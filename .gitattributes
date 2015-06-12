@@ -1,0 +1,39 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Flag binaries
+*.dll   binary
+*.ico   binary
+*.jpeg  binary
+*.jpg   binary
+*.pdf   binary
+*.png   binary
+*.swc   binary
+*.swf   binary
+*.swz   binary
+*.tbx   binary
+*.thmx  binary
+*.zip   binary
+
+# Custom for Visual Studio
+*.cs     diff=csharp
+*.sln    merge=union
+*.csproj merge=union
+*.vbproj merge=union
+*.fsproj merge=union
+*.dbproj merge=union
+
+# Custom for Qt Creator
+*.pro    merge=union
+
+# Standard to msysgit
+*.doc	 diff=astextplain
+*.DOC	 diff=astextplain
+*.docx diff=astextplain
+*.DOCX diff=astextplain
+*.dot  diff=astextplain
+*.DOT  diff=astextplain
+*.pdf  diff=astextplain
+*.PDF	 diff=astextplain
+*.rtf	 diff=astextplain
+*.RTF	 diff=astextplain
