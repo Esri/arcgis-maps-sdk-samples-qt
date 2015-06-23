@@ -18,21 +18,12 @@
 
 #include "ArcGISLocalTiledLayer.h"
 
-mapview_viewpoint::mapview_viewpoint(const QString& title, const QString& categoryList, const QString& shortDesc, const QString& longDesc, const QString& thumbnail) :
-RTSample(title, categoryList, shortDesc, longDesc, thumbnail),
+mapview_viewpoint::mapview_viewpoint() :
+  QWidget(nullptr),
   m_map(nullptr),
   m_mapView(nullptr),
   m_basemap(nullptr)
 {
-}
-
-mapview_viewpoint::~mapview_viewpoint()
-{
-}
-
-void mapview_viewpoint::run()
-{
-    setRunning();
     m_path = QDir::homePath() + QString("/arcgis/Runtime/Data/tpks");
     QString path = m_path + QString("/Topographic.tpk");
     QFile dataFile(path);
@@ -41,16 +32,16 @@ void mapview_viewpoint::run()
         return;
     }
     Esri::ArcGISRuntime::ArcGISLocalTiledLayer* layer = new Esri::ArcGISRuntime::ArcGISLocalTiledLayer(path, this);
-    
+
     m_basemap = new Esri::ArcGISRuntime::Basemap(layer, this);
-    
     m_map = new Esri::ArcGISRuntime::Map(m_basemap, this);
     m_mapView = new Esri::ArcGISRuntime::MapView(m_map, this);
-    displaySampleWidget(m_mapView);
-    
-    this->setCursor(Qt::ArrowCursor);
 
     createWidget();
+}
+
+mapview_viewpoint::~mapview_viewpoint()
+{
 }
 
 // onClicked slot for the viewpoint button
@@ -76,14 +67,18 @@ void mapview_viewpoint::createWidget()
 
     //create the layout and add the widget to the layout
     WidgetPanel* widget = new WidgetPanel();
-    QVBoxLayout *vBoxLayout = new QVBoxLayout();
-    vBoxLayout->addWidget(m_setViewpointButton);
+    QVBoxLayout *vBoxButtonLayout = new QVBoxLayout();
+    vBoxButtonLayout->addWidget(m_setViewpointButton);
     widget->setFixedSize(175,50);
-    widget->setLayout(vBoxLayout);
+    widget->setLayout(vBoxButtonLayout);
     widget->setPalette(QPalette(QPalette::Base));
     QGraphicsProxyWidget *proxy = m_mapView->scene()->addWidget(widget);
     proxy->setPos(7, 7);
     proxy->setAcceptedMouseButtons(Qt::LeftButton);
     proxy->setFlag(QGraphicsItem::ItemIsSelectable, false);
     proxy->setOpacity(0.90);
+
+    QVBoxLayout *vBoxLayout = new QVBoxLayout();
+    vBoxLayout->addWidget(m_mapView);
+    setLayout(vBoxLayout);
 }

@@ -18,15 +18,17 @@
 #include "rtsample.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
+#include "Map.h"
+#include "MapView.h"
+#include "Basemap.h"
 
-class map_basemap : public RTSample
+class map_basemap : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit map_basemap(const QString& title, const QString& categoryList, const QString& shortDesc, const QString& longDesc, const QString& thumbnail);
+  explicit map_basemap();
   virtual ~map_basemap();
-  virtual void run();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;

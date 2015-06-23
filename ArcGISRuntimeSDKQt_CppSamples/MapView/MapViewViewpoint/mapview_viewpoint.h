@@ -18,16 +18,17 @@
 #include "rtsample.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
+#include "Map.h"
+#include "MapView.h"
 #include <QPushButton>
 
-class mapview_viewpoint : public RTSample
+class mapview_viewpoint : public QWidget
 {
     Q_OBJECT
     
 public:
-    explicit mapview_viewpoint(const QString& title, const QString& categoryList, const QString& shortDesc, const QString& longDesc, const QString& thumbnail);
+    explicit mapview_viewpoint();
     virtual ~mapview_viewpoint();
-    virtual void run();
 
 private:
     Esri::ArcGISRuntime::Map* m_map;
