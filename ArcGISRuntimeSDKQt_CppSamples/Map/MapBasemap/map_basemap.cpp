@@ -16,7 +16,6 @@
 #include "MapView.h"
 #include "Basemap.h"
 #include "ArcGISLocalTiledLayer.h"
-#include "widgetpanel.h"
 
 map_basemap::map_basemap() :
   QWidget(nullptr),
