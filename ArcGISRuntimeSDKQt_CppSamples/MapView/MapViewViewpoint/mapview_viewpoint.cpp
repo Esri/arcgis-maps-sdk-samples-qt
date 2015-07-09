@@ -12,10 +12,7 @@
 //
 
 #include "mapview_viewpoint.h"
-#include "widgetpanel.h"
 #include <QPushButton>
-#include "widgetpanel.h"
-
 #include "ArcGISLocalTiledLayer.h"
 
 mapview_viewpoint::mapview_viewpoint() :
@@ -66,7 +63,7 @@ void mapview_viewpoint::createWidget()
     connect(m_setViewpointButton, SIGNAL(clicked()), this, SLOT(onButtonSetViewpoint()));
 
     //create the layout and add the widget to the layout
-    WidgetPanel* widget = new WidgetPanel();
+    QWidget* widget = new QWidget();
     QVBoxLayout *vBoxButtonLayout = new QVBoxLayout();
     vBoxButtonLayout->addWidget(m_setViewpointButton);
     widget->setFixedSize(175,50);
