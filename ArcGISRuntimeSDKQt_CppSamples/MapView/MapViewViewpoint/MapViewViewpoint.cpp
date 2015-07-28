@@ -11,24 +11,22 @@
 // See the Sample code usage restrictions document for further information.
 //
 
-#include "mapview_viewpoint.h"
+#include "MapViewViewpoint.h"
 #include <QPushButton>
-#include "ArcGISLocalTiledLayer.h"
+#include "ArcGISTiledLayer.h"
+#include "QDir"
+#include "QUrl"
+#include "QVBoxLayout"
+#include "QGraphicsProxyWidget"
+#include "QFont"
 
-mapview_viewpoint::mapview_viewpoint() :
+MapViewViewpoint::MapViewViewpoint() :
   QWidget(nullptr),
   m_map(nullptr),
   m_mapView(nullptr),
   m_basemap(nullptr)
 {
-    m_path = QDir::homePath() + QString("/arcgis/Runtime/Data/tpks");
-    QString path = m_path + QString("/Topographic.tpk");
-    QFile dataFile(path);
-    if(!dataFile.exists()) {
-        qDebug() << "Data does not exist in " + path;
-        return;
-    }
-    Esri::ArcGISRuntime::ArcGISLocalTiledLayer* layer = new Esri::ArcGISRuntime::ArcGISLocalTiledLayer(path, this);
+    Esri::ArcGISRuntime::ArcGISTiledLayer* layer = new Esri::ArcGISRuntime::ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer"), this);
 
     m_basemap = new Esri::ArcGISRuntime::Basemap(layer, this);
     m_map = new Esri::ArcGISRuntime::Map(m_basemap, this);
@@ -37,12 +35,12 @@ mapview_viewpoint::mapview_viewpoint() :
     createWidget();
 }
 
-mapview_viewpoint::~mapview_viewpoint()
+MapViewViewpoint::~MapViewViewpoint()
 {
 }
 
 // onClicked slot for the viewpoint button
-void mapview_viewpoint::onButtonSetViewpoint()
+void MapViewViewpoint::onButtonSetViewpoint()
 {
     Esri::ArcGISRuntime::Envelope env(6694660.685327099,-1042630.6576358064,16762334.554821558,4930464.480679419,m_mapView->spatialReference());
     Esri::ArcGISRuntime::Viewpoint vp(env, 180);
@@ -50,7 +48,7 @@ void mapview_viewpoint::onButtonSetViewpoint()
 }
 
 // create UI elements
-void mapview_viewpoint::createWidget()
+void MapViewViewpoint::createWidget()
 {
     //add the viewpoint button
     m_setViewpointButton = new QPushButton("Set Viewpoint");
