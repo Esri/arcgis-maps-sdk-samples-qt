@@ -14,11 +14,11 @@
 #include "MapViewViewpoint.h"
 #include <QPushButton>
 #include "ArcGISTiledLayer.h"
-#include "QDir"
-#include "QUrl"
-#include "QVBoxLayout"
-#include "QGraphicsProxyWidget"
-#include "QFont"
+#include <QDir>
+#include <QUrl>
+#include <QVBoxLayout>
+#include <QGraphicsProxyWidget>
+#include <QFont>
 
 MapViewViewpoint::MapViewViewpoint() :
   QWidget(nullptr),
