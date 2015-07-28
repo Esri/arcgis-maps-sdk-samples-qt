@@ -14,21 +14,19 @@
 #ifndef MAP_BASEMAP_H
 #define MAP_BASEMAP_H
 
-#include "pch.h"
-#include "rtsample.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
 #include "Map.h"
 #include "MapView.h"
 #include "Basemap.h"
 
-class map_basemap : public QWidget
+class MapBasemap : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit map_basemap();
-  virtual ~map_basemap();
+  explicit MapBasemap();
+  virtual ~MapBasemap();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;

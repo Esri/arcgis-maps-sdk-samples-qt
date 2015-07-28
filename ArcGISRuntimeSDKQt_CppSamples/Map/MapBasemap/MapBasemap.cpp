@@ -11,27 +11,22 @@
 // See the Sample code usage restrictions document for further information. 
 //
 
-#include "map_basemap.h"
+#include "MapBasemap.h"
 #include "Map.h"
 #include "MapView.h"
 #include "Basemap.h"
-#include "ArcGISLocalTiledLayer.h"
+#include "ArcGISTiledLayer.h"
+#include <QDir>
+#include <QUrl>
+#include <QVBoxLayout>
 
-map_basemap::map_basemap() :
+MapBasemap::MapBasemap() :
   QWidget(nullptr),
   m_map(nullptr),
   m_mapView(nullptr),
   m_basemap(nullptr)
 {
-
-    m_path = QDir::homePath() + QString("/arcgis/Runtime/Data/tpks");
-    QString path = m_path + QString("/Topographic.tpk");
-    QFile dataFile(path);
-    if(!dataFile.exists()) {
-        qDebug() << "Data does not exist in " + path;
-        return;
-    }
-    Esri::ArcGISRuntime::ArcGISLocalTiledLayer* layer = new Esri::ArcGISRuntime::ArcGISLocalTiledLayer(path, this);
+    Esri::ArcGISRuntime::ArcGISTiledLayer* layer = new Esri::ArcGISRuntime::ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer"), this);
 
     m_basemap = new Esri::ArcGISRuntime::Basemap(layer, this);
 
@@ -43,6 +38,6 @@ map_basemap::map_basemap() :
     setLayout(vBoxLayout);
 }
 
-map_basemap::~map_basemap()
+MapBasemap::~MapBasemap()
 {
 }

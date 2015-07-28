@@ -14,21 +14,19 @@
 #ifndef MAPVIEW_VIEWPOINT_H
 #define MAPVIEW_VIEWPOINT_H
 
-#include "pch.h"
-#include "rtsample.h"
 #include "MapTypes.h"
 #include "MapViewTypes.h"
 #include "Map.h"
 #include "MapView.h"
 #include <QPushButton>
 
-class mapview_viewpoint : public QWidget
+class MapViewViewpoint : public QWidget
 {
     Q_OBJECT
     
 public:
-    explicit mapview_viewpoint();
-    virtual ~mapview_viewpoint();
+    explicit MapViewViewpoint();
+    virtual ~MapViewViewpoint();
 
 private:
     Esri::ArcGISRuntime::Map* m_map;
