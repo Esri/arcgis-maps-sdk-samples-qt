@@ -11,15 +11,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
+import QtQuick 2.3
+import QtQuick.Window 2.2
 
-int main(int argc, char *argv[])
-{
-    QGuiApplication app(argc, argv);
+Window {   
+    visible: true
+    width: 800
+    height: 600
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/Samples/Map/Basemap/main.qml")));
-
-    return app.exec();
+    ArcGISTiledLayerUrl {
+        anchors.fill: parent
+    }
 }

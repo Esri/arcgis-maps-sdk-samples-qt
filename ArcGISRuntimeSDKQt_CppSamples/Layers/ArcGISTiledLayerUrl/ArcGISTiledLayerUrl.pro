@@ -24,12 +24,12 @@ QT += core gui opengl xml network positioning sensors
 win32:CONFIG += \
   embed_manifest_exe
 
-TARGET = MapViewViewpoint
+TARGET = MapBasemap
 TEMPLATE = app
 
 SOURCES += \
     main.cpp \
-    MapViewViewpoint.cpp
+    ArcGISTiledLayerUrl.cpp
 
 HEADERS  += \
-    MapViewViewpoint.h
+    ArcGISTiledLayerUrl.h

@@ -11,18 +11,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "MapViewViewpoint.h"
-#include <QApplication>
-#include <QMessageBox>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 
 int main(int argc, char *argv[])
 {
-  QApplication application(argc, argv);
+    QGuiApplication app(argc, argv);
 
-  MapViewViewpoint applicationWindow;
-  applicationWindow.setMinimumWidth(800);
-  applicationWindow.setMinimumHeight(600);
-  applicationWindow.show();
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/Samples/Maps/Basemap/main.qml")));
 
-  return application.exec();
+    return app.exec();
 }
