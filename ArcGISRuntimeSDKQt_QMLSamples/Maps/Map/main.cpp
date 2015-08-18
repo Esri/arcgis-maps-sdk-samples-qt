@@ -11,28 +11,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MAP_BASEMAP_H
-#define MAP_BASEMAP_H
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "Map.h"
-#include "MapView.h"
-#include "Basemap.h"
-
-class MapBasemap : public QWidget
+int main(int argc, char *argv[])
 {
-  Q_OBJECT
+    QGuiApplication app(argc, argv);
 
-public:
-  explicit MapBasemap();
-  virtual ~MapBasemap();
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/Samples/Maps/Basemap/main.qml")));
 
-private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
-  Esri::ArcGISRuntime::Basemap* m_basemap;
-  QString m_path;
-};
-
-#endif // MAP_BASEMAP_H
+    return app.exec();
+}

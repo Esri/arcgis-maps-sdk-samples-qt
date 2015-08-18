@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/Map/Basemap">
+    <qresource prefix="/Samples/Maps/Basemap">
         <file alias="sample.json">MapBasemap.json</file>
         <file>MapBasemap.png</file>
         <file>MapBasemap.qml</file>

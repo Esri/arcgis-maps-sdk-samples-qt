@@ -20,18 +20,20 @@
 #include <QUrl>
 #include <QVBoxLayout>
 
-MapBasemap::MapBasemap() :
-  QWidget(nullptr),
+using namespace Esri::ArcGISRuntime;
+
+MapBasemap::MapBasemap(QWidget* parent) :
+  QWidget(parent),
   m_map(nullptr),
   m_mapView(nullptr),
   m_basemap(nullptr)
 {
-    Esri::ArcGISRuntime::ArcGISTiledLayer* layer = new Esri::ArcGISRuntime::ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer"), this);
+    ArcGISTiledLayer* layer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer"), this);
 
-    m_basemap = new Esri::ArcGISRuntime::Basemap(layer, this);
+    m_basemap = new Basemap(layer, this);
 
-    m_map = new Esri::ArcGISRuntime::Map(m_basemap, this);
-    m_mapView = new Esri::ArcGISRuntime::MapView(m_map, this);
+    m_map = new Map(m_basemap, this);
+    m_mapView = new MapView(m_map, this);
 
     QVBoxLayout *vBoxLayout = new QVBoxLayout();
     vBoxLayout->addWidget(m_mapView);

@@ -11,33 +11,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MAPVIEW_VIEWPOINT_H
-#define MAPVIEW_VIEWPOINT_H
+#ifndef ARCGISTILEDLAYER_URL_H
+#define ARCGISTILEDLAYER_URL_H
 
 #include "MapTypes.h"
 #include "MapViewTypes.h"
 #include "Map.h"
 #include "MapView.h"
-#include <QPushButton>
+#include "Basemap.h"
+#include "ArcGISTiledLayer.h"
 
-class MapViewViewpoint : public QWidget
+class ArcGISTiledLayerUrl : public QWidget
 {
-    Q_OBJECT
-    
+  Q_OBJECT
+
 public:
-    explicit MapViewViewpoint();
-    virtual ~MapViewViewpoint();
+  explicit ArcGISTiledLayerUrl(QWidget* parent = 0);
+  virtual ~ArcGISTiledLayerUrl();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapView* m_mapView;
-    Esri::ArcGISRuntime::Basemap* m_basemap;
-    void createWidget();
-    QPushButton* m_setViewpointButton;
-    QString m_path;
-
-private slots:
-    void onButtonSetViewpoint();
+  Esri::ArcGISRuntime::Map* m_map;
+  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::Basemap* m_basemap;
+  Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer;
+  QString m_path;
 };
 
-#endif // MAPVIEW_VIEWPOINT_H
+#endif // ARCGISTILEDLAYER_URL_H
