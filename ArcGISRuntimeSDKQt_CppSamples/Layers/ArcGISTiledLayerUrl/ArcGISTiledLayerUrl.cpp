@@ -20,8 +20,10 @@
 #include <QUrl>
 #include <QVBoxLayout>
 
-ArcGISTiledLayerUrl::ArcGISTiledLayerUrl() :
-  QWidget(nullptr),
+using namespace Esri::ArcGISRuntime;
+
+ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
+  QWidget(parent),
   m_map(nullptr),
   m_mapView(nullptr),
   m_basemap(nullptr),
@@ -31,16 +33,16 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl() :
     QUrl tiledLayerUrl("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
 
     // construct the ArcGISTiledLayer using the URL
-    m_tiledLayer = new Esri::ArcGISRuntime::ArcGISTiledLayer(tiledLayerUrl, this);
+    m_tiledLayer = new ArcGISTiledLayer(tiledLayerUrl, this);
 
     // create a Basemap and pass in the ArcGISTiledLayer
-    m_basemap = new Esri::ArcGISRuntime::Basemap(m_tiledLayer, this);
+    m_basemap = new Basemap(m_tiledLayer, this);
 
     // create a Map by passing in the Basemap
-    m_map = new Esri::ArcGISRuntime::Map(m_basemap, this);
+    m_map = new Map(m_basemap, this);
 
     // add the Map to a MapView
-    m_mapView = new Esri::ArcGISRuntime::MapView(m_map, this);
+    m_mapView = new MapView(m_map, this);
 
     // setup the UI
     QVBoxLayout *vBoxLayout = new QVBoxLayout();

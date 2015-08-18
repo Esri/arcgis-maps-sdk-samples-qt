@@ -25,7 +25,7 @@ class MapBasemap : public QWidget
   Q_OBJECT
 
 public:
-  explicit MapBasemap();
+  explicit MapBasemap(QWidget* parent = 0);
   virtual ~MapBasemap();
 
 private:
