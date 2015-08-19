@@ -1,6 +1,7 @@
 {
     "source" :  "ArcGISTiledLayerUrl.qml",
     "description" : "ArcGISTiledLayerUrl.html",
-    "thumbnail" : "ArcGISTiledLayerUrl.png"
+    "thumbnail" : "ArcGISTiledLayerUrl.png",
+    "name" : "ArcGIS tiled layer (URL)"
 }
 

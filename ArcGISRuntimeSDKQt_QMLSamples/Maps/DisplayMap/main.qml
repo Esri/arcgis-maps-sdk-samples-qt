@@ -12,25 +12,14 @@
 // limitations under the License.
 
 import QtQuick 2.3
-import Esri.ArcGISRuntime 100.00
+import QtQuick.Window 2.2
 
-Rectangle {
+Window {
+    visible: true
     width: 800
     height: 600
 
-    // Create the MapView
-    MapView {
+    DisplayMap {
         anchors.fill: parent
-        // Nest the Map as a child of the MapView
-        Map {
-            // Nest the Basemap to add it as the Map's Basemap
-            Basemap {
-                // Nest the ArcGISTiledLayer to add it as one of the Basemap's baseLayers
-                ArcGISTiledLayer {
-                    url: "http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"
-                }
-            }
-        }
     }
 }
-

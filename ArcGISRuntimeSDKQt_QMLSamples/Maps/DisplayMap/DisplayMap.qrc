@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/DisplayMap">
+        <file alias="sample.json">DisplayMap.json</file>
+        <file>DisplayMap.png</file>
+        <file>DisplayMap.qml</file>
+        <file>DisplayMap.html</file>
+        <file>main.qml</file>
+    </qresource>
+</RCC>
