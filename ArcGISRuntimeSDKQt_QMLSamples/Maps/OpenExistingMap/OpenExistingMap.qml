@@ -103,7 +103,7 @@ Rectangle {
 
         Rectangle {
             anchors.centerIn: parent
-            width: 225 * scaleFactor
+            width: 250 * scaleFactor
             height: 200 * scaleFactor
             color: "lightgrey"
             opacity: .8
