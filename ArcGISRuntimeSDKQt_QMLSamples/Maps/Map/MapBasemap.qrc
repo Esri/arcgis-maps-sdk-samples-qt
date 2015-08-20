@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Maps/Basemap">
-        <file alias="sample.json">MapBasemap.json</file>
-        <file>MapBasemap.png</file>
-        <file>MapBasemap.qml</file>
-        <file>MapBasemap.html</file>
-        <file>main.qml</file>
-    </qresource>
-</RCC>

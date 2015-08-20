@@ -20,7 +20,7 @@ QT += qml quick
 
 SOURCES += main.cpp
 
-RESOURCES += MapBasemap.qrc
+RESOURCES += SetInitialMapLocation.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

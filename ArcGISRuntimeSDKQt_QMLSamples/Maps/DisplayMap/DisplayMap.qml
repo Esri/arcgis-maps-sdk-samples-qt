@@ -13,24 +13,28 @@
 
 import QtQuick 2.3
 import Esri.ArcGISRuntime 100.00
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
 
-    // Create the MapView
+    property real scaleFactor: System.displayScaleFactor
+
+    // Create MapView that contains a Map with the Imagery with Labels Basemap
     MapView {
         anchors.fill: parent
-        // Nest the Map as a child of the MapView
         Map {
-            // Nest the Basemap to add it as the Map's Basemap
-            Basemap {
-                // Nest the ArcGISTiledLayer to add it as one of the Basemap's baseLayers
-                ArcGISTiledLayer {
-                    url: "http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"
-                }
-            }
+            BasemapImageryWithLabels {}            
+        }
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
         }
     }
 }
-

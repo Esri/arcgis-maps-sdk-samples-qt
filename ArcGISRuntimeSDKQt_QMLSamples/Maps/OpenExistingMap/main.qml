@@ -16,10 +16,10 @@ import QtQuick.Window 2.2
 
 Window {
     visible: true
-    width: 360
-    height: 360    
+    width: 800
+    height: 600
 
-    MapBasemap {
+    OpenExistingMap {
         anchors.fill: parent
     }
 }
