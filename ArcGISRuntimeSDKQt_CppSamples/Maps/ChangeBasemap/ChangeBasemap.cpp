@@ -1,0 +1,82 @@
+// Copyright 2015 Esri.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "ChangeBasemap.h"
+#include "Map.h"
+#include "MapView.h"
+#include <QVBoxLayout>
+#include <QGraphicsProxyWidget>
+
+using namespace Esri::ArcGISRuntime;
+
+ChangeBasemap::ChangeBasemap(QWidget* parent) :
+    QWidget(parent),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_basemapCombo(nullptr)
+{        
+    // Create a map initially using the topographic basemap
+    m_map = new Map(Basemap::topographic(this), this);
+
+    // Create a map view, and pass in the map
+    m_mapView = new MapView(m_map, this);
+
+    // Create and populate a combo box with several basemap types
+    m_basemapCombo = new QComboBox(this);
+    m_basemapCombo->adjustSize();
+    m_basemapCombo->setStyleSheet("QComboBox#combo {color: black; background-color:#000000;}");
+    QStringList items;
+    m_basemapCombo->addItems(items << "Topographic"
+                             << "Streets"
+                             << "Imagery"
+                             << "Oceans");
+
+    // Connect the combo box signal to lambda for setting new basemaps
+    connect(m_basemapCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=](int i) {
+        switch (i)
+        {
+        // Call setBasemap and pass in the appropriate basemap
+        case 0:
+            m_map->setBasemap(Basemap::topographic(this));
+            break;
+        case 1:
+            m_map->setBasemap(Basemap::streets(this));
+            break;
+        case 2:
+            m_map->setBasemap(Basemap::imagery(this));
+            break;
+        case 3:
+            m_map->setBasemap(Basemap::oceans(this));
+            break;
+        }
+    });
+
+    // Set up the UI
+    QWidget* widget = new QWidget();
+    QVBoxLayout* layout = new QVBoxLayout();
+    layout->setMargin(0);
+    layout->addWidget(m_basemapCombo);   
+    widget->setLayout(layout);
+
+    QGraphicsProxyWidget *proxy = m_mapView->scene()->addWidget(widget);
+    proxy->setPos(10, 10);
+    proxy->setOpacity(0.95);
+
+    QVBoxLayout *vBoxLayout = new QVBoxLayout();
+    vBoxLayout->addWidget(m_mapView);
+    setLayout(vBoxLayout);
+}
+
+ChangeBasemap::~ChangeBasemap()
+{
+}
