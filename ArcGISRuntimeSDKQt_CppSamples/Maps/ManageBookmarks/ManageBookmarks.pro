@@ -24,12 +24,12 @@ QT += core gui opengl xml network positioning sensors
 win32:CONFIG += \
   embed_manifest_exe
 
-TARGET = MapBasemap
+TARGET = ManageBookmarks
 TEMPLATE = app
 
 SOURCES += \
     main.cpp \
-    MapBasemap.cpp
+    ManageBookmarks.cpp
 
 HEADERS  += \
-    MapBasemap.h
+    ManageBookmarks.h

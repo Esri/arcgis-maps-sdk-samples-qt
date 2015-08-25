@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "MapBasemap.h"
+#include "ManageBookmarks.h"
 #include <QApplication>
 #include <QMessageBox>
 
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 {
   QApplication application(argc, argv);
 
-  MapBasemap applicationWindow;
+  ManageBookmarks applicationWindow;
   applicationWindow.setMinimumWidth(800);
   applicationWindow.setMinimumHeight(600);
   applicationWindow.show();

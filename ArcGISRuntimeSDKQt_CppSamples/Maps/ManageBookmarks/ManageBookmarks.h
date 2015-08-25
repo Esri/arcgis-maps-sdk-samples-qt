@@ -11,28 +11,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MAP_BASEMAP_H
-#define MAP_BASEMAP_H
+#ifndef MANAGE_BOOKMARKS_H
+#define MANAGE_BOOKMARKS_H
 
-#include "MapTypes.h"
-#include "MapViewTypes.h"
 #include "Map.h"
 #include "MapView.h"
-#include "Basemap.h"
+#include "Viewpoint.h"
+#include <QPushButton>
+#include <QComboBox>
+#include <QMap>
+#include <QInputDialog>
 
-class MapBasemap : public QWidget
+class ManageBookmarks : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit MapBasemap(QWidget* parent = 0);
-  virtual ~MapBasemap();
+  explicit ManageBookmarks(QWidget* parent = 0);
+  virtual ~ManageBookmarks();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapView* m_mapView;
-  Esri::ArcGISRuntime::Basemap* m_basemap;
-  QString m_path;
+  QComboBox* m_bookmarkCombo;
+  QPushButton* m_button;
+  QInputDialog* m_inputDialog;
+  QMap<QString, Esri::ArcGISRuntime::Viewpoint> m_bookmarks;
+  void createInitialBookmarks();
+  void createBookmark(QString name, Esri::ArcGISRuntime::Viewpoint viewpoint);
+  void createUi();
 };
 
-#endif // MAP_BASEMAP_H
+#endif // MANAGE_BOOKMARKS_H
