@@ -25,9 +25,7 @@
 using namespace Esri::ArcGISRuntime;
 
 SetInitialMapArea::SetInitialMapArea(QWidget* parent) :
-    QWidget(parent),
-    m_map(nullptr),
-    m_mapView(nullptr)
+    QWidget(parent)
 {
     // Create envelope for the area of interest
     Envelope envelope(-12211308.778729, 4645116.003309, -12208257.879667, 4650542.535773, SpatialReference(102100));

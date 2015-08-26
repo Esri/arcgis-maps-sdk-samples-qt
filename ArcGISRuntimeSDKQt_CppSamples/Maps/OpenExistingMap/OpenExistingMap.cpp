@@ -25,10 +25,7 @@
 using namespace Esri::ArcGISRuntime;
 
 OpenExistingMap::OpenExistingMap(QWidget* parent) :
-    QWidget(parent),
-    m_mapView(nullptr),
-    m_button(nullptr),
-    m_inputDialog(nullptr)
+    QWidget(parent)
 {        
     // Create a map view
     m_mapView = new MapView(this);
@@ -44,10 +41,9 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
     m_inputDialog = new QInputDialog(this);
     m_inputDialog->setModal(true);
     m_inputDialog->setLabelText("Provide the bookmark name:");
-    QStringList items;
 
     // Add the existing maps to the combo box
-    m_inputDialog->setComboBoxItems(items
+    m_inputDialog->setComboBoxItems(QStringList()
                                     << "Housing with Mortgages"
                                     << "USA Tapestry Segmentation"
                                     << "Geology of United States");

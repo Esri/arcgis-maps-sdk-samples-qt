@@ -20,10 +20,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ChangeBasemap::ChangeBasemap(QWidget* parent) :
-    QWidget(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_basemapCombo(nullptr)
+    QWidget(parent)
 {        
     // Create a map initially using the topographic basemap
     m_map = new Map(Basemap::topographic(this), this);
@@ -35,8 +32,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
     m_basemapCombo = new QComboBox(this);
     m_basemapCombo->adjustSize();
     m_basemapCombo->setStyleSheet("QComboBox#combo {color: black; background-color:#000000;}");
-    QStringList items;
-    m_basemapCombo->addItems(items << "Topographic"
+    m_basemapCombo->addItems(QStringList() << "Topographic"
                              << "Streets"
                              << "Imagery"
                              << "Oceans");

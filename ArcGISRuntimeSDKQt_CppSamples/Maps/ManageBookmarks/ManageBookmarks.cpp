@@ -26,12 +26,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ManageBookmarks::ManageBookmarks(QWidget* parent) :
-    QWidget(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_bookmarkCombo(nullptr),
-    m_button(nullptr),
-    m_inputDialog(nullptr)
+    QWidget(parent)
 {        
     // Create a map using the imagery with labels basemap
     m_map = new Map(Basemap::imageryWithLabels(this), this);

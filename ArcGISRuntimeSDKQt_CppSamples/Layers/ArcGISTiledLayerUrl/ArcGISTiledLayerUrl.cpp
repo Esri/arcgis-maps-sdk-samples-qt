@@ -23,11 +23,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
-  QWidget(parent),
-  m_map(nullptr),
-  m_mapView(nullptr),
-  m_basemap(nullptr),
-  m_tiledLayer(nullptr)
+  QWidget(parent)
 {
     // create the URL pointing to the tiled map service
     QUrl tiledLayerUrl("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");

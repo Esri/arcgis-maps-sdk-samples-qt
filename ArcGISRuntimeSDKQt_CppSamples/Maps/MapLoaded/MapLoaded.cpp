@@ -19,10 +19,7 @@
 using namespace Esri::ArcGISRuntime;
 
 MapLoaded::MapLoaded(QWidget* parent) :
-  QWidget(parent),
-  m_map(nullptr),
-  m_mapView(nullptr),
-  m_loadStatus(nullptr)
+  QWidget(parent)
 {    
     // Create a map using the streets basemap
     m_map = new Map(Basemap::streets(this), this);

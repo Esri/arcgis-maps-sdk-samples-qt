@@ -21,9 +21,7 @@
 using namespace Esri::ArcGISRuntime;
 
 DisplayMap::DisplayMap(QWidget* parent) :
-  QWidget(parent),
-  m_map(nullptr),
-  m_mapView(nullptr)
+  QWidget(parent)
 {    
     // Create a map using the Imagery with labels basemap
     m_map = new Map(Basemap::imageryWithLabels(this), this);
