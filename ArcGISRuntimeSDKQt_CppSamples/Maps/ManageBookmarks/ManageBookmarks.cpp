@@ -42,6 +42,7 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
     // Create the button to display the input dialog
     m_button = new QPushButton(this);
     m_button->setText("Add Bookmark");
+    m_button->setStyleSheet("QPushbutton#text {color: black;}");
 
     // Create the input dialog
     m_inputDialog = new QInputDialog(this);
