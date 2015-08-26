@@ -18,6 +18,8 @@ TEMPLATE = app
 
 QT += qml quick
 
+CONFIG += c++11 arcgis_runtime_qml100_0_0
+
 SOURCES += main.cpp
 
 RESOURCES += SetInitialMapArea.qrc

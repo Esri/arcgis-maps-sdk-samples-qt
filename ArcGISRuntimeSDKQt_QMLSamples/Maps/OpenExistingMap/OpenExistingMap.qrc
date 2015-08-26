@@ -6,8 +6,8 @@
         <file>OpenExistingMap.html</file>
         <file>main.qml</file>
         <file>Housing.png</file>
-        <file>MeanTemp.jpg</file>
         <file>Tapestry.png</file>
         <file>SwitchMap.png</file>
+        <file>geology.jpg</file>
     </qresource>
 </RCC>

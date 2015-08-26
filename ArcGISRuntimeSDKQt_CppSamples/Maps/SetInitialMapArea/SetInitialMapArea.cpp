@@ -11,35 +11,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "MapBasemap.h"
+#include "SetInitialMapArea.h"
+#include "Basemap.h"
 #include "Map.h"
 #include "MapView.h"
-#include "Basemap.h"
-#include "ArcGISTiledLayer.h"
+#include "Viewpoint.h"
+#include "Envelope.h"
+#include "SpatialReference.h"
 #include <QDir>
 #include <QUrl>
 #include <QVBoxLayout>
 
 using namespace Esri::ArcGISRuntime;
 
-MapBasemap::MapBasemap(QWidget* parent) :
-  QWidget(parent),
-  m_map(nullptr),
-  m_mapView(nullptr),
-  m_basemap(nullptr)
+SetInitialMapArea::SetInitialMapArea(QWidget* parent) :
+    QWidget(parent)
 {
-    ArcGISTiledLayer* layer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer"), this);
+    // Create envelope for the area of interest
+    Envelope envelope(-12211308.778729, 4645116.003309, -12208257.879667, 4650542.535773, SpatialReference(102100));
 
-    m_basemap = new Basemap(layer, this);
+    // Create a new map with the imagery with labels basemap
+    m_map = new Map(Basemap::imageryWithLabels(this), this);
 
-    m_map = new Map(m_basemap, this);
+    // Set the initial viewpoint to the envelope
+    m_map->setInitialViewpoint(Viewpoint(envelope));
+
+    // Create a map view, and pass in the map
     m_mapView = new MapView(m_map, this);
 
-    QVBoxLayout *vBoxLayout = new QVBoxLayout();
+    // Set up the UI
+    QVBoxLayout *vBoxLayout = new QVBoxLayout(this);
     vBoxLayout->addWidget(m_mapView);
     setLayout(vBoxLayout);
 }
 
-MapBasemap::~MapBasemap()
+SetInitialMapArea::~SetInitialMapArea()
 {
 }

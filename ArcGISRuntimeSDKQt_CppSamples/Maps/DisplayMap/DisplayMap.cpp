@@ -11,41 +11,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "ArcGISTiledLayerUrl.h"
+#include "DisplayMap.h"
 #include "Map.h"
 #include "MapView.h"
-#include "Basemap.h"
-#include "ArcGISTiledLayer.h"
 #include <QDir>
 #include <QUrl>
 #include <QVBoxLayout>
 
 using namespace Esri::ArcGISRuntime;
 
-ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
+DisplayMap::DisplayMap(QWidget* parent) :
   QWidget(parent)
-{
-    // create the URL pointing to the tiled map service
-    QUrl tiledLayerUrl("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
+{    
+    // Create a map using the Imagery with labels basemap
+    m_map = new Map(Basemap::imageryWithLabels(this), this);
 
-    // construct the ArcGISTiledLayer using the URL
-    m_tiledLayer = new ArcGISTiledLayer(tiledLayerUrl, this);
-
-    // create a Basemap and pass in the ArcGISTiledLayer
-    m_basemap = new Basemap(m_tiledLayer, this);
-
-    // create a Map by passing in the Basemap
-    m_map = new Map(m_basemap, this);
-
-    // add the Map to a MapView
+    // Create a map view, and pass in the map
     m_mapView = new MapView(m_map, this);
 
-    // setup the UI
+    // Set up the UI
     QVBoxLayout *vBoxLayout = new QVBoxLayout();
     vBoxLayout->addWidget(m_mapView);
     setLayout(vBoxLayout);
 }
 
-ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
+DisplayMap::~DisplayMap()
 {
 }

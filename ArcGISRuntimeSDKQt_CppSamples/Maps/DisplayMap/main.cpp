@@ -11,28 +11,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef MAP_BASEMAP_H
-#define MAP_BASEMAP_H
+#include "DisplayMap.h"
+#include <QApplication>
+#include <QMessageBox>
 
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "Map.h"
-#include "MapView.h"
-#include "Basemap.h"
-
-class MapBasemap : public QWidget
+int main(int argc, char *argv[])
 {
-  Q_OBJECT
+  QApplication application(argc, argv);
 
-public:
-  explicit MapBasemap(QWidget* parent = 0);
-  virtual ~MapBasemap();
+  DisplayMap applicationWindow;
+  applicationWindow.setMinimumWidth(800);
+  applicationWindow.setMinimumHeight(600);
+  applicationWindow.show();
 
-private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
-  Esri::ArcGISRuntime::Basemap* m_basemap;
-  QString m_path;
-};
-
-#endif // MAP_BASEMAP_H
+  return application.exec();
+}

@@ -13,23 +13,23 @@
 # limitations under the License.
 #-------------------------------------------------
 
-
-TEMPLATE = app
-
-QT += qml quick
-
-CONFIG += c++11 arcgis_runtime_qml100_0_0
-
-SOURCES += main.cpp
-
-RESOURCES += DisplayMap.qrc
-
-ios {
-    QMAKE_INFO_PLIST = $$PWD/Info.plist
+mac {
+    cache()
 }
 
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+CONFIG += c++11 esri_runtime_qt100_0_0
 
-# Default rules for deployment.
-include(deployment.pri)
+QT += core gui opengl xml network positioning sensors
+
+win32:CONFIG += \
+  embed_manifest_exe
+
+TARGET = OpenExistingMap
+TEMPLATE = app
+
+SOURCES += \
+    main.cpp \
+    OpenExistingMap.cpp
+
+HEADERS  += \
+    OpenExistingMap.h

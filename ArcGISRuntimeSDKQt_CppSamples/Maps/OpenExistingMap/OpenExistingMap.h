@@ -11,18 +11,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "MapBasemap.h"
-#include <QApplication>
-#include <QMessageBox>
+#ifndef OPEN_EXISTING_MAP_H
+#define OPEN_EXISTING_MAP_H
 
-int main(int argc, char *argv[])
+#include "MapView.h"
+#include "PortalItem.h"
+#include <QPushButton>
+#include <QMap>
+#include <QInputDialog>
+
+class OpenExistingMap : public QWidget
 {
-  QApplication application(argc, argv);
+  Q_OBJECT
 
-  MapBasemap applicationWindow;
-  applicationWindow.setMinimumWidth(800);
-  applicationWindow.setMinimumHeight(600);
-  applicationWindow.show();
+public:
+  explicit OpenExistingMap(QWidget* parent = 0);
+  virtual ~OpenExistingMap();
 
-  return application.exec();
-}
+private:
+  Esri::ArcGISRuntime::MapView* m_mapView;
+  QPushButton* m_button;
+  QInputDialog* m_inputDialog;
+  QMap<QString, Esri::ArcGISRuntime::PortalItem> m_portalMaps;
+  void createUi();
+  void createPortalMaps();
+};
+
+#endif // OPEN_EXISTING_MAP_H
