@@ -40,7 +40,7 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
     // Create the input dialog
     m_inputDialog = new QInputDialog(this);
     m_inputDialog->setModal(true);
-    m_inputDialog->setLabelText("Provide the bookmark name:");
+    m_inputDialog->setLabelText("Select a map to open");
 
     // Add the existing maps to the combo box
     m_inputDialog->setComboBoxItems(QStringList()
