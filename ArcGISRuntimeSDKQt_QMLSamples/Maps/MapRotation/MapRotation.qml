@@ -61,6 +61,7 @@ Rectangle {
             anchors {
                 centerIn: parent
             }
+            spacing: 5
 
             Slider {
                 id: slider1
@@ -72,6 +73,7 @@ Rectangle {
                         implicitWidth: 200 * scaleFactor
                         implicitHeight: 8 * scaleFactor
                         color: "gray"
+                        opacity: 0.7
                         radius: 8 * scaleFactor
                     }
                     handle: Rectangle {
@@ -91,16 +93,20 @@ Rectangle {
                     mv.setViewpointRotation(value);
                 }
             }
+
             TextField {
                 anchors {
                     verticalCenter: parent.verticalCenter
                 }
                 style: TextFieldStyle {
-                    textColor: "black"
+                    textColor: "white"
                     background: Rectangle {
                         implicitWidth: 50 * scaleFactor
                         implicitHeight: 34 * scaleFactor
                         border.width: 0
+                        radius: 5
+                        color: "gray"
+                        opacity: 0.7
                     }
                 }
                 font.pixelSize: 20 * scaleFactor
