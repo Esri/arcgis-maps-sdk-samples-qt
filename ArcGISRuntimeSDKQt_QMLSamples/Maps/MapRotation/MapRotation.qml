@@ -104,7 +104,7 @@ Rectangle {
                         implicitWidth: 50 * scaleFactor
                         implicitHeight: 34 * scaleFactor
                         border.width: 0
-                        radius: 5
+                        radius: 5 * scaleFactor
                         color: "gray"
                         opacity: 0.7
                     }
