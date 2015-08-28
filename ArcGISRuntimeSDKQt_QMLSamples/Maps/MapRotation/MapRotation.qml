@@ -23,15 +23,11 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
 
-    // Map UI presentation at top
+    // Map view UI presentation at top
     MapView {
         id: mv
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            bottom: slideContainer.top
-        }
+
+        anchors.fill: parent
 
         Map {
             BasemapStreets {}
@@ -49,50 +45,43 @@ Rectangle {
             }
             scale: 55151630
         }
-        onMapRotationChanged: {
-            slider1.value = rotation
-        }
     }
 
     // Slider UI presentation at bottom
     Rectangle {
-        id: slideContainer
+        height: 46 * scaleFactor
         anchors {
+            horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            left: parent.left
-            right: parent.right
         }
-        height: 35 * scaleFactor
-        width: parent.width
 
         // sliderCombo: A slider and text for its value
         Row {
             id: sliderCombo
             anchors {
-                horizontalCenter: parent.horizontalCenter
+                centerIn: parent
             }
-            spacing: 20 * scaleFactor
 
             Slider {
                 id: slider1
                 anchors {
-                    topMargin: 50 * scaleFactor
+                    verticalCenter: parent.verticalCenter
                 }
                 style: SliderStyle {
                     groove: Rectangle {
-                        implicitWidth: 400
-                        implicitHeight: 8
+                        implicitWidth: 200 * scaleFactor
+                        implicitHeight: 8 * scaleFactor
                         color: "gray"
-                        radius: 8
+                        radius: 8 * scaleFactor
                     }
                     handle: Rectangle {
                         anchors.centerIn: parent
                         color: control.pressed ? "white" : "lightgray"
                         border.color: "gray"
-                        border.width: 2
-                        implicitWidth: 34
-                        implicitHeight: 34
-                        radius: 12
+                        border.width: 2 * scaleFactor
+                        implicitWidth: 34 * scaleFactor
+                        implicitHeight: 34 * scaleFactor
+                        radius: 12 * scaleFactor
                     }
                 }
                 // Slider controls degrees of rotation
@@ -103,17 +92,18 @@ Rectangle {
                 }
             }
             TextField {
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                }
                 style: TextFieldStyle {
                     textColor: "black"
                     background: Rectangle {
-                        radius: 2
-                        implicitWidth: 50
-                        implicitHeight: 35
-                        border.color: slideContainer.color
-                        border.width: 1
+                        implicitWidth: 50 * scaleFactor
+                        implicitHeight: 34 * scaleFactor
+                        border.width: 0
                     }
                 }
-                font.pointSize: 14
+                font.pixelSize: 20 * scaleFactor
                 text: slider1.value.toFixed(0)
             }
         }
