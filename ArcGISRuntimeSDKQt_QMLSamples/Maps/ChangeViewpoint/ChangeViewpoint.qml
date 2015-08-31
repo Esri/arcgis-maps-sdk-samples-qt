@@ -35,12 +35,21 @@ Rectangle {
         spatialReference: SpatialReference.createWgs84()
     }
 
+    ViewpointExtent {
+        id: springViewpoint
+        extent: Envelope {
+            xMin: -12338668.348591767
+            xMax: -12338247.594362013
+            yMin: 5546908.424239618
+            yMax: 5547223.989911933
+            spatialReference: SpatialReference { wkid: 102100 }
+        }
+    }
+
     // Map view UI presentation at top
     MapView {
         id: mv
-
         anchors.fill: parent
-
         Map {
             BasemapImageryWithLabels {}
         }
@@ -63,7 +72,6 @@ Rectangle {
             Button {
                 text: "Center"
                 onClicked: {
-                    console.log("In button Center...");
                     ptBuilder.setXY(-117.195681, 34.056218); // Esri Headquarters
                     mv.setViewpointCenter(ptBuilder.toGeometry());
                 }
@@ -71,7 +79,6 @@ Rectangle {
             Button {
                 text: "Center & Scale"
                 onClicked: {
-                    console.log("In button Center & Scale...");
                     ptBuilder.setXY(-157.564, 20.677); // Hawai'i
                     mv.setViewpointCenterAndScale(ptBuilder.toGeometry(), 4000000.0);
                 }
@@ -79,7 +86,6 @@ Rectangle {
             Button {
                 text: "Geometry"
                 onClicked: {
-                    console.log("In button Geometry...");
                     envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
                     mv.setViewpointGeometry(envBuilder.toGeometry());
                 }
@@ -87,7 +93,6 @@ Rectangle {
             Button {
                 text: "Geometry && Padding"
                 onClicked: {
-                    console.log("In button Geometry & padding...");
                     envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
                     mv.setViewpointGeometryAndPadding(envBuilder.toGeometry(), 200);
                 }
@@ -95,7 +100,6 @@ Rectangle {
             Button {
                 text: "Rotation"
                 onClicked: {
-                    console.log("In button Rotation...");
                     rotationValue = (rotationValue + 45.0) % 360.0;
                     mv.setViewpointRotation(rotationValue);
                 }
@@ -107,18 +111,14 @@ Rectangle {
                     var scaleCount = scaleValues.length;
 
                     scaleIndex = (scaleIndex + 1) % scaleCount;
-                    console.log("scaleIndex=", scaleIndex);
-                    console.log("scaleValues.length=", scaleCount);
                     scaleIndex = scaleIndex % scaleValues.length;
-                    console.log("scaleIndex=", scaleIndex);
                     mv.setViewpointScale(scaleValues[scaleIndex]);
-                    console.log("In button scale, scale =", scaleValues[scaleIndex], "scaleIndex=", scaleIndex);
                 }
             }
             Button {
                 text: "Animation"
                 onClicked: {
-                    console.log("In button Animation...");
+                    mv.setViewpointWithAnimationCurve(springViewpoint, 4.0, Enums.AnimationCurveEaseInOutCubic);
                 }
             }
         }
