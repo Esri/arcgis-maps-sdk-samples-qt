@@ -56,70 +56,63 @@ Rectangle {
     }
 
     // Controls UI presentation at bottom
-    Rectangle {
+    Flow {
         anchors {
-            horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
         }
-        height: 100 * scaleFactor
-        color: "lightblue"
-        Grid {
-            anchors {
-                centerIn: parent
-            }
-            spacing: 5
+        width: parent.width
+        spacing: 5
 
-            Button {
-                text: "Center"
-                onClicked: {
-                    ptBuilder.setXY(-117.195681, 34.056218); // Esri Headquarters
-                    mv.setViewpointCenter(ptBuilder.toGeometry());
-                }
+        Button {
+            text: "Center"
+            onClicked: {
+                ptBuilder.setXY(-117.195681, 34.056218); // Esri Headquarters
+                mv.setViewpointCenter(ptBuilder.toGeometry());
             }
-            Button {
-                text: "Center & Scale"
-                onClicked: {
-                    ptBuilder.setXY(-157.564, 20.677); // Hawai'i
-                    mv.setViewpointCenterAndScale(ptBuilder.toGeometry(), 4000000.0);
-                }
+        }
+        Button {
+            text: "Center & Scale"
+            onClicked: {
+                ptBuilder.setXY(-157.564, 20.677); // Hawai'i
+                mv.setViewpointCenterAndScale(ptBuilder.toGeometry(), 4000000.0);
             }
-            Button {
-                text: "Geometry"
-                onClicked: {
-                    envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
-                    mv.setViewpointGeometry(envBuilder.toGeometry());
-                }
+        }
+        Button {
+            text: "Geometry"
+            onClicked: {
+                envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
+                mv.setViewpointGeometry(envBuilder.toGeometry());
             }
-            Button {
-                text: "Geometry && Padding"
-                onClicked: {
-                    envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
-                    mv.setViewpointGeometryAndPadding(envBuilder.toGeometry(), 200);
-                }
+        }
+        Button {
+            text: "Geometry && Padding"
+            onClicked: {
+                envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
+                mv.setViewpointGeometryAndPadding(envBuilder.toGeometry(), 200);
             }
-            Button {
-                text: "Rotation"
-                onClicked: {
-                    rotationValue = (rotationValue + 45.0) % 360.0;
-                    mv.setViewpointRotation(rotationValue);
-                }
+        }
+        Button {
+            text: "Rotation"
+            onClicked: {
+                rotationValue = (rotationValue + 45.0) % 360.0;
+                mv.setViewpointRotation(rotationValue);
             }
-            Button {
-                text: "Scale"
-                onClicked: {
-                    var scaleValues = [2000000.0, 5000000.0, 10000000.0, 50000000.0];
-                    var scaleCount = scaleValues.length;
+        }
+        Button {
+            text: "Scale"
+            onClicked: {
+                var scaleValues = [2000000.0, 5000000.0, 10000000.0, 50000000.0];
+                var scaleCount = scaleValues.length;
 
-                    scaleIndex = (scaleIndex + 1) % scaleCount;
-                    scaleIndex = scaleIndex % scaleValues.length;
-                    mv.setViewpointScale(scaleValues[scaleIndex]);
-                }
+                scaleIndex = (scaleIndex + 1) % scaleCount;
+                scaleIndex = scaleIndex % scaleValues.length;
+                mv.setViewpointScale(scaleValues[scaleIndex]);
             }
-            Button {
-                text: "Animation"
-                onClicked: {
-                    mv.setViewpointWithAnimationCurve(springViewpoint, 4.0, Enums.AnimationCurveEaseInOutCubic);
-                }
+        }
+        Button {
+            text: "Animation"
+            onClicked: {
+                mv.setViewpointWithAnimationCurve(springViewpoint, 4.0, Enums.AnimationCurveEaseInOutCubic);
             }
         }
     }
