@@ -55,67 +55,91 @@ Rectangle {
         }
     }
 
-    // Controls UI presentation at bottom
-    Flow {
-        anchors {
-            bottom: parent.bottom
-        }
-        width: parent.width
-        spacing: 5
+//    Rectangle {
+//        anchors {
+//            bottom: parent.bottom
+//            left: parent.left
+//            margins: 5 * scaleFactor
+//        }
+//        color: "white"
+//        opacity: 1.0
+//        height: flow1.height * scaleFactor
+//     //   implicitWidth: flow1.width * scaleFactor
+//        width: fattestButton.width + (5 * scaleFactor)
 
-        Button {
-            text: "Center"
-            onClicked: {
-                ptBuilder.setXY(-117.195681, 34.056218); // Esri Headquarters
-                mv.setViewpointCenter(ptBuilder.toGeometry());
-            }
-        }
-        Button {
-            text: "Center & Scale"
-            onClicked: {
-                ptBuilder.setXY(-157.564, 20.677); // Hawai'i
-                mv.setViewpointCenterAndScale(ptBuilder.toGeometry(), 4000000.0);
-            }
-        }
-        Button {
-            text: "Geometry"
-            onClicked: {
-                envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
-                mv.setViewpointGeometry(envBuilder.toGeometry());
-            }
-        }
-        Button {
-            text: "Geometry && Padding"
-            onClicked: {
-                envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
-                mv.setViewpointGeometryAndPadding(envBuilder.toGeometry(), 200);
-            }
-        }
-        Button {
-            text: "Rotation"
-            onClicked: {
-                rotationValue = (rotationValue + 45.0) % 360.0;
-                mv.setViewpointRotation(rotationValue);
-            }
-        }
-        Button {
-            text: "Scale"
-            onClicked: {
-                var scaleValues = [2000000.0, 5000000.0, 10000000.0, 50000000.0];
-                var scaleCount = scaleValues.length;
+//        Component.onCompleted: {
+//            console.log("height:", height);
+//            console.log("width:", width);
+//        }
 
-                scaleIndex = (scaleIndex + 1) % scaleCount;
-                scaleIndex = scaleIndex % scaleValues.length;
-                mv.setViewpointScale(scaleValues[scaleIndex]);
+        // Controls UI presentation at bottom
+        Flow {
+            id: flow1
+            anchors {
+                bottom: parent.bottom
+                left: parent.left
+                margins: 5 * scaleFactor
             }
-        }
-        Button {
-            text: "Animation"
-            onClicked: {
-                mv.setViewpointWithAnimationCurve(springViewpoint, 4.0, Enums.AnimationCurveEaseInOutCubic);
+            width: parent.width
+            spacing: 5
+
+            Button {
+                text: "Center"
+                onClicked: {
+                    ptBuilder.setXYZM(-117.195681, 34.056218, 0.0, 0.0); // Esri Headquarters
+                    mv.setViewpointCenter(ptBuilder.geometry);
+                }
             }
-        }
-    }
+            Button {
+                text: "Center & Scale"
+                onClicked: {
+                    ptBuilder.setXYZM(-157.564, 20.677, 0.0, 0.0); // Hawai'i
+                    mv.setViewpointCenterAndScale(ptBuilder.geometry, 4000000.0);
+                }
+            }
+            Button {
+                text: "Geometry"
+                onClicked: {
+                    envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
+                    mv.setViewpointGeometry(envBuilder.geometry);
+                }
+            }
+            Button {
+                id: fattestButton
+                text: "Geometry && Padding"
+                onClicked: {
+                    envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
+                    mv.setViewpointGeometryAndPadding(envBuilder.geometry, 200);
+                }
+            }
+            Button {
+                text: "Rotation"
+                onClicked: {
+                    rotationValue = (rotationValue + 45.0) % 360.0;
+                    mv.setViewpointRotation(rotationValue);
+                }
+            }
+            Button {
+                text: "Scale"
+                onClicked: {
+                    var scaleValues = [2000000.0, 5000000.0, 10000000.0, 50000000.0];
+                    var scaleCount = scaleValues.length;
+
+                    scaleIndex += 1;
+                    scaleIndex = scaleIndex % scaleValues.length;
+                    console.log("scaleIndex: ", scaleIndex);
+                    console.log("scaleValues.length: ", scaleValues.length);
+                    mv.setViewpointScale(scaleValues[scaleIndex]);
+                }
+            }
+            Button {
+                text: "Animation"
+                onClicked: {
+                    mv.setViewpointWithAnimationCurve(springViewpoint, 4.0, Enums.AnimationCurveEaseInOutCubic);
+                }
+            }
+//        }
+  }
 
     // Neatline rectangle
     Rectangle {
