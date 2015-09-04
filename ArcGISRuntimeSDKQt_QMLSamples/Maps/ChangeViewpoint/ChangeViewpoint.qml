@@ -46,7 +46,6 @@ Rectangle {
         }
     }
 
-    // Map view UI presentation at top
     MapView {
         id: mv
         anchors.fill: parent
@@ -55,91 +54,56 @@ Rectangle {
         }
     }
 
-//    Rectangle {
-//        anchors {
-//            bottom: parent.bottom
-//            left: parent.left
-//            margins: 5 * scaleFactor
-//        }
-//        color: "white"
-//        opacity: 1.0
-//        height: flow1.height * scaleFactor
-//     //   implicitWidth: flow1.width * scaleFactor
-//        width: fattestButton.width + (5 * scaleFactor)
+    ComboBox {
+        id: comboBoxViewpoint
+        anchors {
+            left: parent.left
+            top: parent.top
+            margins: 15 * scaleFactor
+        }
 
-//        Component.onCompleted: {
-//            console.log("height:", height);
-//            console.log("width:", width);
-//        }
+        width: 175 * scaleFactor
 
-        // Controls UI presentation at bottom
-        Flow {
-            id: flow1
-            anchors {
-                bottom: parent.bottom
-                left: parent.left
-                margins: 5 * scaleFactor
-            }
-            width: parent.width
-            spacing: 5
+        model: ["Center","Center and scale","Geometry","Geometry and padding","Rotation","Scale 1:5,000,000","Scale 1:10,000,000","Animation"]
+        onCurrentTextChanged: {
+            changeCurrentViewpoint();
+        }
 
-            Button {
-                text: "Center"
-                onClicked: {
-                    ptBuilder.setXYZM(-117.195681, 34.056218, 0.0, 0.0); // Esri Headquarters
-                    mv.setViewpointCenter(ptBuilder.geometry);
-                }
+        function changeCurrentViewpoint()
+        {
+            switch (comboBoxViewpoint.currentText) {
+            case "Center":
+                ptBuilder.setXYZM(-117.195681, 34.056218, 0.0, 0.0); // Esri Headquarters
+                mv.setViewpointCenter(ptBuilder.geometry);
+                break;
+            case "Center and scale":
+                ptBuilder.setXYZM(-157.564, 20.677, 0.0, 0.0); // Hawai'i
+                mv.setViewpointCenterAndScale(ptBuilder.geometry, 4000000.0);
+                break;
+            case "Geometry":
+                envBuilder.setCoords(116.380, 39.920, 116.400, 39.940, 0, 0, 0, 0); // Beijing
+                mv.setViewpointGeometry(envBuilder.geometry);
+                break;
+            case "Geometry and padding":
+                envBuilder.setCoords(116.380, 39.920, 116.400, 39.940, 0, 0, 0, 0); // Beijing
+                mv.setViewpointGeometryAndPadding(envBuilder.geometry, 200);
+                break;
+            case "Rotation":
+                rotationValue = (rotationValue + 45.0) % 360.0;
+                mv.setViewpointRotation(rotationValue);
+                break;
+            case "Scale 1:5,000,000":
+                mv.setViewpointScale(5000000.0);
+                break;
+            case "Scale 1:10,000,000":
+                mv.setViewpointScale(10000000.0);
+                break;
+            case "Animation":
+                mv.setViewpointWithAnimationCurve(springViewpoint, 4.0, Enums.AnimationCurveEaseInOutCubic);
+                break;
             }
-            Button {
-                text: "Center & Scale"
-                onClicked: {
-                    ptBuilder.setXYZM(-157.564, 20.677, 0.0, 0.0); // Hawai'i
-                    mv.setViewpointCenterAndScale(ptBuilder.geometry, 4000000.0);
-                }
-            }
-            Button {
-                text: "Geometry"
-                onClicked: {
-                    envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
-                    mv.setViewpointGeometry(envBuilder.geometry);
-                }
-            }
-            Button {
-                id: fattestButton
-                text: "Geometry && Padding"
-                onClicked: {
-                    envBuilder.setCoords(116.385, 39.92, 116.395, 39.93, 0, 0, 0, 0); // Beijing
-                    mv.setViewpointGeometryAndPadding(envBuilder.geometry, 200);
-                }
-            }
-            Button {
-                text: "Rotation"
-                onClicked: {
-                    rotationValue = (rotationValue + 45.0) % 360.0;
-                    mv.setViewpointRotation(rotationValue);
-                }
-            }
-            Button {
-                text: "Scale"
-                onClicked: {
-                    var scaleValues = [2000000.0, 5000000.0, 10000000.0, 50000000.0];
-                    var scaleCount = scaleValues.length;
-
-                    scaleIndex += 1;
-                    scaleIndex = scaleIndex % scaleValues.length;
-                    console.log("scaleIndex: ", scaleIndex);
-                    console.log("scaleValues.length: ", scaleValues.length);
-                    mv.setViewpointScale(scaleValues[scaleIndex]);
-                }
-            }
-            Button {
-                text: "Animation"
-                onClicked: {
-                    mv.setViewpointWithAnimationCurve(springViewpoint, 4.0, Enums.AnimationCurveEaseInOutCubic);
-                }
-            }
-//        }
-  }
+        }
+    }
 
     // Neatline rectangle
     Rectangle {
