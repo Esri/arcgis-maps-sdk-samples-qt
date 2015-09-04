@@ -99,6 +99,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: mouse.accepted = true
+            onWheel: wheel.accepted = true
         }
 
         Rectangle {
