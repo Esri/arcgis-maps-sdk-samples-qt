@@ -49,6 +49,7 @@ Rectangle {
     MapView {
         id: mv
         anchors.fill: parent
+
         Map {
             BasemapImageryWithLabels {}
         }
