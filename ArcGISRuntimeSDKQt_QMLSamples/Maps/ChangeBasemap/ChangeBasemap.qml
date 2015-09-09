@@ -22,15 +22,15 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
 
-    //// Create MapView that contains a Map
-    //    MapView {
-    //        anchors.fill: parent
-    //        Map {
-    //            id: map
-    //            // Set the initial basemap to Topographic
-    //            BasemapTopographic {}
-    //        }
-    //    }
+    // Create MapView that contains a Map
+    MapView {
+        anchors.fill: parent
+        Map {
+            id: map
+            // Set the initial basemap to Topographic
+            BasemapTopographic {}
+        }
+    }
 
     ComboBox {
         id: comboBoxBasemap
@@ -40,13 +40,14 @@ Rectangle {
             margins: 15 * scaleFactor
         }
         width: 175 * scaleFactor
-        model: ["Topographic","Streets","Imagery","Ocean"]
+        model: ["Topographic","Streets","Imagery","Oceans"]
         onCurrentTextChanged: {
             // Call this JavaScript function when the current selection changes
-            getCurrentBasemap();
+            if (map.loadStatus === Enums.LoadStatusLoaded)
+                changeBasemap();
         }
 
-        function getCurrentBasemap() {
+        function changeBasemap() {
             // Determine the selected basemap, create that type, and set the Map's basemap
             switch (comboBoxBasemap.currentText) {
             case "Topographic":
