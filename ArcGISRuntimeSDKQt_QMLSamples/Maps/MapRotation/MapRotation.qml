@@ -98,10 +98,11 @@ Rectangle {
                 anchors {
                     verticalCenter: parent.verticalCenter
                 }
+                horizontalAlignment: TextInput.AlignHCenter
                 style: TextFieldStyle {
                     textColor: "white"
                     background: Rectangle {
-                        implicitWidth: 50 * scaleFactor
+                        implicitWidth: 55 * scaleFactor
                         implicitHeight: 34 * scaleFactor
                         border.width: 0
                         radius: 5 * scaleFactor
