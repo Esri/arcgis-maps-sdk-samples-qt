@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/Samples/Features/FeatureLayer_FeatureService">
+        <file>FeatureLayer_FeatureService.html</file>
+        <file alias="sample.json">FeatureLayer_FeatureService.json</file>
+        <file>FeatureLayer_FeatureService.png</file>
+        <file>FeatureLayer_FeatureService.qml</file>
+        <file>main.qml</file>
+    </qresource>
+</RCC>
