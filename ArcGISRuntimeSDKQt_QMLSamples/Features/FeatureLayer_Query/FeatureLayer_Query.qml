@@ -26,13 +26,12 @@ Rectangle {
 
     // Map view UI presentation at top
     MapView {
-        id: mv
-
+        id: mapView
         anchors.fill: parent
 
         Map {
+            id: map
             BasemapTopographic {}
-            initialViewpoint: vc
 
             FeatureLayer {
                 id: featureLayer
@@ -62,27 +61,46 @@ Rectangle {
 
                     onQueryFeaturesStatusChanged: {
                         if (queryFeaturesStatus === Enums.TaskStatusCompleted) {
-                            // clear selected features if any
-                            featureLayer.clearSelection();
-
-                            var featureResults = [];
-                            while (queryFeaturesResult.iterator.hasNext) {
-                                featureResults.push(queryFeaturesResult.iterator.next());
-                            }
-
-                            if (featureResults.length > 0) {
-                                featureLayer.selectFeatures(featureResults);
-
-                                // zoom to the first feature
-                                mv.setViewpointGeometryAndPadding(featureResults[0].geometry, 200);
-                            }
-                            else {
+                            if (!queryFeaturesResult.iterator.hasNext) {
                                 errorMsgDialog.visible = true;
+                                return;
                             }
+
+                            // clear any previous selection
+                            featureLayer.clearSelection();
+                            // get the first feature
+                            var feature = queryFeaturesResult.iterator.next();
+                            // select the first feature.
+                            // The ideal way to select features is to call featureLayer.selectFeaturesWithQuery(), which will
+                            // automatically select the features based on your query.  This is just a way to show you operations
+                            // that you can do with query results. Refer to API doc for more details.
+                            featureLayer.selectFeature(feature);
+
+                            // zoom to the first feature
+                            mapView.setViewpointGeometryAndPadding(feature.geometry, 200);
                         }
                     }
                 }
             }
+
+            onLoadStatusChanged: {
+                if (loadStatus === Enums.LoadStatusLoaded) {
+                    mapView.setViewpoint(viewPoint);
+                }
+            }
+        }
+
+        // initial viewPoint
+        ViewpointCenter {
+            id: viewPoint
+            center: Point {
+                x: -11e6
+                y: 5e6
+                spatialReference: SpatialReference {
+                    wkid: 102100
+                }
+            }
+            scale: 9e7
         }
 
         QueryParameters {
@@ -95,50 +113,40 @@ Rectangle {
 
            anchors {
                top: parent.top
-               bottom: mv.top
+               bottom: map.top
                left: parent.left
                right: parent.right
                margins: 5
            }
            spacing: 5
 
+
            TextField {
                id: findText
                width: parent.width * 0.25
                placeholderText: "Enter a state name to select"
+
+               Keys.onReturnPressed: {
+                    query();
+               }
            }
            Button {
-               text: "Find"
+               text: "Find and Select"
                enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
                onClicked: {
-                   // set the where clause
-                   params.whereClause = "STATE_NAME LIKE \'" + findText.text.toUpperCase() + "\'";
-
-                   // start the query
-                   featureTable.queryFeatures(params);
+                   query();
                }
            }
        }
 
+        // error message dialog
         MessageDialog {
             id: errorMsgDialog
             visible: false
-            text: "No state like " + findText.text.toUpperCase() + " exists."
+            text: "No state named " + findText.text.toUpperCase() + " exists."
             onAccepted: {
                 visible = false;
             }
-        }
-
-        ViewpointCenter {
-            id: vc
-            center: Point {
-                x: -11e6
-                y: 5e6
-                spatialReference: SpatialReference {
-                    wkid: 102113
-                }
-            }
-            scale: 9e7
         }
     }
 
@@ -150,5 +158,15 @@ Rectangle {
             width: 0.5 * scaleFactor
             color: "black"
         }
+    }
+
+    // function to form and execute the query
+    function query() {
+        // set the where clause
+        params.whereClause = "STATE_NAME LIKE \'" + findText.text.toUpperCase() + "\'";
+
+        // start the query
+        featureTable.queryFeatures(params);
+//                   featureTable.queryFeatures(params);
     }
 }

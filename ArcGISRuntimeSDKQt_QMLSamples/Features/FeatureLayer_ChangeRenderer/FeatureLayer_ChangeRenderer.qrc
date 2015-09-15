@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/Samples/Features/FeatureLayer_ChangeRenderer">
+        <file>FeatureLayer_ChangeRenderer.html</file>
+        <file alias="sample.json">FeatureLayer_ChangeRenderer.json</file>
+        <file>FeatureLayer_ChangeRenderer.png</file>
+        <file>FeatureLayer_ChangeRenderer.qml</file>
+        <file>main.qml</file>
+    </qresource>
+</RCC>

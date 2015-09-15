@@ -1,0 +1,89 @@
+// Copyright 2015 Esri.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+import QtQuick 2.3
+import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.2
+import QtQuick.Dialogs 1.2
+import Esri.ArcGISRuntime 100.00
+import Esri.ArcGISExtras 1.1
+
+Rectangle {
+    width: 800
+    height: 600
+
+    property real scaleFactor: System.displayScaleFactor
+
+    // Map view UI presentation at top
+    MapView {
+        id: mapView
+
+        anchors.fill: parent
+
+        Map {
+            BasemapTopographic {}
+
+            // create the feature layer
+            FeatureLayer {
+                id: featureLayer
+
+                // default property (simple renderer)
+                SimpleRenderer {
+                    SimpleLineSymbol {
+                        style: Enums.SimpleLineSymbolStyleSolid
+                        color: "blue"
+                        antiAlias: true
+                        width: 2 * scaleFactor
+                        opacity: 1.0
+                    }
+                }
+
+                // feature table
+                ServiceFeatureTable {
+                    id: featureTable
+                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/PoolPermits/FeatureServer/0"
+
+                }
+            }
+
+            onLoadStatusChanged: {
+                if (loadStatus === Enums.LoadStatusLoaded) {
+                    mapView.setViewpoint(viewPoint);
+                }
+            }
+        }
+
+        ViewpointExtent {
+            id: viewPoint
+            extent: Envelope {
+                xMin: -13075816.4047166
+                yMin: 4014771.46954516
+                xMax: -13073005.6797177
+                yMax: 4016869.78617381
+                spatialReference: SpatialReference {
+                    wkid: 3857
+                }
+            }
+        }
+    }
+
+    // Neatline rectangle
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
+    }
+}
