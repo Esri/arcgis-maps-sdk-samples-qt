@@ -1,0 +1,7 @@
+{
+    "source" :  "FeatureLayer_FeatureService.qml",
+    "description" : "FeatureLayer_FeatureService.html",
+    "thumbnail" : "FeatureLayer_FeatureService.png",
+    "name" : "Feature layer (feature service)"
+}
+
