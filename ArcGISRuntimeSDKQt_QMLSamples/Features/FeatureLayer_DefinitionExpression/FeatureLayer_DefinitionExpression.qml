@@ -30,21 +30,24 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTerrainWithLabels {}
-            initialViewpoint: vc
+            BasemapTopographic {}
+            initialViewpoint: viewPoint
 
             FeatureLayer {
+                id: featureLayer
+
                 ServiceFeatureTable {
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"
+                    id: featureTable
+                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"
                 }
             }
         }
 
         ViewpointCenter {
-            id: vc
+            id: viewPoint
             center: Point {
-                x: -13176752
-                y: 4090404
+                x: -13630484
+                y: 4545415
                 spatialReference: SpatialReference {
                     wkid: 102100
                 }
@@ -52,6 +55,37 @@ Rectangle {
             scale: 300000
         }
     }
+
+    Row {
+       id: expressionRow
+
+       anchors {
+//           top: parent.bottom
+           bottom: parent.bottom
+           left: parent.left
+           right: parent.right
+           margins: 5
+       }
+       spacing: 5
+
+       // button to apply a definition expression
+       Button {
+           text: "Apply Expression"
+           enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
+           onClicked: {
+               featureLayer.definitionExpression = "req_Type = \'Tree Maintenance or Damage\'"
+           }
+       }
+
+       // button to reset the definition expression
+       Button {
+           text: "Reset"
+           enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
+           onClicked: {
+                featureLayer. definitionExpression = "";
+           }
+       }
+   }
 
     // Neatline rectangle
     Rectangle {

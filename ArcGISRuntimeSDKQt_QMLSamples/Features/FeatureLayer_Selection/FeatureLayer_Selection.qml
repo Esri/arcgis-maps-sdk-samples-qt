@@ -23,12 +23,18 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string displayText: ""
+    property string displayText: "No features selected. Click/Tap to select features."
+
 
     // Map view UI presentation at top
     MapView {
         id: mapView
-        anchors.fill: parent
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            bottom: messageBar.top
+        }
 
         Map {
             id: map
@@ -48,14 +54,13 @@ Rectangle {
 
                 onSelectFeaturesStatusChanged: {
                     if (selectFeaturesStatus === Enums.TaskStatusCompleted) {
-                        var i = 0;
+                        var count = 0;
                         while (selectFeaturesResult.iterator.hasNext) {
                             selectFeaturesResult.iterator.next();
-                            ++i;
+                            ++count;
                         }
 
-                        displayText = i > 1 ? i + " features selected" : i + " feature selected";
-                        msgDialog.visible = true;
+                        displayText = "%1 %2 selected.".arg(count).arg(count > 1 ? "features" : "feature");
                     }
                 }
             }
@@ -86,16 +91,6 @@ Rectangle {
             outFields: ["*"]
         }
 
-        // message dialog
-        MessageDialog {
-            id: msgDialog
-            visible: false
-            text: displayText
-            onAccepted: {
-                visible = false;
-            }
-        }
-
         onMouseClicked: {
             // create an envelope with some tolerance and query for feature selection within that envelope
             var tolerance = 22 * scaleFactor;
@@ -108,6 +103,32 @@ Rectangle {
             params.geometry = envelope;
             // query and select the features
             featureLayer.selectFeaturesWithQuery(params, Enums.SelectionModeNew);
+        }
+    }
+
+    Rectangle {
+        id: messageBar
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
+        height: 30 * scaleFactor
+        color: "lightgrey"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
+
+        Text {
+            id: msgText
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                leftMargin: 10 * scaleFactor
+            }
+            text: displayText
+            font.pixelSize: 14 * scaleFactor
         }
     }
 

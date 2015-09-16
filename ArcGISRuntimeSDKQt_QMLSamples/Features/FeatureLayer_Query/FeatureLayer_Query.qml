@@ -29,9 +29,11 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+
         Map {
             id: map
             BasemapTopographic {}
+            initialViewpoint: viewPoint
 
             FeatureLayer {
                 id: featureLayer
@@ -40,8 +42,8 @@ Rectangle {
                 SimpleRenderer {
                     SimpleFillSymbol {
                         style: Enums.SimpleFillSymbolStyleSolid
-                        color: "yellow"
-                        opacity: 0.5
+                        color: "#F2F5A9"
+                        opacity: 0.6
 
                         // default property (outline)
                         SimpleLineSymbol {
@@ -80,12 +82,6 @@ Rectangle {
                             mapView.setViewpointGeometryAndPadding(feature.geometry, 200);
                         }
                     }
-                }
-            }
-
-            onLoadStatusChanged: {
-                if (loadStatus === Enums.LoadStatusLoaded) {
-                    mapView.setViewpoint(viewPoint);
                 }
             }
         }
@@ -167,6 +163,5 @@ Rectangle {
 
         // start the query
         featureTable.queryFeatures(params);
-//                   featureTable.queryFeatures(params);
     }
 }

@@ -71,7 +71,7 @@ Rectangle {
                 xMax: -13073005.6797177
                 yMax: 4016869.78617381
                 spatialReference: SpatialReference {
-                    wkid: 3857
+                    wkid: 102100
                 }
             }
         }
