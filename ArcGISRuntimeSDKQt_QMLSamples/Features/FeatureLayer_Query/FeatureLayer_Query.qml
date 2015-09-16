@@ -27,12 +27,12 @@ Rectangle {
     // Map view UI presentation at top
     MapView {
         id: mapView
-		
+
         anchors.fill: parent
 
         Map {
             id: map
-			
+
             BasemapTopographic {}
             initialViewpoint: viewPoint
 
@@ -60,7 +60,7 @@ Rectangle {
                 // feature table
                 ServiceFeatureTable {
                     id: featureTable
-					url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"
 
                     onQueryFeaturesStatusChanged: {
                         if (queryFeaturesStatus === Enums.TaskStatusCompleted) {
@@ -90,7 +90,7 @@ Rectangle {
         // initial viewPoint
         ViewpointCenter {
             id: viewPoint
-			center: Point {
+            center: Point {
                 x: -11e6
                 y: 5e6
                 spatialReference: SpatialReference {
@@ -102,7 +102,7 @@ Rectangle {
 
         QueryParameters {
             id: params
-			outFields: ["*"]
+            outFields: ["*"]
         }
 
         Row {
@@ -119,18 +119,18 @@ Rectangle {
 
             TextField {
                 id: findText
-				
+
                 width: parent.width * 0.25
                 placeholderText: "Enter a state name to select"
-            	Keys.onReturnPressed: {
+                Keys.onReturnPressed: {
                     query();
                 }
             }
-			
+
             Button {
                 text: "Find and Select"
                 enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
-            	onClicked: {
+                onClicked: {
                     query();
                 }
             }

@@ -38,7 +38,7 @@ Rectangle {
 
         Map {
             id: map
-			BasemapStreets {}
+            BasemapStreets {}
 
             FeatureLayer {
                 id: featureLayer

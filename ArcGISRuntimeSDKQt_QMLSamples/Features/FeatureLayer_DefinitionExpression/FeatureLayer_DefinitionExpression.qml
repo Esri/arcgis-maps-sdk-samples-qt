@@ -45,7 +45,7 @@ Rectangle {
 
         ViewpointCenter {
             id: viewPoint
-			center: Point {
+            center: Point {
                 x: -13630484
                 y: 4545415
                 spatialReference: SpatialReference {

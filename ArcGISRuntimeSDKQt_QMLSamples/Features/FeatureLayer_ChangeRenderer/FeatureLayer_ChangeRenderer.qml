@@ -53,7 +53,7 @@ Rectangle {
 
         SimpleRenderer {
             id: renderer
-			
+
             SimpleLineSymbol {
                 style: Enums.SimpleLineSymbolStyleSolid
                 color: "blue"
@@ -65,7 +65,7 @@ Rectangle {
 
         ViewpointExtent {
             id: viewPoint
-			extent: Envelope {
+            extent: Envelope {
                 xMin: -13075816.4047166
                 yMin: 4014771.46954516
                 xMax: -13073005.6797177
