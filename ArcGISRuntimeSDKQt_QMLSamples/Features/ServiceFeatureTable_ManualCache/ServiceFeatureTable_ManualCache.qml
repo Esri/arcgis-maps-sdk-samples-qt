@@ -79,23 +79,23 @@ Rectangle {
     }
 
     Row {
-       anchors {
-           bottom: parent.bottom
-           left: parent.left
-           right: parent.right
-           margins: 5
-       }
-       spacing: 5
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+            margins: 5
+        }
+        spacing: 5
 
-       // button to populate from service
-       Button {
-           text: "Populate"
-           enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
-           onClicked: {
-               featureTable.populateFromService(params, true);
-           }
-       }
-   }
+        // button to populate from service
+        Button {
+            text: "Populate"
+            enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
+            onClicked: {
+                featureTable.populateFromService(params, true);
+            }
+        }
+    }
 
     // Neatline rectangle
     Rectangle {

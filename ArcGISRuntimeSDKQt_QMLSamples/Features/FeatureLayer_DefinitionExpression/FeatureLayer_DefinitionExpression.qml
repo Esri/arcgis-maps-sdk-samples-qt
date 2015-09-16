@@ -57,35 +57,35 @@ Rectangle {
     }
 
     Row {
-       id: expressionRow
+        id: expressionRow
 
-       anchors {
-//           top: parent.bottom
-           bottom: parent.bottom
-           left: parent.left
-           right: parent.right
-           margins: 5
-       }
-       spacing: 5
+        anchors {
+            //           top: parent.bottom
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+            margins: 5
+        }
+        spacing: 5
 
-       // button to apply a definition expression
-       Button {
-           text: "Apply Expression"
-           enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
-           onClicked: {
-               featureLayer.definitionExpression = "req_Type = \'Tree Maintenance or Damage\'"
-           }
-       }
+        // button to apply a definition expression
+        Button {
+            text: "Apply Expression"
+            enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
+            onClicked: {
+                featureLayer.definitionExpression = "req_Type = \'Tree Maintenance or Damage\'"
+            }
+        }
 
-       // button to reset the definition expression
-       Button {
-           text: "Reset"
-           enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
-           onClicked: {
+        // button to reset the definition expression
+        Button {
+            text: "Reset"
+            enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
+            onClicked: {
                 featureLayer. definitionExpression = "";
-           }
-       }
-   }
+            }
+        }
+    }
 
     // Neatline rectangle
     Rectangle {

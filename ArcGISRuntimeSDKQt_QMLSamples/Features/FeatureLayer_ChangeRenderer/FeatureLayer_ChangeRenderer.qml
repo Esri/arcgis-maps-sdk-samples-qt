@@ -37,17 +37,6 @@ Rectangle {
             FeatureLayer {
                 id: featureLayer
 
-                // default property (simple renderer)
-                SimpleRenderer {
-                    SimpleLineSymbol {
-                        style: Enums.SimpleLineSymbolStyleSolid
-                        color: "blue"
-                        antiAlias: true
-                        width: 2 * scaleFactor
-                        opacity: 1.0
-                    }
-                }
-
                 // feature table
                 ServiceFeatureTable {
                     id: featureTable
@@ -63,6 +52,17 @@ Rectangle {
             }
         }
 
+        SimpleRenderer {
+            id: renderer
+            SimpleLineSymbol {
+                style: Enums.SimpleLineSymbolStyleSolid
+                color: "blue"
+                antiAlias: true
+                width: 2 * scaleFactor
+                opacity: 1.0
+            }
+        }
+
         ViewpointExtent {
             id: viewPoint
             extent: Envelope {
@@ -73,6 +73,25 @@ Rectangle {
                 spatialReference: SpatialReference {
                     wkid: 102100
                 }
+            }
+        }
+    }
+
+    Row {
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+            margins: 5
+        }
+        spacing: 5
+
+        // button to populate from service
+        Button {
+            text: "Change Renderer"
+            enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
+            onClicked: {
+                featureLayer.renderer = renderer;
             }
         }
     }

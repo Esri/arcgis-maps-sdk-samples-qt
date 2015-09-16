@@ -51,7 +51,7 @@ Rectangle {
                             color: "black"
                             width: 2.0 * scaleFactor
                             antiAlias: true
-                            opacity: 0.6
+                            opacity: 1.0
                         }
                     }
                 }
@@ -105,35 +105,35 @@ Rectangle {
         }
 
         Row {
-           id: findRow
+            id: findRow
 
-           anchors {
-               top: parent.top
-               bottom: map.top
-               left: parent.left
-               right: parent.right
-               margins: 5
-           }
-           spacing: 5
+            anchors {
+                top: parent.top
+                bottom: map.top
+                left: parent.left
+                right: parent.right
+                margins: 5
+            }
+            spacing: 5
 
 
-           TextField {
-               id: findText
-               width: parent.width * 0.25
-               placeholderText: "Enter a state name to select"
+            TextField {
+                id: findText
+                width: parent.width * 0.25
+                placeholderText: "Enter a state name to select"
 
-               Keys.onReturnPressed: {
+                Keys.onReturnPressed: {
                     query();
-               }
-           }
-           Button {
-               text: "Find and Select"
-               enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
-               onClicked: {
-                   query();
-               }
-           }
-       }
+                }
+            }
+            Button {
+                text: "Find and Select"
+                enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
+                onClicked: {
+                    query();
+                }
+            }
+        }
 
         // error message dialog
         MessageDialog {
