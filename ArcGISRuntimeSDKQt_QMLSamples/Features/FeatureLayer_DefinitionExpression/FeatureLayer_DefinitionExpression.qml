@@ -45,8 +45,7 @@ Rectangle {
 
         ViewpointCenter {
             id: viewPoint
-			
-            center: Point {
+			center: Point {
                 x: -13630484
                 y: 4545415
                 spatialReference: SpatialReference {
@@ -59,7 +58,6 @@ Rectangle {
 
     Row {
         id: expressionRow
-
         anchors {
             bottom: parent.bottom
             left: parent.left
