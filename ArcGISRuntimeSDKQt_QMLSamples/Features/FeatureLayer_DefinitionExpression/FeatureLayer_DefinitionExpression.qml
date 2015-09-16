@@ -45,6 +45,7 @@ Rectangle {
 
         ViewpointCenter {
             id: viewPoint
+			
             center: Point {
                 x: -13630484
                 y: 4545415
@@ -60,7 +61,6 @@ Rectangle {
         id: expressionRow
 
         anchors {
-            //           top: parent.bottom
             bottom: parent.bottom
             left: parent.left
             right: parent.right
@@ -82,7 +82,7 @@ Rectangle {
             text: "Reset"
             enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
             onClicked: {
-                featureLayer. definitionExpression = "";
+                featureLayer.definitionExpression = "";
             }
         }
     }

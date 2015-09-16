@@ -41,7 +41,6 @@ Rectangle {
                 ServiceFeatureTable {
                     id: featureTable
                     url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/PoolPermits/FeatureServer/0"
-
                 }
             }
 
@@ -54,6 +53,7 @@ Rectangle {
 
         SimpleRenderer {
             id: renderer
+			
             SimpleLineSymbol {
                 style: Enums.SimpleLineSymbolStyleSolid
                 color: "blue"
@@ -65,6 +65,7 @@ Rectangle {
 
         ViewpointExtent {
             id: viewPoint
+			
             extent: Envelope {
                 xMin: -13075816.4047166
                 yMin: 4014771.46954516
