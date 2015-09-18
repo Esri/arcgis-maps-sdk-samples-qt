@@ -71,16 +71,21 @@ Rectangle {
 
                             // clear any previous selection
                             featureLayer.clearSelection();
-                            // get the first feature
-                            var feature = queryFeaturesResult.iterator.next();
-                            // select the first feature.
+
+                            var features = []
+                            // get the features
+                            while (queryFeaturesResult.iterator.hasNext) {
+                                features.push(queryFeaturesResult.iterator.next());
+                            }
+
+                            // select the features
                             // The ideal way to select features is to call featureLayer.selectFeaturesWithQuery(), which will
                             // automatically select the features based on your query.  This is just a way to show you operations
                             // that you can do with query results. Refer to API doc for more details.
-                            featureLayer.selectFeature(feature);
+                            featureLayer.selectFeatures(features);
 
                             // zoom to the first feature
-                            mapView.setViewpointGeometryAndPadding(feature.geometry, 200);
+                            mapView.setViewpointGeometryAndPadding(features[0].geometry, 200);
                         }
                     }
                 }
@@ -160,7 +165,7 @@ Rectangle {
     // function to form and execute the query
     function query() {
         // set the where clause
-        params.whereClause = "STATE_NAME LIKE \'" + findText.text.toUpperCase() + "\'";
+        params.whereClause = "STATE_NAME LIKE \'" + findText.text.toUpperCase() + "%\'";
 
         // start the query
         featureTable.queryFeatures(params);
