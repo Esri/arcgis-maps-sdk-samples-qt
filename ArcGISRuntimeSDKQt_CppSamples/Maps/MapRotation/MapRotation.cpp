@@ -20,8 +20,12 @@
 using namespace Esri::ArcGISRuntime;
 
 MapRotation::MapRotation(QWidget* parent) :
-  QWidget(parent)
-{    
+  QWidget(parent),
+  m_map(nullptr),
+  m_mapView(nullptr),
+  m_slider(nullptr),
+  m_degrees(nullptr)
+{
     // Create a map using the streets basemap
     m_map = new Map(Basemap::streets(this), this);
 
@@ -31,7 +35,7 @@ MapRotation::MapRotation(QWidget* parent) :
     // Users should use slider to rotate map view
     m_mapView->setRotationByPinchingEnabled(false);
 
-    m_slider = new QSlider(Qt::Horizontal);
+    m_slider = new QSlider(Qt::Horizontal, this);
     m_slider->setMinimum(0);
     m_slider->setMaximum(360);
     m_slider->setValue(0);
@@ -43,7 +47,6 @@ MapRotation::MapRotation(QWidget* parent) :
             });
 
     // Set up the UI
-
     QHBoxLayout *hBoxLayout = new QHBoxLayout();
     hBoxLayout->addWidget(m_slider);
     hBoxLayout->addWidget(m_degrees);

@@ -20,7 +20,9 @@
 using namespace Esri::ArcGISRuntime;
 
 ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
-    QWidget(parent)
+    QWidget(parent),
+    m_map(nullptr),
+    m_mapView(nullptr)
 {    
     // Create a map using an imagery basemap
     m_map = new Map(Basemap::imageryWithLabels(this), this);
@@ -44,7 +46,7 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
                                << "Animation");
 
 
-    // Connect the combo box signal to lambda for setting new viewpoint
+    // Connect the combo box signal to slot for setting new viewpoint
     connect(m_viewpointCombo, SIGNAL(currentIndexChanged(int)),
             this, SLOT(changeToNewViewpoint(int)));
 
