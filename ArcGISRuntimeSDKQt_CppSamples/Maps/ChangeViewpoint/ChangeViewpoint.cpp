@@ -22,11 +22,13 @@ using namespace Esri::ArcGISRuntime;
 ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
     QWidget(parent)
 {    
-    // Create a map using the streets basemap
+    // Create a map using an imagery basemap
     m_map = new Map(Basemap::imageryWithLabels(this), this);
 
     // Create a map view, and pass in the map
     m_mapView = new MapView(m_map, this);
+
+    m_rotationValue = 0;
 
     // Create and populate a combo box with several viewpoint types
     m_viewpointCombo = new QComboBox(this);
