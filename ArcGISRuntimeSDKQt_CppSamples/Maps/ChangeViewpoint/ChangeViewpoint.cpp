@@ -70,7 +70,7 @@ void ChangeViewpoint::changeToNewViewpoint(int index)
 {
     // Create the objects used to change viewpoint in various cases
 
-    Point ptEsriHeadquarters(-117.195681, 34.056218, 0.0, 0.0, SpatialReference(4236));
+    Point ptEsriHeadquarters(-117.195681, 34.056218, SpatialReference(4236));
     Point ptHawaii(-157.564, 20.677, SpatialReference(4236));
     Envelope envBeijing(116.380, 39.920, 116.400, 39.940, SpatialReference(4236));
     Viewpoint vpSpring(Envelope(-12338668.348591767, 5546908.424239618, -12338247.594362013, 5547223.989911933, SpatialReference(102100)));
