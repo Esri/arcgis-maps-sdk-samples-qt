@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/Samples/Edit Data/AddFeaturesFeatureService">
+        <file alias="sample.json">AddFeaturesFeatureService.json</file>
+        <file>AddFeaturesFeatureService.png</file>
+        <file>AddFeaturesFeatureService.qml</file>
+        <file>AddFeaturesFeatureService.html</file>
+        <file>main.qml</file>
+    </qresource>
+</RCC>
