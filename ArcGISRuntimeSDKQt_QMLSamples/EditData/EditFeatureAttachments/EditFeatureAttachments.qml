@@ -53,7 +53,7 @@ Rectangle {
                 selectionColor: "cyan"
                 selectionWidth: 3 * scaleFactor
 
-                // declare as child of feature layer, as feature table is the default property
+                // declare as child of feature layer, as featureTable is the default property
                 ServiceFeatureTable {
                     id: featureTable
                     url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
@@ -68,20 +68,18 @@ Rectangle {
                 // signal handler for selecting features
                 onSelectFeaturesStatusChanged: {
                     if (selectFeaturesStatus === Enums.TaskStatusCompleted) {
-                        var count = 0;
-                        while (selectFeaturesResult.iterator.hasNext) {
-                            var feat  = selectFeaturesResult.iterator.next();
-                            damageType = feat.attributes["typdamage"];
-                            selectedFeature = feat;
-                            selectedFeature.attachmentListModel.fetchAttachmentInfos();
-                            ++count;
-                        }
-                        if (count > 0) {
-                            // show the callout
-                            callout.x = mousePointX;
-                            callout.y = mousePointY;
-                            callout.visible = true;
-                        }
+                        if (!selectFeaturesResult.iterator.hasNext)
+                            return;
+
+                        selectedFeature  = selectFeaturesResult.iterator.next();
+                        damageType = selectedFeature.attributes["typdamage"];
+                        // fetch the attachment infos from the service
+                        selectedFeature.attachmentListModel.fetchAttachmentInfos();
+
+                        // show the callout
+                        callout.x = mousePointX;
+                        callout.y = mousePointY;
+                        callout.visible = true;
                     }
                 }
             }

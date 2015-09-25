@@ -51,7 +51,7 @@ Rectangle {
                 selectionColor: "cyan"
                 selectionWidth: 3 * scaleFactor
 
-                // declare as child of feature layer, as feature table is the default property
+                // declare as child of feature layer, as featureTable is the default property
                 ServiceFeatureTable {
                     id: featureTable
                     url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
@@ -83,23 +83,21 @@ Rectangle {
                             featureTable.deleteFeature(feat);
                         }
                     }
-                }                                
+                }
 
                 // signal handler for selecting features
                 onSelectFeaturesStatusChanged: {
                     if (selectFeaturesStatus === Enums.TaskStatusCompleted) {
-                        var count = 0;
-                        while (selectFeaturesResult.iterator.hasNext) {
-                            var feat  = selectFeaturesResult.iterator.next();
-                            damageType = feat.attributes["typdamage"];
-                            ++count;
-                        }
-                        if (count > 0) {
-                            // show the callout
-                            callout.x = mousePointX;
-                            callout.y = mousePointY;
-                            callout.visible = true;
-                        }
+                        if (!selectFeaturesResult.iterator.hasNext)
+                            return;
+
+                        var feat  = selectFeaturesResult.iterator.next();
+                        damageType = feat.attributes["typdamage"];
+
+                        // show the callout
+                        callout.x = mousePointX;
+                        callout.y = mousePointY;
+                        callout.visible = true;
                     }
                 }
             }
@@ -113,13 +111,13 @@ Rectangle {
 
         // hide the callout after navigation
         onVisibleAreaChanged: {
-            callout.visible = false;            
+            callout.visible = false;
         }
 
         onMouseClicked: {
             // reset the map callout and update window
             featureLayer.clearSelection();
-            callout.visible = false;            
+            callout.visible = false;
 
             // create an envelope with some tolerance and query for feature selection within that envelope
             var tolerance = 10 * scaleFactor;
@@ -202,7 +200,7 @@ Rectangle {
                 }
             }
         }
-    }  
+    }
 
     // neatline
     Rectangle {
