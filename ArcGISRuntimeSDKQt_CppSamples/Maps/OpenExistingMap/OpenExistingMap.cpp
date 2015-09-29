@@ -68,20 +68,17 @@ void OpenExistingMap::createPortalMaps()
 {
     // Housing with Mortgages
     PortalItem pitem1;
-    pitem1.setUrl(QUrl("http://www.arcgis.com"));
-    pitem1.setItemId("2d6fa24b357d427f9c737774e7b0f977");
+    pitem1.setUrl(QUrl("http://www.arcgis.com/sharing/rest/content/items/2d6fa24b357d427f9c737774e7b0f977"));
     m_portalMaps.insert("Housing with Mortgages", pitem1);
 
     // USA Tapestry Segmentation
     PortalItem pitem2;
-    pitem2.setUrl(QUrl("http://www.arcgis.com"));
-    pitem2.setItemId("01f052c8995e4b9e889d73c3e210ebe3");
+    pitem2.setUrl(QUrl("http://www.arcgis.com/sharing/rest/content/items/01f052c8995e4b9e889d73c3e210ebe3"));
     m_portalMaps.insert("USA Tapestry Segmentation", pitem2);
 
     // Geology of United States
     PortalItem pitem3;
-    pitem3.setUrl(QUrl("http://www.arcgis.com"));
-    pitem3.setItemId("74a8f6645ab44c4f82d537f1aa0e375d");
+    pitem3.setUrl(QUrl("http://www.arcgis.com/sharing/rest/content/items/74a8f6645ab44c4f82d537f1aa0e375d"));
     m_portalMaps.insert("Geology of United States", pitem3);
 }
 
