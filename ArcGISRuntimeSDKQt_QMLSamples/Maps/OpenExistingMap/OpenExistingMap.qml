@@ -71,8 +71,7 @@ Rectangle {
                     // Create a new, blank map
                     var newMap = ArcGISRuntimeEnvironment.createObject("Map");
                     // Create a PortalItem and assign it a URL and item ID
-                    var newPortalItem = ArcGISRuntimeEnvironment.createObject("PortalItem", {url:"http://arcgis.com"});
-                    newPortalItem.itemId = itemId;
+                    var newPortalItem = ArcGISRuntimeEnvironment.createObject("PortalItem", {url:"http://arcgis.com/sharing/rest/content/items/" + itemId});
                     // Set the portalItem property on the Map
                     newMap.portalItem = newPortalItem;
                     // Set the map to the MapView
