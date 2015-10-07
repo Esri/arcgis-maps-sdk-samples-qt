@@ -77,6 +77,10 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
     createUi();
 }
 
+ManageBookmarks::~ManageBookmarks()
+{
+}
+
 void ManageBookmarks::createInitialBookmarks()
 {
     // Mysterious Desert Pattern
@@ -132,8 +136,4 @@ void ManageBookmarks::createUi()
     QVBoxLayout* vBoxLayout = new QVBoxLayout();
     vBoxLayout->addWidget(m_mapView);
     setLayout(vBoxLayout);
-}
-
-ManageBookmarks::~ManageBookmarks()
-{
 }

@@ -69,6 +69,10 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
+ChangeViewpoint::~ChangeViewpoint()
+{
+}
+
 void ChangeViewpoint::changeToNewViewpoint(int index)
 {
     // Create the objects used to change viewpoint in various cases
@@ -107,8 +111,4 @@ void ChangeViewpoint::changeToNewViewpoint(int index)
         m_mapView->setViewpointAnimated(vpSpring, 4.0, AnimationCurve::EaseInOutCubic);
         break;
     }
-}
-
-ChangeViewpoint::~ChangeViewpoint()
-{
 }
