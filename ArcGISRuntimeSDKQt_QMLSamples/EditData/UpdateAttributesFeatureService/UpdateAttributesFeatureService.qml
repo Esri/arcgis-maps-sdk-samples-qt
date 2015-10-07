@@ -25,6 +25,7 @@ Rectangle {
     property double mousePointX
     property double mousePointY
     property string damageType
+    property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // Create MapView that contains a Map
     MapView {
@@ -99,6 +100,9 @@ Rectangle {
                         callout.x = mousePointX;
                         callout.y = mousePointY;
                         callout.visible = true;
+
+                        // set the combo box's default value
+                        damageComboBox.currentIndex = featAttributes.indexOf(damageType);
                     }
                 }
             }
@@ -234,7 +238,7 @@ Rectangle {
             ComboBox {
                 id: damageComboBox
                 width: updateWindow.width - (20 * scaleFactor)
-                model: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
+                model: featAttributes
             }
 
             Row {
