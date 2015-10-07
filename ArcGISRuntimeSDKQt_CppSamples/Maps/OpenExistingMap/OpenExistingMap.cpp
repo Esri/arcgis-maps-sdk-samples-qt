@@ -67,6 +67,10 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
     createUi();
 }
 
+OpenExistingMap::~OpenExistingMap()
+{
+}
+
 void OpenExistingMap::createPortalMaps()
 {
     // Housing with Mortgages
@@ -101,8 +105,4 @@ void OpenExistingMap::createUi()
     QVBoxLayout* vBoxLayout = new QVBoxLayout();
     vBoxLayout->addWidget(m_mapView);
     setLayout(vBoxLayout);
-}
-
-OpenExistingMap::~OpenExistingMap()
-{
 }
