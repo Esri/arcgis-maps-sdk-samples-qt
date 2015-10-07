@@ -14,7 +14,7 @@ The value displayed in the text box to the right of the slider is bound to the v
 
 ## Tips
 
-This sample code uses `pressedChanged` rather than `valueChanged` to avoid generating many signals as the slider moves, which with animated rotation may cause jittery animation for the rotation. You can defeat the animation so the rotation tracks the slider value as it changes by using the method ` setViewpointWithAnimationCurve` with animation duration set to zero seconds. 
+This sample code includes a handler for the `pressedChanged` signal rather than the `valueChanged` signal to avoid processing the many signals emitted as the slider moves. Changing the rotation value rapidly interrupts the animated rotation and may cause animation jitter. Instead, you could defeat the animation so the rotation tracks the slider value as it changes by using the method ` setViewpointWithAnimationCurve` with animation duration set to zero seconds. 
 
 ```
   onValueChanged: {
