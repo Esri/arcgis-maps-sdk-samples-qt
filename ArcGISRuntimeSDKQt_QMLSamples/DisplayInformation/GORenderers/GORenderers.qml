@@ -51,13 +51,13 @@ Rectangle {
             }
         }
 
-//        GraphicsOverlay {
-//            id: lineGraphicsOverlay
+        //        GraphicsOverlay {
+        //            id: lineGraphicsOverlay
 
-//            renderer: SimpleRenderer {
-//                symbol: lineSymbol
-//            }
-//        }
+        //            renderer: SimpleRenderer {
+        //                symbol: lineSymbol
+        //            }
+        //        }
     }
 
     // the symbology for the point graphic
@@ -101,7 +101,7 @@ Rectangle {
         }
     }
 
-      // polygon graphics overlay
+    // polygon graphics overlay
     GraphicsOverlay {
         id: polygonGraphicsOverlay
 

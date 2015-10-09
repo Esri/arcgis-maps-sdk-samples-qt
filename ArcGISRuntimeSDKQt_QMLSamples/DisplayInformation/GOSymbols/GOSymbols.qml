@@ -58,9 +58,7 @@ Rectangle {
     Point {
         x: -2.712642647560347
         y: 56.062812566811544
-        spatialReference: SpatialReference {
-            wkid: 4326
-        }
+        spatialReference: SpatialReference.createWgs84()
 
         onComponentCompleted: {
             buoyLocArray.push(this);
@@ -71,9 +69,7 @@ Rectangle {
     Point {
         x: -2.6908416959572303
         y: 56.06444173689877
-        spatialReference: SpatialReference {
-            wkid: 4326
-        }
+        spatialReference: SpatialReference.createWgs84()
 
         onComponentCompleted: {
             buoyLocArray.push(this);
@@ -84,9 +80,7 @@ Rectangle {
     Point {
         x: -2.6697273884990937
         y: 56.064250073402874
-        spatialReference: SpatialReference {
-            wkid: 4326
-        }
+        spatialReference: SpatialReference.createWgs84()
 
         onComponentCompleted: {
             buoyLocArray.push(this);
@@ -97,9 +91,7 @@ Rectangle {
     Point {
         x: -2.6395150461199726
         y: 56.06127916736989
-        spatialReference: SpatialReference {
-            wkid: 4326
-        }
+        spatialReference: SpatialReference.createWgs84()
 
         onComponentCompleted: {
             buoyLocArray.push(this);
@@ -118,9 +110,7 @@ Rectangle {
     Point {
         x: -2.640631
         y: 56.078083
-        spatialReference: SpatialReference {
-            wkid: 4326
-        }
+        spatialReference: SpatialReference.createWgs84()
 
         onComponentCompleted: {
             textLocArray.push(this);
@@ -131,9 +121,7 @@ Rectangle {
     Point {
         x: -2.720324
         y: 56.073569
-        spatialReference: SpatialReference {
-            wkid: 4326
-        }
+        spatialReference: SpatialReference.createWgs84()
 
         onComponentCompleted: {
             textLocArray.push(this);
@@ -150,13 +138,6 @@ Rectangle {
         verticalAlignment: Enums.VerticalAlignmentTop
     }
 
-    // polyline builder to build the boat route
-    PolylineBuilder {
-        id: boatRoutePolylineBuilder
-        spatialReference: SpatialReference {
-            wkid: 4326
-        }
-    }
     // LineSymbol
     SimpleLineSymbol {
         id: boatRouteSymbol
@@ -170,9 +151,7 @@ Rectangle {
     // polygon for nesting ground
     PolygonBuilder {
         id: nestingGroundPolygonBuilder
-        spatialReference: SpatialReference {
-            wkid: 4326
-        }
+        spatialReference: SpatialReference.createWgs84()
     }
 
     // symbol for nesting ground
@@ -239,70 +218,13 @@ Rectangle {
 
     // create the boat route
     function createBoatRoute() {
-        boatRoutePolylineBuilder.addPointXY(-2.7184791227926772, 56.06147084563517);
-        boatRoutePolylineBuilder.addPointXY(-2.7196807500463924, 56.06147084563517);
-        boatRoutePolylineBuilder.addPointXY(-2.722084004553823, 56.062141712059706);
-        boatRoutePolylineBuilder.addPointXY(-2.726375530459948, 56.06386674355254);
-        boatRoutePolylineBuilder.addPointXY(-2.726890513568683, 56.0660708381432);
-        boatRoutePolylineBuilder.addPointXY(-2.7270621746049275, 56.06779569383808);
-        boatRoutePolylineBuilder.addPointXY(-2.7255172252787228, 56.068753913653914);
-        boatRoutePolylineBuilder.addPointXY(-2.723113970771293, 56.069424653352335);
-        boatRoutePolylineBuilder.addPointXY(-2.719165766937657, 56.07028701581465);
-        boatRoutePolylineBuilder.addPointXY(-2.713672613777817, 56.070574465681325);
-        boatRoutePolylineBuilder.addPointXY(-2.7093810878716917, 56.07095772883556);
-        boatRoutePolylineBuilder.addPointXY(-2.7044029178205866, 56.07153261642126);
-        boatRoutePolylineBuilder.addPointXY(-2.698223120515766, 56.072394931722265);
-        boatRoutePolylineBuilder.addPointXY(-2.6923866452834355, 56.07325722773041);
-        boatRoutePolylineBuilder.addPointXY(-2.68672183108735, 56.07335303720707);
-        boatRoutePolylineBuilder.addPointXY(-2.6812286779275096, 56.07354465544585);
-        boatRoutePolylineBuilder.addPointXY(-2.6764221689126497, 56.074215311778964);
-        boatRoutePolylineBuilder.addPointXY(-2.6698990495353394, 56.07488595644139);
-        boatRoutePolylineBuilder.addPointXY(-2.6647492184479886, 56.075748196715914);
-        boatRoutePolylineBuilder.addPointXY(-2.659427726324393, 56.076131408423215);
-        boatRoutePolylineBuilder.addPointXY(-2.654792878345778, 56.07622721075461);
-        boatRoutePolylineBuilder.addPointXY(-2.651359657620878, 56.076514616319784);
-        boatRoutePolylineBuilder.addPointXY(-2.6477547758597324, 56.07708942101955);
-        boatRoutePolylineBuilder.addPointXY(-2.6450081992798125, 56.07814320736718);
-        boatRoutePolylineBuilder.addPointXY(-2.6432915889173625, 56.08025069360931);
-        boatRoutePolylineBuilder.addPointXY(-2.638656740938747, 56.08044227755186);
-        boatRoutePolylineBuilder.addPointXY(-2.636940130576297, 56.078813783674946);
-        boatRoutePolylineBuilder.addPointXY(-2.636425147467562, 56.07728102068079);
-        boatRoutePolylineBuilder.addPointXY(-2.637798435757522, 56.076610417698504);
-        boatRoutePolylineBuilder.addPointXY(-2.638656740938747, 56.07507756705851);
-        boatRoutePolylineBuilder.addPointXY(-2.641231656482422, 56.07479015077557);
-        boatRoutePolylineBuilder.addPointXY(-2.6427766058086277, 56.075748196715914);
-        boatRoutePolylineBuilder.addPointXY(-2.6456948434247924, 56.07546078543464);
-        boatRoutePolylineBuilder.addPointXY(-2.647239792750997, 56.074598538729404);
-        boatRoutePolylineBuilder.addPointXY(-2.6492997251859376, 56.072682365868616);
-        boatRoutePolylineBuilder.addPointXY(-2.6530762679833284, 56.0718200569986);
-        boatRoutePolylineBuilder.addPointXY(-2.655479522490758, 56.070861913404286);
-        boatRoutePolylineBuilder.addPointXY(-2.6587410821794135, 56.07047864929729);
-        boatRoutePolylineBuilder.addPointXY(-2.6633759301580286, 56.07028701581465);
-        boatRoutePolylineBuilder.addPointXY(-2.666637489846684, 56.07009538137926);
-        boatRoutePolylineBuilder.addPointXY(-2.670070710571584, 56.06990374599109);
-        boatRoutePolylineBuilder.addPointXY(-2.6741905754414645, 56.069137194910745);
-        boatRoutePolylineBuilder.addPointXY(-2.678310440311345, 56.06808316228391);
-        boatRoutePolylineBuilder.addPointXY(-2.682086983108735, 56.06789151689155);
-        boatRoutePolylineBuilder.addPointXY(-2.6868934921235956, 56.06760404701653);
-        boatRoutePolylineBuilder.addPointXY(-2.6911850180297208, 56.06722075051504);
-        boatRoutePolylineBuilder.addPointXY(-2.695133221863356, 56.06702910083509);
-        boatRoutePolylineBuilder.addPointXY(-2.698223120515766, 56.066837450202335);
-        boatRoutePolylineBuilder.addPointXY(-2.7016563412406667, 56.06645414607839);
-        boatRoutePolylineBuilder.addPointXY(-2.7061195281830366, 56.0660708381432);
-        boatRoutePolylineBuilder.addPointXY(-2.7100677320166717, 56.065591697864576);
-        boatRoutePolylineBuilder.addPointXY(-2.713329291705327, 56.06520838135397);
-        boatRoutePolylineBuilder.addPointXY(-2.7167625124302273, 56.06453756828941);
-        boatRoutePolylineBuilder.addPointXY(-2.718307461756433, 56.06348340989081);
-        boatRoutePolylineBuilder.addPointXY(-2.719165766937657, 56.062812566811544);
-        boatRoutePolylineBuilder.addPointXY(-2.7198524110826376, 56.06204587471371);
-        boatRoutePolylineBuilder.addPointXY(-2.719165766937657, 56.06166252294756);
-        boatRoutePolylineBuilder.addPointXY(-2.718307461756433, 56.06147084563517);
-
-        return boatRoutePolylineBuilder.geometry;
+        // create polyline using json
+        return ArcGISRuntimeEnvironment.createObject("Polyline", {"json": boatRouteJson});
     }
 
     // create the nesting ground polygon
     function createNestingGround() {
+        // create the polygon using the builder class
         nestingGroundPolygonBuilder.addPointXY(-2.643077012566659, 56.077125346044475);
         nestingGroundPolygonBuilder.addPointXY(-2.6428195210159444, 56.07717324600376);
         nestingGroundPolygonBuilder.addPointXY(-2.6425405718360033, 56.07774804087097);
@@ -331,4 +253,64 @@ Rectangle {
 
         return nestingGroundPolygonBuilder.geometry;
     }
+
+    property var boatRouteJson : {"paths":[[[-2.7184791227926772,56.06147084563517],
+                                    [-2.7196807500463924,56.06147084563517],
+                                    [-2.722084004553823,56.062141712059706],
+                                    [-2.726375530459948,56.06386674355254],
+                                    [-2.726890513568683,56.0660708381432],
+                                    [-2.7270621746049275,56.06779569383808],
+                                    [-2.7255172252787228,56.068753913653914],
+                                    [-2.723113970771293,56.069424653352335],
+                                    [-2.719165766937657,56.07028701581465],
+                                    [-2.713672613777817,56.070574465681325],
+                                    [-2.7093810878716917,56.07095772883556],
+                                    [-2.7044029178205866,56.07153261642126],
+                                    [-2.698223120515766,56.072394931722265],
+                                    [-2.6923866452834355,56.07325722773041],
+                                    [-2.68672183108735,56.07335303720707],
+                                    [-2.6812286779275096,56.07354465544585],
+                                    [-2.6764221689126497,56.074215311778964],
+                                    [-2.6698990495353394,56.07488595644139],
+                                    [-2.6647492184479886,56.075748196715914],
+                                    [-2.659427726324393,56.076131408423215],
+                                    [-2.654792878345778,56.07622721075461],
+                                    [-2.651359657620878,56.076514616319784],
+                                    [-2.6477547758597324,56.07708942101955],
+                                    [-2.6450081992798125,56.07814320736718],
+                                    [-2.6432915889173625,56.08025069360931],
+                                    [-2.638656740938747,56.08044227755186],
+                                    [-2.636940130576297,56.078813783674946],
+                                    [-2.636425147467562,56.07728102068079],
+                                    [-2.637798435757522,56.076610417698504],
+                                    [-2.638656740938747,56.07507756705851],
+                                    [-2.641231656482422,56.07479015077557],
+                                    [-2.6427766058086277,56.075748196715914],
+                                    [-2.6456948434247924,56.07546078543464],
+                                    [-2.647239792750997,56.074598538729404],
+                                    [-2.6492997251859376,56.072682365868616],
+                                    [-2.6530762679833284,56.0718200569986],
+                                    [-2.655479522490758,56.070861913404286],
+                                    [-2.6587410821794135,56.07047864929729],
+                                    [-2.6633759301580286,56.07028701581465],
+                                    [-2.666637489846684,56.07009538137926],
+                                    [-2.670070710571584,56.06990374599109],
+                                    [-2.6741905754414645,56.069137194910745],
+                                    [-2.678310440311345,56.06808316228391],
+                                    [-2.682086983108735,56.06789151689155],
+                                    [-2.6868934921235956,56.06760404701653],
+                                    [-2.6911850180297208,56.06722075051504],
+                                    [-2.695133221863356,56.06702910083509],
+                                    [-2.698223120515766,56.066837450202335],
+                                    [-2.7016563412406667,56.06645414607839],
+                                    [-2.7061195281830366,56.0660708381432],
+                                    [-2.7100677320166717,56.065591697864576],
+                                    [-2.713329291705327,56.06520838135397],
+                                    [-2.7167625124302273,56.06453756828941],
+                                    [-2.718307461756433,56.06348340989081],
+                                    [-2.719165766937657,56.062812566811544],
+                                    [-2.7198524110826376,56.06204587471371],
+                                    [-2.719165766937657,56.06166252294756],
+                                    [-2.718307461756433,56.06147084563517]]],
+                                    "spatialReference":{"wkid":4326}}
 }
