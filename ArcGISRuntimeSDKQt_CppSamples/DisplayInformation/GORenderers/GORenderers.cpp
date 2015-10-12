@@ -36,20 +36,20 @@
 using namespace Esri::ArcGISRuntime;
 
 GoRenderers::GoRenderers(QWidget* parent) :
-    QWidget(parent),
-    m_map(nullptr),
-    m_mapView(nullptr)
+  QWidget(parent),
+  m_map(nullptr),
+  m_mapView(nullptr)
 {        
-    // Create a map using the imagery with labels basemap
-    m_map = new Map(Basemap::topographic(this), this);
+  // Create a map using the imagery with labels basemap
+  m_map = new Map(Basemap::topographic(this), this);
 
-    // Create a map view, and pass in the map
-    m_mapView = new MapView(m_map, this);
+  // Create a map view, and pass in the map
+  m_mapView = new MapView(m_map, this);
 
-    // add the graphics overlays
-    addGraphicsOverlay();
+  // add the graphics overlays
+  addGraphicsOverlay();
 
-    createUi();
+  createUi();
 }
 
 void GoRenderers::addGraphicsOverlay()
@@ -68,7 +68,7 @@ void GoRenderers::addGraphicsOverlay()
   // add the graphic to the overlay
   pointGraphicOverlay->graphics()->append(pointGraphic);
   // add the overlay to the mapview
-//  m_mapView->graphicsOverlays()->append(pointGraphicOverlay);
+  m_mapView->graphicsOverlays()->append(pointGraphicOverlay);
 
   // create line geometry
   PolygonBuilder polylineBuilder(SpatialReference::webMercator());
@@ -87,14 +87,14 @@ void GoRenderers::addGraphicsOverlay()
   // add the graphic to the overlay
   lineGraphicOverlay->graphics()->append(lineGraphic);
   // add the overlay to the mapview
-//  m_mapView->graphicsOverlays()->append(lineGraphicOverlay);
+  m_mapView->graphicsOverlays()->append(lineGraphicOverlay);
 
   // create the polygon geometry
   PolygonBuilder polygonBuilder(SpatialReference::webMercator());
   polygonBuilder.addPoint(-20e5, 20e5);
   polygonBuilder.addPoint(20e5, 20e5);
   polygonBuilder.addPoint(20e5, -20e5);
-//  polygonBuilder.addPoint(-20e5, -20e5);
+  //  polygonBuilder.addPoint(-20e5, -20e5);
   SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), 0.7f, this);
   Graphic* polygonGraphic = new Graphic(polygonBuilder.toGeometry(), this);
 
@@ -106,12 +106,12 @@ void GoRenderers::addGraphicsOverlay()
 
 void GoRenderers::createUi()
 {
-    QVBoxLayout* layout = new QVBoxLayout();
-    layout->setMargin(10);
+  QVBoxLayout* layout = new QVBoxLayout();
+  layout->setMargin(10);
 
-    QVBoxLayout* vBoxLayout = new QVBoxLayout();
-    vBoxLayout->addWidget(m_mapView);
-    setLayout(vBoxLayout);
+  QVBoxLayout* vBoxLayout = new QVBoxLayout();
+  vBoxLayout->addWidget(m_mapView);
+  setLayout(vBoxLayout);
 }
 
 GoRenderers::~GoRenderers()
