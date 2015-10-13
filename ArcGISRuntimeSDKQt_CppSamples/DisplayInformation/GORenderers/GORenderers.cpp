@@ -1,4 +1,4 @@
-// [WriteFile Name=ManageBookmarks, Category=Maps]
+// [WriteFile Name=GORenderers, Category=DisplayInformation]
 // [Legal]
 // Copyright 2015 Esri.
 
