@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 {
   QApplication application(argc, argv);
 
-  GoRenderers applicationWindow;
+  GORenderers applicationWindow;
   applicationWindow.setMinimumWidth(800);
   applicationWindow.setMinimumHeight(600);
   applicationWindow.show();

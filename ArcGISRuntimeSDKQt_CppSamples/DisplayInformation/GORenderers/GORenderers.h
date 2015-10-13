@@ -18,13 +18,13 @@
 #include "MapView.h"
 #include "Viewpoint.h"
 
-class GoRenderers : public QWidget
+class GORenderers : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GoRenderers(QWidget* parent = 0);
-  virtual ~GoRenderers();
+  explicit GORenderers(QWidget* parent = 0);
+  virtual ~GORenderers();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;

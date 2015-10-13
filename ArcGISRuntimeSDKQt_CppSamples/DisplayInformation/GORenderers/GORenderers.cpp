@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "GoRenderers.h"
+#include "GORenderers.h"
 #include "Map.h"
 #include "MapView.h"
 #include "Viewpoint.h"
@@ -35,7 +35,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-GoRenderers::GoRenderers(QWidget* parent) :
+GORenderers::GORenderers(QWidget* parent) :
   QWidget(parent),
   m_map(nullptr),
   m_mapView(nullptr)
@@ -52,7 +52,7 @@ GoRenderers::GoRenderers(QWidget* parent) :
   createUi();
 }
 
-void GoRenderers::addGraphicsOverlay()
+void GORenderers::addGraphicsOverlay()
 {
   // create the point geometry
   Point pointGeometry(40e5, 40e5, SpatialReference::webMercator());
@@ -104,7 +104,7 @@ void GoRenderers::addGraphicsOverlay()
   m_mapView->graphicsOverlays()->append(polygonGraphicsOverlay);
 }
 
-void GoRenderers::createUi()
+void GORenderers::createUi()
 {
   QVBoxLayout* layout = new QVBoxLayout();
   layout->setMargin(10);
@@ -114,6 +114,6 @@ void GoRenderers::createUi()
   setLayout(vBoxLayout);
 }
 
-GoRenderers::~GoRenderers()
+GORenderers::~GORenderers()
 {
 }
