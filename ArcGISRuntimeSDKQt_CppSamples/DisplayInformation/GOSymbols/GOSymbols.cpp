@@ -72,14 +72,17 @@ GOSymbols::GOSymbols(QWidget* parent) :
 
 void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 {
+  // create a list of points
   QList<Point> pointsList;
   pointsList << Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84())
              << Point(-2.6908416959572303, 56.06444173689877, SpatialReference::wgs84())
              << Point(-2.6697273884990937, 56.064250073402874, SpatialReference::wgs84())
              << Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84());
 
+  // create the symbology for the points
   SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10, this);
 
+  // create a graphic and add each of them to the overlay
   foreach (const Point &buoyPoint, pointsList) {
     Graphic* graphic = new Graphic(buoyPoint, this);
     graphic->setSymbol(sms);
@@ -90,6 +93,8 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
 {
   SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash,QColor("blue"), 1, true, 0.7f, this);
+
+  // json for the polyline
   QString polylineJson = "{\"paths\":[[[-2.7184791227926772,56.06147084563517],"
                          "[-2.7196807500463924,56.06147084563517],"
                          "[-2.722084004553823,56.062141712059706],"
@@ -149,25 +154,35 @@ void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
                          "[-2.719165766937657,56.06166252294756],"
                          "[-2.718307461756433,56.06147084563517]]],"
                          "\"spatialReference\":{\"wkid\":4326}}";
+
+  // create a polyline from the json
   Polyline polyline = Polyline::fromJson(polylineJson);
+  // create a new graphic using the polyline geometry
   Graphic* graphic = new Graphic(polyline);
+  // set the symbology for the graphic
   graphic->setSymbol(sls);
+  // add the graphic to the graphics overlay
   graphicsOverlay->graphics()->append(graphic);
 }
 
 void GOSymbols::addNestingGround(GraphicsOverlay* graphicsOverlay)
 {
+  // outline for the polygon
   SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor("black"), 1, true, 0.5f, this);
+  // create a fill symbol for a polygon
   SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::DiagonalCross, QColor("green"), 0.5f, outline, this);
 
+  // create a graphic using polygon as the geometry
   Graphic* graphic = new Graphic(createNestingGround(), this);
+  // set the symbology for the graphic
   graphic->setSymbol(sfs);
-
+  // add the graphic to the overlay
   graphicsOverlay->graphics()->append(graphic);
 }
 
 void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
 {
+  // text symbol
   TextSymbol* textSymbolBassRock = new TextSymbol(10, QString("Bass Rock"),
                                                   QColor("blue"),
                                                   HorizontalAlignment::Left,
@@ -177,15 +192,18 @@ void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
                                                     HorizontalAlignment::Right,
                                                     VerticalAlignment::Top, this);
 
+  // geometry for the graphics
   Point craigleith(-2.640631, 56.078083, SpatialReference::wgs84());
   Point bassRock(-2.720324, 56.073569, SpatialReference::wgs84());
 
+  // create the graphics and set their symbology
   Graphic* graphicBass = new Graphic(bassRock, this);
   graphicBass->setSymbol(textSymbolBassRock);
 
   Graphic* graphicCraig = new Graphic(craigleith, this);
   graphicCraig->setSymbol(textSymbolCraigleith);
 
+  // add the graphics to the overlay
   graphicsOverlay->graphics()->append(graphicBass);
   graphicsOverlay->graphics()->append(graphicCraig);
 }
@@ -200,6 +218,7 @@ void GOSymbols::createUi()
   setLayout(vBoxLayout);
 }
 
+// create the polygon geometry
 Geometry GOSymbols::createNestingGround()
 {
   PolygonBuilder nestingGroundPolygonBuilder(SpatialReference::wgs84());
