@@ -94,7 +94,7 @@ void GORenderers::addGraphicsOverlay()
   polygonBuilder.addPoint(-20e5, 20e5);
   polygonBuilder.addPoint(20e5, 20e5);
   polygonBuilder.addPoint(20e5, -20e5);
-  //  polygonBuilder.addPoint(-20e5, -20e5);
+  polygonBuilder.addPoint(-20e5, -20e5);
   SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), 0.7f, this);
   Graphic* polygonGraphic = new Graphic(polygonBuilder.toGeometry(), this);
 
