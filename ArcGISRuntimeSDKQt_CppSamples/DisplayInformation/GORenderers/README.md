@@ -2,7 +2,7 @@
 
 This sample demonstrates how to add graphics and set renderer on graphic overlays
 
-![](capture.PNG)
+![](capture.png)
 
 ##How it works
 

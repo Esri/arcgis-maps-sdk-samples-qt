@@ -2,7 +2,7 @@
 
 This sample demonstrates how to add graphics with symbols to a graphics overlay
 
-![](capture.PNG)
+![](capture.png)
 
 ##How it works
 
