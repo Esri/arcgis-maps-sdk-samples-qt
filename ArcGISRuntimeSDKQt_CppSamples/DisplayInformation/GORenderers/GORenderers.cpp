@@ -78,7 +78,7 @@ void GORenderers::addGraphicsOverlay()
   // create a line symbol
   SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 5, true, 1.0, this);
   // create a line graphic
-  Graphic* lineGraphic = new Graphic(polylineBuilder.toGeometry());
+  Graphic* lineGraphic = new Graphic(polylineBuilder.toGeometry(), this);
 
   // create a graphic overlay to display the line graphic
   GraphicsOverlay* lineGraphicOverlay = new GraphicsOverlay(this);
