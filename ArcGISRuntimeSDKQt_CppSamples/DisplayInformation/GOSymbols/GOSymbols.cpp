@@ -158,7 +158,7 @@ void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
   // create a polyline from the json
   Polyline polyline = Polyline::fromJson(polylineJson);
   // create a new graphic using the polyline geometry
-  Graphic* graphic = new Graphic(polyline);
+  Graphic* graphic = new Graphic(polyline, this);
   // set the symbology for the graphic
   graphic->setSymbol(sls);
   // add the graphic to the graphics overlay
