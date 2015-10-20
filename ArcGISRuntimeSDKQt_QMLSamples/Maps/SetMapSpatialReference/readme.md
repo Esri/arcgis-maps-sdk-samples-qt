@@ -4,13 +4,12 @@
 
 ##
 
-This sample demonstrates how to set the initial spatial reference of a map and all its layers would be projected accordingly.
+This sample demonstrates how to set the initial spatial reference of a map so that all layers that support reprojection are projected into the map’s spatial reference.
 
 ## How it works
 
-The map in the sample is initialized with `esriSRProjCS_World_Bonne (WKID: 54024)` spatial reference. 
-
-Hence the Basemap that is added, with default spatial reference as `GCS_WGS_1984 (WKID: 4326)`, gets re-projected to map's spatial reference.
+The basemap contains an `ArcGISMapImageLayer`, which supports reprojection, and has a default spatial reference of `GCS_WGS_1984 (WKID: 4326)`. 
+When the basemap is added to the map, the `ArcGISMapImageLayer` is automatically reprojected into the map’s spatial reference.
 
 ## Features
 
