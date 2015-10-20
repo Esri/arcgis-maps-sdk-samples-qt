@@ -29,7 +29,7 @@ SetMapSpatialReference::SetMapSpatialReference(QWidget* parent) :
     QWidget(parent)
 {
     // Create a new map with the spatial reference
-    //m_map = new Map(SpatialReference(3857), this);
+    //m_map = new Map(SpatialReference(54024), this);
     m_map = new Map(this);
 
     // create the URL pointing to the map image layer
