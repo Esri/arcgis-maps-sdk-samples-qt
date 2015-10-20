@@ -60,10 +60,10 @@ Rectangle {
     ViewpointExtent {
         id: desertViewpoint
         extent: Envelope {
-            xMin: 3743486.562940341
-            xMax: 3744328.0714771077
-            yMin: 3170771.8344022506
-            yMax: 3171402.9658048255
+            xMin: 3742993.127298778
+            xMax: 3744795.1333054285
+            yMin: 3170396.4675719286
+            yMax: 3171745.88077
             spatialReference: SpatialReference { wkid: 102100 }
         }
     }

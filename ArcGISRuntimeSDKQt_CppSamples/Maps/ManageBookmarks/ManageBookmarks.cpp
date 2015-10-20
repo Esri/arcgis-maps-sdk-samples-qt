@@ -33,7 +33,7 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
 {        
     // Create a map using the imagery with labels basemap
     m_map = new Map(Basemap::imageryWithLabels(this), this);
-    Envelope env1(3743486.562940341, 3170771.8344022506, 3744328.0714771077, 3171402.9658048255, SpatialReference(102100));
+    Envelope env1(3742993.127298778, 3170396.4675719286, 3744795.1333054285, 3171745.88077, SpatialReference(102100));
     m_map->setInitialViewpoint(Viewpoint(env1));
 
     // Create a map view, and pass in the map
@@ -84,7 +84,7 @@ ManageBookmarks::~ManageBookmarks()
 void ManageBookmarks::createInitialBookmarks()
 {
     // Mysterious Desert Pattern
-    Envelope env1(3743486.562940341, 3170771.8344022506, 3744328.0714771077, 3171402.9658048255, SpatialReference(102100));
+    Envelope env1(3742993.127298778, 3170396.4675719286, 3744795.1333054285, 3171745.88077, SpatialReference(102100));
     Viewpoint viewpoint1(env1);
     createBookmark("Mysterious Desert Pattern", viewpoint1);
 
