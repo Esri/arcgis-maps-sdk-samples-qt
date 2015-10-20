@@ -14,14 +14,18 @@
 #ifndef DELETE_FEATURES_FEATURE_SERVICE_H
 #define DELETE_FEATURES_FEATURE_SERVICE_H
 
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "Map.h"
-#include "MapView.h"
-#include "ServiceFeatureTable.h"
-#include "FeatureLayer.h"
 #include "DeleteFeaturesFeatureService.h"
 #include <QPushButton>
+
+namespace Esri {
+    namespace ArcGISRuntime {
+        class Map;
+        class MapView;
+        class FeatureLayer;
+        class ServiceFeatureTable;
+        class Feature;
+    }
+}
 
 class DeleteFeaturesFeatureService : public QWidget
 {
@@ -29,7 +33,7 @@ class DeleteFeaturesFeatureService : public QWidget
 
 public:
   explicit DeleteFeaturesFeatureService(QWidget* parent = 0);
-  virtual ~DeleteFeaturesFeatureService();
+  ~DeleteFeaturesFeatureService();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;

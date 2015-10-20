@@ -14,13 +14,17 @@
 #ifndef ADD_FEATURES_FEATURE_SERVICE_H
 #define ADD_FEATURES_FEATURE_SERVICE_H
 
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "Map.h"
-#include "MapView.h"
-#include "ServiceFeatureTable.h"
-#include "FeatureLayer.h"
 #include "AddFeaturesFeatureService.h"
+#include <QWidget>
+
+namespace Esri {
+    namespace ArcGISRuntime {
+        class Map;
+        class MapView;
+        class FeatureLayer;
+        class ServiceFeatureTable;
+    }
+}
 
 class AddFeaturesFeatureService : public QWidget
 {
@@ -28,7 +32,7 @@ class AddFeaturesFeatureService : public QWidget
 
 public:
   explicit AddFeaturesFeatureService(QWidget* parent = 0);
-  virtual ~AddFeaturesFeatureService();
+  ~AddFeaturesFeatureService();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;

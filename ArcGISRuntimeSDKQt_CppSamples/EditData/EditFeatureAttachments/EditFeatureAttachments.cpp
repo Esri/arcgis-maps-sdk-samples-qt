@@ -107,6 +107,21 @@ void EditFeatureAttachments::connectSignals()
             {
                 updateComboBox(attachments);
             });
+
+
+            // connect to deleteAttachmentCompleted to know when the delete has occurred successfully
+            connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::deleteAttachmentCompleted, [this](QUuid)
+            {
+                // call apply edits on the feature table to apply the edits to the service
+                m_featureTable->applyEdits();
+            });
+
+            // connect to the addAttachmentCompleted signal from the AttachmentListModel
+            connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::addAttachmentCompleted, [this](QUuid, const QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>&)
+            {
+                // once it is complete, call apply edits on the feature table
+                m_featureTable->applyEdits();
+            });
         }
     });
 
@@ -147,13 +162,6 @@ void EditFeatureAttachments::connectSignals()
 
                         // call deleteAttachment
                         m_selectedFeature->attachmentListModel()->deleteAttachment(i);
-
-                        // connect to deleteAttachmentCompleted to know when the delete has occurred successfully
-                        connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::deleteAttachmentCompleted, [this](QUuid)
-                        {
-                            // call apply edits on the feature table to apply the edits to the service
-                            m_featureTable->applyEdits();
-                        });
                     }
                 }
             }
@@ -177,7 +185,10 @@ void EditFeatureAttachments::connectSignals()
                 AttachmentInfo* attachment1 = m_attachmentInfos[m_comboBox->currentIndex()].data();
                 attachment1->fetchData();
 
-                connect(attachment1, &AttachmentInfo::fetchDataCompleted, [this](QUuid, const QByteArray& data)
+                if (m_fetchDataConnection)
+                    disconnect(m_fetchDataConnection);
+
+                m_fetchDataConnection = connect(attachment1, &AttachmentInfo::fetchDataCompleted, [this](QUuid, const QByteArray& data)
                 {
                     QImage image = QImage::fromData(data);
                     QPixmap pm = QPixmap::fromImage(image);
@@ -204,13 +215,6 @@ void EditFeatureAttachments::connectSignals()
             m_viewButton->setEnabled(false);
 
             m_selectedFeature->attachmentListModel()->addAttachment(fileToAdd, contentType, fileName);
-
-            // connect to the addAttachmentCompleted signal from the AttachmentListModel
-            connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::addAttachmentCompleted, [this](QUuid, const QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>&)
-            {
-                // once it is complete, call apply edits on the feature table
-                m_featureTable->applyEdits();
-            });
         }
     });
 }

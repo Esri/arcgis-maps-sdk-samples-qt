@@ -14,15 +14,18 @@
 #ifndef UPDATE_ATTRIBUTES_FEATURES_FEATURE_SERVICE_H
 #define UPDATE_ATTRIBUTES_FEATURES_FEATURE_SERVICE_H
 
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "Map.h"
-#include "MapView.h"
-#include "Viewpoint.h"
-#include "ServiceFeatureTable.h"
-#include "FeatureLayer.h"
 #include "UpdateAttributesFeatureService.h"
 #include <QInputDialog>
+
+namespace Esri {
+    namespace ArcGISRuntime {
+        class Map;
+        class MapView;
+        class FeatureLayer;
+        class ServiceFeatureTable;
+        class Feature;
+    }
+}
 
 class UpdateAttributesFeatureService : public QWidget
 {
@@ -30,7 +33,7 @@ class UpdateAttributesFeatureService : public QWidget
 
 public:
   explicit UpdateAttributesFeatureService(QWidget* parent = 0);
-  virtual ~UpdateAttributesFeatureService();
+  ~UpdateAttributesFeatureService();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
