@@ -16,7 +16,7 @@
 
 #include "ChangeViewpoint.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include <QComboBox>
 #include <QVBoxLayout>
 #include <QGraphicsProxyWidget>
@@ -32,7 +32,7 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
     m_map = new Map(Basemap::imageryWithLabels(this), this);
 
     // Create a map view, and pass in the map
-    m_mapView = new MapView(m_map, this);
+    m_mapView = new MapGraphicsView(m_map, this);
 
     m_rotationValue = 0;
 

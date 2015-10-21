@@ -17,7 +17,7 @@
 #include "MapTypes.h"
 #include "MapViewTypes.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "Basemap.h"
 #include "ArcGISTiledLayer.h"
 
@@ -31,7 +31,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::Basemap* m_basemap;
   Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer;
   QString m_path;

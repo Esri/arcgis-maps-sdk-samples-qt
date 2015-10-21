@@ -17,7 +17,7 @@
 namespace Esri {
 namespace ArcGISRuntime {
   class Map;
-  class MapView;
+  class MapGraphicsView;
   class Basemap;
   class ArcGISMapImageLayer;
   }
@@ -35,7 +35,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::Basemap* m_basemap;
   Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer;
 };

@@ -18,7 +18,7 @@
 namespace Esri {
 namespace ArcGISRuntime {
   class Map;
-  class MapView;
+  class MapGraphicsView;
   }
 }
 
@@ -37,7 +37,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   QSlider* m_slider;
   QLabel* m_degrees;
 };

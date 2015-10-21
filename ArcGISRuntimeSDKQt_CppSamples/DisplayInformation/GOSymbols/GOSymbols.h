@@ -15,7 +15,7 @@
 #define GOSYMBOLS_H
 
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "Viewpoint.h"
 #include "GraphicsOverlay.h"
 
@@ -29,7 +29,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   void addBuoyPoints(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
   void addBoatTrip(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
   void addNestingGround(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);

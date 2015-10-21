@@ -16,7 +16,7 @@
 
 #include "SetInitialMapArea.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "Basemap.h"
 #include "Envelope.h"
 #include "SpatialReference.h"
@@ -37,7 +37,7 @@ SetInitialMapArea::SetInitialMapArea(QWidget* parent) :
     m_map->setInitialViewpoint(Viewpoint(envelope));
 
     // Create a map view, and pass in the map
-    m_mapView = new MapView(m_map, this);
+    m_mapView = new MapGraphicsView(m_map, this);
 
     // Set up the UI
     QVBoxLayout *vBoxLayout = new QVBoxLayout(this);

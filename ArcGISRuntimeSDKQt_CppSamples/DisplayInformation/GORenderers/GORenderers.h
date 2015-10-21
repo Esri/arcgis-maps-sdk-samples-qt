@@ -15,7 +15,7 @@
 #define GORENDERERS_H
 
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "Viewpoint.h"
 
 class GORenderers : public QWidget
@@ -28,7 +28,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   void addGraphicsOverlay();
   void createUi();
 };

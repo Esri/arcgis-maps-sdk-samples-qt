@@ -16,7 +16,7 @@
 
 #include "MapRotation.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include <QSlider>
 #include <QLabel>
 #include <QVBoxLayout>
@@ -35,7 +35,7 @@ MapRotation::MapRotation(QWidget* parent) :
     m_map = new Map(Basemap::streets(this), this);
 
     // Create a map view, and pass in the map
-    m_mapView = new MapView(m_map, this);
+    m_mapView = new MapGraphicsView(m_map, this);
 
     // Users should use slider to rotate map view
     m_mapView->setRotationByPinchingEnabled(false);

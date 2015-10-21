@@ -13,7 +13,7 @@
 
 #include "AddFeaturesFeatureService.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "Basemap.h"
 #include "ServiceFeatureTable.h"
 #include "FeatureLayer.h"
@@ -37,8 +37,8 @@ AddFeaturesFeatureService::AddFeaturesFeatureService(QWidget* parent) :
     m_map = new Map(Basemap::streets(this), this);
     m_map->setInitialViewpoint(vp);
 
-    // add the Map to a MapView
-    m_mapView = new MapView(m_map, this);
+    // add the Map to a MapGraphicsView
+    m_mapView = new MapGraphicsView(m_map, this);
 
     // create the ServiceFeatureTable
     m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
@@ -64,8 +64,8 @@ AddFeaturesFeatureService::~AddFeaturesFeatureService()
 
 void AddFeaturesFeatureService::connectSignals()
 {
-    // connect to the mouse press release signal on the MapView
-    connect(m_mapView, &MapView::mousePressRelease, [this](QMouseEvent& mouseEvent)
+    // connect to the mouse press release signal on the MapGraphicsView
+    connect(m_mapView, &MapGraphicsView::mouseClick, [this](QMouseEvent& mouseEvent)
     {
         // obtain the map point
         Point newPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());

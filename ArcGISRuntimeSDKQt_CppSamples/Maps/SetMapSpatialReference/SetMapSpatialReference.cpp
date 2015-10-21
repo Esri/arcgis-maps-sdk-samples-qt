@@ -16,7 +16,7 @@
 
 #include "SetMapSpatialReference.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "Basemap.h"
 #include "SpatialReference.h"
 #include "ArcGISMapImageLayer.h"
@@ -45,7 +45,7 @@ SetMapSpatialReference::SetMapSpatialReference(QWidget* parent) :
     m_map->setBasemap(m_basemap);
 
     // Create a map view, and pass in the map
-    m_mapView = new MapView(m_map, this);
+    m_mapView = new MapGraphicsView(m_map, this);
 
     // Set up the UI
     QVBoxLayout *vBoxLayout = new QVBoxLayout(this);

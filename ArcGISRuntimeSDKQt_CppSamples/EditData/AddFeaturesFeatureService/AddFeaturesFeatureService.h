@@ -20,7 +20,7 @@
 namespace Esri {
     namespace ArcGISRuntime {
         class Map;
-        class MapView;
+        class MapGraphicsView;
         class FeatureLayer;
         class ServiceFeatureTable;
     }
@@ -36,7 +36,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
   void connectSignals();

@@ -17,7 +17,7 @@
 namespace Esri {
 namespace ArcGISRuntime {
   class Map;
-  class MapView;
+  class MapGraphicsView;
   }
 }
 
@@ -38,7 +38,7 @@ private slots:
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   QComboBox* m_viewpointCombo;
   int m_rotationValue;
 };

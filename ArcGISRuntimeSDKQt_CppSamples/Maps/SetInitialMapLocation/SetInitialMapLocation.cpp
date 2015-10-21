@@ -16,7 +16,7 @@
 
 #include "SetInitialMapLocation.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include <QVBoxLayout>
 
 using namespace Esri::ArcGISRuntime;
@@ -28,7 +28,7 @@ SetInitialMapLocation::SetInitialMapLocation(QWidget* parent) :
     m_map = new Map(BasemapType::ImageryWithLabels, -33.867886, -63.985, 16, this);
 
     // Create a map view, and pass in the map
-    m_mapView = new MapView(m_map, this);
+    m_mapView = new MapGraphicsView(m_map, this);
 
     // Set up the UI
     QVBoxLayout *vBoxLayout = new QVBoxLayout();
