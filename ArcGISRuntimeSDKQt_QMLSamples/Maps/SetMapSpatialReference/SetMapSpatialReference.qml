@@ -30,7 +30,7 @@ Rectangle {
 
             onComponentCompleted: {
                //Add the basemap to the map
-               map.basemap = ArcGISRuntimeEnvironment.createObject("Basemap", { "json": {"uri":"http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"}});
+               map.basemap = ArcGISRuntimeEnvironment.createObject("Basemap", {"uri":"http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"});
             }
         }
     }
