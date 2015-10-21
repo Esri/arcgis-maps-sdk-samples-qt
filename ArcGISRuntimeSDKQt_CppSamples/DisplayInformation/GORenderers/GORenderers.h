@@ -14,9 +14,14 @@
 #ifndef GORENDERERS_H
 #define GORENDERERS_H
 
-#include "Map.h"
-#include "MapGraphicsView.h"
-#include "Viewpoint.h"
+namespace Esri {
+namespace ArcGISRuntime {
+    class Map;
+    class MapGraphicsView;
+  }
+}
+
+#include <QWidget>
 
 class GORenderers : public QWidget
 {
@@ -24,13 +29,14 @@ class GORenderers : public QWidget
 
 public:
   explicit GORenderers(QWidget* parent = 0);
-  virtual ~GORenderers();
+  ~GORenderers();
 
 private:
+  void createUi();
+  void addGraphicsOverlay();
+
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
-  void addGraphicsOverlay();
-  void createUi();
 };
 
 #endif // GORENDERERS_H

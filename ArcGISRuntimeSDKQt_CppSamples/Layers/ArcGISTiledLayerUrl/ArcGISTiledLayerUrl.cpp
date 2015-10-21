@@ -16,7 +16,6 @@
 #include "MapGraphicsView.h"
 #include "Basemap.h"
 #include "ArcGISTiledLayer.h"
-#include <QDir>
 #include <QUrl>
 #include <QVBoxLayout>
 

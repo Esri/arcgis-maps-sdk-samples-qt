@@ -14,12 +14,16 @@
 #ifndef ARCGISTILEDLAYER_URL_H
 #define ARCGISTILEDLAYER_URL_H
 
-#include "MapTypes.h"
-#include "MapViewTypes.h"
-#include "Map.h"
-#include "MapGraphicsView.h"
-#include "Basemap.h"
-#include "ArcGISTiledLayer.h"
+namespace Esri {
+namespace ArcGISRuntime {
+    class Map;
+    class MapGraphicsView;
+    class Basemap;
+    class ArcGISTiledLayer;
+  }
+}
+
+#include <QWidget>
 
 class ArcGISTiledLayerUrl : public QWidget
 {
@@ -27,7 +31,7 @@ class ArcGISTiledLayerUrl : public QWidget
 
 public:
   explicit ArcGISTiledLayerUrl(QWidget* parent = 0);
-  virtual ~ArcGISTiledLayerUrl();
+  ~ArcGISTiledLayerUrl();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
