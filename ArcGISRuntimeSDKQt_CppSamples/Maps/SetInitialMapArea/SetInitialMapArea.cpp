@@ -15,14 +15,11 @@
 // [Legal]
 
 #include "SetInitialMapArea.h"
-#include "Basemap.h"
 #include "Map.h"
 #include "MapView.h"
-#include "Viewpoint.h"
+#include "Basemap.h"
 #include "Envelope.h"
 #include "SpatialReference.h"
-#include <QDir>
-#include <QUrl>
 #include <QVBoxLayout>
 
 using namespace Esri::ArcGISRuntime;

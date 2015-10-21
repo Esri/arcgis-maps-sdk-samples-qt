@@ -17,6 +17,7 @@
 #include "ChangeBasemap.h"
 #include "Map.h"
 #include "MapView.h"
+#include <QComboBox>
 #include <QVBoxLayout>
 #include <QGraphicsProxyWidget>
 

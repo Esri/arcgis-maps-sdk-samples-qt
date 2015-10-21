@@ -23,8 +23,8 @@
 #include <QVBoxLayout>
 #include <QComboBox>
 #include <QPushButton>
+#include <QInputDialog>
 #include <QGraphicsProxyWidget>
-#include <QMap>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -14,9 +14,16 @@
 #ifndef MAP_LOADED_H
 #define MAP_LOADED_H
 
-#include "Map.h"
-#include "MapView.h"
-#include <QLabel>
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  }
+}
+
+class QLabel;
+
+#include <QWidget>
 
 class MapLoaded : public QWidget
 {
@@ -24,7 +31,7 @@ class MapLoaded : public QWidget
 
 public:
   explicit MapLoaded(QWidget* parent = 0);
-  virtual ~MapLoaded();
+  ~MapLoaded();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;

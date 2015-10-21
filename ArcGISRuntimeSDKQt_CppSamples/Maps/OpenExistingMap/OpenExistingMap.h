@@ -14,11 +14,19 @@
 #ifndef OPEN_EXISTING_MAP_H
 #define OPEN_EXISTING_MAP_H
 
-#include "MapView.h"
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  }
+}
+
+class QPushButton;
+class QInputDialog;
+
 #include "PortalItem.h"
-#include <QPushButton>
+#include <QWidget>
 #include <QMap>
-#include <QInputDialog>
 
 class OpenExistingMap : public QWidget
 {
@@ -26,15 +34,18 @@ class OpenExistingMap : public QWidget
 
 public:
   explicit OpenExistingMap(QWidget* parent = 0);
-  virtual ~OpenExistingMap();
+  ~OpenExistingMap();
+
+private:
+  void createUi();
+  void createPortalMaps();
 
 private:
   Esri::ArcGISRuntime::MapView* m_mapView;
   QPushButton* m_button;
   QInputDialog* m_inputDialog;
   QMap<QString, Esri::ArcGISRuntime::PortalItem> m_portalMaps;
-  void createUi();
-  void createPortalMaps();
+
 };
 
 #endif // OPEN_EXISTING_MAP_H

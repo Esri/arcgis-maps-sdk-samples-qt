@@ -23,7 +23,7 @@ namespace ArcGISRuntime {
   }
 }
 
-#include <QMainWindow>
+#include <QWidget>
 
 class SetMapSpatialReference : public QWidget
 {
