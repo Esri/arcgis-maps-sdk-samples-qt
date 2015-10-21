@@ -31,6 +31,7 @@
 #include "SimpleFillSymbol.h"
 #include "TextSymbol.h"
 #include "SimpleRenderer.h"
+#include <QGraphicsProxyWidget>
 #include <QVBoxLayout>
 #include <QList>
 
@@ -67,20 +68,6 @@ GOSymbols::GOSymbols(QWidget* parent) :
   addText(graphicsOverlay);
 
   createUi();
-}
-
-GOSymbols::~GOSymbols()
-{
-}
-
-void GOSymbols::createUi()
-{
-  QVBoxLayout* layout = new QVBoxLayout();
-  layout->setMargin(10);
-
-  QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapView);
-  setLayout(vBoxLayout);
 }
 
 void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
@@ -221,6 +208,16 @@ void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
   graphicsOverlay->graphics()->append(graphicCraig);
 }
 
+void GOSymbols::createUi()
+{
+  QVBoxLayout* layout = new QVBoxLayout();
+  layout->setMargin(10);
+
+  QVBoxLayout* vBoxLayout = new QVBoxLayout();
+  vBoxLayout->addWidget(m_mapView);
+  setLayout(vBoxLayout);
+}
+
 // create the polygon geometry
 Geometry GOSymbols::createNestingGround()
 {
@@ -256,4 +253,6 @@ Geometry GOSymbols::createNestingGround()
   return nestingGroundPolygonBuilder.toGeometry();
 }
 
-
+GOSymbols::~GOSymbols()
+{
+}
