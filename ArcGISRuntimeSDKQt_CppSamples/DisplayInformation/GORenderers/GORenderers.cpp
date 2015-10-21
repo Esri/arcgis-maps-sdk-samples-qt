@@ -17,7 +17,6 @@
 #include "GORenderers.h"
 #include "Map.h"
 #include "MapView.h"
-#include "Viewpoint.h"
 #include "SpatialReference.h"
 #include "Point.h"
 #include "PolylineBuilder.h"
@@ -30,7 +29,6 @@
 #include "SimpleLineSymbol.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleRenderer.h"
-#include <QGraphicsProxyWidget>
 #include <QVBoxLayout>
 
 using namespace Esri::ArcGISRuntime;
@@ -50,6 +48,20 @@ GORenderers::GORenderers(QWidget* parent) :
   addGraphicsOverlay();
 
   createUi();
+}
+
+GORenderers::~GORenderers()
+{
+}
+
+void GORenderers::createUi()
+{
+  QVBoxLayout* layout = new QVBoxLayout();
+  layout->setMargin(10);
+
+  QVBoxLayout* vBoxLayout = new QVBoxLayout();
+  vBoxLayout->addWidget(m_mapView);
+  setLayout(vBoxLayout);
 }
 
 void GORenderers::addGraphicsOverlay()
@@ -104,16 +116,4 @@ void GORenderers::addGraphicsOverlay()
   m_mapView->graphicsOverlays()->append(polygonGraphicsOverlay);
 }
 
-void GORenderers::createUi()
-{
-  QVBoxLayout* layout = new QVBoxLayout();
-  layout->setMargin(10);
 
-  QVBoxLayout* vBoxLayout = new QVBoxLayout();
-  vBoxLayout->addWidget(m_mapView);
-  setLayout(vBoxLayout);
-}
-
-GORenderers::~GORenderers()
-{
-}
