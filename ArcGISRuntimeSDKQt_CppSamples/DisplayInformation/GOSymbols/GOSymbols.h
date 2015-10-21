@@ -14,10 +14,17 @@
 #ifndef GOSYMBOLS_H
 #define GOSYMBOLS_H
 
-#include "Map.h"
-#include "MapView.h"
-#include "Viewpoint.h"
-#include "GraphicsOverlay.h"
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  class Viewpoint;
+  class GraphicsOverlay;
+  }
+}
+
+#include <Geometry.h>
+#include <QWidget>
 
 class GOSymbols : public QWidget
 {
@@ -25,17 +32,19 @@ class GOSymbols : public QWidget
 
 public:
   explicit GOSymbols(QWidget* parent = 0);
-  virtual ~GOSymbols();
+  ~GOSymbols();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  void createUi();
   void addBuoyPoints(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
   void addBoatTrip(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
   void addNestingGround(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
   void addText(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
   Esri::ArcGISRuntime::Geometry createNestingGround();
-  void createUi();
+
+private:
+  Esri::ArcGISRuntime::Map* m_map;
+  Esri::ArcGISRuntime::MapView* m_mapView;
 };
 
 #endif // GOSYMBOLS_H
