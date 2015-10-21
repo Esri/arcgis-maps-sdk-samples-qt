@@ -14,8 +14,14 @@
 #ifndef SET_INITIAL_MAP_LOCATION_H
 #define SET_INITIAL_MAP_LOCATION_H
 
-#include "Map.h"
-#include "MapView.h"
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  }
+}
+
+#include <QWidget>
 
 class SetInitialMapLocation : public QWidget
 {
@@ -23,7 +29,7 @@ class SetInitialMapLocation : public QWidget
 
 public:
   explicit SetInitialMapLocation(QWidget* parent = 0);
-  virtual ~SetInitialMapLocation();
+  ~SetInitialMapLocation();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;

@@ -17,12 +17,11 @@
 #include "OpenExistingMap.h"
 #include "Map.h"
 #include "MapView.h"
-#include "PortalItem.h"
 #include <QVBoxLayout>
 #include <QComboBox>
+#include <QInputDialog>
 #include <QPushButton>
 #include <QGraphicsProxyWidget>
-#include <QMap>
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

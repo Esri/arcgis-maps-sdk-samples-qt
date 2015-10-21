@@ -14,12 +14,16 @@
 #ifndef CHANGE_VIEWPOINT_H
 #define CHANGE_VIEWPOINT_H
 
-#include "Map.h"
-#include "MapView.h"
-#include <QComboBox>
-#include <SpatialReference.h>
-#include <EnvelopeBuilder.h>
-#include <PointBuilder.h>
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  }
+}
+
+class QComboBox;
+
+#include <QWidget>
 
 class ChangeViewpoint : public QWidget
 {
@@ -27,16 +31,16 @@ class ChangeViewpoint : public QWidget
 
 public:
   explicit ChangeViewpoint(QWidget* parent = 0);
-  virtual ~ChangeViewpoint();
+  ~ChangeViewpoint();
+
+private slots:
+  void changeToNewViewpoint(int);
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapView* m_mapView;
   QComboBox* m_viewpointCombo;
   int m_rotationValue;
-
-private slots:
-  void changeToNewViewpoint(int);
 };
 
 #endif // CHANGE_VIEWPOINT_H

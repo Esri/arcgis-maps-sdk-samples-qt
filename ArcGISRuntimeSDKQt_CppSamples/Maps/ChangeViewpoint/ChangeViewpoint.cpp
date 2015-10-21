@@ -17,6 +17,7 @@
 #include "ChangeViewpoint.h"
 #include "Map.h"
 #include "MapView.h"
+#include <QComboBox>
 #include <QVBoxLayout>
 #include <QGraphicsProxyWidget>
 

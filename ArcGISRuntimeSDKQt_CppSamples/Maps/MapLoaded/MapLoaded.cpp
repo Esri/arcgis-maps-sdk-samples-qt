@@ -17,6 +17,7 @@
 #include "MapLoaded.h"
 #include "Map.h"
 #include "MapView.h"
+#include <QLabel>
 #include <QVBoxLayout>
 
 using namespace Esri::ArcGISRuntime;

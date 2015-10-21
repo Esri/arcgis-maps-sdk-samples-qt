@@ -14,8 +14,14 @@
 #ifndef DISPLAY_MAP_H
 #define DISPLAY_MAP_H
 
-#include "Map.h"
-#include "MapView.h"
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  }
+}
+
+#include <QWidget>
 
 class DisplayMap : public QWidget
 {
@@ -23,7 +29,7 @@ class DisplayMap : public QWidget
 
 public:
   explicit DisplayMap(QWidget* parent = 0);
-  virtual ~DisplayMap();
+   ~DisplayMap();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
