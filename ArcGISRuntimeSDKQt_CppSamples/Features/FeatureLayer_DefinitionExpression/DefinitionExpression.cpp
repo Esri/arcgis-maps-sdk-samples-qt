@@ -1,4 +1,3 @@
-// [WriteFile Name=GORenderers, Category=DisplayInformation]
 // [Legal]
 // Copyright 2015 Esri.
 
@@ -39,19 +38,16 @@ DefinitionExpression::DefinitionExpression(QWidget* parent) :
   m_applyExpressionButton = new QPushButton("Apply expression", this);
   m_applyExpressionButton->setStyleSheet(style);
   m_applyExpressionButton->setEnabled(false);
-//  connect (m_applyExpressionButton, SIGNAL(clicked()), this, SLOT(onApplyExpressionClicked()));
 
   m_resetButton = new QPushButton("Reset", this);
   m_resetButton->setStyleSheet(style);
   m_resetButton->setEnabled(false);
-//  connect (m_resetButton, SIGNAL(clicked()), this, SLOT(onResetClicked()));
 
   // Create a map using the imagery with labels basemap
   m_map = new Map(Basemap::topographic(this), this);
 
   // Create a map view, and pass in the map
   m_mapView = new MapView(m_map, this);
-
 
   // create the feature table
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);

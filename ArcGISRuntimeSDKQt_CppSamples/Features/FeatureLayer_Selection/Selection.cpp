@@ -56,16 +56,18 @@ Selection::Selection(QWidget* parent) :
   m_featureLayer->setSelectionWidth(3);
 
   // once the selection on the feature layer is done
-  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, [this](QUuid taskId, std::shared_ptr<FeatureQueryResult> queryResult){
-        m_queryResult = queryResult;
-        onSelectionQueryComplete(taskId);
-      });
+  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, [this](QUuid taskId, std::shared_ptr<FeatureQueryResult> queryResult)
+  {
+    m_queryResult = queryResult;
+    onSelectionQueryComplete(taskId);
+  });
 
   // add the featurelayer to the map's operational layers
   m_map->operationalLayers()->append(m_featureLayer);
 
   // lambda expression for the mouse press event on the mapview
-  connect(m_mapView, &MapView::mousePressRelease, [this](QMouseEvent& mouseEvent){
+  connect(m_mapView, &MapView::mousePressRelease, [this](QMouseEvent& mouseEvent)
+  {
     // get the point from the mouse point
      Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
      qDebug() << "X: " << mapPoint.x() << "; Y: " << mapPoint.y();
@@ -84,6 +86,7 @@ Selection::Selection(QWidget* parent) :
      queryParams.setGeometry(env);
      m_featureLayer->selectFeatures(queryParams, SelectionMode::New);
   });
+
   // create the app ui
   createUi();
 }
