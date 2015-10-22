@@ -99,7 +99,7 @@ void Selection::onSelectionQueryComplete(QUuid taskId)
   // return if no features selected
   if (!m_queryResult->iterator().hasNext())
   {
-    qDebug() << "No features selected";
+    m_selectionResult->setText("No features selected");
     return;
   }
   else // if more than one feature selected
