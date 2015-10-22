@@ -17,8 +17,6 @@
 #include "DisplayMap.h"
 #include "Map.h"
 #include "MapView.h"
-#include <QDir>
-#include <QUrl>
 #include <QVBoxLayout>
 
 using namespace Esri::ArcGISRuntime;

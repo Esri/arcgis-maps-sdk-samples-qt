@@ -14,9 +14,16 @@
 #ifndef CHANGE_BASEMAP_H
 #define CHANGE_BASEMAP_H
 
-#include "Map.h"
-#include "MapView.h"
-#include <QComboBox>
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  }
+}
+
+class QComboBox;
+
+#include <QWidget>
 
 class ChangeBasemap : public QWidget
 {
@@ -24,7 +31,7 @@ class ChangeBasemap : public QWidget
 
 public:
   explicit ChangeBasemap(QWidget* parent = 0);
-  virtual ~ChangeBasemap();
+  ~ChangeBasemap();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;

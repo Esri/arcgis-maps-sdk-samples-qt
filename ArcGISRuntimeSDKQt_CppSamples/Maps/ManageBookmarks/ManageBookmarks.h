@@ -14,13 +14,20 @@
 #ifndef MANAGE_BOOKMARKS_H
 #define MANAGE_BOOKMARKS_H
 
-#include "Map.h"
-#include "MapView.h"
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  }
+}
+
+class QComboBox;
+class QPushButton;
+class QInputDialog;
+
 #include "Viewpoint.h"
-#include <QPushButton>
-#include <QComboBox>
+#include <QWidget>
 #include <QMap>
-#include <QInputDialog>
 
 class ManageBookmarks : public QWidget
 {
@@ -28,7 +35,12 @@ class ManageBookmarks : public QWidget
 
 public:
   explicit ManageBookmarks(QWidget* parent = 0);
-  virtual ~ManageBookmarks();
+  ~ManageBookmarks();
+
+private:
+  void createUi();
+  void createInitialBookmarks();
+  void createBookmark(QString name, Esri::ArcGISRuntime::Viewpoint viewpoint);
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
@@ -37,9 +49,6 @@ private:
   QPushButton* m_button;
   QInputDialog* m_inputDialog;
   QMap<QString, Esri::ArcGISRuntime::Viewpoint> m_bookmarks;
-  void createInitialBookmarks();
-  void createBookmark(QString name, Esri::ArcGISRuntime::Viewpoint viewpoint);
-  void createUi();
 };
 
 #endif // MANAGE_BOOKMARKS_H

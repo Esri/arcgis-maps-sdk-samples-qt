@@ -14,8 +14,14 @@
 #ifndef SET_INITIAL_MAP_AREA_H
 #define SET_INITIAL_MAP_AREA_H
 
-#include "Map.h"
-#include "MapView.h"
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  }
+}
+
+#include <QWidget>
 
 class SetInitialMapArea : public QWidget
 {
@@ -23,7 +29,7 @@ class SetInitialMapArea : public QWidget
 
 public:
   explicit SetInitialMapArea(QWidget* parent = 0);
-  virtual ~SetInitialMapArea();
+  ~SetInitialMapArea();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;

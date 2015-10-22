@@ -51,13 +51,24 @@ Rectangle {
             }
         }
 
-        //        GraphicsOverlay {
-        //            id: lineGraphicsOverlay
+        // graphics overlay for the line symbol
+        GraphicsOverlay {
+            id: lineGraphicsOverlay
 
-        //            renderer: SimpleRenderer {
-        //                symbol: lineSymbol
-        //            }
-        //        }
+            renderer: SimpleRenderer {
+                symbol: lineSymbol
+            }
+        }
+
+        // polygon graphics overlay
+        GraphicsOverlay {
+            id: polygonGraphicsOverlay
+
+            // default property: renderer
+            SimpleRenderer {
+                symbol: fillSymbol
+            }
+        }
     }
 
     // the symbology for the point graphic
@@ -66,16 +77,6 @@ Rectangle {
         style: Enums.SimpleMarkerSymbolStyleDiamond
         color: "red"
         size: 10 * scaleFactor
-    }
-
-    // the overlay for the line graphic
-    GraphicsOverlay {
-        id: lineGraphicsOverlay
-
-        // default property: renderer
-        SimpleRenderer {
-            symbol: lineSymbol
-        }
     }
 
     // line symbol for the line graphic
@@ -98,16 +99,6 @@ Rectangle {
         id: polylineBuilder
         spatialReference: SpatialReference {
             wkid: 102100
-        }
-    }
-
-    // polygon graphics overlay
-    GraphicsOverlay {
-        id: polygonGraphicsOverlay
-
-        // default property: renderer
-        SimpleRenderer {
-            symbol: fillSymbol
         }
     }
 
@@ -150,8 +141,6 @@ Rectangle {
         lineGraphic.geometry = polylineBuilder.geometry;
         // add the graphic to the polyline graphic overlay
         lineGraphicsOverlay.graphics.append(lineGraphic);
-        // add the polyline graphics overlay to the mapview
-        mapView.graphicsOverlays.append(lineGraphicsOverlay);
 
         // create the polygon by assigning points
         polygonBuilder.addPointXY(-20e5, 20e5);
@@ -162,7 +151,5 @@ Rectangle {
         polygonGraphic.geometry = polygonBuilder.geometry;
         // add the graphic to the polygon graphics overlay
         polygonGraphicsOverlay.graphics.append(polygonGraphic);
-        // add the polygon graphics overlay to the mapview
-        mapView.graphicsOverlays.append(polygonGraphicsOverlay);
     }
 }

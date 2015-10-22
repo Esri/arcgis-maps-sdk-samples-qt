@@ -14,10 +14,18 @@
 #ifndef MAP_ROTATION_H
 #define MAP_ROTATION_H
 
-#include "Map.h"
-#include "MapView.h"
-#include <QLabel>
-#include <QSlider>
+
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  }
+}
+
+class QLabel;
+class QSlider;
+
+#include <QWidget>
 
 class MapRotation : public QWidget
 {
@@ -25,7 +33,7 @@ class MapRotation : public QWidget
 
 public:
   explicit MapRotation(QWidget* parent = 0);
-  virtual ~MapRotation();
+  ~MapRotation();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
