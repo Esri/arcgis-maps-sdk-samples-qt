@@ -14,19 +14,6 @@
 // [Legal]
 
 #include "Selection.h"
-#include "Map.h"
-#include "MapView.h"
-#include "Viewpoint.h"
-#include "SpatialReference.h"
-#include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
-#include "SimpleRenderer.h"
-#include "SimpleLineSymbol.h"
-#include "SimpleFillSymbol.h"
-#include "QueryParameters.h"
-#include <QGraphicsProxyWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -36,96 +23,94 @@ Selection::Selection(QWidget* parent) :
   m_mapView(nullptr),
   m_featureLayer(nullptr),
   m_featureTable(nullptr),
-  m_state(nullptr),
-  m_queryButton(nullptr)
+  m_selectionResult(nullptr)
 {
-  QString style = "QPushbutton#text {color: black;}";
-  m_state = new QLineEdit(this);
-  m_state->setAlignment(Qt::AlignLeft);
-  m_state->setStyleSheet("QLineEdit {color: black;}");
-  m_state->setPlaceholderText(QString("Enter a state name. Eg: California or WA"));
+  m_selectionResult = new QLabel("Tap/Click to select features", this);
 
-  m_queryButton = new QPushButton("Query", this);
-  m_queryButton->setStyleSheet(style);
-  m_queryButton->setEnabled(false);
-  connect(m_queryButton, SIGNAL(clicked()), this, SLOT(onQueryClicked()));
-
-  // Create a map using the imagery with labels basemap
-  m_map = new Map(Basemap::topographic(this), this);
-
-  // Create a map view, and pass in the map
+  // create a new basemap instance
+  m_map = new Map(Basemap::streets(this), this);
+  // set the initial extent
+  m_map->setInitialViewpoint(Viewpoint(Envelope(-1131596.019761, 3893114.069099, 3926705.982140, 7977912.461790, SpatialReference::webMercator())));
+  // create a new mapview instance
   m_mapView = new MapView(m_map, this);
 
-  // create the feature table
-  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"), this);
-  // create the feature layer using the feature table
+  // create the feature layer from a feature table
+  m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
   m_featureLayer = new FeatureLayer(m_featureTable, this);
 
-  // line symbol for the outline
-  SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("black"), 2.0f, true, 1.0f, this);
-  // fill symbol
-  SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), 0.6f, outline, this);
-  // create the renderer using the symbology created above
-  SimpleRenderer* renderer = new SimpleRenderer(sfs, this);
-  // set the renderer for the feature layer
-  m_featureLayer->setRenderer(renderer);
+  // set a selection width and color on the feature layer
+  m_featureLayer->setSelectionColor("cyan");
+  m_featureLayer->setSelectionWidth(3);
 
-  connect(m_featureTable, &ServiceFeatureTable::doneLoading,[this](){
-    // zoom to a specific area
-    m_mapView->setViewpointCenter(Point(-11e6, 5e6, SpatialReference(102100)), 9e7);
-    // enable the button once the layer is loaded
-    m_queryButton->setEnabled(true);
-  });
+  // once the selection on the feature layer is done
+  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, [this](QUuid taskId, std::shared_ptr<FeatureQueryResult> queryResult){
+        m_queryResult = queryResult;
+        onSelectionQueryComplete(taskId);
+      });
 
-  // add the feature layer to the map
+  // add the featurelayer to the map's operational layers
   m_map->operationalLayers()->append(m_featureLayer);
 
+  // lambda expression for the mouse press event on the mapview
+  connect(m_mapView, &MapView::mousePressRelease, [this](QMouseEvent& mouseEvent){
+    // get the point from the mouse point
+     Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+     qDebug() << "X: " << mapPoint.x() << "; Y: " << mapPoint.y();
+
+     // create a query parameter object
+     QueryParameters queryParams;
+     QStringList outFields;
+     queryParams.setOutFields(outFields << "*");
+
+     double tolerance = 22;
+     double mapTolerance = tolerance * m_mapView->unitsPerPixel();
+     // create an envelope based on the tolerance
+     Envelope env(mapPoint.x() - mapTolerance, mapPoint.y() - mapTolerance, mapPoint.x() + mapTolerance, mapPoint.y() + mapTolerance, SpatialReference(102100));
+
+     // set the envelope as the geometry of the query param
+     queryParams.setGeometry(env);
+     m_featureLayer->selectFeatures(queryParams, SelectionMode::New);
+  });
+  // create the app ui
   createUi();
 }
 
-void Selection::onQueryClicked()
+// function to count the number of selected features
+void Selection::onSelectionQueryComplete(QUuid taskId)
 {
-  // create a query parameter object and set the where clause
-  QueryParameters queryParams;
-  queryParams.setWhereClause(QString("STATE_NAME LIKE \'" + m_state->text().toUpper() + "%\'"));
+  Q_UNUSED(taskId)
 
-  // iterate over the query results once the query is done
-  connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, [this](QUuid,std::shared_ptr<Esri::ArcGISRuntime::FeatureQueryResult> queryResult){
-    if (!queryResult->iterator().hasNext())
-      return;
-
-    // clear any existing selection
-    m_featureLayer->clearSelection();
-    QList<Feature*> features;
-
-    // iterate over the result object
-    while(queryResult->iterator().hasNext())
+  // return if no features selected
+  if (!m_queryResult->iterator().hasNext())
+  {
+    qDebug() << "No features selected";
+    return;
+  }
+  else // if more than one feature selected
+  {
+    auto count = 0;
+    while (m_queryResult->iterator().hasNext())
     {
-      auto feature = queryResult->iterator().next();
-      feature->setParent(this);
-      // add each feature to the list
-      features.append(feature);
+      // increment the count
+      ++count;
+      // increment the iterator
+      m_queryResult->iterator().next();
     }
 
-    // make a selection with the features found. Ideally calling
-    // calling selectFeatures using the query would do both querying and
-    // selection at once.  We are just showing you how to do it in two steps.
-    m_featureLayer->selectFeatures(features);
-    // zoom to the first feature
-    m_mapView->setViewpointGeometry(features.at(0)->geometry(), 200);
-  });
-
-  m_featureTable->queryFeatures(queryParams);
+    // print the count
+    QString labelText;
+    labelText = count > 1 ? QString::number(count) + " features selected." : QString::number(count) + " feature selected.";
+    m_selectionResult->setText(labelText);
+  }
 }
 
 // create and add the UI elements
 void Selection::createUi()
 {
   QWidget* widget = new QWidget();
-  QHBoxLayout* layout = new QHBoxLayout();
+  QVBoxLayout* layout = new QVBoxLayout();
   layout->setMargin(10);
-  layout->addWidget(m_state);
-  layout->addWidget(m_queryButton);
+  layout->addWidget(m_selectionResult);
   widget->setPalette(QPalette(QPalette::Base));
   widget->setLayout(layout);
 
@@ -138,6 +123,7 @@ void Selection::createUi()
   setLayout(vBoxLayout);
 }
 
+// destructor
 Selection::~Selection()
 {
 }

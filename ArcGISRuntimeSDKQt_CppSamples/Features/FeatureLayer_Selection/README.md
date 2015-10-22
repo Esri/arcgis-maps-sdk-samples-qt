@@ -1,27 +1,19 @@
-#Add graphics with renderer
+#Feature layer selection
 
-This sample demonstrates how to add graphics and set renderer on graphic overlays
+This sample demonstrates how to select features in a feature layer
 
 ![](capture.png)
 
 ##How it works
 
-The sample creates a `GraphicsOverlay` each for a Point, Line and Polygon graphic. Then it defines a renderer of type `Renderer` with `SimpleMarkerSymbol`, `SimpleLineSymbol` and `SimpleFillSymbol` symbols respectively.  
-
-##Tips
-
-You may modify the sample code so that you can add all the symbols to the same graphics overlay instead of creating multiple ones.  You can do this by changing setting a symbol on each graphic and adding to the graphics overlay.  
-
+`MapView` provides a signal called `mousePressRelease`, which is fired every time the user clicks/taps on the map. The app uses the mapPoint passed in the method and creates an envelope around that point based on the tolerance. It then creates a `QueryParameter` object and sets it geometry property to the envelope it just created. This query parameter object signifies all the features present in that area/envelope. It then calls the 'selectFeatures` by passing the query object and the selection mode to select features.
 
 ##Features
 - MapView
 - Map
 - BasemapTopographic
-- GraphicsOverlay
-- Graphic
-- Point
-- PolylineBuilder
-- PolygonBuilder
-
+- ServiceFeatureTable
+- FeatureLayer
+- Query
 
 

@@ -14,13 +14,19 @@
 #ifndef SELECTION_H
 #define SELECTION_H
 
+#include "Selection.h"
 #include "Map.h"
+#include "Basemap.h"
 #include "MapView.h"
 #include "Viewpoint.h"
+#include "SpatialReference.h"
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
-#include <QPushButton>
-#include <QLineEdit>
+#include "QueryParameters.h"
+#include <QGraphicsProxyWidget>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
 
 class Selection : public QWidget
 {
@@ -31,17 +37,18 @@ public:
   virtual ~Selection();
 
 public slots:
-  void onQueryClicked();
+  void onSelectionQueryComplete(QUuid taskId);
+
+private:
+  void createUi();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-  QLineEdit* m_state;
-  QPushButton* m_queryButton;
-
-  void createUi();
+  std::shared_ptr<Esri::ArcGISRuntime::FeatureQueryResult> m_queryResult;
+  QLabel* m_selectionResult;
 };
 
 #endif // SELECTION_H

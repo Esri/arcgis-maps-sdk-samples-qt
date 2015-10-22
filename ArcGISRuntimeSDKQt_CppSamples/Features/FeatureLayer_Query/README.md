@@ -1,27 +1,20 @@
-#Add graphics with renderer
+#Feature layer query
 
-This sample demonstrates how to add graphics and set renderer on graphic overlays
+This sample demonstrates how to query a feature layer via feature table.
 
 ![](capture.png)
 
 ##How it works
 
-The sample creates a `GraphicsOverlay` each for a Point, Line and Polygon graphic. Then it defines a renderer of type `Renderer` with `SimpleMarkerSymbol`, `SimpleLineSymbol` and `SimpleFillSymbol` symbols respectively.  
-
-##Tips
-
-You may modify the sample code so that you can add all the symbols to the same graphics overlay instead of creating multiple ones.  You can do this by changing setting a symbol on each graphic and adding to the graphics overlay.  
-
+When you hit the search button, the sample creates a `QueryParameter` object and specifies the whereClause on it, using the text you provided. It then fires the query on the feature table using the `queryFeatures` method by passing in the queryParameter object. Once the query completes it gets back a FeatureQueryResult. Checking the iterator, if it finds a feature then it highlights the geometry by using `selectFeatures` method on the feature layer.
 
 ##Features
 - MapView
 - Map
 - BasemapTopographic
-- GraphicsOverlay
-- Graphic
-- Point
-- PolylineBuilder
-- PolygonBuilder
-
+- ServiceFeatureTable
+- FeatureLayer
+- QueryParameters
+- Query
 
 

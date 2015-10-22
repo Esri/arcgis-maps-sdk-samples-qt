@@ -18,6 +18,10 @@
 #include "MapView.h"
 #include "Viewpoint.h"
 #include "FeatureLayer.h"
+#include "SpatialReference.h"
+#include "ServiceFeatureTable.h"
+#include <QGraphicsProxyWidget>
+#include <QVBoxLayout>
 #include <QPushButton>
 
 class DefinitionExpression : public QWidget
@@ -29,13 +33,14 @@ public:
   virtual ~DefinitionExpression();
 
 private:
+  void createUi();
+
+private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   QPushButton* m_applyExpressionButton;
   QPushButton* m_resetButton;
-
-  void createUi();
 };
 
 #endif // DEFINITIONEXPRESSION_H

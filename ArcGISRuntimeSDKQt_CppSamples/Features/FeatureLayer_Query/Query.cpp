@@ -14,19 +14,6 @@
 // [Legal]
 
 #include "Query.h"
-#include "Map.h"
-#include "MapView.h"
-#include "Viewpoint.h"
-#include "SpatialReference.h"
-#include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
-#include "SimpleRenderer.h"
-#include "SimpleLineSymbol.h"
-#include "SimpleFillSymbol.h"
-#include "QueryParameters.h"
-#include <QGraphicsProxyWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 
 using namespace Esri::ArcGISRuntime;
 

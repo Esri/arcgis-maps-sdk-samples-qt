@@ -17,8 +17,16 @@
 #include "Map.h"
 #include "MapView.h"
 #include "Viewpoint.h"
+#include "SpatialReference.h"
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
+#include "SimpleRenderer.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleFillSymbol.h"
+#include "QueryParameters.h"
+#include <QGraphicsProxyWidget>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QPushButton>
 #include <QLineEdit>
 
@@ -34,14 +42,15 @@ public slots:
   void onQueryClicked();
 
 private:
+  void createUi();
+
+private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
   QLineEdit* m_state;
   QPushButton* m_queryButton;
-
-  void createUi();
 };
 
 #endif // QUERY_H
