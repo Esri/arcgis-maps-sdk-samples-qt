@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/DisplayInformation/GOSymbols">
+    <qresource prefix="/Samples/Display Information/GOSymbols">
         <file>GOSymbols.html</file>
         <file alias="sample.json">GOSymbols.json</file>
         <file>GOSymbols.png</file>
