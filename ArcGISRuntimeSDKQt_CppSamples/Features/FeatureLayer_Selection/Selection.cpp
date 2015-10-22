@@ -14,7 +14,6 @@
 // [Legal]
 
 #include "Selection.h"
-#include "Selection.h"
 #include "Map.h"
 #include "Basemap.h"
 #include "MapView.h"
