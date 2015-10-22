@@ -14,17 +14,17 @@
 #ifndef CHANGERENDERER_H
 #define CHANGERENDERER_H
 
-#include "Map.h"
-#include "MapView.h"
-#include "Viewpoint.h"
-#include "SpatialReference.h"
-#include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
-#include "SimpleLineSymbol.h"
-#include "SimpleRenderer.h"
-#include <QGraphicsProxyWidget>
-#include <QVBoxLayout>
-#include <QPushButton>
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  class FeatureLayer;
+  }
+}
+
+#include <QWidget>
+
+class QPushButton;
 
 class ChangeRenderer : public QWidget
 {

@@ -14,19 +14,22 @@
 #ifndef SELECTION_H
 #define SELECTION_H
 
-#include "Selection.h"
-#include "Map.h"
-#include "Basemap.h"
-#include "MapView.h"
-#include "Viewpoint.h"
-#include "SpatialReference.h"
-#include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
-#include "QueryParameters.h"
-#include <QGraphicsProxyWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QLabel>
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  class FeatureLayer;
+  class ServiceFeatureTable;
+  class FeatureQueryResult;
+  }
+}
+
+class QPushButton;
+class QLabel;
+
+#include <QWidget>
+#include <memory>
+#include <QUuid>
 
 class Selection : public QWidget
 {

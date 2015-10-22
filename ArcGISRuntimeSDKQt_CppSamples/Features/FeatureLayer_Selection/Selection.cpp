@@ -14,6 +14,19 @@
 // [Legal]
 
 #include "Selection.h"
+#include "Selection.h"
+#include "Map.h"
+#include "Basemap.h"
+#include "MapView.h"
+#include "Viewpoint.h"
+#include "SpatialReference.h"
+#include "FeatureLayer.h"
+#include "ServiceFeatureTable.h"
+#include "QueryParameters.h"
+#include <QGraphicsProxyWidget>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
 
 using namespace Esri::ArcGISRuntime;
 

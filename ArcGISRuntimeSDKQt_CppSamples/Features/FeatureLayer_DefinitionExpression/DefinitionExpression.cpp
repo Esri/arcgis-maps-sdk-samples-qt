@@ -15,6 +15,15 @@
 // [Legal]
 
 #include "DefinitionExpression.h"
+#include "Map.h"
+#include "MapView.h"
+#include "Viewpoint.h"
+#include "FeatureLayer.h"
+#include "SpatialReference.h"
+#include "ServiceFeatureTable.h"
+#include <QGraphicsProxyWidget>
+#include <QVBoxLayout>
+#include <QPushButton>
 
 using namespace Esri::ArcGISRuntime;
 

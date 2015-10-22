@@ -14,15 +14,17 @@
 #ifndef DEFINITIONEXPRESSION_H
 #define DEFINITIONEXPRESSION_H
 
-#include "Map.h"
-#include "MapView.h"
-#include "Viewpoint.h"
-#include "FeatureLayer.h"
-#include "SpatialReference.h"
-#include "ServiceFeatureTable.h"
-#include <QGraphicsProxyWidget>
-#include <QVBoxLayout>
-#include <QPushButton>
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  class FeatureLayer;
+  }
+}
+
+class QPushButton;
+
+#include <QWidget>
 
 class DefinitionExpression : public QWidget
 {

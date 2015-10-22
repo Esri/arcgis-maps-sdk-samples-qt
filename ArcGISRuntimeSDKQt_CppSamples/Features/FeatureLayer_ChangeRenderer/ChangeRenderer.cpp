@@ -15,6 +15,17 @@
 // [Legal]
 
 #include "ChangeRenderer.h"
+#include "Map.h"
+#include "MapView.h"
+#include "FeatureLayer.h"
+#include "Basemap.h"
+#include "SpatialReference.h"
+#include "ServiceFeatureTable.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleRenderer.h"
+#include "QPushButton"
+#include <QGraphicsProxyWidget>
+#include <QVBoxLayout>
 
 using namespace Esri::ArcGISRuntime;
 

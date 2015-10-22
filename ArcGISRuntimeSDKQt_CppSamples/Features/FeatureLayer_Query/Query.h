@@ -14,21 +14,19 @@
 #ifndef QUERY_H
 #define QUERY_H
 
-#include "Map.h"
-#include "MapView.h"
-#include "Viewpoint.h"
-#include "SpatialReference.h"
-#include "FeatureLayer.h"
-#include "ServiceFeatureTable.h"
-#include "SimpleRenderer.h"
-#include "SimpleLineSymbol.h"
-#include "SimpleFillSymbol.h"
-#include "QueryParameters.h"
-#include <QGraphicsProxyWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QLineEdit>
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapView;
+  class FeatureLayer;
+  class ServiceFeatureTable;
+  }
+}
+
+class QPushButton;
+class QLineEdit;
+
+#include <QWidget>
 
 class Query : public QWidget
 {
