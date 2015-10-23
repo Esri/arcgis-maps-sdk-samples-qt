@@ -15,7 +15,7 @@
 
 #include "ChangeRenderer.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "FeatureLayer.h"
 #include "Basemap.h"
 #include "SpatialReference.h"
@@ -44,7 +44,7 @@ ChangeRenderer::ChangeRenderer(QWidget* parent) :
   m_map = new Map(Basemap::topographic(this), this);
 
   // Create a map view, and pass in the map
-  m_mapView = new MapView(m_map, this);
+  m_mapView = new MapGraphicsView(m_map, this);
 
   // create the feature table
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/PoolPermits/FeatureServer/0"), this);

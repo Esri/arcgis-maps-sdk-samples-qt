@@ -15,7 +15,7 @@
 
 #include "DefinitionExpression.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "Viewpoint.h"
 #include "FeatureLayer.h"
 #include "SpatialReference.h"
@@ -47,7 +47,7 @@ DefinitionExpression::DefinitionExpression(QWidget* parent) :
   m_map = new Map(Basemap::topographic(this), this);
 
   // Create a map view, and pass in the map
-  m_mapView = new MapView(m_map, this);
+  m_mapView = new MapGraphicsView(m_map, this);
 
   // create the feature table
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);

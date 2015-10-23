@@ -16,7 +16,7 @@
 
 #include "ChangeBasemap.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include <QComboBox>
 #include <QVBoxLayout>
 #include <QGraphicsProxyWidget>
@@ -30,7 +30,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
     m_map = new Map(Basemap::topographic(this), this);
 
     // Create a map view, and pass in the map
-    m_mapView = new MapView(m_map, this);
+    m_mapView = new MapGraphicsView(m_map, this);
 
     // Create and populate a combo box with several basemap types
     m_basemapCombo = new QComboBox(this);

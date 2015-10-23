@@ -17,7 +17,7 @@
 namespace Esri {
 namespace ArcGISRuntime {
   class Map;
-  class MapView;
+  class MapGraphicsView;
   class FeatureLayer;
   }
 }
@@ -42,7 +42,7 @@ private:
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   QPushButton* m_changeRendererButton;
 };
