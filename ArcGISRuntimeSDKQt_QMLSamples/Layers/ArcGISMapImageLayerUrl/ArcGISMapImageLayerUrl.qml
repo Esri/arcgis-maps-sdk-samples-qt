@@ -28,9 +28,9 @@ Rectangle {
         Map {
             // Nest the Basemap to add it as the Map's Basemap
             Basemap {
-                // Nest the ArcGISTiledLayer to add it as one of the Basemap's baseLayers
-                ArcGISTiledLayer {
-                    url: "http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"
+                // Nest an ArcGISMapImage Layer in the Basemap
+                ArcGISMapImageLayer {
+                    url: "http://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"
                 }
             }
         }
