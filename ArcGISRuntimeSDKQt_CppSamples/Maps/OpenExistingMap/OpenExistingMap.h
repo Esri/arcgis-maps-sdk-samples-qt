@@ -17,7 +17,7 @@
 namespace Esri {
 namespace ArcGISRuntime {
   class Map;
-  class MapView;
+  class MapGraphicsView;
   }
 }
 
@@ -41,7 +41,7 @@ private:
   void createPortalMaps();
 
 private:
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   QPushButton* m_button;
   QInputDialog* m_inputDialog;
   QMap<QString, Esri::ArcGISRuntime::PortalItem> m_portalMaps;

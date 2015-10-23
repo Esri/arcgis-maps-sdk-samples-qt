@@ -16,8 +16,8 @@
 
 namespace Esri {
 namespace ArcGISRuntime {
-  class Map;
-  class MapView;
+    class Map;
+    class MapGraphicsView;
   }
 }
 
@@ -35,9 +35,8 @@ private:
   void createUi();
   void addGraphicsOverlay();
 
-private:
   Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
 };
 
 #endif // GORENDERERS_H

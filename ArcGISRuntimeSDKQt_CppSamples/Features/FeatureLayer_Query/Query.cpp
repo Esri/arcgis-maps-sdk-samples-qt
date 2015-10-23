@@ -15,7 +15,7 @@
 
 #include "Query.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "Viewpoint.h"
 #include "SpatialReference.h"
 #include "FeatureLayer.h"
@@ -56,7 +56,7 @@ Query::Query(QWidget* parent) :
   m_map = new Map(Basemap::topographic(this), this);
 
   // Create a map view, and pass in the map
-  m_mapView = new MapView(m_map, this);
+  m_mapView = new MapGraphicsView(m_map, this);
 
   // create the feature table
   m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"), this);

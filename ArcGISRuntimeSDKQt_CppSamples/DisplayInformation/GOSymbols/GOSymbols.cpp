@@ -16,7 +16,7 @@
 
 #include "GOSymbols.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "Viewpoint.h"
 #include "SpatialReference.h"
 #include "Point.h"
@@ -45,7 +45,7 @@ GOSymbols::GOSymbols(QWidget* parent) :
   m_map = new Map(BasemapType::Oceans, 56.075844, -2.681572, 11, this);
 
   // Create a map view, and pass in the map
-  m_mapView = new MapView(m_map, this);
+  m_mapView = new MapGraphicsView(m_map, this);
 
   // create a new graphics overlay
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);

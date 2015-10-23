@@ -16,7 +16,7 @@
 #include "Selection.h"
 #include "Map.h"
 #include "Basemap.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "Viewpoint.h"
 #include "SpatialReference.h"
 #include "FeatureLayer.h"
@@ -44,7 +44,7 @@ Selection::Selection(QWidget* parent) :
   // set the initial extent
   m_map->setInitialViewpoint(Viewpoint(Envelope(-1131596.019761, 3893114.069099, 3926705.982140, 7977912.461790, SpatialReference::webMercator())));
   // create a new mapview instance
-  m_mapView = new MapView(m_map, this);
+  m_mapView = new MapGraphicsView(m_map, this);
 
   // create the feature layer from a feature table
   m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
@@ -65,7 +65,7 @@ Selection::Selection(QWidget* parent) :
   m_map->operationalLayers()->append(m_featureLayer);
 
   // lambda expression for the mouse press event on the mapview
-  connect(m_mapView, &MapView::mousePressRelease, [this](QMouseEvent& mouseEvent)
+  connect(m_mapView, &MapGraphicsView::mouseClick, [this](QMouseEvent& mouseEvent)
   {
     // get the point from the mouse point
      Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());

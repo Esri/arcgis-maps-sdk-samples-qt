@@ -16,7 +16,7 @@
 
 #include "GORenderers.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "SpatialReference.h"
 #include "Point.h"
 #include "PolylineBuilder.h"
@@ -42,7 +42,7 @@ GORenderers::GORenderers(QWidget* parent) :
   m_map = new Map(Basemap::topographic(this), this);
 
   // Create a map view, and pass in the map
-  m_mapView = new MapView(m_map, this);
+  m_mapView = new MapGraphicsView(m_map, this);
 
   // add the graphics overlays
   addGraphicsOverlay();

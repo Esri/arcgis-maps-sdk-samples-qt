@@ -13,7 +13,7 @@
 
 #include "DeleteFeaturesFeatureService.h"
 #include "Map.h"
-#include "MapView.h"
+#include "MapGraphicsView.h"
 #include "Basemap.h"
 #include "ServiceFeatureTable.h"
 #include "FeatureLayer.h"
@@ -41,8 +41,8 @@ DeleteFeaturesFeatureService::DeleteFeaturesFeatureService(QWidget* parent) :
     m_map = new Map(Basemap::streets(this), this);
     m_map->setInitialViewpoint(vp);
 
-    // add the Map to a MapView
-    m_mapView = new MapView(m_map, this);
+    // add the Map to a MapGraphicsView
+    m_mapView = new MapGraphicsView(m_map, this);
 
     // create the ServiceFeatureTable
     m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
@@ -66,8 +66,8 @@ DeleteFeaturesFeatureService::~DeleteFeaturesFeatureService()
 
 void DeleteFeaturesFeatureService::connectSignals()
 {
-    // connect to the mouse press release signal on the MapView
-    connect(m_mapView, &MapView::mousePressRelease, [this](QMouseEvent& mouseEvent)
+    // connect to the mouse press release signal on the MapGraphicsView
+    connect(m_mapView, &MapGraphicsView::mouseClick, [this](QMouseEvent& mouseEvent)
     {
         // first clear the selection
         m_featureLayer->clearSelection();
@@ -77,7 +77,7 @@ void DeleteFeaturesFeatureService::connectSignals()
     });
 
     // connect to the identifyLayerCompleted signal on the map view
-    connect(m_mapView, &MapView::identifyLayerCompleted, [this](QUuid, QList<GeoElement*> identifyResults)
+    connect(m_mapView, &MapGraphicsView::identifyLayerCompleted, [this](QUuid, QList<GeoElement*> identifyResults)
     {
         if (identifyResults.size() > 0)
         {

@@ -16,10 +16,10 @@
 
 namespace Esri {
 namespace ArcGISRuntime {
-  class Map;
-  class MapView;
-  class Basemap;
-  class ArcGISTiledLayer;
+    class Map;
+    class MapGraphicsView;
+    class Basemap;
+    class ArcGISTiledLayer;
   }
 }
 
@@ -35,7 +35,7 @@ public:
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapView* m_mapView;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::Basemap* m_basemap;
   Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer;
   QString m_path;
