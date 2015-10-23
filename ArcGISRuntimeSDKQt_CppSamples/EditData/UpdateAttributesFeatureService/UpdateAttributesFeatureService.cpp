@@ -109,7 +109,7 @@ void UpdateAttributesFeatureService::connectSignals()
         }
     });
 
-    connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, [this](QUuid, std::shared_ptr<FeatureQueryResult> featureQueryResult)
+    connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, [this](QUuid, QSharedPointer<FeatureQueryResult> featureQueryResult)
     {
         if (featureQueryResult->iterator().hasNext())
         {
@@ -135,7 +135,7 @@ void UpdateAttributesFeatureService::connectSignals()
     });
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<std::shared_ptr<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
     {
         // obtain the first item in the list
         auto featureEditResult = featureEditResults.first();

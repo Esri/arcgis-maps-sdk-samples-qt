@@ -126,12 +126,12 @@ void EditFeatureAttachments::connectSignals()
     });
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<std::shared_ptr<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
     {
         if (featureEditResults.length() > 0)
         {
             // obtain the first item in the list
-            std::shared_ptr<FeatureEditResult> featureEditResult = featureEditResults.first();
+            QSharedPointer<FeatureEditResult> featureEditResult = featureEditResults.first();
             // check if there were errors
             if (!featureEditResult->isCompletedWithErrors())
             {

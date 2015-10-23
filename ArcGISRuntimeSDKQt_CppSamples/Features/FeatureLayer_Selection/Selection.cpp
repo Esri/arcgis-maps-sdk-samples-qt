@@ -55,7 +55,7 @@ Selection::Selection(QWidget* parent) :
   m_featureLayer->setSelectionWidth(3);
 
   // once the selection on the feature layer is done
-  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, [this](QUuid taskId, std::shared_ptr<FeatureQueryResult> queryResult)
+  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, [this](QUuid taskId, QSharedPointer<FeatureQueryResult> queryResult)
   {
     m_queryResult = queryResult;
     onSelectionQueryComplete(taskId);
