@@ -92,7 +92,7 @@ void Query::onQueryClicked()
   queryParams.setWhereClause(QString("STATE_NAME LIKE \'" + m_state->text().toUpper() + "%\'"));
 
   // iterate over the query results once the query is done
-  connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, [this](QUuid,std::shared_ptr<Esri::ArcGISRuntime::FeatureQueryResult> queryResult){
+  connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, [this](QUuid, QSharedPointer<Esri::ArcGISRuntime::FeatureQueryResult> queryResult){
     if (!queryResult->iterator().hasNext())
       return;
 

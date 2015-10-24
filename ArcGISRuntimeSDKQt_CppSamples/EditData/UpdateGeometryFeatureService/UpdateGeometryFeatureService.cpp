@@ -123,10 +123,10 @@ void UpdateGeometryFeatureService::connectSignals()
     });
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<std::shared_ptr<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
     {
         // obtain the first item in the list
-        std::shared_ptr<FeatureEditResult> featureEditResult = featureEditResults.first();
+        QSharedPointer<FeatureEditResult> featureEditResult = featureEditResults.first();
         // check if there were errors, and if not, log the new object ID
         if (!featureEditResult->isCompletedWithErrors())
             qDebug() << "Successfully updated geometry for Object ID:" << featureEditResult->objectId();

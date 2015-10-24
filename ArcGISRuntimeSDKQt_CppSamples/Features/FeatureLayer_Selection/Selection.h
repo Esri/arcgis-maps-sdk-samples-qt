@@ -50,7 +50,7 @@ private:
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-  std::shared_ptr<Esri::ArcGISRuntime::FeatureQueryResult> m_queryResult;
+  QSharedPointer<Esri::ArcGISRuntime::FeatureQueryResult> m_queryResult;
   QLabel* m_selectionResult;
 };
 
