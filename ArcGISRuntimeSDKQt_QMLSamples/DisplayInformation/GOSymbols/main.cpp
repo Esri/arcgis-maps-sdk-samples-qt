@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 #endif
 
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/Samples/DisplayInformation/GOSymbols/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/Samples/Display Information/GOSymbols/main.qml")));
 
     return app.exec();
 }
