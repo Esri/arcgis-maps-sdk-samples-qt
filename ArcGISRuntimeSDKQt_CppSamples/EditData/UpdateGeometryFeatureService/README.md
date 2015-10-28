@@ -2,7 +2,7 @@
 
 This sample demonstrates how to update geometry of a feature in a feature service.
 
-![](capture.png)
+![](screenshot.png)
 
 ##How it works
 

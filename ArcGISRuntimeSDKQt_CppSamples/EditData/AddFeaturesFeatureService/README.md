@@ -2,7 +2,7 @@
 
 This sample demonstrates how to add features to a feature service using a ServiceFeatureTable.
 
-![](capture.png)
+![](screenshot.png)
 
 ##How it works
 
