@@ -27,12 +27,18 @@ Rectangle {
             id: map
             // Specify the SpatialReference
             spatialReference: SpatialReference { wkid:54024 }
-
-            onComponentCompleted: {
-               //Add the basemap to the map
-               map.basemap = ArcGISRuntimeEnvironment.createObject("Basemap", {"uri":"http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"});
-            }
         }
+    }
+
+    Basemap {
+        id: basemap
+        ArcGISMapImageLayer {
+            url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"
+        }
+    }
+
+    Component.onCompleted: {
+        map.basemap = basemap;
     }
 
     Rectangle {
