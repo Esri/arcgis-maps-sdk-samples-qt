@@ -22,6 +22,7 @@
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
 #include "QueryParameters.h"
+#include "IdentifyLayerResult.h"
 #include <QGraphicsProxyWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -55,10 +56,26 @@ Selection::Selection(QWidget* parent) :
   m_featureLayer->setSelectionWidth(3);
 
   // once the selection on the feature layer is done
-  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, [this](QUuid taskId, QSharedPointer<FeatureQueryResult> queryResult)
+  connect(m_mapView, &MapGraphicsView::identifyLayerCompleted, [this](QUuid taskId, QList<Esri::ArcGISRuntime::GeoElement*> identifyResults)
   {
-    m_queryResult = queryResult;
-    onSelectionQueryComplete(taskId);
+    qDebug() << identifyResults.size();
+
+    // clear any existing selection
+    m_featureLayer->clearSelection();
+    QList<Feature*> identifiedFeatures;
+    for (int i = 0; i < identifyResults.size(); i++)
+    {
+      auto element = identifyResults.at(i);
+      if (dynamic_cast<Feature*>(element))
+        identifiedFeatures.append(dynamic_cast<Feature*>(element));
+    }
+    // select the identified features
+    m_featureLayer->selectFeatures(identifiedFeatures);
+    // update the label with the number of selected features
+    auto count = identifiedFeatures.length();
+    QString labelText;
+    labelText = count > 1 ? QString::number(count) + " features selected." : QString::number(count) + " feature selected.";
+    m_selectionResult->setText(labelText);
   });
 
   // add the featurelayer to the map's operational layers
@@ -67,56 +84,11 @@ Selection::Selection(QWidget* parent) :
   // lambda expression for the mouse press event on the mapview
   connect(m_mapView, &MapGraphicsView::mouseClick, [this](QMouseEvent& mouseEvent)
   {
-    // get the point from the mouse point
-     Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-     qDebug() << "X: " << mapPoint.x() << "; Y: " << mapPoint.y();
-
-     // create a query parameter object
-     QueryParameters queryParams;
-     QStringList outFields;
-     queryParams.setOutFields(outFields << "*");
-
-     double tolerance = 22;
-     double mapTolerance = tolerance * m_mapView->unitsPerPixel();
-     // create an envelope based on the tolerance
-     Envelope env(mapPoint.x() - mapTolerance, mapPoint.y() - mapTolerance, mapPoint.x() + mapTolerance, mapPoint.y() + mapTolerance, SpatialReference(102100));
-
-     // set the envelope as the geometry of the query param
-     queryParams.setGeometry(env);
-     m_featureLayer->selectFeatures(queryParams, SelectionMode::New);
+     m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 22, 1000);
   });
 
   // create the app ui
   createUi();
-}
-
-// function to count the number of selected features
-void Selection::onSelectionQueryComplete(QUuid taskId)
-{
-  Q_UNUSED(taskId)
-
-  // return if no features selected
-  if (!m_queryResult->iterator().hasNext())
-  {
-    m_selectionResult->setText("No features selected");
-    return;
-  }
-  else // if more than one feature selected
-  {
-    auto count = 0;
-    while (m_queryResult->iterator().hasNext())
-    {
-      // increment the count
-      ++count;
-      // increment the iterator
-      m_queryResult->iterator().next();
-    }
-
-    // print the count
-    QString labelText;
-    labelText = count > 1 ? QString::number(count) + " features selected." : QString::number(count) + " feature selected.";
-    m_selectionResult->setText(labelText);
-  }
 }
 
 // create and add the UI elements
