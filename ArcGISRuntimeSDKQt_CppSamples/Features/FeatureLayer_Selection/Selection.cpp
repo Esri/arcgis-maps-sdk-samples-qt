@@ -55,11 +55,9 @@ Selection::Selection(QWidget* parent) :
   m_featureLayer->setSelectionColor("cyan");
   m_featureLayer->setSelectionWidth(3);
 
-  // once the selection on the feature layer is done
+  // once the identify is done
   connect(m_mapView, &MapGraphicsView::identifyLayerCompleted, [this](QUuid taskId, QList<Esri::ArcGISRuntime::GeoElement*> identifyResults)
   {
-    qDebug() << identifyResults.size();
-
     // clear any existing selection
     m_featureLayer->clearSelection();
     // a list to store the identified elements
@@ -67,7 +65,7 @@ Selection::Selection(QWidget* parent) :
     for (int i = 0; i < identifyResults.size(); i++)
     {
       auto element = identifyResults.at(i);
-      if (dynamic_cast<Feature*>(element))
+      if (static_cast<Feature*>(element))
         // add the element to the list
         identifiedFeatures.append(dynamic_cast<Feature*>(element));
     }
@@ -78,12 +76,15 @@ Selection::Selection(QWidget* parent) :
     QString labelText;
     labelText = count > 1 ? QString::number(count) + " features selected." : QString::number(count) + " feature selected.";
     m_selectionResult->setText(labelText);
+
+    // delete the list
+    qDeleteAll(identifyResults);
   });
 
   // add the featurelayer to the map's operational layers
   m_map->operationalLayers()->append(m_featureLayer);
 
-  // lambda expression for the mouse press event on the mapview
+  // lambda expression for the mouse press event on the mapview...do an identify operation
   connect(m_mapView, &MapGraphicsView::mouseClick, [this](QMouseEvent& mouseEvent)
   {
      m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 22, 1000);
