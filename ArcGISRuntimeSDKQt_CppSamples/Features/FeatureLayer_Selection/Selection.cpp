@@ -62,11 +62,13 @@ Selection::Selection(QWidget* parent) :
 
     // clear any existing selection
     m_featureLayer->clearSelection();
+    // a list to store the identified elements
     QList<Feature*> identifiedFeatures;
     for (int i = 0; i < identifyResults.size(); i++)
     {
       auto element = identifyResults.at(i);
       if (dynamic_cast<Feature*>(element))
+        // add the element to the list
         identifiedFeatures.append(dynamic_cast<Feature*>(element));
     }
     // select the identified features
