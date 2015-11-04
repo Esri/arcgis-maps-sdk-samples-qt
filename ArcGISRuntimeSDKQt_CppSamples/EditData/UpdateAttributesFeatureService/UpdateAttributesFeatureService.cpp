@@ -107,6 +107,8 @@ void UpdateAttributesFeatureService::connectSignals()
             queryParams.setWhereClause(whereClause);
             m_featureTable->queryFeatures(queryParams);
         }
+
+        qDeleteAll(identifyResults);
     });
 
     connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, [this](QUuid, QSharedPointer<FeatureQueryResult> featureQueryResult)

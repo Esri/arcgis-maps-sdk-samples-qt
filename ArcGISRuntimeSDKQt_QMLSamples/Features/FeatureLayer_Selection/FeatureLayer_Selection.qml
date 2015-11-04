@@ -51,18 +51,6 @@ Rectangle {
                     id: featureTable
                     url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
                 }
-
-                onSelectFeaturesStatusChanged: {
-                    if (selectFeaturesStatus === Enums.TaskStatusCompleted) {
-                        var count = 0;
-                        while (selectFeaturesResult.iterator.hasNext) {
-                            selectFeaturesResult.iterator.next();
-                            ++count;
-                        }
-
-                        displayText = "%1 %2 selected.".arg(count).arg(count > 1 ? "features" : "feature");
-                    }
-                }
             }
 
             onLoadStatusChanged: {
@@ -86,23 +74,28 @@ Rectangle {
             }
         }
 
-        QueryParameters {
-            id: params
-            outFields: ["*"]
+        onMouseClicked: {
+            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 22 * scaleFactor, 1000);
         }
 
-        onMouseClicked: {
-            // create an envelope with some tolerance and query for feature selection within that envelope
-            var tolerance = 22 * scaleFactor;
-            var mapTolerance = tolerance * unitsPerPixel;
-            var envJson = {"xmin" : mouse.mapX - mapTolerance, "ymin" : mouse.mapY - mapTolerance, "xmax" : mouse.mapX + mapTolerance, "ymax" : mouse.mapY + mapTolerance,
-                "spatialReference" : {"wkid": 102100}};
-            var envelope = ArcGISRuntimeEnvironment.createObject("Envelope", {"json" : envJson});
+        onIdentifyLayerStatusChanged: {
+            if (identifyLayerStatus === Enums.TaskStatusCompleted) {
+                // clear any previous selections
+                featureLayer.clearSelection();
 
-            // set the envelope as the geometry for the query parameter
-            params.geometry = envelope;
-            // query and select the features
-            featureLayer.selectFeaturesWithQuery(params, Enums.SelectionModeNew);
+                // create an array to store the features
+                var identifiedObjects = [];
+                for (var i = 0; i < identifyLayerResults.length; i++){
+                    var elem = identifyLayerResults[i];
+                    identifiedObjects.push(elem);
+                }
+                // cache the number of features
+                var count = identifyLayerResults.length;
+
+                // select the features in the feature layer
+                featureLayer.selectFeatures(identifiedObjects);
+                displayText = "%1 %2 selected.".arg(count).arg(count > 1 ? "features" : "feature");
+            }
         }
     }
 

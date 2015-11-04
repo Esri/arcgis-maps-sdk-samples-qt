@@ -40,7 +40,6 @@ public:
   virtual ~Selection();
 
 public slots:
-  void onSelectionQueryComplete(QUuid taskId);
 
 private:
   void createUi();
