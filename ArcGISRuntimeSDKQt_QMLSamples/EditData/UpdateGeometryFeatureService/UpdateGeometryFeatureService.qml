@@ -113,18 +113,19 @@ Rectangle {
                 featureLayer.selectedFeatures();
                 featureSelected = false;
             } else {
-                // no feature is selected, so select a new feature
-                // create an envelope with some tolerance and query for feature selection within that envelope
-                var tolerance = 10 * scaleFactor;
-                var mapTolerance = tolerance * unitsPerPixel;
-                var envJson = {"xmin" : mouse.mapX - mapTolerance, "ymin" : mouse.mapY - mapTolerance, "xmax" : mouse.mapX + mapTolerance, "ymax" : mouse.mapY + mapTolerance,
-                    "spatialReference" : {"wkid": 102100}};
-                var envelope = ArcGISRuntimeEnvironment.createObject("Envelope", {"json" : envJson});
+                // call identify on the mapview
+                mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10 * scaleFactor, 1);
+            }
+        }
 
-                // set the envelope as the geometry for the query parameter
-                params.geometry = envelope;
-                // query and select the features
-                featureLayer.selectFeaturesWithQuery(params, Enums.SelectionModeNew);
+        onIdentifyLayerStatusChanged: {
+            if (identifyLayerStatus === Enums.TaskStatusCompleted) {
+                if (identifyLayerResults.length > 0) {
+                    // get the objectid of the identifed object
+                    params.objectIds = [identifyLayerResults[0].attributes["objectid"]];
+                    // query for the feature using the objectid
+                    featureLayer.selectFeaturesWithQuery(params, Enums.SelectionModeNew);
+                }
             }
         }
     }
