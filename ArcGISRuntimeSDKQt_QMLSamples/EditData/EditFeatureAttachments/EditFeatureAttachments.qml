@@ -71,10 +71,10 @@ Rectangle {
                         if (!selectFeaturesResult.iterator.hasNext)
                             return;
 
-                        selectedFeature  = selectFeaturesResult.iterator.next();
+                        selectedFeature = selectFeaturesResult.iterator.next();
                         damageType = selectedFeature.attributes["typdamage"];
                         // fetch the attachment infos from the service
-                        selectedFeature.attachmentListModel.fetchAttachmentInfos();
+                        //selectedFeature.attachmentListModel.fetchAttachmentInfos();
 
                         // show the callout
                         callout.x = mousePointX;
@@ -103,7 +103,7 @@ Rectangle {
             featureLayer.clearSelection();
             callout.visible = false;
             attachmentWindow.visible = false;
-            selectedFeature = null;
+            //selectedFeature = null;
             mousePointX = mouse.x;
             mousePointY = mouse.y - callout.height;
 
@@ -268,11 +268,11 @@ Rectangle {
                                 selectedFeature.attachmentListModel.deleteAttachmentWithIndex(attachmentsList.currentIndex);
 
                                 // once the status is complete, call apply edits to apply edits from the feature table to the service
-                                selectedFeature.attachmentListModel.deleteAttachmentStatusChanged.connect(function () {
-                                    if (selectedFeature.attachmentListModel.deleteAttachmentStatus === Enums.TaskStatusCompleted) {
-                                        featureTable.applyEdits();
-                                    }
-                                });
+//                                selectedFeature.attachmentListModel.deleteAttachmentStatusChanged.connect(function () {
+//                                    if (selectedFeature.attachmentListModel.deleteAttachmentStatus === Enums.TaskStatusCompleted) {
+//                                        featureTable.applyEdits();
+//                                    }
+//                                });
                             }
                         }
                     }
@@ -349,11 +349,11 @@ Rectangle {
 
             // connect to the status changed signal
             // once the status is complete, call apply edits to apply edits from the feature table to the service
-            selectedFeature.attachmentListModel.addAttachmentStatusChanged.connect(function () {
-                if (selectedFeature.attachmentListModel.addAttachmentStatus === Enums.TaskStatusCompleted) {
-                    featureTable.applyEdits();
-                }
-            });
+//            selectedFeature.attachmentListModel.addAttachmentStatusChanged.connect(function () {
+//                if (selectedFeature.attachmentListModel.addAttachmentStatus === Enums.TaskStatusCompleted) {
+//                    featureTable.applyEdits();
+//                }
+//            });
         }
     }
 
