@@ -99,9 +99,6 @@ void EditFeatureAttachments::connectSignals()
             // set selected feature member
             m_selectedFeature = static_cast<ArcGISFeature*>(identifyResults.at(0));
 
-            // get attachment info
-            m_selectedFeature->attachmentListModel()->fetchAttachmentInfos();
-
             // update the combo box with attachments once complete
             connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::fetchAttachmentInfosCompleted, [this](QUuid, const QList<QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>>& attachments)
             {
@@ -109,19 +106,19 @@ void EditFeatureAttachments::connectSignals()
             });
 
 
-            // connect to deleteAttachmentCompleted to know when the delete has occurred successfully
-            connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::deleteAttachmentCompleted, [this](QUuid)
-            {
-                // call apply edits on the feature table to apply the edits to the service
-                m_featureTable->applyEdits();
-            });
+//            // connect to deleteAttachmentCompleted to know when the delete has occurred successfully
+//            connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::deleteAttachmentCompleted, [this](QUuid)
+//            {
+//                // call apply edits on the feature table to apply the edits to the service
+//                m_featureTable->applyEdits();
+//            });
 
-            // connect to the addAttachmentCompleted signal from the AttachmentListModel
-            connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::addAttachmentCompleted, [this](QUuid, const QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>&)
-            {
-                // once it is complete, call apply edits on the feature table
-                m_featureTable->applyEdits();
-            });
+//            // connect to the addAttachmentCompleted signal from the AttachmentListModel
+//            connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::addAttachmentCompleted, [this](QUuid, const QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>&)
+//            {
+//                // once it is complete, call apply edits on the feature table
+//                m_featureTable->applyEdits();
+//            });
         }
     });
 
@@ -136,7 +133,6 @@ void EditFeatureAttachments::connectSignals()
             if (!featureEditResult->isCompletedWithErrors())
             {
                 qDebug() << "Successfully edited feature attachments";
-                m_selectedFeature->attachmentListModel()->fetchAttachmentInfos();
             }
             else
             {
