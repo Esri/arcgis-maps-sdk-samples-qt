@@ -14,13 +14,9 @@
 #ifndef EDIT_FEATURE_ATTACHMENTS_H
 #define EDIT_FEATURE_ATTACHMENTS_H
 
-#include "EditFeatureAttachments.h"
-#include <QPushButton>
-#include <QComboBox>
-#include <QFileDialog>
+#include <QWidget>
 #include <QList>
 #include <QSharedPointer>
-#include <QMessageBox>
 #include <QMetaObject>
 
 namespace Esri {
@@ -34,6 +30,11 @@ namespace Esri {
     }
 }
 
+class QPushButton;
+class QComboBox;
+class QFileDialog;
+class QMessageBox;
+
 class EditFeatureAttachments : public QWidget
 {
   Q_OBJECT
@@ -41,6 +42,11 @@ class EditFeatureAttachments : public QWidget
 public:
   explicit EditFeatureAttachments(QWidget* parent = 0);
   ~EditFeatureAttachments();
+
+private:
+  void createUi();
+  void connectSignals();
+  void updateComboBox(const QList<QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>>&);
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
@@ -56,9 +62,6 @@ private:
   QPushButton* m_viewButton;
   QFileDialog* m_fileDialog;
   QMetaObject::Connection m_fetchDataConnection;
-  void createUi();
-  void connectSignals();
-  void updateComboBox(const QList<QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>>&);
 };
 
 #endif // EDIT_FEATURE_ATTACHMENTS_H

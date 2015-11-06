@@ -19,12 +19,9 @@
 #include "FeatureLayer.h"
 #include "Point.h"
 #include "Feature.h"
-#include "QueryParameters.h"
-#include "Envelope.h"
 #include <QUrl>
 #include <QVBoxLayout>
 #include <QUuid>
-#include <QStringList>
 #include <QPushButton>
 #include <QGraphicsProxyWidget>
 

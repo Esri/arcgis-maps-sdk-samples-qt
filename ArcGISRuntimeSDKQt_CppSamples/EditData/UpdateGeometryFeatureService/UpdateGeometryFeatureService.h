@@ -14,7 +14,6 @@
 #ifndef UPDATE_GEOMETRY_FEATURES_FEATURE_SERVICE_H
 #define UPDATE_GEOMETRY_FEATURES_FEATURE_SERVICE_H
 
-#include "UpdateGeometryFeatureService.h"
 #include <QWidget>
 
 namespace Esri {
@@ -36,13 +35,15 @@ public:
   ~UpdateGeometryFeatureService();
 
 private:
+  void connectSignals();
+
+private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
   Esri::ArcGISRuntime::Feature* m_selectedFeature;
   bool m_isFeatureSelected;
-  void connectSignals();
 };
 
 #endif // UPDATE_GEOMETRY_FEATURES_FEATURE_SERVICE_H

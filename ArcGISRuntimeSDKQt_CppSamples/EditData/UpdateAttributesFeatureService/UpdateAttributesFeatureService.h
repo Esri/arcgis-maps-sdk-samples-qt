@@ -14,8 +14,7 @@
 #ifndef UPDATE_ATTRIBUTES_FEATURES_FEATURE_SERVICE_H
 #define UPDATE_ATTRIBUTES_FEATURES_FEATURE_SERVICE_H
 
-#include "UpdateAttributesFeatureService.h"
-#include <QInputDialog>
+#include <QWidget>
 
 namespace Esri {
     namespace ArcGISRuntime {
@@ -27,6 +26,8 @@ namespace Esri {
     }
 }
 
+class QInputDialog;
+
 class UpdateAttributesFeatureService : public QWidget
 {
   Q_OBJECT
@@ -36,14 +37,16 @@ public:
   ~UpdateAttributesFeatureService();
 
 private:
+  void createUi();
+  void connectSignals();
+
+private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
   Esri::ArcGISRuntime::Feature* m_selectedFeature;
   QInputDialog* m_inputDialog;
-  void createUi();
-  void connectSignals();
 };
 
 #endif // UPDATE_ATTRIBUTES_FEATURES_FEATURE_SERVICE_H
