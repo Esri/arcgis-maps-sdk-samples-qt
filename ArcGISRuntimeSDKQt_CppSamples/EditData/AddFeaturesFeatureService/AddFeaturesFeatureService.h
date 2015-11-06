@@ -14,7 +14,6 @@
 #ifndef ADD_FEATURES_FEATURE_SERVICE_H
 #define ADD_FEATURES_FEATURE_SERVICE_H
 
-#include "AddFeaturesFeatureService.h"
 #include <QWidget>
 
 namespace Esri {
@@ -35,11 +34,13 @@ public:
   ~AddFeaturesFeatureService();
 
 private:
+  void connectSignals();
+
+private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-  void connectSignals();
 };
 
 #endif // ADD_FEATURES_FEATURE_SERVICE_H

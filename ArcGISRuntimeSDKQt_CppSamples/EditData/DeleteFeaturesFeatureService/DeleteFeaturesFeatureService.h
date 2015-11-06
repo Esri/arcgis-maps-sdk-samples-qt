@@ -14,8 +14,7 @@
 #ifndef DELETE_FEATURES_FEATURE_SERVICE_H
 #define DELETE_FEATURES_FEATURE_SERVICE_H
 
-#include "DeleteFeaturesFeatureService.h"
-#include <QPushButton>
+#include <QWidget>
 
 namespace Esri {
     namespace ArcGISRuntime {
@@ -27,6 +26,8 @@ namespace Esri {
     }
 }
 
+class QPushButton;
+
 class DeleteFeaturesFeatureService : public QWidget
 {
   Q_OBJECT
@@ -36,14 +37,16 @@ public:
   ~DeleteFeaturesFeatureService();
 
 private:
+  void createUi();
+  void connectSignals();
+
+private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
   Esri::ArcGISRuntime::Feature* m_selectedFeature;
   QPushButton* m_DeleteButton;
-  void createUi();
-  void connectSignals();
 };
 
 #endif // DELETE_FEATURES_FEATURE_SERVICE_H

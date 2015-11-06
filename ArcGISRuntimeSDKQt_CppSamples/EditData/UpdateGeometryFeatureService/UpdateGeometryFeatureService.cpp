@@ -21,7 +21,6 @@
 #include "Feature.h"
 #include <QUrl>
 #include <QVBoxLayout>
-#include <QMap>
 #include <QUuid>
 
 using namespace Esri::ArcGISRuntime;

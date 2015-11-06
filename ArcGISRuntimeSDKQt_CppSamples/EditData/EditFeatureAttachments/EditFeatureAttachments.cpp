@@ -23,6 +23,7 @@
 #include "Envelope.h"
 #include "AttachmentInfo.h"
 #include "AttachmentListModel.h"
+#include <QComboBox>
 #include <QUrl>
 #include <QVBoxLayout>
 #include <QUuid>
