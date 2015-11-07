@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ArcGISTiledLayerUrl>("Esri.Samples", 1, 0, "ArcGISTiledLayerUrlSample");
 
     // Intialize application view
-    QQuickView view(QUrl("qrc:/Samples/Layers/ArcGISTiledLayerUrl/main.qml"));
+    QQuickView view(QUrl("qrc:/Samples/Layers/ArcGISTiledLayerUrl/ArcGISTiledLayerUrl.qml"));
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.show();
 

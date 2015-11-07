@@ -17,7 +17,7 @@ import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
 ChangeBasemapSample {
-    id: sample
+    id: changeBasemapSample
     width: 800
     height: 600
 
@@ -41,7 +41,7 @@ ChangeBasemapSample {
         model: ["Topographic","Streets","Imagery","Oceans"]
         onCurrentTextChanged: {
             // Call C++ member when the current selection changes
-            sample.changeBasemap(currentText);
+            changeBasemapSample.changeBasemap(currentText);
         }
     }
 

@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<DisplayMap>("Esri.Samples", 1, 0, "DisplayMapSample");
 
     // Intialize application view
-    QQuickView view(QUrl("qrc:/Samples/Maps/DisplayMap/main.qml"));
+    QQuickView view(QUrl("qrc:/Samples/Maps/DisplayMap/DisplayMap.qml"));
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.show();
 

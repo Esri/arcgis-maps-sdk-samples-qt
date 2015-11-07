@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ChangeBasemap>("Esri.Samples", 1, 0, "ChangeBasemapSample");
 
     // Intialize application view
-    QQuickView view(QUrl("qrc:/Samples/Maps/ChangeBasemap/main.qml"));
+    QQuickView view(QUrl("qrc:/Samples/Maps/ChangeBasemap/ChangeBasemap.qml"));
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     view.show();
 
