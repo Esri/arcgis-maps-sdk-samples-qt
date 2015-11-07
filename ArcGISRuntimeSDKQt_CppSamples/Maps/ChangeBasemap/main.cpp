@@ -11,23 +11,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <QSettings>
+#include <QGuiApplication>
+#include <QQuickView>
+#include <QCommandLineParser>
+#include <QDir>
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
+#include "MapQuickView.h"
 #include "ChangeBasemap.h"
-#include <QApplication>
-#include <QMessageBox>
+#include "ArcGISRuntimeEnvironment.h"
+
+using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
-  QApplication application(argc, argv);
-  
+    QGuiApplication app(argc, argv);
+
 #ifdef Q_OS_WIN
-  // Force usage of OpenGL ES through ANGLE on Windows
-  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+    // Force usage of OpenGL ES through ANGLE on Windows
+    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-  ChangeBasemap applicationWindow;
-  applicationWindow.setMinimumWidth(800);
-  applicationWindow.setMinimumHeight(600);
-  applicationWindow.show();
+    // Register the map view for QML
+    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+    qmlRegisterType<ChangeBasemap>("Esri.Samples", 1, 0, "ChangeBasemapSample");
 
-  return application.exec();
+    // Intialize application view
+    QQuickView view(QUrl("qrc:/Samples/Maps/ChangeBasemap/main.qml"));
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    view.show();
+
+    return app.exec();
 }
+
+
