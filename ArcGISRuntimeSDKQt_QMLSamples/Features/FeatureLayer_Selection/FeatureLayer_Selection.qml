@@ -35,6 +35,7 @@ Rectangle {
             top: parent.top
             bottom: messageBar.top
         }
+        wrapAroundEnabled: false
 
         Map {
             id: map
