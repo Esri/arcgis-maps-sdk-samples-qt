@@ -3,7 +3,7 @@
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# You may obtain a copy of the License at:
 # http://www.apache.org/licenses/LICENSE-2.0
 
 # Unless required by applicable law or agreed to in writing, software
@@ -17,46 +17,19 @@ mac {
     cache()
 }
 
-#-------------------------------------------------------------------------------
+CONFIG += c++11 esri_runtime_qt100_0_0
 
-CONFIG += c++11 arcgis_runtime_qml_cpp100_0_0
+QT += core gui opengl xml network positioning sensors
 
-QT += qml quick positioning sensors
+win32:CONFIG += \
+  embed_manifest_exe
 
-TEMPLATE = app
 TARGET = ChangeBasemap
-
-#-------------------------------------------------------------------------------
-
-HEADERS += \
-    ChangeBasemap.h
+TEMPLATE = app
 
 SOURCES += \
     main.cpp \
     ChangeBasemap.cpp
 
-RESOURCES += ChangeBasemap.qrc
-
-#-------------------------------------------------------------------------------
-
-win32 {
-    LIBS += \
-        Ole32.lib
-}
-
-ios {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-
-    OTHER_FILES += \
-        $$PWD/Info.plist
-
-    QMAKE_INFO_PLIST = $$PWD/Info.plist
-}
-
-android {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-}
-
-
+HEADERS  += \
+    ChangeBasemap.h

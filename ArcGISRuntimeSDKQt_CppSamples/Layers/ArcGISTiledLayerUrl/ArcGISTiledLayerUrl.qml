@@ -11,34 +11,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ARCGISTILEDLAYERURL_H
-#define ARCGISTILEDLAYERURL_H
+import QtQuick 2.3
+import QtQuick.Controls 1.2
+import Esri.Samples 1.0
+import Esri.ArcGISExtras 1.1
 
-namespace Esri
-{
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
+ArcGISTiledLayerUrlSample {
+    width: 800
+    height: 600
+
+    property double scaleFactor: System.displayScaleFactor
+
+    // add a mapView component
+    MapView {
+        anchors.fill: parent
+        objectName: "mapView"
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
     }
 }
 
-#include <QQuickItem>
-
-class ArcGISTiledLayerUrl : public QQuickItem
-{
-    Q_OBJECT
-
-public:
-    ArcGISTiledLayerUrl(QQuickItem* parent = 0);
-    ~ArcGISTiledLayerUrl();
-
-    void componentComplete() Q_DECL_OVERRIDE;
-
-private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-};
-
-#endif // ARCGISTILEDLAYERURL_H
 

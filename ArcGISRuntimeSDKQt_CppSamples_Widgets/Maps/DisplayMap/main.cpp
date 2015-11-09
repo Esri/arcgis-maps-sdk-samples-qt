@@ -11,34 +11,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ARCGISTILEDLAYERURL_H
-#define ARCGISTILEDLAYERURL_H
+#include "DisplayMap.h"
+#include <QApplication>
+#include <QMessageBox>
 
-namespace Esri
+int main(int argc, char *argv[])
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+  QApplication application(argc, argv);
+  
+#ifdef Q_OS_WIN
+  // Force usage of OpenGL ES through ANGLE on Windows
+  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+#endif
+
+  DisplayMap applicationWindow;
+  applicationWindow.setMinimumWidth(800);
+  applicationWindow.setMinimumHeight(600);
+  applicationWindow.show();
+
+  return application.exec();
 }
-
-#include <QQuickItem>
-
-class ArcGISTiledLayerUrl : public QQuickItem
-{
-    Q_OBJECT
-
-public:
-    ArcGISTiledLayerUrl(QQuickItem* parent = 0);
-    ~ArcGISTiledLayerUrl();
-
-    void componentComplete() Q_DECL_OVERRIDE;
-
-private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-};
-
-#endif // ARCGISTILEDLAYERURL_H
-

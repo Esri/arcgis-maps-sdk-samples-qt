@@ -11,34 +11,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ARCGISTILEDLAYERURL_H
-#define ARCGISTILEDLAYERURL_H
+#ifndef CHANGE_BASEMAP_H
+#define CHANGE_BASEMAP_H
 
-namespace Esri
-{
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+namespace Esri {
+namespace ArcGISRuntime {
+  class Map;
+  class MapGraphicsView;
+  }
 }
 
-#include <QQuickItem>
+class QComboBox;
 
-class ArcGISTiledLayerUrl : public QQuickItem
+#include <QWidget>
+
+class ChangeBasemap : public QWidget
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    ArcGISTiledLayerUrl(QQuickItem* parent = 0);
-    ~ArcGISTiledLayerUrl();
-
-    void componentComplete() Q_DECL_OVERRIDE;
+  explicit ChangeBasemap(QWidget* parent = 0);
+  ~ChangeBasemap();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::Map* m_map;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
+  QComboBox* m_basemapCombo;
 };
 
-#endif // ARCGISTILEDLAYERURL_H
-
+#endif // CHANGE_BASEMAP_H
