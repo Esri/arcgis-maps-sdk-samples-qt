@@ -30,6 +30,7 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
+        wrapAroundEnabled: false
 
         Map {
             // Set the initial basemap to Streets

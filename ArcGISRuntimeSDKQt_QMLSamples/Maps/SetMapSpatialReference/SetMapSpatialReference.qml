@@ -23,6 +23,7 @@ Rectangle {
 
     MapView {
         anchors.fill: parent
+        wrapAroundEnabled: false
         Map {
             id: map
             // Specify the SpatialReference
