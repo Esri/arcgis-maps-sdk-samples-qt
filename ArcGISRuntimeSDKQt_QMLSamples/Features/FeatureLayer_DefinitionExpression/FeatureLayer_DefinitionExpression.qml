@@ -28,7 +28,7 @@ Rectangle {
         id: mv
 
         anchors.fill: parent
-        wrapAroundEnabled: false
+        wrapAroundMode: Enums.WrapAroundModeDisabled
 
         Map {
             BasemapTopographic {}
