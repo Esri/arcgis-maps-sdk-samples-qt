@@ -269,8 +269,8 @@ Rectangle {
 
     // iterate through the tiled sublayers and request legend info for all sublayers
     function getTiledLayerInfos() {
-        if (tiledSublayerIndex < tiledLayer.tiledSublayers.count) {
-            var subLayer = tiledLayer.tiledSublayers.get(tiledSublayerIndex);
+        if (tiledSublayerIndex < tiledLayer.tiledSublayers.length) {
+            var subLayer = tiledLayer.tiledSublayers[tiledSublayerIndex];
             subLayer.fetchLegendInfos();
             subLayer.fetchLegendInfosStatusChanged.connect(function () {
                 if (subLayer.fetchLegendInfosStatus === Enums.TaskStatusCompleted) {
