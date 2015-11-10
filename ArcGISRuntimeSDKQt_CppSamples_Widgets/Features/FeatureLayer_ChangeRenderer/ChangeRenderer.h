@@ -32,7 +32,7 @@ class ChangeRenderer : public QWidget
 
 public:
   explicit ChangeRenderer(QWidget* parent = 0);
-  virtual ~ChangeRenderer();
+  ~ChangeRenderer();
 
 public slots:
   void onChangeRendererClicked();

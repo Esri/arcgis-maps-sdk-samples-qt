@@ -32,7 +32,7 @@ class DefinitionExpression : public QWidget
 
 public:
   explicit DefinitionExpression(QWidget* parent = 0);
-  virtual ~DefinitionExpression();
+  ~DefinitionExpression();
 
 private:
   void createUi();

@@ -21,11 +21,8 @@
 #include "SpatialReference.h"
 #include "FeatureLayer.h"
 #include "ServiceFeatureTable.h"
-#include "QueryParameters.h"
-#include "IdentifyLayerResult.h"
 #include <QGraphicsProxyWidget>
 #include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QLabel>
 
 using namespace Esri::ArcGISRuntime;
