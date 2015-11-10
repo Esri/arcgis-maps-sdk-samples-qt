@@ -4,6 +4,5 @@
         <file>ArcGISMapImageLayerUrl.png</file>
         <file>ArcGISMapImageLayerUrl.qml</file>
         <file>ArcGISMapImageLayerUrl.html</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>

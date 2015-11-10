@@ -4,7 +4,6 @@
         <file>ManageBookmarks.png</file>
         <file>ManageBookmarks.qml</file>
         <file>ManageBookmarks.html</file>
-        <file>main.qml</file>
         <file>add.png</file>
     </qresource>
 </RCC>

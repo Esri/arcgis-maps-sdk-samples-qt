@@ -4,6 +4,5 @@
         <file>SetInitialMapArea.png</file>
         <file>SetInitialMapArea.qml</file>
         <file>SetInitialMapArea.html</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>

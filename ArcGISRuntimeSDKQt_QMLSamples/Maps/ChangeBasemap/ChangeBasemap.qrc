@@ -4,6 +4,5 @@
         <file>ChangeBasemap.png</file>
         <file>ChangeBasemap.qml</file>
         <file>ChangeBasemap.html</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>

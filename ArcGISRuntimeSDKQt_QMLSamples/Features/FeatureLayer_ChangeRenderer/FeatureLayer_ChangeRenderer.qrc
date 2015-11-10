@@ -4,6 +4,5 @@
         <file alias="sample.json">FeatureLayer_ChangeRenderer.json</file>
         <file>FeatureLayer_ChangeRenderer.png</file>
         <file>FeatureLayer_ChangeRenderer.qml</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>

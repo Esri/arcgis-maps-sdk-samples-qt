@@ -99,7 +99,6 @@ Rectangle {
         }
 
         onMouseClicked: {
-            console.log(JSON.stringify(mouse.mapPoint.json))
             // reset to defaults
             featureLayer.clearSelection();
             callout.visible = false;

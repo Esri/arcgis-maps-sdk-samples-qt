@@ -4,6 +4,5 @@
         <file alias="sample.json">ServiceFeatureTable_NoCache.json</file>
         <file>ServiceFeatureTable_NoCache.png</file>
         <file>ServiceFeatureTable_NoCache.qml</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>
