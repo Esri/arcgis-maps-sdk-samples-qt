@@ -28,7 +28,7 @@ Rectangle {
         id: mapView
 
         anchors.fill: parent
-        wrapAroundEnabled: false
+        wrapAroundMode: Enums.WrapAroundModeDisabled
 
         Map {
             BasemapLightGrayCanvas {}
