@@ -4,6 +4,5 @@
         <file>SetMapSpatialReference.png</file>
         <file>SetMapSpatialReference.qml</file>
         <file>SetMapSpatialReference.html</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>

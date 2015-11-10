@@ -4,6 +4,5 @@
         <file alias="sample.json">GORenderers.json</file>
         <file>GORenderers.png</file>
         <file>GORenderers.qml</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>

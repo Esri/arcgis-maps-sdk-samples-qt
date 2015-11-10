@@ -4,6 +4,5 @@
         <file>MapLoaded.png</file>
         <file>MapLoaded.qml</file>
         <file>MapLoaded.html</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>

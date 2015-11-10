@@ -4,6 +4,5 @@
         <file>ChangeViewpoint.png</file>
         <file>ChangeViewpoint.qml</file>
         <file>ChangeViewpoint.html</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>
