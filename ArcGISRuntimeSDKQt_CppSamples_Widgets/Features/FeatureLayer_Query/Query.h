@@ -34,7 +34,7 @@ class Query : public QWidget
 
 public:
   explicit Query(QWidget* parent = 0);
-  virtual ~Query();
+  ~Query();
 
 public slots:
   void onQueryClicked();

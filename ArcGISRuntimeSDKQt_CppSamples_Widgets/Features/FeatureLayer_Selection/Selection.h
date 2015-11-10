@@ -24,12 +24,9 @@ namespace ArcGISRuntime {
   }
 }
 
-class QPushButton;
 class QLabel;
 
 #include <QWidget>
-#include <memory>
-#include <QUuid>
 
 class Selection : public QWidget
 {
@@ -37,7 +34,7 @@ class Selection : public QWidget
 
 public:
   explicit Selection(QWidget* parent = 0);
-  virtual ~Selection();
+  ~Selection();
 
 public slots:
 
