@@ -11,11 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef DELETE_FEATURES_FEATURE_SERVICE_H
-#define DELETE_FEATURES_FEATURE_SERVICE_H
+#ifndef ADD_FEATURES_FEATURE_SERVICE_H
+#define ADD_FEATURES_FEATURE_SERVICE_H
 
-#include "DeleteFeaturesFeatureService.h"
-#include <QPushButton>
+#include <QWidget>
 
 namespace Esri {
     namespace ArcGISRuntime {
@@ -23,27 +22,25 @@ namespace Esri {
         class MapGraphicsView;
         class FeatureLayer;
         class ServiceFeatureTable;
-        class Feature;
     }
 }
 
-class DeleteFeaturesFeatureService : public QWidget
+class AddFeaturesFeatureService : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit DeleteFeaturesFeatureService(QWidget* parent = 0);
-  ~DeleteFeaturesFeatureService();
+  explicit AddFeaturesFeatureService(QWidget* parent = 0);
+  ~AddFeaturesFeatureService();
+
+private:
+  void connectSignals();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-  Esri::ArcGISRuntime::Feature* m_selectedFeature;
-  QPushButton* m_DeleteButton;
-  void createUi();
-  void connectSignals();
 };
 
-#endif // DELETE_FEATURES_FEATURE_SERVICE_H
+#endif // ADD_FEATURES_FEATURE_SERVICE_H

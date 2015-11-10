@@ -11,11 +11,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef UPDATE_ATTRIBUTES_FEATURES_FEATURE_SERVICE_H
-#define UPDATE_ATTRIBUTES_FEATURES_FEATURE_SERVICE_H
+#ifndef EDIT_FEATURE_ATTACHMENTS_H
+#define EDIT_FEATURE_ATTACHMENTS_H
 
-#include "UpdateAttributesFeatureService.h"
-#include <QInputDialog>
+#include <QWidget>
+#include <QList>
+#include <QSharedPointer>
+#include <QMetaObject>
 
 namespace Esri {
     namespace ArcGISRuntime {
@@ -23,27 +25,43 @@ namespace Esri {
         class MapGraphicsView;
         class FeatureLayer;
         class ServiceFeatureTable;
-        class Feature;
+        class AttachmentInfo;
+        class ArcGISFeature;
     }
 }
 
-class UpdateAttributesFeatureService : public QWidget
+class QPushButton;
+class QComboBox;
+class QFileDialog;
+class QMessageBox;
+
+class EditFeatureAttachments : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit UpdateAttributesFeatureService(QWidget* parent = 0);
-  ~UpdateAttributesFeatureService();
+  explicit EditFeatureAttachments(QWidget* parent = 0);
+  ~EditFeatureAttachments();
+
+private:
+  void createUi();
+  void connectSignals();
+  void updateComboBox(const QList<QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>>&);
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-  Esri::ArcGISRuntime::Feature* m_selectedFeature;
-  QInputDialog* m_inputDialog;
-  void createUi();
-  void connectSignals();
+  Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature;
+  QList<QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>> m_attachmentInfos;
+  QMessageBox* m_messageBox;
+  QComboBox* m_comboBox;
+  QPushButton* m_addButton;
+  QPushButton* m_deleteButton;
+  QPushButton* m_viewButton;
+  QFileDialog* m_fileDialog;
+  QMetaObject::Connection m_fetchDataConnection;
 };
 
-#endif // UPDATE_ATTRIBUTES_FEATURES_FEATURE_SERVICE_H
+#endif // EDIT_FEATURE_ATTACHMENTS_H

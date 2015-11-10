@@ -12,39 +12,41 @@
 // limitations under the License.
 
 #include "ArcGISTiledLayerUrl.h"
+
 #include "Map.h"
-#include "MapGraphicsView.h"
+#include "MapQuickView.h"
 #include "Basemap.h"
 #include "ArcGISTiledLayer.h"
 #include <QUrl>
-#include <QVBoxLayout>
 
 using namespace Esri::ArcGISRuntime;
 
-ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
-  QWidget(parent)
+ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QQuickItem* parent) :
+    QQuickItem(parent)
 {
-    // create the URL pointing to the tiled map service
-    QUrl tiledLayerUrl("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
-
-    // construct the ArcGISTiledLayer using the URL
-    m_tiledLayer = new ArcGISTiledLayer(tiledLayerUrl, this);
-
-    // create a Basemap and pass in the ArcGISTiledLayer
-    m_basemap = new Basemap(m_tiledLayer, this);
-
-    // create a Map by passing in the Basemap
-    m_map = new Map(m_basemap, this);
-
-    // add the Map to a MapGraphicsView
-    m_mapView = new MapGraphicsView(m_map, this);
-
-    // setup the UI
-    QVBoxLayout *vBoxLayout = new QVBoxLayout();
-    vBoxLayout->addWidget(m_mapView);
-    setLayout(vBoxLayout);
 }
 
+// destructor
 ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
 {
 }
+
+void ArcGISTiledLayerUrl::componentComplete()
+{
+    QQuickItem::componentComplete();
+
+    // find QML MapView component
+    m_mapView = findChild<MapQuickView*>("mapView");
+
+    // create a new tiled layer
+    ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"), this);
+    // create a new basemap instance
+    Basemap* basemap = new Basemap(this);
+    // add the tiled layer to the basemap
+    basemap->baseLayers()->append(tiledLayer);
+    // create a new map instance
+    m_map = new Map(basemap, this);
+    // set map on the map view
+    m_mapView->setMap(m_map);
+}
+

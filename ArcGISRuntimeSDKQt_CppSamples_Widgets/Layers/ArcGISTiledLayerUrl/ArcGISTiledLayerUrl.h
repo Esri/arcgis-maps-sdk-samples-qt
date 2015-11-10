@@ -11,35 +11,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ADD_FEATURES_FEATURE_SERVICE_H
-#define ADD_FEATURES_FEATURE_SERVICE_H
-
-#include "AddFeaturesFeatureService.h"
-#include <QWidget>
+#ifndef ARCGISTILEDLAYER_URL_H
+#define ARCGISTILEDLAYER_URL_H
 
 namespace Esri {
-    namespace ArcGISRuntime {
-        class Map;
-        class MapGraphicsView;
-        class FeatureLayer;
-        class ServiceFeatureTable;
-    }
+namespace ArcGISRuntime {
+    class Map;
+    class MapGraphicsView;
+    class Basemap;
+    class ArcGISTiledLayer;
+  }
 }
 
-class AddFeaturesFeatureService : public QWidget
+#include <QWidget>
+
+class ArcGISTiledLayerUrl : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit AddFeaturesFeatureService(QWidget* parent = 0);
-  ~AddFeaturesFeatureService();
+  explicit ArcGISTiledLayerUrl(QWidget* parent = 0);
+  ~ArcGISTiledLayerUrl();
 
 private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
-  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-  void connectSignals();
+  Esri::ArcGISRuntime::Basemap* m_basemap;
+  Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer;
+  QString m_path;
 };
 
-#endif // ADD_FEATURES_FEATURE_SERVICE_H
+#endif // ARCGISTILEDLAYER_URL_H

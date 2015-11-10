@@ -11,34 +11,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ARCGISTILEDLAYER_URL_H
-#define ARCGISTILEDLAYER_URL_H
+#ifndef ARCGISTILEDLAYERURL_H
+#define ARCGISTILEDLAYERURL_H
 
-namespace Esri {
-namespace ArcGISRuntime {
-    class Map;
-    class MapGraphicsView;
-    class Basemap;
-    class ArcGISTiledLayer;
-  }
+namespace Esri
+{
+    namespace ArcGISRuntime
+    {
+        class Map;
+        class MapQuickView;
+    }
 }
 
-#include <QWidget>
+#include <QQuickItem>
 
-class ArcGISTiledLayerUrl : public QWidget
+class ArcGISTiledLayerUrl : public QQuickItem
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit ArcGISTiledLayerUrl(QWidget* parent = 0);
-  ~ArcGISTiledLayerUrl();
+    ArcGISTiledLayerUrl(QQuickItem* parent = 0);
+    ~ArcGISTiledLayerUrl();
+
+    void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
-  Esri::ArcGISRuntime::Basemap* m_basemap;
-  Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer;
-  QString m_path;
+    Esri::ArcGISRuntime::Map* m_map;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView;
 };
 
-#endif // ARCGISTILEDLAYER_URL_H
+#endif // ARCGISTILEDLAYERURL_H
+

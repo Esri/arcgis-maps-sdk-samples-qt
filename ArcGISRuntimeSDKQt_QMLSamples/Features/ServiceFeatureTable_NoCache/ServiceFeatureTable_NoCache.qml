@@ -28,6 +28,7 @@ Rectangle {
         id: mapView
 
         anchors.fill: parent
+        wrapAroundEnabled: false
 
         Map {
             BasemapTopographic {}

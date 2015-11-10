@@ -11,32 +11,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef CHANGE_BASEMAP_H
-#define CHANGE_BASEMAP_H
+#ifndef CHANGEBASEMAP_H
+#define CHANGEBASEMAP_H
 
-namespace Esri {
-namespace ArcGISRuntime {
-  class Map;
-  class MapGraphicsView;
-  }
+namespace Esri
+{
+    namespace ArcGISRuntime
+    {
+        class Map;
+        class MapQuickView;
+    }
 }
 
-class QComboBox;
+#include <QQuickItem>
 
-#include <QWidget>
-
-class ChangeBasemap : public QWidget
+class ChangeBasemap : public QQuickItem
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit ChangeBasemap(QWidget* parent = 0);
-  ~ChangeBasemap();
+    ChangeBasemap(QQuickItem* parent = 0);
+    ~ChangeBasemap();
+
+    void componentComplete() Q_DECL_OVERRIDE;
+    Q_INVOKABLE void changeBasemap(QString basemap);
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
-  QComboBox* m_basemapCombo;
+    Esri::ArcGISRuntime::Map* m_map;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView;
 };
 
-#endif // CHANGE_BASEMAP_H
+#endif // CHANGEBASEMAP_H
+
