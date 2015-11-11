@@ -1,5 +1,3 @@
-// [WriteFile Name=ChangeBasemap, Category=Maps]
-// [Legal]
 // Copyright 2015 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,71 +10,52 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// [Legal]
 
 #include "ChangeBasemap.h"
+
 #include "Map.h"
-#include "MapGraphicsView.h"
-#include <QComboBox>
-#include <QVBoxLayout>
-#include <QGraphicsProxyWidget>
+#include "MapQuickView.h"
+#include "Basemap.h"
 
 using namespace Esri::ArcGISRuntime;
 
-ChangeBasemap::ChangeBasemap(QWidget* parent) :
-    QWidget(parent)
-{        
-    // Create a map initially using the topographic basemap
-    m_map = new Map(Basemap::topographic(this), this);
-
-    // Create a map view, and pass in the map
-    m_mapView = new MapGraphicsView(m_map, this);
-
-    // Create and populate a combo box with several basemap types
-    m_basemapCombo = new QComboBox(this);
-    m_basemapCombo->adjustSize();
-    m_basemapCombo->setStyleSheet("QComboBox#combo {color: black; background-color:#000000;}");
-    m_basemapCombo->addItems(QStringList() << "Topographic"
-                             << "Streets"
-                             << "Imagery"
-                             << "Oceans");
-
-    // Connect the combo box signal to lambda for setting new basemaps
-    connect(m_basemapCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=](int i) {
-        switch (i)
-        {
-        // Call setBasemap and pass in the appropriate basemap
-        case 0:
-            m_map->setBasemap(Basemap::topographic(this));
-            break;
-        case 1:
-            m_map->setBasemap(Basemap::streets(this));
-            break;
-        case 2:
-            m_map->setBasemap(Basemap::imagery(this));
-            break;
-        case 3:
-            m_map->setBasemap(Basemap::oceans(this));
-            break;
-        }
-    });
-
-    // Set up the UI
-    QWidget* widget = new QWidget();
-    QVBoxLayout* layout = new QVBoxLayout();
-    layout->setMargin(0);
-    layout->addWidget(m_basemapCombo);   
-    widget->setLayout(layout);
-
-    QGraphicsProxyWidget *proxy = m_mapView->scene()->addWidget(widget);
-    proxy->setPos(10, 10);
-    proxy->setOpacity(0.95);
-
-    QVBoxLayout *vBoxLayout = new QVBoxLayout();
-    vBoxLayout->addWidget(m_mapView);
-    setLayout(vBoxLayout);
+ChangeBasemap::ChangeBasemap(QQuickItem* parent) :
+    QQuickItem(parent)
+{
 }
 
+// destructor
 ChangeBasemap::~ChangeBasemap()
 {
 }
+
+void ChangeBasemap::componentComplete()
+{
+    QQuickItem::componentComplete();
+
+    // find QML MapView component
+    m_mapView = findChild<MapQuickView*>("mapView");
+
+    // create a new basemap instance
+    Basemap* basemap = Basemap::topographic(this);
+    // create a new map instance
+    m_map = new Map(basemap, this);
+    // set map on the map view
+    m_mapView->setMap(m_map);
+}
+
+void ChangeBasemap::changeBasemap(QString basemap)
+{
+    if (m_map->loadStatus() == LoadStatus::Loaded)
+    {
+        if (basemap == "Topographic")
+            m_map->setBasemap(Basemap::topographic(this));
+        else if (basemap == "Streets")
+            m_map->setBasemap(Basemap::streets(this));
+        else if (basemap == "Imagery")
+            m_map->setBasemap(Basemap::imagery(this));
+        else if (basemap == "Oceans")
+            m_map->setBasemap(Basemap::oceans(this));
+    }
+}
+

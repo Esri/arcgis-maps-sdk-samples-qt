@@ -35,6 +35,7 @@ Rectangle {
             top: parent.top
             bottom: messageBar.top
         }
+        wrapAroundMode: Enums.WrapAroundModeDisabled
 
         Map {
             id: map

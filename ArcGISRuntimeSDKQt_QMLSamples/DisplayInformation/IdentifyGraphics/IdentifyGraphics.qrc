@@ -4,6 +4,5 @@
         <file alias="sample.json">IdentifyGraphics.json</file>
         <file>IdentifyGraphics.png</file>
         <file>IdentifyGraphics.qml</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>

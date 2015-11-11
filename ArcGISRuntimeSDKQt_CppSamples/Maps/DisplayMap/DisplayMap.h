@@ -11,29 +11,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef DISPLAY_MAP_H
-#define DISPLAY_MAP_H
+#ifndef DISPLAYMAP_H
+#define DISPLAYMAP_H
 
-namespace Esri {
-namespace ArcGISRuntime {
-  class Map;
-  class MapGraphicsView;
-  }
+namespace Esri
+{
+    namespace ArcGISRuntime
+    {
+        class Map;
+        class MapQuickView;
+    }
 }
 
-#include <QWidget>
+#include <QQuickItem>
 
-class DisplayMap : public QWidget
+class DisplayMap : public QQuickItem
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit DisplayMap(QWidget* parent = 0);
-   ~DisplayMap();
+    DisplayMap(QQuickItem* parent = 0);
+    ~DisplayMap();
+
+    void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView;
 };
 
-#endif // DISPLAY_MAP_H
+#endif // DISPLAYMAP_H
+

@@ -12,7 +12,9 @@
 // limitations under the License.
 
 #include <QGuiApplication>
-#include <QQmlApplicationEngine>
+#include <QQuickView>
+#include <QUrl>
+#include <QCoreApplication>
 
 int main(int argc, char *argv[])
 {
@@ -23,8 +25,10 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/Samples/Layers/ArcGISMapImageLayerUrl/main.qml")));
+    // Intialize application view
+    QQuickView view(QUrl("qrc:/Samples/Layers/ArcGISMapImageLayerUrl/ArcGISMapImageLayerUrl.qml"));
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    view.show();
 
     return app.exec();
 }

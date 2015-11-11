@@ -4,6 +4,5 @@
         <file alias="sample.json">FeatureLayer_Query.json</file>
         <file>FeatureLayer_Query.png</file>
         <file>FeatureLayer_Query.qml</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>

@@ -32,6 +32,7 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
+        wrapAroundMode: Enums.WrapAroundModeDisabled
 
         Map {
             // Set the initial basemap to Streets
@@ -98,7 +99,6 @@ Rectangle {
         }
 
         onMouseClicked: {
-            console.log(JSON.stringify(mouse.mapPoint.json))
             // reset to defaults
             featureLayer.clearSelection();
             callout.visible = false;

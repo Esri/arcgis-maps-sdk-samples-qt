@@ -4,6 +4,5 @@
         <file alias="sample.json">FeatureLayer_FeatureService.json</file>
         <file>FeatureLayer_FeatureService.png</file>
         <file>FeatureLayer_FeatureService.qml</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>

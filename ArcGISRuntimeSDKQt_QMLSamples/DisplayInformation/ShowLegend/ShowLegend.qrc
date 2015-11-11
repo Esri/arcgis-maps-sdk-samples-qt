@@ -4,7 +4,6 @@
         <file>ShowLegend.png</file>
         <file>ShowLegend.qml</file>
         <file>ShowLegend.html</file>
-        <file>main.qml</file>
         <file>ic_menu_legendpopover_light.png</file>
         <file>ic_menu_legendpopover_light_d.png</file>
     </qresource>

@@ -4,6 +4,5 @@
         <file>EditFeatureAttachments.png</file>
         <file>EditFeatureAttachments.qml</file>
         <file>EditFeatureAttachments.html</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>

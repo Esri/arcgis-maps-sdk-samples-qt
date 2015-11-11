@@ -23,6 +23,8 @@ Rectangle {
 
     MapView {
         anchors.fill: parent
+        wrapAroundMode: Enums.WrapAroundModeDisabled
+
         Map {
             id: map
             // Specify the SpatialReference

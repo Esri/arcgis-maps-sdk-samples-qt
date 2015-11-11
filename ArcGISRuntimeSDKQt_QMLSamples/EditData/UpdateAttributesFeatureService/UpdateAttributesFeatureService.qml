@@ -31,6 +31,7 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
+        wrapAroundMode: Enums.WrapAroundModeDisabled
 
         Map {
             // Set the initial basemap to Streets
