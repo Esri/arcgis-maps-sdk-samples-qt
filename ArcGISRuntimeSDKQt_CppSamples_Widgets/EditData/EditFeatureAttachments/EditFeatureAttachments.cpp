@@ -105,21 +105,6 @@ void EditFeatureAttachments::connectSignals()
             {
                 updateComboBox(attachments);
             });
-
-
-//            // connect to deleteAttachmentCompleted to know when the delete has occurred successfully
-//            connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::deleteAttachmentCompleted, [this](QUuid)
-//            {
-//                // call apply edits on the feature table to apply the edits to the service
-//                m_featureTable->applyEdits();
-//            });
-
-//            // connect to the addAttachmentCompleted signal from the AttachmentListModel
-//            connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::addAttachmentCompleted, [this](QUuid, const QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>&)
-//            {
-//                // once it is complete, call apply edits on the feature table
-//                m_featureTable->applyEdits();
-//            });
         }
     });
 
