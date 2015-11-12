@@ -61,7 +61,7 @@ Rectangle {
 
                     onApplyEditsStatusChanged: {
                         if (applyEditsStatus === Enums.TaskStatusCompleted) {
-                            console.log("successfully added attachment to service");
+                            console.log("successfully applied attachment edits to service");
                         }
                     }
                 }
@@ -72,10 +72,8 @@ Rectangle {
                         if (!selectFeaturesResult.iterator.hasNext)
                             return;
 
-                        selectedFeature  = selectFeaturesResult.iterator.next();
+                        selectedFeature = selectFeaturesResult.iterator.next();
                         damageType = selectedFeature.attributes["typdamage"];
-                        // fetch the attachment infos from the service
-                        selectedFeature.attachmentListModel.fetchAttachmentInfos();
 
                         // show the callout
                         callout.x = mousePointX;
@@ -266,13 +264,6 @@ Rectangle {
                             } else {
                                 // delete the attachment from the table
                                 selectedFeature.attachmentListModel.deleteAttachmentWithIndex(attachmentsList.currentIndex);
-
-                                // once the status is complete, call apply edits to apply edits from the feature table to the service
-                                selectedFeature.attachmentListModel.deleteAttachmentStatusChanged.connect(function () {
-                                    if (selectedFeature.attachmentListModel.deleteAttachmentStatus === Enums.TaskStatusCompleted) {
-                                        featureTable.applyEdits();
-                                    }
-                                });
                             }
                         }
                     }
@@ -346,14 +337,6 @@ Rectangle {
             // add the attachment to the feature table
             fileInfo.url = fileDialog.fileUrl;
             selectedFeature.attachmentListModel.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
-
-            // connect to the status changed signal
-            // once the status is complete, call apply edits to apply edits from the feature table to the service
-            selectedFeature.attachmentListModel.addAttachmentStatusChanged.connect(function () {
-                if (selectedFeature.attachmentListModel.addAttachmentStatus === Enums.TaskStatusCompleted) {
-                    featureTable.applyEdits();
-                }
-            });
         }
     }
 
