@@ -87,10 +87,11 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
     SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10, this);
 
     // create a graphic and add each of them to the overlay
-    foreach (const Point &buoyPoint, pointsList) {
-    Graphic* graphic = new Graphic(buoyPoint, this);
-    graphic->setSymbol(sms);
-    graphicsOverlay->graphics()->append(graphic);
+    foreach (const Point &buoyPoint, pointsList)
+    {
+        Graphic* graphic = new Graphic(buoyPoint, this);
+        graphic->setSymbol(sms);
+        graphicsOverlay->graphics()->append(graphic);
     }
 }
 
@@ -187,14 +188,8 @@ void GOSymbols::addNestingGround(GraphicsOverlay* graphicsOverlay)
 void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
 {
     // text symbol
-    TextSymbol* textSymbolBassRock = new TextSymbol(10, QString("Bass Rock"),
-                                                  QColor("blue"),
-                                                  HorizontalAlignment::Left,
-                                                  VerticalAlignment::Bottom, this);
-    TextSymbol* textSymbolCraigleith = new TextSymbol(10, QString("Craigleith"),
-                                                    QColor("blue"),
-                                                    HorizontalAlignment::Right,
-                                                    VerticalAlignment::Top, this);
+    TextSymbol* textSymbolBassRock = new TextSymbol(10, QString("Bass Rock"), QColor("blue"), HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
+    TextSymbol* textSymbolCraigleith = new TextSymbol(10, QString("Craigleith"), QColor("blue"), HorizontalAlignment::Right, VerticalAlignment::Top, this);
 
     // geometry for the graphics
     Point craigleith(-2.640631, 56.078083, SpatialReference::wgs84());

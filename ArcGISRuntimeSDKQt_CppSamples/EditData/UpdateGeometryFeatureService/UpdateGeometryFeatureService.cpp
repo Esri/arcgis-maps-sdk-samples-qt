@@ -25,7 +25,6 @@
 #include "FeatureEditResult.h"
 #include "GeoElement.h"
 #include <QUrl>
-#include <QColor>
 #include <QUuid>
 #include <QSharedPointer>
 #include <QMouseEvent>
@@ -68,7 +67,6 @@ void UpdateGeometryFeatureService::componentComplete()
 
     // create the FeatureLayer with the ServiceFeatureTable and add it to the Map
     m_featureLayer = new FeatureLayer(m_featureTable, this);
-    m_featureLayer->setSelectionColor(QColor("cyan"));
     m_featureLayer->setSelectionWidth(3);
     m_map->operationalLayers()->append(m_featureLayer);
 

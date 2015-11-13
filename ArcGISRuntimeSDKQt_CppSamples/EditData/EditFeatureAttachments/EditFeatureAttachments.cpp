@@ -27,7 +27,6 @@
 #include "FeatureQueryResult.h"
 #include "AttachmentListModel.h"
 #include <QUrl>
-#include <QColor>
 #include <QUuid>
 #include <QSharedPointer>
 #include <QMouseEvent>
@@ -38,7 +37,6 @@ using namespace Esri::ArcGISRuntime;
 EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
     QQuickItem(parent),
     m_selectedFeature(nullptr),
-    m_attachmentModel(nullptr),
     m_attachmentCount(0)
 {
 }
@@ -71,7 +69,6 @@ void EditFeatureAttachments::componentComplete()
 
     // create the FeatureLayer with the ServiceFeatureTable and add it to the Map
     m_featureLayer = new FeatureLayer(m_featureTable, this);
-    m_featureLayer->setSelectionColor(QColor("cyan"));
     m_featureLayer->setSelectionWidth(3);
     m_map->operationalLayers()->append(m_featureLayer);
 
@@ -131,15 +128,9 @@ void EditFeatureAttachments::connectSignals()
             if (m_selectedFeature != nullptr)
                 delete m_selectedFeature;
 
-            // first delete if not nullptr
-            if (m_attachmentModel != nullptr)
-                delete m_attachmentModel;
-
             // set selected feature and attachment model members
             m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next());
             m_selectedFeature->setParent(this);
-            m_attachmentModel = m_selectedFeature->attachmentListModel();
-            m_attachmentModel->setParent(this);
             m_featureType = m_selectedFeature->attributeValue("typdamage").toString();
             emit featureTypeChanged();
             emit featureSelected();
@@ -148,7 +139,7 @@ void EditFeatureAttachments::connectSignals()
             // get the number of attachments
             connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::fetchAttachmentInfosCompleted, [this](QUuid, const QList<QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>>)
             {
-                m_attachmentCount = m_attachmentModel->rowCount();
+                m_attachmentCount = m_selectedFeature->attachmentListModel()->rowCount();
                 emit attachmentCountChanged();
             });
         }
@@ -190,19 +181,19 @@ QString EditFeatureAttachments::featureType() const
 }
 
 AttachmentListModel* EditFeatureAttachments::attachmentModel() const
-{
-    return m_attachmentModel;
+{    
+    return m_selectedFeature ? m_selectedFeature->attachmentListModel() : nullptr;
 }
 
 void EditFeatureAttachments::addAttachment(QString fileUrl, QString contentType, QString fileName)
 {
     QFile* file = new QFile(fileUrl);
-    m_attachmentModel->addAttachment(file, contentType, fileName);
+    m_selectedFeature->attachmentListModel()->addAttachment(file, contentType, fileName);
 }
 
 void EditFeatureAttachments::deleteAttachment(int index)
 {
-    m_attachmentModel->deleteAttachment(index);
+    m_selectedFeature->attachmentListModel()->deleteAttachment(index);
 }
 
 int EditFeatureAttachments::attachmentCount() const

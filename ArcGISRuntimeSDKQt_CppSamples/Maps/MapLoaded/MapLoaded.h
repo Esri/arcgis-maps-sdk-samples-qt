@@ -39,6 +39,9 @@ public:
 
     void componentComplete() Q_DECL_OVERRIDE;
 
+signals:
+    void mapLoadStatusChanged();
+
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
@@ -46,9 +49,6 @@ private:
 
 private:
     QString mapLoadStatus() const;
-
-signals:
-    void mapLoadStatusChanged();
 };
 
 #endif // MAP_LOADED_H

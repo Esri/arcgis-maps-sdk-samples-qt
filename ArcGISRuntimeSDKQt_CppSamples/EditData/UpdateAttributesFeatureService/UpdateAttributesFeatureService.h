@@ -45,6 +45,13 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
     Q_INVOKABLE void updateSelectedFeature(QString fieldVal);
 
+signals:
+    void screenXChanged();
+    void screenYChanged();
+    void featureSelected();
+    void featureTypeChanged();
+    void hideWindow();
+
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
@@ -60,13 +67,6 @@ private:
     int screenX() const;
     int screenY() const;
     QString featureType() const;
-
-signals:
-    void screenXChanged();
-    void screenYChanged();
-    void featureSelected();
-    void featureTypeChanged();
-    void hideWindow();
 };
 
 #endif // UPDATE_ATTRIBUTES_FEATURE_SERVICE_H

@@ -41,6 +41,9 @@ public:
 
     void componentComplete() Q_DECL_OVERRIDE;
 
+signals:
+    void selectedFeatureTextChanged();
+
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
@@ -51,9 +54,6 @@ private:
 private:
     void connectSignals();
     QString selectedFeatureText() const;
-
-signals:
-    void selectedFeatureTextChanged();
 };
 
 #endif // FEATURE_LAYER_SELECTION_H

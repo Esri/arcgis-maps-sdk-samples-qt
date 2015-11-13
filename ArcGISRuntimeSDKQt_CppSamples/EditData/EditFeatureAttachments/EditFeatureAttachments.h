@@ -49,13 +49,21 @@ public:
     Q_INVOKABLE void addAttachment(QString fileUrl, QString contentType, QString fileName);
     Q_INVOKABLE void deleteAttachment(int index);
 
+signals:
+    void screenXChanged();
+    void screenYChanged();
+    void featureSelected();
+    void featureTypeChanged();
+    void hideWindow();
+    void attachmentModelChanged();
+    void attachmentCountChanged();
+
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
     Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
     Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature;
-    Esri::ArcGISRuntime::AttachmentListModel* m_attachmentModel;
     int m_screenX;
     int m_screenY;
     int m_attachmentCount;
@@ -68,15 +76,6 @@ private:
     int screenY() const;
     int attachmentCount() const;
     QString featureType() const;
-
-signals:
-    void screenXChanged();
-    void screenYChanged();
-    void featureSelected();
-    void featureTypeChanged();
-    void hideWindow();
-    void attachmentModelChanged();   
-    void attachmentCountChanged();
 };
 
 #endif // EDIT_FEATURE_ATTACHMENTS_H

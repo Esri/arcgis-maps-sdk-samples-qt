@@ -83,7 +83,8 @@ void FeatureLayerQuery::componentComplete()
 void FeatureLayerQuery::connectSignals()
 {
     // iterate over the query results once the query is done
-    connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, [this](QUuid, QSharedPointer<Esri::ArcGISRuntime::FeatureQueryResult> queryResult){
+    connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, [this](QUuid, QSharedPointer<Esri::ArcGISRuntime::FeatureQueryResult> queryResult)
+    {
         if (!queryResult->iterator().hasNext())
         {
             m_queryResultsCount = 0;
@@ -113,13 +114,14 @@ void FeatureLayerQuery::connectSignals()
         emit queryResultsCountChanged();
     });
 
-    connect(m_featureTable, &ServiceFeatureTable::loadStatusChanged,[this](LoadStatus loadStatus){
+    connect(m_featureTable, &ServiceFeatureTable::loadStatusChanged,[this](LoadStatus loadStatus)
+    {
         loadStatus == LoadStatus::Loaded ? m_initialized = true : m_initialized = false;
-        emit isLayerInitializedChanged();
+        emit layerInitializedChanged();
     });
 }
 
-bool FeatureLayerQuery::isLayerInitialized() const
+bool FeatureLayerQuery::layerInitialized() const
 {
     return m_initialized;
 }

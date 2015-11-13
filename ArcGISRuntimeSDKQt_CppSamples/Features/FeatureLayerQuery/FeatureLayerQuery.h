@@ -31,7 +31,7 @@ class FeatureLayerQuery : public QQuickItem
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool isLayerInitialized READ isLayerInitialized NOTIFY isLayerInitializedChanged)
+    Q_PROPERTY(bool layerInitialized READ layerInitialized NOTIFY layerInitializedChanged)
     Q_PROPERTY(int queryResultsCount READ queryResultsCount NOTIFY queryResultsCountChanged)
 
 public:
@@ -40,6 +40,10 @@ public:
 
     void componentComplete() Q_DECL_OVERRIDE;
     Q_INVOKABLE void runQuery(QString whereClause);
+
+signals:
+    void layerInitializedChanged();
+    void queryResultsCountChanged();
 
 private:
     Esri::ArcGISRuntime::Map* m_map;
@@ -51,12 +55,8 @@ private:
 
 private:
     void connectSignals();
-    bool isLayerInitialized() const;
+    bool layerInitialized() const;
     int queryResultsCount() const;
-
-signals:
-    void isLayerInitializedChanged();
-    void queryResultsCountChanged();
 };
 
 #endif // FEATURE_LAYER_QUERY_H

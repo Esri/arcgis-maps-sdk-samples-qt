@@ -24,7 +24,6 @@
 #include "Feature.h"
 #include "FeatureEditResult.h"
 #include <QUrl>
-#include <QColor>
 #include <QMap>
 #include <QUuid>
 #include <QSharedPointer>
@@ -66,7 +65,6 @@ void AddFeaturesFeatureService::componentComplete()
 
     // create the FeatureLayer with the ServiceFeatureTable and add it to the Map
     m_featureLayer = new FeatureLayer(m_featureTable, this);
-    m_featureLayer->setSelectionColor(QColor("cyan"));
     m_featureLayer->setSelectionWidth(3);
     m_map->operationalLayers()->append(m_featureLayer);
 

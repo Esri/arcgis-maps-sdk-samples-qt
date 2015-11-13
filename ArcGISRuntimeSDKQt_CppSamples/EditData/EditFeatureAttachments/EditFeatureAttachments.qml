@@ -206,7 +206,7 @@ EditFeatureAttachmentsSample {
             clip: true
             spacing: 5
             // set the model equal to the C++ attachment list model property
-            model: editAttachmentsSample.attachmentModel === null ? null : editAttachmentsSample.attachmentModel
+            model: editAttachmentsSample.attachmentModel
             // create the delegate to specify how the view is arranged
             delegate: Item {
                 height: 45* scaleFactor
