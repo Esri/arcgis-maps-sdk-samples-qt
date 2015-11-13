@@ -1,0 +1,7 @@
+{
+    "source" :  "FeatureLayerQuery.qml",
+    "description" : "FeatureLayerQuery.html",
+    "thumbnail" : "FeatureLayerQuery.png",
+    "name" : "Feature layer query"
+}
+

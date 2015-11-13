@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef DISPLAYMAP_H
-#define DISPLAYMAP_H
+#ifndef DISPLAY_MAP_H
+#define DISPLAY_MAP_H
 
 namespace Esri
 {
@@ -40,5 +40,5 @@ private:
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
 };
 
-#endif // DISPLAYMAP_H
+#endif // DISPLAY_MAP_H
 
