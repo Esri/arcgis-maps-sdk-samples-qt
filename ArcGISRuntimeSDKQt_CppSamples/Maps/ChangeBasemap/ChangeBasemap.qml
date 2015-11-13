@@ -40,7 +40,7 @@ ChangeBasemapSample {
         width: 175 * scaleFactor
         model: ["Topographic","Streets","Imagery","Oceans"]
         onCurrentTextChanged: {
-            // Call C++ member when the current selection changes
+            // Call C++ invokable function to switch the basemaps
             changeBasemapSample.changeBasemap(currentText);
         }
     }

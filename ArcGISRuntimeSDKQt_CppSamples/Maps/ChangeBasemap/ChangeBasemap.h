@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef CHANGEBASEMAP_H
-#define CHANGEBASEMAP_H
+#ifndef CHANGE_BASEMAP_H
+#define CHANGE_BASEMAP_H
 
 namespace Esri
 {
@@ -41,5 +41,5 @@ private:
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
 };
 
-#endif // CHANGEBASEMAP_H
+#endif // CHANGE_BASEMAP_H
 

@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/OpenExistingMap">
+        <file alias="sample.json">OpenExistingMap.json</file>
+        <file>OpenExistingMap.png</file>
+        <file>OpenExistingMap.qml</file>
+        <file>OpenExistingMap.html</file>
+        <file>geology.jpg</file>
+        <file>Housing.png</file>
+        <file>SwitchMap.png</file>
+        <file>Tapestry.png</file>
+    </qresource>
+</RCC>

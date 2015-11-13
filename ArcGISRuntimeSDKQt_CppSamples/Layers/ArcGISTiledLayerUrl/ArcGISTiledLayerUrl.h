@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ARCGISTILEDLAYERURL_H
-#define ARCGISTILEDLAYERURL_H
+#ifndef ARCGIS_TILED_LAYER_URL_H
+#define ARCGIS_TILED_LAYER_URL_H
 
 namespace Esri
 {
@@ -40,5 +40,5 @@ private:
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
 };
 
-#endif // ARCGISTILEDLAYERURL_H
+#endif // ARCGIS_TILED_LAYER_URL_H
 

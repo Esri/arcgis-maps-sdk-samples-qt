@@ -87,7 +87,7 @@ Rectangle {
         }
         spacing: 5
 
-        // button to populate from service
+        // button to change renderer
         Button {
             text: "Change Renderer"
             enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
