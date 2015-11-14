@@ -161,7 +161,7 @@ void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
                          "\"spatialReference\":{\"wkid\":4326}}";
 
     // create a polyline from the json
-    Polyline polyline = Polyline::fromJson(polylineJson);
+    Esri::ArcGISRuntime::Polyline polyline = Polyline::fromJson(polylineJson);
     // create a new graphic using the polyline geometry
     Graphic* graphic = new Graphic(polyline, this);
     // set the symbology for the graphic
