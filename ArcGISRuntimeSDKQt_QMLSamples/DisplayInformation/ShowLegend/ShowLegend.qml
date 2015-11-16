@@ -151,34 +151,10 @@ Rectangle {
                     // Switch out the list view's model for each item
                     onCurrentTextChanged: {
                         if (currentText === "Census") {
-                            // temp workaround
-                            if (censusListModel.count < 1)
-                                getMapImageLayerInfos();
-                            // end temp workaround
-
                             legendListView.model = censusListModel;
                         } else if (currentText === "Recreation") {
-                            // temp workaround
-                            if (recreationListModel.count < 1)
-                                featureLayer.fetchLegendInfos();
-                            // end temp workaround
-
                             legendListView.model = recreationListModel;
                         } else if (currentText === "Soil Survey") {
-                            // temp workaround
-                            if (soilListModel.count < 1) {
-                                var attempts = 0;
-                                while (tiledLayer.loadStatus !== Enums.LoadStatusLoaded) {
-                                    System.wait(50);
-                                    attempts++;
-                                    if (attempts > 10) {
-                                        break;
-                                    }
-                                }
-                                getTiledLayerInfos();
-                            }
-                            // end temp workaround
-
                             legendListView.model = soilListModel;
                         }
                     }

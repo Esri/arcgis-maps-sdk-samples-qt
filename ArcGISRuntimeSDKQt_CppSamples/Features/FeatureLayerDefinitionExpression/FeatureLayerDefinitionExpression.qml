@@ -42,7 +42,7 @@ FeatureLayerDefinitionExpressionSample {
         // button to apply a definition expression
         Button {
             text: "Apply Expression"
-            enabled: definitionExpressionSample.isLayerInitialized
+            enabled: definitionExpressionSample.layerInitialized
             onClicked: {
                 // Call C++ invokable function to set the definition expression
                 definitionExpressionSample.setDefExpression("req_Type = \'Tree Maintenance or Damage\'");
@@ -52,7 +52,7 @@ FeatureLayerDefinitionExpressionSample {
         // button to reset the definition expression
         Button {
             text: "Reset"
-            enabled: definitionExpressionSample.isLayerInitialized
+            enabled: definitionExpressionSample.layerInitialized
             onClicked: {
                 // Call C++ invokable function to reset the definition expression
                 definitionExpressionSample.setDefExpression("");
