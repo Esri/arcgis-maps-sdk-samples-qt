@@ -39,7 +39,6 @@ UpdateGeometryFeatureService::UpdateGeometryFeatureService(QQuickItem* parent) :
 {
 }
 
-// destructor
 UpdateGeometryFeatureService::~UpdateGeometryFeatureService()
 {
 }

@@ -26,7 +26,6 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QQuickItem* parent) :
 {
 }
 
-// destructor
 ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
 {
 }

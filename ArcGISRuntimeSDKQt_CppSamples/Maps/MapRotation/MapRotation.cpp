@@ -27,7 +27,6 @@ MapRotation::MapRotation(QQuickItem* parent) :
 {
 }
 
-// destructor
 MapRotation::~MapRotation()
 {
 }

@@ -24,7 +24,6 @@ DisplayMap::DisplayMap(QQuickItem* parent) :
 {
 }
 
-// destructor
 DisplayMap::~DisplayMap()
 {
 }

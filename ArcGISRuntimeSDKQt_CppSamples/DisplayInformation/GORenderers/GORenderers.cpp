@@ -35,7 +35,6 @@ GORenderers::GORenderers(QQuickItem* parent) :
 {
 }
 
-// destructor
 GORenderers::~GORenderers()
 {
 }

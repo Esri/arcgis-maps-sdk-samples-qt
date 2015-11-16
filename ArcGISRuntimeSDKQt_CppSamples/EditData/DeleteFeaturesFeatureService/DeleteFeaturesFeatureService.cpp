@@ -38,7 +38,6 @@ DeleteFeaturesFeatureService::DeleteFeaturesFeatureService(QQuickItem* parent) :
 {    
 }
 
-// destructor
 DeleteFeaturesFeatureService::~DeleteFeaturesFeatureService()
 {
 }

@@ -24,7 +24,6 @@ MapLoaded::MapLoaded(QQuickItem* parent) :
 {
 }
 
-// destructor
 MapLoaded::~MapLoaded()
 {
 }

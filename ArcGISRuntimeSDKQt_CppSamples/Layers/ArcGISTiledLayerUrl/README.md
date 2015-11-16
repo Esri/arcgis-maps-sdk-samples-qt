@@ -1,4 +1,4 @@
-#ArcGISTiledLayer (URL)
+#ArcGIS tiled layer (URL)
 
 This sample demonstrates how to display a tiled map service.
 

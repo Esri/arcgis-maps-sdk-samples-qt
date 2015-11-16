@@ -37,7 +37,6 @@ GOSymbols::GOSymbols(QQuickItem* parent) :
 {
 }
 
-// destructor
 GOSymbols::~GOSymbols()
 {
 }

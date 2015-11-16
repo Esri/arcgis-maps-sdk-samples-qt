@@ -26,7 +26,6 @@ ArcGISMapImageLayerUrl::ArcGISMapImageLayerUrl(QQuickItem* parent) :
 {
 }
 
-// destructor
 ArcGISMapImageLayerUrl::~ArcGISMapImageLayerUrl()
 {
 }
@@ -40,12 +39,13 @@ void ArcGISMapImageLayerUrl::componentComplete()
 
     // create a new map image layer
     ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"), this);
-    // create a new basemap instance
-    Basemap* basemap = new Basemap(this);
-    // add the map image layer to the basemap
-    basemap->baseLayers()->append(mapImageLayer);
+
+    // create a new basemap from the layer
+    Basemap* basemap = new Basemap(mapImageLayer, this);
+
     // create a new map instance
     m_map = new Map(basemap, this);
+
     // set map on the map view
     m_mapView->setMap(m_map);
 }

@@ -23,7 +23,6 @@ SetInitialMapLocation::SetInitialMapLocation(QQuickItem* parent) :
 {
 }
 
-// destructor
 SetInitialMapLocation::~SetInitialMapLocation()
 {
 }

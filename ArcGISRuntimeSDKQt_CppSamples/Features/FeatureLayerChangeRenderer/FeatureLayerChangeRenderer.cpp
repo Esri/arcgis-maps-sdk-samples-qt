@@ -34,7 +34,6 @@ FeatureLayerChangeRenderer::FeatureLayerChangeRenderer(QQuickItem* parent) :
     m_initialized = false;
 }
 
-// destructor
 FeatureLayerChangeRenderer::~FeatureLayerChangeRenderer()
 {
 }

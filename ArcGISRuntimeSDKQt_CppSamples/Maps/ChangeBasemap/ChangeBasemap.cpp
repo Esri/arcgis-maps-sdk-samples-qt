@@ -24,7 +24,6 @@ ChangeBasemap::ChangeBasemap(QQuickItem* parent) :
 {
 }
 
-// destructor
 ChangeBasemap::~ChangeBasemap()
 {
 }

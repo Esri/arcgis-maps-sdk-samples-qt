@@ -36,7 +36,6 @@ FeatureLayerSelection::FeatureLayerSelection(QQuickItem* parent) :
     m_selectedFeatureText = "No features selected. Click/Tap to select features.";
 }
 
-// destructor
 FeatureLayerSelection::~FeatureLayerSelection()
 {
 }
