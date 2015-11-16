@@ -1,15 +1,14 @@
-#ArcGISTiledLayer (URL)
+#Display a map (URL)
 
-This sample demonstrates how to display a tiled map service.
+This sample demonstrates how to display a map view with a basemap.
 
 ![](screenshot.png)
 
 ##How it works
 
-An `ArcGISTiledLayer` is constructed by passing in the URL to the map service endpoint. Next, a `Basemap` is created, and the `ArcGISTiledLayer` is appended to the `baseLayers` of the `Basemap`. Finally, the `Map` is constructed with the `Basemap`, and is set to the `MapView`
+This is the most basic sample for displaying a map. It can be considered the "Hello World" map app for the ArcGIS Runtime SDK for Qt. It shows how to create a map view, and add in a map that contains the imagery with labels basemap. By default, this map supports basic zooming and panning operations.
 
 ##Features
 - MapView
 - Map
 - Basemap
-- ArcGISTiledLayer
