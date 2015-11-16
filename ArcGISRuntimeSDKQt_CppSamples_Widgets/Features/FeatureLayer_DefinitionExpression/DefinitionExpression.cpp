@@ -54,7 +54,8 @@ DefinitionExpression::DefinitionExpression(QWidget* parent) :
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(featureTable, this);
 
-  connect(featureTable, &ServiceFeatureTable::doneLoading,[this](){
+  connect(m_featureLayer, &FeatureLayer::doneLoading,[this]()
+  {
     // zoom to a specific area
     m_mapView->setViewpointCenter(Point(-13630484, 4545415, SpatialReference(102100)), 300000);
     // enable the button once the layer is loaded
