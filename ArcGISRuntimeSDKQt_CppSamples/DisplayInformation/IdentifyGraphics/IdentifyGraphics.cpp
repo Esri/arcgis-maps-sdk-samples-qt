@@ -29,7 +29,11 @@
 using namespace Esri::ArcGISRuntime;
 
 IdentifyGraphics::IdentifyGraphics(QQuickItem* parent) :
-    QQuickItem(parent)
+    QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_graphicsOverlay(nullptr),
+    m_identifiedGraphicsCount(0)
 {
 }
 
