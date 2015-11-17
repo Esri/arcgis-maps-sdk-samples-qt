@@ -20,7 +20,9 @@
 using namespace Esri::ArcGISRuntime;
 
 DisplayMap::DisplayMap(QQuickItem* parent) :
-    QQuickItem(parent)
+    QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr)
 {
 }
 

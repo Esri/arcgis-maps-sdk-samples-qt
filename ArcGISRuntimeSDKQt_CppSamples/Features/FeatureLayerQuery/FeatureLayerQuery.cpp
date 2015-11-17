@@ -34,9 +34,14 @@
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerQuery::FeatureLayerQuery(QQuickItem* parent) :
-    QQuickItem(parent)
+    QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_featureLayer(nullptr),
+    m_featureTable(nullptr),
+    m_initialized(false),
+    m_queryResultsCount(0)
 {
-    m_initialized = false;
 }
 
 FeatureLayerQuery::~FeatureLayerQuery()

@@ -36,8 +36,15 @@ using namespace Esri::ArcGISRuntime;
 
 EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
     QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_featureLayer(nullptr),
+    m_featureTable(nullptr),
     m_selectedFeature(nullptr),
-    m_attachmentCount(0)
+    m_screenX(),
+    m_screenY(),
+    m_attachmentCount(0),
+    m_featureType()
 {
 }
 

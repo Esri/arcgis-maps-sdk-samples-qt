@@ -24,9 +24,11 @@
 using namespace Esri::ArcGISRuntime;
 
 ChangeViewpoint::ChangeViewpoint(QQuickItem* parent) :
-    QQuickItem(parent)
+    QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_rotationValue(0)
 {
-    m_rotationValue = 0;
 }
 
 ChangeViewpoint::~ChangeViewpoint()

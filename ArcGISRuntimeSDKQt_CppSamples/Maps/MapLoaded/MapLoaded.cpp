@@ -20,7 +20,10 @@
 using namespace Esri::ArcGISRuntime;
 
 MapLoaded::MapLoaded(QQuickItem* parent) :
-    QQuickItem(parent)
+    QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_loadStatus()
 {
 }
 

@@ -31,9 +31,13 @@
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerSelection::FeatureLayerSelection(QQuickItem* parent) :
-    QQuickItem(parent)
+    QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_featureLayer(nullptr),
+    m_featureTable(nullptr),
+    m_selectedFeatureText("No features selected. Click/Tap to select features.")
 {
-    m_selectedFeatureText = "No features selected. Click/Tap to select features.";
 }
 
 FeatureLayerSelection::~FeatureLayerSelection()

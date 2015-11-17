@@ -47,7 +47,7 @@ private:
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
     Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
     Esri::ArcGISRuntime::Feature* m_selectedFeature;
-    bool m_isFeatureSelected;
+    bool m_featureSelected;
 };
 
 #endif // UPDATE_GEOMETRY_FEATURE_SERVICE_H

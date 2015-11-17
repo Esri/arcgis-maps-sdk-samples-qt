@@ -34,8 +34,15 @@ using namespace Esri::ArcGISRuntime;
 
 DeleteFeaturesFeatureService::DeleteFeaturesFeatureService(QQuickItem* parent) :
     QQuickItem(parent),
-    m_selectedFeature(nullptr)
-{    
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_featureLayer(nullptr),
+    m_featureTable(nullptr),
+    m_selectedFeature(nullptr),
+    m_screenX(),
+    m_screenY(),
+    m_featureType()
+{
 }
 
 DeleteFeaturesFeatureService::~DeleteFeaturesFeatureService()

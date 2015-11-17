@@ -31,7 +31,9 @@
 using namespace Esri::ArcGISRuntime;
 
 GORenderers::GORenderers(QQuickItem* parent) :
-    QQuickItem(parent)
+    QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr)
 {
 }
 
