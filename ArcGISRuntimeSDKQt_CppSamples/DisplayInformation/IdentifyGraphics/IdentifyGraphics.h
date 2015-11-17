@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GO_SYMBOLS_H
-#define GO_SYMBOLS_H
+#ifndef IDENTIFY_GRAPHICS_H
+#define IDENTIFY_GRAPHICS_H
 
 namespace Esri
 {
@@ -20,34 +20,38 @@ namespace Esri
     {
         class Map;
         class MapQuickView;
-        class Geometry;
         class GraphicsOverlay;
     }
 }
 
 #include <QQuickItem>
 
-class GOSymbols : public QQuickItem
+class IdentifyGraphics : public QQuickItem
 {
     Q_OBJECT
 
+    Q_PROPERTY(int identifiedGraphicsCount READ identifiedGraphicsCount NOTIFY identifiedGraphicsCountChanged)
+
 public:
-    GOSymbols(QQuickItem* parent = 0);
-    ~GOSymbols();
+    IdentifyGraphics(QQuickItem* parent = 0);
+    ~IdentifyGraphics();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
+signals:
+    void identifiedGraphicsCountChanged();
+
 private:
-    void addBuoyPoints(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
-    void addBoatTrip(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
-    void addNestingGround(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
-    void addText(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
-    Esri::ArcGISRuntime::Geometry createNestingGround();
+    void addPolygonGraphic();
+    void connectSignals();
+    int identifiedGraphicsCount();
 
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
+    int m_identifiedGraphicsCount;
 };
 
-#endif // GOSYMBOLS_H
+#endif // IDENTIFY_GRAPHICS_H
 

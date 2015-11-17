@@ -46,17 +46,17 @@ signals:
     void queryResultsCountChanged();
 
 private:
+    void connectSignals();
+    bool layerInitialized() const;
+    int queryResultsCount() const;
+
+private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
     Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
     bool m_initialized;
     int m_queryResultsCount;
-
-private:
-    void connectSignals();
-    bool layerInitialized() const;
-    int queryResultsCount() const;
 };
 
 #endif // FEATURE_LAYER_QUERY_H

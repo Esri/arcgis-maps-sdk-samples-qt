@@ -36,11 +36,11 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    void addGraphicsOverlay();
 
 private:
-    void addGraphicsOverlay();
+    Esri::ArcGISRuntime::Map* m_map;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView;
 };
 
 #endif // GO_RENDERERS_H
