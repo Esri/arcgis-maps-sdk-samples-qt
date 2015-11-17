@@ -31,7 +31,6 @@ FeatureLayerDefinitionExpression::FeatureLayerDefinitionExpression(QQuickItem* p
     m_initialized = false;
 }
 
-// destructor
 FeatureLayerDefinitionExpression::~FeatureLayerDefinitionExpression()
 {
 }

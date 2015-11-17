@@ -25,7 +25,6 @@ OpenExistingMap::OpenExistingMap(QQuickItem* parent) :
 {
 }
 
-// destructor
 OpenExistingMap::~OpenExistingMap()
 {
 }

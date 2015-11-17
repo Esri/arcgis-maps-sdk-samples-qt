@@ -1,0 +1,7 @@
+{
+    "source" :  "ArcGISMapImageLayerUrl.qml",
+    "description" : "ArcGISMapImageLayerUrl.html",
+    "thumbnail" : "ArcGISMapImageLayerUrl.png",
+    "name" : "ArcGIS map image layer (URL)"
+}
+

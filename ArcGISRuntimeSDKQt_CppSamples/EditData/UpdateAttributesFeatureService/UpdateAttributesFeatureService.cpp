@@ -38,7 +38,6 @@ UpdateAttributesFeatureService::UpdateAttributesFeatureService(QQuickItem* paren
 {    
 }
 
-// destructor
 UpdateAttributesFeatureService::~UpdateAttributesFeatureService()
 {
 }

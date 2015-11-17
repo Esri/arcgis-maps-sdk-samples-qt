@@ -37,7 +37,6 @@ AddFeaturesFeatureService::AddFeaturesFeatureService(QQuickItem* parent) :
 {
 }
 
-// destructor
 AddFeaturesFeatureService::~AddFeaturesFeatureService()
 {
 }

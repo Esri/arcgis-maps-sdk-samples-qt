@@ -41,7 +41,6 @@ EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
 {
 }
 
-// destructor
 EditFeatureAttachments::~EditFeatureAttachments()
 {
 }

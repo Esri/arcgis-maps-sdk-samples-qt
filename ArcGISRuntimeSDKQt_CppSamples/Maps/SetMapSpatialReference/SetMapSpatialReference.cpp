@@ -27,7 +27,6 @@ SetMapSpatialReference::SetMapSpatialReference(QQuickItem* parent) :
 {
 }
 
-// destructor
 SetMapSpatialReference::~SetMapSpatialReference()
 {
 }

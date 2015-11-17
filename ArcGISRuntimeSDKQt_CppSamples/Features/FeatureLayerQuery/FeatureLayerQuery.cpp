@@ -39,7 +39,6 @@ FeatureLayerQuery::FeatureLayerQuery(QQuickItem* parent) :
     m_initialized = false;
 }
 
-// destructor
 FeatureLayerQuery::~FeatureLayerQuery()
 {
 }

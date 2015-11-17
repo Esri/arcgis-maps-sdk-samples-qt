@@ -28,7 +28,6 @@ ManageBookmarks::ManageBookmarks(QQuickItem* parent) :
 {
 }
 
-// destructor
 ManageBookmarks::~ManageBookmarks()
 {
 }

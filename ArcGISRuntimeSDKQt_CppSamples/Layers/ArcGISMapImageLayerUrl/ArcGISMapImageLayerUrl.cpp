@@ -11,40 +11,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "ArcGISTiledLayerUrl.h"
+#include "ArcGISMapImageLayerUrl.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Basemap.h"
-#include "ArcGISTiledLayer.h"
+#include "ArcGISMapImageLayer.h"
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 
-ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QQuickItem* parent) :
+ArcGISMapImageLayerUrl::ArcGISMapImageLayerUrl(QQuickItem* parent) :
     QQuickItem(parent)
 {
 }
 
-ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
+ArcGISMapImageLayerUrl::~ArcGISMapImageLayerUrl()
 {
 }
 
-void ArcGISTiledLayerUrl::componentComplete()
+void ArcGISMapImageLayerUrl::componentComplete()
 {
     QQuickItem::componentComplete();
 
     // find QML MapView component
     m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new tiled layer
-    ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"), this);
-    // create a new basemap instance
-    Basemap* basemap = new Basemap(this);
-    // add the tiled layer to the basemap
-    basemap->baseLayers()->append(tiledLayer);
+    // create a new map image layer
+    ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"), this);
+
+    // create a new basemap from the layer
+    Basemap* basemap = new Basemap(mapImageLayer, this);
+
     // create a new map instance
     m_map = new Map(basemap, this);
+
     // set map on the map view
     m_mapView->setMap(m_map);
 }

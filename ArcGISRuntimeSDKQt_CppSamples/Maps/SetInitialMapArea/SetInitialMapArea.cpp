@@ -26,7 +26,6 @@ SetInitialMapArea::SetInitialMapArea(QQuickItem* parent) :
 {
 }
 
-// destructor
 SetInitialMapArea::~SetInitialMapArea()
 {
 }

@@ -29,7 +29,6 @@ ChangeViewpoint::ChangeViewpoint(QQuickItem* parent) :
     m_rotationValue = 0;
 }
 
-// destructor
 ChangeViewpoint::~ChangeViewpoint()
 {
 }
