@@ -59,6 +59,14 @@ signals:
     void attachmentCountChanged();
 
 private:
+    void connectSignals();
+    Esri::ArcGISRuntime::AttachmentListModel* attachmentModel() const;
+    int screenX() const;
+    int screenY() const;
+    int attachmentCount() const;
+    QString featureType() const;
+
+private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
@@ -68,14 +76,6 @@ private:
     int m_screenY;
     int m_attachmentCount;
     QString m_featureType;
-
-private:
-    void connectSignals();
-    Esri::ArcGISRuntime::AttachmentListModel* attachmentModel() const;
-    int screenX() const;
-    int screenY() const;
-    int attachmentCount() const;
-    QString featureType() const;
 };
 
 #endif // EDIT_FEATURE_ATTACHMENTS_H

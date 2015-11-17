@@ -45,15 +45,15 @@ signals:
     void selectedFeatureTextChanged();
 
 private:
+    void connectSignals();
+    QString selectedFeatureText() const;
+
+private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
     Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
     QString m_selectedFeatureText;
-
-private:
-    void connectSignals();
-    QString selectedFeatureText() const;
 };
 
 #endif // FEATURE_LAYER_SELECTION_H

@@ -38,13 +38,13 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
+    void connectSignals();
+
+private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
     Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-
-private:
-    void connectSignals();
 };
 
 #endif // ADD_FEATURES_FEATURE_SERVICE_H

@@ -43,13 +43,13 @@ signals:
     void layerInitializedChanged();
 
 private:
+    bool layerInitialized() const;
+
+private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
     bool m_initialized;
-
-private:
-    bool layerInitialized() const;
 };
 
 #endif // FEATURE_LAYER_CHANGE_RENDERER_H

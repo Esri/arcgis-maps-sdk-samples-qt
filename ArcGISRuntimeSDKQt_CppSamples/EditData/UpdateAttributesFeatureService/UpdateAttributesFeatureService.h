@@ -53,6 +53,12 @@ signals:
     void hideWindow();
 
 private:
+    void connectSignals();
+    int screenX() const;
+    int screenY() const;
+    QString featureType() const;
+
+private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
@@ -61,12 +67,6 @@ private:
     int m_screenX;
     int m_screenY;
     QString m_featureType;
-
-private:
-    void connectSignals();
-    int screenX() const;
-    int screenY() const;
-    QString featureType() const;
 };
 
 #endif // UPDATE_ATTRIBUTES_FEATURE_SERVICE_H

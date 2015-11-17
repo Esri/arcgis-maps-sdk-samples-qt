@@ -39,15 +39,15 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
+    void connectSignals();
+
+private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
     Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
     Esri::ArcGISRuntime::Feature* m_selectedFeature;
     bool m_isFeatureSelected;
-
-private:
-    void connectSignals();
 };
 
 #endif // UPDATE_GEOMETRY_FEATURE_SERVICE_H

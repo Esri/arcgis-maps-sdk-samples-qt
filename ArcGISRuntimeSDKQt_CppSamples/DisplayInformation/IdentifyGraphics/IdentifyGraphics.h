@@ -42,15 +42,15 @@ signals:
     void identifiedGraphicsCountChanged();
 
 private:
+    void addPolygonGraphic();
+    void connectSignals();
+    int identifiedGraphicsCount();
+
+private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
     int m_identifiedGraphicsCount;
-
-private:
-    void addPolygonGraphic();
-    void connectSignals();
-    int identifiedGraphicsCount();
 };
 
 #endif // IDENTIFY_GRAPHICS_H

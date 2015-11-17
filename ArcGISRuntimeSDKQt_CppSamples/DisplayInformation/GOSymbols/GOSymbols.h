@@ -38,15 +38,15 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-
-private:
     void addBuoyPoints(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
     void addBoatTrip(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
     void addNestingGround(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
     void addText(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
     Esri::ArcGISRuntime::Geometry createNestingGround();
+
+private:
+    Esri::ArcGISRuntime::Map* m_map;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView;
 };
 
 #endif // GOSYMBOLS_H

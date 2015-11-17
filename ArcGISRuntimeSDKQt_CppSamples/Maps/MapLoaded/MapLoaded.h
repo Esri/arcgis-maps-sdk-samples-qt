@@ -43,12 +43,12 @@ signals:
     void mapLoadStatusChanged();
 
 private:
+    QString mapLoadStatus() const;
+
+private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     QString m_loadStatus;
-
-private:
-    QString mapLoadStatus() const;
 };
 
 #endif // MAP_LOADED_H
