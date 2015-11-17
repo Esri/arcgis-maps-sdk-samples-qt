@@ -75,7 +75,7 @@ void UpdateGeometryFeatureService::componentComplete()
 
 void UpdateGeometryFeatureService::connectSignals()
 {
-    // connect to the mouse press release signal on the MapGraphicsView
+    // connect to the mouse press release signal on the MapQuickView
     connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
     {
         // get the point from the mouse point

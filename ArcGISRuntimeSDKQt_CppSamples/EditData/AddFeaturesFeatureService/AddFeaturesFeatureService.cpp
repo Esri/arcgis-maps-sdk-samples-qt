@@ -73,7 +73,7 @@ void AddFeaturesFeatureService::componentComplete()
 
 void AddFeaturesFeatureService::connectSignals()
 {
-    // connect to the mouse press release signal on the MapGraphicsView
+    // connect to the mouse press release signal on the MapQuickView
     connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
     {
         // obtain the map point

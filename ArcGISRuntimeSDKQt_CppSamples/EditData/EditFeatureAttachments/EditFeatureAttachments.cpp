@@ -77,7 +77,7 @@ void EditFeatureAttachments::componentComplete()
 
 void EditFeatureAttachments::connectSignals()
 {   
-    // connect to the mouse press release signal on the MapGraphicsView
+    // connect to the mouse press release signal on the MapQuickView
     connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
     {
         // first clear the selection
