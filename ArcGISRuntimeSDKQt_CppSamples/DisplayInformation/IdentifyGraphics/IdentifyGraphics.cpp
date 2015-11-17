@@ -53,8 +53,8 @@ void IdentifyGraphics::componentComplete()
     m_graphicsOverlay = new GraphicsOverlay(this);
 
     // assign a renderer to the graphics overlay
-    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), 0.7, this);
-    SimpleRenderer* simpleRenderer = new SimpleRenderer(sfs, this);
+    SimpleFillSymbol* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), 0.7, this);
+    SimpleRenderer* simpleRenderer = new SimpleRenderer(simpleFillSymbol, this);
     m_graphicsOverlay->setRenderer(simpleRenderer);
 
     // add the overlay to the mapview
