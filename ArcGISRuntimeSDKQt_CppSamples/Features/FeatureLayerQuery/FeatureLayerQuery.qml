@@ -56,7 +56,7 @@ FeatureLayerQuerySample {
 
         Button {
             text: "Find and Select"
-            enabled: featureLayerQuerySample.isLayerInitialized
+            enabled: featureLayerQuerySample.layerInitialized
             onClicked: {
                 // Call C++ invokable function to run the query
                 featureLayerQuerySample.runQuery(findText.text);

@@ -33,7 +33,9 @@
 using namespace Esri::ArcGISRuntime;
 
 GOSymbols::GOSymbols(QQuickItem* parent) :
-    QQuickItem(parent)
+    QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr)
 {
 }
 

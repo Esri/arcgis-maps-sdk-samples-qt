@@ -34,8 +34,12 @@ using namespace Esri::ArcGISRuntime;
 
 UpdateGeometryFeatureService::UpdateGeometryFeatureService(QQuickItem* parent) :
     QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_featureLayer(nullptr),
+    m_featureTable(nullptr),
     m_selectedFeature(nullptr),
-    m_isFeatureSelected(false)
+    m_featureSelected(false)
 {
 }
 
@@ -81,7 +85,7 @@ void UpdateGeometryFeatureService::connectSignals()
         Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
 
         // if a feature is already selected, move the selected feature to the new geometry
-        if (m_isFeatureSelected)
+        if (m_featureSelected)
         {
             // set the selected feature's geometry to the tapped map point
             m_selectedFeature->setGeometry(mapPoint);
@@ -91,7 +95,7 @@ void UpdateGeometryFeatureService::connectSignals()
 
             // reset the feature layer
             m_featureLayer->clearSelection();
-            m_isFeatureSelected = false;
+            m_featureSelected = false;
         }
 
         // else select a new feature
@@ -119,7 +123,7 @@ void UpdateGeometryFeatureService::connectSignals()
 
             // set selected feature member
             m_selectedFeature = static_cast<ArcGISFeature*>(identifyResults.at(0));
-            m_isFeatureSelected = true;
+            m_featureSelected = true;
         }
     });
 

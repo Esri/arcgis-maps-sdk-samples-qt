@@ -36,8 +36,15 @@ using namespace Esri::ArcGISRuntime;
 
 EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
     QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_featureLayer(nullptr),
+    m_featureTable(nullptr),
     m_selectedFeature(nullptr),
-    m_attachmentCount(0)
+    m_screenX(0),
+    m_screenY(0),
+    m_attachmentCount(0),
+    m_featureType("")
 {
 }
 
@@ -142,7 +149,7 @@ void EditFeatureAttachments::connectSignals()
                 emit attachmentCountChanged();
             });
         }
-    });
+    });    
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
     connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
@@ -186,8 +193,11 @@ AttachmentListModel* EditFeatureAttachments::attachmentModel() const
 
 void EditFeatureAttachments::addAttachment(QString fileUrl, QString contentType, QString fileName)
 {
+    qDebug() << "adding attachment";
     QFile* file = new QFile(fileUrl);
-    m_selectedFeature->attachmentListModel()->addAttachment(file, contentType, fileName);
+    qDebug() << m_selectedFeature->attachmentListModel()->rowCount();
+    //m_selectedFeature->attachmentListModel()->addAttachment(file, contentType, fileName);
+    qDebug() << "attachment added";
 }
 
 void EditFeatureAttachments::deleteAttachment(int index)

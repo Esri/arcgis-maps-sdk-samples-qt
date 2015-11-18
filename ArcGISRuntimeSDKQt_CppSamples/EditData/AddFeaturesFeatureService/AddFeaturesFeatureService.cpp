@@ -33,7 +33,11 @@
 using namespace Esri::ArcGISRuntime;
 
 AddFeaturesFeatureService::AddFeaturesFeatureService(QQuickItem* parent) :
-    QQuickItem(parent)
+    QQuickItem(parent),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_featureLayer(nullptr),
+    m_featureTable(nullptr)
 {
 }
 
