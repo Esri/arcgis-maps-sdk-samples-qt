@@ -41,8 +41,8 @@ EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
     m_featureLayer(nullptr),
     m_featureTable(nullptr),
     m_selectedFeature(nullptr),
-    m_screenX(),
-    m_screenY(),
+    m_screenX(0),
+    m_screenY(0),
     m_attachmentCount(0),
     m_featureType("")
 {
