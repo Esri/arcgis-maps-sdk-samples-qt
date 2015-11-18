@@ -26,8 +26,7 @@ using namespace Esri::ArcGISRuntime;
 ManageBookmarks::ManageBookmarks(QQuickItem* parent) :
     QQuickItem(parent),
     m_map(nullptr),
-    m_mapView(nullptr),
-    m_bookmarks()
+    m_mapView(nullptr)
 {
 }
 

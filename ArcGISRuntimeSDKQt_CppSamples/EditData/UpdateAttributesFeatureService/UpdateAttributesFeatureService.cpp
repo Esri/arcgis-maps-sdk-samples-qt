@@ -41,7 +41,7 @@ UpdateAttributesFeatureService::UpdateAttributesFeatureService(QQuickItem* paren
     m_selectedFeature(nullptr),
     m_screenX(),
     m_screenY(),
-    m_featureType()
+    m_featureType("")
 {    
 }
 

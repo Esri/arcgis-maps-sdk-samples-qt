@@ -23,7 +23,7 @@ MapLoaded::MapLoaded(QQuickItem* parent) :
     QQuickItem(parent),
     m_map(nullptr),
     m_mapView(nullptr),
-    m_loadStatus()
+    m_loadStatus("")
 {
 }
 

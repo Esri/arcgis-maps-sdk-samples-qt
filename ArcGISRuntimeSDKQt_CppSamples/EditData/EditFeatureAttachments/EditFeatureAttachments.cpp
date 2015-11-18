@@ -44,7 +44,7 @@ EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
     m_screenX(),
     m_screenY(),
     m_attachmentCount(0),
-    m_featureType()
+    m_featureType("")
 {
 }
 
@@ -149,7 +149,7 @@ void EditFeatureAttachments::connectSignals()
                 emit attachmentCountChanged();
             });
         }
-    });
+    });    
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
     connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
@@ -193,8 +193,11 @@ AttachmentListModel* EditFeatureAttachments::attachmentModel() const
 
 void EditFeatureAttachments::addAttachment(QString fileUrl, QString contentType, QString fileName)
 {
+    qDebug() << "adding attachment";
     QFile* file = new QFile(fileUrl);
-    m_selectedFeature->attachmentListModel()->addAttachment(file, contentType, fileName);
+    qDebug() << m_selectedFeature->attachmentListModel()->rowCount();
+    //m_selectedFeature->attachmentListModel()->addAttachment(file, contentType, fileName);
+    qDebug() << "attachment added";
 }
 
 void EditFeatureAttachments::deleteAttachment(int index)
