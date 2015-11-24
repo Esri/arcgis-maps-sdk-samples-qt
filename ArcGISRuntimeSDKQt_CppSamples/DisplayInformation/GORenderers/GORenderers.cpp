@@ -80,7 +80,7 @@ void GORenderers::addGraphicsOverlay()
     polylineBuilder.addPoint(-10e5, 40e5);
     polylineBuilder.addPoint(20e5, 50e5);
     // create a line symbol
-    SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 5, true, 1.0, this);
+    SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 5, this);
     // create a line graphic
     Graphic* lineGraphic = new Graphic(polylineBuilder.toGeometry(), this);
 
@@ -99,7 +99,7 @@ void GORenderers::addGraphicsOverlay()
     polygonBuilder.addPoint(20e5, 20e5);
     polygonBuilder.addPoint(20e5, -20e5);
     polygonBuilder.addPoint(-20e5, -20e5);
-    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), 0.7f, this);
+    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), this);
     Graphic* polygonGraphic = new Graphic(polygonBuilder.toGeometry(), this);
 
     GraphicsOverlay* polygonGraphicsOverlay = new GraphicsOverlay(this);

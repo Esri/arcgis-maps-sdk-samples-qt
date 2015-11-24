@@ -145,7 +145,6 @@ Rectangle {
         color: Qt.rgba(0.5, 0.0, 0.5, 1)
         width: 4
         antiAlias: true
-        opacity: 1
     }
 
     // polygon for nesting ground
@@ -159,7 +158,6 @@ Rectangle {
         id: nestingGroundSymbol
         style: Enums.SimpleFillSymbolStyleDiagonalCross
         color: Qt.rgba(0.0, 0.31, 0.0, 1)
-        opacity: 1
 
         // default property: ouline
         SimpleLineSymbol {
@@ -167,7 +165,6 @@ Rectangle {
             color: Qt.rgba(0.0, 0.0, 0.5, 1)
             width: 1
             antiAlias: true
-            opacity: 1
         }
     }
 

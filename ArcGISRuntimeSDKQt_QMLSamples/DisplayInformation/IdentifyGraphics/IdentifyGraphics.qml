@@ -44,7 +44,6 @@ Rectangle {
                 symbol: SimpleFillSymbol {
                     style: Enums.SimpleFillSymbolStyleSolid
                     color: "yellow"
-                    opacity: 0.7
                 }
             }
         }
