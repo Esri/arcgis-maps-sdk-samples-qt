@@ -69,9 +69,9 @@ void FeatureLayerQuery::componentComplete()
     m_featureLayer = new FeatureLayer(m_featureTable, this);
 
     // line symbol for the outline
-    SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("black"), 2.0f, true, 1.0f, this);
+    SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("black"), 2.0f, this);
     // fill symbol
-    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), 0.6f, outline, this);
+    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), outline, this);
     // create the renderer using the symbology created above
     SimpleRenderer* renderer = new SimpleRenderer(sfs, this);
     // set the renderer for the feature layer

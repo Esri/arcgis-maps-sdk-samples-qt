@@ -45,7 +45,6 @@ Rectangle {
                     SimpleFillSymbol {
                         style: Enums.SimpleFillSymbolStyleSolid
                         color: "#F2F5A9"
-                        opacity: 0.6
 
                         // default property (outline)
                         SimpleLineSymbol {
@@ -53,7 +52,6 @@ Rectangle {
                             color: "black"
                             width: 2.0 * scaleFactor
                             antiAlias: true
-                            opacity: 1.0
                         }
                     }
                 }

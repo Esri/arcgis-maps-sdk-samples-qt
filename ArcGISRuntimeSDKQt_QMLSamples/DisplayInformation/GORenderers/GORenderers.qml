@@ -86,7 +86,6 @@ Rectangle {
         color: "blue"
         width: 5
         antiAlias: true
-        opacity: 1
     }
 
     // the line graphic
@@ -107,7 +106,6 @@ Rectangle {
         id: fillSymbol
         style: Enums.SimpleFillSymbolStyleSolid
         color: "yellow"
-        opacity: 0.7
     }
 
     // the graphic for the polygon graphics overlay

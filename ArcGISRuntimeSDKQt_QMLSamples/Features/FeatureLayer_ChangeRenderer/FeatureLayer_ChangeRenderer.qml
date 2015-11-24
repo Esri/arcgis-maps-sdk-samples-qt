@@ -60,7 +60,6 @@ Rectangle {
                 color: "blue"
                 antiAlias: true
                 width: 2 * scaleFactor
-                opacity: 1.0
             }
         }
 

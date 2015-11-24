@@ -98,7 +98,7 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 
 void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
 {
-    SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash,QColor("blue"), 1, true, 0.7f, this);
+    SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash,QColor("blue"), 1, this);
 
     // json for the polyline
     QString polylineJson = "{\"paths\":[[[-2.7184791227926772,56.06147084563517],"
@@ -174,9 +174,9 @@ void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
 void GOSymbols::addNestingGround(GraphicsOverlay* graphicsOverlay)
 {
     // outline for the polygon
-    SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor("black"), 1, true, 0.5f, this);
+    SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor("black"), 1, this);
     // create a fill symbol for a polygon
-    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::DiagonalCross, QColor("green"), 0.5f, outline, this);
+    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::DiagonalCross, QColor("green"), outline, this);
 
     // create a graphic using polygon as the geometry
     Graphic* graphic = new Graphic(createNestingGround(), this);
