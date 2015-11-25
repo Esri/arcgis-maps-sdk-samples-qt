@@ -193,11 +193,8 @@ AttachmentListModel* EditFeatureAttachments::attachmentModel() const
 
 void EditFeatureAttachments::addAttachment(QString fileUrl, QString contentType, QString fileName)
 {
-    qDebug() << "adding attachment";
     QFile* file = new QFile(fileUrl);
-    qDebug() << m_selectedFeature->attachmentListModel()->rowCount();
-    //m_selectedFeature->attachmentListModel()->addAttachment(file, contentType, fileName);
-    qDebug() << "attachment added";
+    m_selectedFeature->attachmentListModel()->addAttachment(file, contentType, fileName);
 }
 
 void EditFeatureAttachments::deleteAttachment(int index)
