@@ -64,9 +64,9 @@ Query::Query(QWidget* parent) :
   m_featureLayer = new FeatureLayer(m_featureTable, this);
 
   // line symbol for the outline
-  SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("black"), 2.0f, true, 1.0f, this);
+  SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("black"), 2.0f, this);
   // fill symbol
-  SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), 0.6f, outline, this);
+  SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), outline, this);
   // create the renderer using the symbology created above
   SimpleRenderer* renderer = new SimpleRenderer(sfs, this);
   // set the renderer for the feature layer
@@ -103,10 +103,8 @@ void Query::onQueryClicked()
     // iterate over the result object
     while(queryResult->iterator().hasNext())
     {
-      auto feature = queryResult->iterator().next();
-      feature->setParent(this);
       // add each feature to the list
-      features.append(feature);
+      features.append(queryResult->iterator().next(this));
     }
 
     // make a selection with the features found. Ideally calling

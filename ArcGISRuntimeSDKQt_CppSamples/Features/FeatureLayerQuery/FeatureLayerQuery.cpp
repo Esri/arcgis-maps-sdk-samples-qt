@@ -103,10 +103,8 @@ void FeatureLayerQuery::connectSignals()
         // iterate over the result object
         while(queryResult->iterator().hasNext())
         {
-            auto feature = queryResult->iterator().next();
-            feature->setParent(this);
             // add each feature to the list
-            features.append(feature);
+            features.append(queryResult->iterator().next(this));
         }
 
         // select the feature

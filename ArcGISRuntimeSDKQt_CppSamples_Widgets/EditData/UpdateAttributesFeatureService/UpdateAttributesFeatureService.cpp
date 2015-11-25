@@ -120,8 +120,7 @@ void UpdateAttributesFeatureService::connectSignals()
                 delete m_selectedFeature;
 
             // set selected feature member
-            m_selectedFeature = featureQueryResult->iterator().next();
-            m_selectedFeature->setParent(this);
+            m_selectedFeature = featureQueryResult->iterator().next(this);
             QString currentVal = m_selectedFeature->attributeValue("typdamage").toString();
             m_inputDialog->setTextValue(currentVal);
             m_inputDialog->show();
