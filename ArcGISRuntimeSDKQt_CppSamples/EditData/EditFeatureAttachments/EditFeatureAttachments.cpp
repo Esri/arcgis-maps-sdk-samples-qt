@@ -193,7 +193,7 @@ AttachmentListModel* EditFeatureAttachments::attachmentModel() const
 
 void EditFeatureAttachments::addAttachment(QString fileUrl, QString contentType, QString fileName)
 {
-    QFile* file = new QFile(fileUrl);
+    QFile* file = new QFile(fileUrl, this);
     m_selectedFeature->attachmentListModel()->addAttachment(file, contentType, fileName);
 }
 
