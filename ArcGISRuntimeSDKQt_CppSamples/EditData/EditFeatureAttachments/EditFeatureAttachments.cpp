@@ -135,8 +135,7 @@ void EditFeatureAttachments::connectSignals()
                 delete m_selectedFeature;
 
             // set selected feature and attachment model members
-            m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next());
-            m_selectedFeature->setParent(this);
+            m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
             m_featureType = m_selectedFeature->attributeValue("typdamage").toString();
             emit featureTypeChanged();
             emit featureSelected();

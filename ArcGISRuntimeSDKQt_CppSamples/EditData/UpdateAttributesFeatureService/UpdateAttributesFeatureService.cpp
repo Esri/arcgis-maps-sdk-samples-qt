@@ -133,8 +133,7 @@ void UpdateAttributesFeatureService::connectSignals()
                 delete m_selectedFeature;
 
             // set selected feature member
-            m_selectedFeature = featureQueryResult->iterator().next();
-            m_selectedFeature->setParent(this);
+            m_selectedFeature = featureQueryResult->iterator().next(this);
             m_featureType = m_selectedFeature->attributeValue("typdamage").toString();
             emit featureTypeChanged();
             emit featureSelected();
