@@ -124,7 +124,11 @@ Rectangle {
                             }
 
                             Switch {
-                                checked: visible
+                                checked: sublayerVisible
+
+                                onCheckedChanged: {
+                                    sublayerVisible = checked;
+                                }
                             }
                         }
                     }
