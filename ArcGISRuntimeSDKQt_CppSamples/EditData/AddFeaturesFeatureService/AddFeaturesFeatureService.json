@@ -1,5 +1,5 @@
 {
-    "source" :  "AddFeaturesFeatureService.qml",
+    "source" :  "AddFeaturesFeatureService.",
     "description" : "AddFeaturesFeatureService.html",
     "thumbnail" : "AddFeaturesFeatureService.png",
     "name" : "Add features feature service"

@@ -1,5 +1,5 @@
 {
-    "source" :  "UpdateGeometryFeatureService.qml",
+    "source" :  "UpdateGeometryFeatureService.",
     "description" : "UpdateGeometryFeatureService.html",
     "thumbnail" : "UpdateGeometryFeatureService.png",
     "name" : "Update geometry feature service"

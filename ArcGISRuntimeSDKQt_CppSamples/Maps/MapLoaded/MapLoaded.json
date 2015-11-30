@@ -1,5 +1,5 @@
 {
-    "source" :  "MapLoaded.qml",
+    "source" :  "MapLoaded.",
     "description" : "MapLoaded.html",
     "thumbnail" : "MapLoaded.png",
     "name" : "Map loaded"

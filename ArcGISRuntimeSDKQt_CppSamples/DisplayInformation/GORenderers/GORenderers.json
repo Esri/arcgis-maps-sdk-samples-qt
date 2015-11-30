@@ -1,5 +1,5 @@
 {
-    "source" :  "GORenderers.qml",
+    "source" :  "GORenderers.",
     "description" : "GORenderers.html",
     "thumbnail" : "GORenderers.png",
     "name" : "Add graphics with renderer"
