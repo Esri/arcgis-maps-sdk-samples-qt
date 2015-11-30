@@ -3,6 +3,8 @@
         <file alias="sample.json">ChangeBasemap.json</file>
         <file>ChangeBasemap.png</file>
         <file>ChangeBasemap.qml</file>
+		<file>ChangeBasemap.h</file>
+		<file>ChangeBasemap.cpp</file>
         <file>ChangeBasemap.html</file>
     </qresource>
 </RCC>

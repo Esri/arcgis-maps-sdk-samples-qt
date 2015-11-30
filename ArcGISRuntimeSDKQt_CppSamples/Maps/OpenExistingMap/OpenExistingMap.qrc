@@ -3,6 +3,8 @@
         <file alias="sample.json">OpenExistingMap.json</file>
         <file>OpenExistingMap.png</file>
         <file>OpenExistingMap.qml</file>
+		<file>OpenExistingMap.h</file>
+		<file>OpenExistingMap.cpp</file>
         <file>OpenExistingMap.html</file>
         <file>geology.jpg</file>
         <file>Housing.png</file>

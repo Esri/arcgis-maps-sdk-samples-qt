@@ -3,6 +3,8 @@
         <file alias="sample.json">FeatureLayerQuery.json</file>
         <file>FeatureLayerQuery.png</file>
         <file>FeatureLayerQuery.qml</file>
+		<file>FeatureLayerQuery.h</file>
+		<file>FeatureLayerQuery.cpp</file>
         <file>FeatureLayerQuery.html</file>
     </qresource>
 </RCC>

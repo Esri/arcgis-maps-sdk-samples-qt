@@ -3,6 +3,8 @@
         <file alias="sample.json">ShowMagnifier.json</file>
         <file>ShowMagnifier.png</file>
         <file>ShowMagnifier.qml</file>
+		<file>ShowMagnifier.cpp</file>
+		<file>ShowMagnifier.h</file>
         <file>ShowMagnifier.html</file>
     </qresource>
 </RCC>

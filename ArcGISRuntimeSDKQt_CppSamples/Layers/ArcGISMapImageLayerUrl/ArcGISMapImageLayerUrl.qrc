@@ -3,6 +3,8 @@
         <file alias="sample.json">ArcGISMapImageLayerUrl.json</file>
         <file>ArcGISMapImageLayerUrl.png</file>
         <file>ArcGISMapImageLayerUrl.qml</file>
+		<file>ArcGISMapImageLayerUrl.h</file>
+		<file>ArcGISMapImageLayerUrl.cpp</file>
         <file>ArcGISMapImageLayerUrl.html</file>
     </qresource>
 </RCC>

@@ -3,6 +3,8 @@
         <file alias="sample.json">SetInitialMapArea.json</file>
         <file>SetInitialMapArea.png</file>
         <file>SetInitialMapArea.qml</file>
+		<file>SetInitialMapArea.h</file>
+		<file>SetInitialMapArea.cpp</file>
         <file>SetInitialMapArea.html</file>
     </qresource>
 </RCC>

@@ -3,6 +3,8 @@
         <file alias="sample.json">DisplayMap.json</file>
         <file>DisplayMap.png</file>
         <file>DisplayMap.qml</file>
+		<file>DisplayMap.h</file>
+		<file>DisplayMap.cpp</file>
         <file>DisplayMap.html</file>
     </qresource>
 </RCC>

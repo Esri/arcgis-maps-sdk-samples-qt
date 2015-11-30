@@ -3,6 +3,8 @@
         <file alias="sample.json">GORenderers.json</file>
         <file>GORenderers.png</file>
         <file>GORenderers.qml</file>
+		<file>GORenderers.cpp</file>
+		<file>GORenderers.h</file>
         <file>GORenderers.html</file>
     </qresource>
 </RCC>
