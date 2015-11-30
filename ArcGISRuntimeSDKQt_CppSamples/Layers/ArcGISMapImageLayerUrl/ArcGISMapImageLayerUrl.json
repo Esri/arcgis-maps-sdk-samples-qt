@@ -1,5 +1,5 @@
 {
-    "source" :  "ArcGISMapImageLayerUrl.",
+    "source" :  "ArcGISMapImageLayerUrl",
     "description" : "ArcGISMapImageLayerUrl.html",
     "thumbnail" : "ArcGISMapImageLayerUrl.png",
     "name" : "ArcGIS map image layer (URL)"
