@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/DisplayDeviceLocation">
+        <file alias="sample.json">DisplayDeviceLocation.json</file>
+        <file>DisplayDeviceLocation.png</file>
+        <file>DisplayDeviceLocation.qml</file>
+        <file>DisplayDeviceLocation.html</file>
+        <file>Close.png</file>
+        <file>Compass.png</file>
+        <file>DisplayDeviceLocation.cpp</file>
+        <file>DisplayDeviceLocation.h</file>
+        <file>Navigation.png</file>
+        <file>On.png</file>
+        <file>Re-Center.png</file>
+        <file>Stop.png</file>
+    </qresource>
+</RCC>
