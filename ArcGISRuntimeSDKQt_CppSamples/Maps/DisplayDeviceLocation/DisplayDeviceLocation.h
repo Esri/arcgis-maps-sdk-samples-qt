@@ -29,6 +29,13 @@ class DisplayDeviceLocation : public QQuickItem
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString compassMode READ compassMode NOTIFY compassModeChanged)
+    Q_PROPERTY(QString navigationMode READ navigationMode NOTIFY navigationModeChanged)
+    Q_PROPERTY(QString recenterMode READ recenterMode NOTIFY recenterModeChanged)
+    Q_PROPERTY(QString onMode READ onMode NOTIFY onModeChanged)
+    Q_PROPERTY(QString stopMode READ stopMode NOTIFY stopModeChanged)
+    Q_PROPERTY(QString closeMode READ closeMode NOTIFY closeModeChanged)
+
 public:
     DisplayDeviceLocation(QQuickItem* parent = 0);
     ~DisplayDeviceLocation();
@@ -38,9 +45,31 @@ public:
     Q_INVOKABLE void stopLocationDisplay();
     Q_INVOKABLE void setAutoPanMode(QString autoPanMode);
 
+signals:
+    void compassModeChanged();
+    void navigationModeChanged();
+    void recenterModeChanged();
+    void onModeChanged();
+    void stopModeChanged();
+    void closeModeChanged();
+
+private:
+    QString compassMode() const;
+    QString navigationMode() const;
+    QString recenterMode() const;
+    QString onMode() const;
+    QString stopMode() const;
+    QString closeMode() const;
+
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    QString m_compassMode;
+    QString m_navigationMode;
+    QString m_recenterMode;
+    QString m_onMode;
+    QString m_stopMode;
+    QString m_closeMode;
 };
 
 #endif // DISPLAY_DEVICE_LOCATION_H

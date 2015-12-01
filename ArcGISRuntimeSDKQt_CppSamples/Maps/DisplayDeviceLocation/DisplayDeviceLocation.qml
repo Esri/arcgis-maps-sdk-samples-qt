@@ -22,13 +22,23 @@ DisplayDeviceLocationSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
-    property string currentModeText: "Stop"
+    property string currentModeText: deviceLocationSample.stopMode
     property string currentModeImage: "qrc:/Samples/Maps/DisplayDeviceLocation/Stop.png"
 
     // add a mapView component
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+
+        Component.onCompleted: {
+            // populate list model with modes
+            autoPanListModel.append({name: deviceLocationSample.compassMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Compass.png"});
+            autoPanListModel.append({name: deviceLocationSample.navigationMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Navigation.png"});
+            autoPanListModel.append({name: deviceLocationSample.recenterMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Re-Center.png"});
+            autoPanListModel.append({name: deviceLocationSample.onMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/On.png"});
+            autoPanListModel.append({name: deviceLocationSample.stopMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Stop.png"});
+            autoPanListModel.append({name: deviceLocationSample.closeMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Close.png"});
+        }
     }
 
     Rectangle {
@@ -37,16 +47,6 @@ DisplayDeviceLocationSample {
         visible: autoPanListView.visible
         color: "black"
         opacity: 0.7
-    }
-
-    ListModel {
-        id: autoPanListModel
-        ListElement {name: "Compass"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/Compass.png"}
-        ListElement {name: "Navigation"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/Navigation.png"}
-        ListElement {name: "Re-Center"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/Re-Center.png"}
-        ListElement {name: "On"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/On.png"}
-        ListElement {name: "Stop"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/Stop.png"}
-        ListElement {name: "Close"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/Close.png"}
     }
 
     ListView {
@@ -60,7 +60,9 @@ DisplayDeviceLocationSample {
         width: parent.width
         height: 300
         spacing: 10 * scaleFactor
-        model: autoPanListModel
+        model: ListModel {
+            id: autoPanListModel
+        }
 
         delegate: Row {
             id: autopanRow
@@ -96,25 +98,25 @@ DisplayDeviceLocationSample {
             // set the appropriate auto pan mode
             function updateAutoPanMode() {
                 switch (name) {
-                case "Compass":
-                    deviceLocationSample.setAutoPanMode("Compass");
+                case deviceLocationSample.compassMode:
+                    deviceLocationSample.setAutoPanMode(deviceLocationSample.compassMode);
                     break;
-                case "Navigation":
-                    deviceLocationSample.setAutoPanMode("Navigation");
+                case deviceLocationSample.navigationMode:
+                    deviceLocationSample.setAutoPanMode(deviceLocationSample.navigationMode);
                     break;
-                case "Re-Center":
-                    deviceLocationSample.setAutoPanMode("Default");
+                case deviceLocationSample.recenterMode:
+                    deviceLocationSample.setAutoPanMode(deviceLocationSample.recenterMode);
                     break;
-                case "On":
+                case deviceLocationSample.onMode:
                     deviceLocationSample.startLocationDisplay();
-                    deviceLocationSample.setAutoPanMode("Off");
+                    deviceLocationSample.setAutoPanMode(deviceLocationSample.onMode);
                     break;
-                case "Stop":
+                case deviceLocationSample.stopMode:
                     deviceLocationSample.stopLocationDisplay();
                     break;
                 }
 
-                if (name !== "Close") {
+                if (name !== deviceLocationSample.closeMode) {
                     currentModeText = name;
                     currentModeImage = image;
                 }

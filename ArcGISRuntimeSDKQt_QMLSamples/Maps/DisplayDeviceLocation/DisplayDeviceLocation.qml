@@ -22,7 +22,13 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string currentModeText: "Stop"
+    property string compassMode: "Compass"
+    property string navigationMode: "Navigation"
+    property string recenterMode: "Re-Center"
+    property string onMode: "On"
+    property string stopMode: "Stop"
+    property string closeMode: "Close"
+    property string currentModeText: stopMode
     property string currentModeImage: "qrc:/Samples/Maps/DisplayDeviceLocation/Stop.png"
 
     // Create MapView that contains a Map with the Imagery with Labels Basemap
@@ -36,6 +42,14 @@ Rectangle {
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
                     mapView.locationDisplay.start();
+
+                    // populate list model with modes
+                    autoPanListModel.append({name: compassMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Compass.png"});
+                    autoPanListModel.append({name: navigationMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Navigation.png"});
+                    autoPanListModel.append({name: recenterMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Re-Center.png"});
+                    autoPanListModel.append({name: onMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/On.png"});
+                    autoPanListModel.append({name: stopMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Stop.png"});
+                    autoPanListModel.append({name: closeMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Close.png"});
                 }
             }
         }
@@ -54,17 +68,7 @@ Rectangle {
         visible: autoPanListView.visible
         color: "black"
         opacity: 0.7
-    }
-
-    ListModel {
-        id: autoPanListModel
-        ListElement {name: "Compass"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/Compass.png"}
-        ListElement {name: "Navigation"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/Navigation.png"}
-        ListElement {name: "Re-Center"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/Re-Center.png"}
-        ListElement {name: "On"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/On.png"}
-        ListElement {name: "Stop"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/Stop.png"}
-        ListElement {name: "Close"; image: "qrc:/Samples/Maps/DisplayDeviceLocation/Close.png"}
-    }
+    }    
 
     ListView {
         id: autoPanListView
@@ -77,7 +81,9 @@ Rectangle {
         width: parent.width
         height: 300
         spacing: 10 * scaleFactor
-        model: autoPanListModel
+        model: ListModel {
+            id: autoPanListModel
+        }
 
         delegate: Row {
             id: autopanRow
@@ -113,25 +119,25 @@ Rectangle {
             // set the appropriate auto pan mode
             function updateAutoPanMode() {
                 switch (name) {
-                case "Compass":
+                case compassMode:
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeCompassNavigation;
                     break;
-                case "Navigation":
+                case navigationMode:
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
                     break;
-                case "Re-Center":
+                case recenterMode:
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeDefault;
                     break;
-                case "On":
+                case onMode:
                     mapView.locationDisplay.start();
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeOff;
                     break;
-                case "Stop":
+                case stopMode:
                     mapView.locationDisplay.stop();
                     break;
                 }
 
-                if (name !== "Close") {
+                if (name !== closeMode) {
                     currentModeText = name;
                     currentModeImage = image;
                 }

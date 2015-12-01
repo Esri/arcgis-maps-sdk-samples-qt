@@ -16,15 +16,27 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Basemap.h"
-#include <QNmeaPositionInfoSource>
+#include <QGeoPositionInfoSource>
 
 using namespace Esri::ArcGISRuntime;
 
 DisplayDeviceLocation::DisplayDeviceLocation(QQuickItem* parent) :
     QQuickItem(parent),
     m_map(nullptr),
-    m_mapView(nullptr)
+    m_mapView(nullptr),
+    m_compassMode("Compass"),
+    m_navigationMode("Navigation"),
+    m_recenterMode("Re-Center"),
+    m_onMode("On"),
+    m_stopMode("Stop"),
+    m_closeMode("Close")
 {
+    emit compassModeChanged();
+    emit navigationModeChanged();
+    emit recenterModeChanged();
+    emit onModeChanged();
+    emit stopModeChanged();
+    emit closeModeChanged();
 }
 
 DisplayDeviceLocation::~DisplayDeviceLocation()
@@ -67,20 +79,50 @@ void DisplayDeviceLocation::stopLocationDisplay()
 void DisplayDeviceLocation::setAutoPanMode(QString autoPanMode)
 {
     // set the correct auto pan mode on the location display
-    if (autoPanMode == "Compass")
+    if (autoPanMode == m_compassMode)
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::CompassNavigation);
     }
-    else if (autoPanMode == "Navigation")
+    else if (autoPanMode == m_navigationMode)
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
     }
-    else if (autoPanMode == "Default")
+    else if (autoPanMode == m_recenterMode)
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Default);
     }
-    else if (autoPanMode == "Off")
+    else if (autoPanMode == m_stopMode)
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
     }
+}
+
+QString DisplayDeviceLocation::compassMode() const
+{
+    return m_compassMode;
+}
+
+QString DisplayDeviceLocation::navigationMode() const
+{
+    return m_navigationMode;
+}
+
+QString DisplayDeviceLocation::recenterMode() const
+{
+    return m_recenterMode;
+}
+
+QString DisplayDeviceLocation::onMode() const
+{
+    return m_onMode;
+}
+
+QString DisplayDeviceLocation::stopMode() const
+{
+    return m_stopMode;
+}
+
+QString DisplayDeviceLocation::closeMode() const
+{
+    return m_closeMode;
 }
