@@ -3,6 +3,8 @@
         <file alias="sample.json">FeatureLayerDefinitionExpression.json</file>
         <file>FeatureLayerDefinitionExpression.png</file>
         <file>FeatureLayerDefinitionExpression.qml</file>
+		<file>FeatureLayerDefinitionExpression.h</file>
+		<file>FeatureLayerDefinitionExpression.cpp</file>
         <file>FeatureLayerDefinitionExpression.html</file>
     </qresource>
 </RCC>

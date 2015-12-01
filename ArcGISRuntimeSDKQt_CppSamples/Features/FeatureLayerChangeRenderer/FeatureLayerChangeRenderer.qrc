@@ -3,6 +3,8 @@
         <file alias="sample.json">FeatureLayerChangeRenderer.json</file>
         <file>FeatureLayerChangeRenderer.png</file>
         <file>FeatureLayerChangeRenderer.qml</file>
+		<file>FeatureLayerChangeRenderer.h</file>
+		<file>FeatureLayerChangeRenderer.cpp</file>
         <file>FeatureLayerChangeRenderer.html</file>
     </qresource>
 </RCC>

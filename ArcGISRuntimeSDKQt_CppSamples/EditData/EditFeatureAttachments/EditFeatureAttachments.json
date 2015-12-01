@@ -1,5 +1,5 @@
 {
-    "source" :  "EditFeatureAttachments.qml",
+    "source" :  "EditFeatureAttachments",
     "description" : "EditFeatureAttachments.html",
     "thumbnail" : "EditFeatureAttachments.png",
     "name" : "Edit feature attachments"

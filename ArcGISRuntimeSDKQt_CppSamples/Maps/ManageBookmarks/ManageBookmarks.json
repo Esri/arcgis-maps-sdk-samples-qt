@@ -1,5 +1,5 @@
 {
-    "source" :  "ManageBookmarks.qml",
+    "source" :  "ManageBookmarks",
     "description" : "ManageBookmarks.html",
     "thumbnail" : "ManageBookmarks.png",
     "name" : "Manage bookmarks"

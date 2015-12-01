@@ -3,6 +3,8 @@
         <file alias="sample.json">GOSymbols.json</file>
         <file>GOSymbols.png</file>
         <file>GOSymbols.qml</file>
+		<file>GOSymbols.cpp</file>
+		<file>GOSymbols.h</file>
         <file>GOSymbols.html</file>
     </qresource>
 </RCC>

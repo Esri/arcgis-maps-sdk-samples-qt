@@ -3,6 +3,8 @@
         <file alias="sample.json">MapRotation.json</file>
         <file>MapRotation.png</file>
         <file>MapRotation.qml</file>
+		<file>MapRotation.h</file>
+		<file>MapRotation.cpp</file>
         <file>MapRotation.html</file>
     </qresource>
 </RCC>

@@ -1,5 +1,5 @@
 {
-    "source" :  "FeatureLayerSelection.qml",
+    "source" :  "FeatureLayerSelection",
     "description" : "FeatureLayerSelection.html",
     "thumbnail" : "FeatureLayerSelection.png",
     "name" : "Feature layer selection"

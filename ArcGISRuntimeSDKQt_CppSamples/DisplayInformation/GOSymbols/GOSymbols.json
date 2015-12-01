@@ -1,5 +1,5 @@
 {
-    "source" :  "GOSymbols.qml",
+    "source" :  "GOSymbols",
     "description" : "GOSymbols.html",
     "thumbnail" : "GOSymbols.png",
     "name" : "Add graphics with symbols"

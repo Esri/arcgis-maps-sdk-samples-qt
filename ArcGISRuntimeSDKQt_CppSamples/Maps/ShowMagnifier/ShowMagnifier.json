@@ -1,5 +1,5 @@
 {
-    "source" :  "ShowMagnifier.qml",
+    "source" :  "ShowMagnifier",
     "description" : "ShowMagnifier.html",
     "thumbnail" : "ShowMagnifier.png",
     "name" : "Show magnifier"

@@ -3,6 +3,8 @@
         <file alias="sample.json">AddFeaturesFeatureService.json</file>
         <file>AddFeaturesFeatureService.png</file>
         <file>AddFeaturesFeatureService.qml</file>
+		<file>AddFeaturesFeatureService.h</file>
+		<file>AddFeaturesFeatureService.cpp</file>
         <file>AddFeaturesFeatureService.html</file>
     </qresource>
 </RCC>

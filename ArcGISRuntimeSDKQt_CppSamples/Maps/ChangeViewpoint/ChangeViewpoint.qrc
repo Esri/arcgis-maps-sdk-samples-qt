@@ -3,6 +3,8 @@
         <file alias="sample.json">ChangeViewpoint.json</file>
         <file>ChangeViewpoint.png</file>
         <file>ChangeViewpoint.qml</file>
+		<file>ChangeViewpoint.h</file>
+		<file>ChangeViewpoint.cpp</file>
         <file>ChangeViewpoint.html</file>
     </qresource>
 </RCC>

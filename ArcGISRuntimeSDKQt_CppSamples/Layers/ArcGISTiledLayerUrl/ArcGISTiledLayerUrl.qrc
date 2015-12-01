@@ -3,6 +3,8 @@
         <file alias="sample.json">ArcGISTiledLayerUrl.json</file>
         <file>ArcGISTiledLayerUrl.png</file>
         <file>ArcGISTiledLayerUrl.qml</file>
+		<file>ArcGISTiledLayerUrl.cpp</file>
+		<file>ArcGISTiledLayerUrl.h</file>
         <file>ArcGISTiledLayerUrl.html</file>
     </qresource>
 </RCC>

@@ -1,5 +1,5 @@
 {
-    "source" :  "DeleteFeaturesFeatureService.qml",
+    "source" :  "DeleteFeaturesFeatureService",
     "description" : "DeleteFeaturesFeatureService.html",
     "thumbnail" : "DeleteFeaturesFeatureService.png",
     "name" : "Delete features feature service"
