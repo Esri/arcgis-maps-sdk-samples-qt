@@ -20,16 +20,17 @@
 
 using namespace Esri::ArcGISRuntime;
 
+const QString DisplayDeviceLocation::s_compassMode = "Compass";
+const QString DisplayDeviceLocation::s_navigationMode = "Navigation";
+const QString DisplayDeviceLocation::s_recenterMode = "Re-Center";
+const QString DisplayDeviceLocation::s_onMode = "On";
+const QString DisplayDeviceLocation::s_stopMode = "Stop";
+const QString DisplayDeviceLocation::s_closeMode = "Close";
+
 DisplayDeviceLocation::DisplayDeviceLocation(QQuickItem* parent) :
     QQuickItem(parent),
     m_map(nullptr),
-    m_mapView(nullptr),
-    m_compassMode("Compass"),
-    m_navigationMode("Navigation"),
-    m_recenterMode("Re-Center"),
-    m_onMode("On"),
-    m_stopMode("Stop"),
-    m_closeMode("Close")
+    m_mapView(nullptr)
 {
     emit compassModeChanged();
     emit navigationModeChanged();
@@ -79,50 +80,50 @@ void DisplayDeviceLocation::stopLocationDisplay()
 void DisplayDeviceLocation::setAutoPanMode(QString autoPanMode)
 {
     // set the correct auto pan mode on the location display
-    if (autoPanMode == m_compassMode)
+    if (autoPanMode == s_compassMode)
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::CompassNavigation);
     }
-    else if (autoPanMode == m_navigationMode)
+    else if (autoPanMode == s_navigationMode)
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
     }
-    else if (autoPanMode == m_recenterMode)
+    else if (autoPanMode == s_recenterMode)
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Default);
     }
-    else if (autoPanMode == m_stopMode)
+    else if (autoPanMode == s_stopMode)
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
     }
 }
 
-QString DisplayDeviceLocation::compassMode() const
+const QString DisplayDeviceLocation::compassMode()
 {
-    return m_compassMode;
+    return s_compassMode;
 }
 
-QString DisplayDeviceLocation::navigationMode() const
+const QString DisplayDeviceLocation::navigationMode()
 {
-    return m_navigationMode;
+    return s_navigationMode;
 }
 
-QString DisplayDeviceLocation::recenterMode() const
+const QString DisplayDeviceLocation::recenterMode()
 {
-    return m_recenterMode;
+    return s_recenterMode;
 }
 
-QString DisplayDeviceLocation::onMode() const
+const QString DisplayDeviceLocation::onMode()
 {
-    return m_onMode;
+    return s_onMode;
 }
 
-QString DisplayDeviceLocation::stopMode() const
+const QString DisplayDeviceLocation::stopMode()
 {
-    return m_stopMode;
+    return s_stopMode;
 }
 
-QString DisplayDeviceLocation::closeMode() const
+const QString DisplayDeviceLocation::closeMode()
 {
-    return m_closeMode;
+    return s_closeMode;
 }

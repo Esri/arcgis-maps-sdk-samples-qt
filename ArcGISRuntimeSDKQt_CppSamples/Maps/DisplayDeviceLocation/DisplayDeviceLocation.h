@@ -54,22 +54,22 @@ signals:
     void closeModeChanged();
 
 private:
-    QString compassMode() const;
-    QString navigationMode() const;
-    QString recenterMode() const;
-    QString onMode() const;
-    QString stopMode() const;
-    QString closeMode() const;
+    static const QString compassMode();
+    static const QString navigationMode();
+    static const QString recenterMode();
+    static const QString onMode();
+    static const QString stopMode();
+    static const QString closeMode();
 
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    QString m_compassMode;
-    QString m_navigationMode;
-    QString m_recenterMode;
-    QString m_onMode;
-    QString m_stopMode;
-    QString m_closeMode;
+    static const QString s_compassMode;
+    static const QString s_navigationMode;
+    static const QString s_recenterMode;
+    static const QString s_onMode;
+    static const QString s_stopMode;
+    static const QString s_closeMode;
 };
 
 #endif // DISPLAY_DEVICE_LOCATION_H
