@@ -80,19 +80,19 @@ void DisplayDeviceLocation::stopLocationDisplay()
 void DisplayDeviceLocation::setAutoPanMode(QString autoPanMode)
 {
     // set the correct auto pan mode on the location display
-    if (autoPanMode == s_compassMode)
+    if (autoPanMode == compassMode())
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::CompassNavigation);
     }
-    else if (autoPanMode == s_navigationMode)
+    else if (autoPanMode == navigationMode())
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
     }
-    else if (autoPanMode == s_recenterMode)
+    else if (autoPanMode == recenterMode())
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Default);
     }
-    else if (autoPanMode == s_stopMode)
+    else if (autoPanMode == stopMode())
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
     }
