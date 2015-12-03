@@ -48,11 +48,7 @@ Rectangle {
                                 return;
                             }
 
-                            var count = 0;
-                            while (populateFromServiceResult.iterator.hasNext){
-                                populateFromServiceResult.iterator.next();
-                                ++count;
-                            }
+                            var count = populateFromServiceResult.iterator.features.length;
                             console.log("Retrieved %1 features".arg(count));
                         }
                     }
