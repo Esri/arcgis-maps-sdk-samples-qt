@@ -46,7 +46,7 @@ public:
     ~EditFeatureAttachments();
 
     void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void addAttachment(QString fileUrl, QString contentType, QString fileName);
+    Q_INVOKABLE void addAttachment(QUrl fileUrl, QString contentType, QString fileName);
     Q_INVOKABLE void deleteAttachment(int index);
 
 signals:

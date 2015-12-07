@@ -190,10 +190,11 @@ AttachmentListModel* EditFeatureAttachments::attachmentModel() const
     return m_selectedFeature ? m_selectedFeature->attachmentListModel() : nullptr;
 }
 
-void EditFeatureAttachments::addAttachment(QString fileUrl, QString contentType, QString fileName)
+void EditFeatureAttachments::addAttachment(QUrl fileUrl, QString contentType, QString fileName)
 {
-    QFile* file = new QFile(fileUrl, this);
-    m_selectedFeature->attachmentListModel()->addAttachment(file, contentType, fileName);
+    QFile* file = new QFile(fileUrl.toLocalFile(), this);
+    if (file->exists())
+      m_selectedFeature->attachmentListModel()->addAttachment(file, contentType, fileName);
 }
 
 void EditFeatureAttachments::deleteAttachment(int index)
