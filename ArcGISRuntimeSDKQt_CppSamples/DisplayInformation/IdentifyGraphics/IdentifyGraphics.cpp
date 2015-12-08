@@ -57,7 +57,7 @@ void IdentifyGraphics::componentComplete()
     m_graphicsOverlay = new GraphicsOverlay(this);
 
     // assign a renderer to the graphics overlay
-    SimpleFillSymbol* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("yellow"), this);
+    SimpleFillSymbol* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 255, 0, 180), this);
     SimpleRenderer* simpleRenderer = new SimpleRenderer(simpleFillSymbol, this);
     m_graphicsOverlay->setRenderer(simpleRenderer);
 

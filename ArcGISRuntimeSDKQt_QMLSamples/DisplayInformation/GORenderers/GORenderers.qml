@@ -105,7 +105,7 @@ Rectangle {
     SimpleFillSymbol {
         id: fillSymbol
         style: Enums.SimpleFillSymbolStyleSolid
-        color: "yellow"
+        color: Qt.rgba(1, 1, 0, 0.7)
     }
 
     // the graphic for the polygon graphics overlay
