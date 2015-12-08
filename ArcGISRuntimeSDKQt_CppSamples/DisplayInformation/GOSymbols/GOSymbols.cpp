@@ -193,8 +193,8 @@ void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
     TextSymbol* textSymbolCraigleith = new TextSymbol(10, QString("Craigleith"), QColor("blue"), HorizontalAlignment::Right, VerticalAlignment::Top, this);
 
     // geometry for the graphics
-    Point craigleith(-2.640631, 56.078083, SpatialReference::wgs84());
-    Point bassRock(-2.720324, 56.073569, SpatialReference::wgs84());
+    Point bassRock(-2.640631, 56.078083, SpatialReference::wgs84());
+    Point craigleith(-2.720324, 56.073569, SpatialReference::wgs84());
 
     // create the graphics and set their symbology
     Graphic* graphicBass = new Graphic(bassRock, this);
