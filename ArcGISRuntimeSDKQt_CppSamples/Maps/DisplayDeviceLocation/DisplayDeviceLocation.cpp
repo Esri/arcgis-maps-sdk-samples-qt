@@ -17,6 +17,7 @@
 #include "MapQuickView.h"
 #include "Basemap.h"
 #include <QGeoPositionInfoSource>
+#include <QCompass>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -62,6 +63,8 @@ void DisplayDeviceLocation::componentComplete()
 
     // turn on the location display
     m_mapView->locationDisplay()->setPositionSource(QGeoPositionInfoSource::createDefaultSource(this));
+    QCompass* compass = new QCompass(this);
+    m_mapView->locationDisplay()->setCompass(compass);
     m_mapView->locationDisplay()->start();
 }
 

@@ -59,6 +59,7 @@ Rectangle {
             positionSource: PositionSource {
                 active: true
             }
+            compass: Compass {}
         }
     }
 
