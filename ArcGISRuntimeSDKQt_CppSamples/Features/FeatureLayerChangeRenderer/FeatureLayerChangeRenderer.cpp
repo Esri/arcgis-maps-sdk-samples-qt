@@ -79,7 +79,7 @@ bool FeatureLayerChangeRenderer::layerInitialized() const
 void FeatureLayerChangeRenderer::changeRenderer()
 {
     // create a line symbol
-    SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 2.0f, this);
+    SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(0, 0, 255, 204), 2.0f, this);
     // create a renderer with the symbol above
     SimpleRenderer* simpleRenderer = new SimpleRenderer(sls, this);
     // change the renderer with the renderer created above

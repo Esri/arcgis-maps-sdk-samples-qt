@@ -44,7 +44,7 @@ Rectangle {
                 SimpleRenderer {
                     SimpleFillSymbol {
                         style: Enums.SimpleFillSymbolStyleSolid
-                        color: "#F2F5A9"
+                        color: Qt.rgba(1, 1, 0, 0.6)
 
                         // default property (outline)
                         SimpleLineSymbol {

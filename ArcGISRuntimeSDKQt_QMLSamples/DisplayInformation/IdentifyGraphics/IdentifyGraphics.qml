@@ -43,7 +43,7 @@ Rectangle {
             renderer: SimpleRenderer {
                 symbol: SimpleFillSymbol {
                     style: Enums.SimpleFillSymbolStyleSolid
-                    color: "yellow"
+                    color: Qt.rgba(1, 1, 0, 0.7)
                 }
             }
         }
