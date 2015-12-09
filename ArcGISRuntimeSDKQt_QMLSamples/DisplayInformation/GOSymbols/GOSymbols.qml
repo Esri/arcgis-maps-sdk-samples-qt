@@ -128,15 +128,6 @@ Rectangle {
         }
     }
 
-    // text symbol
-    TextSymbol {
-        id: textSymbol
-        size: 10
-        color: Qt.rgba(0.1, 0.4, 0.9, 1)
-
-        horizontalAlignment: Enums.HorizontalAlignmentRight
-        verticalAlignment: Enums.VerticalAlignmentTop
-    }
 
     // LineSymbol
     SimpleLineSymbol {
@@ -190,10 +181,17 @@ Rectangle {
 
         // add text symbols
         for (var i = 0; i < textLocArray.length; i++) {
+            var textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol");
+            textSymbol.size = 10;
+            textSymbol.color = Qt.rgba(0.1, 0.4, 0.9, 1);
             textSymbol.text = symbolTextArray[i];
-            if (i == 1) {
+
+            if (i === 1) {
                 textSymbol.horizontalAlignment = Enums.HorizontalAlignmentLeft;
                 textSymbol.verticalAlignment = Enums.VerticalAlignmentBottom;
+            } else {
+                textSymbol.horizontalAlignment =  Enums.HorizontalAlignmentRight;
+                textSymbol.verticalAlignment =  Enums.VerticalAlignmentTop;
             }
             graphicsOverlay.graphics.append(createGraphic(textLocArray[i], textSymbol));
         }
