@@ -186,11 +186,10 @@ Rectangle {
             textSymbol.color = Qt.rgba(0.1, 0.4, 0.9, 1);
             textSymbol.text = symbolTextArray[i];
 
-            if (i == 1) {
+            if (i === 1) {
                 textSymbol.horizontalAlignment = Enums.HorizontalAlignmentLeft;
                 textSymbol.verticalAlignment = Enums.VerticalAlignmentBottom;
-            }
-            else {
+            } else {
                 textSymbol.horizontalAlignment =  Enums.HorizontalAlignmentRight;
                 textSymbol.verticalAlignment =  Enums.VerticalAlignmentTop;
             }
