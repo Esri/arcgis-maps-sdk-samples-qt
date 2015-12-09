@@ -30,9 +30,8 @@ Rectangle {
 
             onLoadStatusChanged: {
                 // Set the viewpoint once the Map is loaded
-                if (loadStatus === Enums.LoadStatusLoaded) {
-                    mapView.setViewpointWithAnimationCurve(viewpoint, 4, Enums.AnimationCurveEaseInOutQuad);
-                }
+                if (loadStatus === Enums.LoadStatusLoaded)
+                    mapView.setViewpoint(viewpoint);
             }
         }
     }
