@@ -196,12 +196,10 @@ void GOSymbols::addNestingGround(GraphicsOverlay* graphicsOverlay)
 void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
 {
   // text symbol
-  TextSymbol* textSymbolBassRock = new TextSymbol(10, QString("Bass Rock"),
-                                                  QColor("blue"),
+  TextSymbol* textSymbolBassRock = new TextSymbol(QString("Bass Rock"), QColor("blue"), 10,
                                                   HorizontalAlignment::Left,
                                                   VerticalAlignment::Bottom, this);
-  TextSymbol* textSymbolCraigleith = new TextSymbol(10, QString("Craigleith"),
-                                                    QColor("blue"),
+  TextSymbol* textSymbolCraigleith = new TextSymbol(QString("Craigleith"), QColor("blue"), 10,
                                                     HorizontalAlignment::Right,
                                                     VerticalAlignment::Top, this);
 
