@@ -1,3 +1,5 @@
+// [WriteFile Name=EditFeatureAttachments, Category=EditData]
+// [Legal]
 // Copyright 2015 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -10,6 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+// [Legal]
 
 #ifndef EDIT_FEATURE_ATTACHMENTS_H
 #define EDIT_FEATURE_ATTACHMENTS_H

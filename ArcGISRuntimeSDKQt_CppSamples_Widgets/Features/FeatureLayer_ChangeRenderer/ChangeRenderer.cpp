@@ -1,3 +1,4 @@
+// [WriteFile Name=ChangeRenderer, Category=Features]
 // [Legal]
 // Copyright 2015 Esri.
 
