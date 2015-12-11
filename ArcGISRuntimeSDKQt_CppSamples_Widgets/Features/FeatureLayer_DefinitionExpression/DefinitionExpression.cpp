@@ -1,3 +1,4 @@
+// [WriteFile Name=DefinitionExpression, Category=Features]
 // [Legal]
 // Copyright 2015 Esri.
 
