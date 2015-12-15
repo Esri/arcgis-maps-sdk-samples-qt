@@ -1,6 +1,6 @@
 // [WriteFile Name=ServiceFeatureTable_Cache, Category=Features]
 // [Legal]
-// Copyright 2015 Esri.
+// Copyright 2016 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
-import Esri.ArcGISRuntime 100.00
+import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
