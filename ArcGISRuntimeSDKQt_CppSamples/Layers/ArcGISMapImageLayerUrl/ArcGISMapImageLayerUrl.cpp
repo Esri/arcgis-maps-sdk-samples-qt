@@ -43,7 +43,9 @@ void ArcGISMapImageLayerUrl::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
 
     // create a new map image layer
+    //! [Create ArcGISMapImageLayer from URL]
     ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"), this);
+    //! [Create ArcGISMapImageLayer from URL]
 
     // create a new basemap from the layer
     Basemap* basemap = new Basemap(mapImageLayer, this);
