@@ -50,7 +50,7 @@ Rectangle {
 
             FeatureLayer {
                 id: featureLayer
-                
+
                 selectionColor: "cyan"
                 selectionWidth: 3
 
