@@ -83,7 +83,7 @@ Rectangle {
         }
         visible: false
         width: parent.width
-        height: 300
+        height: 300 * scaleFactor
         spacing: 10 * scaleFactor
         model: ListModel {
             id: autoPanListModel
