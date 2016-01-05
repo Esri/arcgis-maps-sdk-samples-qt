@@ -114,7 +114,6 @@ Rectangle {
 
         QueryParameters {
             id: params
-            outFields: ["*"]
             maxFeatures: 1
         }
 
