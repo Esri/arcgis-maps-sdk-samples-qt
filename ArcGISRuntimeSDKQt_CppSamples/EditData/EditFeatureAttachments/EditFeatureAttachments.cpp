@@ -120,7 +120,6 @@ void EditFeatureAttachments::connectSignals()
 
             // obtain the selected feature with attributes
             QueryParameters queryParams;
-            queryParams.setOutFields(QStringList() << "typdamage");
             QString whereClause = "objectid=" + static_cast<ArcGISFeature*>(identifyResults.at(0))->attributeValue("objectid").toString();
             queryParams.setWhereClause(whereClause);
             m_featureTable->queryFeatures(queryParams);

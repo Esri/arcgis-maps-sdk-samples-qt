@@ -118,7 +118,6 @@ void DeleteFeaturesFeatureService::connectSignals()
 
             // select the item in the result
             QueryParameters query;
-            query.setOutFields(QStringList() << "typdamage");
             query.setObjectIds(QList<qint64>() << static_cast<Feature*>(identifyResults.at(0))->attributes()["objectid"].toInt());
             m_featureLayer->selectFeatures(query, SelectionMode::New);
 

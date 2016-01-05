@@ -75,7 +75,6 @@ Rectangle {
     QueryParameters {
         id: params
         whereClause: "req_Type = \'Tree Maintenance or Damage\'"
-        outFields: ["*"]
     }
 
     Row {
@@ -92,7 +91,7 @@ Rectangle {
             text: "Populate"
             enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
             onClicked: {
-                featureTable.populateFromService(params, true);
+                featureTable.populateFromService(params, true, ["*"]);
             }
         }
     }
