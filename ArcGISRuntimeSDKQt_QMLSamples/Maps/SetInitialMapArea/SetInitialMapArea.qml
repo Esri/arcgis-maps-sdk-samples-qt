@@ -30,12 +30,7 @@ Rectangle {
         anchors.fill: parent
         Map {
             BasemapImagery {}
-
-            onLoadStatusChanged: {
-                // Set the viewpoint once the Map is loaded
-                if (loadStatus === Enums.LoadStatusLoaded)
-                    mapView.setViewpoint(viewpoint);
-            }
+            initialViewpoint: viewpoint
         }
     }
 
