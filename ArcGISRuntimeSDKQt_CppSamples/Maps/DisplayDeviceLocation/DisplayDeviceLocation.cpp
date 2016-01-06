@@ -64,11 +64,13 @@ void DisplayDeviceLocation::componentComplete()
     // set map on the map view
     m_mapView->setMap(m_map);
 
+    //! [start location display api snippet]
     // turn on the location display
     m_mapView->locationDisplay()->setPositionSource(QGeoPositionInfoSource::createDefaultSource(this));
     QCompass* compass = new QCompass(this);
     m_mapView->locationDisplay()->setCompass(compass);
     m_mapView->locationDisplay()->start();
+    //! [start location display api snippet]
 }
 
 void DisplayDeviceLocation::startLocationDisplay()

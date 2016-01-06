@@ -90,7 +90,9 @@ void ChangeViewpoint::changeViewpoint(QString viewpoint)
     }
     else if (viewpoint == "Animation")
     {
+        //! [set viewpoint api snippet]
         Viewpoint vpSpring(Envelope(-12338668.348591767, 5546908.424239618, -12338247.594362013, 5547223.989911933, SpatialReference(102100)));
         m_mapView->setViewpointAnimated(vpSpring, 4.0, AnimationCurve::EaseInOutCubic);
+        //! [set viewpoint api snippet]
     }
 }
