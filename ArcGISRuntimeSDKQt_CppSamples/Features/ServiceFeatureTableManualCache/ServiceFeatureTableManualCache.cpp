@@ -59,7 +59,7 @@ void ServiceFeatureTableManualCache::componentComplete()
     m_mapView->setMap(m_map);
 
     // create the feature table
-    ServiceFeatureTable* m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
+    m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
     m_featureTable->setFeatureRequestMode(FeatureRequestMode::ManualCache);
 
     // create the feature layer using the feature table
@@ -70,10 +70,9 @@ void ServiceFeatureTableManualCache::componentComplete()
 }
 
 void ServiceFeatureTableManualCache::populate()
-{
+{    
     QueryParameters params;
     params.setWhereClause("req_Type = \'Tree Maintenance or Damage\'");
-    params.setWhereClause(QString("1=1"));
 
-    m_featureTable->populateFromService(params, false, QStringList() << "*");
+    m_featureTable->populateFromService(params, true, QStringList() << "*");
 }

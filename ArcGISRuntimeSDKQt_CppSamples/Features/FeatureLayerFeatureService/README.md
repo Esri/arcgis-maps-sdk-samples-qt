@@ -1,6 +1,6 @@
 #Feature layer (feature service)
 
-This sample demonstrates how to consume an Esri feature service using the FeatureLayer.
+This sample demonstrates how to consume an Esri feature service by using a FeatureLayer and a ServiceFeatureTable.
 
 ![](screenshot.png)
 
