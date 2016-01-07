@@ -1,0 +1,51 @@
+// [WriteFile Name=ServiceFeatureTableNoCache, Category=Features]
+// [Legal]
+// Copyright 2016 Esri.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+#ifndef SERVICE_FEATURE_TABLE_NO_CACHE_H
+#define SERVICE_FEATURE_TABLE_NO_CACHE_H
+
+namespace Esri
+{
+    namespace ArcGISRuntime
+    {
+        class Map;
+        class MapQuickView;
+        class FeatureLayer;
+        class ServiceFeatureTable;
+    }
+}
+
+#include <QQuickItem>
+
+class ServiceFeatureTableNoCache : public QQuickItem
+{
+    Q_OBJECT
+
+public:
+    ServiceFeatureTableNoCache(QQuickItem* parent = 0);
+    ~ServiceFeatureTableNoCache();
+
+    void componentComplete() Q_DECL_OVERRIDE;
+
+private:
+    Esri::ArcGISRuntime::Map* m_map;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
+    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
+};
+
+#endif // SERVICE_FEATURE_TABLE_NO_CACHE_H
+

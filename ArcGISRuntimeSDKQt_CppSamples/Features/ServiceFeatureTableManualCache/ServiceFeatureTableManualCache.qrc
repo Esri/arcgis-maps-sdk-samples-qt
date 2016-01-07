@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Features/ServiceFeatureTableManualCache">
+        <file alias="sample.json">ServiceFeatureTableManualCache.json</file>
+        <file>ServiceFeatureTableManualCache.png</file>
+        <file>ServiceFeatureTableManualCache.qml</file>
+		<file>ServiceFeatureTableManualCache.h</file>
+		<file>ServiceFeatureTableManualCache.cpp</file>
+        <file>ServiceFeatureTableManualCache.html</file>
+    </qresource>
+</RCC>
