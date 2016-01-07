@@ -57,7 +57,7 @@ void ServiceFeatureTableNoCache::componentComplete()
     m_mapView->setMap(m_map);
 
     // create the feature table
-    ServiceFeatureTable* m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/PoolPermits/FeatureServer/0"), this);
+    m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/PoolPermits/FeatureServer/0"), this);
 
     // set the feature request mode
     m_featureTable->setFeatureRequestMode(FeatureRequestMode::OnInteractionNoCache);
