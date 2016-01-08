@@ -45,6 +45,7 @@ void FeatureLayerDefinitionExpression::componentComplete()
 {
     QQuickItem::componentComplete();
 
+    //! [Obtain the instantiated map view in Cpp]
     // find QML MapView component
     m_mapView = findChild<MapQuickView*>("mapView");
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
@@ -55,6 +56,7 @@ void FeatureLayerDefinitionExpression::componentComplete()
 
     // Set map to map view
     m_mapView->setMap(m_map);
+    //! [Obtain the instantiated map view in Cpp]
 
     // create the feature table
     ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
