@@ -16,7 +16,9 @@
 
 import QtQuick 2.3
 import QtQuick.Controls 1.2
+//! [Import the namespace that has QML type that was registered in Cpp]
 import Esri.Samples 1.0
+//! [Import the namespace that has QML type that was registered in Cpp]
 import Esri.ArcGISExtras 1.1
 
 FeatureLayerDefinitionExpressionSample {
@@ -26,11 +28,13 @@ FeatureLayerDefinitionExpressionSample {
 
     property double scaleFactor: System.displayScaleFactor
 
+    //! [Declare map view in QML that will be accessed from Cpp]
     // add a mapView component
     MapView {
         anchors.fill: parent
         objectName: "mapView"
     }
+    //! [Declare map view in QML that will be accessed from Cpp]
 
     Row {
         id: expressionRow

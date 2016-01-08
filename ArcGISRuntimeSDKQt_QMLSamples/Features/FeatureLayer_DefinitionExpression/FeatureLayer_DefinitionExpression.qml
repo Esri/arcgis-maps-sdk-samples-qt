@@ -20,6 +20,7 @@ import QtQuick.Controls.Styles 1.2
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
 
+//! [Rectangle-mapview-map-viewpoint]
 Rectangle {
     width: 800
     height: 600
@@ -59,6 +60,7 @@ Rectangle {
             scale: 300000
         }
     }
+    //! [Rectangle-mapview-map-viewpoint]
 
     Row {
         id: expressionRow
