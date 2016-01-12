@@ -77,19 +77,19 @@ Rectangle {
         {
             switch (comboBoxViewpoint.currentText) {
             case "Center":
-                ptBuilder.setXYZM(-117.195681, 34.056218, 0.0, 0.0, false, false); // Esri Headquarters
+                ptBuilder.setXY(-117.195681, 34.056218); // Esri Headquarters
                 mv.setViewpointCenter(ptBuilder.geometry);
                 break;
             case "Center and scale":
-                ptBuilder.setXYZM(-157.564, 20.677, 0.0, 0.0, false, false); // Hawai'i
+                ptBuilder.setXY(-157.564, 20.677); // Hawai'i
                 mv.setViewpointCenterAndScale(ptBuilder.geometry, 4000000.0);
                 break;
             case "Geometry":
-                envBuilder.setCoords(116.380, 39.920, 116.400, 39.940, 0, 0, 0, 0, false, false); // Beijing
+                envBuilder.setXY(116.380, 39.920, 116.400, 39.940); // Beijing
                 mv.setViewpointGeometry(envBuilder.geometry);
                 break;
             case "Geometry and padding":
-                envBuilder.setCoords(116.380, 39.920, 116.400, 39.940, 0, 0, 0, 0, false, false); // Beijing
+                envBuilder.setXY(116.380, 39.920, 116.400, 39.940); // Beijing
                 mv.setViewpointGeometryAndPadding(envBuilder.geometry, 200);
                 break;
             case "Rotation":
