@@ -2,7 +2,7 @@
 
 This sample demonstrates how to access and add bookmarks to a map.
 
-![](screenshot.png)
+![](ManageBookmarks.png)
 
 ##How it works
 
