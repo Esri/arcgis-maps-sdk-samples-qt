@@ -2,7 +2,7 @@
 
 This sample demonstrates how to display a map view with a basemap.
 
-![](screenshot.png)
+![](DisplayMap.png)
 
 ##How it works
 
