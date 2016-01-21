@@ -13,6 +13,7 @@ The map in the sample comes pre-populated with a set of bookmarks. You can tap o
 - Map
 - Basemap
 - Viewpoint
+- ViewpointExtent
 - Bookmark
 - Envelope
 - SpatialReference
