@@ -117,7 +117,7 @@ Rectangle {
                 featureSelected = false;
             } else {
                 // call identify on the mapview
-                mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10 * scaleFactor, 1);
+                mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 10 * scaleFactor, 1);
             }
         }
 
