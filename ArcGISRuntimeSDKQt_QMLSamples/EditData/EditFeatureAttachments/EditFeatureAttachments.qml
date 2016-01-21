@@ -108,7 +108,7 @@ Rectangle {
             mousePointY = mouse.y - callout.height;
 
             // call identify on the mapview
-            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 10 * scaleFactor, 1);
+            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10 * scaleFactor);
         }
 
         onIdentifyLayerStatusChanged: {
