@@ -6,7 +6,7 @@ This sample demonstrates how to override and reset a feature layer renderer.
 
 ##How it works
 
-A `SimpleRenderer` is created with a `SimpleLineSymbol`. When the button is clicked, it calls an invokable C++ function that calls `setRenderer` on the `FeatureLayer`, and passes in the new `SimpleRenderer`.
+A `SimpleRenderer` is created with a `SimpleLineSymbol`. When the button is clicked, the `renderer` property on the `FeatureLayer` is set to the new `SimpleRenderer`.
 
 ##Features
 - MapView
