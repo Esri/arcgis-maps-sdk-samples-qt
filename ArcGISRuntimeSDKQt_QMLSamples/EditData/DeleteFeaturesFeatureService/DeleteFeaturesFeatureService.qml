@@ -125,7 +125,7 @@ Rectangle {
             mousePointX = mouse.x;
             mousePointY = mouse.y - callout.height;
             // call identify on the feature layer
-            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10 * scaleFactor, 1);
+            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10 * scaleFactor);
         }
 
         onIdentifyLayerStatusChanged: {
