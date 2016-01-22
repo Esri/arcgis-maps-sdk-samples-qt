@@ -6,7 +6,7 @@ This sample demonstrates how to select features in a feature layer. Tap on an ar
 
 ##How it works
 
-Tap on an area of the map where you see features to select features. This will execute an `identifyLayer` operation on the map view. The `identifyLayerComplete` signal will fire, and a list of features will be returned. Call the `selectFeatures` method on the feature layer, and pass in the list of features, and this will select the features and highlight them on the map view.
+Tap on an area of the map where you see features to select features. This will execute an `identifyLayer` operation on the map view. The `onIdentifyLayerStatusChanged` event will fire, and a list of features will be returned. Call the `selectFeatures` method on the feature layer, and pass in the list of features, and this will select the features and highlight them on the map view.
 
 ##Features
 - MapView
