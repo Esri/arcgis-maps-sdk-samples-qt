@@ -11,5 +11,6 @@ The map view has several methods for setting its current viewpoint. Tap on one o
 ##Features
 - Map
 - ViewpointExtent
+- EnvelopeBuilder
 
 
