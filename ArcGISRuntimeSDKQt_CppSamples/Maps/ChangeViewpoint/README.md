@@ -1,4 +1,4 @@
-#Display a map
+#Change viewpoint
 
 This sample demonstrates how to change the viewpoint of map.
 
