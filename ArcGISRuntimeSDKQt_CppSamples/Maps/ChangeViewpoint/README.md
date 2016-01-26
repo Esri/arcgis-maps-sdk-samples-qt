@@ -1,14 +1,14 @@
 #Display a map
 
-This is the most basic sample for displaying a map.
+This sample demonstrates how to change the viewpoint of map.
 
 ![](screenshot.png)
 
 ##How it works
 
-It can be considered the "Hello World" map app for the ArcGIS Runtime SDK for Qt. It shows how to create a map view, and add in a map that contains the imagery with labels basemap. By default, this map supports basic zooming and panning operations.
+The map view has several methods for setting its current viewpoint. Tap on one of the buttons to see the viewpoint changed using one of these methods. 
 
 ##Features
-- MapView
+- Viewpoint
 - Map
-- Basemap
+- Envelope
