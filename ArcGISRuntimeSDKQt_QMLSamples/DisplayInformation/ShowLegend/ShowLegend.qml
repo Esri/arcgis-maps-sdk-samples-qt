@@ -24,8 +24,6 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property int mapImageSublayerIndex: 0
-    property int tiledSublayerIndex: 0
 
     // Create the MapView
     MapView {
@@ -33,6 +31,8 @@ Rectangle {
         // Nest the Map as a child of the MapView
         Map {
             id: map
+            autoFetchLegendInfos: true
+
             // Nest the Basemap to add it as the Map's Basemap
             BasemapTopographic {}
 
@@ -40,25 +40,12 @@ Rectangle {
             ArcGISTiledLayer {
                 id: tiledLayer
                 url: "http://services.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer"
-
-                onLoadStatusChanged: {
-                    if (loadStatus === Enums.LoadStatusLoaded) {
-                        getTiledLayerInfos();
-                    }
-                }
             }
 
             // Add a map image layer as an operational layer
             ArcGISMapImageLayer {
                 id: mapImageLayer
                 url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"
-
-                // On Loaded request the legend info
-                onLoadStatusChanged: {
-                    if (loadStatus === Enums.LoadStatusLoaded) {
-                        getMapImageLayerInfos();
-                    }
-                }
             }
 
             // Add a feature layer as an operational layer
@@ -66,25 +53,6 @@ Rectangle {
                 id: featureLayer
                 featureTable: ServiceFeatureTable {
                     url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"
-                }
-
-                // On Loaded request the legend info
-                onLoadStatusChanged: {
-                    if (loadStatus === Enums.LoadStatusLoaded) {
-                        featureLayer.fetchLegendInfos();
-                    }
-                }
-
-                // Iterate through the legend infos and write name and URL to the model
-                onFetchLegendInfosStatusChanged: {
-                    if (fetchLegendInfosStatus === Enums.TaskStatusCompleted) {
-                        var legendResults = legendInfosResult;
-                        for (var i = 0; i < legendResults.length; i++) {
-                            var legendResult = legendResults[i];
-                            var legendDict = {itemName: legendResult.name, itemUrl: Qt.resolvedUrl(legendResult.symbol.url)};
-                            recreationListModel.append(legendDict);
-                        }
-                    }
                 }
             }
 
@@ -108,8 +76,8 @@ Rectangle {
             left: parent.left
             top: parent.top
         }
-        property bool expanded: false
-        height: 45 * scaleFactor
+        property bool expanded: true
+        height: 200 * scaleFactor
         width: 200 * scaleFactor
         color: "lightgrey"
         opacity: 0.95
@@ -141,27 +109,10 @@ Rectangle {
                 fill: parent
                 margins: 10 * scaleFactor
             }
-            spacing: 5
+            spacing: 2 * scaleFactor
 
             Row {
-                spacing: 2
-
-                // Combo box to allow switching between layers
-                ComboBox {
-                    model: ["Soil Survey", "Census", "Recreation"]
-                    width: 150 * scaleFactor
-
-                    // Switch out the list view's model for each item
-                    onCurrentTextChanged: {
-                        if (currentText === "Census") {
-                            legendListView.model = censusListModel;
-                        } else if (currentText === "Recreation") {
-                            legendListView.model = recreationListModel;
-                        } else if (currentText === "Soil Survey") {
-                            legendListView.model = soilListModel;
-                        }
-                    }
-                }
+                spacing: 5 * scaleFactor
 
                 // Legend icon to allow expanding and collapsing
                 Image {
@@ -182,6 +133,15 @@ Rectangle {
                         }
                     }
                 }
+
+                // Combo box to allow switching between layers
+               Text {
+                   text: qsTr("Legend")
+                   font {
+                       pixelSize: 18 * scaleFactor
+                       bold: true
+                   }
+               }
             }
 
             // Create a list view to display the legend
@@ -191,80 +151,49 @@ Rectangle {
                 width: 180 * scaleFactor
                 height: 150 * scaleFactor
                 clip: true
+                model: map.legendInfos
 
                 // Create delegate to display the name with an image
                 delegate: Item {
                     width: parent.width
-                    height: 55 * scaleFactor
+                    height: 35 * scaleFactor
                     clip: true
 
                     Row {
                         spacing: 5
                         anchors.verticalCenter: parent.verticalCenter
                         Image {
-                            width: 30 * scaleFactor
-                            height: width
-                            source: itemUrl
+                            width: symbolWidth * scaleFactor
+                            height: symbolHeight * scaleFactor
+                            source: symbolUrl
                         }
                         Text {
                             width: 125 * scaleFactor
-                            text: itemName
+                            text: name
                             wrapMode: Text.WordWrap
                             font.pixelSize: 12 * scaleFactor
                         }
 
                     }
                 }
+
+                section {
+                    property: "layerContentName"
+                    criteria: ViewSection.FullString
+                    labelPositioning: ViewSection.CurrentLabelAtStart | ViewSection.InlineLabels
+                    delegate: Rectangle {
+                        width: 180 * scaleFactor
+                        height: childrenRect.height
+                        color: "lightsteelblue"
+
+                        Text {
+                            text: section
+                            font.bold: true
+                            font.pixelSize: 13 * scaleFactor
+                        }
+                    }
+                }
             }
-        }
-    }
-
-    // Create a list model for each layer
-    ListModel { id: recreationListModel }
-    ListModel { id: censusListModel }
-    ListModel { id: soilListModel }
-
-    // iterate through the map image sublayers and request legend info for all sublayers
-    function getMapImageLayerInfos() {
-        if (mapImageSublayerIndex < mapImageLayer.mapImageSublayers.count) {
-            var subLayer = mapImageLayer.mapImageSublayers.get(mapImageSublayerIndex);
-            subLayer.fetchLegendInfos();
-            subLayer.fetchLegendInfosStatusChanged.connect(function () {
-                if (subLayer.fetchLegendInfosStatus === Enums.TaskStatusCompleted) {
-                    var legendResults = subLayer.legendInfosResult;
-                    for (var i = 0; i < legendResults.length; i++) {
-                        var legendResult = legendResults[i];
-                        // Create a key value pair of names and image URLs for the list model
-                        var legendDict = {itemName: subLayer.name + " " + legendResult.name, itemUrl: Qt.resolvedUrl(legendResult.symbol.url)};
-                        // Add the JSON to the list model
-                        censusListModel.append(legendDict);
-                    }
-                }
-                mapImageSublayerIndex++;
-                getMapImageLayerInfos(); // call again recursively after the fetchLegendInfos completes
-            });
-        }
-    }
-
-    // iterate through the tiled sublayers and request legend info for all sublayers
-    function getTiledLayerInfos() {
-        if (tiledSublayerIndex < tiledLayer.tiledSublayers.length) {
-            var subLayer = tiledLayer.tiledSublayers[tiledSublayerIndex];
-            subLayer.fetchLegendInfos();
-            subLayer.fetchLegendInfosStatusChanged.connect(function () {
-                if (subLayer.fetchLegendInfosStatus === Enums.TaskStatusCompleted) {
-                    var legendResults = subLayer.legendInfosResult;
-                    for (var i = 0; i < legendResults.length; i++) {
-                        var legendResult = legendResults[i];
-                        // Create a key value pair of names and image URLs for the list model
-                        var legendDict = {itemName: subLayer.name + " " + legendResult.name, itemUrl: Qt.resolvedUrl(legendResult.symbol.url)};
-                        // Add the JSON to the list model
-                        soilListModel.append(legendDict);
-                    }
-                }
-                tiledSublayerIndex++;
-                getTiledLayerInfos(); // call again recursively after the fetchLegendInfos completes
-            });
         }
     }
 
