@@ -178,7 +178,7 @@ Rectangle {
                 }
 
                 section {
-                    property: "layerContentName"
+                    property: "layerName"
                     criteria: ViewSection.FullString
                     labelPositioning: ViewSection.CurrentLabelAtStart | ViewSection.InlineLabels
                     delegate: Rectangle {
