@@ -134,14 +134,13 @@ Rectangle {
                     }
                 }
 
-                // Combo box to allow switching between layers
-               Text {
-                   text: qsTr("Legend")
-                   font {
-                       pixelSize: 18 * scaleFactor
-                       bold: true
-                   }
-               }
+                Text {
+                    text: qsTr("Legend")
+                    font {
+                        pixelSize: 18 * scaleFactor
+                        bold: true
+                    }
+                }
             }
 
             // Create a list view to display the legend
