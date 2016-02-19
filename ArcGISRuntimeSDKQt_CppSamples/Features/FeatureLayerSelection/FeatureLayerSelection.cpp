@@ -85,9 +85,9 @@ void FeatureLayerSelection::connectSignals()
     });
 
     // once the identify is done
-    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResults)
+    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
     {
-        if (!identifyResults)
+        if (!identifyResult)
           return;
 
         // clear any existing selection
@@ -95,9 +95,9 @@ void FeatureLayerSelection::connectSignals()
 
         // create a list to store the identified elements
         QList<Feature*> identifiedFeatures;
-        for (int i = 0; i < identifyResults->geoElements().size(); i++)
+        for (int i = 0; i < identifyResult->geoElements().size(); i++)
         {
-            auto element = identifyResults->geoElements().at(i);
+            auto element = identifyResult->geoElements().at(i);
             if (static_cast<Feature*>(element))
                 // add the element to the list
                 identifiedFeatures.append(static_cast<Feature*>(element));

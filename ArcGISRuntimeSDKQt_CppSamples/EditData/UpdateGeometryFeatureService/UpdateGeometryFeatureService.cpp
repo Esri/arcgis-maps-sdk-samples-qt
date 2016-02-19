@@ -113,22 +113,22 @@ void UpdateGeometryFeatureService::connectSignals()
     });
 
     // connect to the identifyLayerCompleted signal on the map view
-    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, IdentifyLayerResult* identifyResults)
+    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, IdentifyLayerResult* identifyResult)
     {
-        if(!identifyResults)
+        if(!identifyResult)
           return;
 
-        if (identifyResults->geoElements().size() > 0)
+        if (identifyResult->geoElements().size() > 0)
         {
             // first delete if not nullptr
             if (m_selectedFeature != nullptr)
                 delete m_selectedFeature;
 
             // select the item in the result
-            m_featureLayer->selectFeature(static_cast<Feature*>(identifyResults->geoElements().at(0)));
+            m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
 
             // set selected feature member
-            m_selectedFeature = static_cast<ArcGISFeature*>(identifyResults->geoElements().at(0));
+            m_selectedFeature = static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0));
             m_featureSelected = true;
         }
     });

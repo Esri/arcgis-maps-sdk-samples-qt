@@ -111,19 +111,19 @@ void EditFeatureAttachments::connectSignals()
     });
 
     // connect to the identifyLayerCompleted signal on the map view
-    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, IdentifyLayerResult* identifyResults)
+    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, IdentifyLayerResult* identifyResult)
     {
-        if(!identifyResults)
+        if(!identifyResult)
           return;
 
-        if (!identifyResults->geoElements().empty())
+        if (!identifyResult->geoElements().empty())
         {
             // select the item in the result
-            m_featureLayer->selectFeature(static_cast<Feature*>(identifyResults->geoElements().at(0)));
+            m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
 
             // obtain the selected feature with attributes
             QueryParameters queryParams;
-            QString whereClause = "objectid=" + static_cast<ArcGISFeature*>(identifyResults->geoElements().at(0))->attributeValue("objectid").toString();
+            QString whereClause = "objectid=" + static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0))->attributeValue("objectid").toString();
             queryParams.setWhereClause(whereClause);
             m_featureTable->queryFeatures(queryParams);
         }
