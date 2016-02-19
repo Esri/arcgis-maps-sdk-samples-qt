@@ -136,9 +136,9 @@ Rectangle {
 
         onIdentifyLayerStatusChanged: {
             if (identifyLayerStatus === Enums.TaskStatusCompleted) {
-                if (identifyLayerResults.length > 0) {
+                if (identifyLayerResult.geoElements.length > 0) {
                     // get the objectid of the identifed object
-                    params.objectIds = [identifyLayerResults[0].attributes["objectid"]];
+                    params.objectIds = [identifyLayerResult.geoElements[0].attributes["objectid"]];
                     // query for the feature using the objectid
                     featureLayer.selectFeaturesWithQuery(params, Enums.SelectionModeNew);
                 }

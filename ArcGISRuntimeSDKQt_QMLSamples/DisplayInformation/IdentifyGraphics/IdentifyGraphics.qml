@@ -54,7 +54,7 @@ Rectangle {
         // Signal handler for identify graphics overlay
         onIdentifyGraphicsOverlayStatusChanged: {
             if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted) {
-                if (identifyGraphicsOverlayResults.length > 0) {
+                if (identifyGraphicsOverlayResults.geoElements.length > 0) {
                     msgDialog.open();
                 }
             } else if (identifyGraphicsOverlayStatus === Enums.TaskStatusErrored) {
