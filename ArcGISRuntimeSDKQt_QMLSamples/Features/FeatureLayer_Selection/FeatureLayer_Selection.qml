@@ -89,12 +89,12 @@ Rectangle {
 
                 // create an array to store the features
                 var identifiedObjects = [];
-                for (var i = 0; i < identifyLayerResults.length; i++){
-                    var elem = identifyLayerResults[i];
+                for (var i = 0; i < identifyLayerResults.geoElements.length; i++){
+                    var elem = identifyLayerResults.geoElements[i];
                     identifiedObjects.push(elem);
                 }
                 // cache the number of features
-                var count = identifyLayerResults.length;
+                var count = identifyLayerResults.geoElements.length;
 
                 // select the features in the feature layer
                 featureLayer.selectFeatures(identifiedObjects);
