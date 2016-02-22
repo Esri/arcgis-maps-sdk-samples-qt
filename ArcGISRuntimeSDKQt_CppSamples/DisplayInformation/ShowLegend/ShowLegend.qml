@@ -1,4 +1,4 @@
-// [WriteFile Name=ShowLegend, Category=DisplayInformation]
+// [WriteFile Name=ShowLegend, Category=Maps]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -16,57 +16,20 @@
 
 import QtQuick 2.3
 import QtQuick.Controls 1.2
-import Esri.ArcGISRuntime 100.0
+import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-Rectangle {
+ShowLegendSample {
+    id: showLegendSample
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property double scaleFactor: System.displayScaleFactor
 
-    // Create the MapView
+    // add a mapView component
     MapView {
         anchors.fill: parent
-        // Nest the Map as a child of the MapView
-        Map {
-            id: map
-            // automatically fetch the legend infos for all operational layers
-            autoFetchLegendInfos: true
-
-            // Nest the Basemap to add it as the Map's Basemap
-            BasemapTopographic {}
-
-            // Add a tiled layer as an operational layer
-            ArcGISTiledLayer {
-                id: tiledLayer
-                url: "http://services.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer"
-            }
-
-            // Add a map image layer as an operational layer
-            ArcGISMapImageLayer {
-                id: mapImageLayer
-                url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"
-            }
-
-            // Add a feature layer as an operational layer
-            FeatureLayer {
-                id: featureLayer
-                featureTable: ServiceFeatureTable {
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"
-                }
-            }
-
-            // Set the initial viewpoint
-            initialViewpoint: ViewpointCenter {
-                center: Point {
-                    x: -11e6
-                    y: 6e6
-                    spatialReference: SpatialReference {wkid: 102100}
-                }
-                scale: 9e7
-            }
-        }
+        objectName: "mapView"
     }
 
     // Create outter rectangle for the legend
@@ -148,10 +111,10 @@ Rectangle {
             ListView {
                 id: legendListView
                 anchors.margins: 10 * scaleFactor
+                model: showLegendSample.legendInfoListModel
                 width: 165 * scaleFactor
                 height: 150 * scaleFactor
                 clip: true
-                model: map.legendInfos
 
                 // Create delegate to display the name with an image
                 delegate: Item {
@@ -197,7 +160,6 @@ Rectangle {
         }
     }
 
-    // neatline
     Rectangle {
         anchors.fill: parent
         color: "transparent"
@@ -207,3 +169,5 @@ Rectangle {
         }
     }
 }
+
+

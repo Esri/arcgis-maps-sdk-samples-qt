@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/Samples/Display Information/ShowLegend">
+        <file alias="sample.json">ShowLegend.json</file>
+        <file>ShowLegend.png</file>
+        <file>ShowLegend.qml</file>
+        <file>ShowLegend.cpp</file>
+        <file>ShowLegend.h</file>
+        <file>ShowLegend.html</file>
+        <file>ic_menu_legendpopover_light_d.png</file>
+        <file>ic_menu_legendpopover_light.png</file>
+    </qresource>
+</RCC>
