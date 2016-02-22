@@ -31,6 +31,7 @@ Rectangle {
         // Nest the Map as a child of the MapView
         Map {
             id: map
+            // automatically fetch the legend infos for all operational layers
             autoFetchLegendInfos: true
 
             // Nest the Basemap to add it as the Map's Basemap
@@ -78,7 +79,7 @@ Rectangle {
         }
         property bool expanded: true
         height: 200 * scaleFactor
-        width: 200 * scaleFactor
+        width: 175 * scaleFactor
         color: "lightgrey"
         opacity: 0.95
         radius: 10
@@ -112,7 +113,15 @@ Rectangle {
             spacing: 2 * scaleFactor
 
             Row {
-                spacing: 5 * scaleFactor
+                spacing: 55 * scaleFactor
+
+                Text {
+                    text: qsTr("Legend")
+                    font {
+                        pixelSize: 18 * scaleFactor
+                        bold: true
+                    }
+                }
 
                 // Legend icon to allow expanding and collapsing
                 Image {
@@ -124,7 +133,7 @@ Rectangle {
                         anchors.fill: parent
                         onClicked: {
                             if (legendRect.expanded) {
-                                legendRect.height = 45 * scaleFactor;
+                                legendRect.height = 40 * scaleFactor;
                                 legendRect.expanded = false;
                             } else {
                                 legendRect.height = 200 * scaleFactor;
@@ -133,21 +142,13 @@ Rectangle {
                         }
                     }
                 }
-
-                Text {
-                    text: qsTr("Legend")
-                    font {
-                        pixelSize: 18 * scaleFactor
-                        bold: true
-                    }
-                }
             }
 
             // Create a list view to display the legend
             ListView {
                 id: legendListView
                 anchors.margins: 10 * scaleFactor
-                width: 180 * scaleFactor
+                width: 165 * scaleFactor
                 height: 150 * scaleFactor
                 clip: true
                 model: map.legendInfos
