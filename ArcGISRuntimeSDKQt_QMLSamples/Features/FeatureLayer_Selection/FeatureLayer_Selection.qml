@@ -94,7 +94,7 @@ Rectangle {
                     identifiedObjects.push(elem);
                 }
                 // cache the number of identifyLayerResult
-                var count = identifyLayerResults.geoElements.length;
+                var count = identifyLayerResult.geoElements.length;
 
                 // select the features in the feature layer
                 featureLayer.selectFeatures(identifiedObjects);
