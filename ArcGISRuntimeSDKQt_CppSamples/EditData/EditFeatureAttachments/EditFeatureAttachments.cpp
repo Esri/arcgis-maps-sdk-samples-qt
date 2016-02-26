@@ -146,9 +146,9 @@ void EditFeatureAttachments::connectSignals()
             emit attachmentModelChanged();
 
             // get the number of attachments
-            connect(m_selectedFeature->attachmentListModel(), &AttachmentListModel::fetchAttachmentInfosCompleted, [this](QUuid, const QList<QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>>)
+            connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentInfosCompleted, [this](QUuid, const QList<QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>>)
             {
-                m_attachmentCount = m_selectedFeature->attachmentListModel()->rowCount();
+                m_attachmentCount = m_selectedFeature->attachments()->rowCount();
                 emit attachmentCountChanged();
             });
         }
@@ -191,19 +191,19 @@ QString EditFeatureAttachments::featureType() const
 
 AttachmentListModel* EditFeatureAttachments::attachmentModel() const
 {    
-    return m_selectedFeature ? m_selectedFeature->attachmentListModel() : nullptr;
+    return m_selectedFeature ? m_selectedFeature->attachments() : nullptr;
 }
 
 void EditFeatureAttachments::addAttachment(QUrl fileUrl, QString contentType, QString fileName)
 {
     QFile* file = new QFile(fileUrl.toLocalFile(), this);
     if (file->exists())
-      m_selectedFeature->attachmentListModel()->addAttachment(file, contentType, fileName);
+      m_selectedFeature->attachments()->addAttachment(file, contentType, fileName);
 }
 
 void EditFeatureAttachments::deleteAttachment(int index)
 {
-    m_selectedFeature->attachmentListModel()->deleteAttachment(index);
+    m_selectedFeature->attachments()->deleteAttachment(index);
 }
 
 int EditFeatureAttachments::attachmentCount() const

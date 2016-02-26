@@ -187,7 +187,7 @@ Rectangle {
 
                 Text {
                     id: attachmentText
-                    text: selectedFeature === null ? "" : "Number of attachments: %1".arg(selectedFeature.attachmentListModel.count)
+                    text: selectedFeature === null ? "" : "Number of attachments: %1".arg(selectedFeature.attachments.count)
                     font.pixelSize: 12 * scaleFactor
                 }
             }
@@ -265,7 +265,7 @@ Rectangle {
                                 msgDialog.open();
                             } else {
                                 // delete the attachment from the table
-                                selectedFeature.attachmentListModel.deleteAttachmentWithIndex(attachmentsList.currentIndex);
+                                selectedFeature.attachments.deleteAttachmentWithIndex(attachmentsList.currentIndex);
                             }
                         }
                     }
@@ -285,7 +285,7 @@ Rectangle {
             clip: true
             spacing: 5
             // set the model equal to the currently selected feature's attachment list model
-            model: selectedFeature === null ? null : selectedFeature.attachmentListModel
+            model: selectedFeature === null ? null : selectedFeature.attachments
             // create the delegate to specify how the view is arranged
             delegate: Item {
                 height: 45* scaleFactor
@@ -338,7 +338,7 @@ Rectangle {
         onAccepted: {
             // add the attachment to the feature table
             fileInfo.url = fileDialog.fileUrl;
-            selectedFeature.attachmentListModel.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
+            selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
         }
     }
 
