@@ -333,6 +333,7 @@ Rectangle {
     }
 
     // file dialog for selecting a file to add as an attachment
+    //! [EditFeatures add attachment from a file dialog]
     FileDialog {
         id: fileDialog
         onAccepted: {
@@ -341,6 +342,7 @@ Rectangle {
             selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
         }
     }
+    //! [EditFeatures add attachment from a file dialog]
 
     MessageDialog {
         id: msgDialog
