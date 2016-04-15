@@ -55,7 +55,7 @@ DefinitionExpression::DefinitionExpression(QWidget* parent) :
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(featureTable, this);
 
-  connect(m_featureLayer, &FeatureLayer::doneLoading,[this]()
+  connect(m_featureLayer, &FeatureLayer::doneLoading,[this](Error error)
   {
     // zoom to a specific area
     m_mapView->setViewpointCenter(Point(-13630484, 4545415, SpatialReference(102100)), 300000);

@@ -52,7 +52,7 @@ ChangeRenderer::ChangeRenderer(QWidget* parent) :
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(featureTable, this);
 
-  connect(m_featureLayer, &FeatureLayer::doneLoading,[this](Esri::ArcGISRuntime::ResponseCode, void*)
+  connect(m_featureLayer, &FeatureLayer::doneLoading,[this](Error error)
   {
     // zoom to a specific area
     m_mapView->setViewpoint(Viewpoint(Envelope(-13075816.4047166, 4014771.46954516, -13073005.6797177, 4016869.78617381, SpatialReference(102100))));
