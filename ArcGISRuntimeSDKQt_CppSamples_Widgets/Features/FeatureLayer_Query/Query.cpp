@@ -73,7 +73,7 @@ Query::Query(QWidget* parent) :
   // set the renderer for the feature layer
   m_featureLayer->setRenderer(renderer);
 
-  connect(m_featureTable, &ServiceFeatureTable::doneLoading,[this](){
+  connect(m_featureTable, &ServiceFeatureTable::doneLoading,[this](Error error){
     // zoom to a specific area
     m_mapView->setViewpointCenter(Point(-11e6, 5e6, SpatialReference(102100)), 9e7);
     // enable the button once the layer is loaded
