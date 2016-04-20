@@ -29,6 +29,7 @@ Rectangle {
     property double mousePointY
     property string damageType
     property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
+    property var selectedFeature: null
 
     // Create MapView that contains a Map
     MapView {
@@ -97,8 +98,8 @@ Rectangle {
                         if (!selectFeaturesResult.iterator.hasNext)
                             return;
 
-                        var feat  = selectFeaturesResult.iterator.next();
-                        damageType = feat.attributes["typdamage"];
+                        selectedFeature = selectFeaturesResult.iterator.next();
+                        damageType = selectedFeature.attributes["typdamage"];
 
                         // show the callout
                         callout.x = mousePointX;
@@ -252,11 +253,24 @@ Rectangle {
                 Button {
                     width: (updateWindow.width / 2) - (20 * scaleFactor)
                     text: "Update"
+
+                    function doUpdate(){
+                        if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
+                            selectedFeature.onLoadStatusChanged.disconnect(doUpdate);
+
+                            selectedFeature.setAttributeValue("typdamage", damageComboBox.currentText);
+                            // update the feature in the feature table asynchronously
+                            featureTable.updateFeature(selectedFeature);
+                        }
+                    }
+
                     // once the update button is clicked, hide the windows, and fetch the currently selected features
                     onClicked: {
                         callout.visible = false;
                         updateWindow.visible = false;
-                        featureLayer.selectedFeatures();
+
+                        selectedFeature.onLoadStatusChanged.connect(doUpdate);
+                        selectedFeature.load();
                     }
                 }
 
