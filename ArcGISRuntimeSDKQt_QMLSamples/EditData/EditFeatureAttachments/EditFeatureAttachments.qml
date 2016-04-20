@@ -259,13 +259,22 @@ Rectangle {
                     // make sure an item is selected and if so, delete it from the service
                     MouseArea {
                         anchors.fill: parent
+
+                        function doDelete(){
+                            if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
+                                selectedFeature.onLoadStatusChanged.disconnect(doDelete);
+                                selectedFeature.attachments.deleteAttachmentWithIndex(attachmentsList.currentIndex);
+                            }
+                        }
+
                         onClicked: {
                             if (attachmentsList.currentIndex === -1)  {
                                 msgDialog.text = "Please first select an attachment to delete.";
                                 msgDialog.open();
                             } else {
                                 // delete the attachment from the table
-                                selectedFeature.attachments.deleteAttachmentWithIndex(attachmentsList.currentIndex);
+                                selectedFeature.onLoadStatusChanged.connect(doDelete);
+                                selectedFeature.retryLoad();
                             }
                         }
                     }
@@ -294,17 +303,22 @@ Rectangle {
 
                 // show the attachment name
                 Text {
+                    id: label
                     anchors {
                         verticalCenter: parent.verticalCenter
                         left: parent.left
+                        right: attachment.left
                     }
                     text: name
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    height: attachment.height
+                    elide: Text.ElideRight
                     font.pixelSize: 16 * scaleFactor
                 }
 
                 // show the attachment's URL if it is an image
                 Image {
+                    id: attachment
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
@@ -336,10 +350,19 @@ Rectangle {
     //! [EditFeatures add attachment from a file dialog]
     FileDialog {
         id: fileDialog
+
+        function doAttachment(){
+            if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
+                selectedFeature.onLoadStatusChanged.disconnect(doAttachment);
+                selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
+            }
+        }
+
         onAccepted: {
             // add the attachment to the feature table
             fileInfo.url = fileDialog.fileUrl;
-            selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
+            selectedFeature.onLoadStatusChanged.connect(doAttachment);
+            selectedFeature.load();
         }
     }
     //! [EditFeatures add attachment from a file dialog]
