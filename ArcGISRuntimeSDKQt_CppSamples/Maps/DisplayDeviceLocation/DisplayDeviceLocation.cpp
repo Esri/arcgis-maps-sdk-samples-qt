@@ -98,7 +98,7 @@ void DisplayDeviceLocation::setAutoPanMode(QString autoPanMode)
     }
     else if (autoPanMode == recenterMode())
     {
-        m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Default);
+        m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
     }
     else if (autoPanMode == stopMode())
     {
