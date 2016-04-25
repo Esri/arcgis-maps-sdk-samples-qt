@@ -129,7 +129,7 @@ Rectangle {
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
                     break;
                 case recenterMode:
-                    mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeDefault;
+                    mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeRecenter;
                     break;
                 case onMode:
                     mapView.locationDisplay.start();
