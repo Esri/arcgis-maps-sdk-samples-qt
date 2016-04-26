@@ -280,7 +280,7 @@ Rectangle {
                             } else {
                                 // delete the attachment from the table
                                 selectedFeature.onLoadStatusChanged.connect(doDelete);
-                                selectedFeature.retryLoad();
+                                selectedFeature.load();
                             }
                         }
                     }
@@ -316,8 +316,8 @@ Rectangle {
                         right: attachment.left
                     }
                     text: name
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    height: attachment.height
+                    wrapMode: Text.WrapAnywhere
+                    maximumLineCount: 1
                     elide: Text.ElideRight
                     font.pixelSize: 16 * scaleFactor
                 }

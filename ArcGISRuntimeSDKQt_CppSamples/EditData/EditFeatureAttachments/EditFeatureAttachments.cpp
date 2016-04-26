@@ -196,14 +196,34 @@ AttachmentListModel* EditFeatureAttachments::attachmentModel() const
 
 void EditFeatureAttachments::addAttachment(QUrl fileUrl, QString contentType, QString fileName)
 {
-    QFile* file = new QFile(fileUrl.toLocalFile(), this);
+    QFile* file = new QFile(fileUrl.toLocalFile(), this); // bad?
     if (file->exists())
-      m_selectedFeature->attachments()->addAttachment(file, contentType, fileName);
+    {
+        connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
+                this, [this, file, contentType, fileName](Esri::ArcGISRuntime::LoadStatus)
+        {
+            if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
+            {
+                disconnect(m_selectedFeature, &ArcGISFeature::loadStatusChanged, 0, 0); // bad...
+                m_selectedFeature->attachments()->addAttachment(file, contentType, fileName);
+            }
+        });
+        m_selectedFeature->load();
+    }
 }
 
 void EditFeatureAttachments::deleteAttachment(int index)
 {
-    m_selectedFeature->attachments()->deleteAttachment(index);
+    connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
+            this, [this, index](Esri::ArcGISRuntime::LoadStatus)
+    {
+        if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
+        {
+            disconnect(m_selectedFeature, &ArcGISFeature::loadStatusChanged, 0, 0); // bad...
+            m_selectedFeature->attachments()->deleteAttachment(index);
+        }
+    });
+    m_selectedFeature->load();
 }
 
 int EditFeatureAttachments::attachmentCount() const

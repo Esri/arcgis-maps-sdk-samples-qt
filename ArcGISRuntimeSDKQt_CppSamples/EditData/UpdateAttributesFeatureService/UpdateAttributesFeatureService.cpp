@@ -135,7 +135,7 @@ void UpdateAttributesFeatureService::connectSignals()
                 delete m_selectedFeature;
 
             // set selected feature member
-            m_selectedFeature = featureQueryResult->iterator().next(this);
+            m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
             m_featureType = m_selectedFeature->attributeValue("typdamage").toString();
             emit featureTypeChanged();
             emit featureSelected();
@@ -153,24 +153,41 @@ void UpdateAttributesFeatureService::connectSignals()
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
     connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
     {
-        // obtain the first item in the list
-        auto featureEditResult = featureEditResults.first();
-        // check if there were errors, and if not, log the new object ID
-        if (!featureEditResult->isCompletedWithErrors())
-            qDebug() << "Successfully updated attribute for Object ID:" << featureEditResult->objectId();
-        else
-            qDebug() << "Apply edits error.";
+        // check if result list is not empty
+        if (!featureEditResults.isEmpty())
+        {
+            // obtain the first item in the list
+            auto featureEditResult = featureEditResults.first();
+            // check if there were errors, and if not, log the new object ID
+            if (!featureEditResult->isCompletedWithErrors())
+                qDebug() << "Successfully updated attribute for Object ID:" << featureEditResult->objectId();
+            else
+                qDebug() << "Apply edits error.";
+        }
         m_featureLayer->clearSelection();
     });
 }
 
 void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)
 {
-    // update the select feature's attribute value
-    m_selectedFeature->setAttributeValue("typdamage", fieldVal);
+    // connect to load status changed signal
+    connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
+            this, [this, fieldVal](Esri::ArcGISRuntime::LoadStatus)
+    {
+        if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
+        {
+            disconnect(m_selectedFeature, &ArcGISFeature::loadStatusChanged, 0, 0); // bad...
 
-    // update the feature table
-    m_featureTable->updateFeature(m_selectedFeature);
+            // update the select feature's attribute value
+            m_selectedFeature->setAttributeValue("typdamage", fieldVal);
+
+            // update the feature table
+            m_featureTable->updateFeature(m_selectedFeature);
+        }
+    });
+
+    // load selecte feature
+    m_selectedFeature->load();
 }
 
 int UpdateAttributesFeatureService::screenX() const
