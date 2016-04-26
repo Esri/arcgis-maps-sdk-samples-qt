@@ -3,22 +3,14 @@ ArcGIS Runtime SDK 100.0 for Qt (Quartz) samples for Qt Creator.  The repo conta
 
 # Prerequisites
 * Qt SDK 5.6 or higher
+* 
+
 
 
 ## Fork the repo
 If you haven't already, fork the repo.
 
 ## Clone the repo
-
-### Android Studio
-Clone the **ArcGIS Android SDK Samples** in Android Studio:
-
-1. Choose **VCS > Checkout from Version Control > GitHub** on the main menu.
-2. From the **Repository** drop-down list, select the source repository to clone the data from.
-3. In the **Folder** text box, specify the directory where the local repository for cloned sources will be set up.
-4. Click the Clone button to start cloning the sources from the specified remote repository.
-
-**NOTE**: Do not import the project into Android Studio.  There is an [outstanding issue](https://groups.google.com/forum/#!topic/adt-dev/o8h3Jg9ICGo) in Android Studio that requires importing the project in the steps defined below.
 
 ### Command line Git
 [Clone the ArcGIS Android SDK Samples](https://help.github.com/articles/fork-a-repo#step-2-clone-your-fork)
