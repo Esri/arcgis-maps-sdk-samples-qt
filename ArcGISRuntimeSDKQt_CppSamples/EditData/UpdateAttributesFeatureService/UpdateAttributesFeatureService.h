@@ -25,7 +25,7 @@ namespace Esri
         class MapQuickView;
         class FeatureLayer;
         class ServiceFeatureTable;
-        class Feature;
+        class ArcGISFeature;
     }
 }
 
@@ -66,7 +66,7 @@ private:
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
     Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-    Esri::ArcGISRuntime::Feature* m_selectedFeature;
+    Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature;
     int m_screenX;
     int m_screenY;
     QString m_featureType;
