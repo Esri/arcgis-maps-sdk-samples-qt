@@ -8,18 +8,18 @@ ArcGIS Runtime SDK 100.0 for Qt (Quartz) samples for Qt Creator.  The repo conta
 
 
 ## Fork the repo
-If you haven't already, fork the repo.
+If you haven't already, fork [the repo](https://github.com/Esri/arcgis-runtime-samples-qt/fork).
 
 ## Clone the repo
 
 ### Command line Git
-[Clone the ArcGIS Android SDK Samples](https://help.github.com/articles/fork-a-repo#step-2-clone-your-fork)
+[Clone the ArcGIS Qt SDK Samples](https://help.github.com/articles/fork-a-repo#step-2-clone-your-fork)
 
 Open your terminal, navigate to your working directory, use ```git clone``` to get a copy of the repo.
 
 ```
 # Clones your fork of the repository into the current directory in terminal
-$ git clone https://github.com/YOUR-USERNAME/arcgis-runtime-samples-android.git
+$ git clone https://github.com/YOUR-USERNAME/arcgis-runtime-samples-qt.git
 ```
 
 ## Configure remote upstream for your fork
@@ -30,14 +30,14 @@ To sync changes you make in a fork with this repository, you must configure a re
 
 ```
 $ git remote -v
-origin	https://github.com/YOUR_USERNAME/arcgis-runtime-samples-android.git (fetch)
-origin	https://github.com/YOUR_USERNAME/arcgis-runtime-samples-android.git (push)
+origin	https://github.com/YOUR_USERNAME/arcgis-runtime-samples-qt.git (fetch)
+origin	https://github.com/YOUR_USERNAME/arcgis-runtime-samples-qt.git (push)
 ```
 
 - Specify a new remote upstream repository
 
 ```
-$ git remote add upstream https://github.com/Esri/arcgis-runtime-samples-android.git
+$ git remote add upstream https://github.com/Esri/arcgis-runtime-samples-qt.git
 ```
 
 - Verify the new upstream repository
@@ -45,10 +45,10 @@ $ git remote add upstream https://github.com/Esri/arcgis-runtime-samples-android
 ```
 $ git remote -v
 
-origin	https://github.com/YOUR_USERNAME/arcgis-runtime-samples-android.git (fetch)
-origin	https://github.com/YOUR_USERNAME/arcgis-runtime-samples-android.git (push)
-upstream https://github.com/Esri/arcgis-runtime-samples-android.git (fetch)
-upstream https://github.com/Esri/arcgis-runtime-samples-android.git (push)
+origin	https://github.com/YOUR_USERNAME/arcgis-runtime-samples-qt.git (fetch)
+origin	https://github.com/YOUR_USERNAME/arcgis-runtime-samples-qt.git (push)
+upstream https://github.com/Esri/arcgis-runtime-samples-qt.git (fetch)
+upstream https://github.com/Esri/arcgis-runtime-samples-qt.git (push)
 ```
 
 ### Sync your fork
