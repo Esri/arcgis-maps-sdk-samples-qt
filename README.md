@@ -73,3 +73,7 @@ $ git checkout master
 ```
 $ git merge upstream/master
 ```
+## Open a sample project file in Qt Creator
+Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to a project file (.pro) within your forked repo location.
+Configure the project and run the sample.
+
