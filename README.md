@@ -2,10 +2,17 @@
 ArcGIS Runtime SDK 100.0 for Qt (Quartz) samples for Qt Creator.  The repo contains [Qt Creator](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
 
 # Prerequisites
-* Qt SDK 5.6 or higher
-* 
+* Qt SDK 5.6 or higher (Open source oe commercial)
+* Qt Creator
+* For Windows: Microsoft Visual C++ Compiler 14.0 
 
+In addition, if you want to run samples on Android:
+* Google's Android SDK
+* Google's Android NDK
+* Gradle, or Apache ANT
 
+In addition, if you want to run samples on iOS devices:
+* XCode
 
 ## Fork the repo
 If you haven't already, fork [the repo](https://github.com/Esri/arcgis-runtime-samples-qt/fork).
