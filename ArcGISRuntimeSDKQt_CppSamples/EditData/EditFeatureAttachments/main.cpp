@@ -16,6 +16,7 @@
 #include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>
+#include <QQmlEngine>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -43,8 +44,15 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<AttachmentListModel>("Esri.Samples", 1, 0, "AttachmentListModel", "AttachmentListModel is an uncreatable type");
 
     // Intialize application view
-    QQuickView view(QUrl("qrc:/Samples/Edit Data/EditFeatureAttachments/EditFeatureAttachments.qml"));
+    QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    // Add the import Path
+    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
+    // Set the source
+    view.setSource(QUrl("qrc:/Samples/Edit Data/EditFeatureAttachments/EditFeatureAttachments.qml"));
+
     view.show();
 
     return app.exec();

@@ -16,6 +16,7 @@
 #include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>
+#include <QQmlEngine>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -41,8 +42,15 @@ int main(int argc, char *argv[])
     qmlRegisterType<FeatureLayerFeatureService>("Esri.Samples", 1, 0, "FeatureLayerFeatureServiceSample");
 
     // Intialize application view
-    QQuickView view(QUrl("qrc:/Samples/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.qml"));
+    QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    // Add the import Path
+    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
+    // Set the source
+    view.setSource(QUrl("qrc:/Samples/Features/FeatureLayerFeatureService/FeatureLayerFeatureService.qml"));
+
     view.show();
 
     return app.exec();
