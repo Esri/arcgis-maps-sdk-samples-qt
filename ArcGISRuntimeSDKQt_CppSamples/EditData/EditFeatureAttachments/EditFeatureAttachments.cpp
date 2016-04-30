@@ -103,8 +103,8 @@ void EditFeatureAttachments::connectSignals()
         m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, 1);
     });
 
-    // connect to the visible area changed signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::visibleAreaChanged, [this]()
+    // connect to the viewpoint changed signal on the MapQuickView
+    connect(m_mapView, &MapQuickView::viewpointChanged, [this]()
     {
         m_featureLayer->clearSelection();
         emit hideWindow();

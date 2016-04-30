@@ -113,7 +113,7 @@ Rectangle {
         }
 
         // hide the callout after navigation
-        onVisibleAreaChanged: {
+        onViewpointChanged: {
             callout.visible = false;
         }
 
