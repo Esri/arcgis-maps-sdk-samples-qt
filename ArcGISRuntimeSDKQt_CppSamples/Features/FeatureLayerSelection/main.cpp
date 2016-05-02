@@ -24,6 +24,7 @@
 #include "MapQuickView.h"
 #include "FeatureLayerSelection.h"
 #include "ArcGISRuntimeEnvironment.h"
+#include <QQmlEngine>
 
 using namespace Esri::ArcGISRuntime;
 
