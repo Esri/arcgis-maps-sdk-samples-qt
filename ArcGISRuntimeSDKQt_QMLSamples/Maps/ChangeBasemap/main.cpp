@@ -15,6 +15,7 @@
 #include <QQuickView>
 #include <QUrl>
 #include <QCoreApplication>
+#include <QQmlEngine>
 
 int main(int argc, char *argv[])
 {
@@ -26,8 +27,22 @@ int main(int argc, char *argv[])
 #endif
 
     // Intialize application view
-    QQuickView view(QUrl("qrc:/Samples/Maps/ChangeBasemap/ChangeBasemap.qml"));
+    QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    // Add the import Path
+    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
+    // Set the source
+    QQuickView view;
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    // Add the import Path
+    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
+    // Set the source
+    view.setSource(QUrl("qrc:/Samples/Maps/ChangeBasemap/ChangeBasemap.qml"));
+
     view.show();
 
     return app.exec();
