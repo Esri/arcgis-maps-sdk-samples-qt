@@ -15,6 +15,7 @@
 #include <QQuickView>
 #include <QUrl>
 #include <QCoreApplication>
+#include <QDir>
 #include <QQmlEngine>
 
 int main(int argc, char *argv[])
