@@ -167,6 +167,7 @@ Rectangle {
                 width: parent.width
                 height: parent.height
                 placeholderText: "Type in an address"
+                font.pixelSize: 14 * scaleFactor
                 style: TextFieldStyle {
                     background: Rectangle {
                         color: "#f7f8fa"

@@ -103,6 +103,7 @@ FindAddressSample {
                 id: textField
                 width: parent.width
                 height: parent.height
+                font.pixelSize: 14 * scaleFactor
                 placeholderText: "Type in an address"
                 style: TextFieldStyle {
                     background: Rectangle {
