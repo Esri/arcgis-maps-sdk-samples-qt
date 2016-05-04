@@ -8,6 +8,6 @@
         <file>FindAddress.html</file>
         <file>ic_menu_closeclear_light_d.png</file>
         <file>ic_menu_collapsedencircled_light_d.png</file>
-        <file>pin_star_red.png</file>
+        <file>pin_circle_red.png</file>
     </qresource>
 </RCC>

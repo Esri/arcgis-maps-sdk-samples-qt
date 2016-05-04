@@ -41,7 +41,7 @@ Rectangle {
 
             SimpleRenderer {
                 PictureMarkerSymbol {
-                    url: "qrc:/Samples/Search/FindAddress/pin_star_red.png"
+                    url: "qrc:/Samples/Search/FindAddress/pin_circle_red.png"
                     width: 35
                     height: 35
                     offsetY: height / 2 // the tip of the pin will point to the location

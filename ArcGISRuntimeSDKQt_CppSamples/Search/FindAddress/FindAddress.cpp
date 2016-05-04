@@ -66,7 +66,7 @@ void FindAddress::componentComplete()
 
     // set a renderer on the graphics overlay
     SimpleRenderer* simpleRenderer = new SimpleRenderer(this);
-    PictureMarkerSymbol* pictureMarkerSymbol = new PictureMarkerSymbol(QUrl("qrc:/Samples/Search/FindAddress/pin_star_red.png"), this);
+    PictureMarkerSymbol* pictureMarkerSymbol = new PictureMarkerSymbol(QUrl("qrc:/Samples/Search/FindAddress/pin_circle_red.png"), this);
     pictureMarkerSymbol->setWidth(35);
     pictureMarkerSymbol->setHeight(35);
     pictureMarkerSymbol->setOffsetY(pictureMarkerSymbol->height() / 2);
