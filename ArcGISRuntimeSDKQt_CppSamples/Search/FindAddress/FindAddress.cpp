@@ -26,7 +26,6 @@
 #include "GeocodeParameters.h"
 #include "Graphic.h"
 #include <QUrl>
-#include <QImage>
 
 using namespace Esri::ArcGISRuntime;
 
