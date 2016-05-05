@@ -34,7 +34,7 @@ Rectangle {
             Basemap {
                 // Nest an ArcGISVectorTiledLayer Layer in the Basemap
                 ArcGISVectorTiledLayer {
-                    url: "http://www.arcgis.com/sharing/rest/content/items/00cd8e843bae49b3a040423e5d65416b/resources/styles/root.json"
+                    url: "http://www.arcgis.com/home/item.html?id=00cd8e843bae49b3a040423e5d65416b"
                 }
             }
             initialViewpoint: ViewpointCenter {

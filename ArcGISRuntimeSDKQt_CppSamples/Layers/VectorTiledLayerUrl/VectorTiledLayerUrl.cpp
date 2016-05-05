@@ -52,8 +52,6 @@ void VectorTiledLayerUrl::componentComplete()
     // set viewpoint
     Point ptLocation(-80.18, 25.778135, SpatialReference(4236));
     m_map->setInitialViewpoint(Viewpoint(ptLocation, 150000));
-
-
     // set map on the map view
     m_mapView->setMap(m_map);
 }
