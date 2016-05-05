@@ -44,14 +44,16 @@ void VectorTiledLayerUrl::componentComplete()
 
     // find QML MapView component
     m_mapView = findChild<MapQuickView*>("mapView");
-
-    // create a new basemap instance
-    Basemap* basemap = Basemap::topographic(this);
+    // create a vector tiled basemap
+    ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=00cd8e843bae49b3a040423e5d65416b"));
+    Basemap* basemap = new Basemap(vectorTiledLayer, this);
     // create a new map instance
     m_map = new Map(basemap, this);
     // set viewpoint
     Point ptLocation(-80.18, 25.778135, SpatialReference(4236));
-    m_map->setInitialViewpoint(Viewpoint(ptLocation, 72223.819286));
+    m_map->setInitialViewpoint(Viewpoint(ptLocation, 150000));
+
+
     // set map on the map view
     m_mapView->setMap(m_map);
 }
@@ -67,7 +69,7 @@ void VectorTiledLayerUrl::changeBasemap(QString basemap)
             vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=3b8814f6ddbd485cae67e8018992246e"));
         else if (basemap == "Night")
             vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=f96366254a564adda1dc468b447ed956"));
-        else if (basemap == "Topographic")
+        else if (basemap == "Dark Gray")
             vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=3e3099d7302f4d99bc6f916dcc07ed59"));
         Basemap* basemap = new Basemap(vectorTiledLayer, this);
         m_map->setBasemap(basemap);

@@ -39,7 +39,7 @@ Rectangle {
             }
             initialViewpoint: ViewpointCenter {
                 center: Point { x:-80.18; y: 25.778135; spatialReference: SpatialReference { wkid: 4326 } }
-                scale: 72223.819286
+                scale: 150000
             }
         }
     }
@@ -52,7 +52,7 @@ Rectangle {
             margins: 15 * scaleFactor
         }
         width: 175 * scaleFactor
-        model: ["Navigation","Streets","Night","Topographic"]
+        model: ["Navigation","Streets","Night","Dark Gray"]
         onCurrentTextChanged: {
             // Call this JavaScript function when the current selection changes
             if (map.loadStatus === Enums.LoadStatusLoaded)
@@ -73,7 +73,7 @@ Rectangle {
             case "Night":
                 layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=f96366254a564adda1dc468b447ed956"});
                 break;
-            case "Topographic":
+            case "Dark Gray":
                 layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=3e3099d7302f4d99bc6f916dcc07ed59"});
                 break;
             }

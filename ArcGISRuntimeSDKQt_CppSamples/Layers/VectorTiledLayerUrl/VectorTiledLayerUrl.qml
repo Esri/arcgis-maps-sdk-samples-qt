@@ -41,7 +41,7 @@ VectorTiledLayerUrlSample {
             margins: 15 * scaleFactor
         }
         width: 175 * scaleFactor
-        model: ["Navigation","Streets","Night","Topographic"]
+        model: ["Navigation","Streets","Night","Dark Gray"]
         onCurrentTextChanged: {
             // Call C++ invokable function to switch the basemaps
             vectorTiledLayerUrlSample.changeBasemap(currentText);
