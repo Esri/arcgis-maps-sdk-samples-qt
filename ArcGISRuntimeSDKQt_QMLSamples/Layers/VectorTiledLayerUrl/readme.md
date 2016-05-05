@@ -1,6 +1,6 @@
 #Vector Tiled Layer Url
 
-This sample uses Vector Tiled Layer basemap from an ArcGIS Online service URL. It shows how to creates a ArcGISVectorTiledLayer from an ArcGIS Online service URL and bind that to a  Basemap.
+This sample uses Vector Tiled Layer basemap from an ArcGIS Online service URL. It shows how to creates an ArcGISVectorTiledLayer from an ArcGIS Online service URL and bind that to a  Basemap.
 
 ![](screenshot.png)
 
