@@ -79,6 +79,8 @@ private:
     int m_screenY;
     int m_attachmentCount;
     QString m_featureType;
+    QString m_whereClause;
+    QMetaObject::Connection m_attachmentConnection;
 };
 
 #endif // EDIT_FEATURE_ATTACHMENTS_H
