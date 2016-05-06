@@ -15,6 +15,8 @@
 #include <QQuickView>
 #include <QUrl>
 #include <QCoreApplication>
+#include <QDir>
+#include <QQmlEngine>
 
 int main(int argc, char *argv[])
 {
@@ -25,9 +27,16 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    // Intialize application view
-    QQuickView view(QUrl("qrc:/Samples/Maps/ChangeBasemap/ChangeBasemap.qml"));
+    // Set the source
+    QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    // Add the import Path
+    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
+    // Set the source
+    view.setSource(QUrl("qrc:/Samples/Maps/ChangeBasemap/ChangeBasemap.qml"));
+
     view.show();
 
     return app.exec();

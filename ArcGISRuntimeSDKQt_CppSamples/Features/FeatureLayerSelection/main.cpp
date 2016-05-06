@@ -16,6 +16,7 @@
 #include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>
+#include <QQmlEngine>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -24,6 +25,7 @@
 #include "MapQuickView.h"
 #include "FeatureLayerSelection.h"
 #include "ArcGISRuntimeEnvironment.h"
+#include <QQmlEngine>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -41,8 +43,15 @@ int main(int argc, char *argv[])
     qmlRegisterType<FeatureLayerSelection>("Esri.Samples", 1, 0, "FeatureLayerSelectionSample");
 
     // Intialize application view
-    QQuickView view(QUrl("qrc:/Samples/Features/FeatureLayerSelection/FeatureLayerSelection.qml"));
+    QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    // Add the import Path
+    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
+    // Set the source
+    view.setSource(QUrl("qrc:/Samples/Features/FeatureLayerSelection/FeatureLayerSelection.qml"));
+
     view.show();
 
     return app.exec();

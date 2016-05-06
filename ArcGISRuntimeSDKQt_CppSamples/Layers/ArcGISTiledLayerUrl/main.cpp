@@ -16,6 +16,7 @@
 #include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>
+#include <QQmlEngine>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -41,8 +42,15 @@ int main(int argc, char *argv[])
     qmlRegisterType<ArcGISTiledLayerUrl>("Esri.Samples", 1, 0, "ArcGISTiledLayerUrlSample");
 
     // Intialize application view
-    QQuickView view(QUrl("qrc:/Samples/Layers/ArcGISTiledLayerUrl/ArcGISTiledLayerUrl.qml"));
+    QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    // Add the import Path
+    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
+    // Set the source
+    view.setSource (QUrl("qrc:/Samples/Layers/ArcGISTiledLayerUrl/ArcGISTiledLayerUrl.qml"));
+
     view.show();
 
     return app.exec();

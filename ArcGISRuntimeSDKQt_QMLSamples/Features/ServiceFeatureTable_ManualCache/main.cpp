@@ -15,6 +15,8 @@
 #include <QQuickView>
 #include <QUrl>
 #include <QCoreApplication>
+#include <QDir>
+#include <QQmlEngine>
 
 int main(int argc, char *argv[])
 {
@@ -26,8 +28,15 @@ int main(int argc, char *argv[])
 #endif
 
     // Intialize application view
-    QQuickView view(QUrl("qrc:/Samples/Features/ServiceFeatureTable_ManualCache/ServiceFeatureTable_ManualCache.qml"));
+    QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    // Add the import Path
+    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+
+    // Set the source
+    view.setSource(QUrl("qrc:/Samples/Features/ServiceFeatureTable_ManualCache/ServiceFeatureTable_ManualCache.qml"));
+
     view.show();
 
     return app.exec();
