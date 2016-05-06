@@ -87,7 +87,7 @@ void EditFeatureAttachments::componentComplete()
 void EditFeatureAttachments::connectSignals()
 {   
     // connect to the mouse press release signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClick, this, [this](QMouseEvent& mouseEvent)
     {
         // first clear the selection
         m_featureLayer->clearSelection();
@@ -104,14 +104,15 @@ void EditFeatureAttachments::connectSignals()
     });
 
     // connect to the viewpoint changed signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::viewpointChanged, [this]()
+    connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
     {
         m_featureLayer->clearSelection();
         emit hideWindow();
     });
 
     // connect to the identifyLayerCompleted signal on the map view
-    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, IdentifyLayerResult* identifyResult)
+    connect(m_mapView, &MapQuickView::identifyLayerCompleted,
+            this, [this](QUuid, IdentifyLayerResult* identifyResult)
     {
         if(!identifyResult)
           return;
@@ -123,14 +124,15 @@ void EditFeatureAttachments::connectSignals()
 
             // obtain the selected feature with attributes
             QueryParameters queryParams;
-            QString whereClause = "objectid=" + static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0))->attributeValue("objectid").toString();
-            queryParams.setWhereClause(whereClause);
+            m_whereClause = "objectid=" + static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0))->attributeValue("objectid").toString();
+            queryParams.setWhereClause(m_whereClause);
             m_featureTable->queryFeatures(queryParams);
         }
     });
 
     // connect to the queryFeaturesCompleted signal on the feature table
-    connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, [this](QUuid, QSharedPointer<FeatureQueryResult> featureQueryResult)
+    connect(m_featureTable, &FeatureTable::queryFeaturesCompleted,
+            this, [this](QUuid, QSharedPointer<FeatureQueryResult> featureQueryResult)
     {
         if (featureQueryResult->iterator().hasNext())
         {
@@ -146,7 +148,8 @@ void EditFeatureAttachments::connectSignals()
             emit attachmentModelChanged();
 
             // get the number of attachments
-            connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentInfosCompleted, [this](QUuid, const QList<QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>>)
+            connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentInfosCompleted,
+                    this, [this](QUuid, const QList<QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>>)
             {
                 m_attachmentCount = m_selectedFeature->attachments()->rowCount();
                 emit attachmentCountChanged();
@@ -155,7 +158,8 @@ void EditFeatureAttachments::connectSignals()
     });    
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted,
+            this, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
     {
         if (featureEditResults.length() > 0)
         {
@@ -165,6 +169,11 @@ void EditFeatureAttachments::connectSignals()
             if (!featureEditResult->isCompletedWithErrors())
             {
                 qDebug() << "Successfully edited feature attachments";
+
+                // update the selected feature with attributes
+                QueryParameters queryParams;
+                queryParams.setWhereClause(m_whereClause);
+                m_featureTable->queryFeatures(queryParams);
             }
             else
             {
@@ -196,16 +205,17 @@ AttachmentListModel* EditFeatureAttachments::attachmentModel() const
 
 void EditFeatureAttachments::addAttachment(QUrl fileUrl, QString contentType, QString fileName)
 {
-    QFile* file = new QFile(fileUrl.toLocalFile(), this); // bad?
-    if (file->exists())
+    if (QFile::exists(fileUrl.toLocalFile()))
     {
-        connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
-                this, [this, file, contentType, fileName](Esri::ArcGISRuntime::LoadStatus)
+        disconnect(m_attachmentConnection); // disconnect previous connection if necessary
+        m_attachmentConnection = connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
+                this, [this, fileUrl, contentType, fileName](Esri::ArcGISRuntime::LoadStatus)
         {
             if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
             {
-                disconnect(m_selectedFeature, &ArcGISFeature::loadStatusChanged, 0, 0); // bad...
-                m_selectedFeature->attachments()->addAttachment(file, contentType, fileName);
+                QFile file(fileUrl.toLocalFile());
+                disconnect(m_attachmentConnection);
+                m_selectedFeature->attachments()->addAttachment(&file, contentType, fileName);
             }
         });
         m_selectedFeature->load();
@@ -214,12 +224,13 @@ void EditFeatureAttachments::addAttachment(QUrl fileUrl, QString contentType, QS
 
 void EditFeatureAttachments::deleteAttachment(int index)
 {
-    connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
+    disconnect(m_attachmentConnection); // disconnect previous connection if necessary
+    m_attachmentConnection = connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
             this, [this, index](Esri::ArcGISRuntime::LoadStatus)
     {
         if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
         {
-            disconnect(m_selectedFeature, &ArcGISFeature::loadStatusChanged, 0, 0); // bad...
+            disconnect(m_attachmentConnection);
             m_selectedFeature->attachments()->deleteAttachment(index);
         }
     });

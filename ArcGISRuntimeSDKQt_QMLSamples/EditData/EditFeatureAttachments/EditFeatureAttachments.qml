@@ -65,6 +65,9 @@ Rectangle {
                     onApplyEditsStatusChanged: {
                         if (applyEditsStatus === Enums.TaskStatusCompleted) {
                             console.log("successfully applied attachment edits to service");
+
+                            // update the selected feature with attributes
+                            featureLayer.selectFeaturesWithQuery(params, Enums.SelectionModeNew);
                         }
                     }
                 }
@@ -264,12 +267,6 @@ Rectangle {
                             if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
                                 selectedFeature.onLoadStatusChanged.disconnect(doDelete);
                                 selectedFeature.attachments.deleteAttachmentWithIndex(attachmentsList.currentIndex);
-
-                                // reset to defaults
-                                featureLayer.clearSelection();
-                                callout.visible = false;
-                                attachmentWindow.visible = false;
-                                selectedFeature = null;
                             }
                         }
 
@@ -361,12 +358,6 @@ Rectangle {
             if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
                 selectedFeature.onLoadStatusChanged.disconnect(doAttachment);
                 selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
-
-                // reset to defaults
-                featureLayer.clearSelection();
-                callout.visible = false;
-                attachmentWindow.visible = false;
-                selectedFeature = null;
             }
         }
 
