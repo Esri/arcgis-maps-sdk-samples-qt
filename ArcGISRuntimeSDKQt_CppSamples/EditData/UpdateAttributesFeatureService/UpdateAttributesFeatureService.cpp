@@ -181,7 +181,7 @@ void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)
             // update the select feature's attribute value
             m_selectedFeature->setAttributeValue("typdamage", fieldVal);
 
-            // update the feature table
+            // update the feature in the feature table
             m_featureTable->updateFeature(m_selectedFeature);
         }
     });
