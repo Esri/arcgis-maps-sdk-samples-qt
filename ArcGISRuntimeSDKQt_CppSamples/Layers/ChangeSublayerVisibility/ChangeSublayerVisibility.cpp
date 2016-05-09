@@ -21,6 +21,9 @@
 #include "Basemap.h"
 #include "ArcGISMapImageLayer.h"
 #include "ArcGISSublayerListModel.h"
+#include "Point.h"
+#include "Viewpoint.h"
+#include "SpatialReference.h"
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
@@ -47,6 +50,7 @@ void ChangeSublayerVisibility::componentComplete()
 
     // create a new map instance
     m_map = new Map(Basemap::topographic(this), this);
+    m_map->setInitialViewpoint(Viewpoint(Point(-11e6, 6e6, SpatialReference(102100)), 9e7));
 
     // add the map image layer
     m_mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"), this);
