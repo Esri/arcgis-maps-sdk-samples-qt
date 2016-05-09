@@ -146,7 +146,7 @@ void EditFeatureAttachments::connectSignals()
             emit attachmentModelChanged();
 
             // get the number of attachments
-            connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentInfosCompleted, [this](QUuid, const QList<QSharedPointer<Esri::ArcGISRuntime::AttachmentInfo>>)
+            connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted, [this](QUuid, const QList<QSharedPointer<Esri::ArcGISRuntime::Attachment>>)
             {
                 m_attachmentCount = m_selectedFeature->attachments()->rowCount();
                 emit attachmentCountChanged();
