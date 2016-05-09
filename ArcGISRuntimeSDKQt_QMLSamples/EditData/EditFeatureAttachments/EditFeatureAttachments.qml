@@ -263,9 +263,9 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
 
-                        function doDelete(){
+                        function doDeleteAttachment(){
                             if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
-                                selectedFeature.onLoadStatusChanged.disconnect(doDelete);
+                                selectedFeature.onLoadStatusChanged.disconnect(doDeleteAttachment);
                                 selectedFeature.attachments.deleteAttachmentWithIndex(attachmentsList.currentIndex);
                             }
                         }
@@ -276,7 +276,7 @@ Rectangle {
                                 msgDialog.open();
                             } else {
                                 // delete the attachment from the table
-                                selectedFeature.onLoadStatusChanged.connect(doDelete);
+                                selectedFeature.onLoadStatusChanged.connect(doDeleteAttachment);
                                 selectedFeature.load();
                             }
                         }
@@ -354,9 +354,9 @@ Rectangle {
     FileDialog {
         id: fileDialog
 
-        function doAttachment(){
+        function doAddAttachment(){
             if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
-                selectedFeature.onLoadStatusChanged.disconnect(doAttachment);
+                selectedFeature.onLoadStatusChanged.disconnect(doAddAttachment);
                 selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
             }
         }
@@ -364,7 +364,7 @@ Rectangle {
         onAccepted: {
             // add the attachment to the feature table
             fileInfo.url = fileDialog.fileUrl;
-            selectedFeature.onLoadStatusChanged.connect(doAttachment);
+            selectedFeature.onLoadStatusChanged.connect(doAddAttachment);
             selectedFeature.load();
         }
     }
