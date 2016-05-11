@@ -2,7 +2,7 @@
 ArcGIS Runtime SDK 100.0 for Qt (Quartz) samples for Qt Creator.  The repo contains [Qt Creator](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
 
 # Prerequisites
-* Qt SDK 5.6 or higher (Open source oe commercial)
+* Qt SDK 5.6 or higher (Open source or commercial)
 * Qt Creator
 * For Windows: Microsoft Visual C++ Compiler 14.0 
 * For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/qml/guide/arcgis-runtime-sdk-for-qt-system-requirements.htm) page.
