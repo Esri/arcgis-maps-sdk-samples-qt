@@ -76,9 +76,9 @@ Rectangle {
                     }
                 }
 
-                function doUpdateAttachment(){
+                function doUpdateAttribute(){
                     if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
-                        selectedFeature.onLoadStatusChanged.disconnect(doUpdateAttachment);
+                        selectedFeature.onLoadStatusChanged.disconnect(doUpdateAttribute);
 
                         // set the geometry
                         selectedFeature.geometry = newLocation;
@@ -98,7 +98,7 @@ Rectangle {
                             // obtain the feature
                             selectedFeature = selectedFeaturesResult.iterator.next();
 
-                            selectedFeature.onLoadStatusChanged.connect(doUpdateAttachment);
+                            selectedFeature.onLoadStatusChanged.connect(doUpdateAttribute);
                             selectedFeature.load();
                         }
                     }

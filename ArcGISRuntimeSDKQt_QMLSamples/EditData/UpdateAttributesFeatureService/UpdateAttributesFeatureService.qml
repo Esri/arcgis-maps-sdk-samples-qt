@@ -254,9 +254,9 @@ Rectangle {
                     width: (updateWindow.width / 2) - (20 * scaleFactor)
                     text: "Update"
 
-                    function doUpdateAttachment(){
+                    function doUpdateAttribute(){
                         if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
-                            selectedFeature.onLoadStatusChanged.disconnect(doUpdateAttachment);
+                            selectedFeature.onLoadStatusChanged.disconnect(doUpdateAttribute);
 
                             selectedFeature.setAttributeValue("typdamage", damageComboBox.currentText);
                             // update the feature in the feature table asynchronously
@@ -269,7 +269,7 @@ Rectangle {
                         callout.visible = false;
                         updateWindow.visible = false;
 
-                        selectedFeature.onLoadStatusChanged.connect(doUpdateAttachment);
+                        selectedFeature.onLoadStatusChanged.connect(doUpdateAttribute);
                         selectedFeature.load();
                     }
                 }
