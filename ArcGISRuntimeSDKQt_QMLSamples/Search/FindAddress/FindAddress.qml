@@ -97,7 +97,7 @@ Rectangle {
                     graphic.geometry = geocodeResults[0].displayLocation;
                     graphic.attributes = geocodeResults[0].attributes;
                     graphicsOverlay.graphics.append(graphic);
-                    mapView.setViewpointCenter(graphic.geometry);
+                    mapView.setViewpointGeometry(geocodeResults[0].extent);
                 }
             }
         }

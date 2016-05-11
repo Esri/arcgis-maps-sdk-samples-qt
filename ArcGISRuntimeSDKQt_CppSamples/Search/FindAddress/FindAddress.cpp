@@ -91,7 +91,7 @@ void FindAddress::connectSignals()
             m_graphicsOverlay->graphics()->clear();
             auto graphic = new Graphic(geocodeResults.at(0).displayLocation(), geocodeResults.at(0).attributes(), this);
             m_graphicsOverlay->graphics()->append(graphic);
-            m_mapView->setViewpointCenter(graphic->geometry());
+            m_mapView->setViewpointGeometry(geocodeResults.at(0).extent());
         }
     });
 
