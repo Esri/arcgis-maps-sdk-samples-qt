@@ -218,17 +218,22 @@ EditFeatureAttachmentsSample {
 
                 // show the attachment name
                 Text {
+                    id: label
                     anchors {
                         verticalCenter: parent.verticalCenter
                         left: parent.left
+                        right: attachment.left
                     }
                     text: name
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    wrapMode: Text.WrapAnywhere
+                    maximumLineCount: 1
+                    elide: Text.ElideRight
                     font.pixelSize: 16 * scaleFactor
                 }
 
                 // show the attachment's URL if it is an image
                 Image {
+                    id: attachment
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: parent.right

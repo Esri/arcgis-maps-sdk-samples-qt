@@ -65,6 +65,9 @@ Rectangle {
                     onApplyEditsStatusChanged: {
                         if (applyEditsStatus === Enums.TaskStatusCompleted) {
                             console.log("successfully applied attachment edits to service");
+
+                            // update the selected feature with attributes
+                            featureLayer.selectFeaturesWithQuery(params, Enums.SelectionModeNew);
                         }
                     }
                 }
@@ -259,13 +262,22 @@ Rectangle {
                     // make sure an item is selected and if so, delete it from the service
                     MouseArea {
                         anchors.fill: parent
+
+                        function doDeleteAttachment(){
+                            if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
+                                selectedFeature.onLoadStatusChanged.disconnect(doDeleteAttachment);
+                                selectedFeature.attachments.deleteAttachmentWithIndex(attachmentsList.currentIndex);
+                            }
+                        }
+
                         onClicked: {
                             if (attachmentsList.currentIndex === -1)  {
                                 msgDialog.text = "Please first select an attachment to delete.";
                                 msgDialog.open();
                             } else {
                                 // delete the attachment from the table
-                                selectedFeature.attachments.deleteAttachmentWithIndex(attachmentsList.currentIndex);
+                                selectedFeature.onLoadStatusChanged.connect(doDeleteAttachment);
+                                selectedFeature.load();
                             }
                         }
                     }
@@ -294,17 +306,22 @@ Rectangle {
 
                 // show the attachment name
                 Text {
+                    id: label
                     anchors {
                         verticalCenter: parent.verticalCenter
                         left: parent.left
+                        right: attachment.left
                     }
                     text: name
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    wrapMode: Text.WrapAnywhere
+                    maximumLineCount: 1
+                    elide: Text.ElideRight
                     font.pixelSize: 16 * scaleFactor
                 }
 
                 // show the attachment's URL if it is an image
                 Image {
+                    id: attachment
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
@@ -336,10 +353,19 @@ Rectangle {
     //! [EditFeatures add attachment from a file dialog]
     FileDialog {
         id: fileDialog
+
+        function doAddAttachment(){
+            if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
+                selectedFeature.onLoadStatusChanged.disconnect(doAddAttachment);
+                selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
+            }
+        }
+
         onAccepted: {
             // add the attachment to the feature table
             fileInfo.url = fileDialog.fileUrl;
-            selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
+            selectedFeature.onLoadStatusChanged.connect(doAddAttachment);
+            selectedFeature.load();
         }
     }
     //! [EditFeatures add attachment from a file dialog]

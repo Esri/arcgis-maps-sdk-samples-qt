@@ -27,6 +27,7 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property bool featureSelected: false
     property Point newLocation
+    property var selectedFeature: null
 
     // Create MapView that contains a Map
     MapView {
@@ -75,18 +76,31 @@ Rectangle {
                     }
                 }
 
+                function doUpdateAttribute(){
+                    if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
+                        selectedFeature.onLoadStatusChanged.disconnect(doUpdateAttribute);
+
+                        // set the geometry
+                        selectedFeature.geometry = newLocation;
+                        // update the feature in the feature table asynchronously
+                        featureTable.updateFeature(selectedFeature);
+
+                        featureSelected = false;
+                        selectedFeature = null;
+                        featureLayer.clearSelection();
+                    }
+                }
+
                 // signal handler for asynchronously fetching the selected feature
                 onSelectedFeaturesStatusChanged: {
                     if (selectedFeaturesStatus === Enums.TaskStatusCompleted) {
                         while (selectedFeaturesResult.iterator.hasNext) {
                             // obtain the feature
-                            var feat = selectedFeaturesResult.iterator.next();
-                            // set the geometry
-                            feat.geometry = newLocation;
-                            // update the feature in the table asynchronously
-                            featureTable.updateFeature(feat);
+                            selectedFeature = selectedFeaturesResult.iterator.next();
+
+                            selectedFeature.onLoadStatusChanged.connect(doUpdateAttribute);
+                            selectedFeature.load();
                         }
-                        featureLayer.clearSelection();
                     }
                 }
 
@@ -114,7 +128,6 @@ Rectangle {
                 newLocation = mouse.mapPoint;
                 // asynchronously fetch the selected feature
                 featureLayer.selectedFeatures();
-                featureSelected = false;
             } else {
                 // call identify on the mapview
                 mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10 * scaleFactor);
