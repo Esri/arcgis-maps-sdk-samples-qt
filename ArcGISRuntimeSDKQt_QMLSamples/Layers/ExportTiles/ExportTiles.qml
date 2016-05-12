@@ -96,14 +96,15 @@ Rectangle {
         }
 
         function displayOutputTileCache(tileCache) {
-            // remove the current basemap
-            map.basemap.baseLayers.clear();
-
             // create a new tiled layer from the output tile cache
             var tiledLayer = ArcGISRuntimeEnvironment.createObject("ArcGISTiledLayer", { tileCache: tileCache } );
 
-            // add the layer to the map
-            map.basemap.baseLayers.append(tiledLayer);
+            // create a new basemap with the tiled layer
+            var basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
+            basemap.baseLayers.append(tiledLayer);
+
+            // set the new basemap on the map
+            map.basemap = basemap;
 
             // zoom to the new layer and hide window once loaded
             tiledLayer.loadStatusChanged.connect(function() {

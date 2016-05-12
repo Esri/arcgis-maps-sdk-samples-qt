@@ -117,21 +117,21 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
 // display the tile cache once the task is complete
 void ExportTiles::displayOutputTileCache(TileCache* tileCache)
 {
-    // remove the current basemap
-    m_map->basemap()->baseLayers()->clear();
-
     // create a new tiled layer from the output tile cache
     auto tiledLayer = new ArcGISTiledLayer(tileCache, this);
 
-    // add the layer to the map
-    m_map->basemap()->baseLayers()->append(tiledLayer);
+    // add the new layer to a basemap
+    auto basemap = new Basemap(tiledLayer, this);
+
+    // set the new basemap on the map
+    m_map->setBasemap(basemap);
 
     // zoom to the new layer and hide window once loaded
     connect(tiledLayer, &ArcGISTiledLayer::doneLoading, [this, tiledLayer]()
     {
         if (tiledLayer->loadStatus() == LoadStatus::Loaded)
         {
-            m_mapView->setViewpointScale(m_mapView->mapScale() * .5);
+            m_mapView->setViewpointScale(m_mapView->mapScale() * 0.5);
         }
     });
 }
