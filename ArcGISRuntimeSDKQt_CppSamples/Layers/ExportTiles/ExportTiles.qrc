@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/ExportTiles">
+        <file alias="sample.json">ExportTiles.json</file>
+        <file>ExportTiles.png</file>
+        <file>ExportTiles.qml</file>
+        <file>ExportTiles.h</file>
+        <file>ExportTiles.cpp</file>
+        <file>ExportTiles.html</file>
+        <file>download.png</file>
+    </qresource>
+</RCC>
