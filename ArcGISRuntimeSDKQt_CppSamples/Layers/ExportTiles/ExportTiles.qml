@@ -59,7 +59,7 @@ ExportTilesSample {
         }
     }
 
-    // Create the download button to generate geodatabase
+    // Create the download button to export tile cache
     Rectangle {
         id: downloadButton
         anchors {
@@ -96,6 +96,7 @@ ExportTilesSample {
         MouseArea {
             anchors.fill: parent
             onClicked: {
+                // call the C++ invokable function to export tile cache from the input screen coordinates
                 exportTilesSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height), dataPath);
                 exportWindow.visible = true;
             }
@@ -175,5 +176,3 @@ ExportTilesSample {
         }
     }
 }
-
-

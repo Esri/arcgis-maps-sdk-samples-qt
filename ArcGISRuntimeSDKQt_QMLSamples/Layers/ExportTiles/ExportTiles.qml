@@ -55,27 +55,13 @@ Rectangle {
             // generate the default parameters with the extent and map scales specified
             var params = exportTask.createDefaultExportTileCacheParameters(tileCacheExtent, mapView.mapScale, tiledLayer.maxScale);
 
-//            //to delete
-//            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
-//            graphic.geometry = tileCacheExtent;
-//            var go = ArcGISRuntimeEnvironment.createObject("GraphicsOverlay")
-//            go.graphics.append(graphic)
-//            var renderer = ArcGISRuntimeEnvironment.createObject("SimpleRenderer");
-//            renderer.symbol = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol", {color: "blue"})
-//            go.renderer = renderer;
-//            mapView.graphicsOverlays.append(go);
-
             // export the cache with the parameters
             executeExportTileCacheTask(params);
         }
 
         function executeExportTileCacheTask(params) {
             // execute the asynchronous task and obtain the job
-            console.log(dataPath + "outputTileCache.tpk")
-
             var exportJob = exportTask.exportTileCacheWithParameters(params, dataPath + "outputTileCache.tpk");
-
-            console.log("exportjob null?", exportJob)
 
             // show the export window
             exportWindow.visible = true;
@@ -142,7 +128,7 @@ Rectangle {
         }
     }
 
-    // Create the download button to generate geodatabase
+    // Create the download button to export the tile cache
     Rectangle {
         id: downloadButton
         anchors {
