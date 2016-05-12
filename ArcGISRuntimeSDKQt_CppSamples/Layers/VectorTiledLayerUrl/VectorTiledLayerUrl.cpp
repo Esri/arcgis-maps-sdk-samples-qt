@@ -1,4 +1,4 @@
-// [WriteFile Name=VectorTiledLayerUrl, Category=Maps]
+// [WriteFile Name=VectorTiledLayerUrl, Category=Layers]
 // [Legal]
 // Copyright 2016 Esri.
 

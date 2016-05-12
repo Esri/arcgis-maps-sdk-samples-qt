@@ -1,4 +1,4 @@
-// [WriteFile Name=FeatureLayerDefinitionExpression, Category=Features]
+// [WriteFile Name=FeatureLayerFeatureService, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
 
