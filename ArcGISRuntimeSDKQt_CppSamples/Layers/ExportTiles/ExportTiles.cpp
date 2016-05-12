@@ -70,25 +70,17 @@ void ExportTiles::componentComplete()
 
 void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2, QString dataPath)
 {
-    qDebug() << "getting extent";
     // create an envelope from the QML rectangle corners
     auto corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
     auto corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
     auto extent = Envelope(corner1, corner2);
     auto tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
-    qDebug() << "got extent" << tileCacheExtent.toJson();
-
-    qDebug() << "getting params";
 
     // generate parameters
     auto params = m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_exportTileCacheTask->mapServiceInfo()->maxScale());
 
-    qDebug() << "calling the task";
-
     // execute the task and obtain the job
     auto exportJob = m_exportTileCacheTask->exportTileCacheWithParameters(params, dataPath + "outputTileCache.tpk");
-
-    qDebug() << "connecting to the job";
 
     // connect to the job's status changed signal
     connect(exportJob, &ExportTileCacheJob::jobStatusChanged, [this, exportJob]()
