@@ -16,7 +16,7 @@
 
 TEMPLATE = app
 
-QT += qml quick sensors positioning sensors
+QT += opengl qml quick sensors positioning sensors
 
 CONFIG += c++11 arcgis_runtime_qml100_0_0
 
