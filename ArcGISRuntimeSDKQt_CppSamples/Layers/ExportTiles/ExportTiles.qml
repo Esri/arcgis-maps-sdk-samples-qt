@@ -175,4 +175,15 @@ ExportTilesSample {
             color: "black"
         }
     }
+
+    FileFolder {
+        path: dataPath
+
+        // create the data path if it does not yet exist
+        Component.onCompleted: {
+            if (!exists) {
+                makePath(dataPath);
+            }
+        }
+    }
 }
