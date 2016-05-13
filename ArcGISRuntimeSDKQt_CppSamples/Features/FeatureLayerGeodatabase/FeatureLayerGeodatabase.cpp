@@ -56,7 +56,7 @@ void FeatureLayerGeodatabase::componentComplete()
     m_dataPath = QQmlProperty::read(m_mapView, "dataPath").toString();
 
     // Create a map using a local vector tile package
-    auto vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(m_dataPath + "LosAngeles.vtpk"), this);
+    auto vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(m_dataPath + "vtpk/LosAngeles.vtpk"), this);
     auto basemap = new Basemap(vectorTiledLayer, this);
     m_map = new Map(basemap, this);
 
@@ -67,7 +67,7 @@ void FeatureLayerGeodatabase::componentComplete()
     m_map->setInitialViewpoint(Viewpoint(Point(-13214155, 4040194, SpatialReference(3857)), 35e4));
 
     // create the geodatabase using a local file path
-    m_geodatabase = new Geodatabase(m_dataPath + "LA_Trails.geodatabase", this);
+    m_geodatabase = new Geodatabase(m_dataPath + "geodatabase/LA_Trails.geodatabase", this);
 
     // connect to doneLoading signal of geodatabase to access feature tables
     connect(m_geodatabase, &Geodatabase::doneLoading, [this](Error error)

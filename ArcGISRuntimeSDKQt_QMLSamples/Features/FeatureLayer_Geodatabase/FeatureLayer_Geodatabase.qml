@@ -47,7 +47,7 @@ Rectangle {
             // create a basemap from a local vector tile package
             Basemap {
                 ArcGISVectorTiledLayer {
-                    url: System.resolvedPathUrl(dataPath + "LosAngeles.vtpk")
+                    url: System.resolvedPathUrl(dataPath + "vtpk/LosAngeles.vtpk")
                 }
             }
 
@@ -59,7 +59,7 @@ Rectangle {
                 // create the geodatabase
                 Geodatabase {
                     id: gdb
-                    path: dataPath + "LA_Trails.geodatabase"
+                    path: dataPath + "geodatabase/LA_Trails.geodatabase"
                 }
             }
         }
