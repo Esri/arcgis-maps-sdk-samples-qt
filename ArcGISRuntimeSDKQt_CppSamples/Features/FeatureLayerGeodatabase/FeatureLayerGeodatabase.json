@@ -1,5 +1,5 @@
 {
-    "source" :  "FeatureLayerGeodatabase.qml",
+    "source" :  "FeatureLayerGeodatabase",
     "description" : "FeatureLayerGeodatabase.html",
     "thumbnail" : "FeatureLayerGeodatabase.png",
     "name" : "Feature layer (geodatabase)",
