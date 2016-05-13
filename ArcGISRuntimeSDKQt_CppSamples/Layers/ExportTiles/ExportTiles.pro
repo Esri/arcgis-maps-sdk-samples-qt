@@ -21,7 +21,7 @@ mac {
 
 CONFIG += c++11 arcgis_runtime_qml_cpp100_0_0
 
-QT += opengl qml quick positioning sensors opengl
+QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
 TARGET = ExportTiles
