@@ -21,7 +21,7 @@ mac {
 
 CONFIG += c++11 arcgis_runtime_qml_cpp100_0_0
 
-QT += qml quick positioning sensors
+QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
 TARGET = ArcGISMapImageLayerUrl
