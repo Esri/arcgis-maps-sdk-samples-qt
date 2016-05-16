@@ -193,6 +193,7 @@ Rectangle {
             source: mapView
             radius: 40
             samples: 20
+            rotation: 180
         }
 
         MouseArea {
