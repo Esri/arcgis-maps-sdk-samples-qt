@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Features/FeatureLayerGeodatabase">
+        <file alias="sample.json">FeatureLayerGeodatabase.json</file>
+        <file>FeatureLayerGeodatabase.png</file>
+        <file>FeatureLayerGeodatabase.qml</file>
+		<file>FeatureLayerGeodatabase.h</file>
+		<file>FeatureLayerGeodatabase.cpp</file>
+        <file>FeatureLayerGeodatabase.html</file>
+    </qresource>
+</RCC>
