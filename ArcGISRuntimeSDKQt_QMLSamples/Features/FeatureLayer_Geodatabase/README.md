@@ -16,5 +16,5 @@ The sample creates an instance of GeodatabaseFeatureTable by supplying the path 
 - FeatureLayer
 
 ##Offline Data
-- https://www.arcgis.com/home/item.html?id=d9f8ce6f6ac84b90a665a861d71a5d0a
-- https://www.arcgis.com/home/item.html?id=2b0f9e17105847809dfeb04e3cad69e0
+- [Los Angeles Vector Tile Package](https://www.arcgis.com/home/item.html?id=d9f8ce6f6ac84b90a665a861d71a5d0a)
+- [Los Angeles Trailheads](https://www.arcgis.com/home/item.html?id=2b0f9e17105847809dfeb04e3cad69e0)
