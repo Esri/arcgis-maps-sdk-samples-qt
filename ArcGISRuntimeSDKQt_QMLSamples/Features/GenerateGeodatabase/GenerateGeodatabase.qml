@@ -1,4 +1,4 @@
-// [WriteFile Name=ExportTiles, Category=Layers]
+// [WriteFile Name=GenerateGeodatabase, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -16,6 +16,7 @@
 
 import QtQuick 2.3
 import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
@@ -25,53 +26,59 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property Envelope tileCacheExtent: null
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property string featureServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer"
+    property Envelope generateExtent: null
     property string statusText: ""
-    property string tiledServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
 
-    // Create MapView that contains a Map
+    // Map view UI presentation at top
     MapView {
         id: mapView
         anchors.fill: parent
+
         Map {
             id: map
-            // Nest an ArcGISTiledLayer in the Basemap
             Basemap {
                 ArcGISTiledLayer {
-                    id: tiledLayer
-                    url: tiledServiceUrl
+                    tileCache: TileCache {
+                        path: dataPath + "tpk/SanFrancisco.tpk"
+                    }
                 }
+            }
+
+            // add the initial online feature service layers
+            FeatureLayer {
+                ServiceFeatureTable { url: featureServiceUrl + "/0" }
+            }
+
+            FeatureLayer {
+                ServiceFeatureTable { url: featureServiceUrl + "/1" }
+            }
+
+            FeatureLayer {
+                ServiceFeatureTable { url: featureServiceUrl + "/2" }
             }
         }
     }
 
-    // Create ExportTileCacheTask
-    ExportTileCacheTask {
-        id: exportTask
-        mapServiceInfo: tiledLayer.mapServiceInfo
+    // create the GeodatabaseSyncTask to generate the local geodatabase
+    GeodatabaseSyncTask {
+        id: geodatabaseSyncTask
+        url: featureServiceUrl
 
-        function generateDefaultParameters() {
-            // generate the default parameters with the extent and map scales specified
-            var params = exportTask.createDefaultExportTileCacheParameters(tileCacheExtent, mapView.mapScale, tiledLayer.maxScale);
-
-            // export the cache with the parameters
-            executeExportTileCacheTask(params);
-        }
-
-        function executeExportTileCacheTask(params) {
+        function executeGenerate() {
             // execute the asynchronous task and obtain the job
-            var exportJob = exportTask.exportTileCacheWithParameters(params, dataPath + "outputTileCache.tpk");
+            var generateJob = generateGeodatabase(generateParameters, dataPath + "Wildfire.geodatabase");
 
-            // show the export window
-            exportWindow.visible = true;
+            // show the generate window
+            generateWindow.visible = true;
 
             // connect to the job's status changed signal to know once it is done
-            exportJob.jobStatusChanged.connect(function() {
-                switch(exportJob.jobStatus) {
+            generateJob.jobStatusChanged.connect(function() {
+                switch(generateJob.jobStatus) {
                 case Enums.JobStatusFailed:
-                    statusText = "Export failed";
-                    exportWindow.hideWindow(5000);
+                    statusText = "Generate failed";
+                    generateWindow.hideWindow(5000);
                     break;
                 case Enums.JobStatusNotStarted:
                     statusText = "Job not started";
@@ -84,39 +91,59 @@ Rectangle {
                     break;
                 case Enums.JobStatusSucceeded:
                     statusText = "Complete";
-                    exportWindow.hideWindow(1500);
-                    displayOutputTileCache(exportJob.result);
+                    generateWindow.hideWindow(1500);
+                    displayLayersFromGeodatabase(generateJob.geodatabase);
                     break;
                 default:
                     break;
                 }
             });
 
-            exportJob.start();
+            // start the job
+            generateJob.start();
         }
 
-        function displayOutputTileCache(tileCache) {
-            // create a new tiled layer from the output tile cache
-            var tiledLayer = ArcGISRuntimeEnvironment.createObject("ArcGISTiledLayer", { tileCache: tileCache } );
+        function displayLayersFromGeodatabase(geodatabase) {
+            // remove the original online feature layers
+            map.operationalLayers.clear();
 
-            // create a new basemap with the tiled layer
-            var basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
-            basemap.baseLayers.append(tiledLayer);
+            // load the geodatabase to access the feature tables
+            geodatabase.loadStatusChanged.connect(function() {
+                if (geodatabase.loadStatus === Enums.LoadStatusLoaded) {
+                    // create a feature layer from each feature table, and add to the map
+                    for (var i = 0; i < geodatabase.geodatabaseFeatureTables.length; i++) {
+                        var featureTable = geodatabase.geodatabaseFeatureTables[i];
+                        var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
+                        featureLayer.featureTable = featureTable;
+                        map.operationalLayers.append(featureLayer);
+                    }
 
-            // set the new basemap on the map
-            map.basemap = basemap;
+                    // unregister geodatabase since there will be no edits uploaded
+                    geodatabaseSyncTask.unregisterGeodatabase(geodatabase);
 
-            // zoom to the new layer and hide window once loaded
-            tiledLayer.loadStatusChanged.connect(function() {
-                if (tiledLayer.loadStatus === Enums.LoadStatusLoaded) {
+                    // hide the extent rectangle and download button
                     extentRectangle.visible = false;
                     downloadButton.visible = false;
-                    mapView.setViewpointScale(mapView.mapScale * .5);
                 }
             });
+            geodatabase.load();
         }
     }
 
+    // create the generate geodatabase parameters
+    GenerateGeodatabaseParameters {
+        id: generateParameters
+        extent: generateExtent
+        layerOptions: [
+            GenerateLayerOption { layerId: "0"},
+            GenerateLayerOption { layerId: "1"},
+            GenerateLayerOption { layerId: "2"}
+        ]
+        outSpatialReference: SpatialReference.createWebMercator()
+        returnAttachments: false
+    }   
+
+    // create an extent rectangle for the output geodatabase
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
@@ -129,7 +156,7 @@ Rectangle {
         }
     }
 
-    // Create the download button to export the tile cache
+    // Create the download button to generate geodatabase
     Rectangle {
         id: downloadButton
         anchors {
@@ -138,10 +165,10 @@ Rectangle {
             bottomMargin: 10 * scaleFactor
         }
 
-        width: 130 * scaleFactor
+        width: 200 * scaleFactor
         height: 35 * scaleFactor
         color: "#DADADA"
-        radius: 5
+        radius: 8
         border {
             color: "#585858"
             width: 1 * scaleFactor
@@ -153,11 +180,12 @@ Rectangle {
             Image {
                 width: 38 * scaleFactor
                 height: width
-                source: "qrc:/Samples/Layers/ExportTiles/download.png"
+                source: "qrc:/Samples/Features/GenerateGeodatabase/download.png"
             }
+
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: "Export tiles"
+                text: "Generate Geodatabase"
                 font.pixelSize: 14 * scaleFactor
                 color: "#474747"
             }
@@ -167,6 +195,7 @@ Rectangle {
             anchors.fill: parent
             onClicked: {
                 getRectangleEnvelope();
+                geodatabaseSyncTask.executeGenerate();
             }
 
             function getRectangleEnvelope() {
@@ -174,22 +203,21 @@ Rectangle {
                 var corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
                 var envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
                 envBuilder.setCorners(corner1, corner2);
-                tileCacheExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
-                exportTask.generateDefaultParameters();
+                generateExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
             }
         }
     }
 
-    // Create a window to display the export window
+    // Create a window to display the generate window
     Rectangle {
-        id: exportWindow
+        id: generateWindow
         anchors.fill: parent
         color: "transparent"
         visible: false
         clip: true
 
         GaussianBlur {
-            anchors.fill: exportWindow
+            anchors.fill: generateWindow
             source: mapView
             radius: 40
             samples: 20
@@ -236,21 +264,12 @@ Rectangle {
         Timer {
             id: hideWindowTimer
 
-            onTriggered: exportWindow.visible = false;
+            onTriggered: generateWindow.visible = false;
         }
 
         function hideWindow(time) {
             hideWindowTimer.interval = time;
             hideWindowTimer.restart();
-        }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 
@@ -262,6 +281,16 @@ Rectangle {
             if (!exists) {
                 makePath(dataPath);
             }
+        }
+    }
+
+    // Neatline rectangle
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
         }
     }
 }

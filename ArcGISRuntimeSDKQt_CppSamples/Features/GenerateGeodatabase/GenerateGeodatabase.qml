@@ -1,4 +1,4 @@
-// [WriteFile Name=ExportTiles, Category=Layers]
+// [WriteFile Name=GenerateGeodatabase, Category=Features]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -15,29 +15,30 @@
 // [Legal]
 
 import QtQuick 2.3
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-ExportTilesSample {
-    id: exportTilesSample
+GenerateGeodatabaseSample {
+    id: generateSample
     width: 800
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    //property Envelope generateExtent: null
     property string statusText: ""
 
     // add a mapView component
     MapView {
         id: mapView
+        property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
         anchors.fill: parent
         objectName: "mapView"
     }
 
     onHideWindow: {
-        exportWindow.hideWindow(time);
+        generateWindow.hideWindow(time);
 
         if (success) {
             extentRectangle.visible = false;
@@ -59,7 +60,7 @@ ExportTilesSample {
         }
     }
 
-    // Create the download button to export tile cache
+    // Create the download button to generate geodatabase
     Rectangle {
         id: downloadButton
         anchors {
@@ -68,7 +69,7 @@ ExportTilesSample {
             bottomMargin: 10 * scaleFactor
         }
 
-        width: 130 * scaleFactor
+        width: 200 * scaleFactor
         height: 35 * scaleFactor
         color: "#DADADA"
         radius: 8
@@ -83,11 +84,12 @@ ExportTilesSample {
             Image {
                 width: 38 * scaleFactor
                 height: width
-                source: "qrc:/Samples/Layers/ExportTiles/download.png"
+                source: "qrc:/Samples/Features/GenerateGeodatabase/download.png"
             }
+
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: "Export tiles"
+                text: "Generate Geodatabase"
                 font.pixelSize: 14 * scaleFactor
                 color: "#474747"
             }
@@ -96,23 +98,22 @@ ExportTilesSample {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                // call the C++ invokable function to export tile cache from the input screen coordinates
-                exportTilesSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height), dataPath);
-                exportWindow.visible = true;
+                generateSample.generateGeodatabaseFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+                generateWindow.visible = true;
             }
         }
     }
 
-    // Create a window to display the export window
+    // Create a window to display the generate window
     Rectangle {
-        id: exportWindow
+        id: generateWindow
         anchors.fill: parent
         color: "transparent"
         visible: false
         clip: true
 
         GaussianBlur {
-            anchors.fill: exportWindow
+            anchors.fill: generateWindow
             source: mapView
             radius: 40
             samples: 20
@@ -159,12 +160,23 @@ ExportTilesSample {
         Timer {
             id: hideWindowTimer
 
-            onTriggered: exportWindow.visible = false;
+            onTriggered: generateWindow.visible = false;
         }
 
         function hideWindow(time) {
             hideWindowTimer.interval = time;
             hideWindowTimer.restart();
+        }
+    }
+
+    FileFolder {
+        path: mapView.dataPath
+
+        // create the data path if it does not yet exist
+        Component.onCompleted: {
+            if (!exists) {
+                makePath(mapView.dataPath);
+            }
         }
     }
 
@@ -174,17 +186,6 @@ ExportTilesSample {
         border {
             width: 0.5 * scaleFactor
             color: "black"
-        }
-    }
-
-    FileFolder {
-        path: dataPath
-
-        // create the data path if it does not yet exist
-        Component.onCompleted: {
-            if (!exists) {
-                makePath(dataPath);
-            }
         }
     }
 }
