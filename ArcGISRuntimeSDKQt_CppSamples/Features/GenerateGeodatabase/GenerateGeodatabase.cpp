@@ -165,7 +165,7 @@ void GenerateGeodatabase::addOfflineData(Geodatabase* gdb)
             m_map->operationalLayers()->append(featureLayer);
         }
 
-        // unregister geodatabase sincethere will be no edits uploaded
+        // unregister geodatabase since there will be no edits uploaded
         m_syncTask->unregisterGeodatabase(gdb);
     });
     gdb->load();
