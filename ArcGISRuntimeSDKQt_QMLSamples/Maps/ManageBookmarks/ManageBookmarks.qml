@@ -212,7 +212,7 @@ Rectangle {
                     onClicked: {
                         // Create the new bookmark by getting the current viewpoint and using the
                         // user's input bookmark name
-                        var viewpoint = mapView.currentViewpoint(Enums.ViewpointTypeBoundingGeometry);
+                        var viewpoint = mapView.currentViewpointExtent;
                         map.createBookmark(textField.text,viewpoint);
                         bookmarks.currentIndex = map.bookmarks.count -1;
                         textField.text = "";
