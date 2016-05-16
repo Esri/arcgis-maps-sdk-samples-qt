@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Features/GenerateGeodatabase">
+        <file alias="sample.json">GenerateGeodatabase.json</file>
+        <file>GenerateGeodatabase.png</file>
+        <file>GenerateGeodatabase.qml</file>
+        <file>GenerateGeodatabase.h</file>
+        <file>GenerateGeodatabase.cpp</file>
+        <file>GenerateGeodatabase.html</file>
+        <file>download.png</file>
+    </qresource>
+</RCC>
