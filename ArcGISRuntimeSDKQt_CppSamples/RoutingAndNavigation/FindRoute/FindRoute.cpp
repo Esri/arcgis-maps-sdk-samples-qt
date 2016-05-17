@@ -19,6 +19,7 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Basemap.h"
+#include "ArcGISVectorTiledLayer.h"
 #include "GraphicsOverlay.h"
 #include "Viewpoint.h"
 #include "Point.h"
@@ -56,7 +57,8 @@ void FindRoute::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
 
     // create a new basemap instance
-    auto basemap = Basemap::topographic(this);
+    auto navigationLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=00cd8e843bae49b3a040423e5d65416b"), this);
+    auto basemap = new Basemap(navigationLayer, this);
 
     // create a new map instance
     m_map = new Map(basemap, this);
@@ -67,7 +69,7 @@ void FindRoute::componentComplete()
 
     // create initial graphics overlays
     m_routeGraphicsOverlay = new GraphicsOverlay(this);
-    auto simpleLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("yellow"), 4, this);
+    auto simpleLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("cyan"), 4, this);
     auto simpleRenderer = new SimpleRenderer(simpleLineSymbol, this);
     m_routeGraphicsOverlay->setRenderer(simpleRenderer);
     m_stopsGraphicsOverlay = new GraphicsOverlay(this);

@@ -80,7 +80,7 @@ Rectangle {
             // Set the renderer
             SimpleRenderer {
                 SimpleLineSymbol {
-                    color: "yellow"
+                    color: "cyan"
                     style: Enums.SimpleLineSymbolStyleSolid
                     width: 4
                 }
@@ -92,7 +92,11 @@ Rectangle {
 
         // Create a map with a basemap and initial viewpoint
         Map {
-            BasemapTopographic {}
+            Basemap {
+                ArcGISVectorTiledLayer {
+                    url: "http://www.arcgis.com/home/item.html?id=00cd8e843bae49b3a040423e5d65416b"
+                }
+            }
 
             initialViewpoint: ViewpointCenter {
                 Point {
