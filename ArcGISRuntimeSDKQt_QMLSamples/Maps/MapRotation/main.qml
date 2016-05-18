@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import QtQuick 2.3
+import QtQuick 2.6
 import QtQuick.Window 2.2
 
 Window {
