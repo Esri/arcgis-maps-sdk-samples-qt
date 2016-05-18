@@ -45,7 +45,7 @@ void VectorTiledLayerUrl::componentComplete()
     // find QML MapView component
     m_mapView = findChild<MapQuickView*>("mapView");
     // create a vector tiled basemap
-    ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=00cd8e843bae49b3a040423e5d65416b"));
+    ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"));
     Basemap* basemap = new Basemap(vectorTiledLayer, this);
     // create a new map instance
     m_map = new Map(basemap, this);
@@ -62,13 +62,13 @@ void VectorTiledLayerUrl::changeBasemap(QString basemap)
     {
         ArcGISVectorTiledLayer* vectorTiledLayer = nullptr;
         if (basemap == "Navigation")
-            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=00cd8e843bae49b3a040423e5d65416b"));
+            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"));
         else if (basemap == "Streets")
-            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=3b8814f6ddbd485cae67e8018992246e"));
+            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=4e1133c28ac04cca97693cf336cd49ad"));
         else if (basemap == "Night")
-            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=f96366254a564adda1dc468b447ed956"));
+            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=bf79e422e9454565ae0cbe9553cf6471"));
         else if (basemap == "Dark Gray")
-            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=3e3099d7302f4d99bc6f916dcc07ed59"));
+            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=850db44b9eb845d3bd42b19e8aa7a024"));
         Basemap* basemap = new Basemap(vectorTiledLayer, this);
         m_map->setBasemap(basemap);
     }

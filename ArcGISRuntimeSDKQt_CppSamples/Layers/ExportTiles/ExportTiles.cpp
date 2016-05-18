@@ -101,7 +101,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
             emit updateStatus("In progress...");
             break;
         case JobStatus::Succeeded:
-            emit updateStatus("Complete");
+            emit updateStatus("Adding TPK...");
             emit hideWindow(1500, true);
             displayOutputTileCache(exportJob->result());
             break;

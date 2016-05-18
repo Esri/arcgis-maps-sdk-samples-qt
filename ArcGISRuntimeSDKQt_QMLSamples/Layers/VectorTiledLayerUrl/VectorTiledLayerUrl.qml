@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.3
-import QtQuick.Controls 1.2
+import QtQuick 2.6
+import QtQuick.Controls 1.4
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
 
@@ -34,7 +34,7 @@ Rectangle {
             Basemap {
                 // Nest an ArcGISVectorTiledLayer Layer in the Basemap
                 ArcGISVectorTiledLayer {
-                    url: "http://www.arcgis.com/home/item.html?id=00cd8e843bae49b3a040423e5d65416b"
+                    url: "http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"
                 }
             }
             initialViewpoint: ViewpointCenter {
@@ -65,16 +65,16 @@ Rectangle {
             switch (comboBoxBasemap.currentText) {
             case "Navigation":
             default:
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=00cd8e843bae49b3a040423e5d65416b"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"});
                 break;
             case "Streets":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=3b8814f6ddbd485cae67e8018992246e"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=4e1133c28ac04cca97693cf336cd49ad"});
                 break;
             case "Night":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=f96366254a564adda1dc468b447ed956"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=bf79e422e9454565ae0cbe9553cf6471"});
                 break;
             case "Dark Gray":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=3e3099d7302f4d99bc6f916dcc07ed59"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=850db44b9eb845d3bd42b19e8aa7a024"});
                 break;
             }
             var newBasemap = ArcGISRuntimeEnvironment.createObject("Basemap");

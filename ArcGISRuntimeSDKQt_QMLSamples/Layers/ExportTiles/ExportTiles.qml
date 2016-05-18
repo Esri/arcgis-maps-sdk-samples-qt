@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.3
-import QtQuick.Controls 1.2
+import QtQuick 2.6
+import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
@@ -83,7 +83,7 @@ Rectangle {
                     statusText = "In progress...";
                     break;
                 case Enums.JobStatusSucceeded:
-                    statusText = "Complete";
+                    statusText = "Adding TPK...";
                     exportWindow.hideWindow(1500);
                     displayOutputTileCache(exportJob.result);
                     break;
@@ -132,6 +132,7 @@ Rectangle {
     // Create the download button to export the tile cache
     Rectangle {
         id: downloadButton
+        property bool pressed: false
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -140,7 +141,7 @@ Rectangle {
 
         width: 130 * scaleFactor
         height: 35 * scaleFactor
-        color: "#DADADA"
+        color: pressed ? "#959595" : "#D6D6D6"
         radius: 5
         border {
             color: "#585858"
@@ -165,6 +166,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: downloadButton.pressed = true
+            onReleased: downloadButton.pressed = false
             onClicked: {
                 getRectangleEnvelope();
             }

@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.3
-import QtQuick.Controls 1.2
-import QtQuick.Controls.Styles 1.2
+import QtQuick 2.6
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
@@ -159,6 +159,7 @@ Rectangle {
     // Create the download button to generate geodatabase
     Rectangle {
         id: downloadButton
+        property bool pressed: false
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -167,7 +168,7 @@ Rectangle {
 
         width: 200 * scaleFactor
         height: 35 * scaleFactor
-        color: "#DADADA"
+        color: pressed ? "#959595" : "#D6D6D6"
         radius: 8
         border {
             color: "#585858"
@@ -193,6 +194,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: downloadButton.pressed = true
+            onReleased: downloadButton.pressed = false
             onClicked: {
                 getRectangleEnvelope();
                 geodatabaseSyncTask.executeGenerate();
