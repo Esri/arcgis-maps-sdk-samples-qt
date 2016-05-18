@@ -96,6 +96,7 @@ Rectangle {
             source: mapView
             radius: 40
             samples: 20
+            rotation: 180
         }
 
         MouseArea {
@@ -139,6 +140,7 @@ Rectangle {
     // Create a button to show the map picker window
     Rectangle {
         id: switchButton
+        property bool pressed: false
         visible: !mapPickerWindow.visible
         anchors {
             right: parent.right
@@ -149,15 +151,11 @@ Rectangle {
 
         width: 45 * scaleFactor
         height: width
-        color: "#D6D6D6"
+        color: pressed ? "#959595" : "#D6D6D6"
         radius: 100
-        layer.enabled: true
-        layer.effect: Glow {
-            radius: 1.5
-            samples: radius * 2
-            source: switchButton
+        border {
             color: "#585858"
-            transparentBorder: true
+            width: 1 * scaleFactor
         }
 
         Image {
@@ -169,6 +167,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: switchButton.pressed = true
+            onReleased: switchButton.pressed = false
             onClicked: {
                 // Show the add window when it is clicked
                 mapPickerWindow.visible = true;

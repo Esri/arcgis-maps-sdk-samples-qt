@@ -132,6 +132,7 @@ Rectangle {
     // Create the download button to export the tile cache
     Rectangle {
         id: downloadButton
+        property bool pressed: false
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -140,7 +141,7 @@ Rectangle {
 
         width: 130 * scaleFactor
         height: 35 * scaleFactor
-        color: "#DADADA"
+        color: pressed ? "#959595" : "#D6D6D6"
         radius: 5
         border {
             color: "#585858"
@@ -165,6 +166,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: downloadButton.pressed = true
+            onReleased: downloadButton.pressed = false
             onClicked: {
                 getRectangleEnvelope();
             }

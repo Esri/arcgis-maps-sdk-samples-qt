@@ -62,6 +62,7 @@ ExportTilesSample {
     // Create the download button to export tile cache
     Rectangle {
         id: downloadButton
+        property bool pressed: false
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -70,7 +71,7 @@ ExportTilesSample {
 
         width: 130 * scaleFactor
         height: 35 * scaleFactor
-        color: "#DADADA"
+        color: pressed ? "#959595" : "#D6D6D6"
         radius: 8
         border {
             color: "#585858"
@@ -95,6 +96,8 @@ ExportTilesSample {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: downloadButton.pressed = true
+            onReleased: downloadButton.pressed = false
             onClicked: {
                 // call the C++ invokable function to export tile cache from the input screen coordinates
                 exportTilesSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height), dataPath);

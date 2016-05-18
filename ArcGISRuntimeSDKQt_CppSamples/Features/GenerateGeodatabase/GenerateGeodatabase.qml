@@ -63,6 +63,7 @@ GenerateGeodatabaseSample {
     // Create the download button to generate geodatabase
     Rectangle {
         id: downloadButton
+        property bool pressed: false
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -71,7 +72,7 @@ GenerateGeodatabaseSample {
 
         width: 200 * scaleFactor
         height: 35 * scaleFactor
-        color: "#DADADA"
+        color: pressed ? "#959595" : "#D6D6D6"
         radius: 8
         border {
             color: "#585858"
@@ -97,6 +98,8 @@ GenerateGeodatabaseSample {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: downloadButton.pressed = true
+            onReleased: downloadButton.pressed = false
             onClicked: {
                 generateSample.generateGeodatabaseFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
                 generateWindow.visible = true;

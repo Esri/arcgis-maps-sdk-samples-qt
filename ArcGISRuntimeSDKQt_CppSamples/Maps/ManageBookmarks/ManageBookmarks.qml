@@ -16,7 +16,6 @@
 
 import QtQuick 2.3
 import QtQuick.Controls 1.2
-import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
@@ -53,6 +52,7 @@ ManageBookmarksSample {
     // Create the add button so new bookmarks can be added
     Rectangle {
         id: addButton
+        property bool pressed: false
         anchors {
             right: parent.right
             bottom: parent.bottom
@@ -62,15 +62,11 @@ ManageBookmarksSample {
 
         width: 45 * scaleFactor
         height: width
-        color: "#D6D6D6"
+        color: pressed ? "#959595" : "#D6D6D6"
         radius: 100
-        layer.enabled: true
-        layer.effect: Glow {
-            radius: 1.5
-            samples: radius * 2
-            source: addButton
+        border {
             color: "#585858"
-            transparentBorder: true
+            width: 1 * scaleFactor
         }
 
         Image {
@@ -83,6 +79,8 @@ ManageBookmarksSample {
 
         MouseArea {
             anchors.fill: parent
+            onPressed: addButton.pressed = true
+            onReleased: addButton.pressed = false
             onClicked: {
                 // Show the add window when it is clicked
                 addWindow.visible = true;
