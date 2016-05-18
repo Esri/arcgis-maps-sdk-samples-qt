@@ -4,6 +4,5 @@
         <file>MapRotation.png</file>
         <file>MapRotation.qml</file>
         <file>MapRotation.html</file>
-        <file>main.qml</file>
     </qresource>
 </RCC>
