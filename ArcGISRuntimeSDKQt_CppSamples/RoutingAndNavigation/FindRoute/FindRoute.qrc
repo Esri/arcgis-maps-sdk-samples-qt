@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/RoutingAndNavigation/FindRoute">
+    <qresource prefix="/Samples/Routing and Navigation/FindRoute">
         <file alias="sample.json">FindRoute.json</file>
         <file>FindRoute.png</file>
         <file>FindRoute.qml</file>
