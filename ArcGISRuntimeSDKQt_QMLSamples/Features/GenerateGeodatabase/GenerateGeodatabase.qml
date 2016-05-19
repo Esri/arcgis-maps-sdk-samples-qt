@@ -68,7 +68,7 @@ Rectangle {
 
         function executeGenerate() {
             // execute the asynchronous task and obtain the job
-            var generateJob = generateGeodatabase(generateParameters, dataPath + "Wildfire.geodatabase");
+            var generateJob = generateGeodatabase(generateParameters, dataPath + "WildfireQml.geodatabase");
 
             // show the generate window
             generateWindow.visible = true;

@@ -116,7 +116,7 @@ void GenerateGeodatabase::generateGeodatabaseFromCorners(double xCorner1, double
     auto params = getUpdatedParameters(geodatabaseExtent);
 
     // execute the task and obtain the job
-    auto generateJob = m_syncTask->generateGeodatabase(params, m_dataPath + "Wildfire.geodatabase");
+    auto generateJob = m_syncTask->generateGeodatabase(params, m_dataPath + "WildfireCpp.geodatabase");
 
     // connect to the job's status changed signal
     connect(generateJob, &GenerateGeodatabaseJob::jobStatusChanged, [this, generateJob]()

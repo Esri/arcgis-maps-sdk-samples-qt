@@ -80,7 +80,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
     auto params = m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_exportTileCacheTask->mapServiceInfo()->maxScale());
 
     // execute the task and obtain the job
-    auto exportJob = m_exportTileCacheTask->exportTileCacheWithParameters(params, dataPath + "outputTileCache.tpk");
+    auto exportJob = m_exportTileCacheTask->exportTileCacheWithParameters(params, dataPath + "outputTileCacheCpp.tpk");
 
     // connect to the job's status changed signal
     connect(exportJob, &ExportTileCacheJob::jobStatusChanged, [this, exportJob]()
