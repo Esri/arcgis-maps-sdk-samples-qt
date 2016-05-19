@@ -61,7 +61,7 @@ Rectangle {
 
         function executeExportTileCacheTask(params) {
             // execute the asynchronous task and obtain the job
-            var exportJob = exportTask.exportTileCacheWithParameters(params, dataPath + "outputTileCache.tpk");
+            var exportJob = exportTask.exportTileCacheWithParameters(params, dataPath + "outputTileCacheQml.tpk");
 
             // show the export window
             exportWindow.visible = true;
