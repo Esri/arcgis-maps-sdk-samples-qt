@@ -106,7 +106,7 @@ void AddFeaturesFeatureService::connectSignals()
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
     connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
     {
-        if (featureEditResults.empty())
+        if (featureEditResults.isEmpty())
             return;
         // obtain the first item in the list
         QSharedPointer<FeatureEditResult> featureEditResult = featureEditResults.first();
