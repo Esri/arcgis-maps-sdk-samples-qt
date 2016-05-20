@@ -44,7 +44,6 @@ void SearchSymbolDictionary::componentComplete()
     //Connect to the search completed signal of the dictionary
     connect(m_SymbolDictionary, &SymbolDictionary::searchSymbolsCompleted, [this](QList<StyleSymbolSearchResult> results)
     {
-        m_latestResults = results;
         QList<QString> resultNames;
         foreach (StyleSymbolSearchResult result, results)
         {

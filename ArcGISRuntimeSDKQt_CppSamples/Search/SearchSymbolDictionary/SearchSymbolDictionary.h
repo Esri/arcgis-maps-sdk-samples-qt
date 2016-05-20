@@ -28,7 +28,6 @@ namespace Esri
 #include <QQuickItem>
 #include <QUuid>
 #include <QAbstractListModel>
-#include "StyleSymbolSearchResult.h"
 
 class SearchSymbolDictionary : public QQuickItem
 {
@@ -86,7 +85,6 @@ private:
     QStringList keysFieldModel() const { return m_keysFieldModel; }
 
     Esri::ArcGISRuntime::SymbolDictionary* m_SymbolDictionary;
-    QList<Esri::ArcGISRuntime::StyleSymbolSearchResult> m_latestResults;
 
     QStringList m_namesFieldModel;
     QStringList m_tagsFieldModel;
