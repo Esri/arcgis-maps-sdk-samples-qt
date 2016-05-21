@@ -22,6 +22,7 @@ namespace Esri
   namespace ArcGISRuntime
   {
     class SymbolDictionary;
+    class StyleSymbolSearchResultListModel;
   }
 }
 
@@ -33,6 +34,8 @@ class SearchSymbolDictionary : public QQuickItem
 {
     Q_OBJECT
     Q_ENUMS(FieldEnum)
+
+    Q_PROPERTY(Esri::ArcGISRuntime::StyleSymbolSearchResultListModel* searchResultsListModel READ searchResultsListModel NOTIFY searchResultsListModelChanged)
     Q_PROPERTY(QStringList namesFieldModel READ namesFieldModel NOTIFY namesFieldModelChanged )
     Q_PROPERTY(QStringList tagsFieldModel READ tagsFieldModel NOTIFY tagsFieldModelChanged )
     Q_PROPERTY(QStringList classesFieldModel READ classesFieldModel NOTIFY classesFieldModelChanged )
@@ -66,6 +69,7 @@ public:
     Q_INVOKABLE void clearModelsField();
 
 signals:
+    void searchResultsListModelChanged();
     void namesFieldModelChanged();
     void tagsFieldModelChanged();
     void classesFieldModelChanged();
@@ -78,6 +82,7 @@ private:
     bool addFieldToModel(QStringList& model, QString field);
     bool removeFieldFromModel(QStringList& model, QString field);
 
+    Esri::ArcGISRuntime::StyleSymbolSearchResultListModel* searchResultsListModel() const;
     QStringList namesFieldModel() const { return m_namesFieldModel; }
     QStringList tagsFieldModel() const { return m_tagsFieldModel; }
     QStringList classesFieldModel() const { return m_classesFieldModel; }
@@ -85,6 +90,7 @@ private:
     QStringList keysFieldModel() const { return m_keysFieldModel; }
 
     Esri::ArcGISRuntime::SymbolDictionary* m_SymbolDictionary;
+    Esri::ArcGISRuntime::StyleSymbolSearchResultListModel* m_searchResults;
 
     QStringList m_namesFieldModel;
     QStringList m_tagsFieldModel;

@@ -23,7 +23,8 @@ using namespace Esri::ArcGISRuntime;
 
 SearchSymbolDictionary::SearchSymbolDictionary(QQuickItem* parent) :
     QQuickItem(parent),
-    m_SymbolDictionary(nullptr)
+    m_SymbolDictionary(nullptr),
+    m_searchResults(nullptr)
 {
 }
 
@@ -42,15 +43,19 @@ void SearchSymbolDictionary::componentComplete()
     m_SymbolDictionary = new SymbolDictionary("mil2525d", datapath);
 
     //Connect to the search completed signal of the dictionary
-    connect(m_SymbolDictionary, &SymbolDictionary::searchSymbolsCompleted, [this](QList<StyleSymbolSearchResult> results)
+    connect(m_SymbolDictionary, &SymbolDictionary::searchSymbolsCompleted, [this](StyleSymbolSearchResultListModel* results)
     {
+        m_searchResults = results;
+        m_searchResults->setParent(m_SymbolDictionary);
         QList<QString> resultNames;
-        foreach (StyleSymbolSearchResult result, results)
+        auto resultList = results->searchResults();
+        foreach (StyleSymbolSearchResult result, resultList)
         {
             resultNames << result.name();
         }
-        emit searchCountUpdate(results.count());
+        emit searchCountUpdate(resultList.count());
         emit searchCompleted(resultNames);
+        emit searchResultsListModelChanged();
     });
 }
 
@@ -154,6 +159,11 @@ bool SearchSymbolDictionary::removeFieldFromModel(QStringList& model, QString fi
 {
     //Remove the field and return if the field was removed
     return model.removeAll(field) > 0;
+}
+
+StyleSymbolSearchResultListModel* SearchSymbolDictionary::searchResultsListModel() const
+{
+  return m_searchResults;
 }
 
 void SearchSymbolDictionary::search()

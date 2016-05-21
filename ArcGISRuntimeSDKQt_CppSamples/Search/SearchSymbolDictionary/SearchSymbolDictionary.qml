@@ -486,9 +486,9 @@ SearchSymbolDictionarySample {
             }
             spacing: 20 * scaleFactor
 
-            visible: false
+            visible: count > 0
             clip: true
-            model: styleSymbolSearchResultsListModel
+            model: searchResultsListModel
 
             delegate: Component {
                 Row {
@@ -498,38 +498,38 @@ SearchSymbolDictionarySample {
                     width: parent.width
 
                     Image {
-                        source: symbolImage //would be Symbol.swatchImage
+                        source: symbolUrl
                     }
 
                     Column {
                         width: parent.width
                         Text {
                             id: nameText
-                            text: repeaterModel[SearchSymbolDictionarySample.FieldNames] + ": " + name
+                            text: "Name: " + name
                             font.pixelSize: fontSize
                             width: parent.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
                         Text {
-                            text: repeaterModel[SearchSymbolDictionarySample.FieldTags] + ": " + tags
+                            text: "Tags: " + tags
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
                         Text {
-                            text: repeaterModel[SearchSymbolDictionarySample.FieldClasses] + ": " + classes
+                            text: "SymbolClass: " + symbolClass
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
                         Text {
-                            text: repeaterModel[SearchSymbolDictionarySample.FieldCategories] + ": " + categories
+                            text: "Category: " + category
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
                         Text {
-                            text: repeaterModel[SearchSymbolDictionarySample.FieldKeys] + ": " + keys
+                            text: "Key: " + key
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -547,9 +547,5 @@ SearchSymbolDictionarySample {
     onSearchCompleted: {
         seachBtn.enabled = true;
         resultView.visible = true;
-    }
-
-    ListModel {
-        id: styleSymbolSearchResultsListModel
     }
 }
