@@ -1,4 +1,4 @@
-// [WriteFile Name=OpenExistingMap, Category=Maps]
+// [WriteFile Name=SearchSymbolDictionary, Category=Symbology]
 // [Legal]
 // Copyright 2016 Esri.
 
