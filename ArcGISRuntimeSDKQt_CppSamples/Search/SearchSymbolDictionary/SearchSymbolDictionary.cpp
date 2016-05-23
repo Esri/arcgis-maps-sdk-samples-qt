@@ -67,7 +67,3 @@ void SearchSymbolDictionary::search(const QStringList& namesSearchParam, const Q
     searchParameters.setTags(tagsSearchParam);
     m_SymbolDictionary->searchSymbols(searchParameters);
 }
-
-
-
-

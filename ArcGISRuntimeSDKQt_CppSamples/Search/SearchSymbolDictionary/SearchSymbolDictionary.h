@@ -1,4 +1,4 @@
-// [WriteFile Name=SearchSymbolDictionary, Category=Symbology]
+// [WriteFile Name=SearchSymbolDictionary, Category=Search]
 // [Legal]
 // Copyright 2016 Esri.
 

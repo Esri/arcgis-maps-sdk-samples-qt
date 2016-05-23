@@ -72,7 +72,7 @@ SearchSymbolDictionarySample {
 
                     ComboBox {
                         id: fieldComboBox
-                        width: (parent.width * .5)
+                        width: parent.width * .5
                         height: seachBtn.height
                         editable: true
                         inputMethodHints : Qt.ImhNoPredictiveText
@@ -94,7 +94,7 @@ SearchSymbolDictionarySample {
                                 model = searchParamList[index];
                             }
                             currentIndex = -1;
-                            editText="";
+                            editText = "";
                         }
 
                         //Remove a field
@@ -105,7 +105,7 @@ SearchSymbolDictionarySample {
                                 searchParamList[index].splice(fieldIndex, 1);
                                 model = searchParamList[index];
                             }
-                            editText ="";
+                            editText = "";
                             currentIndex = -1;
                         }
                     }
@@ -177,8 +177,6 @@ SearchSymbolDictionarySample {
                         //Set the results visibility to false
                         resultView.visible = false;
                         //Reset the search parameters
-                        console.log(repeater.count)
-                        console.log(repeater.itemAt(0))
                         for (var i = 0; i < repeater.count; ++i)
                             repeater.itemAt(i).clearComboBox();
                     }
