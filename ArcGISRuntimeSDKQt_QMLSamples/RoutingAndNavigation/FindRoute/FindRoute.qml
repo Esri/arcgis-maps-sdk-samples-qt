@@ -94,7 +94,7 @@ Rectangle {
         Map {
             Basemap {
                 ArcGISVectorTiledLayer {
-                    url: "http://www.arcgis.com/home/item.html?id=00cd8e843bae49b3a040423e5d65416b"
+                    url: "http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"
                 }
             }
 

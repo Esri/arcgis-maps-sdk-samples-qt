@@ -57,7 +57,7 @@ void FindRoute::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
 
     // create a new basemap instance
-    auto navigationLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=00cd8e843bae49b3a040423e5d65416b"), this);
+    auto navigationLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"), this);
     auto basemap = new Basemap(navigationLayer, this);
 
     // create a new map instance
