@@ -41,11 +41,11 @@ Rectangle {
     ProgressBar {
         id: progressBar_loading
         anchors {
-            left: parent.left
+            horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
+            margins: 5
         }
         indeterminate: true
-        visible: true
     }
 
     SymbolDictionary {
