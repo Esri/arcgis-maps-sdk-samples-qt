@@ -2,7 +2,7 @@
     "source" :  "SearchSymbolDictionary",
     "description" : "SearchSymbolDictionary.html",
     "thumbnail" : "SearchSymbolDictionary.png",
-    "name" : "Search Symbol Dictionary",
+    "name" : "Search symbol dictionary",
     "dataItems" : [
         {
             "itemId" : "4581a9a92c214240a79e15482a2e8349",
