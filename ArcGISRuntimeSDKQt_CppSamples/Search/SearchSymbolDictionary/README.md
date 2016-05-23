@@ -1,4 +1,4 @@
-#Search Symbol Dictionary
+#Search symbol dictionary
 
 This sample demonstrates how to search the SymbolDictionary and return the results in a ListView.
 
@@ -6,7 +6,7 @@ This sample demonstrates how to search the SymbolDictionary and return the resul
 
 ##How it works
 
-The sample uses the `searchSymbols` on the `SymbolDictionary` to search for the symbols that match the `StyleSymbolSearchParameters`.
+The sample uses the `searchSymbols` function to search for the symbols that match the `StyleSymbolSearchParameters`.
 
 ##Features
 -SymbolDictionary

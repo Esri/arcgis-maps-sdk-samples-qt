@@ -33,11 +33,6 @@ class SearchSymbolDictionary : public QQuickItem
 {
     Q_OBJECT
     Q_ENUMS(FieldEnum)
-    Q_PROPERTY(QStringList namesFieldModel READ namesFieldModel NOTIFY namesFieldModelChanged )
-    Q_PROPERTY(QStringList tagsFieldModel READ tagsFieldModel NOTIFY tagsFieldModelChanged )
-    Q_PROPERTY(QStringList classesFieldModel READ classesFieldModel NOTIFY classesFieldModelChanged )
-    Q_PROPERTY(QStringList catsFieldModel READ catsFieldModel NOTIFY catsFieldModelChanged )
-    Q_PROPERTY(QStringList keysFieldModel READ keysFieldModel NOTIFY keysFieldModelChanged )
 
 public:
     explicit SearchSymbolDictionary(QQuickItem *parent = 0);
@@ -52,46 +47,17 @@ public:
     };
 
     void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void search();
-    Q_INVOKABLE void addNameField(QString field);
-    Q_INVOKABLE void removeNameField(QString field);
-    Q_INVOKABLE void addTagField(QString field);
-    Q_INVOKABLE void removeTagField(QString field);
-    Q_INVOKABLE void addClassField(QString field);
-    Q_INVOKABLE void removeClassField(QString field);
-    Q_INVOKABLE void addCatField(QString field);
-    Q_INVOKABLE void removeCatField(QString field);
-    Q_INVOKABLE void addKeyField(QString field);
-    Q_INVOKABLE void removeKeyField(QString field);
-    Q_INVOKABLE void clearModelsField();
+    Q_INVOKABLE void search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
+                            const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
+                            const QStringList& keysSearchParam);
 
 signals:
-    void namesFieldModelChanged();
-    void tagsFieldModelChanged();
-    void classesFieldModelChanged();
-    void catsFieldModelChanged();
-    void keysFieldModelChanged();
     void searchCountUpdate(int count);
     void searchCompleted(QList<QString> resultNames);
 
 private:
-    bool addFieldToModel(QStringList& model, QString field);
-    bool removeFieldFromModel(QStringList& model, QString field);
-
-    QStringList namesFieldModel() const { return m_namesFieldModel; }
-    QStringList tagsFieldModel() const { return m_tagsFieldModel; }
-    QStringList classesFieldModel() const { return m_classesFieldModel; }
-    QStringList catsFieldModel() const { return m_catsFieldModel; }
-    QStringList keysFieldModel() const { return m_keysFieldModel; }
 
     Esri::ArcGISRuntime::SymbolDictionary* m_SymbolDictionary;
-
-    QStringList m_namesFieldModel;
-    QStringList m_tagsFieldModel;
-    QStringList m_classesFieldModel;
-    QStringList m_catsFieldModel;
-    QStringList m_keysFieldModel;
 };
 
 #endif // SEARCHSYMBOLDICTIONARY_H
-

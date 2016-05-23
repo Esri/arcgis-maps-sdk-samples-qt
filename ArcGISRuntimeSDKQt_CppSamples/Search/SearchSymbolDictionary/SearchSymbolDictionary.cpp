@@ -1,4 +1,4 @@
-// [WriteFile Name=SearchSymbolDictionary, Category=Symbology]
+// [WriteFile Name=SearchSymbolDictionary, Category=Search]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -54,117 +54,17 @@ void SearchSymbolDictionary::componentComplete()
     });
 }
 
-void SearchSymbolDictionary::addNameField(QString field)
-{
-    //Add the field to the names list
-    if(addFieldToModel(m_namesFieldModel, field))
-        emit namesFieldModelChanged();
-}
-
-void SearchSymbolDictionary::removeNameField(QString field)
-{
-    //Remove the field from the names list
-    if(removeFieldFromModel(m_namesFieldModel, field))
-        emit namesFieldModelChanged();
-}
-
-void SearchSymbolDictionary::addTagField(QString field)
-{
-    //Add the field to the tags list
-    if(addFieldToModel(m_tagsFieldModel, field))
-        emit tagsFieldModelChanged();
-}
-
-void SearchSymbolDictionary::removeTagField(QString field)
-{
-    //Remove the field from the tags list
-    if(removeFieldFromModel(m_tagsFieldModel, field))
-        emit tagsFieldModelChanged();
-}
-
-void SearchSymbolDictionary::addClassField(QString field)
-{
-    //Add the field to the classes list
-    if(addFieldToModel(m_classesFieldModel, field))
-        emit classesFieldModelChanged();
-}
-
-void SearchSymbolDictionary::removeClassField(QString field)
-{
-    //Remove the field from the classes list
-    if(removeFieldFromModel(m_classesFieldModel, field))
-        emit classesFieldModelChanged();
-}
-
-void SearchSymbolDictionary::addCatField(QString field)
-{
-    //Add the field to the categories list
-    if(addFieldToModel(m_catsFieldModel, field))
-        emit catsFieldModelChanged();
-}
-
-void SearchSymbolDictionary::removeCatField(QString field)
-{
-    //Remove the field from the categories list
-    if(removeFieldFromModel(m_catsFieldModel, field))
-        emit catsFieldModelChanged();
-}
-
-void SearchSymbolDictionary::addKeyField(QString field)
-{
-    //Add the field to the keys list
-    if(addFieldToModel(m_keysFieldModel, field))
-        emit keysFieldModelChanged();
-}
-
-void SearchSymbolDictionary::removeKeyField(QString field)
-{
-    //Remove the field from the keys list
-    if(removeFieldFromModel(m_keysFieldModel, field))
-        emit keysFieldModelChanged();
-}
-
-void SearchSymbolDictionary::clearModelsField()
-{
-    //Clear the lists
-    m_namesFieldModel.clear();
-    emit namesFieldModelChanged();
-    m_tagsFieldModel.clear();
-    emit tagsFieldModelChanged();
-    m_classesFieldModel.clear();
-    emit classesFieldModelChanged();
-    m_catsFieldModel.clear();
-    emit catsFieldModelChanged();
-    m_keysFieldModel.clear();
-    emit keysFieldModelChanged();
-}
-
-bool SearchSymbolDictionary::addFieldToModel(QStringList& model, QString field)
-{
-    //Add unique field only
-    if(model.indexOf(field) == -1)
-    {
-        model.append(field);
-        return true;
-    }
-    return false;
-}
-
-bool SearchSymbolDictionary::removeFieldFromModel(QStringList& model, QString field)
-{
-    //Remove the field and return if the field was removed
-    return model.removeAll(field) > 0;
-}
-
-void SearchSymbolDictionary::search()
+void SearchSymbolDictionary::search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
+                            const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
+                            const QStringList& keysSearchParam)
 {
     //Create search parameters and search with the parameters
     StyleSymbolSearchParameters searchParameters;
-    searchParameters.setCategories(m_catsFieldModel);
-    searchParameters.setKeys(m_keysFieldModel);
-    searchParameters.setNames(m_namesFieldModel);
-    searchParameters.setSymbolClasses(m_classesFieldModel);
-    searchParameters.setTags(m_tagsFieldModel);
+    searchParameters.setCategories(categoriesSearchParam);
+    searchParameters.setKeys(keysSearchParam);
+    searchParameters.setNames(namesSearchParam);
+    searchParameters.setSymbolClasses(classesSearchParam);
+    searchParameters.setTags(tagsSearchParam);
     m_SymbolDictionary->searchSymbols(searchParameters);
 }
 
