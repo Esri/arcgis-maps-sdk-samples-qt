@@ -83,7 +83,7 @@ SearchSymbolDictionarySample {
 
                         model: searchParamList[index]
 
-                        validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z][\da-zA-Z\s]*$/  }
+                        validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z][\da-zA-Z\s]*$/ }
 
                         onAccepted: addField()
 
