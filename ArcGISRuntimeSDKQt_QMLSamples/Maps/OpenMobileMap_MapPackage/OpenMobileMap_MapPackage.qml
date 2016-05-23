@@ -25,7 +25,7 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
 
-    // Create MapView that contains a Map with the Imagery with Labels Basemap
+    // Create MapView
     MapView {
         id: mapView
         anchors.fill: parent

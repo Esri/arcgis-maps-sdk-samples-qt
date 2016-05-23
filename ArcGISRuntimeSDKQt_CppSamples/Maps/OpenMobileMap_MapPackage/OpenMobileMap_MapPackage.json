@@ -2,6 +2,12 @@
     "source" :  "OpenMobileMap_MapPackage",
     "description" : "OpenMobileMap_MapPackage.html",
     "thumbnail" : "OpenMobileMap_MapPackage.png",
-    "name" : "Open mobile map (map package)"
+    "name" : "Open mobile map (map package)",
+    "dataItems" : [
+        {
+            "itemId" : "e1f3a7254cb845b09450f54937c16061",
+            "path" : "~/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk"
+        }
+    ]
 }
 

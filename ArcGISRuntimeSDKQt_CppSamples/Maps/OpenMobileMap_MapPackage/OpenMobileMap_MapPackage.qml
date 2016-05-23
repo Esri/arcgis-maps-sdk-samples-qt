@@ -41,5 +41,3 @@ OpenMobileMap_MapPackageSample {
         }
     }
 }
-
-

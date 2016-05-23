@@ -21,7 +21,6 @@ namespace Esri
 {
     namespace ArcGISRuntime
     {
-        class Map;
         class MapQuickView;
         class MobileMapPackage;
     }
