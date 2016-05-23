@@ -31,6 +31,8 @@ SearchSymbolDictionarySample {
     property double scaleFactor: System.displayScaleFactor
     property double fontSize: 16 * scaleFactor
     property var repeaterModel: ["Names", "Tags", "Classes", "Categories", "Keys"]
+    property var searchParamList: [[],[],[],[],[]]
+
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
 
     Rectangle {
@@ -53,363 +55,86 @@ SearchSymbolDictionarySample {
 
             spacing: 10 * scaleFactor
 
-            Row {
-                id: nameRow
-                spacing: 10 * scaleFactor
-                width: parent.width
+            Repeater {
+                id: repeater
+                model: repeaterModel
 
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 90 * scaleFactor
-                    text: repeaterModel[SearchSymbolDictionarySample.FieldNames] + ":"
-                    font.pixelSize: fontSize
-                }
+                Row {
+                    spacing: 10 * scaleFactor
+                    width: parent.width
 
-                ComboBox {
-                    id: nameComboBox
-                    width: (parent.width * .5)
-                    height: seachBtn.height
-                    editable: true
-                    inputMethodHints : Qt.ImhNoPredictiveText
-
-                    style: ComboBoxStyle {
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 90 * scaleFactor
+                        text: repeaterModel[index] + ":"
                         font.pixelSize: fontSize
                     }
 
-                    model: searchSymbolDictionarySample.namesFieldModel;
+                    ComboBox {
+                        id: fieldComboBox
+                        width: parent.width * .5
+                        height: seachBtn.height
+                        editable: true
+                        inputMethodHints : Qt.ImhNoPredictiveText
 
-                    validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z][\da-zA-Z\s]*$/ }
-                    onAccepted: {
-                        addField();
+                        style: ComboBoxStyle {
+                            font.pixelSize: fontSize
+                        }
+
+                        model: searchParamList[index]
+
+                        validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z][\da-zA-Z\s]*$/ }
+
+                        onAccepted: addField()
+
+                        //Add a new field
+                        function addField(){
+                            if( searchParamList[index].indexOf(editText) === -1) {
+                                searchParamList[index].push(editText);
+                                model = searchParamList[index];
+                            }
+                            currentIndex = -1;
+                            editText = "";
+                        }
+
+                        //Remove a field
+                        function removeField(){
+                            //searchSymbolDictionarySample.removeNameField(editText);
+                            var fieldIndex = searchParamList[index],indexOf;
+                            if(fieldIndex !== -1){
+                                searchParamList[index].splice(fieldIndex, 1);
+                                model = searchParamList[index];
+                            }
+                            editText = "";
+                            currentIndex = -1;
+                        }
                     }
 
-                    //Add a new field
-                    function addField(){
-                        searchSymbolDictionarySample.addNameField(editText);
-                        currentIndex = -1;
-                        editText="";
+                    Button {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: " + "
+                        style: seachBtn.style
+                        enabled: fieldComboBox.acceptableInput
+
+                        //Add field to combobox
+                        onClicked: fieldComboBox.addField()
                     }
 
-                    //Remove a field
-                    function removeField(){
-                        searchSymbolDictionarySample.removeNameField(editText);
-                        editText ="";
-                        currentIndex = -1;
+                    Button {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: " - "
+                        style: seachBtn.style
+                        enabled: fieldComboBox.acceptableInput && fieldComboBox.currentIndex !== -1 && fieldComboBox.count > 0
+
+                        //Remove selected field from combobox
+                        onClicked: fieldComboBox.removeField();
                     }
 
                     //Clear the combobox
-                    function clearFields(){
-                        editText ="";
-                    }
-                }
-
-                Button {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: " + "
-                    style: seachBtn.style
-                    enabled: nameComboBox.acceptableInput
-                    onClicked: {
-                        //Add field to combobox
-                        nameComboBox.addField();
-                    }
-                }
-
-                Button {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: " - "
-                    style: seachBtn.style
-                    enabled: ( nameComboBox.acceptableInput && nameComboBox.currentIndex !== -1 && nameComboBox.count > 0)? true : false
-                    onClicked: {
-                        //Remove selected field from combobox
-                        nameComboBox.removeField();
-                    }
-                }
-            }
-
-            Row {
-                id: catRow
-                spacing: 10 * scaleFactor
-                width: parent.width
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 90 * scaleFactor
-                    text: repeaterModel[SearchSymbolDictionarySample.FieldCategories] + ":"
-                    font.pixelSize: fontSize
-                }
-
-                ComboBox {
-                    id: categoryComboBox
-                    width: (parent.width * .5)
-                    height: seachBtn.height
-                    editable: true
-                    inputMethodHints : Qt.ImhNoPredictiveText
-
-                    style: nameComboBox.style
-
-                    model: searchSymbolDictionarySample.catsFieldModel;
-
-                    validator:nameComboBox.validator
-
-                    onAccepted: {
-                        addField();
-                    }
-
-                    //Add a new field
-                    function addField(){
-                        searchSymbolDictionarySample.addCatField(editText);
-                        currentIndex = -1;
-                        editText="";
-                    }
-
-                    //Remove a field
-                    function removeField(){
-                        searchSymbolDictionarySample.removeCatField(editText);
-                        editText ="";
-                        currentIndex = -1;
-                    }
-
-                    //Clear the combobox
-                    function clearFields(){
-                        editText ="";
-                    }
-                }
-
-                Button {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: " + "
-                    style: seachBtn.style
-                    enabled: categoryComboBox.acceptableInput
-                    onClicked: {
-                        //Add field to combobox
-                        categoryComboBox.addField();
-                    }
-                }
-
-                Button {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: " - "
-                    style: seachBtn.style
-                    enabled: ( categoryComboBox.acceptableInput && categoryComboBox.currentIndex !== -1 && categoryComboBox.count > 0)? true : false
-                    onClicked: {
-                        //Remove selected field from combobox
-                        categoryComboBox.removeField();
-                    }
-                }
-            }
-
-            Row {
-                id: tagRow
-                spacing: 10 * scaleFactor
-                width: parent.width
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 90 * scaleFactor
-                    text: repeaterModel[SearchSymbolDictionarySample.FieldTags] + ":"
-                    font.pixelSize: fontSize
-                }
-
-                ComboBox {
-                    id: tagComboBox
-                    width: (parent.width * .5)
-                    height: seachBtn.height
-                    editable: true
-                    inputMethodHints : Qt.ImhNoPredictiveText
-
-                    style: nameComboBox.style
-
-                    model: searchSymbolDictionarySample.tagsFieldModel;
-
-                    validator:nameComboBox.validator
-
-                    onAccepted: {
-                        addField();
-                    }
-
-                    //Add a new field
-                    function addField(){
-                        searchSymbolDictionarySample.addTagField(editText);
-                        currentIndex = -1;
-                        editText="";
-                    }
-
-                    //Remove a field
-                    function removeField(){
-                        searchSymbolDictionarySample.removeTagField(editText);
-                        editText ="";
-                        currentIndex = -1;
-                    }
-
-                    //Clear the combobox
-                    function clearFields(){
-                        editText ="";
-                    }
-                }
-
-                Button {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: " + "
-                    style: seachBtn.style
-                    enabled: tagComboBox.acceptableInput
-                    onClicked: {
-                        //Add field to combobox
-                        tagComboBox.addField();
-                    }
-                }
-
-                Button {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: " - "
-                    style: seachBtn.style
-                    enabled: ( tagComboBox.acceptableInput && tagComboBox.currentIndex !== -1 && tagComboBox.count > 0)? true : false
-                    onClicked: {
-                        //Remove selected field from combobox
-                        tagComboBox.removeField();
-                    }
-                }
-            }
-
-            Row {
-                id: keyRow
-                spacing: 10 * scaleFactor
-                width: parent.width
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 90 * scaleFactor
-                    text: repeaterModel[SearchSymbolDictionarySample.FieldKeys] + ":"
-                    font.pixelSize: fontSize
-                }
-
-                ComboBox {
-                    id: keyComboBox
-                    width: (parent.width * .5)
-                    height: seachBtn.height
-                    editable: true
-                    inputMethodHints : Qt.ImhNoPredictiveText
-
-                    style: nameComboBox.style
-
-                    model: searchSymbolDictionarySample.keysFieldModel;
-
-                    validator:nameComboBox.validator
-
-                    onAccepted: {
-                        addField();
-                    }
-
-                    //Add a new field
-                    function addField(){
-                        searchSymbolDictionarySample.addKeyField(editText);
-                        currentIndex = -1;
-                        editText="";
-                    }
-
-                    //Remove a field
-                    function removeField(){
-                        searchSymbolDictionarySample.removeKeyField(editText);
-                        editText ="";
-                        currentIndex = -1;
-                    }
-
-                    //Clear the combobox
-                    function clearFields(){
-                        editText ="";
-                    }
-                }
-
-                Button {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: " + "
-                    style: seachBtn.style
-                    enabled: keyComboBox.acceptableInput
-                    onClicked: {
-                        //Add field to combobox
-                        keyComboBox.addField();
-                    }
-                }
-
-                Button {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: " - "
-                    style: seachBtn.style
-                    enabled: ( keyComboBox.acceptableInput && keyComboBox.currentIndex !== -1 && keyComboBox.count > 0)? true : false
-                    onClicked: {
-                        //Remove selected field from combobox
-                        keyComboBox.removeField();
-                    }
-                }
-            }
-
-            Row {
-                id: classRow
-                spacing: 10 * scaleFactor
-                width: parent.width
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 90 * scaleFactor
-                    text: repeaterModel[SearchSymbolDictionarySample.FieldClasses] + ":"
-                    font.pixelSize: fontSize
-                }
-
-                ComboBox {
-                    id: classComboBox
-                    width: (parent.width * .5)
-                    height: seachBtn.height
-                    editable: true
-                    inputMethodHints : Qt.ImhNoPredictiveText
-
-                    style: nameComboBox.style
-
-                    model: searchSymbolDictionarySample.classesFieldModel;
-
-                    validator:nameComboBox.validator
-
-                    onAccepted: {
-                        addField();
-                    }
-
-                    //Add a new field
-                    function addField(){
-                        searchSymbolDictionarySample.addClassField(editText);
-                        currentIndex = -1;
-                        editText="";
-                    }
-
-                    //Remove a field
-                    function removeField(){
-                        searchSymbolDictionarySample.removeClassField(editText);
-                        editText ="";
-                        currentIndex = -1;
-                    }
-
-                    //Clear the combobox
-                    function clearFields(){
-                        editText ="";
-                    }
-                }
-
-                Button {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: " + "
-                    style: seachBtn.style
-                    enabled: classComboBox.acceptableInput
-                    onClicked: {
-                        //Add field to combobox
-                        classComboBox.addField();
-                    }
-                }
-
-                Button {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: " - "
-                    style: seachBtn.style
-                    enabled: ( classComboBox.acceptableInput && classComboBox.currentIndex !== -1 && classComboBox.count > 0)? true : false
-                    onClicked: {
-                        //Remove selected field from combobox
-                        classComboBox.removeField();
+                    function clearComboBox(){
+                        fieldComboBox.editText ="";
+                        searchParamList[index] = [];
+                        fieldComboBox.model = searchParamList[index];
                     }
                 }
             }
@@ -436,7 +161,11 @@ SearchSymbolDictionarySample {
                         //Disable the search button and start the search
                         enabled = false;
                         resultView.visible = false;
-                        searchSymbolDictionarySample.search();
+                        searchSymbolDictionarySample.search(searchParamList[SearchSymbolDictionarySample.FieldNames],
+                                                            searchParamList[SearchSymbolDictionarySample.FieldTags],
+                                                            searchParamList[SearchSymbolDictionarySample.FieldClasses],
+                                                            searchParamList[SearchSymbolDictionarySample.FieldCategories],
+                                                            searchParamList[SearchSymbolDictionarySample.FieldKeys]);
                     }
                 }
 
@@ -448,12 +177,8 @@ SearchSymbolDictionarySample {
                         //Set the results visibility to false
                         resultView.visible = false;
                         //Reset the search parameters
-                        nameComboBox.clearFields();
-                        tagComboBox.clearFields();
-                        classComboBox.clearFields();
-                        keyComboBox.clearFields();
-                        categoryComboBox.clearFields();
-                        searchSymbolDictionarySample.clearModelsField();
+                        for (var i = 0; i < repeater.count; ++i)
+                            repeater.itemAt(i).clearComboBox();
                     }
                 }
             }
@@ -496,6 +221,7 @@ SearchSymbolDictionarySample {
                         margins: 20 * scaleFactor
                     }
                     width: parent.width
+                    spacing: 10 * scaleFactor
 
                     Image {
                         source: symbolUrl
@@ -503,6 +229,8 @@ SearchSymbolDictionarySample {
 
                     Column {
                         width: parent.width
+                        spacing: 10 * scaleFactor
+
                         Text {
                             id: nameText
                             text: "Name: " + name
@@ -510,24 +238,28 @@ SearchSymbolDictionarySample {
                             width: parent.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
+
                         Text {
                             text: "Tags: " + tags
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
+
                         Text {
                             text: "SymbolClass: " + symbolClass
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
+
                         Text {
                             text: "Category: " + category
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
+
                         Text {
                             text: "Key: " + key
                             font.pixelSize: fontSize
