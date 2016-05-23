@@ -26,29 +26,24 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
-    // Create MapView that contains a Map with the Imagery with Labels Basemap
+    // Create MapView that contains a Map with the Topographic Basemap
     MapView {
         id: mapView
-        anchors.fill: parent
+        anchors {
+            fill: parent
+        }
         Map {
             id: map
             BasemapTopographic {}
         }
     }
 
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
-
     ProgressBar {
         id: progressBar_loading
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
+        anchors {
+            left: parent.left
+            bottom: parent.bottom
+        }
         indeterminate: true
         visible: true
     }
@@ -60,55 +55,81 @@ Rectangle {
     }
 
     Geodatabase {
+        property var gdbLayers: []
+
         id: geodatabase_militaryOverlay
         path: dataPath + "/geodatabase/militaryoverlay.geodatabase"
-        autoLoad: true
 
-        Connections {
-            property var gdbLayers: []
-            target: geodatabase_militaryOverlay
-            onLoadStatusChanged: {
-                if (Enums.LoadStatusLoaded === geodatabase_militaryOverlay.loadStatus) {
-                    var tables = geodatabase_militaryOverlay.geodatabaseFeatureTables;
+        onLoadStatusChanged: {
+            if (Enums.LoadStatusLoaded === geodatabase_militaryOverlay.loadStatus) {
+                var tables = geodatabase_militaryOverlay.geodatabaseFeatureTables;
 
-                    // Create a layer for each table
-                    for (var i = tables.length - 1; i >= 0; i--) {
-                        var layer = Qt.createQmlObject("import Esri.ArcGISRuntime 100.0; FeatureLayer {}", map);
-                        gdbLayers.push(layer);
-                        // Each layer needs its own renderer, though all renderers can share the SymbolDictionary.
-                        var renderer = Qt.createQmlObject("import Esri.ArcGISRuntime 100.0; DictionaryRenderer {}", layer);
-                        renderer.symbolDictionary = symbolDictionary;
-                        layer.renderer = renderer;
-                        layer.featureTable = tables[i];
+                // Create a layer for each table
+                for (var i = tables.length - 1; i >= 0; i--) {
+                    var layer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
+                    gdbLayers.push(layer);
+                    // Each layer needs its own renderer, though all renderers can share the SymbolDictionary.
+                    var renderer = ArcGISRuntimeEnvironment.createObject(
+                                "DictionaryRenderer",
+                                { symbolDictionary: symbolDictionary });
 
-                        // Connect the layer's loadStatusChanged signal
-                        layer.loadStatusChanged.connect(function () {
+                    /**
+                     * If the field names in your data don't match the contents of SymbolDictionary::symbologyFieldNames(),
+                     * you must set DictionaryRenderer::symbologyFieldOverrides to a map of key-value pairs like this:
+                     * {
+                     *   "dictionaryFieldName1": "myFieldName1",
+                     *   "dictionaryFieldName2": "myFieldName2"
+                     * }
+                     * The following commented-out code demonstrates one way to do it, in a scenario where the dictionary
+                     * expects the field name "identity" but the database table contains the field "affiliation" instead.
+                     */
+                    /**
+                    var fieldOverrides = {
+                        identity: "affiliation"
+                    };
+                    renderer.symbologyFieldOverrides = fieldOverrides;
+                    */
 
-                            // See if all the layers have loaded.
-                            for (var j = 0; j < gdbLayers.length; j++) {
-                                if (Enums.LoadStatusLoaded !== gdbLayers[j].loadStatus) {
-                                    return;
-                                }
+                    layer.renderer = renderer;
+                    layer.featureTable = tables[i];
+
+                    // Connect the layer's loadStatusChanged signal
+                    layer.loadStatusChanged.connect(function () {
+
+                        // See if all the layers have loaded.
+                        for (var j = 0; j < gdbLayers.length; j++) {
+                            if (Enums.LoadStatusLoaded !== gdbLayers[j].loadStatus) {
+                                return;
                             }
+                        }
 
-                            /**
-                             * If we get here, all the layers loaded. Union the extents and set
-                             * the viewpoint.
-                             */
-                            var bbox = gdbLayers[0].fullExtent;
-                            for (j = 1; j < gdbLayers.length; j++) {
-                                bbox = GeometryEngine.unionOf(bbox, gdbLayers[j].fullExtent);
-                            }
-                            mapView.setViewpointGeometry(bbox);
-                            progressBar_loading.visible = false;
-                        });
+                        /**
+                         * If we get here, all the layers loaded. Union the extents and set
+                         * the viewpoint.
+                         */
+                        var bbox = gdbLayers[0].fullExtent;
+                        for (j = 1; j < gdbLayers.length; j++) {
+                            bbox = GeometryEngine.unionOf(bbox, gdbLayers[j].fullExtent);
+                        }
+                        mapView.setViewpointGeometry(bbox);
+                        progressBar_loading.visible = false;
+                    });
 
-                        // Add the layer to the map
-                        map.operationalLayers.append(layer);
-                    }
+                    // Add the layer to the map
+                    map.operationalLayers.append(layer);
                 }
             }
         }
     }
 
+    Rectangle {
+        anchors {
+            fill: parent
+        }
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
+    }
 }
