@@ -40,7 +40,7 @@ void SearchSymbolDictionary::componentComplete()
     QString datapath = QQmlProperty::read(this, "dataPath").toString();
 
     //Create the dictionary from datapath
-    m_SymbolDictionary = new SymbolDictionary("mil2525d", datapath);
+    m_SymbolDictionary = new SymbolDictionary("mil2525d", datapath, this);
 
     //Connect to the search completed signal of the dictionary
     connect(m_SymbolDictionary, &SymbolDictionary::searchSymbolsCompleted, [this](StyleSymbolSearchResultListModel* results)
