@@ -61,7 +61,7 @@ Rectangle {
 
     Geodatabase {
         id: geodatabase_militaryOverlay
-        path: dataPath + "/military-symbology/militaryoverlay.geodatabase"
+        path: dataPath + "/geodatabase/militaryoverlay.geodatabase"
         autoLoad: true
 
         Connections {
