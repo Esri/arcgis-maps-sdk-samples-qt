@@ -54,12 +54,16 @@ public:
                             const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
                             const QStringList& keysSearchParam);
 
+    Esri::ArcGISRuntime::StyleSymbolSearchResultListModel* searchResultsListModel() const;
+
 signals:
     void searchCountUpdate(int count);
     void searchCompleted(QList<QString> resultNames);
+    void searchResultsListModelChanged();
 
 private:
-    Esri::ArcGISRuntime::SymbolDictionary* m_SymbolDictionary;
+    Esri::ArcGISRuntime::SymbolDictionary* m_symbolDictionary;
+    Esri::ArcGISRuntime::StyleSymbolSearchResultListModel* m_searchResults;
 };
 
 #endif // SEARCHSYMBOLDICTIONARY_H

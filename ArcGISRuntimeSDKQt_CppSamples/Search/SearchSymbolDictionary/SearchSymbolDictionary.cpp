@@ -23,7 +23,7 @@ using namespace Esri::ArcGISRuntime;
 
 SearchSymbolDictionary::SearchSymbolDictionary(QQuickItem* parent) :
     QQuickItem(parent),
-    m_SymbolDictionary(nullptr),
+    m_symbolDictionary(nullptr),
     m_searchResults(nullptr)
 {
 }
@@ -40,13 +40,12 @@ void SearchSymbolDictionary::componentComplete()
     QString datapath = QQmlProperty::read(this, "dataPath").toString();
 
     //Create the dictionary from datapath
-    m_SymbolDictionary = new SymbolDictionary("mil2525d", datapath, this);
+    m_symbolDictionary = new SymbolDictionary("mil2525d", datapath, this);
 
     //Connect to the search completed signal of the dictionary
-    connect(m_SymbolDictionary, &SymbolDictionary::searchSymbolsCompleted, [this](StyleSymbolSearchResultListModel* results)
+    connect(m_symbolDictionary, &SymbolDictionary::searchSymbolsCompleted, [this](StyleSymbolSearchResultListModel* results)
     {
         m_searchResults = results;
-        m_searchResults->setParent(m_SymbolDictionary);
         QList<QString> resultNames;
         auto resultList = results->searchResults();
         foreach (StyleSymbolSearchResult result, resultList)
@@ -57,6 +56,11 @@ void SearchSymbolDictionary::componentComplete()
         emit searchCompleted(resultNames);
         emit searchResultsListModelChanged();
     });
+}
+
+StyleSymbolSearchResultListModel* SearchSymbolDictionary::searchResultsListModel() const
+{
+    return m_searchResults;
 }
 
 void SearchSymbolDictionary::search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
@@ -70,5 +74,5 @@ void SearchSymbolDictionary::search(const QStringList& namesSearchParam, const Q
     searchParameters.setNames(namesSearchParam);
     searchParameters.setSymbolClasses(classesSearchParam);
     searchParameters.setTags(tagsSearchParam);
-    m_SymbolDictionary->searchSymbols(searchParameters);
+    m_symbolDictionary->searchSymbols(searchParameters);
 }
