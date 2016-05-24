@@ -23,6 +23,7 @@
 #include "SpatialReference.h"
 #include "ServiceFeatureTable.h"
 #include "ArcGISTiledLayer.h"
+#include "ArcGISFeatureServiceInfo.h"
 #include "Envelope.h"
 #include "GenerateGeodatabaseParameters.h"
 #include "GeodatabaseSyncTask.h"
@@ -41,7 +42,8 @@ GenerateGeodatabase::GenerateGeodatabase(QQuickItem* parent) :
     m_syncTask(nullptr),
     m_dataPath(""),
     m_featureServiceUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/"),
-    m_serviceIds(QStringList() << "0" << "1" << "2")
+    m_serviceIds(QStringList()),
+    m_featureServiceInfo(nullptr)
 {
 }
 
@@ -58,7 +60,7 @@ void GenerateGeodatabase::componentComplete()
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
     // Create a map using a local tile package
-    m_dataPath = QQmlProperty::read(m_mapView, "dataPath").toString();
+    m_dataPath = QQmlProperty::read(this, "dataPath").toString();
     TileCache* tileCache = new TileCache(m_dataPath + "tpk/SanFrancisco.tpk", this);
     ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);
     Basemap* basemap = new Basemap(tiledLayer, this);
@@ -67,11 +69,38 @@ void GenerateGeodatabase::componentComplete()
     // Set map to map view
     m_mapView->setMap(m_map);
 
-    // add feature layers to map
-    addFeatureLayers(m_featureServiceUrl, m_serviceIds);
+    // add online feature layers to the map, and obtain service IDs
+    m_featureServiceInfo = new ArcGISFeatureServiceInfo(QUrl(m_featureServiceUrl), this);
+    connect(m_featureServiceInfo, &ArcGISFeatureServiceInfo::doneLoading, [this](Error error)
+    {
+        if (error.isEmpty())
+        {
+            qDebug() << "done loading";
+            foreach (auto featureLayerInfo, m_featureServiceInfo->featureLayerInfos())
+            {
+                // add the layer to the map
+                ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(featureLayerInfo->url());
+                FeatureLayer* featureLayer = new FeatureLayer(serviceFeatureTable, this);
+                m_map->operationalLayers()->append(featureLayer);
+
+                // add the layer id to the string list
+                m_serviceIds << QString::number(featureLayerInfo->serviceLayerId());
+            }
+        }
+    });
 
     // create the GeodatabaseSyncTask
     m_syncTask = new GeodatabaseSyncTask(QUrl(m_featureServiceUrl), this);
+
+    // connect to map doneLoading signal
+    connect(m_map, &Map::doneLoading, [this](Error error)
+    {
+        if (error.isEmpty())
+        {
+            // load the feature service info once the map loads
+            m_featureServiceInfo->load();
+        }
+    });
 }
 
 void GenerateGeodatabase::addFeatureLayers(QString serviceUrl, QStringList serviceIds)
@@ -116,38 +145,48 @@ void GenerateGeodatabase::generateGeodatabaseFromCorners(double xCorner1, double
     auto params = getUpdatedParameters(geodatabaseExtent);
 
     // execute the task and obtain the job
-    auto generateJob = m_syncTask->generateGeodatabase(params, m_dataPath + "WildfireCpp.geodatabase");
+    QString outputGdb = QQmlProperty::read(this, "outputGdb").toString();
+    auto generateJob = m_syncTask->generateGeodatabase(params, outputGdb);
 
     // connect to the job's status changed signal
-    connect(generateJob, &GenerateGeodatabaseJob::jobStatusChanged, [this, generateJob]()
+    if (generateJob)
     {
-        // connect to the job's status changed signal to know once it is done
-        switch (generateJob->jobStatus()) {
-        case JobStatus::Failed:
-            emit updateStatus("Generate failed");
-            emit hideWindow(5000, false);
-            break;
-        case JobStatus::NotStarted:
-            emit updateStatus("Job not started");
-            break;
-        case JobStatus::Paused:
-            emit updateStatus("Job paused");
-            break;
-        case JobStatus::Started:
-            emit updateStatus("In progress...");
-            break;
-        case JobStatus::Succeeded:
-            emit updateStatus("Complete");
-            emit hideWindow(1500, true);
-            addOfflineData(generateJob->result());
-            break;
-        default:
-            break;
-        }
-    });
+        connect(generateJob, &GenerateGeodatabaseJob::jobStatusChanged, [this, generateJob]()
+        {
+            // connect to the job's status changed signal to know once it is done
+            switch (generateJob->jobStatus()) {
+            case JobStatus::Failed:
+                emit updateStatus("Generate failed");
+                emit hideWindow(5000, false);
+                break;
+            case JobStatus::NotStarted:
+                emit updateStatus("Job not started");
+                break;
+            case JobStatus::Paused:
+                emit updateStatus("Job paused");
+                break;
+            case JobStatus::Started:
+                emit updateStatus("In progress...");
+                break;
+            case JobStatus::Succeeded:
+                emit updateStatus("Complete");
+                emit hideWindow(1500, true);
+                addOfflineData(generateJob->result());
+                break;
+            default:
+                break;
+            }
+        });
 
-    // start the generate job
-    generateJob->start();
+        // start the generate job
+        generateJob->start();
+    }
+    else
+    {
+        emit updateStatus("Generate failed");
+        emit hideWindow(5000, false);
+    }
+
 }
 
 void GenerateGeodatabase::addOfflineData(Geodatabase* gdb)

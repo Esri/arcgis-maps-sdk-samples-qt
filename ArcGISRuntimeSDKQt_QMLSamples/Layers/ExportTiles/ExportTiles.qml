@@ -26,7 +26,7 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property Envelope tileCacheExtent: null
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property string outputTileCache: System.temporaryFolder.path + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
     property string statusText: ""
     property string tiledServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
 
@@ -61,38 +61,45 @@ Rectangle {
 
         function executeExportTileCacheTask(params) {
             // execute the asynchronous task and obtain the job
-            var exportJob = exportTask.exportTileCacheWithParameters(params, dataPath + "outputTileCacheQml.tpk");
+            var exportJob = exportTask.exportTileCacheWithParameters(params, outputTileCache);
 
-            // show the export window
-            exportWindow.visible = true;
+            // check if job is valid
+            if (exportJob) {
+                // show the export window
+                exportWindow.visible = true;
 
-            // connect to the job's status changed signal to know once it is done
-            exportJob.jobStatusChanged.connect(function() {
-                switch(exportJob.jobStatus) {
-                case Enums.JobStatusFailed:
-                    statusText = "Export failed";
-                    exportWindow.hideWindow(5000);
-                    break;
-                case Enums.JobStatusNotStarted:
-                    statusText = "Job not started";
-                    break;
-                case Enums.JobStatusPaused:
-                    statusText = "Job paused";
-                    break;
-                case Enums.JobStatusStarted:
-                    statusText = "In progress...";
-                    break;
-                case Enums.JobStatusSucceeded:
-                    statusText = "Adding TPK...";
-                    exportWindow.hideWindow(1500);
-                    displayOutputTileCache(exportJob.result);
-                    break;
-                default:
-                    break;
-                }
-            });
+                // connect to the job's status changed signal to know once it is done
+                exportJob.jobStatusChanged.connect(function() {
+                    switch(exportJob.jobStatus) {
+                    case Enums.JobStatusFailed:
+                        statusText = "Export failed";
+                        exportWindow.hideWindow(5000);
+                        break;
+                    case Enums.JobStatusNotStarted:
+                        statusText = "Job not started";
+                        break;
+                    case Enums.JobStatusPaused:
+                        statusText = "Job paused";
+                        break;
+                    case Enums.JobStatusStarted:
+                        statusText = "In progress...";
+                        break;
+                    case Enums.JobStatusSucceeded:
+                        statusText = "Adding TPK...";
+                        exportWindow.hideWindow(1500);
+                        displayOutputTileCache(exportJob.result);
+                        break;
+                    default:
+                        break;
+                    }
+                });
 
-            exportJob.start();
+                exportJob.start();
+            } else {
+                exportWindow.visible = true;
+                statusText = "Export failed";
+                exportWindow.hideWindow(5000);
+            }
         }
 
         function displayOutputTileCache(tileCache) {
@@ -191,12 +198,13 @@ Rectangle {
         visible: false
         clip: true
 
-        GaussianBlur {
-            anchors.fill: exportWindow
-            source: mapView
-            radius: 40
-            samples: 20
-            rotation: 180
+        RadialGradient {
+            anchors.fill: parent
+            opacity: 0.7
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "lightgrey" }
+                GradientStop { position: 0.5; color: "black" }
+            }
         }
 
         MouseArea {
@@ -254,17 +262,6 @@ Rectangle {
         border {
             width: 0.5 * scaleFactor
             color: "black"
-        }
-    }
-
-    FileFolder {
-        path: dataPath
-
-        // create the data path if it does not yet exist
-        Component.onCompleted: {
-            if (!exists) {
-                makePath(dataPath);
-            }
         }
     }
 }

@@ -84,12 +84,13 @@ OpenExistingMapSample {
            anchors.fill: parent
            color: "transparent"
 
-           GaussianBlur {
-               anchors.fill: mapPickerWindow
-               source: mapView
-               radius: 40
-               samples: 20
-               rotation: 180
+           RadialGradient {
+               anchors.fill: parent
+               opacity: 0.7
+               gradient: Gradient {
+                   GradientStop { position: 0.0; color: "lightgrey" }
+                   GradientStop { position: 0.5; color: "black" }
+               }
            }
 
            MouseArea {

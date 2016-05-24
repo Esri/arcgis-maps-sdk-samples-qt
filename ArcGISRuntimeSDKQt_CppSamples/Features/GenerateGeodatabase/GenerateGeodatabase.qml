@@ -26,13 +26,13 @@ GenerateGeodatabaseSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
-    //property Envelope generateExtent: null
     property string statusText: ""
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property string outputGdb: System.temporaryFolder.path + "/WildfireCpp_%1.geodatabase".arg(new Date().getTime().toString())
 
     // add a mapView component
     MapView {
-        id: mapView
-        property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+        id: mapView        
         anchors.fill: parent
         objectName: "mapView"
     }
@@ -115,12 +115,13 @@ GenerateGeodatabaseSample {
         visible: false
         clip: true
 
-        GaussianBlur {
-            anchors.fill: generateWindow
-            source: mapView
-            radius: 40
-            samples: 20
-            rotation: 180
+        RadialGradient {
+            anchors.fill: parent
+            opacity: 0.7
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "lightgrey" }
+                GradientStop { position: 0.5; color: "black" }
+            }
         }
 
         MouseArea {
@@ -173,12 +174,12 @@ GenerateGeodatabaseSample {
     }
 
     FileFolder {
-        path: mapView.dataPath
+        path: dataPath
 
         // create the data path if it does not yet exist
         Component.onCompleted: {
             if (!exists) {
-                makePath(mapView.dataPath);
+                makePath(dataPath);
             }
         }
     }

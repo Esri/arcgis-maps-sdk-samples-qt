@@ -26,7 +26,7 @@ ExportTilesSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property string outputTileCache: System.temporaryFolder.path + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
     property string statusText: ""
 
     // add a mapView component
@@ -100,7 +100,7 @@ ExportTilesSample {
             onReleased: downloadButton.pressed = false
             onClicked: {
                 // call the C++ invokable function to export tile cache from the input screen coordinates
-                exportTilesSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height), dataPath);
+                exportTilesSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height), outputTileCache);
                 exportWindow.visible = true;
             }
         }
@@ -114,12 +114,13 @@ ExportTilesSample {
         visible: false
         clip: true
 
-        GaussianBlur {
-            anchors.fill: exportWindow
-            source: mapView
-            radius: 40
-            samples: 20
-            rotation: 180
+        RadialGradient {
+            anchors.fill: parent
+            opacity: 0.7
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "lightgrey" }
+                GradientStop { position: 0.5; color: "black" }
+            }
         }
 
         MouseArea {
@@ -177,17 +178,6 @@ ExportTilesSample {
         border {
             width: 0.5 * scaleFactor
             color: "black"
-        }
-    }
-
-    FileFolder {
-        path: dataPath
-
-        // create the data path if it does not yet exist
-        Component.onCompleted: {
-            if (!exists) {
-                makePath(dataPath);
-            }
         }
     }
 }
