@@ -9,12 +9,10 @@ This sample demonstrates how to search the SymbolDictionary and return the resul
 The sample uses the `searchSymbols` function to search for the symbols that match the `StyleSymbolSearchParameters`.
 
 ##Features
-
 - SymbolDictionary
 - StyleSymbolSearchParameters
 
 ##Offline Data
-
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
