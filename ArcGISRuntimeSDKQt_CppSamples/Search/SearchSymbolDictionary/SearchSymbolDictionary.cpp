@@ -46,15 +46,8 @@ void SearchSymbolDictionary::componentComplete()
     connect(m_symbolDictionary, &SymbolDictionary::searchSymbolsCompleted, [this](StyleSymbolSearchResultListModel* results)
     {
         m_searchResults = results;
-        QList<QString> resultNames;
-        auto resultList = results->searchResults();
-        foreach (StyleSymbolSearchResult result, resultList)
-        {
-            resultNames << result.name();
-        }
-        emit searchCountUpdate(resultList.count());
-        emit searchCompleted(resultNames);
         emit searchResultsListModelChanged();
+        emit searchCompleted(results->size());
     });
 }
 

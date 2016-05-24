@@ -30,7 +30,7 @@ SearchSymbolDictionarySample {
 
     property double scaleFactor: System.displayScaleFactor
     property double fontSize: 16 * scaleFactor
-    property var repeaterModel: ["Names", "Tags", "Classes", "Categories", "Keys"]
+    property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     property var searchParamList: [[],[],[],[],[]]
 
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
@@ -65,7 +65,7 @@ SearchSymbolDictionarySample {
 
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
-                        width: 90 * scaleFactor
+                        width: 110 * scaleFactor
                         text: repeaterModel[index] + ":"
                         font.pixelSize: fontSize
                     }
@@ -211,7 +211,6 @@ SearchSymbolDictionarySample {
             }
             spacing: 20 * scaleFactor
 
-            visible: count > 0
             clip: true
             model: searchResultsListModel
 
@@ -272,12 +271,12 @@ SearchSymbolDictionarySample {
         }
     }
 
-    //Update the number of results retuned
-    onSearchCountUpdate: resultText.text = "Result(s) found: " + count
-
     //Search completed
     onSearchCompleted: {
         seachBtn.enabled = true;
         resultView.visible = true;
+
+        //Update the number of results retuned
+        resultText.text = "Result(s) found: " + count
     }
 }

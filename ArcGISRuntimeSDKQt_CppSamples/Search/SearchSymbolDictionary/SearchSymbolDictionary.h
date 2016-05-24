@@ -57,8 +57,7 @@ public:
     Esri::ArcGISRuntime::StyleSymbolSearchResultListModel* searchResultsListModel() const;
 
 signals:
-    void searchCountUpdate(int count);
-    void searchCompleted(QList<QString> resultNames);
+    void searchCompleted(int count);
     void searchResultsListModelChanged();
 
 private:
