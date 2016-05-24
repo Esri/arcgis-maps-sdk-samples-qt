@@ -27,8 +27,10 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property string outputGdb: System.temporaryFolder.path + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
     property string featureServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer"
     property Envelope generateExtent: null
+    property var generateLayerOptions: []
     property string statusText: ""
 
     // Map view UI presentation at top
@@ -46,17 +48,33 @@ Rectangle {
                 }
             }
 
-            // add the initial online feature service layers
-            FeatureLayer {
-                ServiceFeatureTable { url: featureServiceUrl + "/0" }
+            onLoadStatusChanged: {
+                if (loadStatus === Enums.LoadStatusLoaded) {
+                    // add the feature layers
+                    featureServiceInfo.load();
+                }
             }
+        }
+    }
 
-            FeatureLayer {
-                ServiceFeatureTable { url: featureServiceUrl + "/1" }
-            }
+    // Create the ArcGISFeatureServiceInfo to obtain layers
+    ArcGISFeatureServiceInfo {
+        id: featureServiceInfo
+        url: featureServiceUrl
 
-            FeatureLayer {
-                ServiceFeatureTable { url: featureServiceUrl + "/2" }
+        onLoadStatusChanged: {
+            if (loadStatus === Enums.LoadStatusLoaded) {
+                for (var i = 0; i < featureLayerInfos.length; i++) {
+                    // add the layer to the map
+                    var serviceFeatureTable = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {url: featureLayerInfos[i].url});
+                    var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: serviceFeatureTable});
+                    map.operationalLayers.append(featureLayer);
+
+                    // add a new GenerateLayerOption to array for use in the GenerateGeodatabaseParameters
+                    var layerOption = ArcGISRuntimeEnvironment.createObject("GenerateLayerOption", {layerId: featureLayerInfos[i].serviceLayerId});
+                    generateLayerOptions.push(layerOption);
+                    generateParameters.layerOptions = generateLayerOptions;
+                }
             }
         }
     }
@@ -68,39 +86,48 @@ Rectangle {
 
         function executeGenerate() {
             // execute the asynchronous task and obtain the job
-            var generateJob = generateGeodatabase(generateParameters, dataPath + "WildfireQml.geodatabase");
+            var generateJob = generateGeodatabase(generateParameters, outputGdb);
 
-            // show the generate window
-            generateWindow.visible = true;
+            // check if the job is valid
+            if (generateJob) {
 
-            // connect to the job's status changed signal to know once it is done
-            generateJob.jobStatusChanged.connect(function() {
-                switch(generateJob.jobStatus) {
-                case Enums.JobStatusFailed:
-                    statusText = "Generate failed";
-                    generateWindow.hideWindow(5000);
-                    break;
-                case Enums.JobStatusNotStarted:
-                    statusText = "Job not started";
-                    break;
-                case Enums.JobStatusPaused:
-                    statusText = "Job paused";
-                    break;
-                case Enums.JobStatusStarted:
-                    statusText = "In progress...";
-                    break;
-                case Enums.JobStatusSucceeded:
-                    statusText = "Complete";
-                    generateWindow.hideWindow(1500);
-                    displayLayersFromGeodatabase(generateJob.geodatabase);
-                    break;
-                default:
-                    break;
-                }
-            });
+                // show the generate window
+                generateWindow.visible = true;
 
-            // start the job
-            generateJob.start();
+                // connect to the job's status changed signal to know once it is done
+                generateJob.jobStatusChanged.connect(function() {
+                    switch(generateJob.jobStatus) {
+                    case Enums.JobStatusFailed:
+                        statusText = "Generate failed";
+                        generateWindow.hideWindow(5000);
+                        break;
+                    case Enums.JobStatusNotStarted:
+                        statusText = "Job not started";
+                        break;
+                    case Enums.JobStatusPaused:
+                        statusText = "Job paused";
+                        break;
+                    case Enums.JobStatusStarted:
+                        statusText = "In progress...";
+                        break;
+                    case Enums.JobStatusSucceeded:
+                        statusText = "Complete";
+                        generateWindow.hideWindow(1500);
+                        displayLayersFromGeodatabase(generateJob.geodatabase);
+                        break;
+                    default:
+                        break;
+                    }
+                });
+
+                // start the job
+                generateJob.start();
+            } else {
+                // a valid job was not obtained, so show an error
+                generateWindow.visible = true;
+                statusText = "Generate failed";
+                generateWindow.hideWindow(5000);
+            }
         }
 
         function displayLayersFromGeodatabase(geodatabase) {
@@ -134,14 +161,9 @@ Rectangle {
     GenerateGeodatabaseParameters {
         id: generateParameters
         extent: generateExtent
-        layerOptions: [
-            GenerateLayerOption { layerId: "0"},
-            GenerateLayerOption { layerId: "1"},
-            GenerateLayerOption { layerId: "2"}
-        ]
         outSpatialReference: SpatialReference.createWebMercator()
         returnAttachments: false
-    }   
+    }
 
     // create an extent rectangle for the output geodatabase
     Rectangle {
@@ -216,15 +238,16 @@ Rectangle {
         id: generateWindow
         anchors.fill: parent
         color: "transparent"
-        visible: false
         clip: true
+        visible: false
 
-        GaussianBlur {
-            anchors.fill: generateWindow
-            source: mapView
-            radius: 40
-            samples: 20
-            rotation: 180
+        RadialGradient {
+            anchors.fill: parent
+            opacity: 0.7
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "lightgrey" }
+                GradientStop { position: 0.5; color: "black" }
+            }
         }
 
         MouseArea {
