@@ -80,38 +80,47 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
     auto params = m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_exportTileCacheTask->mapServiceInfo()->maxScale());
 
     // execute the task and obtain the job
-    auto exportJob = m_exportTileCacheTask->exportTileCacheWithParameters(params, dataPath + "outputTileCacheCpp.tpk");
+    auto exportJob = m_exportTileCacheTask->exportTileCacheWithParameters(params, dataPath);
 
-    // connect to the job's status changed signal
-    connect(exportJob, &ExportTileCacheJob::jobStatusChanged, [this, exportJob]()
+    // check if there is a valid job
+    if (exportJob)
     {
-        // connect to the job's status changed signal to know once it is done
-        switch (exportJob->jobStatus()) {
-        case JobStatus::Failed:
-            emit updateStatus("Export failed");
-            emit hideWindow(5000, false);
-            break;
-        case JobStatus::NotStarted:
-            emit updateStatus("Job not started");
-            break;
-        case JobStatus::Paused:
-            emit updateStatus("Job paused");
-            break;
-        case JobStatus::Started:
-            emit updateStatus("In progress...");
-            break;
-        case JobStatus::Succeeded:
-            emit updateStatus("Adding TPK...");
-            emit hideWindow(1500, true);
-            displayOutputTileCache(exportJob->result());
-            break;
-        default:
-            break;
-        }
-    });
+        // connect to the job's status changed signal
+        connect(exportJob, &ExportTileCacheJob::jobStatusChanged, [this, exportJob]()
+        {
+            // connect to the job's status changed signal to know once it is done
+            switch (exportJob->jobStatus()) {
+            case JobStatus::Failed:
+                emit updateStatus("Export failed");
+                emit hideWindow(5000, false);
+                break;
+            case JobStatus::NotStarted:
+                emit updateStatus("Job not started");
+                break;
+            case JobStatus::Paused:
+                emit updateStatus("Job paused");
+                break;
+            case JobStatus::Started:
+                emit updateStatus("In progress...");
+                break;
+            case JobStatus::Succeeded:
+                emit updateStatus("Adding TPK...");
+                emit hideWindow(1500, true);
+                displayOutputTileCache(exportJob->result());
+                break;
+            default:
+                break;
+            }
+        });
 
-    // start the export job
-    exportJob->start();
+        // start the export job
+        exportJob->start();
+    }
+    else
+    {
+        emit updateStatus("Export failed");
+        emit hideWindow(5000, false);
+    }
 }
 
 // display the tile cache once the task is complete
