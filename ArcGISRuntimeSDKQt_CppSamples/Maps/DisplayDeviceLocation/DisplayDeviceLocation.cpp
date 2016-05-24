@@ -36,12 +36,6 @@ DisplayDeviceLocation::DisplayDeviceLocation(QQuickItem* parent) :
     m_map(nullptr),
     m_mapView(nullptr)
 {
-    emit compassModeChanged();
-    emit navigationModeChanged();
-    emit recenterModeChanged();
-    emit onModeChanged();
-    emit stopModeChanged();
-    emit closeModeChanged();
 }
 
 DisplayDeviceLocation::~DisplayDeviceLocation()
