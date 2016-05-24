@@ -77,3 +77,19 @@ $ git merge upstream/master
 Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to a project file (.pro) within your forked repo location.
 Configure the project and run the sample.
 
+## Use offline data in the samples
+Some of the samples consume offline data, including TPKs, VTPKs, mobile geodatabases, and mobile map packages, among other data formats. If the sample does consume offline data, the sample's associated readme.md will note where you can download the data (from ArcGIS Online), and where the data can be placed once downloaded. For example, it may say something like:
+
+Link | Local Location
+---------|-------|
+|[Los Angeles Vector Tile Package](https://www.arcgis.com/home/item.html?id=d9f8ce6f6ac84b90a665a861d71a5d0a)| `<userhome>`/ArcGIS/Runtime/Data/vtpk/LosAngeles.vtpk |
+
+In this case, you would download the VTPK from the ArcGIS Online Location, and place in specified location. `<userhome>` is used throughout to denote a generic location on the different platforms. The below table specifies where this is on all of the supported platforms:
+
+Platform |  Userhome Location | Example Location
+---------|--------------------|------------------|
+Windows  | `%userprofile%`    | `C:\Users\Bob\ArcGIS\Runtime\Data` |
+Linux    | `~`                | `/users/bob/ArcGIS/Runtime/Data`   |
+Mac OS X | `~`                | `/Users/Bob/ArcGIS/Runtime/Data`   |
+Android  | `/sdcard`          | `/sdcard/ArcGIS/Runtime/Data`      |
+iOS      | `<your app bundle>`| `<appbundle>/ArcGIS/Runtime/Data`  |
