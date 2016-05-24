@@ -30,7 +30,7 @@ SearchSymbolDictionarySample {
 
     property double scaleFactor: System.displayScaleFactor
     property double fontSize: 16 * scaleFactor
-    property var repeaterModel: ["Names", "Tags", "Classes", "Categories", "Keys"]
+    property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     property var searchParamList: [[],[],[],[],[]]
 
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
@@ -65,7 +65,7 @@ SearchSymbolDictionarySample {
 
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
-                        width: 90 * scaleFactor
+                        width: 110 * scaleFactor
                         text: repeaterModel[index] + ":"
                         font.pixelSize: fontSize
                     }
@@ -211,9 +211,8 @@ SearchSymbolDictionarySample {
             }
             spacing: 20 * scaleFactor
 
-            visible: false
             clip: true
-            model: styleSymbolSearchResultsListModel
+            model: searchResultsListModel
 
             delegate: Component {
                 Row {
@@ -224,7 +223,7 @@ SearchSymbolDictionarySample {
                     spacing: 10 * scaleFactor
 
                     Image {
-                        source: symbolImage //would be Symbol.swatchImage
+                        source: symbolUrl
                     }
 
                     Column {
@@ -233,35 +232,35 @@ SearchSymbolDictionarySample {
 
                         Text {
                             id: nameText
-                            text: repeaterModel[SearchSymbolDictionarySample.FieldNames] + ": " + name
+                            text: "Name: " + name
                             font.pixelSize: fontSize
                             width: parent.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: repeaterModel[SearchSymbolDictionarySample.FieldTags] + ": " + tags
+                            text: "Tags: " + tags
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: repeaterModel[SearchSymbolDictionarySample.FieldClasses] + ": " + classes
+                            text: "SymbolClass: " + symbolClass
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: repeaterModel[SearchSymbolDictionarySample.FieldCategories] + ": " + categories
+                            text: "Category: " + category
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: repeaterModel[SearchSymbolDictionarySample.FieldKeys] + ": " + keys
+                            text: "Key: " + key
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -272,16 +271,12 @@ SearchSymbolDictionarySample {
         }
     }
 
-    //Update the number of results retuned
-    onSearchCountUpdate: resultText.text = "Result(s) found: " + count
-
     //Search completed
     onSearchCompleted: {
         seachBtn.enabled = true;
         resultView.visible = true;
-    }
 
-    ListModel {
-        id: styleSymbolSearchResultsListModel
+        //Update the number of results retuned
+        resultText.text = "Result(s) found: " + count
     }
 }

@@ -22,6 +22,7 @@ namespace Esri
   namespace ArcGISRuntime
   {
     class SymbolDictionary;
+    class StyleSymbolSearchResultListModel;
   }
 }
 
@@ -33,6 +34,8 @@ class SearchSymbolDictionary : public QQuickItem
 {
     Q_OBJECT
     Q_ENUMS(FieldEnum)
+
+    Q_PROPERTY(Esri::ArcGISRuntime::StyleSymbolSearchResultListModel* searchResultsListModel READ searchResultsListModel NOTIFY searchResultsListModelChanged)
 
 public:
     explicit SearchSymbolDictionary(QQuickItem *parent = 0);
@@ -51,13 +54,15 @@ public:
                             const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
                             const QStringList& keysSearchParam);
 
+    Esri::ArcGISRuntime::StyleSymbolSearchResultListModel* searchResultsListModel() const;
+
 signals:
-    void searchCountUpdate(int count);
-    void searchCompleted(QList<QString> resultNames);
+    void searchCompleted(int count);
+    void searchResultsListModelChanged();
 
 private:
-
-    Esri::ArcGISRuntime::SymbolDictionary* m_SymbolDictionary;
+    Esri::ArcGISRuntime::SymbolDictionary* m_symbolDictionary;
+    Esri::ArcGISRuntime::StyleSymbolSearchResultListModel* m_searchResults;
 };
 
 #endif // SEARCHSYMBOLDICTIONARY_H

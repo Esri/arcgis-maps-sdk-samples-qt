@@ -23,7 +23,8 @@ using namespace Esri::ArcGISRuntime;
 
 SearchSymbolDictionary::SearchSymbolDictionary(QQuickItem* parent) :
     QQuickItem(parent),
-    m_SymbolDictionary(nullptr)
+    m_symbolDictionary(nullptr),
+    m_searchResults(nullptr)
 {
 }
 
@@ -39,24 +40,25 @@ void SearchSymbolDictionary::componentComplete()
     QString datapath = QQmlProperty::read(this, "dataPath").toString();
 
     //Create the dictionary from datapath
-    m_SymbolDictionary = new SymbolDictionary("mil2525d", datapath);
+    m_symbolDictionary = new SymbolDictionary("mil2525d", datapath, this);
 
     //Connect to the search completed signal of the dictionary
-    connect(m_SymbolDictionary, &SymbolDictionary::searchSymbolsCompleted, [this](QList<StyleSymbolSearchResult> results)
+    connect(m_symbolDictionary, &SymbolDictionary::searchSymbolsCompleted, [this](StyleSymbolSearchResultListModel* results)
     {
-        QList<QString> resultNames;
-        foreach (StyleSymbolSearchResult result, results)
-        {
-            resultNames << result.name();
-        }
-        emit searchCountUpdate(results.count());
-        emit searchCompleted(resultNames);
+        m_searchResults = results;
+        emit searchResultsListModelChanged();
+        emit searchCompleted(results->size());
     });
 }
 
+StyleSymbolSearchResultListModel* SearchSymbolDictionary::searchResultsListModel() const
+{
+    return m_searchResults;
+}
+
 void SearchSymbolDictionary::search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
-                            const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
-                            const QStringList& keysSearchParam)
+                                    const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
+                                    const QStringList& keysSearchParam)
 {
     //Create search parameters and search with the parameters
     StyleSymbolSearchParameters searchParameters;
@@ -65,5 +67,5 @@ void SearchSymbolDictionary::search(const QStringList& namesSearchParam, const Q
     searchParameters.setNames(namesSearchParam);
     searchParameters.setSymbolClasses(classesSearchParam);
     searchParameters.setTags(tagsSearchParam);
-    m_SymbolDictionary->searchSymbols(searchParameters);
+    m_symbolDictionary->searchSymbols(searchParameters);
 }
