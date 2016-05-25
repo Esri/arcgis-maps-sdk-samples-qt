@@ -23,6 +23,7 @@
 
 //#include "ImagePaintedItem.h"
 #include "SearchSymbolDictionary.h"
+#include "StyleSymbolSearchResultListModel.h"
 
 int main(int argc, char *argv[])
 {
@@ -35,6 +36,11 @@ int main(int argc, char *argv[])
 
     // Register the map view for QML
     qmlRegisterType<SearchSymbolDictionary>("Esri.Samples", 1, 0, "SearchSymbolDictionarySample");
+
+    // Register the list model
+    qmlRegisterUncreatableType<Esri::ArcGISRuntime::StyleSymbolSearchResultListModel>("Esri.Samples", 1, 0,
+                                                       "StyleSymbolSearchResultListModel",
+                                                       "StyleSymbolSearchResultListModel is an uncreatable type");
 
     // Intialize application view
     QQuickView view;
