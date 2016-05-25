@@ -42,7 +42,10 @@ Rectangle {
             id: graphicsOverlay
 
             DictionaryRenderer {
-                symbolDictionary: symbolDictionary
+                SymbolDictionary {
+                    specificationType: "mil2525d"
+                    dictionaryPath: dataPath + "/styles/mil2525d.stylx"
+                }
             }
         }
     }
@@ -55,12 +58,6 @@ Rectangle {
             margins: 5 * scaleFactor
         }
         indeterminate: true
-    }
-
-    SymbolDictionary {
-        id: symbolDictionary
-        specificationType: "mil2525d"
-        dictionaryPath: dataPath + "/styles/mil2525d.stylx"
     }
 
     // Use XmlListModel to parse the XML messages file.
