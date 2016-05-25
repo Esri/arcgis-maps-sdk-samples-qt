@@ -2,6 +2,16 @@
     "source" :  "FeatureLayer_DictionaryRenderer.qml",
     "description" : "FeatureLayer_DictionaryRenderer.html",
     "thumbnail" : "FeatureLayer_DictionaryRenderer.png",
-    "name" : "Feature layer (dictionary renderer)"
+    "name" : "Feature layer (dictionary renderer)",
+    "dataItems" : [
+        {
+            "itemId" : "4581a9a92c214240a79e15482a2e8349",
+            "path" : "~/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
+        },
+        {
+            "itemId" : "e0d41b4b409a49a5a7ba11939d8535dc",
+            "path" : "~/ArcGIS/Runtime/Data/geodatabase/militaryoverlay.geodatabase"
+        }
+    ]
 }
 
