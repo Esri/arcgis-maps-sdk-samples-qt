@@ -21,7 +21,6 @@
 #include <Windows.h>
 #endif
 
-//#include "ImagePaintedItem.h"
 #include "SearchSymbolDictionary.h"
 #include "StyleSymbolSearchResultListModel.h"
 
