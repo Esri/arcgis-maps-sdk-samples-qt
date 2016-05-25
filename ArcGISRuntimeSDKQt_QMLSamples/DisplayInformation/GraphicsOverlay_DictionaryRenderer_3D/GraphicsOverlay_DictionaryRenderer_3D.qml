@@ -37,6 +37,11 @@ Rectangle {
         Scene {
             id: scene
             BasemapImagery {}
+            Surface {
+                ArcGISTiledElevationSource {
+                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                }
+            }
         }
         GraphicsOverlay {
             id: graphicsOverlay
@@ -101,32 +106,6 @@ Rectangle {
                         var coords = pointStrings[0].split(",");
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
-                    } else {
-                        /**
-                         * TODO uncomment this section when lines and polygons are supported in 3D.
-                         */
-//                        var builder;
-//                        if (3 <= pointStrings.length && pointStrings[0] === pointStrings[pointStrings.length - 1]) {
-//                            /**
-//                             * If there are at least three points and the first and last points are
-//                             * equivalent, assume it's a polygon.
-//                             */
-//                            builder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {
-//                                spatialReference: sr
-//                            });
-//                        } else {
-//                            // It's a line
-//                            builder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {
-//                                spatialReference: sr
-//                            });
-//                        }
-//                        if (builder) {
-//                            for (var ptIndex = 0; ptIndex < pointStrings.length; ptIndex++) {
-//                                var coords = pointStrings[ptIndex].split(",");
-//                                builder.addPointXY(coords[0], coords[1]);
-//                            }
-//                            geom = builder.geometry;
-//                        }
                     }
                     if (geom) {
                         /**
@@ -153,6 +132,11 @@ Rectangle {
                 // Zoom to graphics
                 if (bbox) {
                     bbox = GeometryEngine.project(bbox.extent, scene.spatialReference);
+
+                    /**
+                     * Create a camera directly above the center of the features, and then rotate that
+                     * camera around the center to tip it.
+                     */
                     var camera = ArcGISRuntimeEnvironment.createObject("Camera", {
                         location: bbox.extent.center,
                         heading: 0,
@@ -160,7 +144,7 @@ Rectangle {
                         roll: 0,
                         distance: 15000
                     });
-                    camera = camera.rotateAround(bbox.extent.center, 0, 45, 0);
+                    camera = camera.rotateAround(bbox.extent.center, 0, 70, 0);
                     sceneView.setViewpointCamera(camera);
                 }
                 progressBar_loading.visible = false;
@@ -176,5 +160,4 @@ Rectangle {
             color: "black"
         }
     }
-
 }

@@ -6,7 +6,7 @@ This sample demonstrates applying a dictionary renderer to graphics, in order to
 
 ##How it works
 
-The sample loads a number of point, line, and polygon military elements from an XML file and adds them as graphics to a `GraphicsOverlay`. A `DictionaryRenderer` is applied to the `GraphicsOverlay` in order to display the graphics with MIL-STD-2525D military symbology. When all graphics are created, the 3D scene's viewpoint is set to zoom to the full extent of all graphics.
+The sample loads a number of point military elements from an XML file and adds them as graphics to a `GraphicsOverlay`. A `DictionaryRenderer` is applied to the `GraphicsOverlay` in order to display the graphics with MIL-STD-2525D military symbology. The `GraphicsOverlay`'s `renderingMode` parameter is set to `GraphicsRenderingModeDynamic`, so that point features are displayed with billboarded symbols facing the user (a developer can set `renderingMode` to `GraphicsRenderingModeStatic` if desired to instead drape the symbols on the surface). When all graphics are created, the 3D scene's viewpoint is set to zoom to the full extent of all graphics.
 
 ##Features
 - SceneView
@@ -17,8 +17,6 @@ The sample loads a number of point, line, and polygon military elements from an 
 - SymbolDictionary
 - SpatialReference
 - PointBuilder
-- PolygonBuilder
-- PolylineBuilder
 - Graphic
 - GeometryEngine
 
