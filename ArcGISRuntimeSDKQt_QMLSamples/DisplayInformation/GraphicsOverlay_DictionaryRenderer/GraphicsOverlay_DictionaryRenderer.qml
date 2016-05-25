@@ -33,16 +33,15 @@ Rectangle {
      */
     MapView {
         id: mapView
-        anchors {
-            fill: parent
-        }
+        anchors.fill: parent
         Map {
             id: map
             BasemapTopographic {}
         }
         GraphicsOverlay {
             id: graphicsOverlay
-            renderer: DictionaryRenderer {
+
+            DictionaryRenderer {
                 symbolDictionary: symbolDictionary
             }
         }
@@ -53,10 +52,9 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            margins: 5
+            margins: 5 * scaleFactor
         }
         indeterminate: true
-        visible: true
     }
 
     SymbolDictionary {
@@ -65,21 +63,10 @@ Rectangle {
         dictionaryPath: dataPath + "/styles/mil2525d.stylx"
     }
 
-    Rectangle {
-        anchors {
-            fill: parent
-        }
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
-
     // Use XmlListModel to parse the XML messages file.
     XmlListModel {
         id: xmlParser
-        source: "file:" + dataPath + "/xml/Mil2525DMessages.xml"
+        source: System.resolvedPathUrl(dataPath + "/xml/Mil2525DMessages.xml")
         query: "/messages/message"
 
         // These are the fields we need for MIL-STD-2525D symbology.
@@ -96,9 +83,8 @@ Rectangle {
         XmlRole { name: "additionalinformation"; query: "additionalinformation/string()" }
 
         onStatusChanged: {
-            if (XmlListModel.Ready === status) {
-                var symDict = symbolDictionary;
-                var bbox = undefined;
+            if (status === XmlListModel.Ready) {
+                var bbox;
                 for (var i = 0; i < count; i++) {
                     var element = get(i);
                     var wkid = element._wkid;
@@ -108,8 +94,8 @@ Rectangle {
                     }
                     var pointStrings = element._control_points.split(";");
                     var sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
-                    var geom = undefined;
-                    if (1 === pointStrings.length) {
+                    var geom;
+                    if (pointStrings.length === 1) {
                         // It's a point
                         var pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder");
                         pointBuilder.spatialReference = sr;
@@ -117,7 +103,7 @@ Rectangle {
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
                     } else {
-                        var builder = undefined;
+                        var builder;
                         if (3 <= pointStrings.length && pointStrings[0] === pointStrings[pointStrings.length - 1]) {
                             /**
                              * If there are at least three points and the first and last points are
@@ -160,13 +146,20 @@ Rectangle {
                 // Zoom to graphics
                 if (bbox) {
                     bbox = bbox.extent;
-                    if (0 < bbox.width) {
-                        bbox = GeometryEngine.buffer(bbox, bbox.width / 4);
-                    }
-                    mapView.setViewpointGeometry(bbox);
+                    mapView.setViewpointGeometryAndPadding(bbox, 300 * scaleFactor);
                 }
                 progressBar_loading.visible = false;
             }
         }
     }
+
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
+    }
+
 }
