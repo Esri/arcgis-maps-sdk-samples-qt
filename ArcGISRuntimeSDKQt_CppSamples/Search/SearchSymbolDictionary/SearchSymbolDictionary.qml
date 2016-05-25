@@ -99,8 +99,7 @@ SearchSymbolDictionarySample {
 
                         //Remove a field
                         function removeField(){
-                            //searchSymbolDictionarySample.removeNameField(editText);
-                            var fieldIndex = searchParamList[index],indexOf;
+                            var fieldIndex = searchParamList[index].indexOf(editText);
                             if(fieldIndex !== -1){
                                 searchParamList[index].splice(fieldIndex, 1);
                                 model = searchParamList[index];
