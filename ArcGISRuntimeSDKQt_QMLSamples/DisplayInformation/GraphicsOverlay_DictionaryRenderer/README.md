@@ -21,3 +21,11 @@ The sample loads a number of point, line, and polygon military elements from an 
 - PolylineBuilder
 - Graphic
 - GeometryEngine
+
+##Offline Data
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+
+Link | Local Location
+---------|-------|
+|[Mil2525d Stylx File](https://www.arcgis.com/home/item.html?id=4581a9a92c214240a79e15482a2e8349)| `<userhome>`/ArcGIS/Runtime/Data/styles/mil2525d.stylx |
+|[MIL-STD-2525D XML Message File](https://www.arcgis.com/home/item.html?id=88501aa9084548cb9f49ee0c13ff551c)| `<userhome>`/ArcGIS/Runtime/Data/xml/Mil2525DMessages.xml |
