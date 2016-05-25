@@ -177,7 +177,7 @@ void EditFeatureAttachments::connectSignals()
             }
             else
             {
-                qDebug() << "Apply edits error:" << featureEditResult->error().errorCode() << featureEditResult->error().message();
+                qDebug() << "Apply edits error:" << featureEditResult->error().code() << featureEditResult->error().message();
             }
         }
     });
