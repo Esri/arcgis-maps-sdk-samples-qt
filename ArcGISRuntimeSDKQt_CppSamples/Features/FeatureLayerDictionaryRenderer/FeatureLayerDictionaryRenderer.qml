@@ -35,7 +35,7 @@ FeatureLayerDictionaryRendererSample {
     }
 
     ProgressBar {
-        objectName: "progressBar_loading"
+        id: progressBar_loading
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -51,5 +51,9 @@ FeatureLayerDictionaryRendererSample {
             width: 0.5 * scaleFactor
             color: "black"
         }
+    }
+
+    onAllLayersLoaded: {
+        progressBar_loading.visible = false;
     }
 }

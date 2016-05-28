@@ -18,13 +18,15 @@
 #define FEATURELAYERDICTIONARYRENDERER_H
 
 #include <QQuickItem>
-#include <QMutex>
 
-#include "FeatureLayer.h"
-#include "Geodatabase.h"
-#include "MapQuickView.h"
-
-using namespace Esri::ArcGISRuntime;
+namespace Esri
+{
+    namespace ArcGISRuntime
+    {
+        class Geodatabase;
+        class MapQuickView;
+    }
+}
 
 class FeatureLayerDictionaryRenderer : public QQuickItem
 {
@@ -36,13 +38,15 @@ public:
 
     void componentComplete() Q_DECL_OVERRIDE;
 
+signals:
+    void allLayersLoaded();
+
 private:
     QString m_dataPath;
     double m_scaleFactor;
-    MapQuickView* m_pMapView;
-    Geodatabase* m_pGeodatabase;
-    QList<FeatureLayer*> m_layers;
-    QMutex m_mutexLayers;
+    int m_loadedLayerCount;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Geodatabase* m_geodatabase;
 };
 
 #endif // FEATURELAYERDICTIONARYRENDERER_H

@@ -19,22 +19,28 @@
 #include <QQmlProperty>
 
 #include "DictionaryRenderer.h"
+#include "FeatureLayer.h"
+#include "Geodatabase.h"
 #include "GeodatabaseFeatureTable.h"
 #include "GeometryEngine.h"
 #include "Map.h"
+#include "MapQuickView.h"
 #include "SymbolDictionary.h"
+
+using namespace Esri::ArcGISRuntime;
 
 FeatureLayerDictionaryRenderer::FeatureLayerDictionaryRenderer(QQuickItem* parent) :
     QQuickItem(parent),
-    m_pMapView(nullptr),
-    m_pGeodatabase(nullptr)
+    m_loadedLayerCount(0),
+    m_mapView(nullptr),
+    m_geodatabase(nullptr)
 {
 
 }
 
 FeatureLayerDictionaryRenderer::~FeatureLayerDictionaryRenderer()
 {
-    delete m_pGeodatabase;
+
 }
 
 void FeatureLayerDictionaryRenderer::componentComplete()
@@ -44,15 +50,15 @@ void FeatureLayerDictionaryRenderer::componentComplete()
     m_dataPath = QQmlProperty::read(this, "dataPath").toString();
     m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
 
-    m_pMapView = findChild<MapQuickView*>("mapView");
+    m_mapView = findChild<MapQuickView*>("mapView");
     // Create a map using the topo basemap
-    Map* pMap = new Map(Basemap::topographic(this), this);
+    Map* map = new Map(Basemap::topographic(this), this);
     // set map on the map view
-    m_pMapView->setMap(pMap);
+    m_mapView->setMap(map);
 
-    m_pGeodatabase = new Geodatabase(m_dataPath + "/geodatabase/militaryoverlay.geodatabase");
+    m_geodatabase = new Geodatabase(m_dataPath + "/geodatabase/militaryoverlay.geodatabase", this);
 
-    connect(m_pGeodatabase, &Geodatabase::loadStatusChanged, [this](LoadStatus gdbLoadStatus)
+    connect(m_geodatabase, &Geodatabase::loadStatusChanged, [this](LoadStatus gdbLoadStatus)
     {
         if (gdbLoadStatus == LoadStatus::Loaded)
         {
@@ -77,72 +83,57 @@ void FeatureLayerDictionaryRenderer::componentComplete()
 //            symbologyFieldOverrides["identity"] = "affiliation";
 //            textFieldOverrides["uniquedesignation"] = "uniqueId";
 
-            SymbolDictionary symbolDictionary("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+            SymbolDictionary* symbolDictionary = new SymbolDictionary("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
 
-            // Create a layer for each table
-            QList<GeodatabaseFeatureTable*> tables = m_pGeodatabase->geodatabaseFeatureTables();
+            QList<GeodatabaseFeatureTable*> tables = m_geodatabase->geodatabaseFeatureTables();
+            /**
+             * Create a layer for each table. The tables are in the order they were in the map document
+             * when the Runtime geodatabase was created, with the top layer first. When we add layers
+             * to the Runtime map, the first layer added is displayed on the bottom, and the last layer
+             * added is displayed on top. Therefore, we loop backward to display the top layer on top and
+             * the bottom layer on the bottom.
+             */
             for (int i = tables.length() - 1; i >= 0 ; i--)
             {
-                GeodatabaseFeatureTable* pTable = tables[i];
-                FeatureLayer* pLayer = new FeatureLayer(pTable);
-                m_layers.append(pLayer);
+                GeodatabaseFeatureTable* table = tables[i];
+                FeatureLayer* layer = new FeatureLayer(table, this);
                 // Each layer needs its own renderer, though all renderers can share the SymbolDictionary.
-                DictionaryRenderer renderer(&symbolDictionary, symbologyFieldOverrides, textFieldOverrides);
-                pLayer->setRenderer(&renderer);
-            }
+                DictionaryRenderer* renderer = new DictionaryRenderer(symbolDictionary, symbologyFieldOverrides, textFieldOverrides, this);
+                layer->setRenderer(renderer);
 
-            for (FeatureLayer* pLayer : m_layers)
-            {
                 // Check to see if all layers have loaded
-                connect(pLayer, &FeatureLayer::loadStatusChanged, [this](LoadStatus layerLoadStatus)
+                connect(layer, &FeatureLayer::loadStatusChanged, this, [this](LoadStatus layerLoadStatus)
                 {
                     if (layerLoadStatus == LoadStatus::Loaded)
                     {
-                        /*
-                         * Lock this block so that only one thread at a time checks to to see if all
-                         * layers loaded.
-                         */
-                        m_mutexLayers.lock();
+                        m_loadedLayerCount++;
+
+                        if (m_loadedLayerCount == m_geodatabase->geodatabaseFeatureTables().length())
                         {
-                            if (m_layers.length() == m_pGeodatabase->geodatabaseFeatureTables().length())
+                            /**
+                             * If we get here, all the layers loaded. Union the extents and set
+                             * the viewpoint.
+                             */
+                            LayerListModel* layers = m_mapView->map()->operationalLayers();
+                            if (layers->size() > 0)
                             {
-                                // See if all the layers have loaded
-                                bool foundNonLoadedLayer = false;
-                                for (FeatureLayer* pLayer : m_layers)
+                                Envelope bbox = layers->at(0)->fullExtent();
+                                for (int j = 1; j < layers->size(); j++)
                                 {
-                                    if (pLayer->loadStatus() != LoadStatus::Loaded)
-                                    {
-                                        foundNonLoadedLayer = true;
-                                        break;
-                                    }
+                                    bbox = GeometryEngine::unionOf(bbox, layers->at(j)->fullExtent());
                                 }
-
-                                if (!foundNonLoadedLayer)
-                                {
-                                    /**
-                                     * If we get here, all the layers loaded. Union the extents and set
-                                     * the viewpoint.
-                                     */
-                                    Envelope bbox = m_layers[0]->fullExtent();
-                                    for (FeatureLayer* pLayer : m_layers)
-                                    {
-                                        bbox = GeometryEngine::unionOf(bbox, pLayer->fullExtent());
-                                    }
-
-                                    m_pMapView->setViewpointGeometry(bbox, 300 * m_scaleFactor);
-                                    findChild<QQuickItem*>("progressBar_loading")->setVisible(false);
-                                }
+                                m_mapView->setViewpointGeometry(bbox, 300 * m_scaleFactor);
                             }
+
+                            emit allLayersLoaded();
                         }
-                        m_mutexLayers.unlock();
                     }
-                });
+                }, Qt::DirectConnection);
 
                 // Add the layer to the map
-                LayerListModel* pOperationalLayers = m_pMapView->map()->operationalLayers();
-                pOperationalLayers->append(pLayer);
+                m_mapView->map()->operationalLayers()->append(layer);
             }
         }
     });
-    m_pGeodatabase->load();
+    m_geodatabase->load();
 }
