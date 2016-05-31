@@ -125,9 +125,9 @@ Rectangle {
 
             TextField {
                 id: findText
-
                 width: parent.width * 0.25
                 placeholderText: "Enter a state name to select"
+                inputMethodHints: Qt.ImhNoPredictiveText
                 Keys.onReturnPressed: {
                     query();
                 }
