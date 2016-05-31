@@ -85,17 +85,8 @@ void FeatureLayerDictionaryRenderer::componentComplete()
 
             SymbolDictionary* symbolDictionary = new SymbolDictionary("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
 
-            QList<GeodatabaseFeatureTable*> tables = m_geodatabase->geodatabaseFeatureTables();
-            /**
-             * Create a layer for each table. The tables are in the order they were in the map document
-             * when the Runtime geodatabase was created, with the top layer first. When we add layers
-             * to the Runtime map, the first layer added is displayed on the bottom, and the last layer
-             * added is displayed on top. Therefore, we loop backward to display the top layer on top and
-             * the bottom layer on the bottom.
-             */
-            for (int i = tables.length() - 1; i >= 0 ; i--)
+            foreach (auto table, m_geodatabase->geodatabaseFeatureTables())
             {
-                GeodatabaseFeatureTable* table = tables[i];
                 FeatureLayer* layer = new FeatureLayer(table, this);
                 // Each layer needs its own renderer, though all renderers can share the SymbolDictionary.
                 DictionaryRenderer* renderer = new DictionaryRenderer(symbolDictionary, symbologyFieldOverrides, textFieldOverrides, this);
@@ -130,8 +121,11 @@ void FeatureLayerDictionaryRenderer::componentComplete()
                     }
                 }, Qt::DirectConnection);
 
-                // Add the layer to the map
-                m_mapView->map()->operationalLayers()->append(layer);
+                /**
+                 * Add the layer to the map. Inserting at index 0 puts the layer below previously added
+                 * layers.
+                 */
+                m_mapView->map()->operationalLayers()->insert(0, layer);
             }
         }
     });
