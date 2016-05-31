@@ -1,0 +1,17 @@
+{
+    "source" :  "GraphicsOverlay_DictionaryRenderer_3D.qml",
+    "description" : "GraphicsOverlay_DictionaryRenderer_3D.html",
+    "thumbnail" : "GraphicsOverlay_DictionaryRenderer_3D.jpg",
+    "name" : "Graphics overlay (dictionary renderer) 3D",
+    "dataItems" : [
+        {
+            "itemId" : "4581a9a92c214240a79e15482a2e8349",
+            "path" : "~/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
+        },
+        {
+            "itemId" : "623382e0113d40698538f249e3bcb1c0",
+            "path" : "~/ArcGIS/Runtime/Data/xml/Mil2525DMessages.xml"
+        }
+    ]
+}
+
