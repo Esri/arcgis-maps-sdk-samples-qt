@@ -154,9 +154,9 @@ void GraphicsOverlayDictionaryRenderer::createGraphic(QVariantMap rawAttributes)
             // Apparently it's a line
             builder = new PolylineBuilder(sr);
         }
-        for (int i = 0; i < pointStrings.length(); i++)
+        foreach (auto pointString, pointStrings)
         {
-            QStringList coords = pointStrings[i].split(",");
+            QStringList coords = pointString.split(",");
             if (coords.length() >= 2)
             {
                 builder->addPoint(coords[0].toDouble(), coords[1].toDouble());
