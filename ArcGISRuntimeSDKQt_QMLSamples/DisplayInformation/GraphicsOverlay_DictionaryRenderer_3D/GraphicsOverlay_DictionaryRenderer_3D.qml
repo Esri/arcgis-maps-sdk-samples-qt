@@ -40,6 +40,7 @@ Rectangle {
         }
         GraphicsOverlay {
             id: graphicsOverlay
+            renderingMode: Enums.GraphicsRenderingModeDynamic
 
             DictionaryRenderer {
                 SymbolDictionary {
