@@ -1,6 +1,6 @@
 #Graphics overlay (dictionary renderer)
 
-This sample demonstrates applying a dictionary renderer to graphics, in order to display military symbology without the need for a feature layer.
+This sample demonstrates applying a dictionary renderer to graphics, in order to display military symbology without the need for a feature table.
 
 ![](screenshot.png)
 

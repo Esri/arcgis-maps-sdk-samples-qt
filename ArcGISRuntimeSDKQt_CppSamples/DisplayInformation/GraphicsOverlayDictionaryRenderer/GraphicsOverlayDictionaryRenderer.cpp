@@ -86,35 +86,47 @@ void GraphicsOverlayDictionaryRenderer::parseXmlFile()
         xmlFile.open(QIODevice::ReadOnly | QIODevice::Text);
     }
     m_xmlParser.setDevice(&xmlFile);
+
+    // Traverse the XML in a loop
     while (!m_xmlParser.atEnd())
     {
         m_xmlParser.readNext();
+
+        // Is this the start or end of a message element?
         if (m_xmlParser.name() == "message")
         {
-            readingMessage = !readingMessage;
-            if (readingMessage)
+            if (!readingMessage)
             {
+                // This is the start of a message element.
                 elementValues.clear();
             }
             else
             {
                 /**
-                 * Here we have a complete message that defines a military feature to display on the
-                 * map. Create a graphic from its attributes.
+                 * This is the end of a message element. Here we have a complete message that defines
+                 * a military feature to display on the map. Create a graphic from its attributes.
                  */
                 createGraphic(elementValues);
             }
+            // Either we just started reading a message, or we just finished reading a message.
+            readingMessage = !readingMessage;
         }
+        // Are we already inside a message element?
         else if (readingMessage)
         {
+            // Is this the start of an element inside a message?
             if (m_xmlParser.isStartElement())
             {
+                // Remember which element we're reading
                 currentElementName = m_xmlParser.name().toString();
             }
+            // Is this text?
             else if (m_xmlParser.isCharacters())
             {
+                // Is this text inside an element?
                 if (!currentElementName.isEmpty())
                 {
+                    // Get the text and store it as the current element's value
                     QStringRef trimmedText = m_xmlParser.text().trimmed();
                     if (!trimmedText.isEmpty())
                     {
@@ -140,30 +152,9 @@ void GraphicsOverlayDictionaryRenderer::createGraphic(QVariantMap rawAttributes)
         geom = Point(coords[0].toDouble(), coords[1].toDouble(), sr);
     }
     else {
-        MultipartBuilder* builder = nullptr;
-        if (pointStrings.length() >= 3 && pointStrings[0] == pointStrings[pointStrings.length() - 1])
-        {
-            /**
-             * If there are at least three points and the first and last points are
-             * equivalent, assume it's a polygon.
-             */
-            builder = new PolygonBuilder(sr);
-        }
-        else
-        {
-            // Apparently it's a line
-            builder = new PolylineBuilder(sr);
-        }
-        foreach (auto pointString, pointStrings)
-        {
-            QStringList coords = pointString.split(",");
-            if (coords.length() >= 2)
-            {
-                builder->addPoint(coords[0].toDouble(), coords[1].toDouble());
-            }
-        }
+        // It's a polygon or polyline
+        MultipartBuilder* builder = createBuilderFromPoints(pointStrings, sr);
         geom = builder->toGeometry();
-        delete builder;
     }
 
     if (!geom.isEmpty())
@@ -180,6 +171,35 @@ void GraphicsOverlayDictionaryRenderer::createGraphic(QVariantMap rawAttributes)
 
         m_bbox = m_bbox.isEmpty() ? geom.extent() : GeometryEngine::unionOf(m_bbox, geom).extent();
     }
+}
+
+MultipartBuilder* GraphicsOverlayDictionaryRenderer::createBuilderFromPoints(
+        QStringList pointStrings,
+        SpatialReference sr)
+{
+    MultipartBuilder* builder = nullptr;
+    if (pointStrings.length() >= 3 && pointStrings[0] == pointStrings[pointStrings.length() - 1])
+    {
+        /**
+         * If there are at least three points and the first and last points are
+         * equivalent, assume it's a polygon.
+         */
+        builder = new PolygonBuilder(sr, this);
+    }
+    else
+    {
+        // It's a line
+        builder = new PolylineBuilder(sr, this);
+    }
+    foreach (auto pointString, pointStrings)
+    {
+        QStringList coords = pointString.split(",");
+        if (coords.length() >= 2)
+        {
+            builder->addPoint(coords[0].toDouble(), coords[1].toDouble());
+        }
+    }
+    return builder;
 }
 
 void GraphicsOverlayDictionaryRenderer::zoomToGraphics()
