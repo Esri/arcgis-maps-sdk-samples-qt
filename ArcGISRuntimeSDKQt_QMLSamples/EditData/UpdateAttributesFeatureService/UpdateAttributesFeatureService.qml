@@ -84,8 +84,8 @@ Rectangle {
                         while (selectedFeaturesResult.iterator.hasNext) {
                             // obtain the feature
                             var feat = selectedFeaturesResult.iterator.next();
-                            // set the new attribute value
-                            feat.setAttributeValue("typdamage", damageComboBox.currentText);
+                            // replace the attribute value
+                            feat.attributes.replaceAttribute("typdamage", damageComboBox.currentText);
                             // update the feature in the feature table asynchronously
                             featureTable.updateFeature(feat);                            
                         }
@@ -99,7 +99,7 @@ Rectangle {
                             return;
 
                         selectedFeature = selectFeaturesResult.iterator.next();
-                        damageType = selectedFeature.attributes["typdamage"];
+                        damageType = selectedFeature.attributes.attributeValue("typdamage");
 
                         // show the callout
                         callout.x = mousePointX;
@@ -139,7 +139,7 @@ Rectangle {
             if (identifyLayerStatus === Enums.TaskStatusCompleted) {
                 if (identifyLayerResult.geoElements.length > 0) {
                     // get the objectid of the identifed object
-                    params.objectIds = [identifyLayerResult.geoElements[0].attributes["objectid"]];
+                    params.objectIds = [identifyLayerResult.geoElements[0].attributes.attributeValue("objectid")];
                     // query for the feature using the objectid
                     featureLayer.selectFeaturesWithQuery(params, Enums.SelectionModeNew);
                 }
@@ -258,7 +258,7 @@ Rectangle {
                         if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
                             selectedFeature.onLoadStatusChanged.disconnect(doUpdateAttribute);
 
-                            selectedFeature.setAttributeValue("typdamage", damageComboBox.currentText);
+                            selectedFeature.attributes.replaceAttribute("typdamage", damageComboBox.currentText);
                             // update the feature in the feature table asynchronously
                             featureTable.updateFeature(selectedFeature);
                         }
