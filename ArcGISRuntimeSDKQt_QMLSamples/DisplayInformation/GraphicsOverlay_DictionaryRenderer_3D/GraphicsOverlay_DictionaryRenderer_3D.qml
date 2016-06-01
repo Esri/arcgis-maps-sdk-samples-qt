@@ -116,9 +116,9 @@ Rectangle {
                         element._wkid = undefined;
 
                         var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                            attributes: element,
                             geometry: geom
                         });
+                        graphic.attributes.attributesJson = element;
                         graphicsOverlay.graphics.append(graphic);
 
                         if (bbox) {
