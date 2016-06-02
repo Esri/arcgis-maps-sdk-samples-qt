@@ -118,8 +118,8 @@ void FindAddress::connectSignals()
     {
         if (identifyResults.length() > 0)
         {
-            m_calloutText = identifyResults.at(0)->attributeValue("Match_addr").toString();
-            m_calloutDetailedText = identifyResults.at(0)->attributeValue("Place_addr").toString();
+            m_calloutText = identifyResults.at(0)->attributes()->attributeValue("Match_addr").toString();
+            m_calloutDetailedText = identifyResults.at(0)->attributes()->attributeValue("Place_addr").toString();
             emit showCallout(m_screenX, m_screenY, m_calloutText, m_calloutDetailedText);
         }
     });

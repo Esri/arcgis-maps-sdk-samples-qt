@@ -119,7 +119,7 @@ void UpdateAttributesFeatureService::connectSignals()
 
             // obtain the selected feature with attributes
             QueryParameters queryParams;
-            QString whereClause = "objectid=" + static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0))->attributeValue("objectid").toString();
+            QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
             queryParams.setWhereClause(whereClause);
             m_featureTable->queryFeatures(queryParams);
         }
@@ -136,7 +136,7 @@ void UpdateAttributesFeatureService::connectSignals()
 
             // set selected feature member
             m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-            m_featureType = m_selectedFeature->attributeValue("typdamage").toString();
+            m_featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
             emit featureTypeChanged();
             emit featureSelected();
         }
@@ -179,7 +179,7 @@ void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)
             disconnect(m_selectedFeature, &ArcGISFeature::loadStatusChanged, 0, 0); // bad...
 
             // update the select feature's attribute value
-            m_selectedFeature->setAttributeValue("typdamage", fieldVal);
+            m_selectedFeature->attributes()->replaceAttribute("typdamage", fieldVal);
 
             // update the feature in the feature table
             m_featureTable->updateFeature(m_selectedFeature);

@@ -126,10 +126,8 @@ Rectangle {
                         element._control_points = undefined;
                         element._wkid = undefined;
 
-                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                            attributes: element,
-                            geometry: geom
-                        });
+                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: geom });
+                        graphic.attributes.attributesJson = element;
                         graphicsOverlay.graphics.append(graphic);
 
                         if (bbox) {

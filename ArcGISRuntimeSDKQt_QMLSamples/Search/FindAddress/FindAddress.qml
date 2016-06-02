@@ -58,8 +58,8 @@ Rectangle {
             if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted) {
                 if (identifyGraphicsOverlayResults.length > 0) {
                     // setup the attributes
-                    calloutText = identifyGraphicsOverlayResults[0].attributes["Match_addr"];
-                    calloutDetailText = identifyGraphicsOverlayResults[0].attributes["Place_addr"];
+                    calloutText = identifyGraphicsOverlayResults[0].attributes.attributeValue("Match_addr");
+                    calloutDetailText = identifyGraphicsOverlayResults[0].attributes.attributeValue("Place_addr");
 
                     // show the callout
                     callout.x = mousePointX - (callout.width / 2);
@@ -95,7 +95,7 @@ Rectangle {
                     graphicsOverlay.graphics.clear();
                     var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
                     graphic.geometry = geocodeResults[0].displayLocation;
-                    graphic.attributes = geocodeResults[0].attributes;
+                    graphic.attributes.attributesJson = geocodeResults[0].attributes;
                     graphicsOverlay.graphics.append(graphic);
                     mapView.setViewpointGeometry(geocodeResults[0].extent);
                 }
