@@ -79,7 +79,7 @@ Rectangle {
         id: pointSymbol
         style: Enums.SimpleMarkerSymbolStyleDiamond
         color: "red"
-        size: 10 * scaleFactor
+        size: 10
     }
 
     // line symbol for the line graphic
