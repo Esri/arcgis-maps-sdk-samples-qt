@@ -120,7 +120,7 @@ void DeleteFeaturesFeatureService::connectSignals()
 
             // select the item in the result
             QueryParameters query;
-            query.setObjectIds(QList<qint64>() << static_cast<Feature*>(identifyResult->geoElements().at(0))->attributes()["objectid"].toInt());
+            query.setObjectIds(QList<qint64>() << identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toLongLong());
             m_featureLayer->selectFeatures(query, SelectionMode::New);
 
             // set selected feature member
@@ -136,7 +136,7 @@ void DeleteFeaturesFeatureService::connectSignals()
         {
             Feature* feat = iter.next();
             // emit signal for QML
-            m_featureType = feat->attributes()["typdamage"].toString();
+            m_featureType = feat->attributes()->attributeValue("typdamage").toString();
             emit featureTypeChanged();
             emit featureSelected();
         }

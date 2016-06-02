@@ -124,7 +124,7 @@ void EditFeatureAttachments::connectSignals()
 
             // obtain the selected feature with attributes
             QueryParameters queryParams;
-            m_whereClause = "objectid=" + static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0))->attributeValue("objectid").toString();
+            m_whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
             queryParams.setWhereClause(m_whereClause);
             m_featureTable->queryFeatures(queryParams);
         }
@@ -142,7 +142,7 @@ void EditFeatureAttachments::connectSignals()
 
             // set selected feature and attachment model members
             m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-            m_featureType = m_selectedFeature->attributeValue("typdamage").toString();
+            m_featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
             emit featureTypeChanged();
             emit featureSelected();
             emit attachmentModelChanged();
