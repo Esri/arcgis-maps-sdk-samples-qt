@@ -106,7 +106,7 @@ Rectangle {
         id: buoyMarkerSymbol
         style: Enums.SimpleMarkerSymbolStyleCircle
         color: "red"
-        size: 10 * scaleFactor
+        size: 10
     }
 
     // text location 1: craigleith (immutable once created)
