@@ -73,7 +73,7 @@ void GraphicsOverlayDictionaryRenderer_3D::componentComplete()
 
     parseXmlFile();
 
-    emit graphicsLoaded();
+    zoomToGraphics();
 }
 
 void GraphicsOverlayDictionaryRenderer_3D::parseXmlFile()

@@ -28,10 +28,6 @@ GraphicsOverlayDictionaryRenderer_3DSample {
     property real scaleFactor: System.displayScaleFactor
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
-    onGraphicsLoaded: {
-        zoomToGraphics();
-    }
-
     onZoomToGraphicsCompleted: {
         progressBar_loading.visible = false;
     }

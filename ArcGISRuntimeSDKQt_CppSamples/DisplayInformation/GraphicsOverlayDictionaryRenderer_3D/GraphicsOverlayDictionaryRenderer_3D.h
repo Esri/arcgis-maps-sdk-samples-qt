@@ -43,11 +43,7 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
 
 signals:
-    void graphicsLoaded();
     void zoomToGraphicsCompleted(bool succeeded);
-
-public slots:
-    void zoomToGraphics();
 
 private:
     static const QString FIELD_CONTROL_POINTS;
@@ -55,6 +51,7 @@ private:
 
     void parseXmlFile();
     void createGraphic(QVariantMap rawAttributes);
+    void zoomToGraphics();
 
     double m_scaleFactor;
     QString m_dataPath;

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Graphics overlay (dictionary renderer)</string>
+	<string>Graphics overlay (dictionary renderer) 3D</string>
 	<key>CFBundleExecutable</key>
 	<string>GraphicsOverlayDictionaryRenderer_3D</string>
 	<key>CFBundleGetInfoString</key>
