@@ -43,7 +43,7 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
 
 signals:
-    void zoomToGraphicsCompleted(bool succeeded);
+    void graphicsLoaded();
 
 private:
     static const QString FIELD_CONTROL_POINTS;
