@@ -27,7 +27,7 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property Point stop1Geometry: null
     property Point stop2Geometry: null
-    property RouteParameters routeParameters: null
+    property var routeParameters: null
     property var directionListModel: null
 
     // Create window for displaying the route directions
