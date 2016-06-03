@@ -4,5 +4,7 @@
         <file>GraphicsOverlayDictionaryRenderer.png</file>
         <file>GraphicsOverlayDictionaryRenderer.qml</file>
         <file>GraphicsOverlayDictionaryRenderer.html</file>
+        <file>GraphicsOverlayDictionaryRenderer.cpp</file>
+        <file>GraphicsOverlayDictionaryRenderer.h</file>
     </qresource>
 </RCC>

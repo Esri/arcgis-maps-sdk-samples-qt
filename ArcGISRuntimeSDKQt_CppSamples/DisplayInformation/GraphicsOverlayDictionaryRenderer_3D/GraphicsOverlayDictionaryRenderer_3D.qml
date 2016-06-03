@@ -28,9 +28,7 @@ GraphicsOverlayDictionaryRenderer_3DSample {
     property real scaleFactor: System.displayScaleFactor
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
-    onZoomToGraphicsCompleted: {
-        progressBar_loading.visible = false;
-    }
+    onGraphicsLoaded: progressBar_loading.visible = false;
 
     // Create SceneView here, and create its Scene and GraphicsOverlay in C++ code
     SceneView {
