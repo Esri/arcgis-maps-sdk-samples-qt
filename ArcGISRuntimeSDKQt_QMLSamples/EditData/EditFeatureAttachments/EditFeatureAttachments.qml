@@ -276,8 +276,12 @@ Rectangle {
                                 msgDialog.open();
                             } else {
                                 // delete the attachment from the table
-                                selectedFeature.onLoadStatusChanged.connect(doDeleteAttachment);
-                                selectedFeature.load();
+                                if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
+                                    selectedFeature.attachments.deleteAttachmentWithIndex(attachmentsList.currentIndex);
+                                } else {
+                                    selectedFeature.onLoadStatusChanged.connect(doDeleteAttachment);
+                                    selectedFeature.load();
+                                }
                             }
                         }
                     }
@@ -364,8 +368,12 @@ Rectangle {
         onAccepted: {
             // add the attachment to the feature table
             fileInfo.url = fileDialog.fileUrl;
-            selectedFeature.onLoadStatusChanged.connect(doAddAttachment);
-            selectedFeature.load();
+            if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
+                selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
+            } else {
+                selectedFeature.onLoadStatusChanged.connect(doAddAttachment);
+                selectedFeature.load();
+            }
         }
     }
     //! [EditFeatures add attachment from a file dialog]
