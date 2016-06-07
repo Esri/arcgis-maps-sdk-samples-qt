@@ -208,33 +208,50 @@ void EditFeatureAttachments::addAttachment(QUrl fileUrl, QString contentType, QS
     if (QFile::exists(fileUrl.toLocalFile()))
     {
         disconnect(m_attachmentConnection); // disconnect previous connection if necessary
-        m_attachmentConnection = connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
-                this, [this, fileUrl, contentType, fileName](Esri::ArcGISRuntime::LoadStatus)
+
+        if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
         {
-            if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
+            QFile file(fileUrl.toLocalFile());
+            m_selectedFeature->attachments()->addAttachment(&file, contentType, fileName);
+        }
+        else
+        {
+            m_attachmentConnection = connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
+                    this, [this, fileUrl, contentType, fileName](Esri::ArcGISRuntime::LoadStatus)
             {
-                QFile file(fileUrl.toLocalFile());
-                disconnect(m_attachmentConnection);
-                m_selectedFeature->attachments()->addAttachment(&file, contentType, fileName);
-            }
-        });
-        m_selectedFeature->load();
+                if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
+                {
+                    QFile file(fileUrl.toLocalFile());
+                    disconnect(m_attachmentConnection);
+                    m_selectedFeature->attachments()->addAttachment(&file, contentType, fileName);
+                }
+            });
+            m_selectedFeature->load();
+        }
     }
 }
 
 void EditFeatureAttachments::deleteAttachment(int index)
 {
     disconnect(m_attachmentConnection); // disconnect previous connection if necessary
-    m_attachmentConnection = connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
-            this, [this, index](Esri::ArcGISRuntime::LoadStatus)
+
+    if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
     {
-        if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
+        m_selectedFeature->attachments()->deleteAttachment(index);
+    }
+    else
+    {
+        m_attachmentConnection = connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
+                this, [this, index](Esri::ArcGISRuntime::LoadStatus)
         {
-            disconnect(m_attachmentConnection);
-            m_selectedFeature->attachments()->deleteAttachment(index);
-        }
-    });
-    m_selectedFeature->load();
+            if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
+            {
+                disconnect(m_attachmentConnection);
+                m_selectedFeature->attachments()->deleteAttachment(index);
+            }
+        });
+        m_selectedFeature->load();
+    }
 }
 
 int EditFeatureAttachments::attachmentCount() const
