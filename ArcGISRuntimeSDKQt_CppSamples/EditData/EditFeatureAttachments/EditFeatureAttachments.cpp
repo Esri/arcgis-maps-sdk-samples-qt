@@ -126,12 +126,12 @@ void EditFeatureAttachments::connectSignals()
             QueryParameters queryParams;
             m_whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
             queryParams.setWhereClause(m_whereClause);
-            m_featureTable->queryFeatures(queryParams);
+            m_featureLayer->selectFeatures(queryParams, SelectionMode::New);
         }
     });
 
     // connect to the queryFeaturesCompleted signal on the feature table
-    connect(m_featureTable, &FeatureTable::queryFeaturesCompleted,
+    connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted,
             this, [this](QUuid, QSharedPointer<FeatureQueryResult> featureQueryResult)
     {
         if (featureQueryResult->iterator().hasNext())
