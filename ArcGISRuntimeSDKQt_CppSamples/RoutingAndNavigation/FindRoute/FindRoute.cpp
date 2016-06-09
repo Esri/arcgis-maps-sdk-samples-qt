@@ -165,25 +165,28 @@ DirectionManeuverListModel* FindRoute::directions()
 
 void FindRoute::solveRoute()
 {
-    if (!m_routeParameters.isEmpty())
+    if (m_routeTask->loadStatus() == LoadStatus::Loaded)
     {
-        // set parameters to return directions
-        m_routeParameters.setReturnDirections(true);
+        if (!m_routeParameters.isEmpty())
+        {
+            // set parameters to return directions
+            m_routeParameters.setReturnDirections(true);
 
-        // clear previous route graphics
-        m_routeGraphicsOverlay->graphics()->clear();
+            // clear previous route graphics
+            m_routeGraphicsOverlay->graphics()->clear();
 
-        // clear previous stops from the parameters
-        m_routeParameters.clearStops();
+            // clear previous stops from the parameters
+            m_routeParameters.clearStops();
 
-        // set the stops to the parameters
-        Stop stop1(m_stopsGraphicsOverlay->graphics()->at(0)->geometry());
-        stop1.setName("Origin");
-        Stop stop2(m_stopsGraphicsOverlay->graphics()->at(1)->geometry());
-        stop2.setName("Destination");
-        m_routeParameters.setStops(QList<Stop>() << stop1 << stop2);
+            // set the stops to the parameters
+            Stop stop1(m_stopsGraphicsOverlay->graphics()->at(0)->geometry());
+            stop1.setName("Origin");
+            Stop stop2(m_stopsGraphicsOverlay->graphics()->at(1)->geometry());
+            stop2.setName("Destination");
+            m_routeParameters.setStops(QList<Stop>() << stop1 << stop2);
 
-        // solve the route with the parameters
-        m_routeTask->solveRoute(m_routeParameters);
+            // solve the route with the parameters
+            m_routeTask->solveRoute(m_routeParameters);
+        }
     }
 }
