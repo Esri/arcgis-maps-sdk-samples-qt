@@ -1,4 +1,4 @@
-// [WriteFile Name=GORenderers, Category=DisplayInformation]
+// [WriteFile Name=BasicSceneView, Category=Scene]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -42,7 +42,7 @@ Rectangle {
                 }
             }
 
-            // set the viewpoint extent...viewpoint extent is a default property ofthe scene
+            // set the viewpoint extent...viewpoint extent is a default property of the scene
             ViewpointExtent{
                 Envelope {
                     xMin: 83.70
