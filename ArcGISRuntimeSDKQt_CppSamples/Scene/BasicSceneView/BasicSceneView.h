@@ -15,7 +15,7 @@
 // [Legal]
 
 #ifndef BASIC_SCENEVIEW_H
-#define BASICS_SCENEVIEW_H
+#define BASIC_SCENEVIEW_H
 
 namespace Esri
 {
