@@ -4,5 +4,7 @@
         <file>FeatureLayerDictionaryRenderer.png</file>
         <file>FeatureLayerDictionaryRenderer.qml</file>
         <file>FeatureLayerDictionaryRenderer.html</file>
+        <file>FeatureLayerDictionaryRenderer.cpp</file>
+        <file>FeatureLayerDictionaryRenderer.h</file>
     </qresource>
 </RCC>
