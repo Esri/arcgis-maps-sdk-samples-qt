@@ -42,7 +42,7 @@ void BasicSceneView::componentComplete()
     m_sceneView = findChild<SceneQuickView*>("sceneView");
 
     // create a new basemap instance
-    Basemap* basemap = Basemap::imageryWithLabels(this);
+    Basemap* basemap = Basemap::imagery(this);
     // create a new scene instance
     m_scene = new Scene(basemap, this);
     // set scene on the scene view
@@ -52,5 +52,10 @@ void BasicSceneView::componentComplete()
     ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
     // add the elevation source to the scene to display elevation
     m_scene->baseSurface()->elevationSources()->append(elevationSource);
+
+    // create a camera
+    Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
+    // set the viewpoint
+    m_sceneView->setViewpointCamera(camera);
 }
 
