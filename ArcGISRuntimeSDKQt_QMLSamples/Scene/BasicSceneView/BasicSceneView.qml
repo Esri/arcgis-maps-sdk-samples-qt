@@ -24,8 +24,6 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
-
     // Create a scene view
     SceneView {
         anchors.fill: parent
