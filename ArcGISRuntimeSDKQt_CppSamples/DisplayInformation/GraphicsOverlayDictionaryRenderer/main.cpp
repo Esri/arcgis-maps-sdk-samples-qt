@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/DisplayInformation/GraphicsOverlayDictionaryRenderer/GraphicsOverlayDictionaryRenderer.qml"));
+    view.setSource(QUrl("qrc:/Samples/Display Information/GraphicsOverlayDictionaryRenderer/GraphicsOverlayDictionaryRenderer.qml"));
 
     view.show();
 
