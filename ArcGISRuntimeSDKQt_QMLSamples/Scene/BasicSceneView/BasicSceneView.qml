@@ -41,31 +41,25 @@ Rectangle {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
-
-            // set the viewpoint extent...viewpoint extent is a default property of the scene
-            ViewpointExtent{
-                Envelope {
-                    xMin: 83.70
-                    yMin: 28.69
-                    xMax: 84.31
-                    yMax: 29.15
-                    spatialReference: SpatialReference.createWgs84()
-                }
-
-                // create a camera object..camera is a default property of viewpoint extent
-                Camera {
-                    id: camera
-                    location: Point {
-                        x: 83.9
-                        y: 28.4
-                        z: 10010.0
-                        spatialReference: SpatialReference.createWgs84()
-                    }
-                    pitch: 80.0
-                    roll: 300.0
-                    heading: 10.0
-                }
-            }
         }
+
+        Component.onCompleted: {
+            // set viewpoint to the specified camera
+            setViewpointCamera(camera);
+        }
+    }
+
+    // create the camera to be used as the scene view's viewpoint
+    Camera {
+        id: camera
+        location: Point {
+            x: 83.9
+            y: 28.4
+            z: 10010.0
+            spatialReference: SpatialReference.createWgs84()
+        }
+        heading: 10.0
+        pitch: 80.0
+        roll: 300.0
     }
 }
