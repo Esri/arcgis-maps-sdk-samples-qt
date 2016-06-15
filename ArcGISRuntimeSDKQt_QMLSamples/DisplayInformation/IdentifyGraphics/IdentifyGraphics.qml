@@ -62,9 +62,9 @@ Rectangle {
             }
         }
 
-        // Signal handler for mouse click event on the map
+        // Signal handler for mouse click event on the map view
         onMouseClicked: {
-            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 22 * scaleFactor, 1000);
+            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 22, 1000);
         }
     }
 
