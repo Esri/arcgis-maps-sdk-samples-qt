@@ -79,7 +79,7 @@ Rectangle {
         }
 
         onMouseClicked: {
-            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 22 * scaleFactor, 1000);
+            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 22, 1000);
         }
 
         onIdentifyLayerStatusChanged: {

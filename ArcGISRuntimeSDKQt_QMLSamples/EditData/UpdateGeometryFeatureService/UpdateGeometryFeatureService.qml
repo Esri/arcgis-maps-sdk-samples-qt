@@ -130,7 +130,7 @@ Rectangle {
                 featureLayer.selectedFeatures();
             } else {
                 // call identify on the mapview
-                mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10 * scaleFactor);
+                mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10);
             }
         }
 
