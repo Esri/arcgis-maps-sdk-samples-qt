@@ -97,6 +97,7 @@ iOS      | `<your app bundle>`| `<appbundle>/ArcGIS/Runtime/Data`  |
 ## Resources
 
 * [ArcGIS Runtime QtSDK Resource Center](https://developers.arcgis.com/qt/quartz/)
+* [Qt and QML](http://www.qt.io/)
 * [ArcGIS Blog](http://blogs.esri.com/esri/arcgis/)
 * [twitter@esri](http://twitter.com/esri)
 
