@@ -18,7 +18,7 @@ If you haven't already, fork [the repo](https://github.com/Esri/arcgis-runtime-s
 Open your terminal, navigate to your working directory, use ```git clone``` to get a copy of the repo.
 
 ```
-# Clones your fork of the repository into the current directory in terminal
+# Clone your fork of the repository into the current directory in terminal
 $ git clone https://github.com/YOUR-USERNAME/arcgis-runtime-samples-qt.git
 ```
 
