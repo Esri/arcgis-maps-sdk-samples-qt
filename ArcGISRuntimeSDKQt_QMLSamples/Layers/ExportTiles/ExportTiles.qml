@@ -61,7 +61,7 @@ Rectangle {
 
         function executeExportTileCacheTask(params) {
             // execute the asynchronous task and obtain the job
-            var exportJob = exportTask.exportTileCacheWithParameters(params, outputTileCache);
+            var exportJob = exportTask.exportTileCache(params, outputTileCache);
 
             // check if job is valid
             if (exportJob) {
