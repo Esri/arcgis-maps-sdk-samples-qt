@@ -43,6 +43,17 @@ Rectangle {
                     url: tiledServiceUrl
                 }
             }
+
+            // set an initial viewpoint
+            ViewpointExtent {
+                Envelope {
+                    xMax: 12362601.050868368
+                    xMin: 10187678.26582548
+                    yMax: 2567213.6854449743
+                    yMin: 936021.5966628084
+                    spatialReference: SpatialReference.createWebMercator()
+                }
+            }
         }
     }
 
