@@ -66,6 +66,11 @@ void GenerateGeodatabase::componentComplete()
     Basemap* basemap = new Basemap(tiledLayer, this);
     m_map = new Map(basemap, this);
 
+    // set an initial viewpoint
+    Envelope env(-122.50017, 37.74500, -122.43843, 37.81638, SpatialReference(4326));
+    Viewpoint viewpoint(env);
+    m_map->setInitialViewpoint(viewpoint);
+
     // Set map to map view
     m_mapView->setMap(m_map);
 

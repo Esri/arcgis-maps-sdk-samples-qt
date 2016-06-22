@@ -58,6 +58,11 @@ void ExportTiles::componentComplete()
     // create a new map instance
     m_map = new Map(basemap, this);
 
+    // set an initial viewpoint
+    Envelope env(12362601, 936021, 10187678, 2567213, SpatialReference(3857));
+    Viewpoint viewpoint(env);
+    m_map->setInitialViewpoint(viewpoint);
+
     // set map on the map view
     m_mapView->setMap(m_map);
 
