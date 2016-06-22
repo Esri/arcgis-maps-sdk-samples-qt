@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayMap, Category=Maps]
+// [WriteFile Name=BasicSceneView, Category=Scenes]
 // [Legal]
 // Copyright 2015 Esri.
 
