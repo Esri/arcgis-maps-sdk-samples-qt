@@ -54,6 +54,17 @@ Rectangle {
                     featureServiceInfo.load();
                 }
             }
+
+            // set an initial viewpoint
+            ViewpointExtent {
+                Envelope {
+                    xMax: -122.43843016064368
+                    xMin: -122.50017717584528
+                    yMax: 37.81638388695054
+                    yMin: 37.745000054347535
+                    spatialReference: SpatialReference.createWgs84()
+                }
+            }
         }
     }
 
