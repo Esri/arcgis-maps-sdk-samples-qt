@@ -59,8 +59,9 @@ void DisplaySceneLayer::componentComplete()
     m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
     // create a camera and set the initial viewpoint
-    Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
-    Viewpoint initViewpoint(Point(-4.49779155626782, 48.38282454039932, m_sceneView->spatialReference()), 62.0132, camera);
+    Point pt(-4.49779155626782, 48.38282454039932, 62.013264927081764, SpatialReference(4326));
+    Camera camera(pt, 41.64729875588979, 71.2017391571523, 2.194677223e-314);
+    Viewpoint initViewpoint(pt, camera);
     m_scene->setInitialViewpoint(initViewpoint);
 
     // set scene on the scene view
