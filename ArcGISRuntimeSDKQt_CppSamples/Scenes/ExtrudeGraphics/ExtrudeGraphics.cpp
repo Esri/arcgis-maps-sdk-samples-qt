@@ -40,7 +40,7 @@ ExtrudeGraphics::ExtrudeGraphics(QQuickItem* parent) :
     m_maxZ(1000),
     m_size(0.01)
 {
-  srand(time(nullptr));
+    srand(time(nullptr));
 }
 
 ExtrudeGraphics::~ExtrudeGraphics()
