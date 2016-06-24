@@ -25,7 +25,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
 
     // Map view UI presentation at top
     MapView {
@@ -47,7 +47,7 @@ Rectangle {
             // create a basemap from a local vector tile package
             Basemap {
                 ArcGISVectorTiledLayer {
-                    url: System.resolvedPathUrl(dataPath + "vtpk/LosAngeles.vtpk")
+                    url: dataPath + "vtpk/LosAngeles.vtpk"
                 }
             }
 
