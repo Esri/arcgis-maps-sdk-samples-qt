@@ -1,0 +1,6 @@
+{
+    "source" :  "ExtrudeGraphics",
+    "description" : "ExtrudeGraphics.html",
+    "thumbnail" : "ExtrudeGraphics.png",
+    "name" : "Extrude graphics in the z direction"
+}
