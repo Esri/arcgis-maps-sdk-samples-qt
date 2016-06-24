@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/BasicSceneView">
+        <file>BasicSceneView.html</file>
+        <file alias="sample.json">BasicSceneView.json</file>
+        <file>BasicSceneView.png</file>
+        <file>BasicSceneView.qml</file>
+    </qresource>
+</RCC>
