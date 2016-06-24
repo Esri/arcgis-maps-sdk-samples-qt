@@ -103,11 +103,8 @@ Rectangle {
                              createPoint(item.x + size, item.y, z),
                              createPoint(item.x + size, item.y + size, z),
                              createPoint(item.x, item.y + size, z)];
-            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
-            graphic.symbol = sfs;
-            var attribListModel = graphic.attributes;
-            attribListModel.insertAttribute("height", z);
-            graphic.geometry = createPolygonFromPoints(newPoints);
+            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {symbol: sfs, geometry: createPolygonFromPoints(newPoints)});
+            graphic.attributes.insertAttribute("height", z);
             graphicsOverlay.graphics.append(graphic);
         });
     }
