@@ -85,11 +85,6 @@ Rectangle {
         color: "red"
     }
 
-    Graphic {
-        id: graphic
-        symbol: sfs
-    }
-
     function createGraphics(){
         var lat = camera.location.x;
         var lng = camera.location.y + 0.2;
@@ -108,6 +103,8 @@ Rectangle {
                              createPoint(item.x + size, item.y, z),
                              createPoint(item.x + size, item.y + size, z),
                              createPoint(item.x, item.y + size, z)];
+            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+            graphic.symbol = sfs;
             var attribListModel = graphic.attributes;
             attribListModel.insertAttribute("height", z);
             graphic.geometry = createPolygonFromPoints(newPoints);
