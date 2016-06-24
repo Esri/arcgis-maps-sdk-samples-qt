@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/Scene/DisplaySceneLayer">
+    <qresource prefix="/Samples/Scenes/DisplaySceneLayer">
         <file>DisplaySceneLayer.html</file>
         <file alias="sample.json">DisplaySceneLayer.json</file>
         <file>DisplaySceneLayer.png</file>
