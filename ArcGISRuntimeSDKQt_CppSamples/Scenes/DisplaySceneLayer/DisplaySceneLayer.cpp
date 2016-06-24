@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplaySceneLayer, Category=Scene]
+// [WriteFile Name=DisplaySceneLayer, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -20,6 +20,10 @@
 #include "SceneQuickView.h"
 #include "Basemap.h"
 #include "ArcGISTiledElevationSource.h"
+#include "ArcGISSceneLayer.h"
+#include "Point.h"
+#include "Viewpoint.h"
+#include "Camera.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -56,7 +60,7 @@ void DisplaySceneLayer::componentComplete()
 
     // create a camera and set the initial viewpoint
     Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
-    Viewpoint initViewpoint(Point(-4.49779155626782, 48.38282454039932), 62.0132, camera);
+    Viewpoint initViewpoint(Point(-4.49779155626782, 48.38282454039932, m_sceneView->spatialReference()), 62.0132, camera);
     m_scene->setInitialViewpoint(initViewpoint);
 
     // set scene on the scene view

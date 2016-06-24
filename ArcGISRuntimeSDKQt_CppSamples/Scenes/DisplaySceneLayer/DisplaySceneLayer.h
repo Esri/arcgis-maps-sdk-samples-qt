@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplaySceneLayer, Category=Scene]
+// [WriteFile Name=DisplaySceneLayer, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
 
