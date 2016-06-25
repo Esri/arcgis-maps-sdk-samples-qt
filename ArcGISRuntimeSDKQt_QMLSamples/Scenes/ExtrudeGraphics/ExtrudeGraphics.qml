@@ -55,7 +55,6 @@ Rectangle {
                     extrusionExpression: "height"
                 }
             }
-
         }
 
         Component.onCompleted: {

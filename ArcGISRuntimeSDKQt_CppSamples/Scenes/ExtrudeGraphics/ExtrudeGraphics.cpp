@@ -88,30 +88,30 @@ void ExtrudeGraphics::componentComplete()
     QList<Point> pointsList;
     for (auto i = 0; i <= 100; i++)
     {
-      Point point(i / 10 * m_size + lat, i % 10 * m_size + lng, m_sceneView->spatialReference());
-      pointsList.append(point);
+        Point point(i / 10 * m_size + lat, i % 10 * m_size + lng, m_sceneView->spatialReference());
+        pointsList.append(point);
     }
 
     foreach (auto point, pointsList)
     {
-      // create a random z value
-      double z = m_maxZ * (rand() % 6 + 1);
-      // create a list of points
-      QList<Point> points;
-      points << Point(point.x(), point.y(), z)
-             << Point(point.x() + m_size, point.y(), z)
-             << Point(point.x() + m_size, point.y() + m_size, z)
-             << Point(point.x(), point.y() + m_size, z);
+        // create a random z value
+        double z = m_maxZ * (rand() % 6 + 1);
+        // create a list of points
+        QList<Point> points;
+        points << Point(point.x(), point.y(), z)
+               << Point(point.x() + m_size, point.y(), z)
+               << Point(point.x() + m_size, point.y() + m_size, z)
+               << Point(point.x(), point.y() + m_size, z);
 
-      // create a new fill symbol to symbolize the graphic
-      SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::red), this);
-      // create a new graphic
-      Graphic* graphic = new Graphic(createPolygonFromPoints(points), sfs, this);
-      // add a height attribute to the graphic using the attribute list model
-      // the extrusion will be applied to this attribute. See the expression above
-      graphic->attributes()->insertAttribute("height", z);
-      // add the graphic to the graphic overlay
-      graphicsOverlay->graphics()->append(graphic);
+        // create a new fill symbol to symbolize the graphic
+        SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::red), this);
+        // create a new graphic
+        Graphic* graphic = new Graphic(createPolygonFromPoints(points), sfs, this);
+        // add a height attribute to the graphic using the attribute list model
+        // the extrusion will be applied to this attribute. See the expression above
+        graphic->attributes()->insertAttribute("height", z);
+        // add the graphic to the graphic overlay
+        graphicsOverlay->graphics()->append(graphic);
     }
 
     m_sceneView->graphicsOverlays()->append(graphicsOverlay);
@@ -120,17 +120,17 @@ void ExtrudeGraphics::componentComplete()
 // helper to create polygon from points
 Esri::ArcGISRuntime::Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Point> points)
 {
-  Esri::ArcGISRuntime::Polygon polygon;
-  if (points.length() == 0)
-    return polygon;
+    Esri::ArcGISRuntime::Polygon polygon;
+    if (points.length() == 0)
+      return polygon;
 
-  // create a polygon builder
-  PolygonBuilder* pb = new PolygonBuilder(m_sceneView->spatialReference(), this);
-  foreach (auto point, points)
-  {
-    // add each point to the builder object
-    pb->addPoint(point);
-  }
-  return polygon = pb->toGeometry();
+    // create a polygon builder
+    PolygonBuilder* pb = new PolygonBuilder(m_sceneView->spatialReference(), this);
+    foreach (auto point, points)
+    {
+      // add each point to the builder object
+      pb->addPoint(point);
+    }
+    return polygon = pb->toGeometry();
 }
 
