@@ -1,4 +1,4 @@
-// [WriteFile Name=BasicSceneView, Category=Scene]
+// [WriteFile Name=DisplaySceneLayer, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -19,7 +19,7 @@ import QtQuick.Controls 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-BasicSceneSample {
+DisplaySceneLayerSample {
     width: 800
     height: 600
 

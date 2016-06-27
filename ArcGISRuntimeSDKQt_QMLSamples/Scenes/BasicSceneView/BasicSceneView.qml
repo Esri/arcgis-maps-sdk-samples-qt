@@ -1,4 +1,4 @@
-// [WriteFile Name=BasicSceneView, Category=Scene]
+// [WriteFile Name=BasicSceneView, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
 

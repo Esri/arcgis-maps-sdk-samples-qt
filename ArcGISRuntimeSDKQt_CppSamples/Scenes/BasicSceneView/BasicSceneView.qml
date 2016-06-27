@@ -1,4 +1,4 @@
-// [WriteFile Name=BasicSceneView, Category=Scene]
+// [WriteFile Name=BasicSceneView, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,34 +14,31 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef BASIC_SCENEVIEW_H
-#define BASIC_SCENEVIEW_H
+import QtQuick 2.6
+import QtQuick.Controls 1.4
+import Esri.Samples 1.0
+import Esri.ArcGISExtras 1.1
 
-namespace Esri
-{
-    namespace ArcGISRuntime
-    {
-        class Scene;
-        class SceneQuickView;
+BasicSceneSample {
+    width: 800
+    height: 600
+
+    property double scaleFactor: System.displayScaleFactor
+
+    // add a mapView component
+    SceneView {
+        anchors.fill: parent
+        objectName: "sceneView"
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
     }
 }
 
-#include <QQuickItem>
-
-class BasicSceneView : public QQuickItem
-{
-    Q_OBJECT
-
-public:
-    BasicSceneView(QQuickItem* parent = 0);
-    ~BasicSceneView();
-
-    void componentComplete() Q_DECL_OVERRIDE;
-
-private:
-    Esri::ArcGISRuntime::Scene* m_scene;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
-};
-
-#endif // BASIC_SCENEVIEW_H
 

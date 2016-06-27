@@ -11,23 +11,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <QSettings>
 #include <QGuiApplication>
 #include <QQuickView>
-#include <QCommandLineParser>
+#include <QUrl>
+#include <QCoreApplication>
 #include <QDir>
 #include <QQmlEngine>
 #include <QSurfaceFormat>
-
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
-#include "SceneQuickView.h"
-#include "BasicSceneView.h"
-#include "ArcGISRuntimeEnvironment.h"
-
-using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
@@ -43,15 +33,11 @@ int main(int argc, char *argv[])
 #endif
     
     QGuiApplication app(argc, argv);
-
+    
 #ifdef Q_OS_WIN
     // Force usage of OpenGL ES through ANGLE on Windows
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
-
-    // Register the map view for QML
-    qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-    qmlRegisterType<BasicSceneView>("Esri.Samples", 1, 0, "BasicSceneSample");
 
     // Intialize application view
     QQuickView view;
@@ -61,11 +47,9 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Scene/BasicSceneView/BasicSceneView.qml"));
- 
+    view.setSource(QUrl("qrc:/Samples/Scenes/ExtrudeGraphics/ExtrudeGraphics.qml"));
+
     view.show();
 
     return app.exec();
 }
-
-
