@@ -26,7 +26,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
     property string outputGdb: System.temporaryFolder.path + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
     property string featureServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer"
     property Envelope generateExtent: null
@@ -311,7 +311,7 @@ Rectangle {
     }
 
     FileFolder {
-        path: dataPath
+        url: dataPath
 
         // create the data path if it does not yet exist
         Component.onCompleted: {

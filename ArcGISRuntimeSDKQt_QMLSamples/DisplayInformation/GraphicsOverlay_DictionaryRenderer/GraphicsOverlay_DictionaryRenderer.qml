@@ -25,7 +25,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     /**
      * Create MapView that contains a Map with the Topographic Basemap, as well as a GraphicsOverlay
@@ -63,7 +63,7 @@ Rectangle {
     // Use XmlListModel to parse the XML messages file.
     XmlListModel {
         id: xmlParser
-        source: System.resolvedPathUrl(dataPath + "/xml/Mil2525DMessages.xml")
+        source: dataPath + "/xml/Mil2525DMessages.xml"
         query: "/messages/message"
 
         // These are the fields we need for MIL-STD-2525D symbology.
