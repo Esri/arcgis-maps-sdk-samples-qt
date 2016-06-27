@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Scene/DisplaySceneLayer">
-        <file>DisplaySceneLayer.html</file>
-        <file alias="sample.json">DisplaySceneLayer.json</file>
-        <file>DisplaySceneLayer.png</file>
-        <file>DisplaySceneLayer.qml</file>
-    </qresource>
-</RCC>
