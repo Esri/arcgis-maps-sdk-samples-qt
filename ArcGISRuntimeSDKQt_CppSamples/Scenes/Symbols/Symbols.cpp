@@ -55,7 +55,7 @@ void Symbols::componentComplete()
     m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
     // create a camera
-    Camera camera(29, 45, 6000, 0, 0, 0);
+    Camera camera(34, 45, 6000, 0, 0, 0);
     // set the viewpoint
     m_sceneView->setViewpointCamera(camera);
 
@@ -72,12 +72,12 @@ void Symbols::componentComplete()
     symbolStyles.insert(SimpleMarkerSceneSymbolStyle::Cylinder, QColor("purple"));
     symbolStyles.insert(SimpleMarkerSceneSymbolStyle::Diamond, QColor("turquoise"));
     symbolStyles.insert(SimpleMarkerSceneSymbolStyle::Sphere, QColor("blue"));
-    symbolStyles.insert(SimpleMarkerSceneSymbolStyle::Tetrahedron, QColor("green"));
+    symbolStyles.insert(SimpleMarkerSceneSymbolStyle::Tetrahedron, QColor("yellow"));
     QMapIterator<SimpleMarkerSceneSymbolStyle, QColor> i(symbolStyles);
 
-    auto x = 44.975;
-    auto y = 29;
-    auto z = 500;
+    const auto x = 44.975;
+    const auto y = 34;
+    const auto z = 500;
     auto counter = 0;
 
     // iterate over the map

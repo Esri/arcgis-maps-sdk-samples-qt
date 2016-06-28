@@ -25,7 +25,7 @@ Rectangle {
     height: 600
 
     property double pointX: 44.975
-    property double pointY: 29
+    property double pointY: 34
     property double pointZ: 500
 
     // Create a scene view
@@ -67,7 +67,7 @@ Rectangle {
         id: camera
         location: Point {
             x: 45
-            y: 29
+            y: 34
             z: 6000
             spatialReference: SpatialReference.createWgs84()
         }
@@ -102,7 +102,7 @@ Rectangle {
         }
         ListElement {
             symbolStyle: Enums.SimpleMarkerSceneSymbolStyleTetrahedron
-            color: "green"
+            color: "yellow"
         }
     }
 
