@@ -1,5 +1,5 @@
 {
-    "source" :  "Symbols",
+    "source" :  "Symbols.qml",
     "description" : "Symbols.html",
     "thumbnail" : "Symbols.png",
     "name" : "Scene symbols"
