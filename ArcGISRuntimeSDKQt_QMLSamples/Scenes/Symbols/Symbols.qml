@@ -24,6 +24,10 @@ Rectangle {
     width: 800
     height: 600
 
+    property double pointX: 44.975
+    property double pointY: 29
+    property double pointZ: 500
+
     // Create a scene view
     SceneView {
         anchors.fill: parent
@@ -43,9 +47,18 @@ Rectangle {
             }
         }
 
+        // add a graphics overlay
+        GraphicsOverlay {
+            id: graphicsOverlay
+            LayerSceneProperties {
+                surfacePlacement: Enums.SurfacePlacementAbsolute
+            }
+        }
+
         Component.onCompleted: {
             // set viewpoint to the specified camera
             setViewpointCamera(camera);
+            addSymbols();
         }
     }
 
@@ -53,13 +66,78 @@ Rectangle {
     Camera {
         id: camera
         location: Point {
-            x: 83.9
-            y: 28.4
-            z: 10010.0
+            x: 45
+            y: 29
+            z: 6000
             spatialReference: SpatialReference.createWgs84()
         }
-        heading: 10.0
-        pitch: 80.0
-        roll: 300.0
+        heading: 0
+        pitch: 0
+        roll: 0
+    }
+
+    // listmodel to store the symbol colors and styles
+    ListModel {
+        id: symbolModel
+
+        ListElement {
+            symbolStyle: Enums.SimpleMarkerSceneSymbolStyleCone
+            color: "red"
+        }
+        ListElement {
+            symbolStyle: Enums.SimpleMarkerSceneSymbolStyleCube
+            color: "white"
+        }
+        ListElement {
+            symbolStyle: Enums.SimpleMarkerSceneSymbolStyleCylinder
+            color: "purple"
+        }
+        ListElement {
+            symbolStyle: Enums.SimpleMarkerSceneSymbolStyleDiamond
+            color: "turquoise"
+        }
+        ListElement {
+            symbolStyle: Enums.SimpleMarkerSceneSymbolStyleSphere
+            color: "blue"
+        }
+        ListElement {
+            symbolStyle: Enums.SimpleMarkerSceneSymbolStyleTetrahedron
+            color: "green"
+        }
+    }
+
+    // function to dynamically create the graphics and add them to the graphics overlay
+    function addSymbols() {
+        for (var i = 0; i < symbolModel.count; i++) {
+            var elem = symbolModel.get(i);
+
+            // create a simple marker scene symbol
+            var smss = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSceneSymbol", {
+                                                                 style: elem.symbolStyle,
+                                                                 color: elem.color,
+                                                                 width: 200,
+                                                                 height: 200,
+                                                                 depth: 200,
+                                                                 anchorPosition: Enums.SceneSymbolAnchorPositionCenter
+                                                             });
+
+            smss.style = elem.symbolStyle;
+            // create a new point geometry
+            var point = ArcGISRuntimeEnvironment.createObject("Point", {
+                                                                  x: pointX + 0.01 * i,
+                                                                  y: pointY,
+                                                                  z: pointZ,
+                                                                  spatialReference: SpatialReference.createWgs84()
+                                                              });
+
+            // create a graphic using the point and the symbol
+            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                    geometry: point,
+                                                                    symbol: smss
+                                                                });
+
+            // add the graphic to the graphics overlay
+            graphicsOverlay.graphics.append(graphic);
+        }
     }
 }
