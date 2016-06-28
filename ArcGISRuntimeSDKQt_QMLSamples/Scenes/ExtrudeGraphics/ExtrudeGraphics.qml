@@ -26,6 +26,7 @@ Rectangle {
 
     property real size: 0.01
     property int maxZ: 1000
+    property var colors: []
     // Create a scene view
     SceneView {
         id: sceneView
@@ -78,30 +79,36 @@ Rectangle {
         roll: 300.0
     }
 
-    SimpleFillSymbol {
-        id: sfs
-        style: Enums.SimpleFillSymbolStyleSolid
-        color: "red"
-    }
-
     function createGraphics(){
         var lat = camera.location.x;
         var lng = camera.location.y + 0.2;
 
+        // add a set of colors to pick from
+        addColors();
+
         // create a random set of points
         var points = [];
         for (var i = 0; i <= 100; i++) {
-            var point = ArcGISRuntimeEnvironment.createObject("Point", {x:i / 10 * size + lat, y:i % 10 * size + lng, spatialReference:sceneView.spatialReference});
+            var point = ArcGISRuntimeEnvironment.createObject("Point", {x:i / 10 * (size * 2) + lat, y:i % 10 * (size * 2) + lng, spatialReference:sceneView.spatialReference});
             points.push(point);
         }
 
         // for each point construct a polygon by manipulating the co-ordinates
         points.forEach(function(item){
-            var z = maxZ * (Math.floor(Math.random() * 6));
+            var randNum = Math.floor(Math.random() * 6);
+            var z = maxZ * randNum;
             var newPoints = [createPoint(item.x, item.y, z),
                              createPoint(item.x + size, item.y, z),
                              createPoint(item.x + size, item.y + size, z),
                              createPoint(item.x, item.y + size, z)];
+
+            // create a simple fill symbol
+            var sfs = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
+            sfs.style = Enums.SimpleFillSymbolStyleSolid;
+            // assign a random color from the list
+            sfs.color = colors[randNum];
+
+            // create a graphic using the fill symbol
             var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {symbol: sfs, geometry: createPolygonFromPoints(newPoints)});
             graphic.attributes.insertAttribute("height", z);
             graphicsOverlay.graphics.append(graphic);
@@ -122,5 +129,16 @@ Rectangle {
     // create a point
     function createPoint(x, y, z) {
         return ArcGISRuntimeEnvironment.createObject("Point", {x:x, y:y, z:z, spatialReference: sceneView.spatialReference});
+    }
+
+    // add colors to array
+    function addColors() {
+        colors.push("white");
+        colors.push("black");
+        colors.push("turquoise");
+        colors.push("green");
+        colors.push("red");
+        colors.push("blue");
+        colors.push("purple");
     }
 }
