@@ -72,7 +72,7 @@ void ExtrudeGraphics::componentComplete()
     m_sceneView->setViewpointCamera(camera);
 
     // graphics location
-    double lat = camera.location().x();
+    double lat = camera.location().x() - 0.03;
     double lng = camera.location().y() + 0.2;
 
     GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
@@ -88,14 +88,26 @@ void ExtrudeGraphics::componentComplete()
     QList<Point> pointsList;
     for (auto i = 0; i <= 100; i++)
     {
-        Point point(i / 10 * m_size + lat, i % 10 * m_size + lng, m_sceneView->spatialReference());
+        Point point(i / 10 * (m_size * 2) + lat, i % 10 * (m_size * 2) + lng, m_sceneView->spatialReference());
         pointsList.append(point);
     }
 
     foreach (auto point, pointsList)
     {
+        // create a list of colors to ramdomly pick from
+        QList<QColor>colors;
+        colors << QColor("white")
+               << QColor("green")
+               << QColor("blue")
+               << QColor("turquoise")
+               << QColor("purple")
+               << QColor("black")
+               << QColor("red");
+
         // create a random z value
-        double z = m_maxZ * (rand() % 6 + 1);
+        int randNum = rand() % 6 + 1;
+        double z = m_maxZ * randNum;
+
         // create a list of points
         QList<Point> points;
         points << Point(point.x(), point.y(), z)
@@ -104,7 +116,7 @@ void ExtrudeGraphics::componentComplete()
                << Point(point.x(), point.y() + m_size, z);
 
         // create a new fill symbol to symbolize the graphic
-        SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(Qt::red), this);
+        SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, colors[randNum], this);
         // create a new graphic
         Graphic* graphic = new Graphic(createPolygonFromPoints(points), sfs, this);
         // add a height attribute to the graphic using the attribute list model
