@@ -22,6 +22,9 @@
 #include "ArcGISTiledElevationSource.h"
 #include "DistanceCompositeSceneSymbol.h"
 #include "SimpleMarkerSymbol.h"
+#include "SimpleMarkerSceneSymbol.h"
+#include "ModelMarkerSymbol.h"
+#include <QQmlProperty>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -40,6 +43,9 @@ void DistanceCompositeSymbol::componentComplete()
 {
     QQuickItem::componentComplete();
 
+    // get the data path
+    QString dataPath = QQmlProperty::read(this, "dataPath").toString();
+
     // find QML SceneView component
     m_sceneView = findChild<SceneQuickView*>("sceneView");
 
@@ -56,13 +62,44 @@ void DistanceCompositeSymbol::componentComplete()
     m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
     // create a camera
-    Camera camera(Point(-2.708471, 56.096575, 5000, m_sceneView->spatialReference()),1500, 0, 80.0, 0);
+    Point point(-2.708471, 56.096575, 5000, m_sceneView->spatialReference());
+    Camera camera(point, 1500, 0, 80.0, 0);
 
     // create a new graphics overlay and add it to the sceneview
     GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
+    graphicsOverlay->sceneProperties().setSurfacePlacement(SurfacePlacement::Relative);
+
+    // create a new model marker symbol
+    ModelMarkerSymbol* mms = new ModelMarkerSymbol(QUrl(dataPath), 0.01f, this);
+    mms->setHeading(180);
+
+    connect(mms, &ModelMarkerSymbol::loadStatusChanged, [mms, point, graphicsOverlay, this](){
+        if (mms->loadStatus() == LoadStatus::Loaded)
+        {
+            SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10.0f, this);
+            SimpleMarkerSceneSymbol* smss = new SimpleMarkerSceneSymbol(SimpleMarkerSceneSymbolStyle::Cone, QColor("red"), 75, 75, 75, SceneSymbolAnchorPosition::Bottom, this);
+
+            // create distance symbol ranges with each smybol type and a distance range(meters)
+            DistanceSymbolRange* dsrModel = new DistanceSymbolRange(mms, 0, 999, this);
+            DistanceSymbolRange* dsrCone = new DistanceSymbolRange(smss, 1000, 1999, this);
+            DistanceSymbolRange* dsrCircle = new DistanceSymbolRange(sms, 2000, 0, this);
+
+            DistanceCompositeSceneSymbol* compositeSceneSymbol = new DistanceCompositeSceneSymbol(this);
+
+            compositeSceneSymbol->distanceSymbolRanges()->append(dsrModel);
+            compositeSceneSymbol->distanceSymbolRanges()->append(dsrCone);
+            compositeSceneSymbol->distanceSymbolRanges()->append(dsrCircle);
+
+            // create a graphic using the composite symbol
+            Graphic* graphic = new Graphic(point, compositeSceneSymbol, this);
+            // add the graphic to the graphics overlay
+            graphicsOverlay->graphics()->append(graphic);
+        }
+    });
+
+    mms->load();
+
     m_sceneView->graphicsOverlays()->append(graphicsOverlay);
-
-
     // set the viewpoint
     m_sceneView->setViewpointCamera(camera);
 }
