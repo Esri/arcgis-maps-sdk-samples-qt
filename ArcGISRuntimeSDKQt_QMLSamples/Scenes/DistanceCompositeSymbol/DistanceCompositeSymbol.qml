@@ -78,69 +78,73 @@ Rectangle {
         roll: 0
     }
 
-    SimpleMarkerSymbol {
-        id: sms
-        style: Enums.SimpleMarkerSymbolStyleCircle
-        color: "red"
-        size: 10
-    }
+    // create a distance symbol range with a model marker symbol
+    DistanceSymbolRange {
+        id: dsrModel
+        minDistance: 0
+        maxDistance: 999
 
-    SimpleMarkerSceneSymbol {
-        id: smss
-        style: Enums.SimpleMarkerSceneSymbolStyleCone
-        color: "red"
-        height: 75
-        width: 75
-        pitch: -90
-    }
+        // model marker symbol
+        ModelMarkerSymbol {
+            id: mms
+            url: dataPath
+            scale: 0.01
+            heading: 180
 
-    ModelMarkerSymbol {
-        id: mms
-        url: dataPath
-        scale: 0.01
-        heading: 180
+            Component.onCompleted: {
+                mms.load();
+            }
 
-        Component.onCompleted: {
-            mms.load();
-        }
+            onLoadStatusChanged: {
+                if (mms.loadStatus === Enums.LoadStatusLoaded) {
+                    // add the ranges to the composite symbol
+                    distanceCompositeSceneSymbol.distanceSymbolRanges.append(dsrModel);
+                    distanceCompositeSceneSymbol.distanceSymbolRanges.append(dsrCone);
+                    distanceCompositeSceneSymbol.distanceSymbolRanges.append(dsrCircle);
 
-        onLoadStatusChanged: {
-            if (mms.loadStatus === Enums.LoadStatusLoaded) {
-                distanceCompositeSceneSymbol.distanceSymbolRanges.append(dsrModel);
-                distanceCompositeSceneSymbol.distanceSymbolRanges.append(dsrCone);
-                distanceCompositeSceneSymbol.distanceSymbolRanges.append(dsrCircle);
-
-                var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                        geometry: point,
-                                                                        symbol: distanceCompositeSceneSymbol
-                                                                    });
-                graphicsOverlay.graphics.append(graphic);
+                    // create a graphic using the composite symbol
+                    var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                            geometry: point,
+                                                                            symbol: distanceCompositeSceneSymbol
+                                                                        });
+                    // add the graphic to the graphics overlay
+                    graphicsOverlay.graphics.append(graphic);
+                }
             }
         }
+    }
 
-        DistanceSymbolRange {
-            id: dsrModel
-            minDistance: 0
-            maxDistance: 999
-            symbol: mms
-        }
+    // create a distance symbol range with a simple marker scene symbol
+    DistanceSymbolRange {
+        id: dsrCone
+        minDistance: 1000
+        maxDistance: 1999
 
-        DistanceSymbolRange {
-            id: dsrCone
-            minDistance: 1000
-            maxDistance: 1999
-            symbol: smss
+        SimpleMarkerSceneSymbol {
+            style: Enums.SimpleMarkerSceneSymbolStyleCone
+            color: "red"
+            height: 75
+            width: 75
+            pitch: -90
         }
+    }
 
-        DistanceSymbolRange {
-            id: dsrCircle
-            minDistance: 2000
-            maxDistance: 0
-            symbol: sms
-        }
+    // create a distance symbol range with a simple marker symbol
+    DistanceSymbolRange {
+        id: dsrCircle
+        minDistance: 2000
+        maxDistance: 0
 
-        DistanceCompositeSceneSymbol {
-            id: distanceCompositeSceneSymbol
+        SimpleMarkerSymbol {
+            style: Enums.SimpleMarkerSymbolStyleCircle
+            color: "red"
+            size: 10
         }
-      }
+    }
+
+    // create a distance composite scene symbol
+    DistanceCompositeSceneSymbol {
+        id: distanceCompositeSceneSymbol
+    }
 }
+
