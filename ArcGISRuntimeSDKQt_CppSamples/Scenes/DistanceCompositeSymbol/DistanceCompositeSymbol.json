@@ -1,5 +1,5 @@
 {
-    "source" :  "DistanceCompositeSymbol.qml",
+    "source" :  "DistanceCompositeSymbol",
     "description" : "DistanceCompositeSymbol.html",
     "thumbnail" : "DistanceCompositeSymbol.png",
     "name" : "Distance Composite Symbol"
