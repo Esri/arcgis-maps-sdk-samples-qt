@@ -76,11 +76,10 @@ void GenerateGeodatabase::componentComplete()
 
     // add online feature layers to the map, and obtain service IDs
     m_featureServiceInfo = new ArcGISFeatureServiceInfo(QUrl(m_featureServiceUrl), this);
-    connect(m_featureServiceInfo, &ArcGISFeatureServiceInfo::doneLoading, [this](Error error)
+    connect(m_featureServiceInfo, &ArcGISFeatureServiceInfo::doneLoading, [this]()
     {
-        if (error.isEmpty())
+        if (m_featureServiceInfo->loadStatus() == LoadStatus::Loaded)
         {
-            qDebug() << "done loading";
             foreach (auto featureLayerInfo, m_featureServiceInfo->featureLayerInfos())
             {
                 // add the layer to the map
@@ -98,9 +97,9 @@ void GenerateGeodatabase::componentComplete()
     m_syncTask = new GeodatabaseSyncTask(QUrl(m_featureServiceUrl), this);
 
     // connect to map doneLoading signal
-    connect(m_map, &Map::doneLoading, [this](Error error)
+    connect(m_map, &Map::doneLoading, [this]()
     {
-        if (error.isEmpty())
+        if (m_map->loadStatus() == LoadStatus::Loaded)
         {
             // load the feature service info once the map loads
             m_featureServiceInfo->load();
@@ -200,7 +199,7 @@ void GenerateGeodatabase::addOfflineData(Geodatabase* gdb)
     m_map->operationalLayers()->clear();
 
     // load the geodatabase
-    connect(gdb, &Geodatabase::doneLoading, [this, gdb](Error)
+    connect(gdb, &Geodatabase::doneLoading, [this, gdb]()
     {
         // create a feature layer from each feature table, and add to the map
         foreach (auto featureTable, gdb->geodatabaseFeatureTables())
