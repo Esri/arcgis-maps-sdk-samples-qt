@@ -50,7 +50,7 @@ void GraphicsOverlayDictionaryRenderer::componentComplete()
     QQuickItem::componentComplete();
 
     // QML properties
-    m_dataPath = QQmlProperty::read(this, "dataPath").toString();
+    m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
     m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
 
     // Set up DictionaryRenderer
