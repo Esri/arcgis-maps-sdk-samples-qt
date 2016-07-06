@@ -47,9 +47,9 @@ void OpenMobileMap_MapPackage::componentComplete()
     m_mobileMapPackage = new MobileMapPackage(dataPath + "Yellowstone.mmpk", this);
 
     // wait for the mobile map package to load
-    connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, [this](Error error)
+    connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, [this]()
     {
-        if (error.isEmpty())
+        if (m_mobileMapPackage->loadStatus() == LoadStatus::Loaded)
         {
             // set the map view's map to the first map in the mobile map package
             m_mapView->setMap(m_mobileMapPackage->maps().at(0));

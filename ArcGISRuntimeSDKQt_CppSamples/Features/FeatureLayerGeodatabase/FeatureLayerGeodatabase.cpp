@@ -70,9 +70,9 @@ void FeatureLayerGeodatabase::componentComplete()
     m_geodatabase = new Geodatabase(m_dataPath + "geodatabase/LA_Trails.geodatabase", this);
 
     // connect to doneLoading signal of geodatabase to access feature tables
-    connect(m_geodatabase, &Geodatabase::doneLoading, [this](Error error)
+    connect(m_geodatabase, &Geodatabase::doneLoading, [this]()
     {
-        if (error.isEmpty())
+        if (m_geodatabase->loadStatus() == LoadStatus::Loaded)
         {
             // access the feature table by name
             auto featureTable = m_geodatabase->geodatabaseFeatureTable("Trailheads");
