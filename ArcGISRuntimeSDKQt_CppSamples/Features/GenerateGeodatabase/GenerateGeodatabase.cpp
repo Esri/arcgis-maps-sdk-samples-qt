@@ -60,7 +60,7 @@ void GenerateGeodatabase::componentComplete()
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
     // Create a map using a local tile package
-    m_dataPath = QQmlProperty::read(this, "dataPath").toString();
+    m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
     TileCache* tileCache = new TileCache(m_dataPath + "tpk/SanFrancisco.tpk", this);
     ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);
     Basemap* basemap = new Basemap(tiledLayer, this);
