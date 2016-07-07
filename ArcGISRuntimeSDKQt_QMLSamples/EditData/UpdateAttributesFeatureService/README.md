@@ -6,7 +6,9 @@ This sample demonstrates how to edit attributes of a feature in a feature servic
 
 ##How it works
 
-Features in the map represent properties and are symbolized based on the type of damage to the property. Tapping on a feature displays a callout. The callout contains information about the type of damage on that property. In order to change the type of damage, tap on the information button in the callout. An editing window will appear that allows for different values to be selected. Clicking update will update the feature with the new value. This is done by first obtaining the feature after it is selected. Once the feature is obtained, the feature attribute is updated by calling the `setAttributeValue` method. To update the feature in the feature table, call `updateFeature`, and pass in the edited feature. Finally, to update the service, call the `applyEdits` method, and this will apply the feature edits to the service.
+Features in the map represent parcels and are symbolized based on an attribute specifying the type of damage to the parcels. Selecting a parcel displays a callout. The callout contains information about the type of damage for that parcel. To change the type of damage, select the `information` button in the callout. An editing window appears, allowing you to choose new attribute values. Selecting the `update` button will update the parcel with the new value. 
+
+This is done by first obtaining the parcel feature after it is selected. Once the feature is obtained, the feature's attribute is updated by calling `setAttributeValue`. To update the feature in the feature table, call `updateFeature` and pass in the edited feature. Finally, to update the service, call `applyEdits` to apply the edits to the service.
 
 ##Features
 - MapView
