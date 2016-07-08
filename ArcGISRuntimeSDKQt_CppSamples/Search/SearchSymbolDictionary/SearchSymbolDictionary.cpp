@@ -37,7 +37,7 @@ void SearchSymbolDictionary::componentComplete()
     QQuickItem::componentComplete();
 
     //Get the data path
-    QString datapath = QQmlProperty::read(this, "dataPath").toString();
+    QString datapath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
 
     //Create the dictionary from datapath
     m_symbolDictionary = new SymbolDictionary("mil2525d", datapath, this);

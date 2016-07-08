@@ -26,7 +26,7 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property Envelope tileCacheExtent: null
-    property string outputTileCache: System.temporaryFolder.path + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
+    property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
     property string statusText: ""
     property string tiledServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
 
@@ -41,6 +41,17 @@ Rectangle {
                 ArcGISTiledLayer {
                     id: tiledLayer
                     url: tiledServiceUrl
+                }
+            }
+
+            // set an initial viewpoint
+            ViewpointExtent {
+                Envelope {
+                    xMax: 12362601.050868368
+                    xMin: 10187678.26582548
+                    yMax: 2567213.6854449743
+                    yMin: 936021.5966628084
+                    spatialReference: SpatialReference.createWebMercator()
                 }
             }
         }
@@ -61,7 +72,7 @@ Rectangle {
 
         function executeExportTileCacheTask(params) {
             // execute the asynchronous task and obtain the job
-            var exportJob = exportTask.exportTileCacheWithParameters(params, outputTileCache);
+            var exportJob = exportTask.exportTileCache(params, outputTileCache);
 
             // check if job is valid
             if (exportJob) {

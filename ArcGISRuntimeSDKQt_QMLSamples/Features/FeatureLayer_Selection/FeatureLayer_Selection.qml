@@ -26,7 +26,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string displayText: "No features selected. Click/Tap to select features."
+    property string displayText: "Click or tap to select features."
 
 
     // Map view UI presentation at top

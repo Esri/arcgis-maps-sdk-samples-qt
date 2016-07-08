@@ -1,12 +1,13 @@
 {
-    "source" :  "DistanceCompositeSymbol",
+    "source" :  "DistanceCompositeSymbol.qml",
     "description" : "DistanceCompositeSymbol.html",
     "thumbnail" : "DistanceCompositeSymbol.png",
-    "name" : "Distance Composite Symbol",
-    "dataItems" : [
+    "name" : "Distance composite symbol",
+	"dataItems" : [
         {
             "itemId" : "810a20c8be914170948d4c2d2146b4c5",
             "path" : "~/ArcGIS/Runtime/Data/3D/SkyCrane/SkyCrane.lwo"
         }
     ]
 }
+
