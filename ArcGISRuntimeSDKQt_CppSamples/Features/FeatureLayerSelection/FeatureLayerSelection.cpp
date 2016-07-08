@@ -39,7 +39,7 @@ FeatureLayerSelection::FeatureLayerSelection(QQuickItem* parent) :
     m_mapView(nullptr),
     m_featureLayer(nullptr),
     m_featureTable(nullptr),
-    m_selectedFeatureText("No features selected. Click/Tap to select features.")
+    m_selectedFeatureText("Click or tap to select features.")
 {
 }
 
