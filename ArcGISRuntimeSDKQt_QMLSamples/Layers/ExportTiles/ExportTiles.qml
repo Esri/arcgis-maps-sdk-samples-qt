@@ -26,7 +26,7 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property Envelope tileCacheExtent: null
-    property string outputTileCache: System.temporaryFolder.path + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
+    property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
     property string statusText: ""
     property string tiledServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
 
