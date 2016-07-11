@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/DisplayLayerViewDrawStatus">
+        <file>DisplayLayerViewDrawStatus.qml</file>
+		<file>DisplayLayerViewDrawStatus.h</file>
+        <file>DisplayLayerViewDrawStatus.cpp</file>
+    </qresource>
+</RCC>
