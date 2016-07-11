@@ -18,116 +18,116 @@ import Esri.ArcGISExtras 1.1
 import Esri.Samples 1.0
 
 DisplayLayerViewDrawStatusSample {
-  id: displayLayerView
-  width: 800
-  height: 600
+    id: displayLayerView
+    width: 800
+    height: 600
 
-  property double scaleFactor: System.displayScaleFactor
+    property double scaleFactor: System.displayScaleFactor
 
-  // add a mapView component
-  MapView {
-    id: mapView
-    anchors.fill: parent
-    objectName: "mapView"
-  }
-
-  // table to display layer names and statuses
-  TableView {
-    id: tableView
-    anchors {
-      bottom: parent.bottom
-      horizontalCenter: parent.horizontalCenter
-      margins: 10 * scaleFactor
-    }
-    height: 150 * scaleFactor
-    width: 230 * scaleFactor
-    model: layerViewModel
-    headerVisible: false
-    verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-    horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-    section.labelPositioning: 10
-    opacity: parent.opacity
-
-    // set number of layers states to be displayed at once
-    rowDelegate: Row {
-      height: tableView.height / 3
+    // add a mapView component
+    MapView {
+        id: mapView
+        anchors.fill: parent
+        objectName: "mapView"
     }
 
-    style: TableViewStyle {
-      backgroundColor: "transparent"
-      frame: Rectangle {
-        border.color: "black"
-        opacity: 0.77
-        radius: 10
-
-        // make sure mouse actions on table do not affect map behind it
-        MouseArea {
-          anchors.fill: parent
-          onClicked: mouse.accepted = true
-          onWheel: wheel.accepted = true
+    // table to display layer names and statuses
+    TableView {
+        id: tableView
+        anchors {
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+            margins: 10 * scaleFactor
         }
-      }
-    }
+        height: 150 * scaleFactor
+        width: 230 * scaleFactor
+        model: layerViewModel
+        headerVisible: false
+        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+        section.labelPositioning: 10
+        opacity: parent.opacity
 
-    // create List Model to store Layer View States and names
-    ListModel {
-      id: layerViewModel
-    }
-
-    TableViewColumn {
-      role: "name"
-      width: tableView.width * 0.75 - 10 * scaleFactor
-      delegate: Component {
-        Text {
-          text: styleData.value
-          renderType: Text.NativeRendering
-          font.weight: Font.Black
-          horizontalAlignment: Text.AlignLeft
-          verticalAlignment: Text.AlignVCenter
-          font.pixelSize: tableView.height * 0.10
-          leftPadding: 10 * scaleFactor
-          elide: Text.ElideRight
+        // set number of layers states to be displayed at once
+        rowDelegate: Row {
+            height: tableView.height / 3
         }
-      }
-    }
 
-    TableViewColumn {
-      role: "status"
-      width: tableView.width * 0.25
-      delegate: Component {
-        Text {
-          text: styleData.value
-          renderType: Text.NativeRendering
-          horizontalAlignment: Text.AlignRight
-          verticalAlignment: Text.AlignVCenter
-          font.pixelSize: tableView.height * 0.10
-          color: "steelblue"
+        style: TableViewStyle {
+            backgroundColor: "transparent"
+            frame: Rectangle {
+                border.color: "black"
+                opacity: 0.77
+                radius: 10
+
+                // make sure mouse actions on table do not affect map behind it
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: mouse.accepted = true
+                    onWheel: wheel.accepted = true
+                }
+            }
         }
-      }
-    }
-  }
 
-  // Neatline Rectangle
-  Rectangle {
-    anchors.fill: parent
-    color: "transparent"
-    border {
-      width: 0.5 * scaleFactor
-      color: "black"
-    }
-  }
+        // create List Model to store Layer View States and names
+        ListModel {
+            id: layerViewModel
+        }
 
-  // initialize ListModel to display layer names and ViewStates
-  Component.onCompleted: {
-    for (var i = 0; i < displayLayerView.layerNames.length; i++)
-      layerViewModel.append({"name": displayLayerView.layerNames[i], "status": displayLayerView.layerViewStates[i]});
-  }
+        TableViewColumn {
+            role: "name"
+            width: tableView.width * 0.75 - 10 * scaleFactor
+            delegate: Component {
+                Text {
+                    text: styleData.value
+                    renderType: Text.NativeRendering
+                    font.weight: Font.Black
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: tableView.height * 0.10
+                    leftPadding: 10 * scaleFactor
+                    elide: Text.ElideRight
+                }
+            }
+        }
 
-  // adjust ListModel when layer view state changes in C++
-  onStatusChanged: {
-    for (var i = 0; i < displayLayerView.layerNames.length; i++) {
-      layerViewModel.setProperty(i, "name", displayLayerView.layerNames[i]);
-      layerViewModel.setProperty(i, "status", displayLayerView.layerViewStates[i]);
+        TableViewColumn {
+            role: "status"
+            width: tableView.width * 0.25
+            delegate: Component {
+                Text {
+                    text: styleData.value
+                    renderType: Text.NativeRendering
+                    horizontalAlignment: Text.AlignRight
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: tableView.height * 0.10
+                    color: "steelblue"
+                }
+            }
+        }
     }
-  }
+
+    // Neatline Rectangle
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
+    }
+
+    // initialize ListModel to display layer names and ViewStates
+    Component.onCompleted: {
+        for (var i = 0; i < displayLayerView.layerNames.length; i++)
+            layerViewModel.append({"name": displayLayerView.layerNames[i], "status": displayLayerView.layerViewStates[i]});
+    }
+
+    // adjust ListModel when layer view state changes in C++
+    onStatusChanged: {
+        for (var i = 0; i < displayLayerView.layerNames.length; i++) {
+            layerViewModel.setProperty(i, "name", displayLayerView.layerNames[i]);
+            layerViewModel.setProperty(i, "status", displayLayerView.layerViewStates[i]);
+        }
+    }
 }
