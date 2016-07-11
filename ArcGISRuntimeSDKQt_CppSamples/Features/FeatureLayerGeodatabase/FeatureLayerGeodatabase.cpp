@@ -53,7 +53,7 @@ void FeatureLayerGeodatabase::componentComplete()
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
     // get the data path
-    m_dataPath = QQmlProperty::read(m_mapView, "dataPath").toString();
+    m_dataPath = QQmlProperty::read(m_mapView, "dataPath").toUrl().toLocalFile();
 
     // Create a map using a local vector tile package
     auto vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(m_dataPath + "vtpk/LosAngeles.vtpk"), this);

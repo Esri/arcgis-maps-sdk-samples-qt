@@ -1,21 +1,22 @@
 #Feature layer selection
 
-This sample demonstrates how to select features in a feature layer. Tap on an area of the map where you see features to select features.
+This sample demonstrates how to select features in a feature layer.
 
 ![](screenshot.png)
 
 ##How it works
 
-Tap on an area of the map where you see features to select features. This will execute an `identifyLayer` operation on the map view. The `onIdentifyLayerStatusChanged` event will fire, and a list of features will be returned. Call the `selectFeatures` method on the feature layer, and pass in the list of features, and this will select the features and highlight them on the map view.
+Click or tap on an area of the map where you see features to select features. This will execute an `identifyLayer` operation on the map view. When the operation completes, the `identifyLayerStatusChanged` signal emits, and a list of features is returned. Call the `selectFeatures` method on the feature layer, passing in the list of features. This will select the features and highlight them on the map view.
 
 ##Features
 - MapView
 - Map
-- Basemap
-- Viewpoint
+- BasemapStreets
+- ViewpointExtent
 - SpatialReference
 - ServiceFeatureTable
 - FeatureLayer
 - Feature
 - Envelope
 - GeoElement
+

@@ -27,7 +27,7 @@ FeatureLayerGeodatabaseSample {
 
     // add a mapView component
     MapView {
-        property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+        property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
         anchors.fill: parent
         objectName: "mapView"
     }
