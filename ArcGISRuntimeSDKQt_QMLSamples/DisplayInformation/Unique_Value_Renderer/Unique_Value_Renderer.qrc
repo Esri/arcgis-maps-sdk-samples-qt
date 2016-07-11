@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/Samples/Display Information/Unique_Value_Renderer">
+        <file>Unique_Value_Renderer.qml</file>
+    </qresource>
+</RCC>
