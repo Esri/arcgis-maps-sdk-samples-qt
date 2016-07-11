@@ -28,28 +28,23 @@ TARGET = UniqueValueRenderer
 
 #-------------------------------------------------------------------------------
 
-HEADERS += \
-    Unique_Value_Renderer.h
+HEADERS +=     Unique_Value_Renderer.h
 
-SOURCES += \
-    main.cpp \
-    Unique_Value_Renderer.cpp
+SOURCES +=     main.cpp     Unique_Value_Renderer.cpp
 
 RESOURCES += Unique_Value_Renderer.qrc
 
 #-------------------------------------------------------------------------------
 
 win32 {
-    LIBS += \
-        Ole32.lib
+    LIBS +=         Ole32.lib
 }
 
 ios {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 
-    OTHER_FILES += \
-        $$PWD/Info.plist
+    OTHER_FILES +=         $$PWD/Info.plist
 
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
@@ -62,4 +57,3 @@ android {
 macx {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.10
 }
-

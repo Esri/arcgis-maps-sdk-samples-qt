@@ -1,0 +1,6 @@
+{
+    "source" :  "Unique_Value_Renderer",
+    "description" : "Unique_Value_Renderer.html",
+    "thumbnail" : "Unique_Value_Renderer.png",
+    "name" : "This sample demonstrate how to use a unique value renderer to style different features in a feature layer with different symbols."
+}
