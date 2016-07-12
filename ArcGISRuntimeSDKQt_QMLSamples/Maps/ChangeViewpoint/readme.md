@@ -1,6 +1,6 @@
 #Change Viewpoint
 
-This sample demonstrates how to change the viewpoint of map.
+This sample demonstrates how to change the viewpoint of a map.
 
 ![](screenshot.png)
 
