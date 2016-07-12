@@ -1,14 +1,19 @@
-// Copyright 2016 ESRI
-//
-// All rights reserved under the copyright laws of the United States
-// and applicable international laws, treaties, and conventions.
-//
-// You may freely redistribute and use this sample code, with or
-// without modification, provided you include the original copyright
-// notice and use restrictions.
-//
-// See the Sample code usage restrictions document for further information.
-//
+// [WriteFile Name=Unique_Value_Renderer, Category=DisplayInformation]
+// [Legal]
+// Copyright 2016 Esri.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
 
 #include "Unique_Value_Renderer.h"
 
@@ -67,7 +72,7 @@ void Unique_Value_Renderer::componentComplete()
 
     // create unique renderer
     m_uniqueValueRenderer = new UniqueValueRenderer(this);
-    // can add multiple fields. only using one in this sample
+    // you can add multiple fields. In this case, only one is used
     m_uniqueValueRenderer->setFieldNames(QStringList("STATE_NAME"));
 
     // create symbols to be used in the renderer
@@ -76,23 +81,13 @@ void Unique_Value_Renderer::componentComplete()
     m_arizonaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("green"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("green"), 2, this), this);
     m_nevadaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("blue"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 2, this), this);
 
+    // create unique values and add to the UniqueValueRenderer
+    createUniqueValue("California", m_californiaSymbol);
+    createUniqueValue("Arizona", m_arizonaSymbol);
+    createUniqueValue("Nevada", m_nevadaSymbol);
+
     // set default symbol
     m_uniqueValueRenderer->setDefaultSymbol(m_defaultSymbol);
-
-    // set value for California. define: (label, description, attribute value, symbol, parent)
-    QVariantList californiaValue;
-    californiaValue.append("California");
-    m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue("California", "The State of California", californiaValue, m_californiaSymbol, this));
-
-    // set value for Arizona
-    QVariantList arizonaValue;
-    arizonaValue.append("Arizona");
-    m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue("Arizona", "The State of Arizona", arizonaValue, m_arizonaSymbol, this));
-
-    // set value for Nevada
-    QVariantList nevadaValue;
-    nevadaValue.append("Nevada");
-    m_uniqueValueRenderer->uniqueValues()->append(new UniqueValue("Nevada", "The State of Nevada", nevadaValue, m_nevadaSymbol, this));
 
     // set the renderer on the feature layer
     m_featureLayer->setRenderer(m_uniqueValueRenderer);
@@ -102,4 +97,16 @@ void Unique_Value_Renderer::componentComplete()
 
     // set map on the map view
     m_mapView->setMap(m_map);
+}
+
+void Unique_Value_Renderer::createUniqueValue(QString stateName, SimpleFillSymbol* fillSymbol)
+{
+    // add state's attribute value for field "STATE_NAME" to QVariantList
+    QVariantList stateValue;
+    stateValue.append(stateName);
+
+    // set value for a State to be rendered. (label, description, attribute value list, symbol, parent)
+    UniqueValue* uniqueValue = new UniqueValue(stateName, "The State of " + stateName, stateValue, fillSymbol, this);
+    // append to UniqueValueRenderer
+    m_uniqueValueRenderer->uniqueValues()->append(uniqueValue);
 }

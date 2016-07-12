@@ -24,27 +24,32 @@ CONFIG += c++11 arcgis_runtime_qml_cpp100_0_0
 QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
-TARGET = UniqueValueRenderer
+TARGET = Unique_Value_Renderer
 
 #-------------------------------------------------------------------------------
 
-HEADERS +=     Unique_Value_Renderer.h
+HEADERS += \
+    Unique_Value_Renderer.h
 
-SOURCES +=     main.cpp     Unique_Value_Renderer.cpp
+SOURCES += \
+    main.cpp \
+    Unique_Value_Renderer.cpp
 
 RESOURCES += Unique_Value_Renderer.qrc
 
 #-------------------------------------------------------------------------------
 
 win32 {
-    LIBS +=         Ole32.lib
+    LIBS += \
+        Ole32.lib
 }
 
 ios {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 
-    OTHER_FILES +=         $$PWD/Info.plist
+    OTHER_FILES += \
+        $$PWD/Info.plist
 
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }

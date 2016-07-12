@@ -1,15 +1,18 @@
+// [WriteFile Name=Unique_Value_Renderer, Category=DisplayInformation]
+// [Legal]
+// Copyright 2016 Esri.
 
-// Copyright 2016 ESRI
-//
-// All rights reserved under the copyright laws of the United States
-// and applicable international laws, treaties, and conventions.
-//
-// You may freely redistribute and use this sample code, with or
-// without modification, provided you include the original copyright
-// notice and use restrictions.
-//
-// See the Sample code usage restrictions document for further information.
-//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
@@ -25,7 +28,6 @@ Rectangle {
 
     // add a mapView component
     MapView {
-        id: mapView
         anchors.fill: parent
 
         // add map to the mapview
@@ -36,37 +38,38 @@ Rectangle {
 
             // create feature layer using service feature table
             FeatureLayer {
-                id: featureLayer
 
                 ServiceFeatureTable {
-                    id: featureTable
                     url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"
                 }
 
                 // override the renderer of the feature layer with a new unique value renderer
                 UniqueValueRenderer {
-                    id: uniqueValueRenderer
+                    // set fields. Multiple fields can be set. In this sample, we only use one.
                     fieldNames: ["STATE_NAME"]
                     defaultSymbol: SimpleFillSymbol {
                         style: Enums.SimpleFillSymbolStyleNull
                         color: "black"
-                        outline: SimpleLineSymbol {
+
+                        SimpleLineSymbol {
                             style: "SimpleLineSymbolStyleSolid"
                             color: "grey"
                             width: 2
                         }
                     }
 
-                    // set value for CA
+                    // set value for California
                     UniqueValue {
                         label: "California"
                         description: "The State of California"
                         values: ["California"]
-                        symbol: SimpleFillSymbol {
+
+                        SimpleFillSymbol {
                             id: californiaFillSymbol
                             style: Enums.SimpleFillSymbolStyleSolid
                             color: "red"
-                            outline: SimpleLineSymbol {
+
+                            SimpleLineSymbol {
                                 style: "SimpleLineSymbolStyleSolid"
                                 color: "red"
                                 width: 2
@@ -79,11 +82,13 @@ Rectangle {
                         label: "Arizona"
                         description: "The State of Arizona"
                         values: ["Arizona"]
-                        symbol: SimpleFillSymbol {
+
+                        SimpleFillSymbol {
                             id: arizonaFillSymbol
                             style: Enums.SimpleFillSymbolStyleSolid
                             color: "green"
-                            outline: SimpleLineSymbol {
+
+                            SimpleLineSymbol {
                                 style: "SimpleLineSymbolStyleSolid"
                                 color: "green"
                                 width: 2
@@ -96,11 +101,13 @@ Rectangle {
                         label: "Nevada"
                         description: "The State of Nevada"
                         values: ["Nevada"]
-                        symbol: SimpleFillSymbol {
+
+                        SimpleFillSymbol {
                             id: nevadaFillSymbol
                             style: Enums.SimpleFillSymbolStyleSolid
                             color: "blue"
-                            outline: SimpleLineSymbol {
+
+                            SimpleLineSymbol {
                                 style: "SimpleLineSymbolStyleSolid"
                                 color: "blue"
                                 width: 2
@@ -112,8 +119,8 @@ Rectangle {
 
             // set initial viewpoint
             ViewpointExtent {
-                id: viewPoint
-                extent: Envelope {
+
+                Envelope {
                     xMin: -13893029.0
                     yMin: 3573174.0
                     xMax: -12038972.0
@@ -124,6 +131,7 @@ Rectangle {
         }
     }
 
+    // neatline rectangle
     Rectangle {
         anchors.fill: parent
         color: "transparent"
