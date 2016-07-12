@@ -2,6 +2,6 @@
     "source" :  "DisplayLayerViewDrawStatus",
     "description" : "DisplayLayerViewDrawStatus.html",
     "thumbnail" : "DisplayLayerViewDrawStatus.png",
-    "name" : "This sample demonstrates how to get view status for layers in a map."
+    "name" : "Display layer view draw status"
 }
 

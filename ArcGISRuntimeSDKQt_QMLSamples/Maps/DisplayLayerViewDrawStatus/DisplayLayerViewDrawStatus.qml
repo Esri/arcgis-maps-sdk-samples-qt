@@ -1,15 +1,18 @@
+// [WriteFile Name=DisplayLayerViewDrawStatus, Category=Maps]
+// [Legal]
+// Copyright 2016 Esri.
 
-// Copyright 2016 ESRI
-//
-// All rights reserved under the copyright laws of the United States
-// and applicable international laws, treaties, and conventions.
-//
-// You may freely redistribute and use this sample code, with or
-// without modification, provided you include the original copyright
-// notice and use restrictions.
-//
-// See the Sample code usage restrictions document for further information.
-//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
@@ -45,7 +48,6 @@ Rectangle {
 
             //create a feature layer using a url
             FeatureLayer {
-
                 ServiceFeatureTable {
                     url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"
                 }
@@ -100,9 +102,10 @@ Rectangle {
         }
 
         function getindex(layer) {
-            for (var i = 0; i < layerViewModel.count; i++)
+            for (var i = 0; i < layerViewModel.count; i++) {
                 if (layer === map.operationalLayers.get(i))
                     return i;
+            }
         }
     }
 
@@ -120,19 +123,18 @@ Rectangle {
         headerVisible: false
         verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
         horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-        section.labelPositioning: 10
-        opacity: parent.opacity
+        opacity: 0.95
 
         // set number of layers states to be displayed at once
         rowDelegate: Row {
             height: tableView.height / 3
         }
 
+        // create rectangle to frame the TableView
         style: TableViewStyle {
             backgroundColor: "transparent"
             frame: Rectangle {
                 border.color: "black"
-                opacity: 0.77
                 radius: 10
 
                 // make sure mouse actions on table do not affect map behind it
@@ -151,17 +153,19 @@ Rectangle {
 
         TableViewColumn {
             role: "name"
-            width: tableView.width * 0.75 - 10 * scaleFactor
+            width: tableView.width * 0.75 - tableView.anchors.margins
             delegate: Component {
                 Text {
                     text: styleData.value
+                    leftPadding: tableView.anchors.margins
                     renderType: Text.NativeRendering
-                    font.weight: Font.Black
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: tableView.height * 0.10
-                    leftPadding: 10 * scaleFactor
                     elide: Text.ElideRight
+                    font {
+                        weight: Font.Black
+                        pixelSize: tableView.height * 0.10
+                    }
                 }
             }
         }
