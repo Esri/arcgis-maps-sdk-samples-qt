@@ -35,68 +35,57 @@ TiledLayerRenderMode {
     }
 
     // switch to change RenderModes
-    Rectangle {
-        id: modeRectangle
+    Switch {
+        id: modeSwitch
         anchors {
             left: parent.left
             top: parent.top
             margins: 10 * scaleFactor
         }
         width: 140 * scaleFactor
-        height: 30 * scaleFactor
-        radius: 10
-        opacity: 0.77
+        height: 25 * scaleFactor
 
-        Switch {
-            id: modeSwitch
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                verticalCenter: parent.verticalCenter
-                margins: 5 * scaleFactor
+        style: SwitchStyle {
+
+            groove: Rectangle {
+                width: modeSwitch.width
+                height: modeSwitch.height
+                radius: 5
+                border {
+                    color: "#4D4D4D"
+                    width: 1
+                }
+                color: "lightsteelblue"
             }
 
-            style: SwitchStyle {
+            handle: Rectangle {
+                width: modeSwitch.width / 2
+                height: modeSwitch.height
+                radius: 5
+                border.color: "#4D4D4D"
 
-                groove: Rectangle {
-                    width: modeRectangle.width - modeSwitch.anchors.margins
-                    height: modeRectangle.height / 2 + modeSwitch.anchors.margins
-                    radius: 5
-                    border {
-                        color: "#4D4D4D"
-                        width: 1
+                Text {
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        horizontalCenter: parent.horizontalCenter
                     }
-                    color: "lightsteelblue"
+                    text: changeSwitch()
+                    renderType: Text.NativeRendering
+                    font.pixelSize: 11 * scaleFactor
                 }
 
-                handle: Rectangle {
-                    width: modeRectangle.width / 2 - modeSwitch.anchors.margins
-                    height: modeRectangle.height / 2 + modeSwitch.anchors.margins
-                    radius: 5
-                    border.color: "#4D4D4D"
-
-                    Text {
-                        anchors {
-                            verticalCenter: parent.verticalCenter
-                            horizontalCenter: parent.horizontalCenter
-                        }
-                        text: changeSwitch()
-                        renderType: Text.NativeRendering
-                        font.pixelSize: 11 * scaleFactor
-                    }
-
-                    // determine text to display on slider
-                    function changeSwitch() {
-                        if (modeSwitch.checked === false)
-                            return "Aesthetics";
-                        else
-                            return "Scale";
-                    }
+                // determine text to display on slider
+                function changeSwitch() {
+                    if (modeSwitch.checked === false)
+                        return "Aesthetics";
+                    else
+                        return "Scale";
                 }
             }
+        }
 
-            onCheckedChanged: {
-                tiledLayerRenderMode.changeRenderMode();
-            }
+        onCheckedChanged: {
+            tiledLayerRenderMode.changeRenderMode();
         }
     }
 
