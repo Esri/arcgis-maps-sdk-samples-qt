@@ -56,6 +56,7 @@ TiledLayerRenderMode {
             }
 
             style: SwitchStyle {
+
                 groove: Rectangle {
                     width: modeRectangle.width - modeSwitch.anchors.margins
                     height: modeRectangle.height / 2 + modeSwitch.anchors.margins
@@ -66,6 +67,7 @@ TiledLayerRenderMode {
                     }
                     color: "lightsteelblue"
                 }
+
                 handle: Rectangle {
                     width: modeRectangle.width / 2 - modeSwitch.anchors.margins
                     height: modeRectangle.height / 2 + modeSwitch.anchors.margins

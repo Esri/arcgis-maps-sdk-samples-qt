@@ -29,7 +29,7 @@ TARGET = TiledLayerRenderMode
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-      TiledLayerRenderMode.h
+    TiledLayerRenderMode.h
 
 SOURCES += \
     main.cpp \
@@ -41,7 +41,7 @@ RESOURCES += TiledLayerRenderMode.qrc
 
 win32 {
     LIBS += \
-      Ole32.lib
+        Ole32.lib
 }
 
 ios {

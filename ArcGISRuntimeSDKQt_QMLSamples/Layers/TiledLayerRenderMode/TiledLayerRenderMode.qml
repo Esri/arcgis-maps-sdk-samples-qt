@@ -76,6 +76,7 @@ Rectangle {
             }
 
             style: SwitchStyle {
+
                 groove: Rectangle {
                     width: modeRectangle.width - modeSwitch.anchors.margins
                     height: modeRectangle.height / 2 + modeSwitch.anchors.margins
@@ -86,6 +87,7 @@ Rectangle {
                     }
                     color: "lightsteelblue"
                 }
+
                 handle: Rectangle {
                     width: modeRectangle.width / 2 - modeSwitch.anchors.margins
                     height: modeRectangle.height / 2 + modeSwitch.anchors.margins
@@ -113,11 +115,10 @@ Rectangle {
             }
 
             onCheckedChanged: {
-                if (modeSwitch.checked === true) {
+                if (modeSwitch.checked === true)
                     tiledLayer.renderMode = Enums.RenderModeScale;
-                } else {
+                else
                     tiledLayer.renderMode = Enums.RenderModeAesthetics;
-                }
             }
         }
     }
