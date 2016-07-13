@@ -17,8 +17,9 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.0
+
 
 Rectangle {
     clip: true
@@ -93,14 +94,14 @@ Rectangle {
                     renderType: Text.NativeRendering
                     font.pixelSize: 11 * scaleFactor
                 }
+            }
 
-                // determine text to display on slider
-                function changeSwitch() {
-                    if (modeSwitch.checked === false)
-                        return "Aesthetics";
-                    else
-                        return "Scale";
-                }
+            // determine text to display on slider
+            function changeSwitch() {
+                if (modeSwitch.checked === false)
+                    return "Aesthetics";
+                else
+                    return "Scale";
             }
         }
 

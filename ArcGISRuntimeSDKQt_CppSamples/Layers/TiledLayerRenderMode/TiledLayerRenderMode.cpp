@@ -16,19 +16,20 @@
 
 #include "TiledLayerRenderMode.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
 #include "ArcGISTiledLayer.h"
 #include "Basemap.h"
+#include "Map.h"
+#include "MapQuickView.h"
 #include "Point.h"
-#include "Viewpoint.h"
 #include "SpatialReference.h"
+#include "Viewpoint.h"
+
 
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 
-TiledLayerRenderMode::TiledLayerRenderMode(QQuickItem* parent):
+TiledLayerRenderMode::TiledLayerRenderMode(QQuickItem* parent) :
     QQuickItem(parent),
     m_map(nullptr),
     m_mapView(nullptr),
@@ -53,7 +54,7 @@ void TiledLayerRenderMode::componentComplete()
     m_tiledLayer->setRenderMode(RenderMode::Aesthetics);
     Basemap* basemap = new Basemap(m_tiledLayer, this);
 
-    // Create a map using the basemap
+    // create a map using the Basemap
     m_map = new Map(basemap, this);
 
     // set initial viewpoint
