@@ -3,5 +3,10 @@
 <hr>
 <p>This sample demonstrates how to rotate a map view.
 The rotation is set using a slider control, with the rotation
-in degrees displayed next to the slider.</p>
+in degrees displayed next to the slider. The slider is initialized to zero degrees and limited to
+values from 0 to 360. When the slider
+is released, it emits the <code>pressedChanged</code> signal.
+The rotation is changed by calling the <code>setViewpoint</code>
+method on the map view. Rotation using two fingers on a
+touch screen device is disabled in this sample.</p>
 </html>
