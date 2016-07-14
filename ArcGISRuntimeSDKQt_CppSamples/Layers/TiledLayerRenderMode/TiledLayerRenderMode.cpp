@@ -24,7 +24,6 @@
 #include "SpatialReference.h"
 #include "Viewpoint.h"
 
-
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
