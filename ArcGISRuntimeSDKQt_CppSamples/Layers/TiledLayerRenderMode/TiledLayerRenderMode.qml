@@ -39,8 +39,8 @@ TiledLayerRenderMode {
     Switch {
         id: modeSwitch
         anchors {
-            left: parent.left
-            top: parent.top
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
             margins: 10 * scaleFactor
         }
         width: 140 * scaleFactor
@@ -51,18 +51,18 @@ TiledLayerRenderMode {
             groove: Rectangle {
                 width: modeSwitch.width
                 height: modeSwitch.height
-                radius: 5
+                radius: 3
                 border {
                     color: "#4D4D4D"
                     width: 1
                 }
-                color: "lightsteelblue"
+                color: "#E0E0E0"
             }
 
             handle: Rectangle {
                 width: modeSwitch.width / 2
                 height: modeSwitch.height
-                radius: 5
+                radius: 3
                 border.color: "#4D4D4D"
 
                 Text {
@@ -70,18 +70,10 @@ TiledLayerRenderMode {
                         verticalCenter: parent.verticalCenter
                         horizontalCenter: parent.horizontalCenter
                     }
-                    text: changeSwitch()
+                    text: !modeSwitch.checked ? "Aesthetics" : "Scale"
                     renderType: Text.NativeRendering
                     font.pixelSize: 11 * scaleFactor
                 }
-            }
-
-            // determine text to display on slider
-            function changeSwitch() {
-                if (modeSwitch.checked === false)
-                    return "Aesthetics";
-                else
-                    return "Scale";
             }
         }
 

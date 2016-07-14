@@ -23,7 +23,6 @@
 #endif
 
 #include "MapQuickView.h"
-
 #include "TiledLayerRenderMode.h"
 
 using namespace Esri::ArcGISRuntime;

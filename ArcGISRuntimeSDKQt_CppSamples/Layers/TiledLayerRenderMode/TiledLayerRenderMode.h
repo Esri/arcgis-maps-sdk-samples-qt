@@ -40,7 +40,6 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
     Q_INVOKABLE void changeRenderMode();
 
-
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
