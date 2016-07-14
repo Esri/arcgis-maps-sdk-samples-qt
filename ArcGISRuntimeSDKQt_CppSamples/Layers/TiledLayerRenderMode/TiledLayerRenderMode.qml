@@ -21,7 +21,7 @@ import Esri.ArcGISExtras 1.1
 import Esri.Samples 1.0
 
 
-TiledLayerRenderMode {
+TiledLayerRenderModeSample {
     id: tiledLayerRenderMode
     clip: true
     width: 800
