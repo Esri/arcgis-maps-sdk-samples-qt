@@ -19,7 +19,7 @@ import QtQuick.Controls 1.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-Unique_Value_Renderer {
+Unique_Value_RendererSample {
     width: 800
     height: 600
 
