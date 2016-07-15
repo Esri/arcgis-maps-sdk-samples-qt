@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/Picture_Marker_SymbolSample">
+        <file alias="sample.json">Picture_Marker_SymbolSample.json</file>
+        <file>Picture_Marker_SymbolSample.png</file>
+        <file>Picture_Marker_SymbolSample.qml</file>
+        <file>Picture_Marker_SymbolSample.html</file>
+        <file>blue_symbol.png</file>
+        <file>orange_symbol.png</file>
+    </qresource>
+</RCC>
