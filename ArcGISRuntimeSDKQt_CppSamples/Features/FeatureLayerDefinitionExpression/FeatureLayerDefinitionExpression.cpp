@@ -80,7 +80,6 @@ bool FeatureLayerDefinitionExpression::layerInitialized() const
 
 void FeatureLayerDefinitionExpression::setDefExpression(QString whereClause)
 {
-    // SQL whereClause will be defined in QML with
-    // definitionExpressionSample.setDefExpression(whereClause)
+    // In QML, "req_Type = \'Tree Maintenance or Damage\'"
     m_featureLayer->setDefinitionExpression(whereClause);
 }
