@@ -1,5 +1,5 @@
 {
-    "source" :  "TiledLayerRenderMode",
+    "source" :  "TiledLayerRenderMode.qml",
     "description" : "TiledLayerRenderMode.html",
     "thumbnail" : "TiledLayerRenderMode.png",
     "name" : "Tiled layer render mode"

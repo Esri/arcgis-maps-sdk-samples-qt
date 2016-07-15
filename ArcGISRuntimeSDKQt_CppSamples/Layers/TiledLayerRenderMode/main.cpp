@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 
     // Register the map view for QML
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<TiledLayerRenderMode>("Esri.Samples", 1, 0, "TiledLayerRenderMode");
+    qmlRegisterType<TiledLayerRenderMode>("Esri.Samples", 1, 0, "TiledLayerRenderModeSample");
 
     // Intialize application view
     QQuickView view;
