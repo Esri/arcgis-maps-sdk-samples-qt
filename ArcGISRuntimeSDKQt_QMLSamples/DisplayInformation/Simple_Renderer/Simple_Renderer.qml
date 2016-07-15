@@ -57,7 +57,7 @@ Rectangle {
 
                 // set symbol as red cross
                 SimpleMarkerSymbol {
-                    style: "SimpleMarkerSymbolStyleCross"
+                    style: Enums.SimpleMarkerSymbolStyleCross
                     color: "red"
                     size: 12
                 }
