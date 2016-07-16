@@ -109,7 +109,7 @@ Rectangle {
     // TODO: figure out how to get this path to a resource
     FileFolder {
         id: folder
-        path: "qrc:/Samples/DisplayInformation/Picture_Marker_SymbolSample/"
+        path: "/Samples/DisplayInformation/Picture_Marker_SymbolSample/"
     }
 
     // delete temporary orange symbol image
