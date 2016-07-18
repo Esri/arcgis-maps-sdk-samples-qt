@@ -43,7 +43,7 @@ Rectangle {
                 spatialReference: SpatialReference.createWebMercator()
             }
 
-            // set initial viewpoint using envelope
+            // set initial viewpoint using envelope with padding
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded)
                     mapView.setViewpointGeometryAndPadding(envelope, 200);

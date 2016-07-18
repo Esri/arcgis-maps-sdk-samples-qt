@@ -1,10 +1,11 @@
 #Picture_Marker_Symbol
 
-This sample demonstrates how to create PictureMarkerSymbols from the different types of picture resources.
+This sample demonstrates how to create `PictureMarkerSymbol`s from the different types of picture resources.
 
 ![](screenshot.png)
 
 ##How it works
+A `GraphicsOverlay` is added to a `MapView`. Three `Graphic`s are added to the `GraphicsOverlay` with `PictureMarkerSymbol`s which are created with three different image sources, URL, Qt resource, and file path.
 
 ##Features
 

@@ -23,7 +23,6 @@
 #endif
 
 #include "MapQuickView.h"
-
 #include "Picture_Marker_Symbol.h"
 
 using namespace Esri::ArcGISRuntime;

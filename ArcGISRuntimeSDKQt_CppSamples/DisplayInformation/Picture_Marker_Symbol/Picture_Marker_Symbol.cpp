@@ -1,4 +1,4 @@
-// [WriteFile Name=Picture_Marker_SymbolSample, Category=DisplayInformation]
+// [WriteFile Name=Picture_Marker_Symbol, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -22,6 +22,7 @@
 #include "Viewpoint.h"
 #include "MapQuickView.h"
 #include "GraphicsOverlay.h"
+#include "SpatialReference.h"
 #include "PictureMarkerSymbol.h"
 
 #include <QUrl>
@@ -74,7 +75,7 @@ void Picture_Marker_SymbolSample::componentComplete()
     PictureMarkerSymbol* orangeSymbol = new PictureMarkerSymbol(QUrl(m_dataPath + "/symbol/orange_symbol.png"));
     addGraphic(Point(-226773, 6550477, SpatialReference::webMercator()), orangeSymbol);
 
-    // add to MapView
+    // add GraphicsOverlay to MapView
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 }
 

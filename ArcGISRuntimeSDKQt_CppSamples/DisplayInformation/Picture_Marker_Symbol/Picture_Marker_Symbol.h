@@ -1,4 +1,4 @@
-// [WriteFile Name=Picture_Marker_SymbolSample, Category=DisplayInformation]
+// [WriteFile Name=Picture_Marker_Symbol, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
