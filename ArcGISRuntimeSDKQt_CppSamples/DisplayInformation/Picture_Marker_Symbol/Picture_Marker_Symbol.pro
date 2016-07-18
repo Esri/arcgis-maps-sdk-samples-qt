@@ -24,7 +24,7 @@ CONFIG += c++11 arcgis_runtime_qml_cpp100_0_0
 QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
-TARGET = Picture_Marker_SymbolSample
+TARGET = Picture_Marker_Symbol
 
 #-------------------------------------------------------------------------------
 

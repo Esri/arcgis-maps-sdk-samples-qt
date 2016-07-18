@@ -28,11 +28,12 @@ TARGET = Simple_Marker_Symbol
 
 #-------------------------------------------------------------------------------
 
-HEADERS += Simple_Marker_Symbol.h
+HEADERS += \
+    Simple_Marker_Symbol.h
 
 SOURCES += \
-      main.cpp \
-      Simple_Marker_Symbol.cpp
+    main.cpp \
+    Simple_Marker_Symbol.cpp
 
 RESOURCES += Simple_Marker_Symbol.qrc
 

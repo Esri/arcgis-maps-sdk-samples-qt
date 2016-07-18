@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/DisplayInformation/Simple_Renderer/Simple_Renderer.qml"));
+    view.setSource(QUrl("qrc:/Samples/Display Information/Simple_Renderer/Simple_Renderer.qml"));
 
     view.show();
 
