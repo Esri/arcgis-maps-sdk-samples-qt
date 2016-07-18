@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/DisplayInformation/Picture_Marker_Symbol">
+    <qresource prefix="/Samples/Display Information/Picture_Marker_Symbol">
         <file alias="sample.json">Picture_Marker_Symbol.json</file>
         <file>Picture_Marker_Symbol.png</file>
         <file>Picture_Marker_Symbol.qml</file>
