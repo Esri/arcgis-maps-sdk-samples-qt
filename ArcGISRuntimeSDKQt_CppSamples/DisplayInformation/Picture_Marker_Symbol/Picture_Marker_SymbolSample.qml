@@ -20,15 +20,25 @@ import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
 Picture_Marker_SymbolSample {
-    id: rootRectangle
     clip: true
-
     width: 800
     height: 600
+
+    property real scaleFactor: System.displayScaleFactor
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // add a mapView component
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
     }
 }

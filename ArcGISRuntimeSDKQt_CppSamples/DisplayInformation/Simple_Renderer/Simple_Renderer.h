@@ -24,10 +24,10 @@ namespace Esri
         class Map;
         class MapQuickView;
         class GraphicsOverlay;
+        class Point;
     }
 }
 
-#include "Point.h"
 #include <QQuickItem>
 
 class Simple_Renderer : public QQuickItem
@@ -41,7 +41,7 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    void addPoint(Esri::ArcGISRuntime::Point point);
+    void addPoint(Esri::ArcGISRuntime::Point &point);
 
 private:
     Esri::ArcGISRuntime::Map* m_map;

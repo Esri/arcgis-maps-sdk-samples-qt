@@ -24,8 +24,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string inputPNG: "orange_symbol.png"
-    property string outputPNG: System.temporaryFolder.path + "/" + inputPNG
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Map view UI presentation at top
     MapView {
@@ -81,7 +80,7 @@ Rectangle {
                 }
             }
 
-            // create orange symbol from image on disk copied from resources
+            // create orange symbol from file path
             Graphic {
 
                 Point {
@@ -91,7 +90,7 @@ Rectangle {
                 }
 
                 PictureMarkerSymbol {
-                    url: copyOrangeSymbolImage(inputPNG)
+                    url: dataPath + "/symbol/orange_symbol.png"
                 }
             }
         }
@@ -104,21 +103,5 @@ Rectangle {
             width: 0.5 * scaleFactor
             color: "black"
         }
-    }
-
-    // TODO: figure out how to get this path to a resource
-    FileFolder {
-        id: folder
-        path: "/Samples/DisplayInformation/Picture_Marker_SymbolSample/"
-    }
-
-    // delete temporary orange symbol image
-    Component.onDestruction: {
-        System.temporaryFolder.removeFile(inputPNG);
-    }
-
-    function copyOrangeSymbolImage(dataPath) {
-        folder.copyFile(dataPath, outputPNG);
-        return outputPNG;
     }
 }

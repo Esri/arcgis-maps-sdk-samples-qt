@@ -19,13 +19,17 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Map;
-class MapQuickView;
-}
+    namespace ArcGISRuntime
+    {
+        class Map;
+        class MapQuickView;
+        class GraphicsOverlay;
+        class PictureMarkerSymbol;
+        class Point;
+    }
 }
 
+#include <QString>
 #include <QQuickItem>
 
 class Picture_Marker_SymbolSample : public QQuickItem
@@ -36,14 +40,14 @@ public:
     Picture_Marker_SymbolSample(QQuickItem* parent = nullptr);
     ~Picture_Marker_SymbolSample();
 
+    void addGraphic(Esri::ArcGISRuntime::Point &point, Esri::ArcGISRuntime::PictureMarkerSymbol* symbol);
     void componentComplete() Q_DECL_OVERRIDE;
 
-signals:
-
 private:
-
-    Esri::ArcGISRuntime::Map*             m_map;
-    Esri::ArcGISRuntime::MapQuickView*    m_mapView;
+    QString m_dataPath;
+    Esri::ArcGISRuntime::Map* m_map;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
 };
 
 #endif // PICTURE_MARKER_SYMBOLSAMPLE_H
