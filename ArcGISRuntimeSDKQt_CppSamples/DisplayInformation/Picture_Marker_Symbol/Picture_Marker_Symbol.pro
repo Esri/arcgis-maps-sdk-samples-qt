@@ -28,16 +28,20 @@ TARGET = Picture_Marker_SymbolSample
 
 #-------------------------------------------------------------------------------
 
-HEADERS +=     Picture_Marker_SymbolSample.h
+HEADERS += \
+    Picture_Marker_Symbol.h
 
-SOURCES +=     main.cpp     Picture_Marker_SymbolSample.cpp
+SOURCES += \
+    main.cpp \
+    Picture_Marker_Symbol.cpp
 
-RESOURCES += Picture_Marker_SymbolSample.qrc
+RESOURCES += Picture_Marker_Symbol.qrc
 
 #-------------------------------------------------------------------------------
 
 win32 {
-    LIBS +=         Ole32.lib
+    LIBS += \
+        Ole32.lib
 }
 
 ios {

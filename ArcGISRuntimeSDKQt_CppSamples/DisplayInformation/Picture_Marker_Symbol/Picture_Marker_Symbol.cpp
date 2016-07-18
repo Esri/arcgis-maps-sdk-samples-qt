@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "Picture_Marker_SymbolSample.h"
+#include "Picture_Marker_Symbol.h"
 
 #include "Map.h"
 #include "Point.h"
@@ -25,8 +25,6 @@
 #include "PictureMarkerSymbol.h"
 
 #include <QUrl>
-#include <QDir>
-#include <QFile>
 #include <QString>
 #include <QQmlProperty>
 
@@ -69,8 +67,12 @@ void Picture_Marker_SymbolSample::componentComplete()
     addGraphic(Point(-228835, 6550763, SpatialReference::webMercator()), campSymbol);
 
     // create a blue symbol from a local resource
-    PictureMarkerSymbol* blueSymbol = new PictureMarkerSymbol(QUrl("qrc:/Samples/DisplayInformation/Picture_Marker_SymbolSample/blue_symbol.png"), this);
+    PictureMarkerSymbol* blueSymbol = new PictureMarkerSymbol(QUrl("qrc:/Samples/Display Information/Picture_Marker_Symbol/blue_symbol.png"), this);
     addGraphic(Point(-223560, 6552021, SpatialReference::webMercator()), blueSymbol);
+
+    // create an orange symbol from a file path
+    PictureMarkerSymbol* orangeSymbol = new PictureMarkerSymbol(QUrl(m_dataPath + "/symbol/orange_symbol.png"));
+    addGraphic(Point(-226773, 6550477, SpatialReference::webMercator()), orangeSymbol);
 
     // add to MapView
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
