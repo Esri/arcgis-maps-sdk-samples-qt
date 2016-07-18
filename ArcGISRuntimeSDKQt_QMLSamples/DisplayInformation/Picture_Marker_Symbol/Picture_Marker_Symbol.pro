@@ -22,7 +22,8 @@ CONFIG += c++11 arcgis_runtime_qml100_0_0
 
 SOURCES += main.cpp
 
-RESOURCES += Picture_Marker_SymbolSample.qrc
+RESOURCES += \
+    Picture_Marker_Symbol.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist
