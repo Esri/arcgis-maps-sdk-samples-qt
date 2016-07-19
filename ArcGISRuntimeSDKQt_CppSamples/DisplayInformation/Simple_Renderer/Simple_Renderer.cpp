@@ -24,6 +24,7 @@
 #include "Graphic.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "SpatialReference.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -50,17 +51,6 @@ void Simple_Renderer::componentComplete()
     // Create a map using the imagery basemap
     m_map = new Map(Basemap::imagery(this), this);
 
-    // create points to render
-    Point oldFaithfullPoint(-110.828140, 44.460458, SpatialReference::wgs84());
-    Point cascadeGeyserPoint(-110.829004, 44.462438, SpatialReference::wgs84());
-    Point plumeGeyserPoint(-110.829381, 44.462735, SpatialReference::wgs84());
-
-    // Set map to map view
-    m_mapView->setMap(m_map);
-
-    // set viewpoint using the two farthest points as an envelope with padding
-    m_mapView->setViewpointGeometry(Envelope(oldFaithfullPoint, plumeGeyserPoint), 200);
-
     // create graphics overlay
     m_graphicsOverlay = new GraphicsOverlay();
 
@@ -72,10 +62,21 @@ void Simple_Renderer::componentComplete()
     // set the SimpleRenderer to the GraphicsOverlay
     m_graphicsOverlay->setRenderer(simpleRenderer);
 
+    // create points to render
+    Point oldFaithfullPoint(-110.828140, 44.460458, SpatialReference::wgs84());
+    Point cascadeGeyserPoint(-110.829004, 44.462438, SpatialReference::wgs84());
+    Point plumeGeyserPoint(-110.829381, 44.462735, SpatialReference::wgs84());
+
     // create graphics using points and add them to GraphicsOverlay
     addPoint(oldFaithfullPoint);
     addPoint(cascadeGeyserPoint);
     addPoint(plumeGeyserPoint);
+
+    // Set map to map view
+    m_mapView->setMap(m_map);
+
+    // set viewpoint using the two farthest points as an envelope with padding
+    m_mapView->setViewpointGeometry(Envelope(oldFaithfullPoint, plumeGeyserPoint), 200);
 
     // add GraphicsOverlay to MapView
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);

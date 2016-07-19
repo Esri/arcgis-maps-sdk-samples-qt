@@ -5,7 +5,7 @@ This sample demonstrates how to add a point graphic, symbolized by a red circle 
 ![](screenshot.png)
 
 ##How it works
-A `GraphicsOverlay` is created and a `Graphic` is added to it. The `Graphic` sets a `Point` geometry and a `SimpleMarkerSymbol`.
+A `GraphicsOverlay` is created and a `Graphic` is added to it. The `Graphic` sets a `Point` geometry and a red circle `SimpleMarkerSymbol`.
 
 ##Features
 - MapView
