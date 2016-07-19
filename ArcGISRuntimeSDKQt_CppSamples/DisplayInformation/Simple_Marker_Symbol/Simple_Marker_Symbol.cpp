@@ -48,7 +48,7 @@ void Simple_Marker_Symbol::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // create a map using the topographic basemap
+    // create a map using the imagery basemap
     m_map = new Map(Basemap::imagery(this), this);
 
     // set initial viewpoint

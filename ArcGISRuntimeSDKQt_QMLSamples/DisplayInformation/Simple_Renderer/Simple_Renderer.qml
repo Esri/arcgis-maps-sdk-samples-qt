@@ -66,7 +66,7 @@ Rectangle {
             // add the points to be rendered
             Graphic {
 
-                // Old Faithfull
+                // Old Faithful
                 Point {
                     x: -110.828140
                     y: 44.460458

@@ -63,12 +63,12 @@ void Simple_Renderer::componentComplete()
     m_graphicsOverlay->setRenderer(simpleRenderer);
 
     // create points to render
-    Point oldFaithfullPoint(-110.828140, 44.460458, SpatialReference::wgs84());
+    Point oldFaithfulPoint(-110.828140, 44.460458, SpatialReference::wgs84());
     Point cascadeGeyserPoint(-110.829004, 44.462438, SpatialReference::wgs84());
     Point plumeGeyserPoint(-110.829381, 44.462735, SpatialReference::wgs84());
 
     // create graphics using points and add them to GraphicsOverlay
-    addPoint(oldFaithfullPoint);
+    addPoint(oldFaithfulPoint);
     addPoint(cascadeGeyserPoint);
     addPoint(plumeGeyserPoint);
 
@@ -76,7 +76,7 @@ void Simple_Renderer::componentComplete()
     m_mapView->setMap(m_map);
 
     // set viewpoint using the two farthest points as an envelope with padding
-    m_mapView->setViewpointGeometry(Envelope(oldFaithfullPoint, plumeGeyserPoint), 200);
+    m_mapView->setViewpointGeometry(Envelope(oldFaithfulPoint, plumeGeyserPoint), 200);
 
     // add GraphicsOverlay to MapView
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
