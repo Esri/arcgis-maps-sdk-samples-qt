@@ -52,7 +52,7 @@ Rectangle {
 
         GraphicsOverlay {
 
-            // create Campsite Symbol from url and add to overlay
+            // create Campsite Symbol from URL
             Graphic {
 
                 Point {
@@ -66,7 +66,7 @@ Rectangle {
                 }
             }
 
-            // create blue symbol from local resource and add to overlay
+            // create blue symbol from local resource
             Graphic {
 
                 Point {

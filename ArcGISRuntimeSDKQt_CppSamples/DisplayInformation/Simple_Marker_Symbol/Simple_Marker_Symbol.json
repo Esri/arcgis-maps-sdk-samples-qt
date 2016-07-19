@@ -2,6 +2,6 @@
     "source" :  "Simple_Marker_Symbol",
     "description" : "Simple_Marker_Symbol.html",
     "thumbnail" : "Simple_Marker_Symbol.png",
-    "name" : "This sample demonstrates how to add a point graphic, symbolized by a red circle specified via a SimpleMarkerSymbol, to a GraphicsOverlay."
+    "name" : "Simple marker symbol"
 }
 

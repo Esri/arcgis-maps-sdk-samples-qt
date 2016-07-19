@@ -2,6 +2,6 @@
     "source" :  "Simple_Renderer",
     "description" : "Simple_Renderer.html",
     "thumbnail" : "Simple_Renderer.png",
-    "name" : "This sample demonstrates how to create a SimpleRenderer and add it to a GraphicsOverlay."
+    "name" : "Simple renderer"
 }
 
