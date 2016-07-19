@@ -32,7 +32,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Picture_Marker_SymbolSample::Picture_Marker_SymbolSample(QQuickItem* parent) :
+Picture_Marker_Symbol::Picture_Marker_Symbol(QQuickItem* parent) :
     QQuickItem(parent),
     m_map(nullptr),
     m_mapView(nullptr),
@@ -40,11 +40,11 @@ Picture_Marker_SymbolSample::Picture_Marker_SymbolSample(QQuickItem* parent) :
 {
 }
 
-Picture_Marker_SymbolSample::~Picture_Marker_SymbolSample()
+Picture_Marker_Symbol::~Picture_Marker_Symbol()
 {
 }
 
-void Picture_Marker_SymbolSample::componentComplete()
+void Picture_Marker_Symbol::componentComplete()
 {
     QQuickItem::componentComplete();
 
@@ -82,7 +82,7 @@ void Picture_Marker_SymbolSample::componentComplete()
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 }
 
-void Picture_Marker_SymbolSample::addGraphic(Point &point, PictureMarkerSymbol* symbol)
+void Picture_Marker_Symbol::addGraphic(Point &point, PictureMarkerSymbol* symbol)
 {
     // create graphic
     Graphic* graphic = new Graphic(point, symbol);

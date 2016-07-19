@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef PICTURE_MARKER_SYMBOLSAMPLE_H
-#define PICTURE_MARKER_SYMBOLSAMPLE_H
+#ifndef PICTURE_MARKER_SYMBOL_H
+#define PICTURE_MARKER_SYMBOL_H
 
 namespace Esri
 {
@@ -32,13 +32,13 @@ namespace Esri
 #include <QString>
 #include <QQuickItem>
 
-class Picture_Marker_SymbolSample : public QQuickItem
+class Picture_Marker_Symbol : public QQuickItem
 {
     Q_OBJECT
 
 public:
-    Picture_Marker_SymbolSample(QQuickItem* parent = nullptr);
-    ~Picture_Marker_SymbolSample();
+    Picture_Marker_Symbol(QQuickItem* parent = nullptr);
+    ~Picture_Marker_Symbol();
 
     void addGraphic(Esri::ArcGISRuntime::Point &point, Esri::ArcGISRuntime::PictureMarkerSymbol* symbol);
     void componentComplete() Q_DECL_OVERRIDE;
@@ -50,4 +50,4 @@ private:
     Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
 };
 
-#endif // PICTURE_MARKER_SYMBOLSAMPLE_H
+#endif // PICTURE_MARKER_SYMBOL_H

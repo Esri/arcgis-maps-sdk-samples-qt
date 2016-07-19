@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 
     // Register the map view for QML
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<Picture_Marker_SymbolSample>("Esri.Samples", 1, 0, "Picture_Marker_SymbolSample");
+    qmlRegisterType<Picture_Marker_Symbol>("Esri.Samples", 1, 0, "Picture_Marker_SymbolSample");
 
     // Intialize application view
     QQuickView view;
