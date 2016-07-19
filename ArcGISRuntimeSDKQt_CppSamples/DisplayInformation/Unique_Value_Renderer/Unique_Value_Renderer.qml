@@ -20,6 +20,7 @@ import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
 Unique_Value_RendererSample {
+    clip: true
     width: 800
     height: 600
 

@@ -27,7 +27,8 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Simple_Renderer::Simple_Renderer(QQuickItem* parent): QQuickItem(parent),
+Simple_Renderer::Simple_Renderer(QQuickItem* parent) :
+    QQuickItem(parent),
     m_map(nullptr),
     m_mapView(nullptr),
     m_graphicsOverlay(nullptr)
@@ -57,13 +58,13 @@ void Simple_Renderer::componentComplete()
     // Set map to map view
     m_mapView->setMap(m_map);
 
-    // set viewpoint using the two farthest points as an envelope
+    // set viewpoint using the two farthest points as an envelope with padding
     m_mapView->setViewpointGeometry(Envelope(oldFaithfullPoint, plumeGeyserPoint), 200);
 
     // create graphics overlay
     m_graphicsOverlay = new GraphicsOverlay();
 
-    // create red cross simple
+    // create red cross SimpleMarkerSymbol
     SimpleMarkerSymbol* crossSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor("red"), 12, this);
 
     // create renderer and set symbol to crossSymbol
@@ -76,7 +77,7 @@ void Simple_Renderer::componentComplete()
     addPoint(cascadeGeyserPoint);
     addPoint(plumeGeyserPoint);
 
-    // set GraphicsOverlay to MapView
+    // add GraphicsOverlay to MapView
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 }
 

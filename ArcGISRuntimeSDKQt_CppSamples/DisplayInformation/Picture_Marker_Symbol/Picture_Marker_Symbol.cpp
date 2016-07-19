@@ -19,6 +19,7 @@
 #include "Map.h"
 #include "Point.h"
 #include "Graphic.h"
+#include "Basemap.h"
 #include "Viewpoint.h"
 #include "MapQuickView.h"
 #include "GraphicsOverlay.h"
@@ -31,9 +32,11 @@
 
 using namespace Esri::ArcGISRuntime;
 
-Picture_Marker_SymbolSample::Picture_Marker_SymbolSample(QQuickItem* parent) : QQuickItem(parent),
+Picture_Marker_SymbolSample::Picture_Marker_SymbolSample(QQuickItem* parent) :
+    QQuickItem(parent),
     m_map(nullptr),
-    m_mapView(nullptr)
+    m_mapView(nullptr),
+    m_graphicsOverlay(nullptr)
 {
 }
 
