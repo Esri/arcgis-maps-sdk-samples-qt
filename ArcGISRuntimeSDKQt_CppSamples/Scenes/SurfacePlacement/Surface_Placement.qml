@@ -1,4 +1,4 @@
-// [WriteFile Name=Unique_Value_Renderer, Category=DisplayInformation]
+// [WriteFile Name=Surface_Placement, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,25 +14,23 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.3
-import QtQuick.Controls 1.2
+import QtQuick 2.6
+import QtQuick.Controls 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-Unique_Value_RendererSample {
-    clip: true
+SurfacePlacementSample {
     width: 800
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
 
-    // add a mapView component
-    MapView {
+    // Create SceneView here, and create its Scene and GraphicsOverlay in C++ code
+    SceneView {
+        objectName: "sceneView"
         anchors.fill: parent
-        objectName: "mapView"
     }
 
-    // neatline rectangle
     Rectangle {
         anchors.fill: parent
         color: "transparent"

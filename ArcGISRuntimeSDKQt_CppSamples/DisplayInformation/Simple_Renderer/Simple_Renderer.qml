@@ -1,4 +1,4 @@
-// [WriteFile Name=Unique_Value_Renderer, Category=DisplayInformation]
+// [WriteFile Name=Simple_Renderer, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,17 +14,17 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.3
-import QtQuick.Controls 1.2
-import Esri.Samples 1.0
+import QtQuick 2.6
+import QtQuick.Controls 1.4
 import Esri.ArcGISExtras 1.1
+import Esri.Samples 1.0
 
-Unique_Value_RendererSample {
+Simple_RendererSample {
     clip: true
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property double scaleFactor: System.displayScaleFactor
 
     // add a mapView component
     MapView {
@@ -32,7 +32,6 @@ Unique_Value_RendererSample {
         objectName: "mapView"
     }
 
-    // neatline rectangle
     Rectangle {
         anchors.fill: parent
         color: "transparent"

@@ -1,4 +1,4 @@
-#Change basemap
+#Vector Tiled Layer Url
 
 This sample demonstrates how to use a vector tiled layer from an ArcGIS Online service as a basemap.
 

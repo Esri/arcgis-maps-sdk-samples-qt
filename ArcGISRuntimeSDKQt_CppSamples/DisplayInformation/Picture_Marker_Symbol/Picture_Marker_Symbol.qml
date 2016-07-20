@@ -1,4 +1,4 @@
-// [WriteFile Name=Unique_Value_Renderer, Category=DisplayInformation]
+// [WriteFile Name=Picture_Marker_Symbol, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,17 +14,18 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.3
-import QtQuick.Controls 1.2
+import QtQuick 2.6
+import QtQuick.Controls 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-Unique_Value_RendererSample {
+Picture_Marker_SymbolSample {
     clip: true
     width: 800
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // add a mapView component
     MapView {
@@ -32,7 +33,6 @@ Unique_Value_RendererSample {
         objectName: "mapView"
     }
 
-    // neatline rectangle
     Rectangle {
         anchors.fill: parent
         color: "transparent"
