@@ -71,7 +71,7 @@ void Picture_Marker_Symbol::componentComplete()
     addGraphic(Point(-228835, 6550763, SpatialReference::webMercator()), campSymbol);
 
     // create a blue symbol from a local resource
-    PictureMarkerSymbol* blueSymbol = new PictureMarkerSymbol(QUrl("qrc:/Samples/Display Information/Picture_Marker_Symbol/blue_symbol.png"), this);
+    PictureMarkerSymbol* blueSymbol = new PictureMarkerSymbol(QUrl("qrc:/Samples/DisplayInformation/Picture_Marker_Symbol/blue_symbol.png"), this);
     addGraphic(Point(-223560, 6552021, SpatialReference::webMercator()), blueSymbol);
 
     // create an orange symbol from a file path

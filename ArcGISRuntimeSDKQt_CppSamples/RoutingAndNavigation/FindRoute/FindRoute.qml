@@ -136,7 +136,7 @@ FindRouteSample {
                 anchors.centerIn: parent
                 width: 35 * scaleFactor
                 height: width
-                source: "qrc:/Samples/Routing and Navigation/FindRoute/directions.png"
+                source: "qrc:/Samples/RoutingAndNavigation/FindRoute/directions.png"
             }
 
             MouseArea {
