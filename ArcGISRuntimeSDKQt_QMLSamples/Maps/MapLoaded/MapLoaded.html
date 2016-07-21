@@ -1,10 +1,5 @@
 <html>
 <img src="MapLoaded.png"></img>
 <hr>
-<p>This sample demonstrates how to determine the map's load status.
-The load status is obtained from the <code>loadStatus</code> property. The map is considered 
-loaded when any of the following are true: the map has a valid spatial reference, 
-the map has an initial viewpoint, or one of the map's predefined layers has been created. 
-A signal handler is set up on the map to handle the <code>loadStatusChanged</code> signal by 
-updating the text at the bottom of the display with the new load status.</p>
+<p>This sample shows how to tell what the map's load status is. This is obtained from the loadStatus property, which is inherited from the loadable interface. The loadStatus will be considered loaded when any of the following are true: the map has a valid spatial reference; the map has an an initial viewpoint; one of the map's predefined layers has been created. A signal handler is set up on the map to handle the loadStatusChanged signal, and the status text in the bottom of the sample is updated when the status changes.</p>
 </html>

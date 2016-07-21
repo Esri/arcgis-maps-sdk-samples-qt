@@ -6,7 +6,7 @@ This sample demonstrates how to access and add bookmarks to a map.
 
 ##How it works
 
-When the sample starts, the map contains a set of bookmarks. You can select a bookmark from the list, which changes the map's viewpoint. To create a new bookmark, pan and zoom to a new location and select the `+` button. A prompt appears to let you provide a name for the new bookmark. When you select `Done` the new bookmark is added to the bookmark list.
+The map in the sample comes pre-populated with a set of bookmarks. You can tap on the bookmarks combo box to view the list. Then select a bookmark to update the map's viewpoint. To create a new bookmark, pan and/or zoom to a new location and tap on the + button. You will be prompted to provide a name for the new bookmark. When you tap Done the new bookmark should also show up in the list.
 
 ##Features
 - MapView

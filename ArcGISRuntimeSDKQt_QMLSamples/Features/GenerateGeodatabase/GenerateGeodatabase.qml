@@ -26,8 +26,8 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
-    property url outputGdb: System.temporaryFolder.url + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property string outputGdb: System.temporaryFolder.path + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
     property string featureServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer"
     property Envelope generateExtent: null
     property var generateLayerOptions: []
@@ -52,17 +52,6 @@ Rectangle {
                 if (loadStatus === Enums.LoadStatusLoaded) {
                     // add the feature layers
                     featureServiceInfo.load();
-                }
-            }
-
-            // set an initial viewpoint
-            ViewpointExtent {
-                Envelope {
-                    xMax: -122.43843016064368
-                    xMin: -122.50017717584528
-                    yMax: 37.81638388695054
-                    yMin: 37.745000054347535
-                    spatialReference: SpatialReference.createWgs84()
                 }
             }
         }
@@ -311,7 +300,7 @@ Rectangle {
     }
 
     FileFolder {
-        url: dataPath
+        path: dataPath
 
         // create the data path if it does not yet exist
         Component.onCompleted: {

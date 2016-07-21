@@ -1,6 +1,6 @@
 #Graphics overlay (dictionary renderer) 3D
 
-This sample demonstrates applying a dictionary renderer to a graphics overlay in a 3D scene to display military symbology.
+This sample demonstrates applying a dictionary renderer to a graphics overlay in a 3D scene, in order to display military symbology without the need for a feature layer.
 
 ![](screenshot.jpg)
 

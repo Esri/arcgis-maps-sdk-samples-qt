@@ -1,6 +1,6 @@
 #Set initial map area
 
-This sample demonstrates how to create a map with a predefined initial extent.
+This sample demonstrates how to create a map with a pre-defined initial extent.
 
 ![](screenshot.png)
 
