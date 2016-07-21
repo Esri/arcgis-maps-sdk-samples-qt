@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Display Information/Simple_Marker_Symbol/Simple_Marker_Symbol.qml"));
+    view.setSource(QUrl("qrc:/Samples/DisplayInformation/Simple_Marker_Symbol/Simple_Marker_Symbol.qml"));
 
     view.show();
 

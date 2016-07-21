@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Edit Data/EditFeatureAttachments/EditFeatureAttachments.qml"));
+    view.setSource(QUrl("qrc:/Samples/EditData/EditFeatureAttachments/EditFeatureAttachments.qml"));
 
     view.show();
 

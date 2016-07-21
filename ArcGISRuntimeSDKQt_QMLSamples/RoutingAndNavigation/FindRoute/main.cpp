@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Routing and Navigation/FindRoute/FindRoute.qml"));
+    view.setSource(QUrl("qrc:/Samples/RoutingAndNavigation/FindRoute/FindRoute.qml"));
 
     view.show();
 

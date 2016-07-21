@@ -76,7 +76,7 @@ Rectangle {
                 }
 
                 PictureMarkerSymbol {
-                    url: "qrc:/Samples/Display Information/Picture_Marker_Symbol/blue_symbol.png"
+                    url: "qrc:/Samples/DisplayInformation/Picture_Marker_Symbol/blue_symbol.png"
                 }
             }
 
