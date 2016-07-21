@@ -68,15 +68,18 @@ void Picture_Marker_Symbol::componentComplete()
 
     // create a campsite symbol from a URL
     PictureMarkerSymbol* campSymbol = new PictureMarkerSymbol(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0/images/e82f744ebb069bb35b234b3fea46deae"), this);
-    addGraphic(Point(-228835, 6550763, SpatialReference::webMercator()), campSymbol);
+    Point campPoint(-228835, 6550763, SpatialReference::webMercator());
+    addGraphic(campPoint, campSymbol);
 
     // create a blue symbol from a local resource
     PictureMarkerSymbol* blueSymbol = new PictureMarkerSymbol(QUrl("qrc:/Samples/Display Information/Picture_Marker_Symbol/blue_symbol.png"), this);
-    addGraphic(Point(-223560, 6552021, SpatialReference::webMercator()), blueSymbol);
+    Point blueSymbolPoint(-223560, 6552021, SpatialReference::webMercator());
+    addGraphic(blueSymbolPoint, blueSymbol);
 
     // create an orange symbol from a file path
     PictureMarkerSymbol* orangeSymbol = new PictureMarkerSymbol(QUrl(m_dataPath + "/symbol/orange_symbol.png"));
-    addGraphic(Point(-226773, 6550477, SpatialReference::webMercator()), orangeSymbol);
+    Point orangeSymbolPoint(-226773, 6550477, SpatialReference::webMercator());
+    addGraphic(orangeSymbolPoint, orangeSymbol);
 
     // add GraphicsOverlay to MapView
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
