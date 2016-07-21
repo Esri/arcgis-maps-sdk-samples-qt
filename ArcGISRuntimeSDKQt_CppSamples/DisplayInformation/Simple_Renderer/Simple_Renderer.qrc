@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Display Information/Simple_Renderer">
+        <file alias="sample.json">Simple_Renderer.json</file>
+        <file>Simple_Renderer.png</file>
+        <file>Simple_Renderer.qml</file>
+		<file>Simple_Renderer.h</file>
+		<file>Simple_Renderer.cpp</file>
+        <file>Simple_Renderer.html</file>
+    </qresource>
+</RCC>

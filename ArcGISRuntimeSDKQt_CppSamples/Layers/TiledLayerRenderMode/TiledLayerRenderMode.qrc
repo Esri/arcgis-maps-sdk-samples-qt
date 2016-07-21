@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/TiledLayerRenderMode">
+        <file alias="sample.json">TiledLayerRenderMode.json</file>
+        <file>TiledLayerRenderMode.png</file>
+        <file>TiledLayerRenderMode.qml</file>
+		<file>TiledLayerRenderMode.h</file>
+		<file>TiledLayerRenderMode.cpp</file>
+        <file>TiledLayerRenderMode.html</file>
+    </qresource>
+</RCC>

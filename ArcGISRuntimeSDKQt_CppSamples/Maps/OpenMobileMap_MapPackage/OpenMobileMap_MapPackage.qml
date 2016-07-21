@@ -24,7 +24,7 @@ OpenMobileMap_MapPackageSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
 
     // add a mapView component
     MapView {
