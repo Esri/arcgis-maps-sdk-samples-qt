@@ -80,8 +80,8 @@ Rectangle {
     }
 
     function createGraphics(){
-        var lat = camera.location.x;
-        var lng = camera.location.y + 0.2;
+        var lon = camera.location.x;
+        var lat = camera.location.y + 0.2;
 
         // add a set of colors to pick from
         addColors();
@@ -89,7 +89,7 @@ Rectangle {
         // create a random set of points
         var points = [];
         for (var i = 0; i <= 100; i++) {
-            var point = ArcGISRuntimeEnvironment.createObject("Point", {x:i / 10 * (size * 2) + lat, y:i % 10 * (size * 2) + lng, spatialReference:sceneView.spatialReference});
+            var point = ArcGISRuntimeEnvironment.createObject("Point", {x:i / 10 * (size * 2) + lon, y:i % 10 * (size * 2) + lat, spatialReference:sceneView.spatialReference});
             points.push(point);
         }
 
