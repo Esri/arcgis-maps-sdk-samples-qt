@@ -72,8 +72,8 @@ void ExtrudeGraphics::componentComplete()
     m_sceneView->setViewpointCamera(camera);
 
     // graphics location
-    double lat = camera.location().x() - 0.03;
-    double lng = camera.location().y() + 0.2;
+    double lng = camera.location().x() - 0.03;
+    double lat = camera.location().y() + 0.2;
 
     GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
 
@@ -88,7 +88,7 @@ void ExtrudeGraphics::componentComplete()
     QList<Point> pointsList;
     for (auto i = 0; i <= 100; i++)
     {
-        Point point(i / 10 * (m_size * 2) + lat, i % 10 * (m_size * 2) + lng, m_sceneView->spatialReference());
+        Point point(i / 10 * (m_size * 2) + lng, i % 10 * (m_size * 2) + lat, m_sceneView->spatialReference());
         pointsList.append(point);
     }
 
