@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Display Information/GORenderers/GORenderers.qml"));
+    view.setSource(QUrl("qrc:/Samples/DisplayInformation/GORenderers/GORenderers.qml"));
 
     view.show();
 
