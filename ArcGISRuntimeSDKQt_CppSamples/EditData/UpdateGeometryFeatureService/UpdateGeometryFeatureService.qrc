@@ -1,10 +1,10 @@
 <RCC>
-    <qresource prefix="/Samples/Edit Data/UpdateGeometryFeatureService">
+    <qresource prefix="/Samples/EditData/UpdateGeometryFeatureService">
         <file alias="sample.json">UpdateGeometryFeatureService.json</file>
         <file>UpdateGeometryFeatureService.png</file>
         <file>UpdateGeometryFeatureService.qml</file>
-		<file>UpdateGeometryFeatureService.h</file>
-		<file>UpdateGeometryFeatureService.cpp</file>
+        <file>UpdateGeometryFeatureService.h</file>
+        <file>UpdateGeometryFeatureService.cpp</file>
         <file>UpdateGeometryFeatureService.html</file>
     </qresource>
 </RCC>

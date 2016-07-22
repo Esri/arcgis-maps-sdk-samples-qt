@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Display Information/GraphicsOverlayDictionaryRenderer_3D/GraphicsOverlayDictionaryRenderer_3D.qml"));
+    view.setSource(QUrl("qrc:/Samples/DisplayInformation/GraphicsOverlayDictionaryRenderer_3D/GraphicsOverlayDictionaryRenderer_3D.qml"));
 
     view.show();
 
