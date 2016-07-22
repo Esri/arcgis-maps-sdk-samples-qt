@@ -1,5 +1,11 @@
 <html>
 <img src="ShowLegend.png"></img>
 <hr>
-<p>This sample demonstrates how to show a legend for all the operational layers in the map.</p>
+<p>This sample demonstrates how to show a legend for all the operational layers in the map.
+The sample utilizes the <code>autoFetchLegendInfos</code> property on the Map. This 
+property will cause the map to recursively loop through all of the operational layers in 
+the map (including sublayers), and request the <code>LegendInfo</code> for each item. All 
+of the resulting LegendInfo objects are passed into the LegendInfoListModel. A QML 
+ListView directly consumes this model, and separates each item by using a 
+<code>section</code>.</p>
 </html>

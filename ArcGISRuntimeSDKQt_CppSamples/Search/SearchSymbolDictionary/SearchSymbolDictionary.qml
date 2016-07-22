@@ -33,7 +33,7 @@ SearchSymbolDictionarySample {
     property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     property var searchParamList: [[],[],[],[],[]]
 
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
 
     Rectangle {
         id: topRectangle

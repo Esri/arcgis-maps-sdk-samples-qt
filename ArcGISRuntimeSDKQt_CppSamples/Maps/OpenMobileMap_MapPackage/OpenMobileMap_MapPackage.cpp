@@ -41,7 +41,7 @@ void OpenMobileMap_MapPackage::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
 
     // get the data path
-    QString dataPath = QQmlProperty::read(this, "dataPath").toString();
+    QString dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
 
     // instatiate a mobile map package
     m_mobileMapPackage = new MobileMapPackage(dataPath + "Yellowstone.mmpk", this);
