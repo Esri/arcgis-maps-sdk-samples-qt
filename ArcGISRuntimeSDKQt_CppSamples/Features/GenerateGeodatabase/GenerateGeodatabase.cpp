@@ -60,16 +60,11 @@ void GenerateGeodatabase::componentComplete()
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
     // Create a map using a local tile package
-    m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
+    m_dataPath = QQmlProperty::read(this, "dataPath").toString();
     TileCache* tileCache = new TileCache(m_dataPath + "tpk/SanFrancisco.tpk", this);
     ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);
     Basemap* basemap = new Basemap(tiledLayer, this);
     m_map = new Map(basemap, this);
-
-    // set an initial viewpoint
-    Envelope env(-122.50017, 37.74500, -122.43843, 37.81638, SpatialReference(4326));
-    Viewpoint viewpoint(env);
-    m_map->setInitialViewpoint(viewpoint);
 
     // Set map to map view
     m_mapView->setMap(m_map);

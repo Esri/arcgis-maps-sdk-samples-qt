@@ -58,11 +58,6 @@ void ExportTiles::componentComplete()
     // create a new map instance
     m_map = new Map(basemap, this);
 
-    // set an initial viewpoint
-    Envelope env(12362601, 936021, 10187678, 2567213, SpatialReference(3857));
-    Viewpoint viewpoint(env);
-    m_map->setInitialViewpoint(viewpoint);
-
     // set map on the map view
     m_mapView->setMap(m_map);
 
@@ -85,7 +80,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
     auto params = m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_exportTileCacheTask->mapServiceInfo()->maxScale());
 
     // execute the task and obtain the job
-    auto exportJob = m_exportTileCacheTask->exportTileCache(params, dataPath);
+    auto exportJob = m_exportTileCacheTask->exportTileCacheWithParameters(params, dataPath);
 
     // check if there is a valid job
     if (exportJob)

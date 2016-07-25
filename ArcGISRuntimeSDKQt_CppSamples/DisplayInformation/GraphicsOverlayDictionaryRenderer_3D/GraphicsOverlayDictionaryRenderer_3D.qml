@@ -25,7 +25,7 @@ GraphicsOverlayDictionaryRenderer_3DSample {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     onGraphicsLoaded: progressBar_loading.visible = false;
 

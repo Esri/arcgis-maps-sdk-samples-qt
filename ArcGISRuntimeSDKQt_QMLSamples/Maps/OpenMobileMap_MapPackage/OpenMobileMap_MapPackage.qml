@@ -23,7 +23,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
 
     // Create MapView
     MapView {

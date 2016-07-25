@@ -6,7 +6,7 @@ This sample demonstrates how to open an existing map.
 
 ##How it works
 
-The existing maps are web maps stored in ArcGIS Online as portal items. The portal items are presented in a list view with the portal item's thumbnail and title. When a portal item is selected, a new map object is created from that portal item, and the new map object is assigned the map view.
+The sample displays a list view of 3 different maps saved in ArcGIS Online as portal items.  When a portal item is selected from the view, a new map is constructed with that portal item, and the map view is assigned the new map.
 
 ##Features
 - MapView
