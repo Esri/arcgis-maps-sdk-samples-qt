@@ -101,7 +101,6 @@ Rectangle {
                     font {
                         weight: Font.Black
                         pixelSize: 12 * scaleFactor
-
                     }
                     height: 20 * scaleFactor
                     horizontalAlignment: Text.AlignHCenter
