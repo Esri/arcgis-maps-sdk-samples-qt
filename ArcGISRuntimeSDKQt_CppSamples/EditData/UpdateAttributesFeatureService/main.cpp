@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Edit Data/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qml"));
+    view.setSource(QUrl("qrc:/Samples/EditData/UpdateAttributesFeatureService/UpdateAttributesFeatureService.qml"));
 
     view.show();
 
