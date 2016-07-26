@@ -1,6 +1,6 @@
 #Surface placement
 
-This sample demonstrates how to control the surface placement of a 3D graphic. Graphics can either be placed relative to the elevation surface, relative to sea level, or draped over the elevation surface.
+This sample demonstrates how to control the surface placement of a 3D graphic. Graphics can either be placed relative to the elevation surface (RELATIVE), relative to sea level (ABSOLUTE), or draped over the elevation surface (DRAPED).
 
 ![](screenshot.png)
 
