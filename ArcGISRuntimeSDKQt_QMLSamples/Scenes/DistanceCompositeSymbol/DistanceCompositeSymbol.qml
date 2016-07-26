@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D/SkyCrane/SkyCrane.lwo"
+    property string dataPath: System.resolvedPathUrl(System.userHomePath + "/ArcGIS/Runtime/Data/3D/SkyCrane/SkyCrane.lwo")
 
     // Create a scene view
     SceneView {
