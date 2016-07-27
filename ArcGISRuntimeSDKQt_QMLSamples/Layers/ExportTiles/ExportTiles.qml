@@ -41,6 +41,11 @@ Rectangle {
                 ArcGISTiledLayer {
                     id: tiledLayer
                     url: tiledServiceUrl
+                    onLoadStatusChanged: {
+                        if (loadStatus === Enums.LoadStatusLoaded) {
+                            exportTask.load();
+                        }
+                    }
                 }
             }
 
@@ -61,6 +66,14 @@ Rectangle {
     ExportTileCacheTask {
         id: exportTask
         mapServiceInfo: tiledLayer.mapServiceInfo
+
+        onLoadErrorChanged: {
+            if (loadError) {
+                exportWindow.visible = true;
+                statusText = "Export failed";
+                exportWindow.hideWindow(5000);
+            }
+        }
 
         function generateDefaultParameters() {
             // generate the default parameters with the extent and map scales specified
