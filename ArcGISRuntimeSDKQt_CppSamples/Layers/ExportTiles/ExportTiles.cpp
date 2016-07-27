@@ -70,16 +70,6 @@ void ExportTiles::componentComplete()
     connect(tiledLayer, &ArcGISTiledLayer::doneLoading, [this, tiledLayer](Error)
     {
       m_exportTileCacheTask = new ExportTileCacheTask(tiledLayer->mapServiceInfo(), this);
-      connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, [this](Error error)
-      {
-        if (!error.isEmpty())
-        {
-          emit updateStatus("ExportTileCacheTask failed to load.");
-          emit hideWindow(5000, false);
-        }
-      });
-
-      m_exportTileCacheTask->load();
     });
 }
 
