@@ -51,7 +51,7 @@ void DisplayDrawingStatus::componentComplete()
     m_map->setInitialViewpoint(Viewpoint(Envelope(-13639984, 4537387, -13606734, 4558866, SpatialReference::webMercator())));
 
     // create feature layer
-    ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/0"), this);
+    ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
     m_featureLayer = new FeatureLayer(featureTable, this);
 
     // Set map to map view

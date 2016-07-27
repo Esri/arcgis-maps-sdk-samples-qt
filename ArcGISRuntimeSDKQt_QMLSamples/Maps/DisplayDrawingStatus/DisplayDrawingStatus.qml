@@ -38,7 +38,7 @@ Rectangle {
             // create FeatureLayer using a service URL
             FeatureLayer {
                 ServiceFeatureTable {
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/0"
+                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
                 }
             }
 
@@ -56,7 +56,7 @@ Rectangle {
 
         // make Drawing Window visible if map is drawing. Not visible if drawing completed
         onDrawStatusChanged: {
-             drawStatus === Enums.DrawStatusInProgress ? mapDrawingWindow.visible = true : mapDrawingWindow.visible = false;
+            drawStatus === Enums.DrawStatusInProgress ? mapDrawingWindow.visible = true : mapDrawingWindow.visible = false;
         }
     }
 
@@ -82,12 +82,10 @@ Rectangle {
             radius: 3
             opacity: 0.85
             color: "#E0E0E0"
+            border.color: "black"
 
             Column {
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
-                }
+                anchors.centerIn: parent
                 topPadding: 5 * scaleFactor
                 spacing: 5 * scaleFactor
 
@@ -105,7 +103,7 @@ Rectangle {
                     height: 20 * scaleFactor
                     horizontalAlignment: Text.AlignHCenter
                     renderType: Text.NativeRendering
-                    text: "Drawing Map..."
+                    text: "Drawing..."
                 }
             }
         }

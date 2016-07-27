@@ -57,12 +57,10 @@ DisplayDrawingStatusSample {
             radius: 3
             opacity: 0.85
             color: "#E0E0E0"
+            border.color: "black"
 
             Column {
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
-                }
+                anchors.centerIn: parent
                 topPadding: 5 * scaleFactor
                 spacing: 5 * scaleFactor
 
@@ -76,12 +74,11 @@ DisplayDrawingStatusSample {
                     font {
                         weight: Font.Black
                         pixelSize: 12 * scaleFactor
-
                     }
                     height: 20 * scaleFactor
                     horizontalAlignment: Text.AlignHCenter
                     renderType: Text.NativeRendering
-                    text: "Drawing Map..."
+                    text: "Drawing..."
                 }
             }
         }
