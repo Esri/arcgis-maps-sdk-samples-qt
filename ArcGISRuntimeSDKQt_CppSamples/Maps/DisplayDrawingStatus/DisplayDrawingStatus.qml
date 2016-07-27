@@ -69,6 +69,7 @@ DisplayDrawingStatusSample {
                     height: 60 * scaleFactor
                     running: true
                 }
+
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     font {
