@@ -69,7 +69,7 @@ void ExportTiles::componentComplete()
     // create the task from the tiled layer's map service info once it is loaded
     connect(tiledLayer, &ArcGISTiledLayer::doneLoading, [this, tiledLayer](Error)
     {
-      m_exportTileCacheTask = new ExportTileCacheTask(tiledLayer->mapServiceInfo(), this);
+        m_exportTileCacheTask = new ExportTileCacheTask(tiledLayer->mapServiceInfo(), this);
     });
 }
 
