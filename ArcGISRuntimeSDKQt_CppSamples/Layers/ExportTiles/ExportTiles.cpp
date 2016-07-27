@@ -69,7 +69,17 @@ void ExportTiles::componentComplete()
     // create the task from the tiled layer's map service info once it is loaded
     connect(tiledLayer, &ArcGISTiledLayer::doneLoading, [this, tiledLayer](Error)
     {
-        m_exportTileCacheTask = new ExportTileCacheTask(tiledLayer->mapServiceInfo(), this);
+      m_exportTileCacheTask = new ExportTileCacheTask(tiledLayer->mapServiceInfo(), this);
+      connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, [this](Error error)
+      {
+        if (!error.isEmpty())
+        {
+          emit updateStatus("ExportTileCacheTask failed to load.");
+          emit hideWindow(5000, false);
+        }
+      });
+
+      m_exportTileCacheTask->load();
     });
 }
 
@@ -82,7 +92,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
     auto tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
     // generate parameters
-    auto params = m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_exportTileCacheTask->mapServiceInfo()->maxScale());
+    auto params = m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_exportTileCacheTask->mapServiceInfo().maxScale());
 
     // execute the task and obtain the job
     auto exportJob = m_exportTileCacheTask->exportTileCache(params, dataPath);
