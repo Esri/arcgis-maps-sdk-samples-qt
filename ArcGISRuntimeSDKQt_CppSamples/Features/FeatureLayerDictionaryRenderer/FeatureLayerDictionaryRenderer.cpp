@@ -62,8 +62,6 @@ void FeatureLayerDictionaryRenderer::componentComplete()
     {
         if (gdbLoadStatus == LoadStatus::Loaded)
         {
-            QMap<QString, QString> symbologyFieldOverrides;
-            QMap<QString, QString> textFieldOverrides;
             /**
              * If the field names in your data don't match the contents of SymbolDictionary::symbologyFieldNames(),
              * you must add key-value pairs to a QMap<QString, QString> and include this QMap when calling the
@@ -80,17 +78,25 @@ void FeatureLayerDictionaryRenderer::componentComplete()
              * and where the dictionary expects the field name "uniquedesignation" but the database table contains
              * the field "uniqueId" instead.
              */
+//            QMap<QString, QString> symbologyFieldOverrides;
+//            QMap<QString, QString> textFieldOverrides;
 //            symbologyFieldOverrides["identity"] = "affiliation";
 //            textFieldOverrides["uniquedesignation"] = "uniqueId";
 
+            //! [Create Symbol Dictionary Cpp]
             SymbolDictionary* symbolDictionary = new SymbolDictionary("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+            //! [Create Symbol Dictionary Cpp]
 
             foreach (auto table, m_geodatabase->geodatabaseFeatureTables())
             {
+                //! [Apply Dictionary Renderer Feature Layer Cpp]
+                // Create a layer and set the feature table
                 FeatureLayer* layer = new FeatureLayer(table, this);
-                // Each layer needs its own renderer, though all renderers can share the SymbolDictionary.
-                DictionaryRenderer* renderer = new DictionaryRenderer(symbolDictionary, symbologyFieldOverrides, textFieldOverrides, this);
+
+                // Create a dictionary renderer and apply to the layer
+                DictionaryRenderer* renderer = new DictionaryRenderer(symbolDictionary, this);
                 layer->setRenderer(renderer);
+                //! [Apply Dictionary Renderer Feature Layer Cpp]
 
                 // Check to see if all layers have loaded
                 connect(layer, &FeatureLayer::loadStatusChanged, this, [this](LoadStatus layerLoadStatus)
