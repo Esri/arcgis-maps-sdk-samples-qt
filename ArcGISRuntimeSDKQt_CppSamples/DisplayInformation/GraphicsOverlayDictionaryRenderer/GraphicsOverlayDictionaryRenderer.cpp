@@ -35,7 +35,7 @@ const QString GraphicsOverlayDictionaryRenderer::FIELD_WKID = "_wkid";
 GraphicsOverlayDictionaryRenderer::GraphicsOverlayDictionaryRenderer(QQuickItem* parent) :
     QQuickItem(parent),
     m_mapView(nullptr),
-    m_graphicsOverlay(new GraphicsOverlay(this))
+    m_graphicsOverlay(nullptr)
 {
 
 }
@@ -53,10 +53,15 @@ void GraphicsOverlayDictionaryRenderer::componentComplete()
     m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
     m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
 
-    // Set up DictionaryRenderer
+    //! [Apply Dictionary Renderer Graphics Overlay Cpp]
+    // Create graphics overlay
+    m_graphicsOverlay = new GraphicsOverlay(this);
+
+    // Create dictionary renderer and apply to the graphics overlay
     SymbolDictionary* symbolDictionary = new SymbolDictionary("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
     DictionaryRenderer* renderer = new DictionaryRenderer(symbolDictionary, this);
     m_graphicsOverlay->setRenderer(renderer);
+    //! [Apply Dictionary Renderer Graphics Overlay Cpp]
 
     // Create a map and give it to the MapView
     m_mapView = findChild<MapQuickView*>("mapView");

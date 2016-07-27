@@ -38,6 +38,8 @@ Rectangle {
             id: map
             BasemapTopographic {}
         }
+
+        //! [Apply Dictionary Renderer Graphics Overlay QML]
         GraphicsOverlay {
             id: graphicsOverlay
 
@@ -48,6 +50,7 @@ Rectangle {
                 }
             }
         }
+        //! [Apply Dictionary Renderer Graphics Overlay QML]
     }
 
     ProgressBar {
@@ -156,5 +159,4 @@ Rectangle {
             color: "black"
         }
     }
-
 }
