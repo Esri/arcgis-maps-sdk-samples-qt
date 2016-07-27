@@ -51,7 +51,7 @@ Rectangle {
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
                     // add the feature layers
-                    featureServiceInfo.load();
+                    geodatabaseSyncTask.load();
                 }
             }
 
@@ -68,13 +68,14 @@ Rectangle {
         }
     }
 
-    // Create the ArcGISFeatureServiceInfo to obtain layers
-    ArcGISFeatureServiceInfo {
-        id: featureServiceInfo
+    // create the GeodatabaseSyncTask to generate the local geodatabase
+    GeodatabaseSyncTask {
+        id: geodatabaseSyncTask
         url: featureServiceUrl
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusLoaded) {
+                var featureLayerInfos = featureServiceInfo.featureLayerInfos;
                 for (var i = 0; i < featureLayerInfos.length; i++) {
                     // add the layer to the map
                     var serviceFeatureTable = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {url: featureLayerInfos[i].url});
@@ -88,12 +89,6 @@ Rectangle {
                 }
             }
         }
-    }
-
-    // create the GeodatabaseSyncTask to generate the local geodatabase
-    GeodatabaseSyncTask {
-        id: geodatabaseSyncTask
-        url: featureServiceUrl
 
         function executeGenerate() {
             // execute the asynchronous task and obtain the job

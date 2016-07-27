@@ -82,7 +82,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
     auto tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
     // generate parameters
-    auto params = m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_exportTileCacheTask->mapServiceInfo()->maxScale());
+    auto params = m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_exportTileCacheTask->mapServiceInfo().maxScale());
 
     // execute the task and obtain the job
     auto exportJob = m_exportTileCacheTask->exportTileCache(params, dataPath);

@@ -25,12 +25,12 @@ namespace Esri
         class MapQuickView;
         class GeodatabaseSyncTask;
         class Geodatabase;
-        class ArcGISFeatureServiceInfo;
     }
 }
 
 #include "Envelope.h"
 #include "GenerateGeodatabaseParameters.h"
+#include "ArcGISFeatureServiceInfo.h"
 #include <QQuickItem>
 #include <QStringList>
 
@@ -61,7 +61,7 @@ private:
     QString m_dataPath;
     QString m_featureServiceUrl;
     QStringList m_serviceIds;
-    Esri::ArcGISRuntime::ArcGISFeatureServiceInfo* m_featureServiceInfo;
+    Esri::ArcGISRuntime::ArcGISFeatureServiceInfo m_featureServiceInfo;
 };
 
 #endif // GENERATE_GEODATABASE_H
