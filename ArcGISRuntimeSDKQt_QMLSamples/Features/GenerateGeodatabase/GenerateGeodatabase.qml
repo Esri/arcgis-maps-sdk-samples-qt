@@ -68,6 +68,7 @@ Rectangle {
         }
     }
 
+    //! [Features GenerateGeodatabase Create GeodatabaseSyncTask]
     // create the GeodatabaseSyncTask to generate the local geodatabase
     GeodatabaseSyncTask {
         id: geodatabaseSyncTask
@@ -170,6 +171,7 @@ Rectangle {
         outSpatialReference: SpatialReference.createWebMercator()
         returnAttachments: false
     }
+    //! [Features GenerateGeodatabase Create GeodatabaseSyncTask]
 
     // create an extent rectangle for the output geodatabase
     Rectangle {

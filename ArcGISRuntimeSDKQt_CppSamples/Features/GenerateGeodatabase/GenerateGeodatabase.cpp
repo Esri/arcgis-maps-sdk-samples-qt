@@ -73,8 +73,10 @@ void GenerateGeodatabase::componentComplete()
     // Set map to map view
     m_mapView->setMap(m_map);
 
+    //! [Features GenerateGeodatabase Part 1]
     // create the GeodatabaseSyncTask
     m_syncTask = new GeodatabaseSyncTask(QUrl(m_featureServiceUrl), this);
+    //! [Features GenerateGeodatabase Part 1]
 
     // connect to sync task doneLoading signal
     connect(m_syncTask, &GeodatabaseSyncTask::doneLoading, [this](Error error)
@@ -122,6 +124,7 @@ void GenerateGeodatabase::addFeatureLayers(QString serviceUrl, QStringList servi
     }
 }
 
+//! [Features GenerateGeodatabase Part 2]
 GenerateGeodatabaseParameters GenerateGeodatabase::getUpdatedParameters(Envelope gdbExtent)
 {
     // create the parameters
@@ -195,8 +198,8 @@ void GenerateGeodatabase::generateGeodatabaseFromCorners(double xCorner1, double
         emit updateStatus("Generate failed");
         emit hideWindow(5000, false);
     }
-
 }
+//! [Features GenerateGeodatabase Part 2]
 
 void GenerateGeodatabase::addOfflineData(Geodatabase* gdb)
 {
