@@ -81,9 +81,8 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
     auto extent = Envelope(corner1, corner2);
     auto tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
-    ExportTileCacheParameters params;
     // connect to sync task doneLoading signal
-    connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, [this, &params, &dataPath](QUuid, ExportTileCacheParameters parameters)
+    connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, [this, &dataPath](QUuid, ExportTileCacheParameters parameters)
     {
         m_parameters = parameters;
 
