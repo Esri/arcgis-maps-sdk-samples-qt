@@ -30,6 +30,8 @@ Rectangle {
     property string statusText: ""
     property string tiledServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
 
+    property ExportTileCacheParameters params
+
     // Create MapView that contains a Map
     MapView {
         id: mapView
@@ -62,12 +64,18 @@ Rectangle {
         id: exportTask
         mapServiceInfo: tiledLayer.mapServiceInfo
 
+        onCreateDefaultExportTileCacheParametersStatusChanged: {
+            if (createDefaultExportTileCacheParametersStatus === Enums.TaskStatusCompleted) {
+                params = defaultExportTileCacheParameters;
+
+                // export the cache with the parameters
+                executeExportTileCacheTask(params);
+            }
+        }
+
         function generateDefaultParameters() {
             // generate the default parameters with the extent and map scales specified
-            var params = exportTask.createDefaultExportTileCacheParameters(tileCacheExtent, mapView.mapScale, tiledLayer.maxScale);
-
-            // export the cache with the parameters
-            executeExportTileCacheTask(params);
+            exportTask.createDefaultExportTileCacheParameters(tileCacheExtent, mapView.mapScale, tiledLayer.maxScale);
         }
 
         function executeExportTileCacheTask(params) {
