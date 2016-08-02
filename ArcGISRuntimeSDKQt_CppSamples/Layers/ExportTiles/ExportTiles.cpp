@@ -83,10 +83,12 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
 
     ExportTileCacheParameters params;
     // connect to sync task doneLoading signal
-    connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, [this, &params](QUuid, ExportTileCacheParameters parameters)
+    connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, [this, &params, &dataPath](QUuid, ExportTileCacheParameters parameters)
     {
+        m_parameters = parameters;
+
         // execute the task and obtain the job
-        auto exportJob = m_exportTileCacheTask->exportTileCache(parameters, dataPath);
+        auto exportJob = m_exportTileCacheTask->exportTileCache(m_parameters, dataPath);
 
         // check if there is a valid job
         if (exportJob)
