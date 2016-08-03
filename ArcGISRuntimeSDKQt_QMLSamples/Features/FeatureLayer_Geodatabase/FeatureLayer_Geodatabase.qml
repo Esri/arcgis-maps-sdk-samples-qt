@@ -44,13 +44,16 @@ Rectangle {
                 scale: 35e4
             }
 
+            //! [FeatureLayer Geodatabase add basemap]
             // create a basemap from a local vector tile package
             Basemap {
                 ArcGISVectorTiledLayer {
                     url: dataPath + "vtpk/LosAngeles.vtpk"
                 }
             }
+            //! [FeatureLayer Geodatabase add basemap]
 
+            //! [FeatureLayer Geodatabase create]
             // create a feature layer
             FeatureLayer {
                 // obtain the feature table from the geodatabase by name
@@ -62,6 +65,7 @@ Rectangle {
                     path: dataPath + "geodatabase/LA_Trails.geodatabase"
                 }
             }
+            //! [FeatureLayer Geodatabase create]
         }
     }
 
