@@ -76,21 +76,7 @@ Rectangle {
                             featureTable.applyEdits();
                         }
                     }
-                }
-
-                // signal handler for asynchronously fetching the selected feature
-                onSelectedFeaturesStatusChanged: {
-                    if (selectedFeaturesStatus === Enums.TaskStatusCompleted) {
-                        while (selectedFeaturesResult.iterator.hasNext) {
-                            // obtain the feature
-                            var feat = selectedFeaturesResult.iterator.next();
-                            // replace the attribute value
-                            feat.attributes.replaceAttribute("typdamage", damageComboBox.currentText);
-                            // update the feature in the feature table asynchronously
-                            featureTable.updateFeature(feat);                            
-                        }
-                    }
-                }                                
+                }                 
 
                 // signal handler for selecting features
                 onSelectFeaturesStatusChanged: {
