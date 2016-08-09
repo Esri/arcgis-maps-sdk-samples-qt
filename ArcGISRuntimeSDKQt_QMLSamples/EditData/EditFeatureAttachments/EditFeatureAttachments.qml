@@ -41,14 +41,17 @@ Rectangle {
             // Set the initial basemap to Streets
             BasemapStreets { }
 
-            // Set the initial viewpoint over the UK
-            initialViewpoint: ViewpointCenter {
-                center: Point {
-                    x: 14902768.01
-                    y: 4050890.22
-                    spatialReference: SpatialReference { wkid: 102100 }
+            ViewpointExtent {
+                id: viewPoint
+                extent: Envelope {
+                    xMin: -14400186.784644607
+                    yMin: 2328358.2989760893
+                    xMax: -7312972.106830405
+                    yMax: 7377998.756918708
+                    spatialReference: SpatialReference {
+                        wkid: 102100
+                    }
                 }
-                scale: 2e6
             }
 
             FeatureLayer {
