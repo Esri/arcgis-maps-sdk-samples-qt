@@ -60,12 +60,9 @@ void DeleteFeaturesFeatureService::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // create a Viewpoint
-    Viewpoint vp(Point(544871,6806138,SpatialReference(3857)), 2e6);
-
     // create a Map by passing in the Basemap
     m_map = new Map(Basemap::streets(this), this);
-    m_map->setInitialViewpoint(vp);
+    m_map->setInitialViewpoint(Viewpoint(Envelope(-14400186.784644607, 2328358.2989760893, -7312972.106830405, 7377998.756918708, SpatialReference::webMercator())));
 
     // set map on the map view
     m_mapView->setMap(m_map);

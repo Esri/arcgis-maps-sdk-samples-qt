@@ -68,10 +68,10 @@ Rectangle {
         ViewpointExtent {
             id: viewPoint
             extent: Envelope {
-                xMin: -1131596.019761
-                yMin: 3893114.069099
-                xMax: 3926705.982140
-                yMax: 7977912.461790
+                xMin: -14400186.784644607
+                yMin: 2328358.2989760893
+                xMax: -7312972.106830405
+                yMax: 7377998.756918708
                 spatialReference: SpatialReference {
                     wkid: 102100
                 }
