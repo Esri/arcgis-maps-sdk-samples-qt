@@ -47,7 +47,7 @@ private:
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   QPushButton* m_button;
   QInputDialog* m_inputDialog;
-  QMap<QString, Esri::ArcGISRuntime::PortalItem> m_portalMaps;
+  QMap<QString, QString > m_portalIds;
 
 };
 
