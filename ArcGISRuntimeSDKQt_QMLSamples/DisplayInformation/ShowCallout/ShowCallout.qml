@@ -57,19 +57,19 @@ Rectangle {
         }
 
         Callout {
-            id: calling
+            id: callout
             calloutData: mapView.calloutData
         }
 
         // display callout on mouseclick
         onMouseClicked: {
-            if (calling.calloutVisible)
-                calling.dismiss()
+            if (callout.calloutVisible)
+                callout.dismiss()
             else
             {
                 mapView.calloutData.location = mouse.mapPoint;
                 mapView.calloutData.detail = "x: " + mouse.mapPoint.x.toFixed(2) + " y: " + mouse.mapPoint.y.toFixed(2);
-                calling.showCallout()
+                callout.showCallout()
             }
         }
     }
