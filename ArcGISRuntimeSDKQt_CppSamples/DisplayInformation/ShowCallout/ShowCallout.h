@@ -23,6 +23,7 @@ namespace Esri
     {
         class Map;
         class MapQuickView;
+        class CalloutData;
     }
 }
 
@@ -31,6 +32,7 @@ namespace Esri
 class ShowCallout : public QQuickItem
 {
     Q_OBJECT
+    Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
 
 public:
     ShowCallout(QQuickItem* parent = nullptr);
@@ -38,9 +40,16 @@ public:
 
     void componentComplete() Q_DECL_OVERRIDE;
 
+signals:
+    void calloutDataChanged();
+
+private:
+     Esri::ArcGISRuntime::CalloutData* calloutData() const;
+
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::CalloutData* m_calloutData;
 };
 
 #endif // SHOWCALLOUT_H

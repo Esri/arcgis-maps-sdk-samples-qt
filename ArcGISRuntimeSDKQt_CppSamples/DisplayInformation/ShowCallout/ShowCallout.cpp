@@ -44,7 +44,7 @@ void ShowCallout::componentComplete()
 
     // Create a map using the topographic basemap
     m_map = new Map(Basemap::topographic(this), this);
-    m_map->setInitialViewpoint(Viewpoint(Envelope(-13075816.4047166, 4014771.46954516, -13073005.6797177, 4016869.78617381, SpatialReference(102100))));
+    m_map->setInitialViewpoint(Viewpoint(Point(-13041154, 3858170, SpatialReference(3857)), 1e5));
 
     // Set map to map view
     m_mapView->setMap(m_map);
@@ -60,14 +60,19 @@ void ShowCallout::componentComplete()
             m_mapView->calloutData()->setVisible(false);
         else
         {
-            Point mapPoint = GeometryEngine::project(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()), SpatialReference(102100));        
+            Point mapPoint = GeometryEngine::project(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()), SpatialReference(3857));
             m_mapView->calloutData()->setLocation(mapPoint);          
-            m_mapView->calloutData()->setDetail("lat: " + QString::number(mouseEvent.x()) + " long: " + QString::number(mouseEvent.y()));
+            m_mapView->calloutData()->setDetail("lat: " + QString::number(mapPoint.x()) + " long: " + QString::number(mapPoint.y()));
             m_mapView->calloutData()->setVisible(true);
         }
-
+        qDebug() << m_mapView->calloutData()->detail();
         qDebug() << m_mapView->calloutData()->screenPoint();
         qDebug() << m_mapView->calloutData()->isVisible();
         qDebug() << m_mapView->calloutData()->location();
     });
+}
+
+CalloutData* ShowCallout::calloutData() const
+{
+    return m_mapView->calloutData();
 }
