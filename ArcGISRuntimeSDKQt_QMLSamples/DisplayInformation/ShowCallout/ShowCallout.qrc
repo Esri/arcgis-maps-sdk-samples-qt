@@ -4,5 +4,6 @@
         <file>ShowCallout.png</file>
         <file>ShowCallout.qml</file>
         <file>ShowCallout.html</file>
+        <file>RedShinyPin.png</file>
     </qresource>
 </RCC>

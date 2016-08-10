@@ -15,8 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISRuntime.Toolkit.Controls 2.0
 
 Rectangle {
@@ -47,25 +47,24 @@ Rectangle {
             }
         }
 
+        Callout {
+            id: calling
+            calloutData: mapView.calloutData
+        }
+
         onMouseClicked: {
             if (calling.calloutVisible)
                 calling.dismiss()
             else
             {
                 mapView.calloutData.location = mouse.mapPoint;
+                mapView.calloutData.imageUrl = "qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png";
                 mapView.calloutData.title = "Location";
                 mapView.calloutData.detail = "lat: " + mouse.mapPoint.y.toFixed(3) + " long: " + mouse.mapPoint.x.toFixed(3);
                 calling.showCallout()
             }
-
         }
     }
-
-    Callout {
-        id: calling
-        calloutData: mapView.calloutData
-    }
-
 
     // Neatline rectangle
     Rectangle {

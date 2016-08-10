@@ -19,28 +19,28 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Map;
-class MapQuickView;
-}
+    namespace ArcGISRuntime
+    {
+        class Map;
+        class MapQuickView;
+    }
 }
 
 #include <QQuickItem>
 
 class ShowCallout : public QQuickItem
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  ShowCallout(QQuickItem* parent = nullptr);
-  ~ShowCallout();
+    ShowCallout(QQuickItem* parent = nullptr);
+    ~ShowCallout();
 
-  void componentComplete() Q_DECL_OVERRIDE;
+    void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView;
 };
 
 #endif // SHOWCALLOUT_H
