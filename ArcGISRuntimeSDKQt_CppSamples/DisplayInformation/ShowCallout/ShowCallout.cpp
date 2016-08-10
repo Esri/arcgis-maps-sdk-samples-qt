@@ -44,7 +44,7 @@ void ShowCallout::componentComplete()
 
     // Create a map using the topographic basemap
     m_map = new Map(Basemap::topographic(this), this);
-    m_map->setInitialViewpoint(Viewpoint(Point(-13041154, 3858170, SpatialReference(3857)), 1e5));
+    m_map->setInitialViewpoint(Viewpoint(Point(-1.2e7, 5e6, SpatialReference::webMercator()), 1e7));
 
     // Set map to map view
     m_mapView->setMap(m_map);

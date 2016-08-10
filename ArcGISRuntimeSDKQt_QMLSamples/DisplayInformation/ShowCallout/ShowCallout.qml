@@ -39,11 +39,11 @@ Rectangle {
             // initial Viewpoint
             ViewpointCenter {
                 Point {
-                    x: -13041154
-                    y: 3858170
+                    x: -1.2e7
+                    y: 5e6
                     spatialReference: SpatialReference.createWebMercator()
                 }
-                scale: 1e5
+                scale: 1e7
             }
 
             // initialize calloutData when map is loaded

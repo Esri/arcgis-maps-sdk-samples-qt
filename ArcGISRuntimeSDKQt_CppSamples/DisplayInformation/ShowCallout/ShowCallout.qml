@@ -20,7 +20,7 @@ import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Controls 2.0
 
 ShowCalloutSample {
-    id: rootRectangle
+    id: showCalloutSample
     clip: true
 
     width: 800
@@ -38,8 +38,7 @@ ShowCalloutSample {
         }
 
         Component.onCompleted: {
-            callout.calloutData = ShowCalloutSample.calloutData;
-
+            callout.calloutData = showCalloutSample.calloutData;
         }
     }
 
