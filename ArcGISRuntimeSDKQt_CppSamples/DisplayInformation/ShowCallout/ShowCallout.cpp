@@ -54,6 +54,7 @@ void ShowCallout::componentComplete()
     m_mapView->calloutData()->setTitle("Location");
     m_mapView->calloutData()->setImageUrl(QUrl("qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png"));
 
+    // display callout on mouseclick
     connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent){
         if (m_mapView->calloutData()->isVisible())
             m_mapView->calloutData()->setVisible(false);

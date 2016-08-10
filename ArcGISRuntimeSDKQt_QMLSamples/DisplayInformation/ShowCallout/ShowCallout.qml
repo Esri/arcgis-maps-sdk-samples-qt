@@ -60,7 +60,7 @@ Rectangle {
                 mapView.calloutData.location = mouse.mapPoint;
                 mapView.calloutData.imageUrl = "qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png";
                 mapView.calloutData.title = "Location";
-                mapView.calloutData.detail = "lat: " + mouse.mapPoint.y.toFixed(3) + " long: " + mouse.mapPoint.x.toFixed(3);
+                mapView.calloutData.detail = "lat: " + mouse.mapPoint.y.toFixed(2) + " long: " + mouse.mapPoint.x.toFixed(2);
                 calling.showCallout()
             }
         }
