@@ -19,12 +19,12 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Map;
-class MapQuickView;
-class CalloutData;
-}
+    namespace ArcGISRuntime
+    {
+        class Map;
+        class MapQuickView;
+        class CalloutData;
+    }
 }
 
 #include <QQuickItem>
