@@ -60,9 +60,12 @@ void ShowCallout::componentComplete()
             m_mapView->calloutData()->setVisible(false);
         else
         {
-            Point mapPoint = GeometryEngine::project(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()), SpatialReference(3857));
-            m_mapView->calloutData()->setLocation(mapPoint);          
-            m_mapView->calloutData()->setDetail("x: " + QString::number(mapPoint.x()) + " y: " + QString::number(mapPoint.y()));
+            // set callout position
+            Point mapPoint = GeometryEngine::project(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()), SpatialReference::webMercator());
+            m_mapView->calloutData()->setLocation(mapPoint);
+
+            // set detail as coordinates formatted to decimal numbers with precision 2
+            m_mapView->calloutData()->setDetail("x: " + QString::number(mapPoint.x(), 'f', 2) + " y: " + QString::number(mapPoint.y(), 'f', 2));
             m_mapView->calloutData()->setVisible(true);
         }
     });

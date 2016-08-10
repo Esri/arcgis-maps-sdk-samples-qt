@@ -61,6 +61,7 @@ Rectangle {
             calloutData: mapView.calloutData
         }
 
+        // display callout on mouseclick
         onMouseClicked: {
             if (calling.calloutVisible)
                 calling.dismiss()
