@@ -62,13 +62,9 @@ void ShowCallout::componentComplete()
         {
             Point mapPoint = GeometryEngine::project(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()), SpatialReference(3857));
             m_mapView->calloutData()->setLocation(mapPoint);          
-            m_mapView->calloutData()->setDetail("lat: " + QString::number(mapPoint.x()) + " long: " + QString::number(mapPoint.y()));
+            m_mapView->calloutData()->setDetail("x: " + QString::number(mapPoint.x()) + " y: " + QString::number(mapPoint.y()));
             m_mapView->calloutData()->setVisible(true);
         }
-        qDebug() << m_mapView->calloutData()->detail();
-        qDebug() << m_mapView->calloutData()->screenPoint();
-        qDebug() << m_mapView->calloutData()->isVisible();
-        qDebug() << m_mapView->calloutData()->location();
     });
 }
 

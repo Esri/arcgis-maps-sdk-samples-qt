@@ -67,7 +67,7 @@ Rectangle {
             else
             {
                 mapView.calloutData.location = mouse.mapPoint;
-                mapView.calloutData.detail = "lat: " + mouse.mapPoint.y.toFixed(2) + " long: " + mouse.mapPoint.x.toFixed(2);
+                mapView.calloutData.detail = "x: " + mouse.mapPoint.x.toFixed(2) + " y: " + mouse.mapPoint.y.toFixed(2);
                 calling.showCallout()
             }
         }
