@@ -36,14 +36,14 @@ Rectangle {
         Map {
             BasemapTopographic {}
 
+            // initial Viewpoint
             ViewpointCenter {
                 Point {
-                    x: -1.2e7
-                    y: 5e6
+                    x: -13041154
+                    y: 3858170
                     spatialReference: SpatialReference.createWebMercator()
                 }
-                scale: 4e7
-
+                scale: 1e5
             }
         }
 
