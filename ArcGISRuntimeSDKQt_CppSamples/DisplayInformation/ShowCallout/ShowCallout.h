@@ -19,12 +19,12 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class CalloutData;
-    }
+namespace ArcGISRuntime
+{
+class Map;
+class MapQuickView;
+class CalloutData;
+}
 }
 
 #include <QQuickItem>
@@ -44,12 +44,11 @@ signals:
     void calloutDataChanged();
 
 private:
-     Esri::ArcGISRuntime::CalloutData* calloutData() const;
+    Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::CalloutData* m_calloutData;
 };
 
 #endif // SHOWCALLOUT_H
