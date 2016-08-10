@@ -1,6 +1,6 @@
 #Show callout
 
-This sample demonstrates how to show location coordinates on a Map using a Callout.
+This sample demonstrates how to show location coordinates on a `Map` using a `Callout`.
 
 ![](screenshot.png)
 
