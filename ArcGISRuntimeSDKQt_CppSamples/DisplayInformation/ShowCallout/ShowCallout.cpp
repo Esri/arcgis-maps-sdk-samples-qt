@@ -25,7 +25,8 @@ using namespace Esri::ArcGISRuntime;
 ShowCallout::ShowCallout(QQuickItem* parent):
     QQuickItem(parent),
     m_map(nullptr),
-    m_mapView(nullptr)
+    m_mapView(nullptr),
+    m_calloutData(nullptr)
 {
 }
 
@@ -52,6 +53,8 @@ void ShowCallout::componentComplete()
     m_mapView->calloutData()->setVisible(false);
     m_mapView->calloutData()->setTitle("Location");
     m_mapView->calloutData()->setImageUrl(QUrl("qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png"));
+    m_calloutData = m_mapView->calloutData();
+    emit calloutDataChanged();
 
     // display callout on mouseclick
     connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent){
@@ -72,5 +75,5 @@ void ShowCallout::componentComplete()
 
 CalloutData* ShowCallout::calloutData() const
 {
-    return m_mapView->calloutData();
+    return m_calloutData;
 }

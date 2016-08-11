@@ -35,10 +35,7 @@ ShowCalloutSample {
 
         Callout {
             id: callout
-        }
-
-        Component.onCompleted: {
-            callout.calloutData = showCalloutSample.calloutData;
+            calloutData: showCalloutSample.calloutData
         }
     }
 

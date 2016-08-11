@@ -49,6 +49,7 @@ private:
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::CalloutData* m_calloutData;
 };
 
 #endif // SHOWCALLOUT_H
