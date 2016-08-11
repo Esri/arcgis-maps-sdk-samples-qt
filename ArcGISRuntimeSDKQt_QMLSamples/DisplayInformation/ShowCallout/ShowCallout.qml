@@ -25,10 +25,10 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor;
-    property Point calloutLocation;
-    property real xCoor;
-    property real yCoor;
+    property real scaleFactor: System.displayScaleFactor
+    property Point calloutLocation
+    property real xCoor
+    property real yCoor
 
     // Map view UI presentation at top
     MapView {
