@@ -11,6 +11,5 @@ When `MapView`'s `mouseClick` signal is emitted, the `QMouseEvent` position is t
 - Map
 - MapView
 - Callout
-- GeometryEngine
 - Viewpoint
 - SpatialReference

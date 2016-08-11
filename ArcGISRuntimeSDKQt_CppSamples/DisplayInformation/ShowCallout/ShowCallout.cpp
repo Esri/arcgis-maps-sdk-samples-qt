@@ -19,7 +19,6 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "CalloutData.h"
-#include "GeometryEngine.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -61,7 +60,7 @@ void ShowCallout::componentComplete()
         else
         {
             // set callout position
-            Point mapPoint = GeometryEngine::project(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()), SpatialReference::webMercator());
+            Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
             m_mapView->calloutData()->setLocation(mapPoint);
 
             // set detail as coordinates formatted to decimal numbers with precision 2
