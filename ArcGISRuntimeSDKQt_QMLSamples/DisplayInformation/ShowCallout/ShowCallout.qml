@@ -25,8 +25,10 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
-    property Point calloutLocation
+    property real scaleFactor: System.displayScaleFactor;
+    property Point calloutLocation;
+    property real xCoor;
+    property real yCoor;
 
     // Map view UI presentation at top
     MapView {
@@ -38,7 +40,7 @@ Rectangle {
             imageUrl: "qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png"
             title: "Location"
             location: calloutLocation
-            detail: "x: " + calloutLocation.x.toFixed(2) + " y: " + calloutLocation.y.toFixed(2);
+            detail: "x: " + xCoor + " y: " + yCoor;
         }
 
         Map {
@@ -67,7 +69,9 @@ Rectangle {
             else
             {
                 calloutLocation = mouse.mapPoint;
-                callout.showCallout()
+                xCoor = mouse.mapPoint.x.toFixed(2);
+                yCoor = mouse.mapPoint.y.toFixed(2);
+                callout.showCallout();
             }
         }
     }
