@@ -26,12 +26,20 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
+    property Point calloutLocation
 
     // Map view UI presentation at top
     MapView {
         id: mapView
-
         anchors.fill: parent
+
+        // initialize Callout
+        calloutData {
+            imageUrl: "qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png"
+            title: "Location"
+            location: calloutLocation
+            detail: "x: " + calloutLocation.x.toFixed(2) + " y: " + calloutLocation.y.toFixed(2);
+        }
 
         Map {
             BasemapTopographic {}
@@ -45,20 +53,11 @@ Rectangle {
                 }
                 scale: 1e7
             }
-
-            // initialize calloutData when map is loaded
-            onLoadStatusChanged: {
-                if(loadStatus === Enums.LoadStatusLoaded)
-                {
-                    mapView.calloutData.imageUrl = "qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png";
-                    mapView.calloutData.title = "Location";
-                }
-            }
         }
 
         Callout {
             id: callout
-            calloutData: mapView.calloutData
+            calloutData: parent.calloutData
         }
 
         // display callout on mouseclick
@@ -67,8 +66,7 @@ Rectangle {
                 callout.dismiss()
             else
             {
-                mapView.calloutData.location = mouse.mapPoint;
-                mapView.calloutData.detail = "x: " + mouse.mapPoint.x.toFixed(2) + " y: " + mouse.mapPoint.y.toFixed(2);
+                calloutLocation = mouse.mapPoint;
                 callout.showCallout()
             }
         }
