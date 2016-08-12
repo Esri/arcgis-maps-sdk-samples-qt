@@ -105,7 +105,6 @@ Rectangle {
             }
         }
 
-
         GeocodeParameters {
             id: geocodeParams
             maxResults: 1
@@ -170,6 +169,7 @@ Rectangle {
                     locatorTask.geocodeWithParameters(text, geocodeParams);
             }
 
+            // select suggestions with key presses
             Keys.onDownPressed: {
                 if ((locatorTask.suggestions.count !== 0) && (highlightIndex < locatorTask.suggestions.count))
                 {
@@ -228,6 +228,7 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: {
                                 suggestView.currentIndex = index;
+                                suggestionRect.visible = false;
                                 if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress) {
                                     locatorTask.geocodeWithSuggestResult(locatorTask.suggestions.get(suggestView.currentIndex));
                                 }
