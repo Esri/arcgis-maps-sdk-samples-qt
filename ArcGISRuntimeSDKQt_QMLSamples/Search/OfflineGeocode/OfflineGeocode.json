@@ -1,0 +1,6 @@
+{
+    "source" :  "OfflineGeocode.qml",
+    "description" : "OfflineGeocode.html",
+    "thumbnail" : "OfflineGeocode.png",
+    "name" : "Offline geocode"
+}

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Search/OfflineGeocode">
+        <file alias="sample.json">OfflineGeocode.json</file>
+        <file>OfflineGeocode.png</file>
+        <file>OfflineGeocode.qml</file>
+        <file>OfflineGeocode.html</file>
+    </qresource>
+</RCC>
