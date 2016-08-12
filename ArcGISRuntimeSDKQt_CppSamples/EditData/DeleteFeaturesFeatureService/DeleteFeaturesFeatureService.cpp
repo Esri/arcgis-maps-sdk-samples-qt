@@ -62,10 +62,10 @@ void DeleteFeaturesFeatureService::componentComplete()
 
     // create a Map by passing in the Basemap
     m_map = new Map(Basemap::streets(this), this);
-    m_map->setInitialViewpoint(Viewpoint(Envelope(-14400186.784644607, 2328358.2989760893, -7312972.106830405, 7377998.756918708, SpatialReference::webMercator())));
 
     // set map on the map view
     m_mapView->setMap(m_map);
+    m_mapView->setViewpointCenter(Point(-10800000, 4500000, SpatialReference(102100)), 3e7);
 
     // create the ServiceFeatureTable
     m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
