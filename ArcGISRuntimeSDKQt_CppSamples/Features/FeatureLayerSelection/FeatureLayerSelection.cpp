@@ -57,10 +57,10 @@ void FeatureLayerSelection::componentComplete()
 
     // Create a map using the streets basemap
     m_map = new Map(Basemap::streets(this), this);
+    m_map->setInitialViewpoint(Viewpoint(Point(-10800000, 4500000, SpatialReference(102100)), 3e7));
 
     // Set map to map view
     m_mapView->setMap(m_map);
-    m_mapView->setViewpointCenter(Point(-10800000, 4500000, SpatialReference(102100)), 3e7);
 
     // create the feature table
     m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
