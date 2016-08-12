@@ -4,5 +4,7 @@
         <file>OfflineGeocode.png</file>
         <file>OfflineGeocode.qml</file>
         <file>OfflineGeocode.html</file>
+        <file>RedShinyPin.png</file>
+        <file>blue_symbol.png</file>
     </qresource>
 </RCC>
