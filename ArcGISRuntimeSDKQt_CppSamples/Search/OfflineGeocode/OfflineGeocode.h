@@ -22,7 +22,11 @@ namespace Esri
     namespace ArcGISRuntime
     {
         class Map;
+        class Graphic;
+        class LocatorTask;
+        class CalloutData;
         class MapQuickView;
+        class GraphicsOverlay;
         class ArcGISTiledLayer;
     }
 }
@@ -32,6 +36,7 @@ namespace Esri
 class OfflineGeocode : public QQuickItem
 {
     Q_OBJECT
+    Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
 
 public:
     OfflineGeocode(QQuickItem* parent = nullptr);
@@ -39,11 +44,22 @@ public:
 
     void componentComplete() Q_DECL_OVERRIDE;
 
+signals:
+    void calloutDataChanged();
+
+private:
+    Esri::ArcGISRuntime::CalloutData* calloutData() const;
+    void connectSignals();
+
 private:
     QString m_dataPath;
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::CalloutData* m_calloutData;
+    Esri::ArcGISRuntime::LocatorTask* m_locatorTask;
+    Esri::ArcGISRuntime::Graphic* m_pinGraphic;
     Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
 };
 
 #endif // OFFLINEGEOCODE_H

@@ -21,7 +21,6 @@ import Esri.ArcGISRuntime 100.0
 import QtQuick.Controls.Styles 1.4
 import Esri.ArcGISRuntime.Toolkit.Controls 2.0
 
-// TODO: implement real time geocoding somehow...
 Rectangle {
     id: rootRectangle
     clip: true
@@ -244,11 +243,16 @@ Rectangle {
                         }
                     }
 
+                    // when user types, suggestions appear
+                    Keys.onPressed: {
+                        suggestionRect.visible = true;
+                    }
+
                     onAccepted: {
                         suggestionRect.visible = false;
                         if(locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
                             locatorTask.geocodeWithParameters(text, geocodeParams);
-                    }
+                    }     
                 }
 
                 Rectangle {
@@ -292,7 +296,6 @@ Rectangle {
             height: suggestionHeight * locatorTask.suggestions.count * scaleFactor
             color: "#f7f8fa"
             opacity: 0.85
-            visible: false
 
             ListView {
                 id: suggestView

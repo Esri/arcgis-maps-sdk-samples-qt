@@ -18,9 +18,10 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit.Controls 2.0
 
 OfflineGeocodeSample {
-    id: rootRectangle
+    id: offlineGeocodeSample
     clip: true
 
     width: 800
@@ -33,6 +34,11 @@ OfflineGeocodeSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+
+        Callout {
+            id: callout
+            calloutData: offlineGeocodeSample.calloutData
+        }
     }
 
     Rectangle {
