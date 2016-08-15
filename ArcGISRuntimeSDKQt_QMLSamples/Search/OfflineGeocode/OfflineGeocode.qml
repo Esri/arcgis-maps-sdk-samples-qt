@@ -36,12 +36,12 @@ Rectangle {
     property Point clickedPoint
     property real suggestionHeight: 20
     property bool isReverseGeocode: false
+    property bool isPressAndHold: false
 
     // Map view UI presentation at top
     MapView {
         id: mapView
         anchors.fill: parent
-        magnifierEnabled: true
 
         calloutData {
             title: "Address"
@@ -51,6 +51,7 @@ Rectangle {
 
         Map {
 
+            // create local tiled layer using tile package
             Basemap {
                 ArcGISTiledLayer {
                     TileCache {
@@ -59,6 +60,7 @@ Rectangle {
                 }
             }
 
+            // set initial viewpoint
             ViewpointCenter {
                 Point {
                     x: -13042254.715252
@@ -71,6 +73,7 @@ Rectangle {
             }
         }
 
+        // add a graphics overlay to the mapview
         GraphicsOverlay {
             id: graphicsOverlay
 
@@ -108,9 +111,14 @@ Rectangle {
         }
 
         onIdentifyGraphicsOverlayStatusChanged: {
+            // if clicked on the pin graphic, display callout.
             if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted){
-                if (identifyGraphicsOverlayResults.length > 0)
+                if (identifyGraphicsOverlayResults.length > 0 && !isPressAndHold)
                     callout.showCallout();
+                // if user is dragging the pin, real time geocode
+                else if (identifyGraphicsOverlayResults.length > 0 && isPressAndHold)
+                    isReverseGeocode = true;
+                // otherwise, normal reverse geocode
                 else if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress){
                     isReverseGeocode = true;
                     locatorTask.reverseGeocodeWithParameters(clickedPoint, reverseGeocodeParams);
@@ -118,19 +126,27 @@ Rectangle {
             }
         }
 
-        // These two signal will be used for real time reverse geocoding.. maybe.
-        onMousePressAndHold: {
-
-        }
-
-        onMouseReleased: {
-
-        }
-
         // hide suggestion window if viewpoint changes
         onViewpointChanged: {
             suggestionRect.visible = false;
             noResultsRect.visible = false;
+        }
+
+        // The following signal handlers are for realtime geocoding
+        onMousePressAndHold: {
+            if (pinLocation !== null){
+                isPressAndHold = true;
+                mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, 1);
+            }
+        }
+
+        onMousePositionChanged: {
+            if (isPressAndHold && isReverseGeocode && locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
+                locatorTask.reverseGeocodeWithParameters(mouse.mapPoint, reverseGeocodeParams);
+        }
+
+        onMouseReleased: {
+            isPressAndHold = false;
         }
     }
 
@@ -160,16 +176,13 @@ Rectangle {
         }
 
         onGeocodeStatusChanged: {
-            if (geocodeStatus === Enums.TaskStatusInProgress)
-            {
+            if (geocodeStatus === Enums.TaskStatusInProgress){
                 busyIndicator.visible = true;
             }
-            else if (geocodeStatus === Enums.TaskStatusCompleted)
-            {
+            else if (geocodeStatus === Enums.TaskStatusCompleted){
                 busyIndicator.visible = false;
 
-                if(locatorTask.geocodeResults.length > 0)
-                {
+                if(locatorTask.geocodeResults.length > 0){
                     callout.dismiss();
 
                     // zoom to geocoded location
@@ -183,7 +196,8 @@ Rectangle {
                     if (isReverseGeocode)
                         callout.showCallout();
 
-                    isReverseGeocode = false;
+                    if (!isPressAndHold)
+                        isReverseGeocode = false;
                 }
 
                 else {
@@ -313,7 +327,7 @@ Rectangle {
                             onClicked: {
                                 suggestView.currentIndex = index;
                                 suggestionRect.visible = false;
-                                if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress) {
+                                if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress){
                                     textField.text = locatorTask.suggestions.get(suggestView.currentIndex).label
                                     locatorTask.geocodeWithSuggestResult(locatorTask.suggestions.get(suggestView.currentIndex));
                                 }
@@ -349,7 +363,6 @@ Rectangle {
             font.pixelSize: 18 * scaleFactor
         }
     }
-
 
     // Neatline rectangle
     Rectangle {
