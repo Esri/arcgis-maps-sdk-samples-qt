@@ -43,6 +43,7 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        // initialize callout
         calloutData {
             title: "Address"
             imageUrl: "qrc:/Samples/Search/OfflineGeocode/RedShinyPin.png"
@@ -181,7 +182,7 @@ Rectangle {
             else if (geocodeStatus === Enums.TaskStatusCompleted){
                 busyIndicator.visible = false;
 
-                if(locatorTask.geocodeResults.length > 0){
+                if(geocodeResults.length > 0){
                     callout.dismiss();
 
                     // zoom to geocoded location
