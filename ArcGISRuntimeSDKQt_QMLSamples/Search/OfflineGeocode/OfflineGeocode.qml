@@ -270,12 +270,12 @@ Rectangle {
                         anchors.centerIn: parent
                         width: parent.width
                         height: parent.width
-                        source: suggestionRect.visible === true ? "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_light_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_light_d.png"
+                        source: suggestionRect.visible ? "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_light_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_light_d.png"
 
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                suggestionRect.visible === true ? suggestionRect.visible = false : suggestionRect.visible = true
+                                suggestionRect.visible ? suggestionRect.visible = false : suggestionRect.visible = true
                             }
                         }
                     }
@@ -285,7 +285,7 @@ Rectangle {
                     id: suggestBusyIndicator
                     anchors.verticalCenter: parent.verticalCenter
                     height: 25 * scaleFactor
-                    visible: suggestionRect.visible === true && locatorTask.suggestions.suggestInProgress === true
+                    visible: suggestionRect.visible && locatorTask.suggestions.suggestInProgress
                 }
             }
         }
