@@ -31,6 +31,10 @@ namespace Esri
     }
 }
 
+#include "Point.h"
+#include "ReverseGeocodeParameters.h"
+#include "GeocodeParameters.h"
+
 #include <QQuickItem>
 
 class OfflineGeocode : public QQuickItem
@@ -43,6 +47,7 @@ public:
     ~OfflineGeocode();
 
     void componentComplete() Q_DECL_OVERRIDE;
+    Q_INVOKABLE void geocodeWithText(const QString& address);
 
 signals:
     void calloutDataChanged();
@@ -52,6 +57,8 @@ private:
     void connectSignals();
 
 private:
+    bool m_isReverseGeocode;
+    bool m_isPressAndHold;
     QString m_dataPath;
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
@@ -60,6 +67,10 @@ private:
     Esri::ArcGISRuntime::Graphic* m_pinGraphic;
     Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer;
     Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
+    Esri::ArcGISRuntime::GeocodeParameters m_geocodeParameters;
+    Esri::ArcGISRuntime::ReverseGeocodeParameters m_reverseGeocodeParameters;
+    Esri::ArcGISRuntime::Point m_clickedPoint;
+
 };
 
 #endif // OFFLINEGEOCODE_H

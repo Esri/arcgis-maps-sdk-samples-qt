@@ -18,6 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
+import QtQuick.Controls.Styles 1.4
 import Esri.ArcGISRuntime.Toolkit.Controls 2.0
 
 OfflineGeocodeSample {
@@ -38,6 +39,35 @@ OfflineGeocodeSample {
         Callout {
             id: callout
             calloutData: offlineGeocodeSample.calloutData
+            screenOffsety: -29 * scaleFactor
+        }
+    }
+
+    TextField {
+        id: textField
+        anchors {
+            left: parent.left
+            top: parent.top
+            margins: 10 * scaleFactor
+        }
+        width: 300
+        height: 35
+        opacity: 0.95
+        placeholderText: "Enter an Address"
+
+        style: TextFieldStyle {
+            background: Rectangle {
+                color: "#f7f8fa"
+                border {
+                    color: "#7B7C7D"
+                    width: 1 * scaleFactor
+                }
+                radius: 2
+            }
+        }
+
+        onAccepted: {
+            offlineGeocodeSample.geocodeWithText(text);
         }
     }
 
