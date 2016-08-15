@@ -111,13 +111,11 @@ Rectangle {
         }
 
         onIdentifyGraphicsOverlayStatusChanged: {
-            // if clicked on the pin graphic, display callout.
             if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted){
-                if (identifyGraphicsOverlayResults.length > 0 && !isPressAndHold)
+                // if clicked on the pin graphic, display callout.
+                if (identifyGraphicsOverlayResults.length > 0)
                     callout.showCallout();
-                // if user is dragging the pin, real time geocode
-                else if (identifyGraphicsOverlayResults.length > 0 && isPressAndHold)
-                    isReverseGeocode = true;
+
                 // otherwise, normal reverse geocode
                 else if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress){
                     isReverseGeocode = true;
@@ -132,12 +130,13 @@ Rectangle {
             noResultsRect.visible = false;
         }
 
-        // The following signal handlers are for realtime geocoding
+        // The following signal handlers are for realtime geocoding (dragging)
         onMousePressAndHold: {
-            if (pinLocation !== null){
-                isPressAndHold = true;
-                mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, 1);
-            }
+            isPressAndHold = true;
+            isReverseGeocode = true;
+
+            if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
+                locatorTask.reverseGeocodeWithParameters(mouse.mapPoint, reverseGeocodeParams);
         }
 
         onMousePositionChanged: {
@@ -147,7 +146,6 @@ Rectangle {
 
         onMouseReleased: {
             isPressAndHold = false;
-            isReverseGeocode = false;
         }
     }
 
@@ -197,6 +195,7 @@ Rectangle {
                     if (isReverseGeocode)
                         callout.showCallout();
 
+                    // continue reverse geocoding if dragging mouse
                     if (!isPressAndHold)
                         isReverseGeocode = false;
                 }
@@ -311,11 +310,13 @@ Rectangle {
                                 verticalCenter: parent.verticalCenter
                                 margins: 10 * scaleFactor
                             }
-                            text: modelData
+
                             font {
                                 weight: Font.Black
                                 pixelSize: 12 * scaleFactor
                             }
+
+                            text: modelData
                             elide: Text.ElideRight
                             leftPadding: 5 * scaleFactor
                             renderType: Text.NativeRendering
