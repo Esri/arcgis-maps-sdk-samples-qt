@@ -103,16 +103,19 @@ DisplayDeviceLocationSample {
                 switch (name) {
                 case deviceLocationSample.compassMode:
                     deviceLocationSample.setAutoPanMode(deviceLocationSample.compassMode);
+                    deviceLocationSample.startLocationDisplay();
                     break;
                 case deviceLocationSample.navigationMode:
                     deviceLocationSample.setAutoPanMode(deviceLocationSample.navigationMode);
+                    deviceLocationSample.startLocationDisplay();
                     break;
                 case deviceLocationSample.recenterMode:
                     deviceLocationSample.setAutoPanMode(deviceLocationSample.recenterMode);
+                    deviceLocationSample.startLocationDisplay();
                     break;
                 case deviceLocationSample.onMode:
-                    deviceLocationSample.startLocationDisplay();
                     deviceLocationSample.setAutoPanMode(deviceLocationSample.onMode);
+                    deviceLocationSample.startLocationDisplay();
                     break;
                 case deviceLocationSample.stopMode:
                     deviceLocationSample.stopLocationDisplay();
