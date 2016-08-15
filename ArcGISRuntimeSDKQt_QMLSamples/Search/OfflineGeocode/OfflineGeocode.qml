@@ -147,6 +147,7 @@ Rectangle {
 
         onMouseReleased: {
             isPressAndHold = false;
+            isReverseGeocode = false;
         }
     }
 
