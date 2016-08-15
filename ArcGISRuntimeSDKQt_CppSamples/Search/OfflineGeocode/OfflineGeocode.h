@@ -33,9 +33,9 @@ namespace Esri
 }
 
 #include "Point.h"
-#include "ReverseGeocodeParameters.h"
-#include "GeocodeParameters.h"
 #include "SuggestResult.h"
+#include "GeocodeParameters.h"
+#include "ReverseGeocodeParameters.h"
 
 #include <QQuickItem>
 
@@ -53,16 +53,16 @@ public:
     ~OfflineGeocode();
 
     void componentComplete() Q_DECL_OVERRIDE;
+    Q_INVOKABLE void geocodeWithSuggestion(int index);  
     Q_INVOKABLE void geocodeWithText(const QString& address);
-    Q_INVOKABLE void geocodeWithSuggestion(int index);
     Q_INVOKABLE void setSuggestionsText(const QString & searchText);
 
 signals:
+    void noResultsChanged();
     void calloutDataChanged();
     void suggestionsChanged();
     void suggestInProgressChanged();
     void geocodeInProgressChanged();
-    void noResultsChanged();
 
 private:
     Esri::ArcGISRuntime::CalloutData* calloutData() const;

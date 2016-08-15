@@ -17,17 +17,17 @@
 #include "OfflineGeocode.h"
 
 #include "Map.h"
+#include "Point.h"
 #include "CalloutData.h"
-#include "GeocodeParameters.h"
+#include "LocatorTask.h"
 #include "GeocodeResult.h"
 #include "MapQuickView.h"
-#include "Point.h"
-#include "LocatorTask.h"
 #include "GraphicsOverlay.h"
 #include "SuggestListModel.h"
-#include "IdentifyGraphicsOverlayResult.h"
 #include "ArcGISTiledLayer.h"
+#include "GeocodeParameters.h"
 #include "PictureMarkerSymbol.h"
+#include "IdentifyGraphicsOverlayResult.h"
 
 #include <QQmlProperty>
 
@@ -43,10 +43,10 @@ OfflineGeocode::OfflineGeocode(QQuickItem* parent):
     m_locatorTask(nullptr),
     m_graphicsOverlay(nullptr),
     m_suggestListModel(nullptr),
+    m_noResults(false),
     m_isPressAndHold(false),
     m_isReverseGeocode(false),
     m_suggestInProgress(false),
-    m_noResults(false),
     m_geocodeInProgress(false)
 {
 }
@@ -66,7 +66,7 @@ void OfflineGeocode::componentComplete()
     m_dataPath = QQmlProperty::read(this, "dataPath").toString();
 
     // create a basemap using a tiled layer
-    //QUrl path = m_dataPath + "/tpk/streetmap_SD.tpk"; This won't work for whatever reason
+    //QUrl path = m_dataPath + "/tpk/streetmap_SD.tpk"; This won't work for whatever reason // "C:/Users/ryan8759/ArcGIS/Runtime/Data/tpk/streetmap_SD.tpk"
     m_tiledLayer = new ArcGISTiledLayer(new TileCache("C:/Users/ryan8759/ArcGIS/Runtime/Data/tpk/streetmap_SD.tpk"), this);
     Basemap* basemap = new Basemap(this);
     basemap->baseLayers()->append(m_tiledLayer);
@@ -194,7 +194,6 @@ void OfflineGeocode::connectSignals()
     {
         m_suggestInProgress = m_suggestListModel->suggestInProgress();
         emit suggestInProgressChanged();
-        emit suggestionsChanged();
     });
 
     connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, QList<Graphic*> identifyResults){
@@ -252,5 +251,4 @@ void OfflineGeocode::connectSignals()
             emit noResultsChanged();
         }
     });
-
 }
