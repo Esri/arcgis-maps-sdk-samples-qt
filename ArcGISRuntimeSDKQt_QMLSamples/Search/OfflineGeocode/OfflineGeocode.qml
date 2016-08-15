@@ -18,8 +18,10 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.0
+import QtQuick.Controls.Styles 1.4
 import Esri.ArcGISRuntime.Toolkit.Controls 2.0
-// todo: implement suggestions. implement real time geocoding. adjust callout/pin position to make it look nicer.
+
+// TODO: implement real time geocoding somehow...
 Rectangle {
     id: rootRectangle
     clip: true
@@ -30,18 +32,21 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
-    property Point calloutLocation
-    property int highlightIndex: 0
+    property Point pinLocation
+    property Point clickedPoint
+    property real suggestionHeight: 20
+    property bool isReverseGeocode: false
 
     // Map view UI presentation at top
     MapView {
         id: mapView
         anchors.fill: parent
+        magnifierEnabled: true
 
         calloutData {
             title: "Address"
             imageUrl: "qrc:/Samples/Search/OfflineGeocode/RedShinyPin.png"
-            location: calloutLocation
+            location: pinLocation
         }
 
         Map {
@@ -53,6 +58,17 @@ Rectangle {
                     }
                 }
             }
+
+            ViewpointCenter {
+                Point {
+                    x: -13042254.715252
+                    y: 3857970.236806
+                    spatialReference: SpatialReference {
+                        wkid: 3857
+                    }
+                }
+                scale: 2e4
+            }
         }
 
         GraphicsOverlay {
@@ -61,26 +77,45 @@ Rectangle {
             // pin graphic that will visually display geocoding results
             Graphic {
                 id: pinGraphic
-                geometry: calloutLocation
+                geometry: pinLocation
                 visible: true
 
                 PictureMarkerSymbol {
                     id: pictureMarker
-                    url: "qrc:/Samples/Search/OfflineGeocode/blue_symbol.png"
+                    height: 19 * scaleFactor
+                    url: "qrc:/Samples/Search/OfflineGeocode/red_pin.png"
+                    offsetY: height / 2 // tip of the pin will point to the location
                 }
-
             }
         }
 
         Callout {
             id: callout
             calloutData: parent.calloutData
+            screenOffsety: - pictureMarker.height - 10 * scaleFactor // callout will display right on top of pin
         }
 
-        onMouseClicked: {
+        // dismiss suggestions and no results notification on mouse press
+        onMousePressed: {
+            noResultsRect.visible = false;
             suggestionRect.visible = false;
-            if(locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
-                locatorTask.reverseGeocodeWithParameters(mouse.mapPoint, reverseGeocodeParams);
+        }
+
+        // separate clicking the graphic from geocode request
+        onMouseClicked: {
+            clickedPoint = mouse.mapPoint;
+            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, 1);
+        }
+
+        onIdentifyGraphicsOverlayStatusChanged: {
+            if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted){
+                if (identifyGraphicsOverlayResults.length > 0)
+                    callout.showCallout();
+                else if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress){
+                    isReverseGeocode = true;
+                    locatorTask.reverseGeocodeWithParameters(clickedPoint, reverseGeocodeParams);
+                }
+            }
         }
 
         // These two signal will be used for real time reverse geocoding.. maybe.
@@ -90,6 +125,12 @@ Rectangle {
 
         onMouseReleased: {
 
+        }
+
+        // hide suggestion window if viewpoint changes
+        onViewpointChanged: {
+            suggestionRect.visible = false;
+            noResultsRect.visible = false;
         }
     }
 
@@ -107,6 +148,8 @@ Rectangle {
 
         GeocodeParameters {
             id: geocodeParams
+            resultAttributeNames: ["Match_addr"]
+            minScore: 75
             maxResults: 1
         }
 
@@ -114,10 +157,6 @@ Rectangle {
             id: reverseGeocodeParams
             maxDistance: 1000
             maxResults: 1
-        }
-
-        onSuggestionsChanged: {
-            suggestionRect.visible = true;
         }
 
         onGeocodeStatusChanged: {
@@ -128,21 +167,30 @@ Rectangle {
             else if (geocodeStatus === Enums.TaskStatusCompleted)
             {
                 busyIndicator.visible = false;
-                callout.dismiss();
 
                 if(locatorTask.geocodeResults.length > 0)
                 {
-                    // reset textfield
-                    textField.text = "";
+                    callout.dismiss();
 
-                    // zoom to geocode location
+                    // zoom to geocoded location
                     mapView.setViewpointGeometry(geocodeResults[0].extent)
 
-                    // show callout
+                    // set pin and callout detail
+                    pinLocation = geocodeResults[0].displayLocation;
                     mapView.calloutData.detail = geocodeResults[0].label;
-                    calloutLocation = geocodeResults[0].displayLocation;
-                    callout.showCallout();
 
+                    // if it was a reverse geocode, also display callout
+                    if (isReverseGeocode)
+                        callout.showCallout();
+
+                    isReverseGeocode = false;
+                }
+
+                else {
+                    // if no result found, inform user
+                    callout.dismiss()
+                    noResultsRect.visible = true;
+                    pinLocation = null;
                 }
             }
         }
@@ -150,47 +198,75 @@ Rectangle {
 
     Column {
         anchors {
-            left: parent.left
-            top: parent.top
+            fill: parent
             margins: 10 * scaleFactor
         }
 
-        bottomPadding: 10 * scaleFactor
-
-        TextField {
-            id: textField
+        Rectangle {
             width: 300 * scaleFactor
-            placeholderText: "Enter Address"
+            height: 35 * scaleFactor
+            color: "#f7f8fa"
 
-            onAccepted: {
-                highlightIndex = 0
-                suggestionRect.visible = false;
-                if(locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
-                    locatorTask.geocodeWithParameters(text, geocodeParams);
-            }
+            Row {
+                width: parent.width
+                height: parent.height
 
-            // select suggestions with key presses
-            Keys.onDownPressed: {
-                if ((locatorTask.suggestions.count !== 0) && (highlightIndex < locatorTask.suggestions.count))
-                {
-                    highlightIndex += 1;
+                TextField {
+                    id: textField
+                    width: parent.width
+                    height: parent.height
+                    opacity: 0.95
+                    placeholderText: "Enter an Address"
 
-                    if(highlightIndex === 1)
-                        highlightIndex = 0;
+                    style: TextFieldStyle {
+                        background: Rectangle {
+                            color: "#f7f8fa"
+                            border {
+                                color: "#7B7C7D"
+                                width: 1 * scaleFactor
+                            }
+                            radius: 2
+                        }
+                    }
 
-                    text = locatorTask.suggestions.get(highlightIndex).label;
+                    onAccepted: {
+                        suggestionRect.visible = false;
+                        if(locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
+                            locatorTask.geocodeWithParameters(text, geocodeParams);
+                    }
                 }
-            }
 
-            Keys.onUpPressed: {
-                if ((locatorTask.suggestions.count !== 0) && (highlightIndex < locatorTask.suggestions.count))
-                {
-                    highlightIndex -= 1;
+                Rectangle {
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        right: parent.right
+                        margins: 5 * scaleFactor
+                    }
 
-                    if(highlightIndex < 0)
-                        highlightIndex = 0;
+                    width: 35 * scaleFactor
+                    color: "#f7f8fa"
+                    radius: 2
 
-                    text = locatorTask.suggestions.get(highlightIndex).label;
+                    Image {
+                        anchors.centerIn: parent
+                        width: parent.width
+                        height: parent.width
+                        source: suggestionRect.visible === true ? "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_light_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_light_d.png"
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                suggestionRect.visible === true ? suggestionRect.visible = false : suggestionRect.visible = true
+                            }
+                        }
+                    }
+                }
+
+                BusyIndicator {
+                    id: suggestBusyIndicator
+                    anchors.verticalCenter: parent.verticalCenter
+                    height: 25 * scaleFactor
+                    visible: suggestionRect.visible === true && locatorTask.suggestions.suggestInProgress === true
                 }
             }
         }
@@ -198,38 +274,47 @@ Rectangle {
         Rectangle {
             id: suggestionRect
             width: textField.width
-            height: 4 * textField.height
-            color: "lightgrey"
+            height: suggestionHeight * locatorTask.suggestions.count * scaleFactor
+            color: "#f7f8fa"
+            opacity: 0.85
             visible: false
 
             ListView {
                 id: suggestView
                 model: locatorTask.suggestions
                 height: parent.height
-                highlightFollowsCurrentItem: true
-
-                highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
                 delegate: Component {
 
                     Rectangle {
                         width: textField.width
-                        height: 20 * scaleFactor
-                        color: "lightgrey"
-                        border.color: "black"
+                        height: suggestionHeight * scaleFactor
+                        color: "#f7f8fa"
+                        border.color: "darkgray"
 
                         Text {
-                            font.pixelSize: 12 * scaleFactor
+                            anchors {
+                                verticalCenter: parent.verticalCenter
+                                margins: 10 * scaleFactor
+                            }
                             text: modelData
+                            font {
+                                weight: Font.Black
+                                pixelSize: 12 * scaleFactor
+                            }
+                            elide: Text.ElideRight
+                            leftPadding: 5 * scaleFactor
                             renderType: Text.NativeRendering
                             color: "black"
                         }
 
+                        // when user clicks suggestion, geocode with the selected address
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
                                 suggestView.currentIndex = index;
                                 suggestionRect.visible = false;
                                 if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress) {
+                                    textField.text = locatorTask.suggestions.get(suggestView.currentIndex).label
                                     locatorTask.geocodeWithSuggestResult(locatorTask.suggestions.get(suggestView.currentIndex));
                                 }
                             }
@@ -244,6 +329,25 @@ Rectangle {
         id: busyIndicator
         anchors.centerIn: parent
         visible: false
+    }
+
+    Rectangle {
+        id: noResultsRect
+        anchors.centerIn: parent
+        height: 50 * scaleFactor
+        width: 200 * scaleFactor
+        color: "lightgrey"
+        visible: false
+        radius: 2 * scaleFactor
+        opacity: 0.85
+        border.color: "black"
+
+        Text {
+            anchors.centerIn: parent
+            text: "No matching addresses"
+            renderType: Text.NativeRendering
+            font.pixelSize: 18 * scaleFactor
+        }
     }
 
 

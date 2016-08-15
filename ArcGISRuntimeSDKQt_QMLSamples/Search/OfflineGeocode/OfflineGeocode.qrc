@@ -5,6 +5,8 @@
         <file>OfflineGeocode.qml</file>
         <file>OfflineGeocode.html</file>
         <file>RedShinyPin.png</file>
-        <file>blue_symbol.png</file>
+        <file>red_pin.png</file>
+        <file>ic_menu_closeclear_light_d.png</file>
+        <file>ic_menu_collapsedencircled_light_d.png</file>
     </qresource>
 </RCC>
