@@ -32,8 +32,8 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
-    property Point pinLocation
-    property Point clickedPoint
+    property Point pinLocation: null
+    property Point clickedPoint: null
     property real suggestionHeight: 20
     property bool isReverseGeocode: false
     property bool isPressAndHold: false
@@ -105,7 +105,6 @@ Rectangle {
             suggestionRect.visible = false;
         }
 
-        // separate clicking the graphic from geocode request
         onMouseClicked: {
             clickedPoint = mouse.mapPoint;
             mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, 1);
@@ -113,6 +112,7 @@ Rectangle {
 
         onIdentifyGraphicsOverlayStatusChanged: {
             if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted){
+
                 // if clicked on the pin graphic, display callout.
                 if (identifyGraphicsOverlayResults.length > 0)
                     callout.showCallout();
@@ -153,7 +153,6 @@ Rectangle {
     LocatorTask {
         id: locatorTask
         url: dataPath + "/Locators/SanDiego_StreetAddress.loc"
-
         suggestions {
             searchText: textField.text
             suggestTimerThreshold: 250
@@ -179,6 +178,7 @@ Rectangle {
             if (geocodeStatus === Enums.TaskStatusInProgress){
                 busyIndicator.visible = true;
             }
+
             else if (geocodeStatus === Enums.TaskStatusCompleted){
                 busyIndicator.visible = false;
 
@@ -355,7 +355,7 @@ Rectangle {
         width: 200 * scaleFactor
         color: "lightgrey"
         visible: false
-        radius: 2 * scaleFactor
+        radius: 2
         opacity: 0.85
         border.color: "black"
 
