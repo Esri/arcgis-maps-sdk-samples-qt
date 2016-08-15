@@ -220,20 +220,28 @@ void OfflineGeocode::connectSignals()
 
         if(geocodeResults.length() > 0)
         {
+            // dismiss no results notification
             m_noResults = false;
             emit noResultsChanged();
 
+            // dismiss callouts
             m_calloutData->setVisible(false);
 
+            // zoom to result's extent
             m_mapView->setViewpointGeometry(geocodeResults.at(0).extent());
+
+            // set callout location and detail
             m_calloutData->setLocation(geocodeResults.at(0).displayLocation());
             m_calloutData->setDetail(geocodeResults.at(0).label());
+
+            // set pin graphic's location
             m_pinGraphic->setGeometry(geocodeResults.at(0).displayLocation());
             m_pinGraphic->setVisible(true);
 
             if (m_isReverseGeocode)
                 m_calloutData->setVisible(true);
 
+            // continue reverse geocoding if user is pressing and holding
             if (!m_isPressAndHold)
                 m_isReverseGeocode = false;
         }
