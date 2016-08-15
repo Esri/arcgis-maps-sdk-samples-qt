@@ -16,15 +16,19 @@
 
 #include "OfflineGeocode.h"
 
+#include "ArcGISTiledLayer.h"
 #include "Map.h"
 #include "MapQuickView.h"
+
+#include <QQmlProperty>
 
 using namespace Esri::ArcGISRuntime;
 
 OfflineGeocode::OfflineGeocode(QQuickItem* parent /* = nullptr */):
     QQuickItem(parent),
     m_map(nullptr),
-    m_mapView(nullptr)
+    m_mapView(nullptr),
+    m_tiledLayer(nullptr)
 {
 }
 
@@ -40,10 +44,18 @@ void OfflineGeocode::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // Create a map using the topographic basemap
-    m_map = new Map(Basemap::topographic(this), this);
-    m_map->setInitialViewpoint(Viewpoint(Envelope(-13075816.4047166, 4014771.46954516, -13073005.6797177, 4016869.78617381, SpatialReference(102100))));
+    m_dataPath = QQmlProperty::read(this, "dataPath").toString();
 
+    // create a basemap using a tiled layer
+    TileCache* tileCache = new TileCache(m_dataPath + "/tpk/streetmap_SD.tpk");
+    m_tiledLayer = new ArcGISTiledLayer(tileCache, this);
+
+    Basemap* basemap = new Basemap(this);
+    basemap->baseLayers()->append(m_tiledLayer);
+
+    // create map using basemap
+    m_map = new Map(basemap);
+    m_map->setInitialViewpoint(Viewpoint(Point(-13042254.715252, 3857970.236806, SpatialReference(3857)), 2e4));
 
     // Set map to map view
     m_mapView->setMap(m_map);

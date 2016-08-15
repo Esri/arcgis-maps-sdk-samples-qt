@@ -27,6 +27,7 @@ OfflineGeocodeSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // add a mapView component
     MapView {

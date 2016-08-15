@@ -19,11 +19,12 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Map;
-class MapQuickView;
-}
+    namespace ArcGISRuntime
+    {
+        class Map;
+        class MapQuickView;
+        class ArcGISTiledLayer;
+    }
 }
 
 #include <QQuickItem>
@@ -39,8 +40,10 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
+    QString m_dataPath;
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer;
 };
 
 #endif // OFFLINEGEOCODE_H

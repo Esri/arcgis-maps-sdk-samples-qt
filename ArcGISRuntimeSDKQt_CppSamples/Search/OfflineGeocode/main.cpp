@@ -23,6 +23,7 @@
 #endif
 
 #include "MapQuickView.h"
+#include "CalloutData.h"
 
 #include "OfflineGeocode.h"
 
@@ -51,6 +52,7 @@ int main(int argc, char *argv[])
     // Register the map view for QML
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
     qmlRegisterType<OfflineGeocode>("Esri.Samples", 1, 0, "OfflineGeocodeSample");
+    qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
 
     // Intialize application view
     QQuickView view;
