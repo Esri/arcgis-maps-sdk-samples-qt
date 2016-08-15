@@ -24,6 +24,7 @@
 #include "Point.h"
 #include "LocatorTask.h"
 #include "GraphicsOverlay.h"
+#include "SuggestListModel.h"
 #include "IdentifyGraphicsOverlayResult.h"
 #include "ArcGISTiledLayer.h"
 #include "PictureMarkerSymbol.h"
@@ -36,13 +37,17 @@ OfflineGeocode::OfflineGeocode(QQuickItem* parent):
     QQuickItem(parent),
     m_map(nullptr),
     m_mapView(nullptr),
+    m_pinGraphic(nullptr),
     m_tiledLayer(nullptr),
     m_calloutData(nullptr),
     m_locatorTask(nullptr),
-    m_pinGraphic(nullptr),
     m_graphicsOverlay(nullptr),
+    m_suggestListModel(nullptr),
+    m_isPressAndHold(false),
     m_isReverseGeocode(false),
-    m_isPressAndHold(false)
+    m_suggestInProgress(false),
+    m_noResults(false),
+    m_geocodeInProgress(false)
 {
 }
 
@@ -50,7 +55,6 @@ OfflineGeocode::~OfflineGeocode()
 {
 }
 
-//todo: initialize locator task and graphicsoverlay/graphics
 void OfflineGeocode::componentComplete()
 {
     QQuickItem::componentComplete();
@@ -84,6 +88,9 @@ void OfflineGeocode::componentComplete()
     // create locator task
     m_locatorTask = new LocatorTask(m_dataPath + "/Locators/SanDiego_StreetAddress.loc");
 
+    m_suggestListModel = m_locatorTask->suggestions();
+    emit suggestionsChanged();
+
     // set geocode parameters
     m_geocodeParameters.setMinScore(75);
     m_geocodeParameters.setResultAttributeNames(QStringList() << "Match_addr");
@@ -106,12 +113,41 @@ void OfflineGeocode::geocodeWithText(const QString& address)
     m_locatorTask->geocodeWithParameters(address, m_geocodeParameters);
 }
 
+void OfflineGeocode::geocodeWithSuggestion(int index)
+{
+    m_locatorTask->geocodeWithSuggestResultAndParameters(m_suggestListModel->suggestResults().at(index), m_geocodeParameters);
+}
+
+void OfflineGeocode::setSuggestionsText(const QString& searchText)
+{
+    m_suggestListModel->setSearchText(searchText);
+}
+
 CalloutData *OfflineGeocode::calloutData() const
 {
     return m_calloutData;
 }
 
-// todo: connect locator signals and the different mouse clicks
+SuggestListModel *OfflineGeocode::suggestions() const
+{
+    return m_suggestListModel;
+}
+
+bool OfflineGeocode::geocodeInProgress() const
+{
+    return m_geocodeInProgress;
+}
+
+bool OfflineGeocode::suggestInProgress() const
+{
+    return m_suggestInProgress;
+}
+
+bool OfflineGeocode::noResults() const
+{
+    return m_noResults;
+}
+
 void OfflineGeocode::connectSignals()
 {
     connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent){
@@ -122,33 +158,73 @@ void OfflineGeocode::connectSignals()
     connect(m_mapView, &MapQuickView::mousePressAndHold, [this](QMouseEvent& mouseEvent){
         m_isPressAndHold = true;
         m_isReverseGeocode = true;
-        m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
-        m_locatorTask->reverseGeocodeWithParameters(m_clickedPoint, m_reverseGeocodeParameters);
+
+        // reverse geocode
+        m_locatorTask->reverseGeocodeWithParameters(Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y())), m_reverseGeocodeParameters);
+
+        // make busy indicator visible
+        m_geocodeInProgress = true;
+        emit geocodeInProgressChanged();
     });
 
     connect(m_mapView, &MapQuickView::mouseMove, [this](QMouseEvent& mouseEvent){
+        // if user is dragging mouse hold, realtime reverse geocode
         if(m_isPressAndHold)
-            m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
-        m_locatorTask->reverseGeocodeWithParameters(m_clickedPoint, m_reverseGeocodeParameters);
+        {
+            m_locatorTask->reverseGeocodeWithParameters(Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y())), m_reverseGeocodeParameters);
+
+            m_geocodeInProgress = true;
+            emit geocodeInProgressChanged();
+        }
     });
 
+    // reset after user stops holding down mouse
     connect(m_mapView, &MapQuickView::mouseRelease, [this](){
         m_isPressAndHold = false;
+        m_isReverseGeocode = false;
+    });
+
+    // dismiss no results notification
+    connect(m_mapView, &MapQuickView::mousePress, [this](){
+        m_noResults = false;
+        emit noResultsChanged();
+    });
+
+    connect(m_suggestListModel, &SuggestListModel::suggestInProgressChanged, [this]()
+    {
+        m_suggestInProgress = m_suggestListModel->suggestInProgress();
+        emit suggestInProgressChanged();
+        emit suggestionsChanged();
     });
 
     connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, QList<Graphic*> identifyResults){
+        // if user clicked on pin, display callout
         if (identifyResults.count() > 0)
             m_calloutData->setVisible(true);
+        // otherwise, reverse geocode at that point
         else
         {
             m_isReverseGeocode = true;
             m_locatorTask->reverseGeocodeWithParameters(m_clickedPoint, m_reverseGeocodeParameters);
+
+            m_geocodeInProgress = true;
+            emit geocodeInProgressChanged();
         }
     });
 
     connect(m_locatorTask, &LocatorTask::geocodeCompleted, [this](QUuid, QList<GeocodeResult> geocodeResults)
-    {   if(geocodeResults.length() > 0)
+    {
+        // dismiss busy indicator
+        m_geocodeInProgress = false;
+        emit geocodeInProgressChanged();
+
+        if(geocodeResults.length() > 0)
         {
+            m_noResults = false;
+            emit noResultsChanged();
+
+            m_calloutData->setVisible(false);
+
             m_mapView->setViewpointGeometry(geocodeResults.at(0).extent());
             m_calloutData->setLocation(geocodeResults.at(0).displayLocation());
             m_calloutData->setDetail(geocodeResults.at(0).label());
@@ -161,8 +237,12 @@ void OfflineGeocode::connectSignals()
             if (!m_isPressAndHold)
                 m_isReverseGeocode = false;
         }
+        // if there are no matching results, notify user
         else
-            qDebug() << "No results";
+        {
+            m_noResults = true;
+            emit noResultsChanged();
+        }
     });
 
 }
