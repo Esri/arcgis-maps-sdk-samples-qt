@@ -40,7 +40,7 @@ OfflineGeocodeSample {
         Callout {
             id: callout
             calloutData: offlineGeocodeSample.calloutData
-            screenOffsety: - 36 * scaleFactor
+            screenOffsety: - 56 * scaleFactor
         }
     }
 
@@ -51,7 +51,7 @@ OfflineGeocodeSample {
         }
 
         Rectangle {
-            width: 300 * scaleFactor
+            width: 350 * scaleFactor
             height: 35 * scaleFactor
             color: "#f7f8fa"
 
@@ -77,8 +77,7 @@ OfflineGeocodeSample {
                         }
                     }
 
-                    // when user types, suggestions appear
-                    Keys.onPressed: {
+                    onTextChanged: {
                         suggestionRect.visible = true;
                         offlineGeocodeSample.setSuggestionsText(text);
                     }
@@ -166,10 +165,12 @@ OfflineGeocodeSample {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                suggestView.currentIndex = index;
-                                suggestionRect.visible = false;
-                                textField.text = label;
                                 offlineGeocodeSample.geocodeWithSuggestion(index);
+                                textField.text = label;
+                                suggestionRect.visible = false;
+
+
+
                             }
                         }
                     }
@@ -197,10 +198,14 @@ OfflineGeocodeSample {
 
         Text {
             anchors.centerIn: parent
-            text: "No matching addresses"
+            text: "No matching address"
             renderType: Text.NativeRendering
             font.pixelSize: 18 * scaleFactor
         }
+    }
+
+    onDismissSuggestions: {
+        suggestionRect.visible = false;
     }
 
     Rectangle {

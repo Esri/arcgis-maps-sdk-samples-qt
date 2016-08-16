@@ -217,42 +217,53 @@ Rectangle {
         }
 
         Rectangle {
-            width: 300 * scaleFactor
+            id: addressSearchRect
+            width: 350 * scaleFactor
             height: 35 * scaleFactor
             color: "#f7f8fa"
+            border {
+                color: "#7B7C7D"
+                width: 1 * scaleFactor
+            }
+            radius: 2
 
             Row {
+                anchors.centerIn: parent
                 width: parent.width
                 height: parent.height
+                spacing: 0
+                leftPadding: 5 * scaleFactor
 
                 TextField {
                     id: textField
-                    width: parent.width
-                    height: parent.height
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                    }
+
+                    width: parent.width * 0.90
+                    height: parent.height * 0.90
                     opacity: 0.95
                     placeholderText: "Enter an Address"
+                    font.pixelSize: 14 * scaleFactor
 
                     style: TextFieldStyle {
                         background: Rectangle {
                             color: "#f7f8fa"
-                            border {
-                                color: "#7B7C7D"
-                                width: 1 * scaleFactor
-                            }
                             radius: 2
                         }
                     }
 
                     // when user types, suggestions appear
-                    Keys.onPressed: {
+
+                    onTextChanged: {
                         suggestionRect.visible = true;
                     }
 
                     onAccepted: {
                         suggestionRect.visible = false;
-                        if(locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
+                        if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
                             locatorTask.geocodeWithParameters(text, geocodeParams);
-                    }     
+                    }
                 }
 
                 Rectangle {
@@ -280,19 +291,12 @@ Rectangle {
                         }
                     }
                 }
-
-                BusyIndicator {
-                    id: suggestBusyIndicator
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 25 * scaleFactor
-                    visible: suggestionRect.visible && locatorTask.suggestions.suggestInProgress
-                }
             }
         }
 
         Rectangle {
             id: suggestionRect
-            width: textField.width
+            width: addressSearchRect.width
             height: suggestionHeight * locatorTask.suggestions.count * scaleFactor
             color: "#f7f8fa"
             opacity: 0.85
@@ -304,7 +308,13 @@ Rectangle {
                 delegate: Component {
 
                     Rectangle {
-                        width: textField.width
+                        anchors {
+                            topMargin: -5 * scaleFactor
+                            leftMargin: 20 * scaleFactor
+                            rightMargin: 20 * scaleFactor
+                        }
+
+                        width: addressSearchRect.width
                         height: suggestionHeight * scaleFactor
                         color: "#f7f8fa"
                         border.color: "darkgray"
@@ -312,7 +322,8 @@ Rectangle {
                         Text {
                             anchors {
                                 verticalCenter: parent.verticalCenter
-                                margins: 10 * scaleFactor
+                                leftMargin: 5 * scaleFactor
+                                rightMargin: 5 * scaleFactor
                             }
 
                             font {
@@ -320,6 +331,7 @@ Rectangle {
                                 pixelSize: 12 * scaleFactor
                             }
 
+                            width: parent.width
                             text: modelData
                             elide: Text.ElideRight
                             leftPadding: 5 * scaleFactor
@@ -331,12 +343,11 @@ Rectangle {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                suggestView.currentIndex = index;
-                                suggestionRect.visible = false;
                                 if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress){
-                                    textField.text = locatorTask.suggestions.get(suggestView.currentIndex).label
+                                    textField.text = locatorTask.suggestions.get(index).label
                                     locatorTask.geocodeWithSuggestResult(locatorTask.suggestions.get(suggestView.currentIndex));
                                 }
+                                suggestionRect.visible = false;
                             }
                         }
                     }
@@ -356,7 +367,7 @@ Rectangle {
         anchors.centerIn: parent
         height: 50 * scaleFactor
         width: 200 * scaleFactor
-        color: "lightgrey"
+        color: "#f7f8fa"
         visible: false
         radius: 2
         opacity: 0.85

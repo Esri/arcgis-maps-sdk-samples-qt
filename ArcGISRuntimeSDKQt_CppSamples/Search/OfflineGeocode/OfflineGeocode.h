@@ -63,6 +63,7 @@ signals:
     void suggestionsChanged();
     void suggestInProgressChanged();
     void geocodeInProgressChanged();
+    void dismissSuggestions();
 
 private:
     Esri::ArcGISRuntime::CalloutData* calloutData() const;

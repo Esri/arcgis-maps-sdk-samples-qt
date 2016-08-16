@@ -66,7 +66,7 @@ void OfflineGeocode::componentComplete()
     m_dataPath = QQmlProperty::read(this, "dataPath").toString();
 
     // create a tiled layer using a local .tpk file
-    TileCache* tileCache = new TileCache(m_dataPath + "tpk/streetmap_SD.tpk", this);
+    TileCache* tileCache = new TileCache(m_dataPath + "/tpk/streetmap_SD.tpk", this);
     m_tiledLayer = new ArcGISTiledLayer(tileCache, this);
 
     // create basemap and add tiled layer
@@ -82,7 +82,7 @@ void OfflineGeocode::componentComplete()
 
     // initialize callout
     m_mapView->calloutData()->setVisible(false);
-    m_mapView->calloutData()->setTitle("Location");
+    m_mapView->calloutData()->setTitle("Address");
     m_mapView->calloutData()->setImageUrl(QUrl("qrc:/Samples/Search/OfflineGeocode/RedShinyPin.png"));
     m_calloutData = m_mapView->calloutData();
     emit calloutDataChanged();
@@ -103,7 +103,7 @@ void OfflineGeocode::componentComplete()
     // create graphics overlay and add pin graphic
     m_graphicsOverlay = new GraphicsOverlay(this);
     PictureMarkerSymbol* pinSymbol = new PictureMarkerSymbol(QUrl("qrc:/Samples/Search/OfflineGeocode/red_pin.png"), this);
-    pinSymbol->setHeight(36);
+    pinSymbol->setHeight(72);
     pinSymbol->setOffsetY(pinSymbol->height() / 2);
     m_pinGraphic = new Graphic(Point(-13042254.715252, 3857970.236806, SpatialReference(3857)), pinSymbol, this);
     m_pinGraphic->setVisible(false);
@@ -155,12 +155,14 @@ bool OfflineGeocode::noResults() const
 
 void OfflineGeocode::connectSignals()
 {
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent){
+    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    {
         m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
         m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, 1);
     });
 
-    connect(m_mapView, &MapQuickView::mousePressAndHold, [this](QMouseEvent& mouseEvent){
+    connect(m_mapView, &MapQuickView::mousePressAndHold, [this](QMouseEvent& mouseEvent)
+    {
         m_isPressAndHold = true;
         m_isReverseGeocode = true;
 
@@ -172,7 +174,8 @@ void OfflineGeocode::connectSignals()
         emit geocodeInProgressChanged();
     });
 
-    connect(m_mapView, &MapQuickView::mouseMove, [this](QMouseEvent& mouseEvent){
+    connect(m_mapView, &MapQuickView::mouseMove, [this](QMouseEvent& mouseEvent)
+    {
         // if user is dragging mouse hold, realtime reverse geocode
         if(m_isPressAndHold)
         {
@@ -184,15 +187,18 @@ void OfflineGeocode::connectSignals()
     });
 
     // reset after user stops holding down mouse
-    connect(m_mapView, &MapQuickView::mouseRelease, [this](){
+    connect(m_mapView, &MapQuickView::mouseRelease, [this]()
+    {
         m_isPressAndHold = false;
         m_isReverseGeocode = false;
     });
 
     // dismiss no results notification
-    connect(m_mapView, &MapQuickView::mousePress, [this](){
+    connect(m_mapView, &MapQuickView::mousePress, [this]()
+    {
         m_noResults = false;
         emit noResultsChanged();
+        emit dismissSuggestions();
     });
 
     connect(m_suggestListModel, &SuggestListModel::suggestInProgressChanged, [this]()
@@ -201,7 +207,8 @@ void OfflineGeocode::connectSignals()
         emit suggestInProgressChanged();
     });
 
-    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, QList<Graphic*> identifyResults){
+    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, QList<Graphic*> identifyResults)
+    {
         // if user clicked on pin, display callout
         if (identifyResults.count() > 0)
             m_calloutData->setVisible(true);
