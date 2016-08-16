@@ -66,8 +66,8 @@ void OfflineGeocode::componentComplete()
     m_dataPath = QQmlProperty::read(this, "dataPath").toString();
 
     // create a basemap using a tiled layer
-    //QUrl path = m_dataPath + "/tpk/streetmap_SD.tpk"; This won't work for whatever reason // "C:/Users/ryan8759/ArcGIS/Runtime/Data/tpk/streetmap_SD.tpk"
-    m_tiledLayer = new ArcGISTiledLayer(new TileCache("C:/Users/ryan8759/ArcGIS/Runtime/Data/tpk/streetmap_SD.tpk"), this);
+    //C:/Users/ryan8759/ArcGIS/Runtime/Data/tpk/streetmap_SD.tpk"
+    m_tiledLayer = new ArcGISTiledLayer(new TileCache(m_dataPath + "/tpk/streetmap_SD.tpk"), this);
     Basemap* basemap = new Basemap(this);
     basemap->baseLayers()->append(m_tiledLayer);
 

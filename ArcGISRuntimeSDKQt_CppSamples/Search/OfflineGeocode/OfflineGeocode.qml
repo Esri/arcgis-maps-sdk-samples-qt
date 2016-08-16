@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import Esri.Samples 1.0
 import QtQuick.Controls 1.4
-import Esri.ArcGISExtras 1.1
 import QtQuick.Controls.Styles 1.4
+import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Controls 2.0
 
 OfflineGeocodeSample {
@@ -29,7 +29,7 @@ OfflineGeocodeSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
     property real suggestionHeight: 20
 
     // add a mapView component
