@@ -129,7 +129,7 @@ Rectangle {
             noResultsRect.visible = false;
         }
 
-        // The following signal handlers are for realtime geocoding (dragging)
+        // When user press and holds, prepare for real-time reverse geocoding
         onMousePressAndHold: {
             isPressAndHold = true;
             isReverseGeocode = true;
@@ -138,13 +138,16 @@ Rectangle {
                 locatorTask.reverseGeocodeWithParameters(mouse.mapPoint, reverseGeocodeParams);
         }
 
+        // real-time reverse geocode if mouse being held down
         onMousePositionChanged: {
-            if (isPressAndHold && isReverseGeocode && locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
+            if (isPressAndHold && locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
                 locatorTask.reverseGeocodeWithParameters(mouse.mapPoint, reverseGeocodeParams);
         }
 
+        // stop real-time reverse geocoding
         onMouseReleased: {
             isPressAndHold = false;
+            isReverseGeocode = false;
         }
     }
 
@@ -173,12 +176,7 @@ Rectangle {
         }
 
         onGeocodeStatusChanged: {
-            if (geocodeStatus === Enums.TaskStatusInProgress) {
-                busyIndicator.visible = true;
-            }
-
-            else if (geocodeStatus === Enums.TaskStatusCompleted) {
-                busyIndicator.visible = false;
+            if (geocodeStatus === Enums.TaskStatusCompleted) {
 
                 if(geocodeResults.length > 0) {
                     callout.dismiss();
@@ -186,7 +184,7 @@ Rectangle {
                     // zoom to geocoded location
                     mapView.setViewpointGeometry(geocodeResults[0].extent)
 
-                    // set pin and callout detail
+                    // set pin and edit callout
                     pinLocation = geocodeResults[0].displayLocation;
                     mapView.calloutData.geoElement = pinGraphic;
                     mapView.calloutData.detail = geocodeResults[0].label;
@@ -195,7 +193,7 @@ Rectangle {
                     if (isReverseGeocode)
                         callout.showCallout();
 
-                    // continue reverse geocoding if dragging mouse
+                    // continue reverse geocoding if press and holding mouse
                     if (!isPressAndHold)
                         isReverseGeocode = false;
                 }
@@ -304,12 +302,6 @@ Rectangle {
                 delegate: Component {
 
                     Rectangle {
-                        anchors {
-                            topMargin: -5 * scaleFactor
-                            leftMargin: 20 * scaleFactor
-                            rightMargin: 20 * scaleFactor
-                        }
-
                         width: addressSearchRect.width
                         height: suggestionHeight * scaleFactor
                         color: "#f7f8fa"
@@ -353,10 +345,11 @@ Rectangle {
         }
     }
 
+    // running when geocoding in progress
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        visible: false
+        running: locatorTask.geocodeStatus === Enums.TaskStatusInProgress
     }
 
     Rectangle {
@@ -372,7 +365,7 @@ Rectangle {
 
         Text {
             anchors.centerIn: parent
-            text: "No matching addresses"
+            text: "No matching address"
             renderType: Text.NativeRendering
             font.pixelSize: 18 * scaleFactor
         }

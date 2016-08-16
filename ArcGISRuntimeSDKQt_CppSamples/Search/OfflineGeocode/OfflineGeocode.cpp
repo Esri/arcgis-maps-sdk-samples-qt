@@ -47,7 +47,6 @@ OfflineGeocode::OfflineGeocode(QQuickItem* parent):
     m_noResults(false),
     m_isPressAndHold(false),
     m_isReverseGeocode(false),
-    m_suggestInProgress(false),
     m_geocodeInProgress(false)
 {
 }
@@ -92,7 +91,6 @@ void OfflineGeocode::componentComplete()
     m_geocodeParameters.setResultAttributeNames(QStringList() << "Match_addr");
     m_geocodeParameters.setMaxResults(1);
     m_reverseGeocodeParameters.setMaxResults(1);
-
 
     // create graphics overlay and add pin graphic
     m_graphicsOverlay = new GraphicsOverlay(this);
@@ -144,11 +142,6 @@ bool OfflineGeocode::geocodeInProgress() const
     return m_geocodeInProgress;
 }
 
-bool OfflineGeocode::suggestInProgress() const
-{
-    return m_suggestInProgress;
-}
-
 bool OfflineGeocode::noResults() const
 {
     return m_noResults;
@@ -191,6 +184,7 @@ void OfflineGeocode::connectSignals()
     connect(m_mapView, &MapQuickView::mouseRelease, [this]()
     {
         m_isPressAndHold = false;
+        m_isReverseGeocode = false;
     });
 
     // dismiss no results notification
@@ -201,12 +195,7 @@ void OfflineGeocode::connectSignals()
         emit dismissSuggestions();
     });
 
-    connect(m_suggestListModel, &SuggestListModel::suggestInProgressChanged, [this]()
-    {
-        m_suggestInProgress = m_suggestListModel->suggestInProgress();
-        emit suggestInProgressChanged();
-    });
-
+    // if clicked pin graphic, show callout. otherwise, reverse geocode
     connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, QList<Graphic*> identifyResults)
     {
         // if user clicked on pin, display callout

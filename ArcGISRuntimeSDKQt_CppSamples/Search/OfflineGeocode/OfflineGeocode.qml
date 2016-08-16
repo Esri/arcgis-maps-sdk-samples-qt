@@ -44,6 +44,7 @@ OfflineGeocodeSample {
         }
     }
 
+    // address bar and suggestions list
     Column {
         anchors {
             fill: parent
@@ -94,6 +95,7 @@ OfflineGeocodeSample {
                     }
                 }
 
+                // button to close and open suggestions
                 Rectangle {
                     anchors {
                         verticalCenter: parent.verticalCenter

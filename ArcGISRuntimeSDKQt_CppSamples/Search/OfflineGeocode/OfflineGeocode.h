@@ -45,7 +45,6 @@ class OfflineGeocode : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
     Q_PROPERTY(Esri::ArcGISRuntime::SuggestListModel* suggestions READ suggestions NOTIFY suggestionsChanged)
     Q_PROPERTY(bool geocodeInProgress READ geocodeInProgress NOTIFY geocodeInProgressChanged)
-    Q_PROPERTY(bool suggestInProgress READ suggestInProgress NOTIFY suggestInProgressChanged)
     Q_PROPERTY(bool noResults READ noResults NOTIFY noResultsChanged)
 
 public:
@@ -61,7 +60,6 @@ signals:
     void noResultsChanged();
     void calloutDataChanged();
     void suggestionsChanged();
-    void suggestInProgressChanged();
     void geocodeInProgressChanged();
     void dismissSuggestions();
 
@@ -69,7 +67,6 @@ private:
     Esri::ArcGISRuntime::CalloutData* calloutData() const;
     Esri::ArcGISRuntime::SuggestListModel* suggestions() const;
     bool geocodeInProgress() const;
-    bool suggestInProgress() const;
     bool noResults() const;
     void connectSignals();
 
@@ -77,7 +74,6 @@ private:
     bool m_isReverseGeocode;
     bool m_geocodeInProgress;
     bool m_isPressAndHold;
-    bool m_suggestInProgress;
     bool m_noResults;
     QString m_dataPath;
     Esri::ArcGISRuntime::Map* m_map;
