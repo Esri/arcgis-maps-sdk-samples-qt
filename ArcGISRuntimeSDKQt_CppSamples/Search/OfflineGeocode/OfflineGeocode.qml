@@ -51,28 +51,34 @@ OfflineGeocodeSample {
         }
 
         Rectangle {
+            id: addressSearchRect
             width: 350 * scaleFactor
             height: 35 * scaleFactor
             color: "#f7f8fa"
+            border {
+                color: "#7B7C7D"
+                width: 1 * scaleFactor
+            }
+            radius: 2
 
             Row {
+                anchors.centerIn: parent
                 width: parent.width
                 height: parent.height
+                spacing: 0
+                leftPadding: 5 * scaleFactor
 
                 TextField {
                     id: textField
-                    width: parent.width
-                    height: parent.height
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width * 0.90
+                    height: parent.height * 0.90
                     opacity: 0.95
                     placeholderText: "Enter an Address"
 
                     style: TextFieldStyle {
                         background: Rectangle {
                             color: "#f7f8fa"
-                            border {
-                                color: "#7B7C7D"
-                                width: 1 * scaleFactor
-                            }
                             radius: 2
                         }
                     }
@@ -113,19 +119,12 @@ OfflineGeocodeSample {
                         }
                     }
                 }
-
-                BusyIndicator {
-                    id: suggestBusyIndicator
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 25 * scaleFactor
-                    running: offlineGeocodeSample.suggestInProgress && suggestionRect.visible
-                }
             }
         }
 
         Rectangle {
             id: suggestionRect
-            width: textField.width
+            width: addressSearchRect.width
             height: suggestionHeight * suggestView.count * scaleFactor
             color: "#f7f8fa"
             opacity: 0.85
@@ -138,7 +137,7 @@ OfflineGeocodeSample {
                 delegate: Component {
 
                     Rectangle {
-                        width: textField.width
+                        width: addressSearchRect.width
                         height: suggestionHeight * scaleFactor
                         color: "#f7f8fa"
                         border.color: "darkgray"

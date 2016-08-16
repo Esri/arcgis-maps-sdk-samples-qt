@@ -237,10 +237,7 @@ Rectangle {
 
                 TextField {
                     id: textField
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                    }
-
+                    anchors.verticalCenter: parent.verticalCenter
                     width: parent.width * 0.90
                     height: parent.height * 0.90
                     opacity: 0.95
