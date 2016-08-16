@@ -103,7 +103,8 @@ void OfflineGeocode::componentComplete()
     // create graphics overlay and add pin graphic
     m_graphicsOverlay = new GraphicsOverlay(this);
     PictureMarkerSymbol* pinSymbol = new PictureMarkerSymbol(QUrl("qrc:/Samples/Search/OfflineGeocode/red_pin.png"), this);
-    pinSymbol->setHeight(72);
+    pinSymbol->setHeight(36);
+    pinSymbol->setWidth(19);
     pinSymbol->setOffsetY(pinSymbol->height() / 2);
     m_pinGraphic = new Graphic(Point(-13042254.715252, 3857970.236806, SpatialReference(3857)), pinSymbol, this);
     m_pinGraphic->setVisible(false);
@@ -241,13 +242,13 @@ void OfflineGeocode::connectSignals()
             // zoom to result's extent
             m_mapView->setViewpointGeometry(geocodeResults.at(0).extent());
 
-            // set callout location and detail
-            m_calloutData->setLocation(geocodeResults.at(0).displayLocation());
-            m_calloutData->setDetail(geocodeResults.at(0).label());
-
             // set pin graphic's location
             m_pinGraphic->setGeometry(geocodeResults.at(0).displayLocation());
             m_pinGraphic->setVisible(true);
+
+            // set callout location and detail
+            m_calloutData->setDetail(geocodeResults.at(0).label());
+            m_calloutData->setGeoElement(m_pinGraphic);
 
             if (m_isReverseGeocode)
                 m_calloutData->setVisible(true);

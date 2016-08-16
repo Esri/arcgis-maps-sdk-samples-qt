@@ -40,7 +40,7 @@ OfflineGeocodeSample {
         Callout {
             id: callout
             calloutData: offlineGeocodeSample.calloutData
-            screenOffsety: - 56 * scaleFactor
+            screenOffsety: -19 * scaleFactor
         }
     }
 
@@ -84,8 +84,8 @@ OfflineGeocodeSample {
                     }
 
                     onTextChanged: {
-                        suggestionRect.visible = true;
                         offlineGeocodeSample.setSuggestionsText(text);
+                        suggestionRect.visible = true;
                     }
 
                     onAccepted: {
@@ -167,9 +167,6 @@ OfflineGeocodeSample {
                                 offlineGeocodeSample.geocodeWithSuggestion(index);
                                 textField.text = label;
                                 suggestionRect.visible = false;
-
-
-
                             }
                         }
                     }
@@ -189,7 +186,7 @@ OfflineGeocodeSample {
         anchors.centerIn: parent
         height: 50 * scaleFactor
         width: 200 * scaleFactor
-        color: "lightgrey"
+        color: "#f7f8fa"
         visible: offlineGeocodeSample.noResults
         radius: 2
         opacity: 0.85
