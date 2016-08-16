@@ -66,8 +66,7 @@ void OfflineGeocode::componentComplete()
     m_dataPath = QQmlProperty::read(this, "dataPath").toString();
 
     // create a tiled layer using a local .tpk file
-    auto path = m_dataPath + "tpk/streetmap_SD.tpk";
-    TileCache* tileCache = new TileCache(path, this);
+    TileCache* tileCache = new TileCache(m_dataPath + "tpk/streetmap_SD.tpk", this);
     m_tiledLayer = new ArcGISTiledLayer(tileCache, this);
 
     // create basemap and add tiled layer
