@@ -85,9 +85,10 @@ Rectangle {
 
                 PictureMarkerSymbol {
                     id: pictureMarker
-                    height: 19
+                    height: 72 * scaleFactor
                     url: "qrc:/Samples/Search/OfflineGeocode/red_pin.png"
-                    offsetY: height / 2 // tip of the pin will point to the location
+                    offsetY: height / 2
+                    leaderOffsetY: height / 2
                 }
             }
         }
@@ -95,7 +96,7 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            screenOffsety: - pictureMarker.height // callout will display right on top of pin
+            screenOffsety: - pictureMarker.height
         }
 
         // dismiss suggestions and no results notification on mouse press
