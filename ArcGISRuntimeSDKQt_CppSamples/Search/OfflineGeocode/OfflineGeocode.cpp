@@ -18,10 +18,11 @@
 
 #include "Map.h"
 #include "Point.h"
+#include "Graphic.h"
 #include "CalloutData.h"
 #include "LocatorTask.h"
-#include "GeocodeResult.h"
 #include "MapQuickView.h"
+#include "GeocodeResult.h"
 #include "GraphicsOverlay.h"
 #include "SuggestListModel.h"
 #include "ArcGISTiledLayer.h"
