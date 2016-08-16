@@ -80,13 +80,6 @@ void OfflineGeocode::componentComplete()
     // Set map to map view
     m_mapView->setMap(m_map);
 
-    // initialize callout
-    m_mapView->calloutData()->setVisible(false);
-    m_mapView->calloutData()->setTitle("Address");
-    m_mapView->calloutData()->setImageUrl(QUrl("qrc:/Samples/Search/OfflineGeocode/RedShinyPin.png"));
-    m_calloutData = m_mapView->calloutData();
-    emit calloutDataChanged();
-
     // create locator task
     m_locatorTask = new LocatorTask(m_dataPath + "/Locators/SanDiego_StreetAddress.loc");
 
@@ -110,6 +103,12 @@ void OfflineGeocode::componentComplete()
     m_pinGraphic->setVisible(false);
     m_graphicsOverlay->graphics()->append(m_pinGraphic);
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
+
+    // initialize callout
+    m_mapView->calloutData()->setVisible(false);
+    m_mapView->calloutData()->setTitle("Address");
+    m_calloutData = m_mapView->calloutData();
+    emit calloutDataChanged();
 
     connectSignals();
 }
@@ -178,7 +177,7 @@ void OfflineGeocode::connectSignals()
     connect(m_mapView, &MapQuickView::mouseMove, [this](QMouseEvent& mouseEvent)
     {
         // if user is dragging mouse hold, realtime reverse geocode
-        if(m_isPressAndHold)
+        if (m_isPressAndHold)
         {
             m_locatorTask->reverseGeocodeWithParameters(Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y())), m_reverseGeocodeParameters);
 
@@ -191,7 +190,6 @@ void OfflineGeocode::connectSignals()
     connect(m_mapView, &MapQuickView::mouseRelease, [this]()
     {
         m_isPressAndHold = false;
-        m_isReverseGeocode = false;
     });
 
     // dismiss no results notification
@@ -213,6 +211,7 @@ void OfflineGeocode::connectSignals()
         // if user clicked on pin, display callout
         if (identifyResults.count() > 0)
             m_calloutData->setVisible(true);
+
         // otherwise, reverse geocode at that point
         else
         {

@@ -45,8 +45,6 @@ Rectangle {
         // initialize callout
         calloutData {
             title: "Address"
-            imageUrl: "qrc:/Samples/Search/OfflineGeocode/RedShinyPin.png"
-            location: pinLocation
         }
 
         Map {
@@ -85,10 +83,10 @@ Rectangle {
 
                 PictureMarkerSymbol {
                     id: pictureMarker
-                    height: 72 * scaleFactor
+                    height: 36 * scaleFactor
+                    width: 19 * scaleFactor
                     url: "qrc:/Samples/Search/OfflineGeocode/red_pin.png"
                     offsetY: height / 2
-                    leaderOffsetY: height / 2
                 }
             }
         }
@@ -96,7 +94,7 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            screenOffsety: - pictureMarker.height
+            screenOffsety: -19 * scaleFactor
         }
 
         // dismiss suggestions and no results notification on mouse press
@@ -175,14 +173,14 @@ Rectangle {
         }
 
         onGeocodeStatusChanged: {
-            if (geocodeStatus === Enums.TaskStatusInProgress){
+            if (geocodeStatus === Enums.TaskStatusInProgress) {
                 busyIndicator.visible = true;
             }
 
-            else if (geocodeStatus === Enums.TaskStatusCompleted){
+            else if (geocodeStatus === Enums.TaskStatusCompleted) {
                 busyIndicator.visible = false;
 
-                if(geocodeResults.length > 0){
+                if(geocodeResults.length > 0) {
                     callout.dismiss();
 
                     // zoom to geocoded location
@@ -190,6 +188,7 @@ Rectangle {
 
                     // set pin and callout detail
                     pinLocation = geocodeResults[0].displayLocation;
+                    mapView.calloutData.geoElement = pinGraphic;
                     mapView.calloutData.detail = geocodeResults[0].label;
 
                     // if it was a reverse geocode, also display callout
@@ -201,8 +200,8 @@ Rectangle {
                         isReverseGeocode = false;
                 }
 
+                // if no result found, inform user
                 else {
-                    // if no result found, inform user
                     callout.dismiss()
                     noResultsRect.visible = true;
                     pinLocation = null;
@@ -252,7 +251,6 @@ Rectangle {
                     }
 
                     // when user types, suggestions appear
-
                     onTextChanged: {
                         suggestionRect.visible = true;
                     }
@@ -341,10 +339,11 @@ Rectangle {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress){
+                                if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress) {
                                     textField.text = locatorTask.suggestions.get(index).label
                                     locatorTask.geocodeWithSuggestResult(locatorTask.suggestions.get(suggestView.currentIndex));
                                 }
+
                                 suggestionRect.visible = false;
                             }
                         }
