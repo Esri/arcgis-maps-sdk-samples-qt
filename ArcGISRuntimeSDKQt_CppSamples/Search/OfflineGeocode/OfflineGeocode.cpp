@@ -64,10 +64,13 @@ void OfflineGeocode::componentComplete()
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
     m_dataPath = QQmlProperty::read(this, "dataPath").toString();
-qDebug() << m_dataPath;
-    // create a basemap using a tiled layer
-    //C:/Users/ryan8759/ArcGIS/Runtime/Data/tpk/streetmap_SD.tpk"
-    m_tiledLayer = new ArcGISTiledLayer(new TileCache("/Users/ryan8759/arcgis-runtime-samples-qt/ArcGISRuntimeSDKQt_CppSamples/Search/OfflineGeocode/streetmap_SD.tpk"), this);
+
+    // create a tiled layer using a local .tpk file
+    auto path = m_dataPath + "tpk/streetmap_SD.tpk";
+    TileCache* tileCache = new TileCache(path, this);
+    m_tiledLayer = new ArcGISTiledLayer(tileCache, this);
+
+    // create basemap and add tiled layer
     Basemap* basemap = new Basemap(this);
     basemap->baseLayers()->append(m_tiledLayer);
 
@@ -101,9 +104,8 @@ qDebug() << m_dataPath;
     // create graphics overlay and add pin graphic
     m_graphicsOverlay = new GraphicsOverlay(this);
     PictureMarkerSymbol* pinSymbol = new PictureMarkerSymbol(QUrl("qrc:/Samples/Search/OfflineGeocode/red_pin.png"), this);
-    pinSymbol->setHeight(19);
-    pinSymbol->setOffsetY(pinSymbol->height());
-    qDebug() << pinSymbol->height();
+    pinSymbol->setHeight(36);
+    pinSymbol->setOffsetY(pinSymbol->height() / 2);
     m_pinGraphic = new Graphic(Point(-13042254.715252, 3857970.236806, SpatialReference(3857)), pinSymbol, this);
     m_pinGraphic->setVisible(false);
     m_graphicsOverlay->graphics()->append(m_pinGraphic);
@@ -127,12 +129,12 @@ void OfflineGeocode::setSuggestionsText(const QString& searchText)
     m_suggestListModel->setSearchText(searchText);
 }
 
-CalloutData *OfflineGeocode::calloutData() const
+CalloutData* OfflineGeocode::calloutData() const
 {
     return m_calloutData;
 }
 
-SuggestListModel *OfflineGeocode::suggestions() const
+SuggestListModel* OfflineGeocode::suggestions() const
 {
     return m_suggestListModel;
 }

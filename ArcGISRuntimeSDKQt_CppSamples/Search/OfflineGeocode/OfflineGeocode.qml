@@ -29,7 +29,7 @@ OfflineGeocodeSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    property string dataPath: System.resolvedPath(System.userHomePath) + "/ArcGIS/Runtime/Data/"
     property real suggestionHeight: 20
 
     // add a mapView component
@@ -40,7 +40,7 @@ OfflineGeocodeSample {
         Callout {
             id: callout
             calloutData: offlineGeocodeSample.calloutData
-            screenOffsety: -29 * scaleFactor
+            screenOffsety: - 36 * scaleFactor
         }
     }
 
