@@ -2,5 +2,15 @@
     "source" :  "OfflineGeocode.qml",
     "description" : "OfflineGeocode.html",
     "thumbnail" : "OfflineGeocode.png",
-    "name" : "Offline geocode"
+    "name" : "Offline geocode",
+	"dataItems" : [
+		{
+			"itemId" : "",
+			"path" : "~/ArcGIS/Runtime/Data/Locators/SanDiego_StreetAddress.loc"
+        },
+        {
+			"itemId" : "",
+			"path" : "~/ArcGIS/Runtime/Data/tpk/streetmap_SD.tpk"
+        }
+    ]
 }

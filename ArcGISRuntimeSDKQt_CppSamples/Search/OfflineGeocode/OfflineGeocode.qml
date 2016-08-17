@@ -30,7 +30,6 @@ OfflineGeocodeSample {
 
     property double scaleFactor: System.displayScaleFactor
     property string dataPath: System.resolvedPath(System.userHomePath) + "/ArcGIS/Runtime/Data/"
-    property real suggestionHeight: 20
 
     // add a mapView component
     MapView {
@@ -127,7 +126,7 @@ OfflineGeocodeSample {
         Rectangle {
             id: suggestionRect
             width: addressSearchRect.width
-            height: suggestionHeight * suggestView.count * scaleFactor
+            height: 20 * suggestView.count * scaleFactor
             color: "#f7f8fa"
             opacity: 0.85
             visible: false
@@ -140,7 +139,7 @@ OfflineGeocodeSample {
 
                     Rectangle {
                         width: addressSearchRect.width
-                        height: suggestionHeight * scaleFactor
+                        height: 20 * scaleFactor
                         color: "#f7f8fa"
                         border.color: "darkgray"
 

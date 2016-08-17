@@ -246,6 +246,7 @@ void OfflineGeocode::connectSignals()
             if (!m_isPressAndHold)
                 m_isReverseGeocode = false;
         }
+
         // if there are no matching results, notify user
         else
         {

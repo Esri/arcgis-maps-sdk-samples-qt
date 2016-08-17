@@ -22,7 +22,6 @@ import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISRuntime.Toolkit.Controls 2.0
 
 Rectangle {
-    id: rootRectangle
     clip: true
 
     width: 800
@@ -33,7 +32,6 @@ Rectangle {
 
     property Point pinLocation: null
     property Point clickedPoint: null
-    property real suggestionHeight: 20
     property bool isReverseGeocode: false
     property bool isPressAndHold: false
 
@@ -291,7 +289,7 @@ Rectangle {
         Rectangle {
             id: suggestionRect
             width: addressSearchRect.width
-            height: suggestionHeight * locatorTask.suggestions.count * scaleFactor
+            height: 20 * locatorTask.suggestions.count * scaleFactor
             color: "#f7f8fa"
             opacity: 0.85
 
@@ -303,7 +301,7 @@ Rectangle {
 
                     Rectangle {
                         width: addressSearchRect.width
-                        height: suggestionHeight * scaleFactor
+                        height: 20 * scaleFactor
                         color: "#f7f8fa"
                         border.color: "darkgray"
 
