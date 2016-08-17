@@ -92,6 +92,11 @@ OfflineGeocodeSample {
                         suggestionRect.visible = false;
                         offlineGeocodeSample.geocodeWithText(text);
                     }
+
+                    Component.onCompleted: {
+                        text = "910 N Harbor Dr, San Diego, CA 92101"
+                        suggestionRect.visible = false
+                    }
                 }
 
                 // button to close and open suggestions

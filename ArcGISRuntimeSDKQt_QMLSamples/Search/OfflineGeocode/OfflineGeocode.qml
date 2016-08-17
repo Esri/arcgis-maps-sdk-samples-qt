@@ -256,6 +256,11 @@ Rectangle {
                         if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
                             locatorTask.geocodeWithParameters(text, geocodeParams);
                     }
+
+                    Component.onCompleted: {
+                        text = "910 N Harbor Dr, San Diego, CA 92101"
+                        suggestionRect.visible = false
+                    }
                 }
 
                 Rectangle {
@@ -330,8 +335,8 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: {
                                 if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress) {
-                                    textField.text = locatorTask.suggestions.get(index).label
-                                    locatorTask.geocodeWithSuggestResult(locatorTask.suggestions.get(suggestView.currentIndex));
+                                    locatorTask.geocodeWithParameters(label, geocodeParams)
+                                    textField.text = label
                                 }
 
                                 suggestionRect.visible = false;
