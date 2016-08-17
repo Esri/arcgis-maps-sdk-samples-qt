@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
     qmlRegisterType<OfflineGeocode>("Esri.Samples", 1, 0, "OfflineGeocodeSample");
     qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
-    qmlRegisterUncreatableType<Esri::ArcGISRuntime::SuggestListModel>("Esri.Suggestions", 1, 0, "SuggestListModel", "SuggestionListModel is an uncreatable type");
+    qmlRegisterUncreatableType<Esri::ArcGISRuntime::SuggestListModel>("Esri.Samples", 1, 0, "SuggestListModel", "SuggestionListModel is an uncreatable type");
 
     // Intialize application view
     QQuickView view;
