@@ -5,23 +5,23 @@
     "name" : "Offline geocode",
     "dataItems" : [
         {
-            "itemId" : "",
+            "itemId" : "7277419732964266b909bf2bae1ddb54",
             "path" : "~/ArcGIS/Runtime/Data/tpk/streetmap_SD.tpk"
         },
 		{
-            "itemId" : "",
+            "itemId" : "c88c170e18f74740a0e4c660a5ff51c4",
 			"path" : "~/ArcGIS/Runtime/Data/Locators/SanDiego_StreetAddress.loc"
         },
         {
-            "itemId" : "",
+            "itemId" : "c88c170e18f74740a0e4c660a5ff51c4",
             "path" : "~/ArcGIS/Runtime/Data/Locators/SanDiego_StreetAddress.loc.xml"
         },
         {
-            "itemId" : "",
+            "itemId" : "c88c170e18f74740a0e4c660a5ff51c4",
             "path" : "~/ArcGIS/Runtime/Data/Locators/SanDiego_StreetAddress.locb"
         },
         {
-            "itemId" : "",
+            "itemId" : "c88c170e18f74740a0e4c660a5ff51c4",
             "path" : "~/ArcGIS/Runtime/Data/Locators/SanDiego_StreetAddress.lox"
         }
     ]
