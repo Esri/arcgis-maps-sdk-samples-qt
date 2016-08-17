@@ -3,7 +3,7 @@
     "description" : "OfflineGeocode.html",
     "thumbnail" : "OfflineGeocode.png",
     "name" : "Offline geocode",
-	"dataItems" : [
+    "dataItems" : [
         {
             "itemId" : "7277419732964266b909bf2bae1ddb54",
             "path" : "~/ArcGIS/Runtime/Data/tpk/streetmap_SD.tpk"
