@@ -151,7 +151,7 @@ Rectangle {
 
     LocatorTask {
         id: locatorTask
-        url: dataPath + "/Locators/SanDiego_StreetAddress.loc"
+        url: dataPath + "/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc"
         suggestions {
             searchText: textField.text
             suggestTimerThreshold: 250

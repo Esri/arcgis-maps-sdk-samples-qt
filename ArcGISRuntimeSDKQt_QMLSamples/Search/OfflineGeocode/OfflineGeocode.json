@@ -10,19 +10,19 @@
         },
         {
             "itemId" : "c88c170e18f74740a0e4c660a5ff51c4",
-            "path" : "~/ArcGIS/Runtime/Data/Locators/SanDiego_StreetAddress.loc"
+            "path" : "~/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc"
         },
         {
             "itemId" : "c88c170e18f74740a0e4c660a5ff51c4",
-            "path" : "~/ArcGIS/Runtime/Data/Locators/SanDiego_StreetAddress.loc.xml"
+            "path" : "~/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc.xml"
         },
         {
             "itemId" : "c88c170e18f74740a0e4c660a5ff51c4",
-            "path" : "~/ArcGIS/Runtime/Data/Locators/SanDiego_StreetAddress.locb"
+            "path" : "~/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.locb"
         },
         {
             "itemId" : "c88c170e18f74740a0e4c660a5ff51c4",
-            "path" : "~/ArcGIS/Runtime/Data/Locators/SanDiego_StreetAddress.lox"
+            "path" : "~/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.lox"
         }
     ]
 }
