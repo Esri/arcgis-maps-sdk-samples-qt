@@ -36,17 +36,15 @@ Rectangle {
             // Set the initial basemap to Streets
             BasemapStreets { }
 
-            ViewpointExtent {
-                id: viewPoint
-                extent: Envelope {
-                    xMin: -14400186.784644607
-                    yMin: 2328358.2989760893
-                    xMax: -7312972.106830405
-                    yMax: 7377998.756918708
+            ViewpointCenter {
+                Point {
+                    x: -10800000
+                    y: 4500000
                     spatialReference: SpatialReference {
                         wkid: 102100
                     }
                 }
+                scale: 3e7
             }
 
             FeatureLayer {
