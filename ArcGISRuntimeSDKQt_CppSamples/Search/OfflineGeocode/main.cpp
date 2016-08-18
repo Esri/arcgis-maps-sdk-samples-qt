@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    // Register the map view for QML
+    // Registering QML types
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
     qmlRegisterType<OfflineGeocode>("Esri.Samples", 1, 0, "OfflineGeocodeSample");
     qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");

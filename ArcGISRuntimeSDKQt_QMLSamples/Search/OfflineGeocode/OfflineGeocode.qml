@@ -153,6 +153,7 @@ Rectangle {
         id: locatorTask
         url: dataPath + "/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc"
         suggestions {
+            // suggestions will update whenever textField's text property changes
             searchText: textField.text
             suggestTimerThreshold: 250
             suggestParameters: SuggestParameters {
@@ -229,6 +230,7 @@ Rectangle {
                 height: parent.height
                 leftPadding: 5 * scaleFactor
 
+                // search bar for geocoding
                 TextField {
                     id: textField
                     anchors.verticalCenter: parent.verticalCenter
@@ -245,23 +247,26 @@ Rectangle {
                         }
                     }
 
-                    // when user types, suggestions appear
+                    // when user types, make suggestions visible
                     onTextChanged: {
                         suggestionRect.visible = true;
                     }
 
+                    // when enter or return is presed, begin geocoding with inputted text
                     onAccepted: {
                         suggestionRect.visible = false;
                         if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
                             locatorTask.geocodeWithParameters(text, geocodeParams);
                     }
 
+                    // initial text
                     Component.onCompleted: {
-                        text = "910 N Harbor Dr, San Diego, CA 92101"
-                        suggestionRect.visible = false
+                        text = "910 N Harbor Dr, San Diego, CA 92101";
+                        suggestionRect.visible = false;
                     }
                 }
 
+                // button to open and close suggestions
                 Rectangle {
                     anchors {
                         verticalCenter: parent.verticalCenter
@@ -282,7 +287,7 @@ Rectangle {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                suggestionRect.visible ? suggestionRect.visible = false : suggestionRect.visible = true
+                                suggestionRect.visible = !suggestionRect.visible;
                             }
                         }
                     }
@@ -322,7 +327,7 @@ Rectangle {
                             }
 
                             width: parent.width
-                            text: modelData
+                            text: label
                             elide: Text.ElideRight
                             leftPadding: 5 * scaleFactor
                             renderType: Text.NativeRendering
@@ -334,10 +339,14 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: {
                                 if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress) {
-                                    locatorTask.geocodeWithParameters(label, geocodeParams)
-                                    textField.text = label
+                                    // geocode with the suggestion
+                                    locatorTask.geocodeWithParameters(label, geocodeParams);
+
+                                    // change the text label
+                                    textField.text = label;
                                 }
 
+                                // dismiss suggestions
                                 suggestionRect.visible = false;
                             }
                         }

@@ -47,6 +47,7 @@ OfflineGeocode::OfflineGeocode(QQuickItem* parent):
     m_noResults(false),
     m_isPressAndHold(false),
     m_isReverseGeocode(false),
+    m_suggestInProgress(false),
     m_geocodeInProgress(false)
 {
 }
@@ -148,6 +149,11 @@ bool OfflineGeocode::noResults() const
     return m_noResults;
 }
 
+bool OfflineGeocode::suggestInProgress() const
+{
+    return m_suggestInProgress;
+}
+
 void OfflineGeocode::connectSignals()
 {
     connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
@@ -188,12 +194,18 @@ void OfflineGeocode::connectSignals()
         m_isReverseGeocode = false;
     });
 
-    // dismiss no results notification
+    // dismiss no results notification and suggestions on mouse press
     connect(m_mapView, &MapQuickView::mousePress, [this]()
     {
         m_noResults = false;
         emit noResultsChanged();
         emit dismissSuggestions();
+    });
+
+    connect(m_suggestListModel, &SuggestListModel::suggestInProgressChanged, [this]()
+    {
+        m_suggestInProgress = m_suggestListModel->suggestInProgress();
+        emit suggestInProgressChanged();
     });
 
     // if clicked pin graphic, show callout. otherwise, reverse geocode

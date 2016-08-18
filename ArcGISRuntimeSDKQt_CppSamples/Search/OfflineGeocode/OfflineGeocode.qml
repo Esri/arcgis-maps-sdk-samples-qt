@@ -67,6 +67,7 @@ OfflineGeocodeSample {
                 height: parent.height
                 leftPadding: 5 * scaleFactor
 
+                // search bar for geocoding
                 TextField {
                     id: textField
                     anchors.verticalCenter: parent.verticalCenter
@@ -82,19 +83,21 @@ OfflineGeocodeSample {
                         }
                     }
 
+                    // set the SuggestListModel searchText whenever text is changed
                     onTextChanged: {
                         offlineGeocodeSample.setSuggestionsText(text);
-                        suggestionRect.visible = true;
                     }
 
+                    // when enter or return is pressed, geocode with the inputted text
                     onAccepted: {
                         suggestionRect.visible = false;
                         offlineGeocodeSample.geocodeWithText(text);
                     }
 
+                    // initial text
                     Component.onCompleted: {
-                        text = "910 N Harbor Dr, San Diego, CA 92101"
-                        suggestionRect.visible = false
+                        text = "910 N Harbor Dr, San Diego, CA 92101";
+                        suggestionRect.visible = false;
                     }
                 }
 
@@ -119,7 +122,7 @@ OfflineGeocodeSample {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                suggestionRect.visible ? suggestionRect.visible = false : suggestionRect.visible = true
+                                suggestionRect.visible = !suggestionRect.visible;
                             }
                         }
                     }
@@ -158,7 +161,7 @@ OfflineGeocodeSample {
                                 pixelSize: 12 * scaleFactor
                             }
 
-                            text: modelData
+                            text: label
                             elide: Text.ElideRight
                             leftPadding: 5 * scaleFactor
                             renderType: Text.NativeRendering
@@ -205,8 +208,15 @@ OfflineGeocodeSample {
         }
     }
 
+    // signal handler to dismiss suggestions when user clicks away
     onDismissSuggestions: {
         suggestionRect.visible = false;
+    }
+
+    // if suggestions changed, make them visible
+    onSuggestInProgressChanged: {
+        if(offlineGeocodeSample.suggestInProgress)
+            suggestionRect.visible = true;
     }
 
     Rectangle {
