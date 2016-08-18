@@ -227,7 +227,6 @@ Rectangle {
                 anchors.centerIn: parent
                 width: parent.width
                 height: parent.height
-                spacing: 0
                 leftPadding: 5 * scaleFactor
 
                 TextField {

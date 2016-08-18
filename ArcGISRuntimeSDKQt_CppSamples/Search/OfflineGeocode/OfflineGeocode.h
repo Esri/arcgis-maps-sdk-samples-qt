@@ -54,7 +54,7 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
     Q_INVOKABLE void geocodeWithSuggestion(int index);  
     Q_INVOKABLE void geocodeWithText(const QString& address);
-    Q_INVOKABLE void setSuggestionsText(const QString & searchText);
+    Q_INVOKABLE void setSuggestionsText(const QString& searchText);
 
 signals:
     void noResultsChanged();
@@ -87,7 +87,6 @@ private:
     Esri::ArcGISRuntime::SuggestListModel* m_suggestListModel;   
     Esri::ArcGISRuntime::GeocodeParameters m_geocodeParameters;
     Esri::ArcGISRuntime::ReverseGeocodeParameters m_reverseGeocodeParameters;
-
 };
 
 #endif // OFFLINEGEOCODE_H
