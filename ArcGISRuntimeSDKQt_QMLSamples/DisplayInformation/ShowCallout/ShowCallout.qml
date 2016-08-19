@@ -55,7 +55,7 @@ Rectangle {
             imageUrl: "qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png"
             title: "Location"
             location: calloutLocation
-            detail: "x: " + xCoor + " y: " + yCoor;
+            detail: "x: " + xCoor + " y: " + yCoor
         }
 
         Callout {
