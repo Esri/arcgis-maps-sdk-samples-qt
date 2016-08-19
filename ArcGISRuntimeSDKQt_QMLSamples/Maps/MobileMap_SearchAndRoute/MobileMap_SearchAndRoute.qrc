@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/MobileMap_SearchAndRoute">
+        <file alias="sample.json">MobileMap_SearchAndRoute.json</file>
+        <file>MobileMap_SearchAndRoute.png</file>
+        <file>MobileMap_SearchAndRoute.qml</file>
+        <file>MobileMap_SearchAndRoute.html</file>
+    </qresource>
+</RCC>

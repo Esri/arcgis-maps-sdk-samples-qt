@@ -1,0 +1,6 @@
+{
+    "source" :  "MobileMap_SearchAndRoute.qml",
+    "description" : "MobileMap_SearchAndRoute.html",
+    "thumbnail" : "MobileMap_SearchAndRoute.png",
+    "name" : "Mobile map (search and route)"
+}
