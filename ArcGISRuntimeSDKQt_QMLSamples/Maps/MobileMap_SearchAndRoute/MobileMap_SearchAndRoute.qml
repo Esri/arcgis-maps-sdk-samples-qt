@@ -64,7 +64,6 @@ Rectangle {
                 color: "blue"
                 size: 12
             }
-
         }
 
         GraphicsOverlay {
@@ -99,7 +98,6 @@ Rectangle {
             else {
                 currentRouteTask = null;
             }
-
         }
     }
 
@@ -129,9 +127,8 @@ Rectangle {
                         }
                     }
                 }
-                else
-                    console.log("no result");
             }
+
             else
                 busyIndicator.visible = true;
         }
@@ -163,7 +160,6 @@ Rectangle {
                 console.log(currentRouteTask.error.message);
 
         }
-
     }
 
     // create reverse geocoding parameters
@@ -268,23 +264,25 @@ Rectangle {
                                     // reset map list
                                     mapsInBundle.clear();
 
-                                    // add the maps to a ListModel to be displayed
+                                    // create the list of maps within a package
                                     for(var i = 0; i < mobileMapList[index].maps.length; i++) {
                                         var mapTitle = mobileMapList[index].maps[i].item.title;
 
+                                        // if no locatorTask or transportationNetworks, just display title
                                         if (mobileMapList[index].locatorTask !== null)
                                             mapTitle += " (Geocoding)";
                                         if (mobileMapList[index].maps[i].transportationNetworks.length !== 0)
                                             mapTitle += " (Routing)";
 
+                                        // add to ListModel
                                         mapsInBundle.append({"name": mapTitle});
                                     }
 
                                     selectedMmpkIndex = index;
                                     mapListView.state = "chooseMap";
-
-
                                 }
+
+                                // if mobile map package has been selected, display map selection options
                                 else if (mapListView.state === "chooseMap") {
                                     selectedMapInBundleIndex = index;
                                     mapSelectionWindow.visible = false;
@@ -375,9 +373,15 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if (currentRouteParams !== null && routeStops.length >= 2) {
+                    // only start routing if there are at least 2 stops
+                    if (routeStops.length >= 2) {
+
+                        // clear any previous routing displays
                         routeGraphicsOverlay.graphics.clear();
+
+                        // set stops
                         currentRouteParams.setStops(routeStops);
+
                         currentRouteTask.solveRoute(currentRouteParams);
                     }
                 }
@@ -403,11 +407,18 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
+                    // reset graphic overlays
                     routeGraphicsOverlay.graphics.clear();
                     stopsGraphicsOverlay.graphics.clear();
+
+                    // reset stops
                     routeStops = [];
                     currentRouteParams.clearStops();
+
+                    // dismiss callout
                     callout.dismiss();
+
+                    // make route controls invisible
                     clearButton.visible = false;
                     routeButton.visible = false;
                 }
@@ -441,12 +452,14 @@ Rectangle {
             anchors.fill: parent
             onClicked: {
                 if (mapSelectionWindow.visible === true) {
+                    // go from "choose map" to "choose mobile map package" display
                     if (mapListView.state === "chooseMap") {
                         // go back to MobileMapPackage selection
                         mapListView.state = "choosePackage";
                     }
                 }
 
+                // if MapView is currently in foreground, pop up map selection window
                 else {
                     mapSelectionWindow.visible = true;
                     mapListView.state = "chooseMap";
