@@ -77,6 +77,7 @@ Rectangle {
             scale: 3e7
         }
 
+        //! [identify feature layer qml api snippet]
         onMouseClicked: {
             mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 22, 1000);
         }
@@ -100,6 +101,7 @@ Rectangle {
                 displayText = "%1 %2 selected.".arg(count).arg(count > 1 ? "features" : "feature");
             }
         }
+        //! [identify feature layer qml api snippet]
     }
 
     Rectangle {

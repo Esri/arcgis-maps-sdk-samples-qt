@@ -32,6 +32,7 @@ Rectangle {
 
         anchors.fill: parent
 
+        //! [Display Feature Service]
         Map {
             BasemapTerrainWithLabels {}
             initialViewpoint: vc
@@ -42,6 +43,7 @@ Rectangle {
                 }
             }
         }
+        //! [Display Feature Service]
 
         ViewpointCenter {
             id: vc

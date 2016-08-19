@@ -25,6 +25,7 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
 
+    //! [display vector tiled layer]
     // Create MapView that contains a Map
     MapView {
         id: mapview
@@ -43,6 +44,7 @@ Rectangle {
             }
         }
     }
+    //! [display vector tiled layer]
 
     ComboBox {
         id: comboBoxBasemap

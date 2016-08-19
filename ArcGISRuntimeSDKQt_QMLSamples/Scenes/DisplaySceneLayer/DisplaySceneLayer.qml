@@ -33,10 +33,11 @@ Rectangle {
             // add a basemap
             BasemapTopographic {}
 
-            // add a scene service with ArcGISSceneLayer
+            //! [add a scene service with ArcGISSceneLayer]
             ArcGISSceneLayer {
                 url: "http://scene.arcgis.com/arcgis/rest/services/Hosted/Buildings_Brest/SceneServer/layers/0"
             }
+            //! [add a scene service with ArcGISSceneLayer]
 
             // add a surface, which is a default property of scene
             Surface {

@@ -24,6 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
+    //! [create the scene with a basemap and surface]
     // Create a scene view
     SceneView {
         anchors.fill: parent
@@ -48,18 +49,21 @@ Rectangle {
             setViewpointCamera(camera);
         }
     }
+    //! [create the scene with a basemap and surface]
 
-    // create the camera to be used as the scene view's viewpoint
+    //! [create the camera to be used as the scene view's viewpoint]
     Camera {
         id: camera
-        location: Point {
+        heading: 10.0
+        pitch: 80.0
+        roll: 300.0
+
+        Point {
             x: 83.9
             y: 28.4
             z: 10010.0
             spatialReference: SpatialReference.createWgs84()
         }
-        heading: 10.0
-        pitch: 80.0
-        roll: 300.0
     }
+    //! [create the camera to be used as the scene view's viewpoint]
 }
