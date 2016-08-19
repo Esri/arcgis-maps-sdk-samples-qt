@@ -88,15 +88,16 @@ Rectangle {
 
         onMapChanged: {
             stopsGraphicsOverlay.graphics.clear();
+            routeGraphicsOverlay.graphics.clear();
+            callout.dismiss();
             currentLocatorTask = mobileMapList[selectedMmpkIndex].locatorTask;
 
-            if (mobileMapList[selectedMmpkIndex].maps[selectedMapInBundleIndex].transportationNetworks.count > 0) {
+            if (mobileMapList[selectedMmpkIndex].maps[selectedMapInBundleIndex].transportationNetworks.length > 0) {
                 currentRouteTask = ArcGISRuntimeEnvironment.createObject("RouteTask", {transportationNetworkDataset: mobileMapList[selectedMmpkIndex].maps[selectedMapInBundleIndex].transportationNetworks[0]});
                 currentRouteTask.load();
             }
             else {
                 currentRouteTask = null;
-                routeControls.visible = false;
             }
 
         }
@@ -116,9 +117,16 @@ Rectangle {
                     mapView.calloutData.detail = currentLocatorTask.geocodeResults[0].label;
                     callout.showCallout();
 
-                    if (currentRouteTask !== null) { console.log("h");
+                    if (currentRouteTask !== null) {
                         var stop = ArcGISRuntimeEnvironment.createObject("Stop", {name: "stop", geometry: clickedPoint});
                         routeStops.push(stop);
+
+                        if (routeStops.length > 0) {
+                            clearButton.visible = true;
+                            if (routeStops.length > 1) {
+                                routeButton.visible = true;
+                            }
+                        }
                     }
                 }
                 else
@@ -355,7 +363,8 @@ Rectangle {
             width: height
             border.color: "black"
             radius: 2
-            opacity: 0.50
+            opacity: 0.90
+            visible: false
 
             Text {
                 anchors.centerIn: parent
@@ -383,6 +392,7 @@ Rectangle {
             border.color: "black"
             radius: 2
             opacity: 0.90
+            visible: false
 
             Text {
                 anchors.centerIn: parent
@@ -398,6 +408,8 @@ Rectangle {
                     routeStops = [];
                     currentRouteParams.clearStops();
                     callout.dismiss();
+                    clearButton.visible = false;
+                    routeButton.visible = false;
                 }
             }
         }
@@ -417,7 +429,7 @@ Rectangle {
         border.color: "black"
         radius: 2
         opacity: 0.90
-        visible: true
+        visible: mapListView.state !== "choosePackage"
 
         Text {
             anchors.centerIn: parent
