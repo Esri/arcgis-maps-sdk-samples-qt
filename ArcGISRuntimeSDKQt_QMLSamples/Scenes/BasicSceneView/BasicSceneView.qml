@@ -66,4 +66,14 @@ Rectangle {
         }
     }
     //! [create the camera to be used as the scene view's viewpoint]
+
+    // Neatline rectangle
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
+    }
 }

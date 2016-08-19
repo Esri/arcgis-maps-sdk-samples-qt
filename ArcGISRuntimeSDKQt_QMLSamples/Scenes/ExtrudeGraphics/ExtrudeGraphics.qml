@@ -79,6 +79,16 @@ Rectangle {
         roll: 300.0
     }
 
+    // Neatline rectangle
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
+    }
+
     function createGraphics(){
         var lon = camera.location.x;
         var lat = camera.location.y + 0.2;

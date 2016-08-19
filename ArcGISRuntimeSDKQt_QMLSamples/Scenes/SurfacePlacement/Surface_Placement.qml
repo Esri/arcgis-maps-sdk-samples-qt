@@ -164,6 +164,7 @@ Rectangle {
         spatialReference: SpatialReference.createWgs84()
     }
 
+    // Neatline rectangle
     Rectangle {
         anchors.fill: parent
         color: "transparent"
