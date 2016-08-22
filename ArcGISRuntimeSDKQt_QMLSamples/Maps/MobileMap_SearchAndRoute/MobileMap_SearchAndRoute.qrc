@@ -7,5 +7,6 @@
         <file>pinOutlineSymbol.png</file>
         <file>routingSymbol.png</file>
         <file>bluePinSymbol.png</file>
+        <file>discardSymbol.png</file>
     </qresource>
 </RCC>

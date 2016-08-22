@@ -56,6 +56,7 @@ Rectangle {
             screenOffsety: -19 * scaleFactor
         }
 
+        // graphics overlay to visually display geocoding results
         GraphicsOverlay {
             id: stopsGraphicsOverlay
 
@@ -76,6 +77,7 @@ Rectangle {
             }
         }
 
+        // graphics overlay to display any routing results
         GraphicsOverlay {
             id: routeGraphicsOverlay
 
@@ -96,15 +98,21 @@ Rectangle {
         }
 
         onMapChanged: {
+            // clear any previous graphics overlays
             stopsGraphicsOverlay.graphics.clear();
             routeGraphicsOverlay.graphics.clear();
+
             callout.dismiss();
+
+            // change the locatorTask
             currentLocatorTask = mobileMapList[selectedMmpkIndex].locatorTask;
 
+            // determine if map supports routing
             if (mobileMapList[selectedMmpkIndex].maps[selectedMapInBundleIndex].transportationNetworks.length > 0) {
                 currentRouteTask = ArcGISRuntimeEnvironment.createObject("RouteTask", {transportationNetworkDataset: mobileMapList[selectedMmpkIndex].maps[selectedMapInBundleIndex].transportationNetworks[0]});
                 currentRouteTask.load();
             }
+
             else {
                 currentRouteTask = null;
             }
@@ -148,6 +156,7 @@ Rectangle {
                                                                                    offsetY: 19 * scaleFactor
                                                                                });
 
+                        // create graphic using the text symbol
                         var labelGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: textSymbol});
                         stopsGraphicsOverlay.graphics.append(labelGraphic);
                     }
@@ -162,24 +171,27 @@ Rectangle {
     Connections {
         target: currentRouteTask
 
+        // if RouteTask loads properly, generate the default parameters
         onLoadStatusChanged: {
             if (currentRouteTask.loadStatus === Enums.LoadStatusLoaded) {
                 currentRouteTask.generateDefaultParameters();
             }
         }
 
+        // obtain default parameters
         onGenerateDefaultParametersStatusChanged: {
             if (currentRouteTask.generateDefaultParametersStatus === Enums.TaskStatusCompleted)
                 currentRouteParams = currentRouteTask.generateDefaultParametersResult;
         }
 
         onSolveRouteStatusChanged: {
+            // if route solve is successful, add a route graphic
             if(currentRouteTask.solveRouteStatus === Enums.TaskStatusCompleted) {
                 var generatedRoute = currentRouteTask.solveRouteResult.routes[0];
                 var routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: generatedRoute.routeGeometry});
                 routeGraphicsOverlay.graphics.append(routeGraphic);
             }
-
+            // otherwise, display error message
             else if (currentRouteTask.solveRouteStatus === Enums.TaskStatusErrored)
                 console.log(currentRouteTask.error.message);
 
@@ -232,17 +244,18 @@ Rectangle {
                 }
             }
 
-            // Mmpk ListModel
+            // ListModel to store names of Mobile Map Packages in data folder
             ListModel {
                 id: mobileMapPackages
             }
 
-            // maps contained in Mmpk ListModel
+            // maps contained in a MobileMapPackage
             ListModel {
                 id: mapsInBundle
                 dynamicRoles: true
             }
 
+            // displays either the avaialble MMPKs or maps
             ListView {
                 id: mapListView
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -266,7 +279,6 @@ Rectangle {
 
                 delegate: Component {
 
-                    // idea: make this an image instead and then have separate delegates for each mode.
                     Rectangle {
 
                         width: 200 * scaleFactor
@@ -304,7 +316,6 @@ Rectangle {
                             source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
                             height: 20 * scaleFactor
                             width: height
-                            // the code is not happy here
                             visible: mapListView.state === "chooseMap" && routing
                         }
 
@@ -415,10 +426,14 @@ Rectangle {
             opacity: 0.90
             visible: false
 
-            Text {
-                anchors.centerIn: parent
-                text: "ROUTE"
-                renderType: Text.NativeRendering
+            Image {
+                anchors {
+                    centerIn: parent
+                    margins: 5 * scaleFactor
+                }
+                source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
+                height: 44 * scaleFactor
+                width: height
             }
 
             MouseArea {
@@ -439,6 +454,7 @@ Rectangle {
             }
         }
 
+        // clear graphics button
         Rectangle {
             id: clearButton
             color: "#f7f8fa"
@@ -449,10 +465,14 @@ Rectangle {
             opacity: 0.90
             visible: false
 
-            Text {
-                anchors.centerIn: parent
-                text: "CLEAR"
-                renderType: Text.NativeRendering
+            Image {
+                anchors {
+                    centerIn: parent
+                    margins: 5 * scaleFactor
+                }
+                source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/discardSymbol.png"
+                height: 44 * scaleFactor
+                width: height
             }
 
             MouseArea {
