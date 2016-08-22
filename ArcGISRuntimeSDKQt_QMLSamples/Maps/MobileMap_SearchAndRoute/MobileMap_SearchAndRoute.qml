@@ -49,6 +49,13 @@ Rectangle {
             title : "Address";
         }
 
+        // animation for showing the map selection window
+        transform: Translate {
+            id: translate
+            x: 0
+            Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
+        }
+
         // create a callout to display information
         Callout {
             id: callout
@@ -66,14 +73,6 @@ Rectangle {
                 width: 36 * scaleFactor
                 url: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/bluePinSymbol.png"
                 offsetY: height / 2
-            }
-
-            TextSymbol {
-                id: labelSymbol
-                size: 18 * scaleFactor
-                text: 'eh'
-                color: "white"
-                offsetY: bluePinSymbol.height / 2
             }
         }
 
@@ -219,136 +218,193 @@ Rectangle {
             }
         }
 
-        Column {
+        // create window for displaying available mmpk/maps
+        Rectangle {
+            id: selectionMenu
             anchors {
+                left: parent.left
                 top: parent.top
-                horizontalCenter: parent.horizontalCenter
-                margins: 10 * scaleFactor
+                bottom: parent.bottom
             }
+            visible: true
+            width: 275 * scaleFactor
+            color: "#f7f8fa"
 
-            spacing: 100 * scaleFactor
+            Column {
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    margins: 5 * scaleFactor
+                }
 
-            Rectangle {
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: 300 * scaleFactor
-                height: 65 * scaleFactor
-                color: "#f7f8fa"
-                border.color: "black"
-                radius: 2
+                spacing: 100 * scaleFactor
 
-                Text {
-                    anchors.centerIn: parent
-                    font.pixelSize: 18 * scaleFactor
-                    text: mapListView.state === "choosePackage" ? "Choose a Mobile Map Package" : "Choose a Map"
-                    renderType: Text.NativeRendering
+                // ListModel to store names of Mobile Map Packages in data folder
+                ListModel {
+                    id: mobileMapPackages
+                }
+
+                // maps contained in a MobileMapPackage
+                ListModel {
+                    id: mapsInBundle
+                    dynamicRoles: true
+                }
+
+                // displays either the avaialble MMPKs or maps
+                ListView {
+                    id: mapListView
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: 400 * scaleFactor
+                    width: 200 * scaleFactor
+                    spacing: 10 * scaleFactor
+                    model: mobileMapPackages
+                    state: "choosePackage"
+
+                    states: [
+                        State {
+                            name: "choosePackage"
+                            PropertyChanges { target: mapListView; model: mobileMapPackages }
+                        },
+
+                        State {
+                            name: "chooseMap"
+                            PropertyChanges { target: mapListView; model: mapsInBundle }
+                        }
+                    ]
+
+                    header: Component {
+                        Text {
+                            height: 40 * scaleFactor
+                            font.pixelSize: 20 * scaleFactor
+                            text: mapListView.state === "choosePackage" ? "Choose a Mobile Map Package" : "Choose a Map"
+                            renderType: Text.NativeRendering
+                        }
+                    }
+
+                    delegate: Component {
+                        Rectangle {
+
+                            width: 200 * scaleFactor
+                            height: 50 * scaleFactor
+                            color: "#f7f8fa"
+                            border.color: "black"
+                            radius: 2
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: name
+                                renderType: Text.NativeRendering
+                            }
+
+                            // geocoding available indicator
+                            Image {
+                                anchors {
+                                    left: parent.left
+                                    top: parent.top
+                                    margins: 5 * scaleFactor
+                                }
+                                source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pinOutlineSymbol.png"
+                                height: 20 * scaleFactor
+                                width: height
+                                visible: mapListView.state === "chooseMap" && mobileMapList[selectedMmpkIndex].locatorTask !== null
+                            }
+
+                            // routing available indicator
+                            Image {
+                                anchors {
+                                    right: parent.right
+                                    top: parent.top
+                                    margins: 5 * scaleFactor
+                                }
+                                source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
+                                height: 20 * scaleFactor
+                                width: height
+                                visible: mapListView.state === "chooseMap" && routing
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    if (mapListView.state === "choosePackage") {
+
+                                        // reset map list
+                                        mapsInBundle.clear();
+
+                                        // create the list of maps within a package
+                                        for(var i = 0; i < mobileMapList[index].maps.length; i++) {
+                                            var mapTitle = mobileMapList[index].maps[i].item.title;
+
+                                            mapTitle += " " + (i + 1);
+
+                                            // add to ListModel
+                                            mapsInBundle.append({"name": mapTitle, "routing": mobileMapList[index].maps[i].transportationNetworks.length > 0});
+                                        }
+
+                                        selectedMmpkIndex = index;
+                                        mapListView.state = "chooseMap";
+                                    }
+
+                                    // if mobile map package has been selected, display map selection options
+                                    else if (mapListView.state === "chooseMap") {
+                                        selectedMapInBundleIndex = index;
+                                        mapSelectionWindow.visible = false;
+                                        mapView.visible = true;
+
+                                        // set map
+                                        mapView.map = mobileMapList[selectedMmpkIndex].maps[index];
+
+                                        // animate map back to original position
+                                        translate.x = 0;
+
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
-            // ListModel to store names of Mobile Map Packages in data folder
-            ListModel {
-                id: mobileMapPackages
-            }
+            //backbutton
+            Rectangle {
+                anchors {
+                    bottom: parent.bottom
+                    right: parent.right
+                    margins: 10 * scaleFactor
+                }
 
-            // maps contained in a MobileMapPackage
-            ListModel {
-                id: mapsInBundle
-                dynamicRoles: true
-            }
+                color: "#f7f8fa"
+                height: 50 * scaleFactor
+                width: height
+                border.color: "black"
+                radius: 2
+                opacity: 0.90
+                visible: mapListView.state !== "choosePackage"
 
-            // displays either the avaialble MMPKs or maps
-            ListView {
-                id: mapListView
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: 400 * scaleFactor
-                width: 200 * scaleFactor
-                spacing: 10 * scaleFactor
-                model: mobileMapPackages
-                state: "choosePackage"
-
-                states: [
-                    State {
-                        name: "choosePackage"
-                        PropertyChanges { target: mapListView; model: mobileMapPackages }
-                    },
-
-                    State {
-                        name: "chooseMap"
-                        PropertyChanges { target: mapListView; model: mapsInBundle }
+                Image {
+                    anchors {
+                        centerIn: parent
+                        margins: 5 * scaleFactor
                     }
-                ]
+                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/back.png"
+                    height: 44 * scaleFactor
+                    width: height
+                }
 
-                delegate: Component {
-
-                    Rectangle {
-
-                        width: 200 * scaleFactor
-                        height: 50 * scaleFactor
-                        color: "#f7f8fa"
-                        border.color: "black"
-                        radius: 2
-
-                        Text {
-                            anchors.centerIn: parent
-                            text: name
-                            renderType: Text.NativeRendering
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        if (mapSelectionWindow.visible === true) {
+                            // go from "choose map" to "choose mobile map package" display
+                            if (mapListView.state === "chooseMap") {
+                                // go back to MobileMapPackage selection
+                                mapListView.state = "choosePackage";
+                            }
                         }
 
-                        // geocoding available indicator
-                        Image {
-                            anchors {
-                                left: parent.left
-                                top: parent.top
-                                margins: 5 * scaleFactor
-                            }
-                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pinOutlineSymbol.png"
-                            height: 20 * scaleFactor
-                            width: height
-                            visible: mapListView.state === "chooseMap" && mobileMapList[selectedMmpkIndex].locatorTask !== null
-                        }
-
-                        // routing available indicator
-                        Image {
-                            anchors {
-                                right: parent.right
-                                top: parent.top
-                                margins: 5 * scaleFactor
-                            }
-                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
-                            height: 20 * scaleFactor
-                            width: height
-                            visible: mapListView.state === "chooseMap" && routing
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                if (mapListView.state === "choosePackage") {
-
-                                    // reset map list
-                                    mapsInBundle.clear();
-
-                                    // create the list of maps within a package
-                                    for(var i = 0; i < mobileMapList[index].maps.length; i++) {
-                                        var mapTitle = mobileMapList[index].maps[i].item.title;
-
-                                        mapTitle += " " + (i + 1);
-
-                                        // add to ListModel
-                                        mapsInBundle.append({"name": mapTitle, "routing": mobileMapList[index].maps[i].transportationNetworks.length > 0});
-                                    }
-
-                                    selectedMmpkIndex = index;
-                                    mapListView.state = "chooseMap";
-                                }
-
-                                // if mobile map package has been selected, display map selection options
-                                else if (mapListView.state === "chooseMap") {
-                                    selectedMapInBundleIndex = index;
-                                    mapSelectionWindow.visible = false;
-                                    mapView.visible = true;
-                                    mapView.map = mobileMapList[selectedMmpkIndex].maps[index];
-                                }
-                            }
+                        // if MapView is currently in foreground, pop up map selection window
+                        else {
+                            mapSelectionWindow.visible = true;
+                            mapListView.state = "chooseMap";
                         }
                     }
                 }
@@ -404,7 +460,6 @@ Rectangle {
     }
 
     Column {
-        id: routeControls
         anchors {
             top: parent.top
             right: parent.right
@@ -497,55 +552,50 @@ Rectangle {
         }
     }
 
-    //backbutton
+    // button to open map selection
     Rectangle {
         anchors {
-            bottom: parent.bottom
-            right: parent.right
-            margins: 10 * scaleFactor
+            top: parent.top
+            left: parent.left
+            margins: 5 * scaleFactor
         }
 
         color: "#f7f8fa"
-        height: 50 * scaleFactor
+        height: 35 * scaleFactor
         width: height
         border.color: "black"
         radius: 2
         opacity: 0.90
-        visible: mapListView.state !== "choosePackage"
+        visible: !mapSelectionWindow.visible
 
-        Text {
-            anchors.centerIn: parent
-            text: "BACK"
-            renderType: Text.NativeRendering
+        Image {
+            anchors {
+                centerIn: parent
+                margins: 1 * scaleFactor
+            }
+            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/drawerSymbol.png"
+            height: 33 * scaleFactor
+            width: height
         }
 
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (mapSelectionWindow.visible === true) {
-                    // go from "choose map" to "choose mobile map package" display
-                    if (mapListView.state === "chooseMap") {
-                        // go back to MobileMapPackage selection
-                        mapListView.state = "choosePackage";
-                    }
-                }
-
-                // if MapView is currently in foreground, pop up map selection window
-                else {
-                    mapSelectionWindow.visible = true;
-                    mapListView.state = "chooseMap";
-                }
+                // animate map to the right to display side bar
+                translate.x = selectionMenu.width;
+                mapSelectionWindow.visible = true;
+                mapListView.state = "chooseMap";
             }
         }
     }
 
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
+        // Neatline rectangle
+        Rectangle {
+            anchors.fill: parent
+            color: "transparent"
+            border {
+                width: 0.5 * scaleFactor
+                color: "black"
+            }
         }
     }
-}

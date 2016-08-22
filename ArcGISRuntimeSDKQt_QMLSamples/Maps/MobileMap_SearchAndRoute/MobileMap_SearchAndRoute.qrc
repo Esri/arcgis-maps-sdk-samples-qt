@@ -8,5 +8,7 @@
         <file>routingSymbol.png</file>
         <file>bluePinSymbol.png</file>
         <file>discardSymbol.png</file>
+        <file>back.png</file>
+        <file>drawerSymbol.png</file>
     </qresource>
 </RCC>
