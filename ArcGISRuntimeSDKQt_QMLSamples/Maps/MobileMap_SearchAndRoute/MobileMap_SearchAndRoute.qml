@@ -34,7 +34,7 @@ Rectangle {
     property LocatorTask currentLocatorTask: null
     property RouteTask currentRouteTask: null
     property var currentRouteParams
-    property int mapPackageLoadIndex: 0
+    property int mapPackageLoadIndex
     property int selectedMmpkIndex
     property int selectedMapInBundleIndex
     property Point clickedPoint: null
@@ -53,16 +53,26 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
+            screenOffsety: -19 * scaleFactor
         }
 
         GraphicsOverlay {
             id: stopsGraphicsOverlay
 
-            SimpleMarkerSymbol {
-                id: simpleSymbol
-                style: Enums.SimpleFillSymbolStyleCross
-                color: "blue"
-                size: 12
+            PictureMarkerSymbol {
+                id: bluePinSymbol
+                height: 36 * scaleFactor
+                width: 36 * scaleFactor
+                url: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/bluePinSymbol.png"
+                offsetY: height / 2
+            }
+
+            TextSymbol {
+                id: labelSymbol
+                size: 18 * scaleFactor
+                text: 'eh'
+                color: "white"
+                offsetY: bluePinSymbol.height / 2
             }
         }
 
@@ -108,13 +118,17 @@ Rectangle {
             if (currentLocatorTask.geocodeStatus === Enums.TaskStatusCompleted) {
                 busyIndicator.visible = false;
                 if(currentLocatorTask.geocodeResults.length > 0) {
-                    var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: simpleSymbol});
-                    stopsGraphicsOverlay.graphics.append(graphic);
 
-                    mapView.calloutData.geoElement = graphic;
+                    // create a pin graphic to display location
+                    var pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: bluePinSymbol});
+                    stopsGraphicsOverlay.graphics.append(pinGraphic);
+
+                    // set the calloutData
+                    mapView.calloutData.geoElement = pinGraphic;
                     mapView.calloutData.detail = currentLocatorTask.geocodeResults[0].label;
                     callout.showCallout();
 
+                    // add geocoded point as a stop if routing is available for current map
                     if (currentRouteTask !== null) {
                         var stop = ArcGISRuntimeEnvironment.createObject("Stop", {name: "stop", geometry: clickedPoint});
                         routeStops.push(stop);
@@ -125,6 +139,17 @@ Rectangle {
                                 routeButton.visible = true;
                             }
                         }
+
+                        // create a Text symbol to display stop number
+                        var textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
+                                                                                   color: "white",
+                                                                                   text: routeStops.length,
+                                                                                   size: 18 * scaleFactor,
+                                                                                   offsetY: 19 * scaleFactor
+                                                                               });
+
+                        var labelGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: textSymbol});
+                        stopsGraphicsOverlay.graphics.append(labelGraphic);
                     }
                 }
             }
@@ -153,7 +178,6 @@ Rectangle {
                 var generatedRoute = currentRouteTask.solveRouteResult.routes[0];
                 var routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: generatedRoute.routeGeometry});
                 routeGraphicsOverlay.graphics.append(routeGraphic);
-
             }
 
             else if (currentRouteTask.solveRouteStatus === Enums.TaskStatusErrored)
@@ -216,6 +240,7 @@ Rectangle {
             // maps contained in Mmpk ListModel
             ListModel {
                 id: mapsInBundle
+                dynamicRoles: true
             }
 
             ListView {
@@ -231,7 +256,6 @@ Rectangle {
                     State {
                         name: "choosePackage"
                         PropertyChanges { target: mapListView; model: mobileMapPackages }
-
                     },
 
                     State {
@@ -244,6 +268,7 @@ Rectangle {
 
                     // idea: make this an image instead and then have separate delegates for each mode.
                     Rectangle {
+
                         width: 200 * scaleFactor
                         height: 50 * scaleFactor
                         color: "#f7f8fa"
@@ -252,8 +277,35 @@ Rectangle {
 
                         Text {
                             anchors.centerIn: parent
-                            text: modelData
+                            text: name
                             renderType: Text.NativeRendering
+                        }
+
+                        // geocoding available indicator
+                        Image {
+                            anchors {
+                                left: parent.left
+                                top: parent.top
+                                margins: 5 * scaleFactor
+                            }
+                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pinOutlineSymbol.png"
+                            height: 20 * scaleFactor
+                            width: height
+                            visible: mapListView.state === "chooseMap" && mobileMapList[selectedMmpkIndex].locatorTask !== null
+                        }
+
+                        // routing available indicator
+                        Image {
+                            anchors {
+                                right: parent.right
+                                top: parent.top
+                                margins: 5 * scaleFactor
+                            }
+                            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
+                            height: 20 * scaleFactor
+                            width: height
+                            // the code is not happy here
+                            visible: mapListView.state === "chooseMap" && routing
                         }
 
                         MouseArea {
@@ -268,14 +320,10 @@ Rectangle {
                                     for(var i = 0; i < mobileMapList[index].maps.length; i++) {
                                         var mapTitle = mobileMapList[index].maps[i].item.title;
 
-                                        // if no locatorTask or transportationNetworks, just display title
-                                        if (mobileMapList[index].locatorTask !== null)
-                                            mapTitle += " (Geocoding)";
-                                        if (mobileMapList[index].maps[i].transportationNetworks.length !== 0)
-                                            mapTitle += " (Routing)";
+                                        mapTitle += " " + (i + 1);
 
                                         // add to ListModel
-                                        mapsInBundle.append({"name": mapTitle});
+                                        mapsInBundle.append({"name": mapTitle, "routing": mobileMapList[index].maps[i].transportationNetworks.length > 0});
                                     }
 
                                     selectedMmpkIndex = index;
@@ -309,10 +357,11 @@ Rectangle {
                 mobileMap.load();
 
                 mobileMap.loadStatusChanged.connect(function() {
+                    // after mmpk is loaded, add it to the list of mobile map packages
                     if (mobileMap.loadStatus === Enums.LoadStatusLoaded) {
                         var title = mobileMap.item.title;
                         mobileMapList.push(mobileMap);
-                        mobileMapPackages.append({"name": title});
+                        mobileMapPackages.append({"name": title, "routing": false});
                     }
                 });
 
@@ -336,11 +385,13 @@ Rectangle {
         }
     }
 
+
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
         visible: false
     }
+
     Column {
         id: routeControls
         anchors {

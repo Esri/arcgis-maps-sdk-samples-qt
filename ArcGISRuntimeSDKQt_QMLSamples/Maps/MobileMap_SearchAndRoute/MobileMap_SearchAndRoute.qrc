@@ -4,5 +4,8 @@
         <file>MobileMap_SearchAndRoute.png</file>
         <file>MobileMap_SearchAndRoute.qml</file>
         <file>MobileMap_SearchAndRoute.html</file>
+        <file>pinOutlineSymbol.png</file>
+        <file>routingSymbol.png</file>
+        <file>bluePinSymbol.png</file>
     </qresource>
 </RCC>
