@@ -225,16 +225,34 @@ Rectangle {
                 left: parent.left
                 top: parent.top
                 bottom: parent.bottom
+                margins: 5 * scaleFactor
             }
             visible: true
+            height: parent.height
             width: 275 * scaleFactor
-            color: "#f7f8fa"
+            color: "#E0E0E0"
+            radius: 1
 
             Column {
                 anchors {
                     top: parent.top
                     left: parent.left
-                    margins: 5 * scaleFactor
+                }
+                width: parent.width
+
+                Rectangle {
+                    width: parent.width
+                    height: 100 * scaleFactor
+                    color: "#283593"
+
+                    Text {
+                        anchors.centerIn: parent
+                        color: "white"
+                        height: 40 * scaleFactor
+                        font.pixelSize: 20 * scaleFactor
+                        text: mapListView.state === "choosePackage" ? "Choose a Mobile Map Package" : "Choose a Map"
+                        renderType: Text.NativeRendering
+                    }
                 }
 
                 spacing: 100 * scaleFactor
@@ -272,23 +290,14 @@ Rectangle {
                         }
                     ]
 
-                    header: Component {
-                        Text {
-                            height: 40 * scaleFactor
-                            font.pixelSize: 20 * scaleFactor
-                            text: mapListView.state === "choosePackage" ? "Choose a Mobile Map Package" : "Choose a Map"
-                            renderType: Text.NativeRendering
-                        }
-                    }
-
                     delegate: Component {
                         Rectangle {
 
                             width: 200 * scaleFactor
                             height: 50 * scaleFactor
-                            color: "#f7f8fa"
-                            border.color: "black"
+                            color: "transparent"
                             radius: 2
+                            border.color: "#283593"
 
                             Text {
                                 anchors.centerIn: parent
@@ -372,7 +381,7 @@ Rectangle {
                     margins: 10 * scaleFactor
                 }
 
-                color: "#f7f8fa"
+                color: "#E0E0E0"
                 height: 50 * scaleFactor
                 width: height
                 border.color: "black"
@@ -473,7 +482,7 @@ Rectangle {
         // solve route button
         Rectangle {
             id: routeButton
-            color: "#f7f8fa"
+            color: "#E0E0E0"
             height: 50 * scaleFactor
             width: height
             border.color: "black"
@@ -512,7 +521,7 @@ Rectangle {
         // clear graphics button
         Rectangle {
             id: clearButton
-            color: "#f7f8fa"
+            color: "#E0E0E0"
             height: 50 * scaleFactor
             width: height
             border.color: "black"
@@ -560,7 +569,7 @@ Rectangle {
             margins: 5 * scaleFactor
         }
 
-        color: "#f7f8fa"
+        color: "#E0E0E0"
         height: 35 * scaleFactor
         width: height
         border.color: "black"
@@ -589,13 +598,13 @@ Rectangle {
         }
     }
 
-        // Neatline rectangle
-        Rectangle {
-            anchors.fill: parent
-            color: "transparent"
-            border {
-                width: 0.5 * scaleFactor
-                color: "black"
-            }
+    // Neatline rectangle
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
         }
     }
+}
