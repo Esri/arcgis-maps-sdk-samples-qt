@@ -23,9 +23,9 @@ import Esri.ArcGISRuntime.Toolkit.Controls 2.0
 
 Rectangle {
     clip: true
-
     width: 800
     height: 600
+    color: "#E0E0E0"
 
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
@@ -52,7 +52,7 @@ Rectangle {
         // animation for showing the map selection window
         transform: Translate {
             id: translate
-            x: 0
+            x: 275
             Behavior on x { NumberAnimation { duration: 300; easing.type: Easing.OutQuad } }
         }
 
@@ -566,20 +566,20 @@ Rectangle {
         anchors {
             top: parent.top
             left: parent.left
-            margins: 5 * scaleFactor
+            topMargin: 5 * scaleFactor
         }
 
-        color: "#E0E0E0"
+        color: "#283593"
         height: 35 * scaleFactor
         width: height
-        border.color: "black"
         radius: 2
-        opacity: 0.90
+        opacity: 0.85
         visible: !mapSelectionWindow.visible
 
         Image {
             anchors {
-                centerIn: parent
+                verticalCenter: parent.verticalCenter
+                right: parent.right
                 margins: 1 * scaleFactor
             }
             source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/drawerSymbol.png"
