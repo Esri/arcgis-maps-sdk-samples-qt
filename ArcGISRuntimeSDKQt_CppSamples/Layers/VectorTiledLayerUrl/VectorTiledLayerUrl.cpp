@@ -44,11 +44,15 @@ void VectorTiledLayerUrl::componentComplete()
 
     // find QML MapView component
     m_mapView = findChild<MapQuickView*>("mapView");
+
+    //! [display vector tiled layer]
     // create a vector tiled basemap
     ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"));
     Basemap* basemap = new Basemap(vectorTiledLayer, this);
     // create a new map instance
     m_map = new Map(basemap, this);
+    //! [display vector tiled layer]
+
     // set viewpoint
     Point ptLocation(-80.18, 25.778135, SpatialReference(4236));
     m_map->setInitialViewpoint(Viewpoint(ptLocation, 150000));

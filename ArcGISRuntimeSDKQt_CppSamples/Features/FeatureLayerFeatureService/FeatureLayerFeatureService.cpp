@@ -56,6 +56,7 @@ void FeatureLayerFeatureService::componentComplete()
     // Set map to map view
     m_mapView->setMap(m_map);
 
+    //! [Display Feature Service]
     // create the feature table
     m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"), this);
 
@@ -64,4 +65,5 @@ void FeatureLayerFeatureService::componentComplete()
 
     // add the feature layer to the map
     m_map->operationalLayers()->append(m_featureLayer);
+    //! [Display Feature Service]
 }
