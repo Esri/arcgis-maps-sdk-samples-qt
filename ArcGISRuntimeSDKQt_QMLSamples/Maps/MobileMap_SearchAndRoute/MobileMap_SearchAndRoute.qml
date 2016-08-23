@@ -107,6 +107,7 @@ Rectangle {
 
                     // set callout's geoelement
                     mapView.calloutData.geoElement = identifyGraphicsOverlayResults[0].symbol.symbolType === Enums.SymbolTypePictureMarkerSymbol ? identifyGraphicsOverlayResults[0] : identifyGraphicsOverlayResults[1];
+                    mapView.calloutData.detail = identifyGraphicsOverlayResults[0].attributes.attributeNames.length;
                     callout.showCallout();
                 }
 
@@ -152,8 +153,8 @@ Rectangle {
                     stopsGraphicsOverlay.graphics.append(pinGraphic);
 
                     // need to figure out how to set the attributes of a graphic!!
-                    pinGraphic.attributes.insertAttribute("Match_addr", currentLocatorTask.geocodeResults[0].label);
-                    console.log(currentLocatorTask.geocodeResults[0].attributes.value);
+                    pinGraphic.attributes.insertAttribute("Match_addr", "h");//currentLocatorTask.geocodeResults[0].label);
+                    console.log(pinGraphic.attributes.attributeNames.length);
 
                     // add geocoded point as a stop if routing is available for current map
                     if (currentRouteTask !== null) {
@@ -210,6 +211,7 @@ Rectangle {
                 var routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: generatedRoute.routeGeometry});
                 routeGraphicsOverlay.graphics.append(routeGraphic);
             }
+
             // otherwise, display error message
             else if (currentRouteTask.solveRouteStatus === Enums.TaskStatusErrored)
                 console.log(currentRouteTask.error.message);
@@ -524,7 +526,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     // only start routing if there are at least 2 stops
-                    if (routeStops.length >= 2) {
+                    if (currentRouteTask.solveRouteStatus !== Enums.TaskStatusInProgress && routeStops.length >= 2) {
 
                         // clear any previous routing displays
                         routeGraphicsOverlay.graphics.clear();
@@ -532,6 +534,7 @@ Rectangle {
                         // set stops
                         currentRouteParams.setStops(routeStops);
 
+                        // solve route using generated default parameters
                         currentRouteTask.solveRoute(currentRouteParams);
                     }
                 }
