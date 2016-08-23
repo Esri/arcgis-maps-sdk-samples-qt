@@ -29,15 +29,18 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
-    property var mobileMapList: []
-    property var mobilePathsList: []
+
     property LocatorTask currentLocatorTask: null
     property RouteTask currentRouteTask: null
+    property Point clickedPoint: null
+
     property var currentRouteParams
     property int mapPackageLoadIndex
     property int selectedMmpkIndex
     property int selectedMapInBundleIndex
-    property Point clickedPoint: null
+
+    property var mobileMapList: []
+    property var mobilePathsList: []
     property var routeStops: []
 
     // Map view UI presentation at top
@@ -82,7 +85,7 @@ Rectangle {
 
             SimpleRenderer {
                 SimpleLineSymbol {
-                    color: "cyan"
+                    color: "#2196F3"
                     style: Enums.SimpleLineSymbolStyleSolid
                     width: 4
                 }
@@ -92,7 +95,25 @@ Rectangle {
         onMouseClicked: {
             if (currentLocatorTask !== null) {
                 clickedPoint = mouse.mapPoint;
-                currentLocatorTask.reverseGeocodeWithParameters(mouse.mapPoint, reverseGeocodeParams);
+                identifyGraphicsOverlayWithMaxResults(stopsGraphicsOverlay, mouse.x, mouse.y, 5, 2);
+            }
+        }
+
+        onIdentifyGraphicsOverlayStatusChanged: {
+            if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted){
+
+                // if clicked on the pin graphic, display callout.
+                if (identifyGraphicsOverlayResults.length > 0) {
+
+                    // set callout's geoelement
+                    mapView.calloutData.geoElement = identifyGraphicsOverlayResults[0].symbol.symbolType === Enums.SymbolTypePictureMarkerSymbol ? identifyGraphicsOverlayResults[0] : identifyGraphicsOverlayResults[1];
+                    callout.showCallout();
+                }
+
+                // otherwise, reverse geocode
+                else if (currentLocatorTask.geocodeStatus !== Enums.TaskStatusInProgress){
+                    currentLocatorTask.reverseGeocodeWithParameters(clickedPoint, reverseGeocodeParams);
+                }
             }
         }
 
@@ -130,10 +151,9 @@ Rectangle {
                     var pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: bluePinSymbol});
                     stopsGraphicsOverlay.graphics.append(pinGraphic);
 
-                    // set the calloutData
-                    mapView.calloutData.geoElement = pinGraphic;
-                    mapView.calloutData.detail = currentLocatorTask.geocodeResults[0].label;
-                    callout.showCallout();
+                    // need to figure out how to set the attributes of a graphic!!
+                    pinGraphic.attributes.insertAttribute("Match_addr", currentLocatorTask.geocodeResults[0].label);
+                    console.log(currentLocatorTask.geocodeResults[0].attributes.value);
 
                     // add geocoded point as a stop if routing is available for current map
                     if (currentRouteTask !== null) {
@@ -249,7 +269,7 @@ Rectangle {
                         anchors.centerIn: parent
                         color: "white"
                         height: 40 * scaleFactor
-                        font.pixelSize: 20 * scaleFactor
+                        font.pixelSize: 18 * scaleFactor
                         text: mapListView.state === "choosePackage" ? "Choose a Mobile Map Package" : "Choose a Map"
                         renderType: Text.NativeRendering
                     }
