@@ -27,6 +27,7 @@ MobileMap_SearchAndRouteSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
 
     // add a mapView component
     MapView {

@@ -19,13 +19,20 @@
 #include "Map.h"
 #include "MapQuickView.h"
 
+#include <QDir>
+#include <QQmlProperty>
+#include <QFileInfoList>
+#include <QFile>
+
 using namespace Esri::ArcGISRuntime;
 
 MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent /* = nullptr */):
     QQuickItem(parent),
+    m_mmpkDirectory(QDir::homePath() + "/ArcGIS/Runtime/Data/mmpk/"),
     m_map(nullptr),
     m_mapView(nullptr)
 {
+    m_fileInfoList = m_mmpkDirectory.entryInfoList();
 }
 
 MobileMap_SearchAndRoute::~MobileMap_SearchAndRoute()
@@ -40,11 +47,39 @@ void MobileMap_SearchAndRoute::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
+    //identifyMobileMapPackages();
+
+    createMobileMapPackages(0);
+
     // Create a map using the topographic basemap
     m_map = new Map(Basemap::topographic(this), this);
     m_map->setInitialViewpoint(Viewpoint(Envelope(-13075816.4047166, 4014771.46954516, -13073005.6797177, 4016869.78617381, SpatialReference(102100))));
 
-
     // Set map to map view
     m_mapView->setMap(m_map);
+}
+
+void MobileMap_SearchAndRoute::identifyMobileMapPackages()
+{
+    foreach (QFileInfo file, m_fileInfoList) {
+        if (file.completeSuffix() == "mmpk")
+            qDebug() << file.fileName();
+    }
+}
+
+void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
+{
+    if (index >= m_fileInfoList.length())
+        return;
+    else
+    {
+        if (m_fileInfoList[index].completeSuffix() == "mmpk")
+            qDebug() << m_fileInfoList[index].fileName();
+
+        //connect signals
+
+        index++;
+    }
+
+    createMobileMapPackages(index);
 }

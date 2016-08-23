@@ -23,10 +23,13 @@ namespace Esri
     {
         class Map;
         class MapQuickView;
+        class MobileMapPackage;
     }
 }
 
 #include <QQuickItem>
+#include <QFileInfoList>
+#include <QDir>
 
 class MobileMap_SearchAndRoute : public QQuickItem
 {
@@ -38,9 +41,15 @@ public:
 
     void componentComplete() Q_DECL_OVERRIDE;
 
+    void identifyMobileMapPackages();
+    void createMobileMapPackages(int index);
+
 private:
+    QDir m_mmpkDirectory;
+    QFileInfoList m_fileInfoList;
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    QList<Esri::ArcGISRuntime::MobileMapPackage*> m_mobileMapPackages;
 };
 
 #endif // MOBILEMAP_SEARCHANDROUTE_H
