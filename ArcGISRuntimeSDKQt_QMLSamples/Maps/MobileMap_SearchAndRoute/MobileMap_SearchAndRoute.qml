@@ -47,9 +47,10 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
+        visible: false
 
         calloutData {
-            title : "Address";
+            title : "Callout";
         }
 
         // animation for showing the map selection window
@@ -254,12 +255,6 @@ Rectangle {
                     // extract address from GeocodeResult and add as the an attribute of the graphic
                     pinGraphic.attributes.insertAttribute("Match_addr", currentLocatorTask.geocodeResults[0].label);
 
-                    for(var prop in currentLocatorTask.locatorInfo.resultAttributes) {
-                        console.log(currentLocatorTask.locatorInfo.resultAttributes[prop].name);//currentLocatorTask.geocodeResults[0].attributes[prop]);
-                    }
-
-                    //console.log(currentLocatorTask.geocodeResults[0].attributes["Rank"]);
-
                     if (currentLocatorTask !== null)
                         clearButton.visible = true;
 
@@ -426,8 +421,11 @@ Rectangle {
 
                             Text {
                                 anchors.centerIn: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                width: 150 * scaleFactor
                                 text: name
                                 renderType: Text.NativeRendering
+                                elide: Text.ElideMiddle
                             }
 
                             // geocoding available icon
