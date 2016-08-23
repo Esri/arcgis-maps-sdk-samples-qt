@@ -92,14 +92,13 @@ Rectangle {
             }
         }
 
+        // Map controls
         Column {
             anchors {
                 top: parent.top
                 right: parent.right
                 margins: 10 * scaleFactor
             }
-
-            visible: currentRouteTask !== null
 
             spacing: 10 * scaleFactor
 
@@ -167,20 +166,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        // reset graphic overlays
-                        routeGraphicsOverlay.graphics.clear();
-                        stopsGraphicsOverlay.graphics.clear();
-
-                        // reset stops
-                        routeStops = [];
-                        currentRouteParams.clearStops();
-
-                        // dismiss callout
-                        callout.dismiss();
-
-                        // make route controls invisible
-                        clearButton.visible = false;
-                        routeButton.visible = false;
+                        mapView.resetMap();
                     }
                 }
             }
@@ -193,7 +179,7 @@ Rectangle {
                 translate.x = 0;
             }
 
-            else if (mapSelectionWindow.visible === false && currentLocatorTask !== null) {
+            else if (currentLocatorTask !== null) {
                 clickedPoint = mouse.mapPoint;
                 identifyGraphicsOverlayWithMaxResults(stopsGraphicsOverlay, mouse.x, mouse.y, 5, 2);
             }
@@ -219,17 +205,10 @@ Rectangle {
         }
 
         onMapChanged: {
-            // clear any previous graphics overlays
-            stopsGraphicsOverlay.graphics.clear();
-            routeGraphicsOverlay.graphics.clear();
-
-            callout.dismiss();
+            mapView.resetMap();
 
             // change the locatorTask
             currentLocatorTask = mobileMapList[selectedMmpkIndex].locatorTask;
-
-            // clear any stored stops
-            routeStops = [];
 
             // determine if map supports routing
             if (mobileMapList[selectedMmpkIndex].maps[selectedMapInBundleIndex].transportationNetworks.length > 0) {
@@ -240,6 +219,22 @@ Rectangle {
             else {
                 currentRouteTask = null;
             }
+        }
+
+        function resetMap() {
+            // reset graphic overlays
+            routeGraphicsOverlay.graphics.clear();
+            stopsGraphicsOverlay.graphics.clear();
+
+            // clear stops
+            routeStops = [];
+
+            // dismiss callout
+            callout.dismiss();
+
+            // make route controls invisible
+            routeButton.visible = false;
+            clearButton.visible = false;
         }
     }
 
@@ -253,23 +248,28 @@ Rectangle {
                 if(currentLocatorTask.geocodeResults.length > 0) {
 
                     // create a pin graphic to display location
-                    var pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: bluePinSymbol});
+                    var pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: currentLocatorTask.geocodeResults[0].displayLocation, symbol: bluePinSymbol});
                     stopsGraphicsOverlay.graphics.append(pinGraphic);
 
                     // extract address from GeocodeResult and add as the an attribute of the graphic
                     pinGraphic.attributes.insertAttribute("Match_addr", currentLocatorTask.geocodeResults[0].label);
 
+                    for(var prop in currentLocatorTask.locatorInfo.resultAttributes) {
+                        console.log(currentLocatorTask.locatorInfo.resultAttributes[prop].name);//currentLocatorTask.geocodeResults[0].attributes[prop]);
+                    }
+
+                    //console.log(currentLocatorTask.geocodeResults[0].attributes["Rank"]);
+
+                    if (currentLocatorTask !== null)
+                        clearButton.visible = true;
+
                     // add geocoded point as a stop if routing is available for current map
                     if (currentRouteTask !== null) {
-                        var stop = ArcGISRuntimeEnvironment.createObject("Stop", {name: "stop", geometry: clickedPoint});
+                        var stop = ArcGISRuntimeEnvironment.createObject("Stop", {name: "stop", geometry: currentLocatorTask.geocodeResults[0].displayLocation});
                         routeStops.push(stop);
 
-                        if (routeStops.length > 0) {
-                            clearButton.visible = true;
-                            if (routeStops.length > 1) {
-                                routeButton.visible = true;
-                            }
-                        }
+                        if (routeStops.length > 1)
+                            routeButton.visible = true;
 
                         // create a Text symbol to display stop number
                         var textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
@@ -280,7 +280,7 @@ Rectangle {
                                                                                });
 
                         // create graphic using the text symbol
-                        var labelGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: textSymbol});
+                        var labelGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: currentLocatorTask.geocodeResults[0].displayLocation, symbol: textSymbol});
                         stopsGraphicsOverlay.graphics.append(labelGraphic);
                     }
                 }
@@ -316,17 +316,16 @@ Rectangle {
                 routeGraphicsOverlay.graphics.append(routeGraphic);
             }
 
-            // otherwise, display error message
+            // otherwise, console error message
             else if (currentRouteTask.solveRouteStatus === Enums.TaskStatusErrored)
                 console.log(currentRouteTask.error.message);
-
         }
     }
 
     // create reverse geocoding parameters
     ReverseGeocodeParameters {
         id: reverseGeocodeParams
-        maxResults: 1
+        maxResults: 10
     }
 
     // window for selecting mobile map package and desired map
@@ -431,7 +430,7 @@ Rectangle {
                                 renderType: Text.NativeRendering
                             }
 
-                            // geocoding available indicator
+                            // geocoding available icon
                             Image {
                                 anchors {
                                     left: parent.left
@@ -444,7 +443,7 @@ Rectangle {
                                 visible: mapListView.state === "chooseMap" && mobileMapList[selectedMmpkIndex].locatorTask !== null
                             }
 
-                            // routing available indicator
+                            // routing available icon
                             Image {
                                 anchors {
                                     right: parent.right
@@ -491,7 +490,6 @@ Rectangle {
 
                                         // animate map back to original position
                                         translate.x = 0;
-
                                     }
                                 }
                             }
