@@ -78,6 +78,7 @@ void FeatureLayerSelection::componentComplete()
 
 void FeatureLayerSelection::connectSignals()
 {
+    //! [identify feature layer qml api snippet]
     // lambda expression for the mouse press event on the mapview... do an identify operation
     connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
     {
@@ -110,6 +111,7 @@ void FeatureLayerSelection::connectSignals()
         m_selectedFeatureText = count > 1 ? QString::number(count) + " features selected." : QString::number(count) + " feature selected.";
         emit selectedFeatureTextChanged();
     });
+    //! [identify feature layer qml api snippet]
 }
 
 QString FeatureLayerSelection::selectedFeatureText() const

@@ -32,22 +32,24 @@ ManageBookmarksSample {
         objectName: "mapView"
     }
 
+    //! [Use BookmarkListModel in View]
     ComboBox {
-        id: bookmarks
+        id: bookmarkComboBox
         anchors {
             left: parent.left
             top: parent.top
             margins: 15 * scaleFactor
         }
         width: 225 * scaleFactor
-        // Set the model equal to the QStringList created in C++
-        model: manageBookmarksSample.bookmarkList
+        // Set the model to the BookmarkListModel
+        model: manageBookmarksSample.bookmarks
 
         onCurrentTextChanged: {
             // Call C++ invokable function to to go to the bookmark
-            manageBookmarksSample.goToBookmark(bookmarks.currentText);
+            manageBookmarksSample.goToBookmark(bookmarkComboBox.currentIndex);
         }
     }
+    //! [Use BookmarkListModel in View]
 
     // Create the add button so new bookmarks can be added
     Rectangle {
@@ -100,7 +102,7 @@ ManageBookmarksSample {
         radius: 5
         border {
             color: "#4D4D4D"
-            width: 1
+            width: 1 * scaleFactor
         }
 
         MouseArea {
@@ -130,7 +132,7 @@ ManageBookmarksSample {
                 spacing: 5
                 Button {
                     width: (textField.width / 2) - (2.5 * scaleFactor)
-                    text: "Cancel"
+                    text: qsTr("Cancel")
                     onClicked: addWindow.visible = false;
                 }
                 Button {
@@ -139,7 +141,7 @@ ManageBookmarksSample {
                     onClicked: {
                         // Call the C++ invokable function and pass in the name specified
                         manageBookmarksSample.addBookmark(textField.text);
-                        bookmarks.currentIndex = bookmarkList.length - 1;
+                        bookmarkComboBox.currentIndex = bookmarkComboBox.count - 1;
                         textField.text = "";
                         addWindow.visible = false;
                     }

@@ -24,6 +24,7 @@
 #endif
 
 #include "MapQuickView.h"
+#include "BookmarkListModel.h"
 #include "ManageBookmarks.h"
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -52,6 +53,11 @@ int main(int argc, char *argv[])
     // Register the map view for QML
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
     qmlRegisterType<ManageBookmarks>("Esri.Samples", 1, 0, "ManageBookmarksSample");
+    //! [Register the list model for QML]
+    qmlRegisterUncreatableType<BookmarkListModel>("Esri.Samples", 1, 0,
+                                                        "BookmarkListModel",
+                                                        "BookmarkListModel is an uncreatable type");
+    //! [Register the list model for QML]
 
     // Intialize application view
     QQuickView view;

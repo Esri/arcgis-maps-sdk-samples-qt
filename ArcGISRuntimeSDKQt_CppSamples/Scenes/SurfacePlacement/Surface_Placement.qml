@@ -26,10 +26,12 @@ SurfacePlacementSample {
     property real scaleFactor: System.displayScaleFactor
 
     // Create SceneView here, and create its Scene and GraphicsOverlay in C++ code
+    //! [add a sceneView component]
     SceneView {
         objectName: "sceneView"
         anchors.fill: parent
     }
+    //! [add a sceneView component]
 
     Rectangle {
         anchors.fill: parent

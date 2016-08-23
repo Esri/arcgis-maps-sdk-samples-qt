@@ -33,10 +33,12 @@ ShowCalloutSample {
         anchors.fill: parent
         objectName: "mapView"
 
+        //! [set callout data]
         Callout {
             id: callout
             calloutData: showCalloutSample.calloutData
         }
+        //! [set callout data]
     }
 
     Rectangle {
