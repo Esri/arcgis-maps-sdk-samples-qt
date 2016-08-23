@@ -18,6 +18,7 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MobileMapPackage.h"
 
 #include <QDir>
 #include <QQmlProperty>
@@ -26,7 +27,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent /* = nullptr */):
+MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
     QQuickItem(parent),
     m_mmpkDirectory(QDir::homePath() + "/ArcGIS/Runtime/Data/mmpk/"),
     m_map(nullptr),
@@ -47,24 +48,8 @@ void MobileMap_SearchAndRoute::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    //identifyMobileMapPackages();
-
+    // identify and create MobileMapPackages using mmpk files in datapath
     createMobileMapPackages(0);
-
-    // Create a map using the topographic basemap
-    m_map = new Map(Basemap::topographic(this), this);
-    m_map->setInitialViewpoint(Viewpoint(Envelope(-13075816.4047166, 4014771.46954516, -13073005.6797177, 4016869.78617381, SpatialReference(102100))));
-
-    // Set map to map view
-    m_mapView->setMap(m_map);
-}
-
-void MobileMap_SearchAndRoute::identifyMobileMapPackages()
-{
-    foreach (QFileInfo file, m_fileInfoList) {
-        if (file.completeSuffix() == "mmpk")
-            qDebug() << file.fileName();
-    }
 }
 
 void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
@@ -74,12 +59,42 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
     else
     {
         if (m_fileInfoList[index].completeSuffix() == "mmpk")
-            qDebug() << m_fileInfoList[index].fileName();
+        {
+            MobileMapPackage* mobileMapPackage = new MobileMapPackage(m_mmpkDirectory.absoluteFilePath(m_fileInfoList[index].fileName()));
+            mobileMapPackage->load();
 
-        //connect signals
+            connect(mobileMapPackage, &MobileMapPackage::doneLoading, [mobileMapPackage, this](Error error)
+            {
+                if (error.isEmpty())
+                {
+                    qDebug() << mobileMapPackage->path();
+                    m_mobileMapPackages.append(mobileMapPackage);
+
+                    QVariantMap mmpkProperties;
+                    mmpkProperties["name"] = mobileMapPackage->item().title();
+                    mmpkProperties["geocoding"] = mobileMapPackage->locatorTask() != nullptr;
+                    mmpkProperties["routing"] = false;
+
+                    m_mobileMapProperties << mmpkProperties;
+
+                    emit mmpkPropertiesChanged();
+                }
+            });
+        }
 
         index++;
     }
 
     createMobileMapPackages(index);
+}
+
+// used to interact with ListView in QML
+int MobileMap_SearchAndRoute::selectIndex(int index)
+{
+    return index;
+}
+
+QVariantList MobileMap_SearchAndRoute::mmpkProperties() const
+{
+    return m_mobileMapProperties;
 }

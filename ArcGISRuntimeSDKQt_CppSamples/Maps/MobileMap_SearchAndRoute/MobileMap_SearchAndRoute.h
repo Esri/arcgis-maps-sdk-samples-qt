@@ -29,11 +29,13 @@ namespace Esri
 
 #include <QQuickItem>
 #include <QFileInfoList>
+#include <QVariantMap>
 #include <QDir>
 
 class MobileMap_SearchAndRoute : public QQuickItem
 {
     Q_OBJECT
+    Q_PROPERTY(QVariantList mmpkProperties READ mmpkProperties NOTIFY mmpkPropertiesChanged)
 
 public:
     MobileMap_SearchAndRoute(QQuickItem* parent = nullptr);
@@ -41,15 +43,25 @@ public:
 
     void componentComplete() Q_DECL_OVERRIDE;
 
-    void identifyMobileMapPackages();
     void createMobileMapPackages(int index);
+    Q_INVOKABLE int selectIndex(int index);
+    //buildMapList function
+
+signals:
+    void mmpkPropertiesChanged();
+
+private:
+    QVariantList mmpkProperties() const;
+
 
 private:
     QDir m_mmpkDirectory;
     QFileInfoList m_fileInfoList;
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::MobileMapPackage* m_mobileMap;
     QList<Esri::ArcGISRuntime::MobileMapPackage*> m_mobileMapPackages;
+    QVariantList m_mobileMapProperties;
 };
 
 #endif // MOBILEMAP_SEARCHANDROUTE_H
