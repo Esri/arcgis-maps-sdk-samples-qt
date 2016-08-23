@@ -30,12 +30,14 @@ Rectangle {
         // Nest the Map as a child of the MapView
         Map {
             // Nest the Basemap to add it as the Map's Basemap
+            //! [display tiled layer from tiled map service]
             Basemap {
                 // Nest the ArcGISTiledLayer to add it as one of the Basemap's baseLayers
                 ArcGISTiledLayer {
                     url: "http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"
                 }
             }
+            //! [display tiled layer from tiled map service]
         }
     }
 

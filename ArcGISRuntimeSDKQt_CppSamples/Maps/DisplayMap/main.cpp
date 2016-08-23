@@ -49,8 +49,9 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    // Register the map view for QML
+    //! [Register the map view for QML]
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+    //! [Register the map view for QML]
     qmlRegisterType<DisplayMap>("Esri.Samples", 1, 0, "DisplayMapSample");
 
     // Intialize application view

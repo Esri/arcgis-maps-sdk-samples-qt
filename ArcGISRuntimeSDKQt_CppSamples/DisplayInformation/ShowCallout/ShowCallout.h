@@ -32,7 +32,9 @@ namespace Esri
 class ShowCallout : public QQuickItem
 {
     Q_OBJECT
+    //! [expose callout property]
     Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
+    //! [expose callout property]
 
 public:
     ShowCallout(QQuickItem* parent = nullptr);

@@ -35,14 +35,6 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
-        // initialize Callout
-        calloutData {
-            imageUrl: "qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png"
-            title: "Location"
-            location: calloutLocation
-            detail: "x: " + xCoor + " y: " + yCoor;
-        }
-
         Map {
             BasemapTopographic {}
 
@@ -57,10 +49,20 @@ Rectangle {
             }
         }
 
+        //! [show callout qml api snippet]
+        // initialize Callout
+        calloutData {
+            imageUrl: "qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png"
+            title: "Location"
+            location: calloutLocation
+            detail: "x: " + xCoor + " y: " + yCoor
+        }
+
         Callout {
             id: callout
             calloutData: parent.calloutData
         }
+        //! [show callout qml api snippet]
 
         // display callout on mouseclick
         onMouseClicked: {

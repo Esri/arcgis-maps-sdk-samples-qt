@@ -49,7 +49,9 @@ int main(int argc, char *argv[])
 #endif
 
   // Register classes for QML
+  //! [Register the scene view for QML]
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  //! [Register the scene view for QML]
   qmlRegisterType<Surface_Placement>("Esri.Samples", 1, 0, "SurfacePlacementSample");
 
   // Intialize application view

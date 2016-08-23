@@ -55,10 +55,12 @@ void FeatureLayerGeodatabase::componentComplete()
     // get the data path
     m_dataPath = QQmlProperty::read(m_mapView, "dataPath").toUrl().toLocalFile();
 
+    //! [FeatureLayer Geodatabase add basemap]
     // Create a map using a local vector tile package
-    auto vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(m_dataPath + "vtpk/LosAngeles.vtpk"), this);
-    auto basemap = new Basemap(vectorTiledLayer, this);
+    ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(m_dataPath + "vtpk/LosAngeles.vtpk"), this);
+    Basemap* basemap = new Basemap(vectorTiledLayer, this);
     m_map = new Map(basemap, this);
+    //! [FeatureLayer Geodatabase add basemap]
 
     // Set map to map view
     m_mapView->setMap(m_map);

@@ -106,6 +106,16 @@ Rectangle {
         }
     }
 
+    // Neatline rectangle
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
+    }
+
     // function to dynamically create the graphics and add them to the graphics overlay
     function addSymbols() {
         for (var i = 0; i < symbolModel.count; i++) {

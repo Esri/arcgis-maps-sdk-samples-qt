@@ -91,6 +91,7 @@ void IdentifyGraphics::addPolygonGraphic()
 
 void IdentifyGraphics::connectSignals()
 {
+    //! [identify graphics api snippet]
     // connect to the mouse press release signal on the MapQuickView
     connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
     {
@@ -104,6 +105,7 @@ void IdentifyGraphics::connectSignals()
         m_identifiedGraphicsCount = identifyResults.size();
         emit identifiedGraphicsCountChanged();
     });
+    //! [identify graphics api snippet]
 }
 
 int IdentifyGraphics::identifiedGraphicsCount()

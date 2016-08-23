@@ -40,6 +40,8 @@ Rectangle {
 
         Map {
             id: map
+
+            //! [display tiled layer from tile cache]
             Basemap {
                 ArcGISTiledLayer {
                     TileCache {
@@ -47,6 +49,7 @@ Rectangle {
                     }
                 }
             }
+            //! [display tiled layer from tile cache]
 
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {

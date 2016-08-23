@@ -51,6 +51,12 @@ Rectangle {
             }
         }
 
+        //! [identify graphics api snippet]
+        // Signal handler for mouse click event on the map view
+        onMouseClicked: {
+            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 22, 1000);
+        }
+
         // Signal handler for identify graphics overlay
         onIdentifyGraphicsOverlayStatusChanged: {
             if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted) {
@@ -61,11 +67,7 @@ Rectangle {
                 console.log("error");
             }
         }
-
-        // Signal handler for mouse click event on the map view
-        onMouseClicked: {
-            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 22, 1000);
-        }
+        //! [identify graphics api snippet]
     }
 
     MessageDialog {

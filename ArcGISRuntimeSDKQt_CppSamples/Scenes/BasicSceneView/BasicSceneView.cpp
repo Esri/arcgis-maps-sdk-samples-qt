@@ -48,14 +48,16 @@ void BasicSceneView::componentComplete()
     // set scene on the scene view
     m_sceneView->setScene(m_scene);
 
-    // create a new elevation source
+    //! [create a new elevation source]
     ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
     // add the elevation source to the scene to display elevation
     m_scene->baseSurface()->elevationSources()->append(elevationSource);
+    //! [create a new elevation source]
 
-    // create a camera
+    //! [create a camera]
     Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
     // set the viewpoint
     m_sceneView->setViewpointCamera(camera);
+    //! [create a camera]
 }
 
