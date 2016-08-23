@@ -92,8 +92,108 @@ Rectangle {
             }
         }
 
+        Column {
+            anchors {
+                top: parent.top
+                right: parent.right
+                margins: 10 * scaleFactor
+            }
+
+            visible: currentRouteTask !== null
+
+            spacing: 10 * scaleFactor
+
+            // solve route button
+            Rectangle {
+                id: routeButton
+                color: "#E0E0E0"
+                height: 50 * scaleFactor
+                width: height
+                border.color: "black"
+                radius: 2
+                opacity: 0.90
+                visible: false
+
+                Image {
+                    anchors {
+                        centerIn: parent
+                        margins: 5 * scaleFactor
+                    }
+                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
+                    height: 44 * scaleFactor
+                    width: height
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        // only start routing if there are at least 2 stops
+                        if (currentRouteTask.solveRouteStatus !== Enums.TaskStatusInProgress && routeStops.length >= 2) {
+
+                            // clear any previous routing displays
+                            routeGraphicsOverlay.graphics.clear();
+
+                            // set stops
+                            currentRouteParams.setStops(routeStops);
+
+                            // solve route using generated default parameters
+                            currentRouteTask.solveRoute(currentRouteParams);
+                        }
+                    }
+                }
+            }
+
+            // clear graphics button
+            Rectangle {
+                id: clearButton
+                color: "#E0E0E0"
+                height: 50 * scaleFactor
+                width: height
+                border.color: "black"
+                radius: 2
+                opacity: 0.90
+                visible: false
+
+                Image {
+                    anchors {
+                        centerIn: parent
+                        margins: 5 * scaleFactor
+                    }
+                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/discardSymbol.png"
+                    height: 44 * scaleFactor
+                    width: height
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        // reset graphic overlays
+                        routeGraphicsOverlay.graphics.clear();
+                        stopsGraphicsOverlay.graphics.clear();
+
+                        // reset stops
+                        routeStops = [];
+                        currentRouteParams.clearStops();
+
+                        // dismiss callout
+                        callout.dismiss();
+
+                        // make route controls invisible
+                        clearButton.visible = false;
+                        routeButton.visible = false;
+                    }
+                }
+            }
+        }
+
         onMouseClicked: {
-            if (currentLocatorTask !== null) {
+            // if map selection is currently visible, dismiss
+            if (mapSelectionWindow.visible === true) {
+                mapSelectionWindow.visible = !mapSelectionWindow.visible
+                translate.x = 0;
+            }
+
+            else if (mapSelectionWindow.visible === false && currentLocatorTask !== null) {
                 clickedPoint = mouse.mapPoint;
                 identifyGraphicsOverlayWithMaxResults(stopsGraphicsOverlay, mouse.x, mouse.y, 5, 2);
             }
@@ -107,7 +207,7 @@ Rectangle {
 
                     // set callout's geoelement
                     mapView.calloutData.geoElement = identifyGraphicsOverlayResults[0].symbol.symbolType === Enums.SymbolTypePictureMarkerSymbol ? identifyGraphicsOverlayResults[0] : identifyGraphicsOverlayResults[1];
-                    mapView.calloutData.detail = identifyGraphicsOverlayResults[0].attributes.attributeNames.length;
+                    mapView.calloutData.detail = mapView.calloutData.geoElement.attributes.attributeValue("Match_addr");
                     callout.showCallout();
                 }
 
@@ -128,6 +228,9 @@ Rectangle {
             // change the locatorTask
             currentLocatorTask = mobileMapList[selectedMmpkIndex].locatorTask;
 
+            // clear any stored stops
+            routeStops = [];
+
             // determine if map supports routing
             if (mobileMapList[selectedMmpkIndex].maps[selectedMapInBundleIndex].transportationNetworks.length > 0) {
                 currentRouteTask = ArcGISRuntimeEnvironment.createObject("RouteTask", {transportationNetworkDataset: mobileMapList[selectedMmpkIndex].maps[selectedMapInBundleIndex].transportationNetworks[0]});
@@ -140,6 +243,7 @@ Rectangle {
         }
     }
 
+    // connect signals from LocatorTask
     Connections {
         target: currentLocatorTask
 
@@ -152,9 +256,8 @@ Rectangle {
                     var pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: bluePinSymbol});
                     stopsGraphicsOverlay.graphics.append(pinGraphic);
 
-                    // need to figure out how to set the attributes of a graphic!!
-                    pinGraphic.attributes.insertAttribute("Match_addr", "h");//currentLocatorTask.geocodeResults[0].label);
-                    console.log(pinGraphic.attributes.attributeNames.length);
+                    // extract address from GeocodeResult and add as the an attribute of the graphic
+                    pinGraphic.attributes.insertAttribute("Match_addr", currentLocatorTask.geocodeResults[0].label);
 
                     // add geocoded point as a stop if routing is available for current map
                     if (currentRouteTask !== null) {
@@ -188,6 +291,7 @@ Rectangle {
         }
     }
 
+    // connect signals from RouteTask
     Connections {
         target: currentRouteTask
 
@@ -355,6 +459,7 @@ Rectangle {
 
                             MouseArea {
                                 anchors.fill: parent
+                                propagateComposedEvents: false
                                 onClicked: {
                                     if (mapListView.state === "choosePackage") {
 
@@ -483,105 +588,11 @@ Rectangle {
         }
     }
 
-
+    // runs when app is geocoding
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
         visible: false
-    }
-
-    Column {
-        anchors {
-            top: parent.top
-            right: parent.right
-            margins: 10 * scaleFactor
-        }
-
-        visible: currentRouteTask !== null
-
-        spacing: 10 * scaleFactor
-
-        // solve route button
-        Rectangle {
-            id: routeButton
-            color: "#E0E0E0"
-            height: 50 * scaleFactor
-            width: height
-            border.color: "black"
-            radius: 2
-            opacity: 0.90
-            visible: false
-
-            Image {
-                anchors {
-                    centerIn: parent
-                    margins: 5 * scaleFactor
-                }
-                source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
-                height: 44 * scaleFactor
-                width: height
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    // only start routing if there are at least 2 stops
-                    if (currentRouteTask.solveRouteStatus !== Enums.TaskStatusInProgress && routeStops.length >= 2) {
-
-                        // clear any previous routing displays
-                        routeGraphicsOverlay.graphics.clear();
-
-                        // set stops
-                        currentRouteParams.setStops(routeStops);
-
-                        // solve route using generated default parameters
-                        currentRouteTask.solveRoute(currentRouteParams);
-                    }
-                }
-            }
-        }
-
-        // clear graphics button
-        Rectangle {
-            id: clearButton
-            color: "#E0E0E0"
-            height: 50 * scaleFactor
-            width: height
-            border.color: "black"
-            radius: 2
-            opacity: 0.90
-            visible: false
-
-            Image {
-                anchors {
-                    centerIn: parent
-                    margins: 5 * scaleFactor
-                }
-                source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/discardSymbol.png"
-                height: 44 * scaleFactor
-                width: height
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    // reset graphic overlays
-                    routeGraphicsOverlay.graphics.clear();
-                    stopsGraphicsOverlay.graphics.clear();
-
-                    // reset stops
-                    routeStops = [];
-                    currentRouteParams.clearStops();
-
-                    // dismiss callout
-                    callout.dismiss();
-
-                    // make route controls invisible
-                    clearButton.visible = false;
-                    routeButton.visible = false;
-                }
-            }
-        }
     }
 
     // button to open map selection
