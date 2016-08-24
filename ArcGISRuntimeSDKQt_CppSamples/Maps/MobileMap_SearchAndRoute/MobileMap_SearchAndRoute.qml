@@ -29,6 +29,7 @@ MobileMap_SearchAndRouteSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
+    property bool isMapOpen: false
 
     // add a mapView component
     MapView {
@@ -76,6 +77,26 @@ MobileMap_SearchAndRouteSample {
                     height: 100 * scaleFactor
                     color: "#283593"
 
+                    Image {
+                        anchors {
+                            top: parent.top
+                            right: parent.right
+                            margins: 10 * scaleFactor
+                        }
+
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                        height: 44 * scaleFactor
+                        width: height
+                        visible: isMapOpen
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                mapSelectionStack.push(mapSelectView);
+                            }
+                        }
+                    }
+
                     Text {
                         anchors.centerIn: parent
                         color: "white"
@@ -116,6 +137,7 @@ MobileMap_SearchAndRouteSample {
                                 anchors.fill: parent
                                 propagateComposedEvents: false
                                 onClicked: {
+                                    isMapOpen = false;
                                     mobileMapSearchRoute.createMapList(index);
                                     mapSelectionStack.push(mapSelectView);
                                 }
@@ -125,6 +147,7 @@ MobileMap_SearchAndRouteSample {
                 }
             }
         }
+
         Item {
             id: mapSelectView
             Column {
@@ -155,6 +178,27 @@ MobileMap_SearchAndRouteSample {
                             anchors.fill: parent
                             onClicked: {
                                 mapSelectionStack.pop();
+                            }
+                        }
+                    }
+
+                    // forward button
+                    Image {
+                        anchors {
+                            top: parent.top
+                            right: parent.right
+                            margins: 10 * scaleFactor
+                        }
+
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                        height: 44 * scaleFactor
+                        width: height
+                        visible: isMapOpen
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                mapSelectionStack.push(mapView);
                             }
                         }
                     }
@@ -227,6 +271,7 @@ MobileMap_SearchAndRouteSample {
                                 onClicked: {
                                     // set map
                                     mobileMapSearchRoute.selectMap(index);
+                                    isMapOpen = true;
                                     mapSelectionStack.push(mapView);
                                 }
                             }
