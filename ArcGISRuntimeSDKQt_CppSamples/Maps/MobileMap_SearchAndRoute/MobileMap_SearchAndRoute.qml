@@ -41,16 +41,28 @@ MobileMap_SearchAndRouteSample {
             screenOffsety: -19 * scaleFactor
         }
 
-        // back button to return to map selection
-        Image {
+        Rectangle {
             anchors {
-                top: parent.top
                 left: parent.left
-                margins: 10 * scaleFactor
+                top: parent.top
             }
-            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/back.png"
-            height: 44 * scaleFactor
-            width: height
+            opacity: 0.50
+            height: parent.height
+            width: 25 * scaleFactor
+            color: "white"
+
+            Rectangle {
+                width: parent.width
+                height: 100 * scaleFactor
+                color: "#283593"
+            }
+
+            Image {
+                anchors.verticalCenter: parent.verticalCenter
+                source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/back.png"
+                height: 33 * scaleFactor
+                width: height
+            }
 
             MouseArea {
                 anchors.fill: parent
@@ -67,7 +79,6 @@ MobileMap_SearchAndRouteSample {
                 right: parent.right
                 margins: 10 * scaleFactor
             }
-
             spacing: 10 * scaleFactor
 
             // solve route button
@@ -155,7 +166,7 @@ MobileMap_SearchAndRouteSample {
                     // forward navigation button. Visible after first map is selected
                     Image {
                         anchors {
-                            top: parent.top
+                            verticalCenter: parent.verticalCenter
                             right: parent.right
                             margins: 10 * scaleFactor
                         }
@@ -245,7 +256,7 @@ MobileMap_SearchAndRouteSample {
                     // back button
                     Image {
                         anchors {
-                            top: parent.top
+                            verticalCenter: parent.verticalCenter
                             left: parent.left
                             margins: 10 * scaleFactor
                         }
@@ -264,11 +275,10 @@ MobileMap_SearchAndRouteSample {
                     // forward button. Only visible after first map has been selected
                     Image {
                         anchors {
-                            top: parent.top
+                            verticalCenter: parent.verticalCenter
                             right: parent.right
                             margins: 10 * scaleFactor
                         }
-
                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
                         height: 44 * scaleFactor
                         width: height
