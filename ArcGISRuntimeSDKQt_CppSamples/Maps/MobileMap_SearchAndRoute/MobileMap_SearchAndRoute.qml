@@ -32,45 +32,44 @@ MobileMap_SearchAndRouteSample {
 
     // add a mapView component
     MapView {
-        anchors.fill: parent
+        id: mapView
         objectName: "mapView"
-    }
+        visible: false
 
-    Rectangle {
-        id: mapSelectionWindow
-        anchors.fill: parent
-        color: "transparent"
+        // back button
+        Image {
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 10 * scaleFactor
+            }
+            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/back.png"
+            height: 44 * scaleFactor
+            width: height
 
-        RadialGradient {
-            anchors.fill: parent
-            opacity: 0.45
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.5; color: "black" }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    mapSelectionStack.pop();
+                }
             }
         }
+    }
 
-        // create window for displaying available mmpk/maps
-        Rectangle {
-            id: selectionMenu
-            anchors {
-                left: parent.left
-                top: parent.top
-                bottom: parent.bottom
-                margins: 5 * scaleFactor
-            }
-            visible: true
-            height: parent.height
-            width: 275 * scaleFactor
-            color: "#E0E0E0"
-            radius: 1
+    StackView {
+        id: mapSelectionStack
+        anchors.fill: parent
 
+        initialItem: Item {
             Column {
+
                 anchors {
                     top: parent.top
                     left: parent.left
                 }
                 width: parent.width
+
+                spacing: 20 * scaleFactor
 
                 Rectangle {
                     width: parent.width
@@ -81,35 +80,102 @@ MobileMap_SearchAndRouteSample {
                         anchors.centerIn: parent
                         color: "white"
                         height: 40 * scaleFactor
-                        font.pixelSize: 18 * scaleFactor
-                        text: mapListView.state === "choosePackage" ? "Choose a Mobile Map Package" : "Choose a Map"
+                        font.pixelSize: 25 * scaleFactor
+                        text: "Choose a Mobile Map Package"
                         renderType: Text.NativeRendering
                     }
                 }
 
-                spacing: 100 * scaleFactor
+                ListView {
+                    id: mmpkListView
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: 400 * scaleFactor
+                    width: 200 * scaleFactor
+                    spacing: 10 * scaleFactor
+                    model: mobileMapSearchRoute.mmpkList
 
-                // displays either the avaialble MMPKs or maps
+                    delegate: Component {
+                        Rectangle {
+
+                            width: 200 * scaleFactor
+                            height: 50 * scaleFactor
+                            color: "transparent"
+                            radius: 2
+                            border.color: "#283593"
+
+                            Text {
+                                anchors.centerIn: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                width: 150 * scaleFactor
+                                text: modelData
+                                renderType: Text.NativeRendering
+                                elide: Text.ElideMiddle
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                propagateComposedEvents: false
+                                onClicked: {
+                                    mobileMapSearchRoute.createMapList(index);
+                                    mapSelectionStack.push(mapSelectView);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Item {
+            id: mapSelectView
+            Column {
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                }
+                width: parent.width
+                spacing: 20 * scaleFactor
+
+                Rectangle {
+                    width: parent.width
+                    height: 100 * scaleFactor
+                    color: "#283593"
+
+                    // back button
+                    Image {
+                        anchors {
+                            top: parent.top
+                            left: parent.left
+                            margins: 10 * scaleFactor
+                        }
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/back.png"
+                        height: 44 * scaleFactor
+                        width: height
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                mapSelectionStack.pop();
+                            }
+                        }
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        color: "white"
+                        height: 40 * scaleFactor
+                        font.pixelSize: 25 * scaleFactor
+                        text: "Choose a Map"
+                        renderType: Text.NativeRendering
+                    }
+                }
+
                 ListView {
                     id: mapListView
                     anchors.horizontalCenter: parent.horizontalCenter
                     height: 400 * scaleFactor
                     width: 200 * scaleFactor
                     spacing: 10 * scaleFactor
-                    model: mobileMapSearchRoute.mmpkProperties
-                    state: "choosePackage"
-
-                    states: [
-                        State {
-                            name: "choosePackage"
-                            PropertyChanges { target: mapListView; model: mobileMapSearchRoute.mmpkProperties }
-                        },
-
-                        State {
-                            name: "chooseMap"
-                            PropertyChanges { target: mapListView; model: mobileMapSearchRoute.mapList }
-                        }
-                    ]
+                    model: mobileMapSearchRoute.mapList
 
                     delegate: Component {
                         Rectangle {
@@ -139,7 +205,7 @@ MobileMap_SearchAndRouteSample {
                                 source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pinOutlineSymbol.png"
                                 height: 20 * scaleFactor
                                 width: height
-                                visible: mapListView.state === "chooseMap" && modelData.geocoding
+                                visible: modelData.geocoding
                             }
 
                             // routing available icon
@@ -152,81 +218,18 @@ MobileMap_SearchAndRouteSample {
                                 source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
                                 height: 20 * scaleFactor
                                 width: height
-                                visible: mapListView.state === "chooseMap" && modelData.routing
+                                visible: modelData.routing
                             }
 
                             MouseArea {
                                 anchors.fill: parent
                                 propagateComposedEvents: false
                                 onClicked: {
-                                    if (mapListView.state === "choosePackage") {
-
-                                        mobileMapSearchRoute.createMapList(index);
-
-                                        mapListView.state = "chooseMap";
-
-                                    }
-
-                                    // if mobile map package has been selected, display map selection options
-                                    else if (mapListView.state === "chooseMap") {
-                                        selectedMapInBundleIndex = index;
-                                        mapSelectionWindow.visible = false;
-                                        mapView.visible = true;
-
-                                        // set map
-                                        mapView.map = mobileMapList[selectedMmpkIndex].maps[index];
-
-                                        // animate map back to original position
-                                        translate.x = 0;
-                                    }
+                                    // set map
+                                    mobileMapSearchRoute.selectMap(index);
+                                    mapSelectionStack.push(mapView);
                                 }
                             }
-                        }
-                    }
-                }
-            }
-
-            //backbutton
-            Rectangle {
-                anchors {
-                    bottom: parent.bottom
-                    right: parent.right
-                    margins: 10 * scaleFactor
-                }
-
-                color: "#E0E0E0"
-                height: 50 * scaleFactor
-                width: height
-                border.color: "black"
-                radius: 2
-                opacity: 0.90
-                visible: mapListView.state !== "choosePackage"
-
-                Image {
-                    anchors {
-                        centerIn: parent
-                        margins: 5 * scaleFactor
-                    }
-                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/back.png"
-                    height: 44 * scaleFactor
-                    width: height
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        if (mapSelectionWindow.visible === true) {
-                            // go from "choose map" to "choose mobile map package" display
-                            if (mapListView.state === "chooseMap") {
-                                // go back to MobileMapPackage selection
-                                mapListView.state = "choosePackage";
-                            }
-                        }
-
-                        // if MapView is currently in foreground, pop up map selection window
-                        else {
-                            mapSelectionWindow.visible = true;
-                            mapListView.state = "chooseMap";
                         }
                     }
                 }

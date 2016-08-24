@@ -70,16 +70,9 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
                     qDebug() << mobileMapPackage->path();
                     m_mobileMapPackages.append(mobileMapPackage);
 
-                    QVariantMap mmpkProperties;
-                    mmpkProperties["name"] = mobileMapPackage->item().title();
+                    m_mobileMapPackageList << mobileMapPackage->item().title();
 
-                    // for parity with other QVariantList that will be used as a model
-                    mmpkProperties["geocoding"] = false;
-                    mmpkProperties["routing"] = false;
-
-                    m_mobileMapProperties << mmpkProperties;
-
-                    emit mmpkPropertiesChanged();
+                    emit mmpkListChanged();
                 }
             });
         }
@@ -99,6 +92,7 @@ int MobileMap_SearchAndRoute::selectIndex(int index)
 void MobileMap_SearchAndRoute::createMapList(int index)
 {
     m_mapList.clear();
+    m_selectedMmpkIndex = index;
 
     int counter = 1;
     foreach (const auto& map, m_mobileMapPackages[index]->maps())
@@ -116,9 +110,14 @@ void MobileMap_SearchAndRoute::createMapList(int index)
     emit mapListChanged();
 }
 
-QVariantList MobileMap_SearchAndRoute::mmpkProperties() const
+void MobileMap_SearchAndRoute::selectMap(int index)
 {
-    return m_mobileMapProperties;
+    m_mapView->setMap(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index));
+}
+
+QStringList MobileMap_SearchAndRoute::mmpkList() const
+{
+    return m_mobileMapPackageList;
 }
 
 QVariantList MobileMap_SearchAndRoute::mapList() const

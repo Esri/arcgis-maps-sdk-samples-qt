@@ -24,6 +24,10 @@ namespace Esri
         class Map;
         class MapQuickView;
         class MobileMapPackage;
+        class RouteTask;
+        class RouteParameters;
+        class LocatorTask;
+        class ReverseGeocodeParameters;
     }
 }
 
@@ -35,7 +39,7 @@ namespace Esri
 class MobileMap_SearchAndRoute : public QQuickItem
 {
     Q_OBJECT
-    Q_PROPERTY(QVariantList mmpkProperties READ mmpkProperties NOTIFY mmpkPropertiesChanged)
+    Q_PROPERTY(QStringList mmpkList READ mmpkList NOTIFY mmpkListChanged)
     Q_PROPERTY(QVariantList mapList READ mapList NOTIFY mapListChanged)
 
 public:
@@ -47,25 +51,27 @@ public:
     void createMobileMapPackages(int index);
     Q_INVOKABLE int selectIndex(int index);
     Q_INVOKABLE void createMapList(int index);
+    Q_INVOKABLE void selectMap(int index);
 
 signals:
-    void mmpkPropertiesChanged();
+    void mmpkListChanged();
     void mapListChanged();
 
 private:
-    QVariantList mmpkProperties() const;
+    QStringList mmpkList() const;
     QVariantList mapList() const;
 
 
 private:
+    int m_selectedMmpkIndex;
     QDir m_mmpkDirectory;
     QFileInfoList m_fileInfoList;
+    QStringList m_mobileMapPackageList;
+    QVariantList m_mapList;
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::MobileMapPackage* m_mobileMap;
     QList<Esri::ArcGISRuntime::MobileMapPackage*> m_mobileMapPackages;
-    QVariantList m_mobileMapProperties;
-    QVariantList m_mapList;
 };
 
 #endif // MOBILEMAP_SEARCHANDROUTE_H
