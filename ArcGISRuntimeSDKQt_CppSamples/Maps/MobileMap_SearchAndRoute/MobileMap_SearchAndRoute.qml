@@ -38,7 +38,11 @@ MobileMap_SearchAndRouteSample {
         objectName: "mapView"
         visible: false
 
-        Callout
+        Callout {
+            id: callout
+            calloutData: mobileMapSearchRoute.calloutData
+            screenOffsety: -19 * scaleFactor
+        }
 
         // back button
         Image {
@@ -55,6 +59,75 @@ MobileMap_SearchAndRouteSample {
                 anchors.fill: parent
                 onClicked: {
                     mapSelectionStack.pop();
+                }
+            }
+        }
+
+        // Map controls
+        Column {
+            anchors {
+                top: parent.top
+                right: parent.right
+                margins: 10 * scaleFactor
+            }
+
+            spacing: 10 * scaleFactor
+
+            // solve route button
+            Rectangle {
+                id: routeButton
+                color: "#E0E0E0"
+                height: 50 * scaleFactor
+                width: height
+                border.color: "black"
+                radius: 2
+                opacity: 0.90
+                visible: mobileMapSearchRoute.canRoute
+
+                Image {
+                    anchors {
+                        centerIn: parent
+                        margins: 5 * scaleFactor
+                    }
+                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
+                    height: 44 * scaleFactor
+                    width: height
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        mobileMapSearchRoute.solveRoute();
+                    }
+                }
+            }
+
+            // clear graphics button
+            Rectangle {
+                id: clearButton
+                color: "#E0E0E0"
+                height: 50 * scaleFactor
+                width: height
+                border.color: "black"
+                radius: 2
+                opacity: 0.90
+                visible: mobileMapSearchRoute.canClear
+
+                Image {
+                    anchors {
+                        centerIn: parent
+                        margins: 5 * scaleFactor
+                    }
+                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/discardSymbol.png"
+                    height: 44 * scaleFactor
+                    width: height
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        mobileMapSearchRoute.resetMapView();
+                    }
                 }
             }
         }
