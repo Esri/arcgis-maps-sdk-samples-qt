@@ -107,7 +107,7 @@ MobileMap_SearchAndRouteSample {
 
                         State {
                             name: "chooseMap"
-                            PropertyChanges { target: mapListView; model: mobileMapSearchRoute.mmpkProperties }
+                            PropertyChanges { target: mapListView; model: mobileMapSearchRoute.mapList }
                         }
                     ]
 
@@ -139,7 +139,7 @@ MobileMap_SearchAndRouteSample {
                                 source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pinOutlineSymbol.png"
                                 height: 20 * scaleFactor
                                 width: height
-                                visible: mapListView.state === "chooseMap" && mobileMapList[selectedMmpkIndex].locatorTask !== null
+                                visible: mapListView.state === "chooseMap" && modelData.geocoding
                             }
 
                             // routing available icon
@@ -152,7 +152,7 @@ MobileMap_SearchAndRouteSample {
                                 source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
                                 height: 20 * scaleFactor
                                 width: height
-                                visible: mapListView.state === "chooseMap" && routing
+                                visible: mapListView.state === "chooseMap" && modelData.routing
                             }
 
                             MouseArea {
@@ -161,21 +161,10 @@ MobileMap_SearchAndRouteSample {
                                 onClicked: {
                                     if (mapListView.state === "choosePackage") {
 
-                                        // reset map list
-                                        mapsInBundle.clear();
+                                        mobileMapSearchRoute.createMapList(index);
 
-                                        // create the list of maps within a package
-                                        for(var i = 0; i < mobileMapList[index].maps.length; i++) {
-                                            var mapTitle = mobileMapList[index].maps[i].item.title;
-
-                                            mapTitle += " " + (i + 1);
-
-                                            // add to ListModel
-                                            mapsInBundle.append({"name": mapTitle, "routing": mobileMapList[index].maps[i].transportationNetworks.length > 0});
-                                        }
-
-                                        selectedMmpkIndex = index;
                                         mapListView.state = "chooseMap";
+
                                     }
 
                                     // if mobile map package has been selected, display map selection options

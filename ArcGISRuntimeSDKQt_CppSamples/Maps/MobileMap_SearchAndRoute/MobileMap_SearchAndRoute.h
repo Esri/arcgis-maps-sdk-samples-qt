@@ -36,6 +36,7 @@ class MobileMap_SearchAndRoute : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList mmpkProperties READ mmpkProperties NOTIFY mmpkPropertiesChanged)
+    Q_PROPERTY(QVariantList mapList READ mapList NOTIFY mapListChanged)
 
 public:
     MobileMap_SearchAndRoute(QQuickItem* parent = nullptr);
@@ -45,13 +46,15 @@ public:
 
     void createMobileMapPackages(int index);
     Q_INVOKABLE int selectIndex(int index);
-    //buildMapList function
+    Q_INVOKABLE void createMapList(int index);
 
 signals:
     void mmpkPropertiesChanged();
+    void mapListChanged();
 
 private:
     QVariantList mmpkProperties() const;
+    QVariantList mapList() const;
 
 
 private:
@@ -62,6 +65,7 @@ private:
     Esri::ArcGISRuntime::MobileMapPackage* m_mobileMap;
     QList<Esri::ArcGISRuntime::MobileMapPackage*> m_mobileMapPackages;
     QVariantList m_mobileMapProperties;
+    QVariantList m_mapList;
 };
 
 #endif // MOBILEMAP_SEARCHANDROUTE_H
