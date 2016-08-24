@@ -35,8 +35,8 @@ namespace Esri
 
 #include "Stop.h"
 #include "Point.h"
-#include "ReverseGeocodeParameters.h"
 #include "RouteParameters.h"
+#include "ReverseGeocodeParameters.h"
 
 #include <QQuickItem>
 #include <QFileInfoList>
@@ -46,20 +46,17 @@ namespace Esri
 class MobileMap_SearchAndRoute : public QQuickItem
 {
     Q_OBJECT
+    Q_PROPERTY(bool canRoute READ canRoute NOTIFY canRouteChanged)
+    Q_PROPERTY(bool canClear READ canClear NOTIFY canClearChanged)
     Q_PROPERTY(QStringList mmpkList READ mmpkList NOTIFY mmpkListChanged)
     Q_PROPERTY(QVariantList mapList READ mapList NOTIFY mapListChanged)
     Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
-    Q_PROPERTY(bool canRoute READ canRoute NOTIFY canRouteChanged)
-    Q_PROPERTY(bool canClear READ canClear NOTIFY canClearChanged)
 
 public:
     MobileMap_SearchAndRoute(QQuickItem* parent = nullptr);
     ~MobileMap_SearchAndRoute();
 
     void componentComplete() Q_DECL_OVERRIDE;
-
-    void createMobileMapPackages(int index);
-    void connectSignals();
     Q_INVOKABLE void resetMapView();
     Q_INVOKABLE void createMapList(int index);
     Q_INVOKABLE void selectMap(int index);
@@ -73,11 +70,13 @@ signals:
     void canRouteChanged();
 
 private:
+    void connectSignals();
+    bool canRoute() const;
+    bool canClear() const;
+    void createMobileMapPackages(int index);
     QStringList mmpkList() const;
     QVariantList mapList() const;
     Esri::ArcGISRuntime::CalloutData* calloutData() const;
-    bool canRoute() const;
-    bool canClear() const;
 
 private:
     int m_selectedMmpkIndex;
@@ -87,6 +86,8 @@ private:
     QFileInfoList m_fileInfoList;
     QStringList m_mobileMapPackageList;
     QVariantList m_mapList;
+    QList<Esri::ArcGISRuntime::Stop> m_stops;
+    QList<Esri::ArcGISRuntime::MobileMapPackage*> m_mobileMapPackages;
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::MobileMapPackage* m_mobileMap;
@@ -95,8 +96,6 @@ private:
     Esri::ArcGISRuntime::RouteTask* m_currentRouteTask;
     Esri::ArcGISRuntime::RouteParameters m_currentRouteParameters;
     Esri::ArcGISRuntime::ReverseGeocodeParameters m_reverseGeocodeParameters;
-    QList<Esri::ArcGISRuntime::Stop> m_stops;
-    QList<Esri::ArcGISRuntime::MobileMapPackage*> m_mobileMapPackages;
     Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay;
     Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay;
     Esri::ArcGISRuntime::CalloutData* m_calloutData;

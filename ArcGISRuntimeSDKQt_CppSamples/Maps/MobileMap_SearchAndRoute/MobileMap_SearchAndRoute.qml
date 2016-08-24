@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Controls 2.0
@@ -25,7 +24,6 @@ import Esri.ArcGISRuntime.Toolkit.Controls 2.0
 MobileMap_SearchAndRouteSample {
     id: mobileMapSearchRoute
     clip: true
-
     width: 800
     height: 600
 
@@ -36,15 +34,14 @@ MobileMap_SearchAndRouteSample {
     MapView {
         id: mapView
         objectName: "mapView"
-        visible: false
 
+        // callout to display information
         Callout {
-            id: callout
             calloutData: mobileMapSearchRoute.calloutData
             screenOffsety: -19 * scaleFactor
         }
 
-        // back button
+        // back button to return to map selection
         Image {
             anchors {
                 top: parent.top
@@ -133,34 +130,35 @@ MobileMap_SearchAndRouteSample {
         }
     }
 
+    // use a StackView for the user interface
     StackView {
         id: mapSelectionStack
         anchors.fill: parent
 
+        // begin with the mobile map package selection options
         initialItem: Item {
 
             Column {
-
                 anchors {
                     top: parent.top
                     left: parent.left
                 }
                 width: parent.width
-
                 spacing: 20 * scaleFactor
 
+                // UI navigation bar
                 Rectangle {
                     width: parent.width
                     height: 100 * scaleFactor
                     color: "#283593"
 
+                    // forward navigation button. Visible after first map is selected
                     Image {
                         anchors {
                             top: parent.top
                             right: parent.right
                             margins: 10 * scaleFactor
                         }
-
                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
                         height: 44 * scaleFactor
                         width: height
@@ -184,8 +182,8 @@ MobileMap_SearchAndRouteSample {
                     }
                 }
 
+                // mobile map package ListView
                 ListView {
-                    id: mmpkListView
                     anchors.horizontalCenter: parent.horizontalCenter
                     height: 400 * scaleFactor
                     width: 200 * scaleFactor
@@ -215,6 +213,8 @@ MobileMap_SearchAndRouteSample {
                                 propagateComposedEvents: false
                                 onClicked: {
                                     isMapOpen = false;
+
+                                    //generate list of maps and go to map selection view
                                     mobileMapSearchRoute.createMapList(index);
                                     mapSelectionStack.push(mapSelectView);
                                 }
@@ -236,6 +236,7 @@ MobileMap_SearchAndRouteSample {
                 width: parent.width
                 spacing: 20 * scaleFactor
 
+                // UI navigation bar
                 Rectangle {
                     width: parent.width
                     height: 100 * scaleFactor
@@ -260,7 +261,7 @@ MobileMap_SearchAndRouteSample {
                         }
                     }
 
-                    // forward button
+                    // forward button. Only visible after first map has been selected
                     Image {
                         anchors {
                             top: parent.top
@@ -291,8 +292,8 @@ MobileMap_SearchAndRouteSample {
                     }
                 }
 
+                // list of maps
                 ListView {
-                    id: mapListView
                     anchors.horizontalCenter: parent.horizontalCenter
                     height: 400 * scaleFactor
                     width: 200 * scaleFactor
@@ -347,7 +348,7 @@ MobileMap_SearchAndRouteSample {
                                 anchors.fill: parent
                                 propagateComposedEvents: false
                                 onClicked: {
-                                    // set map
+                                    // set map and display mapView
                                     mobileMapSearchRoute.selectMap(index);
                                     isMapOpen = true;
                                     mapSelectionStack.push(mapView);
@@ -360,6 +361,7 @@ MobileMap_SearchAndRouteSample {
         }
     }
 
+    // neatline rectangle
     Rectangle {
         anchors.fill: parent
         color: "transparent"

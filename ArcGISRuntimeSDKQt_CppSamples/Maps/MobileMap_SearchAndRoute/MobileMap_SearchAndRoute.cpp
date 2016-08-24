@@ -17,19 +17,19 @@
 #include "MobileMap_SearchAndRoute.h"
 
 #include "Map.h"
-#include "MapQuickView.h"
-#include "MobileMapPackage.h"
-#include "LocatorTask.h"
-#include "RouteTask.h"
-#include "RouteParameters.h"
 #include "Graphic.h"
-#include "ReverseGeocodeParameters.h"
-#include "GraphicsOverlay.h"
-#include "PictureMarkerSymbol.h"
+#include "RouteTask.h"
 #include "TextSymbol.h"
-#include "SimpleRenderer.h"
-#include "SimpleLineSymbol.h"
+#include "LocatorTask.h"
 #include "RouteResult.h"
+#include "MapQuickView.h"
+#include "SimpleRenderer.h"
+#include "GraphicsOverlay.h"
+#include "RouteParameters.h"
+#include "SimpleLineSymbol.h"
+#include "MobileMapPackage.h"
+#include "PictureMarkerSymbol.h"
+#include "ReverseGeocodeParameters.h"
 
 #include <QDir>
 #include <QQmlProperty>
@@ -49,11 +49,9 @@ MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
     m_currentLocatorTask(nullptr),
     m_stopsGraphicsOverlay(nullptr),
     m_routeGraphicsOverlay(nullptr),
-    m_currentRouteParameters(nullptr),
     m_canRoute(false),
     m_canClear(false)
 {
-    emit calloutDataChanged();
     m_fileInfoList = m_mmpkDirectory.entryInfoList();
 }
 
@@ -109,9 +107,7 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
                 if (error.isEmpty())
                 {
                     m_mobileMapPackages.append(mobileMapPackage);
-
                     m_mobileMapPackageList << mobileMapPackage->item().title();
-
                     emit mmpkListChanged();
                 }
             });
