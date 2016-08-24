@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     // Register the map view for QML
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
     qmlRegisterType<MobileMap_SearchAndRoute>("Esri.Samples", 1, 0, "MobileMap_SearchAndRouteSample");
+    qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
 
     // Intialize application view
     QQuickView view;

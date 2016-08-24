@@ -31,6 +31,8 @@ namespace Esri
     }
 }
 
+#include "Point.h"
+
 #include <QQuickItem>
 #include <QFileInfoList>
 #include <QVariantMap>
@@ -49,7 +51,7 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
 
     void createMobileMapPackages(int index);
-    Q_INVOKABLE int selectIndex(int index);
+    void connectSignals();
     Q_INVOKABLE void createMapList(int index);
     Q_INVOKABLE void selectMap(int index);
 
@@ -61,7 +63,6 @@ private:
     QStringList mmpkList() const;
     QVariantList mapList() const;
 
-
 private:
     int m_selectedMmpkIndex;
     QDir m_mmpkDirectory;
@@ -71,6 +72,10 @@ private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::MobileMapPackage* m_mobileMap;
+    Esri::ArcGISRuntime::LocatorTask* m_currentLocatorTask;
+    Esri::ArcGISRuntime::RouteTask* m_currentRouteTask;
+    Esri::ArcGISRuntime::RouteParameters* m_currentRouteParameters;
+    Esri::ArcGISRuntime::ReverseGeocodeParameters* m_reverseGeocodeParameters;
     QList<Esri::ArcGISRuntime::MobileMapPackage*> m_mobileMapPackages;
 };
 

@@ -19,6 +19,10 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "MobileMapPackage.h"
+#include "LocatorTask.h"
+#include "RouteTask.h"
+#include "RouteParameters.h"
+#include "ReverseGeocodeParameters.h"
 
 #include <QDir>
 #include <QQmlProperty>
@@ -31,7 +35,10 @@ MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
     QQuickItem(parent),
     m_mmpkDirectory(QDir::homePath() + "/ArcGIS/Runtime/Data/mmpk/"),
     m_map(nullptr),
-    m_mapView(nullptr)
+    m_mapView(nullptr),
+    m_currentLocatorTask(nullptr),
+    m_currentRouteParameters(nullptr),
+    m_currentRouteTask(nullptr)
 {
     m_fileInfoList = m_mmpkDirectory.entryInfoList();
 }
@@ -83,10 +90,12 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
     createMobileMapPackages(index);
 }
 
-// used to interact with ListView in QML
-int MobileMap_SearchAndRoute::selectIndex(int index)
+void MobileMap_SearchAndRoute::connectSignals()
 {
-    return index;
+    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    {
+      qDebug() << "hey!";
+    });
 }
 
 void MobileMap_SearchAndRoute::createMapList(int index)
@@ -112,7 +121,27 @@ void MobileMap_SearchAndRoute::createMapList(int index)
 
 void MobileMap_SearchAndRoute::selectMap(int index)
 {
+    // set the MapView
     m_mapView->setMap(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index));
+
+    // set the locatorTask
+    m_currentLocatorTask = m_mobileMapPackages[m_selectedMmpkIndex]->locatorTask();
+
+    // connect geocoding signals
+
+    // create reverse geocoding parameters
+    m_reverseGeocodeParameters = new ReverseGeocodeParameters();
+    m_reverseGeocodeParameters->setMaxResults(1);
+
+    // create a RouteTask with selected map's transportation network if available
+    if (m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index)->transportationNetworks().count() > 0) {
+        m_currentRouteTask = new RouteTask(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index)->transportationNetworks().at(0), this);
+        m_currentRouteTask->load();
+    }
+
+    // connect routing signals -- > loading
+
+
 }
 
 QStringList MobileMap_SearchAndRoute::mmpkList() const

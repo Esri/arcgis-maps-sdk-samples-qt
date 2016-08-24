@@ -19,6 +19,7 @@ import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit.Controls 2.0
 
 
 MobileMap_SearchAndRouteSample {
@@ -36,6 +37,8 @@ MobileMap_SearchAndRouteSample {
         id: mapView
         objectName: "mapView"
         visible: false
+
+        Callout
 
         // back button
         Image {
@@ -62,6 +65,7 @@ MobileMap_SearchAndRouteSample {
         anchors.fill: parent
 
         initialItem: Item {
+
             Column {
 
                 anchors {
@@ -150,6 +154,7 @@ MobileMap_SearchAndRouteSample {
 
         Item {
             id: mapSelectView
+
             Column {
                 anchors {
                     top: parent.top
