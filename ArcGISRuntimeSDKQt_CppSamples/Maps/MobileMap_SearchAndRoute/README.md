@@ -5,7 +5,7 @@ This sample demonstrates how to geocode and route using data in a map package. A
 ![](screenshot.png)
 
 ##How it works
-A `QDir` is created using a dedicated folder, and `MobileMapPackage`s are created using the `.mmpk` files contained in that directory. When a `Map` is selected, geocoding is performed using its `locatorTask`, and a `RouteTask` is created using its `transportationNetworks`. The logic for the geocoding and routing is similar to the standalone "Offline geocode" and "Find a route" samples. The results are visually displayed with `GraphicsOverlay`s and a `Callout`. 
+A `QDir` is created using a dedicated folder, and `MobileMapPackage`s are created using the `.mmpk` files contained in that directory. `These MobileMapPackages` are stored in a `QList` for future access. When a `Map` inside the package is selected, geocoding is performed using the package's `locatorTask`, and a `RouteTask` is created using its `transportationNetworks`. The logic for the geocoding and routing is similar to the "Offline geocode" and "Find a route" samples. The results are visually displayed with `GraphicsOverlay`s and a `Callout`. 
 
 ##Features
 - Map
