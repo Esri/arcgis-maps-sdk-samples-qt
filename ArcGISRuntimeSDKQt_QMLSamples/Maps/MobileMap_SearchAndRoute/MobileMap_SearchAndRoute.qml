@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import QtGraphicalEffects 1.0
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISRuntime.Toolkit.Controls 2.0
@@ -173,7 +172,7 @@ Rectangle {
             opacity: 0.50
             height: parent.height
             width: 25 * scaleFactor
-            color: "white"
+            color: "#E0E0E0"
 
             Rectangle {
                 anchors {
@@ -609,7 +608,7 @@ Rectangle {
         id: mmpkFolder
         url: dataPath
 
-        // recursively load the created map packages
+        // recursively create and load MobileMapPackages
         function loadMmpks() {
             if (mapPackageLoadIndex < mobilePathsList.length) {
                 var index = mapPackageLoadIndex;
