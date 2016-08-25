@@ -47,10 +47,10 @@ class MobileMap_SearchAndRoute : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(bool canRoute READ canRoute NOTIFY canRouteChanged)
     Q_PROPERTY(bool canClear READ canClear NOTIFY canClearChanged)
+    Q_PROPERTY(bool isGeocodeInProgress READ isGeocodeInProgress NOTIFY isGeocodeInProgressChanged)
     Q_PROPERTY(QStringList mmpkList READ mmpkList NOTIFY mmpkListChanged)
     Q_PROPERTY(QVariantList mapList READ mapList NOTIFY mapListChanged)
     Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
-    Q_PROPERTY(bool isGeocodeInProgress READ isGeocodeInProgress NOTIFY isGeocodeInProgressChanged)
 
 public:
     MobileMap_SearchAndRoute(QQuickItem* parent = nullptr);
@@ -88,6 +88,9 @@ private:
     QFileInfoList m_fileInfoList;
     QStringList m_mobileMapPackageList;
     QVariantList m_mapList;
+    Esri::ArcGISRuntime::Point m_clickedPoint;
+    Esri::ArcGISRuntime::RouteParameters m_currentRouteParameters;
+    Esri::ArcGISRuntime::ReverseGeocodeParameters m_reverseGeocodeParameters;
     QList<Esri::ArcGISRuntime::Stop> m_stops;
     QList<Esri::ArcGISRuntime::MobileMapPackage*> m_mobileMapPackages;
     Esri::ArcGISRuntime::Map* m_map;
@@ -96,12 +99,9 @@ private:
     Esri::ArcGISRuntime::LocatorTask* m_currentLocatorTask;
     Esri::ArcGISRuntime::PictureMarkerSymbol* m_bluePinSymbol;
     Esri::ArcGISRuntime::RouteTask* m_currentRouteTask;
-    Esri::ArcGISRuntime::RouteParameters m_currentRouteParameters;
-    Esri::ArcGISRuntime::ReverseGeocodeParameters m_reverseGeocodeParameters;
     Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay;
     Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay;
     Esri::ArcGISRuntime::CalloutData* m_calloutData;
-    Esri::ArcGISRuntime::Point m_clickedPoint;
 };
 
 #endif // MOBILEMAP_SEARCHANDROUTE_H
