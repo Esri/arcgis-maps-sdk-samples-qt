@@ -41,7 +41,6 @@ namespace Esri
 #include <QQuickItem>
 #include <QFileInfoList>
 #include <QVariantMap>
-#include <QDir>
 
 class MobileMap_SearchAndRoute : public QQuickItem
 {
@@ -86,7 +85,6 @@ private:
     bool m_canRoute;
     bool m_canClear;
     bool m_isGeocodeInProgress;
-    QDir m_mmpkDirectory;
     QFileInfoList m_fileInfoList;
     QStringList m_mobileMapPackageList;
     QVariantList m_mapList;

@@ -40,7 +40,6 @@ using namespace Esri::ArcGISRuntime;
 
 MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
     QQuickItem(parent),
-    m_mmpkDirectory(QDir::homePath() + "/ArcGIS/Runtime/Data/mmpk/"),
     m_map(nullptr),
     m_mapView(nullptr),
     m_calloutData(nullptr),
@@ -53,7 +52,6 @@ MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
     m_canClear(false),
     m_isGeocodeInProgress(false)
 {
-    m_fileInfoList = m_mmpkDirectory.entryInfoList();
 }
 
 MobileMap_SearchAndRoute::~MobileMap_SearchAndRoute()
@@ -68,6 +66,9 @@ void MobileMap_SearchAndRoute::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
+    m_fileInfoList = QDir(QDir::homePath() + "/ArcGIS/Runtime/Data/mmpk/").entryInfoList();
+
+    // initialize Callout
     m_mapView->calloutData()->setTitle("Address");
     m_calloutData = m_mapView->calloutData();
     emit calloutDataChanged();
@@ -94,20 +95,25 @@ void MobileMap_SearchAndRoute::componentComplete()
 
 void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
 {
-    if (index >= m_fileInfoList.length())
-        return;
-    else
+    if (index < m_fileInfoList.length())
     {
+        // check if file is a .mmpk file
         if (m_fileInfoList[index].completeSuffix() == "mmpk")
         {
-            MobileMapPackage* mobileMapPackage = new MobileMapPackage(m_mmpkDirectory.absoluteFilePath(m_fileInfoList[index].fileName()));
+            // create a new MobileMapPackage
+            MobileMapPackage* mobileMapPackage = new MobileMapPackage(m_fileInfoList[index].absoluteFilePath());
+            // load new MMPK
             mobileMapPackage->load();
 
+            // once MMPK is finished loading, add it and its information to lists
             connect(mobileMapPackage, &MobileMapPackage::doneLoading, [mobileMapPackage, this](Error error)
             {
                 if (error.isEmpty())
                 {
+                    // QList of MobileMapPackages
                     m_mobileMapPackages.append(mobileMapPackage);
+
+                    // QStringList of MobileMapPackage names. Used as a ListModel in QML
                     m_mobileMapPackageList << mobileMapPackage->item().title();
                     emit mmpkListChanged();
                 }
@@ -115,9 +121,10 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
         }
 
         index++;
+        createMobileMapPackages(index);
     }
-
-    createMobileMapPackages(index);
+    else
+        return;
 }
 
 void MobileMap_SearchAndRoute::connectSignals()
@@ -127,6 +134,8 @@ void MobileMap_SearchAndRoute::connectSignals()
         if (m_currentLocatorTask != nullptr)
         {
             m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
+
+            // determine if user clicked on a graphic
             m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, 2);
         }
     });
@@ -135,7 +144,7 @@ void MobileMap_SearchAndRoute::connectSignals()
     {
         if (identifyResults.count() > 0)
         {
-            // use the blue pin graphic instead of text graphic to store results
+            // use the blue pin graphic instead of text graphic to as calloutData's geoElement
             if (identifyResults[0]->symbol()->symbolType() == SymbolType::PictureMarkerSymbol)
             {
                 m_mapView->calloutData()->setGeoElement(identifyResults[0]);
@@ -157,17 +166,20 @@ void MobileMap_SearchAndRoute::connectSignals()
             emit isGeocodeInProgressChanged();
         }
     });
-
-
 }
 
 void MobileMap_SearchAndRoute::resetMapView()
 {
+    // dismiss mapView controls
     m_canClear = false;
     emit canClearChanged();
     m_canRoute = false;
     emit canRouteChanged();
+
+    // dimiss callout
     m_calloutData->setVisible(false);
+
+    // clear the graphics overlays and stops
     m_stopsGraphicsOverlay->graphics()->clear();
     m_routeGraphicsOverlay->graphics()->clear();
     m_stops.clear();
@@ -179,6 +191,7 @@ void MobileMap_SearchAndRoute::createMapList(int index)
     m_selectedMmpkIndex = index;
 
     int counter = 1;
+
     foreach (const auto& map, m_mobileMapPackages[index]->maps())
     {
         QVariantMap mapList;
@@ -214,33 +227,36 @@ void MobileMap_SearchAndRoute::selectMap(int index)
 
         connect(m_currentLocatorTask, &LocatorTask::geocodeCompleted, [this](QUuid, QList<GeocodeResult> geocodeResults)
         {
+            // make busy indicator invisible
             m_isGeocodeInProgress = false;
             emit isGeocodeInProgressChanged();
 
             if (geocodeResults.count() > 0)
             {
+                // create a blue pin graphic to display location
                 Graphic* bluePinGraphic = new Graphic(geocodeResults[0].displayLocation(), m_bluePinSymbol, this);
                 bluePinGraphic->attributes()->insertAttribute("Match_addr", geocodeResults[0].label());
                 m_stopsGraphicsOverlay->graphics()->append(bluePinGraphic);
 
-                if (m_stopsGraphicsOverlay->graphics()->size() > 0)
-                {
-                    m_canClear = true;
-                    emit canClearChanged();
+                // make clear graphics overlay button visible
+                m_canClear = true;
+                emit canClearChanged();
 
-                }
-
+                // if routing is enabled in map, set up the Stops
                 if (m_currentRouteTask != nullptr)
                 {
+                    // create a stop based on added graphic
                     m_stops << Stop(bluePinGraphic->geometry());
+
+                    // create a Text Symbol to display stop number
                     TextSymbol* textSymbol = new TextSymbol(this);
                     textSymbol->setText(QString::number(m_stops.count()));
                     textSymbol->setColor(QColor("white"));
                     textSymbol->setSize(18);
                     textSymbol->setOffsetY(m_bluePinSymbol->height() / 2);
 
+                    // create a Graphic using the textSymbol
                     Graphic* stopNumberGraphic = new Graphic(geocodeResults[0].displayLocation(), textSymbol, this);
-
                     m_stopsGraphicsOverlay->graphics()->append(stopNumberGraphic);
 
                     if (m_stops.count() > 1)
@@ -256,7 +272,6 @@ void MobileMap_SearchAndRoute::selectMap(int index)
     // create a RouteTask with selected map's transportation network if available
     if (m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index)->transportationNetworks().count() > 0)
     {
-
         m_currentRouteTask = new RouteTask(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index)->transportationNetworks().at(0), this);
         m_currentRouteTask->load();
 
@@ -286,7 +301,7 @@ void MobileMap_SearchAndRoute::selectMap(int index)
 
 void MobileMap_SearchAndRoute::solveRoute()
 {
-    // clear previous displayed routes
+    // clear previously displayed routes
     m_routeGraphicsOverlay->graphics()->clear();
 
     // set stops and solve route
@@ -304,14 +319,14 @@ QVariantList MobileMap_SearchAndRoute::mapList() const
     return m_mapList;
 }
 
-bool MobileMap_SearchAndRoute::isGeocodeInProgress() const
-{
-    return m_isGeocodeInProgress;
-}
-
 CalloutData *MobileMap_SearchAndRoute::calloutData() const
 {
     return m_calloutData;
+}
+
+bool MobileMap_SearchAndRoute::isGeocodeInProgress() const
+{
+    return m_isGeocodeInProgress;
 }
 
 bool MobileMap_SearchAndRoute::canRoute() const
