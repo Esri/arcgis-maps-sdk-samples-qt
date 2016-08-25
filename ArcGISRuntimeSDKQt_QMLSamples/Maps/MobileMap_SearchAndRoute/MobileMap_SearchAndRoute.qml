@@ -185,7 +185,8 @@ Rectangle {
 
                 Image {
                     anchors.centerIn: parent
-                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/back.png"
+                    mirror: true
+                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
                     height: 33 * scaleFactor
                     width: height
                 }
@@ -483,7 +484,8 @@ Rectangle {
                             left: parent.left
                             margins: 10 * scaleFactor
                         }
-                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/back.png"
+                        mirror: true
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
                         height: 44 * scaleFactor
                         width: height
 
