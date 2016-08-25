@@ -17,12 +17,14 @@
 #include "MobileMap_SearchAndRoute.h"
 
 #include "Map.h"
+#include "Stop.h"
 #include "Graphic.h"
 #include "RouteTask.h"
 #include "TextSymbol.h"
 #include "LocatorTask.h"
 #include "RouteResult.h"
 #include "MapQuickView.h"
+#include "GeocodeResult.h"
 #include "SimpleRenderer.h"
 #include "GraphicsOverlay.h"
 #include "RouteParameters.h"
@@ -73,6 +75,9 @@ void MobileMap_SearchAndRoute::componentComplete()
     m_calloutData = m_mapView->calloutData();
     emit calloutDataChanged();
 
+    // set reverse geocoding parameters
+    m_reverseGeocodeParameters.setMaxResults(1);
+
     // identify and create MobileMapPackages using mmpk files in datapath
     createMobileMapPackages(0);
 
@@ -102,7 +107,7 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
         {
             // create a new MobileMapPackage
             MobileMapPackage* mobileMapPackage = new MobileMapPackage(m_fileInfoList[index].absoluteFilePath());
-            // load new MMPK
+            // load the new MMPK
             mobileMapPackage->load();
 
             // once MMPK is finished loading, add it and its information to lists
@@ -160,7 +165,8 @@ void MobileMap_SearchAndRoute::connectSignals()
         }
 
         // if clicked a point with no graphic on it, reverse geocode
-        else {
+        else
+        {
             m_currentLocatorTask->reverseGeocodeWithParameters(m_clickedPoint, m_reverseGeocodeParameters);
             m_isGeocodeInProgress = true;
             emit isGeocodeInProgressChanged();
@@ -213,9 +219,6 @@ void MobileMap_SearchAndRoute::selectMap(int index)
 
     // set the locatorTask
     m_currentLocatorTask = m_mobileMapPackages[m_selectedMmpkIndex]->locatorTask();
-
-    // create reverse geocoding parameters
-    m_reverseGeocodeParameters.setMaxResults(1);
 
     // set the MapView
     m_mapView->setMap(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index));
