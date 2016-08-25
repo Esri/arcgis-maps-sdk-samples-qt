@@ -47,7 +47,7 @@ Rectangle {
     MapView {
         id: mapView
         calloutData {
-            title : "Callout";
+            title : "Address";
         }
 
         // create a callout to display information
