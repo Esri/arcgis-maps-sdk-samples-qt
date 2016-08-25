@@ -51,6 +51,7 @@ class MobileMap_SearchAndRoute : public QQuickItem
     Q_PROPERTY(QStringList mmpkList READ mmpkList NOTIFY mmpkListChanged)
     Q_PROPERTY(QVariantList mapList READ mapList NOTIFY mapListChanged)
     Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
+    Q_PROPERTY(bool isGeocodeInProgress READ isGeocodeInProgress NOTIFY isGeocodeInProgressChanged)
 
 public:
     MobileMap_SearchAndRoute(QQuickItem* parent = nullptr);
@@ -68,6 +69,7 @@ signals:
     void calloutDataChanged();
     void canClearChanged();
     void canRouteChanged();
+    void isGeocodeInProgressChanged();
 
 private:
     void connectSignals();
@@ -76,12 +78,14 @@ private:
     void createMobileMapPackages(int index);
     QStringList mmpkList() const;
     QVariantList mapList() const;
+    bool isGeocodeInProgress() const;
     Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
     int m_selectedMmpkIndex;
     bool m_canRoute;
     bool m_canClear;
+    bool m_isGeocodeInProgress;
     QDir m_mmpkDirectory;
     QFileInfoList m_fileInfoList;
     QStringList m_mobileMapPackageList;

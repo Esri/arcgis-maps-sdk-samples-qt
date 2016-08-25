@@ -371,6 +371,11 @@ MobileMap_SearchAndRouteSample {
         }
     }
 
+    BusyIndicator {
+        anchors.centerIn: parent
+        visible: mobileMapSearchRoute.isGeocodeInProgress
+    }
+
     // neatline rectangle
     Rectangle {
         anchors.fill: parent

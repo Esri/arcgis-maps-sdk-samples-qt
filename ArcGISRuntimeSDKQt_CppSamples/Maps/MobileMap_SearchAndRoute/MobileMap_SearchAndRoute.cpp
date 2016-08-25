@@ -50,7 +50,8 @@ MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
     m_stopsGraphicsOverlay(nullptr),
     m_routeGraphicsOverlay(nullptr),
     m_canRoute(false),
-    m_canClear(false)
+    m_canClear(false),
+    m_isGeocodeInProgress(false)
 {
     m_fileInfoList = m_mmpkDirectory.entryInfoList();
 }
@@ -152,6 +153,8 @@ void MobileMap_SearchAndRoute::connectSignals()
         // if clicked a point with no graphic on it, reverse geocode
         else {
             m_currentLocatorTask->reverseGeocodeWithParameters(m_clickedPoint, m_reverseGeocodeParameters);
+            m_isGeocodeInProgress = true;
+            emit isGeocodeInProgressChanged();
         }
     });
 
@@ -213,6 +216,9 @@ void MobileMap_SearchAndRoute::selectMap(int index)
 
     connect(m_currentLocatorTask, &LocatorTask::geocodeCompleted, [this](QUuid, QList<GeocodeResult> geocodeResults)
     {
+        m_isGeocodeInProgress = false;
+        emit isGeocodeInProgressChanged();
+
         if (geocodeResults.count() > 0)
         {
             Graphic* bluePinGraphic = new Graphic(geocodeResults[0].displayLocation(), m_bluePinSymbol, this);
@@ -295,6 +301,11 @@ QStringList MobileMap_SearchAndRoute::mmpkList() const
 QVariantList MobileMap_SearchAndRoute::mapList() const
 {
     return m_mapList;
+}
+
+bool MobileMap_SearchAndRoute::isGeocodeInProgress() const
+{
+    return m_isGeocodeInProgress;
 }
 
 CalloutData *MobileMap_SearchAndRoute::calloutData() const
