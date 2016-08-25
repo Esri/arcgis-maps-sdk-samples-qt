@@ -176,16 +176,20 @@ Rectangle {
             color: "white"
 
             Rectangle {
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                }
                 width: parent.width
                 height: 100 * scaleFactor
                 color: "#283593"
-            }
 
-            Image {
-                anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/back.png"
-                height: 33 * scaleFactor
-                width: height
+                Image {
+                    anchors.centerIn: parent
+                    source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/back.png"
+                    height: 33 * scaleFactor
+                    width: height
+                }
             }
 
             MouseArea {
