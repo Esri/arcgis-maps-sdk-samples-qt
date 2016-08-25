@@ -198,13 +198,6 @@ void MobileMap_SearchAndRoute::selectMap(int index)
 {
     resetMapView();
 
-    // disconnect previous connections
-    // todo: find a more elegant way to avoid connecting the same signal to multiple slots
-    if (m_currentLocatorTask != nullptr)
-        m_currentLocatorTask->disconnect();
-    if (m_currentRouteTask != nullptr)
-        m_currentRouteTask->disconnect();
-
     // set the locatorTask
     m_currentLocatorTask = m_mobileMapPackages[m_selectedMmpkIndex]->locatorTask();
 
@@ -214,48 +207,56 @@ void MobileMap_SearchAndRoute::selectMap(int index)
     // set the MapView
     m_mapView->setMap(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index));
 
-    connect(m_currentLocatorTask, &LocatorTask::geocodeCompleted, [this](QUuid, QList<GeocodeResult> geocodeResults)
+    if (m_currentLocatorTask != nullptr)
     {
-        m_isGeocodeInProgress = false;
-        emit isGeocodeInProgressChanged();
+        // prevent connecting same signal to multiple slots
+        m_currentLocatorTask->disconnect();
 
-        if (geocodeResults.count() > 0)
+        connect(m_currentLocatorTask, &LocatorTask::geocodeCompleted, [this](QUuid, QList<GeocodeResult> geocodeResults)
         {
-            Graphic* bluePinGraphic = new Graphic(geocodeResults[0].displayLocation(), m_bluePinSymbol, this);
-            bluePinGraphic->attributes()->insertAttribute("Match_addr", geocodeResults[0].label());
-            m_stopsGraphicsOverlay->graphics()->append(bluePinGraphic);
+            m_isGeocodeInProgress = false;
+            emit isGeocodeInProgressChanged();
 
-            if (m_stopsGraphicsOverlay->graphics()->size() > 0)
+            if (geocodeResults.count() > 0)
             {
-                m_canClear = true;
-                emit canClearChanged();
+                Graphic* bluePinGraphic = new Graphic(geocodeResults[0].displayLocation(), m_bluePinSymbol, this);
+                bluePinGraphic->attributes()->insertAttribute("Match_addr", geocodeResults[0].label());
+                m_stopsGraphicsOverlay->graphics()->append(bluePinGraphic);
 
-            }
-
-            if (m_currentRouteTask != nullptr)
-            {
-                m_stops << Stop(bluePinGraphic->geometry());
-                TextSymbol* textSymbol = new TextSymbol(this);
-                textSymbol->setText(QString::number(m_stops.count()));
-                textSymbol->setColor(QColor("white"));
-                textSymbol->setSize(18);
-                textSymbol->setOffsetY(m_bluePinSymbol->height() / 2);
-
-                Graphic* stopNumberGraphic = new Graphic(geocodeResults[0].displayLocation(), textSymbol, this);
-
-                m_stopsGraphicsOverlay->graphics()->append(stopNumberGraphic);
-
-                if (m_stops.count() > 1)
+                if (m_stopsGraphicsOverlay->graphics()->size() > 0)
                 {
-                    m_canRoute = true;
-                    emit canRouteChanged();
+                    m_canClear = true;
+                    emit canClearChanged();
+
+                }
+
+                if (m_currentRouteTask != nullptr)
+                {
+                    m_stops << Stop(bluePinGraphic->geometry());
+                    TextSymbol* textSymbol = new TextSymbol(this);
+                    textSymbol->setText(QString::number(m_stops.count()));
+                    textSymbol->setColor(QColor("white"));
+                    textSymbol->setSize(18);
+                    textSymbol->setOffsetY(m_bluePinSymbol->height() / 2);
+
+                    Graphic* stopNumberGraphic = new Graphic(geocodeResults[0].displayLocation(), textSymbol, this);
+
+                    m_stopsGraphicsOverlay->graphics()->append(stopNumberGraphic);
+
+                    if (m_stops.count() > 1)
+                    {
+                        m_canRoute = true;
+                        emit canRouteChanged();
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 
     // create a RouteTask with selected map's transportation network if available
-    if (m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index)->transportationNetworks().count() > 0) {
+    if (m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index)->transportationNetworks().count() > 0)
+    {
+
         m_currentRouteTask = new RouteTask(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index)->transportationNetworks().at(0), this);
         m_currentRouteTask->load();
 
@@ -275,8 +276,8 @@ void MobileMap_SearchAndRoute::selectMap(int index)
         // create a graphic using the routeResult
         connect(m_currentRouteTask, &RouteTask::solveRouteCompleted, [this](QUuid, RouteResult routeResult)
         {
-           Graphic* routeGraphic = new Graphic(routeResult.routes()[0].routeGeometry());
-           m_routeGraphicsOverlay->graphics()->append(routeGraphic);
+            Graphic* routeGraphic = new Graphic(routeResult.routes()[0].routeGeometry());
+            m_routeGraphicsOverlay->graphics()->append(routeGraphic);
         });
     }
     else
