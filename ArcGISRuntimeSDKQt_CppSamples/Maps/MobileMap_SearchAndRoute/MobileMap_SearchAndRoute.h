@@ -21,15 +21,15 @@ namespace Esri
 {
     namespace ArcGISRuntime
     {
-        class Map;
-        class MapQuickView;
-        class MobileMapPackage;
+        class Map;    
         class RouteTask;
-        class LocatorTask;
-        class ReverseGeocodeParameters;
-        class PictureMarkerSymbol;
-        class GraphicsOverlay;
+        class LocatorTask;   
         class CalloutData;
+        class MapQuickView;
+        class GraphicsOverlay;
+        class MobileMapPackage;
+        class PictureMarkerSymbol;
+        class ReverseGeocodeParameters;
     }
 }
 
