@@ -38,6 +38,7 @@ Rectangle {
     property int mapPackageLoadIndex
     property int selectedMmpkIndex
     property int selectedMapInBundleIndex
+    property bool isMapOpen
 
     property var mobileMapList: []
     property var mobilePathsList: []
@@ -329,8 +330,267 @@ Rectangle {
         resultAttributeNames: ["StreetName"]
     }
 
+    StackView {
+        id: mapSelectionStack
+        anchors.fill: parent
+
+        initialItem: Item {
+
+            Column {
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                }
+                width: parent.width
+                spacing: 20 * scaleFactor
+
+                // UI navigation bar
+                Rectangle {
+                    width: parent.width
+                    height: 100 * scaleFactor
+                    color: "#283593"
+
+                    // forward navigation button. Visible after first map is selected
+                    Image {
+                        anchors {
+                            verticalCenter: parent.verticalCenter
+                            right: parent.right
+                            margins: 10 * scaleFactor
+                        }
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                        height: 44 * scaleFactor
+                        width: height
+                        visible: isMapOpen
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                mapSelectionStack.push(mapSelectView);
+                            }
+                        }
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        color: "white"
+                        height: 40 * scaleFactor
+                        font.pixelSize: 25 * scaleFactor
+                        text: "Choose a Mobile Map Package"
+                        renderType: Text.NativeRendering
+                    }
+                }
+
+                // ListModel to store names of Mobile Map Packages in data folder
+                ListModel {
+                    id: mobileMapPackages
+                }
+
+                // mobile map package ListView
+                ListView {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: 400 * scaleFactor
+                    width: 200 * scaleFactor
+                    spacing: 10 * scaleFactor
+                    model: mobileMapPackages
+
+                    delegate: Component {
+                        Rectangle {
+
+                            width: 200 * scaleFactor
+                            height: 50 * scaleFactor
+                            color: "transparent"
+                            radius: 2
+                            border.color: "#283593"
+
+                            Text {
+                                anchors.centerIn: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                width: 150 * scaleFactor
+                                text: modelData
+                                renderType: Text.NativeRendering
+                                elide: Text.ElideMiddle
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                propagateComposedEvents: false
+                                onClicked: {
+                                    isMapOpen = false;
+
+                                    // reset map list
+                                    mapsInBundle.clear();
+
+                                    // create the list of maps within a package
+                                    for(var i = 0; i < mobileMapList[index].maps.length; i++) {
+                                        var mapTitle = mobileMapList[index].maps[i].item.title;
+
+                                        mapTitle += " " + (i + 1);
+
+                                        // add to ListModel
+                                        mapsInBundle.append({"name": mapTitle, "routing": mobileMapList[index].maps[i].transportationNetworks.length > 0, "geocoding": mobileMapList[index].locatorTask !== null});
+                                    }
+
+                                    selectedMmpkIndex = index;
+                                    mapSelectionStack.push(mapSelectView);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Item {
+            id: mapSelectView
+
+            Column {
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                }
+                width: parent.width
+                spacing: 20 * scaleFactor
+
+                // UI navigation bar
+                Rectangle {
+                    width: parent.width
+                    height: 100 * scaleFactor
+                    color: "#283593"
+
+                    // back button
+                    Image {
+                        anchors {
+                            verticalCenter: parent.verticalCenter
+                            left: parent.left
+                            margins: 10 * scaleFactor
+                        }
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/back.png"
+                        height: 44 * scaleFactor
+                        width: height
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                mapSelectionStack.pop();
+                            }
+                        }
+                    }
+
+                    // forward button. Only visible after first map has been selected
+                    Image {
+                        anchors {
+                            verticalCenter: parent.verticalCenter
+                            right: parent.right
+                            margins: 10 * scaleFactor
+                        }
+                        source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
+                        height: 44 * scaleFactor
+                        width: height
+                        visible: isMapOpen
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                mapSelectionStack.push(mapView);
+                            }
+                        }
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        color: "white"
+                        height: 40 * scaleFactor
+                        font.pixelSize: 25 * scaleFactor
+                        text: "Choose a Map"
+                        renderType: Text.NativeRendering
+                    }
+                }
+
+                // maps contained in a MobileMapPackage
+                ListModel {
+                    id: mapsInBundle
+                }
+
+                // list of maps
+                ListView {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: 400 * scaleFactor
+                    width: 200 * scaleFactor
+                    spacing: 10 * scaleFactor
+                    model: mapsInBundle
+
+                    delegate: Component {
+                        Rectangle {
+
+                            width: 200 * scaleFactor
+                            height: 50 * scaleFactor
+                            color: "transparent"
+                            radius: 2
+                            border.color: "#283593"
+
+                            Text {
+                                anchors.centerIn: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                width: 150 * scaleFactor
+                                text: name
+                                renderType: Text.NativeRendering
+                                elide: Text.ElideMiddle
+                            }
+
+                            // geocoding available icon
+                            Image {
+                                anchors {
+                                    left: parent.left
+                                    top: parent.top
+                                    margins: 5 * scaleFactor
+                                }
+                                source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pinOutlineSymbol.png"
+                                height: 20 * scaleFactor
+                                width: height
+                                visible: geocoding
+                            }
+
+                            // routing available icon
+                            Image {
+                                anchors {
+                                    right: parent.right
+                                    top: parent.top
+                                    margins: 5 * scaleFactor
+                                }
+                                source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
+                                height: 20 * scaleFactor
+                                width: height
+                                visible: routing
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                propagateComposedEvents: false
+                                onClicked: {
+
+                                    isMapOpen = true;
+
+                                    // set map and display mapView
+                                    selectedMapInBundleIndex = index;
+                                    mapSelectionWindow.visible = false;
+                                    mapView.visible = true;
+
+                                    // set map
+                                    mapView.map = mobileMapList[selectedMmpkIndex].maps[index];
+                                    mapSelectionStack.push(mapView);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //new implementation
+//--------------------------------------------------------------------------------------------------------------------//
     // window for selecting mobile map package and desired map
-    Rectangle {
+    /*Rectangle {
         id: mapSelectionWindow
         anchors.fill: parent
         color: "transparent"
@@ -383,16 +643,7 @@ Rectangle {
 
                 spacing: 100 * scaleFactor
 
-                // ListModel to store names of Mobile Map Packages in data folder
-                ListModel {
-                    id: mobileMapPackages
-                }
 
-                // maps contained in a MobileMapPackage
-                ListModel {
-                    id: mapsInBundle
-                    dynamicRoles: true
-                }
 
                 // displays either the avaialble MMPKs or maps
                 ListView {
@@ -548,13 +799,13 @@ Rectangle {
                 }
             }
         }
-    }
+    }*/
 
     FileFolder {
         id: mmpkFolder
         url: dataPath
 
-        // recursively load the created maps
+        // recursively load the created map packages
         function loadMmpks() {
             if (mapPackageLoadIndex < mobilePathsList.length) {
                 var index = mapPackageLoadIndex;
@@ -566,7 +817,7 @@ Rectangle {
                     if (mobileMap.loadStatus === Enums.LoadStatusLoaded) {
                         var title = mobileMap.item.title;
                         mobileMapList.push(mobileMap);
-                        mobileMapPackages.append({"name": title, "routing": false});
+                        mobileMapPackages.append({"name": title});
                     }
                 });
 
@@ -595,43 +846,6 @@ Rectangle {
         id: busyIndicator
         anchors.centerIn: parent
         visible: false
-    }
-
-    // button to open map selection
-    Rectangle {
-        anchors {
-            top: parent.top
-            left: parent.left
-            topMargin: 5 * scaleFactor
-        }
-
-        color: "#283593"
-        height: 35 * scaleFactor
-        width: height
-        radius: 2
-        opacity: 0.85
-        visible: !mapSelectionWindow.visible
-
-        Image {
-            anchors {
-                verticalCenter: parent.verticalCenter
-                right: parent.right
-                margins: 1 * scaleFactor
-            }
-            source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/drawerSymbol.png"
-            height: 33 * scaleFactor
-            width: height
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                // animate map to the right to display side bar
-                translate.x = selectionMenu.width;
-                mapSelectionWindow.visible = true;
-                mapListView.state = "chooseMap";
-            }
-        }
     }
 
     // Neatline rectangle
