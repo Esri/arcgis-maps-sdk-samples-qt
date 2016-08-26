@@ -2,5 +2,11 @@
     "source" :  "MobileMap_SearchAndRoute.qml",
     "description" : "MobileMap_SearchAndRoute.html",
     "thumbnail" : "MobileMap_SearchAndRoute.png",
-    "name" : "Mobile map (search and route)"
+    "name" : "Mobile map (search and route)",
+	"dataItems" : [
+		{
+			"itemId" : "e1f3a7254cb845b09450f54937c16061",
+			"path" : "~/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk"
+		}
+	]
 }
