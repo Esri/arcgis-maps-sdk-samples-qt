@@ -45,7 +45,7 @@ Rectangle {
                 // override the renderer of the feature layer with a new unique value renderer
                 UniqueValueRenderer {
                     // set fields. Multiple fields can be set. In this sample, we only use one.
-                    fieldNames: ["STATE_NAME"]
+                    fieldNames: ["STATE_ABBR"]
                     defaultSymbol: SimpleFillSymbol {
                         style: Enums.SimpleFillSymbolStyleNull
                         color: "black"
@@ -61,7 +61,7 @@ Rectangle {
                     UniqueValue {
                         label: "California"
                         description: "The State of California"
-                        values: ["California"]
+                        values: ["CA"]
 
                         SimpleFillSymbol {
                             id: californiaFillSymbol
@@ -80,7 +80,7 @@ Rectangle {
                     UniqueValue {
                         label: "Arizona"
                         description: "The State of Arizona"
-                        values: ["Arizona"]
+                        values: ["AZ"]
 
                         SimpleFillSymbol {
                             id: arizonaFillSymbol
@@ -99,7 +99,7 @@ Rectangle {
                     UniqueValue {
                         label: "Nevada"
                         description: "The State of Nevada"
-                        values: ["Nevada"]
+                        values: ["NV"]
 
                         SimpleFillSymbol {
                             id: nevadaFillSymbol
