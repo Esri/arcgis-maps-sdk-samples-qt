@@ -62,7 +62,7 @@ Rectangle {
     // Create ExportTileCacheTask
     ExportTileCacheTask {
         id: exportTask
-        mapServiceInfo: tiledLayer.mapServiceInfo
+        url: tiledServiceUrl
 
         onCreateDefaultExportTileCacheParametersStatusChanged: {
             if (createDefaultExportTileCacheParametersStatus === Enums.TaskStatusCompleted) {
