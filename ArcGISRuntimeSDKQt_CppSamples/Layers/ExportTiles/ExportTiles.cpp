@@ -66,10 +66,15 @@ void ExportTiles::componentComplete()
     // set map on the map view
     m_mapView->setMap(m_map);
 
-    // create the task from the tiled layer's map service info once it is loaded
-    connect(tiledLayer, &ArcGISTiledLayer::doneLoading, [this, tiledLayer](Error)
+    // create the task with the url and load it
+    m_exportTileCacheTask = new ExportTileCacheTask(m_serviceUrl, this);
+    connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, [this](Error error)
     {
-        m_exportTileCacheTask = new ExportTileCacheTask(tiledLayer->mapServiceInfo(), this);
+        if (!error.isEmpty())
+        {
+          emit updateStatus("Export failed");
+          emit hideWindow(5000, false);
+        }
     });
 }
 
