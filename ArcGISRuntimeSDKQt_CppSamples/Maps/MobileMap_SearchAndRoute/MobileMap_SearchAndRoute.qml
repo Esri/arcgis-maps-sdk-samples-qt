@@ -216,13 +216,14 @@ MobileMap_SearchAndRouteSample {
 
                                 width: 200 * scaleFactor
                                 height: 50 * scaleFactor
-                                color: "transparent"
+                                color: "#283593"
                                 radius: 2
-                                border.color: "#283593"
+                                border.color: "darkgray"
 
                                 Text {
                                     anchors.centerIn: parent
                                     horizontalAlignment: Text.AlignHCenter
+                                    color: "white"
                                     width: 150 * scaleFactor
                                     text: modelData
                                     renderType: Text.NativeRendering
@@ -323,16 +324,16 @@ MobileMap_SearchAndRouteSample {
 
                         delegate: Component {
                             Rectangle {
-
                                 width: 200 * scaleFactor
                                 height: 50 * scaleFactor
-                                color: "transparent"
+                                color: "#283593"
                                 radius: 2
-                                border.color: "#283593"
+                                border.color: "darkgray"
 
                                 Text {
                                     anchors.centerIn: parent
                                     horizontalAlignment: Text.AlignHCenter
+                                    color: "white"
                                     width: 150 * scaleFactor
                                     text: modelData.name
                                     renderType: Text.NativeRendering
