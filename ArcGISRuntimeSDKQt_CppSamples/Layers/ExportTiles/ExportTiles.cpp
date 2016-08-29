@@ -76,6 +76,7 @@ void ExportTiles::componentComplete()
           emit hideWindow(5000, false);
         }
     });
+    m_exportTileCacheTask->load();
 }
 
 void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2, QString dataPath)
