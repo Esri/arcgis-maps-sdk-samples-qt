@@ -73,7 +73,7 @@ void Unique_Value_Renderer::componentComplete()
     // create unique renderer
     m_uniqueValueRenderer = new UniqueValueRenderer(this);
     // you can add multiple fields. In this case, only one is used
-    m_uniqueValueRenderer->setFieldNames(QStringList("STATE_NAME"));
+    m_uniqueValueRenderer->setFieldNames(QStringList("STATE_ABBR"));
 
     // create symbols to be used in the renderer
     m_defaultSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Null, QColor("black"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("gray"), 2, this), this);
@@ -82,9 +82,9 @@ void Unique_Value_Renderer::componentComplete()
     m_nevadaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("blue"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 2, this), this);
 
     // create unique values and add to the UniqueValueRenderer
-    createUniqueValue("California", m_californiaSymbol);
-    createUniqueValue("Arizona", m_arizonaSymbol);
-    createUniqueValue("Nevada", m_nevadaSymbol);
+    createUniqueValue("CA", m_californiaSymbol);
+    createUniqueValue("AZ", m_arizonaSymbol);
+    createUniqueValue("NV", m_nevadaSymbol);
 
     // set default symbol
     m_uniqueValueRenderer->setDefaultSymbol(m_defaultSymbol);
@@ -101,7 +101,7 @@ void Unique_Value_Renderer::componentComplete()
 
 void Unique_Value_Renderer::createUniqueValue(QString stateName, SimpleFillSymbol* fillSymbol)
 {
-    // add state's attribute value for field "STATE_NAME" to QVariantList
+    // add state's attribute value for field "STATE_ABBR" to QVariantList
     QVariantList stateValue;
     stateValue.append(stateName);
 
