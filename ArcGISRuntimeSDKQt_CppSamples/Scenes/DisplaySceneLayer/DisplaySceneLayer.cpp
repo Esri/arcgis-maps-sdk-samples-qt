@@ -52,7 +52,7 @@ void DisplaySceneLayer::componentComplete()
 
     //! [add a scene service with ArcGISSceneLayer]
     m_sceneLayer = new ArcGISSceneLayer(QUrl("http://scene.arcgis.com/arcgis/rest/services/Hosted/Buildings_Brest/SceneServer/layers/0"));
-    m_scene->operationalLayers()->append(m_sceneLayer);;
+    m_scene->operationalLayers()->append(m_sceneLayer);
     //! [add a scene service with ArcGISSceneLayer]
 
     // create a new elevation source and add to scene
