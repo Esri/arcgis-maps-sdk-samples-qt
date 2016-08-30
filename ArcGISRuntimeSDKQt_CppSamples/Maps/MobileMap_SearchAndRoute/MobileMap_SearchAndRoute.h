@@ -85,6 +85,7 @@ private:
     bool m_canRoute;
     bool m_canClear;
     bool m_isGeocodeInProgress;
+    QString m_dataPath;
     QFileInfoList m_fileInfoList;
     QStringList m_mobileMapPackageList;
     QVariantList m_mapList;

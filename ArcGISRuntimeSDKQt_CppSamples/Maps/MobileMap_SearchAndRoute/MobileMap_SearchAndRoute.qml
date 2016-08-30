@@ -28,6 +28,7 @@ MobileMap_SearchAndRouteSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
+    property string dataPath: System.userHomeFolder.path + "/ArcGIS/Runtime/Data/mmpk"
     property bool isMapOpen: false
 
     // make background a light gray

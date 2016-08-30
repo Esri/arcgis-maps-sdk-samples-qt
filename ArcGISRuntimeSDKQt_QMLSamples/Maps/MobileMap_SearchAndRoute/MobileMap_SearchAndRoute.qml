@@ -64,19 +64,6 @@ Rectangle {
             visible: false
         }
 
-        // graphics overlay to visually display geocoding results
-        GraphicsOverlay {
-            id: stopsGraphicsOverlay
-
-            PictureMarkerSymbol {
-                id: bluePinSymbol
-                height: 36 * scaleFactor
-                width: 36 * scaleFactor
-                url: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/bluePinSymbol.png"
-                offsetY: height / 2
-            }
-        }
-
         // graphics overlay to display any routing results
         GraphicsOverlay {
             id: routeGraphicsOverlay
@@ -87,6 +74,19 @@ Rectangle {
                     style: Enums.SimpleLineSymbolStyleSolid
                     width: 4
                 }
+            }
+        }
+
+        // graphics overlay to visually display geocoding results
+        GraphicsOverlay {
+            id: stopsGraphicsOverlay
+
+            PictureMarkerSymbol {
+                id: bluePinSymbol
+                height: 36 * scaleFactor
+                width: 36 * scaleFactor
+                url: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/bluePinSymbol.png"
+                offsetY: height / 2
             }
         }
 

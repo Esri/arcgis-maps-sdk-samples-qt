@@ -68,7 +68,9 @@ void MobileMap_SearchAndRoute::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    m_fileInfoList = QDir(QDir::homePath() + "/ArcGIS/Runtime/Data/mmpk/").entryInfoList();
+    m_dataPath = QQmlProperty::read(this, "dataPath").toString();
+    m_fileInfoList = QDir(QUrl(m_dataPath).path()).entryInfoList();
+
 
     // initialize Callout
     m_mapView->calloutData()->setTitle("Address");
@@ -89,8 +91,8 @@ void MobileMap_SearchAndRoute::componentComplete()
     m_routeGraphicsOverlay = new GraphicsOverlay(this);
     m_routeGraphicsOverlay->setRenderer(new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#2196F3"), 4, this), this));
 
-    m_mapView->graphicsOverlays()->append(m_stopsGraphicsOverlay);
     m_mapView->graphicsOverlays()->append(m_routeGraphicsOverlay);
+    m_mapView->graphicsOverlays()->append(m_stopsGraphicsOverlay);
 
     // create a pin symbol
     m_bluePinSymbol = new PictureMarkerSymbol(QUrl("qrc:/Samples/Maps/MobileMap_SearchAndRoute/bluePinSymbol.png"), this);
@@ -110,8 +112,6 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
         {
             // create a new MobileMapPackage
             MobileMapPackage* mobileMapPackage = new MobileMapPackage(m_fileInfoList[index].absoluteFilePath());
-            // load the new MMPK
-            mobileMapPackage->load();
 
             // once MMPK is finished loading, add it and its information to lists
             connect(mobileMapPackage, &MobileMapPackage::doneLoading, [mobileMapPackage, this](Error error)
@@ -126,6 +126,9 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
                     emit mmpkListChanged();
                 }
             });
+
+            // load the new MMPK
+            mobileMapPackage->load();
         }
 
         createMobileMapPackages(++index);
