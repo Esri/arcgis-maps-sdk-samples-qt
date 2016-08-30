@@ -71,7 +71,6 @@ void MobileMap_SearchAndRoute::componentComplete()
     m_dataPath = QQmlProperty::read(this, "dataPath").toString();
     m_fileInfoList = QDir(QUrl(m_dataPath).path()).entryInfoList();
 
-
     // initialize Callout
     m_mapView->calloutData()->setTitle("Address");
     m_calloutData = m_mapView->calloutData();
