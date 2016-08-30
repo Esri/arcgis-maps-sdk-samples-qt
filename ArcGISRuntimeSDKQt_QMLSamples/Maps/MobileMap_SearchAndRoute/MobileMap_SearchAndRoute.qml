@@ -57,6 +57,13 @@ Rectangle {
             screenOffsety: -19 * scaleFactor
         }
 
+        // runs when app is geocoding
+        BusyIndicator {
+            id: busyIndicator
+            anchors.centerIn: parent
+            visible: false
+        }
+
         // graphics overlay to visually display geocoding results
         GraphicsOverlay {
             id: stopsGraphicsOverlay
@@ -216,7 +223,6 @@ Rectangle {
                     // set callout's geoelement
                     mapView.calloutData.geoElement = identifyGraphicsOverlayResults[0].symbol.symbolType === Enums.SymbolTypePictureMarkerSymbol ? identifyGraphicsOverlayResults[0] : identifyGraphicsOverlayResults[1];
                     mapView.calloutData.detail = mapView.calloutData.geoElement.attributes.attributeValue("Match_addr");
-                    console.log(mapView.calloutData.geoElement.attributes.count);
                     callout.showCallout();
                 }
 
@@ -262,24 +268,39 @@ Rectangle {
     }
 
     // connect signals from LocatorTask
-    Connections {
+    Connections  {
         target: currentLocatorTask
 
         onGeocodeStatusChanged: {
             if (currentLocatorTask.geocodeStatus === Enums.TaskStatusCompleted) {
                 busyIndicator.visible = false;
+
                 if(currentLocatorTask.geocodeResults.length > 0) {
-
-                    for(var i = 0; i < currentLocatorTask.locatorInfo.resultAttributes.length; i++)
-                        console.log(currentLocatorTask.locatorInfo.resultAttributes[i].name);
-
                     // create a pin graphic to display location
                     var pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: currentLocatorTask.geocodeResults[0].displayLocation, symbol: bluePinSymbol});
                     stopsGraphicsOverlay.graphics.append(pinGraphic);
 
                     // extract address from GeocodeResult and add as the an attribute of the graphic
-                    pinGraphic.attributes.insertAttribute("Match_addr", currentLocatorTask.geocodeResults[0].label);
-                    //pinGraphic.attributes.attributesJson = currentLocatorTask.geocodeResults[0].attributes;
+                    if (currentLocatorTask.geocodeResults[0].label === "") {
+                        var formattedAddressString;
+                        var address = currentLocatorTask.geocodeResults[0].attributes["Address"];
+                        var street = currentLocatorTask.geocodeResults[0].attributes["Street"];
+                        var city = currentLocatorTask.geocodeResults[0].attributes["City"];
+                        var region = currentLocatorTask.geocodeResults[0].attributes["Region"];
+                        var neighborhood = currentLocatorTask.geocodeResults[0].attributes["Region"];
+
+                        if (address !== "" && street !== "" && region !== "")
+                            formattedAddressString = address + " " + street + " " + region;
+                        if (address !== "" && neighborhood !== "")
+                            formattedAddressString = address + " " + neighborhood;
+                        if (street !== "" && city !== "")
+                            formattedAddressString = street + " " + city;
+
+                        pinGraphic.attributes.insertAttribute("Match_addr", formattedAddressString);
+                    }
+
+                    else
+                        pinGraphic.attributes.insertAttribute("Match_addr", currentLocatorTask.geocodeResults[0].label);
 
                     if (currentLocatorTask !== null)
                         clearButton.visible = true;
@@ -347,7 +368,7 @@ Rectangle {
     ReverseGeocodeParameters {
         id: reverseGeocodeParams
         maxResults: 1
-        resultAttributeNames: ["StreetName"]
+        resultAttributeNames: ["Address", "Neighborhood", "City", "Region", "Street"]
     }
 
     StackView {
@@ -646,13 +667,6 @@ Rectangle {
             // then create a MobileMapPackage with the stored paths
             loadMmpks();
         }
-    }
-
-    // runs when app is geocoding
-    BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        visible: false
     }
 
     // Neatline rectangle
