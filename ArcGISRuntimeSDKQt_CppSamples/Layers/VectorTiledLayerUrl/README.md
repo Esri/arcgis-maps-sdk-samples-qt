@@ -1,4 +1,4 @@
-#Vector Tiled Layer Url
+#Vector Tiled Layer (URL)
 
 This sample demonstrates how to use a vector tiled layer from an ArcGIS Online service as a basemap.
 
