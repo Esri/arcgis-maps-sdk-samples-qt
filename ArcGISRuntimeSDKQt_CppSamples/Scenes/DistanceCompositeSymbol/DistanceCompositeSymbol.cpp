@@ -23,7 +23,7 @@
 #include "DistanceCompositeSceneSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleMarkerSceneSymbol.h"
-#include "ModelMarkerSymbol.h"
+#include "ModelSceneSymbol.h"
 #include <QQmlProperty>
 
 using namespace Esri::ArcGISRuntime;
@@ -70,12 +70,12 @@ void DistanceCompositeSymbol::componentComplete()
     graphicsOverlay->sceneProperties().setSurfacePlacement(SurfacePlacement::Relative);    
     m_sceneView->graphicsOverlays()->append(graphicsOverlay);
 
-    //! [create model marker symbol]
-    ModelMarkerSymbol* mms = new ModelMarkerSymbol(QUrl(dataPath), 0.01f, this);
+    //! [create model scene symbol]
+    ModelSceneSymbol* mms = new ModelSceneSymbol(QUrl(dataPath), 0.01f, this);
     mms->setHeading(180);
-    //! [create model marker symbol]
+    //! [create model scene symbol]
 
-    connect(mms, &ModelMarkerSymbol::loadStatusChanged, [mms, point, graphicsOverlay, this](){
+    connect(mms, &ModelSceneSymbol::loadStatusChanged, [mms, point, graphicsOverlay, this](){
         if (mms->loadStatus() == LoadStatus::Loaded)
         {
             SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10.0f, this);
@@ -84,7 +84,7 @@ void DistanceCompositeSymbol::componentComplete()
             //! [create simple marker scene symbol]
 
             //! [create distance symbol ranges with each symbol type and a distance range(meters)]
-            DistanceSymbolRange* dsrModel = new DistanceSymbolRange(mms, 0, 999, this); // ModelMarkerSymbol
+            DistanceSymbolRange* dsrModel = new DistanceSymbolRange(mms, 0, 999, this); // ModelSceneSymbol
             DistanceSymbolRange* dsrCone = new DistanceSymbolRange(smss, 1000, 1999, this); // SimpleMarkerSceneSymbol
             DistanceSymbolRange* dsrCircle = new DistanceSymbolRange(sms, 2000, 0, this); // SimpleMarkerSymbol
 
