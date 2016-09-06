@@ -92,8 +92,8 @@ void IdentifyGraphics::addPolygonGraphic()
 void IdentifyGraphics::connectSignals()
 {
     //! [identify graphics api snippet]
-    // connect to the mouse press release signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    // connect to the mouse clicked signal on the MapQuickView
+    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
     {
         // call identify on the map view
         m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, 1);

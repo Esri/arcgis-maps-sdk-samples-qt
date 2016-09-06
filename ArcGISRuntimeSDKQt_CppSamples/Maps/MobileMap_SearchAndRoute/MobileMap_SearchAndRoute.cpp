@@ -138,7 +138,7 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
 
 void MobileMap_SearchAndRoute::connectSignals()
 {
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
     {
         if (m_currentLocatorTask != nullptr)
         {

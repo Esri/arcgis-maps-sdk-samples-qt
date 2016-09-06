@@ -128,7 +128,7 @@ Rectangle {
         }
 
         // When user press and holds, prepare for real-time reverse geocoding
-        onMousePressAndHold: {
+        onMousePressedAndHeld: {
             isPressAndHold = true;
             isReverseGeocode = true;
 

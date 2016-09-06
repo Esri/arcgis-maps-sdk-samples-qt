@@ -80,7 +80,7 @@ void FeatureLayerSelection::connectSignals()
 {
     //! [identify feature layer qml api snippet]
     // lambda expression for the mouse press event on the mapview... do an identify operation
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
     {
         m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 22, 1000);
     });

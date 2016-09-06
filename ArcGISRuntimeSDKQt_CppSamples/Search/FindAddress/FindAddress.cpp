@@ -102,7 +102,7 @@ void FindAddress::connectSignals()
     });
 
     // connect to the mouse click signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
     {
         // set the properties for qml
         m_screenX = mouseEvent.x() - 110;
