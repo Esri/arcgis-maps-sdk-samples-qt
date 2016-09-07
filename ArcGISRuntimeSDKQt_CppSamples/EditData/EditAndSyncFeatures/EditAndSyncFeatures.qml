@@ -1,4 +1,4 @@
-// [WriteFile Name=ExportTiles, Category=Layers]
+// [WriteFile Name=EditAndSyncFeatures, Category=EditData]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -20,33 +20,45 @@ import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-ExportTilesSample {
-    id: exportTilesSample
+EditAndSyncFeaturesSample {
+    id: editAndSyncSample
+    clip: true
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
-    property string outputTileCache: System.temporaryFolder.path + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
+    property real scaleFactor: System.displayScaleFactor
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property string outputGdb: System.temporaryFolder.path + "/WildfireCpp_%1.geodatabase".arg(new Date().getTime().toString())
     property string statusText: ""
+    property string instructionText: ""
+    property alias isOffline: editAndSyncSample.isOffline
+    property var selectedFeature: null
 
     // add a mapView component
     MapView {
-        id: mapView
         anchors.fill: parent
         objectName: "mapView"
     }
 
     onHideWindow: {
-        exportWindow.hideWindow(time);
+        syncWindow.hideWindow(time);
 
         if (success) {
             extentRectangle.visible = false;
-            downloadButton.visible = false;
+            syncButton.visible = false;
         }
     }
 
+    onUpdateInstruction: {
+        instructions.visible = true;
+        instructionText = instruction;
+    }
+
+    onShowButton: syncButton.visible = true;
+
     onUpdateStatus: statusText = status;
 
+    // create an extent rectangle for the output geodatabase
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
@@ -59,9 +71,9 @@ ExportTilesSample {
         }
     }
 
-    // Create the download button to export tile cache
+    // Create the button to generate/sync geodatabase
     Rectangle {
-        id: downloadButton
+        id: syncButton
         property bool pressed: false
         anchors {
             horizontalCenter: parent.horizontalCenter
@@ -69,7 +81,7 @@ ExportTilesSample {
             bottomMargin: 10 * scaleFactor
         }
 
-        width: 130 * scaleFactor
+        width: isOffline ? 175 * scaleFactor : 200 * scaleFactor
         height: 35 * scaleFactor
         color: pressed ? "#959595" : "#D6D6D6"
         radius: 8
@@ -84,11 +96,12 @@ ExportTilesSample {
             Image {
                 width: 38 * scaleFactor
                 height: width
-                source: "qrc:/Samples/Layers/ExportTiles/download.png"
+                source: isOffline ? "qrc:/Samples/EditData/EditAndSyncFeatures/sync.png" : "qrc:/Samples/EditData/EditAndSyncFeatures/download.png"
             }
+
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: "Export tiles"
+                text: isOffline ? "Sync Geodatabase" : "Generate Geodatabase"
                 font.pixelSize: 14 * scaleFactor
                 color: "#474747"
             }
@@ -96,23 +109,49 @@ ExportTilesSample {
 
         MouseArea {
             anchors.fill: parent
-            onPressed: downloadButton.pressed = true
-            onReleased: downloadButton.pressed = false
+            onPressed: syncButton.pressed = true
+            onReleased: syncButton.pressed = false
             onClicked: {
-                // call the C++ invokable function to export tile cache from the input screen coordinates
-                exportTilesSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height), outputTileCache);
-                exportWindow.visible = true;
+                if (isOffline) {
+                    instructions.visible = false;
+                    editAndSyncSample.executeSync();
+                    syncWindow.visible = true;
+                } else {
+                    editAndSyncSample.generateGeodatabaseFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+                    syncWindow.visible = true;
+                }
             }
         }
     }
 
-    // Create a window to display the export window
+    // Create a bar to display editing instructions
     Rectangle {
-        id: exportWindow
+        id: instructions
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
+        height: 25 * scaleFactor
+        color: "gray"
+        opacity: 0.9
+        visible: false
+
+        Text {
+            anchors.centerIn: parent
+            text: instructionText
+            font.pixelSize: 16 * scaleFactor
+            color: "white"
+        }
+    }
+
+    // Create a window to display the generate/sync window
+    Rectangle {
+        id: syncWindow
         anchors.fill: parent
         color: "transparent"
-        visible: false
         clip: true
+        visible: false
 
         RadialGradient {
             anchors.fill: parent
@@ -163,7 +202,11 @@ ExportTilesSample {
         Timer {
             id: hideWindowTimer
 
-            onTriggered: exportWindow.visible = false;
+            onTriggered: {
+                syncWindow.visible = false;
+                instructions.visible = true;
+                instructionText = "Tap on a feature";
+            }
         }
 
         function hideWindow(time) {
@@ -172,6 +215,18 @@ ExportTilesSample {
         }
     }
 
+    FileFolder {
+        url: dataPath
+
+        // create the data path if it does not yet exist
+        Component.onCompleted: {
+            if (!exists) {
+                makePath(dataPath);
+            }
+        }
+    }
+
+    // Neatline rectangle
     Rectangle {
         anchors.fill: parent
         color: "transparent"

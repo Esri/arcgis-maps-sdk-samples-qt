@@ -42,17 +42,18 @@ using namespace Esri::ArcGISRuntime;
 
 MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
     QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_calloutData(nullptr),
-    m_bluePinSymbol(nullptr),
-    m_currentRouteTask(nullptr),
-    m_currentLocatorTask(nullptr),
-    m_stopsGraphicsOverlay(nullptr),
-    m_routeGraphicsOverlay(nullptr),
     m_canRoute(false),
     m_canClear(false),
-    m_isGeocodeInProgress(false)
+    m_isGeocodeInProgress(false),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_mobileMap(nullptr),
+    m_currentLocatorTask(nullptr),
+    m_bluePinSymbol(nullptr),
+    m_currentRouteTask(nullptr),
+    m_stopsGraphicsOverlay(nullptr),
+    m_routeGraphicsOverlay(nullptr),
+    m_calloutData(nullptr)
 {
 }
 

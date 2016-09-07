@@ -39,13 +39,13 @@ Unique_Value_Renderer::Unique_Value_Renderer(QQuickItem* parent) :
     QQuickItem(parent),
     m_map(nullptr),
     m_mapView(nullptr),
-    m_featureLayer(nullptr),
     m_featureTable(nullptr),
+    m_featureLayer(nullptr),
+    m_uniqueValueRenderer(nullptr),
     m_defaultSymbol(nullptr),
     m_californiaSymbol(nullptr),
     m_arizonaSymbol(nullptr),
-    m_nevadaSymbol(nullptr),
-    m_uniqueValueRenderer(nullptr)
+    m_nevadaSymbol(nullptr)
 {
 }
 
