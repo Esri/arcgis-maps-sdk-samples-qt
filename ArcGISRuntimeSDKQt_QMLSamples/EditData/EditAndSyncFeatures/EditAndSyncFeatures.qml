@@ -1,4 +1,4 @@
-// [WriteFile Name=GenerateGeodatabase, Category=Features]
+// [WriteFile Name=GenerateGeodatabase, Category=EditData]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -30,10 +30,13 @@ Rectangle {
     property url outputGdb: System.temporaryFolder.url + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
     property string featureServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer"
     property Envelope generateExtent: null
-    property var generateLayerOptions: []
     property string statusText: ""
+    property string featureLayerId: "0"
+    property string instructionText: ""
+    property bool isOffline: false
+    property var selectedFeature: null
+    property Geodatabase offlineGdb: null
 
-    // Map view UI presentation at top
     MapView {
         id: mapView
         anchors.fill: parent
@@ -41,7 +44,6 @@ Rectangle {
         Map {
             id: map
 
-            //! [display tiled layer from tile cache]
             Basemap {
                 ArcGISTiledLayer {
                     TileCache {
@@ -49,12 +51,10 @@ Rectangle {
                     }
                 }
             }
-            //! [display tiled layer from tile cache]
 
-            onLoadStatusChanged: {
-                if (loadStatus === Enums.LoadStatusLoaded) {
-                    // add the feature layers
-                    geodatabaseSyncTask.load();
+            FeatureLayer {
+                ServiceFeatureTable {
+                    url: featureServiceUrl + "/" + featureLayerId
                 }
             }
 
@@ -69,30 +69,54 @@ Rectangle {
                 }
             }
         }
+
+        onMouseClicked: {
+            if (isOffline && !selectedFeature) {
+                // identify to select a feature
+                mapView.identifyLayer(map.operationalLayers.get(0), mouse.x, mouse.y, 5);
+            } else if (isOffline && selectedFeature) {
+
+                // connect to feature table signal
+                var featureTable = map.operationalLayers.get(0).featureTable;
+                featureTable.updateFeatureStatusChanged.connect(function() {
+                    if (featureTable.updateFeatureStatus === Enums.TaskStatusCompleted) {
+                        // clear selections
+                        featureTable.featureLayer.clearSelection();
+                        selectedFeature = null;
+                        instructionText = "Tap the sync button";
+                        syncButton.visible = true;
+                    }
+                });
+
+                // update selected feature's geometry
+                selectedFeature.geometry = mouse.mapPoint;
+                featureTable.updateFeature(selectedFeature);
+            }
+        }
+
+        onIdentifyLayerStatusChanged: {
+            if (identifyLayerStatus === Enums.TaskStatusCompleted) {
+                var featureLayer = map.operationalLayers.get(0);
+
+                // clear any previous selections
+                featureLayer.clearSelection();
+                selectedFeature = null;
+
+                // select the feature
+                if (identifyLayerResult.geoElements.length > 0) {
+                    var geoElement = identifyLayerResult.geoElements[0];
+                    featureLayer.selectFeature(geoElement);
+                    selectedFeature = geoElement;
+                    instructionText = "Tap on map to move feature";
+                }
+            }
+        }
     }
 
-    //! [Features GenerateGeodatabase Create GeodatabaseSyncTask]
     // create the GeodatabaseSyncTask to generate the local geodatabase
     GeodatabaseSyncTask {
         id: geodatabaseSyncTask
         url: featureServiceUrl
-
-        onLoadStatusChanged: {
-            if (loadStatus === Enums.LoadStatusLoaded) {
-                var featureLayerInfos = featureServiceInfo.featureLayerInfos;
-                for (var i = 0; i < featureLayerInfos.length; i++) {
-                    // add the layer to the map
-                    var serviceFeatureTable = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {url: featureLayerInfos[i].url});
-                    var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: serviceFeatureTable});
-                    map.operationalLayers.append(featureLayer);
-
-                    // add a new GenerateLayerOption to array for use in the GenerateGeodatabaseParameters
-                    var layerOption = ArcGISRuntimeEnvironment.createObject("GenerateLayerOption", {layerId: featureLayerInfos[i].serviceLayerId});
-                    generateLayerOptions.push(layerOption);
-                    generateParameters.layerOptions = generateLayerOptions;
-                }
-            }
-        }
 
         function executeGenerate() {
             // execute the asynchronous task and obtain the job
@@ -101,15 +125,15 @@ Rectangle {
             // check if the job is valid
             if (generateJob) {
 
-                // show the generate window
-                generateWindow.visible = true;
+                // show the sync window
+                syncWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
                 generateJob.jobStatusChanged.connect(function() {
                     switch(generateJob.jobStatus) {
                     case Enums.JobStatusFailed:
                         statusText = "Generate failed";
-                        generateWindow.hideWindow(5000);
+                        syncWindow.hideWindow(5000);
                         break;
                     case Enums.JobStatusNotStarted:
                         statusText = "Job not started";
@@ -122,8 +146,10 @@ Rectangle {
                         break;
                     case Enums.JobStatusSucceeded:
                         statusText = "Complete";
-                        generateWindow.hideWindow(1500);
-                        displayLayersFromGeodatabase(generateJob.geodatabase);
+                        syncWindow.hideWindow(1500);
+                        offlineGdb = generateJob.geodatabase;
+                        displayLayersFromGeodatabase();
+                        isOffline = true;
                         break;
                     default:
                         break;
@@ -134,36 +160,79 @@ Rectangle {
                 generateJob.start();
             } else {
                 // a valid job was not obtained, so show an error
-                generateWindow.visible = true;
+                syncWindow.visible = true;
                 statusText = "Generate failed";
-                generateWindow.hideWindow(5000);
+                syncWindow.hideWindow(5000);
             }
         }
 
-        function displayLayersFromGeodatabase(geodatabase) {
+        function executeSync() {
+            // execute the asynchronous task and obtain the job
+            var syncJob = syncGeodatabase(syncParameters, offlineGdb);
+
+            // check if the job is valid
+            if (syncJob) {
+
+                // show the sync window
+                syncWindow.visible = true;
+
+                // connect to the job's status changed signal to know once it is done
+                syncJob.jobStatusChanged.connect(function() {
+                    switch(syncJob.jobStatus) {
+                    case Enums.JobStatusFailed:
+                        statusText = "Sync failed";
+                        syncWindow.hideWindow(5000);
+                        break;
+                    case Enums.JobStatusNotStarted:
+                        statusText = "Job not started";
+                        break;
+                    case Enums.JobStatusPaused:
+                        statusText = "Job paused";
+                        break;
+                    case Enums.JobStatusStarted:
+                        statusText = "In progress...";
+                        break;
+                    case Enums.JobStatusSucceeded:
+                        statusText = "Complete";
+                        syncWindow.hideWindow(1500);
+                        isOffline = true;
+                        break;
+                    default:
+                        break;
+                    }
+                });
+
+                // start the job
+                syncJob.start();
+            } else {
+                // a valid job was not obtained, so show an error
+                syncWindow.visible = true;
+                statusText = "Sync failed";
+                syncWindow.hideWindow(5000);
+            }
+        }
+
+        function displayLayersFromGeodatabase() {
             // remove the original online feature layers
             map.operationalLayers.clear();
 
             // load the geodatabase to access the feature tables
-            geodatabase.loadStatusChanged.connect(function() {
-                if (geodatabase.loadStatus === Enums.LoadStatusLoaded) {
+            offlineGdb.loadStatusChanged.connect(function() {
+                if (offlineGdb.loadStatus === Enums.LoadStatusLoaded) {
                     // create a feature layer from each feature table, and add to the map
-                    for (var i = 0; i < geodatabase.geodatabaseFeatureTables.length; i++) {
-                        var featureTable = geodatabase.geodatabaseFeatureTables[i];
+                    for (var i = 0; i < offlineGdb.geodatabaseFeatureTables.length; i++) {
+                        var featureTable = offlineGdb.geodatabaseFeatureTables[i];
                         var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
                         featureLayer.featureTable = featureTable;
                         map.operationalLayers.append(featureLayer);
                     }
 
-                    // unregister geodatabase since there will be no edits uploaded
-                    geodatabaseSyncTask.unregisterGeodatabase(geodatabase);
-
                     // hide the extent rectangle and download button
                     extentRectangle.visible = false;
-                    downloadButton.visible = false;
+                    syncButton.visible = false;
                 }
             });
-            geodatabase.load();
+            offlineGdb.load();
         }
     }
 
@@ -173,8 +242,28 @@ Rectangle {
         extent: generateExtent
         outSpatialReference: SpatialReference.createWebMercator()
         returnAttachments: false
+
+        // only generate a geodatabase with 1 layer
+        layerOptions: [
+            GenerateLayerOption {
+                layerId: featureLayerId
+            }
+        ]
     }
-    //! [Features GenerateGeodatabase Create GeodatabaseSyncTask]
+
+    // create the generate geodatabase parameters
+    SyncGeodatabaseParameters {
+        id: syncParameters
+
+        // only sync the 1 layer
+        layerOptions: [
+            SyncLayerOption {
+                layerId: featureLayerId
+            }
+        ]
+        // push up edits, and receive any new edits
+        geodatabaseSyncDirection: Enums.SyncDirectionBidirectional
+    }
 
     // create an extent rectangle for the output geodatabase
     Rectangle {
@@ -189,9 +278,9 @@ Rectangle {
         }
     }
 
-    // Create the download button to generate geodatabase
+    // Create the button to generate/sync geodatabase
     Rectangle {
-        id: downloadButton
+        id: syncButton
         property bool pressed: false
         anchors {
             horizontalCenter: parent.horizontalCenter
@@ -199,7 +288,7 @@ Rectangle {
             bottomMargin: 10 * scaleFactor
         }
 
-        width: 200 * scaleFactor
+        width: isOffline ? 175 * scaleFactor : 200 * scaleFactor
         height: 35 * scaleFactor
         color: pressed ? "#959595" : "#D6D6D6"
         radius: 8
@@ -214,12 +303,12 @@ Rectangle {
             Image {
                 width: 38 * scaleFactor
                 height: width
-                source: "qrc:/Samples/Features/GenerateGeodatabase/download.png"
+                source: isOffline ? "qrc:/Samples/EditData/EditAndSyncFeatures/sync.png" : "qrc:/Samples/EditData/EditAndSyncFeatures/download.png"
             }
 
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: "Generate Geodatabase"
+                text: isOffline ? "Sync Geodatabase" : "Generate Geodatabase"
                 font.pixelSize: 14 * scaleFactor
                 color: "#474747"
             }
@@ -227,11 +316,16 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onPressed: downloadButton.pressed = true
-            onReleased: downloadButton.pressed = false
+            onPressed: syncButton.pressed = true
+            onReleased: syncButton.pressed = false
             onClicked: {
-                getRectangleEnvelope();
-                geodatabaseSyncTask.executeGenerate();
+                if (isOffline) {
+                    instructions.visible = false;
+                    geodatabaseSyncTask.executeSync();
+                } else {
+                    getRectangleEnvelope();
+                    geodatabaseSyncTask.executeGenerate();
+                }
             }
 
             function getRectangleEnvelope() {
@@ -244,9 +338,30 @@ Rectangle {
         }
     }
 
-    // Create a window to display the generate window
+    // Create a bar to display editing instructions
     Rectangle {
-        id: generateWindow
+        id: instructions
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
+        height: 25 * scaleFactor
+        color: "gray"
+        opacity: 0.9
+        visible: false
+
+        Text {
+            anchors.centerIn: parent
+            text: instructionText
+            font.pixelSize: 16 * scaleFactor
+            color: "white"
+        }
+    }
+
+    // Create a window to display the generate/sync window
+    Rectangle {
+        id: syncWindow
         anchors.fill: parent
         color: "transparent"
         clip: true
@@ -301,7 +416,11 @@ Rectangle {
         Timer {
             id: hideWindowTimer
 
-            onTriggered: generateWindow.visible = false;
+            onTriggered: {
+                syncWindow.visible = false;
+                instructions.visible = true;
+                instructionText = "Tap on a feature";
+            }
         }
 
         function hideWindow(time) {
@@ -319,6 +438,12 @@ Rectangle {
                 makePath(dataPath);
             }
         }
+    }
+
+    Component.onDestruction: {
+        // unregister the replica
+        if (offlineGdb)
+            geodatabaseSyncTask.unregisterGeodatabase(offlineGdb)
     }
 
     // Neatline rectangle

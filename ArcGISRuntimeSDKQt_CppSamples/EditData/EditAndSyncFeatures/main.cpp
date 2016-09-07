@@ -11,7 +11,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <QSettings>
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QCommandLineParser>
@@ -24,8 +23,8 @@
 #endif
 
 #include "MapQuickView.h"
-#include "FeatureLayerDefinitionExpression.h"
-#include "ArcGISRuntimeEnvironment.h"
+
+#include "EditAndSyncFeatures.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -42,32 +41,28 @@ int main(int argc, char *argv[])
   }
 #endif
 
-    QGuiApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
 
 #ifdef Q_OS_WIN
-    // Force usage of OpenGL ES through ANGLE on Windows
-    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+  // Force usage of OpenGL ES through ANGLE on Windows
+  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    //! [Register the mapview for QML]
-    // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    //! [Register the mapview for QML]
-    qmlRegisterType<FeatureLayerDefinitionExpression>("Esri.Samples", 1, 0, "FeatureLayerDefinitionExpressionSample");
+  // Register the map view for QML
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<EditAndSyncFeatures>("Esri.Samples", 1, 0, "EditAndSyncFeaturesSample");
 
-    // Intialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Features/FeatureLayerDefinitionExpression/FeatureLayerDefinitionExpression.qml"));
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/EditData/EditAndSyncFeatures/EditAndSyncFeatures.qml"));
 
-    view.show();
+  view.show();
 
-    return app.exec();
+  return app.exec();
 }
-
-

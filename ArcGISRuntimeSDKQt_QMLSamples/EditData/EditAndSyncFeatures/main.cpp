@@ -19,16 +19,6 @@
 #include <QQmlEngine>
 #include <QSurfaceFormat>
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
-#include "MapQuickView.h"
-#include "FeatureLayerDefinitionExpression.h"
-#include "ArcGISRuntimeEnvironment.h"
-
-using namespace Esri::ArcGISRuntime;
-
 int main(int argc, char *argv[])
 {
 #if defined(Q_OS_WIN)
@@ -42,32 +32,24 @@ int main(int argc, char *argv[])
   }
 #endif
 
-    QGuiApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
 
 #ifdef Q_OS_WIN
-    // Force usage of OpenGL ES through ANGLE on Windows
-    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+  // Force usage of OpenGL ES through ANGLE on Windows
+  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    //! [Register the mapview for QML]
-    // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    //! [Register the mapview for QML]
-    qmlRegisterType<FeatureLayerDefinitionExpression>("Esri.Samples", 1, 0, "FeatureLayerDefinitionExpressionSample");
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Intialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/EditData/EditAndSyncFeatures/EditAndSyncFeatures.qml"));
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Features/FeatureLayerDefinitionExpression/FeatureLayerDefinitionExpression.qml"));
+  view.show();
 
-    view.show();
-
-    return app.exec();
+  return app.exec();
 }
-
-
