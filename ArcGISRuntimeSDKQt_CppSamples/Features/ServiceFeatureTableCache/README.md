@@ -1,4 +1,4 @@
-#Service feature table - cache
+#Service feature table (cache)
 
 This sample demonstrates how to use a feature table with the OnInteractionCache feature request mode. This mode will cache features locally from the remote feature service. This is the default mode, and will minimize the amount of requests sent to the server, thus lending itself to be the ideal choice for working in a partially connected environment.
 

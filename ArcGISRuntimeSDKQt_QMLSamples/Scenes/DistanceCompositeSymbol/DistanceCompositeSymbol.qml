@@ -93,19 +93,19 @@ Rectangle {
     DistanceCompositeSceneSymbol {
         id: distanceCompositeSceneSymbol
 
-        // create a distance symbol range with a model marker symbol
+        // create a distance symbol range with a model scene symbol
         DistanceSymbolRange {
             minDistance: 0
             maxDistance: 999
 
-            //! [model marker symbol]
-            ModelMarkerSymbol {
+            //! [model scene symbol]
+            ModelSceneSymbol {
                 id: mms
                 url: dataPath + "3D/SkyCrane/SkyCrane.lwo"
                 scale: 0.01
                 heading: 180
             }
-            //! [model marker symbol]
+            //! [model scene symbol]
         }
 
         // create a distance symbol range with a simple marker scene symbol
