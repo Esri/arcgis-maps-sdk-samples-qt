@@ -42,17 +42,19 @@ using namespace Esri::ArcGISRuntime;
 
 MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
     QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_calloutData(nullptr),
-    m_bluePinSymbol(nullptr),
-    m_currentRouteTask(nullptr),
-    m_currentLocatorTask(nullptr),
-    m_stopsGraphicsOverlay(nullptr),
-    m_routeGraphicsOverlay(nullptr),
+    m_selectedMmpkIndex(0),
     m_canRoute(false),
     m_canClear(false),
-    m_isGeocodeInProgress(false)
+    m_isGeocodeInProgress(false),
+    m_map(nullptr),
+    m_mapView(nullptr),
+    m_mobileMap(nullptr),
+    m_currentLocatorTask(nullptr),
+    m_bluePinSymbol(nullptr),
+    m_currentRouteTask(nullptr),
+    m_stopsGraphicsOverlay(nullptr),
+    m_routeGraphicsOverlay(nullptr),
+    m_calloutData(nullptr)
 {
 }
 
@@ -121,7 +123,7 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
                     m_mobileMapPackages.append(mobileMapPackage);
 
                     // QStringList of MobileMapPackage names. Used as a ListModel in QML
-                    m_mobileMapPackageList << mobileMapPackage->item().title();
+                    m_mobileMapPackageList << mobileMapPackage->item()->title();
                     emit mmpkListChanged();
                 }
             });
@@ -205,7 +207,7 @@ void MobileMap_SearchAndRoute::createMapList(int index)
     foreach (const auto& map, m_mobileMapPackages[index]->maps())
     {
         QVariantMap mapList;
-        mapList["name"] = map->item().title() + " " + QString::number(counter);
+        mapList["name"] = map->item()->title() + " " + QString::number(counter);
         mapList["geocoding"] = m_mobileMapPackages[index]->locatorTask() != nullptr;
         mapList["routing"] = map->transportationNetworks().count() > 0;
 
