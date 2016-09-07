@@ -43,7 +43,6 @@ EditAndSyncFeatures::EditAndSyncFeatures(QQuickItem* parent /* = nullptr */):
     m_syncTask(nullptr),
     m_offlineGdb(nullptr),
     m_selectedFeature(nullptr),
-    m_dataPath(""),
     m_featureLayerId(0),
     m_featureServiceUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/"),
     m_isOffline(false)
@@ -72,7 +71,7 @@ void EditAndSyncFeatures::componentComplete()
     m_map = new Map(basemap, this);
 
     // add a feature service to the map
-    ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl(m_featureServiceUrl + QString::number(m_featureLayerId)));
+    ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl(m_featureServiceUrl + QString::number(m_featureLayerId)), this);
     FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
     m_map->operationalLayers()->append(featureLayer);
 
@@ -95,29 +94,32 @@ void EditAndSyncFeatures::connectSignals()
     // lambda expression for the mouse press event on the mapview
     connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
     {
-        if (m_isOffline && !m_selectedFeature)
+        if (m_isOffline)
         {
-            m_mapView->identifyLayer(m_map->operationalLayers()->first(), mouseEvent.x(), mouseEvent.y(), 5, 1);
-        }
-        else if (m_isOffline && m_selectedFeature)
-        {
-            // connect to feature table signal
-            auto featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(0));
-            connect(featureLayer->featureTable(), &GeodatabaseFeatureTable::updateFeatureCompleted, [this, featureLayer](QUuid, bool success)
+            if (!m_selectedFeature)
             {
-                if (success)
+                m_mapView->identifyLayer(m_map->operationalLayers()->first(), mouseEvent.x(), mouseEvent.y(), 5, 1);
+            }
+            else
+            {
+                // connect to feature table signal
+                auto featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(0));
+                connect(featureLayer->featureTable(), &GeodatabaseFeatureTable::updateFeatureCompleted, [this, featureLayer](QUuid, bool success)
                 {
-                    featureLayer->clearSelection();
-                    m_selectedFeature = nullptr;
-                    emit updateInstruction("Tap the sync button");
-                    emit showButton();
-                }
-            });
+                    if (success)
+                    {
+                        featureLayer->clearSelection();
+                        m_selectedFeature = nullptr;
+                        emit updateInstruction("Tap the sync button");
+                        emit showButton();
+                    }
+                });
 
-            // get the point from the mouse point
-            Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-            m_selectedFeature->setGeometry(mapPoint);
-            featureLayer->featureTable()->updateFeature(m_selectedFeature);
+                // get the point from the mouse point
+                Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+                m_selectedFeature->setGeometry(mapPoint);
+                featureLayer->featureTable()->updateFeature(m_selectedFeature);
+            }
         }
     });
 
