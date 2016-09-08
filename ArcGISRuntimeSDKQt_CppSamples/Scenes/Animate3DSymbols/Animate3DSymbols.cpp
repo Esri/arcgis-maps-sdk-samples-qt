@@ -36,6 +36,7 @@
 #include "SpatialReference.h"
 
 #include <QFileInfo>
+#include <QStringListModel>
 #include <QQmlProperty>
 
 using namespace Esri::ArcGISRuntime;
@@ -47,6 +48,7 @@ Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   m_graphic3d(nullptr),
   m_graphic2d(nullptr),
   m_routeGraphic(nullptr),
+  m_missionModel( new QStringListModel({"Grand Canyon", "Hawaii", "Pyrenees", "Snowdon"}, this)),
   m_missionData( new MissionData()),
   m_frame(0),
   m_missionReady(false),
@@ -85,7 +87,7 @@ void Animate3DSymbols::componentComplete()
 
   // create a new graphics overlay and add it to the sceneview
   GraphicsOverlay* sceneOverlay = new GraphicsOverlay(this);
-  sceneOverlay->sceneProperties().setSurfacePlacement(SurfacePlacement::Relative);
+  sceneOverlay->sceneProperties().setSurfacePlacement(SurfacePlacement::Absolute);
   m_sceneView->graphicsOverlays()->append(sceneOverlay);
 
   SimpleRenderer* renderer3D = new SimpleRenderer(this);
@@ -117,7 +119,7 @@ void Animate3DSymbols::componentComplete()
   createModel3d(sceneOverlay);
   createModel2d(mapOverlay);
 
-  changeMission("GrandCanyon");
+  changeMission(m_missionModel->data(m_missionModel->index(0,0)).toString());
   nextFrame();
 }
 
@@ -150,10 +152,13 @@ void Animate3DSymbols::nextFrame()
     m_frame = 0;
 }
 
-void Animate3DSymbols::changeMission(const QString &missionName)
+void Animate3DSymbols::changeMission(const QString &missionNameStr)
 {
+  qDebug() << missionNameStr;
   m_frame = 0;
-  m_missionReady = m_missionData->parse( QUrl(m_dataPath + "/Missions/" + missionName + ".csv").toLocalFile());
+  QString formattedname = missionNameStr;
+  formattedname.remove(" ");
+  m_missionReady = m_missionData->parse( QUrl(m_dataPath + "/Missions/" + formattedname + ".csv").toLocalFile());
 
   PolylineBuilder* routeBldr = new PolylineBuilder(m_mapView->spatialReference(), this);
   for(size_t i = 0; i < m_missionData->size(); ++i )
@@ -173,7 +178,8 @@ void Animate3DSymbols::createModel3d(GraphicsOverlay* sceneOverlay)
   m_model3d = new ModelMarkerSymbol(QUrl(m_dataPath + "/SkyCrane/SkyCrane.lwo"), 0.01f, this);
   m_model3d->setHeading(90.);
 
-  connect(m_model3d, &ModelMarkerSymbol::loadStatusChanged, [sceneOverlay, this](){
+  connect(m_model3d, &ModelMarkerSymbol::loadStatusChanged, [sceneOverlay, this]()
+    {
       if (m_model3d->loadStatus() == LoadStatus::Loaded)
       {
         // create a graphic using the model symbol
@@ -181,7 +187,8 @@ void Animate3DSymbols::createModel3d(GraphicsOverlay* sceneOverlay)
         // add the graphic to the graphics overlay
         sceneOverlay->graphics()->append(m_graphic3d);
       }
-  });
+    }
+  );
 
   m_model3d->load();
 }

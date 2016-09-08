@@ -17,6 +17,8 @@
 #ifndef ANIMATE3DSYMBOLS_H
 #define ANIMATE3DSYMBOLS_H
 
+class MissionData;
+
 namespace Esri
 {
   namespace ArcGISRuntime
@@ -29,7 +31,7 @@ namespace Esri
   }
 }
 
-class MissionData;
+class QAbstractItemModel;
 
 #include <QQuickItem>
 #include <QString>
@@ -50,6 +52,7 @@ public:
 
   Q_INVOKABLE void nextFrame();
   Q_INVOKABLE void changeMission(const QString& missionName);
+  Q_INVOKABLE QAbstractItemModel* missionsModel() {return m_missionModel;}
   Q_INVOKABLE void setZoom(double zoomDist){m_zoomDist = zoomDist;}
   Q_INVOKABLE void setAngle(double angle){m_angle = angle;}
 
@@ -70,6 +73,7 @@ private:
   Esri::ArcGISRuntime::Graphic* m_graphic2d;
   Esri::ArcGISRuntime::Graphic* m_routeGraphic;
   QString m_dataPath;
+  QAbstractItemModel* m_missionModel;
   std::unique_ptr< MissionData >  m_missionData;
   int m_frame;
   bool m_missionReady;

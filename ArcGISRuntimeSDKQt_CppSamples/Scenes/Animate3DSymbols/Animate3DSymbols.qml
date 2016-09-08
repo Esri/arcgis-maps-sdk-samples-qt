@@ -49,6 +49,17 @@ Animate3DSymbolsSample {
         text: checked ? "||" : ">"
     }
 
+    ComboBox{
+        id: missionList
+        model: missionsModel()
+        textRole: "display"
+        anchors.top: playButton.bottom
+        anchors.left: sceneView.left
+        z: 110
+
+        onCurrentTextChanged: changeMission(currentText)
+    }
+
     Slider{
         id: cameraDistance
         anchors.top: sceneView.top

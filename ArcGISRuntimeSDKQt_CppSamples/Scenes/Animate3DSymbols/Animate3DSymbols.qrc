@@ -6,6 +6,5 @@
         <file>Animate3DSymbols.h</file>
         <file>Animate3DSymbols.cpp</file>
         <file>Animate3DSymbols.html</file>
-        <file>SkyCrane.lwo</file>
     </qresource>
 </RCC>
