@@ -23,7 +23,7 @@
 #include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "ModelMarkerSymbol.h"
+#include "ModelSceneSymbol.h"
 #include "PointCollection.h"
 #include "Polyline.h"
 #include "PolylineBuilder.h"
@@ -175,22 +175,22 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
 void Animate3DSymbols::createModel3d(GraphicsOverlay* sceneOverlay)
 {
   //! [create model marker symbol]
-  m_model3d = new ModelMarkerSymbol(QUrl(m_dataPath + "/SkyCrane/SkyCrane.lwo"), 0.01f, this);
-  m_model3d->setHeading(90.);
+  ModelSceneSymbol* model3d = new ModelSceneSymbol(QUrl(m_dataPath + "/SkyCrane/SkyCrane.lwo"), 0.01f, this);
+  model3d->setHeading(90.);
 
-  connect(m_model3d, &ModelMarkerSymbol::loadStatusChanged, [sceneOverlay, this]()
+  connect(model3d, &ModelSceneSymbol::loadStatusChanged, [sceneOverlay, model3d, this]()
     {
-      if (m_model3d->loadStatus() == LoadStatus::Loaded)
+      if (model3d->loadStatus() == LoadStatus::Loaded)
       {
         // create a graphic using the model symbol
-        m_graphic3d = new Graphic(Point(0., 0., 0., m_sceneView->spatialReference()), m_model3d, this);
+        m_graphic3d = new Graphic(Point(0., 0., 0., m_sceneView->spatialReference()), model3d, this);
         // add the graphic to the graphics overlay
         sceneOverlay->graphics()->append(m_graphic3d);
       }
     }
   );
 
-  m_model3d->load();
+  model3d->load();
 }
 
 void Animate3DSymbols::createModel2d(GraphicsOverlay *mapOverlay)

@@ -26,7 +26,6 @@ namespace Esri
     class Graphic;
     class GraphicsOverlay;
     class MapQuickView;
-    class ModelMarkerSymbol;
     class SceneQuickView;
   }
 }
@@ -68,7 +67,6 @@ private:
 
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
   Esri::ArcGISRuntime::MapQuickView* m_mapView;
-  Esri::ArcGISRuntime::ModelMarkerSymbol* m_model3d;
   Esri::ArcGISRuntime::Graphic* m_graphic3d;
   Esri::ArcGISRuntime::Graphic* m_graphic2d;
   Esri::ArcGISRuntime::Graphic* m_routeGraphic;
