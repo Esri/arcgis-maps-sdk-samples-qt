@@ -22,3 +22,10 @@ Pan and zoom into the desired area, making sure the area you want to take offlin
 - SyncGeodatabaseParameters
 - GenerateLayerOption
 - SyncLayerOption
+
+##Offline Data
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+
+Link | Local Location
+---------|-------|
+|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
