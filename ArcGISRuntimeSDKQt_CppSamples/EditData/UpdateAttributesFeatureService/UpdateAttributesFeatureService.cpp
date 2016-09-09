@@ -80,8 +80,8 @@ void UpdateAttributesFeatureService::componentComplete()
 
 void UpdateAttributesFeatureService::connectSignals()
 {   
-    // connect to the mouse press release signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    // connect to the mouse clicked signal on the MapQuickView
+    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
     {
         // first clear the selection
         m_featureLayer->clearSelection();
