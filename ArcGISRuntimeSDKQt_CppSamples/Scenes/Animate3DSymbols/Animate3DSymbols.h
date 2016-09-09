@@ -26,6 +26,7 @@ namespace Esri
     class Graphic;
     class GraphicsOverlay;
     class MapQuickView;
+    class ModelSceneSymbol;
     class SceneQuickView;
   }
 }
@@ -54,6 +55,7 @@ public:
   Q_INVOKABLE QAbstractItemModel* missionsModel() {return m_missionModel;}
   Q_INVOKABLE void setZoom(double zoomDist){m_zoomDist = zoomDist;}
   Q_INVOKABLE void setAngle(double angle){m_angle = angle;}
+  Q_INVOKABLE void setFollowing(bool following);
 
   bool missionReady() const;
 
@@ -61,12 +63,19 @@ signals:
   void missionReadyChanged();
 
 private:
-  void createModel3d(Esri::ArcGISRuntime::GraphicsOverlay* sceneOverlay);
+  void createModel3d();
   void createModel2d(Esri::ArcGISRuntime::GraphicsOverlay* mapOverlay);
   void createRoute2d(Esri::ArcGISRuntime::GraphicsOverlay* mapOverlay);
+  void createGraphic3D();
+  void clearGraphic3D();
+
+  static const QString HEADING;
+  static const QString ROLL;
+  static const QString PITCH;
 
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
   Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::ModelSceneSymbol* m_model3d;
   Esri::ArcGISRuntime::Graphic* m_graphic3d;
   Esri::ArcGISRuntime::Graphic* m_graphic2d;
   Esri::ArcGISRuntime::Graphic* m_routeGraphic;
@@ -77,6 +86,7 @@ private:
   bool m_missionReady;
   double m_zoomDist;
   double m_angle;
+  bool m_following;
 
 };
 

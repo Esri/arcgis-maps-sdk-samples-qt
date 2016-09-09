@@ -17,6 +17,8 @@
 #ifndef MISSIONDATA_H
 #define MISSIONDATA_H
 
+#include "Point.h"
+
 #include <vector>
 
 class QString;
@@ -28,16 +30,12 @@ public:
   struct DataPoint
   {
     DataPoint(double lon, double lat, double elevation, double heading, double pitch, double roll):
-      m_lon(lon),
-      m_lat(lat),
-      m_elevation(elevation),
+      m_pos(Esri::ArcGISRuntime::Point(lon, lat, elevation, Esri::ArcGISRuntime::SpatialReference::wgs84())),
       m_heading(heading),
       m_pitch(pitch),
       m_roll(roll){}
 
-    double m_lon;
-    double m_lat;
-    double m_elevation;
+    Esri::ArcGISRuntime::Point m_pos;
     double m_heading;
     double m_pitch;
     double m_roll;

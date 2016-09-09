@@ -35,6 +35,12 @@ Animate3DSymbolsSample {
         objectName: "sceneView"
         anchors.fill: parent
         z: 10
+
+//        MouseArea {
+//            anchors.fill: parent
+//            onPressed: mouse.accepted = followButton.checked
+//            onWheel: wheel.accepted = followButton.checked
+//        }
     }
 
     ToggleButton{
@@ -58,6 +64,17 @@ Animate3DSymbolsSample {
         z: 110
 
         onCurrentTextChanged: changeMission(currentText)
+    }
+
+    CheckBox{
+        id: followButton
+        anchors.top: missionList.bottom
+        anchors.left: sceneView.left
+        checked: true
+        enabled: missionReady
+        z: 110
+        text: "follow"
+        onCheckedChanged: setFollowing(checked);
     }
 
     Slider{
@@ -111,6 +128,12 @@ Animate3DSymbolsSample {
             objectName: "mapView"
             anchors.fill: parent
             anchors.margins: 2
+
+//            MouseArea {
+//                anchors.fill: parent
+//                onPressed: mouse.accepted = followButton.checked
+//                onWheel: wheel.accepted = followButton.checked
+//            }
         }
     }
 

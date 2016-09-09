@@ -70,7 +70,7 @@ bool MissionData::parse(const QString &dataPath)
     if(!ok)
       continue;
 
-    m_data.emplace_back(lon, lat, elevation, heading, pitch, roll);
+    m_data.emplace_back((double)lon, (double)lat, (double)elevation, (double)heading, (double)pitch, (double)roll);
   }
 
   return m_data.size() > 0;
