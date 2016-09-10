@@ -91,7 +91,7 @@ void EditAndSyncFeatures::componentComplete()
 
 void EditAndSyncFeatures::connectSignals()
 {
-    // lambda expression for the mouse press event on the mapview
+    // lambda expression for the mouse clicked signal on the mapview
     connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
     {
         if (m_isOffline)
