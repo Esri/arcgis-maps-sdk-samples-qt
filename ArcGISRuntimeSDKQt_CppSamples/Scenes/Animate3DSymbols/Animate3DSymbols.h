@@ -17,6 +17,8 @@
 #ifndef ANIMATE3DSYMBOLS_H
 #define ANIMATE3DSYMBOLS_H
 
+//#define ANIMATE_MAP
+
 class MissionData;
 
 namespace Esri
@@ -54,7 +56,7 @@ public:
   Q_INVOKABLE void setFrame(int newFrame);
   Q_INVOKABLE void nextFrame();
   Q_INVOKABLE void changeMission(const QString& missionName);
-  Q_INVOKABLE QAbstractItemModel* missionsModel() {return m_missionModel;}
+  Q_INVOKABLE QAbstractItemModel* missionsModel() {return m_missionsModel;}
   Q_INVOKABLE void setZoom(double zoomDist){m_zoomDist = zoomDist;}
   Q_INVOKABLE void setAngle(double angle){m_angle = angle;}
   Q_INVOKABLE void setFollowing(bool following);
@@ -78,6 +80,7 @@ private:
   static const QString HEADING;
   static const QString ROLL;
   static const QString PITCH;
+  static const QString ANGLE;
 
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
   Esri::ArcGISRuntime::MapQuickView* m_mapView;
@@ -86,13 +89,13 @@ private:
   Esri::ArcGISRuntime::Graphic* m_graphic2d;
   Esri::ArcGISRuntime::Graphic* m_routeGraphic;
   QString m_dataPath;
-  QAbstractItemModel* m_missionModel;
+  QAbstractItemModel* m_missionsModel;
   std::unique_ptr< MissionData >  m_missionData;
   int m_frame;
-  bool m_missionReady;
   double m_zoomDist;
   double m_angle;
   bool m_following;
+  double m_mapZoomFactor;
 };
 
 #endif // ANIMATE3DSYMBOLS_H

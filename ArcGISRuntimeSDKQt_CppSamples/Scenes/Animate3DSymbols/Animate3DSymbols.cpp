@@ -45,6 +45,7 @@ using namespace Esri::ArcGISRuntime;
 const QString Animate3DSymbols::HEADING = "HEADING";
 const QString Animate3DSymbols::ROLL = "ROLL";
 const QString Animate3DSymbols::PITCH = "PITCH";
+const QString Animate3DSymbols::ANGLE = "ANGLE";
 
 Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
@@ -54,12 +55,12 @@ Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   m_graphic3d(nullptr),
   m_graphic2d(nullptr),
   m_routeGraphic(nullptr),
-  m_missionModel( new QStringListModel({"Grand Canyon", "Hawaii", "Pyrenees", "Snowdon"}, this)),
+  m_missionsModel( new QStringListModel({"Grand Canyon", "Hawaii", "Pyrenees", "Snowdon"}, this)),
   m_missionData( new MissionData()),
   m_frame(0),
-  m_missionReady(false),
   m_zoomDist(0.),
-  m_following(true)
+  m_following(true),
+  m_mapZoomFactor(5.)
 {
   Q_INIT_RESOURCE(Animate3DSymbols);
 }
@@ -116,7 +117,7 @@ void Animate3DSymbols::componentComplete()
 
   // create renderer to handle updating plane heading using the graphics card
   SimpleRenderer* renderer2D = new SimpleRenderer(this);
-  renderer2D->setRotationExpression("[ANGLE]");
+  renderer2D->setRotationExpression(QString("[%1]").arg(ANGLE));
   mapOverlay->setRenderer(renderer2D);
 
   // set up route graphic
@@ -143,31 +144,42 @@ void Animate3DSymbols::nextFrame()
 
   if(m_frame < m_missionData->size())
   {
+    // get the data for this stage in the mission
     const MissionData::DataPoint& dp = m_missionData->dataAt(m_frame);
+
+#ifdef ANIMATE_MAP // TODO: Currently, if we do any sort of graphics update for the map view at the same time the scene view flickers
+    // move 2d graphic to the new position
+    m_graphic2d->setGeometry(dp.m_pos);
+#endif
+
+    // move 3D graphic to the new position
     m_graphic3d->setGeometry(dp.m_pos);
+    // update attribute expressions to immediately update rotation
     m_graphic3d->attributes()->replaceAttribute(HEADING, dp.m_heading);
     m_graphic3d->attributes()->replaceAttribute(PITCH, dp.m_pitch);
     m_graphic3d->attributes()->replaceAttribute(ROLL, dp.m_roll);
-    m_sceneView->update();
-
-    // If we do any sort of graphics update for the map view at the same time the scene view flickers
-    m_graphic2d->setGeometry(dp.m_pos);
 
     if(m_following)
     {
+      // move the camera to follow the 3d model
       Camera camera(dp.m_pos, m_zoomDist, dp.m_heading, m_angle, dp.m_roll );
       m_sceneView->setViewpointCamera(camera);
 
+#ifdef ANIMATE_MAP
+      // rotate the map view about the direction of motion
       m_mapView->setViewpoint(Viewpoint(dp.m_pos, m_mapView->mapScale(), 360. + dp.m_heading));
+#endif
     }
     else
     {
-      m_graphic2d->attributes()->replaceAttribute("ANGLE", 360 + dp.m_heading - m_mapView->mapRotation());
+#ifdef ANIMATE_MAP
+      m_graphic2d->attributes()->replaceAttribute(ANGLE, 360 + dp.m_heading - m_mapView->mapRotation());
+#endif
       m_sceneView->update();
     }
-
   }
 
+  // increment the frame count
   m_frame++;
   if(m_frame >= m_missionData->size())
     m_frame = 0;
@@ -177,20 +189,23 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
 {
   m_frame = 0;
 
+  // read the mission data from .csv files stored in qrc
   QString formattedname = missionNameStr;
-  m_missionReady = m_missionData->parse(":/" + formattedname.remove(" ") + ".csv");
+  m_missionData->parse(":/" + formattedname.remove(" ") + ".csv");
 
-  PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);
-  for(size_t i = 0; i < m_missionData->size(); ++i )
+  // if the mission was loaded successfully, move to the start position
+  if(missionReady())
   {
-    const MissionData::DataPoint& dp = m_missionData->dataAt(i);
-    routeBldr->addPoint(dp.m_pos);
-  }
+    // create a polyline representing the route for the mission
+    PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);
+    for(size_t i = 0; i < m_missionData->size(); ++i )
+    {
+      const MissionData::DataPoint& dp = m_missionData->dataAt(i);
+      routeBldr->addPoint(dp.m_pos);
+    }
+    // set the polyline as a graphic on the mapView
+    m_routeGraphic->setGeometry(routeBldr->toGeometry());
 
-  m_routeGraphic->setGeometry(routeBldr->toGeometry());
-
-  if(m_missionReady)
-  {
     const MissionData::DataPoint& dp = m_missionData->dataAt(m_frame);
     Camera camera(dp.m_pos, m_zoomDist, dp.m_heading, m_angle, dp.m_roll);
     m_sceneView->setViewpointCameraAndWait(camera);
@@ -216,12 +231,15 @@ void Animate3DSymbols::clearGraphic3D()
 
 void Animate3DSymbols::createModel3d()
 {
+  // load the ModelSceneSymbol to be animated in the 3d view
   if( m_model3d == nullptr)
   {
     m_model3d = new ModelSceneSymbol(QUrl(m_dataPath + "/SkyCrane/SkyCrane.lwo"), 0.01f, this);
+    // correct the symbol's orientation to match the graphic's orientation
     m_model3d->setHeading(180.);
   }
 
+  // when the model is successfully loaded, setup the 3g draphic to show it it the scene
   connect(m_model3d, &ModelSceneSymbol::loadStatusChanged, [this]()
     {
       if (m_model3d->loadStatus() == LoadStatus::Loaded)
@@ -230,9 +248,9 @@ void Animate3DSymbols::createModel3d()
   );
 
   if( m_model3d->loadStatus() == LoadStatus::Loaded)
-    createGraphic3D();
+    createGraphic3D(); // if the model is already loaded just recreate the graphic
   else
-    m_model3d->load();
+    m_model3d->load(); // if the model has not been loaded before, call load
 }
 
 void Animate3DSymbols::createModel2d(GraphicsOverlay *mapOverlay)
@@ -242,13 +260,14 @@ void Animate3DSymbols::createModel2d(GraphicsOverlay *mapOverlay)
 
   // create a graphic with the symbol and attributes
   QVariantMap attributes;
-  attributes.insert("ANGLE", 0.f);
+  attributes.insert(ANGLE, 0.f);
   m_graphic2d = new Graphic(Point(0, 0, SpatialReference::wgs84()), attributes, plane2DSymbol);
   mapOverlay->graphics()->append(m_graphic2d);
 }
 
 void Animate3DSymbols::createRoute2d(GraphicsOverlay* mapOverlay)
 {
+  // Create a 2d graphic of a solid red line to represen the route of the mission
   SimpleLineSymbol* routeSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::red, 2);
   m_routeGraphic = new Graphic(this);
   m_routeGraphic->setSymbol(routeSymbol);
@@ -257,7 +276,7 @@ void Animate3DSymbols::createRoute2d(GraphicsOverlay* mapOverlay)
 
 void Animate3DSymbols::createGraphic3D()
 {
-  if(m_model3d == nullptr || !m_missionReady || m_missionData->size() == 0)
+  if(m_model3d == nullptr || !missionReady())
     return;
 
   clearGraphic3D();
@@ -286,7 +305,8 @@ void Animate3DSymbols::zoomMapIn()
       m_graphic2d == nullptr)
     return;
 
-  m_mapView->setViewpoint(Viewpoint((Point)m_graphic2d->geometry(), m_mapView->mapScale() / 5.));
+  // zoom the map view in, focusing on the position of the 2d graphic for the helicopter
+  m_mapView->setViewpoint(Viewpoint((Point)m_graphic2d->geometry(), m_mapView->mapScale() / m_mapZoomFactor));
 }
 
 void Animate3DSymbols::zoomMapOut()
@@ -295,12 +315,16 @@ void Animate3DSymbols::zoomMapOut()
       m_graphic2d == nullptr)
     return;
 
-  m_mapView->setViewpoint(Viewpoint((Point)m_graphic2d->geometry(), m_mapView->mapScale() * 5.));
+  // zoom the map view out, focusing on the position of the 2d graphic for the helicopter
+  m_mapView->setViewpoint(Viewpoint((Point)m_graphic2d->geometry(), m_mapView->mapScale() * m_mapZoomFactor));
 }
 
 bool Animate3DSymbols::missionReady() const
 {
-  return m_missionReady;
+  if( m_missionData == nullptr)
+    return false;
+
+  return m_missionData->ready();
 }
 
 int Animate3DSymbols::missionSize() const

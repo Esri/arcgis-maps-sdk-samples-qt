@@ -22,7 +22,8 @@
 
 MissionData::DataPoint MissionData::m_nullData = MissionData::DataPoint( 0., 0., 0., 0., 0., 0.);
 
-MissionData::MissionData()
+MissionData::MissionData():
+  m_ready(false)
 {
 
 }
@@ -30,6 +31,7 @@ MissionData::MissionData()
 bool MissionData::parse(const QString &dataPath)
 {
   m_data.clear();
+  m_ready = false;
 
   QFile file(dataPath);
   if( !file.exists())
@@ -73,7 +75,8 @@ bool MissionData::parse(const QString &dataPath)
     m_data.emplace_back((double)lon, (double)lat, (double)elevation, (double)heading, (double)pitch, (double)roll);
   }
 
-  return m_data.size() > 0;
+  m_ready = m_data.size() > 0;
+  return m_ready;
 }
 
 const MissionData::DataPoint &MissionData::dataAt(size_t i) const
