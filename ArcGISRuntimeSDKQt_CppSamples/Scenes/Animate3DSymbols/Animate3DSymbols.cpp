@@ -35,6 +35,7 @@
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
 
+#include <QDir>
 #include <QFileInfo>
 #include <QStringListModel>
 #include <QQmlProperty>
@@ -60,13 +61,12 @@ Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   m_zoomDist(0.),
   m_following(true)
 {
+  Q_INIT_RESOURCE(Animate3DSymbols);
 }
 
 Animate3DSymbols::~Animate3DSymbols()
 {
 }
-
-
 
 void Animate3DSymbols::componentComplete()
 {
@@ -142,14 +142,13 @@ void Animate3DSymbols::nextFrame()
     m_graphic3d->attributes()->replaceAttribute(ROLL, dp.m_roll);
     m_sceneView->update();
 
-//    if( m_frame%5 == 0)
-//      m_graphic2d->setGeometry(newP);
+    // If we do any sort of graphics update for the map view at the same time the scene view flickers
+//    m_graphic2d->setGeometry(dp.m_pos);
 
     if(m_following)
     {
-
-        Camera camera(dp.m_pos, m_zoomDist, dp.m_heading, m_angle, dp.m_roll );
-        m_sceneView->setViewpointCameraAndWait(camera);
+      Camera camera(dp.m_pos, m_zoomDist, dp.m_heading, m_angle, dp.m_roll );
+      m_sceneView->setViewpointCamera(camera);
 
 //      Point camP = m_sceneView->currentViewpointCamera().location();
 //      double dist = GeometryEngine::distance(camP, dp.m_pos);
@@ -180,9 +179,9 @@ void Animate3DSymbols::nextFrame()
 void Animate3DSymbols::changeMission(const QString &missionNameStr)
 {
   m_frame = 0;
+
   QString formattedname = missionNameStr;
-  formattedname.remove(" ");
-  m_missionReady = m_missionData->parse( QUrl(m_dataPath + "/Missions/" + formattedname + ".csv").toLocalFile());
+  m_missionReady = m_missionData->parse(":/" + formattedname.remove(" ") + ".csv");
 
 //  PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);
 //  for(size_t i = 0; i < m_missionData->size(); ++i )

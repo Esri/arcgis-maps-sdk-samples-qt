@@ -87,7 +87,6 @@ private:
   double m_zoomDist;
   double m_angle;
   bool m_following;
-
 };
 
 #endif // ANIMATE3DSYMBOLS_H

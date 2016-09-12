@@ -49,6 +49,8 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
+  Q_INIT_RESOURCE(Animate3DSymbols);
+
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

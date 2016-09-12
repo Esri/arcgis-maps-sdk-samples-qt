@@ -36,23 +36,24 @@ Animate3DSymbolsSample {
         anchors.fill: parent
         z: 10
 
-//        MouseArea {
-//            anchors.fill: parent
-//            onPressed: mouse.accepted = followButton.checked
-//            onWheel: wheel.accepted = followButton.checked
-//        }
+        MouseArea {
+            anchors.fill: parent
+            onPressed: mouse.accepted = followButton.checked
+            onWheel: wheel.accepted = followButton.checked
+        }
     }
 
-    ToggleButton{
+    Button{
         id: playButton
         anchors.top: sceneView.top
         anchors.left: sceneView.left
-        width: 16 * scaleFactor
+        width: 64 * scaleFactor
         height: 16 * scaleFactor
         checked: false
+        checkable: true
         enabled: missionReady
         z: 110
-        text: checked ? "||" : ">"
+        text: checked ? "Pause" : "Play"
     }
 
     ComboBox{
@@ -61,6 +62,8 @@ Animate3DSymbolsSample {
         textRole: "display"
         anchors.top: playButton.bottom
         anchors.left: sceneView.left
+        width: 64 * scaleFactor
+        height: 16 * scaleFactor
         z: 110
 
         onCurrentTextChanged: changeMission(currentText)
@@ -77,12 +80,23 @@ Animate3DSymbolsSample {
         onCheckedChanged: setFollowing(checked);
     }
 
+    Text{
+        id: distTitle
+        text: "Zoom"
+        enabled: followButton.checked && missionReady
+        anchors.top: cameraDistance.top
+        anchors.right: cameraDistance.left
+        anchors.rightMargin: 10
+        z: 110
+        height: 16 * scaleFactor
+        renderType: Text.NativeRendering
+    }
     Slider{
         id: cameraDistance
+        enabled: followButton.checked && missionReady
         anchors.top: sceneView.top
         anchors.right: sceneView.right
         z: 110
-        enabled: missionReady
         minimumValue: 10.
         maximumValue: 500.
         value: 200.
@@ -91,12 +105,23 @@ Animate3DSymbolsSample {
         onValueChanged: setZoom(value);
     }
 
+    Text{
+        id: angleTitle
+        text: "Angle"
+        enabled: followButton.checked && missionReady
+        anchors.top: cameraAngle.top
+        anchors.right: cameraAngle.left
+        anchors.rightMargin: 10
+        z: 110
+        height: 16 * scaleFactor
+        renderType: Text.NativeRendering
+    }
     Slider{
         id: cameraAngle
         anchors.top: cameraDistance.bottom
         anchors.right: sceneView.right
         z: 110
-        enabled: missionReady
+        enabled: followButton.checked && missionReady
         minimumValue: 0.
         maximumValue: 180.
         value: 75.
@@ -104,15 +129,27 @@ Animate3DSymbolsSample {
         Component.onCompleted: setAngle(value);
         onValueChanged: setAngle(value)
     }
+
+    Text{
+        id: speedTitle
+        text: "Speed"
+        enabled: missionReady
+        anchors.top: animationSpeed.top
+        anchors.right: animationSpeed.left
+        anchors.rightMargin: 10
+        z: 110
+        height: 16 * scaleFactor
+        renderType: Text.NativeRendering
+    }
     Slider{
         id: animationSpeed
         anchors.top: cameraAngle.bottom
         anchors.right: sceneView.right
         z: 110
         enabled: missionReady
-        minimumValue: 10
-        maximumValue: 100
-        value: 20
+        minimumValue: 50
+        maximumValue: 200
+        value: 50
     }
 
     Rectangle
@@ -129,17 +166,17 @@ Animate3DSymbolsSample {
             anchors.fill: parent
             anchors.margins: 2
 
-//            MouseArea {
-//                anchors.fill: parent
-//                onPressed: mouse.accepted = followButton.checked
-//                onWheel: wheel.accepted = followButton.checked
-//            }
+            MouseArea {
+                anchors.fill: parent
+                onPressed: mouse.accepted = followButton.checked
+                onWheel: wheel.accepted = followButton.checked
+            }
         }
     }
 
     Timer{
         id: timer
-        interval: 110 - animationSpeed.value; running: playButton.checked; repeat: true
+        interval: 210 - animationSpeed.value; running: playButton.checked; repeat: true
         onTriggered: nextFrame();
     }
 
