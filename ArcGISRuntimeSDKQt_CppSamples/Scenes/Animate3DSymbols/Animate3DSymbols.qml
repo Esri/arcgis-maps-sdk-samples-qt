@@ -34,8 +34,6 @@ Animate3DSymbolsSample {
         id: sceneView
         objectName: "sceneView"
         anchors.fill: parent
-        z: 10
-
         MouseArea {
             anchors.fill: parent
             onPressed: mouse.accepted = followButton.checked
@@ -43,133 +41,178 @@ Animate3DSymbolsSample {
         }
     }
 
-    Button{
-        id: playButton
+    GroupBox
+    {
+        id: animationGroupBox
+        z: 110
         anchors.top: sceneView.top
         anchors.left: sceneView.left
         width: 64 * scaleFactor
-        height: 16 * scaleFactor
-        checked: false
-        checkable: true
-        enabled: missionReady
-        z: 110
-        text: checked ? "Pause" : "Play"
+
+        Column
+        {
+            spacing: 10
+
+            ComboBox{
+                id: missionList
+                model: missionsModel()
+                textRole: "display"
+                onCurrentTextChanged: {
+                    changeMission(currentText);
+                    progressSlider.value = 0;
+                }
+            }
+
+            Button{
+                id: playButton
+                checked: false
+                checkable: true
+                enabled: missionReady
+                text: checked ? "pause" : "play"
+            }
+
+            Text{
+                id: progressTitle
+                text: "progress"
+                height: 8 * scaleFactor
+                renderType: Text.NativeRendering
+            }
+            Slider{
+                id: progressSlider
+                minimumValue: 0
+                maximumValue: missionSize
+                enabled : missionReady
+                onValueChanged: setFrame(value);
+            }
+
+            CheckBox{
+                id: followButton
+                checked: true
+                enabled: missionReady
+                text: "follow"
+                onCheckedChanged: setFollowing(checked);
+            }
+        }
     }
 
-    ComboBox{
-        id: missionList
-        model: missionsModel()
-        textRole: "display"
-        anchors.top: playButton.bottom
-        anchors.left: sceneView.left
-        width: 64 * scaleFactor
-        height: 16 * scaleFactor
+    GroupBox
+    {
+        id: cameraGroupBox
         z: 110
-
-        onCurrentTextChanged: changeMission(currentText)
-    }
-
-    CheckBox{
-        id: followButton
-        anchors.top: missionList.bottom
-        anchors.left: sceneView.left
-        checked: true
-        enabled: missionReady
-        z: 110
-        text: "follow"
-        onCheckedChanged: setFollowing(checked);
-    }
-
-    Text{
-        id: distTitle
-        text: "Zoom"
-        enabled: followButton.checked && missionReady
-        anchors.top: cameraDistance.top
-        anchors.right: cameraDistance.left
-        anchors.rightMargin: 10
-        z: 110
-        height: 16 * scaleFactor
-        renderType: Text.NativeRendering
-    }
-    Slider{
-        id: cameraDistance
-        enabled: followButton.checked && missionReady
         anchors.top: sceneView.top
         anchors.right: sceneView.right
-        z: 110
-        minimumValue: 10.
-        maximumValue: 500.
-        value: 200.
+        width: 64 * scaleFactor
 
-        Component.onCompleted: setZoom(value);
-        onValueChanged: setZoom(value);
-    }
+        Column
+        {
+            spacing: 10
 
-    Text{
-        id: angleTitle
-        text: "Angle"
-        enabled: followButton.checked && missionReady
-        anchors.top: cameraAngle.top
-        anchors.right: cameraAngle.left
-        anchors.rightMargin: 10
-        z: 110
-        height: 16 * scaleFactor
-        renderType: Text.NativeRendering
-    }
-    Slider{
-        id: cameraAngle
-        anchors.top: cameraDistance.bottom
-        anchors.right: sceneView.right
-        z: 110
-        enabled: followButton.checked && missionReady
-        minimumValue: 0.
-        maximumValue: 180.
-        value: 75.
+            Text{
+                id: distTitle
+                text: "Zoom"
+                enabled: followButton.checked && missionReady
+                height: 8 * scaleFactor
+                renderType: Text.NativeRendering
+            }
 
-        Component.onCompleted: setAngle(value);
-        onValueChanged: setAngle(value)
-    }
+            Slider{
+                id: cameraDistance
+                enabled: followButton.checked && missionReady
+                minimumValue: 10.
+                maximumValue: 500.
+                value: 200.
+                Component.onCompleted: setZoom(value);
+                onValueChanged: setZoom(value);
+            }
 
-    Text{
-        id: speedTitle
-        text: "Speed"
-        enabled: missionReady
-        anchors.top: animationSpeed.top
-        anchors.right: animationSpeed.left
-        anchors.rightMargin: 10
-        z: 110
-        height: 16 * scaleFactor
-        renderType: Text.NativeRendering
-    }
-    Slider{
-        id: animationSpeed
-        anchors.top: cameraAngle.bottom
-        anchors.right: sceneView.right
-        z: 110
-        enabled: missionReady
-        minimumValue: 50
-        maximumValue: 200
-        value: 50
+            Text{
+                id: angleTitle
+                text: "Angle"
+                enabled: followButton.checked && missionReady
+                height: 16 * scaleFactor
+                renderType: Text.NativeRendering
+            }
+
+            Slider{
+                id: cameraAngle
+                enabled: followButton.checked && missionReady
+                minimumValue: 0.
+                maximumValue: 180.
+                value: 75.
+                Component.onCompleted: setAngle(value);
+                onValueChanged: setAngle(value)
+            }
+
+            Text{
+                id: speedTitle
+                text: "Speed"
+                enabled: missionReady
+                height: 16 * scaleFactor
+                renderType: Text.NativeRendering
+            }
+
+            Slider{
+                id: animationSpeed
+                enabled: missionReady
+                minimumValue: 50
+                maximumValue: 200
+                value: 50
+            }
+        }
     }
 
     Rectangle
     {
+        id: mapFrame
         anchors.left: sceneView.left
         anchors.bottom: sceneView.bottom
         width: sceneView.width * .2
         height: sceneView.height * .4
         color: "black"
         z: 100
+        clip: true
+
+        GroupBox
+        {
+            id: mapZoomBox
+            z: 120
+            anchors.top: mapFrame.top
+            anchors.margins: 10
+            width: mapFrame.width
+
+            Row{
+                spacing: 10
+
+                Button{
+                    id: mapZoomIn
+
+                    text: "+"
+                    height: 16 * scaleFactor
+                    width: height
+                    onClicked: zoomMapIn()
+                }
+
+                Button{
+                    id: mapZoomOut
+                    anchors.margins: 10
+                    text: "-"
+                    height: 16 * scaleFactor
+                    width: height
+                    onClicked: zoomMapOut()
+                }
+            }
+        }
 
         MapView{
+            id: mapView
             objectName: "mapView"
-            anchors.fill: parent
+            anchors.fill: mapFrame
             anchors.margins: 2
 
             MouseArea {
                 anchors.fill: parent
-                onPressed: mouse.accepted = followButton.checked
-                onWheel: wheel.accepted = followButton.checked
+                onPressed: mouse.accepted
+                onWheel: wheel.accepted
             }
         }
     }

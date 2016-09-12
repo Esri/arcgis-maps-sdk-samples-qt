@@ -120,12 +120,20 @@ void Animate3DSymbols::componentComplete()
   mapOverlay->setRenderer(renderer2D);
 
   // set up route graphic
-//  createRoute2d(mapOverlay);
-
+  createRoute2d(mapOverlay);
+  // set up 3d graphic for model position in map view
   createModel2d(mapOverlay);
+}
 
-  changeMission(m_missionModel->data(m_missionModel->index(0,0)).toString());
-  nextFrame();
+void Animate3DSymbols::setFrame(int newFrame)
+{
+  if(m_missionData == nullptr ||
+     newFrame > m_missionData->size() ||
+     newFrame < 0 ||
+     m_frame == newFrame)
+    return;
+
+  m_frame = newFrame;
 }
 
 void Animate3DSymbols::nextFrame()
@@ -143,30 +151,19 @@ void Animate3DSymbols::nextFrame()
     m_sceneView->update();
 
     // If we do any sort of graphics update for the map view at the same time the scene view flickers
-//    m_graphic2d->setGeometry(dp.m_pos);
+    m_graphic2d->setGeometry(dp.m_pos);
 
     if(m_following)
     {
       Camera camera(dp.m_pos, m_zoomDist, dp.m_heading, m_angle, dp.m_roll );
       m_sceneView->setViewpointCamera(camera);
 
-//      Point camP = m_sceneView->currentViewpointCamera().location();
-//      double dist = GeometryEngine::distance(camP, dp.m_pos);
-//      qDebug() << "dist = " << dist << " & zoom dist = " << m_zoomDist;
-//      if( dist > m_zoomDist )
-//      {
-//        Camera camera(dp.m_pos, m_zoomDist, dp.m_heading, m_angle, dp.m_roll );
-//        m_sceneView->setViewpointCameraAndWait(camera);
-//      }
-//      else
-//         m_sceneView->update();
-
-//    m_sceneView->setViewpointCamera(camera);
+      m_mapView->setViewpoint(Viewpoint(dp.m_pos, m_mapView->mapScale(), 360. + dp.m_heading));
     }
     else
     {
-//      m_graphic2d->attributes()->replaceAttribute("ANGLE", 360 + dp.m_heading - m_mapView->mapRotation());
-       m_sceneView->update();
+      m_graphic2d->attributes()->replaceAttribute("ANGLE", 360 + dp.m_heading - m_mapView->mapRotation());
+      m_sceneView->update();
     }
 
   }
@@ -183,24 +180,26 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   QString formattedname = missionNameStr;
   m_missionReady = m_missionData->parse(":/" + formattedname.remove(" ") + ".csv");
 
-//  PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);
-//  for(size_t i = 0; i < m_missionData->size(); ++i )
-//  {
-//    const MissionData::DataPoint& dp = m_missionData->dataAt(i);
-//    routeBldr->addPoint(dp.m_pos);
-//  }
+  PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);
+  for(size_t i = 0; i < m_missionData->size(); ++i )
+  {
+    const MissionData::DataPoint& dp = m_missionData->dataAt(i);
+    routeBldr->addPoint(dp.m_pos);
+  }
 
-//  m_routeGraphic->setGeometry(routeBldr->toGeometry());
+  m_routeGraphic->setGeometry(routeBldr->toGeometry());
 
   if(m_missionReady)
   {
     const MissionData::DataPoint& dp = m_missionData->dataAt(m_frame);
     Camera camera(dp.m_pos, m_zoomDist, dp.m_heading, m_angle, dp.m_roll);
     m_sceneView->setViewpointCameraAndWait(camera);
+    m_mapView->setViewpointAndWait(Viewpoint(m_routeGraphic->geometry()));
     createModel3d();
   }
 
   emit missionReadyChanged();
+  emit missionSizeChanged();
 }
 
 void Animate3DSymbols::clearGraphic3D()
@@ -281,7 +280,33 @@ void Animate3DSymbols::setFollowing(bool following)
   m_following = following;
 }
 
+void Animate3DSymbols::zoomMapIn()
+{
+  if (m_mapView == nullptr ||
+      m_graphic2d == nullptr)
+    return;
+
+  m_mapView->setViewpoint(Viewpoint((Point)m_graphic2d->geometry(), m_mapView->mapScale() / 5.));
+}
+
+void Animate3DSymbols::zoomMapOut()
+{
+  if (m_mapView == nullptr ||
+      m_graphic2d == nullptr)
+    return;
+
+  m_mapView->setViewpoint(Viewpoint((Point)m_graphic2d->geometry(), m_mapView->mapScale() * 5.));
+}
+
 bool Animate3DSymbols::missionReady() const
 {
   return m_missionReady;
+}
+
+int Animate3DSymbols::missionSize() const
+{
+  if( m_missionData == nullptr)
+    return 0;
+
+  return (int)m_missionData->size();
 }

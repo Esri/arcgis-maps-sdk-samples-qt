@@ -43,6 +43,7 @@ class Animate3DSymbols : public QQuickItem
   Q_OBJECT
 
   Q_PROPERTY(bool missionReady READ missionReady NOTIFY missionReadyChanged)
+  Q_PROPERTY(int missionSize READ missionSize NOTIFY missionSizeChanged)
 
 public:
   Animate3DSymbols(QQuickItem* parent = nullptr);
@@ -50,17 +51,22 @@ public:
 
   void componentComplete() Q_DECL_OVERRIDE;
 
+  Q_INVOKABLE void setFrame(int newFrame);
   Q_INVOKABLE void nextFrame();
   Q_INVOKABLE void changeMission(const QString& missionName);
   Q_INVOKABLE QAbstractItemModel* missionsModel() {return m_missionModel;}
   Q_INVOKABLE void setZoom(double zoomDist){m_zoomDist = zoomDist;}
   Q_INVOKABLE void setAngle(double angle){m_angle = angle;}
   Q_INVOKABLE void setFollowing(bool following);
+  Q_INVOKABLE void zoomMapIn();
+  Q_INVOKABLE void zoomMapOut();
 
   bool missionReady() const;
+  int missionSize() const;
 
 signals:
   void missionReadyChanged();
+  void missionSizeChanged();
 
 private:
   void createModel3d();
