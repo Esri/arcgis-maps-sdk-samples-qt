@@ -268,7 +268,7 @@ void Animate3DSymbols::createModel2d(GraphicsOverlay *mapOverlay)
 void Animate3DSymbols::createRoute2d(GraphicsOverlay* mapOverlay)
 {
   // Create a 2d graphic of a solid red line to represen the route of the mission
-  SimpleLineSymbol* routeSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::red, 2);
+  SimpleLineSymbol* routeSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::red, 2, this);
   m_routeGraphic = new Graphic(this);
   m_routeGraphic->setSymbol(routeSymbol);
   mapOverlay->graphics()->append(m_routeGraphic);

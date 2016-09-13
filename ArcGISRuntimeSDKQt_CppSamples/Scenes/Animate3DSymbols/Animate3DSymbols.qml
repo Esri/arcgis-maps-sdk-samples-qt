@@ -41,19 +41,17 @@ Animate3DSymbolsSample {
         }
     }
 
-    GroupBox
-    {
+    GroupBox {
         id: animationGroupBox
         z: 110
         anchors.top: sceneView.top
         anchors.left: sceneView.left
         anchors.margins: 10 * scaleFactor
 
-        Column
-        {
+        Column {
             spacing: 10
 
-            ComboBox{
+            ComboBox {
                 id: missionList
                 model: missionsModel()
                 textRole: "display"
@@ -63,7 +61,7 @@ Animate3DSymbolsSample {
                 }
             }
 
-            Button{
+            Button {
                 id: playButton
                 checked: false
                 checkable: true
@@ -71,12 +69,12 @@ Animate3DSymbolsSample {
                 text: checked ? "pause" : "play"
             }
 
-            Text{
+            Text {
                 id: progressTitle
                 text: "progress"
                 renderType: Text.NativeRendering
             }
-            Slider{
+            Slider {
                 id: progressSlider
                 minimumValue: 0
                 maximumValue: missionSize
@@ -84,7 +82,7 @@ Animate3DSymbolsSample {
                 onValueChanged: setFrame(value);
             }
 
-            CheckBox{
+            CheckBox {
                 id: followButton
                 checked: true
                 enabled: missionReady
@@ -94,26 +92,24 @@ Animate3DSymbolsSample {
         }
     }
 
-    GroupBox
-    {
+    GroupBox {
         id: cameraGroupBox
         z: 110
         anchors.top: sceneView.top
         anchors.right: sceneView.right
         anchors.margins: 10 * scaleFactor
 
-        Column
-        {
+        Column {
             spacing: 10
 
-            Text{
+            Text {
                 id: distTitle
                 text: "Zoom"
                 enabled: followButton.checked && missionReady
                 renderType: Text.NativeRendering
             }
 
-            Slider{
+            Slider {
                 id: cameraDistance
                 enabled: followButton.checked && missionReady
                 minimumValue: 10.
@@ -123,14 +119,14 @@ Animate3DSymbolsSample {
                 onValueChanged: setZoom(value);
             }
 
-            Text{
+            Text {
                 id: angleTitle
                 text: "Angle"
                 enabled: followButton.checked && missionReady
                 renderType: Text.NativeRendering
             }
 
-            Slider{
+            Slider {
                 id: cameraAngle
                 enabled: followButton.checked && missionReady
                 minimumValue: 0.
@@ -140,14 +136,14 @@ Animate3DSymbolsSample {
                 onValueChanged: setAngle(value)
             }
 
-            Text{
+            Text {
                 id: speedTitle
                 text: "Speed"
                 enabled: missionReady
                 renderType: Text.NativeRendering
             }
 
-            Slider{
+            Slider {
                 id: animationSpeed
                 enabled: missionReady
                 minimumValue: 50
@@ -157,8 +153,7 @@ Animate3DSymbolsSample {
         }
     }
 
-    Rectangle
-    {
+    Rectangle {
         id: mapFrame
         anchors.left: sceneView.left
         anchors.bottom: sceneView.bottom
@@ -168,18 +163,17 @@ Animate3DSymbolsSample {
         z: 100
         clip: true
 
-        GroupBox
-        {
+        GroupBox {
             id: mapZoomBox
             z: 120
             anchors.top: mapFrame.top
             anchors.margins: 10 * scaleFactor
             width: mapFrame.width
 
-            Row{
+            Row {
                 spacing: 10
 
-                Button{
+                Button {
                     id: mapZoomIn
 
                     text: "+"
@@ -187,7 +181,7 @@ Animate3DSymbolsSample {
                     onClicked: zoomMapIn()
                 }
 
-                Button{
+                Button {
                     id: mapZoomOut
                     anchors.margins: 10
                     text: "-"
@@ -197,7 +191,7 @@ Animate3DSymbolsSample {
             }
         }
 
-        MapView{
+        MapView {
             id: mapView
             objectName: "mapView"
             anchors.fill: mapFrame
@@ -211,7 +205,7 @@ Animate3DSymbolsSample {
         }
     }
 
-    Timer{
+    Timer {
         id: timer
         interval: 210 - animationSpeed.value; running: playButton.checked; repeat: true
         onTriggered: nextFrame();

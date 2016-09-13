@@ -90,7 +90,7 @@ private:
   Esri::ArcGISRuntime::Graphic* m_routeGraphic;
   QString m_dataPath;
   QAbstractItemModel* m_missionsModel;
-  std::unique_ptr< MissionData >  m_missionData;
+  std::unique_ptr<MissionData> m_missionData;
   int m_frame;
   double m_zoomDist;
   double m_angle;
