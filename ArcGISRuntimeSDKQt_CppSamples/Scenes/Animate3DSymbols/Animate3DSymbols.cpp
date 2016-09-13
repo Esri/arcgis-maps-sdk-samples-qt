@@ -55,12 +55,12 @@ Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   m_graphic3d(nullptr),
   m_graphic2d(nullptr),
   m_routeGraphic(nullptr),
-  m_missionsModel( new QStringListModel({"Grand Canyon", "Hawaii", "Pyrenees", "Snowdon"}, this)),
-  m_missionData( new MissionData()),
+  m_missionsModel(new QStringListModel({"Grand Canyon", "Hawaii", "Pyrenees", "Snowdon"}, this)),
+  m_missionData(new MissionData()),
   m_frame(0),
-  m_zoomDist(0.),
+  m_zoomDist(0.0),
   m_following(true),
-  m_mapZoomFactor(5.)
+  m_mapZoomFactor(5.0)
 {
   Q_INIT_RESOURCE(Animate3DSymbols);
 }
@@ -128,7 +128,7 @@ void Animate3DSymbols::componentComplete()
 
 void Animate3DSymbols::setFrame(int newFrame)
 {
-  if(m_missionData == nullptr ||
+  if (m_missionData == nullptr ||
      newFrame > (int)m_missionData->size() ||
      newFrame < 0 ||
      m_frame == newFrame)
@@ -139,15 +139,15 @@ void Animate3DSymbols::setFrame(int newFrame)
 
 void Animate3DSymbols::nextFrame()
 {
-  if(m_missionData == nullptr)
+  if (m_missionData == nullptr)
     return;
 
-  if(m_frame < (int)m_missionData->size())
+  if (m_frame < (int)m_missionData->size())
   {
     // get the data for this stage in the mission
     const MissionData::DataPoint& dp = m_missionData->dataAt(m_frame);
 
-#ifdef ANIMATE_MAP // TODO: Currently, if we do any sort of graphics update for the map view at the same time the scene view flickers
+#ifdef ANIMATE_MAP
     // move 2d graphic to the new position
     m_graphic2d->setGeometry(dp.m_pos);
 #endif
@@ -159,10 +159,10 @@ void Animate3DSymbols::nextFrame()
     m_graphic3d->attributes()->replaceAttribute(PITCH, dp.m_pitch);
     m_graphic3d->attributes()->replaceAttribute(ROLL, dp.m_roll);
 
-    if(m_following)
+    if (m_following)
     {
       // move the camera to follow the 3d model
-      Camera camera(dp.m_pos, m_zoomDist, dp.m_heading, m_angle, dp.m_roll );
+      Camera camera(dp.m_pos, m_zoomDist, dp.m_heading, m_angle, dp.m_roll);
       m_sceneView->setViewpointCamera(camera);
 
 #ifdef ANIMATE_MAP
@@ -181,7 +181,7 @@ void Animate3DSymbols::nextFrame()
 
   // increment the frame count
   m_frame++;
-  if(m_frame >= (int)m_missionData->size())
+  if (m_frame >= (int)m_missionData->size())
     m_frame = 0;
 }
 
@@ -194,11 +194,11 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   m_missionData->parse(":/Missions/" + formattedname.remove(" ") + ".csv");
 
   // if the mission was loaded successfully, move to the start position
-  if(missionReady())
+  if (missionReady())
   {
     // create a polyline representing the route for the mission
     PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);
-    for(size_t i = 0; i < m_missionData->size(); ++i )
+    for(size_t i = 0; i < m_missionData->size(); ++i)
     {
       const MissionData::DataPoint& dp = m_missionData->dataAt(i);
       routeBldr->addPoint(dp.m_pos);
@@ -219,10 +219,10 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
 
 void Animate3DSymbols::clearGraphic3D()
 {
-  if(m_graphic3d == nullptr)
+  if (m_graphic3d == nullptr)
     return;
 
-  if(m_sceneView->graphicsOverlays()->size() > 0 && m_sceneView->graphicsOverlays()->at(0))
+  if (m_sceneView->graphicsOverlays()->size() > 0 && m_sceneView->graphicsOverlays()->at(0))
     m_sceneView->graphicsOverlays()->at(0)->graphics()->clear();
 
   delete m_graphic3d;
@@ -232,7 +232,7 @@ void Animate3DSymbols::clearGraphic3D()
 void Animate3DSymbols::createModel3d()
 {
   // load the ModelSceneSymbol to be animated in the 3d view
-  if( m_model3d == nullptr)
+  if (m_model3d == nullptr)
   {
     m_model3d = new ModelSceneSymbol(QUrl(m_dataPath + "/SkyCrane/SkyCrane.lwo"), 0.01f, this);
     // correct the symbol's orientation to match the graphic's orientation
@@ -247,7 +247,7 @@ void Animate3DSymbols::createModel3d()
     }
   );
 
-  if( m_model3d->loadStatus() == LoadStatus::Loaded)
+  if (m_model3d->loadStatus() == LoadStatus::Loaded)
     createGraphic3D(); // if the model is already loaded just recreate the graphic
   else
     m_model3d->load(); // if the model has not been loaded before, call load
@@ -261,7 +261,7 @@ void Animate3DSymbols::createModel2d(GraphicsOverlay *mapOverlay)
   // create a graphic with the symbol and attributes
   QVariantMap attributes;
   attributes.insert(ANGLE, 0.f);
-  m_graphic2d = new Graphic(Point(0, 0, SpatialReference::wgs84()), attributes, plane2DSymbol);
+  m_graphic2d = new Graphic(Point(0, 0, SpatialReference::wgs84()), attributes, plane2DSymbol, this);
   mapOverlay->graphics()->append(m_graphic2d);
 }
 
@@ -276,7 +276,7 @@ void Animate3DSymbols::createRoute2d(GraphicsOverlay* mapOverlay)
 
 void Animate3DSymbols::createGraphic3D()
 {
-  if(m_model3d == nullptr || !missionReady())
+  if (m_model3d == nullptr || !missionReady())
     return;
 
   clearGraphic3D();
@@ -321,7 +321,7 @@ void Animate3DSymbols::zoomMapOut()
 
 bool Animate3DSymbols::missionReady() const
 {
-  if( m_missionData == nullptr)
+  if (m_missionData == nullptr)
     return false;
 
   return m_missionData->ready();
@@ -329,7 +329,7 @@ bool Animate3DSymbols::missionReady() const
 
 int Animate3DSymbols::missionSize() const
 {
-  if( m_missionData == nullptr)
+  if (m_missionData == nullptr)
     return 0;
 
   return (int)m_missionData->size();
