@@ -306,7 +306,7 @@ void Animate3DSymbols::zoomMapIn()
     return;
 
   // zoom the map view in, focusing on the position of the 2d graphic for the helicopter
-  m_mapView->setViewpoint(Viewpoint((Point)m_graphic2d->geometry(), m_mapView->mapScale() / m_mapZoomFactor));
+  m_mapView->setViewpoint(Viewpoint((Point)m_routeGraphic->geometry(), m_mapView->mapScale() / m_mapZoomFactor));
 }
 
 void Animate3DSymbols::zoomMapOut()
@@ -316,7 +316,7 @@ void Animate3DSymbols::zoomMapOut()
     return;
 
   // zoom the map view out, focusing on the position of the 2d graphic for the helicopter
-  m_mapView->setViewpoint(Viewpoint((Point)m_graphic2d->geometry(), m_mapView->mapScale() * m_mapZoomFactor));
+  m_mapView->setViewpoint(Viewpoint((Point)m_routeGraphic->geometry(), m_mapView->mapScale() * m_mapZoomFactor));
 }
 
 bool Animate3DSymbols::missionReady() const
