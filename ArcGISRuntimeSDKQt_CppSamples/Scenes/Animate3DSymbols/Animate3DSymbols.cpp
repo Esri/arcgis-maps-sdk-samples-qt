@@ -191,7 +191,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
 
   // read the mission data from .csv files stored in qrc
   QString formattedname = missionNameStr;
-  m_missionData->parse(":/" + formattedname.remove(" ") + ".csv");
+  m_missionData->parse(":/Missions/" + formattedname.remove(" ") + ".csv");
 
   // if the mission was loaded successfully, move to the start position
   if(missionReady())
