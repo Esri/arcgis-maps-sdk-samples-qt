@@ -47,7 +47,7 @@ Animate3DSymbolsSample {
         z: 110
         anchors.top: sceneView.top
         anchors.left: sceneView.left
-        width: 64 * scaleFactor
+        anchors.margins: 10 * scaleFactor
 
         Column
         {
@@ -74,7 +74,6 @@ Animate3DSymbolsSample {
             Text{
                 id: progressTitle
                 text: "progress"
-                height: 8 * scaleFactor
                 renderType: Text.NativeRendering
             }
             Slider{
@@ -101,7 +100,7 @@ Animate3DSymbolsSample {
         z: 110
         anchors.top: sceneView.top
         anchors.right: sceneView.right
-        width: 64 * scaleFactor
+        anchors.margins: 10 * scaleFactor
 
         Column
         {
@@ -111,7 +110,6 @@ Animate3DSymbolsSample {
                 id: distTitle
                 text: "Zoom"
                 enabled: followButton.checked && missionReady
-                height: 8 * scaleFactor
                 renderType: Text.NativeRendering
             }
 
@@ -129,7 +127,6 @@ Animate3DSymbolsSample {
                 id: angleTitle
                 text: "Angle"
                 enabled: followButton.checked && missionReady
-                height: 16 * scaleFactor
                 renderType: Text.NativeRendering
             }
 
@@ -147,7 +144,6 @@ Animate3DSymbolsSample {
                 id: speedTitle
                 text: "Speed"
                 enabled: missionReady
-                height: 16 * scaleFactor
                 renderType: Text.NativeRendering
             }
 
@@ -166,8 +162,8 @@ Animate3DSymbolsSample {
         id: mapFrame
         anchors.left: sceneView.left
         anchors.bottom: sceneView.bottom
-        width: sceneView.width * .2
-        height: sceneView.height * .4
+        width: Math.max(sceneView.width * .2, 128 * scaleFactor)
+        height: Math.max(sceneView.height * .4, 128 * scaleFactor)
         color: "black"
         z: 100
         clip: true
@@ -177,7 +173,7 @@ Animate3DSymbolsSample {
             id: mapZoomBox
             z: 120
             anchors.top: mapFrame.top
-            anchors.margins: 10
+            anchors.margins: 10 * scaleFactor
             width: mapFrame.width
 
             Row{
@@ -187,7 +183,6 @@ Animate3DSymbolsSample {
                     id: mapZoomIn
 
                     text: "+"
-                    height: 16 * scaleFactor
                     width: height
                     onClicked: zoomMapIn()
                 }
@@ -196,7 +191,6 @@ Animate3DSymbolsSample {
                     id: mapZoomOut
                     anchors.margins: 10
                     text: "-"
-                    height: 16 * scaleFactor
                     width: height
                     onClicked: zoomMapOut()
                 }
