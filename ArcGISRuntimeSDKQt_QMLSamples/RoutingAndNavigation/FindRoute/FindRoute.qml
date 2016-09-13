@@ -219,14 +219,14 @@ Rectangle {
         // Request default parameters once the task is loaded
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusLoaded) {
-                routeTask.generateDefaultParameters();
+                routeTask.createDefaultParameters();
             }
         }
 
         // Store the resulting route parameters
-        onGenerateDefaultParametersStatusChanged: {
-            if (generateDefaultParametersStatus === Enums.TaskStatusCompleted) {
-                routeParameters = generateDefaultParametersResult;
+        onCreateDefaultParametersStatusChanged: {
+            if (createDefaultParametersStatus === Enums.TaskStatusCompleted) {
+                routeParameters = createDefaultParametersResult;
             }
         }
 
