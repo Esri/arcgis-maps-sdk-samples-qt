@@ -127,12 +127,12 @@ void FindRoute::setupRouteTask()
         if (loadStatus == LoadStatus::Loaded)
         {
             // Request default parameters once the task is loaded
-            m_routeTask->generateDefaultParameters();
+            m_routeTask->createDefaultParameters();
         }
     });
 
-    // connect to generateDefaultParametersCompleted signal
-    connect(m_routeTask, &RouteTask::generateDefaultParametersCompleted, [this](QUuid, RouteParameters routeParameters)
+    // connect to createDefaultParametersCompleted signal
+    connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, [this](QUuid, RouteParameters routeParameters)
     {
         // Store the resulting route parameters
         m_routeParameters = routeParameters;
