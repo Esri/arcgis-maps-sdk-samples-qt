@@ -129,7 +129,7 @@ void Animate3DSymbols::componentComplete()
 void Animate3DSymbols::setFrame(int newFrame)
 {
   if(m_missionData == nullptr ||
-     newFrame > m_missionData->size() ||
+     newFrame > (int)m_missionData->size() ||
      newFrame < 0 ||
      m_frame == newFrame)
     return;
@@ -142,7 +142,7 @@ void Animate3DSymbols::nextFrame()
   if(m_missionData == nullptr)
     return;
 
-  if(m_frame < m_missionData->size())
+  if(m_frame < (int)m_missionData->size())
   {
     // get the data for this stage in the mission
     const MissionData::DataPoint& dp = m_missionData->dataAt(m_frame);
@@ -181,7 +181,7 @@ void Animate3DSymbols::nextFrame()
 
   // increment the frame count
   m_frame++;
-  if(m_frame >= m_missionData->size())
+  if(m_frame >= (int)m_missionData->size())
     m_frame = 0;
 }
 
