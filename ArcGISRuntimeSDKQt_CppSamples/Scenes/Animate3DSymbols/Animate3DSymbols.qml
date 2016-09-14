@@ -44,9 +44,7 @@ Animate3DSymbolsSample {
     GroupBox {
         id: animationGroupBox
         z: 110
-        anchors.top: sceneView.top
-        anchors.left: sceneView.left
-        anchors.margins: 10 * scaleFactor
+        anchors {top: sceneView.top; left: sceneView.left; margins: 10 * scaleFactor}
 
         Column {
             spacing: 10
@@ -95,9 +93,7 @@ Animate3DSymbolsSample {
     GroupBox {
         id: cameraGroupBox
         z: 110
-        anchors.top: sceneView.top
-        anchors.right: sceneView.right
-        anchors.margins: 10 * scaleFactor
+        anchors {top: sceneView.top; right: sceneView.right; margins: 10 * scaleFactor}
 
         Column {
             spacing: 10
@@ -157,8 +153,7 @@ Animate3DSymbolsSample {
 
     Rectangle {
         id: mapFrame
-        anchors.left: sceneView.left
-        anchors.bottom: sceneView.bottom
+        anchors {left:sceneView.left; bottom: sceneView.bottom}
         width: Math.max(sceneView.width * .2, 128 * scaleFactor)
         height: Math.max(sceneView.height * .4, 128 * scaleFactor)
         color: "black"
@@ -168,8 +163,7 @@ Animate3DSymbolsSample {
         GroupBox {
             id: mapZoomBox
             z: 120
-            anchors.top: mapFrame.top
-            anchors.margins: 10 * scaleFactor
+            anchors {top: mapFrame.top; margins: 10 * scaleFactor}
             width: mapFrame.width
 
             Row {
@@ -177,7 +171,7 @@ Animate3DSymbolsSample {
 
                 Button {
                     id: mapZoomIn
-
+                    anchors.margins: 10
                     text: "+"
                     width: height
                     onClicked: zoomMapIn()
@@ -196,8 +190,7 @@ Animate3DSymbolsSample {
         MapView {
             id: mapView
             objectName: "mapView"
-            anchors.fill: mapFrame
-            anchors.margins: 2
+            anchors {fill: mapFrame; margins: 2 * scaleFactor}
 
             MouseArea {
                 anchors.fill: parent
