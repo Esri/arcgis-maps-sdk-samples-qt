@@ -194,7 +194,7 @@ void Animate3DSymbols::animate()
 
     if (m_following)
     {
-      if(!m_camHandler->m_camWatcher.isDone())
+      if (!m_camHandler->m_camWatcher.isDone())
         m_sceneView->update();
       else
       {
@@ -355,7 +355,7 @@ void Animate3DSymbols::createGraphic3D()
 
 void Animate3DSymbols::setFollowing(bool following)
 {
-  if( m_following == following)
+  if (m_following == following)
     return;
 
   m_following = following;
