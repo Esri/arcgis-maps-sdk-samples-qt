@@ -1,19 +1,19 @@
 #Animate 3D Symbols
 
-Demonstrates how to animate a graphic's position and rotation and follow it with a camera. Also shows how to combine a SceneView and MapView in an MVC application with property binding.
+Demonstrates how to animate a graphic's position and rotation and follow it with a camera. Also shows how to combine a SceneQuickView and MapQuickView in an MVC application with property binding.
 
 ##How to use the sample
 
 Animation Controls (Top Left Corner):
 
- - Select a mission -- selects a location with a route for plane to fly
- - Mission progress -- shows how far along the route the plane is. Slide to change keyframe in animation
+ - Select a mission -- selects a location with a route for the helicopter to fly
+ - Mission progress -- shows how far along the route the helicopter is. Slide to change keyframe in animation
  - Play -- toggles playing and stopping the animation
  - Toggle -- toggles the camera's follow mode and free cam mode
 Camera Controls (Top Right Corner):
 
- - Camare zoom -- distance between camera and plane
- - Camera angle -- viewing angle between camera and plane
+ - Camare zoom -- distance between camera and helicopter
+ - Camera angle -- viewing angle between camera and helicopter
  - Flight speed -- controls speed of animation
 2D Map Controls (Bottom Left Corner):
 
@@ -24,36 +24,37 @@ Camera Controls (Top Right Corner):
 ##How it works
 To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
 
-1. Create a `GraphicsOverlay` and attach it to the `SceneView`.
-2. Create a `ModelSceneSymbol` with `AnchorPosition.CENTER`.
+1. Create a `GraphicsOverlay` and attach it to the `SceneQuickView`.
+2. Create a `ModelSceneSymbol`.
 3. Create a `Graphic(Geometry, Symbol)`.
  - set geometry to a point where graphic will be located in scene view
  - set symbol to the one we made above
 4. Add Attributes to graphic.
- - Get attributes from graphic, `Graphic.getAttributes()`.
- - Add heading, pitch, and roll attribute, `attributes.put("HEADING", settings.get(HEADING))`;
+ - Get attributes from graphic, `graphic->attributes()`.
+ - Add heading, pitch, and roll attribute, `attributes->insertAttribute("HEADING", myHeading)`;
 5. Create a SimpleRenderer to access and set it's expression properties.
- - access properties with Renderer.getSceneProperties()
- - set heading, pitch, and roll expressions, SceneProperties.setHeadingExpression("HEADING").
+ - access properties with `renderer->sceneProperties()`
+ - set heading, pitch, and roll expressions, `sceneProperties->setHeadingExpression("HEADING")`.
 6. Add graphic to the graphics overlay.
-7. Set renderer to graphics overlay, `GraphicsOverlay.setRenderer(Renderer)`
-8. Update graphic's location, `Graphic.setGeometry(Point)`.
-9. Update symbol's heading, pitch, and roll, `attributes.replace("HEADING", settings.get(HEADING))`.
+7. Set renderer to graphics overlay, `graphicsOverlay->setRenderer(renderer)`
+8. Update graphic's location, `graphic->setGeometry(Point)`.
+9. Update graphics's heading, pitch, and roll, `graphic->attributes()->replaceAttribute("HEADING", myHeading)`.
+10. Set the sceneViews's camera to be looking at the symbol with `sceneView->setViewpointCamera( Camera(myPoint, myZoomDist, myHeading, myAngle, myRoll), myDurationSeconds)`
 
 ##Features
 
- - ArcGISMap
- - ArcGISScene
+ - Map
+ - Scebe
  - Camera
  - Graphic
  - GraphicsOverlay
- - LayerSceneProperties.SurfacePlacement
- - MapView
+ - SurfacePlacement
+ - MapQuickView
  - ModelSceneSymbol
  - Point
  - Polyline
  - Renderer
- - Renderer.SceneProperties
- - SceneView
+ - SceneProperties
+ - SceneQuickView
  - Viewpoint
 
