@@ -149,6 +149,8 @@ Animate3DSymbolsSample {
                 minimumValue: 50
                 maximumValue: 200
                 value: 50
+                Component.onCompleted: changeSpeed(value);
+                onValueChanged: changeSpeed(value);
             }
         }
     }

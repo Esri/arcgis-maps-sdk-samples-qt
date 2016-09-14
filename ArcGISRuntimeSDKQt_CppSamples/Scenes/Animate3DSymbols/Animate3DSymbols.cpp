@@ -34,6 +34,7 @@
 #include "SimpleMarkerSceneSymbol.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
+#include "TaskWatcher.h"
 
 #include <QDir>
 #include <QFileInfo>
@@ -47,6 +48,46 @@ const QString Animate3DSymbols::ROLL = "ROLL";
 const QString Animate3DSymbols::PITCH = "PITCH";
 const QString Animate3DSymbols::ANGLE = "ANGLE";
 
+struct Animate3DSymbols::CameraHandler
+{
+
+  void setZoomDist(double zoomDist)
+  {
+    m_camWatcher.cancel();
+    m_zoomDist = zoomDist;
+  }
+
+  void setAngle(double angle)
+  {
+    m_camWatcher.cancel();
+    m_angle = angle;
+  }
+
+  void setIntervalMs(int intervalMs)
+  {
+    m_camWatcher.cancel();
+    m_intervalMs = intervalMs;
+  }
+
+  float animationDurationSeconds() const
+  {
+    // the faster the animation, the shorter duration we want for our camera animations
+    float res = (200 - m_intervalMs) / 200.0f;
+    res *= 10.0f;
+
+    // slow down camera animation when the camera is zoomed right in (range 10-500)
+    float zoomFactor = (510 - m_zoomDist) / 500.0f;
+    res += zoomFactor;
+
+    return res;
+  }
+
+  TaskWatcher m_camWatcher;
+  float m_intervalMs = 0.0;
+  double m_zoomDist = 0.0;
+  double m_angle = 90.0;
+};
+
 Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
   m_sceneView(nullptr),
@@ -57,8 +98,8 @@ Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   m_routeGraphic(nullptr),
   m_missionsModel(new QStringListModel({"Grand Canyon", "Hawaii", "Pyrenees", "Snowdon"}, this)),
   m_missionData(new MissionData()),
+  m_camHandler(new CameraHandler),
   m_frame(0),
-  m_zoomDist(0.0),
   m_following(true),
   m_mapZoomFactor(5.0)
 {
@@ -137,6 +178,11 @@ void Animate3DSymbols::setFrame(int newFrame)
   m_frame = newFrame;
 }
 
+void Animate3DSymbols::changeSpeed(int intervalMs)
+{
+  m_camHandler->setIntervalMs(intervalMs);
+}
+
 void Animate3DSymbols::nextFrame()
 {
   if (m_missionData == nullptr)
@@ -147,23 +193,16 @@ void Animate3DSymbols::nextFrame()
     // get the data for this stage in the mission
     const MissionData::DataPoint& dp = m_missionData->dataAt(m_frame);
 
-#ifdef ANIMATE_MAP
-    // move 2d graphic to the new position
-    m_graphic2d->setGeometry(dp.m_pos);
-#endif
-
-    // move 3D graphic to the new position
-    m_graphic3d->setGeometry(dp.m_pos);
-    // update attribute expressions to immediately update rotation
-    m_graphic3d->attributes()->replaceAttribute(HEADING, dp.m_heading);
-    m_graphic3d->attributes()->replaceAttribute(PITCH, dp.m_pitch);
-    m_graphic3d->attributes()->replaceAttribute(ROLL, dp.m_roll);
-
     if (m_following)
     {
-      // move the camera to follow the 3d model
-      Camera camera(dp.m_pos, m_zoomDist, dp.m_heading, m_angle, dp.m_roll);
-      m_sceneView->setViewpointCamera(camera);
+      if( !m_camHandler->m_camWatcher.isDone())
+        m_sceneView->update();
+      else
+      {
+        // move the camera to follow the 3d model
+        Camera camera(dp.m_pos, m_camHandler->m_zoomDist, dp.m_heading, m_camHandler->m_angle, dp.m_roll);
+        m_camHandler->m_camWatcher = m_sceneView->setViewpointCamera(camera, m_camHandler->animationDurationSeconds());
+      }
 
 #ifdef ANIMATE_MAP
       // rotate the map view about the direction of motion
@@ -177,6 +216,18 @@ void Animate3DSymbols::nextFrame()
 #endif
       m_sceneView->update();
     }
+
+#ifdef ANIMATE_MAP
+    // move 2d graphic to the new position
+    m_graphic2d->setGeometry(dp.m_pos);
+#endif
+
+    // move 3D graphic to the new position
+    m_graphic3d->setGeometry(dp.m_pos);
+    // update attribute expressions to immediately update rotation
+    m_graphic3d->attributes()->replaceAttribute(HEADING, dp.m_heading);
+    m_graphic3d->attributes()->replaceAttribute(PITCH, dp.m_pitch);
+    m_graphic3d->attributes()->replaceAttribute(ROLL, dp.m_roll);
   }
 
   // increment the frame count
@@ -188,6 +239,7 @@ void Animate3DSymbols::nextFrame()
 void Animate3DSymbols::changeMission(const QString &missionNameStr)
 {
   m_frame = 0;
+  m_camHandler->m_camWatcher.cancel();
 
   // read the mission data from .csv files stored in qrc
   QString formattedname = missionNameStr;
@@ -207,7 +259,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
     m_routeGraphic->setGeometry(routeBldr->toGeometry());
 
     const MissionData::DataPoint& dp = m_missionData->dataAt(m_frame);
-    Camera camera(dp.m_pos, m_zoomDist, dp.m_heading, m_angle, dp.m_roll);
+    Camera camera(dp.m_pos, m_camHandler->m_zoomDist, dp.m_heading, m_camHandler->m_angle, dp.m_roll);
     m_sceneView->setViewpointCameraAndWait(camera);
     m_mapView->setViewpointAndWait(Viewpoint(m_routeGraphic->geometry()));
     createModel3d();
@@ -215,6 +267,16 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
 
   emit missionReadyChanged();
   emit missionSizeChanged();
+}
+
+void Animate3DSymbols::setZoom(double zoomDist)
+{
+  m_camHandler->setZoomDist(zoomDist);
+}
+
+void Animate3DSymbols::setAngle(double angle)
+{
+  m_camHandler->setAngle(angle);
 }
 
 void Animate3DSymbols::clearGraphic3D()

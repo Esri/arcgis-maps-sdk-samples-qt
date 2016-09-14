@@ -30,6 +30,7 @@ namespace Esri
     class MapQuickView;
     class ModelSceneSymbol;
     class SceneQuickView;
+    class TaskWatcher;
   }
 }
 
@@ -54,11 +55,12 @@ public:
   void componentComplete() Q_DECL_OVERRIDE;
 
   Q_INVOKABLE void setFrame(int newFrame);
+  Q_INVOKABLE void changeSpeed(int intervalMs);
   Q_INVOKABLE void nextFrame();
   Q_INVOKABLE void changeMission(const QString& missionName);
   Q_INVOKABLE QAbstractItemModel* missionsModel() {return m_missionsModel;}
-  Q_INVOKABLE void setZoom(double zoomDist){m_zoomDist = zoomDist;}
-  Q_INVOKABLE void setAngle(double angle){m_angle = angle;}
+  Q_INVOKABLE void setZoom(double zoomDist);
+  Q_INVOKABLE void setAngle(double angle);
   Q_INVOKABLE void setFollowing(bool following);
   Q_INVOKABLE void zoomMapIn();
   Q_INVOKABLE void zoomMapOut();
@@ -82,6 +84,8 @@ private:
   static const QString PITCH;
   static const QString ANGLE;
 
+  struct CameraHandler;
+
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
   Esri::ArcGISRuntime::MapQuickView* m_mapView;
   Esri::ArcGISRuntime::ModelSceneSymbol* m_model3d;
@@ -91,9 +95,8 @@ private:
   QString m_dataPath;
   QAbstractItemModel* m_missionsModel;
   std::unique_ptr<MissionData> m_missionData;
+  std::unique_ptr<CameraHandler> m_camHandler;
   int m_frame;
-  double m_zoomDist;
-  double m_angle;
   bool m_following;
   double m_mapZoomFactor;
 };
