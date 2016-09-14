@@ -195,7 +195,7 @@ void Animate3DSymbols::nextFrame()
 
     if (m_following)
     {
-      if( !m_camHandler->m_camWatcher.isDone())
+      if(!m_camHandler->m_camWatcher.isDone())
         m_sceneView->update();
       else
       {

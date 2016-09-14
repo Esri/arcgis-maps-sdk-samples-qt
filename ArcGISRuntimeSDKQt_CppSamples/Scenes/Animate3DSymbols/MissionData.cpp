@@ -20,10 +20,15 @@
 #include <QFile>
 #include <QString>
 
-MissionData::DataPoint MissionData::m_nullData = MissionData::DataPoint( 0., 0., 0., 0., 0., 0.);
+MissionData::DataPoint MissionData::m_nullData = MissionData::DataPoint(0., 0., 0., 0., 0., 0.);
 
 MissionData::MissionData():
   m_ready(false)
+{
+
+}
+
+MissionData::~MissionData()
 {
 
 }
@@ -34,7 +39,7 @@ bool MissionData::parse(const QString &dataPath)
   m_ready = false;
 
   QFile file(dataPath);
-  if( !file.exists())
+  if(!file.exists())
     return false;
 
   if (!file.open(QIODevice::ReadOnly))
@@ -44,7 +49,7 @@ bool MissionData::parse(const QString &dataPath)
   {
     QByteArray line = file.readLine();
     QList<QByteArray> parts = line.split(',');
-    if( parts.size() < 6)
+    if(parts.size() < 6)
       continue;
 
     bool ok = false;
@@ -81,7 +86,7 @@ bool MissionData::parse(const QString &dataPath)
 
 const MissionData::DataPoint &MissionData::dataAt(size_t i) const
 {
-  if( i < m_data.size())
+  if(i < m_data.size())
     return m_data[i];
 
   return m_nullData;

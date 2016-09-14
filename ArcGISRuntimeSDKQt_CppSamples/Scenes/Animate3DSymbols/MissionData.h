@@ -41,19 +41,18 @@ public:
     double m_roll;
   };
 
-  typedef std::vector< DataPoint > DataPointList;
+  typedef std::vector<DataPoint> DataPointList;
 
   MissionData();
+  ~MissionData();
 
   bool parse(const QString& dataPath);
-
   bool isEmpty() const {return m_data.empty();}
   size_t size() const {return m_data.size();}
   const DataPoint& dataAt(size_t i) const;
   bool ready() const {return m_ready;}
 
 private:
-
   DataPointList m_data;
   static DataPoint m_nullData;
   bool m_ready;
