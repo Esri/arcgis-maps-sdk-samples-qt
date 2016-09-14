@@ -108,9 +108,9 @@ Animate3DSymbolsSample {
             Slider {
                 id: cameraDistance
                 enabled: followButton.checked && missionReady
-                minimumValue: 10.
-                maximumValue: 500.
-                value: 200.
+                minimumValue: 10.0
+                maximumValue: 500.0
+                value: 200.0
                 Component.onCompleted: setZoom(value);
                 onValueChanged: setZoom(value);
             }
@@ -125,9 +125,9 @@ Animate3DSymbolsSample {
             Slider {
                 id: cameraAngle
                 enabled: followButton.checked && missionReady
-                minimumValue: 0.
-                maximumValue: 180.
-                value: 75.
+                minimumValue: 0.0
+                maximumValue: 180.0
+                value: 75.0
                 Component.onCompleted: setAngle(value);
                 onValueChanged: setAngle(value)
             }
