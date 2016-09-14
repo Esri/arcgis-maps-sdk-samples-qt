@@ -30,14 +30,26 @@ Animate3DSymbolsSample {
     property double scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D"
 
+    following: followButton.checked
+    missionFrame: progressSlider.value
+    zoom: cameraDistance.value
+    angle: cameraAngle.value
+    speed: animationSpeed.value
+
+    onNextFrameRequested: {
+        progressSlider.value = progressSlider.value + 1;
+        if (progressSlider.value >= missionSize)
+            progressSlider.value = 0;
+    }
+
     SceneView {
         id: sceneView
         objectName: "sceneView"
         anchors.fill: parent
         MouseArea {
             anchors.fill: parent
-            onPressed: mouse.accepted = followButton.checked
-            onWheel: wheel.accepted = followButton.checked
+            onPressed: mouse.accepted = following
+            onWheel: wheel.accepted = following
         }
     }
 
@@ -77,15 +89,13 @@ Animate3DSymbolsSample {
                 minimumValue: 0
                 maximumValue: missionSize
                 enabled : missionReady
-                onValueChanged: setFrame(value);
             }
 
             CheckBox {
                 id: followButton
-                checked: true
                 enabled: missionReady
                 text: "follow"
-                onCheckedChanged: setFollowing(checked);
+                checked: following
             }
         }
     }
@@ -101,35 +111,31 @@ Animate3DSymbolsSample {
             Text {
                 id: distTitle
                 text: "Zoom"
-                enabled: followButton.checked && missionReady
+                enabled: following && missionReady
                 renderType: Text.NativeRendering
             }
 
             Slider {
                 id: cameraDistance
-                enabled: followButton.checked && missionReady
+                enabled: following && missionReady
                 minimumValue: 10.0
                 maximumValue: 500.0
                 value: 200.0
-                Component.onCompleted: setZoom(value);
-                onValueChanged: setZoom(value);
             }
 
             Text {
                 id: angleTitle
                 text: "Angle"
-                enabled: followButton.checked && missionReady
+                enabled: following && missionReady
                 renderType: Text.NativeRendering
             }
 
             Slider {
                 id: cameraAngle
-                enabled: followButton.checked && missionReady
+                enabled: following && missionReady
                 minimumValue: 0.0
                 maximumValue: 180.0
                 value: 75.0
-                Component.onCompleted: setAngle(value);
-                onValueChanged: setAngle(value)
             }
 
             Text {
@@ -145,8 +151,6 @@ Animate3DSymbolsSample {
                 minimumValue: 50
                 maximumValue: 200
                 value: 50
-                Component.onCompleted: changeSpeed(value);
-                onValueChanged: changeSpeed(value);
             }
         }
     }
@@ -203,7 +207,7 @@ Animate3DSymbolsSample {
     Timer {
         id: timer
         interval: 210 - animationSpeed.value; running: playButton.checked; repeat: true
-        onTriggered: nextFrame();
+        onTriggered: animate();
     }
 
     Rectangle {

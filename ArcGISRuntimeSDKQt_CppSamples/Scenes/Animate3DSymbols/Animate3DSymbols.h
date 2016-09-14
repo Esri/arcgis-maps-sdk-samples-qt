@@ -47,6 +47,11 @@ class Animate3DSymbols : public QQuickItem
 
   Q_PROPERTY(bool missionReady READ missionReady NOTIFY missionReadyChanged)
   Q_PROPERTY(int missionSize READ missionSize NOTIFY missionSizeChanged)
+  Q_PROPERTY(bool following READ following WRITE setFollowing NOTIFY followingChanged)
+  Q_PROPERTY(int missionFrame READ missionFrame WRITE setMissionFrame)
+  Q_PROPERTY(double zoom READ zoom WRITE setZoom)
+  Q_PROPERTY(double angle READ angle WRITE setAngle)
+  Q_PROPERTY(int speed READ speed WRITE setSpeed)
 
 public:
   Animate3DSymbols(QQuickItem* parent = nullptr);
@@ -54,23 +59,32 @@ public:
 
   void componentComplete() Q_DECL_OVERRIDE;
 
-  Q_INVOKABLE void setFrame(int newFrame);
-  Q_INVOKABLE void changeSpeed(int intervalMs);
-  Q_INVOKABLE void nextFrame();
+
+  Q_INVOKABLE void animate();
   Q_INVOKABLE void changeMission(const QString& missionName);
   Q_INVOKABLE QAbstractItemModel* missionsModel() {return m_missionsModel;}
-  Q_INVOKABLE void setZoom(double zoomDist);
-  Q_INVOKABLE void setAngle(double angle);
-  Q_INVOKABLE void setFollowing(bool following);
   Q_INVOKABLE void zoomMapIn();
   Q_INVOKABLE void zoomMapOut();
 
   bool missionReady() const;
   int missionSize() const;
+  bool following() const;
+  int missionFrame() const;
+  double zoom() const;
+  double angle() const;
+  int speed() const;
+
+  void setFollowing(bool following);
+  void setMissionFrame(int newFrame);
+  void setZoom(double zoomDist);
+  void setAngle(double angle);
+  void setSpeed(int intervalMs);
 
 signals:
   void missionReadyChanged();
   void missionSizeChanged();
+  void followingChanged();
+  void nextFrameRequested();
 
 private:
   void createModel3d();

@@ -167,10 +167,9 @@ void Animate3DSymbols::componentComplete()
   createModel2d(mapOverlay);
 }
 
-void Animate3DSymbols::setFrame(int newFrame)
+void Animate3DSymbols::setMissionFrame(int newFrame)
 {
   if (m_missionData == nullptr ||
-     newFrame > (int)m_missionData->size() ||
      newFrame < 0 ||
      m_frame == newFrame)
     return;
@@ -178,20 +177,20 @@ void Animate3DSymbols::setFrame(int newFrame)
   m_frame = newFrame;
 }
 
-void Animate3DSymbols::changeSpeed(int intervalMs)
+void Animate3DSymbols::setSpeed(int intervalMs)
 {
   m_camHandler->setIntervalMs(intervalMs);
 }
 
-void Animate3DSymbols::nextFrame()
+void Animate3DSymbols::animate()
 {
   if (m_missionData == nullptr)
     return;
 
-  if (m_frame < (int)m_missionData->size())
+  if (missionFrame() < missionSize())
   {
     // get the data for this stage in the mission
-    const MissionData::DataPoint& dp = m_missionData->dataAt(m_frame);
+    const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
 
     if (m_following)
     {
@@ -231,14 +230,12 @@ void Animate3DSymbols::nextFrame()
   }
 
   // increment the frame count
-  m_frame++;
-  if (m_frame >= (int)m_missionData->size())
-    m_frame = 0;
+  emit nextFrameRequested();
 }
 
 void Animate3DSymbols::changeMission(const QString &missionNameStr)
 {
-  m_frame = 0;
+  setMissionFrame(0);
   m_camHandler->m_camWatcher.cancel();
 
   // read the mission data from .csv files stored in qrc
@@ -250,7 +247,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   {
     // create a polyline representing the route for the mission
     PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);
-    for(size_t i = 0; i < m_missionData->size(); ++i)
+    for(int i = 0; i < missionSize(); ++i)
     {
       const MissionData::DataPoint& dp = m_missionData->dataAt(i);
       routeBldr->addPoint(dp.m_pos);
@@ -258,7 +255,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
     // set the polyline as a graphic on the mapView
     m_routeGraphic->setGeometry(routeBldr->toGeometry());
 
-    const MissionData::DataPoint& dp = m_missionData->dataAt(m_frame);
+    const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
     Camera camera(dp.m_pos, m_camHandler->m_zoomDist, dp.m_heading, m_camHandler->m_angle, dp.m_roll);
     m_sceneView->setViewpointCameraAndWait(camera);
     m_mapView->setViewpointAndWait(Viewpoint(m_routeGraphic->geometry()));
@@ -344,7 +341,7 @@ void Animate3DSymbols::createGraphic3D()
   clearGraphic3D();
 
   // get the mission data for the frame
-  const MissionData::DataPoint& dp = m_missionData->dataAt(m_frame);
+  const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
 
   // create a graphic using the model symbol
   m_graphic3d = new Graphic(dp.m_pos, m_model3d, this);
@@ -358,7 +355,11 @@ void Animate3DSymbols::createGraphic3D()
 
 void Animate3DSymbols::setFollowing(bool following)
 {
+  if( m_following == following)
+    return;
+
   m_following = following;
+  emit followingChanged();
 }
 
 void Animate3DSymbols::zoomMapIn()
@@ -395,4 +396,29 @@ int Animate3DSymbols::missionSize() const
     return 0;
 
   return (int)m_missionData->size();
+}
+
+bool Animate3DSymbols::following() const
+{
+  return m_following;
+}
+
+int Animate3DSymbols::missionFrame() const
+{
+  return m_frame;
+}
+
+double Animate3DSymbols::zoom() const
+{
+  return m_camHandler ? m_camHandler->m_zoomDist : 200.0;
+}
+
+double Animate3DSymbols::angle() const
+{
+  return m_camHandler ? m_camHandler->m_angle : 90.0;
+}
+
+int Animate3DSymbols::speed() const
+{
+  return m_camHandler ? m_camHandler->m_intervalMs : 50;
 }
