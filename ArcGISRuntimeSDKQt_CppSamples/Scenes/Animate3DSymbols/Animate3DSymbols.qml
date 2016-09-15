@@ -32,7 +32,7 @@ Animate3DSymbolsSample {
 
     following: followButton.checked
     missionFrame: progressSlider.value
-    zoom: cameraDistance.value
+    zoom: cameraDistance.maximumValue - cameraDistance.value
     angle: cameraAngle.value
     speed: animationSpeed.value
 
