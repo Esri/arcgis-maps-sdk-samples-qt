@@ -37,6 +37,7 @@ ShowCalloutSample {
         Callout {
             id: callout
             calloutData: showCalloutSample.calloutData
+            accessoryButtonHidden: true
         }
         //! [set callout data]
     }

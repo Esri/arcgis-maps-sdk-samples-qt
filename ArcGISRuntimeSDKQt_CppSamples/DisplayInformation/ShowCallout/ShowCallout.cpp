@@ -52,7 +52,8 @@ void ShowCallout::componentComplete()
     //! [initialize callout]
     m_mapView->calloutData()->setVisible(false);
     m_mapView->calloutData()->setTitle("Location");
-    m_mapView->calloutData()->setImageUrl(QUrl("qrc:/Samples/DisplayInformation/ShowCallout/RedShinyPin.png"));
+    QImage image(":/Samples/DisplayInformation/ShowCallout/RedShinyPin.png");
+    m_mapView->calloutData()->setImage(image);
     m_calloutData = m_mapView->calloutData();
     emit calloutDataChanged();
     //! [initialize callout]
