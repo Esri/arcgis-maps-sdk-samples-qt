@@ -355,54 +355,24 @@ Rectangle {
         routeGraphic.symbol = routeSymbol;
         graphicsOverlay.graphics.append(routeGraphic);
 
-        var firstPoint = currentMissionModel.get(0);
-        var firstPos = ArcGISRuntimeEnvironment.createObject(
-            "Point", {
-                x: firstPoint.lon,
-                y: firstPoint.lat,
-                z: firstPoint.elevation,
-                spatialReference: SpatialReference.createWgs84()
-            });
-        var cam = ArcGISRuntimeEnvironment.createObject(
-            "Camera", {
-                location: firstPoint,
-                distance: cameraDistance.maximumValue - cameraDistance.value,
-                heading: firstPoint.heading,
-                pitch: cameraAngle.value,
-                roll: 0.0
-            });
-        sceneView.setViewpointCamera(cam);
+        var firstData = currentMissionModel.get(0);
+        var firstPos = createPoint(firstData);
+        setCamera(firstPos, firstData.heading);
         mapView.setViewpointGeometryAndPadding(routeGraphic.geometry, 200);
     }
 
     function animate() {
         if (progressSlider.value < missionSize ) {
             var missionData = currentMissionModel.get(progressSlider.value);
-            var newPos = ArcGISRuntimeEnvironment.createObject(
-                "Point", {
-                    x: missionData.lon,
-                    y: missionData.lat,
-                    z: missionData.elevation,
-                    spatialReference: SpatialReference.createWgs84()
-                });
+            var newPos = createPoint(missionData);
 
             graphic3d.geometry = newPos;
             graphic3d.attributes.replaceAttribute(headingAtt, missionData.heading);
             graphic3d.attributes.replaceAttribute(pitchAtt, missionData.pitch);
             graphic3d.attributes.replaceAttribute(rollAtt, missionData.roll);
 
-            if (followButton.checked ) {
-                var cam = ArcGISRuntimeEnvironment.createObject(
-                    "Camera", {
-                        location: newPos,
-                        distance: cameraDistance.maximumValue - cameraDistance.value,
-                        heading: missionData.heading,
-                        pitch: cameraAngle.value,
-                        roll: 0.0
-                    });
-
-                sceneView.setViewpointCamera(cam);
-            }
+            if (followButton.checked )
+                setCamera(newPos, missionData.heading);
             else
                 sceneView.update();
         }
@@ -422,5 +392,28 @@ Rectangle {
         progressSlider.value = progressSlider.value + 1;
         if (progressSlider.value >= missionSize)
            progressSlider.value = 0;
+    }
+
+    function createPoint(missionData) {
+        return ArcGISRuntimeEnvironment.createObject(
+            "Point", {
+                x: missionData.lon,
+                y: missionData.lat,
+                z: missionData.elevation,
+                spatialReference: SpatialReference.createWgs84()
+            });
+    }
+
+    function setCamera(point, headingVal) {
+        var cam = ArcGISRuntimeEnvironment.createObject(
+            "Camera", {
+                location: point,
+                distance: cameraDistance.maximumValue - cameraDistance.value,
+                heading: headingVal,
+                pitch: cameraAngle.value,
+                roll: 0.0
+            });
+
+        sceneView.setViewpointCamera(cam);
     }
 }
