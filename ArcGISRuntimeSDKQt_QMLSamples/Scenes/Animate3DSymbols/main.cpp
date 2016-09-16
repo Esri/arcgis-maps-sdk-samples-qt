@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Scenes/Animate3DSamples/Animate3DSamples.qml"));
+  view.setSource(QUrl("qrc:/Samples/Scenes/Animate3DSymbols/Animate3DSymbols.qml"));
 
   view.show();
 
