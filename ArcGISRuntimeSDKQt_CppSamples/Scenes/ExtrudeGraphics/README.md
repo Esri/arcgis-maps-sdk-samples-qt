@@ -1,4 +1,4 @@
-#Basic SceneView (URL)
+#Extrude Graphics
 
 This sample demonstrates how to render graphics extruded in the Z direction.
 

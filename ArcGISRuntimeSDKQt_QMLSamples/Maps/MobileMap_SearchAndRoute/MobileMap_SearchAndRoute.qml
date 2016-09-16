@@ -133,7 +133,7 @@ Rectangle {
                             // set stops
                             currentRouteParams.setStops(routeStops);
 
-                            // solve route using generated default parameters
+                            // solve route using created default parameters
                             currentRouteTask.solveRoute(currentRouteParams);
                         }
                     }
@@ -337,17 +337,17 @@ Rectangle {
     Connections {
         target: currentRouteTask
 
-        // if RouteTask loads properly, generate the default parameters
+        // if RouteTask loads properly, create the default parameters
         onLoadStatusChanged: {
             if (currentRouteTask.loadStatus === Enums.LoadStatusLoaded) {
-                currentRouteTask.generateDefaultParameters();
+                currentRouteTask.createDefaultParameters();
             }
         }
 
         // obtain default parameters
-        onGenerateDefaultParametersStatusChanged: {
-            if (currentRouteTask.generateDefaultParametersStatus === Enums.TaskStatusCompleted)
-                currentRouteParams = currentRouteTask.generateDefaultParametersResult;
+        onCreateDefaultParametersStatusChanged: {
+            if (currentRouteTask.createDefaultParametersStatus === Enums.TaskStatusCompleted)
+                currentRouteParams = currentRouteTask.createDefaultParametersResult;
         }
 
         onSolveRouteStatusChanged: {

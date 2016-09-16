@@ -45,7 +45,7 @@ DisplayDrawingStatusSample {
             opacity: 0.15
             gradient: Gradient {
                 GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.5; color: "black" }
+                GradientStop { position: 0.7; color: "black" }
             }
         }
 

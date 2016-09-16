@@ -1,0 +1,13 @@
+{
+    "source" :  "Animate3DSymbols",
+    "description" : "Animate3DSymbols.html",
+    "thumbnail" : "Animate3DSymbols.png",
+    "name" : "Animate 3D Symbols",
+    "dataItems" : [
+        {
+            "itemId" : "810a20c8be914170948d4c2d2146b4c5",
+            "path" : "~/ArcGIS/Runtime/Data/3D/SkyCrane/SkyCrane.lwo"
+        }
+    ]
+}
+

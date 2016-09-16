@@ -140,7 +140,7 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
 
 void MobileMap_SearchAndRoute::connectSignals()
 {
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
     {
         if (m_currentLocatorTask != nullptr)
         {
@@ -305,15 +305,15 @@ void MobileMap_SearchAndRoute::selectMap(int index)
         m_currentRouteTask = new RouteTask(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index)->transportationNetworks().at(0), this);
         m_currentRouteTask->load();
 
-        // generate default parameters after the RouteTask is loaded
+        // create default parameters after the RouteTask is loaded
         connect(m_currentRouteTask, &RouteTask::loadStatusChanged, [this](LoadStatus loadStatus)
         {
             if (loadStatus == LoadStatus::Loaded)
-                m_currentRouteTask->generateDefaultParameters();
+                m_currentRouteTask->createDefaultParameters();
         });
 
-        // store the generated route parameters
-        connect(m_currentRouteTask, &RouteTask::generateDefaultParametersCompleted, [this](QUuid, RouteParameters routeParameters)
+        // store the created route parameters
+        connect(m_currentRouteTask, &RouteTask::createDefaultParametersCompleted, [this](QUuid, RouteParameters routeParameters)
         {
             m_currentRouteParameters = routeParameters;
         });

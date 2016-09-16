@@ -90,9 +90,9 @@ void DistanceCompositeSymbol::componentComplete()
 
             DistanceCompositeSceneSymbol* compositeSceneSymbol = new DistanceCompositeSceneSymbol(this);
 
-            compositeSceneSymbol->distanceSymbolRanges()->append(dsrModel);
-            compositeSceneSymbol->distanceSymbolRanges()->append(dsrCone);
-            compositeSceneSymbol->distanceSymbolRanges()->append(dsrCircle);
+            compositeSceneSymbol->ranges()->append(dsrModel);
+            compositeSceneSymbol->ranges()->append(dsrCone);
+            compositeSceneSymbol->ranges()->append(dsrCircle);
             //! [create distance symbol ranges with each symbol type and a distance range(meters)]
 
             // create a graphic using the composite symbol

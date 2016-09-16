@@ -36,19 +36,19 @@ using namespace Esri::ArcGISRuntime;
 
 OfflineGeocode::OfflineGeocode(QQuickItem* parent):
     QQuickItem(parent),
+    m_isReverseGeocode(false),
+    m_geocodeInProgress(false),
+    m_isPressAndHold(false),
+    m_noResults(false),
+    m_suggestInProgress(false),
     m_map(nullptr),
-    m_mapView(nullptr),
     m_pinGraphic(nullptr),
-    m_tiledLayer(nullptr),
+    m_mapView(nullptr),
     m_calloutData(nullptr),
     m_locatorTask(nullptr),
+    m_tiledLayer(nullptr),
     m_graphicsOverlay(nullptr),
-    m_suggestListModel(nullptr),
-    m_noResults(false),
-    m_isPressAndHold(false),
-    m_isReverseGeocode(false),
-    m_suggestInProgress(false),
-    m_geocodeInProgress(false)
+    m_suggestListModel(nullptr)
 {
 }
 
@@ -156,13 +156,13 @@ bool OfflineGeocode::suggestInProgress() const
 
 void OfflineGeocode::connectSignals()
 {
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
     {
         m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
         m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, 1);
     });
 
-    connect(m_mapView, &MapQuickView::mousePressAndHold, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mousePressedAndHeld, [this](QMouseEvent& mouseEvent)
     {
         m_isPressAndHold = true;
         m_isReverseGeocode = true;
@@ -175,7 +175,7 @@ void OfflineGeocode::connectSignals()
         emit geocodeInProgressChanged();
     });
 
-    connect(m_mapView, &MapQuickView::mouseMove, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseMoved, [this](QMouseEvent& mouseEvent)
     {
         // if user is dragging mouse hold, realtime reverse geocode
         if (m_isPressAndHold)
@@ -188,14 +188,14 @@ void OfflineGeocode::connectSignals()
     });
 
     // reset after user stops holding down mouse
-    connect(m_mapView, &MapQuickView::mouseRelease, [this]()
+    connect(m_mapView, &MapQuickView::mouseReleased, [this]()
     {
         m_isPressAndHold = false;
         m_isReverseGeocode = false;
     });
 
     // dismiss no results notification and suggestions on mouse press
-    connect(m_mapView, &MapQuickView::mousePress, [this]()
+    connect(m_mapView, &MapQuickView::mousePressed, [this]()
     {
         m_noResults = false;
         emit noResultsChanged();
