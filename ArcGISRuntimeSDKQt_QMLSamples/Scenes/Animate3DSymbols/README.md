@@ -1,0 +1,10 @@
+#Animate 3D Samples
+
+Demonstrates how to animate a graphic's position and rotation and follow it with a camera. Also shows how to combine a SceneQuickView and MapQuickView in an MVC application with property binding.
+
+![](screenshot.png)
+
+##How it works
+
+##Features
+

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/Animate3DSamples">
+        <file alias="sample.json">Animate3DSamples.json</file>
+        <file>Animate3DSamples.png</file>
+        <file>Animate3DSamples.qml</file>
+        <file>Animate3DSamples.html</file>
+    </qresource>
+</RCC>
