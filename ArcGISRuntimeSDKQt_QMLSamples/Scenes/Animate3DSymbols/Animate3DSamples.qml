@@ -28,7 +28,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property url dataPath: "C:/Users/luke8660/ArcGIS/Runtime/Data/3D"
+    property url dataPath: System.resolvedPath(System.userHomePath) +  "/ArcGIS/Runtime/Data/3D"
 
     property int missionSize: currentMissionModel.count
     property bool missionReady: true
@@ -297,16 +297,11 @@ Rectangle {
     FileFolder{
         id: missionsFolder
         path: dataPath + "/Missions/"
-
-//        Component.onCompleted: {
-//            path = dataPath + "/Missions/"
-//        }
     }
 
     function changeMission(missionName) {      
         currentMissionModel.clear();
         progressSlider.value = 0;
-        console.log(missionsFolder.path);
         if (!missionsFolder.exists)
             return;
         var fileName = missionName.replace(/\s/g, '') + ".csv";
@@ -326,11 +321,10 @@ Rectangle {
                 "roll":dataParts[5],
             })
         }
-        console.log(currentMissionModel.count);
     }
 
     function animate() {
-        if (progressSlider.value < currentMissionModel.count ) {
+        if (progressSlider.value < missionSize ) {
             var missionData = currentMissionModel.get(progressSlider.value);
             var newPos = ArcGISRuntimeEnvironment.createObject(
                 "Point", {
