@@ -242,9 +242,9 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   setMissionFrame(0);
   m_camHandler->m_camWatcher.cancel();
 
-  // read the mission data from .csv files stored in qrc
+  // read the mission data from the samples .csv files
   QString formattedname = missionNameStr;
-  m_missionData->parse(":/Missions/" + formattedname.remove(" ") + ".csv");
+  m_missionData->parse( QUrl(m_dataPath).toLocalFile() + "/Missions/" + formattedname.remove(" ") + ".csv");
 
   // if the mission was loaded successfully, move to the start position
   if (missionReady())

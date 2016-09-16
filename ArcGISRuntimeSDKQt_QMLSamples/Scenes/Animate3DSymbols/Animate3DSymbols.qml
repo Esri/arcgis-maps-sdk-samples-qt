@@ -308,7 +308,7 @@ Rectangle {
 
     FileFolder{
         id: missionsFolder
-        path: dataPath + "/Missions/"
+        path: System.resolvedPath(dataPath) + "/Missions/"
     }
 
     function changeMission(missionName) {

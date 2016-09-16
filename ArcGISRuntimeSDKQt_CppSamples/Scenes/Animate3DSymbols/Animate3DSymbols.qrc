@@ -7,10 +7,4 @@
         <file>Animate3DSymbols.cpp</file>
         <file>Animate3DSymbols.html</file>
     </qresource>
-    <qresource prefix="/Missions">
-        <file>GrandCanyon.csv</file>
-        <file>Hawaii.csv</file>
-        <file>Pyrenees.csv</file>
-        <file>Snowdon.csv</file>
-    </qresource>
 </RCC>
