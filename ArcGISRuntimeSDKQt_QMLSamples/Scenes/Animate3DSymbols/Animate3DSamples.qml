@@ -61,15 +61,6 @@ Rectangle {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
-
-            onLoadStatusChanged: {
-                if (loadStatus !== Enums.LoadStatusLoaded)
-                    return;
-
-                graphic3d.attributes.insertAttribute(headingAtt, 0.0);
-                graphic3d.attributes.insertAttribute(pitchAtt, 0.0);
-                graphic3d.attributes.insertAttribute(rollAtt, 0.0);
-            }
         }
 
         GraphicsOverlay {
@@ -99,6 +90,10 @@ Rectangle {
                     height: 75
                     width: 75
                     anchorPosition: Enums.SceneSymbolAnchorPositionBottom
+                }
+
+                attributes {
+                    attributesJson: {"HEASING":0,"PITCH":0,"ROLL":0}
                 }
 
 //                ModelSceneSymbol {
