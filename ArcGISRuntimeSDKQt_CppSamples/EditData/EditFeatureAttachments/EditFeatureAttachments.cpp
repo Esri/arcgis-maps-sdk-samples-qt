@@ -97,7 +97,7 @@ void EditFeatureAttachments::connectSignals()
         emit hideWindow();
 
         // call identify on the map view
-        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, 1);
+        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, IdentifyReturns::GeoElementsOnly, 1);
     });
 
     // connect to the viewpoint changed signal on the MapQuickView

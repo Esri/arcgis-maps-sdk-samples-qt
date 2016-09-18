@@ -54,13 +54,13 @@ Rectangle {
         //! [identify graphics api snippet]
         // Signal handler for mouse click event on the map view
         onMouseClicked: {
-            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 22, 1000);
+            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 22, Enums.IdentifyReturnsGeoElementsOnly, 1000);
         }
 
         // Signal handler for identify graphics overlay
         onIdentifyGraphicsOverlayStatusChanged: {
             if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted) {
-                if (identifyGraphicsOverlayResults.length > 0) {
+                if (identifyGraphicsOverlayResult.graphics.length > 0) {
                     msgDialog.open();
                 }
             } else if (identifyGraphicsOverlayStatus === Enums.TaskStatusErrored) {

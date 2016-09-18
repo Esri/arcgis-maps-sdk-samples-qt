@@ -82,7 +82,7 @@ void FeatureLayerSelection::connectSignals()
     // lambda expression for the mouse press event on the mapview... do an identify operation
     connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
     {
-        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 22, 1000);
+        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 22, IdentifyReturns::GeoElementsOnly, 1000);
     });
 
     // once the identify is done

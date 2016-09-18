@@ -103,14 +103,14 @@ Rectangle {
 
         onMouseClicked: {
             clickedPoint = mouse.mapPoint;
-            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, 1);
+            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, Enums.IdentifyReturnsGeoElementsOnly, 1);
         }
 
         onIdentifyGraphicsOverlayStatusChanged: {
             if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted){
 
                 // if clicked on the pin graphic, display callout.
-                if (identifyGraphicsOverlayResults.length > 0)
+                if (identifyGraphicsOverlayResult.graphics.length > 0)
                     callout.showCallout();
 
                 // otherwise, normal reverse geocode

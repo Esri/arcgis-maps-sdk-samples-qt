@@ -146,25 +146,30 @@ void MobileMap_SearchAndRoute::connectSignals()
             m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
 
             // determine if user clicked on a graphic
-            m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, 2);
+            m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, IdentifyReturns::GeoElementsOnly, 2);
         }
     });
 
-    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, QList<Graphic*> identifyResults)
+    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
     {
-        if (identifyResults.count() > 0)
+        if (!identifyResult)
+          return;
+
+        // get graphics list
+        auto graphics = identifyResult->graphics();
+        if (graphics.count() > 0)
         {
             // use the blue pin graphic instead of text graphic to as calloutData's geoElement
-            if (identifyResults[0]->symbol()->symbolType() == SymbolType::PictureMarkerSymbol)
+            if (graphics[0]->symbol()->symbolType() == SymbolType::PictureMarkerSymbol)
             {
-                m_mapView->calloutData()->setGeoElement(identifyResults[0]);
-                m_mapView->calloutData()->setDetail(identifyResults[0]->attributes()->attributeValue("Match_addr").toString());
+                m_mapView->calloutData()->setGeoElement(graphics[0]);
+                m_mapView->calloutData()->setDetail(graphics[0]->attributes()->attributeValue("Match_addr").toString());
                 m_mapView->calloutData()->setVisible(true);
             }
-            else
+            else if (graphics.count() > 1)
             {
-                m_mapView->calloutData()->setGeoElement(identifyResults[1]);
-                m_mapView->calloutData()->setDetail(identifyResults[1]->attributes()->attributeValue("Match_addr").toString());
+                m_mapView->calloutData()->setGeoElement(graphics[1]);
+                m_mapView->calloutData()->setDetail(graphics[1]->attributes()->attributeValue("Match_addr").toString());
                 m_mapView->calloutData()->setVisible(true);
             }
         }
@@ -176,6 +181,8 @@ void MobileMap_SearchAndRoute::connectSignals()
             m_isGeocodeInProgress = true;
             emit isGeocodeInProgressChanged();
         }
+
+        identifyResult->deleteLater();
     });
 }
 
