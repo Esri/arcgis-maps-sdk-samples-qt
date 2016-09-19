@@ -73,6 +73,7 @@ Rectangle {
                 calloutLocation = mouse.mapPoint;
                 xCoor = mouse.mapPoint.x.toFixed(2);
                 yCoor = mouse.mapPoint.y.toFixed(2);
+                callout.accessoryButtonHidden = true;
                 callout.showCallout();
             }
         }
