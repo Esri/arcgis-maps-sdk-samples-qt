@@ -28,7 +28,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property url dataPath: System.resolvedPath(System.userHomePath) +  "/ArcGIS/Runtime/Data/3D"
+    property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D"
 
     property int missionSize: currentMissionModel.count
     property bool missionReady: missionSize > 0
@@ -84,7 +84,7 @@ Rectangle {
 
             ModelSceneSymbol {
                 id: mms
-                url: dataPath + "/SkyCrane/SkyCrane.lwo"
+                url: System.resolvedPath(dataPath) + "/SkyCrane/SkyCrane.lwo"
                 scale: 0.01
                 heading: 180
             }
