@@ -39,6 +39,8 @@ Rectangle {
     property string rollAtt: "ROLL";
     property string angleAtt: "ANGLE";
 
+    property var graphic3d;
+
     /**
      * Create SceneView that contains a Scene with the Imagery Basemap
      */
@@ -80,19 +82,11 @@ Rectangle {
                 }
             }
 
-            Graphic {
-                id: graphic3d
-
-                attributes {
-                    attributesJson: {"HEADING":0,"PITCH":0,"ROLL":0}
-                }
-
-                ModelSceneSymbol {
-                    id: mms
-                    url: dataPath + "/SkyCrane/SkyCrane.lwo"
-                    scale: 0.01
-                    heading: 180
-                }
+            ModelSceneSymbol {
+                id: mms
+                url: dataPath + "/SkyCrane/SkyCrane.lwo"
+                scale: 0.01
+                heading: 180
             }
         }
 
@@ -328,6 +322,14 @@ Rectangle {
 
         if (missionSize === 0)
             return;
+
+        sceneOverlay.graphics.clear();
+        graphic3d = ArcGISRuntimeEnvironment.createObject("Graphic");
+        graphic3d.symbol = mms;
+        graphic3d.attributes.insertAttribute(headingAtt, 0.0);
+        graphic3d.attributes.insertAttribute(rollAtt, 0.0);
+        graphic3d.attributes.insertAttribute(pitchAtt, 0.0);
+        sceneOverlay.graphics.append(graphic3d);
 
         var rtBldr = ArcGISRuntimeEnvironment.createObject(
             "PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
