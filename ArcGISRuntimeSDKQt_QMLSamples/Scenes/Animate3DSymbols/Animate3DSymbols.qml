@@ -85,7 +85,7 @@ Rectangle {
 
             ModelSceneSymbol {
                 id: mms
-                url: System.resolvedPath(dataPath) + "/SkyCrane/SkyCrane.lwo"
+                url: dataPath + "/SkyCrane/SkyCrane.lwo"
                 scale: 0.01
                 heading: 180
             }
@@ -115,7 +115,11 @@ Rectangle {
     GroupBox {
         id: animationGroupBox
         z: 110
-        anchors {top: sceneView.top; left: sceneView.left; margins: 10 * scaleFactor}
+        anchors {
+            top: sceneView.top
+            left: sceneView.left
+            margins: 10 * scaleFactor
+        }
 
         Column {
             spacing: 10
@@ -163,7 +167,11 @@ Rectangle {
     GroupBox {
         id: cameraGroupBox
         z: 110
-        anchors {top: sceneView.top; right: sceneView.right; margins: 10 * scaleFactor}
+        anchors {
+            top: sceneView.top
+            right: sceneView.right
+            margins: 10 * scaleFactor
+        }
 
         Column {
             spacing: 10
@@ -227,7 +235,10 @@ Rectangle {
         GroupBox {
             id: mapZoomBox
             z: 120
-            anchors {top: mapFrame.top; margins: 10 * scaleFactor}
+            anchors {
+                top: mapFrame.top
+                margins: 10 * scaleFactor
+            }
             width: mapFrame.width
 
             Row {
@@ -253,7 +264,10 @@ Rectangle {
 
         MapView {
             id: mapView
-            anchors {fill: mapFrame; margins: 2 * scaleFactor}
+            anchors {
+                fill: mapFrame
+                margins: 2 * scaleFactor
+            }
 
             Map {
                 BasemapImagery {}
@@ -297,7 +311,7 @@ Rectangle {
         }
     }
 
-    FileFolder{
+    FileFolder {
         id: missionsFolder
         path: System.resolvedPath(dataPath) + "/Missions/"
     }
@@ -420,8 +434,7 @@ Rectangle {
             sceneView.update();
     }
 
-    function getCameraDuration()
-    {
+    function getCameraDuration() {
         // the faster the animation, the shorter duration we want for our camera animations (range 10-200)
         var res = ((animationSpeed.maximumValue + animationSpeed.maximumValue) - animationSpeed.value) / animationSpeed.maximumValue;
         res *= 5.0;
