@@ -1,5 +1,5 @@
 #Animate 3D symbols
-Demonstrates how to animate a graphic's position and rotation and follow it with a camera. Also shows how to combine a SceneQuickView and MapQuickView in an MVC application with property binding.
+Demonstrates how to animate a graphic's position and rotation and follow it with a camera. Also shows how to combine a SceneView and MapView in an MVC application with property binding.
 
 ##How to use the sample
 
@@ -22,37 +22,35 @@ Camera Controls (Top Right Corner):
 ##How it works
 To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
 
-1. Create a `GraphicsOverlay` and attach it to the `SceneQuickView`.
-2. Create a `ModelSceneSymbol`.
-3. Create a `Graphic(Geometry, Symbol)`.
+1. Create a ```GraphicsOverlay``` and add it to the ```SceneView```.
+2. Create a ```ModelSceneSymbol```.
+3. Create a ```Graphic```.
  - set geometry to a point where graphic will be located in scene view
  - set symbol to the one we made above
 4. Add Attributes to graphic.
- - Get attributes from graphic, `graphic->attributes()`.
- - Add heading, pitch, and roll attribute, `attributes->insertAttribute("HEADING", myHeading)`;
-5. Create a SimpleRenderer to access and set it's expression properties.
- - access properties with `renderer->sceneProperties()`
- - set heading, pitch, and roll expressions, `sceneProperties->setHeadingExpression("HEADING")`.
+ - Get attributes from graphic, `graphic.attributes()`.
+ - Add heading, pitch, and roll attribute, `attributes.insertAttribute("HEADING", myHeading)`;
+5. Create a ```SimpleRenderer``` to access and set it's expression properties - e.g. ``headingExpression: "HEADING"`.
 6. Add graphic to the graphics overlay.
-7. Set renderer to graphics overlay, `graphicsOverlay->setRenderer(renderer)`
-8. Update graphic's location, `graphic->setGeometry(Point)`.
-9. Update graphics's heading, pitch, and roll, `graphic->attributes()->replaceAttribute("HEADING", myHeading)`.
-10. Set the sceneViews's camera to be looking at the symbol with `sceneView->setViewpointCamera( Camera(myPoint, myZoomDist, myHeading, myAngle, myRoll), myDurationSeconds)`
+7. Add a renderer to graphics overlay
+8. Update graphic's location, `graphic.geometry = geometry`.
+9. Update graphics's heading, pitch, and roll, `graphic.attributes.replaceAttribute("HEADING", myHeading)`.
+10. Set the sceneViews's camera to be looking at the symbol with `sceneView.setViewpointCamera`
 
 ##Features
  - Map
- - Scebe
+ - Scene
  - Camera
  - Graphic
  - GraphicsOverlay
  - SurfacePlacement
- - MapQuickView
+ - MapView
  - ModelSceneSymbol
  - Point
  - Polyline
  - Renderer
  - SceneProperties
- - SceneQuickView
+ - SceneView
  - Viewpoint
  
  ##Offline Data

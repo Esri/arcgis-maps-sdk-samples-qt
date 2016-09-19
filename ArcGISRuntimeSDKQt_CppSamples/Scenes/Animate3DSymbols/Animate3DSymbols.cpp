@@ -242,9 +242,9 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   setMissionFrame(0);
   m_camHandler->m_camWatcher.cancel();
 
-  // read the mission data from .csv files stored in qrc
+  // read the mission data from the samples .csv files
   QString formattedname = missionNameStr;
-  m_missionData->parse(":/Missions/" + formattedname.remove(" ") + ".csv");
+  m_missionData->parse(QUrl(m_dataPath).toLocalFile() + "/Missions/" + formattedname.remove(" ") + ".csv");
 
   // if the mission was loaded successfully, move to the start position
   if (missionReady())
@@ -261,7 +261,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
 
     const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
     Camera camera(dp.m_pos, m_camHandler->m_zoomDist, dp.m_heading, m_camHandler->m_angle, dp.m_roll);
-    m_sceneView->setViewpointCameraAndWait(camera);
+    m_sceneView->setViewpointCamera(camera);
     m_mapView->setViewpointAndWait(Viewpoint(m_routeGraphic->geometry()));
     createModel3d();
   }
@@ -331,7 +331,7 @@ void Animate3DSymbols::createModel2d(GraphicsOverlay *mapOverlay)
 void Animate3DSymbols::createRoute2d(GraphicsOverlay* mapOverlay)
 {
   // Create a 2d graphic of a solid red line to represen the route of the mission
-  SimpleLineSymbol* routeSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::red, 2, this);
+  SimpleLineSymbol* routeSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::red, 1, this);
   m_routeGraphic = new Graphic(this);
   m_routeGraphic->setSymbol(routeSymbol);
   mapOverlay->graphics()->append(m_routeGraphic);
