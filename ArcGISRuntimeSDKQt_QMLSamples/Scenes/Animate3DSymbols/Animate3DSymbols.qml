@@ -318,7 +318,7 @@ Rectangle {
                 "lat":dataParts[1],
                 "elevation":dataParts[2],
                 "heading":dataParts[3],
-                "pich":dataParts[4],
+                "pitch":dataParts[4],
                 "roll":dataParts[5],
             })
         }
@@ -329,9 +329,7 @@ Rectangle {
         sceneOverlay.graphics.clear();
         graphic3d = ArcGISRuntimeEnvironment.createObject("Graphic");
         graphic3d.symbol = mms;
-        graphic3d.attributes.insertAttribute(headingAtt, 0.0);
-        graphic3d.attributes.insertAttribute(rollAtt, 0.0);
-        graphic3d.attributes.insertAttribute(pitchAtt, 0.0);
+
         sceneOverlay.graphics.append(graphic3d);
 
         var rtBldr = ArcGISRuntimeEnvironment.createObject(
@@ -348,6 +346,10 @@ Rectangle {
 
         var firstData = currentMissionModel.get(0);
         var firstPos = createPoint(firstData);
+        graphic3d.geometry = firstPos;
+        graphic3d.attributes.insertAttribute(headingAtt, firstData.heading);
+        graphic3d.attributes.insertAttribute(rollAtt, firstData.roll);
+        graphic3d.attributes.insertAttribute(pitchAtt, firstData.pitch);
         setCamera(firstPos, firstData.heading);
         mapView.setViewpointGeometryAndPadding(routeGraphic.geometry, 200);
     }
