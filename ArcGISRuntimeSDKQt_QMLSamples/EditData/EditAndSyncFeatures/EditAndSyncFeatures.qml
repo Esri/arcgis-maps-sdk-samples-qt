@@ -73,7 +73,7 @@ Rectangle {
         onMouseClicked: {
             if (isOffline && !selectedFeature) {
                 // identify to select a feature
-                mapView.identifyLayer(map.operationalLayers.get(0), mouse.x, mouse.y, 5);
+                mapView.identifyLayer(map.operationalLayers.get(0), mouse.x, mouse.y, 5, Enums.IdentifyReturnsGeoElementsOnly);
             } else if (isOffline && selectedFeature) {
 
                 // connect to feature table signal

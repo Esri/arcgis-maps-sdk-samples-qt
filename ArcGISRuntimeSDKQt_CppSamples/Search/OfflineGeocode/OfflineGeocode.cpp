@@ -159,7 +159,7 @@ void OfflineGeocode::connectSignals()
     connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
     {
         m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
-        m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, 1);
+        m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, IdentifyReturns::GeoElementsOnly, 1);
     });
 
     connect(m_mapView, &MapQuickView::mousePressedAndHeld, [this](QMouseEvent& mouseEvent)
@@ -209,10 +209,14 @@ void OfflineGeocode::connectSignals()
     });
 
     // if clicked pin graphic, show callout. otherwise, reverse geocode
-    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, QList<Graphic*> identifyResults)
+    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
     {
+        if (!identifyResult)
+          return;
+
         // if user clicked on pin, display callout
-        if (identifyResults.count() > 0)
+        auto graphics = identifyResult->graphics();
+        if (graphics.count() > 0)
             m_calloutData->setVisible(true);
 
         // otherwise, reverse geocode at that point
@@ -224,6 +228,8 @@ void OfflineGeocode::connectSignals()
             m_geocodeInProgress = true;
             emit geocodeInProgressChanged();
         }
+
+        identifyResult->deleteLater();
     });
 
     connect(m_locatorTask, &LocatorTask::geocodeCompleted, [this](QUuid, QList<GeocodeResult> geocodeResults)

@@ -120,7 +120,7 @@ Rectangle {
 
             mousePointX = mouse.x;
             mousePointY = mouse.y - callout.height;
-            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10, 1);
+            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 10, Enums.IdentifyReturnsGeoElementsOnly, 1);
         }
 
         onIdentifyLayerStatusChanged: {

@@ -110,18 +110,24 @@ void FindAddress::connectSignals()
         emit hideCallout();
 
         // call identify on the map view
-        m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, 1);
+        m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, IdentifyReturns::GeoElementsOnly, 1);
     });
 
     // connect to the identifyGraphicsOverlayCompleted signal on the map view
-    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, QList<Graphic*> identifyResults)
+    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
     {
-        if (identifyResults.length() > 0)
+        if (!identifyResult)
+          return;
+
+        auto graphics = identifyResult->graphics();
+        if (graphics.length() > 0)
         {
-            m_calloutText = identifyResults.at(0)->attributes()->attributeValue("Match_addr").toString();
-            m_calloutDetailedText = identifyResults.at(0)->attributes()->attributeValue("Place_addr").toString();
+            m_calloutText = graphics.at(0)->attributes()->attributeValue("Match_addr").toString();
+            m_calloutDetailedText = graphics.at(0)->attributes()->attributeValue("Place_addr").toString();
             emit showCallout(m_screenX, m_screenY, m_calloutText, m_calloutDetailedText);
         }
+
+        identifyResult->deleteLater();
     });
 }
 

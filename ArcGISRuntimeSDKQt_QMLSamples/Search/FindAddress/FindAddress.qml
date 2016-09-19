@@ -56,10 +56,10 @@ Rectangle {
         // show the callout once the identify is complete
         onIdentifyGraphicsOverlayStatusChanged: {
             if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted) {
-                if (identifyGraphicsOverlayResults.length > 0) {
+                if (identifyGraphicsOverlayResult.graphics.length > 0) {
                     // setup the attributes
-                    calloutText = identifyGraphicsOverlayResults[0].attributes.attributeValue("Match_addr");
-                    calloutDetailText = identifyGraphicsOverlayResults[0].attributes.attributeValue("Place_addr");
+                    calloutText = identifyGraphicsOverlayResult.graphics[0].attributes.attributeValue("Match_addr");
+                    calloutDetailText = identifyGraphicsOverlayResult.graphics[0].attributes.attributeValue("Place_addr");
 
                     // show the callout
                     callout.x = mousePointX - (callout.width / 2);
@@ -74,7 +74,7 @@ Rectangle {
             callout.visible = false;
             mousePointX = mouse.x;
             mousePointY = mouse.y;
-            mapView.identifyGraphicsOverlay(graphicsOverlay, mouse.x, mouse.y, 2);
+            mapView.identifyGraphicsOverlay(graphicsOverlay, mouse.x, mouse.y, 2, Enums.IdentifyReturnsGeoElementsOnly);
         }
 
         // hide callout after navigation

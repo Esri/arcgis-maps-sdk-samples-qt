@@ -56,7 +56,11 @@ Animate3DSymbolsSample {
     GroupBox {
         id: animationGroupBox
         z: 110
-        anchors {top: sceneView.top; left: sceneView.left; margins: 10 * scaleFactor}
+        anchors {
+            top: sceneView.top
+            left: sceneView.left
+            margins: 10 * scaleFactor
+        }
 
         Column {
             spacing: 10
@@ -84,6 +88,7 @@ Animate3DSymbolsSample {
                 text: "progress"
                 renderType: Text.NativeRendering
             }
+
             Slider {
                 id: progressSlider
                 minimumValue: 0
@@ -103,14 +108,18 @@ Animate3DSymbolsSample {
     GroupBox {
         id: cameraGroupBox
         z: 110
-        anchors {top: sceneView.top; right: sceneView.right; margins: 10 * scaleFactor}
+        anchors {
+            top: sceneView.top
+            right: sceneView.right
+            margins: 10 * scaleFactor
+        }
 
         Column {
             spacing: 10
 
             Text {
                 id: distTitle
-                text: "Zoom"
+                text: "zoom"
                 enabled: following && missionReady
                 renderType: Text.NativeRendering
             }
@@ -125,7 +134,7 @@ Animate3DSymbolsSample {
 
             Text {
                 id: angleTitle
-                text: "Angle"
+                text: "angle"
                 enabled: following && missionReady
                 renderType: Text.NativeRendering
             }
@@ -140,7 +149,7 @@ Animate3DSymbolsSample {
 
             Text {
                 id: speedTitle
-                text: "Speed"
+                text: "speed"
                 enabled: missionReady
                 renderType: Text.NativeRendering
             }
@@ -157,7 +166,10 @@ Animate3DSymbolsSample {
 
     Rectangle {
         id: mapFrame
-        anchors {left:sceneView.left; bottom: sceneView.bottom}
+        anchors {
+            left:sceneView.left
+            bottom: sceneView.bottom
+        }
         width: Math.max(sceneView.width * .2, 128 * scaleFactor)
         height: Math.max(sceneView.height * .4, 128 * scaleFactor)
         color: "black"
@@ -167,7 +179,10 @@ Animate3DSymbolsSample {
         GroupBox {
             id: mapZoomBox
             z: 120
-            anchors {top: mapFrame.top; margins: 10 * scaleFactor}
+            anchors {
+                top: mapFrame.top
+                margins: 10 * scaleFactor
+            }
             width: mapFrame.width
 
             Row {
@@ -194,7 +209,10 @@ Animate3DSymbolsSample {
         MapView {
             id: mapView
             objectName: "mapView"
-            anchors {fill: mapFrame; margins: 2 * scaleFactor}
+            anchors {
+                fill: mapFrame
+                margins: 2 * scaleFactor
+            }
 
             MouseArea {
                 anchors.fill: parent
@@ -206,7 +224,9 @@ Animate3DSymbolsSample {
 
     Timer {
         id: timer
-        interval: 210 - animationSpeed.value; running: playButton.checked; repeat: true
+        interval: 210 - animationSpeed.value;
+        running: playButton.checked;
+        repeat: true
         onTriggered: animate();
     }
 
