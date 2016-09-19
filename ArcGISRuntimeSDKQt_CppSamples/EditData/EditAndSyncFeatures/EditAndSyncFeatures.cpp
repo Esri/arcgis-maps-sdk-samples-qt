@@ -233,13 +233,13 @@ void EditAndSyncFeatures::generateGeodatabaseFromCorners(double xCorner1, double
         // start the generate job
         generateJob->start();
     }
+    //! [EditAndSyncFeatures generate]
     else
     {
         emit updateStatus("Generate failed");
         emit hideWindow(5000, false);
     }
 }
-//! [EditAndSyncFeatures generate]
 
 void EditAndSyncFeatures::addOfflineData()
 {
@@ -308,11 +308,11 @@ void EditAndSyncFeatures::executeSync()
         // start the sync job
         syncJob->start();
     }
+    //! [EditAndSyncFeatures executeSync]
     else
     {
         emit updateStatus("Sync failed");
         emit hideWindow(5000, false);
     }
 }
-//! [EditAndSyncFeatures executeSync]
 
