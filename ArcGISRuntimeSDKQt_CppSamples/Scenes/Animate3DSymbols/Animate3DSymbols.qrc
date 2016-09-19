@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/Animate3DSymbols">
+        <file alias="sample.json">Animate3DSymbols.json</file>
+        <file>Animate3DSymbols.png</file>
+        <file>Animate3DSymbols.qml</file>
+        <file>Animate3DSymbols.h</file>
+        <file>Animate3DSymbols.cpp</file>
+        <file>Animate3DSymbols.html</file>
+    </qresource>
+    <qresource prefix="/Missions">
+        <file>GrandCanyon.csv</file>
+        <file>Hawaii.csv</file>
+        <file>Pyrenees.csv</file>
+        <file>Snowdon.csv</file>
+    </qresource>
+</RCC>
