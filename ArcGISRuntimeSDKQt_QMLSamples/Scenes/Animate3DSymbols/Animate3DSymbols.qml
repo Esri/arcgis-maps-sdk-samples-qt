@@ -40,6 +40,7 @@ Rectangle {
     property string angleAtt: "ANGLE";
 
     property var graphic3d;
+    property bool camReady: true;
 
     /**
      * Create SceneView that contains a Scene with the Imagery Basemap
@@ -95,6 +96,8 @@ Rectangle {
             onPressed: mouse.accepted = followButton.checked
             onWheel: wheel.accepted = followButton.checked
         }
+
+        onSetViewpointCameraCompleted: camReady = true;
     }
 
     ListModel {
@@ -407,6 +410,30 @@ Rectangle {
                 roll: 0.0
             });
 
-        sceneView.setViewpointCamera(cam);
+        if (!playButton.checked)
+            sceneView.setViewpointCamera(cam);
+        else if (camReady) {
+            camReady = false;
+            sceneView.setViewpointCameraAndSeconds(cam, getCameraDuration());
+        }
+        else
+            sceneView.update();
+    }
+
+    function getCameraDuration()
+    {
+        // the faster the animation, the shorter duration we want for our camera animations (range 10-200)
+        var res = ((animationSpeed.maximumValue + animationSpeed.maximumValue) - animationSpeed.value) / animationSpeed.maximumValue;
+        res *= 5.0;
+
+        // slow down camera animation when the camera is zoomed right in (range 10-500)
+        var zoomFactor = (cameraDistance.value) / cameraDistance.maximumValue;
+        res += zoomFactor;
+
+        // for very steep angles the camera needs to be quick enough to keep the model in view
+        if( cameraAngle.value > 135 || cameraAngle.value < 45)
+           res = 0.0;
+
+        return res;
     }
 }
