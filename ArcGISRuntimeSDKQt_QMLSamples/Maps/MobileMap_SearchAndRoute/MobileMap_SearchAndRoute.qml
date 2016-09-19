@@ -210,7 +210,7 @@ Rectangle {
         onMouseClicked: {
             if (currentLocatorTask !== null) {
                 clickedPoint = mouse.mapPoint;
-                identifyGraphicsOverlayWithMaxResults(stopsGraphicsOverlay, mouse.x, mouse.y, 5, 2);
+                identifyGraphicsOverlayWithMaxResults(stopsGraphicsOverlay, mouse.x, mouse.y, 5, Enums.IdentifyReturnsGeoElementsOnly, 2);
             }
         }
 
@@ -218,10 +218,11 @@ Rectangle {
             if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted){
 
                 // if clicked on the pin graphic, display callout.
-                if (identifyGraphicsOverlayResults.length > 0) {
+                if (identifyGraphicsOverlayResult.graphics.length > 0) {
 
                     // set callout's geoelement
-                    mapView.calloutData.geoElement = identifyGraphicsOverlayResults[0].symbol.symbolType === Enums.SymbolTypePictureMarkerSymbol ? identifyGraphicsOverlayResults[0] : identifyGraphicsOverlayResults[1];
+                    mapView.calloutData.geoElement = identifyGraphicsOverlayResult.graphics[0].symbol.symbolType === Enums.SymbolTypePictureMarkerSymbol ?
+                                identifyGraphicsOverlayResult.graphics[0] : identifyGraphicsOverlayResult.graphics[1];
                     mapView.calloutData.detail = mapView.calloutData.geoElement.attributes.attributeValue("Match_addr");
                     callout.showCallout();
                 }
