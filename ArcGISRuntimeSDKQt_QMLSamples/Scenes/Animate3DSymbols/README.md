@@ -1,4 +1,4 @@
-#Animate 3D Symbols
+#Animate 3D symbols
 Demonstrates how to animate a graphic's position and rotation and follow it with a camera. Also shows how to combine a SceneView and MapView in an MVC application with property binding.
 
 ##How to use the sample
@@ -22,17 +22,15 @@ Camera Controls (Top Right Corner):
 ##How it works
 To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
 
-1. Create a `GraphicsOverlay` and attach it to the `SceneQuickView`.
-2. Create a `ModelSceneSymbol`.
-3. Create a `Graphic(Geometry, Symbol)`.
+1. Create a ```GraphicsOverlay``` and add it to the ```SceneView```.
+2. Create a ```ModelSceneSymbol```.
+3. Create a ```Graphic```.
  - set geometry to a point where graphic will be located in scene view
  - set symbol to the one we made above
 4. Add Attributes to graphic.
  - Get attributes from graphic, `graphic.attributes()`.
  - Add heading, pitch, and roll attribute, `attributes.insertAttribute("HEADING", myHeading)`;
-5. Create a SimpleRenderer to access and set it's expression properties.
- - access properties with `renderer->sceneProperties()`
- - set heading, pitch, and roll expression properties, `headingExpression("HEADING")`.
+5. Create a ```SimpleRenderer``` to access and set it's expression properties - e.g. ``headingExpression: "HEADING"`.
 6. Add graphic to the graphics overlay.
 7. Add a renderer to graphics overlay
 8. Update graphic's location, `graphic.geometry = geometry`.
@@ -61,4 +59,8 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 Link | Local Location
 ---------|-------|
 |[Model Marker Symbol Data](https://www.arcgis.com/home/item.html?id=810a20c8be914170948d4c2d2146b4c5)| `<userhome>`/ArcGIS/Runtime/Data/3D/SkyCrane/SkyCrane.lwo |
+|[GrandCanyon.csv mission data](https://www.arcgis.com/home/item.html?id=290f0c571c394461a8b58b6775d0bd63)| `<userhome>`/ArcGIS/Runtime/Data/3D/Missions/GrandCanyon.csv |
+|[Hawaii.csv mission data](https://www.arcgis.com/home/item.html?id=e87c154fb9c2487f999143df5b08e9b1)| `<userhome>`/ArcGIS/5a9b60cee9ba41e79640a06bcdf8084dime/Data/3D/Missions/Hawaii.csv |
+|[Pyrenees.csv mission data](https://www.arcgis.com/home/item.html?id=5a9b60cee9ba41e79640a06bcdf8084d)| `<userhome>`/ArcGIS/Runtime/Data/3D/Missions/Pyrenees.csv |
+|[Snowdon.csv mission data](https://www.arcgis.com/home/item.html?id=12509ffdc684437f8f2656b0129d2c13)| `<userhome>`/ArcGIS/Runtime/Data/3D/Missions/Snowdon.csv |
 

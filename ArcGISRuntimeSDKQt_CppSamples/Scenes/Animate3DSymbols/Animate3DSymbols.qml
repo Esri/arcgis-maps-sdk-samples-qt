@@ -84,6 +84,7 @@ Animate3DSymbolsSample {
                 text: "progress"
                 renderType: Text.NativeRendering
             }
+
             Slider {
                 id: progressSlider
                 minimumValue: 0
@@ -206,7 +207,9 @@ Animate3DSymbolsSample {
 
     Timer {
         id: timer
-        interval: 210 - animationSpeed.value; running: playButton.checked; repeat: true
+        interval: 210 - animationSpeed.value;
+        running: playButton.checked;
+        repeat: true
         onTriggered: animate();
     }
 

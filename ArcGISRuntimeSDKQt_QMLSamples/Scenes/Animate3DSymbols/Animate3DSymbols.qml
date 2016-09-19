@@ -1,4 +1,4 @@
-// [WriteFile Name=Animate3DSamples, Category=Scenes]
+// [WriteFile Name=Animate3DSymbols, Category=Scenes]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -140,6 +140,7 @@ Rectangle {
                 text: "progress"
                 renderType: Text.NativeRendering
             }
+
             Slider {
                 id: progressSlider
                 minimumValue: 0
@@ -277,7 +278,9 @@ Rectangle {
 
     Timer {
         id: timer
-        interval: 210 - animationSpeed.value; running: playButton.checked; repeat: true
+        interval: 210 - animationSpeed.value;
+        running: playButton.checked;
+        repeat: true
         onTriggered: animate();
     }
 
@@ -305,7 +308,7 @@ Rectangle {
         var fileName = missionName.replace(/\s/g, '') + ".csv";
         var fileContents = missionsFolder.readTextFile(fileName);
         var lines = fileContents.split("\n");
-        for(var i = 0; i < lines.length; i++) {
+        for (var i = 0; i < lines.length; i++) {
             var dataParts = lines[i].split(",");
             if (dataParts.length !== 6)
                 continue;
@@ -333,8 +336,8 @@ Rectangle {
 
         var rtBldr = ArcGISRuntimeEnvironment.createObject(
             "PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
-        for (var i = 0; i < currentMissionModel.count; i++) {
-            var missionData = currentMissionModel.get(i);
+        for (var j = 0; j < currentMissionModel.count; j++) {
+            var missionData = currentMissionModel.get(j);
             rtBldr.addPointXY(missionData.lon, missionData.lat);
         }
 
@@ -359,7 +362,7 @@ Rectangle {
             graphic3d.attributes.replaceAttribute(pitchAtt, missionData.pitch);
             graphic3d.attributes.replaceAttribute(rollAtt, missionData.roll);
 
-            if (followButton.checked )
+            if (followButton.checked)
                 setCamera(newPos, missionData.heading);
             else
                 sceneView.update();
