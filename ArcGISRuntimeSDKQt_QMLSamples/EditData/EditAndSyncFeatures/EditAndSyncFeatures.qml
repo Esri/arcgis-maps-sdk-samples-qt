@@ -113,6 +113,7 @@ Rectangle {
         }
     }
 
+    //! [EditAndSyncFeatures create GeodatabaseSyncTask]
     // create the GeodatabaseSyncTask to generate the local geodatabase
     GeodatabaseSyncTask {
         id: geodatabaseSyncTask
@@ -211,6 +212,8 @@ Rectangle {
                 syncWindow.hideWindow(5000);
             }
         }
+        // ...
+        //! [EditAndSyncFeatures create GeodatabaseSyncTask]
 
         function displayLayersFromGeodatabase() {
             // remove the original online feature layers
@@ -236,6 +239,7 @@ Rectangle {
         }
     }
 
+    //! [EditAndSyncFeatures GeodatabaseSyncTask parameters]
     // create the generate geodatabase parameters
     GenerateGeodatabaseParameters {
         id: generateParameters
@@ -251,7 +255,7 @@ Rectangle {
         ]
     }
 
-    // create the generate geodatabase parameters
+    // create the sync geodatabase parameters
     SyncGeodatabaseParameters {
         id: syncParameters
 
@@ -264,6 +268,7 @@ Rectangle {
         // push up edits, and receive any new edits
         geodatabaseSyncDirection: Enums.SyncDirectionBidirectional
     }
+    //! [EditAndSyncFeatures GeodatabaseSyncTask parameters]
 
     // create an extent rectangle for the output geodatabase
     Rectangle {
