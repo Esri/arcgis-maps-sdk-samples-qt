@@ -83,25 +83,16 @@ Rectangle {
             Graphic {
                 id: graphic3d
 
-                SimpleMarkerSceneSymbol {
-                    id: coneSymbol
-                    style: Enums.SimpleMarkerSceneSymbolStyleCone
-                    color: "blue"
-                    height: 75
-                    width: 75
-                    anchorPosition: Enums.SceneSymbolAnchorPositionBottom
-                }
-
                 attributes {
-                    attributesJson: {"HEASING":0,"PITCH":0,"ROLL":0}
+                    attributesJson: {"HEADING":0,"PITCH":0,"ROLL":0}
                 }
 
-//                ModelSceneSymbol {
-//                    id: mms
-//                    url: dataPath + "/SkyCrane/SkyCrane.lwo"
-//                    scale: 0.01
-//                    heading: 180
-//                }
+                ModelSceneSymbol {
+                    id: mms
+                    url: dataPath + "/SkyCrane/SkyCrane.lwo"
+                    scale: 0.01
+                    heading: 180
+                }
             }
         }
 
