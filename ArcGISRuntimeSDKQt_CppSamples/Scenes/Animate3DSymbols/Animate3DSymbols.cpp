@@ -123,7 +123,8 @@ void Animate3DSymbols::componentComplete()
 
   // find QML SceneView component
   m_sceneView = findChild<SceneQuickView*>("sceneView");
-
+  // turn off attribution text since this will be visible in the map
+  m_sceneView->setAttributionTextVisible(false);
   // create a new scene instance
   Scene* scene = new Scene(Basemap::imagery(this), this);
 

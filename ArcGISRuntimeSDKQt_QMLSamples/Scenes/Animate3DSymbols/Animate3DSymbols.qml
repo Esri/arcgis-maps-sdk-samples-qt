@@ -50,6 +50,7 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
+        attributionTextVisible: false // turn off attribution text since this will be visible in the map
 
         // create a scene...scene is a default property of sceneview
         // and thus will get added to the sceneview
