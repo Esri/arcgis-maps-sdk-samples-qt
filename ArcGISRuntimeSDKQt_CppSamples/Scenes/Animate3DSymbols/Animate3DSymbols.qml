@@ -110,7 +110,7 @@ Animate3DSymbolsSample {
 
             Text {
                 id: distTitle
-                text: "Zoom"
+                text: "zoom"
                 enabled: following && missionReady
                 renderType: Text.NativeRendering
             }
@@ -125,7 +125,7 @@ Animate3DSymbolsSample {
 
             Text {
                 id: angleTitle
-                text: "Angle"
+                text: "angle"
                 enabled: following && missionReady
                 renderType: Text.NativeRendering
             }
@@ -140,7 +140,7 @@ Animate3DSymbolsSample {
 
             Text {
                 id: speedTitle
-                text: "Speed"
+                text: "speed"
                 enabled: missionReady
                 renderType: Text.NativeRendering
             }
