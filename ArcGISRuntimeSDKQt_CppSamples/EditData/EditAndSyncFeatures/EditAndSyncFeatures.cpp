@@ -144,6 +144,7 @@ void EditAndSyncFeatures::connectSignals()
    });
 }
 
+//! [EditAndSyncFeatures parameters generate]
 GenerateGeodatabaseParameters EditAndSyncFeatures::getGenerateParameters(Envelope gdbExtent)
 {
     // create the parameters
@@ -160,7 +161,9 @@ GenerateGeodatabaseParameters EditAndSyncFeatures::getGenerateParameters(Envelop
 
     return params;
 }
+//! [EditAndSyncFeatures parameters generate]
 
+//! [EditAndSyncFeatures parameters sync]
 SyncGeodatabaseParameters EditAndSyncFeatures::getSyncParameters()
 {
     // create the parameters
@@ -175,7 +178,9 @@ SyncGeodatabaseParameters EditAndSyncFeatures::getSyncParameters()
 
     return params;
 }
+//! [EditAndSyncFeatures parameters sync]
 
+//! [EditAndSyncFeatures generate]
 void EditAndSyncFeatures::generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
 {
     // create an envelope from the QML rectangle corners
@@ -228,6 +233,7 @@ void EditAndSyncFeatures::generateGeodatabaseFromCorners(double xCorner1, double
         // start the generate job
         generateJob->start();
     }
+    //! [EditAndSyncFeatures generate]
     else
     {
         emit updateStatus("Generate failed");
@@ -258,6 +264,7 @@ bool EditAndSyncFeatures::isOffline() const
     return m_isOffline;
 }
 
+//! [EditAndSyncFeatures executeSync]
 void EditAndSyncFeatures::executeSync()
 {
     // get the updated parameters
@@ -301,9 +308,11 @@ void EditAndSyncFeatures::executeSync()
         // start the sync job
         syncJob->start();
     }
+    //! [EditAndSyncFeatures executeSync]
     else
     {
         emit updateStatus("Sync failed");
         emit hideWindow(5000, false);
     }
 }
+
