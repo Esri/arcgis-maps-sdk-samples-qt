@@ -163,8 +163,8 @@ Rectangle {
                         spacing: 5
                         anchors.verticalCenter: parent.verticalCenter
                         Image {
-                            width: symbolWidth * scaleFactor
-                            height: symbolHeight * scaleFactor
+                            width: Math.min(symbolWidth, 20) * scaleFactor
+                            height: Math.min(symbolHeight, 20) * scaleFactor
                             source: symbolUrl
                         }
                         Text {
