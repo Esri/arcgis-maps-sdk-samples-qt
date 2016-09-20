@@ -123,7 +123,6 @@ void Animate3DSymbols::componentComplete()
 
   // find QML SceneView component
   m_sceneView = findChild<SceneQuickView*>("sceneView");
-
   // create a new scene instance
   Scene* scene = new Scene(Basemap::imagery(this), this);
 
@@ -151,6 +150,7 @@ void Animate3DSymbols::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setAttributionTextVisible(false);
 
   // set up mini map
   Map* map = new Map(Basemap::imagery(this), this);
@@ -384,6 +384,13 @@ void Animate3DSymbols::zoomMapOut()
 
   // zoom the map view out, focusing on the position of the 2d graphic for the helicopter
   m_mapView->setViewpoint(Viewpoint((Point)m_routeGraphic->geometry(), m_mapView->mapScale() * m_mapZoomFactor));
+}
+
+void Animate3DSymbols::viewWidthChanged(bool sceneViewIsWider)
+{
+  // only show the attribution text on the view with the widest visible extent
+  m_sceneView->setAttributionTextVisible(sceneViewIsWider);
+  m_mapView->setAttributionTextVisible(!sceneViewIsWider);
 }
 
 bool Animate3DSymbols::missionReady() const

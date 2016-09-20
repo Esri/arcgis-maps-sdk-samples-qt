@@ -42,6 +42,8 @@ Animate3DSymbolsSample {
             progressSlider.value = 0;
     }
 
+    onWidthChanged: viewWidthChanged((sceneView.width - mapView.width) > mapView.width);
+
     SceneView {
         id: sceneView
         objectName: "sceneView"
