@@ -50,7 +50,7 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
-        attributionTextVisible: false // turn off attribution text since this will be visible in the map
+        attributionTextVisible: (sceneView.width - mapView.width) > mapView.width // only show attribution text on the widest view
 
         // create a scene...scene is a default property of sceneview
         // and thus will get added to the sceneview
@@ -265,6 +265,7 @@ Rectangle {
 
         MapView {
             id: mapView
+            attributionTextVisible: !sceneView.attributionTextVisible
             anchors {
                 fill: mapFrame
                 margins: 2 * scaleFactor

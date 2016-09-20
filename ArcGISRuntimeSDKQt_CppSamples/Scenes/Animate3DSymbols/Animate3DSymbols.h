@@ -65,6 +65,7 @@ public:
   Q_INVOKABLE QAbstractItemModel* missionsModel() {return m_missionsModel;}
   Q_INVOKABLE void zoomMapIn();
   Q_INVOKABLE void zoomMapOut();
+  Q_INVOKABLE void viewWidthChanged(bool sceneViewIsWider);
 
   bool missionReady() const;
   int missionSize() const;
