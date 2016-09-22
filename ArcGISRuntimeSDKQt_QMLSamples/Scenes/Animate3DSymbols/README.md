@@ -25,8 +25,8 @@ To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
 1. Create a ```GraphicsOverlay``` and add it to the ```SceneView```.
 2. Create a ```ModelSceneSymbol```.
 3. Create a ```Graphic```.
- 1. set geometry to a point where graphic will be located in scene view
- 2. set symbol to the one we made above
+ 1. Set geometry to a point where graphic will be located in scene view
+ 2. Set symbol to the one we made above
 4. Add Attributes to graphic.
  1. Get attributes from graphic, `graphic.attributes()`.
  2. Add heading, pitch, and roll attribute, `attributes.insertAttribute("HEADING", myHeading)`;
