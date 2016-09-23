@@ -54,7 +54,7 @@ void DistanceCompositeSymbol::componentComplete()
     // create a new scene instance
     m_scene = new Scene(basemap, this);
     // set scene on the scene view
-    m_sceneView->setScene(m_scene);
+    m_sceneView->setArcGISScene(m_scene);
 
     // create a new elevation source
     ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);

@@ -127,7 +127,7 @@ void Animate3DSymbols::componentComplete()
   Scene* scene = new Scene(Basemap::imagery(this), this);
 
   // set scene on the scene view
-  m_sceneView->setScene(scene);
+  m_sceneView->setArcGISScene(scene);
 
   // create a new elevation source
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(

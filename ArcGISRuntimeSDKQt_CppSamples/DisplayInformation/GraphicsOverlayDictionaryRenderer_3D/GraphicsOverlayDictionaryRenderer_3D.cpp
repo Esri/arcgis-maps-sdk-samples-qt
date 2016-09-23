@@ -68,7 +68,7 @@ void GraphicsOverlayDictionaryRenderer_3D::componentComplete()
                     QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
                     this));
     scene->setBaseSurface(surface);
-    m_sceneView->setScene(scene);
+    m_sceneView->setArcGISScene(scene);
     m_sceneView->graphicsOverlays()->append(m_graphicsOverlay);
 
     parseXmlFile();
@@ -179,7 +179,7 @@ void GraphicsOverlayDictionaryRenderer_3D::createGraphic(QVariantMap rawAttribut
 
 void GraphicsOverlayDictionaryRenderer_3D::zoomToGraphics()
 {
-    m_bbox = GeometryEngine::project(m_bbox, m_sceneView->scene()->spatialReference());
+    m_bbox = GeometryEngine::project(m_bbox, m_sceneView->arcGISScene()->spatialReference());
 
     // Create a camera that looks at the bbox center, height 15000, pitch 70
     Camera camera(m_bbox.extent().center(), 15000, 0, 70, 0);

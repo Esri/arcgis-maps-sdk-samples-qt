@@ -63,7 +63,7 @@ void Surface_Placement::componentComplete()
     scene->setInitialViewpoint(viewpoint);
 
     // set the scene to the scene view
-    m_sceneView->setScene(scene);
+    m_sceneView->setArcGISScene(scene);
 
     // add graphics overlays and set surface placement
     addGraphicsOverlays();
