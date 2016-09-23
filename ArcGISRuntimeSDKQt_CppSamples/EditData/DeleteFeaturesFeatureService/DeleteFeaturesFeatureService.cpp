@@ -93,8 +93,10 @@ void DeleteFeaturesFeatureService::connectSignals()
         emit screenYChanged();
         emit hideWindow();
 
+        //! [DeleteFeaturesFeatureService identify feature]
         // call identify on the map view
         m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, IdentifyReturns::GeoElementsOnly, 1);
+        //! [DeleteFeaturesFeatureService identify feature]
     });
 
     // connect to the viewpoint changed signal on the MapQuickView

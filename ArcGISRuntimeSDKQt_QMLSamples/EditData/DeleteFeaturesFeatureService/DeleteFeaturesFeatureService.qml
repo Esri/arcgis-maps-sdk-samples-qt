@@ -126,8 +126,10 @@ Rectangle {
 
             mousePointX = mouse.x;
             mousePointY = mouse.y - callout.height;
+            //! [DeleteFeaturesFeatureService identify feature]
             // call identify on the feature layer
             mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10, Enums.IdentifyReturnsGeoElementsOnly);
+            //! [DeleteFeaturesFeatureService identify feature]
         }
 
         onIdentifyLayerStatusChanged: {
