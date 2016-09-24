@@ -53,7 +53,7 @@ void ManageBookmarks::componentComplete()
     m_mapView->setMap(m_map);
 
     // create the bookmarks once the map is loaded
-    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
+    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, this, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
     {
         if (loadStatus == LoadStatus::Loaded)
         {

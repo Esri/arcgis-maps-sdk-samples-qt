@@ -58,7 +58,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
 
     m_geodatabase = new Geodatabase(m_dataPath + "/geodatabase/militaryoverlay.geodatabase", this);
 
-    connect(m_geodatabase, &Geodatabase::loadStatusChanged, [this](LoadStatus gdbLoadStatus)
+    connect(m_geodatabase, &Geodatabase::loadStatusChanged, this, [this](LoadStatus gdbLoadStatus)
     {
         if (gdbLoadStatus == LoadStatus::Loaded)
         {

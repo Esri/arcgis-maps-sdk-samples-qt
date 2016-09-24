@@ -74,7 +74,7 @@ void FeatureLayerGeodatabase::componentComplete()
     //! [FeatureLayer Geodatabase create gdb]
 
     // connect to doneLoading signal of geodatabase to access feature tables
-    connect(m_geodatabase, &Geodatabase::doneLoading, [this](Error error)
+    connect(m_geodatabase, &Geodatabase::doneLoading, this, [this](Error error)
     {
         if (error.isEmpty())
         {

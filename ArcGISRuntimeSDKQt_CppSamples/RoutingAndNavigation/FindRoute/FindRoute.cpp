@@ -77,7 +77,7 @@ void FindRoute::componentComplete()
     m_mapView->graphicsOverlays()->append(m_stopsGraphicsOverlay);
 
     // connect to loadStatusChanged signal
-    connect(m_map, &Map::loadStatusChanged, [this](LoadStatus loadStatus)
+    connect(m_map, &Map::loadStatusChanged, this, [this](LoadStatus loadStatus)
     {
         if (loadStatus == LoadStatus::Loaded)
         {
@@ -122,7 +122,7 @@ void FindRoute::setupRouteTask()
     m_routeTask = new RouteTask(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"), this);
 
     // connect to loadStatusChanged signal
-    connect(m_routeTask, &RouteTask::loadStatusChanged, [this](LoadStatus loadStatus)
+    connect(m_routeTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
     {
         if (loadStatus == LoadStatus::Loaded)
         {
@@ -132,14 +132,14 @@ void FindRoute::setupRouteTask()
     });
 
     // connect to createDefaultParametersCompleted signal
-    connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, [this](QUuid, RouteParameters routeParameters)
+    connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
     {
         // Store the resulting route parameters
         m_routeParameters = routeParameters;
     });
 
     // connect to solveRouteCompleted signal
-    connect(m_routeTask, &RouteTask::solveRouteCompleted, [this](QUuid, RouteResult routeResult)
+    connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
     {
         // Add the route graphic once the solve completes
         auto generatedRoute = routeResult.routes().at(0);

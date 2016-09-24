@@ -43,7 +43,7 @@ void SearchSymbolDictionary::componentComplete()
     m_symbolDictionary = new SymbolDictionary("mil2525d", datapath, this);
 
     //Connect to the search completed signal of the dictionary
-    connect(m_symbolDictionary, &SymbolDictionary::searchSymbolsCompleted, [this](QUuid, StyleSymbolSearchResultListModel* results)
+    connect(m_symbolDictionary, &SymbolDictionary::searchSymbolsCompleted, this, [this](QUuid, StyleSymbolSearchResultListModel* results)
     {
         m_searchResults = results;
         emit searchResultsListModelChanged();

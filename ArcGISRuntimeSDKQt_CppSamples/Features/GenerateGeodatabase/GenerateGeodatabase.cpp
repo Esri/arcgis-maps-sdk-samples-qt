@@ -80,7 +80,7 @@ void GenerateGeodatabase::componentComplete()
     //! [Features GenerateGeodatabase Part 1]
 
     // connect to sync task doneLoading signal
-    connect(m_syncTask, &GeodatabaseSyncTask::doneLoading, [this](Error error)
+    connect(m_syncTask, &GeodatabaseSyncTask::doneLoading, this, [this](Error error)
     {
       if (!error.isEmpty())
       {
@@ -105,7 +105,7 @@ void GenerateGeodatabase::componentComplete()
     });
 
     // connect to map doneLoading signal
-    connect(m_map, &Map::doneLoading, [this](Error error)
+    connect(m_map, &Map::doneLoading, this, [this](Error error)
     {
         if (error.isEmpty())
         {
@@ -208,7 +208,7 @@ void GenerateGeodatabase::addOfflineData(Geodatabase* gdb)
     m_map->operationalLayers()->clear();
 
     // load the geodatabase
-    connect(gdb, &Geodatabase::doneLoading, [this, gdb](Error)
+    connect(gdb, &Geodatabase::doneLoading, this, [this, gdb](Error)
     {
         // create a feature layer from each feature table, and add to the map
         foreach (auto featureTable, gdb->geodatabaseFeatureTables())

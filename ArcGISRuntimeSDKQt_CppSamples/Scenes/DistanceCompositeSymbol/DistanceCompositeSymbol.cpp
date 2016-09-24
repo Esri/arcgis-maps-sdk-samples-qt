@@ -75,7 +75,7 @@ void DistanceCompositeSymbol::componentComplete()
     mms->setHeading(180);
     //! [create model scene symbol]
 
-    connect(mms, &ModelSceneSymbol::loadStatusChanged, [mms, point, graphicsOverlay, this](){
+    connect(mms, &ModelSceneSymbol::loadStatusChanged, this, [mms, point, graphicsOverlay, this](){
         if (mms->loadStatus() == LoadStatus::Loaded)
         {
             SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10.0f, this);

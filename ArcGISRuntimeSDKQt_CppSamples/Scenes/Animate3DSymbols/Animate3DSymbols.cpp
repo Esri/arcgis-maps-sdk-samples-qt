@@ -303,7 +303,7 @@ void Animate3DSymbols::createModel3d()
   }
 
   // when the model is successfully loaded, setup the 3g draphic to show it it the scene
-  connect(m_model3d, &ModelSceneSymbol::loadStatusChanged, [this]()
+  connect(m_model3d, &ModelSceneSymbol::loadStatusChanged, this, [this]()
     {
       if (m_model3d->loadStatus() == LoadStatus::Loaded)
         createGraphic3D();
