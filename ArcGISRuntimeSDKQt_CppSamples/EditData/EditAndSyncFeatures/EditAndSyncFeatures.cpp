@@ -92,7 +92,7 @@ void EditAndSyncFeatures::componentComplete()
 void EditAndSyncFeatures::connectSignals()
 {
     // lambda expression for the mouse clicked signal on the mapview
-    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         if (m_isOffline)
         {
@@ -104,7 +104,7 @@ void EditAndSyncFeatures::connectSignals()
             {
                 // connect to feature table signal
                 auto featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(0));
-                connect(featureLayer->featureTable(), &GeodatabaseFeatureTable::updateFeatureCompleted, [this, featureLayer](QUuid, bool success)
+                connect(featureLayer->featureTable(), &GeodatabaseFeatureTable::updateFeatureCompleted, this, [this, featureLayer](QUuid, bool success)
                 {
                     if (success)
                     {
@@ -124,7 +124,7 @@ void EditAndSyncFeatures::connectSignals()
     });
 
     // once the identify is done
-    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
+    connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
     {
         if (!identifyResult)
           return;
@@ -199,7 +199,7 @@ void EditAndSyncFeatures::generateGeodatabaseFromCorners(double xCorner1, double
     // connect to the job's status changed signal
     if (generateJob)
     {
-        connect(generateJob, &GenerateGeodatabaseJob::jobStatusChanged, [this, generateJob]()
+        connect(generateJob, &GenerateGeodatabaseJob::jobStatusChanged, this, [this, generateJob]()
         {
             // connect to the job's status changed signal to know once it is done
             switch (generateJob->jobStatus()) {
@@ -247,7 +247,7 @@ void EditAndSyncFeatures::addOfflineData()
     m_map->operationalLayers()->clear();
 
     // load the geodatabase
-    connect(m_offlineGdb, &Geodatabase::doneLoading, [this](Error)
+    connect(m_offlineGdb, &Geodatabase::doneLoading, this, [this](Error)
     {
         // create a feature layer from each feature table, and add to the map
         foreach (auto featureTable, m_offlineGdb->geodatabaseFeatureTables())
@@ -276,7 +276,7 @@ void EditAndSyncFeatures::executeSync()
     // connect to the job's status changed signal
     if (syncJob)
     {
-        connect(syncJob, &GenerateGeodatabaseJob::jobStatusChanged, [this, syncJob]()
+        connect(syncJob, &GenerateGeodatabaseJob::jobStatusChanged, this, [this, syncJob]()
         {
             // connect to the job's status changed signal to know once it is done
             switch (syncJob->jobStatus()) {

@@ -68,7 +68,7 @@ void ExportTiles::componentComplete()
 
     // create the task with the url and load it
     m_exportTileCacheTask = new ExportTileCacheTask(m_serviceUrl, this);
-    connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, [this](Error error)
+    connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, this, [this](Error error)
     {
         if (!error.isEmpty())
         {
@@ -88,7 +88,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
     auto tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
     // connect to sync task doneLoading signal
-    connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, [this, dataPath](QUuid, ExportTileCacheParameters parameters)
+    connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, this, [this, dataPath](QUuid, ExportTileCacheParameters parameters)
     {
         m_parameters = parameters;
 
@@ -99,7 +99,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
         if (exportJob)
         {
             // connect to the job's status changed signal
-            connect(exportJob, &ExportTileCacheJob::jobStatusChanged, [this, exportJob]()
+            connect(exportJob, &ExportTileCacheJob::jobStatusChanged, this, [this, exportJob]()
             {
                 // connect to the job's status changed signal to know once it is done
                 switch (exportJob->jobStatus()) {
@@ -153,7 +153,7 @@ void ExportTiles::displayOutputTileCache(TileCache* tileCache)
     m_map->setBasemap(basemap);
 
     // zoom to the new layer and hide window once loaded
-    connect(tiledLayer, &ArcGISTiledLayer::doneLoading, [this, tiledLayer]()
+    connect(tiledLayer, &ArcGISTiledLayer::doneLoading, this, [this, tiledLayer]()
     {
         if (tiledLayer->loadStatus() == LoadStatus::Loaded)
         {

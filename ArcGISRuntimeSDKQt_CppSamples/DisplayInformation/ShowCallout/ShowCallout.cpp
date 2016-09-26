@@ -59,7 +59,7 @@ void ShowCallout::componentComplete()
     //! [initialize callout]
 
     // display callout on mouseClicked
-    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent){
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent){
         if (m_mapView->calloutData()->isVisible())
             m_mapView->calloutData()->setVisible(false);
         else

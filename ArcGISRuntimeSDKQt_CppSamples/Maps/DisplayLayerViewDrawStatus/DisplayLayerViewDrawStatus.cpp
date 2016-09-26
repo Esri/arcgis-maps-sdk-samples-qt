@@ -103,7 +103,7 @@ void DisplayLayerViewDrawStatus::addLayers()
 void DisplayLayerViewDrawStatus::connectSignals()
 {
     // connect layerViewStateChanged signal
-    connect(m_mapView, &MapQuickView::layerViewStateChanged, [this](Layer* layer, LayerViewState viewState)
+    connect(m_mapView, &MapQuickView::layerViewStateChanged, this, [this](Layer* layer, LayerViewState viewState)
     {
         int rIndex;
 
@@ -134,7 +134,7 @@ void DisplayLayerViewDrawStatus::connectSignals()
         emit statusChanged();
     });
 
-    connect(m_map, &Map::loadStatusChanged, [this](LoadStatus loadStatus)
+    connect(m_map, &Map::loadStatusChanged, this, [this](LoadStatus loadStatus)
     {
         if (loadStatus == LoadStatus::Loaded)
             emit mapReady();

@@ -79,7 +79,7 @@ void UpdateGeometryFeatureService::componentComplete()
 void UpdateGeometryFeatureService::connectSignals()
 {
     // connect to the mouse clicked signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         // get the point from the mouse point
         Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
@@ -110,7 +110,7 @@ void UpdateGeometryFeatureService::connectSignals()
     });
 
     // connect to the identifyLayerCompleted signal on the map view
-    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, IdentifyLayerResult* identifyResult)
+    connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
     {
         if(!identifyResult)
           return;
@@ -131,7 +131,7 @@ void UpdateGeometryFeatureService::connectSignals()
     });
 
     // connect to the updateFeatureCompleted signal to determine if the update was successful
-    connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, [this](QUuid, bool success)
+    connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this](QUuid, bool success)
     {
         // if the update was successful, call apply edits to apply to the service
         if (success)
@@ -139,7 +139,7 @@ void UpdateGeometryFeatureService::connectSignals()
     });
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
     {
         // obtain the first item in the list
         QSharedPointer<FeatureEditResult> featureEditResult = featureEditResults.first();

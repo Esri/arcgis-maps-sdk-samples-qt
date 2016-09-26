@@ -57,7 +57,7 @@ void DisplayDrawingStatus::componentComplete()
     // Set map to map view
     m_mapView->setMap(m_map);
 
-    connect(m_mapView, &MapQuickView::drawStatusChanged,[this](DrawStatus drawStatus)
+    connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
     {
         drawStatus == DrawStatus::InProgress ? m_mapDrawing = true : m_mapDrawing = false;
         emit mapDrawStatusChanged();

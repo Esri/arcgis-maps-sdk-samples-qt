@@ -156,13 +156,13 @@ bool OfflineGeocode::suggestInProgress() const
 
 void OfflineGeocode::connectSignals()
 {
-    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
         m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, IdentifyReturns::GeoElementsOnly, 1);
     });
 
-    connect(m_mapView, &MapQuickView::mousePressedAndHeld, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)
     {
         m_isPressAndHold = true;
         m_isReverseGeocode = true;
@@ -175,7 +175,7 @@ void OfflineGeocode::connectSignals()
         emit geocodeInProgressChanged();
     });
 
-    connect(m_mapView, &MapQuickView::mouseMoved, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseMoved, this, [this](QMouseEvent& mouseEvent)
     {
         // if user is dragging mouse hold, realtime reverse geocode
         if (m_isPressAndHold)
@@ -188,28 +188,28 @@ void OfflineGeocode::connectSignals()
     });
 
     // reset after user stops holding down mouse
-    connect(m_mapView, &MapQuickView::mouseReleased, [this]()
+    connect(m_mapView, &MapQuickView::mouseReleased, this, [this]()
     {
         m_isPressAndHold = false;
         m_isReverseGeocode = false;
     });
 
     // dismiss no results notification and suggestions on mouse press
-    connect(m_mapView, &MapQuickView::mousePressed, [this]()
+    connect(m_mapView, &MapQuickView::mousePressed, this, [this]()
     {
         m_noResults = false;
         emit noResultsChanged();
         emit dismissSuggestions();
     });
 
-    connect(m_suggestListModel, &SuggestListModel::suggestInProgressChanged, [this]()
+    connect(m_suggestListModel, &SuggestListModel::suggestInProgressChanged, this, [this]()
     {
         m_suggestInProgress = m_suggestListModel->suggestInProgress();
         emit suggestInProgressChanged();
     });
 
     // if clicked pin graphic, show callout. otherwise, reverse geocode
-    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
+    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
     {
         if (!identifyResult)
           return;
@@ -232,7 +232,7 @@ void OfflineGeocode::connectSignals()
         identifyResult->deleteLater();
     });
 
-    connect(m_locatorTask, &LocatorTask::geocodeCompleted, [this](QUuid, QList<GeocodeResult> geocodeResults)
+    connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, QList<GeocodeResult> geocodeResults)
     {
         // dismiss busy indicator
         m_geocodeInProgress = false;

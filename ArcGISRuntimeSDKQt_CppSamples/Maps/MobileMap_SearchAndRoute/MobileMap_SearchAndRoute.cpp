@@ -115,7 +115,7 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
             MobileMapPackage* mobileMapPackage = new MobileMapPackage(m_fileInfoList[index].absoluteFilePath());
 
             // once MMPK is finished loading, add it and its information to lists
-            connect(mobileMapPackage, &MobileMapPackage::doneLoading, [mobileMapPackage, this](Error error)
+            connect(mobileMapPackage, &MobileMapPackage::doneLoading, this, [mobileMapPackage, this](Error error)
             {
                 if (error.isEmpty())
                 {
@@ -140,7 +140,7 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
 
 void MobileMap_SearchAndRoute::connectSignals()
 {
-    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         if (m_currentLocatorTask != nullptr)
         {
@@ -151,7 +151,7 @@ void MobileMap_SearchAndRoute::connectSignals()
         }
     });
 
-    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
+    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
     {
         if (!identifyResult)
           return;
@@ -240,7 +240,7 @@ void MobileMap_SearchAndRoute::selectMap(int index)
         // prevent connecting same signal to multiple slots
         m_currentLocatorTask->disconnect();
 
-        connect(m_currentLocatorTask, &LocatorTask::geocodeCompleted, [this](QUuid, QList<GeocodeResult> geocodeResults)
+        connect(m_currentLocatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, QList<GeocodeResult> geocodeResults)
         {
             // make busy indicator invisible
             m_isGeocodeInProgress = false;
@@ -313,20 +313,20 @@ void MobileMap_SearchAndRoute::selectMap(int index)
         m_currentRouteTask->load();
 
         // create default parameters after the RouteTask is loaded
-        connect(m_currentRouteTask, &RouteTask::loadStatusChanged, [this](LoadStatus loadStatus)
+        connect(m_currentRouteTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
         {
             if (loadStatus == LoadStatus::Loaded)
                 m_currentRouteTask->createDefaultParameters();
         });
 
         // store the created route parameters
-        connect(m_currentRouteTask, &RouteTask::createDefaultParametersCompleted, [this](QUuid, RouteParameters routeParameters)
+        connect(m_currentRouteTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
         {
             m_currentRouteParameters = routeParameters;
         });
 
         // create a graphic using the routeResult
-        connect(m_currentRouteTask, &RouteTask::solveRouteCompleted, [this](QUuid, RouteResult routeResult)
+        connect(m_currentRouteTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
         {
             Graphic* routeGraphic = new Graphic(routeResult.routes()[0].routeGeometry());
             m_routeGraphicsOverlay->graphics()->append(routeGraphic);

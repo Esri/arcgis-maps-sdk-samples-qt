@@ -48,7 +48,7 @@ void OpenMobileMap_MapPackage::componentComplete()
     m_mobileMapPackage = new MobileMapPackage(dataPath + "Yellowstone.mmpk", this);
 
     // wait for the mobile map package to load
-    connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, [this](Error error)
+    connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](Error error)
     {
         if (error.isEmpty())
         {

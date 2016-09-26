@@ -80,13 +80,13 @@ void FeatureLayerSelection::connectSignals()
 {
     //! [identify feature layer qml api snippet]
     // lambda expression for the mouse press event on the mapview... do an identify operation
-    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 22, IdentifyReturns::GeoElementsOnly, 1000);
     });
 
     // once the identify is done
-    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
+    connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
     {
         if (!identifyResult)
           return;

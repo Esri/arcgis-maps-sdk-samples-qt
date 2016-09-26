@@ -84,7 +84,7 @@ void FindAddress::componentComplete()
 void FindAddress::connectSignals()
 {
     // connect to geocode complete signal on the LocatorTask
-    connect(m_locatorTask, &LocatorTask::geocodeCompleted, [this](QUuid, QList<GeocodeResult> geocodeResults)
+    connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, QList<GeocodeResult> geocodeResults)
     {
         if (geocodeResults.length() > 0)
         {
@@ -96,13 +96,13 @@ void FindAddress::connectSignals()
     });
 
     // connect to the viewpoint changed signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::viewpointChanged, [this]()
+    connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
     {
         emit hideCallout();
     });
 
     // connect to the mouse click signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         // set the properties for qml
         m_screenX = mouseEvent.x() - 110;
@@ -114,7 +114,7 @@ void FindAddress::connectSignals()
     });
 
     // connect to the identifyGraphicsOverlayCompleted signal on the map view
-    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
+    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
     {
         if (!identifyResult)
           return;

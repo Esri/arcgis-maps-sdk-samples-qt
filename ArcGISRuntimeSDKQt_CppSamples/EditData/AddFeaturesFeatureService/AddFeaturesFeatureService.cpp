@@ -77,7 +77,7 @@ void AddFeaturesFeatureService::componentComplete()
 void AddFeaturesFeatureService::connectSignals()
 {
     // connect to the mouse clicked signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         // obtain the map point
         Point newPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
@@ -93,7 +93,7 @@ void AddFeaturesFeatureService::connectSignals()
     });
 
     // connect to the addFeatureCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::addFeatureCompleted, [this](QUuid, bool success)
+    connect(m_featureTable, &ServiceFeatureTable::addFeatureCompleted, this, [this](QUuid, bool success)
     {
         // if add feature was successful, call apply edits
         if (success)
@@ -101,7 +101,7 @@ void AddFeaturesFeatureService::connectSignals()
     });
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
     {
         if (featureEditResults.isEmpty())
             return;
