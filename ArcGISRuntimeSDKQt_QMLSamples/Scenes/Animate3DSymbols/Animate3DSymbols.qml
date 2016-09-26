@@ -289,7 +289,7 @@ Rectangle {
 
     SimpleLineSymbol {
         id: routeSymbol
-        style: Enums.SimpleFillSymbolStyleSolid
+        style: Enums.SimpleLineSymbolStyleSolid
         color: Qt.rgba(1.0, 0.0, 0.0, 1)
         width: 1
         antiAlias: true
