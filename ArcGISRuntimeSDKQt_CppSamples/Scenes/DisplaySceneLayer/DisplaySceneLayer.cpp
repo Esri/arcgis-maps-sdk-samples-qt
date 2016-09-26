@@ -66,6 +66,6 @@ void DisplaySceneLayer::componentComplete()
     m_scene->setInitialViewpoint(initViewpoint);
 
     // set scene on the scene view
-    m_sceneView->setScene(m_scene);
+    m_sceneView->setArcGISScene(m_scene);
 }
 
