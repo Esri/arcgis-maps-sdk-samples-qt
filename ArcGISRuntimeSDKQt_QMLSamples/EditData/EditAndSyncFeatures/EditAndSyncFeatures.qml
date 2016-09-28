@@ -145,7 +145,6 @@ Rectangle {
         }
 
         function updateGenerateJobStatus() {
-            //console.log("updateGenerateJobStatus");
             switch(generateJob.jobStatus) {
             case Enums.JobStatusFailed:
                 statusText = "Generate failed";
