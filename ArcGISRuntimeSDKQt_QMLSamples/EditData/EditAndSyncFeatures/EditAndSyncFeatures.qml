@@ -118,10 +118,12 @@ Rectangle {
     GeodatabaseSyncTask {
         id: geodatabaseSyncTask
         url: featureServiceUrl
+        property var generateJob
+        property var syncJob
 
         function executeGenerate() {
             // execute the asynchronous task and obtain the job
-            var generateJob = generateGeodatabase(generateParameters, outputGdb);
+            generateJob = generateGeodatabase(generateParameters, outputGdb);
 
             // check if the job is valid
             if (generateJob) {
@@ -130,32 +132,7 @@ Rectangle {
                 syncWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
-                generateJob.jobStatusChanged.connect(function() {
-                    switch(generateJob.jobStatus) {
-                    case Enums.JobStatusFailed:
-                        statusText = "Generate failed";
-                        syncWindow.hideWindow(5000);
-                        break;
-                    case Enums.JobStatusNotStarted:
-                        statusText = "Job not started";
-                        break;
-                    case Enums.JobStatusPaused:
-                        statusText = "Job paused";
-                        break;
-                    case Enums.JobStatusStarted:
-                        statusText = "In progress...";
-                        break;
-                    case Enums.JobStatusSucceeded:
-                        statusText = "Complete";
-                        syncWindow.hideWindow(1500);
-                        offlineGdb = generateJob.geodatabase;
-                        displayLayersFromGeodatabase();
-                        isOffline = true;
-                        break;
-                    default:
-                        break;
-                    }
-                });
+                generateJob.jobStatusChanged.connect(updateGenerateJobStatus);
 
                 // start the job
                 generateJob.start();
@@ -167,9 +144,36 @@ Rectangle {
             }
         }
 
+        function updateGenerateJobStatus() {
+            switch(generateJob.jobStatus) {
+            case Enums.JobStatusFailed:
+                statusText = "Generate failed";
+                syncWindow.hideWindow(5000);
+                break;
+            case Enums.JobStatusNotStarted:
+                statusText = "Job not started";
+                break;
+            case Enums.JobStatusPaused:
+                statusText = "Job paused";
+                break;
+            case Enums.JobStatusStarted:
+                statusText = "In progress...";
+                break;
+            case Enums.JobStatusSucceeded:
+                statusText = "Complete";
+                syncWindow.hideWindow(1500);
+                offlineGdb = generateJob.geodatabase;
+                displayLayersFromGeodatabase();
+                isOffline = true;
+                break;
+            default:
+                break;
+            }
+        }
+
         function executeSync() {
             // execute the asynchronous task and obtain the job
-            var syncJob = syncGeodatabase(syncParameters, offlineGdb);
+            syncJob = syncGeodatabase(syncParameters, offlineGdb);
 
             // check if the job is valid
             if (syncJob) {
@@ -178,30 +182,7 @@ Rectangle {
                 syncWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
-                syncJob.jobStatusChanged.connect(function() {
-                    switch(syncJob.jobStatus) {
-                    case Enums.JobStatusFailed:
-                        statusText = "Sync failed";
-                        syncWindow.hideWindow(5000);
-                        break;
-                    case Enums.JobStatusNotStarted:
-                        statusText = "Job not started";
-                        break;
-                    case Enums.JobStatusPaused:
-                        statusText = "Job paused";
-                        break;
-                    case Enums.JobStatusStarted:
-                        statusText = "In progress...";
-                        break;
-                    case Enums.JobStatusSucceeded:
-                        statusText = "Complete";
-                        syncWindow.hideWindow(1500);
-                        isOffline = true;
-                        break;
-                    default:
-                        break;
-                    }
-                });
+                syncJob.jobStatusChanged.connect(updateSyncJobStatus);
 
                 // start the job
                 syncJob.start();
@@ -212,6 +193,32 @@ Rectangle {
                 syncWindow.hideWindow(5000);
             }
         }
+
+        function updateSyncJobStatus() {
+            switch(syncJob.jobStatus) {
+            case Enums.JobStatusFailed:
+                statusText = "Sync failed";
+                syncWindow.hideWindow(5000);
+                break;
+            case Enums.JobStatusNotStarted:
+                statusText = "Job not started";
+                break;
+            case Enums.JobStatusPaused:
+                statusText = "Job paused";
+                break;
+            case Enums.JobStatusStarted:
+                statusText = "In progress...";
+                break;
+            case Enums.JobStatusSucceeded:
+                statusText = "Complete";
+                syncWindow.hideWindow(1500);
+                isOffline = true;
+                break;
+            default:
+                break;
+            }
+        }
+
         // ...
         //! [EditAndSyncFeatures create GeodatabaseSyncTask]
 
@@ -236,6 +243,11 @@ Rectangle {
                 }
             });
             offlineGdb.load();
+        }
+
+        Component.onDestruction: {
+            generateJob.jobStatusChanged.disconnect(updateGenerateJobStatus);
+            syncJob.jobStatusChanged.disconnect(updateSyncJobStatus);
         }
     }
 

@@ -63,6 +63,7 @@ Rectangle {
     ExportTileCacheTask {
         id: exportTask
         url: tiledServiceUrl
+        property var exportJob
 
         onCreateDefaultExportTileCacheParametersStatusChanged: {
             if (createDefaultExportTileCacheParametersStatus === Enums.TaskStatusCompleted) {
@@ -80,7 +81,7 @@ Rectangle {
 
         function executeExportTileCacheTask(params) {
             // execute the asynchronous task and obtain the job
-            var exportJob = exportTask.exportTileCache(params, outputTileCache);
+            exportJob = exportTask.exportTileCache(params, outputTileCache);
 
             // check if job is valid
             if (exportJob) {
@@ -88,36 +89,40 @@ Rectangle {
                 exportWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
-                exportJob.jobStatusChanged.connect(function() {
-                    switch(exportJob.jobStatus) {
-                    case Enums.JobStatusFailed:
-                        statusText = "Export failed";
-                        exportWindow.hideWindow(5000);
-                        break;
-                    case Enums.JobStatusNotStarted:
-                        statusText = "Job not started";
-                        break;
-                    case Enums.JobStatusPaused:
-                        statusText = "Job paused";
-                        break;
-                    case Enums.JobStatusStarted:
-                        statusText = "In progress...";
-                        break;
-                    case Enums.JobStatusSucceeded:
-                        statusText = "Adding TPK...";
-                        exportWindow.hideWindow(1500);
-                        displayOutputTileCache(exportJob.result);
-                        break;
-                    default:
-                        break;
-                    }
-                });
+                exportJob.jobStatusChanged.connect(updateJobStatus);
 
                 exportJob.start();
             } else {
                 exportWindow.visible = true;
                 statusText = "Export failed";
                 exportWindow.hideWindow(5000);
+            }
+        }
+
+        function updateJobStatus() {
+            switch(exportJob.jobStatus) {
+            case Enums.JobStatusFailed:
+                statusText = "Export failed";
+                exportWindow.hideWindow(5000);
+                break;
+            case Enums.JobStatusNotStarted:
+                statusText = "Job not started";
+                break;
+            case Enums.JobStatusPaused:
+                statusText = "Job paused";
+                break;
+            case Enums.JobStatusStarted:
+                console.log("In progress...");
+                statusText = "In progress...";
+                break;
+            case Enums.JobStatusSucceeded:
+                statusText = "Adding TPK...";
+                exportWindow.hideWindow(1500);
+                displayOutputTileCache(exportJob.result);
+                break;
+            default:
+                console.log("default");
+                break;
             }
         }
 
@@ -140,6 +145,10 @@ Rectangle {
                     mapView.setViewpointScale(mapView.mapScale * .5);
                 }
             });
+        }
+
+        Component.onDestruction: {
+            exportJob.jobStatusChanged.disconnect(updateJobStatus);
         }
     }
 
