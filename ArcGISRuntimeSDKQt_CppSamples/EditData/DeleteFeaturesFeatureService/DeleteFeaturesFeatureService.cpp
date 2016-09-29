@@ -95,7 +95,7 @@ void DeleteFeaturesFeatureService::connectSignals()
 
         //! [DeleteFeaturesFeatureService identify feature]
         // call identify on the map view
-        double tolerance = 5;
+        double tolerance = 5.0;
         int maxResults = 1;
         m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), tolerance, IdentifyReturns::GeoElementsOnly, maxResults);
         //! [DeleteFeaturesFeatureService identify feature]
