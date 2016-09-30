@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Portal/PortalUserInfo">
+        <file alias="sample.json">PortalUserInfo.json</file>
+        <file>PortalUserInfo.png</file>
+        <file>PortalUserInfo.qml</file>
+        <file>PortalUserInfo.html</file>
+    </qresource>
+</RCC>
