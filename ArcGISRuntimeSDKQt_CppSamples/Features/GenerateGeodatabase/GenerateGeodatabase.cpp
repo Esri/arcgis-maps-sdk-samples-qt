@@ -91,15 +91,19 @@ void GenerateGeodatabase::componentComplete()
 
       // add online feature layers to the map, and obtain service IDs
       m_featureServiceInfo = m_syncTask->featureServiceInfo();
-      foreach (auto featureLayerInfo, m_featureServiceInfo.featureLayerInfos())
+      foreach (auto idInfo, m_featureServiceInfo.layerInfos())
       {
+          // get the layer ID from the idInfo
+          auto id = QString::number(idInfo.infoId());
+
           // add the layer to the map
-          ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(featureLayerInfo.url());
+          QUrl featureLayerUrl(m_featureServiceInfo.url().toString() + "/" + id);
+          ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(featureLayerUrl);
           FeatureLayer* featureLayer = new FeatureLayer(serviceFeatureTable, this);
           m_map->operationalLayers()->append(featureLayer);
 
           // add the layer id to the string list
-          m_serviceIds << QString::number(featureLayerInfo.serviceLayerId());
+          m_serviceIds << id;
       }
 
     });
@@ -164,7 +168,7 @@ void GenerateGeodatabase::generateGeodatabaseFromCorners(double xCorner1, double
     // connect to the job's status changed signal
     if (generateJob)
     {
-        connect(generateJob, &GenerateGeodatabaseJob::jobStatusChanged, [this, generateJob]()
+        connect(generateJob, &GenerateGeodatabaseJob::jobStatusChanged, this, [this, generateJob]()
         {
             // connect to the job's status changed signal to know once it is done
             switch (generateJob->jobStatus()) {

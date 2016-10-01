@@ -76,18 +76,20 @@ Rectangle {
     GeodatabaseSyncTask {
         id: geodatabaseSyncTask
         url: featureServiceUrl
+        property var generateJob
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusLoaded) {
-                var featureLayerInfos = featureServiceInfo.featureLayerInfos;
-                for (var i = 0; i < featureLayerInfos.length; i++) {
+                var idInfos = featureServiceInfo.layerInfos;
+                for (var i = 0; i < idInfos.length; i++) {
                     // add the layer to the map
-                    var serviceFeatureTable = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {url: featureLayerInfos[i].url});
+                    var featureLayerUrl = featureServiceInfo.url + "/" + idInfos[i].infoId;
+                    var serviceFeatureTable = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {url: featureLayerUrl});
                     var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: serviceFeatureTable});
                     map.operationalLayers.append(featureLayer);
 
                     // add a new GenerateLayerOption to array for use in the GenerateGeodatabaseParameters
-                    var layerOption = ArcGISRuntimeEnvironment.createObject("GenerateLayerOption", {layerId: featureLayerInfos[i].serviceLayerId});
+                    var layerOption = ArcGISRuntimeEnvironment.createObject("GenerateLayerOption", {layerId: idInfos[i].infoId});
                     generateLayerOptions.push(layerOption);
                     generateParameters.layerOptions = generateLayerOptions;
                 }
@@ -96,7 +98,7 @@ Rectangle {
 
         function executeGenerate() {
             // execute the asynchronous task and obtain the job
-            var generateJob = generateGeodatabase(generateParameters, outputGdb);
+            generateJob = generateGeodatabase(generateParameters, outputGdb);
 
             // check if the job is valid
             if (generateJob) {
@@ -105,30 +107,7 @@ Rectangle {
                 generateWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
-                generateJob.jobStatusChanged.connect(function() {
-                    switch(generateJob.jobStatus) {
-                    case Enums.JobStatusFailed:
-                        statusText = "Generate failed";
-                        generateWindow.hideWindow(5000);
-                        break;
-                    case Enums.JobStatusNotStarted:
-                        statusText = "Job not started";
-                        break;
-                    case Enums.JobStatusPaused:
-                        statusText = "Job paused";
-                        break;
-                    case Enums.JobStatusStarted:
-                        statusText = "In progress...";
-                        break;
-                    case Enums.JobStatusSucceeded:
-                        statusText = "Complete";
-                        generateWindow.hideWindow(1500);
-                        displayLayersFromGeodatabase(generateJob.geodatabase);
-                        break;
-                    default:
-                        break;
-                    }
-                });
+                generateJob.jobStatusChanged.connect(updateGenerateJobStatus);
 
                 // start the job
                 generateJob.start();
@@ -137,6 +116,31 @@ Rectangle {
                 generateWindow.visible = true;
                 statusText = "Generate failed";
                 generateWindow.hideWindow(5000);
+            }
+        }
+
+        function updateGenerateJobStatus() {
+            switch(generateJob.jobStatus) {
+            case Enums.JobStatusFailed:
+                statusText = "Generate failed";
+                generateWindow.hideWindow(5000);
+                break;
+            case Enums.JobStatusNotStarted:
+                statusText = "Job not started";
+                break;
+            case Enums.JobStatusPaused:
+                statusText = "Job paused";
+                break;
+            case Enums.JobStatusStarted:
+                statusText = "In progress...";
+                break;
+            case Enums.JobStatusSucceeded:
+                statusText = "Complete";
+                generateWindow.hideWindow(1500);
+                displayLayersFromGeodatabase(generateJob.geodatabase);
+                break;
+            default:
+                break;
             }
         }
 
@@ -164,6 +168,10 @@ Rectangle {
                 }
             });
             geodatabase.load();
+        }
+
+        Component.onDestruction: {
+            generateJob.jobStatusChanged.disconnect(updateGenerateJobStatus);
         }
     }
 
