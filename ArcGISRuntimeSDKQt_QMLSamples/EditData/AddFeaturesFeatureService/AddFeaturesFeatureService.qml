@@ -77,6 +77,7 @@ Rectangle {
             }
         }
 
+        //! [AddFeaturesFeatureService new feature at mouse click]
         onMouseClicked: {
             // create attributes json for the new feature
             var featureAttributes = {"typdamage" : "Minor", "primcause" : "Earthquake"};
@@ -87,6 +88,7 @@ Rectangle {
             // add the new feature to the feature table
             featureTable.addFeature(feature);
         }
+        //! [AddFeaturesFeatureService new feature at mouse click]
     }
 
     // neatline

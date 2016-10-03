@@ -76,6 +76,7 @@ void AddFeaturesFeatureService::componentComplete()
 
 void AddFeaturesFeatureService::connectSignals()
 {
+    //! [AddFeaturesFeatureService add at mouse click]
     // connect to the mouse clicked signal on the MapQuickView
     connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
@@ -91,6 +92,7 @@ void AddFeaturesFeatureService::connectSignals()
         Feature* feature = m_featureTable->createFeature(featureAttributes,newPoint,this);
         m_featureTable->addFeature(feature);
     });
+    //! [AddFeaturesFeatureService add at mouse click]
 
     // connect to the addFeatureCompleted signal from the ServiceFeatureTable
     connect(m_featureTable, &ServiceFeatureTable::addFeatureCompleted, this, [this](QUuid, bool success)
