@@ -54,7 +54,7 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            screenOffsety: -19 * scaleFactor
+            screenOffsetY: -19 * scaleFactor
         }
 
         // runs when app is geocoding
