@@ -19,6 +19,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
 
 Rectangle {
     id: rootRectangle
@@ -59,6 +60,10 @@ Rectangle {
 
         anchors {fill: parent; margins: 10 * scaleFactor }
         spacing: 10 * scaleFactor
+
+        AuthenticationView {
+            authenticationManager: AuthenticationManager
+        }
 
         Column {
             Text {
