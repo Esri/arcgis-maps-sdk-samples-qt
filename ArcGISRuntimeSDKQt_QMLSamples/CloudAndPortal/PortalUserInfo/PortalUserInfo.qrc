@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/Portal/PortalUserInfo">
+    <qresource prefix="/Samples/CloudAndPortal/PortalUserInfo">
         <file alias="sample.json">PortalUserInfo.json</file>
         <file>PortalUserInfo.png</file>
         <file>PortalUserInfo.qml</file>
