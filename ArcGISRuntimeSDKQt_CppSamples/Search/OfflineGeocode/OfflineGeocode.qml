@@ -39,7 +39,7 @@ OfflineGeocodeSample {
         Callout {
             id: callout
             calloutData: offlineGeocodeSample.calloutData
-            screenOffsety: -19 * scaleFactor
+            screenOffsetY: -19 * scaleFactor
         }
     }
 
