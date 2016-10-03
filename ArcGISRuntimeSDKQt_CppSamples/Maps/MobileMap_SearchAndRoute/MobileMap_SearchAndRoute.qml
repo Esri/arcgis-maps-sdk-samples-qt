@@ -44,7 +44,7 @@ MobileMap_SearchAndRouteSample {
             // callout to display information
             Callout {
                 calloutData: mobileMapSearchRoute.calloutData
-                screenOffsety: -19 * scaleFactor
+                screenOffsetY: -19 * scaleFactor
             }
 
             Rectangle {
