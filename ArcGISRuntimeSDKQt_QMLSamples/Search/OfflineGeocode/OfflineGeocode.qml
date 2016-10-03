@@ -92,7 +92,7 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            screenOffsety: -19 * scaleFactor
+            screenOffsetY: -19 * scaleFactor
         }
 
         // dismiss suggestions and no results notification on mouse press
