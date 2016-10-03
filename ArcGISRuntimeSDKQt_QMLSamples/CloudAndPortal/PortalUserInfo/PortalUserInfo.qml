@@ -1,4 +1,4 @@
-// [WriteFile Name=PortalUserInfo, Category=Portal]
+// [WriteFile Name=PortalUserInfo, Category=CloudAndPortal]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -33,7 +33,8 @@ Rectangle {
 
     Portal {
         id: portal
-        credential: usersCredential
+//        credential: usersCredential
+        loginRequired: true
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusFailedToLoad) {
@@ -48,10 +49,16 @@ Rectangle {
         }
     }
 
-    Credential {
-        id: usersCredential
-        username: userNameBox.text
-        password: passwordBox.text
+//    Credential {
+//        id: usersCredential
+//        username: userNameBox.text
+//        password: passwordBox.text
+//    }
+
+    AuthenticationView {
+        anchors.fill: parent
+        visible: true
+        authenticationManager: AuthenticationManager
     }
 
     Column {
@@ -61,56 +68,53 @@ Rectangle {
         anchors {fill: parent; margins: 10 * scaleFactor }
         spacing: 10 * scaleFactor
 
-        AuthenticationView {
-            authenticationManager: AuthenticationManager
-        }
 
-        Column {
-            Text {
-                text: qsTr("Username")
-                font.bold: true
-            }
+//        Column {
+//            Text {
+//                text: qsTr("Username")
+//                font.bold: true
+//            }
 
-            TextField {
-                id: userNameBox
-                placeholderText: "enter Username"
-                style: TextFieldStyle {
-                    textColor: "black"
-                    background: Rectangle {
-                        radius: 4
-                        color: "lightyellow"
-                        border.color: "lightgrey"
-                        border.width: 1
-                    }
-                }
-            }
-        }
+//            TextField {
+//                id: userNameBox
+//                placeholderText: "enter Username"
+//                style: TextFieldStyle {
+//                    textColor: "black"
+//                    background: Rectangle {
+//                        radius: 4
+//                        color: "lightyellow"
+//                        border.color: "lightgrey"
+//                        border.width: 1
+//                    }
+//                }
+//            }
+//        }
 
-        Column {
-            Text {
-                text: qsTr("Password")
-                font.bold: true
-            }
+//        Column {
+//            Text {
+//                text: qsTr("Password")
+//                font.bold: true
+//            }
 
-            TextField {
-                id: passwordBox
-                placeholderText: "enter Password"
-                style: TextFieldStyle {
-                    textColor: "black"
-                    background: Rectangle {
-                        radius: 4
-                        color: "lightyellow"
-                        border.color: "lightgrey"
-                        border.width: 1
-                    }
-                }
-                echoMode: TextInput.Password
-            }
-        }
+//            TextField {
+//                id: passwordBox
+//                placeholderText: "enter Password"
+//                style: TextFieldStyle {
+//                    textColor: "black"
+//                    background: Rectangle {
+//                        radius: 4
+//                        color: "lightyellow"
+//                        border.color: "lightgrey"
+//                        border.width: 1
+//                    }
+//                }
+//                echoMode: TextInput.Password
+//            }
+//        }
 
         Button {
             id: loadButton
-            enabled: passwordBox.text.length > 0 && userNameBox.text.length > 0
+//            enabled: passwordBox.text.length > 0 && userNameBox.text.length > 0
             style: ButtonStyle {
                 background: Rectangle {
                     border.color: "lightgrey"
