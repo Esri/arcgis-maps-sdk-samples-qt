@@ -25,8 +25,8 @@ Rectangle {
     id: rootRectangle
     clip: true
 
-    width: 800
-    height: 600
+    width: 500
+    height: 500
 
     property real scaleFactor: System.displayScaleFactor
     property var user
@@ -157,9 +157,9 @@ Rectangle {
         }
 
         Image {
-            source : user && user.thumbnailUrl.lenghth > 0 ? user.thumbnailUrl : "qrc:/Samples/CloudAndPortal/PortalUserInfo/PortalUserInfo.png"
-            width: 32 * scaleFactor
+            source : user && user.thumbnailUrl.lenghth > 0 ? user.thumbnailUrl : "qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png"
             height: 32 * scaleFactor
+            width: 32 * scaleFactor
         }
 
         Column {

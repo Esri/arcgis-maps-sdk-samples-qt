@@ -4,5 +4,6 @@
         <file>PortalUserInfo.png</file>
         <file>PortalUserInfo.qml</file>
         <file>PortalUserInfo.html</file>
+        <file>placeholder_img.png</file>
     </qresource>
 </RCC>
