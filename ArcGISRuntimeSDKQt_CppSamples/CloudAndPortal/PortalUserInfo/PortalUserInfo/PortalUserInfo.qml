@@ -100,7 +100,7 @@ PortalUserInfoSample {
             }
 
             SequentialAnimation on x {
-                id: failAnimatiom
+                id: failAnimation
                 loops: 10
                 running: false
                 PropertyAnimation { to: 50; duration: 20 }

@@ -39,7 +39,7 @@ Rectangle {
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusFailedToLoad) {
                 console.log(portal.loadError.message);
-                failAnimatiom.running = true;
+                failAnimation.running = true;
                 return;
             }
             else if(loadStatus !== Enums.LoadStatusLoaded) {
@@ -129,7 +129,7 @@ Rectangle {
             }
 
             SequentialAnimation on x {
-                id: failAnimatiom
+                id: failAnimation
                 loops: 10
                 running: false
                 PropertyAnimation { to: 50; duration: 20 }
