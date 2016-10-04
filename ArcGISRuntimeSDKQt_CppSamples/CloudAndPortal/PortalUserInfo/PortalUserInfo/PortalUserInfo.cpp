@@ -102,17 +102,17 @@ QString PortalUserInfo::access() const
 
   switch (m_user->access())
   {
-      return "????";
+    return "????";
   case PortalAccess::Organization:
-      return "Organization";
+    return "Organization";
   case PortalAccess::Private:
-      return "Only you";
+    return "Only you";
   case PortalAccess::Public:
-      return "Everyone";
+    return "Everyone";
   case PortalAccess::Shared:
-      return "Shared Groups";
+    return "Shared Groups";
   default:
-  return UNKNOWN;
+    return UNKNOWN;
   }
 }
 
@@ -120,6 +120,7 @@ QUrl PortalUserInfo::thumbnailUrl() const
 {
   if (m_user && !m_user->thumbnailUrl().isEmpty())
     return m_user->thumbnailUrl();
+
   return "qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png";
 }
 
@@ -127,6 +128,7 @@ QString PortalUserInfo::loadErrorMessage() const
 {
   if (m_portal)
     return m_portal->loadError().message();
+
   return "";
 }
 
