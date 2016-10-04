@@ -144,10 +144,13 @@ Rectangle {
         }
     }
 
+    property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]
+    property var detailValue: ["fullName", "username", "email", "description", "access"]
+
     Column {
         id: userDetailsColumn
         visible: portal.loadStatus === Enums.LoadStatusLoaded
-        anchors {fill: parent; margins: 10 * scaleFactor }
+        anchors{ top: parent.top; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
         spacing: 10 * scaleFactor
 
         Text {
@@ -161,58 +164,18 @@ Rectangle {
             height: 32 * scaleFactor
             width: 32 * scaleFactor
         }
+    }
 
-        Column {
-            Text {
-                text: "Full Name"
-                font.bold: true
-            }
+    ListView {
+        visible: portal.loadStatus === Enums.LoadStatusLoaded
+        anchors{ top: userDetailsColumn.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        spacing: 10 * scaleFactor
+        clip: true
+        model: detailNames.length
 
+        delegate: Column {
             Text {
-                text: user ? user.fullName: ("????")
-                color: "grey"
-            }
-        }
-
-        Column {
-            Text {
-                text: "Username"
-                font.bold: true
-            }
-
-            Text {
-                text: user ? user.username: ("????")
-                color: "grey"
-            }
-        }
-
-        Column {
-            Text {
-                text: "Email"
-                font.bold: true
-            }
-
-            Text {
-                text: user ? user.email: ("????")
-                color: "grey"
-            }
-        }
-
-        Column {
-            Text {
-                text: "Bio"
-                font.bold: true
-            }
-
-            Text {
-                text: user ? user.description: ("????")
-                color: "grey"
-            }
-        }
-
-        Column {
-            Text {
-                text: "Who can see your profile"
+                text: detailNames[index]
                 font.bold: true
             }
 
@@ -220,6 +183,10 @@ Rectangle {
                 text: {
                     if (!user)
                         return "????";
+
+                    if( detailValue[index] !== "access")
+                        return user[detailValue[index]];
+
                     if (user.access === Enums.PortalAccessOrganization)
                         return "Organization";
                     else if (user.access === Enums.PortalAccessPrivate)
@@ -229,14 +196,11 @@ Rectangle {
                     else if (user.access === Enums.PortalAccessShared)
                         return "Shared Groups";
                     return "????";
-
                 }
                 color: "grey"
             }
         }
-
     }
-
 
     // Neatline rectangle
     Rectangle {
