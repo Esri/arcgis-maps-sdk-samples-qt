@@ -118,7 +118,7 @@ QString PortalUserInfo::access() const
 
 QUrl PortalUserInfo::thumbnailUrl() const
 {
-  if (m_user)
+  if (m_user && !m_user->thumbnailUrl().isEmpty())
     return m_user->thumbnailUrl();
   return "qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png";
 }
