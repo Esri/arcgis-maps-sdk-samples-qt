@@ -32,6 +32,7 @@ Rectangle {
 
     function chooseBasemap(selectedMapTitle){
         title.text = selectedMapTitle;
+        basemapsGrid.enabled = false;
 
         if (selectedMapTitle === "Imagery")
             map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapImagery");
@@ -70,7 +71,6 @@ Rectangle {
                 return;
 
             porInfo = portal.portalInfo;
-            console.log(porInfo.organizationName);
 
             basemapsList.append({"name": "Imagery"});
             basemapsList.append({"name": "Imagery with labels"});
@@ -88,8 +88,18 @@ Rectangle {
 
     Text{
         id: title
-        anchors {top: parent.top; left: parent.left; right: parent.right}
+        anchors {top: parent.top; left: parent.left; right: parent.right; margins: 10}
+        font.pointSize: 10
+        font.bold: true
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignTop
         text: porInfo ? porInfo.name + " Basemaps" : "Loading Organization Basemaps..."
+        wrapMode: Text.Wrap
+        elide: Text.ElideRight
+    }
+
+    Map {
+        id: map
     }
 
     MapView {
@@ -99,10 +109,6 @@ Rectangle {
         anchors{top: title.bottom; bottom: parent.bottom; left: parent.left; right: parent.right}
     }
 
-    Map {
-        id: map
-    }
-
     GridView {
         id: basemapsGrid
         anchors{top: title.bottom; bottom: parent.bottom; left: parent.left; right: parent.right}
@@ -110,6 +116,7 @@ Rectangle {
         cellHeight: 64 * scaleFactor
         opacity: 0
         focus: true
+        clip: true
 
         delegate: Rectangle {
             anchors.margins: 5 * scaleFactor
@@ -126,6 +133,7 @@ Rectangle {
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight
                 font.pointSize: 6
+                font.bold: index == basemapsGrid.currentIndex
             }
 
             MouseArea {
@@ -134,13 +142,26 @@ Rectangle {
                 onClicked: {
                     if (!enabled)
                         return;
+
                     basemapsGrid.currentIndex = index;
                 }
                 onDoubleClicked: {
                     if (!enabled)
-                        return;chooseBasemap(name);
+                        return;
+
+                    selectedAnimation.running = true;
+                    chooseBasemap(name);
                 }
             }
+
+            SequentialAnimation on opacity {
+                id: selectedAnimation
+                running: false
+                loops: 4
+                PropertyAnimation { to: 0; duration: 60 }
+                PropertyAnimation { to: 1; duration: 60 }
+            }
+
         }
 
         OpacityAnimator on opacity {
