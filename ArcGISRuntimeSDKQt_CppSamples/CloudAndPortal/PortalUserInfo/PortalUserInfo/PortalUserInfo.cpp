@@ -102,7 +102,7 @@ QString PortalUserInfo::access() const
 
   switch (m_user->access())
   {
-    return "????";
+    return UNKNOWN;
   case PortalAccess::Organization:
     return "Organization";
   case PortalAccess::Private:

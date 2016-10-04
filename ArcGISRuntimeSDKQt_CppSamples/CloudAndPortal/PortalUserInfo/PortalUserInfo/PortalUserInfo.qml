@@ -117,10 +117,13 @@ PortalUserInfoSample {
         }
     }
 
+    property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]
+    property var detailValue: ["fullName", "username", "email", "bio", "access"]
+
     Column {
         id: userDetailsColumn
         visible: loaded
-        anchors {fill: parent; margins: 10 * scaleFactor }
+        anchors{ top: parent.top; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
         spacing: 10 * scaleFactor
 
         Text {
@@ -134,69 +137,27 @@ PortalUserInfoSample {
             height: 32 * scaleFactor
             width: 32 * scaleFactor
         }
-
-        Column {
-            Text {
-                text: "Full Name"
-                font.bold: true
-            }
-
-            Text {
-                text: fullName
-                color: "grey"
-            }
-        }
-
-        Column {
-            Text {
-                text: "Username"
-                font.bold: true
-            }
-
-            Text {
-                text: username
-                color: "grey"
-            }
-        }
-
-        Column {
-            Text {
-                text: "Email"
-                font.bold: true
-            }
-
-            Text {
-                text: email
-                color: "grey"
-            }
-        }
-
-        Column {
-            Text {
-                text: "Bio"
-                font.bold: true
-            }
-
-            Text {
-                text: bio
-                color: "grey"
-            }
-        }
-
-        Column {
-            Text {
-                text: "Who can see your profile"
-                font.bold: true
-            }
-
-            Text {
-                text: access
-                color: "grey"
-            }
-        }
-
     }
 
+    ListView {
+        visible: loaded
+        anchors{ top: userDetailsColumn.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        spacing: 10 * scaleFactor
+        clip: true
+        model: detailNames.length
+
+        delegate: Column {
+            Text {
+                text: detailNames[index]
+                font.bold: true
+            }
+
+            Text {
+                text: rootRectangle[detailValue[index]]
+                color: "grey"
+            }
+        }
+    }
 
     // Neatline rectangle
     Rectangle {

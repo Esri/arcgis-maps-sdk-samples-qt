@@ -40,7 +40,7 @@ class PortalUserInfo : public QQuickItem
   Q_PROPERTY(bool loaded READ loaded NOTIFY loadedChanged)
   Q_PROPERTY(QString fullName READ fullName NOTIFY fullNameChanged)
   Q_PROPERTY(QString email READ email NOTIFY emailChanged)
-  Q_PROPERTY(QString bio READ email NOTIFY bioChanged)
+  Q_PROPERTY(QString bio READ bio NOTIFY bioChanged)
   Q_PROPERTY(QString access READ access NOTIFY accessChanged)
   Q_PROPERTY(QUrl thumbnailUrl READ thumbnailUrl NOTIFY thumbnailUrlChanged)
   Q_PROPERTY(QString loadErrorMessage READ loadErrorMessage NOTIFY loadErrorMessageChanged)
