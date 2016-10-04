@@ -15,6 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Controls 1.4
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
 
@@ -50,8 +51,6 @@ Rectangle {
             map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapTerrainWithLabels");
         if (selectedMapTitle === "Topographic")
             map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapTopographic");
-
-        mapView.map = map;
 
         gridFadeOut.running = true;
         mapView.visible = true;
@@ -98,8 +97,9 @@ Rectangle {
         elide: Text.ElideRight
     }
 
-    Map {
-        id: map
+    BusyIndicator {
+        anchors.centerIn: parent
+        running: !mapView.visible && portal.loadStatus !== Enums.LoadStatusLoaded;
     }
 
     MapView {
@@ -107,6 +107,10 @@ Rectangle {
         id: mapView
 
         anchors{top: title.bottom; bottom: parent.bottom; left: parent.left; right: parent.right}
+        Map {
+            id: map
+            spatialReference: SpatialReference.createWebMercator()
+        }
     }
 
     GridView {
