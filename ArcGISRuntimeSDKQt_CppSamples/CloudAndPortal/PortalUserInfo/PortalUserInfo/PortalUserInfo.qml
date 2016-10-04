@@ -29,6 +29,8 @@ PortalUserInfoSample {
 
     property double scaleFactor: System.displayScaleFactor
 
+    onLoadFailed: failAnimation.running = true;
+
     Column {
         id: loginColumn
         visible: !loaded
@@ -108,11 +110,11 @@ PortalUserInfoSample {
             }
         }
 
-//        Text {
-//            text: portal.loadError ? portal.loadError.message : ""
-//            color: "red"
-//            font.bold: true
-//        }
+        Text {
+            text: loadErrorMessage
+            color: "red"
+            font.bold: true
+        }
     }
 
     Column {

@@ -43,6 +43,7 @@ class PortalUserInfo : public QQuickItem
   Q_PROPERTY(QString bio READ email NOTIFY bioChanged)
   Q_PROPERTY(QString access READ access NOTIFY accessChanged)
   Q_PROPERTY(QUrl thumbnailUrl READ thumbnailUrl NOTIFY thumbnailUrlChanged)
+  Q_PROPERTY(QString loadErrorMessage READ loadErrorMessage NOTIFY loadErrorMessageChanged)
 
 public:
   PortalUserInfo(QQuickItem* parent = nullptr);
@@ -59,6 +60,7 @@ public:
   QString bio() const;
   QString access() const;
   QUrl thumbnailUrl() const;
+  QString loadErrorMessage() const;
 
 signals:
   void loadedChanged();
@@ -68,6 +70,8 @@ signals:
   void bioChanged();
   void accessChanged();
   void thumbnailUrlChanged();
+  void loadErrorMessageChanged();
+  void loadFailed();
 
 private slots:
   void onPortalLoadStatusChanged(Esri::ArcGISRuntime::LoadStatus loadStatus);

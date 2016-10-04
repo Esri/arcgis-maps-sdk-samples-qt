@@ -30,7 +30,8 @@ PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
   m_portal(new Portal(false, m_credential, this)),
   m_user(nullptr)
 {
-  connect( m_portal, &Portal::loadStatusChanged, this, &PortalUserInfo::onPortalLoadStatusChanged);
+  connect(m_portal, &Portal::loadStatusChanged, this, &PortalUserInfo::onPortalLoadStatusChanged);
+  connect(m_portal, &Portal::doneLoading, this, &PortalUserInfo::loadErrorMessageChanged);
 }
 
 PortalUserInfo::~PortalUserInfo()
@@ -122,6 +123,13 @@ QUrl PortalUserInfo::thumbnailUrl() const
   return "qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png";
 }
 
+QString PortalUserInfo::loadErrorMessage() const
+{
+  if (m_portal)
+    return m_portal->loadError().message();
+  return "";
+}
+
 void PortalUserInfo::onPortalLoadStatusChanged(LoadStatus loadStatus)
 {
   switch (loadStatus) {
@@ -137,6 +145,7 @@ void PortalUserInfo::onPortalLoadStatusChanged(LoadStatus loadStatus)
   case LoadStatus::Loading:
     break;
   case LoadStatus::FailedToLoad:
+    emit loadFailed();
     break;
   case LoadStatus::NotLoaded:
     break;
