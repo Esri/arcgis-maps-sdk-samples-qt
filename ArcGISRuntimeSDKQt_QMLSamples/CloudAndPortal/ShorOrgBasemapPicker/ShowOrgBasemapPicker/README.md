@@ -1,0 +1,10 @@
+#Show organization basemap picker
+
+This sample demonstrates how to load a Portal and then use the organization's predefined basemaps query to get all basemaps. Thumbnails for these basemaps are then shown in a picker, to allow the user to select a basemap for use in a Map in a MapView.
+
+![](screenshot.png)
+
+##How it works
+
+##Features
+

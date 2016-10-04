@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/CloudAndPortal/ShowOrgBasemapPicker">
+        <file alias="sample.json">ShowOrgBasemapPicker.json</file>
+        <file>ShowOrgBasemapPicker.png</file>
+        <file>ShowOrgBasemapPicker.qml</file>
+        <file>ShowOrgBasemapPicker.html</file>
+    </qresource>
+</RCC>
