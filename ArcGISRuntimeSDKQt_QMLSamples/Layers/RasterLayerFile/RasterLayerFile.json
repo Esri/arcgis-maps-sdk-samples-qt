@@ -1,0 +1,12 @@
+{
+    "source" :  "RasterLayerFile.qml",
+    "description" : "RasterLayerFile.html",
+    "thumbnail" : "RasterLayerFile.png",
+    "name" : "Raster layer (file)",
+    "dataItems" : [        
+        {
+            "itemId" : "8ad45e34ccd4412f8c2ad7629fb43a24",
+            "path" : "~/ArcGIS/Runtime/Data/raster/Colorado.tif"
+        }
+    ]
+}
