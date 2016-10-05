@@ -18,6 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
 
 Rectangle {
     id: rootRectangle
@@ -56,16 +57,26 @@ Rectangle {
         mapView.visible = true;
     }
 
+    BusyIndicator {
+        anchors.centerIn: parent
+        running: !mapView.visible && portal.loadStatus !== Enums.LoadStatusLoaded;
+    }
+
     Portal {
         id: portal
-        Credential {
-            username: "qtdevteam_2"
-            password: "qtdevteam1234"
+        loginRequired: true
+
+        credential: Credential {
+            username: "h"
+            password: "h"
         }
 
         Component.onCompleted: load();
 
         onLoadStatusChanged: {
+            if (loadStatus === Enums.LoadStatusFailedToLoad)
+                retryLoad();
+
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
@@ -95,11 +106,6 @@ Rectangle {
         text: porInfo ? porInfo.name + " Basemaps" : "Loading Organization Basemaps..."
         wrapMode: Text.Wrap
         elide: Text.ElideRight
-    }
-
-    BusyIndicator {
-        anchors.centerIn: parent
-        running: !mapView.visible && portal.loadStatus !== Enums.LoadStatusLoaded;
     }
 
     MapView {
@@ -141,7 +147,7 @@ Rectangle {
             }
 
             MouseArea {
-                enabled: !mapView.visible
+                enabled: !mapView.visible && portal.loadStatus == Enums.LoadStatusLoaded
                 anchors.fill: parent
                 onClicked: {
                     if (!enabled)
@@ -182,6 +188,10 @@ Rectangle {
             duration: 2000
             running: false
         }
+    }
+
+    AuthenticationView {
+        authenticationManager: AuthenticationManager
     }
 
     // Neatline rectangle
