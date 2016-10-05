@@ -25,8 +25,8 @@ Rectangle {
     id: rootRectangle
     clip: true
 
-    width: 500
-    height: 500
+    width: 600
+    height: 800
 
     property real scaleFactor: System.displayScaleFactor
     property var user
@@ -35,6 +35,8 @@ Rectangle {
         id: portal
         credential: usersCredential
         loginRequired: true
+
+        Component.onCompleted: load();
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusFailedToLoad) {
@@ -49,99 +51,22 @@ Rectangle {
         }
     }
 
+    // TODO: remove this once loginRequired is properly honoured by the Portal token generation
     Credential {
         id: usersCredential
-        username: userNameBox.text
-        password: passwordBox.text
+        username: "h"
+        password: "i"
     }
 
-    Column {
-        id: loginColumn
-        visible: portal.loadStatus !== Enums.LoadStatusLoaded
+    BusyIndicator {
+        id: loadingIndicator
+        anchors.centerIn: parent
+        running: portal.loadStatus !== Enums.LoadStatusLoaded
+    }
 
-        anchors {fill: parent; margins: 10 * scaleFactor }
-        spacing: 10 * scaleFactor
-
-
-        Column {
-            Text {
-                text: qsTr("Username")
-                font.bold: true
-            }
-
-            TextField {
-                id: userNameBox
-                placeholderText: "enter Username"
-                style: TextFieldStyle {
-                    textColor: "black"
-                    background: Rectangle {
-                        radius: 4
-                        color: "lightyellow"
-                        border.color: "lightgrey"
-                        border.width: 1
-                    }
-                }
-            }
-        }
-
-        Column {
-            Text {
-                text: qsTr("Password")
-                font.bold: true
-            }
-
-            TextField {
-                id: passwordBox
-                placeholderText: "enter Password"
-                style: TextFieldStyle {
-                    textColor: "black"
-                    background: Rectangle {
-                        radius: 4
-                        color: "lightyellow"
-                        border.color: "lightgrey"
-                        border.width: 1
-                    }
-                }
-                echoMode: TextInput.Password
-            }
-        }
-
-        Button {
-            id: loadButton
-            enabled: passwordBox.text.length > 0 && userNameBox.text.length > 0
-            style: ButtonStyle {
-                background: Rectangle {
-                    border.color: "lightgrey"
-                    color: "orange"
-                    radius: 4
-                }
-                label: Text {
-                    text: qsTr("SIGN IN")
-                    color: "white"
-                }
-            }
-
-            onClicked: {
-                if (portal.loadStatus === Enums.LoadStatusNotLoaded)
-                    portal.load();
-                else if (portal.loadStatus === Enums.LoadStatusFailedToLoad)
-                    portal.retryLoad();
-            }
-
-            SequentialAnimation on x {
-                id: failAnimation
-                loops: 10
-                running: false
-                PropertyAnimation { to: 50; duration: 20 }
-                PropertyAnimation { to: 0; duration: 20 }
-            }
-        }
-
-        Text {
-            text: portal.loadError ? portal.loadError.message : ""
-            color: "red"
-            font.bold: true
-        }
+    AuthenticationView {
+        id: authView
+        authenticationManager: AuthenticationManager
     }
 
     property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]
