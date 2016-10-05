@@ -16,6 +16,7 @@
 
 #include "PortalUserInfo.h"
 
+#include "AuthenticationManager.h"
 #include "Credential.h"
 #include "Portal.h"
 #include "PortalUser.h"
@@ -26,12 +27,13 @@ const QString PortalUserInfo::UNKNOWN = "????";
 
 PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_credential(new Credential(this)),
-  m_portal(new Portal(false, m_credential, this)),
+  m_credential(new Credential("h", "i", this)), // TODO remove this once loginRequired is honoured
+  m_portal(new Portal(true, m_credential, this)),
   m_user(nullptr)
 {
   connect(m_portal, &Portal::loadStatusChanged, this, &PortalUserInfo::onPortalLoadStatusChanged);
   connect(m_portal, &Portal::doneLoading, this, &PortalUserInfo::loadErrorMessageChanged);
+  emit authManagerChanged();
 }
 
 PortalUserInfo::~PortalUserInfo()
@@ -41,14 +43,19 @@ PortalUserInfo::~PortalUserInfo()
 void PortalUserInfo::componentComplete()
 {
   QQuickItem::componentComplete();
+  load();
 }
 
-void PortalUserInfo::load(const QString username, const QString& password)
+AuthenticationManager *PortalUserInfo::authManager() const
+{
+  return AuthenticationManager::instance();
+}
+
+void PortalUserInfo::load()
 {
   if (!m_portal || !m_credential)
     return;
 
-  m_credential->setUserAccount(username, password);
   if (m_portal->loadStatus() == LoadStatus::NotLoaded)
       m_portal->load();
   else if (m_portal->loadStatus() == LoadStatus::FailedToLoad)
@@ -147,7 +154,7 @@ void PortalUserInfo::onPortalLoadStatusChanged(LoadStatus loadStatus)
   case LoadStatus::Loading:
     break;
   case LoadStatus::FailedToLoad:
-    emit loadFailed();
+    m_portal->retryLoad();
     break;
   case LoadStatus::NotLoaded:
     break;

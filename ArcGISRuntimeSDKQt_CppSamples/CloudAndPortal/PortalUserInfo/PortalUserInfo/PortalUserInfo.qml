@@ -16,9 +16,9 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
 
 PortalUserInfoSample {
     id: rootRectangle
@@ -29,92 +29,15 @@ PortalUserInfoSample {
 
     property double scaleFactor: System.displayScaleFactor
 
-    onLoadFailed: failAnimation.running = true;
+    BusyIndicator {
+        id: loadingIndicator
+        anchors.centerIn: parent
+        running: !loaded
+    }
 
-    Column {
-        id: loginColumn
-        visible: !loaded
-
-        anchors {fill: parent; margins: 10 * scaleFactor }
-        spacing: 10 * scaleFactor
-
-
-        Column {
-            Text {
-                text: qsTr("Username")
-                font.bold: true
-            }
-
-            TextField {
-                id: userNameBox
-                placeholderText: "enter Username"
-                style: TextFieldStyle {
-                    textColor: "black"
-                    background: Rectangle {
-                        radius: 4
-                        color: "lightyellow"
-                        border.color: "lightgrey"
-                        border.width: 1
-                    }
-                }
-            }
-        }
-
-        Column {
-            Text {
-                text: qsTr("Password")
-                font.bold: true
-            }
-
-            TextField {
-                id: passwordBox
-                placeholderText: "enter Password"
-                style: TextFieldStyle {
-                    textColor: "black"
-                    background: Rectangle {
-                        radius: 4
-                        color: "lightyellow"
-                        border.color: "lightgrey"
-                        border.width: 1
-                    }
-                }
-                echoMode: TextInput.Password
-            }
-        }
-
-        Button {
-            id: loadButton
-            enabled: passwordBox.text.length > 0 && userNameBox.text.length > 0
-            style: ButtonStyle {
-                background: Rectangle {
-                    border.color: "lightgrey"
-                    color: "orange"
-                    radius: 4
-                }
-                label: Text {
-                    text: qsTr("SIGN IN")
-                    color: "white"
-                }
-            }
-
-            onClicked: {
-                load(userNameBox.text, passwordBox.text);
-            }
-
-            SequentialAnimation on x {
-                id: failAnimation
-                loops: 10
-                running: false
-                PropertyAnimation { to: 50; duration: 20 }
-                PropertyAnimation { to: 0; duration: 20 }
-            }
-        }
-
-        Text {
-            text: loadErrorMessage
-            color: "red"
-            font.bold: true
-        }
+    AuthenticationView {
+        id: authView
+        authenticationManager: authManager
     }
 
     property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]

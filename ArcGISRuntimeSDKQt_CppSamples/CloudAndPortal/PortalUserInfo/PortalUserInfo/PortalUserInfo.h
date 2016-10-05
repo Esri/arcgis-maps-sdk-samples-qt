@@ -21,6 +21,7 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class AuthenticationManager;
 class Credential;
 class Portal;
 class PortalUser;
@@ -36,6 +37,7 @@ class PortalUserInfo : public QQuickItem
 {
   Q_OBJECT
 
+  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(QString username READ username NOTIFY usernameChanged)
   Q_PROPERTY(bool loaded READ loaded NOTIFY loadedChanged)
   Q_PROPERTY(QString fullName READ fullName NOTIFY fullNameChanged)
@@ -51,8 +53,7 @@ public:
 
   void componentComplete() Q_DECL_OVERRIDE;
 
-  Q_INVOKABLE void load(const QString username, const QString& password);
-
+  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
   QString username() const;
   bool loaded();
   QString fullName() const;
@@ -63,6 +64,7 @@ public:
   QString loadErrorMessage() const;
 
 signals:
+  void authManagerChanged();
   void loadedChanged();
   void usernameChanged();
   void fullNameChanged();
@@ -71,12 +73,13 @@ signals:
   void accessChanged();
   void thumbnailUrlChanged();
   void loadErrorMessageChanged();
-  void loadFailed();
 
 private slots:
   void onPortalLoadStatusChanged(Esri::ArcGISRuntime::LoadStatus loadStatus);
 
 private:
+
+  void load();
 
   static const QString UNKNOWN;
 
