@@ -98,7 +98,7 @@ void EditAndSyncFeatures::connectSignals()
         {
             if (!m_selectedFeature)
             {
-                m_mapView->identifyLayer(m_map->operationalLayers()->first(), mouseEvent.x(), mouseEvent.y(), 5, IdentifyReturns::GeoElementsOnly, 1);
+                m_mapView->identifyLayer(m_map->operationalLayers()->first(), mouseEvent.x(), mouseEvent.y(), 5, false, 1);
             }
             else
             {

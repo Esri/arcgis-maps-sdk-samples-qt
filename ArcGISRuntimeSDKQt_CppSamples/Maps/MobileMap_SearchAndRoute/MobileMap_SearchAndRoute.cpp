@@ -147,7 +147,7 @@ void MobileMap_SearchAndRoute::connectSignals()
             m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
 
             // determine if user clicked on a graphic
-            m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, IdentifyReturns::GeoElementsOnly, 2);
+            m_mapView->identifyGraphicsOverlay(m_stopsGraphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, false, 2);
         }
     });
 

@@ -79,7 +79,7 @@ Rectangle {
 
         //! [identify feature layer qml api snippet]
         onMouseClicked: {
-            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 22, Enums.IdentifyReturnsGeoElementsOnly, 1000);
+            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 22, false, 1000);
         }
 
         onIdentifyLayerStatusChanged: {

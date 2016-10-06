@@ -105,7 +105,7 @@ void UpdateGeometryFeatureService::connectSignals()
             m_featureLayer->clearSelection();
 
             // call identify on the map view
-            m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, IdentifyReturns::GeoElementsOnly, 1);
+            m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
         }
     });
 

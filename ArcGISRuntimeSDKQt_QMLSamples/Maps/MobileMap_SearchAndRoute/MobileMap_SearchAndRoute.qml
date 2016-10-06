@@ -210,7 +210,7 @@ Rectangle {
         onMouseClicked: {
             if (currentLocatorTask !== null) {
                 clickedPoint = mouse.mapPoint;
-                identifyGraphicsOverlayWithMaxResults(stopsGraphicsOverlay, mouse.x, mouse.y, 5, Enums.IdentifyReturnsGeoElementsOnly, 2);
+                identifyGraphicsOverlayWithMaxResults(stopsGraphicsOverlay, mouse.x, mouse.y, 5, false, 2);
             }
         }
 
