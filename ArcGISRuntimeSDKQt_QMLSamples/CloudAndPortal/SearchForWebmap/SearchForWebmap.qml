@@ -31,7 +31,9 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
 
     function search(keyWord) {
-        console.log("here");
+
+        portal.findItems(webmapQuery);
+
         webmapsModel.append({"name": "Imagery"});
         webmapsModel.append({"name": "Imagery with labels"});
         webmapsModel.append({"name": "Light Gray Canvas"});
@@ -43,20 +45,33 @@ Rectangle {
 
         webmapsList.model = webmapsModel;
         webmapsList.visible = true;
+        mapView.visible = false;
+    }
 
-        console.log(webmapsList.model.count);
+    function selectWebmap(webmapName) {
+        var bmap = ArcGISRuntimeEnvironment.createObject("BasemapImagery");
+        map.basemap = bmap;
+        mapView.visible = true;
+        webmapsModel.clear();
     }
 
     ListModel {
         id: webmapsModel
     }
 
+    PortalQueryParametersForItems {
+        id: webmapQuery
+        type: Enums.PortalItemTypeWebMap
+    }
+
     Portal {
         id: portal
         loginRequired: true
         credential: Credential {
-            username: "h"
-            password: "h"
+            oAuthClientInfo: OAuthClientInfo {
+                oAuthMode: Enums.OAuthModeUser
+                clientId: "W3hPKzPbeJ0tr8aj"
+            }
         }
 
         Component.onCompleted: load();
@@ -70,40 +85,97 @@ Rectangle {
 
             searchBox.visible = true
         }
+
+        onFindItemsResultChanged: {
+            var foundWebmaps = portal.findItemsResult;
+            if (foundWebmaps)
+                console.log("found",foundWebmaps.totalResults);
+        }
     }
 
     Component {
         id: webmapDelegate
         Rectangle {
+            anchors.margins: 25
             width: webmapsList.width
-            height: 50
-            color: "lightgrey"
-            border {
-                width: 2
-                color: "black"
-            }
-            radius: 4
+            height: 24 * scaleFactor
+            border.color: "lightgrey"
+            radius: 10
 
             Text {
+                anchors{fill: parent; margins: 10}
                 text: name
-                font.bold: index === webmapsList.currentIndex
+                color: "grey"
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: webmapsList.currentIndex = index;
+                onDoubleClicked: selectWebmap(name);
             }
         }
     }
 
-    ListView {
-        id: webmapsList
-        anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
-        visible: true
-//        clip: true
+    Component {
+        id: highlightDelegate
+        Rectangle {
+            z: 110
+            anchors.margins: 25
+            width: webmapsList.width
+            height: 24 * scaleFactor
+            color: "orange"
+            radius: 4
 
-        delegate: webmapDelegate
+            Text {
+                anchors{fill: parent; margins: 10}
+                text: webmapsModel.count > 0 ? webmapsModel.get(webmapsList.currentIndex).name : ""
+                font.bold: true
+                color: "white"
+                horizontalAlignment: Text.AlignHCenter
+            }
+        }
+    }
+
+    BusyIndicator {
+        anchors.centerIn: parent
+        running: portal.loadStatus !== Enums.LoadStatusLoaded
+    }
+
+    Rectangle {
+        id: resultsBox
+        visible: webmapsModel.count > 0
+        anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        border.color: "grey"
+        border.width: 2
+        radius: 5
+
+
+        Text {
+            id: resultsTitle
+            anchors { margins: 10; top: parent.top; left: parent.left; right: parent.right }
+            text: "webmaps: " + keyWordField.text
+            font.bold: true
+            font.pointSize: 10
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        ListView {
+            id: webmapsList
+            anchors { margins: 20; top: resultsTitle.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+            clip: true
+            model: webmapsModel
+            delegate: webmapDelegate
+            highlightFollowsCurrentItem: true
+            highlight: highlightDelegate
+        }
+
     }
 
     Column {
+        visible: portal.loadStatus === Enums.LoadStatusLoaded
         id: searchBox
         anchors {top: parent.top; horizontalCenter: parent.horizontalCenter; margins: 10 * scaleFactor}
-        visible: true
         height: 100
         spacing:5
 
@@ -139,13 +211,16 @@ Rectangle {
         }
     }
 
-//    MapView {
-//        id: mapView
-//        visible: false
-//        anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; margins: 10 * scaleFactor}
-//    }
+    MapView {
+        id: mapView
+        visible: false
+        anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
 
-
+        Map {
+            id: map
+            spatialReference: SpatialReference.createWebMercator()
+        }
+    }
 
     AuthenticationView {
         authenticationManager: AuthenticationManager
