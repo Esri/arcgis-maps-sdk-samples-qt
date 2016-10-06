@@ -66,12 +66,10 @@ Rectangle {
         id: portal
 
         credential: Credential {
-            username: "qtdevteam_2"
-            password: "qtdevteam1234"
-//            oAuthClientInfo: OAuthClientInfo {
-//                oAuthMode: Enums.OAuthModeUser
-//                clientId: "W3hPKzPbeJ0tr8aj"
-//            }
+            oAuthClientInfo: OAuthClientInfo {
+                oAuthMode: Enums.OAuthModeUser
+                clientId: "W3hPKzPbeJ0tr8aj"
+            }
         }
 
         Component.onCompleted: load();
