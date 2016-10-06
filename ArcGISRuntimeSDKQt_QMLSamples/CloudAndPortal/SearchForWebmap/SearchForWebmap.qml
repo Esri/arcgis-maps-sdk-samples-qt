@@ -29,6 +29,8 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
+    property var portalItem
+    property var basemap
 
     function search(keyWord) {
         if (keyWord === "none") {
@@ -53,10 +55,40 @@ Rectangle {
     }
 
     function selectWebmap(webmapName) {
-        var bmap = ArcGISRuntimeEnvironment.createObject("BasemapImagery");
-        map.basemap = bmap;
+
+        var id = "8bf7167d20924cbf8e25e7b11c7c502c"; //"42a12cf7cd914a4e8d762b7ad049c14c"
+
+        portalItem = ArcGISRuntimeEnvironment.createObject("PortalItem");
+        portalItem.portal = portal;
+        portalItem.itemId = id;
+
+        console.log("load portalItem")
+        portalItem.load();
+
+        portalItem.loadStatusChanged.connect(createBasemap);
+    }
+
+    function createBasemap() {
+        console.log(" portalItem.loadStatusChanged")
+        if (portalItem.loadStatus !== Enums.LoadStatusLoaded)
+            return;
+
+        console.log("createBasemap")
+        basemap = ArcGISRuntimeEnvironment.createObject("Basemap", {"item": portalItem});
+        basemap.load();
+
+        basemap.loadStatusChanged.connect(assignWebmap);
+        basemap.loadErrorChanged.connect( function(){console.log("basemap error",basemap.loadError.message)});
+    }
+
+    function assignWebmap() {
+        console.log(" basemap.loadStatusChanged")
+        if (basemap.loadStatus !== Enums.LoadStatusLoaded)
+            return;
+        console.log("ok!")
+        map.basemap = basemap;
+        webmapsList.visible = false;
         mapView.visible = true;
-        webmapsModel.clear();
     }
 
     ListModel {
