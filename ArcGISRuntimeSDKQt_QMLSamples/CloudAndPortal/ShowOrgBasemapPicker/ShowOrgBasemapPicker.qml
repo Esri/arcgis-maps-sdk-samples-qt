@@ -28,7 +28,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property var porInfo: null
+    property var porInfo: portal.portalInfo
 
     ListModel {id: basemapsList}
 
@@ -64,36 +64,49 @@ Rectangle {
 
     Portal {
         id: portal
-        loginRequired: true
 
         credential: Credential {
-            username: "h"
-            password: "h"
+            username: "qtdevteam_2"
+            password: "qtdevteam1234"
+//            oAuthClientInfo: OAuthClientInfo {
+//                oAuthMode: Enums.OAuthModeUser
+//                clientId: "W3hPKzPbeJ0tr8aj"
+//            }
         }
 
         Component.onCompleted: load();
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusFailedToLoad)
+            {
                 retryLoad();
+                return;
+            }
 
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
-            porInfo = portal.portalInfo;
-
-            basemapsList.append({"name": "Imagery"});
-            basemapsList.append({"name": "Imagery with labels"});
-            basemapsList.append({"name": "Light Gray Canvas"});
-            basemapsList.append({"name": "National Geographic"});
-            basemapsList.append({"name": "Oceans"});
-            basemapsList.append({"name": "Streets"});
-            basemapsList.append({"name": "Terrain with labels"});
-            basemapsList.append({"name": "Topographic"});
-
-            basemapsGrid.model = basemapsList;
-            gridFadeIn.running = true;
+            fetchBasemaps();
         }
+
+        onFetchBasemapsStatusChanged: {
+            console.log("fetch basemaps finished");
+//            var bmps = portal.basemaps;
+            console.log(portal.basemaps);
+
+            return;
+
+//            for (var i = 0; i < bmps.length; i++)
+//            {
+//                basemapsList.append({"name": bmps[i].name});
+//                console.log(bmps[i].name)
+//            }
+
+//            basemapsGrid.model = basemapsList;
+//            gridFadeIn.running = true;
+        }
+
+        onErrorChanged: console.log(error.message);
     }
 
     Text{
@@ -103,7 +116,7 @@ Rectangle {
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignTop
-        text: porInfo ? porInfo.name + " Basemaps" : "Loading Organization Basemaps..."
+        text: porInfo ? porInfo.organizationName + " Basemaps" : "Loading Organization Basemaps..."
         wrapMode: Text.Wrap
         elide: Text.ElideRight
     }
