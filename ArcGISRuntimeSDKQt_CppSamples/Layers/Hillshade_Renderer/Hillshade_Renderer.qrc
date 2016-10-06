@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/Hillshade_Renderer">
+        <file alias="sample.json">Hillshade_Renderer.json</file>
+        <file>Hillshade_Renderer.png</file>
+        <file>Hillshade_Renderer.qml</file>
+		<file>Hillshade_Renderer.h</file>
+		<file>Hillshade_Renderer.cpp</file>
+        <file>Hillshade_Renderer.html</file>
+    </qresource>
+</RCC>
