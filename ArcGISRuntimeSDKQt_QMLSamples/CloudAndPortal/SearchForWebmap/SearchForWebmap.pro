@@ -16,7 +16,7 @@
 
 TEMPLATE = app
 
-QT += qml quick positioning sensors
+QT += qml quick positioning sensors webengine
 
 CONFIG += c++11 arcgis_runtime_qml100_0_0
 

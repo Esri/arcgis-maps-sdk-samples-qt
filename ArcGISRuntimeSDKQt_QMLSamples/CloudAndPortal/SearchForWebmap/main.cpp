@@ -17,6 +17,7 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+#include <QtWebEngine>
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +27,8 @@ int main(int argc, char *argv[])
   // Force usage of OpenGL ES through ANGLE on Windows
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
+
+  QtWebEngine::initialize();
 
   // Intialize application view
   QQuickView view;
