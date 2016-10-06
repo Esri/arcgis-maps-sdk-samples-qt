@@ -74,7 +74,7 @@ Rectangle {
             callout.visible = false;
             mousePointX = mouse.x;
             mousePointY = mouse.y;
-            mapView.identifyGraphicsOverlay(graphicsOverlay, mouse.x, mouse.y, 2, Enums.IdentifyReturnsGeoElementsOnly);
+            mapView.identifyGraphicsOverlay(graphicsOverlay, mouse.x, mouse.y, 2, false);
         }
 
         // hide callout after navigation

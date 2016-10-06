@@ -159,7 +159,7 @@ void OfflineGeocode::connectSignals()
     connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
-        m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, IdentifyReturns::GeoElementsOnly, 1);
+        m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
     });
 
     connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)

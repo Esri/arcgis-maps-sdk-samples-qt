@@ -103,7 +103,7 @@ Rectangle {
 
         onMouseClicked: {
             clickedPoint = mouse.mapPoint;
-            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, Enums.IdentifyReturnsGeoElementsOnly, 1);
+            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, false, 1);
         }
 
         onIdentifyGraphicsOverlayStatusChanged: {

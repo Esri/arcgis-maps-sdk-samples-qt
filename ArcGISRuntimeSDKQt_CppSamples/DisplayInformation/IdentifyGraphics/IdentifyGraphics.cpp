@@ -96,7 +96,7 @@ void IdentifyGraphics::connectSignals()
     connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         // call identify on the map view
-        m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, IdentifyReturns::GeoElementsOnly, 1);
+        m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
     });
 
     // connect to the identifyLayerCompleted signal on the map view
