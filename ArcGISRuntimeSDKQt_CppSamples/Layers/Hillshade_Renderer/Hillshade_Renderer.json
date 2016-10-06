@@ -1,0 +1,13 @@
+{
+    "source" :  "Hillshade_Renderer",
+    "description" : "Hillshade_Renderer.html",
+    "thumbnail" : "Hillshade_Renderer.png",
+    "name" : "Hillshade renderer",
+    "dataItems" : [        
+        {
+            "itemId" : "ae9739163a76437ea02482e1a807b806",
+            "path" : "~/ArcGIS/Runtime/Data/raster/srtm.tiff"
+        }
+    ]
+}
+
