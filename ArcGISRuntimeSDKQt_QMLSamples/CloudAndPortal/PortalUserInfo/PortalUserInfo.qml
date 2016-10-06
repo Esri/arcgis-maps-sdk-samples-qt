@@ -32,8 +32,16 @@ Rectangle {
 
     Portal {
         id: portal
-        credential: usersCredential
         loginRequired: true
+        credential: Credential {
+            id: usersCredential
+            username: "h"
+            password: "i"
+            oAuthClientInfo: OAuthClientInfo {
+                oAuthMode: Enums.OAuthModeUser
+                clientId: "W3hPKzPbeJ0tr8aj"
+            }
+        }
 
         Component.onCompleted: load();
 
@@ -48,13 +56,6 @@ Rectangle {
             }
             user = portalUser
         }
-    }
-
-    // TODO: remove this once loginRequired is properly honoured by the Portal token generation
-    Credential {
-        id: usersCredential
-        username: "h"
-        password: "i"
     }
 
     BusyIndicator {
