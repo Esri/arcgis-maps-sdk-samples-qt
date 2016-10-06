@@ -31,6 +31,10 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
 
     function search(keyWord) {
+        if (keyWord === "none") {
+            noResultsAnimation.running = true;
+            return;
+        }
 
         portal.findItems(webmapQuery);
 
@@ -84,12 +88,14 @@ Rectangle {
                 return;
 
             searchBox.visible = true
+            keyWordField.focus = true
         }
 
         onFindItemsResultChanged: {
             var foundWebmaps = portal.findItemsResult;
             if (foundWebmaps)
                 console.log("found",foundWebmaps.totalResults);
+            webmapsList.focus = true;
         }
     }
 
@@ -150,7 +156,6 @@ Rectangle {
         border.width: 2
         radius: 5
 
-
         Text {
             id: resultsTitle
             anchors { margins: 10; top: parent.top; left: parent.left; right: parent.right }
@@ -169,7 +174,6 @@ Rectangle {
             highlightFollowsCurrentItem: true
             highlight: highlightDelegate
         }
-
     }
 
     Column {
@@ -208,6 +212,15 @@ Rectangle {
                     onClicked : search(keyWordField.text);
                 }
             }
+
+            SequentialAnimation on x {
+                id: noResultsAnimation
+                loops: 10
+                running: false
+                PropertyAnimation { to: 50; duration: 20 }
+                PropertyAnimation { to: 0; duration: 20 }
+            }
+
         }
     }
 
