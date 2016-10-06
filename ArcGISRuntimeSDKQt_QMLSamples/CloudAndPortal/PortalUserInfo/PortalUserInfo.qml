@@ -30,6 +30,13 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property var user
 
+    BusyIndicator {
+        id: loadingIndicator
+        anchors.centerIn: parent
+        running: portal.loadStatus !== Enums.LoadStatusLoaded
+    }
+
+    //! [PortalUserInfo create portal]
     Portal {
         id: portal
         credential: Credential {
@@ -43,8 +50,7 @@ Rectangle {
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusFailedToLoad) {
-                console.log(portal.loadError.message);
-                failAnimation.running = true;
+                retryLoad();
                 return;
             }
             else if(loadStatus !== Enums.LoadStatusLoaded) {
@@ -54,16 +60,11 @@ Rectangle {
         }
     }
 
-    BusyIndicator {
-        id: loadingIndicator
-        anchors.centerIn: parent
-        running: portal.loadStatus !== Enums.LoadStatusLoaded
-    }
-
     AuthenticationView {
         id: authView
         authenticationManager: AuthenticationManager
     }
+    //! [PortalUserInfo create portal]
 
     property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]
     property var detailValue: ["fullName", "username", "email", "description", "access"]
