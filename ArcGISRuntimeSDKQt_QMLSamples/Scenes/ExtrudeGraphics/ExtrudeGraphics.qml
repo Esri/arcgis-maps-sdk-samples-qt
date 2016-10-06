@@ -27,6 +27,8 @@ Rectangle {
     property real size: 0.01
     property int maxZ: 1000
     property var colors: []
+    property real scaleFactor: System.displayScaleFactor
+
     // Create a scene view
     SceneView {
         id: sceneView
