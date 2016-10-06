@@ -28,7 +28,7 @@ Rectangle {
     height: 800
 
     property real scaleFactor: System.displayScaleFactor
-    property var user
+    property var user: portal.portalUser
 
     BusyIndicator {
         id: loadingIndicator
@@ -49,14 +49,8 @@ Rectangle {
         Component.onCompleted: load();
 
         onLoadStatusChanged: {
-            if (loadStatus === Enums.LoadStatusFailedToLoad) {
+            if (loadStatus === Enums.LoadStatusFailedToLoad)
                 retryLoad();
-                return;
-            }
-            else if(loadStatus !== Enums.LoadStatusLoaded) {
-                return;
-            }
-            user = portalUser
         }
     }
 
