@@ -27,8 +27,8 @@ const QString PortalUserInfo::UNKNOWN = "????";
 
 PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_credential(new Credential("h", "i", this)), // TODO remove this once loginRequired is honoured
-  m_portal(new Portal(true, m_credential, this)),
+  m_credential(new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this)),
+  m_portal(new Portal(m_credential, this)),
   m_user(nullptr)
 {
   connect(m_portal, &Portal::loadStatusChanged, this, &PortalUserInfo::onPortalLoadStatusChanged);

@@ -32,11 +32,7 @@ Rectangle {
 
     Portal {
         id: portal
-        loginRequired: true
         credential: Credential {
-            id: usersCredential
-            username: "h"
-            password: "i"
             oAuthClientInfo: OAuthClientInfo {
                 oAuthMode: Enums.OAuthModeUser
                 clientId: "W3hPKzPbeJ0tr8aj"
