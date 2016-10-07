@@ -1,8 +1,8 @@
 {
-    "source" :  "SearchSymbolDictionary",
-    "description" : "SearchSymbolDictionary.html",
-    "thumbnail" : "SearchSymbolDictionary.png",
-    "name" : "Search symbol dictionary",
+    "source" :  "SearchDictionarySymbolStyle",
+    "description" : "SearchDictionarySymbolStyle.html",
+    "thumbnail" : "SearchDictionarySymbolStyle.png",
+    "name" : "Search dictionary symbol style",
     "dataItems" : [
         {
             "itemId" : "4581a9a92c214240a79e15482a2e8349",

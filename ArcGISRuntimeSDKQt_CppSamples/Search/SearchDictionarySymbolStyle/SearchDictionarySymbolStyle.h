@@ -1,4 +1,4 @@
-// [WriteFile Name=SearchSymbolDictionary, Category=Search]
+// [WriteFile Name=SearchDictionarySymbolStyle, Category=Search]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,14 +14,14 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef SEARCHSYMBOLDICTIONARY_H
-#define SEARCHSYMBOLDICTIONARY_H
+#ifndef SEARCHDICTIONARYSYMBOLSTYLE_H
+#define SEARCHDICTIONARYSYMBOLSTYLE_H
 
 namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class SymbolDictionary;
+    class DictionarySymbolStyle;
     class StyleSymbolSearchResultListModel;
   }
 }
@@ -30,7 +30,7 @@ namespace Esri
 #include <QUuid>
 #include <QAbstractListModel>
 
-class SearchSymbolDictionary : public QQuickItem
+class SearchDictionarySymbolStyle : public QQuickItem
 {
     Q_OBJECT
     Q_ENUMS(FieldEnum)
@@ -38,8 +38,8 @@ class SearchSymbolDictionary : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::StyleSymbolSearchResultListModel* searchResultsListModel READ searchResultsListModel NOTIFY searchResultsListModelChanged)
 
 public:
-    explicit SearchSymbolDictionary(QQuickItem *parent = 0);
-    ~SearchSymbolDictionary();
+    explicit SearchDictionarySymbolStyle(QQuickItem *parent = 0);
+    ~SearchDictionarySymbolStyle();
 
     enum class FieldEnum {
         FieldNames,
@@ -61,8 +61,8 @@ signals:
     void searchResultsListModelChanged();
 
 private:
-    Esri::ArcGISRuntime::SymbolDictionary* m_symbolDictionary;
+    Esri::ArcGISRuntime::DictionarySymbolStyle* m_dictionarySymbolStyle;
     Esri::ArcGISRuntime::StyleSymbolSearchResultListModel* m_searchResults;
 };
 
-#endif // SEARCHSYMBOLDICTIONARY_H
+#endif // SEARCHDICTIONARYSYMBOLSTYLE_H

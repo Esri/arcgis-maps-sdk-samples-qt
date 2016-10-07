@@ -26,7 +26,7 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "Surface.h"
-#include "SymbolDictionary.h"
+#include "DictionarySymbolStyle.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -55,8 +55,8 @@ void GraphicsOverlayDictionaryRenderer_3D::componentComplete()
     m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
 
     // Set up DictionaryRenderer
-    SymbolDictionary* symbolDictionary = new SymbolDictionary("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
-    DictionaryRenderer* renderer = new DictionaryRenderer(symbolDictionary, this);
+    DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+    DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
     m_graphicsOverlay->setRenderer(renderer);
 
     // Create a scene and give it to the SceneView

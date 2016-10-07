@@ -25,7 +25,7 @@
 #include "MapQuickView.h"
 #include "PolygonBuilder.h"
 #include "PolylineBuilder.h"
-#include "SymbolDictionary.h"
+#include "DictionarySymbolStyle.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -58,8 +58,8 @@ void GraphicsOverlayDictionaryRenderer::componentComplete()
     m_graphicsOverlay = new GraphicsOverlay(this);
 
     // Create dictionary renderer and apply to the graphics overlay
-    SymbolDictionary* symbolDictionary = new SymbolDictionary("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
-    DictionaryRenderer* renderer = new DictionaryRenderer(symbolDictionary, this);
+    DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+    DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
     m_graphicsOverlay->setRenderer(renderer);
     //! [Apply Dictionary Renderer Graphics Overlay Cpp]
 

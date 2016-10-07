@@ -25,7 +25,7 @@
 #include "GeometryEngine.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "SymbolDictionary.h"
+#include "DictionarySymbolStyle.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -83,9 +83,9 @@ void FeatureLayerDictionaryRenderer::componentComplete()
 //            symbologyFieldOverrides["identity"] = "affiliation";
 //            textFieldOverrides["uniquedesignation"] = "uniqueId";
 
-            //! [Create Symbol Dictionary Cpp]
-            SymbolDictionary* symbolDictionary = new SymbolDictionary("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
-            //! [Create Symbol Dictionary Cpp]
+            //! [Create Dictionary Symbol Style Cpp]
+            DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+            //! [Create Dictionary Symbol Style Cpp]
 
             foreach (auto table, m_geodatabase->geodatabaseFeatureTables())
             {
@@ -94,7 +94,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
                 FeatureLayer* layer = new FeatureLayer(table, this);
 
                 // Create a dictionary renderer and apply to the layer
-                DictionaryRenderer* renderer = new DictionaryRenderer(symbolDictionary, this);
+                DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
                 layer->setRenderer(renderer);
                 //! [Apply Dictionary Renderer Feature Layer Cpp]
 
