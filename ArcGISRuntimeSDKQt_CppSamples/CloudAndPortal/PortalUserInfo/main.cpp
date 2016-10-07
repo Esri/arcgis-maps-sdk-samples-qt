@@ -16,6 +16,9 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebEngine>
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -38,9 +41,13 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngine::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
+
   // Register the types for QML
   qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
-  qmlRegisterUncreatableType<AuthenticationChallenge>("Esri.Samples", 1, 0, "AuthenticationChallenge", "AuthenticationChallenge is uncreateable");
+//  qmlRegisterUncreatableType<AuthenticationChallenge>("Esri.Samples", 1, 0, "AuthenticationChallenge", "AuthenticationChallenge is uncreateable");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<PortalUserInfo>("Esri.Samples", 1, 0, "PortalUserInfoSample");
 

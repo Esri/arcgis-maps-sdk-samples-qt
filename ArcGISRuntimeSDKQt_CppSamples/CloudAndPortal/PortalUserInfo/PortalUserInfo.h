@@ -19,15 +19,15 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class AuthenticationManager;
-class Credential;
-class Portal;
-class PortalUser;
+  namespace ArcGISRuntime
+  {
+    class AuthenticationManager;
+    class Credential;
+    class Portal;
+    class PortalUser;
 
-enum class LoadStatus;
-}
+    enum class LoadStatus;
+  }
 }
 
 #include <QQuickItem>

@@ -21,7 +21,7 @@ mac {
 
 CONFIG += c++11 arcgis_runtime_qml_cpp100_0_0
 
-QT += opengl qml quick positioning sensors
+QT += opengl qml quick positioning sensors webengine
 
 TEMPLATE = app
 TARGET = PortalUserInfo

@@ -36,30 +36,6 @@ Rectangle {
         running: portal.loadStatus !== Enums.LoadStatusLoaded
     }
 
-    //! [PortalUserInfo create portal]
-    Portal {
-        id: portal
-        credential: Credential {
-            oAuthClientInfo: OAuthClientInfo {
-                oAuthMode: Enums.OAuthModeUser
-                clientId: "W3hPKzPbeJ0tr8aj"
-            }
-        }
-
-        Component.onCompleted: load();
-
-        onLoadStatusChanged: {
-            if (loadStatus === Enums.LoadStatusFailedToLoad)
-                retryLoad();
-        }
-    }
-
-    AuthenticationView {
-        id: authView
-        authenticationManager: AuthenticationManager
-    }
-    //! [PortalUserInfo create portal]
-
     property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]
     property var detailValue: ["fullName", "username", "email", "description", "access"]
 
@@ -117,6 +93,30 @@ Rectangle {
             }
         }
     }
+
+    //! [PortalUserInfo create portal]
+    Portal {
+        id: portal
+        credential: Credential {
+            oAuthClientInfo: OAuthClientInfo {
+                oAuthMode: Enums.OAuthModeUser
+                clientId: "W3hPKzPbeJ0tr8aj"
+            }
+        }
+
+        Component.onCompleted: load();
+
+        onLoadStatusChanged: {
+            if (loadStatus === Enums.LoadStatusFailedToLoad)
+                retryLoad();
+        }
+    }
+
+    AuthenticationView {
+        id: authView
+        authenticationManager: AuthenticationManager
+    }
+    //! [PortalUserInfo create portal]
 
     // Neatline rectangle
     Rectangle {

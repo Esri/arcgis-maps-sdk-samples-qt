@@ -35,11 +35,6 @@ PortalUserInfoSample {
         running: !loaded
     }
 
-    AuthenticationView {
-        id: authView
-        authenticationManager: authManager
-    }
-
     property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]
     property var detailValue: ["fullName", "username", "email", "bio", "access"]
 
@@ -80,6 +75,11 @@ PortalUserInfoSample {
                 color: "grey"
             }
         }
+    }
+
+    AuthenticationView {
+        id: authView
+        authenticationManager: authManager
     }
 
     // Neatline rectangle
