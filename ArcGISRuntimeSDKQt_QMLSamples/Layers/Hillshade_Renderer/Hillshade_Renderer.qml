@@ -26,7 +26,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/data/raster"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
 
     MapView {
         anchors.fill: parent

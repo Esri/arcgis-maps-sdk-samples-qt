@@ -27,7 +27,7 @@ Hillshade_RendererSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/data/raster"
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
 
     // add a mapView component
     MapView {
