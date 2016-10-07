@@ -18,6 +18,11 @@ TEMPLATE = app
 
 QT += qml quick positioning sensors
 
+qtHaveModule(webengine) {
+    QT += webengine
+    DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
+}
+
 CONFIG += c++11 arcgis_runtime_qml100_0_0
 
 SOURCES += main.cpp

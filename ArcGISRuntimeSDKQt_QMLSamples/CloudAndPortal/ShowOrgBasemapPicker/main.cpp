@@ -17,6 +17,9 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebEngine>
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +29,10 @@ int main(int argc, char *argv[])
   // Force usage of OpenGL ES through ANGLE on Windows
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+QtWebEngine::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Intialize application view
   QQuickView view;
