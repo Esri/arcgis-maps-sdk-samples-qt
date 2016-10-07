@@ -55,7 +55,7 @@ RasterLayerFileSample {
         id: fileDialog
 
         // only display supported raster formats
-        nameFilters: ["Raster files (*.asrp *.usrp *.dt0 *.dt1 *.dt2 *.geotiff *.tif *.hfa *.hre *.img *.jpeg *.jpg *.jp2 *.nitf *.png *.rpf *.srtm1 *.srtm2)"]
+        nameFilters: ["Raster files (*.img *.I12 *.dt0 *.dt1 *.dt2 *.tc2 *.geotiff *.tif *.hr1 *.jpg *.jpeg *.jp2 *.ntf *.png *.i21 *.ovr)"]
         folder: dataPath
 
         onAccepted: {
