@@ -24,8 +24,8 @@ Rectangle {
     id: rootRectangle
     clip: true
 
-    width: 140
-    height: 140
+    width: 800
+    height: 600
 
     property real scaleFactor: System.displayScaleFactor
     property var user: portal.portalUser

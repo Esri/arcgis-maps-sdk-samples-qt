@@ -47,7 +47,6 @@ int main(int argc, char *argv[])
 
   // Register the types for QML
   qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
-//  qmlRegisterUncreatableType<AuthenticationChallenge>("Esri.Samples", 1, 0, "AuthenticationChallenge", "AuthenticationChallenge is uncreateable");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<PortalUserInfo>("Esri.Samples", 1, 0, "PortalUserInfoSample");
 
