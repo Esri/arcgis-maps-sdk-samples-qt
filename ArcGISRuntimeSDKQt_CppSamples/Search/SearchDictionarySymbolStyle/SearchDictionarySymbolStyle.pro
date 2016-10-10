@@ -25,18 +25,18 @@ QT += opengl qml quick positioning sensors
 
 
 TEMPLATE = app
-TARGET = SearchSymbolDictionary
+TARGET = SearchDictionarySymbolStyle
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    SearchSymbolDictionary.h
+    SearchDictionarySymbolStyle.h
 
 SOURCES += \
     main.cpp \
-    SearchSymbolDictionary.cpp
+    SearchDictionarySymbolStyle.cpp
 
-RESOURCES += SearchSymbolDictionary.qrc
+RESOURCES += SearchDictionarySymbolStyle.qrc
 
 #-------------------------------------------------------------------------------
 

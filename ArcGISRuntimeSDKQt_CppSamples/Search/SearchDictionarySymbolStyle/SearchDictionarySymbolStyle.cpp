@@ -1,4 +1,4 @@
-// [WriteFile Name=SearchSymbolDictionary, Category=Search]
+// [WriteFile Name=SearchDictionarySymbolStyle, Category=Search]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,25 +14,25 @@
 // limitations under the License.
 // [Legal]
 
-#include "SearchSymbolDictionary.h"
-#include "SymbolDictionary.h"
+#include "SearchDictionarySymbolStyle.h"
+#include "DictionarySymbolStyle.h"
 
 #include <QQmlProperty>
 
 using namespace Esri::ArcGISRuntime;
 
-SearchSymbolDictionary::SearchSymbolDictionary(QQuickItem* parent) :
+SearchDictionarySymbolStyle::SearchDictionarySymbolStyle(QQuickItem* parent) :
     QQuickItem(parent),
-    m_symbolDictionary(nullptr),
+    m_dictionarySymbolStyle(nullptr),
     m_searchResults(nullptr)
 {
 }
 
-SearchSymbolDictionary::~SearchSymbolDictionary()
+SearchDictionarySymbolStyle::~SearchDictionarySymbolStyle()
 {
 }
 
-void SearchSymbolDictionary::componentComplete()
+void SearchDictionarySymbolStyle::componentComplete()
 {
     QQuickItem::componentComplete();
 
@@ -40,10 +40,10 @@ void SearchSymbolDictionary::componentComplete()
     QString datapath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
 
     //Create the dictionary from datapath
-    m_symbolDictionary = new SymbolDictionary("mil2525d", datapath, this);
+    m_dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", datapath, this);
 
     //Connect to the search completed signal of the dictionary
-    connect(m_symbolDictionary, &SymbolDictionary::searchSymbolsCompleted, this, [this](QUuid, StyleSymbolSearchResultListModel* results)
+    connect(m_dictionarySymbolStyle, &DictionarySymbolStyle::searchSymbolsCompleted, this, [this](QUuid, StyleSymbolSearchResultListModel* results)
     {
         m_searchResults = results;
         emit searchResultsListModelChanged();
@@ -51,12 +51,12 @@ void SearchSymbolDictionary::componentComplete()
     });
 }
 
-StyleSymbolSearchResultListModel* SearchSymbolDictionary::searchResultsListModel() const
+StyleSymbolSearchResultListModel* SearchDictionarySymbolStyle::searchResultsListModel() const
 {
     return m_searchResults;
 }
 
-void SearchSymbolDictionary::search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
+void SearchDictionarySymbolStyle::search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
                                     const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
                                     const QStringList& keysSearchParam)
 {
@@ -67,5 +67,5 @@ void SearchSymbolDictionary::search(const QStringList& namesSearchParam, const Q
     searchParameters.setNames(namesSearchParam);
     searchParameters.setSymbolClasses(classesSearchParam);
     searchParameters.setTags(tagsSearchParam);
-    m_symbolDictionary->searchSymbols(searchParameters);
+    m_dictionarySymbolStyle->searchSymbols(searchParameters);
 }

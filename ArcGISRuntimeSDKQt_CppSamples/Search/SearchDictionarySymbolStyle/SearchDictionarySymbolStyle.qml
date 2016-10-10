@@ -1,4 +1,4 @@
-// [WriteFile Name=SearchSymbolDictionary, Category=Search]
+// [WriteFile Name=SearchDictionarySymbolStyle, Category=Search]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -23,8 +23,8 @@ import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-SearchSymbolDictionarySample {
-    id: searchSymbolDictionarySample
+SearchDictionarySymbolStyleSample {
+    id: searchDictionarySymbolStyleSample
     width: 800
     height: 600
 
@@ -160,11 +160,11 @@ SearchSymbolDictionarySample {
                         //Disable the search button and start the search
                         enabled = false;
                         resultView.visible = false;
-                        searchSymbolDictionarySample.search(searchParamList[SearchSymbolDictionarySample.FieldNames],
-                                                            searchParamList[SearchSymbolDictionarySample.FieldTags],
-                                                            searchParamList[SearchSymbolDictionarySample.FieldClasses],
-                                                            searchParamList[SearchSymbolDictionarySample.FieldCategories],
-                                                            searchParamList[SearchSymbolDictionarySample.FieldKeys]);
+                        searchDictionarySymbolStyleSample .search(searchParamList[SearchDictionarySymbolStyleSample.FieldNames],
+                                                            searchParamList[SearchDictionarySymbolStyleSample.FieldTags],
+                                                            searchParamList[SearchDictionarySymbolStyleSample.FieldClasses],
+                                                            searchParamList[SearchDictionarySymbolStyleSample.FieldCategories],
+                                                            searchParamList[SearchDictionarySymbolStyleSample.FieldKeys]);
                     }
                 }
 

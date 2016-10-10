@@ -44,9 +44,9 @@ Rectangle {
             id: graphicsOverlay
 
             DictionaryRenderer {
-                SymbolDictionary {
+                DictionarySymbolStyle {
                     specificationType: "mil2525d"
-                    dictionaryPath: dataPath + "/styles/mil2525d.stylx"
+                    styleLocation: dataPath + "/styles/mil2525d.stylx"
                 }
             }
         }
