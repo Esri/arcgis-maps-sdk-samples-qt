@@ -20,6 +20,7 @@
 #include "Credential.h"
 #include "Portal.h"
 #include "PortalUser.h"
+#include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -128,7 +129,7 @@ QUrl PortalUserInfo::thumbnailUrl() const
   if (m_user && !m_user->thumbnailUrl().isEmpty())
     return m_user->thumbnailUrl();
 
-  return "qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png";
+  return QUrl("qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png");
 }
 
 QString PortalUserInfo::loadErrorMessage() const
