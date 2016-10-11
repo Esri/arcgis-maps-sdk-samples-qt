@@ -167,8 +167,6 @@ void Animate3DSymbols::componentComplete()
 
   // set up route graphic
   createRoute2d(mapOverlay);
-  // set up 3d graphic for model position in map view
-  createModel2d(mapOverlay);
 }
 
 void Animate3DSymbols::setMissionFrame(int newFrame)
@@ -207,23 +205,11 @@ void Animate3DSymbols::animate()
         m_camHandler->m_camWatcher = m_sceneView->setViewpointCamera(camera, m_camHandler->animationDurationSeconds());
       }
 
-#ifdef ANIMATE_MAP
-      // rotate the map view about the direction of motion
-      m_mapView->setViewpoint(Viewpoint(dp.m_pos, m_mapView->mapScale(), 360. + dp.m_heading));
-#endif
     }
     else
     {
-#ifdef ANIMATE_MAP
-      m_graphic2d->attributes()->replaceAttribute(ANGLE, 360 + dp.m_heading - m_mapView->mapRotation());
-#endif
       m_sceneView->update();
     }
-
-#ifdef ANIMATE_MAP
-    // move 2d graphic to the new position
-    m_graphic2d->setGeometry(dp.m_pos);
-#endif
 
     // move 3D graphic to the new position
     m_graphic3d->setGeometry(dp.m_pos);
@@ -256,6 +242,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
       const MissionData::DataPoint& dp = m_missionData->dataAt(i);
       routeBldr->addPoint(dp.m_pos);
     }
+
     // set the polyline as a graphic on the mapView
     m_routeGraphic->setGeometry(routeBldr->toGeometry());
 
@@ -369,7 +356,7 @@ void Animate3DSymbols::setFollowing(bool following)
 void Animate3DSymbols::zoomMapIn()
 {
   if (m_mapView == nullptr ||
-      m_graphic2d == nullptr)
+      m_routeGraphic == nullptr)
     return;
 
   // zoom the map view in, focusing on the position of the 2d graphic for the helicopter
@@ -379,7 +366,7 @@ void Animate3DSymbols::zoomMapIn()
 void Animate3DSymbols::zoomMapOut()
 {
   if (m_mapView == nullptr ||
-      m_graphic2d == nullptr)
+      m_routeGraphic == nullptr)
     return;
 
   // zoom the map view out, focusing on the position of the 2d graphic for the helicopter
