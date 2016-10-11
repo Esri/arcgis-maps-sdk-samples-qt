@@ -90,7 +90,6 @@ void OfflineGeocode::componentComplete()
 
     // set geocode parameters
     m_geocodeParameters.setMinScore(75);
-    m_geocodeParameters.setResultAttributeNames(QStringList() << "Match_addr");
     m_geocodeParameters.setMaxResults(1);
     m_reverseGeocodeParameters.setMaxResults(1);
 
@@ -238,7 +237,7 @@ void OfflineGeocode::connectSignals()
         m_geocodeInProgress = false;
         emit geocodeInProgressChanged();
 
-        if(geocodeResults.length() > 0)
+        if (geocodeResults.length() > 0)
         {
             // dismiss no results notification
             m_noResults = false;

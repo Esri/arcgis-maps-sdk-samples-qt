@@ -40,6 +40,7 @@ OfflineGeocodeSample {
             id: callout
             calloutData: offlineGeocodeSample.calloutData
             screenOffsetY: -19 * scaleFactor
+            accessoryButtonHidden: true
         }
     }
 

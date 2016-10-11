@@ -80,9 +80,6 @@ void MobileMap_SearchAndRoute::componentComplete()
 
     // set reverse geocoding parameters
     m_reverseGeocodeParameters.setMaxResults(1);
-    QStringList resultAttributeNames;
-    resultAttributeNames << "Address" << "Neighborhood" << "City" << "Region" << "Street";
-    m_reverseGeocodeParameters.setResultAttributeNames(resultAttributeNames);
 
     // identify and create MobileMapPackages using mmpk files in datapath
     createMobileMapPackages(0);
@@ -164,7 +161,7 @@ void MobileMap_SearchAndRoute::connectSignals()
             if (graphics[0]->symbol()->symbolType() == SymbolType::PictureMarkerSymbol)
             {
                 m_mapView->calloutData()->setGeoElement(graphics[0]);
-                m_mapView->calloutData()->setDetail(graphics[0]->attributes()->attributeValue("Match_addr").toString());
+                m_mapView->calloutData()->setDetail(graphics[0]->attributes()->attributeValue("AddressLabel").toString());
                 m_mapView->calloutData()->setVisible(true);
             }
             else if (graphics.count() > 1)
@@ -250,28 +247,7 @@ void MobileMap_SearchAndRoute::selectMap(int index)
             {
                 // create a blue pin graphic to display location
                 Graphic* bluePinGraphic = new Graphic(geocodeResults[0].displayLocation(), m_bluePinSymbol, this);
-
-                // create a label if GeocodeResult label comes back empty
-                if (geocodeResults[0].label() == "")
-                {
-                    QString formattedAddressString;
-                    QString address = geocodeResults[0].attributes()["Address"].toString();
-                    QString street = geocodeResults[0].attributes()["Street"].toString();
-                    QString city = geocodeResults[0].attributes()["City"].toString();
-                    QString region = geocodeResults[0].attributes()["Region"].toString();
-                    QString neighborhood = geocodeResults[0].attributes()["Neighborhood"].toString();
-
-                    if (address != "" && city != "" && region != "")
-                        formattedAddressString = address + " " + city + " " + region;
-                    if (address != "" && neighborhood != "")
-                        formattedAddressString = address + " " + neighborhood;
-                    if (street != "" && city != "")
-                        formattedAddressString = street + " " + city;
-
-                    bluePinGraphic->attributes()->insertAttribute("Match_addr", formattedAddressString);
-                }
-                else
-                    bluePinGraphic->attributes()->insertAttribute("Match_addr", geocodeResults[0].label());
+                bluePinGraphic->attributes()->insertAttribute("AddressLabel", geocodeResults[0].label());
 
                 m_stopsGraphicsOverlay->graphics()->append(bluePinGraphic);
 
