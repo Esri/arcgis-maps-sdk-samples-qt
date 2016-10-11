@@ -17,8 +17,6 @@
 #ifndef ANIMATE3DSYMBOLS_H
 #define ANIMATE3DSYMBOLS_H
 
-//#define ANIMATE_MAP
-
 class MissionData;
 
 namespace Esri

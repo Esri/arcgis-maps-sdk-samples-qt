@@ -88,7 +88,7 @@ Animate3DSymbolsSample {
             Text {
                 id: progressTitle
                 text: "progress"
-                renderType: Text.NativeRendering
+                color: "white"
             }
 
             Slider {
@@ -96,6 +96,7 @@ Animate3DSymbolsSample {
                 minimumValue: 0
                 maximumValue: missionSize
                 enabled : missionReady
+                width: Math.max(implicitWidth, playButton.width)
             }
 
             CheckBox {
@@ -103,6 +104,7 @@ Animate3DSymbolsSample {
                 enabled: missionReady
                 text: "follow"
                 checked: following
+
             }
         }
     }
@@ -123,7 +125,7 @@ Animate3DSymbolsSample {
                 id: distTitle
                 text: "zoom"
                 enabled: following && missionReady
-                renderType: Text.NativeRendering
+                color: "white"
             }
 
             Slider {
@@ -132,13 +134,14 @@ Animate3DSymbolsSample {
                 minimumValue: 10.0
                 maximumValue: 500.0
                 value: 200.0
+                width: Math.max(implicitWidth, playButton.width)
             }
 
             Text {
                 id: angleTitle
                 text: "angle"
                 enabled: following && missionReady
-                renderType: Text.NativeRendering
+                color: "white"
             }
 
             Slider {
@@ -147,13 +150,14 @@ Animate3DSymbolsSample {
                 minimumValue: 0.0
                 maximumValue: 180.0
                 value: 75.0
+                width: Math.max(implicitWidth, playButton.width)
             }
 
             Text {
                 id: speedTitle
                 text: "speed"
                 enabled: missionReady
-                renderType: Text.NativeRendering
+                color: "white"
             }
 
             Slider {
@@ -162,6 +166,7 @@ Animate3DSymbolsSample {
                 minimumValue: 50
                 maximumValue: 200
                 value: 50
+                width: Math.max(implicitWidth, playButton.width)
             }
         }
     }
