@@ -55,6 +55,7 @@ Rectangle {
             id: callout
             calloutData: parent.calloutData
             screenOffsetY: -19 * scaleFactor
+            accessoryButtonHidden: true
         }
 
         // runs when app is geocoding
@@ -223,7 +224,7 @@ Rectangle {
                     // set callout's geoelement
                     mapView.calloutData.geoElement = identifyGraphicsOverlayResult.graphics[0].symbol.symbolType === Enums.SymbolTypePictureMarkerSymbol ?
                                 identifyGraphicsOverlayResult.graphics[0] : identifyGraphicsOverlayResult.graphics[1];
-                    mapView.calloutData.detail = mapView.calloutData.geoElement.attributes.attributeValue("Match_addr");
+                    mapView.calloutData.detail = mapView.calloutData.geoElement.attributes.attributeValue("AddressLabel");
                     callout.showCallout();
                 }
 
@@ -280,28 +281,7 @@ Rectangle {
                     // create a pin graphic to display location
                     var pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: currentLocatorTask.geocodeResults[0].displayLocation, symbol: bluePinSymbol});
                     stopsGraphicsOverlay.graphics.append(pinGraphic);
-
-                    // extract address from GeocodeResult and add as the an attribute of the graphic
-                    if (currentLocatorTask.geocodeResults[0].label === "") {
-                        var formattedAddressString;
-                        var address = currentLocatorTask.geocodeResults[0].attributes["Address"];
-                        var street = currentLocatorTask.geocodeResults[0].attributes["Street"];
-                        var city = currentLocatorTask.geocodeResults[0].attributes["City"];
-                        var region = currentLocatorTask.geocodeResults[0].attributes["Region"];
-                        var neighborhood = currentLocatorTask.geocodeResults[0].attributes["Region"];
-
-                        if (address !== "" && street !== "" && region !== "")
-                            formattedAddressString = address + " " + street + " " + region;
-                        if (address !== "" && neighborhood !== "")
-                            formattedAddressString = address + " " + neighborhood;
-                        if (street !== "" && city !== "")
-                            formattedAddressString = street + " " + city;
-
-                        pinGraphic.attributes.insertAttribute("Match_addr", formattedAddressString);
-                    }
-
-                    else
-                        pinGraphic.attributes.insertAttribute("Match_addr", currentLocatorTask.geocodeResults[0].label);
+                    pinGraphic.attributes.insertAttribute("AddressLabel", currentLocatorTask.geocodeResults[0].label);
 
                     if (currentLocatorTask !== null)
                         clearButton.visible = true;

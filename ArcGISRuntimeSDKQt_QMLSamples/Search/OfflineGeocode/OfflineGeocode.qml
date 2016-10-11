@@ -93,6 +93,7 @@ Rectangle {
             id: callout
             calloutData: parent.calloutData
             screenOffsetY: -19 * scaleFactor
+            accessoryButtonHidden: true
         }
 
         // dismiss suggestions and no results notification on mouse press
@@ -163,7 +164,6 @@ Rectangle {
 
         GeocodeParameters {
             id: geocodeParams
-            resultAttributeNames: ["Match_addr"]
             minScore: 75
             maxResults: 1
         }

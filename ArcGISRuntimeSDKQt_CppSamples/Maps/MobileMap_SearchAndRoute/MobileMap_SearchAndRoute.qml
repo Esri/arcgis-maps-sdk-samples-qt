@@ -45,6 +45,7 @@ MobileMap_SearchAndRouteSample {
             Callout {
                 calloutData: mobileMapSearchRoute.calloutData
                 screenOffsetY: -19 * scaleFactor
+                accessoryButtonHidden: true
             }
 
             Rectangle {
