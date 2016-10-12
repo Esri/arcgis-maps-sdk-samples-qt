@@ -63,14 +63,14 @@ void FeatureLayerDictionaryRenderer::componentComplete()
         if (gdbLoadStatus == LoadStatus::Loaded)
         {
             /**
-             * If the field names in your data don't match the contents of SymbolDictionary::symbologyFieldNames(),
+             * If the field names in your data don't match the contents of DictionarySymbolStyle::symbologyFieldNames(),
              * you must add key-value pairs to a QMap<QString, QString> and include this QMap when calling the
              * DictionaryRenderer constructor. The keys and values are like this:
              *
              *   "dictionaryFieldName1": "myFieldName1"
              *   "dictionaryFieldName2": "myFieldName2"
              *
-             * The same principle applies to SymbolDictionary::textFieldNames() for text attributes that appear
+             * The same principle applies to DictionarySymbolStyle::textFieldNames() for text attributes that appear
              * as part of military symbols.
              *
              * The following commented-out code demonstrates one way to do it, in a scenario where the dictionary
