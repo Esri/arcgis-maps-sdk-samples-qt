@@ -146,6 +146,7 @@ void Animate3DSymbols::componentComplete()
   renderProperties.setHeadingExpression(HEADING);
   renderProperties.setPitchExpression(PITCH);
   renderProperties.setRollExpression(ROLL);
+  renderer3D->setSceneProperties(renderProperties);
   sceneOverlay->setRenderer(renderer3D);
 
   // find QML MapView component
