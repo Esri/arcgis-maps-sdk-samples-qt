@@ -43,7 +43,7 @@ void SearchDictionarySymbolStyle::componentComplete()
     m_dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", datapath, this);
 
     //Connect to the search completed signal of the dictionary
-    connect(m_dictionarySymbolStyle, &DictionarySymbolStyle::searchSymbolsCompleted, this, [this](QUuid, StyleSymbolSearchResultListModel* results)
+    connect(m_dictionarySymbolStyle, &DictionarySymbolStyle::searchSymbolsCompleted, this, [this](QUuid, SymbolStyleSearchResultListModel* results)
     {
         m_searchResults = results;
         emit searchResultsListModelChanged();
@@ -51,7 +51,7 @@ void SearchDictionarySymbolStyle::componentComplete()
     });
 }
 
-StyleSymbolSearchResultListModel* SearchDictionarySymbolStyle::searchResultsListModel() const
+SymbolStyleSearchResultListModel* SearchDictionarySymbolStyle::searchResultsListModel() const
 {
     return m_searchResults;
 }
@@ -61,7 +61,7 @@ void SearchDictionarySymbolStyle::search(const QStringList& namesSearchParam, co
                                     const QStringList& keysSearchParam)
 {
     //Create search parameters and search with the parameters
-    StyleSymbolSearchParameters searchParameters;
+    SymbolStyleSearchParameters searchParameters;
     searchParameters.setCategories(categoriesSearchParam);
     searchParameters.setKeys(keysSearchParam);
     searchParameters.setNames(namesSearchParam);
