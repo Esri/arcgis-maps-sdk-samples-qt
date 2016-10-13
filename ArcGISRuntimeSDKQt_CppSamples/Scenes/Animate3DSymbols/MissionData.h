@@ -30,7 +30,7 @@ public:
   struct DataPoint
   {
     DataPoint(double lon, double lat, double elevation, double heading, double pitch, double roll):
-      m_pos(Esri::ArcGISRuntime::Point(lon, lat, elevation, Esri::ArcGISRuntime::SpatialReference::wgs84())),
+      m_pos(Esri::ArcGISRuntime::Point(lon, lat, elevation, Esri::ArcGISRuntime::SpatialReference(4326))),
       m_heading(heading),
       m_pitch(pitch),
       m_roll(roll){}
