@@ -14,7 +14,7 @@ This sample loads a number of point, line, and polygon military elements from an
 - BasemapTopographic
 - GraphicsOverlay
 - DictionaryRenderer
-- SymbolDictionary
+- DictionarySymbolStyle
 - SpatialReference
 - PointBuilder
 - PolygonBuilder

@@ -21,7 +21,7 @@
 #include <Windows.h>
 #endif
 
-#include "SearchSymbolDictionary.h"
+#include "SearchDictionarySymbolStyle.h"
 #include "StyleSymbolSearchResultListModel.h"
 
 int main(int argc, char *argv[])
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 #endif
 
     // Register the map view for QML
-    qmlRegisterType<SearchSymbolDictionary>("Esri.Samples", 1, 0, "SearchSymbolDictionarySample");
+    qmlRegisterType<SearchDictionarySymbolStyle>("Esri.Samples", 1, 0, "SearchDictionarySymbolStyleSample");
 
     // Register the list model
     qmlRegisterUncreatableType<Esri::ArcGISRuntime::StyleSymbolSearchResultListModel>("Esri.Samples", 1, 0,
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Search/SearchSymbolDictionary/SearchSymbolDictionary.qml"));
+    view.setSource(QUrl("qrc:/Samples/Search/SearchDictionarySymbolStyle/SearchDictionarySymbolStyle.qml"));
 
     view.show();
 

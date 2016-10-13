@@ -24,7 +24,7 @@ This sample loads a number of point, line, and polygon military elements from an
 - PolygonBuilder
 - PolylineBuilder
 - SpatialReference
-- SymbolDictionary
+- DictionarySymbolStyle
 
 ##Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).

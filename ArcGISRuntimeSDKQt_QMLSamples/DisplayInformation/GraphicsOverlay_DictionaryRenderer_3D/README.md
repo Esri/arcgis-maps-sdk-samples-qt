@@ -14,7 +14,7 @@ The sample loads a number of point military elements from an XML file and adds t
 - BasemapImagery
 - GraphicsOverlay
 - DictionaryRenderer
-- SymbolDictionary
+- DictionarySymbolStyle
 - SpatialReference
 - PointBuilder
 - Graphic

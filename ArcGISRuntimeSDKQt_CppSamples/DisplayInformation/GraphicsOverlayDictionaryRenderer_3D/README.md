@@ -24,7 +24,7 @@ The sample loads a number of point military elements from an XML file and adds t
 - SceneView
 - SpatialReference
 - Surface
-- SymbolDictionary
+- DictionarySymbolStyle
 
 ##Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
