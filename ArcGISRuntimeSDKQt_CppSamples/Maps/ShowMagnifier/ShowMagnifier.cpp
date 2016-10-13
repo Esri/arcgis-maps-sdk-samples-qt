@@ -46,7 +46,7 @@ void ShowMagnifier::componentComplete()
 
     // create a new map instance
     m_map = new Map(basemap, this);
-    m_map->setInitialViewpoint(Viewpoint(Point(-110.8258, 32.1545089, SpatialReference::wgs84()), 2e4));
+    m_map->setInitialViewpoint(Viewpoint(Point(-110.8258, 32.1545089, SpatialReference(4326))), 2e4));
 
     // set map on the map view
     m_mapView->setMap(m_map);

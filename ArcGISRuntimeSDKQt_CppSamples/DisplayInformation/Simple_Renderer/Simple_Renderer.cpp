@@ -63,9 +63,9 @@ void Simple_Renderer::componentComplete()
     m_graphicsOverlay->setRenderer(simpleRenderer);
 
     // create points to render
-    Point oldFaithfulPoint(-110.828140, 44.460458, SpatialReference::wgs84());
-    Point cascadeGeyserPoint(-110.829004, 44.462438, SpatialReference::wgs84());
-    Point plumeGeyserPoint(-110.829381, 44.462735, SpatialReference::wgs84());
+    Point oldFaithfulPoint(-110.828140, 44.460458, SpatialReference(4326)));
+    Point cascadeGeyserPoint(-110.829004, 44.462438, SpatialReference(4326)));
+    Point plumeGeyserPoint(-110.829381, 44.462735, SpatialReference(4326)));
 
     // create graphics using points and add them to GraphicsOverlay
     addPoint(oldFaithfulPoint);
