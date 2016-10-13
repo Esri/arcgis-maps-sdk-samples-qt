@@ -6,11 +6,11 @@ This sample demonstrates how to search the DictionarySymbolStyle and return the 
 
 ##How it works
 
-The sample uses the `searchSymbols` function to search for the symbols that match the `StyleSymbolSearchParameters`.
+The sample uses the `searchSymbols` function to search for the symbols that match the `SymbolStyleSearchParameters`.
 
 ##Features
 - DictionarySymbolStyle
-- StyleSymbolSearchParameters
+- SymbolStyleSearchParameters
 
 ##Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).

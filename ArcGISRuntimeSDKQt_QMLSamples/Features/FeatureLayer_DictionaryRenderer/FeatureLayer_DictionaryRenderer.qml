@@ -52,7 +52,7 @@ Rectangle {
     DictionarySymbolStyle {
         id: dictionarySymbolStyle
         specificationType: "mil2525d"
-        dictionaryPath: dataPath + "/styles/mil2525d.stylx"
+        styleLocation: dataPath + "/styles/mil2525d.stylx"
     }
     //! [Create Dictionary Symbol Style QML]
 

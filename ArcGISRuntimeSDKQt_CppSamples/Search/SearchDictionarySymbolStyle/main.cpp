@@ -22,7 +22,7 @@
 #endif
 
 #include "SearchDictionarySymbolStyle.h"
-#include "StyleSymbolSearchResultListModel.h"
+#include "SymbolStyleSearchResultListModel.h"
 
 int main(int argc, char *argv[])
 {
@@ -37,9 +37,9 @@ int main(int argc, char *argv[])
     qmlRegisterType<SearchDictionarySymbolStyle>("Esri.Samples", 1, 0, "SearchDictionarySymbolStyleSample");
 
     // Register the list model
-    qmlRegisterUncreatableType<Esri::ArcGISRuntime::StyleSymbolSearchResultListModel>("Esri.Samples", 1, 0,
-                                                       "StyleSymbolSearchResultListModel",
-                                                       "StyleSymbolSearchResultListModel is an uncreatable type");
+    qmlRegisterUncreatableType<Esri::ArcGISRuntime::SymbolStyleSearchResultListModel>("Esri.Samples", 1, 0,
+                                                       "SymbolStyleSearchResultListModel",
+                                                       "SymbolStyleSearchResultListModel is an uncreatable type");
 
     // Intialize application view
     QQuickView view;
