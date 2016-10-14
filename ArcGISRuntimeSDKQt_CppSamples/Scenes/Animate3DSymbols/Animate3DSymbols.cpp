@@ -237,7 +237,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   if (missionReady())
   {
     // create a polyline representing the route for the mission
-    PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference(4326), this);
+    PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);
     for(int i = 0; i < missionSize(); ++i)
     {
       const MissionData::DataPoint& dp = m_missionData->dataAt(i);
@@ -312,7 +312,7 @@ void Animate3DSymbols::createModel2d(GraphicsOverlay *mapOverlay)
   // create a graphic with the symbol and attributes
   QVariantMap attributes;
   attributes.insert(ANGLE, 0.f);
-  m_graphic2d = new Graphic(Point(0, 0, SpatialReference(4326)), attributes, plane2DSymbol, this);
+  m_graphic2d = new Graphic(Point(0, 0, SpatialReference::wgs84()), attributes, plane2DSymbol, this);
   mapOverlay->graphics()->append(m_graphic2d);
 }
 
