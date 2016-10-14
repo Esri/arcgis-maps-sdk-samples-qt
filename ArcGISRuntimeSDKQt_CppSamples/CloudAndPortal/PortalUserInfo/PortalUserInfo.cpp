@@ -98,7 +98,7 @@ QString PortalUserInfo::email() const
 QString PortalUserInfo::bio() const
 {
   if (m_user)
-    return m_user->description();
+    return m_user->userDescription();
 
   return UNKNOWN;
 }
