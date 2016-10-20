@@ -17,9 +17,18 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QQmlEngine>
+#include <QSurfaceFormat>
 
 int main(int argc, char *argv[])
 {
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
+    // Linux requires 3.2 OpenGL Context
+    // in order to instance 3D symbols
+    QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
+    fmt.setVersion(3, 2);
+    QSurfaceFormat::setDefaultFormat(fmt);
+#endif
+
     QGuiApplication app(argc, argv);
     
 #ifdef Q_OS_WIN
