@@ -14,9 +14,18 @@
 #include "BasicSceneView.h"
 #include <QApplication>
 #include <QMessageBox>
+#include <QSurfaceFormat>
 
 int main(int argc, char *argv[])
 {
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
+  // Linux requires 3.2 OpenGL Context
+  // in order to instance 3D symbols
+  QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
+  fmt.setVersion(3, 2);
+  QSurfaceFormat::setDefaultFormat(fmt);
+#endif
+
   QApplication application(argc, argv);
   
 #ifdef Q_OS_WIN
