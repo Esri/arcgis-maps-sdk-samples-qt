@@ -55,7 +55,7 @@ Rectangle {
                     z: 62.013264927081764
                     spatialReference: SpatialReference.createWgs84()
                 }
-                scale: 62.013264927081764
+                targetScale: 62.013264927081764
 
                 Camera {
                     id: camera

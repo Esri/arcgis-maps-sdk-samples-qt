@@ -40,7 +40,7 @@ Rectangle {
             }
             initialViewpoint: ViewpointCenter {
                 center: Point { x:-80.18; y: 25.778135; spatialReference: SpatialReference { wkid: 4326 } }
-                scale: 150000
+                targetScale: 150000
             }
         }
     }

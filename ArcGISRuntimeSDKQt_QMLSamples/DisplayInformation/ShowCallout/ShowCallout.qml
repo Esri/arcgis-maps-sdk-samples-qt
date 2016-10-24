@@ -45,7 +45,7 @@ Rectangle {
                     y: 5e6
                     spatialReference: SpatialReference.createWebMercator()
                 }
-                scale: 1e7
+                targetScale: 1e7
             }
         }
 

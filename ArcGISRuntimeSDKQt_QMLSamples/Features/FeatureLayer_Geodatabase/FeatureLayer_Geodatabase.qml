@@ -41,7 +41,7 @@ Rectangle {
                     y: 4040194
                     spatialReference: SpatialReference.createWebMercator()
                 }
-                scale: 35e4
+                targetScale: 35e4
             }
 
             //! [FeatureLayer Geodatabase add basemap]

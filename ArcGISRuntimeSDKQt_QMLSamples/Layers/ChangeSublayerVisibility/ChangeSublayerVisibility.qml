@@ -45,7 +45,7 @@ Rectangle {
                     y: 6e6
                     spatialReference: SpatialReference {wkid: 102100}
                 }
-                scale: 9e7
+                targetScale: 9e7
             }
         }
     }

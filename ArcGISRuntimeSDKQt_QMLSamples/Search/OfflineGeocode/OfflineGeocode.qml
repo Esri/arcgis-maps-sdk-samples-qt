@@ -65,7 +65,7 @@ Rectangle {
                         wkid: 3857
                     }
                 }
-                scale: 2e4
+                targetScale: 2e4
             }
         }
 

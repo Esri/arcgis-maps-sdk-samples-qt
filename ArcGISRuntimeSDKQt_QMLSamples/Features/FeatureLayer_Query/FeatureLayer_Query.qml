@@ -104,7 +104,7 @@ Rectangle {
                     wkid: 102100
                 }
             }
-            scale: 9e7
+            targetScale: 9e7
         }
 
         QueryParameters {
