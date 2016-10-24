@@ -30,7 +30,6 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property var porInfo: portal.portalInfo
 
-    ListModel {id: basemapsList}
 
     function chooseBasemap(selectedMapTitle){
         title.text = selectedMapTitle;
@@ -89,19 +88,14 @@ Rectangle {
 
         onFetchBasemapsStatusChanged: {
             console.log("fetch basemaps finished");
-//            var bmps = portal.basemaps;
-            console.log(portal.basemaps);
+            if (fetchBasemapsStatus !== Enums.TaskStatusCompleted)
+                return;
 
-            return;
+            console.log("basemaps.rowCount", basemaps.rowCount());
+            console.log(basemaps.get(0).name);
 
-//            for (var i = 0; i < bmps.length; i++)
-//            {
-//                basemapsList.append({"name": bmps[i].name});
-//                console.log(bmps[i].name)
-//            }
-
-//            basemapsGrid.model = basemapsList;
-//            gridFadeIn.running = true;
+            basemapsGrid.model = basemaps;
+            gridFadeIn.running = true;
         }
 
         onErrorChanged: console.log(error.message);
@@ -138,6 +132,7 @@ Rectangle {
         opacity: 0
         focus: true
         clip: true
+//        model: portal.basemaps
 
         delegate: Rectangle {
             anchors.margins: 5 * scaleFactor
@@ -164,6 +159,8 @@ Rectangle {
                     if (!enabled)
                         return;
 
+                    console.log(basemapsGrid.model.get(0).name);
+                    console.log("name", model.name, "item", model.item, "url", model.url);
                     basemapsGrid.currentIndex = index;
                 }
                 onDoubleClicked: {
