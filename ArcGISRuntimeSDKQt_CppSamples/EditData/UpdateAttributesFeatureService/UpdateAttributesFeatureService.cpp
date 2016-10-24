@@ -30,7 +30,6 @@
 #include "FeatureQueryResult.h"
 #include <QUrl>
 #include <QUuid>
-#include <QSharedPointer>
 #include <QMouseEvent>
 
 using namespace Esri::ArcGISRuntime;
@@ -123,9 +122,9 @@ void UpdateAttributesFeatureService::connectSignals()
     });
 
     // connect to the queryFeaturesCompleted signal on the feature table
-    connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, QSharedPointer<FeatureQueryResult> featureQueryResult)
+    connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
     {
-        if (featureQueryResult->iterator().hasNext())
+        if (featureQueryResult && featureQueryResult->iterator().hasNext())
         {
             // first delete if not nullptr
             if (m_selectedFeature != nullptr)
@@ -148,7 +147,7 @@ void UpdateAttributesFeatureService::connectSignals()
     });
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
     {
         // check if result list is not empty
         if (!featureEditResults.isEmpty())

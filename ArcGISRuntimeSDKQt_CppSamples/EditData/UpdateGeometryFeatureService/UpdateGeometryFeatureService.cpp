@@ -29,7 +29,6 @@
 #include "GeoElement.h"
 #include <QUrl>
 #include <QUuid>
-#include <QSharedPointer>
 #include <QMouseEvent>
 #include <QList>
 
@@ -139,12 +138,12 @@ void UpdateGeometryFeatureService::connectSignals()
     });
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
     {
         // obtain the first item in the list
-        QSharedPointer<FeatureEditResult> featureEditResult = featureEditResults.first();
+        FeatureEditResult* featureEditResult = featureEditResults.isEmpty() ? nullptr : featureEditResults.first();
         // check if there were errors, and if not, log the new object ID
-        if (!featureEditResult->isCompletedWithErrors())
+        if (featureEditResult && !featureEditResult->isCompletedWithErrors())
             qDebug() << "Successfully updated geometry for Object ID:" << featureEditResult->objectId();
         else
             qDebug() << "Apply edits error.";

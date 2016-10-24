@@ -31,7 +31,6 @@
 #include "AttachmentListModel.h"
 #include <QUrl>
 #include <QUuid>
-#include <QSharedPointer>
 #include <QMouseEvent>
 #include <QFile>
 
@@ -129,9 +128,9 @@ void EditFeatureAttachments::connectSignals()
 
     // connect to the queryFeaturesCompleted signal on the feature table
     connect(m_featureTable, &FeatureTable::queryFeaturesCompleted,
-            this, [this](QUuid, QSharedPointer<FeatureQueryResult> featureQueryResult)
+            this, [this](QUuid, FeatureQueryResult* featureQueryResult)
     {
-        if (featureQueryResult->iterator().hasNext())
+        if (featureQueryResult && featureQueryResult->iterator().hasNext())
         {
             // first delete if not nullptr
             if (m_selectedFeature != nullptr)
@@ -146,7 +145,7 @@ void EditFeatureAttachments::connectSignals()
 
             // get the number of attachments
             connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted,
-                    this, [this](QUuid, const QList<QSharedPointer<Esri::ArcGISRuntime::Attachment>>)
+                    this, [this](QUuid, const QList<Attachment*>&)
             {
                 m_attachmentCount = m_selectedFeature->attachments()->rowCount();
                 emit attachmentCountChanged();
@@ -156,12 +155,12 @@ void EditFeatureAttachments::connectSignals()
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
     connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted,
-            this, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
+            this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
     {
         if (featureEditResults.length() > 0)
         {
             // obtain the first item in the list
-            QSharedPointer<FeatureEditResult> featureEditResult = featureEditResults.first();
+            FeatureEditResult* featureEditResult = featureEditResults.first();
             // check if there were errors
             if (!featureEditResult->isCompletedWithErrors())
             {

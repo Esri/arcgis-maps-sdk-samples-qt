@@ -57,11 +57,10 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
       {
         // create a portal item with the item id
         QString portalId = m_portalIds.value(m_inputDialog->textValue() );
-        if( portalId.isEmpty())
+        if(portalId.isEmpty())
             return;
 
-        PortalItem portalItem;
-        portalItem.setUrl(QUrl("http://arcgis.com/sharing/rest/content/items/" + portalId));
+        PortalItem* portalItem = new PortalItem(QUrl("http://arcgis.com/sharing/rest/content/items/" + portalId), this);
 
         // create a new map from the portal item
         Map* map = new Map(portalItem, this);
@@ -83,7 +82,7 @@ void OpenExistingMap::createPortalMaps()
 {
     m_portalIds.insert("Housing with Mortgages", "2d6fa24b357d427f9c737774e7b0f977");
     m_portalIds.insert("USA Tapestry Segmentation", "01f052c8995e4b9e889d73c3e210ebe3");
-    m_portalIds.insert("Geology of United States", "74a8f6645ab44c4f82d537f1aa0e375d");
+    m_portalIds.insert("Geology of United States", "92ad152b9da94dee89b9e387dfe21acd");
 }
 
 void OpenExistingMap::createUi()

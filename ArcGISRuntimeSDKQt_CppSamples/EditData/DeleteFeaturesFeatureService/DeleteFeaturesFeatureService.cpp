@@ -30,7 +30,6 @@
 #include "FeatureQueryResult.h"
 #include <QUrl>
 #include <QUuid>
-#include <QSharedPointer>
 #include <QMouseEvent>
 
 using namespace Esri::ArcGISRuntime;
@@ -130,7 +129,7 @@ void DeleteFeaturesFeatureService::connectSignals()
     });
 
     // connect to the selectedFeatures signal on the feature layer
-    connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, QSharedPointer<FeatureQueryResult> featureQueryResult)
+    connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
     {
         FeatureIterator iter = featureQueryResult->iterator();
         if (iter.hasNext())
@@ -152,12 +151,12 @@ void DeleteFeaturesFeatureService::connectSignals()
     });
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
     {
         // obtain the first item in the list
-        QSharedPointer<FeatureEditResult> featureEditResult = featureEditResults.first();
+        FeatureEditResult* featureEditResult = featureEditResults.isEmpty() ? nullptr : featureEditResults.first();
         // check if there were errors, and if not, log the new object ID
-        if (!featureEditResult->isCompletedWithErrors())
+        if (featureEditResult && !featureEditResult->isCompletedWithErrors())
             qDebug() << "Successfully deleted Object ID:" << featureEditResult->objectId();
         else
             qDebug() << "Apply edits error.";
