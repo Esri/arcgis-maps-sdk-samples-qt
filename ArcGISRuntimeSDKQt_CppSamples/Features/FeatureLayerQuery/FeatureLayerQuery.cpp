@@ -90,9 +90,9 @@ void FeatureLayerQuery::componentComplete()
 void FeatureLayerQuery::connectSignals()
 {
     // iterate over the query results once the query is done
-    connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, QSharedPointer<Esri::ArcGISRuntime::FeatureQueryResult> queryResult)
+    connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* queryResult)
     {
-        if (!queryResult->iterator().hasNext())
+        if (queryResult && !queryResult->iterator().hasNext())
         {
             m_queryResultsCount = 0;
             emit queryResultsCountChanged();
