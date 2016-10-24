@@ -104,7 +104,7 @@ Rectangle {
                     y: 3858170
                     spatialReference: SpatialReference.createWebMercator()
                 }
-                scale: 1e5
+                targetScale: 1e5
             }
 
             // Add the graphics and setup the RouteTask once the map is loaded

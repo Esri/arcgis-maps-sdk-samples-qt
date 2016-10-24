@@ -56,7 +56,7 @@ Rectangle {
                 wkid: 4326
             }
         }
-        scale: 288895.277144
+        targetScale: 288895.277144
     }
 
     //! [GOSymbol buoy points]

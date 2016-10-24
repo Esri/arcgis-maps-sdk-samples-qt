@@ -44,7 +44,7 @@ Rectangle {
             spatialReference: SpatialReference { wkid: 102100 }
         }
         // Specify the scale
-        scale: 15000
+        targetScale: 15000
     }
 
     Rectangle {

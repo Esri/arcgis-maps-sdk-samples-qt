@@ -55,7 +55,7 @@ Rectangle {
 
             // create initial viewpoint
             ViewpointCenter {
-                scale: 5e7
+                targetScale: 5e7
 
                 Point {
                     x: -11e6
