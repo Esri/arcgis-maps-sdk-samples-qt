@@ -18,6 +18,7 @@
 
 #include "AuthenticationManager.h"
 #include "Credential.h"
+#include "CredentialCache.h"
 #include "Portal.h"
 #include "PortalUser.h"
 #include <QUrl>
@@ -35,6 +36,7 @@ PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
   connect(m_portal, &Portal::loadStatusChanged, this, &PortalUserInfo::onPortalLoadStatusChanged);
   connect(m_portal, &Portal::doneLoading, this, &PortalUserInfo::loadErrorMessageChanged);
   emit authManagerChanged();
+  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
 PortalUserInfo::~PortalUserInfo()
@@ -58,9 +60,9 @@ void PortalUserInfo::load()
     return;
 
   if (m_portal->loadStatus() == LoadStatus::NotLoaded)
-      m_portal->load();
+    m_portal->load();
   else if (m_portal->loadStatus() == LoadStatus::FailedToLoad)
-      m_portal->retryLoad();
+    m_portal->retryLoad();
 }
 
 QString PortalUserInfo::username() const
@@ -155,8 +157,11 @@ void PortalUserInfo::onPortalLoadStatusChanged(LoadStatus loadStatus)
   case LoadStatus::Loading:
     break;
   case LoadStatus::FailedToLoad:
+  {
+    m_portal->setCredential(nullptr);
     m_portal->retryLoad();
     break;
+  }
   case LoadStatus::NotLoaded:
     break;
   case LoadStatus::Unknown:

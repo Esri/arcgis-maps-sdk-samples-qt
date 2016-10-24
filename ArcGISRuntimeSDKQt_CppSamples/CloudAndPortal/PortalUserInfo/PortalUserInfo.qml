@@ -51,7 +51,7 @@ PortalUserInfoSample {
         }
 
         Image {
-            source : thumbnailUrl
+            source : thumbnailUrl.toString().length > 0 ? thumbnailUrl : "qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png"
             height: 32 * scaleFactor
             width: 32 * scaleFactor
         }
