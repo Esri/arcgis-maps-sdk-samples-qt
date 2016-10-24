@@ -97,7 +97,6 @@ Rectangle {
     //! [PortalUserInfo create portal]
     Portal {
         id: portal
-        loginRequired: false
         credential: Credential {
             oAuthClientInfo: OAuthClientInfo {
                 oAuthMode: Enums.OAuthModeUser
@@ -105,7 +104,10 @@ Rectangle {
             }
         }
 
-        Component.onCompleted: load();
+        Component.onCompleted: {
+            AuthenticationManager.credentialCacheEnabled = false;
+            load();
+        }
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusFailedToLoad)
@@ -117,6 +119,7 @@ Rectangle {
         id: authView
         authenticationManager: AuthenticationManager
     }
+
     //! [PortalUserInfo create portal]
 
     // Neatline rectangle

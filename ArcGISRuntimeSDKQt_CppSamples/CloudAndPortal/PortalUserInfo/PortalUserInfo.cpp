@@ -158,7 +158,6 @@ void PortalUserInfo::onPortalLoadStatusChanged(LoadStatus loadStatus)
     break;
   case LoadStatus::FailedToLoad:
   {
-    m_portal->setCredential(nullptr);
     m_portal->retryLoad();
     break;
   }
