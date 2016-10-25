@@ -24,8 +24,8 @@ Rectangle {
     id: rootRectangle
     clip: true
 
-    width: 800
-    height: 600
+    width: 800 * scaleFactor
+    height: 600 * scaleFactor
 
     property real scaleFactor: System.displayScaleFactor
     property var user: portal.portalUser
@@ -37,7 +37,7 @@ Rectangle {
     }
 
     property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]
-    property var detailValue: ["fullName", "username", "email", "description", "access"]
+    property var detailValue: ["fullName", "username", "email", "userDescription", "access"]
 
     Column {
         id: userDetailsColumn
@@ -52,7 +52,7 @@ Rectangle {
         }
 
         Image {
-            source : user && user.thumbnailUrl.lenghth > 0 ? user.thumbnailUrl : "qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png"
+            source : user && user.thumbnailUrl.toString().length > 0 ? user.thumbnailUrl : "qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png"
             height: 32 * scaleFactor
             width: 32 * scaleFactor
         }
@@ -76,7 +76,7 @@ Rectangle {
                     if (!user)
                         return "????";
 
-                    if( detailValue[index] !== "access")
+                    if(detailValue[index] !== "access")
                         return user[detailValue[index]];
 
                     if (user.access === Enums.PortalAccessOrganization)
@@ -104,7 +104,10 @@ Rectangle {
             }
         }
 
-        Component.onCompleted: load();
+        Component.onCompleted: {
+            AuthenticationManager.credentialCacheEnabled = false;
+            load();
+        }
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusFailedToLoad)
@@ -116,6 +119,7 @@ Rectangle {
         id: authView
         authenticationManager: AuthenticationManager
     }
+
     //! [PortalUserInfo create portal]
 
     // Neatline rectangle
