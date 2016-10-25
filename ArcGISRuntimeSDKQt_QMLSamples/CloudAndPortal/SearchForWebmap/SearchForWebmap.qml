@@ -33,71 +33,42 @@ Rectangle {
     property var basemap
 
     function search(keyWord) {
-        if (keyWord === "none") {
-            noResultsAnimation.running = true;
-            return;
-        }
-
-        portal.findItems(webmapQuery);
-
-        webmapsModel.append({"name": "Imagery"});
-        webmapsModel.append({"name": "Imagery with labels"});
-        webmapsModel.append({"name": "Light Gray Canvas"});
-        webmapsModel.append({"name": "National Geographic"});
-        webmapsModel.append({"name": "Oceans"});
-        webmapsModel.append({"name": "Streets"});
-        webmapsModel.append({"name": "Terrain with labels"});
-        webmapsModel.append({"name": "Topographic"});
-
-        webmapsList.model = webmapsModel;
-        webmapsList.visible = true;
         mapView.visible = false;
+        mapView.map = null;
+        console.log(webmapQuery.query);
+        portal.findItems(webmapQuery);
     }
 
-    function selectWebmap(webmapName) {
-
-        var id = "8bf7167d20924cbf8e25e7b11c7c502c"; //"42a12cf7cd914a4e8d762b7ad049c14c"
-
-        portalItem = ArcGISRuntimeEnvironment.createObject("PortalItem");
-        portalItem.portal = portal;
-        portalItem.itemId = id;
-
-        console.log("load portalItem")
+    function loadSelectedWebmap(selectedWebmap) {
+        portalItem = selectedWebmap;
         portalItem.load();
 
-        portalItem.loadStatusChanged.connect(createBasemap);
+        portalItem.loadStatusChanged.connect(createMap);
     }
 
-    function createBasemap() {
-        console.log(" portalItem.loadStatusChanged")
+    function createMap() {
         if (portalItem.loadStatus !== Enums.LoadStatusLoaded)
             return;
 
-        console.log("createBasemap")
-        basemap = ArcGISRuntimeEnvironment.createObject("Basemap", {"item": portalItem});
-        basemap.load();
+        mapView.map = ArcGISRuntimeEnvironment.createObject("Map", {"item": portalItem});
+        mapView.map.load();
 
-        basemap.loadStatusChanged.connect(assignWebmap);
-        basemap.loadErrorChanged.connect( function(){console.log("basemap error",basemap.loadError.message)});
+        mapView.map.loadStatusChanged.connect(assignWebmap);
+        mapView.map.loadErrorChanged.connect( function(){console.log("basemap error",basemap.loadError.message)});
     }
 
     function assignWebmap() {
-        console.log(" basemap.loadStatusChanged")
-        if (basemap.loadStatus !== Enums.LoadStatusLoaded)
+        if (mapView.map.loadStatus !== Enums.LoadStatusLoaded)
             return;
-        console.log("ok!")
-        map.basemap = basemap;
+
         webmapsList.visible = false;
         mapView.visible = true;
-    }
-
-    ListModel {
-        id: webmapsModel
     }
 
     PortalQueryParametersForItems {
         id: webmapQuery
         type: Enums.PortalItemTypeWebMap
+        searchString: "tags:\"" + keyWordField.text + "\"";
     }
 
     Portal {
@@ -124,9 +95,11 @@ Rectangle {
         }
 
         onFindItemsResultChanged: {
-            var foundWebmaps = portal.findItemsResult;
-            if (foundWebmaps)
-                console.log("found",foundWebmaps.totalResults);
+            if (portal.findItemsStatus !== Enums.TaskStatusCompleted)
+                return;
+
+            webmapsList.visible = true;
+            webmapsList.model = portal.findItemsResult.itemResults
             webmapsList.focus = true;
         }
     }
@@ -142,7 +115,7 @@ Rectangle {
 
             Text {
                 anchors{fill: parent; margins: 10}
-                text: name
+                text: webmapsList.model.get(index).title
                 color: "grey"
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -150,7 +123,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: webmapsList.currentIndex = index;
-                onDoubleClicked: selectWebmap(name);
+                onDoubleClicked: loadSelectedWebmap(webmapsList.model.get(index));
             }
         }
     }
@@ -167,7 +140,7 @@ Rectangle {
 
             Text {
                 anchors{fill: parent; margins: 10}
-                text: webmapsModel.count > 0 ? webmapsModel.get(webmapsList.currentIndex).name : ""
+                text: webmapsList.model.count > 0 ? webmapsList.model.get(webmapsList.currentIndex).title : ""
                 font.bold: true
                 color: "white"
                 horizontalAlignment: Text.AlignHCenter
@@ -182,7 +155,7 @@ Rectangle {
 
     Rectangle {
         id: resultsBox
-        visible: webmapsModel.count > 0
+        visible: webmapsList.model && webmapsList.model.count > 0
         anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
         border.color: "grey"
         border.width: 2
@@ -201,10 +174,10 @@ Rectangle {
             id: webmapsList
             anchors { margins: 20; top: resultsTitle.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
             clip: true
-            model: webmapsModel
             delegate: webmapDelegate
             highlightFollowsCurrentItem: true
             highlight: highlightDelegate
+            model: null
         }
     }
 
@@ -260,11 +233,6 @@ Rectangle {
         id: mapView
         visible: false
         anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
-
-        Map {
-            id: map
-            spatialReference: SpatialReference.createWebMercator()
-        }
     }
 
     AuthenticationView {
