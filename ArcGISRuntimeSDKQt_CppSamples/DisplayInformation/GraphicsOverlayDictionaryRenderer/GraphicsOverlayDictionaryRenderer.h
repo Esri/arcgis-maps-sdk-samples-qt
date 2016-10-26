@@ -59,7 +59,6 @@ private:
             QStringList pointStrings,
             Esri::ArcGISRuntime::SpatialReference sr);
 
-    double m_scaleFactor;
     QString m_dataPath;
     QXmlStreamReader m_xmlParser;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
