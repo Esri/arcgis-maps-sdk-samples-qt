@@ -30,12 +30,16 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property var portalItem
-    property var itemResults
 
-    function search(keyWord) {
+    function search() {
+        console.log(webmapQuery.query);
         mapView.visible = false;
         mapView.map = null;
         portal.findItems(webmapQuery);
+    }
+
+    function searchNext(){
+        portal.findItems(portal.findItemsResult.nextQueryParameters);
     }
 
     function loadSelectedWebmap(selectedWebmap) {
@@ -53,7 +57,7 @@ Rectangle {
         mapView.map.load();
 
         mapView.map.loadStatusChanged.connect(assignWebmap);
-        mapView.map.loadErrorChanged.connect( function(){console.log("basemap error",basemap.loadError.message)});
+        mapView.map.loadErrorChanged.connect( function(){console.log("map error",mapView.map.loadError.message)});
     }
 
     function assignWebmap() {
@@ -109,13 +113,17 @@ Rectangle {
             anchors.margins: 25
             width: webmapsList.width
             height: 24 * scaleFactor
-            border.color: "lightgrey"
+            border.color: "white"
+            border.width: 2 * scaleFactor
+            color: "lightgrey"
             radius: 10
 
             Text {
                 anchors{fill: parent; margins: 10}
                 text: webmapsList.model.get(index).title
-                color: "grey"
+                color: "white"
+                elide: Text.ElideRight
+                wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
             }
 
@@ -141,6 +149,8 @@ Rectangle {
                 anchors{fill: parent; margins: 10}
                 text: webmapsList.model.count > 0 ? webmapsList.model.get(webmapsList.currentIndex).title : ""
                 font.bold: true
+                elide: Text.ElideRight
+                wrapMode: Text.Wrap
                 color: "white"
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -160,33 +170,34 @@ Rectangle {
         border.width: 2
         radius: 5
 
-        Row {
+        Text {
             id: resultsTitle
             anchors { margins: 10; top: parent.top; left: parent.left; right: parent.right }
-            spacing: 10
-
-            Text {
-                text: "webmaps: " + keyWordField.text
-                font.bold: true
-                font.pointSize: 10
-                horizontalAlignment: Text.AlignHCenter
-            }
-
-            Button {
-                id: nextResults
-                text: "Next Results"
-                visible: portal.findItemsStatus === Enums.TaskStatusCompleted && portal.findItemsResult.nextQueryParameters !== null
-            }
+            text: "webmaps: " + keyWordField.text
+            elide: Text.ElideRight
+            wrapMode: Text.Wrap
+            font.bold: true
+            font.pointSize: 10
+            horizontalAlignment: Text.AlignHCenter
         }
 
         ListView {
             id: webmapsList
-            anchors { margins: 20; top: resultsTitle.bottom; bottom: parent.bottom; left: parent.left; right: parent.right }
+            anchors { margins: 20; top: resultsTitle.bottom; bottom: moreResultsButton.top; left: parent.left; right: parent.right }
             clip: true
             delegate: webmapDelegate
             highlightFollowsCurrentItem: true
             highlight: highlightDelegate
             model: null
+        }
+
+        Button {
+            id: moreResultsButton
+            height: 20 * scaleFactor
+            anchors { margins: 20; bottom: parent.bottom; horizontalCenter: resultsBox.horizontalCenter }
+            text: "More Results"
+            visible: portal.findItemsStatus === Enums.TaskStatusCompleted && portal.findItemsResult.nextQueryParameters !== null
+            onClicked: searchNext();
         }
     }
 
@@ -194,7 +205,6 @@ Rectangle {
         visible: portal.loadStatus === Enums.LoadStatusLoaded
         id: searchBox
         anchors {top: parent.top; horizontalCenter: parent.horizontalCenter; margins: 10 * scaleFactor}
-        height: 100
         spacing:5
 
         Text {
