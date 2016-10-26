@@ -32,7 +32,6 @@ Rectangle {
     property var portalItem
 
     function search() {
-        console.log(webmapQuery.query);
         mapView.visible = false;
         mapView.map = null;
         portal.findItems(webmapQuery);
