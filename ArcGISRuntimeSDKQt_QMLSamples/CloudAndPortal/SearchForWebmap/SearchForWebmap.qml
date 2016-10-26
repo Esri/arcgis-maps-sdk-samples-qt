@@ -172,7 +172,7 @@ Rectangle {
         Text {
             id: resultsTitle
             anchors { margins: 10; top: parent.top; left: parent.left; right: parent.right }
-            text: "webmaps: " + keyWordField.text
+            text: "web maps: " + keyWordField.text
             elide: Text.ElideRight
             wrapMode: Text.Wrap
             font.bold: true
