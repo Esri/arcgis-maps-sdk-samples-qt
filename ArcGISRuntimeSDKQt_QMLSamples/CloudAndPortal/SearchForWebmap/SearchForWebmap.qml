@@ -30,12 +30,11 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property var portalItem
-    property var basemap
+    property var itemResults
 
     function search(keyWord) {
         mapView.visible = false;
         mapView.map = null;
-        console.log(webmapQuery.query);
         portal.findItems(webmapQuery);
     }
 
@@ -161,13 +160,23 @@ Rectangle {
         border.width: 2
         radius: 5
 
-        Text {
+        Row {
             id: resultsTitle
             anchors { margins: 10; top: parent.top; left: parent.left; right: parent.right }
-            text: "webmaps: " + keyWordField.text
-            font.bold: true
-            font.pointSize: 10
-            horizontalAlignment: Text.AlignHCenter
+            spacing: 10
+
+            Text {
+                text: "webmaps: " + keyWordField.text
+                font.bold: true
+                font.pointSize: 10
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            Button {
+                id: nextResults
+                text: "Next Results"
+                visible: portal.findItemsStatus === Enums.TaskStatusCompleted && portal.findItemsResult.nextQueryParameters !== null
+            }
         }
 
         ListView {
