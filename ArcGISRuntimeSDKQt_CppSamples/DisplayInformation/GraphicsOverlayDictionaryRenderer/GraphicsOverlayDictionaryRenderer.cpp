@@ -209,5 +209,5 @@ MultipartBuilder* GraphicsOverlayDictionaryRenderer::createBuilderFromPoints(
 
 void GraphicsOverlayDictionaryRenderer::zoomToGraphics()
 {
-    m_mapView->setViewpointGeometry(m_bbox.extent(), 300 * m_scaleFactor);
+    m_mapView->setViewpointGeometry(m_bbox.extent(), 20 * m_scaleFactor);
 }
