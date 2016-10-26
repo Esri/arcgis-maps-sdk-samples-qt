@@ -51,8 +51,7 @@ void GraphicsOverlayDictionaryRenderer::componentComplete()
 
     // QML properties
     m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
-    m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
-
+    
     //! [Apply Dictionary Renderer Graphics Overlay Cpp]
     // Create graphics overlay
     m_graphicsOverlay = new GraphicsOverlay(this);
@@ -209,5 +208,5 @@ MultipartBuilder* GraphicsOverlayDictionaryRenderer::createBuilderFromPoints(
 
 void GraphicsOverlayDictionaryRenderer::zoomToGraphics()
 {
-    m_mapView->setViewpointGeometry(m_bbox.extent(), 300 * m_scaleFactor);
+    m_mapView->setViewpointGeometry(m_bbox.extent(), 20);
 }
