@@ -11,9 +11,9 @@ This sample demonstrates how find portal items by using a keyword, and limit the
 4. The search term is bound to the searchString for a `PortalQueryParametersForItems` which also has the property `type: Enums.PortalItemTypeWebMap`. NOTE if multiple item types are required these can be set via the `types` property.
 5. The query parameters are passed to the portal's `findItems` method.
 6. Once the `findItems` task is complete, a `PortalQueryResultSetForItems` is obtained from the portal's `findItemsResult` property.
-7. The `PortalItemListModel` from the items result is set on a `ListView` to display the set of web maps. If many web maps match the search criteria, the rsults will contain only the 1st set (to allow "paging" through the results in batches).
+7. The `PortalItemListModel` from the items result is set on a `ListView` to display the set of web maps. If many web maps match the search criteria, the results will contain only the 1st set (to allow "paging" through the results in batches).
 8. If there are additional results, a subsequent query can be issued by clicking the "More Results" button. Ths passes the itemResult's `nextQueryParameters` property to a new `findItems` operation.
-9. When the user double-clicks on a web map in the list, the `PortalItem` is loaded anad set as a `Map` on the `MapView`
+9. When the user double-clicks on a web map in the list, the `PortalItem` is loaded and set as a `Map` on the `MapView`
 
 ##Features
 - Portal
