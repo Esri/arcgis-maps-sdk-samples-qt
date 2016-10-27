@@ -82,6 +82,7 @@ void ExtrudeGraphics::componentComplete()
     RendererSceneProperties props = renderer->sceneProperties();
     props.setExtrusionMode(ExtrusionMode::BaseHeight);
     props.setExtrusionExpression("height");
+    renderer->setSceneProperties(props);
     graphicsOverlay->setRenderer(renderer);
 
     // setup graphic locations
