@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.2
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
@@ -43,9 +44,14 @@ Rectangle {
 
     function loadSelectedWebmap(selectedWebmap) {
         portalItem = selectedWebmap;
-        portalItem.load();
 
         portalItem.loadStatusChanged.connect(createMap);
+        portalItem.loadErrorChanged.connect( function() {
+            webMapMsg.text = portalItem.loadError.message;
+            webMapMsg.visible = true;
+        });
+
+        portalItem.load();
     }
 
     function createMap() {
@@ -53,10 +59,14 @@ Rectangle {
             return;
 
         mapView.map = ArcGISRuntimeEnvironment.createObject("Map", {"item": portalItem});
-        mapView.map.load();
 
         mapView.map.loadStatusChanged.connect(assignWebmap);
-        mapView.map.loadErrorChanged.connect( function(){console.log("map error",mapView.map.loadError.message)});
+        mapView.map.loadErrorChanged.connect( function() {
+            webMapMsg.text = mapView.map.loadError.message;
+            webMapMsg.visible = true;
+        });
+
+        mapView.map.load();
     }
 
     function assignWebmap() {
@@ -111,7 +121,7 @@ Rectangle {
         Rectangle {
             anchors.margins: 25
             width: webmapsList.width
-            height: 24 * scaleFactor
+            height: 32 * scaleFactor
             border.color: "white"
             border.width: 2 * scaleFactor
             color: "lightgrey"
@@ -255,6 +265,14 @@ Rectangle {
 
     AuthenticationView {
         authenticationManager: AuthenticationManager
+    }
+
+    MessageDialog {
+        id: webMapMsg
+        title: "Could not load web map!"
+        visible: false
+
+        onAccepted: visible = false;
     }
 
     // Neatline rectangle
