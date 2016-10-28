@@ -129,7 +129,7 @@ Rectangle {
                 }
 
                 // Zoom to graphics
-                if(bbox)
+                if (bbox)
                    mapView.setViewpointGeometryAndPadding(bbox, 20);
 
                 progressBar_loading.visible = false;
