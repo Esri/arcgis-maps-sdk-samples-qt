@@ -83,6 +83,8 @@ void ExtrudeGraphics::componentComplete()
     props.setExtrusionMode(ExtrusionMode::BaseHeight);
     props.setExtrusionExpression("height");
     renderer->setSceneProperties(props);
+    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), this);
+    renderer->setSymbol(sfs);
     graphicsOverlay->setRenderer(renderer);
 
     // setup graphic locations
@@ -95,16 +97,6 @@ void ExtrudeGraphics::componentComplete()
 
     foreach (auto point, pointsList)
     {
-        // create a list of colors to ramdomly pick from
-        QList<QColor>colors;
-        colors << QColor("white")
-               << QColor("green")
-               << QColor("blue")
-               << QColor("turquoise")
-               << QColor("purple")
-               << QColor("black")
-               << QColor("red");
-
         // create a random z value
         int randNum = rand() % 6 + 1;
         double z = m_maxZ * randNum;
@@ -116,10 +108,8 @@ void ExtrudeGraphics::componentComplete()
                << Point(point.x() + m_size, point.y() + m_size, z)
                << Point(point.x(), point.y() + m_size, z);
 
-        // create a new fill symbol to symbolize the graphic
-        SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, colors[randNum], this);
         // create a new graphic
-        Graphic* graphic = new Graphic(createPolygonFromPoints(points), sfs, this);
+        Graphic* graphic = new Graphic(createPolygonFromPoints(points), this);
         // add a height attribute to the graphic using the attribute list model
         // the extrusion will be applied to this attribute. See the expression above
         graphic->attributes()->insertAttribute("height", z);
