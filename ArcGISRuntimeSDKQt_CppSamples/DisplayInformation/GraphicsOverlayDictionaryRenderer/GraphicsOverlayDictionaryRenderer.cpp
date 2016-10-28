@@ -70,12 +70,7 @@ void GraphicsOverlayDictionaryRenderer::componentComplete()
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
     parseXmlFile();
-
-    connect(m_map, &Map::loadStatusChanged, this, [this](LoadStatus loadStatus)
-    {
-        if(loadStatus == LoadStatus::Loaded)
-            emit graphicsLoaded();
-    });
+    emit graphicsLoaded();
 }
 
 void GraphicsOverlayDictionaryRenderer::parseXmlFile()
@@ -184,33 +179,11 @@ void GraphicsOverlayDictionaryRenderer::createGraphic(QVariantMap rawAttributes)
 
         Graphic* graphic = new Graphic(geom, rawAttributes, this);
         m_graphicsOverlay->graphics()->append(graphic);
-//        if(m_bbox.isEmpty())
-//        {
-//            m_bbox = geom.extent();
-//        }
-//        else
-//        {
-//            m_bbox = Envelope(__min(m_bbox.extent().xMin(),geom.extent().xMin()), __min(m_bbox.extent().yMin(),geom.extent().yMin()),
-//                              __max(m_bbox.extent().xMax(),geom.extent().xMax()), __max(m_bbox.extent().yMax(),geom.extent().yMax()), geom.spatialReference());
-//        }
-
-        m_bbox = m_bbox.isEmpty() ? graphic->geometry().extent() : GeometryEngine::unionOf(m_bbox,  graphic->geometry()).extent();
+        m_bbox = m_bbox.isEmpty() ? graphic->geometry().extent() : GeometryEngine::unionOf(m_bbox.extent(),  graphic->geometry().extent()).extent();
     }
 }
 
 void GraphicsOverlayDictionaryRenderer::zoomToGraphics()
 {
-    qDebug() << "center BoundingGeometry" << m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().toJson();
-    qDebug() << "center and scale" << m_mapView->currentViewpoint(ViewpointType::CenterAndScale).targetScale();
-
-    //m_mapView->setViewpoint(Viewpoint(m_bbox.extent().center(), 188340));
-    m_mapView->setViewpointCenter(m_bbox.extent().center());
-   //map->setInitialViewpoint(Viewpoint(m_bbox.extent().center(),188340));
-
-    //m_mapView->setViewpoint(Viewpoint(m_bbox.extent().center()));
-   // qDebug() << "center BoundingGeometry" << m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().toJson();
-    //qDebug() << "center and scale" << m_mapView->currentViewpoint(ViewpointType::CenterAndScale).targetGeometry().toJson();
-
-    qDebug() << "center 5" << m_bbox.extent().toJson();
-
+    m_mapView->setViewpointGeometry(m_bbox.extent(), 20);
 }
