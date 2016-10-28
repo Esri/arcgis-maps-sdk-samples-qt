@@ -21,15 +21,14 @@
 #include <QXmlStreamReader>
 
 #include "Envelope.h"
-#include "SpatialReference.h"
 
 namespace Esri
 {
     namespace ArcGISRuntime
     {
+        class Map;
         class GraphicsOverlay;
         class MapQuickView;
-        class MultipartBuilder;
     }
 }
 
@@ -55,12 +54,10 @@ private:
 
     void parseXmlFile();
     void createGraphic(QVariantMap rawAttributes);
-    Esri::ArcGISRuntime::MultipartBuilder* createBuilderFromPoints(
-            QStringList pointStrings,
-            Esri::ArcGISRuntime::SpatialReference sr);
 
     QString m_dataPath;
     QXmlStreamReader m_xmlParser;
+    Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
     Esri::ArcGISRuntime::Envelope m_bbox;

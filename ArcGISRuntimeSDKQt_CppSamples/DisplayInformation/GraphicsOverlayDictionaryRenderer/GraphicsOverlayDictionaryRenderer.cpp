@@ -24,7 +24,7 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "PolygonBuilder.h"
-#include "PolylineBuilder.h"
+#include "MultipointBuilder.h"
 #include "DictionarySymbolStyle.h"
 
 using namespace Esri::ArcGISRuntime;
@@ -34,6 +34,7 @@ const QString GraphicsOverlayDictionaryRenderer::FIELD_WKID = "_wkid";
 
 GraphicsOverlayDictionaryRenderer::GraphicsOverlayDictionaryRenderer(QQuickItem* parent) :
     QQuickItem(parent),
+    m_map(nullptr),
     m_mapView(nullptr),
     m_graphicsOverlay(nullptr)
 {
@@ -64,12 +65,11 @@ void GraphicsOverlayDictionaryRenderer::componentComplete()
 
     // Create a map and give it to the MapView
     m_mapView = findChild<MapQuickView*>("mapView");
-    Map* map = new Map(Basemap::topographic(this), this);
-    m_mapView->setMap(map);
+    m_map = new Map(Basemap::topographic(this), this);
+    m_mapView->setMap(m_map);
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
     parseXmlFile();
-
     emit graphicsLoaded();
 }
 
@@ -156,54 +156,31 @@ void GraphicsOverlayDictionaryRenderer::createGraphic(QVariantMap rawAttributes)
         geom = Point(coords[0].toDouble(), coords[1].toDouble(), sr);
     }
     else {
-        // It's a polygon or polyline
-        MultipartBuilder* builder = createBuilderFromPoints(pointStrings, sr);
+        // It's a multipoint
+        auto builder = new MultipointBuilder(sr, this);
+        PointCollection* collection = new PointCollection(sr, this);
+        foreach (auto pointString, pointStrings)
+        {
+            QStringList coords = pointString.split(",");
+            if (coords.length() >= 2)
+                collection->insertPoint(0,coords[0].toDouble(), coords[1].toDouble());
+        }
+        builder->setPoints(collection);
         geom = builder->toGeometry();
     }
 
     if (!geom.isEmpty())
     {
-        /**
-         * Get rid of _control_points and _wkid. They are not needed in the graphic's
-         * attributes.
-         */
+
+        // Get rid of _control_points and _wkid. They are not needed in the graphic's
+        // attributes.
         rawAttributes.remove(FIELD_CONTROL_POINTS);
         rawAttributes.remove(FIELD_WKID);
 
         Graphic* graphic = new Graphic(geom, rawAttributes, this);
         m_graphicsOverlay->graphics()->append(graphic);
-
-        m_bbox = m_bbox.isEmpty() ? geom.extent() : GeometryEngine::unionOf(m_bbox, geom).extent();
+        m_bbox = m_bbox.isEmpty() ? graphic->geometry().extent() : GeometryEngine::unionOf(m_bbox.extent(),  graphic->geometry().extent()).extent();
     }
-}
-
-MultipartBuilder* GraphicsOverlayDictionaryRenderer::createBuilderFromPoints(
-        QStringList pointStrings,
-        SpatialReference sr)
-{
-    MultipartBuilder* builder = nullptr;
-    if (pointStrings.length() >= 3 && pointStrings[0] == pointStrings[pointStrings.length() - 1])
-    {
-        /**
-         * If there are at least three points and the first and last points are
-         * equivalent, assume it's a polygon.
-         */
-        builder = new PolygonBuilder(sr, this);
-    }
-    else
-    {
-        // It's a line
-        builder = new PolylineBuilder(sr, this);
-    }
-    foreach (auto pointString, pointStrings)
-    {
-        QStringList coords = pointString.split(",");
-        if (coords.length() >= 2)
-        {
-            builder->addPoint(coords[0].toDouble(), coords[1].toDouble());
-        }
-    }
-    return builder;
 }
 
 void GraphicsOverlayDictionaryRenderer::zoomToGraphics()
