@@ -31,27 +31,12 @@ Rectangle {
     property var porInfo: portal.portalInfo
 
 
-    function chooseBasemap(selectedMapTitle){
-        title.text = selectedMapTitle;
+    function chooseBasemap(selectedBasemap){
+        title.text = selectedBasemap.item.title;
         basemapsGrid.enabled = false;
 
-        if (selectedMapTitle === "Imagery")
-            map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapImagery");
-        if (selectedMapTitle === "Imagery with labels")
-            map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapImageryWithLabels");
-        if (selectedMapTitle === "Light Gray Canvas")
-            map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapLightGrayCanvas");
-        if (selectedMapTitle === "National Geographic")
-            map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapNationalGeographic");
-        if (selectedMapTitle === "Oceans")
-            map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapOceans");
-        if (selectedMapTitle === "Streets")
-            map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreets");
-        if (selectedMapTitle === "Terrain with labels")
-            map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapTerrainWithLabels");
-        if (selectedMapTitle === "Topographic")
-            map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapTopographic");
-
+        var newMap = ArcGISRuntimeEnvironment.createObject("Map", {basemap: selectedBasemap});
+        mapView.map = newMap;
         gridFadeOut.running = true;
         mapView.visible = true;
     }
@@ -91,12 +76,6 @@ Rectangle {
             if (fetchBasemapsStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            console.log("basemaps.rowCount", basemaps.rowCount());
-            console.log(basemaps.get(0).url);
-            console.log(basemaps.get(0).json);
-            console.log(basemaps.get(0).item.title);
-            console.log(JSON.stringify(basemaps.get(0).json));
-
             basemapsGrid.model = basemaps;
             gridFadeIn.running = true;
         }
@@ -107,7 +86,7 @@ Rectangle {
     Text{
         id: title
         anchors {top: parent.top; left: parent.left; right: parent.right; margins: 10}
-        font.pointSize: 10
+        font.pointSize: 14
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignTop
@@ -121,21 +100,16 @@ Rectangle {
         id: mapView
 
         anchors{top: title.bottom; bottom: parent.bottom; left: parent.left; right: parent.right}
-        Map {
-            id: map
-            spatialReference: SpatialReference.createWebMercator()
-        }
     }
 
     GridView {
         id: basemapsGrid
         anchors{top: title.bottom; bottom: parent.bottom; left: parent.left; right: parent.right}
-        cellWidth: 64 * scaleFactor;
-        cellHeight: 64 * scaleFactor
+        cellWidth: 128 * scaleFactor;
+        cellHeight: 128 * scaleFactor
         opacity: 0
         focus: true
         clip: true
-//        model: portal.basemaps
 
         delegate: Rectangle {
             anchors.margins: 5 * scaleFactor
@@ -148,12 +122,19 @@ Rectangle {
 
             Text {
                 anchors {fill: parent; margins: 10 * scaleFactor }
-                text: name
+                z: 100
+                text: item.title
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight
-                font.pointSize: 6
+                font.pointSize: 8
                 font.bold: index == basemapsGrid.currentIndex
             }
+
+//            Image {
+//                id: basemapImg
+//                anchors {fill: parent; margins: 10 * scaleFactor }
+//                source: item.thumbnailUrl
+//            }
 
             MouseArea {
                 enabled: !mapView.visible && portal.loadStatus == Enums.LoadStatusLoaded
@@ -162,8 +143,6 @@ Rectangle {
                     if (!enabled)
                         return;
 
-                    console.log(basemapsGrid.model.get(0).item.title);
-                    console.log("name", model.name, "item", model.item, "url", model.url);
                     basemapsGrid.currentIndex = index;
                 }
                 onDoubleClicked: {
@@ -171,7 +150,7 @@ Rectangle {
                         return;
 
                     selectedAnimation.running = true;
-                    chooseBasemap(name);
+                    chooseBasemap(basemapsGrid.model.get(index));
                 }
             }
 
