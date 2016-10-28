@@ -92,7 +92,10 @@ Rectangle {
                 return;
 
             console.log("basemaps.rowCount", basemaps.rowCount());
-            console.log(basemaps.get(0).name);
+            console.log(basemaps.get(0).url);
+            console.log(basemaps.get(0).json);
+            console.log(basemaps.get(0).item.title);
+            console.log(JSON.stringify(basemaps.get(0).json));
 
             basemapsGrid.model = basemaps;
             gridFadeIn.running = true;
@@ -159,7 +162,7 @@ Rectangle {
                     if (!enabled)
                         return;
 
-                    console.log(basemapsGrid.model.get(0).name);
+                    console.log(basemapsGrid.model.get(0).item.title);
                     console.log("name", model.name, "item", model.item, "url", model.url);
                     basemapsGrid.currentIndex = index;
                 }
