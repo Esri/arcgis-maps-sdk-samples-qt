@@ -57,6 +57,10 @@ Rectangle {
                     extrusionMode: Enums.ExtrusionModeBaseHeight
                     extrusionExpression: "height"
                 }
+                SimpleFillSymbol{
+                    style: Enums.SimpleFillSymbolStyleSolid;
+                    color: "red"
+                }
             }
         }
 
@@ -95,9 +99,6 @@ Rectangle {
         var lon = camera.location.x;
         var lat = camera.location.y + 0.2;
 
-        // add a set of colors to pick from
-        addColors();
-
         // create a random set of points
         var points = [];
         for (var i = 0; i <= 100; i++) {
@@ -114,14 +115,8 @@ Rectangle {
                              createPoint(item.x + size, item.y + size, z),
                              createPoint(item.x, item.y + size, z)];
 
-            // create a simple fill symbol
-            var sfs = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
-            sfs.style = Enums.SimpleFillSymbolStyleSolid;
-            // assign a random color from the list
-            sfs.color = colors[randNum];
-
-            // create a graphic using the fill symbol
-            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {symbol: sfs, geometry: createPolygonFromPoints(newPoints)});
+            // create a graphic
+            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: createPolygonFromPoints(newPoints)});
             graphic.attributes.insertAttribute("height", z);
             graphicsOverlay.graphics.append(graphic);
         });
@@ -141,16 +136,5 @@ Rectangle {
     // create a point
     function createPoint(x, y, z) {
         return ArcGISRuntimeEnvironment.createObject("Point", {x:x, y:y, z:z, spatialReference: sceneView.spatialReference});
-    }
-
-    // add colors to array
-    function addColors() {
-        colors.push("white");
-        colors.push("black");
-        colors.push("turquoise");
-        colors.push("green");
-        colors.push("red");
-        colors.push("blue");
-        colors.push("purple");
     }
 }
