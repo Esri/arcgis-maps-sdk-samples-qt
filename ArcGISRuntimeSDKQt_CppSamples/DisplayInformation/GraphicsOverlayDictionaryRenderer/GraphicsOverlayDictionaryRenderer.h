@@ -21,7 +21,6 @@
 #include <QXmlStreamReader>
 
 #include "Envelope.h"
-#include "SpatialReference.h"
 
 namespace Esri
 {
@@ -30,7 +29,6 @@ namespace Esri
         class Map;
         class GraphicsOverlay;
         class MapQuickView;
-        class GeometryBuilder;
     }
 }
 
@@ -56,9 +54,6 @@ private:
 
     void parseXmlFile();
     void createGraphic(QVariantMap rawAttributes);
-    Esri::ArcGISRuntime::GeometryBuilder* createBuilderFromPoints(
-            QStringList pointStrings,
-            Esri::ArcGISRuntime::SpatialReference sr);
 
     QString m_dataPath;
     QXmlStreamReader m_xmlParser;
