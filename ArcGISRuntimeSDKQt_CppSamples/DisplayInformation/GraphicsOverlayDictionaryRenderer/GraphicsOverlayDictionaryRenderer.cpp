@@ -163,7 +163,7 @@ void GraphicsOverlayDictionaryRenderer::createGraphic(QVariantMap rawAttributes)
         {
             QStringList coords = pointString.split(",");
             if (coords.length() >= 2)
-                collection->insertPoint(0,coords[0].toDouble(), coords[1].toDouble());
+                collection->addPoint(coords[0].toDouble(), coords[1].toDouble());
         }
         builder->setPoints(collection);
         geom = builder->toGeometry();

@@ -27,10 +27,8 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
-    /**
-     * Create MapView that contains a Map with the Topographic Basemap, as well as a GraphicsOverlay
-     * for the military symbols.
-     */
+    // Create MapView that contains a Map with the Topographic Basemap, as well as a GraphicsOverlay
+    // for the military symbols.
     MapView {
         id: mapView
         anchors.fill: parent
@@ -103,29 +101,18 @@ Rectangle {
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
                     } else {
-                        var builder;
-                        if (3 <= pointStrings.length && pointStrings[0] === pointStrings[pointStrings.length - 1]) {
-                            /**
-                             * If there are at least three points and the first and last points are
-                             * equivalent, assume it's a polygon.
-                             */
-                            builder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder");
-                        } else {
-                            // Apparently it's a line
-                            builder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder");
-                        }
+                        var builder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder");
                         builder.spatialReference = sr;
+
                         for (var ptIndex = 0; ptIndex < pointStrings.length; ptIndex++) {
                             var coords = pointStrings[ptIndex].split(",");
-                            builder.addPointXY(coords[0], coords[1]);
+                            builder.points.addPointXY(coords[0], coords[1]);
                         }
                         geom = builder.geometry;
                     }
                     if (geom) {
-                        /**
-                         * Get rid of _control_points and _wkid. They are not needed in the graphic's
-                         * attributes.
-                         */
+                        // Get rid of _control_points and _wkid. They are not needed in the graphic's
+                        // attributes.
                         element._control_points = undefined;
                         element._wkid = undefined;
 
@@ -134,18 +121,17 @@ Rectangle {
                         graphicsOverlay.graphics.append(graphic);
 
                         if (bbox) {
-                            bbox = GeometryEngine.unionOf(bbox, geom);
+                            bbox = GeometryEngine.unionOf(bbox, graphic.geometry.extent);
                         } else {
-                            bbox = geom;
+                            bbox = geom.extent;
                         }
                     }
                 }
 
                 // Zoom to graphics
-                if (bbox) {
-                    bbox = bbox.extent;
-                    mapView.setViewpointGeometryAndPadding(bbox, 20);
-                }
+                if (bbox)
+                   mapView.setViewpointGeometryAndPadding(bbox, 20);
+
                 progressBar_loading.visible = false;
             }
         }
