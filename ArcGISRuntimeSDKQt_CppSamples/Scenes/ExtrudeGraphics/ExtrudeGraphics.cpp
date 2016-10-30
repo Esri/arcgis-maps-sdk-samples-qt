@@ -81,7 +81,7 @@ void ExtrudeGraphics::componentComplete()
     SimpleRenderer* renderer = new SimpleRenderer(this);
     RendererSceneProperties props = renderer->sceneProperties();
     props.setExtrusionMode(ExtrusionMode::BaseHeight);
-    props.setExtrusionExpression("height");
+    props.setExtrusionExpression("[height]");
     renderer->setSceneProperties(props);
     SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), this);
     renderer->setSymbol(sfs);

@@ -43,10 +43,10 @@
 
 using namespace Esri::ArcGISRuntime;
 
-const QString Animate3DSymbols::HEADING = "HEADING";
-const QString Animate3DSymbols::ROLL = "ROLL";
-const QString Animate3DSymbols::PITCH = "PITCH";
-const QString Animate3DSymbols::ANGLE = "ANGLE";
+const QString Animate3DSymbols::HEADING = "[heading]";
+const QString Animate3DSymbols::ROLL = "[roll]";
+const QString Animate3DSymbols::PITCH = "[pitch]";
+const QString Animate3DSymbols::ANGLE = "[angle]";
 
 struct Animate3DSymbols::CameraHandler
 {
