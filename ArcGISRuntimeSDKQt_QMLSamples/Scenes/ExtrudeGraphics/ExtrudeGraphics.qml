@@ -55,7 +55,7 @@ Rectangle {
             SimpleRenderer {
                 RendererSceneProperties {
                     extrusionMode: Enums.ExtrusionModeBaseHeight
-                    extrusionExpression: "height"
+                    extrusionExpression: "[height]"
                 }
                 SimpleFillSymbol{
                     style: Enums.SimpleFillSymbolStyleSolid;

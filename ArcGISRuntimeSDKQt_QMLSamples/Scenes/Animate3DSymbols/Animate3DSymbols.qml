@@ -34,10 +34,10 @@ Rectangle {
     property bool missionReady: missionSize > 0
     property alias following: followButton.checked
 
-    property string headingAtt: "HEADING";
-    property string pitchAtt: "PITCH";
-    property string rollAtt: "ROLL";
-    property string angleAtt: "ANGLE";
+    property string headingAtt: "[heading]";
+    property string pitchAtt: "[pitch]";
+    property string rollAtt: "[roll]";
+    property string angleAtt: "[angle]";
 
     property var graphic3d;
     property bool camReady: true;
