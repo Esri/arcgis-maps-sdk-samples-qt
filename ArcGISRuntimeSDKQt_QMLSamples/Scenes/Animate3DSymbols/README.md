@@ -29,12 +29,12 @@ To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
  2. Set symbol to the one we made above
 4. Add Attributes to graphic.
  1. Get attributes from graphic, `graphic.attributes()`.
- 2. Add heading, pitch, and roll attribute, `attributes.insertAttribute("HEADING", myHeading)`;
-5. Create a ```SimpleRenderer``` to access and set it's expression properties - e.g. ``headingExpression: "HEADING"`.
+ 2. Add heading, pitch, and roll attribute, `attributes.insertAttribute("heading", myHeading)`;
+5. Create a ```SimpleRenderer``` to access and set it's expression properties - e.g. ``headingExpression: "[heading]"`.
 6. Add graphic to the graphics overlay.
 7. Add a renderer to graphics overlay
 8. Update graphic's location, `graphic.geometry = geometry`.
-9. Update graphics's heading, pitch, and roll, `graphic.attributes.replaceAttribute("HEADING", myHeading)`.
+9. Update graphics's heading, pitch, and roll, `graphic.attributes.replaceAttribute("heading", myHeading)`.
 10. Set the sceneViews's camera to be looking at the symbol with `sceneView.setViewpointCamera`
 
 ##Features
