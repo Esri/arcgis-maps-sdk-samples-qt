@@ -43,10 +43,10 @@
 
 using namespace Esri::ArcGISRuntime;
 
-const QString Animate3DSymbols::HEADING = "[heading]";
-const QString Animate3DSymbols::ROLL = "[roll]";
-const QString Animate3DSymbols::PITCH = "[pitch]";
-const QString Animate3DSymbols::ANGLE = "[angle]";
+const QString Animate3DSymbols::HEADING = "heading";
+const QString Animate3DSymbols::ROLL = "roll";
+const QString Animate3DSymbols::PITCH = "pitch";
+const QString Animate3DSymbols::ANGLE = "angle";
 
 struct Animate3DSymbols::CameraHandler
 {
@@ -143,9 +143,9 @@ void Animate3DSymbols::componentComplete()
 
   SimpleRenderer* renderer3D = new SimpleRenderer(this);
   RendererSceneProperties renderProperties = renderer3D->sceneProperties();
-  renderProperties.setHeadingExpression(HEADING);
-  renderProperties.setPitchExpression(PITCH);
-  renderProperties.setRollExpression(ROLL);
+  renderProperties.setHeadingExpression(QString("[%1]").arg(HEADING));
+  renderProperties.setPitchExpression(QString("[%1]").arg(PITCH));
+  renderProperties.setRollExpression(QString("[%1]").arg(ROLL));
   renderer3D->setSceneProperties(renderProperties);
   sceneOverlay->setRenderer(renderer3D);
 
@@ -160,11 +160,6 @@ void Animate3DSymbols::componentComplete()
   // create a graphics overlay for the mini map
   GraphicsOverlay* mapOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(mapOverlay);
-
-  // create renderer to handle updating plane heading using the graphics card
-  SimpleRenderer* renderer2D = new SimpleRenderer(this);
-  renderer2D->setRotationExpression(QString("[%1]").arg(ANGLE));
-  mapOverlay->setRenderer(renderer2D);
 
   // set up route graphic
   createRoute2d(mapOverlay);

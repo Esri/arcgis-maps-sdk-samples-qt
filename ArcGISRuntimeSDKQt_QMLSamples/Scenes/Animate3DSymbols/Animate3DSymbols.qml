@@ -34,10 +34,10 @@ Rectangle {
     property bool missionReady: missionSize > 0
     property alias following: followButton.checked
 
-    property string headingAtt: "[heading]";
-    property string pitchAtt: "[pitch]";
-    property string rollAtt: "[roll]";
-    property string angleAtt: "[angle]";
+    property string headingAtt: "heading";
+    property string pitchAtt: "pitch";
+    property string rollAtt: "roll";
+    property var    attrFormat: "[%1]"
 
     property var graphic3d;
     property bool camReady: true;
@@ -78,9 +78,9 @@ Rectangle {
                 id: sceneRenderer
                 RendererSceneProperties {
                     id: renderProps
-                    headingExpression: headingAtt
-                    pitchExpression: pitchAtt
-                    rollExpression: rollAtt
+                    headingExpression: attrFormat.arg(headingAtt)
+                    pitchExpression:  attrFormat.arg(pitchAtt)
+                    rollExpression: attrFormat.arg(rollAtt)
                 }
             }
 
