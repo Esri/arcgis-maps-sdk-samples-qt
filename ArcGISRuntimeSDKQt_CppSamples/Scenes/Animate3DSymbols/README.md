@@ -29,14 +29,14 @@ To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
  2. Set symbol to the one we made above
 4. Add Attributes to graphic.
  1. Get attributes from graphic, `graphic->attributes()`.
- 2. Add heading, pitch, and roll attribute, `attributes->insertAttribute("HEADING", myHeading)`;
+ 2. Add heading, pitch, and roll attribute, `attributes->insertAttribute("heading", myHeading)`;
 5. Create a SimpleRenderer to access and set it's expression properties.
  1. Access properties with `renderer->sceneProperties()`
- 2. Set heading, pitch, and roll expressions, `sceneProperties->setHeadingExpression("HEADING")`.
+ 2. Set heading, pitch, and roll expressions, `sceneProperties->setHeadingExpression("[heading]")`.
 6. Add graphic to the graphics overlay.
 7. Set renderer to graphics overlay, `graphicsOverlay->setRenderer(renderer)`
 8. Update graphic's location, `graphic->setGeometry(Point)`.
-9. Update graphics's heading, pitch, and roll, `graphic->attributes()->replaceAttribute("HEADING", myHeading)`.
+9. Update graphics's heading, pitch, and roll, `graphic->attributes()->replaceAttribute("heading", myHeading)`.
 10. Set the sceneViews's camera to be looking at the symbol with `sceneView->setViewpointCamera( Camera(myPoint, myZoomDist, myHeading, myAngle, myRoll), myDurationSeconds)`
 
 ##Features
