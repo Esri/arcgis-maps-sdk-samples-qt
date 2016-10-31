@@ -108,7 +108,7 @@ Rectangle {
 
         // for each point construct a polygon by manipulating the co-ordinates
         points.forEach(function(item){
-            var randNum = Math.ceil(Math.random() * 6) ;
+            var randNum = Math.ceil(Math.random() * 6);
             var z = maxZ * randNum;
             var newPoints = [createPoint(item.x, item.y, z),
                              createPoint(item.x + size, item.y, z),
