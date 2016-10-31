@@ -161,11 +161,6 @@ void Animate3DSymbols::componentComplete()
   GraphicsOverlay* mapOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(mapOverlay);
 
-  // create renderer to handle updating plane heading using the graphics card
-  SimpleRenderer* renderer2D = new SimpleRenderer(this);
-  renderer2D->setRotationExpression(QString("[%1]").arg(ANGLE));
-  mapOverlay->setRenderer(renderer2D);
-
   // set up route graphic
   createRoute2d(mapOverlay);
 }
