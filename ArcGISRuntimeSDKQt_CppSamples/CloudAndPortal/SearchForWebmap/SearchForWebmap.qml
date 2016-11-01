@@ -1,4 +1,5 @@
-
+// [WriteFile Name=SearchForWebmap, Category=CloudAndPortal]
+// [Legal]
 // Copyright 2016 ESRI
 //
 // All rights reserved under the copyright laws of the United States
@@ -22,9 +23,7 @@ SearchForWebmapSample {
     id: root
     width: 800
     height: 600
-
     clip: true
-
     property real scaleFactor: System.displayScaleFactor
     property string selItem
 
@@ -91,18 +90,18 @@ SearchForWebmapSample {
 
         Button {
             id: moreResultsButton
-            height: 20 * scaleFactor
             anchors { margins: 20; bottom: parent.bottom; horizontalCenter: resultsBox.horizontalCenter }
-            text: "More Results"
+            height: 20 * scaleFactor
             visible: hasMoreResults
+            text: "More Results"
             onClicked: searchNext();
         }
     }
 
     Column {
-        visible: portalLoaded
         id: searchBox
         anchors {top: parent.top; horizontalCenter: parent.horizontalCenter; margins: 10 * scaleFactor}
+        visible: portalLoaded
         spacing:5
 
         Text {
@@ -124,9 +123,9 @@ SearchForWebmapSample {
             }
 
             Image {
-                source: "qrc:/Samples/CloudAndPortal/SearchForWebmap/searchIcon.png"
                 width: height
                 height: keyWordField.height
+                source: "qrc:/Samples/CloudAndPortal/SearchForWebmap/searchIcon.png"
 
                 MouseArea {
                     anchors.fill: parent

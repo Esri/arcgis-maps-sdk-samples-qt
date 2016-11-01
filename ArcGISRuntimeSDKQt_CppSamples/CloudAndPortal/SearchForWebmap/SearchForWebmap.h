@@ -1,3 +1,5 @@
+// [WriteFile Name=SearchForWebmap, Category=CloudAndPortal]
+// [Legal]
 // Copyright 2016 ESRI
 //
 // All rights reserved under the copyright laws of the United States
@@ -15,17 +17,16 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class AuthenticationManager;
-class Credential;
-class Map;
-class MapQuickView;
-class Portal;
-class PortalItem;
-class PortalItemListModel;
-class PortalQueryResultSetForItems;
-}
+    namespace ArcGISRuntime
+    {
+        class AuthenticationManager;
+        class Map;
+        class MapQuickView;
+        class Portal;
+        class PortalItem;
+        class PortalItemListModel;
+        class PortalQueryResultSetForItems;
+    }
 }
 
 #include <QAbstractListModel>
@@ -73,10 +74,10 @@ private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::Portal* m_portal;
-    bool m_portalLoaded;
     Esri::ArcGISRuntime::PortalQueryResultSetForItems* m_webmapResults;
     Esri::ArcGISRuntime::PortalItemListModel* m_webmaps;
     Esri::ArcGISRuntime::PortalItem* m_selectedItem;
+    bool m_portalLoaded;
     QString m_mapLoadeError;
 };
 

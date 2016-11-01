@@ -1,3 +1,5 @@
+// [WriteFile Name=SearchForWebmap, Category=CloudAndPortal]
+// [Legal]
 // Copyright 2016 ESRI
 //
 // All rights reserved under the copyright laws of the United States
@@ -30,7 +32,8 @@ SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */):
     m_portal(new Portal(new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this), this)),
     m_webmapResults(nullptr),
     m_webmaps(nullptr),
-    m_selectedItem(nullptr)
+    m_selectedItem(nullptr),
+    m_portalLoaded(false)
 {
     connect(m_portal, &Portal::findItemsCompleted, this, &SearchForWebmap::onSearchCompleted);
     emit authManagerChanged();
@@ -45,12 +48,10 @@ void SearchForWebmap::componentComplete()
 {
     QQuickItem::componentComplete();
 
-    connect(m_portal, &Portal::loadStatusChanged, this, [this]()
-        {
-            m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
-            emit portalLoadedChanged();
-        }
-    );
+    connect(m_portal, &Portal::loadStatusChanged, this, [this](){
+        m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
+        emit portalLoadedChanged();
+    });
     m_portal->load();
 
     // find QML MapView component
@@ -141,22 +142,18 @@ void SearchForWebmap::onWebmapLoaded()
 
     m_map = new Map(m_selectedItem, this);
 
-    connect(m_map, &Map::errorOccurred, this, [this]()
-        {
-            m_mapLoadeError = m_map->loadError().message();
-            emit mapLoadErrorChanged();
-        }
-    );
+    connect(m_map, &Map::errorOccurred, this, [this](){
+        m_mapLoadeError = m_map->loadError().message();
+        emit mapLoadErrorChanged();
+    });
 
-    connect(m_map, &Map::loadStatusChanged, this, [this]()
-        {
-            if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
-                return;
+    connect(m_map, &Map::loadStatusChanged, this, [this](){
+        if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
+            return;
 
-            m_mapView->setMap(m_map);
-            m_mapView->setVisible(true);
-        }
-    );
+        m_mapView->setMap(m_map);
+        m_mapView->setVisible(true);
+    });
 
     m_map->load();
 }
