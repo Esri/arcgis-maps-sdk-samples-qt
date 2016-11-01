@@ -19,6 +19,7 @@ import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
 
 SearchForWebmapSample {
+    id: root
     width: 800
     height: 600
 
@@ -159,6 +160,7 @@ SearchForWebmapSample {
 
     MessageDialog {
         id: webMapMsg
+        width: root.width
         title: "Could not load web map!"
         visible: mapLoadError.length > 0
         text: mapLoadError

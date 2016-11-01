@@ -32,9 +32,9 @@ SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */):
     m_webmaps(nullptr),
     m_selectedItem(nullptr)
 {
-  connect(m_portal, &Portal::findItemsCompleted, this, &SearchForWebmap::onSearchCompleted);
-  emit authManagerChanged();
-  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
+    connect(m_portal, &Portal::findItemsCompleted, this, &SearchForWebmap::onSearchCompleted);
+    emit authManagerChanged();
+    AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
 SearchForWebmap::~SearchForWebmap()
@@ -46,10 +46,10 @@ void SearchForWebmap::componentComplete()
     QQuickItem::componentComplete();
 
     connect(m_portal, &Portal::loadStatusChanged, this, [this]()
-      {
-        m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
-        emit portalLoadedChanged();
-      }
+        {
+            m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
+            emit portalLoadedChanged();
+        }
     );
     m_portal->load();
 
@@ -80,12 +80,12 @@ QString SearchForWebmap::mapLoadError() const
 
 void SearchForWebmap::search(const QString keyword)
 {
-  PortalQueryParametersForItems query;
-  query.setSearchString(QString("tags:\"%1\"").arg(keyword));
-  query.setType(PortalItemType::WebMap);
-  m_portal->findItems(query);
+    PortalQueryParametersForItems query;
+    query.setSearchString(QString("tags:\"%1\"").arg(keyword));
+    query.setType(PortalItemType::WebMap);
+    m_portal->findItems(query);
 
-  m_mapView->setVisible(false);
+    m_mapView->setVisible(false);
 }
 
 void SearchForWebmap::searchNext()
@@ -122,10 +122,10 @@ void SearchForWebmap::errorAccepted()
 
 void SearchForWebmap::onSearchCompleted(PortalQueryResultSetForItems *webmapResults)
 {
-  m_webmapResults = webmapResults;
-  m_webmaps = m_webmapResults->itemResults();
-  emit webmapsChanged();
-  emit hasMoreResultsChanged();
+    m_webmapResults = webmapResults;
+    m_webmaps = m_webmapResults->itemResults();
+    emit webmapsChanged();
+    emit hasMoreResultsChanged();
 }
 
 void SearchForWebmap::onWebmapLoaded()
