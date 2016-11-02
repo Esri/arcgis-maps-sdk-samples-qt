@@ -27,6 +27,20 @@ SearchForWebmapSample {
     property real scaleFactor: System.displayScaleFactor
     property string selItem
 
+    // Create MapQuickView here, and create its Map etc. in C++ code
+    MapView {
+        id: mapView
+        objectName: "mapView"
+        anchors {
+            top: searchBox.bottom;
+            bottom: parent.bottom;
+            left: parent.left;
+            right: parent.right;
+            margins: 10 * scaleFactor
+        }
+        visible: false
+    }
+
     Component {
         id: webmapDelegate
         Rectangle {
@@ -62,15 +76,26 @@ SearchForWebmapSample {
 
     Rectangle {
         id: resultsBox
+        anchors {
+            top: searchBox.bottom;
+            bottom: parent.bottom;
+            left: parent.left;
+            right: parent.right;
+            margins: 10 * scaleFactor
+        }
         visible: webmaps && !mapView.visible
-        anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
         border.color: "grey"
         border.width: 2
         radius: 5
 
         Text {
             id: resultsTitle
-            anchors { margins: 10; top: parent.top; left: parent.left; right: parent.right }
+            anchors {
+                margins: 10;
+                top: parent.top;
+                left: parent.left;
+                right: parent.right
+            }
             text: "web maps: " + keyWordField.text
             elide: Text.ElideRight
             wrapMode: Text.Wrap
@@ -81,7 +106,13 @@ SearchForWebmapSample {
 
         ListView {
             id: webmapsList
-            anchors { margins: 20; top: resultsTitle.bottom; bottom: moreResultsButton.top; left: parent.left; right: parent.right }
+            anchors {
+                margins: 20;
+                top: resultsTitle.bottom;
+                bottom: moreResultsButton.top;
+                left: parent.left;
+                right: parent.right
+            }
             clip: true
             delegate: webmapDelegate
             highlightFollowsCurrentItem: true
@@ -90,7 +121,11 @@ SearchForWebmapSample {
 
         Button {
             id: moreResultsButton
-            anchors { margins: 20; bottom: parent.bottom; horizontalCenter: resultsBox.horizontalCenter }
+            anchors {
+                margins: 20;
+                bottom: parent.bottom;
+                horizontalCenter: resultsBox.horizontalCenter
+            }
             height: 20 * scaleFactor
             visible: hasMoreResults
             text: "More Results"
@@ -100,7 +135,11 @@ SearchForWebmapSample {
 
     Column {
         id: searchBox
-        anchors {top: parent.top; horizontalCenter: parent.horizontalCenter; margins: 10 * scaleFactor}
+        anchors {
+            top: parent.top;
+            horizontalCenter: parent.horizontalCenter;
+            margins: 10 * scaleFactor
+        }
         visible: portalLoaded
         spacing:5
 
@@ -143,14 +182,6 @@ SearchForWebmapSample {
             }
 
         }
-    }
-
-    // Create MapQuickView here, and create its Map etc. in C++ code
-    MapView {
-        id: mapView
-        objectName: "mapView"
-        visible: false
-        anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
     }
 
     AuthenticationView {
