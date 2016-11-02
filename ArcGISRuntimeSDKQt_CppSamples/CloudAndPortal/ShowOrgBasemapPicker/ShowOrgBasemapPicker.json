@@ -1,0 +1,6 @@
+{
+    "source" :  "ShowOrgBasemapPicker.qml",
+    "description" : "ShowOrgBasemapPicker.html",
+    "thumbnail" : "ShowOrgBasemapPicker.png",
+    "name" : "Show organization basemap picker"
+}
