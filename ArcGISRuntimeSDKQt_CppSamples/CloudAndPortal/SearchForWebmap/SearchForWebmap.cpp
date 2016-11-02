@@ -20,7 +20,6 @@
 #include "PortalItem.h"
 #include "PortalItemListModel.h"
 #include "PortalQueryParametersForItems.h"
-
 #include "SearchForWebmap.h"
 
 using namespace Esri::ArcGISRuntime;
@@ -35,8 +34,6 @@ SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */):
     m_selectedItem(nullptr),
     m_portalLoaded(false)
 {
-    connect(m_portal, &Portal::findItemsCompleted, this, &SearchForWebmap::onSearchCompleted);
-    emit authManagerChanged();
     AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
@@ -47,11 +44,20 @@ SearchForWebmap::~SearchForWebmap()
 void SearchForWebmap::componentComplete()
 {
     QQuickItem::componentComplete();
+    emit authManagerChanged();
 
     connect(m_portal, &Portal::loadStatusChanged, this, [this](){
         m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
         emit portalLoadedChanged();
     });
+
+    connect(m_portal, &Portal::findItemsCompleted, this, [this](PortalQueryResultSetForItems *webmapResults){
+        m_webmapResults = webmapResults;
+        m_webmaps = m_webmapResults->itemResults();
+        emit webmapsChanged();
+        emit hasMoreResultsChanged();
+    });
+
     m_portal->load();
 
     // find QML MapView component
@@ -111,7 +117,33 @@ void SearchForWebmap::loadSelectedWebmap(int index)
 
     m_selectedItem = selectedItem;
 
-    connect(m_selectedItem, &PortalItem::loadStatusChanged, this, &SearchForWebmap::onWebmapLoaded);
+    connect(m_selectedItem, &PortalItem::loadStatusChanged, this, [this]{
+        if (!m_selectedItem || m_selectedItem->loadStatus() != LoadStatus::Loaded)
+            return;
+
+        if (m_map)
+            m_map->disconnect();
+
+        m_mapLoadeError.clear();
+        emit mapLoadErrorChanged();
+
+        m_map = new Map(m_selectedItem, this);
+
+        connect(m_map, &Map::errorOccurred, this, [this](){
+            m_mapLoadeError = m_map->loadError().message();
+            emit mapLoadErrorChanged();
+        });
+
+        connect(m_map, &Map::loadStatusChanged, this, [this](){
+            if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
+                return;
+
+            m_mapView->setMap(m_map);
+            m_mapView->setVisible(true);
+        });
+
+        m_map->load();
+    });
     m_selectedItem->load();
 }
 
@@ -119,43 +151,6 @@ void SearchForWebmap::errorAccepted()
 {
     m_mapLoadeError.clear();
     emit mapLoadErrorChanged();
-}
-
-void SearchForWebmap::onSearchCompleted(PortalQueryResultSetForItems *webmapResults)
-{
-    m_webmapResults = webmapResults;
-    m_webmaps = m_webmapResults->itemResults();
-    emit webmapsChanged();
-    emit hasMoreResultsChanged();
-}
-
-void SearchForWebmap::onWebmapLoaded()
-{
-    if (!m_selectedItem || m_selectedItem->loadStatus() != LoadStatus::Loaded)
-        return;
-
-    if (m_map)
-        m_map->disconnect();
-
-    m_mapLoadeError.clear();
-    emit mapLoadErrorChanged();
-
-    m_map = new Map(m_selectedItem, this);
-
-    connect(m_map, &Map::errorOccurred, this, [this](){
-        m_mapLoadeError = m_map->loadError().message();
-        emit mapLoadErrorChanged();
-    });
-
-    connect(m_map, &Map::loadStatusChanged, this, [this](){
-        if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
-            return;
-
-        m_mapView->setMap(m_map);
-        m_mapView->setVisible(true);
-    });
-
-    m_map->load();
 }
 
 AuthenticationManager *SearchForWebmap::authManager() const

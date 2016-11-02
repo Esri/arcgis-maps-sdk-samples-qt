@@ -66,10 +66,6 @@ signals:
     void hasMoreResultsChanged();
     void mapLoadErrorChanged();
 
-private slots:
-    void onSearchCompleted(Esri::ArcGISRuntime::PortalQueryResultSetForItems* webmapResults);
-    void onWebmapLoaded();
-
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
