@@ -158,18 +158,13 @@ void MobileMap_SearchAndRoute::connectSignals()
         if (graphics.count() > 0)
         {
             // use the blue pin graphic instead of text graphic to as calloutData's geoElement
-            if (graphics[0]->symbol()->symbolType() == SymbolType::PictureMarkerSymbol)
-            {
-                m_mapView->calloutData()->setGeoElement(graphics[0]);
-                m_mapView->calloutData()->setDetail(graphics[0]->attributes()->attributeValue("AddressLabel").toString());
-                m_mapView->calloutData()->setVisible(true);
-            }
-            else if (graphics.count() > 1)
-            {
-                m_mapView->calloutData()->setGeoElement(graphics[1]);
-                m_mapView->calloutData()->setDetail(graphics[1]->attributes()->attributeValue("Match_addr").toString());
-                m_mapView->calloutData()->setVisible(true);
-            }
+            auto graphic = graphics[0];
+            if (graphic->symbol()->symbolType() != SymbolType::PictureMarkerSymbol && graphics.count() > 1)
+                graphic = graphics[1];
+
+            m_mapView->calloutData()->setGeoElement(graphic);
+            m_mapView->calloutData()->setDetail(graphic->attributes()->attributeValue("AddressLabel").toString());
+            m_mapView->calloutData()->setVisible(true);
         }
 
         // if clicked a point with no graphic on it, reverse geocode
