@@ -39,7 +39,7 @@ BasicSceneView::BasicSceneView(QWidget* parent) :
     // create a camera
     Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
     // set the viewpoint to the camera
-    m_sceneView->setViewpointCamera(camera, 0);
+    m_sceneView->setViewpointCameraAndWait(camera);
 
     // Set up the UI
     QVBoxLayout *vBoxLayout = new QVBoxLayout(this);
