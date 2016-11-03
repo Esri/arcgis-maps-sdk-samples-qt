@@ -30,7 +30,6 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property var porInfo: portal.portalInfo
 
-
     function chooseBasemap(selectedBasemap){
         title.text = selectedBasemap.item.title;
         basemapsGrid.enabled = false;
@@ -72,20 +71,22 @@ Rectangle {
         }
 
         onFetchBasemapsStatusChanged: {
-            console.log("fetch basemaps finished");
             if (fetchBasemapsStatus !== Enums.TaskStatusCompleted)
                 return;
 
             basemapsGrid.model = basemaps;
             gridFadeIn.running = true;
         }
-
-        onErrorChanged: console.log(error.message);
     }
 
     Text{
         id: title
-        anchors {top: parent.top; left: parent.left; right: parent.right; margins: 10}
+        anchors {
+            top: parent.top;
+            left: parent.left;
+            right: parent.right;
+            margins: 10
+        }
         font.pointSize: 14
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
@@ -96,15 +97,24 @@ Rectangle {
     }
 
     MapView {
-        visible: false
         id: mapView
-
-        anchors{top: title.bottom; bottom: parent.bottom; left: parent.left; right: parent.right}
+        anchors {
+            top: title.bottom;
+            bottom: parent.bottom;
+            left: parent.left;
+            right: parent.right
+        }
+        visible: false
     }
 
     GridView {
         id: basemapsGrid
-        anchors{top: title.bottom; bottom: parent.bottom; left: parent.left; right: parent.right}
+        anchors {
+            top: title.bottom;
+            bottom: parent.bottom;
+            left: parent.left;
+            right: parent.right
+        }
         cellWidth: 128 * scaleFactor;
         cellHeight: 128 * scaleFactor
         opacity: 0
@@ -115,14 +125,36 @@ Rectangle {
             anchors.margins: 5 * scaleFactor
             width: basemapsGrid.cellWidth
             height: width
-            border {width: 2; color: index == basemapsGrid.currentIndex ? "blue" : "lightgrey"}
+            border {
+                width: 2;
+                color: index == basemapsGrid.currentIndex ? "blue" : "lightgrey"
+            }
             color: index == basemapsGrid.currentIndex ? "yellow" : "white"
             radius: 2
             clip: true
 
+            Image {
+                id: basemapImg
+                anchors {
+                    bottom: basemapLabel.top;
+                    horizontalCenter: parent.horizontalCenter
+                }
+                height: parent.height - ( basemapLabel.height * 2 );
+                width: height
+                source: item.thumbnailUrl
+                fillMode: Image.PreserveAspectCrop
+            }
+
             Text {
-                anchors {fill: parent; margins: 10 * scaleFactor }
+                id: basemapLabel
+                anchors {
+                    bottom: parent.bottom;
+                    left: parent.left;
+                    right: parent.right
+                }
+                height: 16 * scaleFactor
                 z: 100
+                horizontalAlignment: Text.AlignHCenter
                 text: item.title
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight
@@ -130,21 +162,17 @@ Rectangle {
                 font.bold: index == basemapsGrid.currentIndex
             }
 
-//            Image {
-//                id: basemapImg
-//                anchors {fill: parent; margins: 10 * scaleFactor }
-//                source: item.thumbnailUrl
-//            }
-
             MouseArea {
                 enabled: !mapView.visible && portal.loadStatus == Enums.LoadStatusLoaded
                 anchors.fill: parent
+
                 onClicked: {
                     if (!enabled)
                         return;
 
                     basemapsGrid.currentIndex = index;
                 }
+
                 onDoubleClicked: {
                     if (!enabled)
                         return;
