@@ -69,7 +69,7 @@ void ExtrudeGraphics::componentComplete()
     // create a camera
     Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
     // set the viewpoint
-    m_sceneView->setViewpointCamera(camera);
+    m_sceneView->setViewpointCamera(camera, 0);
 
     // graphics location
     double lon = camera.location().x() - 0.03;

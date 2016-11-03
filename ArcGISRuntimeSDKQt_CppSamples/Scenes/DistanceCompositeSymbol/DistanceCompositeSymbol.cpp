@@ -105,6 +105,6 @@ void DistanceCompositeSymbol::componentComplete()
     mms->load();
 
     // set the viewpoint
-    m_sceneView->setViewpointCamera(camera);
+    m_sceneView->setViewpointCamera(camera, 0);
 }
 

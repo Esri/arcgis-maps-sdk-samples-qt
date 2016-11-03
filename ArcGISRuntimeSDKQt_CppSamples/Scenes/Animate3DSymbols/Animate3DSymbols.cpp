@@ -243,7 +243,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
 
     const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
     Camera camera(dp.m_pos, m_camHandler->m_zoomDist, dp.m_heading, m_camHandler->m_angle, dp.m_roll);
-    m_sceneView->setViewpointCamera(camera);
+    m_sceneView->setViewpointCamera(camera, 0);
     m_mapView->setViewpointAndWait(Viewpoint(m_routeGraphic->geometry()));
     createModel3d();
   }
