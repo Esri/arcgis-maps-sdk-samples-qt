@@ -431,7 +431,7 @@ Rectangle {
             });
 
         if (!playButton.checked)
-            sceneView.setViewpointCamera(cam);
+            sceneView.setViewpointCameraAndSeconds(cam, 0);
         else if (camReady) {
             camReady = false;
             sceneView.setViewpointCameraAndSeconds(cam, getCameraDuration());

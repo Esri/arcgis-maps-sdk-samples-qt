@@ -57,7 +57,7 @@ void Symbols::componentComplete()
     // create a camera
     Camera camera(34, 45, 6000, 0, 0, 0);
     // set the viewpoint
-    m_sceneView->setViewpointCamera(camera);
+    m_sceneView->setViewpointCameraAndWait(camera);
 
     // create a graphics overlay
     GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);

@@ -184,5 +184,5 @@ void GraphicsOverlayDictionaryRenderer_3D::zoomToGraphics()
     // Create a camera that looks at the bbox center, height 15000, pitch 70
     Camera camera(m_bbox.extent().center(), 15000, 0, 70, 0);
 
-    m_sceneView->setViewpointCamera(camera);
+    m_sceneView->setViewpointCameraAndWait(camera);
 }

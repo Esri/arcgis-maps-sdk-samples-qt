@@ -55,11 +55,13 @@ Rectangle {
                                                                         });
                     // add the graphic to the graphics overlay
                     graphicsOverlay.graphics.append(graphic);
-
-                    // set viewpoint to the specified camera
-                    sceneView.setViewpointCamera(camera);
                 }
             }
+        }
+
+        Component.onCompleted: {
+            // set viewpoint to the specified camera
+            setViewpointCameraAndSeconds(camera, 0)
         }
 
         GraphicsOverlay {
