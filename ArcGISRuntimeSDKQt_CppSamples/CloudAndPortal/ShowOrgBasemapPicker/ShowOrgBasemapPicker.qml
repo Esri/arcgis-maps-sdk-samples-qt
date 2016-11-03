@@ -87,11 +87,27 @@ ShowOrgBasemapPickerSample {
             radius: 2
             clip: true
 
-            Text {
+            Image {
+                id: basemapImg
                 anchors {
-                    fill: parent;
-                    margins: 10 * scaleFactor
+                    bottom: basemapLabel.top;
+                    horizontalCenter: parent.horizontalCenter
                 }
+                height: parent.height - ( basemapLabel.height * 2 );
+                width: height
+                fillMode: Image.PreserveAspectCrop
+
+                Component.onCompleted: source = basemapThumbnail(index);
+            }
+
+            Text {
+                id: basemapLabel
+                anchors {
+                    bottom: parent.bottom;
+                    left: parent.left;
+                    right: parent.right
+                }
+                height: 16 * scaleFactor
                 z: 100
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight
@@ -101,15 +117,10 @@ ShowOrgBasemapPickerSample {
                 Component.onCompleted: text = basemapTitle(index);
             }
 
-//            Image {
-//                id: basemapImg
-//                anchors {fill: parent; margins: 10 * scaleFactor }
-//                source: item.thumbnailUrl
-//            }
-
             MouseArea {
                 enabled: !mapView.visible && portalLoaded
                 anchors.fill: parent
+
                 onClicked: {
                     if (!enabled)
                         return;

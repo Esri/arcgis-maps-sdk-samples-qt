@@ -139,6 +139,30 @@ QString ShowOrgBasemapPicker::basemapTitle(int index)
     return basemapAtIndex->item()->title();
 }
 
+QUrl ShowOrgBasemapPicker::basemapThumbnail(int index)
+{
+    if (!basemaps())
+        return QUrl();
+
+    Basemap* basemapAtIndex = m_portal->basemaps()->at(index);
+    if (!basemapAtIndex)
+        return QUrl();
+
+    Item* itemAtIndex = basemapAtIndex->item();
+    if (!itemAtIndex)
+        return QUrl();
+
+    QImage itemThumbnail = itemAtIndex->thumbnail();
+    if (itemThumbnail.isNull())
+    {
+        itemAtIndex->fetchThumbnail();
+    }
+    else
+    {
+        itemThumbnail
+    }
+}
+
 void ShowOrgBasemapPicker::onFetchBasemapsCompleted()
 {
     emit basemapsChanged();
