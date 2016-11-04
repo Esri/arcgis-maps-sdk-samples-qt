@@ -94,10 +94,9 @@ ShowOrgBasemapPickerSample {
                     horizontalCenter: parent.horizontalCenter
                 }
                 height: parent.height - ( basemapLabel.height * 2 );
+                source: thumbnailUrl
                 width: height
                 fillMode: Image.PreserveAspectCrop
-
-                Component.onCompleted: source = basemapThumbnail(index);
             }
 
             Text {
@@ -111,10 +110,9 @@ ShowOrgBasemapPickerSample {
                 z: 100
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight
+                text: title
                 font.pointSize: 8
                 font.bold: index == basemapsGrid.currentIndex
-
-                Component.onCompleted: text = basemapTitle(index);
             }
 
             MouseArea {
@@ -175,4 +173,5 @@ ShowOrgBasemapPickerSample {
             color: "black"
         }
     }
+
 }

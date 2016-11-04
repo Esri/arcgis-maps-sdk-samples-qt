@@ -51,9 +51,9 @@ public:
     QString mapLoadError() const;
 
     Q_INVOKABLE void loadSelectedBasemap(int index);
-    Q_INVOKABLE void errorAccepted();
+    Q_INVOKABLE void errorAccepted();/*
     Q_INVOKABLE QString basemapTitle(int index);
-    Q_INVOKABLE QUrl basemapThumbnail(int index);
+    Q_INVOKABLE QUrl basemapThumbnail(int index);*/
 
 signals:
     void authManagerChanged();
