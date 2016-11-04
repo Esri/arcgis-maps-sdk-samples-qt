@@ -58,7 +58,7 @@ Rectangle {
         Component.onCompleted: load();
 
         onLoadStatusChanged: {
-            if (loadStatus === Enums.LoadStatusFailedToLoad){
+            if (loadStatus === Enums.LoadStatusFailedToLoad) {
                 retryLoad();
                 return;
             }
