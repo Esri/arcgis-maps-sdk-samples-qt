@@ -30,7 +30,7 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property var porInfo: portal.portalInfo
 
-    function chooseBasemap(selectedBasemap){
+    function chooseBasemap(selectedBasemap) {
         title.text = selectedBasemap.item.title;
         basemapsGrid.enabled = false;
 
@@ -58,8 +58,7 @@ Rectangle {
         Component.onCompleted: load();
 
         onLoadStatusChanged: {
-            if (loadStatus === Enums.LoadStatusFailedToLoad)
-            {
+            if (loadStatus === Enums.LoadStatusFailedToLoad){
                 retryLoad();
                 return;
             }
@@ -127,9 +126,9 @@ Rectangle {
             height: width
             border {
                 width: 2;
-                color: index == basemapsGrid.currentIndex ? "blue" : "lightgrey"
+                color: index === basemapsGrid.currentIndex ? "blue" : "lightgrey"
             }
-            color: index == basemapsGrid.currentIndex ? "yellow" : "white"
+            color: index === basemapsGrid.currentIndex ? "yellow" : "white"
             radius: 2
             clip: true
 
@@ -159,11 +158,11 @@ Rectangle {
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight
                 font.pointSize: 8
-                font.bold: index == basemapsGrid.currentIndex
+                font.bold: index === basemapsGrid.currentIndex
             }
 
             MouseArea {
-                enabled: !mapView.visible && portal.loadStatus == Enums.LoadStatusLoaded
+                enabled: !mapView.visible && portal.loadStatus === Enums.LoadStatusLoaded
                 anchors.fill: parent
 
                 onClicked: {
@@ -189,7 +188,6 @@ Rectangle {
                 PropertyAnimation { to: 0; duration: 60 }
                 PropertyAnimation { to: 1; duration: 60 }
             }
-
         }
 
         OpacityAnimator on opacity {
@@ -199,6 +197,7 @@ Rectangle {
             duration: 2000
             running: false
         }
+
         OpacityAnimator on opacity {
             id: gridFadeOut
             from: 1;

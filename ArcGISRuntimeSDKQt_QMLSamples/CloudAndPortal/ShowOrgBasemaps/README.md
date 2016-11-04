@@ -6,7 +6,7 @@ This sample demonstrates how to load a Portal and then use the organization's pr
 
 ##How it works
 1. A `Portal` is constructed using a `Credential` of type OAuth.
-2. When the App starts, the portal is loaded and the `AuthenticationManager` then issues a challenge for the supplied credential type.
+2. When the app starts, the portal is loaded and the `AuthenticationManager` then issues a challenge for the supplied credential type.
 3. The user is presented with an `AuthenticationView` which allows them to log-in
 4. After a successful load, a request is made to `fetchBasemaps` from the portal instance.
 5. When the basemaps are successfully retrieved, the portal's `BasemapListModel` is passed to a QML `ListView`.

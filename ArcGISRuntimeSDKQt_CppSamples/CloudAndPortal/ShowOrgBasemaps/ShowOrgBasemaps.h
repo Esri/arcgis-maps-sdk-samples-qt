@@ -55,9 +55,7 @@ public:
     QString mapLoadError() const;
 
     Q_INVOKABLE void loadSelectedBasemap(int index);
-    Q_INVOKABLE void errorAccepted();/*
-    Q_INVOKABLE QString basemapTitle(int index);
-    Q_INVOKABLE QUrl basemapThumbnail(int index);*/
+    Q_INVOKABLE void errorAccepted();
 
 signals:
     void authManagerChanged();
@@ -71,7 +69,7 @@ private:
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::Portal* m_portal;
     bool m_portalLoaded;
-    QString m_mapLoadeError;
+    QString m_mapLoadError;
 };
 
 #endif // SHOWORGBASEMAPS_H

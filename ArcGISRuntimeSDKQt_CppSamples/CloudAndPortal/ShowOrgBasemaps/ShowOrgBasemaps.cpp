@@ -84,7 +84,7 @@ QAbstractListModel* ShowOrgBasemaps::basemaps() const
 
 QString ShowOrgBasemaps::mapLoadError() const
 {
-    return m_mapLoadeError;
+    return m_mapLoadError;
 }
 
 void ShowOrgBasemaps::loadSelectedBasemap(int index)
@@ -99,13 +99,13 @@ void ShowOrgBasemaps::loadSelectedBasemap(int index)
     if (m_map)
         m_map->disconnect();
 
-    m_mapLoadeError.clear();
+    m_mapLoadError.clear();
     emit mapLoadErrorChanged();
 
     m_map = new Map(selectedBasemap, this);
 
     connect(m_map, &Map::errorOccurred, this, [this](){
-        m_mapLoadeError = m_map->loadError().message();
+        m_mapLoadError = m_map->loadError().message();
         emit mapLoadErrorChanged();
     });
 
@@ -122,7 +122,7 @@ void ShowOrgBasemaps::loadSelectedBasemap(int index)
 
 void ShowOrgBasemaps::errorAccepted()
 {
-    m_mapLoadeError.clear();
+    m_mapLoadError.clear();
     emit mapLoadErrorChanged();
 }
 

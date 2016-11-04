@@ -41,7 +41,8 @@ ShowOrgBasemapsSample {
             top: parent.top;
             left: parent.left;
             right: parent.right;
-            margins: 10}
+            margins: 10
+        }
         font.pointSize: 14
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
@@ -54,17 +55,18 @@ ShowOrgBasemapsSample {
     MapView {
         id: mapView
         objectName: "mapView"
-        anchors{
+        anchors {
             top: title.bottom;
             bottom: parent.bottom;
             left: parent.left;
-            right: parent.right}
+            right: parent.right
+        }
         visible: false
     }
 
     GridView {
         id: basemapsGrid
-        anchors{
+        anchors {
             top: title.bottom;
             bottom: parent.bottom;
             left: parent.left;
@@ -82,8 +84,8 @@ ShowOrgBasemapsSample {
             anchors.margins: 5 * scaleFactor
             width: basemapsGrid.cellWidth
             height: width
-            border {width: 2; color: index == basemapsGrid.currentIndex ? "blue" : "lightgrey"}
-            color: index == basemapsGrid.currentIndex ? "yellow" : "white"
+            border {width: 2; color: index === basemapsGrid.currentIndex ? "blue" : "lightgrey"}
+            color: index === basemapsGrid.currentIndex ? "yellow" : "white"
             radius: 2
             clip: true
 
@@ -112,7 +114,7 @@ ShowOrgBasemapsSample {
                 elide: Text.ElideRight
                 text: title
                 font.pointSize: 8
-                font.bold: index == basemapsGrid.currentIndex
+                font.bold: index === basemapsGrid.currentIndex
             }
 
             MouseArea {
@@ -151,6 +153,7 @@ ShowOrgBasemapsSample {
             duration: 2000
             running: false
         }
+
         OpacityAnimator on opacity {
             id: gridFadeOut
             from: 1;
@@ -173,5 +176,4 @@ ShowOrgBasemapsSample {
             color: "black"
         }
     }
-
 }
