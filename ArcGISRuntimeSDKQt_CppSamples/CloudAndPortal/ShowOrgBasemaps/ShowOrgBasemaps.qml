@@ -1,4 +1,4 @@
-// [WriteFile Name=ShowOrgBasemapPicker, Category=CloudAndPortal]
+// [WriteFile Name=ShowOrgBasemaps, Category=CloudAndPortal]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -21,7 +21,7 @@ import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
 
-ShowOrgBasemapPickerSample {
+ShowOrgBasemapsSample {
     width: 800
     height: 600
     clip: true

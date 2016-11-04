@@ -29,7 +29,7 @@
 #include "MapQuickView.h"
 #include "Item.h"
 
-#include "ShowOrgBasemapPicker.h"
+#include "ShowOrgBasemaps.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
   // Register the types for QML
   qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<ShowOrgBasemapPicker>("Esri.Samples", 1, 0, "ShowOrgBasemapPickerSample");
+  qmlRegisterType<ShowOrgBasemaps>("Esri.Samples", 1, 0, "ShowOrgBasemapsSample");
 
   // Intialize application view
   QQuickView view;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/CloudAndPortal/ShowOrgBasemapPicker/ShowOrgBasemapPicker.qml"));
+  view.setSource(QUrl("qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ShowOrgBasemaps.qml"));
 
   view.show();
 

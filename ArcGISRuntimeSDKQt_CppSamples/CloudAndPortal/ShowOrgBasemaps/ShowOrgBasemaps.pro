@@ -29,15 +29,18 @@ qtHaveModule(webengine) {
 }
 
 TEMPLATE = app
-TARGET = ShowOrgBasemapPicker
+TARGET = ShowOrgBasemaps
 
 #-------------------------------------------------------------------------------
 
-HEADERS += ShowOrgBasemapPicker.h
+HEADERS += \
+    ShowOrgBasemaps.h
 
-SOURCES += main.cpp ShowOrgBasemapPicker.cpp
+SOURCES += main.cpp \
+    ShowOrgBasemaps.cpp
 
-RESOURCES += ShowOrgBasemapPicker.qrc
+RESOURCES += \
+    ShowOrgBasemaps.qrc
 
 #-------------------------------------------------------------------------------
 

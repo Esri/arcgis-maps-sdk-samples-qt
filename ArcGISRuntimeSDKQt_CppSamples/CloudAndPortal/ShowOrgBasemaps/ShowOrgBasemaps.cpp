@@ -1,14 +1,18 @@
-// Copyright 2016 ESRI
-//
-// All rights reserved under the copyright laws of the United States
-// and applicable international laws, treaties, and conventions.
-//
-// You may freely redistribute and use this sample code, with or
-// without modification, provided you include the original copyright
-// notice and use restrictions.
-//
-// See the Sample code usage restrictions document for further information.
-//
+// [WriteFile Name=ShowOrgBasemaps, Category=CloudAndPortal]
+// [Legal]
+// Copyright 2016 Esri.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
 
 #include "AuthenticationManager.h"
 #include "Map.h"
@@ -16,11 +20,11 @@
 #include "Basemap.h"
 #include "BasemapListModel.h"
 #include "Portal.h"
-#include "ShowOrgBasemapPicker.h"
+#include "ShowOrgBasemaps.h"
 
 using namespace Esri::ArcGISRuntime;
 
-ShowOrgBasemapPicker::ShowOrgBasemapPicker(QQuickItem* parent /* = nullptr */):
+ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
     QQuickItem(parent),
     m_map(nullptr),
     m_mapView(nullptr),
@@ -29,11 +33,11 @@ ShowOrgBasemapPicker::ShowOrgBasemapPicker(QQuickItem* parent /* = nullptr */):
     AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
-ShowOrgBasemapPicker::~ShowOrgBasemapPicker()
+ShowOrgBasemaps::~ShowOrgBasemaps()
 {
 }
 
-void ShowOrgBasemapPicker::componentComplete()
+void ShowOrgBasemaps::componentComplete()
 {
     QQuickItem::componentComplete();
 
@@ -60,12 +64,12 @@ void ShowOrgBasemapPicker::componentComplete()
     m_portal->load();
 }
 
-bool ShowOrgBasemapPicker::portalLoaded() const
+bool ShowOrgBasemaps::portalLoaded() const
 {
     return m_portalLoaded;
 }
 
-QString ShowOrgBasemapPicker::orgName() const
+QString ShowOrgBasemaps::orgName() const
 {
     if (!portalLoaded() || !m_portal->portalInfo())
         return "";
@@ -73,17 +77,17 @@ QString ShowOrgBasemapPicker::orgName() const
     return m_portal->portalInfo()->organizationName();
 }
 
-QAbstractListModel* ShowOrgBasemapPicker::basemaps() const
+QAbstractListModel* ShowOrgBasemaps::basemaps() const
 {
     return m_portal->basemaps();
 }
 
-QString ShowOrgBasemapPicker::mapLoadError() const
+QString ShowOrgBasemaps::mapLoadError() const
 {
     return m_mapLoadeError;
 }
 
-void ShowOrgBasemapPicker::loadSelectedBasemap(int index)
+void ShowOrgBasemaps::loadSelectedBasemap(int index)
 {
     if (!m_portal->basemaps())
         return;
@@ -116,13 +120,13 @@ void ShowOrgBasemapPicker::loadSelectedBasemap(int index)
     m_map->load();
 }
 
-void ShowOrgBasemapPicker::errorAccepted()
+void ShowOrgBasemaps::errorAccepted()
 {
     m_mapLoadeError.clear();
     emit mapLoadErrorChanged();
 }
 
-AuthenticationManager *ShowOrgBasemapPicker::authManager() const
+AuthenticationManager *ShowOrgBasemaps::authManager() const
 {
     return AuthenticationManager::instance();
 }
