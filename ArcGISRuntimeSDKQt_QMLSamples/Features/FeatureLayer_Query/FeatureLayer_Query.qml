@@ -87,7 +87,7 @@ Rectangle {
                             featureLayer.selectFeatures(features);
 
                             // zoom to the first feature
-                            mapView.setViewpointGeometryAndPadding(features[0].geometry, 200);
+                            mapView.setViewpointGeometryAndPadding(features[0].geometry, 30);
                         }
                     }
                 }

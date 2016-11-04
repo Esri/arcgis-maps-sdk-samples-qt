@@ -37,7 +37,7 @@ Rectangle {
     property string headingAtt: "heading";
     property string pitchAtt: "pitch";
     property string rollAtt: "roll";
-    property var    attrFormat: "[%1]"
+    property string attrFormat: "[%1]"
 
     property var graphic3d;
     property bool camReady: true;
@@ -374,7 +374,7 @@ Rectangle {
         graphic3d.attributes.insertAttribute(rollAtt, firstData.roll);
         graphic3d.attributes.insertAttribute(pitchAtt, firstData.pitch);
         setCamera(firstPos, firstData.heading);
-        mapView.setViewpointGeometryAndPadding(routeGraphic.geometry, 200);
+        mapView.setViewpointGeometryAndPadding(routeGraphic.geometry, 30);
     }
 
     function animate() {
