@@ -119,7 +119,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
                                 {
                                     bbox = GeometryEngine::unionOf(bbox, layers->at(j)->fullExtent());
                                 }
-                                m_mapView->setViewpointGeometry(bbox, 300 * m_scaleFactor);
+                                m_mapView->setViewpointGeometry(bbox, 100);
                             }
 
                             emit allLayersLoaded();

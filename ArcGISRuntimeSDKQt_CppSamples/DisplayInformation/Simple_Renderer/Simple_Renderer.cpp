@@ -76,7 +76,7 @@ void Simple_Renderer::componentComplete()
     m_mapView->setMap(m_map);
 
     // set viewpoint using the two farthest points as an envelope with padding
-    m_mapView->setViewpointGeometry(Envelope(oldFaithfulPoint, plumeGeyserPoint), 200);
+    m_mapView->setViewpointGeometry(Envelope(oldFaithfulPoint, plumeGeyserPoint), 50);
 
     // add GraphicsOverlay to MapView
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);

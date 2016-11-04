@@ -46,7 +46,7 @@ Rectangle {
             // set initial viewpoint using envelope with padding
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded)
-                    mapView.setViewpointGeometryAndPadding(envelope, 200);
+                    mapView.setViewpointGeometryAndPadding(envelope, 30);
             }
         }
 

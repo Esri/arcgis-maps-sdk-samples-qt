@@ -113,7 +113,7 @@ void FeatureLayerQuery::connectSignals()
         // select the feature
         m_featureLayer->selectFeatures(features);
         // zoom to the first feature
-        m_mapView->setViewpointGeometry(features.at(0)->geometry(), 200);
+        m_mapView->setViewpointGeometry(features.at(0)->geometry(), 30);
         // set the count for QML property
         m_queryResultsCount = features.count();
         emit queryResultsCountChanged();
