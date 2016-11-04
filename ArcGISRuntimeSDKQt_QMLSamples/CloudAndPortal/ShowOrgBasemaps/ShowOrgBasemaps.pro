@@ -27,7 +27,7 @@ CONFIG += c++11 arcgis_runtime_qml100_0_0
 
 SOURCES += main.cpp
 
-RESOURCES += ShowOrgBasemapPicker.qrc
+RESOURCES += ShowOrgBasemaps.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

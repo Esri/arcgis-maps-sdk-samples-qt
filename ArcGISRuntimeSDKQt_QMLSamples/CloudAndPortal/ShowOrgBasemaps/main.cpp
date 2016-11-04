@@ -42,7 +42,7 @@ QtWebEngine::initialize();
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/CloudAndPortal/ShowOrgBasemapPicker/ShowOrgBasemapPicker.qml"));
+  view.setSource(QUrl("qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ShowOrgBasemaps.qml"));
 
   view.show();
 
