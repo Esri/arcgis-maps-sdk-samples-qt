@@ -1,0 +1,6 @@
+{
+    "source" :  "ShowOrgBasemaps.qml",
+    "description" : "ShowOrgBasemaps.html",
+    "thumbnail" : "ShowOrgBasemaps.png",
+    "name" : "Show organization basemaps"
+}
