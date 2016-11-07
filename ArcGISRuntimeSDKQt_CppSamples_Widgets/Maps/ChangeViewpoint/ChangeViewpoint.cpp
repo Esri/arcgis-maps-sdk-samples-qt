@@ -116,7 +116,7 @@ void ChangeViewpoint::changeToNewViewpoint(int index)
 
 double ChangeViewpoint::screenRatio() const
 {
-    const double width = static_cast<double>(m_mapView->width());
-    const double height = static_cast<double>(m_mapView->height());
+    const double width = static_cast<double>(m_mapView->mapWidth());
+    const double height = static_cast<double>(m_mapView->mapHeight());
     return height > width ? width / height : height / width;
 }
