@@ -54,6 +54,15 @@ void Hillshade_Renderer::componentComplete()
   // Add the raster to the map
   Basemap* basemap = new Basemap(rasterLayer, this);
   Map* map = new Map(basemap, this);
+
+  // zoom to the new layer once loaded
+  connect(map, &Map::loadStatusChanged, this, [this, map]()
+  {
+    if (map->loadStatus() == LoadStatus::Loaded)
+    {
+      m_mapView->setViewpointScale(754479);
+    }
+  });
   m_mapView->setMap(map);
 
   // Apply the hillshade renderer to the raster layer
