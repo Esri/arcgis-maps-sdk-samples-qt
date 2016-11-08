@@ -90,7 +90,7 @@ Rectangle {
                 break;
             case "Geometry and padding":
                 envBuilder.setXY(116.380, 39.920, 116.400, 39.940); // Beijing
-                mv.setViewpointGeometryAndPadding(envBuilder.geometry, 200);
+                mv.setViewpointGeometryAndPadding(envBuilder.geometry, 200 * screenRatio());
                 break;
             case "Rotation":
                 rotationValue = (rotationValue + 45.0) % 360.0;
@@ -107,6 +107,12 @@ Rectangle {
                 break;
             }
         }
+    }
+
+    function screenRatio() {
+        var width = mv.mapWidth;
+        var height = mv.mapHeight;
+        return height > width ? width / height : height / width;
     }
 
     // Neatline rectangle
