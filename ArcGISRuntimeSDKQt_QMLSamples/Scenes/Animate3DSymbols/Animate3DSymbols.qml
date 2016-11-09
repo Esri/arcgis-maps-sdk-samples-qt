@@ -40,7 +40,6 @@ Rectangle {
     property string attrFormat: "[%1]"
 
     property var graphic3d;
-    property bool camReady: true;
 
     /**
      * Create SceneView that contains a Scene with the Imagery Basemap
@@ -97,8 +96,6 @@ Rectangle {
             onPressed: mouse.accepted = followButton.checked
             onWheel: wheel.accepted = followButton.checked
         }
-
-        onSetViewpointCameraCompleted: camReady = true;
     }
 
     ListModel {
@@ -389,8 +386,6 @@ Rectangle {
 
             if (followButton.checked)
                 setCamera(newPos, missionData.heading);
-            else
-                sceneView.update();
         }
 
         nextFrameRequested();
@@ -431,13 +426,10 @@ Rectangle {
             });
 
         if (!playButton.checked)
-            sceneView.setViewpointCameraAndSeconds(cam, 0);
-        else if (camReady) {
-            camReady = false;
-            sceneView.setViewpointCameraAndSeconds(cam, getCameraDuration());
+            sceneView.setViewpointCameraAndWait(cam);
+        else {
+            sceneView.setViewpointCameraAndWait(cam);
         }
-        else
-            sceneView.update();
     }
 
     function getCameraDuration() {

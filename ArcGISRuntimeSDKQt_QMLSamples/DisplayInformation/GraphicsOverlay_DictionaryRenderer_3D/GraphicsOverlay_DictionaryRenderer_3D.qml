@@ -145,7 +145,7 @@ Rectangle {
                         distance: 15000
                     });
                     camera = camera.rotateAround(bbox.extent.center, 0, 70, 0);
-                    sceneView.setViewpointCameraAndSeconds(camera, 0);
+                    sceneView.setViewpointCameraAndWait(camera);
                 }
                 progressBar_loading.visible = false;
             }

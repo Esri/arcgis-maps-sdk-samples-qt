@@ -46,7 +46,7 @@ Rectangle {
 
         Component.onCompleted: {
             // set viewpoint to the specified camera
-            setViewpointCameraAndSeconds(camera, 0);
+            setViewpointCameraAndWait(camera);
         }
     }
     //! [create the scene with a basemap and surface]

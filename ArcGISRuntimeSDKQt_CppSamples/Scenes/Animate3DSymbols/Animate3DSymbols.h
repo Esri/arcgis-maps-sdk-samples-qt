@@ -28,7 +28,6 @@ namespace Esri
     class MapQuickView;
     class ModelSceneSymbol;
     class SceneQuickView;
-    class TaskWatcher;
   }
 }
 
