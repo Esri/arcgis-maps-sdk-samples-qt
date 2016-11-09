@@ -61,7 +61,7 @@ Rectangle {
 
         Component.onCompleted: {
             // set viewpoint to the specified camera
-            setViewpointCameraAndSeconds(camera, 0)
+            setViewpointCameraAndWait(camera)
         }
 
         GraphicsOverlay {
@@ -121,7 +121,7 @@ Rectangle {
                 color: "red"
                 height: 75
                 width: 75
-                pitch: -90
+                depth: 75
             }
             //! [simple marker scene symbol]
         }

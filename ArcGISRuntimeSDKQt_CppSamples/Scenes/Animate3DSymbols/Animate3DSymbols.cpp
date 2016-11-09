@@ -33,7 +33,6 @@
 #include "SimpleMarkerSceneSymbol.h"
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
-#include "TaskWatcher.h"
 
 #include <QDir>
 #include <QFileInfo>
@@ -52,40 +51,19 @@ struct Animate3DSymbols::CameraHandler
 
   void setZoomDist(double zoomDist)
   {
-    m_camWatcher.cancel();
     m_zoomDist = zoomDist;
   }
 
   void setAngle(double angle)
   {
-    m_camWatcher.cancel();
     m_angle = angle;
   }
 
   void setIntervalMs(int intervalMs)
   {
-    m_camWatcher.cancel();
     m_intervalMs = intervalMs;
   }
 
-  float animationDurationSeconds() const
-  {
-    // the faster the animation, the shorter duration we want for our camera animations (range 10-200)
-    float res = (220 - m_intervalMs) / 200.0f;
-    res *= 10.0f;
-
-    // slow down camera animation when the camera is zoomed right in (range 10-500)
-    float zoomFactor = (520 - m_zoomDist) / 500.0f;
-    res += zoomFactor;
-
-    // for very steep angles the camera needs to be quick enough to keep the model in view
-    if( m_angle > 135 || m_angle < 45)
-       res = 0.0f;
-
-    return res;
-  }
-
-  TaskWatcher m_camWatcher;
   float m_intervalMs = 0.0;
   double m_zoomDist = 0.0;
   double m_angle = 90.0;
@@ -191,19 +169,10 @@ void Animate3DSymbols::animate()
 
     if (m_following)
     {
-      if (!m_camHandler->m_camWatcher.isDone())
-        m_sceneView->update();
-      else
-      {
-        // move the camera to follow the 3d model
-        Camera camera(dp.m_pos, m_camHandler->m_zoomDist, dp.m_heading, m_camHandler->m_angle, dp.m_roll);
-        m_camHandler->m_camWatcher = m_sceneView->setViewpointCamera(camera, m_camHandler->animationDurationSeconds());
-      }
+      // move the camera to follow the 3d model
+      Camera camera(dp.m_pos, m_camHandler->m_zoomDist, dp.m_heading, m_camHandler->m_angle, dp.m_roll);
+      m_sceneView->setViewpointCameraAndWait(camera);
 
-    }
-    else
-    {
-      m_sceneView->update();
     }
 
     // move 3D graphic to the new position
@@ -221,7 +190,6 @@ void Animate3DSymbols::animate()
 void Animate3DSymbols::changeMission(const QString &missionNameStr)
 {
   setMissionFrame(0);
-  m_camHandler->m_camWatcher.cancel();
 
   // read the mission data from the samples .csv files
   QString formattedname = missionNameStr;

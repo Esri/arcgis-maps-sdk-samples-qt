@@ -29,6 +29,7 @@ Rectangle {
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
 
     MapView {
+        id: mapView
         anchors.fill: parent
 
         Map {
@@ -50,6 +51,12 @@ Rectangle {
                         pixelSizePower: 1
                         outputBitDepth: 8
                     }
+                }
+            }
+
+            onLoadStatusChanged: {
+                if (loadStatus === Enums.LoadStatusLoaded) {
+                    mapView.setViewpointScale(754479);
                 }
             }
         }
