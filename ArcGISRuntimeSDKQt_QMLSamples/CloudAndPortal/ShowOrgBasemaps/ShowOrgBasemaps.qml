@@ -140,7 +140,7 @@ Rectangle {
                 }
                 height: parent.height - ( basemapLabel.height * 2 );
                 width: height
-                source: item.thumbnailUrl
+                source: thumbnailUrl
                 fillMode: Image.PreserveAspectCrop
             }
 
@@ -154,7 +154,7 @@ Rectangle {
                 height: 16 * scaleFactor
                 z: 100
                 horizontalAlignment: Text.AlignHCenter
-                text: item.title
+                text: title
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight
                 font.pointSize: 8
