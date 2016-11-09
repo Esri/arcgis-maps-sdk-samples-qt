@@ -57,7 +57,7 @@ Rectangle {
 
         Component.onCompleted: {
             // set viewpoint to the specified camera
-            setViewpointCameraAndSeconds(camera, 0);
+            setViewpointCameraAndWait(camera);
             addSymbols();
         }
     }
