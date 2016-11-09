@@ -56,9 +56,9 @@ void Hillshade_Renderer::componentComplete()
   Map* map = new Map(basemap, this);
 
   // zoom to the new layer once loaded
-  connect(map, &Map::loadStatusChanged, this, [this, map]()
+  connect(map, &Map::loadStatusChanged, this, [this](LoadStatus loadStatus)
   {
-    if (map->loadStatus() == LoadStatus::Loaded)
+    if (loadStatus == LoadStatus::Loaded)
     {
       m_mapView->setViewpointScale(754479);
     }
