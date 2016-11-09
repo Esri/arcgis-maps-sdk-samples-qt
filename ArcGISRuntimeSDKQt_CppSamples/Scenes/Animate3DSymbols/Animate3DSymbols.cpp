@@ -64,23 +64,6 @@ struct Animate3DSymbols::CameraHandler
     m_intervalMs = intervalMs;
   }
 
-  float animationDurationSeconds() const
-  {
-    // the faster the animation, the shorter duration we want for our camera animations (range 10-200)
-    float res = (220 - m_intervalMs) / 200.0f;
-    res *= 10.0f;
-
-    // slow down camera animation when the camera is zoomed right in (range 10-500)
-    float zoomFactor = (520 - m_zoomDist) / 500.0f;
-    res += zoomFactor;
-
-    // for very steep angles the camera needs to be quick enough to keep the model in view
-    if( m_angle > 135 || m_angle < 45)
-       res = 0.0f;
-
-    return res;
-  }
-
   float m_intervalMs = 0.0;
   double m_zoomDist = 0.0;
   double m_angle = 90.0;
