@@ -38,7 +38,7 @@ GraphicsOverlayDictionaryRenderer_3D::GraphicsOverlayDictionaryRenderer_3D(QQuic
     m_sceneView(nullptr),
     m_graphicsOverlay(new GraphicsOverlay(this))
 {
-    m_graphicsOverlay->setRenderingMode(GraphicsRenderingMode::Dynamic);
+    m_graphicsOverlay->setRenderingMode(GraphicsRenderingMode::Static);
 }
 
 GraphicsOverlayDictionaryRenderer_3D::~GraphicsOverlayDictionaryRenderer_3D()
