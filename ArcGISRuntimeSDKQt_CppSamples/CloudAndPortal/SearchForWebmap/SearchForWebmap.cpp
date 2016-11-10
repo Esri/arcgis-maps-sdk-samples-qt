@@ -89,7 +89,7 @@ void SearchForWebmap::search(const QString keyword)
 {
     PortalQueryParametersForItems query;
     query.setSearchString(QString("tags:\"%1\"").arg(keyword));
-    query.setType(PortalItemType::WebMap);
+    query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
     m_portal->findItems(query);
 
     m_mapView->setVisible(false);
