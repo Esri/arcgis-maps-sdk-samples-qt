@@ -45,7 +45,7 @@ Rectangle {
         }
         GraphicsOverlay {
             id: graphicsOverlay
-            renderingMode: Enums.GraphicsRenderingModeStatic
+            renderingMode: Enums.GraphicsRenderingModeDynamic
 
             DictionaryRenderer {
                 DictionarySymbolStyle {
