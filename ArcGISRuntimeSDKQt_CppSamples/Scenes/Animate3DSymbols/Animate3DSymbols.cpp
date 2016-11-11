@@ -247,9 +247,7 @@ void Animate3DSymbols::createModel3d()
   // load the ModelSceneSymbol to be animated in the 3d view
   if (m_model3d == nullptr)
   {
-    m_model3d = new ModelSceneSymbol(QUrl(m_dataPath + "/SkyCrane/SkyCrane.lwo"), 0.01f, this);
-    // correct the symbol's orientation to match the graphic's orientation
-    m_model3d->setHeading(180.);
+    m_model3d = new ModelSceneSymbol(QUrl(m_dataPath + "/Bristol/Collada/Bristol.dae"), 10.0f, this);
   }
 
   // when the model is successfully loaded, setup the 3g draphic to show it it the scene
