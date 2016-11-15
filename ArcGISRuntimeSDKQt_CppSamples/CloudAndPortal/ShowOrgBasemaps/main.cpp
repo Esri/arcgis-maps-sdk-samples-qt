@@ -16,6 +16,7 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+#include <QAbstractListModel>
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
 #include <QtWebEngine>
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -48,6 +49,7 @@ int main(int argc, char *argv[])
 
   // Register the types for QML
   qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ShowOrgBasemaps>("Esri.Samples", 1, 0, "ShowOrgBasemapsSample");
 
