@@ -88,8 +88,7 @@ QString SearchForWebmap::mapLoadError() const
 void SearchForWebmap::search(const QString keyword)
 {
     PortalQueryParametersForItems query;
-    query.setSearchString(QString("tags:\"%1\"").arg(keyword));
-    query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
+    query.setSearchString(QString("tags:\"%1\" AND +type:\"Web Map\" AND -type:\"Web Mapping Application\"").arg(keyword));
     m_portal->findItems(query);
 
     m_mapView->setVisible(false);
