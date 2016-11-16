@@ -69,6 +69,7 @@ Animate3DSymbolsSample {
 
             ComboBox {
                 id: missionList
+                enabled: !playButton.checked
                 model: missionsModel()
                 textRole: "display"
                 onCurrentTextChanged: {

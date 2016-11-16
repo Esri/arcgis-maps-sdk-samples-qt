@@ -124,6 +124,7 @@ Rectangle {
 
             ComboBox {
                 id: missionList
+                enabled: !playButton.checked
                 model: missionsModel
                 textRole: "name"
                 onCurrentTextChanged: {
