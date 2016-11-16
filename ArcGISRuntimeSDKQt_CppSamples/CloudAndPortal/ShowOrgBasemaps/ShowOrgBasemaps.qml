@@ -52,18 +52,6 @@ ShowOrgBasemapsSample {
         elide: Text.ElideRight
     }
 
-    MapView {
-        id: mapView
-        objectName: "mapView"
-        anchors {
-            top: title.bottom;
-            bottom: parent.bottom;
-            left: parent.left;
-            right: parent.right
-        }
-        visible: false
-    }
-
     GridView {
         id: basemapsGrid
         anchors {
@@ -161,6 +149,18 @@ ShowOrgBasemapsSample {
             duration: 2000
             running: false
         }
+    }
+
+    MapView {
+        id: mapView
+        objectName: "mapView"
+        anchors {
+            top: title.bottom;
+            bottom: parent.bottom;
+            left: parent.left;
+            right: parent.right
+        }
+        visible: false
     }
 
     AuthenticationView {
