@@ -26,7 +26,7 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "Surface.h"
-#include "SymbolDictionary.h"
+#include "DictionarySymbolStyle.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -51,12 +51,12 @@ void GraphicsOverlayDictionaryRenderer_3D::componentComplete()
     QQuickItem::componentComplete();
 
     // QML properties
-    m_dataPath = QQmlProperty::read(this, "dataPath").toString();
+    m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
     m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
 
     // Set up DictionaryRenderer
-    SymbolDictionary* symbolDictionary = new SymbolDictionary("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
-    DictionaryRenderer* renderer = new DictionaryRenderer(symbolDictionary, this);
+    DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+    DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
     m_graphicsOverlay->setRenderer(renderer);
 
     // Create a scene and give it to the SceneView
@@ -68,7 +68,7 @@ void GraphicsOverlayDictionaryRenderer_3D::componentComplete()
                     QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
                     this));
     scene->setBaseSurface(surface);
-    m_sceneView->setScene(scene);
+    m_sceneView->setArcGISScene(scene);
     m_sceneView->graphicsOverlays()->append(m_graphicsOverlay);
 
     parseXmlFile();
@@ -179,10 +179,10 @@ void GraphicsOverlayDictionaryRenderer_3D::createGraphic(QVariantMap rawAttribut
 
 void GraphicsOverlayDictionaryRenderer_3D::zoomToGraphics()
 {
-    m_bbox = GeometryEngine::project(m_bbox, m_sceneView->scene()->spatialReference());
+    m_bbox = GeometryEngine::project(m_bbox, m_sceneView->arcGISScene()->spatialReference());
 
     // Create a camera that looks at the bbox center, height 15000, pitch 70
     Camera camera(m_bbox.extent().center(), 15000, 0, 70, 0);
 
-    m_sceneView->setViewpointCamera(camera);
+    m_sceneView->setViewpointCameraAndWait(camera);
 }

@@ -90,9 +90,9 @@ void FeatureLayerQuery::componentComplete()
 void FeatureLayerQuery::connectSignals()
 {
     // iterate over the query results once the query is done
-    connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, [this](QUuid, QSharedPointer<Esri::ArcGISRuntime::FeatureQueryResult> queryResult)
+    connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* queryResult)
     {
-        if (!queryResult->iterator().hasNext())
+        if (queryResult && !queryResult->iterator().hasNext())
         {
             m_queryResultsCount = 0;
             emit queryResultsCountChanged();
@@ -113,13 +113,13 @@ void FeatureLayerQuery::connectSignals()
         // select the feature
         m_featureLayer->selectFeatures(features);
         // zoom to the first feature
-        m_mapView->setViewpointGeometry(features.at(0)->geometry(), 200);
+        m_mapView->setViewpointGeometry(features.at(0)->geometry(), 30);
         // set the count for QML property
         m_queryResultsCount = features.count();
         emit queryResultsCountChanged();
     });
 
-    connect(m_featureTable, &ServiceFeatureTable::loadStatusChanged,[this](LoadStatus loadStatus)
+    connect(m_featureTable, &ServiceFeatureTable::loadStatusChanged, this, [this](LoadStatus loadStatus)
     {
         loadStatus == LoadStatus::Loaded ? m_initialized = true : m_initialized = false;
         emit layerInitializedChanged();

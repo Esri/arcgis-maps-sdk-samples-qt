@@ -41,6 +41,7 @@ Rectangle {
             // Set the initial basemap to Streets
             BasemapStreets { }
 
+            // set viewpoint over The United States
             ViewpointCenter {
                 Point {
                     x: -10800000
@@ -49,7 +50,7 @@ Rectangle {
                         wkid: 102100
                     }
                 }
-                scale: 3e7
+                targetScale: 3e7
             }
 
             FeatureLayer {
@@ -77,21 +78,7 @@ Rectangle {
                             featureTable.applyEdits();
                         }
                     }
-                }
-
-                // signal handler for asynchronously fetching the selected feature
-                onSelectedFeaturesStatusChanged: {
-                    if (selectedFeaturesStatus === Enums.TaskStatusCompleted) {
-                        while (selectedFeaturesResult.iterator.hasNext) {
-                            // obtain the feature
-                            var feat = selectedFeaturesResult.iterator.next();
-                            // replace the attribute value
-                            feat.attributes.replaceAttribute("typdamage", damageComboBox.currentText);
-                            // update the feature in the feature table asynchronously
-                            featureTable.updateFeature(feat);                            
-                        }
-                    }
-                }                                
+                }                 
 
                 // signal handler for selecting features
                 onSelectFeaturesStatusChanged: {
@@ -133,7 +120,7 @@ Rectangle {
 
             mousePointX = mouse.x;
             mousePointY = mouse.y - callout.height;
-            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10, 1);
+            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 10, false, 1);
         }
 
         onIdentifyLayerStatusChanged: {

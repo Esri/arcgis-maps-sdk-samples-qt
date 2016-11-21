@@ -1,0 +1,6 @@
+{
+    "source" :  "TokenAuthentication.qml",
+    "description" : "TokenAuthentication.html",
+    "thumbnail" : "TokenAuthentication.png",
+    "name" : "Token authentication"
+}

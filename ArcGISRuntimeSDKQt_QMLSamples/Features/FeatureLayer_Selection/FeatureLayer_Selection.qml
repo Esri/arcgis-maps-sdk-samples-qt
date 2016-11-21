@@ -26,7 +26,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string displayText: "No features selected. Click/Tap to select features."
+    property string displayText: "Click or tap to select features."
 
 
     // Map view UI presentation at top
@@ -64,7 +64,7 @@ Rectangle {
             }
         }
 
-        // initial viewPoint
+        // initial viewpoint
         ViewpointCenter {
             id: viewPoint
             Point {
@@ -74,11 +74,12 @@ Rectangle {
                     wkid: 102100
                 }
             }
-            scale: 3e7
+            targetScale: 3e7
         }
 
+        //! [identify feature layer qml api snippet]
         onMouseClicked: {
-            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 22, 1000);
+            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 22, false, 1000);
         }
 
         onIdentifyLayerStatusChanged: {
@@ -100,6 +101,7 @@ Rectangle {
                 displayText = "%1 %2 selected.".arg(count).arg(count > 1 ? "features" : "feature");
             }
         }
+        //! [identify feature layer qml api snippet]
     }
 
     Rectangle {

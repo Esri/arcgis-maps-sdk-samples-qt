@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/Samples/CloudAndPortal/SearchForWebmap">
+        <file alias="sample.json">SearchForWebmap.json</file>
+        <file>SearchForWebmap.png</file>
+        <file>SearchForWebmap.qml</file>
+        <file>SearchForWebmap.html</file>
+        <file>searchIcon.png</file>
+    </qresource>
+</RCC>

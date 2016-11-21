@@ -59,7 +59,7 @@ void ExtrudeGraphics::componentComplete()
     // create a new scene instance
     m_scene = new Scene(basemap, this);
     // set scene on the scene view
-    m_sceneView->setScene(m_scene);
+    m_sceneView->setArcGISScene(m_scene);
 
     // create a new elevation source
     ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(m_elevationSourceUrl, this);
@@ -69,11 +69,11 @@ void ExtrudeGraphics::componentComplete()
     // create a camera
     Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
     // set the viewpoint
-    m_sceneView->setViewpointCamera(camera);
+    m_sceneView->setViewpointCameraAndWait(camera);
 
     // graphics location
-    double lat = camera.location().x() - 0.03;
-    double lng = camera.location().y() + 0.2;
+    double lon = camera.location().x() - 0.03;
+    double lat = camera.location().y() + 0.2;
 
     GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
 
@@ -81,29 +81,22 @@ void ExtrudeGraphics::componentComplete()
     SimpleRenderer* renderer = new SimpleRenderer(this);
     RendererSceneProperties props = renderer->sceneProperties();
     props.setExtrusionMode(ExtrusionMode::BaseHeight);
-    props.setExtrusionExpression("height");
+    props.setExtrusionExpression("[height]");
+    renderer->setSceneProperties(props);
+    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), this);
+    renderer->setSymbol(sfs);
     graphicsOverlay->setRenderer(renderer);
 
     // setup graphic locations
     QList<Point> pointsList;
     for (auto i = 0; i <= 100; i++)
     {
-        Point point(i / 10 * (m_size * 2) + lat, i % 10 * (m_size * 2) + lng, m_sceneView->spatialReference());
+        Point point(i / 10 * (m_size * 2) + lon, i % 10 * (m_size * 2) + lat, m_sceneView->spatialReference());
         pointsList.append(point);
     }
 
     foreach (auto point, pointsList)
     {
-        // create a list of colors to ramdomly pick from
-        QList<QColor>colors;
-        colors << QColor("white")
-               << QColor("green")
-               << QColor("blue")
-               << QColor("turquoise")
-               << QColor("purple")
-               << QColor("black")
-               << QColor("red");
-
         // create a random z value
         int randNum = rand() % 6 + 1;
         double z = m_maxZ * randNum;
@@ -115,10 +108,8 @@ void ExtrudeGraphics::componentComplete()
                << Point(point.x() + m_size, point.y() + m_size, z)
                << Point(point.x(), point.y() + m_size, z);
 
-        // create a new fill symbol to symbolize the graphic
-        SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, colors[randNum], this);
         // create a new graphic
-        Graphic* graphic = new Graphic(createPolygonFromPoints(points), sfs, this);
+        Graphic* graphic = new Graphic(createPolygonFromPoints(points), this);
         // add a height attribute to the graphic using the attribute list model
         // the extrusion will be applied to this attribute. See the expression above
         graphic->attributes()->insertAttribute("height", z);

@@ -57,20 +57,25 @@ void DisplayDeviceLocation::componentComplete()
 
     // set map on the map view
     m_mapView->setMap(m_map);
-
-    //! [start location display api snippet]
-    // turn on the location display
-    m_mapView->locationDisplay()->setPositionSource(QGeoPositionInfoSource::createDefaultSource(this));
-    QCompass* compass = new QCompass(this);
-    m_mapView->locationDisplay()->setCompass(compass);
-    m_mapView->locationDisplay()->start();
-    //! [start location display api snippet]
 }
 
 void DisplayDeviceLocation::startLocationDisplay()
 {
-    // start location display
-    m_mapView->locationDisplay()->start();
+    if (!m_mapView->locationDisplay()->positionSource())
+    {
+        //! [start location display api snippet]
+        // turn on the location display
+        m_mapView->locationDisplay()->setPositionSource(QGeoPositionInfoSource::createDefaultSource(this));
+        QCompass* compass = new QCompass(this);
+        m_mapView->locationDisplay()->setCompass(compass);
+        m_mapView->locationDisplay()->start();
+        //! [start location display api snippet]
+    }
+    else
+    {
+        // start location display
+        m_mapView->locationDisplay()->start();
+    }
 }
 
 void DisplayDeviceLocation::stopLocationDisplay()
@@ -95,6 +100,10 @@ void DisplayDeviceLocation::setAutoPanMode(QString autoPanMode)
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
     }
     else if (autoPanMode == stopMode())
+    {
+        m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
+    }
+    else if (autoPanMode == onMode())
     {
         m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Off);
     }

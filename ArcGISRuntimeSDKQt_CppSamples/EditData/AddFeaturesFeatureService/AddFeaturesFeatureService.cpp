@@ -29,7 +29,6 @@
 #include <QUrl>
 #include <QMap>
 #include <QUuid>
-#include <QSharedPointer>
 #include <QVariant>
 #include <QMouseEvent>
 
@@ -76,8 +75,9 @@ void AddFeaturesFeatureService::componentComplete()
 
 void AddFeaturesFeatureService::connectSignals()
 {
-    // connect to the mouse press release signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    //! [AddFeaturesFeatureService add at mouse click]
+    // connect to the mouse clicked signal on the MapQuickView
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         // obtain the map point
         Point newPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
@@ -91,9 +91,10 @@ void AddFeaturesFeatureService::connectSignals()
         Feature* feature = m_featureTable->createFeature(featureAttributes,newPoint,this);
         m_featureTable->addFeature(feature);
     });
+    //! [AddFeaturesFeatureService add at mouse click]
 
     // connect to the addFeatureCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::addFeatureCompleted, [this](QUuid, bool success)
+    connect(m_featureTable, &ServiceFeatureTable::addFeatureCompleted, this, [this](QUuid, bool success)
     {
         // if add feature was successful, call apply edits
         if (success)
@@ -101,12 +102,13 @@ void AddFeaturesFeatureService::connectSignals()
     });
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
     {
         if (featureEditResults.isEmpty())
             return;
+
         // obtain the first item in the list
-        QSharedPointer<FeatureEditResult> featureEditResult = featureEditResults.first();
+        FeatureEditResult* featureEditResult = featureEditResults.first();
         // check if there were errors, and if not, log the new object ID
         if (!featureEditResult->isCompletedWithErrors())
             qDebug() << "New Object ID is:" << featureEditResult->objectId();

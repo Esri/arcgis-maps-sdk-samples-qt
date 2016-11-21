@@ -25,6 +25,7 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
 
+    //! [display vector tiled layer]
     // Create MapView that contains a Map
     MapView {
         id: mapview
@@ -39,10 +40,11 @@ Rectangle {
             }
             initialViewpoint: ViewpointCenter {
                 center: Point { x:-80.18; y: 25.778135; spatialReference: SpatialReference { wkid: 4326 } }
-                scale: 150000
+                targetScale: 150000
             }
         }
     }
+    //! [display vector tiled layer]
 
     ComboBox {
         id: comboBoxBasemap

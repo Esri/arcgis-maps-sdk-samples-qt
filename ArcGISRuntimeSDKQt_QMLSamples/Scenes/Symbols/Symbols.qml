@@ -57,7 +57,7 @@ Rectangle {
 
         Component.onCompleted: {
             // set viewpoint to the specified camera
-            setViewpointCamera(camera);
+            setViewpointCameraAndWait(camera);
             addSymbols();
         }
     }
@@ -103,6 +103,16 @@ Rectangle {
         ListElement {
             symbolStyle: Enums.SimpleMarkerSceneSymbolStyleTetrahedron
             color: "yellow"
+        }
+    }
+
+    // Neatline rectangle
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
         }
     }
 

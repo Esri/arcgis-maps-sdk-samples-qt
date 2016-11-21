@@ -24,10 +24,12 @@ Rectangle {
     width: 800
     height: 600
 
-    property string dataPath: System.resolvedPathUrl(System.userHomePath + "/ArcGIS/Runtime/Data/3D/SkyCrane/SkyCrane.lwo")
+    property real scaleFactor: System.displayScaleFactor
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
 
     // Create a scene view
     SceneView {
+        id: sceneView
         anchors.fill: parent
 
         // create a scene...scene is a default property of sceneview
@@ -43,6 +45,23 @@ Rectangle {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
+
+            onLoadStatusChanged: {
+                if (loadStatus === Enums.LoadStatusLoaded) {
+                    // create a graphic using the composite symbol
+                    var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                            geometry: point,
+                                                                            symbol: distanceCompositeSceneSymbol
+                                                                        });
+                    // add the graphic to the graphics overlay
+                    graphicsOverlay.graphics.append(graphic);
+                }
+            }
+        }
+
+        Component.onCompleted: {
+            // set viewpoint to the specified camera
+            setViewpointCameraAndWait(camera)
         }
 
         GraphicsOverlay {
@@ -51,12 +70,6 @@ Rectangle {
             LayerSceneProperties {
                 surfacePlacement: Enums.SurfacePlacementRelative
             }
-        }
-
-        Component.onCompleted: {
-            // set viewpoint to the specified camera
-            setViewpointCamera(camera);
-            //            createSymbol();
         }
     }
 
@@ -76,75 +89,65 @@ Rectangle {
         heading: 0
         pitch: 80.0
         roll: 0
-    }
+    }    
 
-    // create a distance symbol range with a model marker symbol
-    DistanceSymbolRange {
-        id: dsrModel
-        minDistance: 0
-        maxDistance: 999
-
-        // model marker symbol
-        ModelMarkerSymbol {
-            id: mms
-            url: dataPath
-            scale: 0.01
-            heading: 180
-
-            Component.onCompleted: {
-                mms.load();
-            }
-
-            onLoadStatusChanged: {
-                if (mms.loadStatus === Enums.LoadStatusLoaded) {
-                    // add the ranges to the composite symbol
-                    distanceCompositeSceneSymbol.distanceSymbolRanges.append(dsrModel);
-                    distanceCompositeSceneSymbol.distanceSymbolRanges.append(dsrCone);
-                    distanceCompositeSceneSymbol.distanceSymbolRanges.append(dsrCircle);
-
-                    // create a graphic using the composite symbol
-                    var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                            geometry: point,
-                                                                            symbol: distanceCompositeSceneSymbol
-                                                                        });
-                    // add the graphic to the graphics overlay
-                    graphicsOverlay.graphics.append(graphic);
-                }
-            }
-        }
-    }
-
-    // create a distance symbol range with a simple marker scene symbol
-    DistanceSymbolRange {
-        id: dsrCone
-        minDistance: 1000
-        maxDistance: 1999
-
-        SimpleMarkerSceneSymbol {
-            style: Enums.SimpleMarkerSceneSymbolStyleCone
-            color: "red"
-            height: 75
-            width: 75
-            pitch: -90
-        }
-    }
-
-    // create a distance symbol range with a simple marker symbol
-    DistanceSymbolRange {
-        id: dsrCircle
-        minDistance: 2000
-        maxDistance: 0
-
-        SimpleMarkerSymbol {
-            style: Enums.SimpleMarkerSymbolStyleCircle
-            color: "red"
-            size: 10
-        }
-    }
-
-    // create a distance composite scene symbol
+    //! [create a distance composite scene symbol]
     DistanceCompositeSceneSymbol {
         id: distanceCompositeSceneSymbol
+
+        // create a distance symbol range with a model scene symbol
+        DistanceSymbolRange {
+            minDistance: 0
+            maxDistance: 999
+
+            //! [model scene symbol]
+            ModelSceneSymbol {
+                id: mms
+                url: dataPath + "3D/SkyCrane/SkyCrane.lwo"
+                scale: 0.01
+                heading: 180
+            }
+            //! [model scene symbol]
+        }
+
+        // create a distance symbol range with a simple marker scene symbol
+        DistanceSymbolRange {
+            minDistance: 1000
+            maxDistance: 1999
+
+            //! [simple marker scene symbol]
+            SimpleMarkerSceneSymbol {
+                style: Enums.SimpleMarkerSceneSymbolStyleCone
+                color: "red"
+                height: 75
+                width: 75
+                depth: 75
+            }
+            //! [simple marker scene symbol]
+        }
+
+        // create a distance symbol range with a simple marker symbol
+        DistanceSymbolRange {
+            minDistance: 2000
+            maxDistance: 0
+
+            SimpleMarkerSymbol {
+                style: Enums.SimpleMarkerSymbolStyleCircle
+                color: "red"
+                size: 10
+            }
+        }
+    }
+    //! [create a distance composite scene symbol]
+
+    // Neatline rectangle
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
+        }
     }
 }
 

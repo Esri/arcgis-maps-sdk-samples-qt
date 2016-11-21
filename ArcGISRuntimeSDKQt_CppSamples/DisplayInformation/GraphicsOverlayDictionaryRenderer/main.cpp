@@ -15,7 +15,6 @@
 #include <QQuickView>
 #include <QDir>
 #include <QQmlEngine>
-#include <QSurfaceFormat>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -29,17 +28,6 @@ using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
-#if defined(Q_OS_WIN)
-    if (QT_VERSION_MAJOR == 5 && QT_VERSION_MINOR > 6)
-    {
-        // Workaround for Qt versions greater than 5.6
-        // Force to OpenGL ES 3
-        QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
-        fmt.setVersion(3, 0);
-        QSurfaceFormat::setDefaultFormat(fmt);
-    }
-#endif
-    
     QGuiApplication app(argc, argv);
     
 #ifdef Q_OS_WIN
@@ -59,7 +47,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Display Information/GraphicsOverlayDictionaryRenderer/GraphicsOverlayDictionaryRenderer.qml"));
+    view.setSource(QUrl("qrc:/Samples/DisplayInformation/GraphicsOverlayDictionaryRenderer/GraphicsOverlayDictionaryRenderer.qml"));
 
     view.show();
 

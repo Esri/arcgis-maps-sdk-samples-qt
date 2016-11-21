@@ -50,9 +50,10 @@ void DisplaySceneLayer::componentComplete()
     Basemap* basemap = Basemap::topographic(this);
     m_scene = new Scene(basemap, this);
 
-    // add a scene service with ArcGISSceneLayer
+    //! [add a scene service with ArcGISSceneLayer]
     m_sceneLayer = new ArcGISSceneLayer(QUrl("http://scene.arcgis.com/arcgis/rest/services/Hosted/Buildings_Brest/SceneServer/layers/0"));
-    m_scene->operationalLayers()->append(m_sceneLayer);;
+    m_scene->operationalLayers()->append(m_sceneLayer);
+    //! [add a scene service with ArcGISSceneLayer]
 
     // create a new elevation source and add to scene
     ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
@@ -65,6 +66,6 @@ void DisplaySceneLayer::componentComplete()
     m_scene->setInitialViewpoint(initViewpoint);
 
     // set scene on the scene view
-    m_sceneView->setScene(m_scene);
+    m_sceneView->setArcGISScene(m_scene);
 }
 

@@ -91,19 +91,24 @@ void IdentifyGraphics::addPolygonGraphic()
 
 void IdentifyGraphics::connectSignals()
 {
-    // connect to the mouse press release signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    //! [identify graphics api snippet]
+    // connect to the mouse clicked signal on the MapQuickView
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         // call identify on the map view
-        m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, 1);
+        m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
     });
 
     // connect to the identifyLayerCompleted signal on the map view
-    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, [this](QUuid, QList<Graphic*> identifyResults)
+    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
     {
-        m_identifiedGraphicsCount = identifyResults.size();
-        emit identifiedGraphicsCountChanged();
+        if (identifyResult)
+        {
+          m_identifiedGraphicsCount = identifyResult->graphics().size();
+          emit identifiedGraphicsCountChanged();
+        }
     });
+    //! [identify graphics api snippet]
 }
 
 int IdentifyGraphics::identifiedGraphicsCount()

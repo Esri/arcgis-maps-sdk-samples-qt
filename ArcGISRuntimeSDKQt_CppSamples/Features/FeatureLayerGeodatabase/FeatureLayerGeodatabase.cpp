@@ -53,12 +53,14 @@ void FeatureLayerGeodatabase::componentComplete()
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
     // get the data path
-    m_dataPath = QQmlProperty::read(m_mapView, "dataPath").toString();
+    m_dataPath = QQmlProperty::read(m_mapView, "dataPath").toUrl().toLocalFile();
 
+    //! [FeatureLayer Geodatabase add basemap]
     // Create a map using a local vector tile package
-    auto vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(m_dataPath + "vtpk/LosAngeles.vtpk"), this);
-    auto basemap = new Basemap(vectorTiledLayer, this);
+    ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(m_dataPath + "vtpk/LosAngeles.vtpk"), this);
+    Basemap* basemap = new Basemap(vectorTiledLayer, this);
     m_map = new Map(basemap, this);
+    //! [FeatureLayer Geodatabase add basemap]
 
     // Set map to map view
     m_mapView->setMap(m_map);
@@ -66,22 +68,28 @@ void FeatureLayerGeodatabase::componentComplete()
     // set initial viewpoint
     m_map->setInitialViewpoint(Viewpoint(Point(-13214155, 4040194, SpatialReference(3857)), 35e4));
 
+    //! [FeatureLayer Geodatabase create gdb]
     // create the geodatabase using a local file path
     m_geodatabase = new Geodatabase(m_dataPath + "geodatabase/LA_Trails.geodatabase", this);
+    //! [FeatureLayer Geodatabase create gdb]
 
     // connect to doneLoading signal of geodatabase to access feature tables
-    connect(m_geodatabase, &Geodatabase::doneLoading, [this](Error error)
+    connect(m_geodatabase, &Geodatabase::doneLoading, this, [this](Error error)
     {
         if (error.isEmpty())
         {
+            //! [FeatureLayer Geodatabase create feature layer]
             // access the feature table by name
             auto featureTable = m_geodatabase->geodatabaseFeatureTable("Trailheads");
 
             // create a feature layer from the feature table
             auto featureLayer = new FeatureLayer(featureTable, this);
+            //! [FeatureLayer Geodatabase create feature layer]
 
+            //! [FeatureLayer Geodatabase add to map]
             // add the feature layer to the map
             m_map->operationalLayers()->append(featureLayer);
+            //! [FeatureLayer Geodatabase add to map]
         }
     });
 

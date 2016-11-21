@@ -57,7 +57,7 @@ Rectangle {
                     wkid: 102100
                 }
             }
-            scale: 300000
+            targetScale: 300000
         }
     }
     //! [Rectangle-mapview-map-viewpoint]

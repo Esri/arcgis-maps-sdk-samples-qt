@@ -73,7 +73,7 @@ void ChangeViewpoint::changeViewpoint(QString viewpoint)
     else if (viewpoint == "Geometry and padding")
     {
         Envelope envBeijing(116.380, 39.920, 116.400, 39.940, SpatialReference(4236));
-        m_mapView->setViewpointGeometry(envBeijing, 200);
+        m_mapView->setViewpointGeometry(envBeijing, 200 * screenRatio());
     }
     else if (viewpoint == "Rotation")
     {
@@ -95,4 +95,11 @@ void ChangeViewpoint::changeViewpoint(QString viewpoint)
         m_mapView->setViewpointAnimated(vpSpring, 4.0, AnimationCurve::EaseInOutCubic);
         //! [set viewpoint api snippet]
     }
+}
+
+double ChangeViewpoint::screenRatio() const
+{
+    const double width = static_cast<double>(m_mapView->mapWidth());
+    const double height = static_cast<double>(m_mapView->mapHeight());
+    return height > width ? width / height : height / width;
 }

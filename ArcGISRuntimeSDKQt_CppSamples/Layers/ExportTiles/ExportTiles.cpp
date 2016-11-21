@@ -58,14 +58,25 @@ void ExportTiles::componentComplete()
     // create a new map instance
     m_map = new Map(basemap, this);
 
+    // set an initial viewpoint
+    Envelope env(12362601, 936021, 10187678, 2567213, SpatialReference(3857));
+    Viewpoint viewpoint(env);
+    m_map->setInitialViewpoint(viewpoint);
+
     // set map on the map view
     m_mapView->setMap(m_map);
 
-    // create the task from the tiled layer's map service info once it is loaded
-    connect(tiledLayer, &ArcGISTiledLayer::doneLoading, [this, tiledLayer](Error)
+    // create the task with the url and load it
+    m_exportTileCacheTask = new ExportTileCacheTask(m_serviceUrl, this);
+    connect(m_exportTileCacheTask, &ExportTileCacheTask::doneLoading, this, [this](Error error)
     {
-        m_exportTileCacheTask = new ExportTileCacheTask(tiledLayer->mapServiceInfo(), this);
+        if (!error.isEmpty())
+        {
+          emit updateStatus("Export failed");
+          emit hideWindow(5000, false);
+        }
     });
+    m_exportTileCacheTask->load();
 }
 
 void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2, QString dataPath)
@@ -76,51 +87,57 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
     auto extent = Envelope(corner1, corner2);
     auto tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
-    // generate parameters
-    auto params = m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_exportTileCacheTask->mapServiceInfo()->maxScale());
-
-    // execute the task and obtain the job
-    auto exportJob = m_exportTileCacheTask->exportTileCacheWithParameters(params, dataPath);
-
-    // check if there is a valid job
-    if (exportJob)
+    // connect to sync task doneLoading signal
+    connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, this, [this, dataPath](QUuid, ExportTileCacheParameters parameters)
     {
-        // connect to the job's status changed signal
-        connect(exportJob, &ExportTileCacheJob::jobStatusChanged, [this, exportJob]()
+        m_parameters = parameters;
+
+        // execute the task and obtain the job
+        auto exportJob = m_exportTileCacheTask->exportTileCache(m_parameters, dataPath);
+
+        // check if there is a valid job
+        if (exportJob)
         {
-            // connect to the job's status changed signal to know once it is done
-            switch (exportJob->jobStatus()) {
-            case JobStatus::Failed:
-                emit updateStatus("Export failed");
-                emit hideWindow(5000, false);
-                break;
-            case JobStatus::NotStarted:
-                emit updateStatus("Job not started");
-                break;
-            case JobStatus::Paused:
-                emit updateStatus("Job paused");
-                break;
-            case JobStatus::Started:
-                emit updateStatus("In progress...");
-                break;
-            case JobStatus::Succeeded:
-                emit updateStatus("Adding TPK...");
-                emit hideWindow(1500, true);
-                displayOutputTileCache(exportJob->result());
-                break;
-            default:
-                break;
-            }
-        });
+            // connect to the job's status changed signal
+            connect(exportJob, &ExportTileCacheJob::jobStatusChanged, this, [this, exportJob]()
+            {
+                // connect to the job's status changed signal to know once it is done
+                switch (exportJob->jobStatus()) {
+                case JobStatus::Failed:
+                    emit updateStatus("Export failed");
+                    emit hideWindow(5000, false);
+                    break;
+                case JobStatus::NotStarted:
+                    emit updateStatus("Job not started");
+                    break;
+                case JobStatus::Paused:
+                    emit updateStatus("Job paused");
+                    break;
+                case JobStatus::Started:
+                    emit updateStatus("In progress...");
+                    break;
+                case JobStatus::Succeeded:
+                    emit updateStatus("Adding TPK...");
+                    emit hideWindow(1500, true);
+                    displayOutputTileCache(exportJob->result());
+                    break;
+                default:
+                    break;
+                }
+            });
 
-        // start the export job
-        exportJob->start();
-    }
-    else
-    {
-        emit updateStatus("Export failed");
-        emit hideWindow(5000, false);
-    }
+            // start the export job
+            exportJob->start();
+        }
+        else
+        {
+            emit updateStatus("Export failed");
+            emit hideWindow(5000, false);
+        }
+    });
+    // generate parameters
+    m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_exportTileCacheTask->mapServiceInfo().maxScale());
+
 }
 
 // display the tile cache once the task is complete
@@ -136,7 +153,7 @@ void ExportTiles::displayOutputTileCache(TileCache* tileCache)
     m_map->setBasemap(basemap);
 
     // zoom to the new layer and hide window once loaded
-    connect(tiledLayer, &ArcGISTiledLayer::doneLoading, [this, tiledLayer]()
+    connect(tiledLayer, &ArcGISTiledLayer::doneLoading, this, [this, tiledLayer]()
     {
         if (tiledLayer->loadStatus() == LoadStatus::Loaded)
         {

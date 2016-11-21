@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/EditData/EditAndSyncFeatures">
+        <file alias="sample.json">EditAndSyncFeatures.json</file>
+        <file>EditAndSyncFeatures.png</file>
+        <file>EditAndSyncFeatures.qml</file>
+        <file>EditAndSyncFeatures.html</file>
+        <file>download.png</file>
+        <file>sync.png</file>
+    </qresource>
+</RCC>

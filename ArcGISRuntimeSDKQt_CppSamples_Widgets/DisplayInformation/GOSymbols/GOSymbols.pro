@@ -33,3 +33,7 @@ SOURCES += \
 
 HEADERS  += \
     GOSymbols.h
+
+macx {
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.11
+}
