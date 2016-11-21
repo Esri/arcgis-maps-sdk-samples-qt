@@ -17,13 +17,13 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
-#include <QSurfaceFormat>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
 #include "MapQuickView.h"
+#include "BookmarkListModel.h"
 #include "ManageBookmarks.h"
 #include "ArcGISRuntimeEnvironment.h"
 
@@ -31,17 +31,6 @@ using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
-#if defined(Q_OS_WIN)
-    if (QT_VERSION_MAJOR == 5 && QT_VERSION_MINOR > 6)
-    {
-        // Workaround for Qt versions greater than 5.6
-        // Force to OpenGL ES 3
-        QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
-        fmt.setVersion(3, 0);
-        QSurfaceFormat::setDefaultFormat(fmt);
-    }
-#endif
-    
     QGuiApplication app(argc, argv);
 
 #ifdef Q_OS_WIN
@@ -52,6 +41,11 @@ int main(int argc, char *argv[])
     // Register the map view for QML
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
     qmlRegisterType<ManageBookmarks>("Esri.Samples", 1, 0, "ManageBookmarksSample");
+    //! [Register the list model for QML]
+    qmlRegisterUncreatableType<BookmarkListModel>("Esri.Samples", 1, 0,
+                                                        "BookmarkListModel",
+                                                        "BookmarkListModel is an uncreatable type");
+    //! [Register the list model for QML]
 
     // Intialize application view
     QQuickView view;

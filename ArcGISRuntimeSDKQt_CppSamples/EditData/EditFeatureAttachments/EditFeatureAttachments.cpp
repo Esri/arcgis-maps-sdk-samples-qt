@@ -31,7 +31,6 @@
 #include "AttachmentListModel.h"
 #include <QUrl>
 #include <QUuid>
-#include <QSharedPointer>
 #include <QMouseEvent>
 #include <QFile>
 
@@ -83,8 +82,8 @@ void EditFeatureAttachments::componentComplete()
 
 void EditFeatureAttachments::connectSignals()
 {   
-    // connect to the mouse press release signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClick, this, [this](QMouseEvent& mouseEvent)
+    // connect to the mouse clicked signal on the MapQuickView
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         // first clear the selection
         m_featureLayer->clearSelection();
@@ -97,7 +96,7 @@ void EditFeatureAttachments::connectSignals()
         emit hideWindow();
 
         // call identify on the map view
-        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, 1);
+        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
     });
 
     // connect to the viewpoint changed signal on the MapQuickView
@@ -123,15 +122,15 @@ void EditFeatureAttachments::connectSignals()
             QueryParameters queryParams;
             m_whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
             queryParams.setWhereClause(m_whereClause);
-            m_featureLayer->selectFeatures(queryParams, SelectionMode::New);
+            m_featureTable->queryFeatures(queryParams);
         }
     });
 
     // connect to the queryFeaturesCompleted signal on the feature table
-    connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted,
-            this, [this](QUuid, QSharedPointer<FeatureQueryResult> featureQueryResult)
+    connect(m_featureTable, &FeatureTable::queryFeaturesCompleted,
+            this, [this](QUuid, FeatureQueryResult* featureQueryResult)
     {
-        if (featureQueryResult->iterator().hasNext())
+        if (featureQueryResult && featureQueryResult->iterator().hasNext())
         {
             // first delete if not nullptr
             if (m_selectedFeature != nullptr)
@@ -146,7 +145,7 @@ void EditFeatureAttachments::connectSignals()
 
             // get the number of attachments
             connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted,
-                    this, [this](QUuid, const QList<QSharedPointer<Esri::ArcGISRuntime::Attachment>>)
+                    this, [this](QUuid, const QList<Attachment*>&)
             {
                 m_attachmentCount = m_selectedFeature->attachments()->rowCount();
                 emit attachmentCountChanged();
@@ -156,12 +155,12 @@ void EditFeatureAttachments::connectSignals()
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
     connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted,
-            this, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
+            this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
     {
         if (featureEditResults.length() > 0)
         {
             // obtain the first item in the list
-            QSharedPointer<FeatureEditResult> featureEditResult = featureEditResults.first();
+            FeatureEditResult* featureEditResult = featureEditResults.first();
             // check if there were errors
             if (!featureEditResult->isCompletedWithErrors())
             {

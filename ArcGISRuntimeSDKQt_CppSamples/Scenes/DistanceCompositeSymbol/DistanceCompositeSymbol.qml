@@ -24,7 +24,7 @@ DistanceCompositeSymbolSample {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D/SkyCrane/SkyCrane.lwo"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D/SkyCrane/SkyCrane.lwo"
 
     // add a mapView component
     SceneView {

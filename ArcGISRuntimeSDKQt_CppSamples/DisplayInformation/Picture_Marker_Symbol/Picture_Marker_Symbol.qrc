@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/Picture_Marker_Symbol">
+        <file alias="sample.json">Picture_Marker_Symbol.json</file>
+        <file>Picture_Marker_Symbol.png</file>
+        <file>Picture_Marker_Symbol.qml</file>
+        <file>Picture_Marker_Symbol.h</file>
+        <file>Picture_Marker_Symbol.cpp</file>
+        <file>Picture_Marker_Symbol.html</file>
+        <file>blue_symbol.png</file>
+    </qresource>
+</RCC>

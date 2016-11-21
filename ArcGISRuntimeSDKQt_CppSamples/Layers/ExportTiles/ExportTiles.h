@@ -17,6 +17,8 @@
 #ifndef EXPORT_TILES
 #define EXPORT_TILES
 
+#include "ExportTileCacheParameters.h"
+
 namespace Esri
 {
     namespace ArcGISRuntime
@@ -53,6 +55,7 @@ private:
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     QUrl m_serviceUrl;
     Esri::ArcGISRuntime::ExportTileCacheTask* m_exportTileCacheTask;
+    Esri::ArcGISRuntime::ExportTileCacheParameters m_parameters;
 };
 
 #endif // EXPORT_TILES

@@ -77,7 +77,7 @@ void FindRoute::componentComplete()
     m_mapView->graphicsOverlays()->append(m_stopsGraphicsOverlay);
 
     // connect to loadStatusChanged signal
-    connect(m_map, &Map::loadStatusChanged, [this](LoadStatus loadStatus)
+    connect(m_map, &Map::loadStatusChanged, this, [this](LoadStatus loadStatus)
     {
         if (loadStatus == LoadStatus::Loaded)
         {
@@ -94,8 +94,8 @@ void FindRoute::addStopGraphics()
     Point stop2Geometry(-13041693, 3856006, SpatialReference(3857));
 
     // create the stop graphics' symbols
-    auto stop1Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing and Navigation/FindRoute/pinA.png"));
-    auto stop2Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing and Navigation/FindRoute/pinB.png"));
+    auto stop1Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/RoutingAndNavigation/FindRoute/pinA.png"));
+    auto stop2Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/RoutingAndNavigation/FindRoute/pinB.png"));
 
     // create the stop graphics
     auto stop1Graphic = new Graphic(stop1Geometry, stop1Symbol, this);
@@ -122,24 +122,24 @@ void FindRoute::setupRouteTask()
     m_routeTask = new RouteTask(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"), this);
 
     // connect to loadStatusChanged signal
-    connect(m_routeTask, &RouteTask::loadStatusChanged, [this](LoadStatus loadStatus)
+    connect(m_routeTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
     {
         if (loadStatus == LoadStatus::Loaded)
         {
             // Request default parameters once the task is loaded
-            m_routeTask->generateDefaultParameters();
+            m_routeTask->createDefaultParameters();
         }
     });
 
-    // connect to generateDefaultParametersCompleted signal
-    connect(m_routeTask, &RouteTask::generateDefaultParametersCompleted, [this](QUuid, RouteParameters routeParameters)
+    // connect to createDefaultParametersCompleted signal
+    connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
     {
         // Store the resulting route parameters
         m_routeParameters = routeParameters;
     });
 
     // connect to solveRouteCompleted signal
-    connect(m_routeTask, &RouteTask::solveRouteCompleted, [this](QUuid, RouteResult routeResult)
+    connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
     {
         // Add the route graphic once the solve completes
         auto generatedRoute = routeResult.routes().at(0);

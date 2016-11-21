@@ -36,6 +36,7 @@ Rectangle {
             // Set the initial basemap to Streets
             BasemapStreets { }
 
+            // set initial viewpoint to The United States
             ViewpointCenter {
                 Point {
                     x: -10800000
@@ -44,7 +45,7 @@ Rectangle {
                         wkid: 102100
                     }
                 }
-                scale: 3e7
+                targetScale: 3e7
             }
 
             FeatureLayer {
@@ -76,7 +77,7 @@ Rectangle {
             }
         }
 
-
+        //! [AddFeaturesFeatureService new feature at mouse click]
         onMouseClicked: {
             // create attributes json for the new feature
             var featureAttributes = {"typdamage" : "Minor", "primcause" : "Earthquake"};
@@ -87,6 +88,7 @@ Rectangle {
             // add the new feature to the feature table
             featureTable.addFeature(feature);
         }
+        //! [AddFeaturesFeatureService new feature at mouse click]
     }
 
     // neatline

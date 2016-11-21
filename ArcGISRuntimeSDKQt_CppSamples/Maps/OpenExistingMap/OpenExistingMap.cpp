@@ -51,8 +51,7 @@ void OpenExistingMap::componentComplete()
 void OpenExistingMap::openMap(QString itemId)
 {
     // create a portal item with the item id
-    PortalItem portalItem;
-    portalItem.setUrl(QUrl("http://arcgis.com/sharing/rest/content/items/" + itemId));
+    auto portalItem = new PortalItem(QUrl("http://arcgis.com/sharing/rest/content/items/" + itemId));
 
     // create a new map from the portal item
     Map* map = new Map(portalItem, this);

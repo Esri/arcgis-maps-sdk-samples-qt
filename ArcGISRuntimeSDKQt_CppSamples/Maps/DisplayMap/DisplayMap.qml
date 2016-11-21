@@ -25,11 +25,12 @@ DisplayMapSample {
 
     property double scaleFactor: System.displayScaleFactor
 
-    // add a mapView component
+    //! [add a mapView component]
     MapView {
         anchors.fill: parent
         objectName: "mapView"
     }
+    //! [add a mapView component]
 
     Rectangle {
         anchors.fill: parent

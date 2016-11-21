@@ -24,6 +24,7 @@ namespace Esri
         class Map;
         class MapQuickView;
         class Viewpoint;
+        class BookmarkListModel;
     }
 }
 
@@ -35,30 +36,30 @@ class QString;
 class ManageBookmarks : public QQuickItem
 {
     Q_OBJECT
-
-    Q_PROPERTY(QStringList bookmarkList READ bookmarkList NOTIFY bookmarkListChanged)
+    //! [Expose the list model to QML]
+    Q_PROPERTY(Esri::ArcGISRuntime::BookmarkListModel* bookmarks READ bookmarks NOTIFY bookmarksChanged)
+    //! [Expose the list model to QML]
 
 public:
     ManageBookmarks(QQuickItem* parent = 0);
     ~ManageBookmarks();
 
     void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void goToBookmark(QString bookmarkName);
+    Q_INVOKABLE void goToBookmark(int bookmarkIndex);
     Q_INVOKABLE void addBookmark(QString newBookmarkName);
 
 signals:
-    void bookmarkListChanged();
+    void bookmarksChanged();
 
 private:
     void createInitialBookmarks();
     void createBookmark(QString name, Esri::ArcGISRuntime::Viewpoint viewpoint);
-    QStringList bookmarkList() const;
+    Esri::ArcGISRuntime::BookmarkListModel* bookmarks() const;
 
 private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    QStringList m_bookmarkList;
-    QMap<QString, Esri::ArcGISRuntime::Viewpoint> m_bookmarks;
+    Esri::ArcGISRuntime::BookmarkListModel* m_bookmarks;
 };
 
 #endif // MANAGE_BOOKMARKS_H

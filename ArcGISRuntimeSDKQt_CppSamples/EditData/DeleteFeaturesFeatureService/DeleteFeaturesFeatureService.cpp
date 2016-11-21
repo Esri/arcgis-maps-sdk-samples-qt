@@ -30,7 +30,6 @@
 #include "FeatureQueryResult.h"
 #include <QUrl>
 #include <QUuid>
-#include <QSharedPointer>
 #include <QMouseEvent>
 
 using namespace Esri::ArcGISRuntime;
@@ -80,8 +79,8 @@ void DeleteFeaturesFeatureService::componentComplete()
 
 void DeleteFeaturesFeatureService::connectSignals()
 {   
-    // connect to the mouse press release signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    // connect to the mouse clicked signal on the MapQuickView
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         // first clear the selection
         m_featureLayer->clearSelection();
@@ -93,19 +92,23 @@ void DeleteFeaturesFeatureService::connectSignals()
         emit screenYChanged();
         emit hideWindow();
 
+        //! [DeleteFeaturesFeatureService identify feature]
         // call identify on the map view
-        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, 1);
+        double tolerance = 5.0;
+        int maxResults = 1;
+        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), tolerance, false, maxResults);
+        //! [DeleteFeaturesFeatureService identify feature]
     });
 
     // connect to the viewpoint changed signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::viewpointChanged, [this]()
+    connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
     {
         m_featureLayer->clearSelection();
         emit hideWindow();
     });
 
     // connect to the identifyLayerCompleted signal on the map view
-    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, IdentifyLayerResult* identifyResult)
+    connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
     {
         if(!identifyResult)
           return;
@@ -126,7 +129,7 @@ void DeleteFeaturesFeatureService::connectSignals()
     });
 
     // connect to the selectedFeatures signal on the feature layer
-    connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, [this](QUuid, QSharedPointer<FeatureQueryResult> featureQueryResult)
+    connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
     {
         FeatureIterator iter = featureQueryResult->iterator();
         if (iter.hasNext())
@@ -140,7 +143,7 @@ void DeleteFeaturesFeatureService::connectSignals()
     });
 
     // connect to the deleteFeatureCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::deleteFeatureCompleted, [this](QUuid, bool success)
+    connect(m_featureTable, &ServiceFeatureTable::deleteFeatureCompleted, this, [this](QUuid, bool success)
     {
         // if delete feature was successful, call apply edits
         if (success)
@@ -148,12 +151,12 @@ void DeleteFeaturesFeatureService::connectSignals()
     });
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
     {
         // obtain the first item in the list
-        QSharedPointer<FeatureEditResult> featureEditResult = featureEditResults.first();
+        FeatureEditResult* featureEditResult = featureEditResults.isEmpty() ? nullptr : featureEditResults.first();
         // check if there were errors, and if not, log the new object ID
-        if (!featureEditResult->isCompletedWithErrors())
+        if (featureEditResult && !featureEditResult->isCompletedWithErrors())
             qDebug() << "Successfully deleted Object ID:" << featureEditResult->objectId();
         else
             qDebug() << "Apply edits error.";

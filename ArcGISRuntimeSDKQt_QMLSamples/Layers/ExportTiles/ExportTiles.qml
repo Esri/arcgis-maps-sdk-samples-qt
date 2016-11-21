@@ -26,9 +26,11 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property Envelope tileCacheExtent: null
-    property string outputTileCache: System.temporaryFolder.path + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
+    property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
     property string statusText: ""
     property string tiledServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
+
+    property ExportTileCacheParameters params
 
     // Create MapView that contains a Map
     MapView {
@@ -43,25 +45,43 @@ Rectangle {
                     url: tiledServiceUrl
                 }
             }
+
+            // set an initial viewpoint
+            ViewpointExtent {
+                Envelope {
+                    xMax: 12362601.050868368
+                    xMin: 10187678.26582548
+                    yMax: 2567213.6854449743
+                    yMin: 936021.5966628084
+                    spatialReference: SpatialReference.createWebMercator()
+                }
+            }
         }
     }
 
     // Create ExportTileCacheTask
     ExportTileCacheTask {
         id: exportTask
-        mapServiceInfo: tiledLayer.mapServiceInfo
+        url: tiledServiceUrl
+        property var exportJob
+
+        onCreateDefaultExportTileCacheParametersStatusChanged: {
+            if (createDefaultExportTileCacheParametersStatus === Enums.TaskStatusCompleted) {
+                params = defaultExportTileCacheParameters;
+
+                // export the cache with the parameters
+                executeExportTileCacheTask(params);
+            }
+        }
 
         function generateDefaultParameters() {
             // generate the default parameters with the extent and map scales specified
-            var params = exportTask.createDefaultExportTileCacheParameters(tileCacheExtent, mapView.mapScale, tiledLayer.maxScale);
-
-            // export the cache with the parameters
-            executeExportTileCacheTask(params);
+            exportTask.createDefaultExportTileCacheParameters(tileCacheExtent, mapView.mapScale, tiledLayer.maxScale);
         }
 
         function executeExportTileCacheTask(params) {
             // execute the asynchronous task and obtain the job
-            var exportJob = exportTask.exportTileCacheWithParameters(params, outputTileCache);
+            exportJob = exportTask.exportTileCache(params, outputTileCache);
 
             // check if job is valid
             if (exportJob) {
@@ -69,36 +89,40 @@ Rectangle {
                 exportWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
-                exportJob.jobStatusChanged.connect(function() {
-                    switch(exportJob.jobStatus) {
-                    case Enums.JobStatusFailed:
-                        statusText = "Export failed";
-                        exportWindow.hideWindow(5000);
-                        break;
-                    case Enums.JobStatusNotStarted:
-                        statusText = "Job not started";
-                        break;
-                    case Enums.JobStatusPaused:
-                        statusText = "Job paused";
-                        break;
-                    case Enums.JobStatusStarted:
-                        statusText = "In progress...";
-                        break;
-                    case Enums.JobStatusSucceeded:
-                        statusText = "Adding TPK...";
-                        exportWindow.hideWindow(1500);
-                        displayOutputTileCache(exportJob.result);
-                        break;
-                    default:
-                        break;
-                    }
-                });
+                exportJob.jobStatusChanged.connect(updateJobStatus);
 
                 exportJob.start();
             } else {
                 exportWindow.visible = true;
                 statusText = "Export failed";
                 exportWindow.hideWindow(5000);
+            }
+        }
+
+        function updateJobStatus() {
+            switch(exportJob.jobStatus) {
+            case Enums.JobStatusFailed:
+                statusText = "Export failed";
+                exportWindow.hideWindow(5000);
+                break;
+            case Enums.JobStatusNotStarted:
+                statusText = "Job not started";
+                break;
+            case Enums.JobStatusPaused:
+                statusText = "Job paused";
+                break;
+            case Enums.JobStatusStarted:
+                console.log("In progress...");
+                statusText = "In progress...";
+                break;
+            case Enums.JobStatusSucceeded:
+                statusText = "Adding TPK...";
+                exportWindow.hideWindow(1500);
+                displayOutputTileCache(exportJob.result);
+                break;
+            default:
+                console.log("default");
+                break;
             }
         }
 
@@ -121,6 +145,10 @@ Rectangle {
                     mapView.setViewpointScale(mapView.mapScale * .5);
                 }
             });
+        }
+
+        Component.onDestruction: {
+            exportJob.jobStatusChanged.disconnect(updateJobStatus);
         }
     }
 
@@ -203,7 +231,7 @@ Rectangle {
             opacity: 0.7
             gradient: Gradient {
                 GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.5; color: "black" }
+                GradientStop { position: 0.7; color: "black" }
             }
         }
 

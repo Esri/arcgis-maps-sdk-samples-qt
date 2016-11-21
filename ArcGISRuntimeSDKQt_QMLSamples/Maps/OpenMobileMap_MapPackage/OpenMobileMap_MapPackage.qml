@@ -22,8 +22,9 @@ Rectangle {
     width: 800
     height: 600
 
+    //! [open mobile map package qml api snippet]
     property real scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
 
     // Create MapView
     MapView {
@@ -49,6 +50,7 @@ Rectangle {
             }
         }
     }
+    //! [open mobile map package qml api snippet]
 
     Rectangle {
         anchors.fill: parent

@@ -37,6 +37,7 @@ void DisplayMap::componentComplete()
 {
     QQuickItem::componentComplete();
 
+    //! [MapQuickView API Snippet]
     // find QML MapView component
     m_mapView = findChild<MapQuickView*>("mapView");
 
@@ -46,5 +47,6 @@ void DisplayMap::componentComplete()
     m_map = new Map(basemap, this);
     // set map on the map view
     m_mapView->setMap(m_map);
+    //! [MapQuickView API Snippet]
 }
 

@@ -26,8 +26,8 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
-    property string outputGdb: System.temporaryFolder.path + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property url outputGdb: System.temporaryFolder.url + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
     property string featureServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer"
     property Envelope generateExtent: null
     property var generateLayerOptions: []
@@ -40,6 +40,8 @@ Rectangle {
 
         Map {
             id: map
+
+            //! [display tiled layer from tile cache]
             Basemap {
                 ArcGISTiledLayer {
                     TileCache {
@@ -47,46 +49,56 @@ Rectangle {
                     }
                 }
             }
+            //! [display tiled layer from tile cache]
 
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
                     // add the feature layers
-                    featureServiceInfo.load();
+                    geodatabaseSyncTask.load();
+                }
+            }
+
+            // set an initial viewpoint
+            ViewpointExtent {
+                Envelope {
+                    xMax: -122.43843016064368
+                    xMin: -122.50017717584528
+                    yMax: 37.81638388695054
+                    yMin: 37.745000054347535
+                    spatialReference: SpatialReference.createWgs84()
                 }
             }
         }
     }
 
-    // Create the ArcGISFeatureServiceInfo to obtain layers
-    ArcGISFeatureServiceInfo {
-        id: featureServiceInfo
+    //! [Features GenerateGeodatabase Create GeodatabaseSyncTask]
+    // create the GeodatabaseSyncTask to generate the local geodatabase
+    GeodatabaseSyncTask {
+        id: geodatabaseSyncTask
         url: featureServiceUrl
+        property var generateJob
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusLoaded) {
-                for (var i = 0; i < featureLayerInfos.length; i++) {
+                var idInfos = featureServiceInfo.layerInfos;
+                for (var i = 0; i < idInfos.length; i++) {
                     // add the layer to the map
-                    var serviceFeatureTable = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {url: featureLayerInfos[i].url});
+                    var featureLayerUrl = featureServiceInfo.url + "/" + idInfos[i].infoId;
+                    var serviceFeatureTable = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {url: featureLayerUrl});
                     var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: serviceFeatureTable});
                     map.operationalLayers.append(featureLayer);
 
                     // add a new GenerateLayerOption to array for use in the GenerateGeodatabaseParameters
-                    var layerOption = ArcGISRuntimeEnvironment.createObject("GenerateLayerOption", {layerId: featureLayerInfos[i].serviceLayerId});
+                    var layerOption = ArcGISRuntimeEnvironment.createObject("GenerateLayerOption", {layerId: idInfos[i].infoId});
                     generateLayerOptions.push(layerOption);
                     generateParameters.layerOptions = generateLayerOptions;
                 }
             }
         }
-    }
-
-    // create the GeodatabaseSyncTask to generate the local geodatabase
-    GeodatabaseSyncTask {
-        id: geodatabaseSyncTask
-        url: featureServiceUrl
 
         function executeGenerate() {
             // execute the asynchronous task and obtain the job
-            var generateJob = generateGeodatabase(generateParameters, outputGdb);
+            generateJob = generateGeodatabase(generateParameters, outputGdb);
 
             // check if the job is valid
             if (generateJob) {
@@ -95,30 +107,7 @@ Rectangle {
                 generateWindow.visible = true;
 
                 // connect to the job's status changed signal to know once it is done
-                generateJob.jobStatusChanged.connect(function() {
-                    switch(generateJob.jobStatus) {
-                    case Enums.JobStatusFailed:
-                        statusText = "Generate failed";
-                        generateWindow.hideWindow(5000);
-                        break;
-                    case Enums.JobStatusNotStarted:
-                        statusText = "Job not started";
-                        break;
-                    case Enums.JobStatusPaused:
-                        statusText = "Job paused";
-                        break;
-                    case Enums.JobStatusStarted:
-                        statusText = "In progress...";
-                        break;
-                    case Enums.JobStatusSucceeded:
-                        statusText = "Complete";
-                        generateWindow.hideWindow(1500);
-                        displayLayersFromGeodatabase(generateJob.geodatabase);
-                        break;
-                    default:
-                        break;
-                    }
-                });
+                generateJob.jobStatusChanged.connect(updateGenerateJobStatus);
 
                 // start the job
                 generateJob.start();
@@ -127,6 +116,31 @@ Rectangle {
                 generateWindow.visible = true;
                 statusText = "Generate failed";
                 generateWindow.hideWindow(5000);
+            }
+        }
+
+        function updateGenerateJobStatus() {
+            switch(generateJob.jobStatus) {
+            case Enums.JobStatusFailed:
+                statusText = "Generate failed";
+                generateWindow.hideWindow(5000);
+                break;
+            case Enums.JobStatusNotStarted:
+                statusText = "Job not started";
+                break;
+            case Enums.JobStatusPaused:
+                statusText = "Job paused";
+                break;
+            case Enums.JobStatusStarted:
+                statusText = "In progress...";
+                break;
+            case Enums.JobStatusSucceeded:
+                statusText = "Complete";
+                generateWindow.hideWindow(1500);
+                displayLayersFromGeodatabase(generateJob.geodatabase);
+                break;
+            default:
+                break;
             }
         }
 
@@ -155,6 +169,10 @@ Rectangle {
             });
             geodatabase.load();
         }
+
+        Component.onDestruction: {
+            generateJob.jobStatusChanged.disconnect(updateGenerateJobStatus);
+        }
     }
 
     // create the generate geodatabase parameters
@@ -164,6 +182,7 @@ Rectangle {
         outSpatialReference: SpatialReference.createWebMercator()
         returnAttachments: false
     }
+    //! [Features GenerateGeodatabase Create GeodatabaseSyncTask]
 
     // create an extent rectangle for the output geodatabase
     Rectangle {
@@ -246,7 +265,7 @@ Rectangle {
             opacity: 0.7
             gradient: Gradient {
                 GradientStop { position: 0.0; color: "lightgrey" }
-                GradientStop { position: 0.5; color: "black" }
+                GradientStop { position: 0.7; color: "black" }
             }
         }
 
@@ -300,7 +319,7 @@ Rectangle {
     }
 
     FileFolder {
-        path: dataPath
+        url: dataPath
 
         // create the data path if it does not yet exist
         Component.onCompleted: {

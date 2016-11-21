@@ -24,7 +24,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Create MapView that contains a Map with the Topographic Basemap
     MapView {
@@ -48,11 +48,13 @@ Rectangle {
         indeterminate: true
     }
 
-    SymbolDictionary {
-        id: symbolDictionary
+    //! [Create Dictionary Symbol Style QML]
+    DictionarySymbolStyle {
+        id: dictionarySymbolStyle
         specificationType: "mil2525d"
-        dictionaryPath: dataPath + "/styles/mil2525d.stylx"
+        styleLocation: dataPath + "/styles/mil2525d.stylx"
     }
+    //! [Create Dictionary Symbol Style QML]
 
     Geodatabase {
         property var gdbLayers: []
@@ -66,15 +68,20 @@ Rectangle {
 
                 // Create a layer for each table
                 for (var i = tables.length - 1; i >= 0; i--) {
+                    //! [Apply Dictionary Renderer Feature Layer QML]
+                    // Create a layer and set the feature table
                     var layer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
-                    gdbLayers.push(layer);
-                    // Each layer needs its own renderer, though all renderers can share the SymbolDictionary.
+                    layer.featureTable = tables[i];
+
+                    // Create a dictionary renderer and apply to the layer
                     var renderer = ArcGISRuntimeEnvironment.createObject(
                                 "DictionaryRenderer",
-                                { symbolDictionary: symbolDictionary });
+                                { dictionarySymbolStyle: dictionarySymbolStyle });
+                    layer.renderer = renderer;
+                    //! [Apply Dictionary Renderer Feature Layer QML]
 
                     /**
-                     * If the field names in your data don't match the contents of SymbolDictionary::symbologyFieldNames(),
+                     * If the field names in your data don't match the contents of DictionarySymbolStyle::symbologyFieldNames(),
                      * you must set DictionaryRenderer::symbologyFieldOverrides to a map of key-value pairs like this:
                      * {
                      *   "dictionaryFieldName1": "myFieldName1",
@@ -90,8 +97,7 @@ Rectangle {
                     renderer.symbologyFieldOverrides = fieldOverrides;
                     */
 
-                    layer.renderer = renderer;
-                    layer.featureTable = tables[i];
+                    gdbLayers.push(layer);
 
                     // Connect the layer's loadStatusChanged signal
                     layer.loadStatusChanged.connect(function () {

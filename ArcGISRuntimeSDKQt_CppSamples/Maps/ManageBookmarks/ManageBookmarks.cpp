@@ -29,7 +29,8 @@ using namespace Esri::ArcGISRuntime;
 ManageBookmarks::ManageBookmarks(QQuickItem* parent) :
     QQuickItem(parent),
     m_map(nullptr),
-    m_mapView(nullptr)
+    m_mapView(nullptr),
+    m_bookmarks(nullptr)
 {
 }
 
@@ -50,14 +51,15 @@ void ManageBookmarks::componentComplete()
     m_map = new Map(basemap, this);
     // set map on the map view
     m_mapView->setMap(m_map);
-    // create string list for bookmarks
-    m_bookmarkList = QStringList();
 
     // create the bookmarks once the map is loaded
-    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
+    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, this, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
     {
         if (loadStatus == LoadStatus::Loaded)
+        {
+            m_bookmarks = m_map->bookmarks();
             createInitialBookmarks();
+        }
     });
 }
 
@@ -86,28 +88,26 @@ void ManageBookmarks::createInitialBookmarks()
 
 void ManageBookmarks::createBookmark(QString name, Viewpoint viewpoint)
 {
+    //! [Add bookmarks to the list model]
     // Create the bookmark from the name and viewpoint
     Bookmark* bookmark = new Bookmark(name, viewpoint, this);
 
     // Add it to the map's bookmark list
     m_map->bookmarks()->append(bookmark);
 
-    // Add it to a bookmark map so it can be accessed later
-    m_bookmarks.insert(name,viewpoint);
-
-    // Add the name to a list to expose to QML
-    m_bookmarkList.append(name);
-    emit bookmarkListChanged();
+    // emit that model has changed
+    emit bookmarksChanged();
+    //! [Add bookmarks to the list model]
 }
 
-void ManageBookmarks::goToBookmark(QString bookmarkName)
+void ManageBookmarks::goToBookmark(int bookmarkIndex)
 {
-    m_mapView->setViewpoint(m_bookmarks.value(bookmarkName));
+   m_mapView->setViewpoint(m_bookmarks->at(bookmarkIndex)->viewpoint());
 }
 
-QStringList ManageBookmarks::bookmarkList() const
+BookmarkListModel* ManageBookmarks::bookmarks() const
 {
-    return m_bookmarkList;
+    return m_bookmarks;
 }
 
 void ManageBookmarks::addBookmark(QString newBookmarkName)

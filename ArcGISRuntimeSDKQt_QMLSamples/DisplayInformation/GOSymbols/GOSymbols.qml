@@ -29,6 +29,7 @@ Rectangle {
     property var symbolTextArray: ["Craigleith", "Bass Rock"]
     property var textLocArray: []
 
+    //! [GOSymbols MapView]
     // Map view UI presentation at top
     MapView {
         id: mapView
@@ -43,6 +44,7 @@ Rectangle {
             id: graphicsOverlay
         }
     }
+    //! [GOSymbols MapView]
 
     // the center of the mapview
     ViewpointCenter {
@@ -54,9 +56,10 @@ Rectangle {
                 wkid: 4326
             }
         }
-        scale: 288895.277144
+        targetScale: 288895.277144
     }
 
+    //! [GOSymbol buoy points]
     // buoy location 1 (immutable once created)
     Point {
         x: -2.712642647560347
@@ -100,7 +103,9 @@ Rectangle {
             buoyLocArray.push(this);
         }
     }
+    //! [GOSymbol buoy points]
 
+    //! [GOSymbol buoy symbol]
     // buoy symbol
     SimpleMarkerSymbol {
         id: buoyMarkerSymbol
@@ -108,7 +113,9 @@ Rectangle {
         color: "red"
         size: 10
     }
+    //! [GOSymbol buoy symbol]
 
+    //! [GOSymbol text points]
     // text location 1: craigleith (immutable once created)
     Point {
         x: -2.640631
@@ -130,8 +137,10 @@ Rectangle {
             textLocArray.push(this);
         }
     }
+    //! [GOSymbol text points]
 
 
+    //! [GOSymbol line symbol]
     // LineSymbol
     SimpleLineSymbol {
         id: boatRouteSymbol
@@ -140,7 +149,9 @@ Rectangle {
         width: 4
         antiAlias: true
     }
+    //! [GOSymbol line symbol]
 
+    //! [GOSymbol nesting ground]
     // polygon for nesting ground
     PolygonBuilder {
         id: nestingGroundPolygonBuilder
@@ -161,6 +172,7 @@ Rectangle {
             antiAlias: true
         }
     }
+    //! [GOSymbol nesting ground]
 
     // Neatline rectangle
     Rectangle {
@@ -206,6 +218,7 @@ Rectangle {
         graphicsOverlay.graphics.append(createGraphic(createNestingGround(), nestingGroundSymbol));
     }
 
+    //! [GOSymbol createGraphic]
     // create and return a graphic
     function createGraphic(geometry, symbol) {
         var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
@@ -213,13 +226,17 @@ Rectangle {
         graphic.symbol = symbol;
         return graphic;
     }
+    //! [GOSymbol createGraphic]
 
+    //! [GOSymbol createBoatRoute]
     // create the boat route
     function createBoatRoute() {
         // create polyline using json
         return ArcGISRuntimeEnvironment.createObject("Polyline", {"json": boatRouteJson});
     }
+    //! [GOSymbol createBoatRoute]
 
+    //! [GOSymbol createNestingGround]
     // create the nesting ground polygon
     function createNestingGround() {
         // create the polygon using the builder class
@@ -251,7 +268,9 @@ Rectangle {
 
         return nestingGroundPolygonBuilder.geometry;
     }
+    //! [GOSymbol createNestingGround]
 
+    //! [GOSymbol boatRouteJson]
     property var boatRouteJson : {"paths":[[[-2.7184791227926772,56.06147084563517],
                                     [-2.7196807500463924,56.06147084563517],
                                     [-2.722084004553823,56.062141712059706],
@@ -311,4 +330,5 @@ Rectangle {
                                     [-2.719165766937657,56.06166252294756],
                                     [-2.718307461756433,56.06147084563517]]],
                                     "spatialReference":{"wkid":4326}}
+    //! [GOSymbol boatRouteJson]
 }

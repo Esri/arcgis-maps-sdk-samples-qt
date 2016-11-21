@@ -44,8 +44,6 @@ Rectangle {
             // start the location display
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
-                    mapView.locationDisplay.start();
-
                     // populate list model with modes
                     autoPanListModel.append({name: compassMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Compass.png"});
                     autoPanListModel.append({name: navigationMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Navigation.png"});
@@ -124,16 +122,19 @@ Rectangle {
                 switch (name) {
                 case compassMode:
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeCompassNavigation;
+                    mapView.locationDisplay.start();
                     break;
                 case navigationMode:
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
+                    mapView.locationDisplay.start();
                     break;
                 case recenterMode:
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeRecenter;
-                    break;
-                case onMode:
                     mapView.locationDisplay.start();
+                    break;
+                case onMode:                   
                     mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeOff;
+                    mapView.locationDisplay.start();
                     break;
                 case stopMode:
                     mapView.locationDisplay.stop();

@@ -39,6 +39,7 @@ Rectangle {
             // Set the initial basemap to Streets
             BasemapStreets { }
 
+            // Set the initial viewpoint over The United States
             ViewpointCenter {
                 Point {
                     x: -10800000
@@ -47,7 +48,7 @@ Rectangle {
                         wkid: 102100
                     }
                 }
-                scale: 3e7
+                targetScale: 3e7
             }
 
             FeatureLayer {
@@ -125,8 +126,10 @@ Rectangle {
 
             mousePointX = mouse.x;
             mousePointY = mouse.y - callout.height;
+            //! [DeleteFeaturesFeatureService identify feature]
             // call identify on the feature layer
-            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10);
+            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10, false);
+            //! [DeleteFeaturesFeatureService identify feature]
         }
 
         onIdentifyLayerStatusChanged: {

@@ -30,7 +30,6 @@
 #include "FeatureQueryResult.h"
 #include <QUrl>
 #include <QUuid>
-#include <QSharedPointer>
 #include <QMouseEvent>
 
 using namespace Esri::ArcGISRuntime;
@@ -80,8 +79,8 @@ void UpdateAttributesFeatureService::componentComplete()
 
 void UpdateAttributesFeatureService::connectSignals()
 {   
-    // connect to the mouse press release signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    // connect to the mouse clicked signal on the MapQuickView
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
         // first clear the selection
         m_featureLayer->clearSelection();
@@ -94,18 +93,18 @@ void UpdateAttributesFeatureService::connectSignals()
         emit hideWindow();
 
         // call identify on the map view
-        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, 1);
+        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
     });
 
     // connect to the viewpoint changed signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::viewpointChanged, [this]()
+    connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
     {
         m_featureLayer->clearSelection();
         emit hideWindow();
     });
 
     // connect to the identifyLayerCompleted signal on the map view
-    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, IdentifyLayerResult* identifyResult)
+    connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
     {
         if(!identifyResult)
           return;
@@ -123,9 +122,9 @@ void UpdateAttributesFeatureService::connectSignals()
     });
 
     // connect to the queryFeaturesCompleted signal on the feature table
-    connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, [this](QUuid, QSharedPointer<FeatureQueryResult> featureQueryResult)
+    connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
     {
-        if (featureQueryResult->iterator().hasNext())
+        if (featureQueryResult && featureQueryResult->iterator().hasNext())
         {
             // first delete if not nullptr
             if (m_selectedFeature != nullptr)
@@ -140,7 +139,7 @@ void UpdateAttributesFeatureService::connectSignals()
     });
 
     // connect to the updateFeatureCompleted signal to determine if the update was successful
-    connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, [this](QUuid, bool success)
+    connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this](QUuid, bool success)
     {
         // if the update was successful, call apply edits to apply to the service
         if (success)
@@ -148,7 +147,7 @@ void UpdateAttributesFeatureService::connectSignals()
     });
 
     // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, [this](QUuid, QList<QSharedPointer<FeatureEditResult>> featureEditResults)
+    connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
     {
         // check if result list is not empty
         if (!featureEditResults.isEmpty())

@@ -48,6 +48,7 @@ GOSymbols::~GOSymbols()
 
 void GOSymbols::componentComplete()
 {
+    //! [GOSymbols create graphics overlay]
     QQuickItem::componentComplete();
 
     // find QML MapView component
@@ -63,7 +64,9 @@ void GOSymbols::componentComplete()
 
     // add the overlay to the mapview
     m_mapView->graphicsOverlays()->append(graphicsOverlay);
+    //! [GOSymbols create graphics overlay]
 
+    //! [GOSymbols add all graphics]
     // add graphics to the graphics overlays
     //  add point graphics
     addBuoyPoints(graphicsOverlay);
@@ -76,8 +79,10 @@ void GOSymbols::componentComplete()
 
     // add text
     addText(graphicsOverlay);
+    //! [GOSymbols add all graphics]
 }
 
+//! [GOSymbols addBuoyPoints]
 void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 {
     // create a list of points
@@ -98,7 +103,9 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
         graphicsOverlay->graphics()->append(graphic);
     }
 }
+//! [GOSymbols addBuoyPoints]
 
+//! [GOSymbols addBoatTrip]
 void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
 {
     SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 255, 180), 1, this);
@@ -173,7 +180,9 @@ void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
     // add the graphic to the graphics overlay
     graphicsOverlay->graphics()->append(graphic);
 }
+//! [GOSymbols addBoatTrip]
 
+//! [GOSymbols addNestingGround]
 void GOSymbols::addNestingGround(GraphicsOverlay* graphicsOverlay)
 {
     // outline for the polygon
@@ -188,7 +197,9 @@ void GOSymbols::addNestingGround(GraphicsOverlay* graphicsOverlay)
     // add the graphic to the overlay
     graphicsOverlay->graphics()->append(graphic);
 }
+//! [GOSymbols addNestingGround]
 
+//! [GOSymbols addText]
 void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
 {
     // text symbol
@@ -210,7 +221,9 @@ void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
     graphicsOverlay->graphics()->append(graphicBass);
     graphicsOverlay->graphics()->append(graphicCraig);
 }
+//! [GOSymbols addText]
 
+//! [GOSymbols createNestingGround]
 // create the polygon geometry
 Geometry GOSymbols::createNestingGround()
 {
@@ -245,3 +258,4 @@ Geometry GOSymbols::createNestingGround()
 
     return nestingGroundPolygonBuilder.toGeometry();
 }
+//! [GOSymbols createNestingGround]

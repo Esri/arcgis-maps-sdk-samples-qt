@@ -64,7 +64,7 @@ Rectangle {
                     y: 6e6
                     spatialReference: SpatialReference {wkid: 102100}
                 }
-                scale: 9e7
+                targetScale: 9e7
             }
         }
     }
@@ -125,7 +125,7 @@ Rectangle {
 
                 // Legend icon to allow expanding and collapsing
                 Image {
-                    source: legendRect.expanded ? "qrc:/Samples/Display Information/ShowLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/Display Information/ShowLegend/ic_menu_legendpopover_light.png"
+                    source: legendRect.expanded ? "qrc:/Samples/DisplayInformation/ShowLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/ShowLegend/ic_menu_legendpopover_light.png"
                     width: 28 * scaleFactor
                     height: width
 
@@ -163,8 +163,8 @@ Rectangle {
                         spacing: 5
                         anchors.verticalCenter: parent.verticalCenter
                         Image {
-                            width: symbolWidth * scaleFactor
-                            height: symbolHeight * scaleFactor
+                            width: Math.min(symbolWidth, 24) * scaleFactor
+                            height: Math.min(symbolHeight, 24) * scaleFactor
                             source: symbolUrl
                         }
                         Text {

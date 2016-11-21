@@ -39,7 +39,7 @@ FeatureLayerSelection::FeatureLayerSelection(QQuickItem* parent) :
     m_mapView(nullptr),
     m_featureLayer(nullptr),
     m_featureTable(nullptr),
-    m_selectedFeatureText("No features selected. Click/Tap to select features.")
+    m_selectedFeatureText("Click or tap to select features.")
 {
 }
 
@@ -78,14 +78,15 @@ void FeatureLayerSelection::componentComplete()
 
 void FeatureLayerSelection::connectSignals()
 {
+    //! [identify feature layer qml api snippet]
     // lambda expression for the mouse press event on the mapview... do an identify operation
-    connect(m_mapView, &MapQuickView::mouseClick, [this](QMouseEvent& mouseEvent)
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
-        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 22, 1000);
+        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 22, false, 1000);
     });
 
     // once the identify is done
-    connect(m_mapView, &MapQuickView::identifyLayerCompleted, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
+    connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
     {
         if (!identifyResult)
           return;
@@ -110,6 +111,7 @@ void FeatureLayerSelection::connectSignals()
         m_selectedFeatureText = count > 1 ? QString::number(count) + " features selected." : QString::number(count) + " feature selected.";
         emit selectedFeatureTextChanged();
     });
+    //! [identify feature layer qml api snippet]
 }
 
 QString FeatureLayerSelection::selectedFeatureText() const

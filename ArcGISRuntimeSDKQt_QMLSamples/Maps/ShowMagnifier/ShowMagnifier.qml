@@ -50,7 +50,7 @@ Rectangle {
             y: 32.1545089
             spatialReference: SpatialReference {wkid: 4326}
         }
-        scale: 2e4
+        targetScale: 2e4
     }
 
     Rectangle {

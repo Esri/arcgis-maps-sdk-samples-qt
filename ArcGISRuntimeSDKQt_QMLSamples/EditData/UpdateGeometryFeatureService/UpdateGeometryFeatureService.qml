@@ -47,7 +47,7 @@ Rectangle {
                         wkid: 102100
                     }
                 }
-                scale: 3e7
+                targetScale: 3e7
             }
 
             FeatureLayer {
@@ -131,7 +131,7 @@ Rectangle {
                 featureLayer.selectedFeatures();
             } else {
                 // call identify on the mapview
-                mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10);
+                mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10, false);
             }
         }
 

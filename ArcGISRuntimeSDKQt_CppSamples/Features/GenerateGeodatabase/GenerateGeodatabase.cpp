@@ -42,8 +42,7 @@ GenerateGeodatabase::GenerateGeodatabase(QQuickItem* parent) :
     m_syncTask(nullptr),
     m_dataPath(""),
     m_featureServiceUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/"),
-    m_serviceIds(QStringList()),
-    m_featureServiceInfo(nullptr)
+    m_serviceIds(QStringList())
 {
 }
 
@@ -59,46 +58,63 @@ void GenerateGeodatabase::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // Create a map using a local tile package
-    m_dataPath = QQmlProperty::read(this, "dataPath").toString();
+    //! [Create a map using a local tile package]
+    m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
     TileCache* tileCache = new TileCache(m_dataPath + "tpk/SanFrancisco.tpk", this);
     ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);
     Basemap* basemap = new Basemap(tiledLayer, this);
     m_map = new Map(basemap, this);
+    //! [Create a map using a local tile package]
+
+    // set an initial viewpoint
+    Envelope env(-122.50017, 37.74500, -122.43843, 37.81638, SpatialReference(4326));
+    Viewpoint viewpoint(env);
+    m_map->setInitialViewpoint(viewpoint);
 
     // Set map to map view
     m_mapView->setMap(m_map);
 
-    // add online feature layers to the map, and obtain service IDs
-    m_featureServiceInfo = new ArcGISFeatureServiceInfo(QUrl(m_featureServiceUrl), this);
-    connect(m_featureServiceInfo, &ArcGISFeatureServiceInfo::doneLoading, [this](Error error)
-    {
-        if (error.isEmpty())
-        {
-            qDebug() << "done loading";
-            foreach (auto featureLayerInfo, m_featureServiceInfo->featureLayerInfos())
-            {
-                // add the layer to the map
-                ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(featureLayerInfo->url());
-                FeatureLayer* featureLayer = new FeatureLayer(serviceFeatureTable, this);
-                m_map->operationalLayers()->append(featureLayer);
-
-                // add the layer id to the string list
-                m_serviceIds << QString::number(featureLayerInfo->serviceLayerId());
-            }
-        }
-    });
-
+    //! [Features GenerateGeodatabase Part 1]
     // create the GeodatabaseSyncTask
     m_syncTask = new GeodatabaseSyncTask(QUrl(m_featureServiceUrl), this);
+    //! [Features GenerateGeodatabase Part 1]
+
+    // connect to sync task doneLoading signal
+    connect(m_syncTask, &GeodatabaseSyncTask::doneLoading, this, [this](Error error)
+    {
+      if (!error.isEmpty())
+      {
+        emit updateStatus("Generate failed");
+        emit hideWindow(5000, false);
+        return;
+      }
+
+      // add online feature layers to the map, and obtain service IDs
+      m_featureServiceInfo = m_syncTask->featureServiceInfo();
+      foreach (auto idInfo, m_featureServiceInfo.layerInfos())
+      {
+          // get the layer ID from the idInfo
+          auto id = QString::number(idInfo.infoId());
+
+          // add the layer to the map
+          QUrl featureLayerUrl(m_featureServiceInfo.url().toString() + "/" + id);
+          ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(featureLayerUrl);
+          FeatureLayer* featureLayer = new FeatureLayer(serviceFeatureTable, this);
+          m_map->operationalLayers()->append(featureLayer);
+
+          // add the layer id to the string list
+          m_serviceIds << id;
+      }
+
+    });
 
     // connect to map doneLoading signal
-    connect(m_map, &Map::doneLoading, [this](Error error)
+    connect(m_map, &Map::doneLoading, this, [this](Error error)
     {
         if (error.isEmpty())
         {
-            // load the feature service info once the map loads
-            m_featureServiceInfo->load();
+            // load the sync task once the map loads
+            m_syncTask->load();
         }
     });
 }
@@ -113,6 +129,7 @@ void GenerateGeodatabase::addFeatureLayers(QString serviceUrl, QStringList servi
     }
 }
 
+//! [Features GenerateGeodatabase Part 2]
 GenerateGeodatabaseParameters GenerateGeodatabase::getUpdatedParameters(Envelope gdbExtent)
 {
     // create the parameters
@@ -151,7 +168,7 @@ void GenerateGeodatabase::generateGeodatabaseFromCorners(double xCorner1, double
     // connect to the job's status changed signal
     if (generateJob)
     {
-        connect(generateJob, &GenerateGeodatabaseJob::jobStatusChanged, [this, generateJob]()
+        connect(generateJob, &GenerateGeodatabaseJob::jobStatusChanged, this, [this, generateJob]()
         {
             // connect to the job's status changed signal to know once it is done
             switch (generateJob->jobStatus()) {
@@ -186,8 +203,8 @@ void GenerateGeodatabase::generateGeodatabaseFromCorners(double xCorner1, double
         emit updateStatus("Generate failed");
         emit hideWindow(5000, false);
     }
-
 }
+//! [Features GenerateGeodatabase Part 2]
 
 void GenerateGeodatabase::addOfflineData(Geodatabase* gdb)
 {
@@ -195,7 +212,7 @@ void GenerateGeodatabase::addOfflineData(Geodatabase* gdb)
     m_map->operationalLayers()->clear();
 
     // load the geodatabase
-    connect(gdb, &Geodatabase::doneLoading, [this, gdb](Error)
+    connect(gdb, &Geodatabase::doneLoading, this, [this, gdb](Error)
     {
         // create a feature layer from each feature table, and add to the map
         foreach (auto featureTable, gdb->geodatabaseFeatureTables())

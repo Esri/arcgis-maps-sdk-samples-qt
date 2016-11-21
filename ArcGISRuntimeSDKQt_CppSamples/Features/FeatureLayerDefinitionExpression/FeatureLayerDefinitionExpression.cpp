@@ -63,7 +63,7 @@ void FeatureLayerDefinitionExpression::componentComplete()
     // create the feature layer using the feature table
     m_featureLayer = new FeatureLayer(featureTable, this);
 
-    connect(m_featureLayer, &FeatureLayer::loadStatusChanged,[this](LoadStatus loadStatus)
+    connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, [this](LoadStatus loadStatus)
     {
         loadStatus == LoadStatus::Loaded ? m_initialized = true : m_initialized = false;
         emit layerInitializedChanged();
@@ -80,5 +80,6 @@ bool FeatureLayerDefinitionExpression::layerInitialized() const
 
 void FeatureLayerDefinitionExpression::setDefExpression(QString whereClause)
 {
+    // In QML, "req_Type = \'Tree Maintenance or Damage\'"
     m_featureLayer->setDefinitionExpression(whereClause);
 }

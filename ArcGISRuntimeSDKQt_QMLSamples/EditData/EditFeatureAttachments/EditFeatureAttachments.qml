@@ -49,7 +49,7 @@ Rectangle {
                         wkid: 102100
                     }
                 }
-                scale: 3e7
+                targetScale: 3e7
             }
 
             FeatureLayer {
@@ -112,7 +112,7 @@ Rectangle {
             mousePointY = mouse.y - callout.height;
 
             // call identify on the mapview
-            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10);
+            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10, false);
         }
 
         onIdentifyLayerStatusChanged: {
