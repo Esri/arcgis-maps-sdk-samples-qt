@@ -33,10 +33,11 @@ Rectangle {
             // add a basemap
             BasemapTopographic {}
 
-            // add a scene service with ArcGISSceneLayer
+            //! [add a scene service with ArcGISSceneLayer]
             ArcGISSceneLayer {
                 url: "http://scene.arcgis.com/arcgis/rest/services/Hosted/Buildings_Brest/SceneServer/layers/0"
             }
+            //! [add a scene service with ArcGISSceneLayer]
 
             // add a surface, which is a default property of scene
             Surface {
@@ -54,7 +55,7 @@ Rectangle {
                     z: 62.013264927081764
                     spatialReference: SpatialReference.createWgs84()
                 }
-                scale: 62.013264927081764
+                targetScale: 62.013264927081764
 
                 Camera {
                     id: camera
@@ -69,6 +70,16 @@ Rectangle {
                     roll: 2.194677223e-314
                 }
             }
+        }
+    }
+
+    // Neatline rectangle
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border {
+            width: 0.5 * scaleFactor
+            color: "black"
         }
     }
 }

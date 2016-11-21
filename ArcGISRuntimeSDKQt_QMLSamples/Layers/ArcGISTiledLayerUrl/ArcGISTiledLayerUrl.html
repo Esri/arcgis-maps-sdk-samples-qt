@@ -1,5 +1,10 @@
 <html>
 <img src="ArcGISTiledLayerUrl.png"></img>
 <hr>
-<p>The ArcGISTiledLayer from URL sample is the most basic sample for the ArcGIS Runtime SDK for Qt using Tiled Layer basemap from an ArcGIS Online service URL. It shows how to create a Tiled Layer from an ArcGIS Online service URL and bind that to a Basemap. The Basemap is used to create a Map which is used inside of the MapView. By default, this map supports basic zooming and panning operations.</p>
+<p>This sample demonstrates how to display a tiled map service.
+An <code>ArcGISTiledLayer</code> is created by setting its <code>url</code> property to 
+the URL of the map service endpoint. The <code>ArcGISTiledLayer</code> is nested within a 
+basemap, thus becoming one of the basemap's layers. The basemap is set as the basemap of 
+the map, and the map is set as the map for the map view. Note how default properties in 
+QML make this nesting easier to code.</p>
 </html>

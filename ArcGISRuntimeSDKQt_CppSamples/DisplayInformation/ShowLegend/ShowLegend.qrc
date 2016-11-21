@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/Display Information/ShowLegend">
+    <qresource prefix="/Samples/DisplayInformation/ShowLegend">
         <file alias="sample.json">ShowLegend.json</file>
         <file>ShowLegend.png</file>
         <file>ShowLegend.qml</file>

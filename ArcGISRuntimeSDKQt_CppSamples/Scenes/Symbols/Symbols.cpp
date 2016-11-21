@@ -47,7 +47,7 @@ void Symbols::componentComplete()
     // create a new scene instance
     m_scene = new Scene(basemap, this);
     // set scene on the scene view
-    m_sceneView->setScene(m_scene);
+    m_sceneView->setArcGISScene(m_scene);
 
     // create a new elevation source
     ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
@@ -57,7 +57,7 @@ void Symbols::componentComplete()
     // create a camera
     Camera camera(34, 45, 6000, 0, 0, 0);
     // set the viewpoint
-    m_sceneView->setViewpointCamera(camera);
+    m_sceneView->setViewpointCameraAndWait(camera);
 
     // create a graphics overlay
     GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);

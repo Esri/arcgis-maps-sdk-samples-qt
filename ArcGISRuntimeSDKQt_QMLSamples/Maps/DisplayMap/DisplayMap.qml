@@ -24,13 +24,14 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
 
-    // Create MapView that contains a Map with the Imagery with Labels Basemap
+    //! [Create MapView that contains a Map with the Imagery with Labels Basemap]
     MapView {
         anchors.fill: parent
         Map {
             BasemapImageryWithLabels {}            
         }
     }
+    //! [Create MapView that contains a Map with the Imagery with Labels Basemap]
 
     Rectangle {
         anchors.fill: parent

@@ -25,7 +25,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     /**
      * Create SceneView that contains a Scene with the Imagery Basemap, as well as a GraphicsOverlay
@@ -48,9 +48,9 @@ Rectangle {
             renderingMode: Enums.GraphicsRenderingModeDynamic
 
             DictionaryRenderer {
-                SymbolDictionary {
+                DictionarySymbolStyle {
                     specificationType: "mil2525d"
-                    dictionaryPath: dataPath + "/styles/mil2525d.stylx"
+                    styleLocation: dataPath + "/styles/mil2525d.stylx"
                 }
             }
         }
@@ -69,7 +69,7 @@ Rectangle {
     // Use XmlListModel to parse the XML messages file.
     XmlListModel {
         id: xmlParser
-        source: System.resolvedPathUrl(dataPath + "/xml/Mil2525DMessages.xml")
+        source: dataPath + "/xml/Mil2525DMessages.xml"
         query: "/messages/message"
 
         // These are the fields we need for MIL-STD-2525D symbology.
@@ -145,7 +145,7 @@ Rectangle {
                         distance: 15000
                     });
                     camera = camera.rotateAround(bbox.extent.center, 0, 70, 0);
-                    sceneView.setViewpointCamera(camera);
+                    sceneView.setViewpointCameraAndWait(camera);
                 }
                 progressBar_loading.visible = false;
             }

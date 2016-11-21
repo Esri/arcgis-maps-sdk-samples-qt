@@ -25,7 +25,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
 
     // Map view UI presentation at top
     MapView {
@@ -41,16 +41,19 @@ Rectangle {
                     y: 4040194
                     spatialReference: SpatialReference.createWebMercator()
                 }
-                scale: 35e4
+                targetScale: 35e4
             }
 
+            //! [FeatureLayer Geodatabase add basemap]
             // create a basemap from a local vector tile package
             Basemap {
                 ArcGISVectorTiledLayer {
-                    url: System.resolvedPathUrl(dataPath + "vtpk/LosAngeles.vtpk")
+                    url: dataPath + "vtpk/LosAngeles.vtpk"
                 }
             }
+            //! [FeatureLayer Geodatabase add basemap]
 
+            //! [FeatureLayer Geodatabase create]
             // create a feature layer
             FeatureLayer {
                 // obtain the feature table from the geodatabase by name
@@ -62,6 +65,7 @@ Rectangle {
                     path: dataPath + "geodatabase/LA_Trails.geodatabase"
                 }
             }
+            //! [FeatureLayer Geodatabase create]
         }
     }
 

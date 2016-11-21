@@ -25,7 +25,7 @@
 #include "GeometryEngine.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "SymbolDictionary.h"
+#include "DictionarySymbolStyle.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -47,7 +47,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
 {
     QQuickItem::componentComplete();
 
-    m_dataPath = QQmlProperty::read(this, "dataPath").toString();
+    m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
     m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
 
     m_mapView = findChild<MapQuickView*>("mapView");
@@ -58,21 +58,19 @@ void FeatureLayerDictionaryRenderer::componentComplete()
 
     m_geodatabase = new Geodatabase(m_dataPath + "/geodatabase/militaryoverlay.geodatabase", this);
 
-    connect(m_geodatabase, &Geodatabase::loadStatusChanged, [this](LoadStatus gdbLoadStatus)
+    connect(m_geodatabase, &Geodatabase::loadStatusChanged, this, [this](LoadStatus gdbLoadStatus)
     {
         if (gdbLoadStatus == LoadStatus::Loaded)
         {
-            QMap<QString, QString> symbologyFieldOverrides;
-            QMap<QString, QString> textFieldOverrides;
             /**
-             * If the field names in your data don't match the contents of SymbolDictionary::symbologyFieldNames(),
+             * If the field names in your data don't match the contents of DictionarySymbolStyle::symbologyFieldNames(),
              * you must add key-value pairs to a QMap<QString, QString> and include this QMap when calling the
              * DictionaryRenderer constructor. The keys and values are like this:
              *
              *   "dictionaryFieldName1": "myFieldName1"
              *   "dictionaryFieldName2": "myFieldName2"
              *
-             * The same principle applies to SymbolDictionary::textFieldNames() for text attributes that appear
+             * The same principle applies to DictionarySymbolStyle::textFieldNames() for text attributes that appear
              * as part of military symbols.
              *
              * The following commented-out code demonstrates one way to do it, in a scenario where the dictionary
@@ -80,17 +78,25 @@ void FeatureLayerDictionaryRenderer::componentComplete()
              * and where the dictionary expects the field name "uniquedesignation" but the database table contains
              * the field "uniqueId" instead.
              */
+//            QMap<QString, QString> symbologyFieldOverrides;
+//            QMap<QString, QString> textFieldOverrides;
 //            symbologyFieldOverrides["identity"] = "affiliation";
 //            textFieldOverrides["uniquedesignation"] = "uniqueId";
 
-            SymbolDictionary* symbolDictionary = new SymbolDictionary("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+            //! [Create Dictionary Symbol Style Cpp]
+            DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+            //! [Create Dictionary Symbol Style Cpp]
 
             foreach (auto table, m_geodatabase->geodatabaseFeatureTables())
             {
+                //! [Apply Dictionary Renderer Feature Layer Cpp]
+                // Create a layer and set the feature table
                 FeatureLayer* layer = new FeatureLayer(table, this);
-                // Each layer needs its own renderer, though all renderers can share the SymbolDictionary.
-                DictionaryRenderer* renderer = new DictionaryRenderer(symbolDictionary, symbologyFieldOverrides, textFieldOverrides, this);
+
+                // Create a dictionary renderer and apply to the layer
+                DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
                 layer->setRenderer(renderer);
+                //! [Apply Dictionary Renderer Feature Layer Cpp]
 
                 // Check to see if all layers have loaded
                 connect(layer, &FeatureLayer::loadStatusChanged, this, [this](LoadStatus layerLoadStatus)
@@ -113,7 +119,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
                                 {
                                     bbox = GeometryEngine::unionOf(bbox, layers->at(j)->fullExtent());
                                 }
-                                m_mapView->setViewpointGeometry(bbox, 300 * m_scaleFactor);
+                                m_mapView->setViewpointGeometry(bbox, 100);
                             }
 
                             emit allLayersLoaded();

@@ -40,6 +40,8 @@ private slots:
   void changeToNewViewpoint(int);
 
 private:
+  double screenRatio() const;
+
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
   QComboBox* m_viewpointCombo;

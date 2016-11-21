@@ -25,7 +25,7 @@ FeatureLayerDictionaryRendererSample {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Create MapView here, and create its Map in C++ code
     MapView {

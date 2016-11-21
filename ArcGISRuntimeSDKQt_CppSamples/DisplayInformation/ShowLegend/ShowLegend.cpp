@@ -60,7 +60,7 @@ void ShowLegend::componentComplete()
 
     addLayers();
 
-    connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, [this]()
+    connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, this, [this]()
     {
         // set the legend info list model
         m_legendInfoListModel = m_map->legendInfos();

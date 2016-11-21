@@ -96,7 +96,7 @@ void ChangeViewpoint::changeToNewViewpoint(int index)
         m_mapView->setViewpointGeometry(envBeijing);
         break;
     case 3: // "Geometry and padding"
-        m_mapView->setViewpointGeometry(envBeijing, 200);
+        m_mapView->setViewpointGeometry(envBeijing, 200 * screenRatio());
         break;
     case 4: // "Rotation"
         m_rotationValue = (m_rotationValue + 45) % 360;
@@ -112,4 +112,11 @@ void ChangeViewpoint::changeToNewViewpoint(int index)
         m_mapView->setViewpointAnimated(vpSpring, 4.0, AnimationCurve::EaseInOutCubic);
         break;
     }
+}
+
+double ChangeViewpoint::screenRatio() const
+{
+    const double width = static_cast<double>(m_mapView->mapWidth());
+    const double height = static_cast<double>(m_mapView->mapHeight());
+    return height > width ? width / height : height / width;
 }

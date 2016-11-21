@@ -87,7 +87,7 @@ Rectangle {
                             featureLayer.selectFeatures(features);
 
                             // zoom to the first feature
-                            mapView.setViewpointGeometryAndPadding(features[0].geometry, 200);
+                            mapView.setViewpointGeometryAndPadding(features[0].geometry, 30);
                         }
                     }
                 }
@@ -104,7 +104,7 @@ Rectangle {
                     wkid: 102100
                 }
             }
-            scale: 9e7
+            targetScale: 9e7
         }
 
         QueryParameters {

@@ -24,12 +24,12 @@ This sample loads a number of point, line, and polygon military elements from an
 - PolygonBuilder
 - PolylineBuilder
 - SpatialReference
-- SymbolDictionary
+- DictionarySymbolStyle
 
 ##Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
 ---------|-------|
-|[Mil2525d Stylx File](https://www.arcgis.com/home/item.html?id=4581a9a92c214240a79e15482a2e8349)| `<userhome>`/ArcGIS/Runtime/Data/styles/mil2525d.stylx |
-|[MIL-STD-2525D XML Message File](https://www.arcgis.com/home/item.html?id=623382e0113d40698538f249e3bcb1c0)| `<userhome>`/ArcGIS/Runtime/Data/xml/Mil2525DMessages.xml |
+|[Mil2525d Stylx File](https://www.arcgis.com/home/item.html?id=e34835bf5ec5430da7cf16bb8c0b075c)| `<userhome>`/ArcGIS/Runtime/Data/styles/mil2525d.stylx |
+|[MIL-STD-2525D XML Message File](https://arcgisruntime.maps.arcgis.com/home/item.html?id=3db12175479147ea9c89ebaaf3b89996)| `<userhome>`/ArcGIS/Runtime/Data/xml/Mil2525DMessages.xml |

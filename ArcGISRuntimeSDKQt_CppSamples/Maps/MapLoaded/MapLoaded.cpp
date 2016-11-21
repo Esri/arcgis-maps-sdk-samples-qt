@@ -48,7 +48,7 @@ void MapLoaded::componentComplete()
     // set map on the map view
     m_mapView->setMap(m_map);
 
-    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
+    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, this, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
     {
         switch (loadStatus)
         {

@@ -41,13 +41,14 @@ void OpenMobileMap_MapPackage::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
 
     // get the data path
-    QString dataPath = QQmlProperty::read(this, "dataPath").toString();
+    QString dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
 
+    //! [open mobile map package cpp snippet]
     // instatiate a mobile map package
     m_mobileMapPackage = new MobileMapPackage(dataPath + "Yellowstone.mmpk", this);
 
     // wait for the mobile map package to load
-    connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, [this](Error error)
+    connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](Error error)
     {
         if (error.isEmpty())
         {
@@ -58,5 +59,6 @@ void OpenMobileMap_MapPackage::componentComplete()
 
     // load the mobile map package
     m_mobileMapPackage->load();
+    //! [open mobile map package cpp snippet]
 }
 

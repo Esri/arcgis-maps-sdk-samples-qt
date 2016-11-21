@@ -45,11 +45,7 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
     m_inputDialog->setModal(true);
     m_inputDialog->setLabelText("Select a map to open");
 
-    // Add the existing maps to the combo box
-    m_inputDialog->setComboBoxItems(QStringList()
-                                    << "Housing with Mortgages"
-                                    << "USA Tapestry Segmentation"
-                                    << "Geology of United States");
+    m_inputDialog->setComboBoxItems(m_portalIds.keys());
 
     // Connect the button clicked signal to lambda for showing input dialog
     connect(m_button, &QPushButton::clicked, [this]() {
@@ -57,10 +53,22 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
     });
 
     // Connect the input dialog accepted signal to lambda for opening the selected map
-    connect(m_inputDialog, &QInputDialog::accepted, [this]() {
-        Map* newMap = new Map(m_portalMaps.value(m_inputDialog->textValue()), this);
-        m_mapView->setMap(newMap);
-    });
+    connect(m_inputDialog, &QInputDialog::accepted, [this]()
+      {
+        // create a portal item with the item id
+        QString portalId = m_portalIds.value(m_inputDialog->textValue() );
+        if(portalId.isEmpty())
+            return;
+
+        PortalItem* portalItem = new PortalItem(QUrl("http://arcgis.com/sharing/rest/content/items/" + portalId), this);
+
+        // create a new map from the portal item
+        Map* map = new Map(portalItem, this);
+
+        // set the map to the map view
+        m_mapView->setMap(map);
+      }
+    );
 
     // Set up the UI
     createUi();
@@ -72,20 +80,9 @@ OpenExistingMap::~OpenExistingMap()
 
 void OpenExistingMap::createPortalMaps()
 {
-    // Housing with Mortgages
-    PortalItem pitem1;
-    pitem1.setUrl(QUrl("http://www.arcgis.com/sharing/rest/content/items/2d6fa24b357d427f9c737774e7b0f977"));
-    m_portalMaps.insert("Housing with Mortgages", pitem1);
-
-    // USA Tapestry Segmentation
-    PortalItem pitem2;
-    pitem2.setUrl(QUrl("http://www.arcgis.com/sharing/rest/content/items/01f052c8995e4b9e889d73c3e210ebe3"));
-    m_portalMaps.insert("USA Tapestry Segmentation", pitem2);
-
-    // Geology of United States
-    PortalItem pitem3;
-    pitem3.setUrl(QUrl("http://www.arcgis.com/sharing/rest/content/items/74a8f6645ab44c4f82d537f1aa0e375d"));
-    m_portalMaps.insert("Geology of United States", pitem3);
+    m_portalIds.insert("Housing with Mortgages", "2d6fa24b357d427f9c737774e7b0f977");
+    m_portalIds.insert("USA Tapestry Segmentation", "01f052c8995e4b9e889d73c3e210ebe3");
+    m_portalIds.insert("Geology of United States", "92ad152b9da94dee89b9e387dfe21acd");
 }
 
 void OpenExistingMap::createUi()

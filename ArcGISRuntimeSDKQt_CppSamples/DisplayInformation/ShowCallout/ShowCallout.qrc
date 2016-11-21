@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/ShowCallout">
+        <file alias="sample.json">ShowCallout.json</file>
+        <file>ShowCallout.png</file>
+        <file>ShowCallout.qml</file>
+        <file>ShowCallout.h</file>
+        <file>ShowCallout.cpp</file>
+        <file>ShowCallout.html</file>
+        <file>RedShinyPin.png</file>
+    </qresource>
+</RCC>

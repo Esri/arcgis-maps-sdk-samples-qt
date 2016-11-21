@@ -40,6 +40,8 @@ public:
     Q_INVOKABLE void changeViewpoint(QString viewpoint);
 
 private:
+    double screenRatio() const;
+
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     int m_rotationValue;

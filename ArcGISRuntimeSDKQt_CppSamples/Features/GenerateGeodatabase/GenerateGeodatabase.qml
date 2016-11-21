@@ -27,7 +27,7 @@ GenerateGeodatabaseSample {
 
     property double scaleFactor: System.displayScaleFactor
     property string statusText: ""
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
     property string outputGdb: System.temporaryFolder.path + "/WildfireCpp_%1.geodatabase".arg(new Date().getTime().toString())
 
     // add a mapView component
