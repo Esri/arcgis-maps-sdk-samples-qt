@@ -41,7 +41,7 @@ To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
 
 ##Features
  - Map
- - Scebe
+ - Scene
  - Camera
  - Graphic
  - GraphicsOverlay
