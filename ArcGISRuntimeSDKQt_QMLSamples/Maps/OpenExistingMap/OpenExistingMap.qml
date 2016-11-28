@@ -71,12 +71,16 @@ Rectangle {
                 // When an item in the list view is clicked
                 onClicked: {
                     portalItemListView.currentIndex = index
-                    // Create a new, blank map
-                    var newMap = ArcGISRuntimeEnvironment.createObject("Map");
+
+                    //! [Construct map from a portal item id]
                     // Create a PortalItem and assign it a URL and item ID
-                    var newPortalItem = ArcGISRuntimeEnvironment.createObject("PortalItem", {url:"http://arcgis.com/sharing/rest/content/items/" + itemId});
-                    // Set the portalItem property on the Map
-                    newMap.item = newPortalItem;
+                    var organizationPortalUrl = "http://arcgis.com";
+                    var newPortalItem = ArcGISRuntimeEnvironment.createObject("PortalItem",
+                        {url: organizationPortalUrl + "/sharing/rest/content/items/" + itemId});
+                    // Create a new map with the item portalItem set
+                    var newMap = ArcGISRuntimeEnvironment.createObject("Map", {item: newPortalItem});
+                    //! [Construct map from a portal item id]
+
                     // Set the map to the MapView
                     mapView.map = newMap;
                     mapPickerWindow.visible = false;
