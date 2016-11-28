@@ -34,11 +34,11 @@ class OpenExistingMap : public QQuickItem
     Q_OBJECT
 
 public:
-    OpenExistingMap(QQuickItem* parent = 0);
+    OpenExistingMap(QQuickItem* parent = nullptr);
     ~OpenExistingMap();
 
     void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void openMap(QString itemId);
+    Q_INVOKABLE void openMap(const QString& itemId);
 
 private:
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
