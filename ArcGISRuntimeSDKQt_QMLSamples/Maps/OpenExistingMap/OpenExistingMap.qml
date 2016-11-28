@@ -77,7 +77,7 @@ Rectangle {
                     var organizationPortalUrl = "http://arcgis.com";
                     var newPortalItem = ArcGISRuntimeEnvironment.createObject("PortalItem",
                         {url: organizationPortalUrl + "/sharing/rest/content/items/" + itemId});
-                    // Create a new map with the item portalItem set
+                    // Create a new map and assign the portalItem
                     var newMap = ArcGISRuntimeEnvironment.createObject("Map", {item: newPortalItem});
                     //! [Construct map from a portal item id]
 
