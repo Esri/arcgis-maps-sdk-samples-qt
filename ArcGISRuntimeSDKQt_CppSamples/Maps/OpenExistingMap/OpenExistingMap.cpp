@@ -48,16 +48,13 @@ void OpenExistingMap::componentComplete()
     m_mapView->setMap(map);
 }
 
-void OpenExistingMap::openMap(const QString& itemId)
+void OpenExistingMap::openMap(QString itemId)
 {
-    //! [Construct map from a portal item id]
-    // create a portal item from a QUrl using the item id QString
-    QString organizationPortalUrl("http://arcgis.com");
-    PortalItem* portalItem = new PortalItem(QUrl(organizationPortalUrl + "/sharing/rest/content/items/" + itemId), this);
+    // create a portal item with the item id
+    auto portalItem = new PortalItem(QUrl("http://arcgis.com/sharing/rest/content/items/" + itemId));
 
     // create a new map from the portal item
     Map* map = new Map(portalItem, this);
-    //! [Construct map from a portal item id]
 
     // set the map to the map view
     m_mapView->setMap(map);
