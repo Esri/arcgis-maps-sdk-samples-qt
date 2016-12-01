@@ -63,6 +63,8 @@ Rectangle {
 
                 PictureMarkerSymbol {
                     url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0/images/e82f744ebb069bb35b234b3fea46deae"
+                    width: 38
+                    height: 38
                 }
             }
 
@@ -77,6 +79,8 @@ Rectangle {
 
                 PictureMarkerSymbol {
                     url: "qrc:/Samples/DisplayInformation/Picture_Marker_Symbol/blue_symbol.png"
+                    width: 80
+                    height: 80
                 }
             }
 
@@ -91,6 +95,8 @@ Rectangle {
 
                 PictureMarkerSymbol {
                     url: dataPath + "/symbol/orange_symbol.png"
+                    width: 64
+                    height: 64
                 }
             }
         }
