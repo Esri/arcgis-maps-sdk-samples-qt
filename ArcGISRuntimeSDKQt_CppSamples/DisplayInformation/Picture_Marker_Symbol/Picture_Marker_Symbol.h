@@ -44,12 +44,12 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
+    void setWidthAndHeight(Esri::ArcGISRuntime::PictureMarkerSymbol* symbol, float size);
+
     QString m_dataPath;
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
-
-    void setWidthAndHeight(Esri::ArcGISRuntime::PictureMarkerSymbol* symbol, float size);
 };
 
 #endif // PICTURE_MARKER_SYMBOL_H

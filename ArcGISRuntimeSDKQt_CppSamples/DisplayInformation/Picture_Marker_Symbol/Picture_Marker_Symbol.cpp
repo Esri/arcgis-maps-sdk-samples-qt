@@ -96,7 +96,7 @@ void Picture_Marker_Symbol::addGraphic(Point &point, PictureMarkerSymbol* symbol
     m_graphicsOverlay->graphics()->append(graphic);
 }
 
-void Picture_Marker_Symbol::setWidthAndHeight(Esri::ArcGISRuntime::PictureMarkerSymbol* symbol, float size)
+void Picture_Marker_Symbol::setWidthAndHeight(PictureMarkerSymbol* symbol, float size)
 {
   symbol->setWidth(size);
   symbol->setHeight(size);
