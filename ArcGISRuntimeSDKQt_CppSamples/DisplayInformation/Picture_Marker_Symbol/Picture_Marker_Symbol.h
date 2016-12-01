@@ -48,6 +48,8 @@ private:
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
+
+    void setWidthAndHeight(Esri::ArcGISRuntime::PictureMarkerSymbol* symbol, float size);
 };
 
 #endif // PICTURE_MARKER_SYMBOL_H
