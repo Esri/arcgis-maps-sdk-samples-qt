@@ -32,6 +32,7 @@ ShowCalloutSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+        clip: true
 
         //! [set callout data]
         Callout {
