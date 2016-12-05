@@ -34,6 +34,7 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
+        clip: true
 
         Map {
             BasemapTopographic {}
