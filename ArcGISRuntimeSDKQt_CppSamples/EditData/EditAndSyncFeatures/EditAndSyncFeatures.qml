@@ -78,7 +78,7 @@ EditAndSyncFeaturesSample {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 10 * scaleFactor
+            bottomMargin: 23 * scaleFactor
         }
 
         width: isOffline ? 175 * scaleFactor : 200 * scaleFactor

@@ -79,7 +79,7 @@ FindRouteSample {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
-                bottomMargin: 10 * scaleFactor
+                bottomMargin: 25 * scaleFactor
             }
 
             width: 130 * scaleFactor

@@ -40,6 +40,7 @@ DisplayLayerViewDrawStatusSample {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
             margins: 10 * scaleFactor
+            bottomMargin: 25 * scaleFactor
         }
         height: 150 * scaleFactor
         width: 230 * scaleFactor
