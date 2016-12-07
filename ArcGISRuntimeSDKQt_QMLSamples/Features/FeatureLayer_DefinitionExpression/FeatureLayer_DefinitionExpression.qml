@@ -68,7 +68,8 @@ Rectangle {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            margins: 5
+            margins: 5 * scaleFactor
+            bottomMargin: 25 * scaleFactor
         }
         spacing: 5
 
