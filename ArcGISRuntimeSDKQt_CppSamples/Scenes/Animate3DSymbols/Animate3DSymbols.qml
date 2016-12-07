@@ -177,6 +177,8 @@ Animate3DSymbolsSample {
         anchors {
             left:sceneView.left
             bottom: sceneView.bottom
+            margins: 10 * scaleFactor
+            bottomMargin: 25 * scaleFactor
         }
         width: Math.max(sceneView.width * .2, 128 * scaleFactor)
         height: Math.max(sceneView.height * .4, 128 * scaleFactor)

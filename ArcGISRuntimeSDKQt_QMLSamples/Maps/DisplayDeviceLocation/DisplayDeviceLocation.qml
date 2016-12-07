@@ -158,7 +158,7 @@ Rectangle {
         anchors {
             right: parent.right
             bottom: parent.bottom
-            margins: 10 * scaleFactor
+            margins: 25 * scaleFactor
         }
         spacing: 10
 
