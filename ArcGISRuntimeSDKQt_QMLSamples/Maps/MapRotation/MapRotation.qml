@@ -56,6 +56,7 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
+            bottomMargin: 20 * scaleFactor
         }
 
         // sliderCombo: A slider and text for its value

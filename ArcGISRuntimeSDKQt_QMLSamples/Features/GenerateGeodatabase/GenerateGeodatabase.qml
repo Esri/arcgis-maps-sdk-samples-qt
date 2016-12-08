@@ -204,7 +204,7 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 10 * scaleFactor
+            bottomMargin: 23 * scaleFactor
         }
 
         width: 200 * scaleFactor
