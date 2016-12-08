@@ -159,6 +159,7 @@ Rectangle {
             right: parent.right
             bottom: parent.bottom
             margins: 10 * scaleFactor
+            bottomMargin: 25 * scaleFactor
         }
         spacing: 10
 
