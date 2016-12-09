@@ -79,8 +79,7 @@ Rectangle {
 
     PortalQueryParametersForItems {
         id: webmapQuery
-        types: [ Enums.PortalItemTypeWebMap ]
-        searchString: "tags:\"" + keyWordField.text + "\"";
+        searchString: "tags:\"" + keyWordField.text + "\" AND +type:\"Web Map\" AND -type:\"Web Mapping Application\"";
     }
 
     Portal {
