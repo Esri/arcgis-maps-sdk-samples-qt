@@ -22,7 +22,6 @@ import Esri.ArcGISExtras 1.1
 Feature_Collection_LayerSample {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
 

@@ -54,7 +54,6 @@ Rectangle {
                             fieldType: Enums.FieldTypeText
                         }
 
-
                         // define the renderer
                         SimpleRenderer {
                             SimpleMarkerSymbol {
@@ -89,7 +88,6 @@ Rectangle {
                             length: 50
                             fieldType: Enums.FieldTypeText
                         }
-
 
                         // define the renderer
                         SimpleRenderer {
