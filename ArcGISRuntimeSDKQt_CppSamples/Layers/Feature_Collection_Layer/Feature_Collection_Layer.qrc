@@ -3,8 +3,8 @@
         <file alias="sample.json">Feature_Collection_Layer.json</file>
         <file>Feature_Collection_Layer.png</file>
         <file>Feature_Collection_Layer.qml</file>
-		<file>Feature_Collection_Layer.h</file>
-		<file>Feature_Collection_Layer.cpp</file>
+	    <file>Feature_Collection_Layer.h</file>
+	    <file>Feature_Collection_Layer.cpp</file>
         <file>Feature_Collection_Layer.html</file>
     </qresource>
 </RCC>
