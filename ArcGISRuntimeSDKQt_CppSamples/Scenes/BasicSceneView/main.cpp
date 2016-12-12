@@ -17,6 +17,7 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QSurfaceFormat>
+#include <QQmlEngine>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
