@@ -1,0 +1,6 @@
+{
+    "source" :  "DisplayGrid.qml",
+    "description" : "DisplayGrid.html",
+    "thumbnail" : "DisplayGrid.png",
+    "name" : "Display a grid"
+}
