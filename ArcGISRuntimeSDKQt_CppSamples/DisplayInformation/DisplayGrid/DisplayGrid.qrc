@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/DisplayGrid">
+        <file alias="sample.json">DisplayGrid.json</file>
+        <file>DisplayGrid.png</file>
+        <file>DisplayGrid.qml</file>
+	    <file>DisplayGrid.h</file>
+	    <file>DisplayGrid.cpp</file>
+        <file>DisplayGrid.html</file>
+    </qresource>
+</RCC>
