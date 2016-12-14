@@ -17,14 +17,12 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
-import QtQuick.Controls.Styles 1.4
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
 
@@ -35,6 +33,14 @@ Rectangle {
     property string mgrsGrid: "MGRS"
     property string dd: "Decimal degrees"
     property string dms: "Degrees minutes seconds"
+    property string geographic: "Geographic"
+    property string bottomLeft: "Bottom left"
+    property string bottomRight: "Bottom right"
+    property string topLeft: "Top left"
+    property string topRight: "Top right"
+    property string center: "Center"
+    property string allSides: "All sides"
+    property string currentLabelPosition: geographic
     property real centerWindowY: (rootRectangle.height / 2) - (styleWindow.height / 2)
     property color currentGridColor: "red"
     property color currentGridLabelColor: "black"
@@ -65,19 +71,30 @@ Rectangle {
     // change the grid color for each grid level
     function changeGridColor(color) {
         if (mapView.grid) {
-            for (var level = 0; level < mapView.grid.levelCount; ++level) {
+            // find the number of resolution levels in the grid
+            var gridLevels = mapView.grid.levelCount;
+
+            //! [DisplayGrid Set_Grid_Lines]
+            for (var level = 0; level < gridLevels; ++level) {
                 var lineSym = ArcGISRuntimeEnvironment.createObject("SimpleLineSymbol", {style: Enums.SimpleLineSymbolStyleSolid,
                                                                         color: color,
                                                                         width: 1 + level} );
                 mapView.grid.setLineSymbol(level, lineSym);
             }
+            //! [DisplayGrid Set_Grid_Lines]
         }
     }
 
     // change the grid label color for each grid level
     function changeLabelColor(color) {
         if (mapView.grid) {
-            for (var level = 0; level < mapView.grid.levelCount; ++level) {
+            //! [DisplayGrid Grid_Levels]
+            // find the number of resolution levels in the grid
+            var gridLevels = mapView.grid.levelCount;
+            //! [DisplayGrid Grid_Levels]
+
+            //! [DisplayGrid Set_Grid_Labels]
+            for (var level = 0; level < gridLevels; ++level) {
                 var textSym = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
                                                                         text: "text",
                                                                         size: 14,
@@ -94,6 +111,7 @@ Rectangle {
 
                 mapView.grid.setTextSymbol(level, textSym);
             }
+            //! [DisplayGrid Set_Grid_Labels]
         }
     }
 
@@ -101,50 +119,97 @@ Rectangle {
     function changeLabelFormat(format) {
         if (mapView.grid) {
             if (mapView.grid.gridType === Enums.GridTypeLatitudeLongitudeGrid) {
-                if (format === dd)
+                if (format === dd) {
+                    // format the labels to display in decimal degrees
                     mapView.grid.labelFormat = Enums.LatitudeLongitudeGridLabelFormatDecimalDegrees;
-                else if (format === dms)
+                } else if (format === dms) {
+                    //! [DisplayGrid Set_Label_Format]
+                    // format the labels to display in degrees, minutes and seconds
                     mapView.grid.labelFormat = Enums.LatitudeLongitudeGridLabelFormatDegreesMinutesSeconds;
+                    //! [DisplayGrid Set_Label_Format]
+                }
+            }
+        }
+    }
+
+    // change the grid label placement
+    function changeLabelPosition(position) {
+        if (mapView.grid) {
+            switch(position) {
+            case geographic:
+                //! [DisplayGrid Set_Label_Placement_Geographic]
+                // update the label positioning to geographic
+                mapView.grid.labelPosition = Enums.GridLabelPositionGeographic;
+                //! [DisplayGrid Set_Label_Placement_Geographic]
+                break;
+            case bottomLeft:
+                // update the label positioning to bottom left
+                mapView.grid.labelPosition = Enums.GridLabelPositionBottomLeft;
+                break;
+            case bottomRight:
+                // update the label positioning to bottom right
+                mapView.grid.labelPosition = Enums.GridLabelPositionBottomRight;
+                break;
+            case topLeft:
+                // update the label positioning to top left
+                mapView.grid.labelPosition = Enums.GridLabelPositionTopLeft;
+                break;
+            case topRight:
+                //! [DisplayGrid Set_Label_Placement_Top_Right]
+                // update the label positioning to top right
+                mapView.grid.labelPosition = Enums.GridLabelPositionTopRight;
+                //! [DisplayGrid Set_Label_Placement_Top_Right]
+                break;
+            case center:
+                // update the label positioning to center
+                mapView.grid.labelPosition = Enums.GridLabelPositionCenter;
+                break;
+            case allSides:
+                // update the label positioning to all sides
+                mapView.grid.labelPosition = Enums.GridLabelPositionAllSides;
+                break;
+            default:
+                mapView.grid.labelPosition = Enums.GridLabelPositionGeographic;
             }
         }
     }
 
     // Button to view the styling window
     Rectangle {
-       id: styleButton
-       property bool pressed: false
-       anchors {
-           horizontalCenter: parent.horizontalCenter
-           bottom: parent.bottom
-           bottomMargin: 23 * scaleFactor
-       }
+        id: styleButton
+        property bool pressed: false
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: 23 * scaleFactor
+        }
 
-       width: 150 * scaleFactor
-       height: 30 * scaleFactor
-       color: pressed ? "#959595" : "#D6D6D6"
-       radius: 8
-       border {
-           color: "#585858"
-           width: 1 * scaleFactor
-       }
+        width: 150 * scaleFactor
+        height: 30 * scaleFactor
+        color: pressed ? "#959595" : "#D6D6D6"
+        radius: 8
+        border {
+            color: "#585858"
+            width: 1 * scaleFactor
+        }
 
 
-       Text {
-           anchors.centerIn: parent
-           text: "Change grid style"
-           font.pixelSize: 14 * scaleFactor
-           color: "#474747"
-       }
+        Text {
+            anchors.centerIn: parent
+            text: "Change grid style"
+            font.pixelSize: 14 * scaleFactor
+            color: "#474747"
+        }
 
-       MouseArea {
-           anchors.fill: parent
-           onPressed: styleButton.pressed = true
-           onReleased: styleButton.pressed = false
-           onClicked: {
-               background.visible = true;
-               showAnimation.restart()
-           }
-       }
+        MouseArea {
+            anchors.fill: parent
+            onPressed: styleButton.pressed = true
+            onReleased: styleButton.pressed = false
+            onClicked: {
+                background.visible = true;
+                showAnimation.restart()
+            }
+        }
     }
 
     // background fade rectangle
@@ -169,8 +234,8 @@ Rectangle {
         id: styleWindow
         anchors.horizontalCenter: parent.horizontalCenter
         y: parent.height // initially display below the page
-        width: 225 * scaleFactor
-        height: 250 * scaleFactor
+        width: 250 * scaleFactor
+        height: 275 * scaleFactor
         color: "lightgray"
         radius: 4 * scaleFactor
         border {
@@ -196,7 +261,7 @@ Rectangle {
             }
             columns: 2
             columnSpacing: 10
-            rows: 7
+            rows: 8
             rowSpacing: 10
 
             Text {
@@ -211,21 +276,25 @@ Rectangle {
 
                 onCurrentTextChanged: {
                     // change the grid
-                    if (currentText === latlonGrid)
+                    if (currentText === latlonGrid) {
+                        //! [DisplayGrid Set_LatLon_Grid]
+                        // create a grid for showing Latitude and Longitude (Meridians and Parallels)
                         mapView.grid = ArcGISRuntimeEnvironment.createObject("LatitudeLongitudeGrid");
-                    else if (currentText === utmGrid)
+                        //! [DisplayGrid Set_LatLon_Grid]
+                    } else if (currentText === utmGrid) {
                         mapView.grid = ArcGISRuntimeEnvironment.createObject("UTMGrid");
-                    else if (currentText === usngGrid)
+                    } else if (currentText === usngGrid) {
                         mapView.grid = ArcGISRuntimeEnvironment.createObject("USNGGrid");
-                    else if (currentText === mgrsGrid)
+                    } else if (currentText === mgrsGrid) {
                         mapView.grid = ArcGISRuntimeEnvironment.createObject("MGRSGrid");
-                    else
+                    } else
                         return;
 
                     // apply any styling that has been set
                     changeGridColor(currentGridColor);
                     changeLabelColor(currentGridLabelColor);
                     changeLabelFormat(currentLabelFormat);
+                    changeLabelPosition(currentLabelPosition);
                     mapView.grid.visible = gridVisible;
                     mapView.grid.labelsVisible = labelVisible;
                 }
@@ -246,10 +315,13 @@ Rectangle {
                 Layout.leftMargin: styleWindow.width * 0.25
 
                 onCheckedChanged: {
-                    if (checked)
+                    if (checked) {
                         mapView.grid.labelsVisible = true;
-                    else
+                    } else {
+                        //! [DisplayGrid Label_Visible]
                         mapView.grid.labelsVisible = false;
+                        //! [DisplayGrid Label_Visible]
+                    }
                 }
             }
 
@@ -265,10 +337,13 @@ Rectangle {
                 Layout.leftMargin: styleWindow.width * 0.25
 
                 onCheckedChanged: {
-                    if (checked)
+                    if (checked) {
                         mapView.grid.visible = true;
-                    else
+                    } else {
+                        //! [DisplayGrid Grid_Visible]
                         mapView.grid.visible = false;
+                        //! [DisplayGrid Grid_Visible]
+                    }
                 }
             }
 
@@ -303,6 +378,22 @@ Rectangle {
             }
 
             Text {
+                text: "Label position"
+                Layout.maximumWidth: styleWindow.width * 0.38
+                color: enabled ? "black"  : "gray"
+            }
+
+            ComboBox {
+                model: [geographic, bottomLeft, bottomRight, topLeft, topRight, center, allSides]
+                Layout.minimumWidth: styleWindow.width * 0.5
+
+                onCurrentTextChanged: {
+                    currentLabelPosition = currentText;
+                    changeLabelPosition(currentLabelPosition);
+                }
+            }
+
+            Text {
                 text: "Label format"
                 Layout.maximumWidth: styleWindow.width * 0.35
                 enabled: mapView.grid.gridType === Enums.GridTypeLatitudeLongitudeGrid
@@ -322,37 +413,37 @@ Rectangle {
 
             // Button to hide the styling window
             Rectangle {
-               id: hideButton
-               property bool pressed: false
-               anchors.horizontalCenter: parent.horizontalCenter
-               Layout.columnSpan: 2
+                id: hideButton
+                property bool pressed: false
+                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.columnSpan: 2
 
-               width: 150 * scaleFactor
-               height: 30 * scaleFactor
-               color: pressed ? "#959595" : "#D6D6D6"
-               radius: 8
-               border {
-                   color: "#585858"
-                   width: 1 * scaleFactor
-               }
+                width: 150 * scaleFactor
+                height: 30 * scaleFactor
+                color: pressed ? "#959595" : "#D6D6D6"
+                radius: 8
+                border {
+                    color: "#585858"
+                    width: 1 * scaleFactor
+                }
 
 
-               Text {
-                   anchors.centerIn: parent
-                   text: "Hide window"
-                   font.pixelSize: 14 * scaleFactor
-                   color: "#474747"
-               }
+                Text {
+                    anchors.centerIn: parent
+                    text: "Hide window"
+                    font.pixelSize: 14 * scaleFactor
+                    color: "#474747"
+                }
 
-               MouseArea {
-                   anchors.fill: parent
-                   onPressed: hideButton.pressed = true
-                   onReleased: hideButton.pressed = false
-                   onClicked: {
-                       background.visible = false;
-                       hideAnimation.restart()
-                   }
-               }
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: hideButton.pressed = true
+                    onReleased: hideButton.pressed = false
+                    onClicked: {
+                        background.visible = false;
+                        hideAnimation.restart()
+                    }
+                }
             }
         }
 
