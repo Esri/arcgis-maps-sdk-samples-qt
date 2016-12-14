@@ -17,11 +17,12 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import Esri.Samples 1.0
 import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
 
-Rectangle {
+AddItemsToPortalSample {
     id: rootRectangle
     clip: true
 
@@ -29,93 +30,6 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property url localCSVFile: "qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv"
-
-    PortalItem {
-        id: itemToAdd
-        portal: portal
-        type: Enums.PortalItemTypeCSV
-        title: "Add Items Sample"
-
-        onLoadStatusChanged: {
-            if (loadStatus !== Enums.LoadStatusLoaded)
-                return;
-
-            statusBar.text = "Succesfully loaded item from portal." + itemToAdd.itemId
-            itemIdLabel.text = "itemId:\t" + itemToAdd.itemId;
-        }
-    }
-
-    PortalUser {
-        id: myUser
-        portal: portal
-        username: portal.portalUser ? portal.portalUser.username : ""
-
-        onLoadStatusChanged: {
-            if (loadStatus === Enums.LoadStatusFailedToLoad)
-                return;
-
-            if (loadStatus !== Enums.LoadStatusLoaded)
-                return;
-
-            statusBar.text = "Connected as " + username
-        }
-
-        onUsernameChanged: {
-            if (loadStatus === Enums.LoadStatusLoaded)
-                return;
-
-            // If the username is valid and the portal has been loaded, we are ready to load the user
-            if (username.length > 0 && portal.loadStatus === Enums.LoadStatusLoaded)
-                load();
-        }
-
-        onErrorChanged: {
-            statusBar.text = error.message + ": " + error.additionalMessage;
-        }
-
-        onAddPortalItemStatusChanged: {
-            if (addPortalItemStatus !== Enums.TaskStatusCompleted)
-                return;
-
-            statusBar.text = "Successfully added item.";
-            addItemButton.border.width = 2
-            itemToAdd.load();
-        }
-
-        onDeletePortalItemStatusChanged: {
-            if (deletePortalItemStatus !== Enums.TaskStatusCompleted)
-                return;
-
-            statusBar.text = "Successfully deleted item " + itemToAdd.itemId;
-            deleteItemButton.enabled = false;
-        }
-    }
-
-    Portal {
-        id: portal
-        loginRequired: true
-        credential: Credential {
-            oAuthClientInfo: OAuthClientInfo {
-                oAuthMode: Enums.OAuthModeUser
-                clientId: "W3hPKzPbeJ0tr8aj"
-            }
-        }
-
-        onLoadStatusChanged: {
-            if (loadStatus === Enums.LoadStatusFailedToLoad)
-                return;
-
-            if (loadStatus !== Enums.LoadStatusLoaded)
-                return;
-
-            authenticationButton.border.width = 2
-
-            // The user cannot be loaded until it has been notified of the name change
-            if (myUser.username.length > 0)
-                myUser.load();
-        }
-    }
 
     Column {
         anchors {
@@ -133,7 +47,7 @@ Rectangle {
             border.color: "lightgrey"
             border.width: 2
             radius: 8
-            enabled: portal.loadStatus !== Enums.LoadStatusLoaded
+            enabled: !portalLoaded
 
             Row {
                 anchors.fill: parent
@@ -141,7 +55,7 @@ Rectangle {
 
                 Image {
                     anchors.verticalCenter: parent.verticalCenter
-                    source: portal.loadStatus !== Enums.LoadStatusLoaded ?
+                    source: portalLoaded ?
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_account_dark.png" :
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
                     fillMode: Image.PreserveAspectFit
@@ -160,7 +74,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    portal.load();
+                    authenticatePortal();
                     authenticationButton.border.width = 4
                 }
             }
@@ -175,7 +89,7 @@ Rectangle {
             border.color: authenticationButton.border.color
             border.width: 2
             radius: authenticationButton.radius
-            enabled: itemToAdd.loadStatus !== Enums.LoadStatusLoaded && portal.loadStatus === Enums.LoadStatusLoaded
+            enabled: !portalItemLoaded && portalLoaded
 
             Row {
                 anchors.fill: parent
@@ -183,7 +97,7 @@ Rectangle {
 
                 Image {
                     anchors.verticalCenter: parent.verticalCenter
-                    source: itemToAdd.loadStatus === Enums.LoadStatusLoaded ?
+                    source: portalItemLoaded ?
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png" :
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_addencircled_dark.png"
 
@@ -205,7 +119,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     addItemButton.border.width = 4
-                    myUser.addPortalItemWithUrl(itemToAdd, localCSVFile, "add_item_sample.csv");
+                    addItem();
                 }
             }
         }
@@ -219,7 +133,7 @@ Rectangle {
             border.color: authenticationButton.border.color
             border.width: 2
             radius: authenticationButton.radius
-            enabled: itemToAdd.loadStatus === Enums.LoadStatusLoaded
+            enabled: portalItemLoaded && !itemDeleted
 
             Row {
                 anchors.fill: parent
@@ -227,7 +141,7 @@ Rectangle {
 
                 Image {
                     anchors.verticalCenter: parent.verticalCenter
-                    source: myUser.deletePortalItemStatus !== Enums.TaskStatusCompleted ?
+                    source: !itemDeleted ?
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_trash_dark.png" :
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
 
@@ -248,7 +162,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     deleteItemButton.border.width = 2
-                    myUser.deletePortalItem(itemToAdd);
+                    deleteItem();
                 }
             }
         }
@@ -291,7 +205,7 @@ Rectangle {
 
                 Text {
                     color: "white"
-                    text: "title:\t" + itemToAdd.title
+                    text: "title:\t" + portalItemTitle
                 }
 
                 Text {
@@ -301,14 +215,14 @@ Rectangle {
                         right: parent.right
                     }
                     color: "white"
-                    text: "itemId:\t" + itemToAdd.itemId
+                    text: "itemId:\t" + portalItemId
                     wrapMode: Text.Wrap
                     elide: Text.ElideRight
                 }
 
                 Text {
                     color: "white"
-                    text: "type:\t" + itemToAdd.typeName
+                    text: "type:\t" + portalItemTypeName
                 }
             }
         }
@@ -321,19 +235,17 @@ Rectangle {
             }
             wrapMode: Text.Wrap
             elide: Text.ElideRight
+            text: statusText
         }
     }
 
     AuthenticationView {
-        authenticationManager: AuthenticationManager
+        authenticationManager: authManager
     }
 
     BusyIndicator {
         anchors.centerIn: parent
-        running: portal.loadStatus === Enums.TaskStatusInProgress ||
-                 myUser.loadStatus === Enums.TaskStatusInProgress ||
-                 myUser.addPortalItemStatus === Enums.TaskStatusInProgress ||
-                 myUser.deletePortalItemStatus === Enums.TaskStatusInProgress
+        running: busy
     }
 
     // Neatline rectangle
