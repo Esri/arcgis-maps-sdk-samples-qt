@@ -57,11 +57,11 @@ public:
   ~DisplayGrid();
 
   void componentComplete() Q_DECL_OVERRIDE;
-  Q_INVOKABLE void changeGrid(QString gridType);
-  Q_INVOKABLE void changeGridColor(QString color);
-  Q_INVOKABLE void changeLabelColor(QString color);
-  Q_INVOKABLE void changeLabelFormat(QString format);
-  Q_INVOKABLE void changeLabelPosition(QString position);
+  Q_INVOKABLE void changeGrid(const QString& gridType);
+  Q_INVOKABLE void changeGridColor(const QString& color);
+  Q_INVOKABLE void changeLabelColor(const QString& color);
+  Q_INVOKABLE void changeLabelFormat(const QString& format);
+  Q_INVOKABLE void changeLabelPosition(const QString& position);
 
 signals:
   void utmGridChanged();
@@ -99,13 +99,13 @@ private:
     static const QString centerPosition() { return s_centerPosition; }
     static const QString allSidesPosition() { return s_allSidesPosition; }
     QString currentGridColor() const;
-    void setCurrentGridColor(QString gridColor);
+    void setCurrentGridColor(const QString& gridColor);
     QString currentLabelColor() const;
-    void setCurrentLabelColor(QString labelColor);
+    void setCurrentLabelColor(const QString& labelColor);
     QString currentLabelFormat() const;
-    void setCurrentLabelFormat(QString labelFormat);
+    void setCurrentLabelFormat(const QString& labelFormat);
     QString currentLabelPosition() const;
-    void setCurrentLabelPosition(QString labelPosition);
+    void setCurrentLabelPosition(const QString& labelPosition);
     bool gridVisibility();
     void setGridVisibility(bool visible);
     bool gridLabelVisibility();

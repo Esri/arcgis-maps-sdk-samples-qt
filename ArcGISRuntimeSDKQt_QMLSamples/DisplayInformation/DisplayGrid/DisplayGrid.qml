@@ -427,7 +427,6 @@ Rectangle {
                     width: 1 * scaleFactor
                 }
 
-
                 Text {
                     anchors.centerIn: parent
                     text: "Hide window"

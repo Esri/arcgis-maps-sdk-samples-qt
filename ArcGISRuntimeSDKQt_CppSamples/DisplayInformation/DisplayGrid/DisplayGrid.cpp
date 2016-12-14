@@ -74,7 +74,7 @@ void DisplayGrid::componentComplete()
 }
 
 // change the grid type
-void DisplayGrid::changeGrid(QString gridType)
+void DisplayGrid::changeGrid(const QString& gridType)
 {
   if (gridType == latlonGrid())
   {
@@ -110,7 +110,7 @@ void DisplayGrid::changeGrid(QString gridType)
 }
 
 // change the grid color
-void DisplayGrid::changeGridColor(QString color)
+void DisplayGrid::changeGridColor(const QString& color)
 {
   if (m_mapView->grid())
   {
@@ -128,7 +128,7 @@ void DisplayGrid::changeGridColor(QString color)
 }
 
 // change the grid label color
-void DisplayGrid::changeLabelColor(QString color)
+void DisplayGrid::changeLabelColor(const QString& color)
 {
   if (m_mapView->grid())
   {
@@ -152,7 +152,7 @@ void DisplayGrid::changeLabelColor(QString color)
 }
 
 // change the grid label format
-void DisplayGrid::changeLabelFormat(QString format)
+void DisplayGrid::changeLabelFormat(const QString& format)
 {
   if (m_mapView->grid())
   {
@@ -175,7 +175,7 @@ void DisplayGrid::changeLabelFormat(QString format)
 }
 
 // change the grid label placement
-void DisplayGrid::changeLabelPosition(QString position)
+void DisplayGrid::changeLabelPosition(const QString& position)
 {
   if (m_mapView->grid())
   {
@@ -226,7 +226,7 @@ QString DisplayGrid::currentGridColor() const
   return m_currentGridColor;
 }
 
-void DisplayGrid::setCurrentGridColor(QString gridColor)
+void DisplayGrid::setCurrentGridColor(const QString& gridColor)
 {
   m_currentGridColor = gridColor;
   changeGridColor(m_currentGridColor);
@@ -237,7 +237,7 @@ QString DisplayGrid::currentLabelColor() const
   return m_currentLabelColor;
 }
 
-void DisplayGrid::setCurrentLabelColor(QString labelColor)
+void DisplayGrid::setCurrentLabelColor(const QString& labelColor)
 {
   m_currentLabelColor = labelColor;
   changeLabelColor(m_currentLabelColor);
@@ -248,7 +248,7 @@ QString DisplayGrid::currentLabelFormat() const
   return m_currentLabelFormat;
 }
 
-void DisplayGrid::setCurrentLabelFormat(QString labelFormat)
+void DisplayGrid::setCurrentLabelFormat(const QString& labelFormat)
 {
   m_currentLabelFormat = labelFormat;
   changeLabelFormat(m_currentLabelFormat);
@@ -259,7 +259,7 @@ QString DisplayGrid::currentLabelPosition() const
   return m_currentLabelPosition;
 }
 
-void DisplayGrid::setCurrentLabelPosition(QString labelPosition)
+void DisplayGrid::setCurrentLabelPosition(const QString& labelPosition)
 {
   m_currentLabelPosition = labelPosition;
   changeLabelPosition(m_currentLabelPosition);
