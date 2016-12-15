@@ -41,7 +41,8 @@ void AddItemsToPortal::componentComplete()
     QQuickItem::componentComplete();
     emit authManagerChanged();
 
-    connect(m_portal, &Portal::loadStatusChanged, this, [this](){
+    connect(m_portal, &Portal::loadStatusChanged, this, [this]()
+    {
         emit portalLoadedChanged();
 
         if (m_portal->loadStatus() != LoadStatus::Loaded)
@@ -52,7 +53,8 @@ void AddItemsToPortal::componentComplete()
         connectUserSignals();
     });
 
-    connect(m_item, &PortalItem::loadStatusChanged, this, [this](){
+    connect(m_item, &PortalItem::loadStatusChanged, this, [this]()
+    {
         if (m_item->loadStatus() != LoadStatus::Loaded)
             return;
 
@@ -133,12 +135,14 @@ void AddItemsToPortal::connectUserSignals()
     if (!m_user)
         return;
 
-    connect(m_user, &PortalUser::errorOccurred, this, [this](Esri::ArcGISRuntime::Error error){
+    connect(m_user, &PortalUser::errorOccurred, this, [this](Esri::ArcGISRuntime::Error error)
+    {
         m_busy = false;
         setStatusText( QString(error.message() + ": " + error.additionalMessage()));
     });
 
-    connect(m_user, &PortalUser::addPortalItemCompleted, this, [this](bool success){
+    connect(m_user, &PortalUser::addPortalItemCompleted, this, [this](bool success)
+    {
         m_busy = false;
 
         if (!success)
@@ -148,7 +152,8 @@ void AddItemsToPortal::connectUserSignals()
         m_item->load();
     });
 
-    connect(m_user, &PortalUser::deletePortalItemCompleted, this, [this](bool success){
+    connect(m_user, &PortalUser::deletePortalItemCompleted, this, [this](bool success)
+    {
         m_busy = false;
 
         if (!success)
@@ -167,7 +172,7 @@ void AddItemsToPortal::setStatusText(const QString &statusText)
     emit statusTextChanged();
 }
 
-AuthenticationManager *AddItemsToPortal::authManager() const
+AuthenticationManager* AddItemsToPortal::authManager() const
 {
     return AuthenticationManager::instance();
 }

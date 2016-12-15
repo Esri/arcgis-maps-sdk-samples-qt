@@ -79,7 +79,7 @@ Rectangle {
                 return;
 
             statusBar.text = "Successfully added item.";
-            addItemButton.border.width = 2
+            addItemButton.border.width = 2 * scaleFactor;
             itemToAdd.load();
         }
 
@@ -109,7 +109,7 @@ Rectangle {
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
-            authenticationButton.border.width = 2
+            authenticationButton.border.width = 2 * scaleFactor;
 
             // The user cannot be loaded until it has been notified of the name change
             if (myUser.username.length > 0)
@@ -130,9 +130,11 @@ Rectangle {
             height: 64 * scaleFactor
             width: 256 * scaleFactor
             color: enabled ? "darkblue" : "darkgrey"
-            border.color: "lightgrey"
-            border.width: 2
-            radius: 8
+            border {
+                color: "lightgrey"
+                width: 2 * scaleFactor
+            }
+            radius: 8 * scaleFactor
             enabled: portal.loadStatus !== Enums.LoadStatusLoaded
 
             Row {
@@ -161,7 +163,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     portal.load();
-                    authenticationButton.border.width = 4
+                    authenticationButton.border.width = 4 * scaleFactor;
                 }
             }
         }
@@ -172,8 +174,10 @@ Rectangle {
             height: authenticationButton.height
             width: authenticationButton.width
             color: enabled ? "darkblue" : "darkgrey"
-            border.color: authenticationButton.border.color
-            border.width: 2
+            border {
+                color: authenticationButton.border.color
+                width: 2 * scaleFactor
+            }
             radius: authenticationButton.radius
             enabled: itemToAdd.loadStatus !== Enums.LoadStatusLoaded && portal.loadStatus === Enums.LoadStatusLoaded
 
@@ -186,7 +190,6 @@ Rectangle {
                     source: itemToAdd.loadStatus === Enums.LoadStatusLoaded ?
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png" :
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_addencircled_dark.png"
-
 
                     fillMode: Image.PreserveAspectFit
                     height: 64 * scaleFactor
@@ -204,7 +207,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    addItemButton.border.width = 4
+                    addItemButton.border.width = 4 * scaleFactor;
                     myUser.addPortalItemWithUrl(itemToAdd, localCSVFile, "add_item_sample.csv");
                 }
             }
@@ -216,8 +219,10 @@ Rectangle {
             height: authenticationButton.height
             width: authenticationButton.width
             color: enabled ? "darkblue" : "darkgrey"
-            border.color: authenticationButton.border.color
-            border.width: 2
+            border {
+                color: authenticationButton.border.color
+                width: 2 * scaleFactor
+            }
             radius: authenticationButton.radius
             enabled: itemToAdd.loadStatus === Enums.LoadStatusLoaded
 
@@ -247,7 +252,7 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    deleteItemButton.border.width = 2
+                    deleteItemButton.border.width = 2 * scaleFactor;
                     myUser.deletePortalItem(itemToAdd);
                 }
             }
@@ -270,8 +275,10 @@ Rectangle {
             }
             height: 128 * scaleFactor
             color: "lightgrey"
-            border.color: "darkgrey"
-            border.width: 4
+            border {
+                color: "darkgrey"
+                width: 4 * scaleFactor
+            }
             radius: 32
 
             Column {

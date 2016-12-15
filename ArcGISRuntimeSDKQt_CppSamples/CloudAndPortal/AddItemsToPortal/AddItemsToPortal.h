@@ -26,7 +26,6 @@ namespace Esri
     }
 }
 
-#include <QAbstractListModel>
 #include <QQuickItem>
 
 class AddItemsToPortal : public QQuickItem
@@ -49,16 +48,6 @@ public:
 
     void componentComplete() Q_DECL_OVERRIDE;
 
-    Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
-    bool portalLoaded() const;
-    bool portalItemLoaded() const;
-    QString portalItemId() const;
-    QString portalItemTitle() const;
-    QString portalItemTypeName() const;
-    bool itemDeleted() const;
-    QString statusText() const;
-    bool busy() const;
-
     Q_INVOKABLE void authenticatePortal();
     Q_INVOKABLE void addItem();
     Q_INVOKABLE void deleteItem();
@@ -75,6 +64,16 @@ signals:
     void busyChanged();
 
 private:
+    Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
+    bool portalLoaded() const;
+    bool portalItemLoaded() const;
+    QString portalItemId() const;
+    QString portalItemTitle() const;
+    QString portalItemTypeName() const;
+    bool itemDeleted() const;
+    QString statusText() const;
+    bool busy() const;
+
     void setStatusText(const QString& msg);
     void connectUserSignals();
 

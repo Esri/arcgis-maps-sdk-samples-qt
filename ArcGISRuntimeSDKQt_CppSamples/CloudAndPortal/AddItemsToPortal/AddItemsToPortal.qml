@@ -44,8 +44,10 @@ AddItemsToPortalSample {
             height: 64 * scaleFactor
             width: 256 * scaleFactor
             color: enabled ? "darkblue" : "darkgrey"
-            border.color: "lightgrey"
-            border.width: 2
+            border{
+                color: "lightgrey"
+                width: 2 * scaleFactor
+            }
             radius: 8
             enabled: !portalLoaded
 
@@ -75,7 +77,7 @@ AddItemsToPortalSample {
                 anchors.fill: parent
                 onClicked: {
                     authenticatePortal();
-                    authenticationButton.border.width = 4
+                    authenticationButton.border.width = 4 * scaleFactor;
                 }
             }
         }
@@ -86,8 +88,10 @@ AddItemsToPortalSample {
             height: authenticationButton.height
             width: authenticationButton.width
             color: enabled ? "darkblue" : "darkgrey"
-            border.color: authenticationButton.border.color
-            border.width: 2
+            border{
+                color: authenticationButton.border.color
+                width: 2 * scaleFactor
+            }
             radius: authenticationButton.radius
             enabled: !portalItemLoaded && portalLoaded
 
@@ -100,7 +104,6 @@ AddItemsToPortalSample {
                     source: portalItemLoaded ?
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png" :
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_addencircled_dark.png"
-
 
                     fillMode: Image.PreserveAspectFit
                     height: 64 * scaleFactor
@@ -118,7 +121,7 @@ AddItemsToPortalSample {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    addItemButton.border.width = 4
+                    addItemButton.border.width = 4 * scaleFactor
                     addItem();
                 }
             }
@@ -130,8 +133,10 @@ AddItemsToPortalSample {
             height: authenticationButton.height
             width: authenticationButton.width
             color: enabled ? "darkblue" : "darkgrey"
-            border.color: authenticationButton.border.color
-            border.width: 2
+            border {
+                color: authenticationButton.border.color
+                width: 2 * scaleFactor
+            }
             radius: authenticationButton.radius
             enabled: portalItemLoaded && !itemDeleted
 
@@ -161,7 +166,7 @@ AddItemsToPortalSample {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    deleteItemButton.border.width = 2
+                    deleteItemButton.border.width = 2 * scaleFactor
                     deleteItem();
                 }
             }
@@ -184,8 +189,10 @@ AddItemsToPortalSample {
             }
             height: 128 * scaleFactor
             color: "lightgrey"
-            border.color: "darkgrey"
-            border.width: 4
+            border{
+                color: "darkgrey"
+                width: 4 * scaleFactor
+            }
             radius: 32
 
             Column {
