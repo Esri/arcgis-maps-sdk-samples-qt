@@ -51,12 +51,14 @@ void SearchForWebmap::componentComplete()
         emit portalLoadedChanged();
     });
 
+    //! [SearchForWebmap CPP Portal find items completed]
     connect(m_portal, &Portal::findItemsCompleted, this, [this](PortalQueryResultSetForItems *webmapResults){
         m_webmapResults = webmapResults;
         m_webmaps = m_webmapResults->itemResults();
         emit webmapsChanged();
         emit hasMoreResultsChanged();
     });
+    //! [SearchForWebmap CPP Portal find items completed]
 
     m_portal->load();
 
@@ -87,10 +89,12 @@ QString SearchForWebmap::mapLoadError() const
 
 void SearchForWebmap::search(const QString keyword)
 {
+    //! [SearchForWebmap CPP Portal find items]
     PortalQueryParametersForItems query;
     query.setSearchString(QString("tags:\"%1\"").arg(keyword));
     query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
     m_portal->findItems(query);
+    //! [SearchForWebmap CPP Portal find items]
 
     m_mapView->setVisible(false);
 }
