@@ -34,17 +34,17 @@ OpenExistingMapSample {
         objectName: "mapView"
     }
 
-    // Create a list model with information about different portal items
+    // Create a list model with information about different webmaps
        ListModel {
-           id: portalItemListModel
+           id: webmapsListModel
            ListElement { itemTitle: "Housing with Mortgages"; imageUrl: "qrc:/Samples/Maps/OpenExistingMap/Housing.png"; itemId: "2d6fa24b357d427f9c737774e7b0f977"}
            ListElement { itemTitle: "USA Tapestry Segmentation"; imageUrl: "qrc:/Samples/Maps/OpenExistingMap/Tapestry.png"; itemId: "01f052c8995e4b9e889d73c3e210ebe3"}
            ListElement { itemTitle: "Geology of United States"; imageUrl: "qrc:/Samples/Maps/OpenExistingMap/geology.jpg"; itemId: "92ad152b9da94dee89b9e387dfe21acd"}
        }
 
-       // Create a delegate for how the portal items display in the view
+       // Create a delegate for how the webmaps display in the view
        Component {
-           id: portalItemDelegate
+           id: webmapsDelegate
            Item {
                width: parent.width
                height: 65 * scaleFactor
@@ -69,8 +69,8 @@ OpenExistingMapSample {
                    anchors.fill: parent
                    // When an item in the list view is clicked
                    onClicked: {
-                        portalItemListView.currentIndex = index;
-                       // Call C++ invokable function to open the map from a portal item using this item id
+                        webmapsListView.currentIndex = index;
+                       // Call C++ invokable function to open the map from a webmap Url using this item id
                         openExistingMapSample.openMap(itemId);
                         mapPickerWindow.visible = false;
                    }
@@ -78,7 +78,7 @@ OpenExistingMapSample {
            }
        }
 
-       // Create a window to display the different Portal Items that can be selected
+       // Create a window to display the different webmaps that can be selected
        Rectangle {
            id: mapPickerWindow
            anchors.fill: parent
@@ -113,15 +113,15 @@ OpenExistingMapSample {
 
                // Create a list view to display the items
                ListView {
-                   id: portalItemListView
+                   id: webmapsListView
                    anchors {
                        fill: parent
                        margins: 10 * scaleFactor
                    }
-                   // Assign the model to the list model of portal items
-                   model: portalItemListModel
+                   // Assign the model to the list model of webmaps
+                   model: webmapsListModel
                    // Assign the delegate to the delegate created above
-                   delegate: portalItemDelegate
+                   delegate: webmapsDelegate
                    spacing: 10
                    clip: true
                    highlightFollowsCurrentItem: true
