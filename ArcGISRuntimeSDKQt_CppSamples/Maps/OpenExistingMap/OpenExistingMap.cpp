@@ -19,7 +19,6 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Basemap.h"
-#include "PortalItem.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -50,13 +49,13 @@ void OpenExistingMap::componentComplete()
 
 void OpenExistingMap::openMap(const QString& itemId)
 {
-    //! [Construct map from a portal item id]
-    // create a portal item from a QUrl using the item id QString
+    //! [Construct map from a webmap Url]
+    // create a QUrl using the item id QString
     QString organizationPortalUrl("http://arcgis.com");
-    PortalItem* portalItem = new PortalItem(QUrl(organizationPortalUrl + "/sharing/rest/content/items/" + itemId), this);
-    // create a new map from the portal item
-    Map* map = new Map(portalItem, this);
-    //! [Construct map from a portal item id]
+    QUrl webmapUrl( QString(organizationPortalUrl + "/sharing/rest/content/items/" + itemId));
+    // create a new map from the webmap Url
+    Map* map = new Map(webmapUrl, this);
+    //! [Construct map from a webmap Url]
 
     // set the map to the map view
     m_mapView->setMap(map);
