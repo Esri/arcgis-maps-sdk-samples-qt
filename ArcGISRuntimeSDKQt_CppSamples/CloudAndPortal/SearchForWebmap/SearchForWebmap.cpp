@@ -101,10 +101,15 @@ void SearchForWebmap::search(const QString keyword)
 
 void SearchForWebmap::searchNext()
 {
-    if (!m_webmapResults || m_webmapResults->nextQueryParameters().startIndex() == -1)
+    if (!m_webmapResults)
         return;
 
-    m_portal->findItems(m_webmapResults->nextQueryParameters());
+    //! [Portal find with nextQueryParameters]
+    PortalQueryParameters nextQuery = m_webmapResults->nextQueryParameters();
+    // check whether the startIndex of the new query is valid
+    if (nextQuery.startIndex() != -1)
+        m_portal->findItems(nextQuery);
+    //! [Portal find with nextQueryParameters]
 }
 
 void SearchForWebmap::loadSelectedWebmap(int index)

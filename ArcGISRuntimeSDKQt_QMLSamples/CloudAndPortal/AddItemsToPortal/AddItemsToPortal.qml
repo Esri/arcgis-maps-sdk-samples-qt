@@ -29,7 +29,6 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property url localCSVFile: "qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv"
 
     PortalItem {
         id: itemToAdd
@@ -74,14 +73,18 @@ Rectangle {
             statusBar.text = error.message + ": " + error.additionalMessage;
         }
 
+        //! [PortalUser addPortalItemCompleted]
         onAddPortalItemStatusChanged: {
             if (addPortalItemStatus !== Enums.TaskStatusCompleted)
                 return;
 
+            itemToAdd.load();
+        //! [PortalUser addPortalItemCompleted]
+
             statusBar.text = "Successfully added item.";
             addItemButton.border.width = 2 * scaleFactor;
-            itemToAdd.load();
         }
+
 
         onDeletePortalItemStatusChanged: {
             if (deletePortalItemStatus !== Enums.TaskStatusCompleted)
@@ -208,7 +211,10 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     addItemButton.border.width = 4 * scaleFactor;
+                    //! [PortalUser addItemWithUrl]
+                    var localCSVFile = "qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv";
                     myUser.addPortalItemWithUrl(itemToAdd, localCSVFile, "add_item_sample.csv");
+                    //! [PortalUser addItemWithUrl]
                 }
             }
         }

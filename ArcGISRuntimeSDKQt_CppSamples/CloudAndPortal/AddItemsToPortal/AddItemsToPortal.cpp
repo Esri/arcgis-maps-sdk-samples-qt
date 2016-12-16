@@ -48,8 +48,8 @@ void AddItemsToPortal::componentComplete()
         if (m_portal->loadStatus() != LoadStatus::Loaded)
             return;
 
-        m_busy = false;
         m_user = m_portal->portalUser();
+        m_busy = false;
         connectUserSignals();
     });
 
@@ -117,8 +117,11 @@ void AddItemsToPortal::addItem()
         return;
 
     m_busy = true;
+
+    //! [PortalUser addItemWithUrl]
     QUrl localCSV("qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv");
     m_user->addPortalItemWithUrl(m_item, localCSV, "add_item_sample.csv" );
+    //! [PortalUser addItemWithUrl]
 }
 
 void AddItemsToPortal::deleteItem()
@@ -141,6 +144,7 @@ void AddItemsToPortal::connectUserSignals()
         setStatusText( QString(error.message() + ": " + error.additionalMessage()));
     });
 
+    //! [PortalUser addPortalItemCompleted]
     connect(m_user, &PortalUser::addPortalItemCompleted, this, [this](bool success)
     {
         m_busy = false;
@@ -151,6 +155,7 @@ void AddItemsToPortal::connectUserSignals()
         setStatusText("Successfully added item.");
         m_item->load();
     });
+    //! [PortalUser addPortalItemCompleted]
 
     connect(m_user, &PortalUser::deletePortalItemCompleted, this, [this](bool success)
     {

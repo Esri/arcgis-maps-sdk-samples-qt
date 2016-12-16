@@ -77,6 +77,7 @@ ShowOrgBasemapsSample {
             radius: 2
             clip: true
 
+            //! [BasemapListModel example QML delegate]
             Image {
                 id: basemapImg
                 anchors {
@@ -84,7 +85,7 @@ ShowOrgBasemapsSample {
                     horizontalCenter: parent.horizontalCenter
                 }
                 height: parent.height - ( basemapLabel.height * 2 );
-                source: thumbnailUrl
+                source: thumbnailUrl // use the thumbnailUrl role of the model
                 width: height
                 fillMode: Image.PreserveAspectCrop
             }
@@ -100,10 +101,11 @@ ShowOrgBasemapsSample {
                 z: 100
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight
-                text: title
+                text: title // use the title role of the model
                 font.pointSize: 8
                 font.bold: index === basemapsGrid.currentIndex
             }
+            //! [BasemapListModel example QML delegate]
 
             MouseArea {
                 enabled: !mapView.visible && portalLoaded

@@ -35,11 +35,18 @@ Rectangle {
     function search() {
         mapView.visible = false;
         mapView.map = null;
+        //! [Portal findItems webmaps part 2]
         portal.findItems(webmapQuery);
+        //! [Portal findItems webmaps part 2]
     }
 
     function searchNext(){
-        portal.findItems(portal.findItemsResult.nextQueryParameters);
+        //! [Portal find with nextQueryParameters]
+        var nextQuery = portal.findItemsResult.nextQueryParameters;
+        // check whether the startIndex of the new query is valid
+        if (nextQuery.startIndex !== -1)
+            portal.findItems(nextQuery);
+        //! [Portal find with nextQueryParameters]
     }
 
     function loadSelectedWebmap(selectedWebmap) {
@@ -77,11 +84,13 @@ Rectangle {
         mapView.visible = true;
     }
 
+    //! [Portal findItems webmaps part 1]
     PortalQueryParametersForItems {
         id: webmapQuery
         types: [ Enums.PortalItemTypeWebMap ]
         searchString: "tags:\"" + keyWordField.text + "\"";
     }
+    //! [Portal findItems webmaps part 1]
 
     Portal {
         id: portal
@@ -106,14 +115,17 @@ Rectangle {
             keyWordField.focus = true
         }
 
+        //! [Portal findItems completed]
         onFindItemsResultChanged: {
             if (portal.findItemsStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            webmapsList.visible = true;
+            // bind the item list model to the view
             webmapsList.model = portal.findItemsResult.itemResults
+            webmapsList.visible = true;
             webmapsList.focus = true;
         }
+        //! [Portal findItems completed]
     }
 
     Component {
@@ -127,14 +139,16 @@ Rectangle {
             color: "lightgrey"
             radius: 10
 
+            //! [PortalItemListModel example QML delegate]
             Text {
                 anchors{fill: parent; margins: 10}
-                text: webmapsList.model.get(index).title
+                text: title
                 color: "white"
                 elide: Text.ElideRight
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
             }
+            //! [PortalItemListModel example QML delegate]
 
             MouseArea {
                 anchors.fill: parent

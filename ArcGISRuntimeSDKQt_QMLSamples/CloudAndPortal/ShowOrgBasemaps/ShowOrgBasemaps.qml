@@ -132,6 +132,7 @@ Rectangle {
             radius: 2
             clip: true
 
+            //! [BasemapListModel example QML delegate]
             Image {
                 id: basemapImg
                 anchors {
@@ -160,6 +161,7 @@ Rectangle {
                 font.pointSize: 8
                 font.bold: index === basemapsGrid.currentIndex
             }
+            //! [BasemapListModel example QML delegate]
 
             MouseArea {
                 enabled: !mapView.visible && portal.loadStatus === Enums.LoadStatusLoaded
