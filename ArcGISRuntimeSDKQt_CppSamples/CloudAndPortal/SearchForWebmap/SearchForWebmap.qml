@@ -52,14 +52,16 @@ SearchForWebmapSample {
             color: index === webmapsList.currentIndex ? "orange" : "lightgrey"
             radius: 10
 
+            //! [PortalItemListModel example QML delegate]
             Text {
                 anchors{fill: parent; margins: 10}
-                text: model.title
+                text: title // access the title role of the model
                 color: "white"
                 elide: Text.ElideRight
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
             }
+            //! [PortalItemListModel example QML delegate]
 
             MouseArea {
                 anchors.fill: parent
