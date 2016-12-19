@@ -57,6 +57,7 @@ Rectangle {
 
         Component.onCompleted: load();
 
+        //! [Portal fetchBasemaps after loaded]
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusFailedToLoad) {
                 retryLoad();
@@ -76,6 +77,7 @@ Rectangle {
             basemapsGrid.model = basemaps;
             gridFadeIn.running = true;
         }
+        //! [Portal fetchBasemaps after loaded]
     }
 
     Text{
