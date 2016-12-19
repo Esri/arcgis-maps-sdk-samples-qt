@@ -25,6 +25,8 @@
 #include "MGRSGrid.h"
 #include "SimpleLineSymbol.h"
 #include "TextSymbol.h"
+#include "Viewpoint.h"
+#include "Point.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -67,7 +69,8 @@ void DisplayGrid::componentComplete()
 
   // Create a map using the imagery basemap
   m_map = new Map(Basemap::imagery(this), this);
-  m_map->setInitialViewpoint(Viewpoint(Envelope(-11018849.838073004, 4906181.949903341, -9653433.562293354, 5930244.156738078, SpatialReference(102100))));
+  double targetScale = 6450785;
+  m_map->setInitialViewpoint(Viewpoint(Point(-10336141.70018318, 5418213.05332071, SpatialReference::webMercator()), targetScale));
 
   // Set map to map view
   m_mapView->setMap(m_map);

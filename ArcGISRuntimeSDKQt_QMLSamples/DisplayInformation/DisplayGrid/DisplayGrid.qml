@@ -56,12 +56,12 @@ Rectangle {
             BasemapImagery {}
 
             // Set an initial viewpoint
-            ViewpointExtent {
-                Envelope {
-                    xMin: -11018849.838073004
-                    yMin: 4906181.949903341
-                    xMax: -9653433.562293354
-                    yMax: 5930244.156738078
+            ViewpointCenter {
+                targetScale: 6450785
+
+                Point {
+                    x: -10336141.70018318
+                    y: 5418213.05332071
                     spatialReference: SpatialReference.createWebMercator()
                 }
             }
