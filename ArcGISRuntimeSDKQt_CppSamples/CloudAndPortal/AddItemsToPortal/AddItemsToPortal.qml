@@ -31,6 +31,8 @@ AddItemsToPortalSample {
 
     property real scaleFactor: System.displayScaleFactor
 
+    onPortalItemIdChanged: portalItemModel.setProperty(1, "value", portalItemId);
+
     Column {
         anchors {
             fill: parent
@@ -42,7 +44,7 @@ AddItemsToPortalSample {
             id: authenticationButton
             anchors.horizontalCenter: parent.horizontalCenter
             height: 64 * scaleFactor
-            width: 256 * scaleFactor
+            width: Math.min(256 * scaleFactor, parent.width)
             color: enabled ? "darkblue" : "darkgrey"
             border{
                 color: "lightgrey"
@@ -57,7 +59,7 @@ AddItemsToPortalSample {
 
                 Image {
                     anchors.verticalCenter: parent.verticalCenter
-                    source: portalLoaded ?
+                    source: !portalLoaded ?
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_account_dark.png" :
                                 "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
                     fillMode: Image.PreserveAspectFit
@@ -189,47 +191,52 @@ AddItemsToPortalSample {
             }
             height: 128 * scaleFactor
             color: "lightgrey"
-            border{
+            border {
                 color: "darkgrey"
                 width: 4 * scaleFactor
             }
             radius: 32
+            clip: true
 
-            Column {
+            Text {
+                id: portalItemLabel
+                anchors{
+                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
+                    margins: 4 * scaleFactor
+                }
+                color: "white"
+                font.bold: true
+                text: "PortalItem"
+                font.underline: true
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            ListModel {
+                id: portalItemModel
+
+                Component.onCompleted: {
+                    append({"label": "title", "value": portalItemTitle });
+                    append({"label": "itemId", "value": portalItemId});
+                    append({"label": "type", "value": portalItemTypeName});
+                }
+            }
+
+            ListView {
                 anchors {
-                    fill: parent
+                    top: portalItemLabel.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
                     margins: 16 * scaleFactor
                 }
-                spacing: 8 * scaleFactor
-
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                clip: true
+                model: portalItemModel
+                delegate: Text {
                     color: "white"
-                    font.bold: true
-                    text: "PortalItem"
-                    font.underline: true
-                }
-
-                Text {
-                    color: "white"
-                    text: "title:\t" + portalItemTitle
-                }
-
-                Text {
-                    id: itemIdLabel
-                    anchors{
-                        left: parent.left
-                        right: parent.right
-                    }
-                    color: "white"
-                    text: "itemId:\t" + portalItemId
+                    text: label + ":\t" + value
                     wrapMode: Text.Wrap
                     elide: Text.ElideRight
-                }
-
-                Text {
-                    color: "white"
-                    text: "type:\t" + portalItemTypeName
                 }
             }
         }

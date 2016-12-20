@@ -41,7 +41,7 @@ Rectangle {
                 return;
 
             statusBar.text = "Succesfully loaded item from portal." + itemToAdd.itemId
-            itemIdLabel.text = "itemId:\t" + itemToAdd.itemId;
+            portalItemModel.setProperty(1, "value", itemToAdd.itemId);
         }
     }
 
@@ -79,7 +79,7 @@ Rectangle {
                 return;
 
             itemToAdd.load();
-        //! [PortalUser addPortalItemCompleted]
+            //! [PortalUser addPortalItemCompleted]
 
             statusBar.text = "Successfully added item.";
             addItemButton.border.width = 2 * scaleFactor;
@@ -131,7 +131,7 @@ Rectangle {
             id: authenticationButton
             anchors.horizontalCenter: parent.horizontalCenter
             height: 64 * scaleFactor
-            width: 256 * scaleFactor
+            width: Math.min(256 * scaleFactor, parent.width)
             color: enabled ? "darkblue" : "darkgrey"
             border {
                 color: "lightgrey"
@@ -286,42 +286,47 @@ Rectangle {
                 width: 4 * scaleFactor
             }
             radius: 32
+            clip: true
 
-            Column {
+            Text {
+                id: portalItemLabel
+                anchors{
+                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
+                    margins: 4 * scaleFactor
+                }
+                color: "white"
+                font.bold: true
+                text: "PortalItem"
+                font.underline: true
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            ListModel {
+                id: portalItemModel
+
+                Component.onCompleted: {
+                    append({"label": "title", "value": itemToAdd.title });
+                    append({"label": "itemId", "value": itemToAdd.itemId});
+                    append({"label": "type", "value": itemToAdd.typeName});
+                }
+            }
+
+            ListView {
                 anchors {
-                    fill: parent
+                    top: portalItemLabel.bottom
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
                     margins: 16 * scaleFactor
                 }
-                spacing: 8 * scaleFactor
-
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
+                clip: true
+                model: portalItemModel
+                delegate: Text {
                     color: "white"
-                    font.bold: true
-                    text: "PortalItem"
-                    font.underline: true
-                }
-
-                Text {
-                    color: "white"
-                    text: "title:\t" + itemToAdd.title
-                }
-
-                Text {
-                    id: itemIdLabel
-                    anchors{
-                        left: parent.left
-                        right: parent.right
-                    }
-                    color: "white"
-                    text: "itemId:\t" + itemToAdd.itemId
+                    text: label + ":\t" + value
                     wrapMode: Text.Wrap
                     elide: Text.ElideRight
-                }
-
-                Text {
-                    color: "white"
-                    text: "type:\t" + itemToAdd.typeName
                 }
             }
         }
