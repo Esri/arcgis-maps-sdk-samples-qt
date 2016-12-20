@@ -28,7 +28,7 @@ ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
     QQuickItem(parent),
     m_map(nullptr),
     m_mapView(nullptr),
-    m_portal(new Portal(new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this), this))
+    m_portal(new Portal(this))
 {
     AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
@@ -60,8 +60,6 @@ void ShowOrgBasemaps::componentComplete()
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
     emit authManagerChanged();
-
-    m_portal->load();
 }
 
 bool ShowOrgBasemaps::portalLoaded() const
@@ -85,6 +83,17 @@ QAbstractListModel* ShowOrgBasemaps::basemaps() const
 QString ShowOrgBasemaps::mapLoadError() const
 {
     return m_mapLoadError;
+}
+
+void ShowOrgBasemaps::load(bool anonymous)
+{
+    if (anonymous)
+        m_portal->load();
+    else {
+        Credential* cred = new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this);
+        m_portal->setCredential(cred);
+        m_portal->load();
+    }
 }
 
 void ShowOrgBasemaps::loadSelectedBasemap(int index)

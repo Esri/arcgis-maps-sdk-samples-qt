@@ -54,6 +54,7 @@ public:
     QAbstractListModel* basemaps() const;
     QString mapLoadError() const;
 
+    Q_INVOKABLE void load(bool anonymous);
     Q_INVOKABLE void loadSelectedBasemap(int index);
     Q_INVOKABLE void errorAccepted();
 

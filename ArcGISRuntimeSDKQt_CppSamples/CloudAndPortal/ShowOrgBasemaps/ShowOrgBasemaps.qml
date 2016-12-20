@@ -32,7 +32,7 @@ ShowOrgBasemapsSample {
 
     BusyIndicator {
         anchors.centerIn: parent
-        running: !mapView.visible && !portalLoaded
+        running: !mapView.visible && !portalLoaded & !anonymousLogIn.visible
     }
 
     Text{
@@ -163,6 +163,60 @@ ShowOrgBasemapsSample {
             right: parent.right
         }
         visible: false
+    }
+
+    Button {
+        id: backButton
+        anchors {
+            top: mapView.top
+            right: mapView.right
+            margins: 16 * scaleFactor
+        }
+        visible: mapView.visible
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
+        text: "Back"
+        opacity: hovered ? 1 : 0.5
+
+        onClicked: {
+            mapView.visible = false;
+            basemapsGrid.enabled = true;
+            gridFadeIn.running = true;
+        }
+    }
+
+    Button {
+        id: anonymousLogIn
+        anchors{
+            margins: 16 * scaleFactor
+            horizontalCenter: parent.horizontalCenter
+            top: title.bottom
+        }
+        text: "Anonymous"
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
+
+        onClicked: {
+            load(true);
+            anonymousLogIn.visible = false;
+            userLogIn.visible = false;
+        }
+    }
+
+    Button {
+        id: userLogIn
+        anchors{
+            margins: 16 * scaleFactor
+            horizontalCenter: anonymousLogIn.horizontalCenter
+            top: anonymousLogIn.bottom
+        }
+        width: anonymousLogIn.width
+        text: "Sign-in"
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
+
+        onClicked: {
+            load(false);
+            anonymousLogIn.visible = false;
+            userLogIn.visible = false;
+        }
     }
 
     AuthenticationView {
