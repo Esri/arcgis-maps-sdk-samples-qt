@@ -134,6 +134,46 @@ QUrl PortalUserInfo::thumbnailUrl() const
   return QUrl("qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png");
 }
 
+QString PortalUserInfo::orgTitle() const
+{
+    if (m_portal->portalInfo())
+        return m_portal->portalInfo()->organizationName();
+
+    return "";
+}
+
+QString PortalUserInfo::orgDescription() const
+{
+    if (m_portal->portalInfo())
+        return m_portal->portalInfo()->organizationDescription();
+
+    return "";
+}
+
+QUrl PortalUserInfo::orgThumbnailUrl() const
+{
+    if (m_portal->portalInfo())
+        return m_portal->portalInfo()->thumbnailUrl();
+
+    return QUrl();
+}
+
+QString PortalUserInfo::canSearchPublic() const
+{
+    if (m_portal->portalInfo())
+        return m_portal->portalInfo()->isCanSearchPublic() ? "True" : "False";
+
+    return "";
+}
+
+QString PortalUserInfo::canSharePublic() const
+{
+    if (m_portal->portalInfo())
+        return m_portal->portalInfo()->isCanShareBingPublic() ? "True" : "False";
+
+    return "";
+}
+
 QString PortalUserInfo::loadErrorMessage() const
 {
   if (m_portal)

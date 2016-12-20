@@ -59,8 +59,15 @@ Rectangle {
     }
 
     ListView {
+        id: userList
         visible: portal.loadStatus === Enums.LoadStatusLoaded
-        anchors{ top: userDetailsColumn.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        anchors{
+            top: userDetailsColumn.bottom;
+            bottom: midLine.top
+            left: parent.left;
+            right: parent.right;
+            margins: 10 * scaleFactor
+        }
         spacing: 10 * scaleFactor
         clip: true
         model: detailNames.length
@@ -94,6 +101,68 @@ Rectangle {
         }
     }
 
+    Rectangle {
+        id: midLine
+        anchors {
+            verticalCenter: parent.verticalCenter
+            margins: 8 * scaleFactor
+            left: parent.left
+            right: parent.right
+        }
+        height: 4 * scaleFactor
+        visible: portal.loadStatus === Enums.LoadStatusLoaded
+        color: "lightgrey"
+    }
+
+    Column {
+        id: portalDetailsColumn
+        visible: portal.loadStatus === Enums.LoadStatusLoaded
+        anchors{ top: midLine.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        spacing: 10 * scaleFactor
+
+        Text {
+            text: portal.portalInfo ? portal.portalInfo.organizationName : ""
+            font.bold: true
+            font.pointSize: 15
+        }
+
+        Image {
+            source : /*portal.portalInfo ? portal.portalInfo.portalThumbnailUrl :*/ ""
+            height: 32 * scaleFactor
+            width: 32 * scaleFactor
+        }
+    }
+
+    property var infoLabels: ["Description", "Can Find External Content", "Can Share Items Externally"]
+    property var infoValues: ["organizationDescription", "canSearchPublic", "canSharePublic"]
+
+    ListView {
+        id: infoList
+        visible: portal.loadStatus === Enums.LoadStatusLoaded
+        anchors{
+            top: portalDetailsColumn.bottom;
+            bottom: parent.bottom
+            left: parent.left;
+            right: parent.right;
+            margins: 10 * scaleFactor
+        }
+        spacing: 10 * scaleFactor
+        clip: true
+        model: infoValues.length
+
+        delegate: Column {
+            Text {
+                text: portal.portalInfo ? infoLabels[index] : ""
+                font.bold: true
+            }
+
+            Text {
+                text: portal.portalInfo ? portal.portalInfo[infoValues[index]] : ""
+                color: "grey"
+            }
+        }
+    }
+
     //! [PortalUserInfo create portal]
     Portal {
         id: portal
@@ -104,10 +173,7 @@ Rectangle {
             }
         }
 
-        Component.onCompleted: {
-            AuthenticationManager.credentialCacheEnabled = false;
-            load();
-        }
+        Component.onCompleted: load();
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusFailedToLoad)
@@ -119,7 +185,6 @@ Rectangle {
         id: authView
         authenticationManager: AuthenticationManager
     }
-
     //! [PortalUserInfo create portal]
 
     // Neatline rectangle
