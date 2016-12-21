@@ -22,13 +22,15 @@
 #include "PortalQueryParametersForItems.h"
 #include "SearchForWebmap.h"
 
+#include <QDate>
+
 using namespace Esri::ArcGISRuntime;
 
 SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */):
     QQuickItem(parent),
     m_map(nullptr),
     m_mapView(nullptr),
-    m_portal(new Portal(new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this), this)),
+    m_portal(new Portal(this)),
     m_webmapResults(nullptr),
     m_webmaps(nullptr),
     m_selectedItem(nullptr),
@@ -90,9 +92,18 @@ QString SearchForWebmap::mapLoadError() const
 void SearchForWebmap::search(const QString keyword)
 {
     //! [SearchForWebmap CPP Portal find items]
+    // webmaps authored prior to July 2nd, 2014 are not supported - so search only from that date to the current time
+    QString fromDate = QString("000000%1").arg(QDateTime(QDate(2014, 7, 2)).toTime_t());
+    QString toDate = QString("000000%1").arg(QDateTime::currentDateTime().toTime_t());
+
     PortalQueryParametersForItems query;
-    query.setSearchString(QString("tags:\"%1\"").arg(keyword));
+    query.setSearchString(QString("tags:\"%1\" AND +uploaded:[%2 TO %3]")
+                          .arg(keyword)
+                          .arg(fromDate)
+                          .arg(toDate));
     query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
+    qDebug() << query.query();
+
     m_portal->findItems(query);
     //! [SearchForWebmap CPP Portal find items]
 

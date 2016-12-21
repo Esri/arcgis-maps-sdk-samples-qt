@@ -46,7 +46,7 @@ SearchForWebmapSample {
         Rectangle {
             anchors.margins: 25
             width: webmapsList.width
-            height: 24 * scaleFactor
+            height: 32 * scaleFactor
             border.color: "white"
             border.width: 2 * scaleFactor
             color: index === webmapsList.currentIndex ? "orange" : "lightgrey"
@@ -54,7 +54,10 @@ SearchForWebmapSample {
 
             //! [PortalItemListModel example QML delegate]
             Text {
-                anchors{fill: parent; margins: 10}
+                anchors{
+                    fill: parent;
+                    margins: 10
+                }
                 text: title // access the title role of the model
                 color: "white"
                 elide: Text.ElideRight
