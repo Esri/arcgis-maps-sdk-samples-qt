@@ -102,7 +102,6 @@ void SearchForWebmap::search(const QString keyword)
                           .arg(fromDate)
                           .arg(toDate));
     query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
-    qDebug() << query.query();
 
     m_portal->findItems(query);
     //! [SearchForWebmap CPP Portal find items]
