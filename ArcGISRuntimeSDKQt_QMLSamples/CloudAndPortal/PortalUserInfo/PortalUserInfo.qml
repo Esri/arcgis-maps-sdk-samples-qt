@@ -42,7 +42,12 @@ Rectangle {
     Column {
         id: userDetailsColumn
         visible: portal.loadStatus === Enums.LoadStatusLoaded
-        anchors{ top: parent.top; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            margins: 10 * scaleFactor
+        }
         spacing: 10 * scaleFactor
 
         Text {
@@ -61,7 +66,7 @@ Rectangle {
     ListView {
         id: userList
         visible: portal.loadStatus === Enums.LoadStatusLoaded
-        anchors{
+        anchors {
             top: userDetailsColumn.bottom;
             bottom: midLine.top
             left: parent.left;
@@ -117,7 +122,12 @@ Rectangle {
     Column {
         id: portalDetailsColumn
         visible: portal.loadStatus === Enums.LoadStatusLoaded
-        anchors{ top: midLine.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        anchors {
+            top: midLine.bottom
+            left: parent.left
+            right: parent.right
+            margins: 10 * scaleFactor
+        }
         spacing: 10 * scaleFactor
 
         Text {
@@ -127,7 +137,7 @@ Rectangle {
         }
 
         Image {
-            source : /*portal.portalInfo ? portal.portalInfo.portalThumbnailUrl :*/ ""
+            source : portal.portalInfo ? portal.portalInfo.portalThumbnailUrl : ""
             height: 32 * scaleFactor
             width: 32 * scaleFactor
         }
@@ -139,11 +149,11 @@ Rectangle {
     ListView {
         id: infoList
         visible: portal.loadStatus === Enums.LoadStatusLoaded
-        anchors{
-            top: portalDetailsColumn.bottom;
+        anchors {
+            top: portalDetailsColumn.bottom
             bottom: parent.bottom
-            left: parent.left;
-            right: parent.right;
+            left: parent.left
+            right: parent.right
             margins: 10 * scaleFactor
         }
         spacing: 10 * scaleFactor

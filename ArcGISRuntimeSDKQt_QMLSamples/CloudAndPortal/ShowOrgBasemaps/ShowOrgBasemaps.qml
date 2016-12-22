@@ -232,7 +232,7 @@ Rectangle {
 
     Button {
         id: anonymousLogIn
-        anchors{
+        anchors {
             margins: 16 * scaleFactor
             horizontalCenter: parent.horizontalCenter
             top: title.bottom
@@ -249,7 +249,7 @@ Rectangle {
 
     Button {
         id: userLogIn
-        anchors{
+        anchors {
             margins: 16 * scaleFactor
             horizontalCenter: anonymousLogIn.horizontalCenter
             top: anonymousLogIn.bottom

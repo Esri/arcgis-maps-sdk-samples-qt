@@ -41,7 +41,12 @@ PortalUserInfoSample {
     Column {
         id: userDetailsColumn
         visible: loaded
-        anchors{ top: parent.top; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            margins: 10 * scaleFactor
+        }
         spacing: 10 * scaleFactor
 
         Text {
@@ -59,7 +64,7 @@ PortalUserInfoSample {
 
     ListView {
         visible: loaded
-        anchors{
+        anchors {
             top: userDetailsColumn.bottom
             bottom: midLine.top
             left: parent.left
@@ -99,7 +104,12 @@ PortalUserInfoSample {
     Column {
         id: portalDetailsColumn
         visible: loaded
-        anchors{ top: midLine.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        anchors {
+            top: midLine.bottom
+            left: parent.left
+            right: parent.right
+            margins: 10 * scaleFactor
+        }
         spacing: 10 * scaleFactor
 
         Text {
@@ -121,11 +131,11 @@ PortalUserInfoSample {
     ListView {
         id: infoList
         visible: loaded
-        anchors{
-            top: portalDetailsColumn.bottom;
+        anchors {
+            top: portalDetailsColumn.bottom
             bottom: parent.bottom
-            left: parent.left;
-            right: parent.right;
+            left: parent.left
+            right: parent.right
             margins: 10 * scaleFactor
         }
         spacing: 10 * scaleFactor

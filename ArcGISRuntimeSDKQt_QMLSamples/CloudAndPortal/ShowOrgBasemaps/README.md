@@ -6,7 +6,7 @@ This sample demonstrates how to load a Portal and then use the organization's pr
 
 ##How it works
 1. The user is prompted to load a portal anonymously or with a log-in.
-2. A `Portal` is then loaded - if the user chose to authenticate this uses a `Credential` of type OAuth.
+2. A `Portal` is then loaded - if the user chose to log-in in step 1, this uses a `Credential` of type OAuth.
 3. When the app starts, the portal is loaded and if required, the `AuthenticationManager` issues a challenge for the supplied credential type.
 4. The user is presented with an `AuthenticationView` which allows them to log-in
 5. After a successful load, a request is made to `fetchBasemaps` from the portal instance.

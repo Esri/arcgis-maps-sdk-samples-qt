@@ -139,7 +139,7 @@ Rectangle {
 
             //! [PortalItemListModel example QML delegate]
             Text {
-                anchors{
+                anchors {
                     fill: parent;
                     margins: 10
                 }
@@ -170,7 +170,10 @@ Rectangle {
             radius: 4
 
             Text {
-                anchors{fill: parent; margins: 10}
+                anchors {
+                    fill: parent
+                    margins: 10
+                }
                 text: webmapsList.model.count > 0 ? webmapsList.model.get(webmapsList.currentIndex).title : ""
                 font.bold: true
                 elide: Text.ElideRight

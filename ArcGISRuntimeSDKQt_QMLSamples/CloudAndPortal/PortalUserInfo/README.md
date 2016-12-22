@@ -23,8 +23,8 @@ Similarly, the `portalInfo` property is used to populate:
  - `organizationName`
  - `organizationDescription`
  - `thumbnailUrl`
- - `isCanSearchPublic`
- - `isCanSharePublic`
+ - `canSearchPublic`
+ - `canSharePublic`
  
 ##Features
 - Portal

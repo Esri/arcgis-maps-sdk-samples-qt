@@ -54,7 +54,7 @@ SearchForWebmapSample {
 
             //! [PortalItemListModel example QML delegate]
             Text {
-                anchors{
+                anchors {
                     fill: parent;
                     margins: 10
                 }
