@@ -42,20 +42,19 @@ Rectangle {
 
     BusyIndicator {
         anchors.centerIn: parent
-        running: !mapView.visible && portal.loadStatus !== Enums.LoadStatusLoaded;
+        running: !anonymousLogIn.visible && !mapView.visible && portal.loadStatus !== Enums.LoadStatusLoaded;
+    }
+
+    Credential {
+        id: oAuthCredential
+        oAuthClientInfo: OAuthClientInfo {
+            oAuthMode: Enums.OAuthModeUser
+            clientId: "W3hPKzPbeJ0tr8aj"
+        }
     }
 
     Portal {
         id: portal
-
-        credential: Credential {
-            oAuthClientInfo: OAuthClientInfo {
-                oAuthMode: Enums.OAuthModeUser
-                clientId: "W3hPKzPbeJ0tr8aj"
-            }
-        }
-
-        Component.onCompleted: load();
 
         //! [Portal fetchBasemaps after loaded]
         onLoadStatusChanged: {
@@ -92,7 +91,8 @@ Rectangle {
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignTop
-        text: porInfo ? porInfo.organizationName + " Basemaps" : "Loading Organization Basemaps..."
+        text: anonymousLogIn.visible ? "Load Portal" :
+                                       porInfo ? porInfo.organizationName + " Basemaps" : "Loading Organization Basemaps..."
         wrapMode: Text.Wrap
         elide: Text.ElideRight
     }
@@ -106,6 +106,25 @@ Rectangle {
             right: parent.right
         }
         visible: false
+    }
+
+    Button {
+        id: backButton
+        anchors {
+            top: mapView.top
+            right: mapView.right
+            margins: 16 * scaleFactor
+        }
+        visible: mapView.visible
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
+        text: "Back"
+        opacity: hovered ? 1 : 0.5
+
+        onClicked: {
+            mapView.visible = false;
+            basemapsGrid.enabled = true;
+            gridFadeIn.running = true;
+        }
     }
 
     GridView {
@@ -208,6 +227,42 @@ Rectangle {
             to: 0;
             duration: 2000
             running: false
+        }
+    }
+
+    Button {
+        id: anonymousLogIn
+        anchors {
+            margins: 16 * scaleFactor
+            horizontalCenter: parent.horizontalCenter
+            top: title.bottom
+        }
+        text: "Anonymous"
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
+
+        onClicked: {
+            portal.load();
+            anonymousLogIn.visible = false;
+            userLogIn.visible = false;
+        }
+    }
+
+    Button {
+        id: userLogIn
+        anchors {
+            margins: 16 * scaleFactor
+            horizontalCenter: anonymousLogIn.horizontalCenter
+            top: anonymousLogIn.bottom
+        }
+        width: anonymousLogIn.width
+        text: "Sign-in"
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
+
+        onClicked: {
+            portal.credential = oAuthCredential;
+            portal.load();
+            anonymousLogIn.visible = false;
+            userLogIn.visible = false;
         }
     }
 

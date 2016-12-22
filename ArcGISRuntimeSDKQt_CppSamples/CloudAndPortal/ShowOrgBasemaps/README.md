@@ -5,14 +5,16 @@ This sample demonstrates how to load a Portal and then use the organization's pr
 ![](screenshot.png)
 
 ##How it works
-1. A `Portal` is constructed using a `Credential` of type OAuth.
-2. When the app starts, the portal is loaded and the `AuthenticationManager` then issues a challenge for the supplied credential type.
-3. The user is presented with an `AuthenticationView` which allows them to log-in
-4. After a successful load, a request is made to `fetchBasemaps` from the portal instance.
-5. When the basemaps are successfully retrieved, the portal's `BasemapListModel` is passed to a QML `ListView`.
-6. A delegate shows each basemap's `title` and thumbnail image.
-7. When the user double-clicks on a `Basemap` in the list, a `Map` is created using this (unloaded) item.
-8. The map is then loaded and once the operation is complete it is set on a `MapView` to show the user's selected basemap
+1. The user is prompted to load a portal anonymously or with a log-in.
+2. A `Portal` is then loaded - if the user chose to load with a log-in in step 1 this uses a `Credential` of type OAuth.
+3. When the app starts, the portal is loaded and if required, the `AuthenticationManager` issues a challenge for the supplied credential type.
+4. The user is presented with an `AuthenticationView` which allows them to log-in
+5. After a successful load, a request is made to `fetchBasemaps` from the portal instance.
+6. When the basemaps are successfully retrieved, the portal's `BasemapListModel` is passed to a QML `GridView`.
+7. A delegate shows each basemap's `title` and thumbnail image.
+8. When the user double-clicks on a `Basemap` in the list, a `Map` is created using this (unloaded) item.
+9. The map is then loaded and once the operation is complete it is set on a `MapView` to show the user's selected basemap
+10. A back button allows the user to return to the list of basemaps.
 
 ##Features
 - Portal

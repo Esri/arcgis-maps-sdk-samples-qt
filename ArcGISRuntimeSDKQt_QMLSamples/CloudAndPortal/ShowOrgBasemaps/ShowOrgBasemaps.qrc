@@ -4,5 +4,8 @@
         <file>ShowOrgBasemaps.png</file>
         <file>ShowOrgBasemaps.qml</file>
         <file>ShowOrgBasemaps.html</file>
+        <file>ic_menu_back_dark.png</file>
+        <file>ic_menu_account_dark.png</file>
+        <file>ic_menu_help_dark.png</file>
     </qresource>
 </RCC>

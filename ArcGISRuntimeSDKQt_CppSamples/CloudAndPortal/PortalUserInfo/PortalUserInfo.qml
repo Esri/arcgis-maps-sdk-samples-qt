@@ -41,7 +41,12 @@ PortalUserInfoSample {
     Column {
         id: userDetailsColumn
         visible: loaded
-        anchors{ top: parent.top; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            margins: 10 * scaleFactor
+        }
         spacing: 10 * scaleFactor
 
         Text {
@@ -59,7 +64,13 @@ PortalUserInfoSample {
 
     ListView {
         visible: loaded
-        anchors{ top: userDetailsColumn.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        anchors {
+            top: userDetailsColumn.bottom
+            bottom: midLine.top
+            left: parent.left
+            right: parent.right
+            margins: 10 * scaleFactor
+        }
         spacing: 10 * scaleFactor
         clip: true
         model: detailNames.length
@@ -72,6 +83,73 @@ PortalUserInfoSample {
 
             Text {
                 text: rootRectangle[detailValue[index]]
+                color: "grey"
+            }
+        }
+    }
+
+    Rectangle {
+        id: midLine
+        anchors {
+            verticalCenter: parent.verticalCenter
+            margins: 8 * scaleFactor
+            left: parent.left
+            right: parent.right
+        }
+        height: 4 * scaleFactor
+        visible: loaded
+        color: "lightgrey"
+    }
+
+    Column {
+        id: portalDetailsColumn
+        visible: loaded
+        anchors {
+            top: midLine.bottom
+            left: parent.left
+            right: parent.right
+            margins: 10 * scaleFactor
+        }
+        spacing: 10 * scaleFactor
+
+        Text {
+            text: orgTitle
+            font.bold: true
+            font.pointSize: 15
+        }
+
+        Image {
+            source : orgThumbnailUrl
+            height: 32 * scaleFactor
+            width: 32 * scaleFactor
+        }
+    }
+
+    property var infoLabels: ["Description", "Can Find External Content", "Can Share Items Externally"]
+    property var infoValues: ["orgDescription", "canSearchPublic", "canSharePublic"]
+
+    ListView {
+        id: infoList
+        visible: loaded
+        anchors {
+            top: portalDetailsColumn.bottom
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+            margins: 10 * scaleFactor
+        }
+        spacing: 10 * scaleFactor
+        clip: true
+        model: infoValues.length
+
+        delegate: Column {
+            Text {
+                text: loaded ? infoLabels[index] : ""
+                font.bold: true
+            }
+
+            Text {
+                text: rootRectangle[infoValues[index]]
                 color: "grey"
             }
         }

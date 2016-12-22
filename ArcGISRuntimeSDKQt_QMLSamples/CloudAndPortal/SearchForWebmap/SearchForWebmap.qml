@@ -85,22 +85,20 @@ Rectangle {
     }
 
     //! [Portal findItems webmaps part 1]
+    // webmaps authored prior to July 2nd, 2014 are not supported - so search only from that date to the current time
+    property string fromDate: "000000" + new Date('Wed, 02 Jul 2014 00:00:00 GMT').getTime()
+    property string toDate: "000000" + new Date().getTime()
+
     PortalQueryParametersForItems {
         id: webmapQuery
         types: [ Enums.PortalItemTypeWebMap ]
-        searchString: "tags:\"" + keyWordField.text + "\"";
+
+        searchString: 'tags:\"' + keyWordField.text + '\" AND + uploaded:[' + fromDate + ' TO ' + toDate +']';
     }
     //! [Portal findItems webmaps part 1]
 
     Portal {
         id: portal
-        loginRequired: true
-        credential: Credential {
-            oAuthClientInfo: OAuthClientInfo {
-                oAuthMode: Enums.OAuthModeUser
-                clientId: "W3hPKzPbeJ0tr8aj"
-            }
-        }
 
         Component.onCompleted: load();
 
@@ -141,7 +139,10 @@ Rectangle {
 
             //! [PortalItemListModel example QML delegate]
             Text {
-                anchors{fill: parent; margins: 10}
+                anchors {
+                    fill: parent;
+                    margins: 10
+                }
                 text: title
                 color: "white"
                 elide: Text.ElideRight
@@ -169,7 +170,10 @@ Rectangle {
             radius: 4
 
             Text {
-                anchors{fill: parent; margins: 10}
+                anchors {
+                    fill: parent
+                    margins: 10
+                }
                 text: webmapsList.model.count > 0 ? webmapsList.model.get(webmapsList.currentIndex).title : ""
                 font.bold: true
                 elide: Text.ElideRight
