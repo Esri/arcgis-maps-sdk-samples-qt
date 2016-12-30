@@ -131,12 +131,35 @@ bool FeatureLayerQuery::layerInitialized() const
     return m_initialized;
 }
 
-void FeatureLayerQuery::runQuery(QString whereClause)
+void FeatureLayerQuery::runQuery(const QString& stateName)
 {
     // create a query parameter object and set the where clause
     QueryParameters queryParams;
-    queryParams.setWhereClause(QString("STATE_NAME LIKE \'" + whereClause.toUpper() + "%\'"));
-    m_featureTable->queryFeatures(queryParams);
+    queryParams.setWhereClause(QString("STATE_NAME LIKE \'" + formatStateNameForQuery(stateName) + "%\'"));
+    m_featureTable->queryFeatures(queryParams, QueryFeatureFields::LoadAll);
+}
+
+QString FeatureLayerQuery::formatStateNameForQuery(const QString& stateName) const
+{
+    // format state names as expected by the service, for instance "Rhode Island"
+    if (stateName.isEmpty())
+        return QString();
+
+    QString stateNameFomatted;
+    QStringList words = stateName.split(" ", QString::SkipEmptyParts);
+
+    for (const auto& word : words)
+    {
+        stateNameFomatted += word[0].toUpper();
+        for (int i = 1; i < word.size(); i++)
+        {
+            stateNameFomatted += word[i].toLower();
+        }
+
+        stateNameFomatted += " ";
+    }
+
+    return stateNameFomatted.trimmed();
 }
 
 int FeatureLayerQuery::queryResultsCount() const

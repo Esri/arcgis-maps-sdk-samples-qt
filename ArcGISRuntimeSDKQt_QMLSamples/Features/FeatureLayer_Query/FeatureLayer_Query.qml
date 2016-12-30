@@ -166,9 +166,29 @@ Rectangle {
     // function to form and execute the query
     function query() {
         // set the where clause
-        params.whereClause = "STATE_NAME LIKE \'" + findText.text.toUpperCase() + "%\'";
+        params.whereClause = "STATE_NAME LIKE \'" + formatStateNameForQuery(findText.text) + "%\'";
 
         // start the query
         featureTable.queryFeatures(params);
+    }
+
+    function formatStateNameForQuery(stateName) {
+        // format state names as expected by the service, for instance "Rhode Island"
+        if (stateName === "")
+            return "";
+
+        var stateNameFormatted = "";
+
+        var words = stateName.split(" ");
+        words.forEach(function(word) {
+            stateNameFormatted += word.charAt(0).toUpperCase();
+            for (var i = 1; i < word.length; ++i) {
+                stateNameFormatted += word.charAt(i).toLowerCase();
+            }
+
+            stateNameFormatted += " ";
+        });
+
+        return stateNameFormatted.trim();
     }
 }
