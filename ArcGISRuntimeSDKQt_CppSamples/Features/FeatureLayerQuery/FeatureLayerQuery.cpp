@@ -136,7 +136,7 @@ void FeatureLayerQuery::runQuery(const QString& stateName)
     // create a query parameter object and set the where clause
     QueryParameters queryParams;
     queryParams.setWhereClause(QString("STATE_NAME LIKE \'" + formatStateNameForQuery(stateName) + "%\'"));
-    m_featureTable->queryFeatures(queryParams, QueryFeatureFields::LoadAll);
+    m_featureTable->queryFeatures(queryParams);
 }
 
 QString FeatureLayerQuery::formatStateNameForQuery(const QString& stateName) const
