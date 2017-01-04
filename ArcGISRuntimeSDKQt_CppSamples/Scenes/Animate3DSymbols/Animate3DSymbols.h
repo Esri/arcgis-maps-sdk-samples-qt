@@ -88,11 +88,9 @@ signals:
   void nextFrameRequested();
 
 private:
-  void createModel3d();
   void createModel2d(Esri::ArcGISRuntime::GraphicsOverlay* mapOverlay);
   void createRoute2d(Esri::ArcGISRuntime::GraphicsOverlay* mapOverlay);
   void createGraphic3D();
-  void clearGraphic3D();
 
   static const QString HEADING;
   static const QString ROLL;

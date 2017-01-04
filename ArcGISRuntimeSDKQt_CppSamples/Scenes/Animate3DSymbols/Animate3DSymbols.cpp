@@ -115,7 +115,7 @@ void Animate3DSymbols::componentComplete()
 
   // create a new graphics overlay and add it to the sceneview
   GraphicsOverlay* sceneOverlay = new GraphicsOverlay(this);
-  sceneOverlay->sceneProperties().setSurfacePlacement(SurfacePlacement::Absolute);
+  sceneOverlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Absolute));
   m_sceneView->graphicsOverlays()->append(sceneOverlay);
 
   SimpleRenderer* renderer3D = new SimpleRenderer(this);
@@ -140,6 +140,9 @@ void Animate3DSymbols::componentComplete()
 
   // set up route graphic
   createRoute2d(mapOverlay);
+
+  // set up overlay 2D graphic
+  createModel2d(mapOverlay);
 }
 
 void Animate3DSymbols::setMissionFrame(int newFrame)
@@ -181,6 +184,9 @@ void Animate3DSymbols::animate()
     m_graphic3d->attributes()->replaceAttribute(HEADING, dp.m_heading);
     m_graphic3d->attributes()->replaceAttribute(PITCH, dp.m_pitch);
     m_graphic3d->attributes()->replaceAttribute(ROLL, dp.m_roll);
+
+    // move 2D graphic to the new position
+    m_graphic2d->setGeometry(dp.m_pos);
   }
 
   // increment the frame count
@@ -213,7 +219,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
     Camera camera(dp.m_pos, m_camHandler->m_zoomDist, dp.m_heading, m_camHandler->m_angle, dp.m_roll);
     m_sceneView->setViewpointCameraAndWait(camera);
     m_mapView->setViewpointAndWait(Viewpoint(m_routeGraphic->geometry()));
-    createModel3d();
+    createGraphic3D();
   }
 
   emit missionReadyChanged();
@@ -230,49 +236,13 @@ void Animate3DSymbols::setAngle(double angle)
   m_camHandler->setAngle(angle);
 }
 
-void Animate3DSymbols::clearGraphic3D()
-{
-  if (m_graphic3d == nullptr)
-    return;
-
-  if (m_sceneView->graphicsOverlays()->size() > 0 && m_sceneView->graphicsOverlays()->at(0))
-    m_sceneView->graphicsOverlays()->at(0)->graphics()->clear();
-
-  delete m_graphic3d;
-  m_graphic3d = nullptr;
-}
-
-void Animate3DSymbols::createModel3d()
-{
-  // load the ModelSceneSymbol to be animated in the 3d view
-  if (m_model3d == nullptr)
-  {
-    m_model3d = new ModelSceneSymbol(QUrl(m_dataPath + "/Bristol/Collada/Bristol.dae"), 10.0f, this);
-  }
-
-  // when the model is successfully loaded, setup the 3g draphic to show it it the scene
-  connect(m_model3d, &ModelSceneSymbol::loadStatusChanged, this, [this]()
-    {
-      if (m_model3d->loadStatus() == LoadStatus::Loaded)
-        createGraphic3D();
-    }
-  );
-
-  if (m_model3d->loadStatus() == LoadStatus::Loaded)
-    createGraphic3D(); // if the model is already loaded just recreate the graphic
-  else
-    m_model3d->load(); // if the model has not been loaded before, call load
-}
-
 void Animate3DSymbols::createModel2d(GraphicsOverlay *mapOverlay)
 {
   // create a blue triangle symbol to represent the plane on the mini map
   SimpleMarkerSymbol* plane2DSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, Qt::blue, 10, this);
 
-  // create a graphic with the symbol and attributes
-  QVariantMap attributes;
-  attributes.insert(ANGLE, 0.f);
-  m_graphic2d = new Graphic(Point(0, 0, SpatialReference::wgs84()), attributes, plane2DSymbol, this);
+  // create a graphic with the symbol
+  m_graphic2d = new Graphic(Point(0, 0, SpatialReference::wgs84()), plane2DSymbol, this);
   mapOverlay->graphics()->append(m_graphic2d);
 }
 
@@ -287,22 +257,40 @@ void Animate3DSymbols::createRoute2d(GraphicsOverlay* mapOverlay)
 
 void Animate3DSymbols::createGraphic3D()
 {
-  if (m_model3d == nullptr || !missionReady())
+  if (!missionReady())
     return;
 
-  clearGraphic3D();
+  // create the ModelSceneSymbol to be animated in the 3d view
+  if (!m_model3d)
+  {
+    m_model3d = new ModelSceneSymbol(QUrl(m_dataPath + "/Bristol/Collada/Bristol.dae"), 10.0f, this);
+  }
 
   // get the mission data for the frame
   const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
 
-  // create a graphic using the model symbol
-  m_graphic3d = new Graphic(dp.m_pos, m_model3d, this);
-  m_graphic3d->attributes()->insertAttribute(HEADING, dp.m_heading);
-  m_graphic3d->attributes()->insertAttribute(PITCH, dp.m_pitch);
-  m_graphic3d->attributes()->insertAttribute(ROLL, dp.m_roll);
+  if (!m_graphic3d)
+  {
+    // create a graphic using the model symbol
+    m_graphic3d = new Graphic(dp.m_pos, m_model3d, this);
+    m_graphic3d->attributes()->insertAttribute(HEADING, dp.m_heading);
+    m_graphic3d->attributes()->insertAttribute(PITCH, dp.m_pitch);
+    m_graphic3d->attributes()->insertAttribute(ROLL, dp.m_roll);
 
-  // add the graphic to the graphics overlay
-  m_sceneView->graphicsOverlays()->at(0)->graphics()->append(m_graphic3d);
+    // add the graphic to the graphics overlay
+    m_sceneView->graphicsOverlays()->at(0)->graphics()->append(m_graphic3d);
+  }
+  else
+  {
+    // update existing graphic's geometry and attributes
+    m_graphic3d->setGeometry(dp.m_pos);
+    m_graphic3d->attributes()->replaceAttribute(HEADING, dp.m_heading);
+    m_graphic3d->attributes()->replaceAttribute(PITCH, dp.m_pitch);
+    m_graphic3d->attributes()->replaceAttribute(ROLL, dp.m_roll);
+  }
+
+  // move 2D graphic to the new position
+  m_graphic2d->setGeometry(dp.m_pos);
 }
 
 void Animate3DSymbols::setFollowing(bool following)
