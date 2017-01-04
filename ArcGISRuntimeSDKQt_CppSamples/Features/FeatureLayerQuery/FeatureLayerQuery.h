@@ -42,7 +42,7 @@ public:
     ~FeatureLayerQuery();
 
     void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void runQuery(QString whereClause);
+    Q_INVOKABLE void runQuery(const QString& stateName);
 
 signals:
     void layerInitializedChanged();
@@ -54,6 +54,8 @@ private:
     int queryResultsCount() const;
 
 private:
+    QString formatStateNameForQuery(const QString& stateName) const;
+
     Esri::ArcGISRuntime::Map* m_map;
     Esri::ArcGISRuntime::MapQuickView* m_mapView;
     Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;

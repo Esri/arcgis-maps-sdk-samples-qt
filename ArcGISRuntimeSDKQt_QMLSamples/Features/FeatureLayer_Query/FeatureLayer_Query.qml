@@ -166,9 +166,25 @@ Rectangle {
     // function to form and execute the query
     function query() {
         // set the where clause
-        params.whereClause = "STATE_NAME LIKE \'" + findText.text.toUpperCase() + "%\'";
+        params.whereClause = "STATE_NAME LIKE '" + formatStateNameForQuery(findText.text) + "%'";
 
         // start the query
         featureTable.queryFeatures(params);
+    }
+
+    function formatStateNameForQuery(stateName) {
+        // format state names as expected by the service, for instance "Rhode Island"
+        if (stateName === "")
+            return "";
+
+        var formattedWords = [];
+
+        var lowerStateName = stateName.toLowerCase();
+        var words = lowerStateName.split(" ");
+        words.forEach(function(word) {
+            formattedWords.push(word.charAt(0).toUpperCase() + word.slice(1));
+        });
+
+        return formattedWords.join(" ");
     }
 }
