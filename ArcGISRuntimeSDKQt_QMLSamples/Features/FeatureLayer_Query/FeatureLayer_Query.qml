@@ -166,7 +166,7 @@ Rectangle {
     // function to form and execute the query
     function query() {
         // set the where clause
-        params.whereClause = "STATE_NAME LIKE \'" + formatStateNameForQuery(findText.text) + "%\'";
+        params.whereClause = "STATE_NAME LIKE '" + formatStateNameForQuery(findText.text) + "%'";
 
         // start the query
         featureTable.queryFeatures(params);
@@ -177,18 +177,14 @@ Rectangle {
         if (stateName === "")
             return "";
 
-        var stateNameFormatted = "";
+        var formattedWords = [];
 
-        var words = stateName.split(" ");
+        var lowerStateName = stateName.toLowerCase();
+        var words = lowerStateName.split(" ");
         words.forEach(function(word) {
-            stateNameFormatted += word.charAt(0).toUpperCase();
-            for (var i = 1; i < word.length; ++i) {
-                stateNameFormatted += word.charAt(i).toLowerCase();
-            }
-
-            stateNameFormatted += " ";
+            formattedWords.push(word.charAt(0).toUpperCase() + word.slice(1));
         });
 
-        return stateNameFormatted.trim();
+        return formattedWords.join(" ");
     }
 }

@@ -135,7 +135,7 @@ void FeatureLayerQuery::runQuery(const QString& stateName)
 {
     // create a query parameter object and set the where clause
     QueryParameters queryParams;
-    queryParams.setWhereClause(QString("STATE_NAME LIKE \'" + formatStateNameForQuery(stateName) + "%\'"));
+    queryParams.setWhereClause(QString("STATE_NAME LIKE '" + formatStateNameForQuery(stateName) + "%'"));
     m_featureTable->queryFeatures(queryParams);
 }
 
@@ -145,21 +145,17 @@ QString FeatureLayerQuery::formatStateNameForQuery(const QString& stateName) con
     if (stateName.isEmpty())
         return QString();
 
-    QString stateNameFomatted;
     QStringList words = stateName.split(" ", QString::SkipEmptyParts);
+    QStringList formattedWords;
 
-    for (const auto& word : words)
+    for (const QString& word : words)
     {
-        stateNameFomatted += word[0].toUpper();
-        for (int i = 1; i < word.size(); i++)
-        {
-            stateNameFomatted += word[i].toLower();
-        }
-
-        stateNameFomatted += " ";
+        QString formattedWord = word.toLower();
+        formattedWord[0] = formattedWord[0].toUpper();
+        formattedWords.append(formattedWord);
     }
 
-    return stateNameFomatted.trimmed();
+    return QString(formattedWords.join(" "));
 }
 
 int FeatureLayerQuery::queryResultsCount() const
