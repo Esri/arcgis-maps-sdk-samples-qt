@@ -61,7 +61,7 @@ void Symbols::componentComplete()
 
     // create a graphics overlay
     GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
-    graphicsOverlay->sceneProperties().setSurfacePlacement(SurfacePlacement::Absolute);
+    graphicsOverlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Absolute));
     // add the graphics overlay to the scene view
     m_sceneView->graphicsOverlays()->append(graphicsOverlay);
 
