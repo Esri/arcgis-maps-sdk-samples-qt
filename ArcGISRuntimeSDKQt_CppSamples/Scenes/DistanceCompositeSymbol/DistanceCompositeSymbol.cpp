@@ -67,7 +67,7 @@ void DistanceCompositeSymbol::componentComplete()
 
     // create a new graphics overlay and add it to the sceneview
     GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
-    graphicsOverlay->sceneProperties().setSurfacePlacement(SurfacePlacement::Relative);    
+    graphicsOverlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Relative));
     m_sceneView->graphicsOverlays()->append(graphicsOverlay);
 
     //! [create model scene symbol]
