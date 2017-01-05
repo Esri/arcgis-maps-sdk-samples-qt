@@ -115,7 +115,7 @@ void Animate3DSymbols::componentComplete()
 
   // create a new graphics overlay and add it to the sceneview
   GraphicsOverlay* sceneOverlay = new GraphicsOverlay(this);
-  sceneOverlay->sceneProperties().setSurfacePlacement(SurfacePlacement::Absolute);
+  sceneOverlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Absolute));
   m_sceneView->graphicsOverlays()->append(sceneOverlay);
 
   SimpleRenderer* renderer3D = new SimpleRenderer(this);
