@@ -76,17 +76,17 @@ void Surface_Placement::addGraphicsOverlays()
 {
     // Graphics overlay with draped surface placement
     m_drapedOverlay = new GraphicsOverlay(this);
-    m_drapedOverlay->sceneProperties().setSurfacePlacement(SurfacePlacement::Draped);
+    m_drapedOverlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Draped));
     m_sceneView->graphicsOverlays()->append(m_drapedOverlay);
 
     // Graphics overlay with relative surface placement
     m_relativeOverlay = new GraphicsOverlay(this);
-    m_relativeOverlay->sceneProperties().setSurfacePlacement(SurfacePlacement::Relative);
+    m_relativeOverlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Relative));
     m_sceneView->graphicsOverlays()->append(m_relativeOverlay);
 
     // Graphics overlay with absolute surface placement
     m_absoluteOverlay = new GraphicsOverlay(this);
-    m_absoluteOverlay->sceneProperties().setSurfacePlacement(SurfacePlacement::Absolute);
+    m_absoluteOverlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Absolute));
     m_sceneView->graphicsOverlays()->append(m_absoluteOverlay);
 }
 
