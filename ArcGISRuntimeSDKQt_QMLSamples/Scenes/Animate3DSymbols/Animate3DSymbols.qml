@@ -409,11 +409,11 @@ Rectangle {
             graphic2d.symbol = plane2DSymbol;
 
             // add 3D plane graphic to the graphics overlay
-            graphicsOverlay.graphics.append(graphic2d);
+            //graphicsOverlay.graphics.append(graphic2d);
         }
 
         // update 2D plane graphic's geomtry
-        graphic2d.geometry = firstPos;
+        //graphic2d.geometry = firstPos;
 
         // set initial camera and map viewpoints
         setCamera(firstPos, firstData.heading);
@@ -430,7 +430,7 @@ Rectangle {
             graphic3d.attributes.replaceAttribute(pitchAtt, missionData.pitch);
             graphic3d.attributes.replaceAttribute(rollAtt, missionData.roll);
 
-            graphic2d.geometry = newPos;
+            //graphic2d.geometry = newPos;
 
             if (followButton.checked)
                 setCamera(newPos, missionData.heading);
