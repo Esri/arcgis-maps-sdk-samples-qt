@@ -186,7 +186,7 @@ void Animate3DSymbols::animate()
     m_graphic3d->attributes()->replaceAttribute(ROLL, dp.m_roll);
 
     // move 2D graphic to the new position
-    m_graphic2d->setGeometry(dp.m_pos);
+    //m_graphic2d->setGeometry(dp.m_pos);
   }
 
   // increment the frame count
@@ -243,7 +243,8 @@ void Animate3DSymbols::createModel2d(GraphicsOverlay *mapOverlay)
 
   // create a graphic with the symbol
   m_graphic2d = new Graphic(Point(0, 0, SpatialReference::wgs84()), plane2DSymbol, this);
-  mapOverlay->graphics()->append(m_graphic2d);
+  Q_UNUSED(mapOverlay)
+  //mapOverlay->graphics()->append(m_graphic2d);
 }
 
 void Animate3DSymbols::createRoute2d(GraphicsOverlay* mapOverlay)
@@ -290,7 +291,7 @@ void Animate3DSymbols::createGraphic3D()
   }
 
   // move 2D graphic to the new position
-  m_graphic2d->setGeometry(dp.m_pos);
+  //m_graphic2d->setGeometry(dp.m_pos);
 }
 
 void Animate3DSymbols::setFollowing(bool following)
