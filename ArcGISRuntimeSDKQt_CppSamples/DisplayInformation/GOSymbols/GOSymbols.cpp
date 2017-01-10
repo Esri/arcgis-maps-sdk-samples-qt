@@ -87,10 +87,10 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 {
     // create a list of points
     QList<Point> pointsList;
-    pointsList << Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84())
-             << Point(-2.6908416959572303, 56.06444173689877, SpatialReference::wgs84())
-             << Point(-2.6697273884990937, 56.064250073402874, SpatialReference::wgs84())
-             << Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84());
+    pointsList << Point(-2.712642647560347, 56.062812566811544, SpatialReference(4326))
+             << Point(-2.6908416959572303, 56.06444173689877, SpatialReference(4326))
+             << Point(-2.6697273884990937, 56.064250073402874, SpatialReference(4326))
+             << Point(-2.6395150461199726, 56.06127916736989, SpatialReference(4326));
 
     // create the symbology for the points
     SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10, this);
@@ -207,8 +207,8 @@ void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
     TextSymbol* textSymbolCraigleith = new TextSymbol(QString("Craigleith"), QColor("blue"), 10, HorizontalAlignment::Right, VerticalAlignment::Top, this);
 
     // geometry for the graphics
-    Point bassRock(-2.640631, 56.078083, SpatialReference::wgs84());
-    Point craigleith(-2.720324, 56.073569, SpatialReference::wgs84());
+    Point bassRock(-2.640631, 56.078083, SpatialReference(4326));
+    Point craigleith(-2.720324, 56.073569, SpatialReference(4326)));
 
     // create the graphics and set their symbology
     Graphic* graphicBass = new Graphic(bassRock, this);
@@ -227,7 +227,7 @@ void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
 // create the polygon geometry
 Geometry GOSymbols::createNestingGround()
 {
-    PolygonBuilder nestingGroundPolygonBuilder(SpatialReference::wgs84());
+    PolygonBuilder nestingGroundPolygonBuilder(SpatialReference(4326)));
 
     // create the polygon using the builder class
     nestingGroundPolygonBuilder.addPoint(-2.643077012566659, 56.077125346044475);

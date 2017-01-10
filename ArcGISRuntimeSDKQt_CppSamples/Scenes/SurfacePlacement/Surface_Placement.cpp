@@ -93,7 +93,7 @@ void Surface_Placement::addGraphicsOverlays()
 void Surface_Placement::addGraphics()
 {
     // create point for the graphics with z value of 1000
-    Point point(-4.04, 53.06, 1000, SpatialReference::wgs84());
+    Point point(-4.04, 53.06, 1000, SpatialReference(4326));
 
     // create simple marker symbol
     SimpleMarkerSymbol* simpleMarkerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 20, this);
