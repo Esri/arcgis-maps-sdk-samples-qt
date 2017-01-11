@@ -9,5 +9,7 @@
         <file>ic_menu_addencircled_dark.png</file>
         <file>ic_menu_checkedcircled_dark.png</file>
         <file>ic_menu_trash_dark.png</file>
+        <file>AddItemsToPortal.cpp</file>
+        <file>AddItemsToPortal.h</file>
     </qresource>
 </RCC>

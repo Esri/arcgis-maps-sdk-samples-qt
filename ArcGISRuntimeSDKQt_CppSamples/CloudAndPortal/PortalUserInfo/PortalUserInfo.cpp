@@ -169,7 +169,7 @@ QString PortalUserInfo::canSearchPublic() const
 QString PortalUserInfo::canSharePublic() const
 {
     if (m_portal->portalInfo())
-        return m_portal->portalInfo()->isCanShareBingPublic() ? "True" : "False";
+        return m_portal->portalInfo()->isCanSharePublic() ? "True" : "False";
 
     return "";
 }
