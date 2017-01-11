@@ -85,7 +85,7 @@ AnalyzeHotspotsSample {
                     margins: 5 * scaleFactor
                 }
                 source: "qrc:/Samples/Analysis/AnalyzeHotspots/calendar.png"
-                width: 24 * scaleFactor
+                width: 22 * scaleFactor
                 height: width
 
                 MouseArea {
@@ -116,7 +116,7 @@ AnalyzeHotspotsSample {
                     margins: 5 * scaleFactor
                 }
                 source: "qrc:/Samples/Analysis/AnalyzeHotspots/calendar.png"
-                width: 24 * scaleFactor
+                width: 22 * scaleFactor
                 height: width
 
                 MouseArea {
