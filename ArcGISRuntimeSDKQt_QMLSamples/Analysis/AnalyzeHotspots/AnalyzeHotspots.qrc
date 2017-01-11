@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/AnalyzeHotspots">
+        <file alias="sample.json">AnalyzeHotspots.json</file>
+        <file>AnalyzeHotspots.png</file>
+        <file>AnalyzeHotspots.qml</file>
+        <file>AnalyzeHotspots.html</file>
+        <file>calendar.png</file>
+    </qresource>
+</RCC>
