@@ -137,7 +137,7 @@ Rectangle {
         }
 
         Image {
-            source : portal.portalInfo ? portal.portalInfo.portalThumbnailUrl : ""
+            source : portal.portalInfo ? portal.portalInfo.thumbnailUrl : ""
             height: 32 * scaleFactor
             width: 32 * scaleFactor
         }
