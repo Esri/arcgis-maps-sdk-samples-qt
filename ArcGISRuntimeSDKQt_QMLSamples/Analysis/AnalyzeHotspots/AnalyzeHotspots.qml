@@ -352,7 +352,7 @@ Rectangle {
         // check that the to date is after the from date
         if (_fromDate > _toDate) {
             messageDialog.text = "Invalid date range.";
-            messageDialog.detailedText = "Please ensure the 'From' date preceeds the 'To' date."
+            messageDialog.detailedText = "Please ensure the 'From' date precedes the 'To' date."
             messageDialog.open();
             return false;
         }
