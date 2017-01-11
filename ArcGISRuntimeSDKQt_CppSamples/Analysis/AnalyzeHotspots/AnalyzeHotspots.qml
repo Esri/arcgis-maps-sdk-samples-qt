@@ -1,6 +1,6 @@
 // [WriteFile Name=AnalyzeHotspots, Category=Analysis]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -147,8 +147,8 @@ AnalyzeHotspotsSample {
                     return;
 
                 // format the date strings for the GP parameters
-                var fromDateString = getFormattedDateStringYYYYMMDD(_fromDate);
-                var toDateString = getFormattedDateStringYYYYMMDD(_toDate);
+                var fromDateString = _fromDate.yyyymmdd();
+                var toDateString = _toDate.yyyymmdd();
 
                 // Run the task
                 executeTaskWithDates(fromDateString, toDateString);
@@ -204,7 +204,7 @@ AnalyzeHotspotsSample {
             maximumDate: new Date(1998,4,31)
 
             onClicked: {
-                var formattedDate = getFormattedDateStringMMDDYYYY(selectedDate);
+                var formattedDate = selectedDate.mmddyyyy();
 
                 if (calendarOverlay.toOrFromDate === "from") {
                     fromDate.text = formattedDate;
@@ -227,34 +227,28 @@ AnalyzeHotspotsSample {
         return new Date(p[2], p[0]-1, p[1]);
     }
 
-    // function to convert date to formatted string MM/DD/YYYY
-    function getFormattedDateStringMMDDYYYY(date) {
+    Component.onCompleted: {
+        // function to convert date to formatted string MM/DD/YYYY
         Date.prototype.mmddyyyy = function() {
-          var mm = this.getMonth() + 1;
-          var dd = this.getDate();
+            var mm = this.getMonth() + 1;
+            var dd = this.getDate();
 
-          return [(mm > 9 ? "" : "0") + mm,
-                  (dd > 9 ? "" : "0") + dd,
-                  this.getFullYear()
-                 ].join("/");
+            return [(mm > 9 ? "" : "0") + mm,
+                    (dd > 9 ? "" : "0") + dd,
+                    this.getFullYear()
+                    ].join("/");
         };
 
-        return date.mmddyyyy();
-    }
-
-    // function to convert date to formatted string YYYY-MM-DD
-    function getFormattedDateStringYYYYMMDD(date) {
+        // function to convert date to formatted string YYYY-MM-DD
         Date.prototype.yyyymmdd = function() {
-          var mm = this.getMonth() + 1;
-          var dd = this.getDate();
+            var mm = this.getMonth() + 1;
+            var dd = this.getDate();
 
-          return [this.getFullYear(),
-                  (mm > 9 ? "" : "0") + mm,
-                  (dd > 9 ? "" : "0") + dd,
-                 ].join("-");
+            return [this.getFullYear(),
+                    (mm > 9 ? "" : "0") + mm,
+                    (dd > 9 ? "" : "0") + dd,
+                    ].join("-");
         };
-
-        return date.yyyymmdd();
     }
 
     // function to validate the date ranges provided

@@ -1,6 +1,6 @@
 // [WriteFile Name=AnalyzeHotspots, Category=Analysis]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ AnalyzeHotspots::AnalyzeHotspots(QQuickItem* parent /* = nullptr */):
   m_map(nullptr),
   m_mapView(nullptr),
   m_hotspotTask(nullptr),
-  m_job(nullptr),
   m_layer(nullptr),
   m_jobInProgress(false),
   m_jobStatus("Not started.")
@@ -73,12 +72,12 @@ void AnalyzeHotspots::executeTaskWithDates(const QString& fromDate, const QStrin
   GeoprocessingParameters hotspotParameters = createParameters(fromDate, toDate);
 
   // Create the GP Job and connect to the status signals
-  m_job = m_hotspotTask->createJob(hotspotParameters);
-  connect(m_job, &GeoprocessingJob::jobStatusChanged, this, [this]()
+  GeoprocessingJob* job = m_hotspotTask->createJob(hotspotParameters);
+  connect(job, &GeoprocessingJob::jobStatusChanged, this, [this, job]()
   {
-    switch (m_job->jobStatus()) {
+    switch (job->jobStatus()) {
     case JobStatus::Failed:
-      emit displayErrorDialog("Geoprocessing Task failed", !m_job->error().isEmpty() ? m_job->error().message() : "Unknown error.");
+      emit displayErrorDialog("Geoprocessing Task failed", !job->error().isEmpty() ? job->error().message() : "Unknown error.");
       m_jobInProgress = false;
       emit jobInProgressChanged();
       m_jobStatus = "Job failed";
@@ -102,7 +101,7 @@ void AnalyzeHotspots::executeTaskWithDates(const QString& fromDate, const QStrin
       m_jobStatus = "Job succeeded";
       emit jobStatusChanged();
       // handle the results
-      processResults(m_job->result());
+      processResults(job->result());
       break;
     default:
       break;
@@ -110,14 +109,14 @@ void AnalyzeHotspots::executeTaskWithDates(const QString& fromDate, const QStrin
   });
 
   // Start the job
-  m_job->start();
+  job->start();
   m_jobInProgress = true;
   emit jobInProgressChanged();
   m_jobStatus = "Job in progress...";
   emit jobStatusChanged();
 }
 
-GeoprocessingParameters AnalyzeHotspots::createParameters(const QString &fromDate, const QString &toDate)
+GeoprocessingParameters AnalyzeHotspots::createParameters(const QString& fromDate, const QString& toDate)
 {
   // Create the GeoprocessingParameters and set the execution type
   GeoprocessingParameters hotspotParameters = GeoprocessingParameters(GeoprocessingExecutionType::AsynchronousSubmit);

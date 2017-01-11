@@ -1,6 +1,6 @@
 // [WriteFile Name=AnalyzeHotspots, Category=Analysis]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ namespace Esri
     class Map;
     class MapQuickView;
     class GeoprocessingTask;
-    class GeoprocessingJob;
     class GeoprocessingResult;
     class ArcGISMapImageLayer;
   }
@@ -57,7 +56,6 @@ private:
   Esri::ArcGISRuntime::Map* m_map;
   Esri::ArcGISRuntime::MapQuickView* m_mapView;
   Esri::ArcGISRuntime::GeoprocessingTask* m_hotspotTask;
-  Esri::ArcGISRuntime::GeoprocessingJob* m_job;
   Esri::ArcGISRuntime::ArcGISMapImageLayer* m_layer;
   bool m_jobInProgress;
   QString m_jobStatus;

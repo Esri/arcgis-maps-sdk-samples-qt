@@ -1,6 +1,6 @@
 // [WriteFile Name=AnalyzeHotspots, Category=Analysis]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property var job
     property bool jobInProgress
-    property string statusText: ""
+    property string statusText: ""    
 
     // Declare the MapView with a Map and Basemap
     MapView {
@@ -224,8 +224,8 @@ Rectangle {
                     return;
 
                 // format the date strings for the GP parameters
-                var fromDateString = getFormattedDateStringYYYYMMDD(_fromDate);
-                var toDateString = getFormattedDateStringYYYYMMDD(_toDate);
+                var fromDateString = _fromDate.yyyymmdd();
+                var toDateString = _toDate.yyyymmdd();
 
                 // set up the GP Parameters
                 hotspotParameters.addParameter(fromDateString, toDateString);
@@ -281,7 +281,7 @@ Rectangle {
             maximumDate: new Date(1998,4,31)
 
             onClicked: {
-                var formattedDate = getFormattedDateStringMMDDYYYY(selectedDate);
+                var formattedDate = selectedDate.mmddyyyy();
 
                 if (calendarOverlay.toOrFromDate === "from") {
                     fromDate.text = formattedDate;
@@ -298,14 +298,8 @@ Rectangle {
         title: "Error"
     }
 
-    // function to get date from a string ex: 01/01/1998
-    function getFormattedDateFromString(dateString) {
-        var p = dateString.split("/");
-        return new Date(p[2], p[0]-1, p[1]);
-    }
-
-    // function to convert date to formatted string MM/DD/YYYY
-    function getFormattedDateStringMMDDYYYY(date) {
+    Component.onCompleted: {
+        // function to convert date to formatted string MM/DD/YYYY
         Date.prototype.mmddyyyy = function() {
             var mm = this.getMonth() + 1;
             var dd = this.getDate();
@@ -316,11 +310,7 @@ Rectangle {
                     ].join("/");
         };
 
-        return date.mmddyyyy();
-    }
-
-    // function to convert date to formatted string YYYY-MM-DD
-    function getFormattedDateStringYYYYMMDD(date) {
+        // function to convert date to formatted string YYYY-MM-DD
         Date.prototype.yyyymmdd = function() {
             var mm = this.getMonth() + 1;
             var dd = this.getDate();
@@ -330,9 +320,13 @@ Rectangle {
                     (dd > 9 ? "" : "0") + dd,
                     ].join("-");
         };
-
-        return date.yyyymmdd();
     }
+
+    // function to get date from a string ex: 01/01/1998
+    function getFormattedDateFromString(dateString) {
+        var p = dateString.split("/");
+        return new Date(p[2], p[0]-1, p[1]);
+    }   
 
     // function to validate the date ranges provided
     function validateDates(_fromDate, _toDate) {
