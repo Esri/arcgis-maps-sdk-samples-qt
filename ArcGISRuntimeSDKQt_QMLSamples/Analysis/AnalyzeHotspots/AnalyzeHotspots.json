@@ -1,0 +1,6 @@
+{
+    "source" :  "AnalyzeHotspots.qml",
+    "description" : "AnalyzeHotspots.html",
+    "thumbnail" : "AnalyzeHotspots.png",
+    "name" : "Analyze hotspots"
+}
