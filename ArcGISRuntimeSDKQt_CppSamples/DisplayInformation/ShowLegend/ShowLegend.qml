@@ -126,8 +126,8 @@ ShowLegendSample {
                         spacing: 5
                         anchors.verticalCenter: parent.verticalCenter
                         Image {
-                            width: Math.min(symbolWidth, 24) * scaleFactor
-                            height: Math.min(symbolHeight, 24) * scaleFactor
+                            width: symbolWidth
+                            height: symbolHeight
                             source: symbolUrl
                         }
                         Text {
