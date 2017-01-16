@@ -41,6 +41,9 @@ Rectangle {
                 return;
 
             statusBar.text = "Succesfully loaded item from portal." + itemToAdd.itemId
+        }
+
+        onItemIdChanged: {
             portalItemModel.setProperty(1, "value", itemToAdd.itemId);
         }
     }
