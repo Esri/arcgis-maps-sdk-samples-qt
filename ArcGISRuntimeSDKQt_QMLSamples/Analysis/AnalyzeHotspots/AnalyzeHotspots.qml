@@ -61,18 +61,18 @@ Rectangle {
                 if (job.jobStatus === Enums.JobStatusFailed) {
                     showErrorDialog(job.error);
                     jobInProgress = false;
-                    statusText = "Job failed."
+                    statusText = "Job failed.";
                 } else if (job.jobStatus === Enums.JobStatusStarted) {
                     jobInProgress = true;
-                    statusText = "Job in progress..."
+                    statusText = "Job in progress...";
                 } else if (job.jobStatus === Enums.JobStatusPaused) {
                     jobInProgress = false;
-                    statusText = "Job paused..."
+                    statusText = "Job paused...";
                 } else if (job.jobStatus === Enums.JobStatusSucceeded) {
                     // handle the results
                     processResults(job.result);
                     jobInProgress = false;
-                    statusText = "Job succeeded."
+                    statusText = "Job succeeded.";
                 }
             });
 
@@ -92,7 +92,8 @@ Rectangle {
         }
 
         function showErrorDialog(error) {
-            messageDialog.title = "Executing geoprocessing failed.";
+            messageDialog.title = "Error";
+            messageDialog.text = "Executing geoprocessing failed.";
             messageDialog.detailedText = error ? error.message : "Unknown error";
             messageDialog.open();
         }
