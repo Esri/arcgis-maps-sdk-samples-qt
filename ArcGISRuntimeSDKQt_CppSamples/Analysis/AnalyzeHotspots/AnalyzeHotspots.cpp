@@ -75,37 +75,34 @@ void AnalyzeHotspots::executeTaskWithDates(const QString& fromDate, const QStrin
   GeoprocessingJob* job = m_hotspotTask->createJob(hotspotParameters);
   connect(job, &GeoprocessingJob::jobStatusChanged, this, [this, job]()
   {
-    switch (job->jobStatus()) {
-    case JobStatus::Failed:
-      emit displayErrorDialog("Geoprocessing Task failed", !job->error().isEmpty() ? job->error().message() : "Unknown error.");
-      m_jobInProgress = false;
-      emit jobInProgressChanged();
-      m_jobStatus = "Job failed";
-      emit jobStatusChanged();
-      break;
-    case JobStatus::Started:
-      m_jobInProgress = true;
-      emit jobInProgressChanged();
-      m_jobStatus = "Job in progress...";
-      emit jobStatusChanged();
-      break;
-    case JobStatus::Paused:
-      m_jobInProgress = false;
-      emit jobInProgressChanged();
-      m_jobStatus = "Job paused...";
-      emit jobStatusChanged();
-      break;
-    case JobStatus::Succeeded:
-      m_jobInProgress = false;
-      emit jobInProgressChanged();
-      m_jobStatus = "Job succeeded";
-      emit jobStatusChanged();
-      // handle the results
-      processResults(job->result());
-      break;
-    default:
-      break;
+    switch (job->jobStatus())
+    {
+      case JobStatus::Failed:
+        emit displayErrorDialog("Geoprocessing Task failed", !job->error().isEmpty() ? job->error().message() : "Unknown error.");
+        m_jobInProgress = false;
+        m_jobStatus = "Job failed";
+        break;
+      case JobStatus::Started:
+        m_jobInProgress = true;
+        m_jobStatus = "Job in progress...";
+        break;
+      case JobStatus::Paused:
+        m_jobInProgress = false;
+        m_jobStatus = "Job paused...";
+        break;
+      case JobStatus::Succeeded:
+        m_jobInProgress = false;
+        m_jobStatus = "Job succeeded";
+        // handle the results
+        processResults(job->result());
+        break;
+      default:
+        break;
     }
+
+    // emit signals
+    emit jobInProgressChanged();
+    emit jobStatusChanged();
   });
 
   // Start the job

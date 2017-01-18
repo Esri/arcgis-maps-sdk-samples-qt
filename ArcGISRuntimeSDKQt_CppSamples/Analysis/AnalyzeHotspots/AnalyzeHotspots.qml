@@ -36,7 +36,8 @@ AnalyzeHotspotsSample {
     }
 
     onDisplayErrorDialog: {
-        messageDialog.title = titleText;
+        messageDialog.title = "Error";
+        messageDialog.text = titleText;
         messageDialog.detailedText = detailedText;
         messageDialog.open();
     }
