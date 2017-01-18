@@ -144,8 +144,10 @@ AnalyzeHotspotsSample {
 
                 // validate dates
                 var success = validateDates(_fromDate, _toDate);
-                if (!success)
+                if (!success) {
+                    messageDialog.open();
                     return;
+                }
 
                 // format the date strings for the GP parameters
                 var fromDateString = _fromDate.yyyymmdd();
@@ -209,8 +211,12 @@ AnalyzeHotspotsSample {
 
                 if (calendarOverlay.toOrFromDate === "from") {
                     fromDate.text = formattedDate;
+                    if (!validateDates(getFormattedDateFromString(fromDate.text), getFormattedDateFromString(toDate.text)))
+                        toDate.text = new Date(selectedDate.setDate(selectedDate.getDate() + 2)).mmddyyyy();
                 } else if (calendarOverlay.toOrFromDate === "to") {
                     toDate.text = formattedDate;
+                    if (!validateDates(getFormattedDateFromString(fromDate.text), getFormattedDateFromString(toDate.text)))
+                        fromDate.text = new Date(selectedDate.setDate(selectedDate.getDate() - 2)).mmddyyyy();
                 }
                 calendarOverlay.visible = false;
             }
@@ -261,7 +267,6 @@ AnalyzeHotspotsSample {
         if (String(_toDate) === "Invalid Date" || String(_fromDate) === "Invalid Date") {
             messageDialog.text = "Invalid date range.";
             messageDialog.detailedText = "Please ensure that each date field contains valid dates."
-            messageDialog.open();
             return false;
         }
 
@@ -269,7 +274,6 @@ AnalyzeHotspotsSample {
         if (!(_fromDate >= _minDate && _fromDate <= _maxDate) || !(_fromDate >= _minDate && _fromDate <= _maxDate)) {
             messageDialog.text = "Invalid date range.";
             messageDialog.detailedText = "Please specify dates between\nJan 01, 1998 and May 31, 1998."
-            messageDialog.open();
             return false;
         }
 
@@ -277,7 +281,6 @@ AnalyzeHotspotsSample {
         if (_fromDate > _toDate) {
             messageDialog.text = "Invalid date range.";
             messageDialog.detailedText = "Please ensure the 'From' date precedes the 'To' date."
-            messageDialog.open();
             return false;
         }
 
@@ -286,7 +289,6 @@ AnalyzeHotspotsSample {
         if ((_toDate - _fromDate) < oneDay) {
             messageDialog.text = "Invalid date range.";
             messageDialog.detailedText = "Please ensure there is at least day in between the 'To' and 'From' dates."
-            messageDialog.open();
             return false;
         }
 
