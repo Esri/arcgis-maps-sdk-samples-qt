@@ -102,7 +102,7 @@ void AnalyzeViewshed::connectSignals()
     // The geoprocessing task is still executing, don't do anything else (i.e. respond to
     // more user taps) until the processing is complete.
     if (m_viewshedInProgress)
-        return;
+      return;
 
     // Indicate that the geoprocessing is running
     m_viewshedInProgress = true;
@@ -120,7 +120,6 @@ void AnalyzeViewshed::connectSignals()
     calculateViewshed();
   });
 
-
   // Connect to the GP Task's errorOccurred signal
   connect(m_viewshedTask, &GeoprocessingTask::errorOccurred, this, [this](Error error)
   {
@@ -135,7 +134,6 @@ void AnalyzeViewshed::calculateViewshed()
                                                                      GeometryType::Point,
                                                                      SpatialReference::webMercator(),
                                                                      this);
-
 
   // Create a new feature from the feature collection table. It will not have a coordinate location (x,y) yet
   Feature* inputFeature = inputFeatures->createFeature(this);
@@ -166,37 +164,34 @@ void AnalyzeViewshed::calculateViewshed()
     // Create signal handler for the job
     connect(viewshedJob, &GeoprocessingJob::jobStatusChanged, this, [this, viewshedJob]()
     {
-      switch (viewshedJob->jobStatus()) {
-          case JobStatus::Failed:
-            emit displayErrorDialog("Geoprocessing Task failed", !viewshedJob->error().isEmpty() ? viewshedJob->error().message() : "Unknown error.");
-            m_viewshedInProgress = false;
-            emit viewshedInProgressChanged();
-            m_jobStatus = "Job failed";
-            emit jobStatusChanged();
-            break;
-          case JobStatus::Started:
-            m_viewshedInProgress = true;
-            emit viewshedInProgressChanged();
-            m_jobStatus = "Job in progress...";
-            emit jobStatusChanged();
-            break;
-          case JobStatus::Paused:
-            m_viewshedInProgress = false;
-            emit viewshedInProgressChanged();
-            m_jobStatus = "Job paused...";
-            emit jobStatusChanged();
-            break;
-          case JobStatus::Succeeded:
-            m_viewshedInProgress = false;
-            emit viewshedInProgressChanged();
-            m_jobStatus = "Job succeeded";
-            emit jobStatusChanged();
-            // handle the results
-            processResults(viewshedJob->result());
-            break;
-          default:
-            break;
-          }
+      switch (viewshedJob->jobStatus())
+      {
+        case JobStatus::Failed:
+          emit displayErrorDialog("Geoprocessing Task failed", !viewshedJob->error().isEmpty() ? viewshedJob->error().message() : "Unknown error.");
+          m_viewshedInProgress = false;
+          m_jobStatus = "Job failed";
+          break;
+        case JobStatus::Started:
+          m_viewshedInProgress = true;
+          m_jobStatus = "Job in progress...";
+          break;
+        case JobStatus::Paused:
+          m_viewshedInProgress = false;
+          m_jobStatus = "Job paused...";
+          break;
+        case JobStatus::Succeeded:
+          m_viewshedInProgress = false;
+          m_jobStatus = "Job succeeded";
+          // handle the results
+          processResults(viewshedJob->result());
+          break;
+        default:
+          break;
+      }
+
+      // emit signals
+      emit viewshedInProgressChanged();
+      emit jobStatusChanged();
     });
 
     // start the job
@@ -210,7 +205,7 @@ void AnalyzeViewshed::calculateViewshed()
 void AnalyzeViewshed::processResults(GeoprocessingResult *results)
 {
   // Get the results from the outputs as GeoprocessingFeatures
-  GeoprocessingFeatures* viewshedResultFeatures = qobject_cast<GeoprocessingFeatures*>(results->outputs()["Viewshed_Result"]);
+  GeoprocessingFeatures* viewshedResultFeatures = static_cast<GeoprocessingFeatures*>(results->outputs()["Viewshed_Result"]);
 
   // Add all the features from the result feature set as a graphics to the map
   FeatureIterator features = viewshedResultFeatures->features()->iterator();
