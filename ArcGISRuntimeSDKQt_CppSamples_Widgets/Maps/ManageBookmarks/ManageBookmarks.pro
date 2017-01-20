@@ -17,7 +17,7 @@ mac {
     cache()
 }
 
-CONFIG += c++11 esri_runtime_qt100_0_0
+CONFIG += c++11 esri_runtime_qt100_0
 
 QT += core gui opengl xml network positioning sensors
 
