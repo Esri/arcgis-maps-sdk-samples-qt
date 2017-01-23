@@ -28,7 +28,8 @@ ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
     QQuickItem(parent),
     m_map(nullptr),
     m_mapView(nullptr),
-    m_portal(new Portal(this))
+    m_portal(new Portal(this)),
+    m_portalLoaded(false)
 {
     AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
