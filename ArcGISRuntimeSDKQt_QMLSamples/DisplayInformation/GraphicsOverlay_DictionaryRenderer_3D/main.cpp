@@ -40,6 +40,8 @@ int main(int argc, char *argv[])
 
     // Add the import Path
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+    view.engine()->addImportPath(ARCGIS_TOOLKIT_IMPORT_PATH);
+    view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH);
 
     // Set the source
     view.setSource(QUrl("qrc:/Samples/DisplayInformation/GraphicsOverlay_DictionaryRenderer_3D/GraphicsOverlay_DictionaryRenderer_3D.qml"));
