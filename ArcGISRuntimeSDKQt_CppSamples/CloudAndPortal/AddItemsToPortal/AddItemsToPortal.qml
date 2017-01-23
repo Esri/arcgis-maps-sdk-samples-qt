@@ -18,7 +18,6 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime 100.0
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
 
