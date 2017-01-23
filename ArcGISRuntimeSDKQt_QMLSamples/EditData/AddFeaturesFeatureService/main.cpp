@@ -36,6 +36,8 @@ int main(int argc, char *argv[])
 
     // Set the source
     view.setSource(QUrl("qrc:/Samples/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.qml"));
+    view.engine()->addImportPath(ARCGIS_TOOLKIT_IMPORT_PATH);
+    view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH);
 
     view.show();
 
