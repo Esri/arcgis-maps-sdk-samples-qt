@@ -29,10 +29,10 @@ ShowOrgBasemapsSample {
 
     onPortalLoadedChanged: { gridFadeIn.running = true; }
 
-//    BusyIndicator {
-//        anchors.centerIn: parent
-//        running: !mapView.visible && !portalLoaded & !anonymousLogIn.visible
-//    }
+    BusyIndicator {
+        anchors.centerIn: parent
+        running: !mapView.visible && !portalLoaded & !anonymousLogIn.visible
+    }
 
     Text{
         id: title
