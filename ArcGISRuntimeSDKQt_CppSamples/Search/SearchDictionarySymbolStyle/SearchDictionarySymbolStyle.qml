@@ -31,6 +31,7 @@ SearchDictionarySymbolStyleSample {
     property double scaleFactor: System.displayScaleFactor
     property double fontSize: 16 * scaleFactor
     property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
+    property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
     property var searchParamList: [[],[],[],[],[]]
 
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
@@ -50,90 +51,114 @@ SearchDictionarySymbolStyleSample {
             id: fieldColumn
             anchors {
                 fill: parent
-                margins: 10 * scaleFactor
+                margins: 8 * scaleFactor
             }
 
-            spacing: 10 * scaleFactor
+            spacing: 4 * scaleFactor
 
             Repeater {
                 id: repeater
                 model: repeaterModel
 
-                Row {
-                    spacing: 10 * scaleFactor
+
+                function addEntry(){
+                }
+
+                Rectangle {
                     width: parent.width
+                    height: 72 * scaleFactor
+                    color: "lightgrey"
+                    border.color: "darkgrey"
+                    radius: 4
 
                     Text {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: 110 * scaleFactor
-                        text: repeaterModel[index] + ":"
-                        font.pixelSize: fontSize
+                        id: categoryTitle
+                        anchors {
+                            top: parent.top
+                            left: parent.left
+                            margins: 8 * scaleFactor
+                        }
+                        height: categoryEntry.height
+                        width: 66 * scaleFactor
+                        text: repeaterModel[index]
+                        font.bold: true
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignLeft
+                        wrapMode: Text.WordWrap
                     }
 
-                    ComboBox {
-                        id: fieldComboBox
-                        width: parent.width * .5
-                        height: seachBtn.height
-                        editable: true
-                        inputMethodHints : Qt.ImhNoPredictiveText
-
-                        style: ComboBoxStyle {
-                            font.pixelSize: fontSize
+                    Button {
+                        id: addCategoryButton
+                        anchors {
+                            top: parent.top
+                            right: parent.right
+                            margins: 8 * scaleFactor
                         }
+                        height: categoryEntry.height
+                        width: height
+                        iconSource: enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_addencircled_light.png" :
+                                              "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_addencircled_dark.png"
+                        enabled: categoryEntry.text.length > 0
 
-                        model: searchParamList[index]
+                        onClicked: {
+                            if (categoryEntry.text.length === 0)
+                                return;
 
+                            var tmp = searchParamList;
+                            tmp[index].push(categoryEntry.text);
+
+                            searchParamList = tmp
+                            categoryEntry.text = "";
+                            seachBtn.enabled = true;
+                        }
+                    }
+
+                    Button {
+                        id: clearCategoryButton
+                        anchors {
+                            top: addCategoryButton.bottom
+                            right: parent.right
+                            margins: 8 * scaleFactor
+                        }
+                        height: categoryEntry.height
+                        width: height
+                        iconSource: enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_closeclear_light.png" :
+                                              "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_closeclear_dark.png"
+                        enabled: categoryList.text.length > 0
+
+                        onClicked: {
+                            categoryEntry.text ="";
+                            var tmp = searchParamList;
+                            tmp[index] = [];
+
+                            searchParamList = tmp
+                        }
+                    }
+
+                    TextField {
+                        id: categoryEntry
+                        anchors{
+                            top: parent.top
+                            right: addCategoryButton.left
+                            left: categoryTitle.right
+                            margins: 8 * scaleFactor
+                        }
+                        placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
                         validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z][\da-zA-Z\s]*$/ }
+                        onAccepted:  addCategoryButton.clicked();
+                    }
 
-                        onAccepted: addField()
-
-                        //Add a new field
-                        function addField(){
-                            if( searchParamList[index].indexOf(editText) === -1) {
-                                searchParamList[index].push(editText);
-                                model = searchParamList[index];
-                            }
-                            currentIndex = -1;
-                            editText = "";
+                    Label {
+                        id: categoryList
+                        anchors{
+                            top: categoryEntry.bottom
+                            right: parent.right
+                            left: parent.left
+                            margins: 8 * scaleFactor
                         }
+                        height: 32 * scaleFactor
+                        text: searchParamList[index].length > 0 ? searchParamList[index].join() : ""
 
-                        //Remove a field
-                        function removeField(){
-                            var fieldIndex = searchParamList[index].indexOf(editText);
-                            if(fieldIndex !== -1){
-                                searchParamList[index].splice(fieldIndex, 1);
-                                model = searchParamList[index];
-                            }
-                            editText = "";
-                            currentIndex = -1;
-                        }
-                    }
-
-                    Button {
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: " + "
-                        style: seachBtn.style
-                        enabled: fieldComboBox.acceptableInput
-
-                        //Add field to combobox
-                        onClicked: fieldComboBox.addField()
-                    }
-
-                    Button {
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: " - "
-                        style: seachBtn.style
-                        enabled: fieldComboBox.acceptableInput && fieldComboBox.currentIndex !== -1 && fieldComboBox.count > 0
-
-                        //Remove selected field from combobox
-                        onClicked: fieldComboBox.removeField();
-                    }
-
-                    //Clear the combobox
-                    function clearComboBox(){
-                        fieldComboBox.editText ="";
-                        searchParamList[index] = [];
-                        fieldComboBox.model = searchParamList[index];
                     }
                 }
             }
@@ -146,38 +171,35 @@ SearchDictionarySymbolStyleSample {
 
                 Button {
                     id: seachBtn
-                    width: text.length * fontSize
-                    text: "Search Symbols"
-                    style: ButtonStyle {
-                        label: Text {
-                            text: control.text
-                            font.pixelSize: fontSize
-                            horizontalAlignment: Text.AlignHCenter
-                            color: enabled ? "black" : "grey"
-                        }
-                    }
+                    width: 128 * scaleFactor
+                    height: 32 * scaleFactor
+                    enabled: false
+                    text: "Search"
+
+                    iconSource: enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png" : "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_dark.png"
                     onClicked:{
                         //Disable the search button and start the search
                         enabled = false;
                         resultView.visible = false;
-                        searchDictionarySymbolStyleSample .search(searchParamList[SearchDictionarySymbolStyleSample.FieldNames],
-                                                            searchParamList[SearchDictionarySymbolStyleSample.FieldTags],
-                                                            searchParamList[SearchDictionarySymbolStyleSample.FieldClasses],
-                                                            searchParamList[SearchDictionarySymbolStyleSample.FieldCategories],
-                                                            searchParamList[SearchDictionarySymbolStyleSample.FieldKeys]);
+
+                        searchDictionarySymbolStyleSample.search(searchParamList[SearchDictionarySymbolStyleSample.FieldNames],
+                                                                 searchParamList[SearchDictionarySymbolStyleSample.FieldTags],
+                                                                 searchParamList[SearchDictionarySymbolStyleSample.FieldClasses],
+                                                                 searchParamList[SearchDictionarySymbolStyleSample.FieldCategories],
+                                                                 searchParamList[SearchDictionarySymbolStyleSample.FieldKeys]);
                     }
                 }
 
                 Button {
                     text: "Clear"
-                    enabled: seachBtn.enabled
+                    height: seachBtn.height
+                    enabled: resultView.count > 0
                     style: seachBtn.style
                     onClicked: {
                         //Set the results visibility to false
                         resultView.visible = false;
                         //Reset the search parameters
-                        for (var i = 0; i < repeater.count; ++i)
-                            repeater.itemAt(i).clearComboBox();
+                        searchParamList = [[],[],[],[],[]];
                     }
                 }
             }
@@ -218,7 +240,7 @@ SearchDictionarySymbolStyleSample {
                     anchors {
                         margins: 20 * scaleFactor
                     }
-                    width: parent.width
+                    width: resultView.width
                     spacing: 10 * scaleFactor
 
                     Image {
