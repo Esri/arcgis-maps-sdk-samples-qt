@@ -60,10 +60,6 @@ SearchDictionarySymbolStyleSample {
                 id: repeater
                 model: repeaterModel
 
-
-                function addEntry(){
-                }
-
                 Rectangle {
                     width: parent.width
                     height: 72 * scaleFactor
@@ -127,17 +123,17 @@ SearchDictionarySymbolStyleSample {
                         enabled: categoryList.text.length > 0
 
                         onClicked: {
-                            categoryEntry.text ="";
+                            categoryEntry.text = "";
                             var tmp = searchParamList;
                             tmp[index] = [];
 
-                            searchParamList = tmp
+                            searchParamList = tmp;
                         }
                     }
 
                     TextField {
                         id: categoryEntry
-                        anchors{
+                        anchors {
                             top: parent.top
                             right: addCategoryButton.left
                             left: categoryTitle.right
@@ -150,7 +146,7 @@ SearchDictionarySymbolStyleSample {
 
                     Label {
                         id: categoryList
-                        anchors{
+                        anchors {
                             top: categoryEntry.bottom
                             right: parent.right
                             left: parent.left
@@ -158,7 +154,6 @@ SearchDictionarySymbolStyleSample {
                         }
                         height: 32 * scaleFactor
                         text: searchParamList[index].length > 0 ? searchParamList[index].join() : ""
-
                     }
                 }
             }
@@ -175,9 +170,10 @@ SearchDictionarySymbolStyleSample {
                     height: 32 * scaleFactor
                     enabled: false
                     text: "Search"
+                    iconSource: enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png" :
+                                          "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_dark.png"
 
-                    iconSource: enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png" : "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_dark.png"
-                    onClicked:{
+                    onClicked: {
                         //Disable the search button and start the search
                         enabled = false;
                         resultView.visible = false;
