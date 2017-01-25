@@ -44,7 +44,7 @@ SearchDictionarySymbolStyleSample {
             top: parent.top
         }
 
-        height: (fieldColumn.childrenRect.height + 20) * scaleFactor
+        height: showSearch.checked ? fieldColumn.childrenRect.height + (20 * scaleFactor) : searchRow.height + resultText.height + (20 * scaleFactor)
         width: parent.width *.9
 
         Column {
@@ -62,10 +62,11 @@ SearchDictionarySymbolStyleSample {
 
                 Rectangle {
                     width: parent.width
-                    height: 72 * scaleFactor
+                    height: showSearch.checked ? 72 * scaleFactor : 0
                     color: "lightgrey"
                     border.color: "darkgrey"
                     radius: 4
+                    clip: true
 
                     Text {
                         id: categoryTitle
@@ -159,6 +160,7 @@ SearchDictionarySymbolStyleSample {
             }
 
             Row {
+                id: searchRow
                 anchors {
                     margins: 10 * scaleFactor
                 }
@@ -197,6 +199,12 @@ SearchDictionarySymbolStyleSample {
                         //Reset the search parameters
                         searchParamList = [[],[],[],[],[]];
                     }
+                }
+
+                CheckBox {
+                    id: showSearch
+                    text: "Show Search"
+                    checked: true
                 }
             }
 
