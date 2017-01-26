@@ -92,7 +92,7 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignTop
         text: anonymousLogIn.visible ? "Load Portal" :
-                                       porInfo ? porInfo.organizationName + " Basemaps" : "Loading Organization Basemaps..."
+                                       (basemapsGrid.count > 0 ? porInfo.organizationName + " Basemaps" : "Loading Organization Basemaps...")
         wrapMode: Text.Wrap
         elide: Text.ElideRight
     }
