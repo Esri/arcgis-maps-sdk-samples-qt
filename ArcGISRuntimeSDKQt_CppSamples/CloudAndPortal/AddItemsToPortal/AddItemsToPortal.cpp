@@ -78,17 +78,17 @@ bool AddItemsToPortal::portalItemLoaded() const
 
 QString AddItemsToPortal::portalItemId() const
 {
-    return m_item->itemId();
+    return !m_itemDeleted  ? m_item->itemId() : "";
 }
 
 QString AddItemsToPortal::portalItemTitle() const
 {
-    return m_item->title();
+    return !m_itemDeleted ? m_item->title() : "";
 }
 
 QString AddItemsToPortal::portalItemTypeName() const
 {
-    return m_item->typeName();
+    return !m_itemDeleted ? m_item->typeName() : "";
 }
 
 bool AddItemsToPortal::itemDeleted() const
@@ -113,7 +113,7 @@ void AddItemsToPortal::authenticatePortal()
 
 void AddItemsToPortal::addItem()
 {
-    if (!m_user)
+    if (!m_user || !m_item)
         return;
 
     m_busy = true;
@@ -126,7 +126,7 @@ void AddItemsToPortal::addItem()
 
 void AddItemsToPortal::deleteItem()
 {
-    if (!m_user)
+    if (!m_user || !m_item)
         return;
 
     m_busy = true;
@@ -166,6 +166,9 @@ void AddItemsToPortal::connectUserSignals()
 
         m_itemDeleted = true;
         emit itemDeletedChanged();
+        emit portalItemIdChanged();
+        emit portalItemTitleChanged();
+        emit portalItemTypeNameChanged();
         setStatusText("Successfully deleted item " + m_item->itemId());
     });
 }

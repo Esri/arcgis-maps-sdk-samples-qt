@@ -95,6 +95,7 @@ Rectangle {
 
             statusBar.text = "Successfully deleted item " + itemToAdd.itemId;
             deleteItemButton.enabled = false;
+            portalItemModel.clear();
         }
     }
 
@@ -123,225 +124,234 @@ Rectangle {
         }
     }
 
-    Column {
-        anchors {
-            fill: parent
-            margins: 16 * scaleFactor
-        }
-        spacing: 16 * scaleFactor
+    Flickable {
+        anchors.fill: parent
+        interactive: true
+        boundsBehavior: Flickable.StopAtBounds
+        contentHeight: parent.height * 1.5
+        contentWidth: parent.width
 
-        Rectangle {
-            id: authenticationButton
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: 64 * scaleFactor
-            width: Math.min(256 * scaleFactor, parent.width)
-            color: enabled ? "darkblue" : "darkgrey"
-            border {
-                color: "lightgrey"
-                width: 2 * scaleFactor
-            }
-            radius: 8 * scaleFactor
-            enabled: portal.loadStatus !== Enums.LoadStatusLoaded
-
-            Row {
-                anchors.fill: parent
-                spacing: 16 * scaleFactor
-
-                Image {
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: portal.loadStatus !== Enums.LoadStatusLoaded ?
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_account_dark.png" :
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
-                    fillMode: Image.PreserveAspectFit
-                    height: 64 * scaleFactor
-                    width: height
-                }
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "Authenticate Portal"
-                    font.bold: true
-                    color: "white"
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    portal.load();
-                    authenticationButton.border.width = 4 * scaleFactor;
-                }
-            }
-        }
-
-        Rectangle {
-            id: addItemButton
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: authenticationButton.height
-            width: authenticationButton.width
-            color: enabled ? "darkblue" : "darkgrey"
-            border {
-                color: authenticationButton.border.color
-                width: 2 * scaleFactor
-            }
-            radius: authenticationButton.radius
-            enabled: itemToAdd.loadStatus !== Enums.LoadStatusLoaded && portal.loadStatus === Enums.LoadStatusLoaded
-
-            Row {
-                anchors.fill: parent
-                spacing: 16 * scaleFactor
-
-                Image {
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: itemToAdd.loadStatus === Enums.LoadStatusLoaded ?
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png" :
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_addencircled_dark.png"
-
-                    fillMode: Image.PreserveAspectFit
-                    height: 64 * scaleFactor
-                    width: height
-                }
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "Add Item"
-                    font.bold: true
-                    color: "white"
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    addItemButton.border.width = 4 * scaleFactor;
-                    //! [PortalUser addItemWithUrl]
-                    var localCSVFile = "qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv";
-                    myUser.addPortalItemWithUrl(itemToAdd, localCSVFile, "add_item_sample.csv");
-                    //! [PortalUser addItemWithUrl]
-                }
-            }
-        }
-
-        Rectangle {
-            id: deleteItemButton
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: authenticationButton.height
-            width: authenticationButton.width
-            color: enabled ? "darkblue" : "darkgrey"
-            border {
-                color: authenticationButton.border.color
-                width: 2 * scaleFactor
-            }
-            radius: authenticationButton.radius
-            enabled: itemToAdd.loadStatus === Enums.LoadStatusLoaded
-
-            Row {
-                anchors.fill: parent
-                spacing: 16 * scaleFactor
-
-                Image {
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: myUser.deletePortalItemStatus !== Enums.TaskStatusCompleted ?
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_trash_dark.png" :
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
-
-                    fillMode: Image.PreserveAspectFit
-                    height: 64 * scaleFactor
-                    width: height
-                }
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "Delete Item"
-                    font.bold: true
-                    color: "white"
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    deleteItemButton.border.width = 2 * scaleFactor;
-                    myUser.deletePortalItem(itemToAdd);
-                }
-            }
-        }
-
-        Rectangle {
+        Column {
+            id: contentCol
             anchors {
-                left: parent.left
-                right: parent.right
+                fill: parent
+                margins: 16 * scaleFactor
             }
-            height: 4 * scaleFactor
-            color: "lightgrey"
-        }
+            spacing: 16 * scaleFactor
 
-        Rectangle {
-            id: itemView
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            height: 128 * scaleFactor
-            color: "lightgrey"
-            border {
-                color: "darkgrey"
-                width: 4 * scaleFactor
-            }
-            radius: 32
-            clip: true
-
-            Text {
-                id: portalItemLabel
-                anchors{
-                    top: parent.top
-                    horizontalCenter: parent.horizontalCenter
-                    margins: 4 * scaleFactor
+            Rectangle {
+                id: authenticationButton
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: 64 * scaleFactor
+                width: Math.min(256 * scaleFactor, parent.width)
+                color: enabled ? "darkblue" : "darkgrey"
+                border {
+                    color: "lightgrey"
+                    width: 2 * scaleFactor
                 }
-                color: "white"
-                font.bold: true
-                text: "PortalItem"
-                font.underline: true
-                horizontalAlignment: Text.AlignHCenter
-            }
+                radius: 8 * scaleFactor
+                enabled: portal.loadStatus !== Enums.LoadStatusLoaded
 
-            ListModel {
-                id: portalItemModel
+                Row {
+                    anchors.fill: parent
+                    spacing: 16 * scaleFactor
 
-                Component.onCompleted: {
-                    append({"label": "title", "value": itemToAdd.title });
-                    append({"label": "itemId", "value": itemToAdd.itemId});
-                    append({"label": "type", "value": itemToAdd.typeName});
+                    Image {
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: portal.loadStatus !== Enums.LoadStatusLoaded ?
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_account_dark.png" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
+                        fillMode: Image.PreserveAspectFit
+                        height: 64 * scaleFactor
+                        width: height
+                    }
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Authenticate Portal"
+                        font.bold: true
+                        color: "white"
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        portal.load();
+                        authenticationButton.border.width = 4 * scaleFactor;
+                    }
                 }
             }
 
-            ListView {
+            Rectangle {
+                id: addItemButton
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: authenticationButton.height
+                width: authenticationButton.width
+                color: enabled ? "darkblue" : "darkgrey"
+                border {
+                    color: authenticationButton.border.color
+                    width: 2 * scaleFactor
+                }
+                radius: authenticationButton.radius
+                enabled: itemToAdd.loadStatus !== Enums.LoadStatusLoaded && portal.loadStatus === Enums.LoadStatusLoaded
+
+                Row {
+                    anchors.fill: parent
+                    spacing: 16 * scaleFactor
+
+                    Image {
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: itemToAdd.loadStatus === Enums.LoadStatusLoaded ?
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_addencircled_dark.png"
+
+                        fillMode: Image.PreserveAspectFit
+                        height: 64 * scaleFactor
+                        width: height
+                    }
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Add Item"
+                        font.bold: true
+                        color: "white"
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        addItemButton.border.width = 4 * scaleFactor;
+                        //! [PortalUser addItemWithUrl]
+                        var localCSVFile = "qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv";
+                        myUser.addPortalItemWithUrl(itemToAdd, localCSVFile, "add_item_sample.csv");
+                        //! [PortalUser addItemWithUrl]
+                    }
+                }
+            }
+
+            Rectangle {
+                id: deleteItemButton
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: authenticationButton.height
+                width: authenticationButton.width
+                color: enabled ? "darkblue" : "darkgrey"
+                border {
+                    color: authenticationButton.border.color
+                    width: 2 * scaleFactor
+                }
+                radius: authenticationButton.radius
+                enabled: itemToAdd.loadStatus === Enums.LoadStatusLoaded
+
+                Row {
+                    anchors.fill: parent
+                    spacing: 16 * scaleFactor
+
+                    Image {
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: myUser.deletePortalItemStatus !== Enums.TaskStatusCompleted ?
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_trash_dark.png" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
+
+                        fillMode: Image.PreserveAspectFit
+                        height: 64 * scaleFactor
+                        width: height
+                    }
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Delete Item"
+                        font.bold: true
+                        color: "white"
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        deleteItemButton.border.width = 2 * scaleFactor;
+                        myUser.deletePortalItem(itemToAdd);
+                    }
+                }
+            }
+
+            Rectangle {
                 anchors {
-                    top: portalItemLabel.bottom
                     left: parent.left
                     right: parent.right
-                    bottom: parent.bottom
-                    margins: 16 * scaleFactor
                 }
-                clip: true
-                model: portalItemModel
-                delegate: Text {
-                    color: "white"
-                    text: label + ":\t" + value
-                    wrapMode: Text.Wrap
-                    elide: Text.ElideRight
-                }
+                height: 4 * scaleFactor
+                color: "lightgrey"
             }
-        }
 
-        Text {
-            id: statusBar
-            anchors{
-                left: parent.left
-                right: parent.right
+            Rectangle {
+                id: itemView
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                height: 100 * scaleFactor
+                color: "lightsteelblue"
+                border {
+                    color: "darkgrey"
+                    width: 4 * scaleFactor
+                }
+                radius: 32
+                clip: true
+
+                Text {
+                    id: portalItemLabel
+                    anchors{
+                        top: parent.top
+                        horizontalCenter: parent.horizontalCenter
+                        margins: 4 * scaleFactor
+                    }
+                    color: "white"
+                    font.bold: true
+                    text: "PortalItem"
+                    font.underline: true
+                    horizontalAlignment: Text.AlignHCenter
+                }
+
+                ListModel {
+                    id: portalItemModel
+
+                    Component.onCompleted: {
+                        append({"label": "title", "value": itemToAdd.title });
+                        append({"label": "itemId", "value": itemToAdd.itemId});
+                        append({"label": "type", "value": itemToAdd.typeName});
+                    }
+                }
+
+                ListView {
+                    anchors {
+                        top: portalItemLabel.bottom
+                        left: parent.left
+                        right: parent.right
+                        bottom: parent.bottom
+                        margins: 16 * scaleFactor
+                    }
+                    clip: true
+                    model: portalItemModel
+                    delegate: Text {
+                        color: "white"
+                        text: label + ":\t" + value
+                        wrapMode: Text.Wrap
+                        elide: Text.ElideRight
+                    }
+                }
             }
-            wrapMode: Text.Wrap
-            elide: Text.ElideRight
+
+            Text {
+                id: statusBar
+                anchors{
+                    left: parent.left
+                    right: parent.right
+                }
+                wrapMode: Text.Wrap
+                elide: Text.ElideRight
+            }
         }
     }
 

@@ -30,225 +30,235 @@ AddItemsToPortalSample {
 
     property real scaleFactor: System.displayScaleFactor
 
+    onPortalItemTitleChanged: portalItemModel.setProperty(0, "value", portalItemTitle);
     onPortalItemIdChanged: portalItemModel.setProperty(1, "value", portalItemId);
+    onPortalItemTypeNameChanged: portalItemModel.setProperty(2, "value", portalItemTypeName);
 
-    Column {
-        anchors {
-            fill: parent
-            margins: 16 * scaleFactor
-        }
-        spacing: 16 * scaleFactor
 
-        Rectangle {
-            id: authenticationButton
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: 64 * scaleFactor
-            width: Math.min(256 * scaleFactor, parent.width)
-            color: enabled ? "darkblue" : "darkgrey"
-            border{
-                color: "lightgrey"
-                width: 2 * scaleFactor
-            }
-            radius: 8
-            enabled: !portalLoaded
-
-            Row {
-                anchors.fill: parent
-                spacing: 16 * scaleFactor
-
-                Image {
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: !portalLoaded ?
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_account_dark.png" :
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
-                    fillMode: Image.PreserveAspectFit
-                    height: 64 * scaleFactor
-                    width: height
-                }
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "Authenticate Portal"
-                    font.bold: true
-                    color: "white"
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    authenticatePortal();
-                    authenticationButton.border.width = 4 * scaleFactor;
-                }
-            }
-        }
-
-        Rectangle {
-            id: addItemButton
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: authenticationButton.height
-            width: authenticationButton.width
-            color: enabled ? "darkblue" : "darkgrey"
-            border{
-                color: authenticationButton.border.color
-                width: 2 * scaleFactor
-            }
-            radius: authenticationButton.radius
-            enabled: !portalItemLoaded && portalLoaded
-
-            Row {
-                anchors.fill: parent
-                spacing: 16 * scaleFactor
-
-                Image {
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: portalItemLoaded ?
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png" :
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_addencircled_dark.png"
-
-                    fillMode: Image.PreserveAspectFit
-                    height: 64 * scaleFactor
-                    width: height
-                }
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "Add Item"
-                    font.bold: true
-                    color: "white"
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    addItemButton.border.width = 4 * scaleFactor
-                    addItem();
-                }
-            }
-        }
-
-        Rectangle {
-            id: deleteItemButton
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: authenticationButton.height
-            width: authenticationButton.width
-            color: enabled ? "darkblue" : "darkgrey"
-            border {
-                color: authenticationButton.border.color
-                width: 2 * scaleFactor
-            }
-            radius: authenticationButton.radius
-            enabled: portalItemLoaded && !itemDeleted
-
-            Row {
-                anchors.fill: parent
-                spacing: 16 * scaleFactor
-
-                Image {
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: !itemDeleted ?
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_trash_dark.png" :
-                                "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
-
-                    fillMode: Image.PreserveAspectFit
-                    height: 64 * scaleFactor
-                    width: height
-                }
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "Delete Item"
-                    font.bold: true
-                    color: "white"
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    deleteItemButton.border.width = 2 * scaleFactor
-                    deleteItem();
-                }
-            }
-        }
-
-        Rectangle {
+    Flickable {
+        anchors.fill: parent
+        interactive: true
+        boundsBehavior: Flickable.StopAtBounds
+        contentHeight: parent.height * 1.5
+        contentWidth: parent.width
+        Column {
             anchors {
-                left: parent.left
-                right: parent.right
+                fill: parent
+                margins: 16 * scaleFactor
             }
-            height: 4 * scaleFactor
-            color: "lightgrey"
-        }
+            spacing: 16 * scaleFactor
 
-        Rectangle {
-            id: itemView
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-            height: 128 * scaleFactor
-            color: "lightgrey"
-            border {
-                color: "darkgrey"
-                width: 4 * scaleFactor
-            }
-            radius: 32
-            clip: true
-
-            Text {
-                id: portalItemLabel
-                anchors{
-                    top: parent.top
-                    horizontalCenter: parent.horizontalCenter
-                    margins: 4 * scaleFactor
+            Rectangle {
+                id: authenticationButton
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: 64 * scaleFactor
+                width: Math.min(256 * scaleFactor, parent.width)
+                color: enabled ? "darkblue" : "darkgrey"
+                border{
+                    color: "lightgrey"
+                    width: 2 * scaleFactor
                 }
-                color: "white"
-                font.bold: true
-                text: "PortalItem"
-                font.underline: true
-                horizontalAlignment: Text.AlignHCenter
-            }
+                radius: 8
+                enabled: !portalLoaded
 
-            ListModel {
-                id: portalItemModel
+                Row {
+                    anchors.fill: parent
+                    spacing: 16 * scaleFactor
 
-                Component.onCompleted: {
-                    append({"label": "title", "value": portalItemTitle });
-                    append({"label": "itemId", "value": portalItemId});
-                    append({"label": "type", "value": portalItemTypeName});
+                    Image {
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: !portalLoaded ?
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_account_dark.png" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
+                        fillMode: Image.PreserveAspectFit
+                        height: 64 * scaleFactor
+                        width: height
+                    }
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Authenticate Portal"
+                        font.bold: true
+                        color: "white"
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        authenticatePortal();
+                        authenticationButton.border.width = 4 * scaleFactor;
+                    }
                 }
             }
 
-            ListView {
+            Rectangle {
+                id: addItemButton
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: authenticationButton.height
+                width: authenticationButton.width
+                color: enabled ? "darkblue" : "darkgrey"
+                border{
+                    color: authenticationButton.border.color
+                    width: 2 * scaleFactor
+                }
+                radius: authenticationButton.radius
+                enabled: !portalItemLoaded && portalLoaded
+
+                Row {
+                    anchors.fill: parent
+                    spacing: 16 * scaleFactor
+
+                    Image {
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: portalItemLoaded ?
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_addencircled_dark.png"
+
+                        fillMode: Image.PreserveAspectFit
+                        height: 64 * scaleFactor
+                        width: height
+                    }
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Add Item"
+                        font.bold: true
+                        color: "white"
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        addItemButton.border.width = 4 * scaleFactor
+                        addItem();
+                    }
+                }
+            }
+
+            Rectangle {
+                id: deleteItemButton
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: authenticationButton.height
+                width: authenticationButton.width
+                color: enabled ? "darkblue" : "darkgrey"
+                border {
+                    color: authenticationButton.border.color
+                    width: 2 * scaleFactor
+                }
+                radius: authenticationButton.radius
+                enabled: portalItemLoaded && !itemDeleted
+
+                Row {
+                    anchors.fill: parent
+                    spacing: 16 * scaleFactor
+
+                    Image {
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: !itemDeleted ?
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_trash_dark.png" :
+                                    "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
+
+                        fillMode: Image.PreserveAspectFit
+                        height: 64 * scaleFactor
+                        width: height
+                    }
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "Delete Item"
+                        font.bold: true
+                        color: "white"
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        deleteItemButton.border.width = 2 * scaleFactor
+                        deleteItem();
+                    }
+                }
+            }
+
+            Rectangle {
                 anchors {
-                    top: portalItemLabel.bottom
                     left: parent.left
                     right: parent.right
-                    bottom: parent.bottom
-                    margins: 16 * scaleFactor
                 }
-                clip: true
-                model: portalItemModel
-                delegate: Text {
-                    color: "white"
-                    text: label + ":\t" + value
-                    wrapMode: Text.Wrap
-                    elide: Text.ElideRight
-                }
+                height: 4 * scaleFactor
+                color: "lightgrey"
             }
-        }
 
-        Text {
-            id: statusBar
-            anchors{
-                left: parent.left
-                right: parent.right
+            Rectangle {
+                id: itemView
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+                height: 128 * scaleFactor
+                color: "lightsteelblue"
+                border {
+                    color: "darkgrey"
+                    width: 4 * scaleFactor
+                }
+                radius: 32
+                clip: true
+
+                Text {
+                    id: portalItemLabel
+                    anchors{
+                        top: parent.top
+                        horizontalCenter: parent.horizontalCenter
+                        margins: 4 * scaleFactor
+                    }
+                    color: "white"
+                    font.bold: true
+                    text: "PortalItem"
+                    font.underline: true
+                    horizontalAlignment: Text.AlignHCenter
+                }
+
+                ListModel {
+                    id: portalItemModel
+
+                    Component.onCompleted: {
+                        append({"label": "title", "value": portalItemTitle });
+                        append({"label": "itemId", "value": portalItemId});
+                        append({"label": "type", "value": portalItemTypeName});
+                    }
+                }
+
+                ListView {
+                    anchors {
+                        top: portalItemLabel.bottom
+                        left: parent.left
+                        right: parent.right
+                        bottom: parent.bottom
+                        margins: 16 * scaleFactor
+                    }
+                    clip: true
+                    model: portalItemModel
+                    delegate: Text {
+                        color: "white"
+                        text: label + ":\t" + value
+                        wrapMode: Text.Wrap
+                        elide: Text.ElideRight
+                    }
+                }
             }
-            wrapMode: Text.Wrap
-            elide: Text.ElideRight
-            text: statusText
+
+            Text {
+                id: statusBar
+                anchors{
+                    left: parent.left
+                    right: parent.right
+                }
+                wrapMode: Text.Wrap
+                elide: Text.ElideRight
+                text: statusText
+            }
         }
     }
 
