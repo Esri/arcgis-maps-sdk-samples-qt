@@ -46,7 +46,8 @@ ShowOrgBasemapsSample {
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignTop
-        text: anonymousLogIn.visible ? "Load Portal" : orgName.length > 0 ? orgName + " Basemaps" : "Loading Organization Basemaps..."
+        text: anonymousLogIn.visible ? "Load Portal" :
+                                       (basemapsGrid.count > 0 ? orgName + " Basemaps" : "Loading Organization Basemaps...")
         wrapMode: Text.Wrap
         elide: Text.ElideRight
     }
