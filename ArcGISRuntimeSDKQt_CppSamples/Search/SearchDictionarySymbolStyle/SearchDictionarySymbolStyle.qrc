@@ -12,5 +12,7 @@
         <file>ic_menu_addencircled_light.png</file>
         <file>ic_menu_closeclear_dark.png</file>
         <file>ic_menu_closeclear_light.png</file>
+        <file>ic_menu_collapsed_light.png</file>
+        <file>ic_menu_expanded_light.png</file>
     </qresource>
 </RCC>
