@@ -65,7 +65,9 @@ void Hillshade_Renderer::componentComplete()
   });
   m_mapView->setMap(map);
 
+  //! [HillshadeRenderer apply to layer snippet]
   // Apply the hillshade renderer to the raster layer
   HillshadeRenderer* hillshadeRenderer = new HillshadeRenderer(45.0, 315.0, 0.000016, SlopeType::None, 1.0, 1.0, 8, this);
   rasterLayer->setRenderer(hillshadeRenderer);
+  //! [HillshadeRenderer apply to layer snippet]
 }

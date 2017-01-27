@@ -32,6 +32,7 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        //! [HillshadeRenderer QML apply to layer snippet]
         Map {
             Basemap {
                 // add a raster to the basemap
@@ -53,6 +54,7 @@ Rectangle {
                     }
                 }
             }
+            //! [HillshadeRenderer QML apply to layer snippet]
 
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
