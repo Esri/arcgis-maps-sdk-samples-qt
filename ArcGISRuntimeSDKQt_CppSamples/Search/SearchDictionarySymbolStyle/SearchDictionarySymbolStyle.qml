@@ -44,7 +44,8 @@ SearchDictionarySymbolStyleSample {
             top: parent.top
         }
 
-        height: showSearch.checked ? fieldColumn.childrenRect.height + (20 * scaleFactor) : searchRow.height + resultText.height + (20 * scaleFactor)
+        height: hideSearch.checked ?  searchRow.height + resultText.height + (20 * scaleFactor) :
+                                     fieldColumn.childrenRect.height + (20 * scaleFactor)
         width: parent.width *.9
 
         Column {
@@ -62,7 +63,7 @@ SearchDictionarySymbolStyleSample {
 
                 Rectangle {
                     width: parent.width
-                    height: showSearch.checked ? 72 * scaleFactor : 0
+                    height: hideSearch.checked ? 0 : 72 * scaleFactor
                     color: "lightgrey"
                     border.color: "darkgrey"
                     radius: 4
@@ -168,7 +169,7 @@ SearchDictionarySymbolStyleSample {
 
                 Button {
                     id: seachBtn
-                    width: 128 * scaleFactor
+                    width: 100 * scaleFactor
                     height: 32 * scaleFactor
                     enabled: false
                     text: "Search"
@@ -201,10 +202,13 @@ SearchDictionarySymbolStyleSample {
                     }
                 }
 
-                CheckBox {
-                    id: showSearch
-                    text: "Show Search"
-                    checked: true
+                Button {
+                    id: hideSearch
+                    height: seachBtn.height
+                    checked: false
+                    checkable: true
+                    iconSource: checked ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_collapsed_light.png" :
+                                          "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_expanded_light.png"
                 }
             }
 
