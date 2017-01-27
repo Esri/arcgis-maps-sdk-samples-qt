@@ -18,6 +18,9 @@
 #include <QDir>
 #include <QQmlEngine>
 
+#define STRINGIZE(x) #x
+#define QUOTE(x) STRINGIZE(x)
+
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
@@ -33,8 +36,10 @@ int main(int argc, char *argv[])
 
     // Add the import Path
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-    view.engine()->addImportPath(ARCGIS_TOOLKIT_IMPORT_PATH);
-    view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH);
+    // Add the Runtime and Extras path
+    view.engine()->addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
+    // Add the Toolkit path
+    view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
 
     // Set the source
     view.setSource(QUrl("qrc:/Samples/DisplayInformation/Simple_Renderer/Simple_Renderer.qml"));
