@@ -1,5 +1,5 @@
 #-------------------------------------------------
-#  Copyright 2016 ESRI
+#  Copyright 2017 ESRI
 #
 #  All rights reserved under the copyright laws of the United States
 #  and applicable international laws, treaties, and conventions.
@@ -12,7 +12,7 @@
 #-------------------------------------------------
 
 contains(QMAKE_HOST.os, Windows):{
-  iniPath = "C:\\ProgramData\\EsriRuntimeQt\\ArcGIS Runtime SDK for Qt $${ARCGIS_RUNTIME_VERSION}.ini"
+  iniPath = $$(ALLUSERSPROFILE)\\EsriRuntimeQt\\ArcGIS Runtime SDK for Qt $${ARCGIS_RUNTIME_VERSION}.ini
 }
 else {
   userHome = $$system(echo $HOME)
