@@ -18,7 +18,10 @@ TEMPLATE = app
 
 QT += qml quick sensors positioning
 
-CONFIG += c++11 arcgis_runtime_qml100_1
+ARCGIS_RUNTIME_VERSION = 100.1
+include($$PWD/arcgisruntime.pri)
+
+CONFIG += c++11
 
 SOURCES += main.cpp
 
@@ -27,9 +30,6 @@ RESOURCES += FeatureLayer_DefinitionExpression.qrc
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
-
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)

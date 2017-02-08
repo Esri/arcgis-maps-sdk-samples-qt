@@ -19,9 +19,12 @@ mac {
 
 #-------------------------------------------------------------------------------
 
-CONFIG += c++11 arcgis_runtime_qml_cpp100_1
+CONFIG += c++11
 
 QT += opengl qml quick positioning sensors
+
+ARCGIS_RUNTIME_VERSION = 100.1
+include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
 TARGET = ShowCallout

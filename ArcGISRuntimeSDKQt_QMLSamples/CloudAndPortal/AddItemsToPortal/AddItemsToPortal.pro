@@ -18,12 +18,15 @@ TEMPLATE = app
 
 QT += qml quick positioning sensors
 
+ARCGIS_RUNTIME_VERSION = 100.1
+include($$PWD/arcgisruntime.pri)
+
 qtHaveModule(webengine) {
   QT += webengine
   DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
 }
 
-CONFIG += c++11 arcgis_runtime_qml100_1
+CONFIG += c++11
 
 SOURCES += main.cpp
 
@@ -32,9 +35,6 @@ RESOURCES += AddItemsToPortal.qrc
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
-
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
