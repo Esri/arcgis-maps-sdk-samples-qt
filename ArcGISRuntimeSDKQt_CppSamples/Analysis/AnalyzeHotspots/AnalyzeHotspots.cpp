@@ -78,7 +78,7 @@ void AnalyzeHotspots::executeTaskWithDates(const QString& fromDate, const QStrin
     switch (job->jobStatus())
     {
       case JobStatus::Failed:
-        emit displayErrorDialog("Geoprocessing Task failed", !job->error().isEmpty() ? job->error().message() : "Unknown error.");
+        emit displayErrorDialog("Geoprocessing Task failed", !job->error().isEmpty() ? job->error().additionalMessage() : "Unknown error.");
         m_jobInProgress = false;
         m_jobStatus = "Job failed";
         break;
