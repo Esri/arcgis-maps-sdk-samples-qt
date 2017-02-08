@@ -94,7 +94,7 @@ Rectangle {
         function showErrorDialog(error) {
             messageDialog.title = "Error";
             messageDialog.text = "Executing geoprocessing failed.";
-            messageDialog.detailedText = error ? error.message : "Unknown error";
+            messageDialog.detailedText = error ? error.additionalMessage : "Unknown error";
             messageDialog.open();
         }
     }
