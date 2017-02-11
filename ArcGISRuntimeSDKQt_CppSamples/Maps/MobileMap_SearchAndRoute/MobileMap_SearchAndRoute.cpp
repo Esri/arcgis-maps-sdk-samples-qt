@@ -71,7 +71,7 @@ void MobileMap_SearchAndRoute::componentComplete()
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
     m_dataPath = QQmlProperty::read(this, "dataPath").toString();
-    m_fileInfoList = QDir(QUrl(m_dataPath).path()).entryInfoList();
+    m_fileInfoList = QDir(m_dataPath).entryInfoList();
 
     // initialize Callout
     m_mapView->calloutData()->setTitle("Address");
