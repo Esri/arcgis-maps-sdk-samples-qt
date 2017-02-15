@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import Esri.ArcGISRuntime 100.1
-//import Esri.ArcGISExtras 1.1
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -43,14 +43,14 @@ Rectangle {
 
         //Search completed
         onSearchSymbolsStatusChanged:{
-            if (searchSymbolStatus !== Enums.TaskStatusCompleted)
+            if (searchSymbolsStatus !== Enums.TaskStatusCompleted)
                 return;
 
             seachBtn.enabled = true;
             resultView.visible = true;
 
             //Update the number of results retuned
-            resultText.text = "Result(s) found: " + count
+            resultText.text = "Result(s) found: " + searchSymbolsResult.count
         }
     }
 
@@ -203,10 +203,10 @@ Rectangle {
                         enabled = false;
                         resultView.visible = false;
 
-                        searhParams.names = searchParamList[SearchDictionarySymbolStyleSample.FieldNames];
-                        searhParams.classes = searchParamList[SearchDictionarySymbolStyleSample.FieldClasses];
-                        searhParams.categories = searchParamList[SearchDictionarySymbolStyleSample.FieldCategories];
-                        searhParams.keys = searchParamList[SearchDictionarySymbolStyleSample.FieldKeys];
+                        searchParams.names = searchParamList[0];
+                        searchParams.symbolClasses = searchParamList[1];
+                        searchParams.categories = searchParamList[2];
+                        searchParams.keys = searchParamList[3];
 
                         dictionarySymbolStyle.searchSymbols(searchParams);
                     }
