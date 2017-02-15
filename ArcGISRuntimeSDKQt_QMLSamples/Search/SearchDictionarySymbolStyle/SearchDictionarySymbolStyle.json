@@ -2,5 +2,12 @@
     "source" :  "SearchDictionarySymbolStyle.qml",
     "description" : "SearchDictionarySymbolStyle.html",
     "thumbnail" : "SearchDictionarySymbolStyle.png",
-    "name" : "Search dictionary symbol style"
+    "name" : "Search dictionary symbol style",
+    "dataItems" : [
+        {
+            "itemId" : "e34835bf5ec5430da7cf16bb8c0b075c",
+            "path" : "~/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
+        }
+    ]
 }
+
