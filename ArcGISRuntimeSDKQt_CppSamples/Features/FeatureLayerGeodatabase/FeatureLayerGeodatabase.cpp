@@ -62,11 +62,11 @@ void FeatureLayerGeodatabase::componentComplete()
     m_map = new Map(basemap, this);
     //! [FeatureLayer Geodatabase add basemap]
 
-    // Set map to map view
-    m_mapView->setMap(m_map);
-
     // set initial viewpoint
     m_map->setInitialViewpoint(Viewpoint(Point(-13214155, 4040194, SpatialReference(3857)), 35e4));
+
+    // Set map to map view
+    m_mapView->setMap(m_map);
 
     //! [FeatureLayer Geodatabase create gdb]
     // create the geodatabase using a local file path
