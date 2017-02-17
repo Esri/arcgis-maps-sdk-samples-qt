@@ -204,9 +204,10 @@ Rectangle {
                         resultView.visible = false;
 
                         searchParams.names = searchParamList[0];
-                        searchParams.symbolClasses = searchParamList[1];
-                        searchParams.categories = searchParamList[2];
-                        searchParams.keys = searchParamList[3];
+                        searchParams.tags = searchParamList[1];
+                        searchParams.symbolClasses = searchParamList[2];
+                        searchParams.categories = searchParamList[3];
+                        searchParams.keys = searchParamList[4];
 
                         dictionarySymbolStyle.searchSymbols(searchParams);
                     }
