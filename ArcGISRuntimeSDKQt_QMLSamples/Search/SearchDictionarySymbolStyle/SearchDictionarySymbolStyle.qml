@@ -46,7 +46,6 @@ Rectangle {
             if (searchSymbolsStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            seachBtn.enabled = true;
             resultView.visible = true;
 
             //Update the number of results retuned
@@ -129,7 +128,6 @@ Rectangle {
 
                             searchParamList = tmp
                             categoryEntry.text = "";
-                            seachBtn.enabled = true;
                         }
                     }
 
@@ -193,14 +191,10 @@ Rectangle {
                     id: seachBtn
                     width: 100 * scaleFactor
                     height: 32 * scaleFactor
-                    enabled: false
-                    text: "Search"
-                    iconSource: enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png" :
-                                          "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_dark.png"
+                    text: searchParamList[0].length === 0 && searchParamList[1].length === 0 && searchParamList[2].length === 0 && searchParamList[3].length === 0 && searchParamList[4].length === 0 ? "List All" : "Search"
+                    iconSource: "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png"
 
                     onClicked: {
-                        //Disable the search button and start the search
-                        enabled = false;
                         resultView.visible = false;
 
                         searchParams.names = searchParamList[0];
