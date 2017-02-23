@@ -285,35 +285,35 @@ Rectangle {
 
                         Text {
                             id: nameText
-                            text: "Name: " + name
+                            text: "<b>Name:</b> " + name
                             font.pixelSize: fontSize
                             width: parent.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: "Tags: " + tags
+                            text: "<b>Tags:</b> " + tags
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: "SymbolClass: " + symbolClass
+                            text: "<b>SymbolClass:</b> " + symbolClass
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: "Category: " + category
+                            text: "<b>Category:</b> " + category
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: "Key: " + key
+                            text: "<b>Key:</b> " + key
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
