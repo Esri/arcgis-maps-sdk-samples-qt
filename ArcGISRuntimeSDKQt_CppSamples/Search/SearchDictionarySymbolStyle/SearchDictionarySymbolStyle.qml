@@ -107,7 +107,6 @@ SearchDictionarySymbolStyleSample {
 
                             searchParamList = tmp
                             categoryEntry.text = "";
-                            seachBtn.enabled = true;
                         }
                     }
 
@@ -172,13 +171,16 @@ SearchDictionarySymbolStyleSample {
                     width: 100 * scaleFactor
                     height: 32 * scaleFactor
                     enabled: false
-                    text: "Search"
-                    iconSource: enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png" :
-                                          "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_dark.png"
+                    text: searchParamList[0].length === 0 &&
+                          searchParamList[1].length === 0 &&
+                          searchParamList[2].length === 0 &&
+                          searchParamList[3].length === 0 &&
+                          searchParamList[4].length === 0 ?
+                              "List All" : "Search"
+                    iconSource: "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png"
 
                     onClicked: {
-                        //Disable the search button and start the search
-                        enabled = false;
+                        //start the search
                         resultView.visible = false;
 
                         searchDictionarySymbolStyleSample.search(searchParamList[SearchDictionarySymbolStyleSample.FieldNames],
@@ -261,35 +263,35 @@ SearchDictionarySymbolStyleSample {
 
                         Text {
                             id: nameText
-                            text: "Name: " + name
+                            text: "<b>Name:</b> " + name
                             font.pixelSize: fontSize
                             width: parent.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: "Tags: " + tags
+                            text: "<b>Tags:</b> " + tags
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: "SymbolClass: " + symbolClass
+                            text: "<b>SymbolClass:</b> " + symbolClass
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: "Category: " + category
+                            text: "<b>Category:</b> " + category
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
                         Text {
-                            text: "Key: " + key
+                            text: "<b>Key:</b> " + key
                             font.pixelSize: fontSize
                             width: nameText.width
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
