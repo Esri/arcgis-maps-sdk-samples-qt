@@ -191,7 +191,12 @@ Rectangle {
                     id: seachBtn
                     width: 100 * scaleFactor
                     height: 32 * scaleFactor
-                    text: searchParamList[0].length === 0 && searchParamList[1].length === 0 && searchParamList[2].length === 0 && searchParamList[3].length === 0 && searchParamList[4].length === 0 ? "List All" : "Search"
+                    text: searchParamList[0].length === 0 &&
+                          searchParamList[1].length === 0 &&
+                          searchParamList[2].length === 0 &&
+                          searchParamList[3].length === 0 &&
+                          searchParamList[4].length === 0 ?
+                              "List All" : "Search"
                     iconSource: "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png"
 
                     onClicked: {
