@@ -1,4 +1,4 @@
-// [WriteFile Name=FindRoute, Category=RoutingAndNavigation]
+// [WriteFile Name=FindRoute, Category=Routing]
 // [Legal]
 // Copyright 2016 Esri.
 
