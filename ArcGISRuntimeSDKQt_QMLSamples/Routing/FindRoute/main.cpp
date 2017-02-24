@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/RoutingAndNavigation/FindRoute/FindRoute.qml"));
+    view.setSource(QUrl("qrc:/Samples/Routing/FindRoute/FindRoute.qml"));
 
     view.show();
 
