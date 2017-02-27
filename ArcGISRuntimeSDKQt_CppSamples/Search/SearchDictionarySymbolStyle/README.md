@@ -1,6 +1,8 @@
 #Search symbol dictionary
 
-This sample demonstrates how to search the DictionarySymbolStyle and return the results in a ListView.
+This sample demonstrates how to search a DictionarySymbolStyle and return the results in a ListView. 
+In this case, the sample uses The Joint Military Symbology MIL-STD-2525D standard but the same code could be used for other symbol dictionaries.
+The MIL-STD-2525D defines a standardized, structured set of graphical symbols for the display of information in command and control (C2) systems and applications.
 
 ![](screenshot.png)
 
