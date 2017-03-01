@@ -170,7 +170,6 @@ SearchDictionarySymbolStyleSample {
                     id: seachBtn
                     width: 100 * scaleFactor
                     height: 32 * scaleFactor
-                    enabled: false
                     text: searchParamList[0].length === 0 &&
                           searchParamList[1].length === 0 &&
                           searchParamList[2].length === 0 &&
