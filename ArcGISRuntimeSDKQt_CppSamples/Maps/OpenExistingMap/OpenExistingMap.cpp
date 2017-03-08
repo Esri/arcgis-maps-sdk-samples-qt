@@ -23,8 +23,7 @@
 using namespace Esri::ArcGISRuntime;
 
 OpenExistingMap::OpenExistingMap(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_mapView(nullptr)
+    QQuickItem(parent)
 {
 }
 

@@ -23,10 +23,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ShowCallout::ShowCallout(QQuickItem* parent):
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_calloutData(nullptr)
+    QQuickItem(parent)
 {
 }
 

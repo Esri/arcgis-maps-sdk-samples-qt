@@ -27,13 +27,7 @@
 using namespace Esri::ArcGISRuntime;
 
 AnalyzeHotspots::AnalyzeHotspots(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_map(nullptr),
-  m_mapView(nullptr),
-  m_hotspotTask(nullptr),
-  m_layer(nullptr),
-  m_jobInProgress(false),
-  m_jobStatus("Not started.")
+  QQuickItem(parent)
 {
 }
 

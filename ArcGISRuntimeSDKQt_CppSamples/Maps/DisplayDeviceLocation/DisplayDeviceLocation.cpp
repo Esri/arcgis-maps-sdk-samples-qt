@@ -24,17 +24,15 @@
 
 using namespace Esri::ArcGISRuntime;
 
-const QString DisplayDeviceLocation::s_compassMode = "Compass";
-const QString DisplayDeviceLocation::s_navigationMode = "Navigation";
-const QString DisplayDeviceLocation::s_recenterMode = "Re-Center";
-const QString DisplayDeviceLocation::s_onMode = "On";
-const QString DisplayDeviceLocation::s_stopMode = "Stop";
-const QString DisplayDeviceLocation::s_closeMode = "Close";
+const QString DisplayDeviceLocation::s_compassMode = QStringLiteral("Compass");
+const QString DisplayDeviceLocation::s_navigationMode = QStringLiteral("Navigation");
+const QString DisplayDeviceLocation::s_recenterMode = QStringLiteral("Re-Center");
+const QString DisplayDeviceLocation::s_onMode = QStringLiteral("On");
+const QString DisplayDeviceLocation::s_stopMode = QStringLiteral("Stop");
+const QString DisplayDeviceLocation::s_closeMode = QStringLiteral("Close");
 
 DisplayDeviceLocation::DisplayDeviceLocation(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr)
+    QQuickItem(parent)
 {
 }
 

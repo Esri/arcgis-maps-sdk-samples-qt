@@ -34,15 +34,15 @@ class FeatureLayerGeodatabase : public QQuickItem
     Q_OBJECT
 
 public:
-    FeatureLayerGeodatabase(QQuickItem* parent = 0);
+    explicit FeatureLayerGeodatabase(QQuickItem* parent = 0);
     ~FeatureLayerGeodatabase();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::Geodatabase* m_geodatabase;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
     QString m_dataPath;
 };
 

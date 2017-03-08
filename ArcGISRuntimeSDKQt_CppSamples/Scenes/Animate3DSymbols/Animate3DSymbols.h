@@ -38,7 +38,7 @@ class QAbstractItemModel;
 #include <QQuickItem>
 #include <QString>
 
-#include <math.h>
+#include <cmath>
 #include <memory>
 
 class Animate3DSymbols : public QQuickItem
@@ -54,7 +54,7 @@ class Animate3DSymbols : public QQuickItem
   Q_PROPERTY(int speed READ speed WRITE setSpeed)
 
 public:
-  Animate3DSymbols(QQuickItem* parent = nullptr);
+  explicit Animate3DSymbols(QQuickItem* parent = nullptr);
   ~Animate3DSymbols();
 
   void componentComplete() Q_DECL_OVERRIDE;
@@ -99,19 +99,19 @@ private:
 
   struct CameraHandler;
 
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
-  Esri::ArcGISRuntime::ModelSceneSymbol* m_model3d;
-  Esri::ArcGISRuntime::Graphic* m_graphic3d;
-  Esri::ArcGISRuntime::Graphic* m_graphic2d;
-  Esri::ArcGISRuntime::Graphic* m_routeGraphic;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::ModelSceneSymbol* m_model3d = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_graphic3d = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_graphic2d = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_routeGraphic = nullptr;
   QString m_dataPath;
-  QAbstractItemModel* m_missionsModel;
+  QAbstractItemModel* m_missionsModel = nullptr;
   std::unique_ptr<MissionData> m_missionData;
   std::unique_ptr<CameraHandler> m_camHandler;
-  int m_frame;
-  bool m_following;
-  double m_mapZoomFactor;
+  int m_frame = 0;
+  bool m_following = true;
+  double m_mapZoomFactor = 5.0;
 };
 
 class MissionData

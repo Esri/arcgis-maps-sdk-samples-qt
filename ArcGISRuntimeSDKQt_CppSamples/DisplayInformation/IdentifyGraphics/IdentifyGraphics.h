@@ -36,7 +36,7 @@ class IdentifyGraphics : public QQuickItem
     Q_PROPERTY(int identifiedGraphicsCount READ identifiedGraphicsCount NOTIFY identifiedGraphicsCountChanged)
 
 public:
-    IdentifyGraphics(QQuickItem* parent = 0);
+    explicit IdentifyGraphics(QQuickItem* parent = 0);
     ~IdentifyGraphics();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -50,10 +50,10 @@ private:
     int identifiedGraphicsCount();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
-    int m_identifiedGraphicsCount;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+    int m_identifiedGraphicsCount = 0;
 };
 
 #endif // IDENTIFY_GRAPHICS_H

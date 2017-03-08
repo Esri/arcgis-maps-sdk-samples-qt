@@ -32,13 +32,7 @@
 using namespace Esri::ArcGISRuntime;
 
 DisplayLayerViewDrawStatus::DisplayLayerViewDrawStatus(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_imageLayer(nullptr),
-    m_tiledLayer(nullptr),
-    m_featureTable(nullptr),
-    m_featureLayer(nullptr)
+    QQuickItem(parent)
 {
 }
 

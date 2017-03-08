@@ -37,7 +37,7 @@ class Unique_Value_Renderer : public QQuickItem
     Q_OBJECT
 
 public:
-    Unique_Value_Renderer(QQuickItem* parent = 0);
+    explicit Unique_Value_Renderer(QQuickItem* parent = 0);
     ~Unique_Value_Renderer();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -46,15 +46,15 @@ private:
     void createUniqueValue(QString stateName, Esri::ArcGISRuntime::SimpleFillSymbol* fillSymbol);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer;
-    Esri::ArcGISRuntime::SimpleFillSymbol* m_defaultSymbol;
-    Esri::ArcGISRuntime::SimpleFillSymbol* m_californiaSymbol;
-    Esri::ArcGISRuntime::SimpleFillSymbol* m_arizonaSymbol;
-    Esri::ArcGISRuntime::SimpleFillSymbol* m_nevadaSymbol;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+    Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
+    Esri::ArcGISRuntime::SimpleFillSymbol* m_defaultSymbol = nullptr;
+    Esri::ArcGISRuntime::SimpleFillSymbol* m_californiaSymbol = nullptr;
+    Esri::ArcGISRuntime::SimpleFillSymbol* m_arizonaSymbol = nullptr;
+    Esri::ArcGISRuntime::SimpleFillSymbol* m_nevadaSymbol = nullptr;
 };
 
 #endif // UNIQUE_VALUE_RENDERER_H

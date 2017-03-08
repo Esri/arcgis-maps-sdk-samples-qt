@@ -29,11 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerFeatureService::FeatureLayerFeatureService(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_featureLayer(nullptr),
-    m_featureTable(nullptr)
+    QQuickItem(parent)
 {
 }
 

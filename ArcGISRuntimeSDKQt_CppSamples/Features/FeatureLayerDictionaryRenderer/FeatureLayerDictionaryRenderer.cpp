@@ -30,10 +30,7 @@
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerDictionaryRenderer::FeatureLayerDictionaryRenderer(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_loadedLayerCount(0),
-    m_mapView(nullptr),
-    m_geodatabase(nullptr)
+    QQuickItem(parent)
 {
 
 }

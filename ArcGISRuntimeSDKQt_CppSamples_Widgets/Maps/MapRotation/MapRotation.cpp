@@ -25,11 +25,7 @@
 using namespace Esri::ArcGISRuntime;
 
 MapRotation::MapRotation(QWidget* parent) :
-  QWidget(parent),
-  m_map(nullptr),
-  m_mapView(nullptr),
-  m_slider(nullptr),
-  m_degrees(nullptr)
+  QWidget(parent)
 {
     // Create a map using the streets basemap
     m_map = new Map(Basemap::streets(this), this);

@@ -32,11 +32,7 @@
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerChangeRenderer::FeatureLayerChangeRenderer(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_featureLayer(nullptr),
-    m_initialized(false)
+    QQuickItem(parent)
 {
 }
 

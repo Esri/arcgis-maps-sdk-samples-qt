@@ -38,7 +38,7 @@ class Feature_Collection_Layer : public QQuickItem
   Q_OBJECT
 
 public:
-  Feature_Collection_Layer(QQuickItem* parent = nullptr);
+  explicit Feature_Collection_Layer(QQuickItem* parent = nullptr);
   ~Feature_Collection_Layer();
 
   void componentComplete() Q_DECL_OVERRIDE;
@@ -52,10 +52,10 @@ private:
   void addPolygonToTable(QString attrName, QString attrValue, QList<Esri::ArcGISRuntime::Point> points, Esri::ArcGISRuntime::FeatureCollectionTable* table);
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
-  Esri::ArcGISRuntime::FeatureCollection* m_featureCollection;
-  Esri::ArcGISRuntime::FeatureCollectionLayer* m_featureCollectionLayer;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureCollection* m_featureCollection = nullptr;
+  Esri::ArcGISRuntime::FeatureCollectionLayer* m_featureCollectionLayer = nullptr;
 };
 
 #endif // FEATURE_COLLECTION_LAYER_H

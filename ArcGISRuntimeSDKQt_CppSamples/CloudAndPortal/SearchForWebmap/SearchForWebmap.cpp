@@ -27,14 +27,7 @@
 using namespace Esri::ArcGISRuntime;
 
 SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */):
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_portal(new Portal(this)),
-    m_webmapResults(nullptr),
-    m_webmaps(nullptr),
-    m_selectedItem(nullptr),
-    m_portalLoaded(false)
+    QQuickItem(parent)
 {
     AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }

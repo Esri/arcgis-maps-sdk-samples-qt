@@ -42,10 +42,10 @@ private slots:
 private:
   double screenRatio() const;
 
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
-  QComboBox* m_viewpointCombo;
-  int m_rotationValue;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
+  QComboBox* m_viewpointCombo = nullptr;
+  int m_rotationValue = 0;
 };
 
 #endif // CHANGE_VIEWPOINT_H

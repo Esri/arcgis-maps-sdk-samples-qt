@@ -37,7 +37,7 @@ class MapLoaded : public QQuickItem
     Q_PROPERTY(QString mapLoadStatus READ mapLoadStatus NOTIFY mapLoadStatusChanged)
 
 public:
-    MapLoaded(QQuickItem* parent = 0);
+    explicit MapLoaded(QQuickItem* parent = 0);
     ~MapLoaded();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -49,8 +49,8 @@ private:
     QString mapLoadStatus() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
     QString m_loadStatus;
 };
 

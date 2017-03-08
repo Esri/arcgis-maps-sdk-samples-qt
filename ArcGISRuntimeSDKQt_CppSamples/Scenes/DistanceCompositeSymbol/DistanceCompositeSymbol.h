@@ -33,14 +33,14 @@ class DistanceCompositeSymbol : public QQuickItem
     Q_OBJECT
 
 public:
-    DistanceCompositeSymbol(QQuickItem* parent = 0);
+    explicit DistanceCompositeSymbol(QQuickItem* parent = 0);
     ~DistanceCompositeSymbol();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Scene* m_scene;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
+    Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 };
 
 #endif // DISTANCE_COMPOSITE_SYMBOL_H

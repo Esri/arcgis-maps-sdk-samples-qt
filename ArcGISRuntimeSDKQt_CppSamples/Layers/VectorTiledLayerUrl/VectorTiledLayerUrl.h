@@ -33,15 +33,15 @@ class VectorTiledLayerUrl : public QQuickItem
     Q_OBJECT
 
 public:
-    VectorTiledLayerUrl(QQuickItem* parent = 0);
+    explicit VectorTiledLayerUrl(QQuickItem* parent = 0);
     ~VectorTiledLayerUrl();
 
     void componentComplete() Q_DECL_OVERRIDE;
     Q_INVOKABLE void changeBasemap(QString basemap);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // VECTOR_TILED_LAYER_URL

@@ -36,13 +36,7 @@
 using namespace Esri::ArcGISRuntime;
 
 GenerateGeodatabase::GenerateGeodatabase(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_syncTask(nullptr),
-    m_dataPath(""),
-    m_featureServiceUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/"),
-    m_serviceIds(QStringList())
+    QQuickItem(parent)
 {
 }
 

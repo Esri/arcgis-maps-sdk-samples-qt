@@ -29,14 +29,11 @@
 
 using namespace Esri::ArcGISRuntime;
 
-const QString GraphicsOverlayDictionaryRenderer::FIELD_CONTROL_POINTS = "_control_points";
-const QString GraphicsOverlayDictionaryRenderer::FIELD_WKID = "_wkid";
+const QString GraphicsOverlayDictionaryRenderer::FIELD_CONTROL_POINTS = QStringLiteral("_control_points");
+const QString GraphicsOverlayDictionaryRenderer::FIELD_WKID = QStringLiteral("_wkid");
 
 GraphicsOverlayDictionaryRenderer::GraphicsOverlayDictionaryRenderer(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_graphicsOverlay(nullptr)
+    QQuickItem(parent)
 {
 
 }

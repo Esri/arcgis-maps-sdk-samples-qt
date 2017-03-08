@@ -43,7 +43,7 @@ class SearchForWebmap : public QQuickItem
     Q_PROPERTY(QString mapLoadError READ mapLoadError NOTIFY mapLoadErrorChanged)
 
 public:
-    SearchForWebmap(QQuickItem* parent = nullptr);
+    explicit SearchForWebmap(QQuickItem* parent = nullptr);
     ~SearchForWebmap();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -67,13 +67,13 @@ signals:
     void mapLoadErrorChanged();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::Portal* m_portal;
-    Esri::ArcGISRuntime::PortalQueryResultSetForItems* m_webmapResults;
-    Esri::ArcGISRuntime::PortalItemListModel* m_webmaps;
-    Esri::ArcGISRuntime::PortalItem* m_selectedItem;
-    bool m_portalLoaded;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+    Esri::ArcGISRuntime::PortalQueryResultSetForItems* m_webmapResults = nullptr;
+    Esri::ArcGISRuntime::PortalItemListModel* m_webmaps = nullptr;
+    Esri::ArcGISRuntime::PortalItem* m_selectedItem = nullptr;
+    bool m_portalLoaded = false;
     QString m_mapLoadeError;
 };
 

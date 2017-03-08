@@ -33,7 +33,7 @@ class ChangeViewpoint : public QQuickItem
     Q_OBJECT
 
 public:
-    ChangeViewpoint(QQuickItem* parent = 0);
+    explicit ChangeViewpoint(QQuickItem* parent = 0);
     ~ChangeViewpoint();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -42,9 +42,9 @@ public:
 private:
     double screenRatio() const;
 
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    int m_rotationValue;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    int m_rotationValue = 0;
 };
 
 #endif // CHANGE_VIEWPOINT_H

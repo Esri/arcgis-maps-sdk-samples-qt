@@ -33,15 +33,15 @@ class ChangeBasemap : public QQuickItem
     Q_OBJECT
 
 public:
-    ChangeBasemap(QQuickItem* parent = 0);
+    explicit ChangeBasemap(QQuickItem* parent = 0);
     ~ChangeBasemap();
 
     void componentComplete() Q_DECL_OVERRIDE;
     Q_INVOKABLE void changeBasemap(QString basemap);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // CHANGE_BASEMAP_H

@@ -33,7 +33,7 @@ class Surface_Placement : public QQuickItem
     Q_OBJECT
 
 public:
-    Surface_Placement(QQuickItem* parent = nullptr);
+    explicit Surface_Placement(QQuickItem* parent = nullptr);
     ~Surface_Placement();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -43,10 +43,10 @@ private:
     void addGraphicsOverlays();
 
 private:
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_drapedOverlay;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_relativeOverlay;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_absoluteOverlay;
+    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_drapedOverlay = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_relativeOverlay = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_absoluteOverlay = nullptr;
 };
 
 #endif // SURFACE_PLACEMENT_H

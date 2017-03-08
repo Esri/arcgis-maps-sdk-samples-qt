@@ -41,10 +41,10 @@
 
 using namespace Esri::ArcGISRuntime;
 
-const QString Animate3DSymbols::HEADING = "heading";
-const QString Animate3DSymbols::ROLL = "roll";
-const QString Animate3DSymbols::PITCH = "pitch";
-const QString Animate3DSymbols::ANGLE = "angle";
+const QString Animate3DSymbols::HEADING = QStringLiteral("heading");
+const QString Animate3DSymbols::ROLL = QStringLiteral("roll");
+const QString Animate3DSymbols::PITCH = QStringLiteral("pitch");
+const QString Animate3DSymbols::ANGLE = QStringLiteral("angle");
 
 struct Animate3DSymbols::CameraHandler
 {
@@ -71,18 +71,9 @@ struct Animate3DSymbols::CameraHandler
 
 Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_sceneView(nullptr),
-  m_mapView(nullptr),
-  m_model3d(nullptr),
-  m_graphic3d(nullptr),
-  m_graphic2d(nullptr),
-  m_routeGraphic(nullptr),
   m_missionsModel(new QStringListModel({"Grand Canyon", "Hawaii", "Pyrenees", "Snowdon"}, this)),
   m_missionData(new MissionData()),
-  m_camHandler(new CameraHandler),
-  m_frame(0),
-  m_following(true),
-  m_mapZoomFactor(5.0)
+  m_camHandler(new CameraHandler())
 {
   Q_INIT_RESOURCE(Animate3DSymbols);
 }

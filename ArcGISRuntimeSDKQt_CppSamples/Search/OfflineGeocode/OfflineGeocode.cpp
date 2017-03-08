@@ -35,20 +35,7 @@
 using namespace Esri::ArcGISRuntime;
 
 OfflineGeocode::OfflineGeocode(QQuickItem* parent):
-    QQuickItem(parent),
-    m_isReverseGeocode(false),
-    m_geocodeInProgress(false),
-    m_isPressAndHold(false),
-    m_noResults(false),
-    m_suggestInProgress(false),
-    m_map(nullptr),
-    m_pinGraphic(nullptr),
-    m_mapView(nullptr),
-    m_calloutData(nullptr),
-    m_locatorTask(nullptr),
-    m_tiledLayer(nullptr),
-    m_graphicsOverlay(nullptr),
-    m_suggestListModel(nullptr)
+    QQuickItem(parent)
 {
 }
 

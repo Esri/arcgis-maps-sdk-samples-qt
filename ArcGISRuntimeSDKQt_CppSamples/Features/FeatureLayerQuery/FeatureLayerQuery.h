@@ -38,7 +38,7 @@ class FeatureLayerQuery : public QQuickItem
     Q_PROPERTY(int queryResultsCount READ queryResultsCount NOTIFY queryResultsCountChanged)
 
 public:
-    FeatureLayerQuery(QQuickItem* parent = 0);
+    explicit FeatureLayerQuery(QQuickItem* parent = 0);
     ~FeatureLayerQuery();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -56,12 +56,12 @@ private:
 private:
     QString formatStateNameForQuery(const QString& stateName) const;
 
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-    bool m_initialized;
-    int m_queryResultsCount;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+    bool m_initialized = false;
+    int m_queryResultsCount = 0;
 };
 
 #endif // FEATURE_LAYER_QUERY_H

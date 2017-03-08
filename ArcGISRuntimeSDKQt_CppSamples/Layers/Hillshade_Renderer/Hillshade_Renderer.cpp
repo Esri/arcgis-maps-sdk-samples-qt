@@ -29,8 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 Hillshade_Renderer::Hillshade_Renderer(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_mapView(nullptr)
+  QQuickItem(parent)
 {
 }
 

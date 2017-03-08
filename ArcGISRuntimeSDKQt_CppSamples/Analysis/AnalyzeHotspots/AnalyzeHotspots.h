@@ -40,7 +40,7 @@ class AnalyzeHotspots : public QQuickItem
   Q_PROPERTY(QString statusText READ jobStatus NOTIFY jobStatusChanged)
 
 public:
-  AnalyzeHotspots(QQuickItem* parent = nullptr);
+  explicit AnalyzeHotspots(QQuickItem* parent = nullptr);
   ~AnalyzeHotspots();
 
   void componentComplete() Q_DECL_OVERRIDE;
@@ -53,12 +53,12 @@ signals:
   void displayErrorDialog(const QString& titleText, const QString& detailedText);
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
-  Esri::ArcGISRuntime::GeoprocessingTask* m_hotspotTask;
-  Esri::ArcGISRuntime::ArcGISMapImageLayer* m_layer;
-  bool m_jobInProgress;
-  QString m_jobStatus;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GeoprocessingTask* m_hotspotTask = nullptr;
+  Esri::ArcGISRuntime::ArcGISMapImageLayer* m_layer = nullptr;
+  bool m_jobInProgress = false;
+  QString m_jobStatus = QString("Not started.");
 
 private:
   bool jobInProgress() const { return m_jobInProgress; }

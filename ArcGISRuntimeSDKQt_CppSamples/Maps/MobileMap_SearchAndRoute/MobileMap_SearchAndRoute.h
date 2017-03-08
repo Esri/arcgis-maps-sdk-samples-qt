@@ -53,7 +53,7 @@ class MobileMap_SearchAndRoute : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
 
 public:
-    MobileMap_SearchAndRoute(QQuickItem* parent = nullptr);
+    explicit MobileMap_SearchAndRoute(QQuickItem* parent = nullptr);
     ~MobileMap_SearchAndRoute();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -81,10 +81,10 @@ private:
     Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
-    int m_selectedMmpkIndex;
-    bool m_canRoute;
-    bool m_canClear;
-    bool m_isGeocodeInProgress;
+    int m_selectedMmpkIndex = 0;
+    bool m_canRoute = false;
+    bool m_canClear = false;
+    bool m_isGeocodeInProgress = false;
     QString m_dataPath;
     QFileInfoList m_fileInfoList;
     QStringList m_mobileMapPackageList;
@@ -94,15 +94,15 @@ private:
     Esri::ArcGISRuntime::ReverseGeocodeParameters m_reverseGeocodeParameters;
     QList<Esri::ArcGISRuntime::Stop> m_stops;
     QList<Esri::ArcGISRuntime::MobileMapPackage*> m_mobileMapPackages;
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::MobileMapPackage* m_mobileMap;
-    Esri::ArcGISRuntime::LocatorTask* m_currentLocatorTask;
-    Esri::ArcGISRuntime::PictureMarkerSymbol* m_bluePinSymbol;
-    Esri::ArcGISRuntime::RouteTask* m_currentRouteTask;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay;
-    Esri::ArcGISRuntime::CalloutData* m_calloutData;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::MobileMapPackage* m_mobileMap = nullptr;
+    Esri::ArcGISRuntime::LocatorTask* m_currentLocatorTask = nullptr;
+    Esri::ArcGISRuntime::PictureMarkerSymbol* m_bluePinSymbol = nullptr;
+    Esri::ArcGISRuntime::RouteTask* m_currentRouteTask = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay = nullptr;
+    Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
 };
 
 #endif // MOBILEMAP_SEARCHANDROUTE_H

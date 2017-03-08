@@ -37,15 +37,7 @@
 using namespace Esri::ArcGISRuntime;
 
 EditAndSyncFeatures::EditAndSyncFeatures(QQuickItem* parent /* = nullptr */):
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_syncTask(nullptr),
-    m_offlineGdb(nullptr),
-    m_selectedFeature(nullptr),
-    m_featureLayerId(0),
-    m_featureServiceUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/"),
-    m_isOffline(false)
+    QQuickItem(parent)
 {
 }
 

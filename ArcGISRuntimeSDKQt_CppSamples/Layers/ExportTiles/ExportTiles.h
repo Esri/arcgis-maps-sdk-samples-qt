@@ -37,7 +37,7 @@ class ExportTiles : public QQuickItem
     Q_OBJECT
 
 public:
-    ExportTiles(QQuickItem* parent = 0);
+    explicit ExportTiles(QQuickItem* parent = 0);
     ~ExportTiles();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -51,11 +51,11 @@ private:
     void displayOutputTileCache(Esri::ArcGISRuntime::TileCache* tileCache);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    QUrl m_serviceUrl;
-    Esri::ArcGISRuntime::ExportTileCacheTask* m_exportTileCacheTask;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::ExportTileCacheTask* m_exportTileCacheTask = nullptr;
     Esri::ArcGISRuntime::ExportTileCacheParameters m_parameters;
+    QUrl m_serviceUrl = QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer");
 };
 
 #endif // EXPORT_TILES

@@ -23,7 +23,7 @@
 using namespace Esri::ArcGISRuntime;
 
 MapLoaded::MapLoaded(QWidget* parent) :
-  QWidget(parent)
+    QWidget(parent)
 {    
     // Create a map using the streets basemap
     m_map = new Map(Basemap::streets(this), this);
@@ -35,7 +35,8 @@ MapLoaded::MapLoaded(QWidget* parent) :
     m_loadStatus= new QLabel("", this);
 
     // Map Load Status changed lambda
-    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, [this](Esri::ArcGISRuntime::LoadStatus loadStatus){
+    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
+    {
         switch (loadStatus)
         {
           case LoadStatus::Loaded:

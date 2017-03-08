@@ -25,11 +25,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_portal(new Portal(this)),
-    m_portalLoaded(false)
+    QQuickItem(parent)
 {
     AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }

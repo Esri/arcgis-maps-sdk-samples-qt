@@ -32,11 +32,7 @@
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerGeodatabase::FeatureLayerGeodatabase(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_geodatabase(nullptr),
-    m_dataPath("")
+    QQuickItem(parent)
 {
 }
 

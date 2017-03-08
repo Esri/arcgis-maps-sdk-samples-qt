@@ -29,10 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ShowLegend::ShowLegend(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_legendInfoListModel(nullptr)
+    QQuickItem(parent)
 {
 }
 

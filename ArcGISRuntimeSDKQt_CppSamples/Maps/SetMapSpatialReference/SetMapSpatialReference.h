@@ -35,16 +35,16 @@ class SetMapSpatialReference : public QQuickItem
     Q_OBJECT
 
 public:
-    SetMapSpatialReference(QQuickItem* parent = 0);
+    explicit SetMapSpatialReference(QQuickItem* parent = 0);
     ~SetMapSpatialReference();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::Basemap* m_basemap;
-    Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
+    Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer = nullptr;
 };
 
 #endif // SET_MAP_SPATIAL_REFERENCE_H

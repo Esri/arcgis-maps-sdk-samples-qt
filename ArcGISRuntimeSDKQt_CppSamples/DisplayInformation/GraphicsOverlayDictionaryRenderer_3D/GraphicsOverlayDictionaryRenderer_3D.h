@@ -53,11 +53,11 @@ private:
     void createGraphic(QVariantMap rawAttributes);
     void zoomToGraphics();
 
-    double m_scaleFactor;
+    double m_scaleFactor = 1.0;
     QString m_dataPath;
     QXmlStreamReader m_xmlParser;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
+    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
     Esri::ArcGISRuntime::Envelope m_bbox;
 };
 

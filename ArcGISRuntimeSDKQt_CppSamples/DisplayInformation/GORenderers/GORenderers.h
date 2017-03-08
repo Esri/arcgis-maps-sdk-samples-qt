@@ -33,7 +33,7 @@ class GORenderers : public QQuickItem
     Q_OBJECT
 
 public:
-    GORenderers(QQuickItem* parent = 0);
+    explicit GORenderers(QQuickItem* parent = 0);
     ~GORenderers();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -42,8 +42,8 @@ private:
     void addGraphicsOverlay();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // GO_RENDERERS_H

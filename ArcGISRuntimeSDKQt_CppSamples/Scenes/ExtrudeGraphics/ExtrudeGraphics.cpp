@@ -33,12 +33,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ExtrudeGraphics::ExtrudeGraphics(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_scene(nullptr),
-    m_sceneView(nullptr),
-    m_elevationSourceUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-    m_maxZ(1000),
-    m_size(0.01)
+    QQuickItem(parent)
 {
     srand(time(nullptr));
 }

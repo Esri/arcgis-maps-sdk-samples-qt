@@ -30,28 +30,22 @@
 
 using namespace Esri::ArcGISRuntime;
 
-const QString DisplayGrid::s_utmGrid = "UTM";
-const QString DisplayGrid::s_usngGrid = "USNG";
-const QString DisplayGrid::s_latlonGrid = "LatLon";
-const QString DisplayGrid::s_mgrsGrid = "MGRS";
-const QString DisplayGrid::s_ddFormat = "Decimal degrees";
-const QString DisplayGrid::s_dmsFormat = "Degrees minutes seconds";
-const QString DisplayGrid::s_geographicPosition = "Geographic";
-const QString DisplayGrid::s_bottomLeftPosition = "Bottom left";
-const QString DisplayGrid::s_bottomRightPosition = "Bottom right";
-const QString DisplayGrid::s_topLeftPosition = "Top left";
-const QString DisplayGrid::s_topRightPosition = "Top right";
-const QString DisplayGrid::s_centerPosition = "Center";
-const QString DisplayGrid::s_allSidesPosition = "All sides";
+const QString DisplayGrid::s_utmGrid = QStringLiteral("UTM");
+const QString DisplayGrid::s_usngGrid = QStringLiteral("USNG");
+const QString DisplayGrid::s_latlonGrid = QStringLiteral("LatLon");
+const QString DisplayGrid::s_mgrsGrid = QStringLiteral("MGRS");
+const QString DisplayGrid::s_ddFormat = QStringLiteral("Decimal degrees");
+const QString DisplayGrid::s_dmsFormat = QStringLiteral( "Degrees minutes seconds");
+const QString DisplayGrid::s_geographicPosition = QStringLiteral("Geographic");
+const QString DisplayGrid::s_bottomLeftPosition = QStringLiteral("Bottom left");
+const QString DisplayGrid::s_bottomRightPosition = QStringLiteral("Bottom right");
+const QString DisplayGrid::s_topLeftPosition = QStringLiteral("Top left");
+const QString DisplayGrid::s_topRightPosition = QStringLiteral("Top right");
+const QString DisplayGrid::s_centerPosition = QStringLiteral("Center");
+const QString DisplayGrid::s_allSidesPosition = QStringLiteral("All sides");
 
 DisplayGrid::DisplayGrid(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_map(nullptr),
-  m_mapView(nullptr),
-  m_currentGridColor("red"),
-  m_currentLabelColor("black"),
-  m_gridVisibility(true),
-  m_gridLabelVisibility(true)
+  QQuickItem(parent)
 {
 }
 

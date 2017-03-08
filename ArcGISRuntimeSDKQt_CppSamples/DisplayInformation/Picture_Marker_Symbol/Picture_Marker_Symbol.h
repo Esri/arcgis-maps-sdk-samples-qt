@@ -37,7 +37,7 @@ class Picture_Marker_Symbol : public QQuickItem
     Q_OBJECT
 
 public:
-    Picture_Marker_Symbol(QQuickItem* parent = nullptr);
+    explicit Picture_Marker_Symbol(QQuickItem* parent = nullptr);
     ~Picture_Marker_Symbol();
 
     void addGraphic(Esri::ArcGISRuntime::Point &point, Esri::ArcGISRuntime::PictureMarkerSymbol* symbol);
@@ -47,9 +47,9 @@ private:
     void setWidthAndHeight(Esri::ArcGISRuntime::PictureMarkerSymbol* symbol, float size);
 
     QString m_dataPath;
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
 };
 
 #endif // PICTURE_MARKER_SYMBOL_H

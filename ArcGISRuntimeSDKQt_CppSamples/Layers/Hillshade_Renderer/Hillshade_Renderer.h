@@ -33,13 +33,13 @@ class Hillshade_Renderer : public QQuickItem
   Q_OBJECT
 
 public:
-  Hillshade_Renderer(QQuickItem* parent = nullptr);
+  explicit Hillshade_Renderer(QQuickItem* parent = nullptr);
   ~Hillshade_Renderer();
 
   void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // HILLSHADE_RENDERER_H

@@ -33,14 +33,14 @@ class BasicSceneView : public QQuickItem
     Q_OBJECT
 
 public:
-    BasicSceneView(QQuickItem* parent = 0);
+    explicit BasicSceneView(QQuickItem* parent = 0);
     ~BasicSceneView();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Scene* m_scene;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
+    Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 };
 
 #endif // BASIC_SCENEVIEW_H

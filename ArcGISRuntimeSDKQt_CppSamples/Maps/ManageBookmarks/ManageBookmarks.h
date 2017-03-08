@@ -41,7 +41,7 @@ class ManageBookmarks : public QQuickItem
     //! [Expose the list model to QML]
 
 public:
-    ManageBookmarks(QQuickItem* parent = 0);
+    explicit ManageBookmarks(QQuickItem* parent = 0);
     ~ManageBookmarks();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -57,9 +57,9 @@ private:
     Esri::ArcGISRuntime::BookmarkListModel* bookmarks() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::BookmarkListModel* m_bookmarks;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::BookmarkListModel* m_bookmarks = nullptr;
 };
 
 #endif // MANAGE_BOOKMARKS_H

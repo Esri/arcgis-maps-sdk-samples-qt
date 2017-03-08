@@ -24,9 +24,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ShowMagnifier::ShowMagnifier(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr)
+    QQuickItem(parent)
 {
 }
 

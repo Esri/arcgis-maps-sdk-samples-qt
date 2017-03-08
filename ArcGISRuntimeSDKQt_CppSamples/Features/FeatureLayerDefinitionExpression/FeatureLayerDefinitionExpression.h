@@ -36,7 +36,7 @@ class FeatureLayerDefinitionExpression : public QQuickItem
     Q_PROPERTY(bool layerInitialized READ layerInitialized NOTIFY layerInitializedChanged)
 
 public:
-    FeatureLayerDefinitionExpression(QQuickItem* parent = 0);
+    explicit FeatureLayerDefinitionExpression(QQuickItem* parent = 0);
     ~FeatureLayerDefinitionExpression();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -49,10 +49,10 @@ private:
     bool layerInitialized() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    bool m_initialized;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+    bool m_initialized = false;
 };
 
 #endif // FEATURE_LAYER_DEFINITION_EXPRESSION_H

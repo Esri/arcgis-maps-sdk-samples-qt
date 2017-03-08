@@ -40,11 +40,7 @@
 using namespace Esri::ArcGISRuntime;
 
 Feature_Collection_Layer::Feature_Collection_Layer(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_map(nullptr),
-  m_mapView(nullptr),
-  m_featureCollection(nullptr),
-  m_featureCollectionLayer(nullptr)
+  QQuickItem(parent)
 {
 }
 

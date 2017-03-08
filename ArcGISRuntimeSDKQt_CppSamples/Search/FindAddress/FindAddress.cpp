@@ -30,16 +30,7 @@
 using namespace Esri::ArcGISRuntime;
 
 FindAddress::FindAddress(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_graphicsOverlay(nullptr),
-    m_locatorTask(nullptr),
-    m_geocodeParameters(),
-    m_screenX(0),
-    m_screenY(0),
-    m_calloutText(""),
-    m_calloutDetailedText("")
+    QQuickItem(parent)
 {
 }
 

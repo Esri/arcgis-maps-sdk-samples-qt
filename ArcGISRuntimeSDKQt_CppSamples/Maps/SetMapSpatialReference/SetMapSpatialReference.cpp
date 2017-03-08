@@ -26,11 +26,7 @@
 using namespace Esri::ArcGISRuntime;
 
 SetMapSpatialReference::SetMapSpatialReference(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_basemap(nullptr),
-    m_imageLayer(nullptr)
+    QQuickItem(parent)
 {    
 }
 

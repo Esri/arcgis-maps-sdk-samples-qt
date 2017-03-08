@@ -43,7 +43,7 @@ class AddItemsToPortal : public QQuickItem
     Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
 
 public:
-    AddItemsToPortal(QQuickItem* parent = nullptr);
+    explicit AddItemsToPortal(QQuickItem* parent = nullptr);
     ~AddItemsToPortal();
 
     void componentComplete() Q_DECL_OVERRIDE;

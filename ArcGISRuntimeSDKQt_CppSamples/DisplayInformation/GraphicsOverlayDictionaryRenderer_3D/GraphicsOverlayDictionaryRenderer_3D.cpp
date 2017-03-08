@@ -35,7 +35,6 @@ const QString GraphicsOverlayDictionaryRenderer_3D::FIELD_WKID = "_wkid";
 
 GraphicsOverlayDictionaryRenderer_3D::GraphicsOverlayDictionaryRenderer_3D(QQuickItem* parent) :
     QQuickItem(parent),
-    m_sceneView(nullptr),
     m_graphicsOverlay(new GraphicsOverlay(this))
 {
     m_graphicsOverlay->setRenderingMode(GraphicsRenderingMode::Dynamic);

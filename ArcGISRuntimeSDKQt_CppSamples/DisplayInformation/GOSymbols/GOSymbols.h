@@ -35,7 +35,7 @@ class GOSymbols : public QQuickItem
     Q_OBJECT
 
 public:
-    GOSymbols(QQuickItem* parent = 0);
+    explicit GOSymbols(QQuickItem* parent = 0);
     ~GOSymbols();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -48,8 +48,8 @@ private:
     Esri::ArcGISRuntime::Geometry createNestingGround();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // GOSYMBOLS_H

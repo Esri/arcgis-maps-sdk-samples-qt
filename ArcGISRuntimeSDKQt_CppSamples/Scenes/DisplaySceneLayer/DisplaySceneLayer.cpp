@@ -28,10 +28,7 @@
 using namespace Esri::ArcGISRuntime;
 
 DisplaySceneLayer::DisplaySceneLayer(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_scene(nullptr),
-    m_sceneView(nullptr),
-    m_sceneLayer(nullptr)
+    QQuickItem(parent)
 {
 }
 

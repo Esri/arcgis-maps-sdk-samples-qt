@@ -29,11 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ChangeSublayerVisibility::ChangeSublayerVisibility(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_mapImageLayer(nullptr),
-    m_sublayerModel(nullptr)
+    QQuickItem(parent)
 {
 }
 
