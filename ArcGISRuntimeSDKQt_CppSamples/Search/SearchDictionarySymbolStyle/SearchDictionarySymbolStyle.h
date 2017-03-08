@@ -38,7 +38,7 @@ class SearchDictionarySymbolStyle : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* searchResultsListModel READ searchResultsListModel NOTIFY searchResultsListModelChanged)
 
 public:
-    explicit SearchDictionarySymbolStyle(QQuickItem *parent = 0);
+    explicit SearchDictionarySymbolStyle(QQuickItem* parent = nullptr);
     ~SearchDictionarySymbolStyle();
 
     enum class FieldEnum {

@@ -33,14 +33,14 @@ class ArcGISTiledLayerUrl : public QQuickItem
     Q_OBJECT
 
 public:
-    ArcGISTiledLayerUrl(QQuickItem* parent = 0);
+    explicit ArcGISTiledLayerUrl(QQuickItem* parent = nullptr);
     ~ArcGISTiledLayerUrl();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // ARCGIS_TILED_LAYER_URL_H

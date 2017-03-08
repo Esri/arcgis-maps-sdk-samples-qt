@@ -49,7 +49,7 @@ class OfflineGeocode : public QQuickItem
     Q_PROPERTY(bool noResults READ noResults NOTIFY noResultsChanged)
 
 public:
-    OfflineGeocode(QQuickItem* parent = nullptr);
+    explicit OfflineGeocode(QQuickItem* parent = nullptr);
     ~OfflineGeocode();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -74,21 +74,21 @@ private:
     void connectSignals();
 
 private:
-    bool m_isReverseGeocode;
-    bool m_geocodeInProgress;
-    bool m_isPressAndHold;
-    bool m_noResults;
-    bool m_suggestInProgress;
+    bool m_isReverseGeocode = false;
+    bool m_geocodeInProgress = false;
+    bool m_isPressAndHold = false;
+    bool m_noResults = false;
+    bool m_suggestInProgress = false;
     QString m_dataPath;
-    Esri::ArcGISRuntime::Map* m_map;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::Point m_clickedPoint;
-    Esri::ArcGISRuntime::Graphic* m_pinGraphic;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::CalloutData* m_calloutData;
-    Esri::ArcGISRuntime::LocatorTask* m_locatorTask;    
-    Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;       
-    Esri::ArcGISRuntime::SuggestListModel* m_suggestListModel;   
+    Esri::ArcGISRuntime::Graphic* m_pinGraphic = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
+    Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
+    Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+    Esri::ArcGISRuntime::SuggestListModel* m_suggestListModel = nullptr;
     Esri::ArcGISRuntime::GeocodeParameters m_geocodeParameters;
     Esri::ArcGISRuntime::ReverseGeocodeParameters m_reverseGeocodeParameters;
 };

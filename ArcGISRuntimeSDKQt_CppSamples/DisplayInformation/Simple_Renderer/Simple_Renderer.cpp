@@ -29,10 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 Simple_Renderer::Simple_Renderer(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_graphicsOverlay(nullptr)
+    QQuickItem(parent)
 {
 }
 

@@ -39,13 +39,7 @@
 using namespace Esri::ArcGISRuntime;
 
 AnalyzeViewshed::AnalyzeViewshed(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_map(nullptr),
-  m_mapView(nullptr),
-  m_inputOverlay(nullptr),
-  m_resultsOverlay(nullptr),
-  m_viewshedTask(nullptr),
-  m_viewshedInProgress(false)
+  QQuickItem(parent)
 {
 }
 

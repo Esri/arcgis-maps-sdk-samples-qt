@@ -33,14 +33,14 @@ class Symbols : public QQuickItem
     Q_OBJECT
 
 public:
-    Symbols(QQuickItem* parent = 0);
+    explicit Symbols(QQuickItem* parent = nullptr);
     ~Symbols();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Scene* m_scene;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
+    Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 };
 
 #endif // SYMBOLS_H

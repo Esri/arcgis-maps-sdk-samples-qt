@@ -33,10 +33,7 @@
 using namespace Esri::ArcGISRuntime;
 
 Picture_Marker_Symbol::Picture_Marker_Symbol(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_graphicsOverlay(nullptr)
+    QQuickItem(parent)
 {
 }
 

@@ -22,9 +22,7 @@
 using namespace Esri::ArcGISRuntime;
 
 SetInitialMapLocation::SetInitialMapLocation(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr)
+    QQuickItem(parent)
 {
 }
 

@@ -39,7 +39,7 @@ class AnalyzeViewshed : public QQuickItem
   Q_PROPERTY(QString statusText READ jobStatus NOTIFY jobStatusChanged)
 
 public:
-  AnalyzeViewshed(QQuickItem* parent = nullptr);
+  explicit AnalyzeViewshed(QQuickItem* parent = nullptr);
   ~AnalyzeViewshed();
 
   void componentComplete() Q_DECL_OVERRIDE;
@@ -50,12 +50,12 @@ signals:
   void jobStatusChanged();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_inputOverlay;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_resultsOverlay;
-  Esri::ArcGISRuntime::GeoprocessingTask* m_viewshedTask;
-  bool m_viewshedInProgress;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_inputOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_resultsOverlay = nullptr;
+  Esri::ArcGISRuntime::GeoprocessingTask* m_viewshedTask = nullptr;
+  bool m_viewshedInProgress = false;
   QString m_jobStatus;
 
 private:

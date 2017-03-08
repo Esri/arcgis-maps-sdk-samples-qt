@@ -35,7 +35,7 @@ class AddFeaturesFeatureService : public QQuickItem
     Q_OBJECT
 
 public:
-    AddFeaturesFeatureService(QQuickItem* parent = 0);
+    explicit AddFeaturesFeatureService(QQuickItem* parent = nullptr);
     ~AddFeaturesFeatureService();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -44,10 +44,10 @@ private:
     void connectSignals();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
 };
 
 #endif // ADD_FEATURES_FEATURE_SERVICE_H

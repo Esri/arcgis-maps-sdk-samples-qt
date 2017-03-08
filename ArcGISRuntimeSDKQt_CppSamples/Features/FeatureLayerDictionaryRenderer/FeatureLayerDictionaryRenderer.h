@@ -33,7 +33,7 @@ class FeatureLayerDictionaryRenderer : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit FeatureLayerDictionaryRenderer(QQuickItem* parent = 0);
+    explicit FeatureLayerDictionaryRenderer(QQuickItem* parent = nullptr);
     ~FeatureLayerDictionaryRenderer();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -43,10 +43,10 @@ signals:
 
 private:
     QString m_dataPath;
-    double m_scaleFactor;
-    int m_loadedLayerCount;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::Geodatabase* m_geodatabase;
+    double m_scaleFactor = 1.0;
+    int m_loadedLayerCount = 0;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
 };
 
 #endif // FEATURELAYERDICTIONARYRENDERER_H

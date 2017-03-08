@@ -35,7 +35,7 @@ class Simple_Renderer : public QQuickItem
     Q_OBJECT
 
 public:
-    Simple_Renderer(QQuickItem* parent = nullptr);
+    explicit Simple_Renderer(QQuickItem* parent = nullptr);
     ~Simple_Renderer();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -44,9 +44,9 @@ private:
     void addPoint(Esri::ArcGISRuntime::Point &point);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
 };
 
 #endif // SIMPLE_RENDERER_H

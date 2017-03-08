@@ -33,15 +33,15 @@ class MapRotation : public QQuickItem
     Q_OBJECT
 
 public:
-    MapRotation(QQuickItem* parent = 0);
+    explicit MapRotation(QQuickItem* parent = nullptr);
     ~MapRotation();
 
     void componentComplete() Q_DECL_OVERRIDE;
     Q_INVOKABLE void setMapViewRotation(double degrees);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // MAP_ROTATION_H

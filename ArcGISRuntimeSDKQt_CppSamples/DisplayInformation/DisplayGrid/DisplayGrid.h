@@ -53,7 +53,7 @@ class DisplayGrid : public QQuickItem
   Q_PROPERTY(bool gridLabelVisibility READ gridLabelVisibility WRITE setGridLabelVisibility NOTIFY gridLabelVisibilityChanged)
 
 public:
-  DisplayGrid(QQuickItem* parent = nullptr);
+  explicit DisplayGrid(QQuickItem* parent = nullptr);
   ~DisplayGrid();
 
   void componentComplete() Q_DECL_OVERRIDE;
@@ -112,8 +112,8 @@ private:
     void setGridLabelVisibility(bool visible);
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   static const QString s_utmGrid;
   static const QString s_usngGrid;
   static const QString s_latlonGrid;
@@ -127,12 +127,12 @@ private:
   static const QString s_topRightPosition;
   static const QString s_centerPosition;
   static const QString s_allSidesPosition;
-  QString m_currentGridColor;
-  QString m_currentLabelColor;
+  QString m_currentGridColor = "red";
+  QString m_currentLabelColor = "black";
   QString m_currentLabelFormat;
   QString m_currentLabelPosition;
-  bool m_gridVisibility;
-  bool m_gridLabelVisibility;
+  bool m_gridVisibility = true;
+  bool m_gridLabelVisibility = true;
 };
 
 #endif // DISPLAYGRID_H

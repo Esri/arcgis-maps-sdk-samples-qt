@@ -33,14 +33,14 @@ class ShowMagnifier : public QQuickItem
     Q_OBJECT
 
 public:
-    ShowMagnifier(QQuickItem* parent = 0);
+    explicit ShowMagnifier(QQuickItem* parent = nullptr);
     ~ShowMagnifier();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // SHOW_MAGNIFIER_H

@@ -37,7 +37,7 @@ class GraphicsOverlayDictionaryRenderer : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit GraphicsOverlayDictionaryRenderer(QQuickItem* parent = 0);
+    explicit GraphicsOverlayDictionaryRenderer(QQuickItem* parent = nullptr);
     ~GraphicsOverlayDictionaryRenderer();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -57,9 +57,9 @@ private:
 
     QString m_dataPath;
     QXmlStreamReader m_xmlParser;
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
     Esri::ArcGISRuntime::Envelope m_bbox;
 };
 

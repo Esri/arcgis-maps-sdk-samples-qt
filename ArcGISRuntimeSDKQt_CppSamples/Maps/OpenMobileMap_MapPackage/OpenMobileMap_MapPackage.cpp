@@ -24,8 +24,7 @@
 using namespace Esri::ArcGISRuntime;
 
 OpenMobileMap_MapPackage::OpenMobileMap_MapPackage(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_mapView(nullptr)
+    QQuickItem(parent)
 {
 }
 

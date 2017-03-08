@@ -26,11 +26,7 @@
 using namespace Esri::ArcGISRuntime;
 
 DisplayDrawingStatus::DisplayDrawingStatus(QQuickItem* parent):
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_featureLayer(nullptr),
-    m_mapDrawing(false)
+    QQuickItem(parent)
 {
 }
 

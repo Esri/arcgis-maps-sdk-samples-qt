@@ -53,7 +53,7 @@ class PortalUserInfo : public QQuickItem
   Q_PROPERTY(QString loadErrorMessage READ loadErrorMessage NOTIFY loadedChanged)
 
 public:
-  PortalUserInfo(QQuickItem* parent = nullptr);
+  explicit PortalUserInfo(QQuickItem* parent = nullptr);
   ~PortalUserInfo();
 
   void componentComplete() Q_DECL_OVERRIDE;

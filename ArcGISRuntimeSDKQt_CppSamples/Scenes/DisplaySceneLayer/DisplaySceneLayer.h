@@ -34,15 +34,15 @@ class DisplaySceneLayer : public QQuickItem
     Q_OBJECT
 
 public:
-    DisplaySceneLayer(QQuickItem* parent = 0);
+    explicit DisplaySceneLayer(QQuickItem* parent = nullptr);
     ~DisplaySceneLayer();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Scene* m_scene;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
-    Esri::ArcGISRuntime::ArcGISSceneLayer* m_sceneLayer;
+    Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+    Esri::ArcGISRuntime::ArcGISSceneLayer* m_sceneLayer = nullptr;
 };
 
 #endif // DISPLAYSCENELAYER_H

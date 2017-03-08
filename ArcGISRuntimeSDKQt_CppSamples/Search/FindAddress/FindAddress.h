@@ -36,7 +36,7 @@ class FindAddress : public QQuickItem
     Q_OBJECT
 
 public:
-    FindAddress(QQuickItem* parent = 0);
+    explicit FindAddress(QQuickItem* parent = nullptr);
     ~FindAddress();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -51,13 +51,13 @@ private:
     void connectSignals();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
-    Esri::ArcGISRuntime::LocatorTask* m_locatorTask;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+    Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
     Esri::ArcGISRuntime::GeocodeParameters m_geocodeParameters;
-    int m_screenX;
-    int m_screenY;
+    int m_screenX = 0;
+    int m_screenY = 0;
     QString m_calloutText;
     QString m_calloutDetailedText;
 };

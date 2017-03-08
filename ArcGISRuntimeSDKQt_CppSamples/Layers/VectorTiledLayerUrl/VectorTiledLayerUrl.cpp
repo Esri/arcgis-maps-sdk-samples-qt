@@ -28,9 +28,7 @@
 using namespace Esri::ArcGISRuntime;
 
 VectorTiledLayerUrl::VectorTiledLayerUrl(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr)
+    QQuickItem(parent)
 {
 }
 

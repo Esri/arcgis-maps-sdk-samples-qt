@@ -28,9 +28,7 @@
 using namespace Esri::ArcGISRuntime;
 
 TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_map(nullptr),
-  m_mapView(nullptr)
+  QQuickItem(parent)
 {
 }
 

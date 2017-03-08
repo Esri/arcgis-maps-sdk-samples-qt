@@ -37,9 +37,7 @@
 using namespace Esri::ArcGISRuntime;
 
 GOSymbols::GOSymbols(QWidget* parent) :
-  QWidget(parent),
-  m_map(nullptr),
-  m_mapView(nullptr)
+  QWidget(parent)
 {        
   // Create a map using the imagery with labels basemap
   m_map = new Map(BasemapType::Oceans, 56.075844, -2.681572, 11, this);

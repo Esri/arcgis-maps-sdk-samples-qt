@@ -42,7 +42,7 @@ class DisplayLayerViewDrawStatus : public QQuickItem
     Q_PROPERTY(QStringList layerViewStates READ layerViewStates NOTIFY statusChanged)
 
 public:
-    DisplayLayerViewDrawStatus(QQuickItem* parent = 0);
+    explicit DisplayLayerViewDrawStatus(QQuickItem* parent = nullptr);
     ~DisplayLayerViewDrawStatus();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -59,12 +59,12 @@ private:
     void connectSignals();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer;
-    Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer = nullptr;
+    Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
+    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
     QStringList m_layerNames;
     QStringList m_layerViewStates;
 };

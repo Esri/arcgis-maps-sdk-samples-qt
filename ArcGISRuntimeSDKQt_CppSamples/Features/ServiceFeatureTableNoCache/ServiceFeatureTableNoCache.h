@@ -35,16 +35,16 @@ class ServiceFeatureTableNoCache : public QQuickItem
     Q_OBJECT
 
 public:
-    ServiceFeatureTableNoCache(QQuickItem* parent = 0);
+    explicit ServiceFeatureTableNoCache(QQuickItem* parent = nullptr);
     ~ServiceFeatureTableNoCache();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
 };
 
 #endif // SERVICE_FEATURE_TABLE_NO_CACHE_H

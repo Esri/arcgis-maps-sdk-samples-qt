@@ -37,7 +37,7 @@ class ShowCallout : public QQuickItem
     //! [expose callout property]
 
 public:
-    ShowCallout(QQuickItem* parent = nullptr);
+    explicit ShowCallout(QQuickItem* parent = nullptr);
     ~ShowCallout();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -49,9 +49,9 @@ private:
     Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::CalloutData* m_calloutData;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
 };
 
 #endif // SHOWCALLOUT_H

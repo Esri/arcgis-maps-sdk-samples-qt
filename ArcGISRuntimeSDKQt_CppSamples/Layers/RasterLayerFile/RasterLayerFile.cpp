@@ -28,8 +28,7 @@
 using namespace Esri::ArcGISRuntime;
 
 RasterLayerFile::RasterLayerFile(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_mapView(nullptr)
+  QQuickItem(parent)
 {
 }
 

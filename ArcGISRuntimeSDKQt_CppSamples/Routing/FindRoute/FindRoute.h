@@ -41,7 +41,7 @@ class FindRoute : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::DirectionManeuverListModel* directions READ directions NOTIFY directionsChanged)
 
 public:
-    FindRoute(QQuickItem* parent = 0);
+    explicit FindRoute(QQuickItem* parent = nullptr);
     ~FindRoute();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -58,13 +58,13 @@ private:
     Esri::ArcGISRuntime::PictureMarkerSymbol* getPictureMarkerSymbol(QUrl imageUrl);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay;
-    Esri::ArcGISRuntime::RouteTask* m_routeTask;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay = nullptr;
+    Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
     Esri::ArcGISRuntime::RouteParameters m_routeParameters;
-    Esri::ArcGISRuntime::DirectionManeuverListModel* m_directions;
+    Esri::ArcGISRuntime::DirectionManeuverListModel* m_directions = nullptr;
 };
 
 #endif // FIND_ROUTE_H

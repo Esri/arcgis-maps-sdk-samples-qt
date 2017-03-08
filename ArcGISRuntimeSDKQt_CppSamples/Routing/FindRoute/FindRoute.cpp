@@ -34,14 +34,7 @@
 using namespace Esri::ArcGISRuntime;
 
 FindRoute::FindRoute(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_routeGraphicsOverlay(nullptr),
-    m_stopsGraphicsOverlay(nullptr),
-    m_routeTask(nullptr),
-    m_routeParameters(),
-    m_directions(nullptr)
+    QQuickItem(parent)
 {
 }
 

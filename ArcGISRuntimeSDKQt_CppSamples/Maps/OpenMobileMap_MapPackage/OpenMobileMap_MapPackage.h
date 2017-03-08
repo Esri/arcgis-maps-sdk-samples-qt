@@ -33,14 +33,14 @@ class OpenMobileMap_MapPackage : public QQuickItem
     Q_OBJECT
 
 public:
-    OpenMobileMap_MapPackage(QQuickItem* parent = 0);
+    explicit OpenMobileMap_MapPackage(QQuickItem* parent = nullptr);
     ~OpenMobileMap_MapPackage();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage = nullptr;
 };
 
 #endif // OPEN_MOBILE_MAP_MAP_PACKAGE_H

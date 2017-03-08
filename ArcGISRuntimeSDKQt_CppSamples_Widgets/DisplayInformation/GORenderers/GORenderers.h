@@ -31,15 +31,15 @@ class GORenderers : public QWidget
   Q_OBJECT
 
 public:
-  explicit GORenderers(QWidget* parent = 0);
+  explicit GORenderers(QWidget* parent = nullptr);
   ~GORenderers();
 
 private:
   void createUi();
   void addGraphicsOverlay();
 
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
 };
 
 #endif // GORENDERERS_H

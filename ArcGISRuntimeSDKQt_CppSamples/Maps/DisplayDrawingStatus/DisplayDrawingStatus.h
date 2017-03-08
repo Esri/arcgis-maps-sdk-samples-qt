@@ -36,7 +36,7 @@ class DisplayDrawingStatus : public QQuickItem
     Q_PROPERTY(bool mapDrawing READ mapDrawing NOTIFY mapDrawStatusChanged)
 
 public:
-    DisplayDrawingStatus(QQuickItem* parent = nullptr);
+    explicit DisplayDrawingStatus(QQuickItem* parent = nullptr);
     ~DisplayDrawingStatus();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -48,10 +48,10 @@ private:
     bool mapDrawing() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    bool m_mapDrawing;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+    bool m_mapDrawing = false;
 };
 
 #endif // DISPLAYDRAWINGSTATUS_H

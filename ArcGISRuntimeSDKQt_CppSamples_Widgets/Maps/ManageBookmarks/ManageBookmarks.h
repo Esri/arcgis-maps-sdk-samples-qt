@@ -37,7 +37,7 @@ class ManageBookmarks : public QWidget
   Q_OBJECT
 
 public:
-  explicit ManageBookmarks(QWidget* parent = 0);
+  explicit ManageBookmarks(QWidget* parent = nullptr);
   ~ManageBookmarks();
 
 private:
@@ -46,11 +46,11 @@ private:
   void createBookmark(QString name, Esri::ArcGISRuntime::Viewpoint viewpoint);
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
-  QComboBox* m_bookmarkCombo;
-  QPushButton* m_button;
-  QInputDialog* m_inputDialog;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
+  QComboBox* m_bookmarkCombo = nullptr;
+  QPushButton* m_button = nullptr;
+  QInputDialog* m_inputDialog = nullptr;
   QMap<QString, Esri::ArcGISRuntime::Viewpoint> m_bookmarks;
 };
 

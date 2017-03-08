@@ -35,14 +35,14 @@ class MapRotation : public QWidget
   Q_OBJECT
 
 public:
-  explicit MapRotation(QWidget* parent = 0);
+  explicit MapRotation(QWidget* parent = nullptr);
   ~MapRotation();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
-  QSlider* m_slider;
-  QLabel* m_degrees;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
+  QSlider* m_slider = nullptr;
+  QLabel* m_degrees = nullptr;
 };
 
 #endif // MAP_ROTATION_H

@@ -31,11 +31,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ServiceFeatureTableManualCache::ServiceFeatureTableManualCache(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_featureLayer(nullptr),
-    m_featureTable(nullptr)
+    QQuickItem(parent)
 {
 }
 

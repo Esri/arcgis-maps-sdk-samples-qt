@@ -42,7 +42,7 @@ class UpdateAttributesFeatureService : public QQuickItem
     Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
 
 public:
-    UpdateAttributesFeatureService(QQuickItem* parent = 0);
+    explicit UpdateAttributesFeatureService(QQuickItem* parent = nullptr);
     ~UpdateAttributesFeatureService();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -62,13 +62,13 @@ private:
     QString featureType() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-    Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature;
-    int m_screenX;
-    int m_screenY;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+    Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
+    int m_screenX = 0;
+    int m_screenY = 0;
     QString m_featureType;
 };
 

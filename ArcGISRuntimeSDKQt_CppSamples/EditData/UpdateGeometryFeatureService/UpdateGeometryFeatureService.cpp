@@ -35,13 +35,7 @@
 using namespace Esri::ArcGISRuntime;
 
 UpdateGeometryFeatureService::UpdateGeometryFeatureService(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_featureLayer(nullptr),
-    m_featureTable(nullptr),
-    m_selectedFeature(nullptr),
-    m_featureSelected(false)
+    QQuickItem(parent)
 {
 }
 

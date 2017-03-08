@@ -32,11 +32,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ExportTiles::ExportTiles(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_serviceUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"),
-    m_exportTileCacheTask(nullptr)
+    QQuickItem(parent)
 {
 }
 

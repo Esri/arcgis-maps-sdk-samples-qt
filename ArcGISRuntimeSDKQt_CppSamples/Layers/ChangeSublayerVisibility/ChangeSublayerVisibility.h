@@ -37,7 +37,7 @@ class ChangeSublayerVisibility : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::ArcGISSublayerListModel* sublayerModel READ sublayerModel NOTIFY sublayerModelChanged)
 
 public:
-    ChangeSublayerVisibility(QQuickItem* parent = 0);
+    explicit ChangeSublayerVisibility(QQuickItem* parent = nullptr);
     ~ChangeSublayerVisibility();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -49,10 +49,10 @@ private:
     Esri::ArcGISRuntime::ArcGISSublayerListModel* sublayerModel();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::ArcGISMapImageLayer* m_mapImageLayer;
-    Esri::ArcGISRuntime::ArcGISSublayerListModel* m_sublayerModel;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::ArcGISMapImageLayer* m_mapImageLayer = nullptr;
+    Esri::ArcGISRuntime::ArcGISSublayerListModel* m_sublayerModel = nullptr;
 };
 
 #endif // CHANGE_SUBLAYER_VISIBILITY_H

@@ -29,10 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 Simple_Marker_Symbol::Simple_Marker_Symbol(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_graphicsOverlay(nullptr)
+    QQuickItem(parent)
 {
 }
 

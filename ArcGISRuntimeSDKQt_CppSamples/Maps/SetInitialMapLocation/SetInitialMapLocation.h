@@ -33,14 +33,14 @@ class SetInitialMapLocation : public QQuickItem
     Q_OBJECT
 
 public:
-    SetInitialMapLocation(QQuickItem* parent = 0);
+    explicit SetInitialMapLocation(QQuickItem* parent = nullptr);
     ~SetInitialMapLocation();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // SET_INITIAL_MAP_LOCATION_H

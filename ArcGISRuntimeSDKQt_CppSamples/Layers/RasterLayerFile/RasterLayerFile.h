@@ -32,7 +32,7 @@ class RasterLayerFile : public QQuickItem
   Q_OBJECT
 
 public:
-  RasterLayerFile(QQuickItem* parent = nullptr);
+  explicit RasterLayerFile(QQuickItem* parent = nullptr);
   ~RasterLayerFile();
 
   void componentComplete() Q_DECL_OVERRIDE;
@@ -40,7 +40,7 @@ public:
   Q_INVOKABLE void createAndAddRasterLayer(QUrl rasterUrl);
 
 private:
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // RASTERLAYERFILE_H

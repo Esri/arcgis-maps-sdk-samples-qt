@@ -45,7 +45,7 @@ class EditFeatureAttachments : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::AttachmentListModel* attachmentModel READ attachmentModel NOTIFY attachmentModelChanged)
 
 public:
-    EditFeatureAttachments(QQuickItem* parent = 0);
+    explicit EditFeatureAttachments(QQuickItem* parent = nullptr);
     ~EditFeatureAttachments();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -70,14 +70,14 @@ private:
     QString featureType() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-    Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature;
-    int m_screenX;
-    int m_screenY;
-    int m_attachmentCount;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+    Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
+    int m_screenX = 0;
+    int m_screenY = 0;
+    int m_attachmentCount = 0;
     QString m_featureType;
     QString m_whereClause;
     QMetaObject::Connection m_attachmentConnection;

@@ -39,7 +39,7 @@ class FeatureLayerSelection : public QQuickItem
     Q_PROPERTY(QString selectedFeatureText READ selectedFeatureText NOTIFY selectedFeatureTextChanged)
 
 public:
-    FeatureLayerSelection(QQuickItem* parent = 0);
+    explicit FeatureLayerSelection(QQuickItem* parent = nullptr);
     ~FeatureLayerSelection();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -52,11 +52,11 @@ private:
     QString selectedFeatureText() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-    QString m_selectedFeatureText;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+    QString m_selectedFeatureText = "Click or tap to select features.";
 };
 
 #endif // FEATURE_LAYER_SELECTION_H

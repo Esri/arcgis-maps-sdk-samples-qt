@@ -43,7 +43,7 @@ class ShowOrgBasemaps : public QQuickItem
     Q_PROPERTY(QString mapLoadError READ mapLoadError NOTIFY mapLoadErrorChanged)
 
 public:
-    ShowOrgBasemaps(QQuickItem* parent = nullptr);
+    explicit ShowOrgBasemaps(QQuickItem* parent = nullptr);
     ~ShowOrgBasemaps();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -66,10 +66,10 @@ signals:
     void mapLoadErrorChanged();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::Portal* m_portal;
-    bool m_portalLoaded;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+    bool m_portalLoaded = false;
     QString m_mapLoadError;
 };
 

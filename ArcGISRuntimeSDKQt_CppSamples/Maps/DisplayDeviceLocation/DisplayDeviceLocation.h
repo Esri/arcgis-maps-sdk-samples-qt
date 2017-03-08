@@ -40,7 +40,7 @@ class DisplayDeviceLocation : public QQuickItem
     Q_PROPERTY(QString closeMode READ closeMode NOTIFY closeModeChanged)
 
 public:
-    DisplayDeviceLocation(QQuickItem* parent = 0);
+    explicit DisplayDeviceLocation(QQuickItem* parent = nullptr);
     ~DisplayDeviceLocation();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -65,8 +65,8 @@ private:
     static const QString closeMode();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
     static const QString s_compassMode;
     static const QString s_navigationMode;
     static const QString s_recenterMode;

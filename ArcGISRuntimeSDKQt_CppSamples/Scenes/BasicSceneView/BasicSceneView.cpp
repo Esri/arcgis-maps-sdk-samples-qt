@@ -24,9 +24,7 @@
 using namespace Esri::ArcGISRuntime;
 
 BasicSceneView::BasicSceneView(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_scene(nullptr),
-    m_sceneView(nullptr)
+    QQuickItem(parent)
 {
 }
 

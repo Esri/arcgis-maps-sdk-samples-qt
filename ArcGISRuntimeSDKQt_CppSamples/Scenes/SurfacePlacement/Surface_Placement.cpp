@@ -32,11 +32,7 @@
 using namespace Esri::ArcGISRuntime;
 
 Surface_Placement::Surface_Placement(QQuickItem* parent /* = nullptr */):
-    QQuickItem(parent),
-    m_sceneView(nullptr),
-    m_drapedOverlay(nullptr),
-    m_relativeOverlay(nullptr),
-    m_absoluteOverlay(nullptr)
+    QQuickItem(parent)
 {
 }
 

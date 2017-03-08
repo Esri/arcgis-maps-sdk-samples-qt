@@ -34,7 +34,7 @@ class GOSymbols : public QWidget
   Q_OBJECT
 
 public:
-  explicit GOSymbols(QWidget* parent = 0);
+  explicit GOSymbols(QWidget* parent = nullptr);
   ~GOSymbols();
 
 private:
@@ -45,8 +45,8 @@ private:
   Esri::ArcGISRuntime::Geometry createNestingGround();
   void createUi();
 
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
 };
 
 #endif // GOSYMBOLS_H

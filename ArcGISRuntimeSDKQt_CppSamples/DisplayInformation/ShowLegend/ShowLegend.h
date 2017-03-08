@@ -38,7 +38,7 @@ class ShowLegend : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::LegendInfoListModel* legendInfoListModel READ legendInfoListModel NOTIFY legendInfoListModelChanged)
 
 public:
-    ShowLegend(QQuickItem* parent = 0);
+    explicit ShowLegend(QQuickItem* parent = nullptr);
     ~ShowLegend();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -51,9 +51,9 @@ private:
     void addLayers();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::LegendInfoListModel* m_legendInfoListModel;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::LegendInfoListModel* m_legendInfoListModel = nullptr;
 };
 
 #endif // SHOW_LEGEND_H

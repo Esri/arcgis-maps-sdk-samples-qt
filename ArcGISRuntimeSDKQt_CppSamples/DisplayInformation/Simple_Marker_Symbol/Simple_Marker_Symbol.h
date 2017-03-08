@@ -34,15 +34,15 @@ class Simple_Marker_Symbol : public QQuickItem
     Q_OBJECT
 
 public:
-    Simple_Marker_Symbol(QQuickItem* parent = nullptr);
+    explicit Simple_Marker_Symbol(QQuickItem* parent = nullptr);
     ~Simple_Marker_Symbol();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay;
+    Esri::ArcGISRuntime::Map* m_map = nullptr;
+    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
 };
 
 #endif // SIMPLE_MARKER_SYMBOL_H

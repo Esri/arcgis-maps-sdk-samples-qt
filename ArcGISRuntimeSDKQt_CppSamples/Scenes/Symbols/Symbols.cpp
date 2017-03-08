@@ -25,9 +25,7 @@
 using namespace Esri::ArcGISRuntime;
 
 Symbols::Symbols(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_scene(nullptr),
-    m_sceneView(nullptr)
+    QQuickItem(parent)
 {
 }
 

@@ -33,13 +33,13 @@ class MapLoaded : public QWidget
   Q_OBJECT
 
 public:
-  explicit MapLoaded(QWidget* parent = 0);
+  explicit MapLoaded(QWidget* parent = nullptr);
   ~MapLoaded();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
-  QLabel* m_loadStatus;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
+  QLabel* m_loadStatus = nullptr;
 };
 
 #endif // MAP_LOADED_H
