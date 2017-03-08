@@ -1,4 +1,4 @@
-// [WriteFile Name=FindRoute, Category=RoutingAndNavigation]
+// [WriteFile Name=FindRoute, Category=Routing]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -195,7 +195,7 @@ Rectangle {
                 anchors.centerIn: parent
                 width: 35 * scaleFactor
                 height: width
-                source: "qrc:/Samples/RoutingAndNavigation/FindRoute/directions.png"
+                source: "qrc:/Samples/Routing/FindRoute/directions.png"
             }
 
             MouseArea {
@@ -295,13 +295,13 @@ Rectangle {
 
         // create the stop graphics' symbols
         var stop1Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
-                                                                    url: "qrc:/Samples/RoutingAndNavigation/FindRoute/pinA.png",
+                                                                    url: "qrc:/Samples/Routing/FindRoute/pinA.png",
                                                                     width: 32,
                                                                     height: 32,
                                                                     offsetY: 16
                                                                 });
         var stop2Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
-                                                                    url: "qrc:/Samples/RoutingAndNavigation/FindRoute/pinB.png",
+                                                                    url: "qrc:/Samples/Routing/FindRoute/pinB.png",
                                                                     width: 32,
                                                                     height: 32,
                                                                     offsetY: 16

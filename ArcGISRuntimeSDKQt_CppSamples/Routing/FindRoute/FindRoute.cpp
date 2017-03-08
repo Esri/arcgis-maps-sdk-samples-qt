@@ -1,4 +1,4 @@
-// [WriteFile Name=FindRoute, Category=RoutingAndNavigation]
+// [WriteFile Name=FindRoute, Category=Routing]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -94,8 +94,8 @@ void FindRoute::addStopGraphics()
     Point stop2Geometry(-13041693, 3856006, SpatialReference(3857));
 
     // create the stop graphics' symbols
-    auto stop1Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/RoutingAndNavigation/FindRoute/pinA.png"));
-    auto stop2Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/RoutingAndNavigation/FindRoute/pinB.png"));
+    auto stop1Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing/FindRoute/pinA.png"));
+    auto stop2Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing/FindRoute/pinB.png"));
 
     // create the stop graphics
     auto stop1Graphic = new Graphic(stop1Geometry, stop1Symbol, this);
