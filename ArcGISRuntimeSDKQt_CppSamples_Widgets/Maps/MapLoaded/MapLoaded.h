@@ -33,7 +33,7 @@ class MapLoaded : public QWidget
   Q_OBJECT
 
 public:
-  explicit MapLoaded(QWidget* parent = 0);
+  explicit MapLoaded(QWidget* parent = nullptr);
   ~MapLoaded();
 
 private:

@@ -33,7 +33,7 @@ class ArcGISTiledLayerUrl : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit ArcGISTiledLayerUrl(QQuickItem* parent = 0);
+    explicit ArcGISTiledLayerUrl(QQuickItem* parent = nullptr);
     ~ArcGISTiledLayerUrl();
 
     void componentComplete() Q_DECL_OVERRIDE;

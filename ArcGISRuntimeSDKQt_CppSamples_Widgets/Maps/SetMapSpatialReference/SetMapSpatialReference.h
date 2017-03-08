@@ -33,7 +33,7 @@ class SetMapSpatialReference : public QWidget
   Q_OBJECT
 
 public:
-  explicit SetMapSpatialReference(QWidget* parent = 0);
+  explicit SetMapSpatialReference(QWidget* parent = nullptr);
   ~SetMapSpatialReference();
 
 private:

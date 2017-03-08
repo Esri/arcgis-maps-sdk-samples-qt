@@ -33,7 +33,7 @@ class DistanceCompositeSymbol : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit DistanceCompositeSymbol(QQuickItem* parent = 0);
+    explicit DistanceCompositeSymbol(QQuickItem* parent = nullptr);
     ~DistanceCompositeSymbol();
 
     void componentComplete() Q_DECL_OVERRIDE;

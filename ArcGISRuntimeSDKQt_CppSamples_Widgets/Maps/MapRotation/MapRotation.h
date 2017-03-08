@@ -35,7 +35,7 @@ class MapRotation : public QWidget
   Q_OBJECT
 
 public:
-  explicit MapRotation(QWidget* parent = 0);
+  explicit MapRotation(QWidget* parent = nullptr);
   ~MapRotation();
 
 private:

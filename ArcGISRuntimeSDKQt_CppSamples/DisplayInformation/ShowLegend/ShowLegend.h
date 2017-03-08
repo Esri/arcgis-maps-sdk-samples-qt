@@ -38,7 +38,7 @@ class ShowLegend : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::LegendInfoListModel* legendInfoListModel READ legendInfoListModel NOTIFY legendInfoListModelChanged)
 
 public:
-    explicit ShowLegend(QQuickItem* parent = 0);
+    explicit ShowLegend(QQuickItem* parent = nullptr);
     ~ShowLegend();
 
     void componentComplete() Q_DECL_OVERRIDE;

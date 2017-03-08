@@ -33,7 +33,7 @@ class ChangeBasemap : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit ChangeBasemap(QQuickItem* parent = 0);
+    explicit ChangeBasemap(QQuickItem* parent = nullptr);
     ~ChangeBasemap();
 
     void componentComplete() Q_DECL_OVERRIDE;

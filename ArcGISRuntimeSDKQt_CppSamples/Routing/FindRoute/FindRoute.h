@@ -41,7 +41,7 @@ class FindRoute : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::DirectionManeuverListModel* directions READ directions NOTIFY directionsChanged)
 
 public:
-    explicit FindRoute(QQuickItem* parent = 0);
+    explicit FindRoute(QQuickItem* parent = nullptr);
     ~FindRoute();
 
     void componentComplete() Q_DECL_OVERRIDE;

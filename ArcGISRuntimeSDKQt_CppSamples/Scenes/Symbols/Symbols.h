@@ -33,7 +33,7 @@ class Symbols : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit Symbols(QQuickItem* parent = 0);
+    explicit Symbols(QQuickItem* parent = nullptr);
     ~Symbols();
 
     void componentComplete() Q_DECL_OVERRIDE;

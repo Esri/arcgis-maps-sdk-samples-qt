@@ -71,7 +71,11 @@ struct Animate3DSymbols::CameraHandler
 
 Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_missionsModel(new QStringListModel({"Grand Canyon", "Hawaii", "Pyrenees", "Snowdon"}, this)),
+  m_missionsModel(new QStringListModel({QStringLiteral("Grand Canyon"),
+                                        QStringLiteral("Hawaii"),
+                                        QStringLiteral("Pyrenees"),
+                                        QStringLiteral("Snowdon")},
+                                       this)),
   m_missionData(new MissionData()),
   m_camHandler(new CameraHandler())
 {

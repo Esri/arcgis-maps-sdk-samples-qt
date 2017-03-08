@@ -31,7 +31,7 @@ class GORenderers : public QWidget
   Q_OBJECT
 
 public:
-  explicit GORenderers(QWidget* parent = 0);
+  explicit GORenderers(QWidget* parent = nullptr);
   ~GORenderers();
 
 private:

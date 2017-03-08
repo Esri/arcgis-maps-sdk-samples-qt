@@ -35,7 +35,7 @@ class ServiceFeatureTableNoCache : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit ServiceFeatureTableNoCache(QQuickItem* parent = 0);
+    explicit ServiceFeatureTableNoCache(QQuickItem* parent = nullptr);
     ~ServiceFeatureTableNoCache();
 
     void componentComplete() Q_DECL_OVERRIDE;

@@ -36,7 +36,7 @@ class UpdateGeometryFeatureService : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit UpdateGeometryFeatureService(QQuickItem* parent = 0);
+    explicit UpdateGeometryFeatureService(QQuickItem* parent = nullptr);
     ~UpdateGeometryFeatureService();
 
     void componentComplete() Q_DECL_OVERRIDE;

@@ -35,7 +35,7 @@ MapLoaded::MapLoaded(QWidget* parent) :
     m_loadStatus= new QLabel("", this);
 
     // Map Load Status changed lambda
-    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
+    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, this, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
     {
         switch (loadStatus)
         {

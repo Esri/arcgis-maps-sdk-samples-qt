@@ -31,7 +31,7 @@ class SetInitialMapLocation : public QWidget
   Q_OBJECT
 
 public:
-  explicit SetInitialMapLocation(QWidget* parent = 0);
+  explicit SetInitialMapLocation(QWidget* parent = nullptr);
   ~SetInitialMapLocation();
 
 private:

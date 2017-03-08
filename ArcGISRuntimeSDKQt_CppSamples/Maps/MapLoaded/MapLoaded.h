@@ -37,7 +37,7 @@ class MapLoaded : public QQuickItem
     Q_PROPERTY(QString mapLoadStatus READ mapLoadStatus NOTIFY mapLoadStatusChanged)
 
 public:
-    explicit MapLoaded(QQuickItem* parent = 0);
+    explicit MapLoaded(QQuickItem* parent = nullptr);
     ~MapLoaded();
 
     void componentComplete() Q_DECL_OVERRIDE;

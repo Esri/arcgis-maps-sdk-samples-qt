@@ -37,7 +37,7 @@ class ManageBookmarks : public QWidget
   Q_OBJECT
 
 public:
-  explicit ManageBookmarks(QWidget* parent = 0);
+  explicit ManageBookmarks(QWidget* parent = nullptr);
   ~ManageBookmarks();
 
 private:

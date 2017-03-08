@@ -42,7 +42,7 @@ class UpdateAttributesFeatureService : public QQuickItem
     Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
 
 public:
-    explicit UpdateAttributesFeatureService(QQuickItem* parent = 0);
+    explicit UpdateAttributesFeatureService(QQuickItem* parent = nullptr);
     ~UpdateAttributesFeatureService();
 
     void componentComplete() Q_DECL_OVERRIDE;

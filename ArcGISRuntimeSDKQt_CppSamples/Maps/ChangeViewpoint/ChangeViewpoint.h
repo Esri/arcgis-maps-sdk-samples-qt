@@ -33,7 +33,7 @@ class ChangeViewpoint : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit ChangeViewpoint(QQuickItem* parent = 0);
+    explicit ChangeViewpoint(QQuickItem* parent = nullptr);
     ~ChangeViewpoint();
 
     void componentComplete() Q_DECL_OVERRIDE;

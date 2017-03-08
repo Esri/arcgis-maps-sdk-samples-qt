@@ -33,7 +33,7 @@ class MapRotation : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit MapRotation(QQuickItem* parent = 0);
+    explicit MapRotation(QQuickItem* parent = nullptr);
     ~MapRotation();
 
     void componentComplete() Q_DECL_OVERRIDE;

@@ -36,7 +36,7 @@ class FeatureLayerDefinitionExpression : public QQuickItem
     Q_PROPERTY(bool layerInitialized READ layerInitialized NOTIFY layerInitializedChanged)
 
 public:
-    explicit FeatureLayerDefinitionExpression(QQuickItem* parent = 0);
+    explicit FeatureLayerDefinitionExpression(QQuickItem* parent = nullptr);
     ~FeatureLayerDefinitionExpression();
 
     void componentComplete() Q_DECL_OVERRIDE;

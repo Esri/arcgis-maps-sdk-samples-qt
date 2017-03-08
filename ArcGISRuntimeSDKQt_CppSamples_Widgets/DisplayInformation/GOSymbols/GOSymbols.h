@@ -34,7 +34,7 @@ class GOSymbols : public QWidget
   Q_OBJECT
 
 public:
-  explicit GOSymbols(QWidget* parent = 0);
+  explicit GOSymbols(QWidget* parent = nullptr);
   ~GOSymbols();
 
 private:

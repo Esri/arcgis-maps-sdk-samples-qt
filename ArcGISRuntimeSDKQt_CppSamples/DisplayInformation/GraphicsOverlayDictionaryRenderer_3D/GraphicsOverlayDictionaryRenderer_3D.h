@@ -37,7 +37,7 @@ class GraphicsOverlayDictionaryRenderer_3D : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit GraphicsOverlayDictionaryRenderer_3D(QQuickItem* parent = 0);
+    explicit GraphicsOverlayDictionaryRenderer_3D(QQuickItem* parent = nullptr);
     ~GraphicsOverlayDictionaryRenderer_3D();
 
     void componentComplete() Q_DECL_OVERRIDE;

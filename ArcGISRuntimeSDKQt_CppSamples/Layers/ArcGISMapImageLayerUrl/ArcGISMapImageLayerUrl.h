@@ -33,7 +33,7 @@ class ArcGISMapImageLayerUrl : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit ArcGISMapImageLayerUrl(QQuickItem* parent = 0);
+    explicit ArcGISMapImageLayerUrl(QQuickItem* parent = nullptr);
     ~ArcGISMapImageLayerUrl();
 
     void componentComplete() Q_DECL_OVERRIDE;

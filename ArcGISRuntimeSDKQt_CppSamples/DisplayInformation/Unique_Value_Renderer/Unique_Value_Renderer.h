@@ -37,7 +37,7 @@ class Unique_Value_Renderer : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit Unique_Value_Renderer(QQuickItem* parent = 0);
+    explicit Unique_Value_Renderer(QQuickItem* parent = nullptr);
     ~Unique_Value_Renderer();
 
     void componentComplete() Q_DECL_OVERRIDE;

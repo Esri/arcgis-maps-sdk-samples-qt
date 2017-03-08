@@ -33,7 +33,7 @@ class GORenderers : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit GORenderers(QQuickItem* parent = 0);
+    explicit GORenderers(QQuickItem* parent = nullptr);
     ~GORenderers();
 
     void componentComplete() Q_DECL_OVERRIDE;

@@ -33,7 +33,7 @@ class SetInitialMapLocation : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit SetInitialMapLocation(QQuickItem* parent = 0);
+    explicit SetInitialMapLocation(QQuickItem* parent = nullptr);
     ~SetInitialMapLocation();
 
     void componentComplete() Q_DECL_OVERRIDE;

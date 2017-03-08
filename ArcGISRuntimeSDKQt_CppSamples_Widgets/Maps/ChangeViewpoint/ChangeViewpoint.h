@@ -33,7 +33,7 @@ class ChangeViewpoint : public QWidget
   Q_OBJECT
 
 public:
-  explicit ChangeViewpoint(QWidget* parent = 0);
+  explicit ChangeViewpoint(QWidget* parent = nullptr);
   ~ChangeViewpoint();
 
 private slots:

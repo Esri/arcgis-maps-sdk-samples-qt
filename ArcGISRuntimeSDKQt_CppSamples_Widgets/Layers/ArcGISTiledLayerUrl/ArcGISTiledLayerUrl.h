@@ -33,7 +33,7 @@ class ArcGISTiledLayerUrl : public QWidget
   Q_OBJECT
 
 public:
-  explicit ArcGISTiledLayerUrl(QWidget* parent = 0);
+  explicit ArcGISTiledLayerUrl(QWidget* parent = nullptr);
   ~ArcGISTiledLayerUrl();
 
 private:

@@ -33,7 +33,7 @@ class VectorTiledLayerUrl : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit VectorTiledLayerUrl(QQuickItem* parent = 0);
+    explicit VectorTiledLayerUrl(QQuickItem* parent = nullptr);
     ~VectorTiledLayerUrl();
 
     void componentComplete() Q_DECL_OVERRIDE;

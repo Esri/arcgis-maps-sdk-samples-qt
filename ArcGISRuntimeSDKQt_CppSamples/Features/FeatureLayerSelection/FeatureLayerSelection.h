@@ -39,7 +39,7 @@ class FeatureLayerSelection : public QQuickItem
     Q_PROPERTY(QString selectedFeatureText READ selectedFeatureText NOTIFY selectedFeatureTextChanged)
 
 public:
-    explicit FeatureLayerSelection(QQuickItem* parent = 0);
+    explicit FeatureLayerSelection(QQuickItem* parent = nullptr);
     ~FeatureLayerSelection();
 
     void componentComplete() Q_DECL_OVERRIDE;

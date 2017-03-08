@@ -42,7 +42,7 @@ class DeleteFeaturesFeatureService : public QQuickItem
     Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
 
 public:
-    explicit DeleteFeaturesFeatureService(QQuickItem* parent = 0);
+    explicit DeleteFeaturesFeatureService(QQuickItem* parent = nullptr);
     ~DeleteFeaturesFeatureService();
 
     void componentComplete() Q_DECL_OVERRIDE;

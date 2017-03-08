@@ -33,7 +33,7 @@ class DisplayMap : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit DisplayMap(QQuickItem* parent = 0);
+    explicit DisplayMap(QQuickItem* parent = nullptr);
     ~DisplayMap();
 
     void componentComplete() Q_DECL_OVERRIDE;

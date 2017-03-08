@@ -71,7 +71,7 @@ private:
   Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
   QString m_dataPath;
   qint64 m_featureLayerId = 0;
-  QString m_featureServiceUrl = "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/";
+  QString m_featureServiceUrl = QStringLiteral("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/");
   bool m_isOffline = false;
 };
 

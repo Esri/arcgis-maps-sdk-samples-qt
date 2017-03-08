@@ -41,7 +41,7 @@ class ManageBookmarks : public QQuickItem
     //! [Expose the list model to QML]
 
 public:
-    explicit ManageBookmarks(QQuickItem* parent = 0);
+    explicit ManageBookmarks(QQuickItem* parent = nullptr);
     ~ManageBookmarks();
 
     void componentComplete() Q_DECL_OVERRIDE;

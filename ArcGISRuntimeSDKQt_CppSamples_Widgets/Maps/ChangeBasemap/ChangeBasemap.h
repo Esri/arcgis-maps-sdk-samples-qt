@@ -33,7 +33,7 @@ class ChangeBasemap : public QWidget
   Q_OBJECT
 
 public:
-  explicit ChangeBasemap(QWidget* parent = 0);
+  explicit ChangeBasemap(QWidget* parent = nullptr);
   ~ChangeBasemap();
 
 private:

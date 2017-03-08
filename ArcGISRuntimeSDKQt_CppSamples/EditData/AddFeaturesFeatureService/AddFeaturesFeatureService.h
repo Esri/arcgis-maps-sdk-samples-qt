@@ -35,7 +35,7 @@ class AddFeaturesFeatureService : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit AddFeaturesFeatureService(QQuickItem* parent = 0);
+    explicit AddFeaturesFeatureService(QQuickItem* parent = nullptr);
     ~AddFeaturesFeatureService();
 
     void componentComplete() Q_DECL_OVERRIDE;

@@ -31,7 +31,7 @@ class SetInitialMapArea : public QWidget
   Q_OBJECT
 
 public:
-  explicit SetInitialMapArea(QWidget* parent = 0);
+  explicit SetInitialMapArea(QWidget* parent = nullptr);
   ~SetInitialMapArea();
 
 private:

@@ -40,7 +40,7 @@ class DisplayDeviceLocation : public QQuickItem
     Q_PROPERTY(QString closeMode READ closeMode NOTIFY closeModeChanged)
 
 public:
-    explicit DisplayDeviceLocation(QQuickItem* parent = 0);
+    explicit DisplayDeviceLocation(QQuickItem* parent = nullptr);
     ~DisplayDeviceLocation();
 
     void componentComplete() Q_DECL_OVERRIDE;

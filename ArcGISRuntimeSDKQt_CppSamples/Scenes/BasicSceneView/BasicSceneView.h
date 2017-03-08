@@ -33,7 +33,7 @@ class BasicSceneView : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit BasicSceneView(QQuickItem* parent = 0);
+    explicit BasicSceneView(QQuickItem* parent = nullptr);
     ~BasicSceneView();
 
     void componentComplete() Q_DECL_OVERRIDE;

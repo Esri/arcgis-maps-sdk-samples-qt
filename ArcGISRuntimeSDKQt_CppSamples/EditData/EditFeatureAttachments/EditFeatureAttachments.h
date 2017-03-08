@@ -45,7 +45,7 @@ class EditFeatureAttachments : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::AttachmentListModel* attachmentModel READ attachmentModel NOTIFY attachmentModelChanged)
 
 public:
-    explicit EditFeatureAttachments(QQuickItem* parent = 0);
+    explicit EditFeatureAttachments(QQuickItem* parent = nullptr);
     ~EditFeatureAttachments();
 
     void componentComplete() Q_DECL_OVERRIDE;

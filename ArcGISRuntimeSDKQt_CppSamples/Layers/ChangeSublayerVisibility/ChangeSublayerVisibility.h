@@ -37,7 +37,7 @@ class ChangeSublayerVisibility : public QQuickItem
     Q_PROPERTY(Esri::ArcGISRuntime::ArcGISSublayerListModel* sublayerModel READ sublayerModel NOTIFY sublayerModelChanged)
 
 public:
-    explicit ChangeSublayerVisibility(QQuickItem* parent = 0);
+    explicit ChangeSublayerVisibility(QQuickItem* parent = nullptr);
     ~ChangeSublayerVisibility();
 
     void componentComplete() Q_DECL_OVERRIDE;

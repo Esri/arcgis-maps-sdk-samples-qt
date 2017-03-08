@@ -39,7 +39,7 @@ class GenerateGeodatabase : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit GenerateGeodatabase(QQuickItem* parent = 0);
+    explicit GenerateGeodatabase(QQuickItem* parent = nullptr);
     ~GenerateGeodatabase();
 
     void componentComplete() Q_DECL_OVERRIDE;
@@ -59,7 +59,7 @@ private:
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
     Esri::ArcGISRuntime::GeodatabaseSyncTask* m_syncTask = nullptr;
     QString m_dataPath;
-    QString m_featureServiceUrl = "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/";
+    QString m_featureServiceUrl = QStringLiteral("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/");
     QStringList m_serviceIds;
     Esri::ArcGISRuntime::ArcGISFeatureServiceInfo m_featureServiceInfo;
 };

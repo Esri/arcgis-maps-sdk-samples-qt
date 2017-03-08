@@ -42,7 +42,7 @@ class DisplayLayerViewDrawStatus : public QQuickItem
     Q_PROPERTY(QStringList layerViewStates READ layerViewStates NOTIFY statusChanged)
 
 public:
-    explicit DisplayLayerViewDrawStatus(QQuickItem* parent = 0);
+    explicit DisplayLayerViewDrawStatus(QQuickItem* parent = nullptr);
     ~DisplayLayerViewDrawStatus();
 
     void componentComplete() Q_DECL_OVERRIDE;

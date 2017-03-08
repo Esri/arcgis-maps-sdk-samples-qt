@@ -33,7 +33,7 @@ class ShowMagnifier : public QQuickItem
     Q_OBJECT
 
 public:
-    explicit ShowMagnifier(QQuickItem* parent = 0);
+    explicit ShowMagnifier(QQuickItem* parent = nullptr);
     ~ShowMagnifier();
 
     void componentComplete() Q_DECL_OVERRIDE;

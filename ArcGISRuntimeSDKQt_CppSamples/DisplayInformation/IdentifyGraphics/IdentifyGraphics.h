@@ -36,7 +36,7 @@ class IdentifyGraphics : public QQuickItem
     Q_PROPERTY(int identifiedGraphicsCount READ identifiedGraphicsCount NOTIFY identifiedGraphicsCountChanged)
 
 public:
-    explicit IdentifyGraphics(QQuickItem* parent = 0);
+    explicit IdentifyGraphics(QQuickItem* parent = nullptr);
     ~IdentifyGraphics();
 
     void componentComplete() Q_DECL_OVERRIDE;
