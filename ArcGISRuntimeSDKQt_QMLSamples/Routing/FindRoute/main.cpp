@@ -11,37 +11,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <QSettings>
 #include <QGuiApplication>
 #include <QQuickView>
-#include <QCommandLineParser>
+#include <QUrl>
+#include <QCoreApplication>
 #include <QDir>
 #include <QQmlEngine>
-
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
-#include "MapQuickView.h"
-#include "FindRoute.h"
-#include "DirectionManeuverListModel.h"
-#include "ArcGISRuntimeEnvironment.h"
-
-using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-
+    
 #ifdef Q_OS_WIN
     // Force usage of OpenGL ES through ANGLE on Windows
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
-
-    // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterUncreatableType<DirectionManeuverListModel>("Esri.Samples", 1, 0, "DirectionManeuverListModel", "DirectionManeuverListModel is an uncreatable type");
-    qmlRegisterType<FindRoute>("Esri.Samples", 1, 0, "FindRouteSample");
 
     // Intialize application view
     QQuickView view;
@@ -51,11 +35,9 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/RoutingAndNavigation/FindRoute/FindRoute.qml"));
- 
+    view.setSource(QUrl("qrc:/Samples/Routing/FindRoute/FindRoute.qml"));
+
     view.show();
 
     return app.exec();
 }
-
-

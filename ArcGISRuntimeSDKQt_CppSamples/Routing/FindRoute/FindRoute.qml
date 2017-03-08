@@ -1,4 +1,4 @@
-// [WriteFile Name=FindRoute, Category=RoutingAndNavigation]
+// [WriteFile Name=FindRoute, Category=Routing]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -136,7 +136,7 @@ FindRouteSample {
                 anchors.centerIn: parent
                 width: 35 * scaleFactor
                 height: width
-                source: "qrc:/Samples/RoutingAndNavigation/FindRoute/directions.png"
+                source: "qrc:/Samples/Routing/FindRoute/directions.png"
             }
 
             MouseArea {
