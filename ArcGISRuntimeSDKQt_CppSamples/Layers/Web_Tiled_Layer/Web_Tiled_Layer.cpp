@@ -1,6 +1,6 @@
 // [WriteFile Name=Web_Tiled_Layer, Category=Layers]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,12 +44,12 @@ void Web_Tiled_Layer::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
 
     // Set up the tiled layer parameters
-    QString templateUrl = "http://{subDomain}.tile.stamen.com/terrain/{level}/{col}/{row}.png";
-    QStringList subDomains = QStringList() << "a" << "b" << "c" << "d";
-    QString attributionText = "Map tiles by <a href=\"http://stamen.com/\">Stamen Design</a>, "
-                              "under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. "
-                              "Data by <a href=\"http://openstreetmap.org/\">OpenStreetMap</a>, "
-                              "under <a href=\"http://creativecommons.org/licenses/by-sa/3.0\">CC BY SA</a>.";
+    const QString templateUrl = "http://{subDomain}.tile.stamen.com/terrain/{level}/{col}/{row}.png";
+    const QStringList subDomains = QStringList() << "a" << "b" << "c" << "d";
+    const QString attributionText = "Map tiles by <a href=\"http://stamen.com/\">Stamen Design</a>, "
+                                    "under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. "
+                                    "Data by <a href=\"http://openstreetmap.org/\">OpenStreetMap</a>, "
+                                    "under <a href=\"http://creativecommons.org/licenses/by-sa/3.0\">CC BY SA</a>.";
 
     // Create the WebTiledLayer with a template URL, sub domains, and copyright information
     WebTiledLayer* webTiledLayer = new WebTiledLayer(templateUrl, subDomains, this);

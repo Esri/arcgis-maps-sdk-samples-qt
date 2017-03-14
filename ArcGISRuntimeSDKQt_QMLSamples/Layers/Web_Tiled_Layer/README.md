@@ -1,6 +1,6 @@
 #Web tiled layer
 
-This sample demonstrates how to display a map tiles from an online resource using the WebTiledLayer.
+This sample demonstrates how to display map tiles from an online resource using the WebTiledLayer.
 
 ![](screenshot.png)
 
