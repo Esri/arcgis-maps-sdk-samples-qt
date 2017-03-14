@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/Web_Tiled_Layer">
+        <file alias="sample.json">Web_Tiled_Layer.json</file>
+        <file>Web_Tiled_Layer.png</file>
+        <file>Web_Tiled_Layer.qml</file>
+        <file>Web_Tiled_Layer.h</file>
+        <file>Web_Tiled_Layer.cpp</file>
+        <file>Web_Tiled_Layer.html</file>
+    </qresource>
+</RCC>
