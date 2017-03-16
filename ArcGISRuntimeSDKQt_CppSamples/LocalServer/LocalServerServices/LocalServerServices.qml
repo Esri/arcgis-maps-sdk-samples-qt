@@ -65,7 +65,7 @@ LocalServerServices {
                     id: stopButton
                     text: "Stop Local Server"
                     width: localServerServicesSample.width * 0.25
-                    enabled: isServerRunning
+                    enabled: isServerRunning & !isServiceRunning
 
                     onClicked: {
                         stopLocalServer();
@@ -114,18 +114,6 @@ LocalServerServices {
                 delegate: servicesDelegate
                 property string currentValue: ""
             }
-
-
-        }
-
-        Button {
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            text: "Go to URL"
-
-            onClicked: {
-                openURL(servicesView.currentValue);
-            }
         }
     }
 
@@ -135,11 +123,13 @@ LocalServerServices {
             id: rect
             width: parent.width
             height: 35 * scaleFactor
-
+            color: (index % 2) ? "white" : "#DDF3EF"
             Text {
                 text: display
                 anchors {
-                    fill: parent
+                    left: parent.left
+                    right: parent.right
+                    verticalCenter: parent.verticalCenter
                     leftMargin: 5 * scaleFactor
                 }
                 elide: Text.ElideLeft
@@ -147,23 +137,12 @@ LocalServerServices {
 
                 MouseArea {
                     anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        servicesView.currentIndex = index;
                         servicesView.currentValue = display;
-                        rect.color = "lightgray";
+                        openURL(display);
                     }
                 }
-            }
-
-            Rectangle {
-                anchors {
-                    top: parent.top;
-                    left: parent.left;
-                    right: parent.right;
-                    topMargin: -8 * scaleFactor
-                }
-                color: "darkgrey"
-                height: 1 * scaleFactor
             }
         }
     }

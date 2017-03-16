@@ -27,6 +27,7 @@ class LocalServer;
 class LocalMapService;
 class LocalFeatureService;
 class LocalGeoprocessingService;
+class LocalService;
 }
 }
 
@@ -65,6 +66,8 @@ private:
   QString serverStatus() const { return m_serverStatus; }
   bool isServerRunning() const { return m_isServerRunning; }
   bool isServiceRunning() const { return m_isServiceRunning; }
+  bool isAnyServiceRunning();
+  void updateStatus(Esri::ArcGISRuntime::LocalService* service, const QString& serviceName);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
