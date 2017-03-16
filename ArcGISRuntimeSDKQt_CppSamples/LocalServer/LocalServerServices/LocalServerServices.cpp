@@ -52,9 +52,6 @@ void LocalServerServices::componentComplete()
   // create a gp service
   m_localGPService = new LocalGeoprocessingService(dataPath + "/gpk/MessageInABottle.gpk", this);
 
-  // create a list model
-  m_servicesList = new QStringListModel(this);
-
   if (LocalServer::instance()->isInstallValid())
   {
     connectSignals();
@@ -187,12 +184,11 @@ bool LocalServerServices::isAnyServiceRunning()
 void LocalServerServices::getCurrentServices()
 {
   // get the service names by looping through the services
-  QStringList serviceNames;
+  m_services.clear();
   foreach (LocalService* service, LocalServer::services())
   {
-    serviceNames << service->url().toString();
+    m_services << service->url().toString();
   }
-  m_servicesList->setStringList(serviceNames);
   emit servicesChanged();
 }
 

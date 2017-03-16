@@ -110,7 +110,7 @@ LocalServerServices {
                 id: servicesView
                 width: startButton.width + servicesCombo.width + (10 * scaleFactor)
                 height: 200 * scaleFactor
-                model: services
+                model: servicesList.length
                 delegate: servicesDelegate
                 property string currentValue: ""
             }
@@ -125,7 +125,7 @@ LocalServerServices {
             height: 35 * scaleFactor
             color: (index % 2) ? "white" : "#DDF3EF"
             Text {
-                text: display
+                text: servicesList[index]
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -139,7 +139,7 @@ LocalServerServices {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        servicesView.currentValue = display;
+                        servicesView.currentValue = services[index];
                         openURL(display);
                     }
                 }

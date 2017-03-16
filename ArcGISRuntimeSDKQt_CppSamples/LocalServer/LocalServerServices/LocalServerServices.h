@@ -38,7 +38,7 @@ class LocalServerServices : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(QStringListModel* services READ services NOTIFY servicesChanged)
+  Q_PROPERTY(QStringList servicesList READ servicesList NOTIFY servicesChanged)
   Q_PROPERTY(QString serverStatus READ serverStatus NOTIFY serverStatusChanged)
   Q_PROPERTY(bool isServerRunning READ isServerRunning NOTIFY isServerRunningChanged)
   Q_PROPERTY(bool isServiceRunning READ isServiceRunning NOTIFY isServiceRunningChanged)
@@ -62,7 +62,7 @@ signals:
 
 private:
   void connectSignals();
-  QStringListModel* services() const { return m_servicesList; }
+  QStringList servicesList() const { return m_services; }
   QString serverStatus() const { return m_serverStatus; }
   bool isServerRunning() const { return m_isServerRunning; }
   bool isServiceRunning() const { return m_isServiceRunning; }
@@ -76,7 +76,7 @@ private:
   Esri::ArcGISRuntime::LocalMapService* m_localMapService = nullptr;
   Esri::ArcGISRuntime::LocalFeatureService* m_localFeatureService = nullptr;
   Esri::ArcGISRuntime::LocalGeoprocessingService* m_localGPService = nullptr;
-  QStringListModel* m_servicesList = nullptr;
+  QStringList m_services;
   QString m_serverStatus;
   bool m_isServerRunning = false;
   bool m_isServiceRunning = false;
