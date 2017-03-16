@@ -68,6 +68,7 @@ private:
   bool isServiceRunning() const { return m_isServiceRunning; }
   bool isAnyServiceRunning();
   void updateStatus(Esri::ArcGISRuntime::LocalService* service, const QString& serviceName);
+  void getCurrentServices();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -76,7 +77,6 @@ private:
   Esri::ArcGISRuntime::LocalFeatureService* m_localFeatureService = nullptr;
   Esri::ArcGISRuntime::LocalGeoprocessingService* m_localGPService = nullptr;
   QStringListModel* m_servicesList = nullptr;
-  QStringList m_services;
   QString m_serverStatus;
   bool m_isServerRunning = false;
   bool m_isServiceRunning = false;

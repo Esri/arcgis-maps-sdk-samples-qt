@@ -180,13 +180,24 @@ void LocalServerServices::openURL(const QString& serviceURL)
 // check if any one of the services is running
 bool LocalServerServices::isAnyServiceRunning()
 {
-  return !(m_localMapService->status() == LocalServerStatus::Stopped
-      && m_localFeatureService->status() == LocalServerStatus::Stopped
-      && m_localGPService->status() == LocalServerStatus::Stopped);
+  return LocalServer::services().size() > 0;
+}
+
+// get the current list of services from local server
+void LocalServerServices::getCurrentServices()
+{
+  // get the service names by looping through the services
+  QStringList serviceNames;
+  foreach (LocalService* service, LocalServer::services())
+  {
+    serviceNames << service->url().toString();
+  }
+  m_servicesList->setStringList(serviceNames);
+  emit servicesChanged();
 }
 
 // get the current status of any service
-void LocalServerServices::updateStatus(LocalService *service, const QString& serviceName)
+void LocalServerServices::updateStatus(LocalService* service, const QString& serviceName)
 {
   if (service->status() == LocalServerStatus::Starting)
   {
@@ -199,11 +210,7 @@ void LocalServerServices::updateStatus(LocalService *service, const QString& ser
     m_isServiceRunning = true;
     emit isServiceRunningChanged();
 
-    // append to the string list
-    m_services.append(service->url().toString());
-    // set the string list to the model and emit
-    m_servicesList->setStringList(m_services);
-    emit servicesChanged();
+    getCurrentServices();
   }
   else if (service->status() == LocalServerStatus::Stopping)
   {
@@ -218,11 +225,7 @@ void LocalServerServices::updateStatus(LocalService *service, const QString& ser
       emit isServiceRunningChanged();
     }
 
-    // remove the url from the string list
-    m_services.removeOne(service->url().toString());
-    // set the stringlist to the model and emit
-    m_servicesList->setStringList(m_services);
-    emit servicesChanged();
+    getCurrentServices();
   }
   emit serverStatusChanged();
 }
