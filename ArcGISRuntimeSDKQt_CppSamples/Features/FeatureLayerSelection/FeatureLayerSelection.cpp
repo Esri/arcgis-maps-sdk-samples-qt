@@ -93,7 +93,7 @@ void FeatureLayerSelection::connectSignals()
         QList<Feature*> identifiedFeatures;
         for (int i = 0; i < identifyResult->geoElements().size(); i++)
         {
-            auto element = identifyResult->geoElements().at(i);
+            GeoElement* element = identifyResult->geoElements().at(i);
             if (static_cast<Feature*>(element))
                 // add the element to the list
                 identifiedFeatures.append(static_cast<Feature*>(element));
@@ -102,7 +102,7 @@ void FeatureLayerSelection::connectSignals()
         // select the identified features
         m_featureLayer->selectFeatures(identifiedFeatures);
         // update the member with the number of selected features
-        auto count = identifiedFeatures.length();
+        int count = identifiedFeatures.length();
         m_selectedFeatureText = count > 1 ? QString::number(count) + " features selected." : QString::number(count) + " feature selected.";
         emit selectedFeatureTextChanged();
     });
