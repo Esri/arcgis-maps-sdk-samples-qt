@@ -64,7 +64,8 @@ void LocalServerServices::connectSignals()
   connect(LocalServer::instance(), &LocalServer::statusChanged, this, [this]()
   {
     // append to the status string
-    switch (LocalServer::status()) {
+    switch (LocalServer::status())
+    {
       case LocalServerStatus::Starting:
       {
         m_serverStatus.append("Server Status: STARTING\n");
@@ -204,7 +205,8 @@ void LocalServerServices::getCurrentServices()
 // get the current status of any service
 void LocalServerServices::updateStatus(LocalService* service, const QString& serviceName)
 {
-  switch (service->status()) {
+  switch (service->status())
+  {
     case LocalServerStatus::Starting:
     {
       m_serverStatus.append(serviceName + " Service Status: STARTING\n");

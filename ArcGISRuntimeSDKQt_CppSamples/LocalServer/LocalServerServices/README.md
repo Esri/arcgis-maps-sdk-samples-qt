@@ -1,32 +1,6 @@
-<h1>Local Server Services</h1>
-
-<p>Demonstrates how to start and stop a Local Server and start and stop a Local Map, Feature, and Geoprocessing Service to that server.</p>
-
-<p><b>Note:</b> Local Server is not supported on MacOS</p>
-
-<p><img src="LocalServerServices.png"/></p>
-
-<h2>How to use the sample</h2>
-
-<p>Local Server Controls (Top Left): </p>
-  <ul><li> Start Local Server -- Starts a Local Server if one is not already running.</li>
-  <li> Stop Local Server --  Stops a Local Server if one is running. </li></ul>
-
-<p>Local Services Controls (Top Right): </p>
-  <ul><li> Combo Box -- Allows for the selection of a Local Map, Feature, or Geoprocessing Service.</li>
-  <li> Start Service -- Starts the Service that is selected in the combo box.</li>
-  <li> Stop Service --  Stops the Service that is selected in the <code>List of Running Services</code>.</li></ul>
-
-<p>Text Area (Middle): </p>
-  <ul><li> Displays the running status of the Local Server and any services that are added to that server. </li></ul>
-
-<p>List of Running Services (Bottom): </p>
-  <ul><li> Displays any services that are currently running on the server.</li> 
-  <li> Clicking on the service -- Opens browser to the service. </li></ul>
-
 # Local Server Services
 
-Demonstrates how to start and stop a Local Server and start and stop a Local Map, Feature, and Geoprocessing Service to that server.
+Demonstrates how to start and stop the Local Server and start and stop a Local Map, Feature, and Geoprocessing Service to that server.
 
 **Note:** Local Server is not supported on MacOS
 
@@ -35,8 +9,8 @@ Demonstrates how to start and stop a Local Server and start and stop a Local Map
 ## How to use the sample
 
 Local Server Controls (Top Left):
-*   Start Local Server -- Starts a Local Server if one is not already running.
-*   Stop Local Server --  Stops a Local Server if one is running.
+*   Start Local Server -- Starts the Local Server if one is not already running.
+*   Stop Local Server --  Stops the Local Server if one is running.
 
 Local Services Controls (Top Right):
 *   Combo Box -- Allows for the selection of a Local Map, Feature, or Geoprocessing Service.
@@ -54,8 +28,8 @@ List of Running Services (Bottom):
 
 To start a `LocalServer` and start a `LocalService` to it:
 
-1. Create and run a local server.
-    * `LocalServer::instance` creates a local server
+1. Create and run the local server.
+    * `LocalServer::instance` creates the local server
     * `LocalServer::start()` starts the server asynchronously
 2. Wait for server to be in the  `LocalServerStatus::STARTED` state.
     * `LocalServer::statusChanged()` fires whenever the running status of the local server has changed.
