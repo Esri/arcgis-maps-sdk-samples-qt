@@ -1,6 +1,6 @@
-// [WriteFile Name=ChangeBasemap, Category=Maps]
+// [WriteFile Name=LocalServerServices, Category=LocalServer]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -64,29 +64,38 @@ void LocalServerServices::connectSignals()
   connect(LocalServer::instance(), &LocalServer::statusChanged, this, [this]()
   {
     // append to the status string
-    if (LocalServer::status() == LocalServerStatus::Starting)
-    {
-      m_serverStatus.append("Server Status: STARTING\n");
-    }
-    else if(LocalServer::status() == LocalServerStatus::Started)
-    {
-      m_serverStatus.append("Server Status: STARTED\n");
-      m_isServerRunning = true;
-      emit isServerRunningChanged();
-    }
-    else if(LocalServer::status() == LocalServerStatus::Stopping)
-    {
-      m_serverStatus.append("Server Status: STOPPING\n");
-    }
-    else if(LocalServer::status() == LocalServerStatus::Stopped)
-    {
-      m_serverStatus.append("Server Status: STOPPED\n");
-      m_isServerRunning = false;
-      emit isServerRunningChanged();
-    }
-    else if(LocalServer::status() == LocalServerStatus::Failed)
-    {
-      m_serverStatus.append("Server Status: FAILED\n");
+    switch (LocalServer::status()) {
+      case LocalServerStatus::Starting:
+      {
+        m_serverStatus.append("Server Status: STARTING\n");
+        break;
+      }
+      case LocalServerStatus::Started:
+      {
+        m_serverStatus.append("Server Status: STARTED\n");
+        m_isServerRunning = true;
+        emit isServerRunningChanged();
+        break;
+      }
+      case LocalServerStatus::Stopping:
+      {
+        m_serverStatus.append("Server Status: STOPPING\n");
+        break;
+      }
+      case LocalServerStatus::Stopped:
+      {
+        m_serverStatus.append("Server Status: STOPPED\n");
+        m_isServerRunning = false;
+        emit isServerRunningChanged();
+        break;
+      }
+      case LocalServerStatus::Failed:
+      {
+        m_serverStatus.append("Server Status: FAILED\n");
+        break;
+      }
+      default:
+        break;
     }
     emit serverStatusChanged();
   });
@@ -185,7 +194,7 @@ void LocalServerServices::getCurrentServices()
 {
   // get the service names by looping through the services
   m_services.clear();
-  foreach (LocalService* service, LocalServer::services())
+  for (const LocalService* service : LocalServer::services())
   {
     m_services << service->url().toString();
   }
@@ -195,33 +204,40 @@ void LocalServerServices::getCurrentServices()
 // get the current status of any service
 void LocalServerServices::updateStatus(LocalService* service, const QString& serviceName)
 {
-  if (service->status() == LocalServerStatus::Starting)
-  {
-    // append the status string
-    m_serverStatus.append(serviceName + " Service Status: STARTING\n");
-  }
-  else if (service->status() == LocalServerStatus::Started)
-  {
-    m_serverStatus.append(serviceName + " Service Status: STARTED\n");
-    m_isServiceRunning = true;
-    emit isServiceRunningChanged();
-
-    getCurrentServices();
-  }
-  else if (service->status() == LocalServerStatus::Stopping)
-  {
-    m_serverStatus.append(serviceName + " Service Status: STOPPING\n");
-  }
-  else if (service->status() == LocalServerStatus::Stopped)
-  {
-    m_serverStatus.append(serviceName + " Service Status: STOPPED\n");
-    if (!isAnyServiceRunning())
+  switch (service->status()) {
+    case LocalServerStatus::Starting:
     {
-      m_isServiceRunning = false;
-      emit isServiceRunningChanged();
+      m_serverStatus.append(serviceName + " Service Status: STARTING\n");
+      break;
     }
+    case LocalServerStatus::Started:
+    {
+      m_serverStatus.append(serviceName + " Service Status: STARTED\n");
+      m_isServiceRunning = true;
+      emit isServiceRunningChanged();
 
-    getCurrentServices();
+      getCurrentServices();
+      break;
+    }
+    case LocalServerStatus::Stopping:
+    {
+      m_serverStatus.append(serviceName + " Service Status: STOPPING\n");
+      break;
+    }
+    case LocalServerStatus::Stopped:
+    {
+      m_serverStatus.append(serviceName + " Service Status: STOPPED\n");
+      if (!isAnyServiceRunning())
+      {
+        m_isServiceRunning = false;
+        emit isServiceRunningChanged();
+      }
+
+      getCurrentServices();
+      break;
+    }
+    default:
+      break;
   }
   emit serverStatusChanged();
 }

@@ -1,6 +1,6 @@
-// [WriteFile Name=ChangeBasemap, Category=Maps]
+// [WriteFile Name=LocalServerServices, Category=LocalServer]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,11 +51,9 @@ LocalServerServices {
                 ComboBox {
                     id: servicesCombo
                     width: (startServiceButton.width * 2) + (10 * scaleFactor)
-
-                    model: ["Map Service", "Feature Service", "Geoprocessing Service"]
                     enabled: isServerRunning
+                    model: ["Map Service", "Feature Service", "Geoprocessing Service"]
                 }
-
             }
 
             Row {
