@@ -35,7 +35,7 @@ To start a `LocalServer` and start a `LocalService` to it:
     * `LocalServer::statusChanged()` fires whenever the running status of the local server has changed.
 3. Create and run a local service, example of running a `LocalMapService`.
     * `new LocalMapService(Url)`, creates a local map service with the given url path to mpk file
-    * `Service.startAsync()`, starts the service asynchronously
+    * `LocalMapService::start()`, starts the service asynchronously
     * service will be added to the local server automatically
 
 
@@ -44,9 +44,9 @@ To stop a `LocalServer` and stop any `LocalServices` that are added to it:
 
 1. Get any services that are currently running on the local server, `LocalServer::services()`.
 2. Loop through all services and stop the selected service (from the dropdown) if started.
-    * check service is started, `LocalService::status()` equals `LocalServerStatus.STARTED`
+    * check service is started, `LocalService::status()` equals `LocalServerStatus::STARTED`
     * `LocalService::stop()`, stops the service asynchronously
-3. Wait for all services to be in the `LocalServerStatus.STOPPED` state.
+3. Wait for all services to be in the `LocalServerStatus::STOPPED` state.
     * `LocalService::statusChanged()` fires whenever the running status of the local service has changed.
 4. `Stop the local server, `LocalServer::stop()`.
 
@@ -58,6 +58,5 @@ To stop a `LocalServer` and stop any `LocalServices` that are added to it:
 * LocalGeoprocessingService
 * LocalMapService
 * LocalServer
-* StatusChangedEvent
 * LocalServerStatus
 * LocalService
