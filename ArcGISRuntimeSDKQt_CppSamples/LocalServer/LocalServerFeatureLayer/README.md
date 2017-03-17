@@ -1,6 +1,6 @@
 # Local Server Feature Layer
 
-Demonstrates how to start a Local Server and Local Feature Service, then create a Feature Layer from the Local Feature Service and add it to a map.
+Demonstrates how to start the Local Server and Local Feature Service, then create a Feature Layer from the Local Feature Service and add it to a map.
 
 **Note:** Local Server is not supported on MacOS
 
@@ -8,7 +8,7 @@ Demonstrates how to start a Local Server and Local Feature Service, then create 
 
 ## How to use the sample
 
-A Local Server and Local Feature Service will automatically be started and once running a Feature Layer will be created and added to the map.
+The Local Server and Local Feature Service will automatically be started and once running a Feature Layer will be created and added to the map.
 
 ## How it works
 
