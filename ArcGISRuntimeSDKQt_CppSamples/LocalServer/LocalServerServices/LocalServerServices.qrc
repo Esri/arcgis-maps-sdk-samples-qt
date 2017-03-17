@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/LocalServer/LocalServerServices">
+        <file alias="sample.json">LocalServerServices.json</file>
+        <file>LocalServerServices.png</file>
+        <file>LocalServerServices.qml</file>
+		<file>LocalServerServices.h</file>
+		<file>LocalServerServices.cpp</file>
+        <file>LocalServerServices.html</file>
+    </qresource>
+</RCC>
