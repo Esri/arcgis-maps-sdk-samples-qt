@@ -1,4 +1,4 @@
-// [WriteFile Name=LocalServerFeatureLayer, Category=LocalServer]
+// [WriteFile Name=LocalServerMapImageLayer, Category=LocalServer]
 // [Legal]
 // Copyright 2017 Esri.
 

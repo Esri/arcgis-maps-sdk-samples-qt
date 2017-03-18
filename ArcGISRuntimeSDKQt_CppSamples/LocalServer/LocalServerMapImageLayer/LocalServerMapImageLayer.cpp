@@ -1,4 +1,4 @@
-// [WriteFile Name=LocalServerFeatureLayer, Category=LocalServer]
+// [WriteFile Name=LocalServerMapImageLayer, Category=LocalServer]
 // [Legal]
 // Copyright 2017 Esri.
 
@@ -55,7 +55,7 @@ void LocalServerMapImageLayer::componentComplete()
 
   QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data";
 
-  // create a feature service
+  // create a map service
   m_localMapService = new LocalMapService(dataPath + "/mpk/RelationshipID.mpk", this);
 
   if (LocalServer::instance()->isInstallValid())
