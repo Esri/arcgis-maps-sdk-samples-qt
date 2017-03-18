@@ -27,18 +27,18 @@ ARCGIS_RUNTIME_VERSION = 100.1
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
-TARGET = LocalServerServices
+TARGET = LocalServerFeatureLayer
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    LocalServerServices.h
+    LocalServerFeatureLayer.h
 
 SOURCES += \
     main.cpp \
-    LocalServerServices.cpp
+    LocalServerFeatureLayer.cpp
 
-RESOURCES += LocalServerServices.qrc
+RESOURCES += LocalServerFeatureLayer.qrc
 
 #-------------------------------------------------------------------------------
 
