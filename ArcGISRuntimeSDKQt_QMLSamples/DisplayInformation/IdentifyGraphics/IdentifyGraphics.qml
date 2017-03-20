@@ -54,7 +54,10 @@ Rectangle {
         //! [identify graphics api snippet]
         // Signal handler for mouse click event on the map view
         onMouseClicked: {
-            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 22, false, 1000);
+            var tolerance = 22;
+            var returnPopupsOnly = false;
+            var maximumResults = 1000;
+            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, tolerance, returnPopupsOnly, maximumResults);
         }
 
         // Signal handler for identify graphics overlay
