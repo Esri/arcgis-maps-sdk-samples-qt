@@ -128,7 +128,9 @@ Rectangle {
             mousePointY = mouse.y - callout.height;
             //! [DeleteFeaturesFeatureService identify feature]
             // call identify on the feature layer
-            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10, false);
+            var tolerance = 10;
+            var returnPopupsOnly = false;
+            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, tolerance, returnPopupsOnly);
             //! [DeleteFeaturesFeatureService identify feature]
         }
 
