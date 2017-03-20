@@ -17,13 +17,13 @@ To create a `ArcGISMapImageLayer` from a `LocalMapService`:
 1. Create and run the local server.
     * `LocalServer::instance` creates the local server
     * `LocalServer::start()` starts the server asynchronously
-2. Wait for server to be in the  `LocalServerStatus::STARTED` state.
+2. Wait for server to be in the  `LocalServerStatus::Started` state.
     * `LocalServer::statusChanged()` fires whenever the running status of the local server has changed.
 3. Create and run a local service, example of running a `LocalMapService`.
     * `new LocalMapService(Url)`, creates a local map service with the given url path to mpk file
     * `LocalMapService::start()`, starts the service asynchronously
     * service will be added to the local server automatically
-4. Wait for map service to be in the LocalServerStatus::STARTED state.
+4. Wait for map service to be in the LocalServerStatus::Started state.
     * `LocalMapService::statusChanged()` signal fires whenever the status of the local service has changed.
 5. Create an arcgis map image layer from local map service.
     * create a `ArcGISMapImageLayer(Url)` from local map service url, `LocalMapService::url()`
