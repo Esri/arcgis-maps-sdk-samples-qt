@@ -20,7 +20,8 @@ RESOURCES += OAuthRedirectExample.qrc
 
 win32 {
     include (Win/Win.pri)
-    include("$$PWD/../../../../../../../qt-solutions/qtsingleapplication/src/qtsingleapplication.pri")
+    QT_SINGLEAPP_DIR = "$$PWD/../../../../../../../qt-solutions/qtsingleapplication"
+    include("$$QT_SINGLEAPP_DIR/src/qtsingleapplication.pri")
 }
 
 macx {
