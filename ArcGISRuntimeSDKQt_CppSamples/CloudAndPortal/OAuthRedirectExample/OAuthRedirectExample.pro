@@ -36,6 +36,7 @@ android {
 }
 
 DEFINES +="CLIENT_ID=\"enter client id\""
+DEFINES +="URL_SCHEME=\"exampleapp\""
 
 win32|unix:!macx {
     message("Using QtSingleApplication")

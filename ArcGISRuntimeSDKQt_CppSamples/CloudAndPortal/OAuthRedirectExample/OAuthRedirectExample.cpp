@@ -23,7 +23,7 @@ using namespace Esri::ArcGISRuntime;
 
 QString OAuthRedirectExample::customUrlProtocol()
 {
-    return "exampleapp";
+    return QUOTE(URL_SCHEME);
 }
 
 QString OAuthRedirectExample::clientId() const

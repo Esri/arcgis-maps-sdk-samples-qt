@@ -26,13 +26,12 @@ Make a note of the `Client Id` for the app - this is what you will use in your a
 ### Add a Redirect URI
 Switch to the "Authentication" tab and scroll down to "Redirect URIs" section at the bottom of the page.
 
-Add the custom url scheme you wish to use with the app - e.g. "myapp". This will be the base for the 
+Add the custom url scheme you wish to use with the app - e.g. "exampleapp". This will be the base for the 
 redirect Url that your app will be set to handle.
 
 ### Add the ClientID to your app
 Open the file `OAuthRedirectExample.pro` file and set your ClientID which you obtained when you registered
-you app online to be the new value for `CLIENT_ID` - e.g. DEFINES +="CLIENT_ID=\"XXXXXXXXXXX\"" where "XXXXXXXXXXX" is your ClientID.
-
+you app online to be the new value for `CLIENT_ID` - e.g. DEFINES +="CLIENT_ID=\"XXXXXXXXXXX\"" where "XXXXXXXXXXX" is your ClientID. Set the url scheme you defined to be the new value of `URL_SCHEME`.
 
 ## Register the custom URL scheme
 Registering a custom URL scehem is handled differently on each platform. On some platforms there are a number of ways this can be achieved. This sample outlines some approaches for each of the supported platforms which can be used while developing. When releasing a product you will need to determine the best way to carry out the registration of the url scheme on your user's systems.
