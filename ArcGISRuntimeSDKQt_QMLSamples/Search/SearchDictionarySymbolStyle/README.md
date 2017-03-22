@@ -1,4 +1,4 @@
-#Search symbol dictionary
+# Search symbol dictionary
 
 This sample demonstrates how to search a DictionarySymbolStyle and return the results in a ListView. 
 In this case, the sample uses The Joint Military Symbology MIL-STD-2525D standard but the same code could be used for other symbol dictionaries.
@@ -6,15 +6,15 @@ The MIL-STD-2525D defines a standardized, structured set of graphical symbols fo
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 
 The sample uses the `searchSymbols` function to search for the symbols that match the `SymbolStyleSearchParameters`.
 
-##Features
+## Features
 - DictionarySymbolStyle
 - SymbolStyleSearchParameters
 
-##Offline Data
+## Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
