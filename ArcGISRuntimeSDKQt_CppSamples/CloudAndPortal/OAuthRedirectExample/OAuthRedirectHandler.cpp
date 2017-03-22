@@ -31,7 +31,7 @@ OAuthRedirectHandler::OAuthRedirectHandler(const QString& urlScheme, QObject* pa
   // for iOS
   QDesktopServices::setUrlHandler(urlScheme, this, "handleAppUrl");
 
-  // for Windows/Linux
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
   QCoreApplication* coreApp = MyApplication::instance();
   if (coreApp)
   {
@@ -39,6 +39,7 @@ OAuthRedirectHandler::OAuthRedirectHandler(const QString& urlScheme, QObject* pa
     if (singleApp)
       connect(singleApp, &MyApplication::messageReceived, this, &OAuthRedirectHandler::handleAppMessage);
   }
+#endif
 
   connect(AuthenticationManager::instance(), &AuthenticationManager::authenticationChallenge, this, [this](AuthenticationChallenge* challenge)
   {

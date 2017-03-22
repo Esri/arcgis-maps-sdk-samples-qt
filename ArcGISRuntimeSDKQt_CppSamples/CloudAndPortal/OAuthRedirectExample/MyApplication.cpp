@@ -21,14 +21,25 @@
 #endif
 
 MyApplication::MyApplication(int &argc, char **argv, bool GUIenabled):
-  QtSingleApplication(argc, argv, GUIenabled)
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+    QtSingleApplication(argc, argv, GUIenabled)
 {
-
+#else
+    QApplication(argc, argv)
+{
+  Q_UNUSED(GUIenabled)
+#endif
 }
 
 MyApplication::MyApplication(const QString &id, int &argc, char **argv):
-  QtSingleApplication(id, argc, argv)
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+    QtSingleApplication(id, argc, argv)
 {
+#else
+    QApplication(argc, argv)
+{
+    Q_UNUSED(id)
+#endif
 
 }
 
@@ -39,14 +50,14 @@ MyApplication::~MyApplication()
 
 bool MyApplication::event(QEvent *event)
 {
-  if (event->type() == QEvent::FileOpen)
-  {
-    QFileOpenEvent* fileEvent = static_cast<QFileOpenEvent *>(event);
-    emit messageReceived(fileEvent->url().toString());
-    return true;
-  }
+    if (event->type() == QEvent::FileOpen)
+    {
+        QFileOpenEvent* fileEvent = static_cast<QFileOpenEvent *>(event);
+        QDesktopServices::openUrl(fileEvent->url());
+        return true;
+    }
 
-  return QtSingleApplication::event(event);
+    return QApplication::event(event);
 }
 
 #ifdef Q_OS_ANDROID
@@ -59,12 +70,12 @@ Java_com_esri_Launcher_openUri(JNIEnv *env,
                                jobject obj,
                                jstring uri)
 {
-  Q_UNUSED(obj)
-  jboolean isCopy;
-  isCopy = false;
-  const char* utf = env->GetStringUTFChars(uri, &isCopy);
-  QDesktopServices::openUrl(QUrl(QString(utf)));
-  env->ReleaseStringUTFChars(uri, utf);
+    Q_UNUSED(obj)
+    jboolean isCopy;
+    isCopy = false;
+    const char* utf = env->GetStringUTFChars(uri, &isCopy);
+    QDesktopServices::openUrl(QUrl(QString(utf)));
+    env->ReleaseStringUTFChars(uri, utf);
 }
 
 #ifdef __cplusplus
