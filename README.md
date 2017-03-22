@@ -13,7 +13,7 @@ If you haven't already, fork [the repo](https://github.com/Esri/arcgis-runtime-s
 ## Clone the repo
 
 ### Command line Git
-[Clone the ArcGIS Qt SDK Samples](https://help.github.com/articles/fork-a-repo#step-2-clone-your-fork)
+[Clone the ArcGIS Qt SDK Samples](https://help.github.com/articles/fork-a-repo# Step-2-clone-your-fork)
 
 Open your terminal, navigate to your working directory, use ```git clone``` to get a copy of the repo.
 

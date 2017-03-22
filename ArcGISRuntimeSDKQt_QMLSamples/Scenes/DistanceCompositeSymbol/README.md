@@ -1,10 +1,10 @@
-#Distance Composite Symbol (URL)
+# Distance Composite Symbol (URL)
 
 This sample demonstrates how to create a graphic using a distance composite scene symbol. Distance composite scene symbols can render different symbols depending on the distance between the camera and the graphic.
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 
 To create and display a ```DistanceCompositeSceneSymbol```:
 
@@ -15,7 +15,7 @@ To create and display a ```DistanceCompositeSceneSymbol```:
 5. Create a ```Graphic``` with the symbol.
 6. Add the graphic to the graphics overlay.
 
-##Features
+## Features
 - Scene
 - ArcGISTiledElevationSource
 - Camera
@@ -29,7 +29,7 @@ To create and display a ```DistanceCompositeSceneSymbol```:
 - SceneView
 - SimpleMarkerSceneSymbol
 
-##Offline Data
+## Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location

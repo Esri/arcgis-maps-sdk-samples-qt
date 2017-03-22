@@ -1,10 +1,10 @@
-#PortalUser Info
+# PortalUser Info
 
 This sample demonstrates how to retrieve a user's details via a Portal.
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 A `Portal` is created, and supplied a `Credential` which uses OAuth in user mode. 
 When the app launches, the portal is loaded, which triggers an authentication challenge.
 
@@ -26,7 +26,7 @@ Similarly, the `portalInfo` property is used to populate:
  - `isCanSearchPublic`
  - `isCanSharePublic`
  
-##Features
+## Features
 - Portal
 - Credential
 - PortalUser

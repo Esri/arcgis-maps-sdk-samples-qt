@@ -1,13 +1,13 @@
-#DisplayLayerViewDrawStatus
+# DisplayLayerViewDrawStatus
 
 This sample demonstrates how to get the view status of a `Layer` in a `Map`.
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 `MapQuickView` has a signal called `layerViewStateChanged` that gets emitted every time a layer's view status changes. The signal contains two arguments, layer, the `Layer` whose state changed, and layerViewState, the `LayerViewState` object defining the new state. 
 
-##Features
+## Features
 - MapView
 - Map
 - Basemap

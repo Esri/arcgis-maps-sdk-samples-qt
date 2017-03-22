@@ -1,13 +1,13 @@
-#Picture_Marker_Symbol
+# Picture_Marker_Symbol
 
 This sample demonstrates how to create `PictureMarkerSymbol`s from the different types of image resources.
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 A `GraphicsOverlay` is added to a `MapView`. Three `Graphic`s are added to the `GraphicsOverlay` with `PictureMarkerSymbol`s which are created with three different image sources, URL, Qt resource, and file path.
 
-##Features
+## Features
 - MapView
 - Map
 - Basemap
@@ -18,7 +18,7 @@ A `GraphicsOverlay` is added to a `MapView`. Three `Graphic`s are added to the `
 - PictureMarkerSymbol
 - SpatialReference
 
-##Offline Data
+## Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
