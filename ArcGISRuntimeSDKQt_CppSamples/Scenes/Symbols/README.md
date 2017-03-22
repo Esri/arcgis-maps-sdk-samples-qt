@@ -1,10 +1,10 @@
-#Symbols (URL)
+# Symbols (URL)
 
 This sample demonstrates how to create symbols with different 3D shapes. Includes tetrahedrons, cubes, spheres, diamonds, cylinders, and cones.
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 
 To create a ```SimpleMarkerSceneSymbol``` with a 3D shape:
 
@@ -14,7 +14,7 @@ To create a ```SimpleMarkerSceneSymbol``` with a 3D shape:
 4. Add the graphics to the graphicsOverlay.
 5. Add the graphicsOverlay to the sceneView.
 
-##Features
+## Features
 - SceneView
 - Graphic
 - GraphicsOverlay

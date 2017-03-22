@@ -1,14 +1,14 @@
-#Feature layer (dictionary renderer)
+# Feature layer (dictionary renderer)
 
 This sample demonstrates how to display a `FeatureLayer` with military symbology, using ArcGIS Runtime's `DictionaryRenderer`.
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 
 This sample loads a number of point, line, and polygon feature tables from a Runtime geodatabase. For each feature table, a `FeatureLayer` is created, and a `DictionaryRenderer` object is created and applied to the layer. Note that each layer needs its own renderer, though all renderers can share the DictionarySymbolStyle, in which case all layers will use the same symbology specification (MIL-STD-2525D in the case of this sample). Each layer is added to the map, and when all layers are loaded, the map's viewpoint is set to zoom to the full extent of all feature layers.
 
-##Features
+## Features
 - MapView
 - Map
 - BasemapTopographic
@@ -18,7 +18,7 @@ This sample loads a number of point, line, and polygon feature tables from a Run
 - FeatureLayer
 - GeometryEngine
 
-##Offline Data
+## Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location

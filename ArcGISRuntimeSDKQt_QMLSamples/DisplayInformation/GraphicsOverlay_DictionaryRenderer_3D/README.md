@@ -1,14 +1,14 @@
-#Graphics overlay (dictionary renderer) 3D
+# Graphics overlay (dictionary renderer) 3D
 
 This sample demonstrates applying a dictionary renderer to a graphics overlay in a 3D scene to display military symbology.
 
 ![](screenshot.jpg)
 
-##How it works
+## How it works
 
 The sample loads a number of point military elements from an XML file and adds them as graphics to a `GraphicsOverlay`. A `DictionaryRenderer` is applied to the `GraphicsOverlay` in order to display the graphics with MIL-STD-2525D military symbology. The `GraphicsOverlay`'s `renderingMode` parameter is set to `GraphicsRenderingModeDynamic`, so that point features are displayed with billboarded symbols facing the user (a developer can set `renderingMode` to `GraphicsRenderingModeStatic` if desired to instead drape the symbols on the surface). When all graphics are created, the 3D scene's viewpoint is set to zoom to the full extent of all graphics.
 
-##Features
+## Features
 - SceneView
 - Scene
 - BasemapImagery
@@ -20,7 +20,7 @@ The sample loads a number of point military elements from an XML file and adds t
 - Graphic
 - GeometryEngine
 
-##Offline Data
+## Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location

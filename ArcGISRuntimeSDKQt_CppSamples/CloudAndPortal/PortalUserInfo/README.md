@@ -1,10 +1,10 @@
-#PortalUser Info
+# PortalUser Info
 
 This sample demonstrates how to retrieve a user's details via a Portal
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 A `Portal` is created, and supplied a `Credential` which uses OAuth in user mode. 
 When the app launches, the portal is loaded, whcih triggers an authentication challenge.
 
@@ -19,7 +19,7 @@ If the portal is successfully loaded, the `portalUser` property is used to popul
 
  The `thumbnailUrl` property is bound to a QML Image to display the user's avatar.
  
-##Features
+## Features
 - Portal
 - Credential
 - PortalUser
