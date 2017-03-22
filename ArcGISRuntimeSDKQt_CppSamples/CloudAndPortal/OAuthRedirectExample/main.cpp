@@ -15,9 +15,12 @@
 #include <QDir>
 #include <QQmlEngine>
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
 #include <QCommandLineParser>
 #include <QSettings>
+#endif
+
+#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
@@ -33,7 +36,7 @@ int main(int argc, char *argv[])
 {
   MyApplication app(argc, argv);
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
   QCommandLineParser commandLineParser;
   commandLineParser.process(app);
 
@@ -41,7 +44,9 @@ int main(int argc, char *argv[])
 
   if (app.sendMessage(argList.join(",")))
     return 0;
+#endif
 
+#ifdef Q_OS_WIN
   // Force usage of OpenGL ES through ANGLE on Windows
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 
@@ -81,7 +86,7 @@ int main(int argc, char *argv[])
   // Set the source
   view.setSource(QUrl("qrc:/Samples/CloudAndPortal/OAuthRedirectExample/OAuthRedirectExample.qml"));
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
   QObject::connect(&app, &MyApplication::messageReceived, [&app, &view](const QString& msg)
   {
     Q_UNUSED(msg);

@@ -20,8 +20,6 @@ RESOURCES += OAuthRedirectExample.qrc
 
 win32 {
     include (Win/Win.pri)
-    QT_SINGLEAPP_DIR = "$$PWD/../../../../../../../qt-solutions/qtsingleapplication"
-    include("$$QT_SINGLEAPP_DIR/src/qtsingleapplication.pri")
 }
 
 macx {
@@ -38,3 +36,9 @@ android {
 }
 
 DEFINES +="CLIENT_ID=\"enter client id\""
+
+win32|unix:!macx {
+    message("Using QtSingleApplication")
+    QT_SINGLEAPP_DIR = "$$PWD/../../../../../../../qt-solutions/qtsingleapplication"
+    include("$$QT_SINGLEAPP_DIR/src/qtsingleapplication.pri")
+}

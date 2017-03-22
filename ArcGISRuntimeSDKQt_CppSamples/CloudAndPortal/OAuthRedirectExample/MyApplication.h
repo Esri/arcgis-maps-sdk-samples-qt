@@ -15,13 +15,13 @@
 
 #include <QtGlobal>
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
 #include  <QtSingleApplication>
 #else
 #include <QApplication>
 #endif
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
 class MyApplication : public QtSingleApplication
 #else
 class MyApplication : public QApplication
