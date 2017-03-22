@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>OAuthRedirectTest</string>
+        <string>OAuthRedirectExample</string>
 	<key>CFBundleExecutable</key>
-	<string>OAuthRedirectTest</string>
+        <string>OAuthRedirectExample</string>
 	<key>CFBundleGetInfoString</key>
 	<string>ArcGIS</string>
 	<key>CFBundleIcons~ipad</key>
 	<dict/>
 	<key>CFBundleIdentifier</key>
-	<string>com.esri.OAuthRedirectTest</string>
+        <string>com.esri.OAuthRedirectExample</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
@@ -24,7 +24,7 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.esri.OAuthRedirectTest</string>
+                        <string>com.esri.OAuthRedirectExample</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>exampleapp</string>

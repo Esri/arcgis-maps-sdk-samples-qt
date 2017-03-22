@@ -35,7 +35,7 @@ android {
     include (Android/Android.pri)
 }
 
-DEFINES +="CLIENT_ID=\"enter client id\""
+DEFINES +="CLIENT_ID=\"Ot1BJWvDLezSkZLc\""
 
 win32|unix:!macx {
     message("Using QtSingleApplication")

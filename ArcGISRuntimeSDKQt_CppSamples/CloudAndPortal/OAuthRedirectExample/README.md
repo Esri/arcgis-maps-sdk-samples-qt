@@ -94,6 +94,23 @@ Next go to Info/URL Types and add a new URL type with Identifier and URL Schemes
 
 Now when you build and run the Project from XCode, the url scheme will be recognised and the URL will be treated as a `QFileOpenEvent`.
 
+_NOTE: When deploying an App on mac it should be possible to set the URL type in the Info.Plist as is done for iOS platforms._
+
+### Android
+On Android, the custom URL scheme is handled with an Activity (see `MyActivity.java`) that handles an intent to open the custom Url by calling a JNI function exposed by the application. 
+
+The Custom url scheme is set up in the `AndroidManifest.xml` file. You need to update `<data android:scheme="exampleapp"/>` to use your own scheme in place of "exampleapp".
+
+### iOS
+On iOS, the `Info.plist` file defines the custom url scheme. You need to update the following code with your custome URL scheme in place of `exampleapp`:
+
+`
+<key>CFBundleURLSchemes</key>
+<array>
+    <string>exampleapp</string>
+</array>
+`
+
 ## QtSingleApplication dependancy
 On Windows and Linux, the sample depends upon the `QtSingleApplication` type from qt-solutions. You can download the project from 
 https://github.com/qtproject/qt-solutions. The sample is designed to include the source files ditrectly: update the `QT_SINGLEAPP_DIR` 
