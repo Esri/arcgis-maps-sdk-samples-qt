@@ -148,6 +148,7 @@ void LocalServerServices::startService(const QString& serviceName, const QUrl& f
     {
       if (m_localMapService->status() == LocalServerStatus::Started)
         return;
+
       m_localMapService->start();
     }
     else
@@ -166,6 +167,7 @@ void LocalServerServices::startService(const QString& serviceName, const QUrl& f
     {
       if (m_localFeatureService->status() == LocalServerStatus::Started)
         return;
+
       m_localFeatureService->start();
     }
     else
@@ -184,6 +186,7 @@ void LocalServerServices::startService(const QString& serviceName, const QUrl& f
     {
     if (m_localGPService->status() == LocalServerStatus::Started)
       return;
+
     m_localGPService->start();
     }
     else
