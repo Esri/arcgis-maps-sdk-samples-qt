@@ -1,7 +1,6 @@
 {
     "source" :  "DistanceCompositeSymbol.qml",
-    "description" : "DistanceCompositeSymbol.html",
-    "thumbnail" : "DistanceCompositeSymbol.png",
+    "otherSourceFiles" :  [],
     "name" : "Distance composite symbol",
 	"dataItems" : [
         {

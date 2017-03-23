@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/Samples/Layers/Web_Tiled_Layer">
         <file alias="sample.json">Web_Tiled_Layer.json</file>
-        <file>Web_Tiled_Layer.png</file>
         <file>Web_Tiled_Layer.qml</file>
-        <file>Web_Tiled_Layer.html</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

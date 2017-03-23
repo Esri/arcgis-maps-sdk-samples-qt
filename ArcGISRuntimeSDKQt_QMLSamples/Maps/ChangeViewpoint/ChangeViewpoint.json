@@ -1,7 +1,6 @@
 {
     "source" :  "ChangeViewpoint.qml",
-    "description" : "ChangeViewpoint.html",
-    "thumbnail" : "ChangeViewpoint.png",
+    "otherSourceFiles" :  [],
     "name" : "Change viewpoint"
 }
 

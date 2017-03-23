@@ -1,7 +1,6 @@
 {
     "source" :  "GraphicsOverlay_DictionaryRenderer.qml",
-    "description" : "GraphicsOverlay_DictionaryRenderer.html",
-    "thumbnail" : "GraphicsOverlay_DictionaryRenderer.png",
+    "otherSourceFiles" :  [],
     "name" : "Graphics overlay (dictionary renderer)",
     "dataItems" : [
         {

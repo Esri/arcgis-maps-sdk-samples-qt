@@ -1,6 +1,5 @@
 {
     "source" :  "Feature_Collection_Layer.qml",
-    "description" : "Feature_Collection_Layer.html",
-    "thumbnail" : "Feature_Collection_Layer.png",
+    "otherSourceFiles" :  [],
     "name" : "Feature collection layer"
 }

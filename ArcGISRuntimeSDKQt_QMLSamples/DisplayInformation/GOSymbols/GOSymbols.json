@@ -1,7 +1,6 @@
 {
     "source" :  "GOSymbols.qml",
-    "description" : "GOSymbols.html",
-    "thumbnail" : "GOSymbols.png",
+    "otherSourceFiles" :  [],
     "name" : "Add graphics with symbols"
 }
 

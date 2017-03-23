@@ -1,7 +1,6 @@
 {
     "source" :  "UpdateAttributesFeatureService.qml",
-    "description" : "UpdateAttributesFeatureService.html",
-    "thumbnail" : "UpdateAttributesFeatureService.png",
+    "otherSourceFiles" :  [],
     "name" : "Update attributes (feature service)"
 }
 

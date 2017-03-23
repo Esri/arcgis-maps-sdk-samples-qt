@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/Samples/Scenes/Symbols">
-        <file>Symbols.html</file>
         <file alias="sample.json">Symbols.json</file>
-        <file>Symbols.png</file>
+        <file>screenshot.png</file>
         <file>Symbols.qml</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

@@ -1,6 +1,5 @@
 {
-    "source" :  "SearchForWebmap.qml",
-    "description" : "SearchForWebmap.html",
-    "thumbnail" : "SearchForWebmap.png",
+    "sourceFiles" :  "SearchForWebmap.qml",
+    "otherSourceFiles" :  [],
     "name" : "Search for web map by keyword"
 }
