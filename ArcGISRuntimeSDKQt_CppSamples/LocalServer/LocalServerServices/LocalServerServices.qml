@@ -60,8 +60,7 @@ LocalServerServices {
                         stopLocalServer();
                     }
                 }
-
-                            }
+            }
 
             Row {
                 spacing: 10 * scaleFactor
