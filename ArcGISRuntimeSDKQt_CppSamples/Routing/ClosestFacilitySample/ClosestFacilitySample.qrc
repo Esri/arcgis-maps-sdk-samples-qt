@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/ClosestFacilitySample">
+        <file alias="sample.json">ClosestFacilitySample.json</file>
+        <file>ClosestFacilitySample.png</file>
+        <file>ClosestFacilitySample.qml</file>
+        <file>ClosestFacilitySample.h</file>
+        <file>ClosestFacilitySample.cpp</file>
+        <file>ClosestFacilitySample.html</file>
+    </qresource>
+</RCC>
