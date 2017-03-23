@@ -1,10 +1,10 @@
-#Extrude Graphics
+# Extrude Graphics
 
 This sample demonstrates how to render graphics extruded in the Z direction.
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 To extrude graphics according to a property:
 
 1. Create a ```GraphicsOverlay``` and ```SimpleRenderer```.
@@ -14,7 +14,7 @@ To extrude graphics according to a property:
 5. Set the renderer on the graphics overlay using ```graphicsOverlay->setRenderer(renderer)```.
 6. Create graphics with the attribute set: ```graphic->attributes()->insertAttribute("height", z)```.
 
-##Features
+## Features
 - ArcGISScene
 - Graphic
 - GraphicsOverlay

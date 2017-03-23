@@ -1,4 +1,4 @@
-#Map rotation
+# Map rotation
 
 This sample demonstrates how to rotate a map view.
 The rotation is set using a slider control, with the rotation

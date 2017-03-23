@@ -1,4 +1,4 @@
-#Set map spatial reference
+# Set map spatial reference
 
 This sample demonstrates how to set the initial spatial reference of a map so that all layers that support reprojection are projected into the map’s spatial reference.
 
