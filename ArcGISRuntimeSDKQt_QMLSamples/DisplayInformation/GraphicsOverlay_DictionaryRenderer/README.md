@@ -1,14 +1,14 @@
-#Graphics overlay (dictionary renderer)
+# Graphics overlay (dictionary renderer)
 
 This sample demonstrates applying a dictionary renderer to graphics to display military symbology.
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 
 This sample loads a number of point, line, and polygon military elements from an XML file and adds them as graphics to a `GraphicsOverlay`. A `DictionaryRenderer` is applied to the `GraphicsOverlay` in order to display the graphics with MIL-STD-2525D military symbology. When all graphics are created, the map's viewpoint is set to zoom to the full extent of all graphics.
 
-##Features
+## Features
 - MapView
 - Map
 - BasemapTopographic
@@ -22,7 +22,7 @@ This sample loads a number of point, line, and polygon military elements from an
 - Graphic
 - GeometryEngine
 
-##Offline Data
+## Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
