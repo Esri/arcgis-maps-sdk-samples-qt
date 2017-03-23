@@ -20,7 +20,7 @@
 #include <jni.h>
 #endif
 
-MyApplication::MyApplication(int &argc, char **argv, bool GUIenabled):
+MyApplication::MyApplication(int& argc, char** argv, bool GUIenabled):
 #if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
     QtSingleApplication(argc, argv, GUIenabled)
 {
@@ -31,7 +31,7 @@ MyApplication::MyApplication(int &argc, char **argv, bool GUIenabled):
 #endif
 }
 
-MyApplication::MyApplication(const QString &id, int &argc, char **argv):
+MyApplication::MyApplication(const QString& id, int& argc, char** argv):
 #if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
     QtSingleApplication(id, argc, argv)
 {
@@ -48,11 +48,11 @@ MyApplication::~MyApplication()
 
 }
 
-bool MyApplication::event(QEvent *event)
+bool MyApplication::event(QEvent* event)
 {
     if (event->type() == QEvent::FileOpen)
     {
-        QFileOpenEvent* fileEvent = static_cast<QFileOpenEvent *>(event);
+        QFileOpenEvent* fileEvent = static_cast<QFileOpenEvent*>(event);
         QDesktopServices::openUrl(fileEvent->url());
         return true;
     }

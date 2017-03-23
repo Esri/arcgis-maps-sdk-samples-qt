@@ -31,11 +31,11 @@ class MyApplication : public QApplication
 
 public:
 
-    MyApplication(int &argc, char **argv, bool GUIenabled = true);
-    MyApplication(const QString &id, int &argc, char **argv);
+    MyApplication(int& argc, char** argv, bool GUIenabled = true);
+    MyApplication(const QString& id, int& argc, char** argv);
     ~MyApplication();
 
-    bool event(QEvent *event) override;
+    bool event(QEvent* event) override;
 };
 
 #endif // MYAPPLICATION_H

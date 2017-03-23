@@ -21,16 +21,6 @@
 
 using namespace Esri::ArcGISRuntime;
 
-QString OAuthRedirectExample::customUrlProtocol()
-{
-    return QUOTE(URL_SCHEME);
-}
-
-QString OAuthRedirectExample::clientId() const
-{
-    return m_portal->credential()->oAuthClientInfo().clientId();
-}
-
 OAuthRedirectExample::OAuthRedirectExample(QQuickItem* parent /* = nullptr */):
     QQuickItem(parent),
     m_portal(new Portal(new Credential(OAuthClientInfo(QUOTE(CLIENT_ID), "", QString("%1://").arg(customUrlProtocol()), OAuthMode::User ), this), this)),
@@ -43,6 +33,18 @@ OAuthRedirectExample::OAuthRedirectExample(QQuickItem* parent /* = nullptr */):
 
 OAuthRedirectExample::~OAuthRedirectExample()
 {
+}
+
+//static
+QString OAuthRedirectExample::customUrlProtocol()
+{
+    return QUOTE(URL_SCHEME);
+}
+
+//static
+QString OAuthRedirectExample::clientId() const
+{
+    return m_portal->credential()->oAuthClientInfo().clientId();
 }
 
 void OAuthRedirectExample::componentComplete()
