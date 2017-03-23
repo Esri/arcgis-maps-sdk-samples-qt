@@ -155,7 +155,7 @@ void ClosestFacilitySample::setupRouting()
         Q_UNUSED(taskId);
         setBusy(false);
 
-        if(closestFacilityResult.isEmpty())
+        if (closestFacilityResult.isEmpty())
         {
             m_message = "Incident not within San Diego Area!";
             emit messageChanged();
