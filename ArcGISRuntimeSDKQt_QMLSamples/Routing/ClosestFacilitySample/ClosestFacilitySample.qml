@@ -139,7 +139,6 @@ Rectangle {
         }
 
         onMouseClicked: {
-
             if (busy === true)
                 return;
 
@@ -191,7 +190,6 @@ Rectangle {
         }
 
         onSolveClosestFacilityStatusChanged: {
-            console.log("solveClosestFacilityStatus", solveClosestFacilityStatus);
             if (solveClosestFacilityStatus !== Enums.TaskStatusCompleted)
                 return;
 
@@ -237,7 +235,6 @@ Rectangle {
     }
 
     function createFacilities() {
-
         facilitiesOverlay.graphics.forEach(function(graphic) {
             var facility = ArcGISRuntimeEnvironment.createObject("Facility", {geometry: graphic.geometry});
             facilities.push(facility);
@@ -246,17 +243,14 @@ Rectangle {
 
 
     function setupRouting() {
-        console.log("setup route")
         busy = true;
         message = "";
         task.createDefaultParameters();
     }
 
     function solveRoute(incidentPoint) {
-        var incidentList = [];
         var incident = ArcGISRuntimeEnvironment.createObject("Incident", {geometry: incidentPoint});
-        incidentList.push(incident);
-        facilityParams.setIncidents(incidentList);
+        facilityParams.setIncidents( [ incident ] );
 
         busy = true;
         message = "";

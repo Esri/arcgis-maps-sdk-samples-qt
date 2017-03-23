@@ -138,9 +138,8 @@ void ClosestFacilitySample::createGraphics()
 void ClosestFacilitySample::setupRouting()
 {
     connect(m_task, &ClosestFacilityTask::createDefaultParametersCompleted, this, [this](
-            QUuid taskId, Esri::ArcGISRuntime::ClosestFacilityParameters defaultParameters)
+            QUuid, Esri::ArcGISRuntime::ClosestFacilityParameters defaultParameters)
     {
-        Q_UNUSED(taskId);
         setBusy(false);
 
         m_facilityParams = defaultParameters;
@@ -150,9 +149,8 @@ void ClosestFacilitySample::setupRouting()
     float lineWidth = 2.0f;
     SimpleLineSymbol* routeSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, lineWidth, this);
     connect(m_task, &ClosestFacilityTask::solveClosestFacilityCompleted, this, [this, routeSymbol]
-            (QUuid taskId, ClosestFacilityResult closestFacilityResult)
+            (QUuid, ClosestFacilityResult closestFacilityResult)
     {
-        Q_UNUSED(taskId);
         setBusy(false);
 
         if (closestFacilityResult.isEmpty())
