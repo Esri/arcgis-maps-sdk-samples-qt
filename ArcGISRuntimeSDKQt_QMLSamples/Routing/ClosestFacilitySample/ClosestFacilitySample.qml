@@ -198,7 +198,7 @@ Rectangle {
             if (solveClosestFacilityResult === null || solveClosestFacilityResult.error)
                 message = "Incident not within San Diego Area!";
 
-            var rankedList = solveClosestFacilityResult.rankedFacilities(0);
+            var rankedList = solveClosestFacilityResult.rankedFacilityIndexes(0);
             var closestFacilityIdx = rankedList[0];
 
             var incidentIndex = 0; // 0 since there is just 1 incident at a time
