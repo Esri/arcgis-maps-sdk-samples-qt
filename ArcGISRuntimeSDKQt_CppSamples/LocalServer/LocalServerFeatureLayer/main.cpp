@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     // Register the map view for QML
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<LocalServerFeatureLayer>("Esri.Samples", 1, 0, "LocalServerFeatureLayer");
+    qmlRegisterType<LocalServerFeatureLayer>("Esri.Samples", 1, 0, "LocalServerFeatureLayerSample");
 
     // Intialize application view
     QQuickView view;
