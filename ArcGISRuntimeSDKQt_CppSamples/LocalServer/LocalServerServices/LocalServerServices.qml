@@ -20,7 +20,7 @@ import QtQuick.Dialogs 1.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-LocalServerServices {
+LocalServerServicesSample {
     id: localServerServicesSample
     width: 800
     height: 600
@@ -143,6 +143,7 @@ LocalServerServices {
             Button {
                 anchors {
                     right: parent.right
+                    bottom: parent.bottom
                 }
                 text: "Open Url"
                 visible: servicesView.model > 0

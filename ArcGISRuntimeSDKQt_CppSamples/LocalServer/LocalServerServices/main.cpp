@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     // Register the map view for QML
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<LocalServerServices>("Esri.Samples", 1, 0, "LocalServerServices");
+    qmlRegisterType<LocalServerServices>("Esri.Samples", 1, 0, "LocalServerServicesSample");
 
     qmlRegisterUncreatableType<QStringListModel>("Esri.Samples", 1, 0, "ServicesListModel", "ServicesListModel is an uncreatable type");
 
