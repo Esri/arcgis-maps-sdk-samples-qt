@@ -50,8 +50,8 @@ public:
   void componentComplete() Q_DECL_OVERRIDE;
   Q_INVOKABLE void startLocalServer();
   Q_INVOKABLE void stopLocalServer();
-  Q_INVOKABLE void startService(const QString& serviceName);
-  Q_INVOKABLE void stopService(const QString& serviceName);
+  Q_INVOKABLE void startService(const QString& serviceName, const QUrl& filePath = QUrl(""));
+  Q_INVOKABLE void stopService(const QUrl& serviceUrl);
   Q_INVOKABLE void openURL(const QString& serviceURL);
 
 signals:
@@ -80,6 +80,7 @@ private:
   QString m_serverStatus;
   bool m_isServerRunning = false;
   bool m_isServiceRunning = false;
+  QHash<QUrl, Esri::ArcGISRuntime::LocalService*> m_servicesHash;
 };
 
 #endif // LOCAL_SERVER_SERVICES_H

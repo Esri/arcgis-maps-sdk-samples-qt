@@ -16,6 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
+import QtQuick.Dialogs 1.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
@@ -36,23 +37,60 @@ LocalServerServices {
             anchors.fill: parent
 
             Row {
+                id: topRow
                 spacing: 10 * scaleFactor
 
                 Button {
                     id: startButton
                     text: "Start Local Server"
-                    width: localServerServicesSample.width * 0.25
+                    width: localServerServicesSample.width * 0.475
 
                     onClicked: {
                         startLocalServer();
                     }
                 }
 
+                Button {
+                    id: stopButton
+                    text: "Stop Local Server"
+                    width: localServerServicesSample.width * 0.475
+                    enabled: isServerRunning & !isServiceRunning
+
+                    onClicked: {
+                        stopLocalServer();
+                    }
+                }
+            }
+
+            Row {
+                spacing: 10 * scaleFactor
+
                 ComboBox {
                     id: servicesCombo
-                    width: (startServiceButton.width * 2) + (10 * scaleFactor)
+                    width: startServiceButton.width
                     enabled: isServerRunning
                     model: ["Map Service", "Feature Service", "Geoprocessing Service"]
+
+                    onCurrentIndexChanged: {
+                        filePathText.text = "";
+                    }
+                }
+
+                TextField {
+                    id: filePathText
+                    placeholderText: "Browse for a file."
+                    width: startServiceButton.width - (40 * scaleFactor)
+                }
+
+                Button {
+                    id: fileDialogButton
+                    text: "..."
+                    width: 30 * scaleFactor
+                    enabled: isServerRunning
+
+                    onClicked: {
+                        fileDialog.visible = true;
+                    }
                 }
             }
 
@@ -60,35 +98,24 @@ LocalServerServices {
                 spacing: 10 * scaleFactor
 
                 Button {
-                    id: stopButton
-                    text: "Stop Local Server"
-                    width: localServerServicesSample.width * 0.25
-                    enabled: isServerRunning & !isServiceRunning
-
-                    onClicked: {
-                        stopLocalServer();
-                    }
-                }
-
-                Button {
                     id: startServiceButton
                     text: "Start Service"
-                    width: localServerServicesSample.width * 0.343
+                    width: localServerServicesSample.width * 0.475
                     enabled: isServerRunning
 
                     onClicked: {
-                        startService(servicesCombo.currentText);
+                        startService(servicesCombo.currentText, filePathText.text);
                     }
                 }
 
                 Button {
                     id: stopServiceButton
                     text: "Stop Service"
-                    width: localServerServicesSample.width * 0.343
+                    width: localServerServicesSample.width * 0.475
                     enabled: isServiceRunning
 
                     onClicked: {
-                        stopService(servicesCombo.currentText);
+                        stopService(servicesView.currentValue);
                     }
                 }
             }
@@ -111,6 +138,18 @@ LocalServerServices {
                 model: servicesList.length
                 delegate: servicesDelegate
                 property string currentValue: ""
+            }
+
+            Button {
+                anchors {
+                    right: parent.right
+                }
+                text: "Open Url"
+                visible: servicesView.model > 0
+
+                onClicked: {
+                    openURL(servicesView.currentValue);
+                }
             }
         }
     }
@@ -137,11 +176,21 @@ LocalServerServices {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        servicesView.currentValue = services[index];
-                        openURL(display);
+                        rect.color = "lightgrey"
+                        servicesView.currentValue = servicesList[index];
                     }
                 }
             }
+        }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a file"
+        folder: System.userHomeFolder.url + "/ArcGIS/Runtime/Data"
+        nameFilters: servicesCombo.currentIndex === 0 || servicesCombo.currentIndex === 1 ? ["mpks (*.mpk)", "All files (*)"] : ["gpks (*.gpk)", "All files (*)"]
+        onAccepted: {
+            filePathText.text = fileUrl;
         }
     }
 

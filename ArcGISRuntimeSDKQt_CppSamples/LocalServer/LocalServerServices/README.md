@@ -8,21 +8,27 @@ Demonstrates how to start and stop the local server and start and stop a Local M
 
 ## How to use the sample
 
-Local Server Controls (Top Left):
+Local Server Controls (Top Row):
 *   Start Local Server -- Starts the local server if one is not already running.
 *   Stop Local Server --  Stops the local server if one is running.
 
-Local Services Controls (Top Right):
+Local Services (Middle Row):
 *   Combo Box -- Allows for the selection of a Local Map, Feature, or Geoprocessing Service.
-*   Start Service -- Starts the Service that is selected in the combo box.
-*   Stop Service --  Stops the Service that is selected in the `List of Running Services`.
+*   Text Box -- The file path resulting from browsing for a local mpk or gpk.
+*   Browse Button -- The button to browse for a local mpk or gpk. The type (mpk/gpk) is filtered based on the selection from the dropdown (mpk for Map and Feature Server and gpk for Geoprocessing Server). 
+Local Services Controls(Bottom Row):
+*   Start Service -- Starts the Service that is selected in the combo box or browsed for.
+*   Stop Service --  Stops the Service that is selected by clicking on the `List of Running Services`.
 
 Text Area (Middle):
 * Displays the running status of the local server and any services that are added to that server.
 
 List of Running Services (Bottom):
 *   Displays any services that are currently running on the server.
-*   Clicking on the service -- Opens browser to the service.
+*   Clicking on the service -- Selects the current service.
+
+Go to Url Button:
+*   Opens a browser to the locally running service based on the selected service from the list of services.
 
 ## How it works
 
