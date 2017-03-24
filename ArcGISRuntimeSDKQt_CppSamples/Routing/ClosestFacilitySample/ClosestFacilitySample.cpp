@@ -159,7 +159,7 @@ void ClosestFacilitySample::setupRouting()
             emit messageChanged();
         }
 
-        QList<int> rankedList = closestFacilityResult.rankedFacilities(0);
+        QList<int> rankedList = closestFacilityResult.rankedFacilityIndexes(0);
         int closestFacilityIdx = rankedList.first();
 
         int incidentIndex = 0; // 0 since there is just 1 incident at a time
