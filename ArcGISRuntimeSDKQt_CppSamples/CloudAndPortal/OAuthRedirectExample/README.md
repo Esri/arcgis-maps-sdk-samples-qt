@@ -15,7 +15,7 @@ different on each platform.
 The custom Url protocol defines a base URL which will be handled by the App itself rather than a browser.
 
 ### Register your App online
-The first step is to register a new App by visiting [the Developers page](https://developers.arcgis.com/applications/).
+The first step is to register a new App by visiting [the Developers page](http://links.esri.com/qtRegisterNewApp).
 
 Once you have logged on you can "Register New Application" to set up your app.
 
@@ -29,10 +29,13 @@ redirect URL that your App will be set to handle.
 
 ### Add the ClientID to your app
 Open the file `OAuthRedirectExample.pro` file and set your ClientID which you obtained when you registered
-your App online to be the new value for `CLIENT_ID` - e.g. DEFINES +="CLIENT_ID=\"XXXXXXXXXXX\"" where "XXXXXXXXXXX" is your ClientID. Set the URL scheme you defined to be the new value of `URL_SCHEME`.
+your App online to be the new value for `CLIENT_ID` - e.g. DEFINES +="CLIENT_ID=\"XXXXXXXXXXX\"" where "XXXXXXXXXXX" is your ClientID.
+Set the URL scheme you defined to be the new value of `URL_SCHEME`.
 
 ## Register the custom URL scheme
-Registering a custom URL scheme is handled differently on each platform. On some platforms there are a number of ways this can be achieved. This sample outlines some approaches for each of the supported platforms which can be used while developing. When releasing a product you will need to determine the best way to carry out the registration of the URL scheme on your user's systems.
+Registering a custom URL scheme is handled differently on each platform. On some platforms there are a number of ways this can be achieved.
+This sample outlines some approaches for each of the supported platforms which can be used while developing.
+When releasing a product you will need to determine the best way to carry out the registration of the URL scheme on your user's systems.
 
 ### Windows
 On Windows, the custom URL protocol is setup using a registry setting which provides the path to an executable
@@ -52,7 +55,8 @@ is notified of the authorization code as a command line argument.
 ### Linux
 _NOTE - this approach for defining a URL scheme on Linux will only work when Mozilla Firefox is the browser used for authentication._
 
-First build the project and take a note of the absolute path to the App - check the App can be run directly by entering this path from a terminal. There are a number of ways to record the protocol for Firefox:
+First build the project and take a note of the absolute path to the App - check the App can be run directly by entering this path from a terminal.
+There are a number of ways to record the protocol for Firefox:
 
 #### Option 1:
 In a terminal, type:
@@ -66,11 +70,14 @@ Replace foo on both lines with the protocol you want to register and /path/to/ap
 Alternatively, in the Firefox browser, type `about:config` into the address bar and hit Enter.
 Right-click -> New -> Boolean -> Name: network.protocol-handler.expose.foo -> Value -> false (Replace foo with the protocol you're specifying)
 
-Next time you click a link of protocol-type foo you will be asked which application to open it with - enter the path to your App. You can try out the protocol by entering `exampleapp://hello` in a new Firefox tab. 
+Next time you click a link of protocol-type foo you will be asked which application to open it with - enter the path to your App.
+You can try out the protocol by entering `exampleapp://hello` in a new Firefox tab.
 
 
 When the App is launched from the browser a new instance will be launched: however, in this example,
-the desired behaviour is that the same instance of the App should be notified with the authorization code. To achieve this, on Linux the sample makes use of the `QtSingleApplication` from qt-solutions. Using this type, the original instance is notified of the authorization code as a command line argument.
+the desired behaviour is that the same instance of the App should be notified with the authorization code.
+To achieve this, on Linux the sample makes use of the `QtSingleApplication` from qt-solutions.
+Using this type, the original instance is notified of the authorization code as a command line argument.
 
 ### Mac
 In order to register a custom URL protocol on Mac whilst developing, you can define a scheme in XCode.
@@ -81,7 +88,8 @@ First, build the project in QtCreator. Next, to create an XCode project from QtC
 
 Open the generated project (e.g. `OAuthRedirectExample.xcodeproj`) in XCode. 
 
-You may need to adjust the Qt Postlink step created by QtCreator to point to the target which XCode will build (e.g. to reference the OAuthRedirectExample.app in the sub directory for Debug or Release). E.g. Go to Build Phases/Qt PostLink and edit the script to look something like:
+You may need to adjust the Qt Postlink step created by QtCreator to point to the target which XCode will build (e.g. to reference the OAuthRedirectExample.app in the sub directory for Debug or Release).
+E.g. Go to Build Phases/Qt PostLink and edit the script to look something like:
 
 `
 install_name_tool -change libEsriCommonQt.dylib "~/ArcGIS_SDKs/Qt100.1/sdk/macOS/x64/lib/libEsriCommonQt.dylib" Release/OAuthRedirectExample.app/Contents/MacOS/OAuthRedirectExample
@@ -96,10 +104,14 @@ _NOTE: When deploying an App on Mac it should be possible to set the URL type in
 ### Android
 On Android, the custom URL scheme is handled with an Activity (see `MyActivity.java`) that handles an intent to open the custom URL by calling a JNI function exposed by the application. 
 
-The Custom URL scheme is set up in the `AndroidManifest.xml` file. You need to update `<data android:scheme="exampleapp"/>` to use your own scheme in place of "exampleapp".
+The Custom URL scheme is set up in the `AndroidManifest.xml` file.
+You need to update `<data android:scheme="exampleapp"/>` to use your own scheme in place of "exampleapp".
+
+The JNI call results in a call to `QDesktopServices::openUrl` which will be handled by the App.
 
 ### iOS
-On iOS, the `Info.plist` file defines the custom URL scheme. You need to update the following code with your custome URL scheme in place of `exampleapp`:
+On iOS, the `Info.plist` file defines the custom URL scheme.
+You need to update the following code with your custome URL scheme in place of `exampleapp`:
 
 `
 <key>CFBundleURLSchemes</key>
@@ -108,8 +120,12 @@ On iOS, the `Info.plist` file defines the custom URL scheme. You need to update 
 </array>
 `
 
+The App will then be notified of the URL as a `QFileOpenEvent`.
+
 ## QtSingleApplication dependancy
-On Windows and Linux, the sample depends upon the `QtSingleApplication` type from qt-solutions. You can download the project from [GitHub](https://github.com/qtproject/qt-solutions). The sample is designed to include the source files ditrectly: update the `QT_SINGLEAPP_DIR` 
+On Windows and Linux, the sample depends upon the `QtSingleApplication` type from qt-solutions.
+You can download the project from [GitHub](http://links.esri.com/qtSingleApplication).
+The sample is designed to include the source files directly: update the `QT_SINGLEAPP_DIR`
 variable in `OAuthRedirectExample.pro` to point to the location you unpack it to.
 
 ## Features
