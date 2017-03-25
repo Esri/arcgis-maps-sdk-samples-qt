@@ -54,6 +54,9 @@ void LocalServerServices::componentComplete()
 
   if (LocalServer::instance()->isInstallValid())
   {
+    if (LocalServer::status() == LocalServerStatus::Started)
+      LocalServer::stop();
+
     connectSignals();
   }
 }
