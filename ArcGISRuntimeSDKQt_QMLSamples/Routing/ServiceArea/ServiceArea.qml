@@ -1,6 +1,6 @@
 // [WriteFile Name=SrviceArea, Category=Routing]
 // [Legal]
-// Copyright 2017 Esri.
+// Copyright 17 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ Rectangle {
     clip: true
 
     width: 800
-    height: 600
+    height: 800
 
     property double scaleFactor: System.displayScaleFactor
     property bool busy: false
@@ -98,12 +98,12 @@ Rectangle {
             if (busy === true)
                 return;
 
-            if (facilitiesButton.checked) {
+            if (modeComboBox.currentText === "Facility") {
                 var facilityGraphic = ArcGISRuntimeEnvironment.createObject(
-                    "Graphic", {geometry: mouse.mapPoint});
+                            "Graphic", {geometry: mouse.mapPoint});
                 facilitiesOverlay.graphics.append(facilityGraphic);
             }
-            else if (barrierButton.checked) {
+            else {
                 handleBarrierPoint(mouse.mapPoint);
             }
         }
@@ -146,44 +146,31 @@ Rectangle {
                 for (var j = 0; j < results.length; j++) {
                     var resultGeometry = results[j].geometry;
                     var resultGraphic = ArcGISRuntimeEnvironment.createObject(
-                        "Graphic", {geometry: resultGeometry});
+                                "Graphic", {geometry: resultGeometry});
                     areasOverlay.graphics.append(resultGraphic);
                 }
             }
         }
     }
 
-    Column {
+    Row {
         anchors {
-            fill: parent
+            top: parent.top
+            left: parent.left
+            right: parent.right
             margins: 8 * scaleFactor
         }
-        spacing: 16 * scaleFactor
+        spacing: 8 * scaleFactor
 
-        ExclusiveGroup {
-            id: modeGroup
-        }
+        ComboBox {
+            id: modeComboBox
+            width: 64 * scaleFactor
+            model: ["Facility", "Barrier"]
 
-        Button {
-            id: facilitiesButton
-            text: "Facility"
-            checkable: true
-            enabled: !busy
-            exclusiveGroup: modeGroup
-            width: serviceAreasButton.width
-            iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_addencircled_light.png"
-        }
+            onCurrentTextChanged: {
+                if (currentText !== "Barrier")
+                    return;
 
-        Button {
-            id: barrierButton
-            text: "Barrier"
-            checkable: true
-            enabled: !busy
-            exclusiveGroup: modeGroup
-            width: serviceAreasButton.width
-            iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_addencircled_light.png"
-
-            onClicked: {
                 if (barrierBuilder === null)
                     createBarrierBuilder();
             }
@@ -191,9 +178,9 @@ Rectangle {
 
         Button {
             id: newBarrierButton
+            visible: modeComboBox.currentText === "Barrier"
             text: "new barrier"
-            anchors.right: barrierButton.right
-            enabled: barrierButton.checked
+            enabled: visible
 
             onClicked: {
                 barrierBuilder = null;
@@ -201,14 +188,20 @@ Rectangle {
                 addBarrierGraphic();
             }
         }
+    }
+
+    Row {
+        anchors {
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+            margins: 24 * scaleFactor
+        }
+        spacing: 8 * scaleFactor
 
         Button {
             id: serviceAreasButton
             text: "Service Area"
-            checkable: true
             enabled: !busy
-            exclusiveGroup: modeGroup
-            iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_find_light.png"
 
             onClicked: startSolveTask();
         }
@@ -219,10 +212,6 @@ Rectangle {
             enabled: !busy
             iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_closeclear_light.png"
             onClicked: {
-                facilitiesButton.checked = false;
-                barrierButton.checked = false;
-                serviceAreasButton.checked = false;
-
                 facilitiesOverlay.graphics.clear();
                 barriersOverlay.graphics.clear();
                 areasOverlay.graphics.clear();
@@ -260,7 +249,7 @@ Rectangle {
 
     function createBarrierBuilder() {
         barrierBuilder = ArcGISRuntimeEnvironment.createObject(
-            "PolylineBuilder", {spatialReference: SpatialReference.createWebMercator()})
+                    "PolylineBuilder", {spatialReference: SpatialReference.createWebMercator()})
     }
 
     function handleBarrierPoint(mapPoint) {
@@ -275,7 +264,7 @@ Rectangle {
 
     function addBarrierGraphic() {
         var barrierGraphic = ArcGISRuntimeEnvironment.createObject(
-            "Graphic", {geometry: barrierBuilder.geometry});
+                    "Graphic", {geometry: barrierBuilder.geometry});
         barriersOverlay.graphics.append(barrierGraphic);
     }
 
@@ -293,7 +282,7 @@ Rectangle {
         var facilities = [];
         facilitiesOverlay.graphics.forEach(function(graphic) {
             var facility = ArcGISRuntimeEnvironment.createObject(
-                "ServiceAreaFacility", {geometry: graphic.geometry});
+                        "ServiceAreaFacility", {geometry: graphic.geometry});
             facilities.push(facility);
         });
 
@@ -302,7 +291,7 @@ Rectangle {
         var barriers = [];
         barriersOverlay.graphics.forEach(function(graphic) {
             var barrier = ArcGISRuntimeEnvironment.createObject(
-                "PolylineBarrier", {geometry: graphic.geometry});
+                        "PolylineBarrier", {geometry: graphic.geometry});
             barriers.push(barrier);
         });
 
