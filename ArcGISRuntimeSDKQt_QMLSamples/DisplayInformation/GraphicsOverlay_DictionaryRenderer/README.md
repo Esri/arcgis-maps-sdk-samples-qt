@@ -1,4 +1,4 @@
-#Graphics overlay (dictionary renderer)
+# Graphics overlay (dictionary renderer)
 
 This sample demonstrates applying a dictionary renderer to graphics to display military symbology.
 
