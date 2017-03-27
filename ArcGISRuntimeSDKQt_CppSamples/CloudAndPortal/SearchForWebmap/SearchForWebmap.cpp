@@ -108,7 +108,7 @@ void SearchForWebmap::searchNext()
         return;
 
     //! [Portal find with nextQueryParameters]
-    PortalQueryParameters nextQuery = m_webmapResults->nextQueryParameters();
+    PortalQueryParametersForItems nextQuery = m_webmapResults->nextQueryParameters();
     // check whether the startIndex of the new query is valid
     if (nextQuery.startIndex() != -1)
         m_portal->findItems(nextQuery);
