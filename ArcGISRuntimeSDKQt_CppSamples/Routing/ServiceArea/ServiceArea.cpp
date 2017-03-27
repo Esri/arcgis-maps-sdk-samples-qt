@@ -30,7 +30,7 @@ using namespace Esri::ArcGISRuntime;
 ServiceArea::ServiceArea(QQuickItem* parent /* = nullptr */):
     QQuickItem(parent),
     m_task(new ServiceAreaTask(
-        QUrl("http://ragss12512:6080/arcgis/rest/services/NA/SanFrancisco_GPNAS/NAServer/Service%20Area"), this))
+        QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea"), this))
 {
 }
 
@@ -46,9 +46,9 @@ void ServiceArea::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // set view to be over San Francisco
+    // set view to be over San Diego
     m_map = new Map(Basemap::streets(this), this);
-    m_map->setInitialViewpoint(Viewpoint(Point(-13630000.0, 4547000.0, SpatialReference::webMercator()), 80000));
+    m_map->setInitialViewpoint(Viewpoint(Point(-13041154, 3858170, SpatialReference(3857)), 1e5));
 
     // Set map to map view
     m_mapView->setMap(m_map);

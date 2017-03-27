@@ -41,14 +41,14 @@ Rectangle {
         Map {
             BasemapStreets {}
 
-            // set the initial viewpoint to San Francisco
+            // set the initial viewpoint to San Diego
             initialViewpoint: ViewpointCenter {
                 Point {
-                    x: -13630000.0
-                    y: 4547000.0
+                    x: -13041154
+                    y: 3858170
                     spatialReference: SpatialReference.createWebMercator()
                 }
-                targetScale: 80000
+                targetScale: 1e5
             }
 
             onLoadStatusChanged: {
@@ -111,7 +111,7 @@ Rectangle {
 
     ServiceAreaTask {
         id: task
-        url: "http://ragss12512:6080/arcgis/rest/services/NA/SanFrancisco_GPNAS/NAServer/Service%20Area"
+        url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea"
 
         onLoadStatusChanged: {
             if (loadStatus !== Enums.LoadStatusLoaded)
