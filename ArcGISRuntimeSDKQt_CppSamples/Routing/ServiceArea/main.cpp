@@ -11,15 +11,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <QSettings>
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
+#include "MapQuickView.h"
+
+#include "ServiceArea.h"
+
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
+
+using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
@@ -31,19 +40,23 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
+    // Register the map view for QML
+    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+    qmlRegisterType<ServiceArea>("Esri.Samples", 1, 0, "ServiceAreaSample");
+
     // Intialize application view
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 
     // Add the import Path
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-    // Add the Runtime and Extras path
+    // Add the Extras path
     view.engine()->addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
     // Add the Toolkit path
     view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Routing/ClosestFacilitySample/ClosestFacilitySample.qml"));
+    view.setSource(QUrl("qrc:/Samples/Routing/ServiceArea/ServiceArea.qml"));
 
     view.show();
 

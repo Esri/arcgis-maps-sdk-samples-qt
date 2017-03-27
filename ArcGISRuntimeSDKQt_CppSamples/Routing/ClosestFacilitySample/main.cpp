@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     // Register the map view for QML
     qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<ClosestFacilitySample>("Esri.Samples", 1, 0, "ClosestFacilitySampleSample");
+    qmlRegisterType<ClosestFacilitySample>("Esri.Samples", 1, 0, "ClosestFacilitySample");
 
     // Intialize application view
     QQuickView view;
