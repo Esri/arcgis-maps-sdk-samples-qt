@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/RoutingAndNavigation/ServiceArea">
+    <qresource prefix="/Samples/Routing/ServiceArea">
         <file alias="sample.json">ServiceArea.json</file>
         <file>ServiceArea.png</file>
         <file>ServiceArea.qml</file>

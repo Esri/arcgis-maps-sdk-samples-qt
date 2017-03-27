@@ -53,7 +53,7 @@ ServiceAreaSample {
             enabled: !busy
             exclusiveGroup: modeGroup
             width: serviceAreasButton.width
-            iconSource: "qrc:/Samples/RoutingAndNavigation/ServiceArea/ic_menu_addencircled_light.png"
+            iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_addencircled_light.png"
 
             onClicked: setFacilityMode();
         }
@@ -65,7 +65,7 @@ ServiceAreaSample {
             enabled: !busy
             exclusiveGroup: modeGroup
             width: serviceAreasButton.width
-            iconSource: "qrc:/Samples/RoutingAndNavigation/ServiceArea/ic_menu_addencircled_light.png"
+            iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_addencircled_light.png"
 
             onClicked: setBarrierMode();
         }
@@ -85,7 +85,7 @@ ServiceAreaSample {
             checkable: true
             enabled: !busy
             exclusiveGroup: modeGroup
-            iconSource: "qrc:/Samples/RoutingAndNavigation/ServiceArea/ic_menu_find_light.png"
+            iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_find_light.png"
 
             onClicked: setSolveServiceAreaMode();
         }
@@ -94,7 +94,7 @@ ServiceAreaSample {
             text: "Reset"
             width: serviceAreasButton.width
             enabled: !busy
-            iconSource: "qrc:/Samples/RoutingAndNavigation/ServiceArea/ic_menu_closeclear_light.png"
+            iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_closeclear_light.png"
             onClicked: {
                 facilitiesButton.checked = false;
                 barrierButton.checked = false;
