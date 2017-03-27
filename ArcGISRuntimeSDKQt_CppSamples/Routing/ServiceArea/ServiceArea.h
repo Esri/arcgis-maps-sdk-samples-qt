@@ -61,7 +61,6 @@ signals:
 private:
 
     enum class SampleMode {
-        None,
         Facility,
         Barrier,
         SolveServiceArea
@@ -87,7 +86,7 @@ private:
     Esri::ArcGISRuntime::GraphicsOverlay* m_areasOverlay;
     bool m_busy = true;
     QString m_message;
-    SampleMode m_mode = SampleMode::None;
+    SampleMode m_mode = SampleMode::Facility;
 };
 
 #endif // SERVICEAREA_H

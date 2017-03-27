@@ -100,7 +100,7 @@ void ServiceArea::setSolveServiceAreaMode()
 
     QList<ServiceAreaFacility> facilities;
     facilities.reserve(facilitiesGraphics->rowCount());
-    for(int f = 0; f < facilitiesGraphics->rowCount(); ++f)
+    for (int f = 0; f < facilitiesGraphics->rowCount(); ++f)
     {
         Graphic* g = facilitiesGraphics->at(f);
         if (!g)
@@ -113,7 +113,7 @@ void ServiceArea::setSolveServiceAreaMode()
     GraphicListModel* barrierGraphics = m_barrierOverlay->graphics();
     QList<PolylineBarrier> barriers;
     barriers.reserve(barrierGraphics->rowCount());
-    for(int b = 0; b < barrierGraphics->rowCount(); ++b)
+    for (int b = 0; b < barrierGraphics->rowCount(); ++b)
     {
         Graphic* g = barrierGraphics->at(b);
         if (!g)
@@ -130,7 +130,6 @@ void ServiceArea::setSolveServiceAreaMode()
 
 void ServiceArea::resetMode()
 {
-    m_mode = SampleMode::None;
     m_facilitiesOverlay->graphics()->clear();
     m_barrierOverlay->graphics()->clear();
     if (m_barrierBuilder)
@@ -230,10 +229,10 @@ void ServiceArea::setupRouting()
         }
 
         int numFacilities = m_facilitiesOverlay->graphics()->size();
-        for(int i = 0; i < numFacilities; ++i)
+        for (int i = 0; i < numFacilities; ++i)
         {
             QList<ServiceAreaPolygon> results = serviceAreaResult.resultPolygons(i);
-            for( const ServiceAreaPolygon& poly : results)
+            for (const ServiceAreaPolygon& poly : results)
                 m_areasOverlay->graphics()->append(new Graphic(poly.geometry(), this));
         }
     });

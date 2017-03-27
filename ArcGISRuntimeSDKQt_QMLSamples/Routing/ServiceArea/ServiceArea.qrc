@@ -4,8 +4,6 @@
         <file>ServiceArea.png</file>
         <file>ServiceArea.qml</file>
         <file>ServiceArea.html</file>
-        <file>ic_menu_addencircled_light.png</file>
         <file>ic_menu_closeclear_light.png</file>
-        <file>ic_menu_find_light.png</file>
     </qresource>
 </RCC>

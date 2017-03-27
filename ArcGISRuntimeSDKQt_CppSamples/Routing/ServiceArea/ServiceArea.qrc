@@ -6,8 +6,6 @@
         <file>ServiceArea.h</file>
         <file>ServiceArea.cpp</file>
         <file>ServiceArea.html</file>
-        <file>ic_menu_addencircled_light.png</file>
         <file>ic_menu_closeclear_light.png</file>
-        <file>ic_menu_find_light.png</file>
     </qresource>
 </RCC>

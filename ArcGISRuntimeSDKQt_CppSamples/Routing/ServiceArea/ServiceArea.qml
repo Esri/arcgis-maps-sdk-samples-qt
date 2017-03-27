@@ -35,57 +35,52 @@ ServiceAreaSample {
         objectName: "mapView"
     }
 
-    Column {
+    Row {
         anchors {
-            fill: parent
+            top: parent.top
+            left: parent.left
+            right: parent.right
             margins: 8 * scaleFactor
         }
-        spacing: 16 * scaleFactor
+        spacing: 8 * scaleFactor
 
-        ExclusiveGroup {
-            id: modeGroup
-        }
+        ComboBox {
+            id: modeComboBox
+            width: 64 * scaleFactor
+            model: ["Facility", "Barrier"]
 
-        Button {
-            id: facilitiesButton
-            text: "Facility"
-            checkable: true
-            enabled: !busy
-            exclusiveGroup: modeGroup
-            width: serviceAreasButton.width
-            iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_addencircled_light.png"
-
-            onClicked: setFacilityMode();
-        }
-
-        Button {
-            id: barrierButton
-            text: "Barrier"
-            checkable: true
-            enabled: !busy
-            exclusiveGroup: modeGroup
-            width: serviceAreasButton.width
-            iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_addencircled_light.png"
-
-            onClicked: setBarrierMode();
+            onCurrentTextChanged: {
+                if (currentText === "Facility")
+                    setFacilityMode();
+                else
+                    setBarrierMode();
+            }
         }
 
         Button {
             id: newBarrierButton
+            visible: modeComboBox.currentText === "Barrier"
             text: "new barrier"
-            anchors.right: barrierButton.right
-            enabled: barrierButton.checked
+            enabled: visible
 
-            onClicked: newBarrier();
+            onClicked: {
+                newBarrier();
+            }
         }
+    }
+
+    Row {
+        anchors {
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+            margins: 24 * scaleFactor
+        }
+        spacing: 8 * scaleFactor
 
         Button {
             id: serviceAreasButton
             text: "Service Area"
-            checkable: true
             enabled: !busy
-            exclusiveGroup: modeGroup
-            iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_find_light.png"
 
             onClicked: setSolveServiceAreaMode();
         }
@@ -96,9 +91,6 @@ ServiceAreaSample {
             enabled: !busy
             iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_closeclear_light.png"
             onClicked: {
-                facilitiesButton.checked = false;
-                barrierButton.checked = false;
-                serviceAreasButton.checked = false;
                 resetMode();
             }
         }
