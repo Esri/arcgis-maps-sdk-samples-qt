@@ -1,4 +1,4 @@
-// [WriteFile Name=ServiceArea, Category=RoutingAndNavigation]
+// [WriteFile Name=ServiceArea, Category=Routing]
 // [Legal]
 // Copyright 2017 Esri.
 

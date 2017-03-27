@@ -1,4 +1,4 @@
-// [WriteFile Name=ServiceArea, Category=RoutingAndNavigation]
+// [WriteFile Name=ServiceArea, Category=Routing]
 // [Legal]
 // Copyright 2017 Esri.
 
@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import Esri.Samples 1.0
-//import Esri.ArcGISExtras 1.1
+import Esri.ArcGISExtras 1.1
 
 ServiceAreaSample {
     id: rootRectangle
@@ -27,7 +27,7 @@ ServiceAreaSample {
     width: 800
     height: 600
 
-    property double scaleFactor: 1 //System.displayScaleFactor
+    property double scaleFactor: System.displayScaleFactor
 
     // add a mapView component
     MapView {
