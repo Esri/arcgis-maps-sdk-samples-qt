@@ -41,6 +41,7 @@ Rectangle {
         Map {
             BasemapStreets {}
 
+            // set the initial viewpoint to San Francisco
             initialViewpoint: ViewpointCenter {
                 Point {
                     x: -13630000.0
