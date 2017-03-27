@@ -27,130 +27,125 @@ LocalServerServicesSample {
 
     property double scaleFactor: System.displayScaleFactor
 
-    Rectangle {
-        id: mainRect
+    Column {
+        spacing: 10 * scaleFactor
         anchors.fill: parent
         anchors.margins: 15 * scaleFactor
 
-        Column {
+        Row {
+            id: topRow
             spacing: 10 * scaleFactor
-            anchors.fill: parent
 
-            Row {
-                id: topRow
-                spacing: 10 * scaleFactor
+            Button {
+                id: startButton
+                text: "Start Local Server"
+                width: localServerServicesSample.width * 0.475
 
-                Button {
-                    id: startButton
-                    text: "Start Local Server"
-                    width: localServerServicesSample.width * 0.475
-
-                    onClicked: {
-                        startLocalServer();
-                    }
+                onClicked: {
+                    startLocalServer();
                 }
-
-                Button {
-                    id: stopButton
-                    text: "Stop Local Server"
-                    width: localServerServicesSample.width * 0.475
-                    enabled: isServerRunning & !isServiceRunning
-
-                    onClicked: {
-                        stopLocalServer();
-                    }
-                }
-            }
-
-            Row {
-                spacing: 10 * scaleFactor
-
-                ComboBox {
-                    id: servicesCombo
-                    width: startServiceButton.width
-                    enabled: isServerRunning
-                    model: ["Map Service", "Feature Service", "Geoprocessing Service"]
-
-                    onCurrentIndexChanged: {
-                        filePathText.text = "";
-                    }
-                }
-
-                TextField {
-                    id: filePathText
-                    placeholderText: "Browse for a file."
-                    width: startServiceButton.width - (40 * scaleFactor)
-                }
-
-                Button {
-                    id: fileDialogButton
-                    text: "..."
-                    width: 30 * scaleFactor
-                    enabled: isServerRunning
-
-                    onClicked: {
-                        fileDialog.visible = true;
-                    }
-                }
-            }
-
-            Row {
-                spacing: 10 * scaleFactor
-
-                Button {
-                    id: startServiceButton
-                    text: "Start Service"
-                    width: localServerServicesSample.width * 0.475
-                    enabled: isServerRunning
-
-                    onClicked: {
-                        startService(servicesCombo.currentText, filePathText.text);
-                    }
-                }
-
-                Button {
-                    id: stopServiceButton
-                    text: "Stop Service"
-                    width: localServerServicesSample.width * 0.475
-                    enabled: isServiceRunning
-
-                    onClicked: {
-                        stopService(servicesView.currentValue);
-                    }
-                }
-            }
-
-            TextArea {
-                id: serverStatusTextArea
-                width: startButton.width + servicesCombo.width + (10 * scaleFactor)
-                height: 200 * scaleFactor
-                text: serverStatus
-            }
-
-            Text {
-                text: "List of Running Services"
-            }
-
-            ListView {
-                id: servicesView
-                width: startButton.width + servicesCombo.width + (10 * scaleFactor)
-                height: 200 * scaleFactor
-                model: servicesList.length
-                delegate: servicesDelegate
-                property string currentValue: ""
             }
 
             Button {
-                anchors {
-                    right: parent.right
-                    bottom: parent.bottom
-                }
-                text: "Open Url"
-                visible: servicesView.model > 0
+                id: stopButton
+                text: "Stop Local Server"
+                width: localServerServicesSample.width * 0.475
+                enabled: isServerRunning & !isServiceRunning
 
                 onClicked: {
-                    openURL(servicesView.currentValue);
+                    stopLocalServer();
                 }
+            }
+        }
+
+        Row {
+            spacing: 10 * scaleFactor
+
+            ComboBox {
+                id: servicesCombo
+                width: startServiceButton.width
+                enabled: isServerRunning
+                model: ["Map Service", "Feature Service", "Geoprocessing Service"]
+
+                onCurrentIndexChanged: {
+                    filePathText.text = "";
+                }
+            }
+
+            TextField {
+                id: filePathText
+                placeholderText: "Browse for a file."
+                width: startServiceButton.width - (40 * scaleFactor)
+            }
+
+            Button {
+                id: fileDialogButton
+                text: "..."
+                width: 30 * scaleFactor
+                enabled: isServerRunning
+
+                onClicked: {
+                    fileDialog.visible = true;
+                }
+            }
+        }
+
+        Row {
+            spacing: 10 * scaleFactor
+
+            Button {
+                id: startServiceButton
+                text: "Start Service"
+                width: localServerServicesSample.width * 0.475
+                enabled: isServerRunning
+
+                onClicked: {
+                    startService(servicesCombo.currentText, filePathText.text);
+                }
+            }
+
+            Button {
+                id: stopServiceButton
+                text: "Stop Service"
+                width: localServerServicesSample.width * 0.475
+                enabled: isServiceRunning
+
+                onClicked: {
+                    stopService(servicesView.currentValue);
+                }
+            }
+        }
+
+        TextArea {
+            id: serverStatusTextArea
+            width: startButton.width + servicesCombo.width + (10 * scaleFactor)
+            height: 200 * scaleFactor
+            text: serverStatus
+        }
+
+        Text {
+            text: "List of Running Services"
+        }
+
+        ListView {
+            id: servicesView
+            width: startButton.width + servicesCombo.width + (10 * scaleFactor)
+            height: 200 * scaleFactor
+            model: servicesList.length
+            delegate: servicesDelegate
+            property string currentValue: ""
+        }
+
+        Button {
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+            }
+            text: "Open Url"
+            visible: servicesView.model > 0
+
+            onClicked: {
+                openURL(servicesView.currentValue);
             }
         }
     }
