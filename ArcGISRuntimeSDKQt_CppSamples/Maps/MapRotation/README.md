@@ -1,4 +1,4 @@
-#Map rotation
+# Map rotation
 
 This sample demonstrates how to rotate a map view.
 The rotation is set using a slider control, with the rotation
@@ -6,7 +6,7 @@ in degrees displayed next to the slider.
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 
 The slider is initialized to zero degrees and limited to
 values from 0 to 360. When the slider
@@ -26,7 +26,7 @@ defeat the animation so the rotation tracks the slider value
 as it changes by using the method `setViewpointAnimated`
 with animation duration set to zero seconds.
 
-##Features
+## Features
 
 - MapView
 - Map

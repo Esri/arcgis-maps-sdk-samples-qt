@@ -16,101 +16,136 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
+import QtQuick.Dialogs 1.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-LocalServerServices {
+LocalServerServicesSample {
     id: localServerServicesSample
     width: 800
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
 
-    Rectangle {
-        id: mainRect
+    Column {
+        spacing: 10 * scaleFactor
         anchors.fill: parent
         anchors.margins: 15 * scaleFactor
 
-        Column {
+        Row {
+            id: topRow
             spacing: 10 * scaleFactor
-            anchors.fill: parent
 
-            Row {
-                spacing: 10 * scaleFactor
+            Button {
+                id: startButton
+                text: "Start Local Server"
+                width: localServerServicesSample.width * 0.475
 
-                Button {
-                    id: startButton
-                    text: "Start Local Server"
-                    width: localServerServicesSample.width * 0.25
-
-                    onClicked: {
-                        startLocalServer();
-                    }
-                }
-
-                ComboBox {
-                    id: servicesCombo
-                    width: (startServiceButton.width * 2) + (10 * scaleFactor)
-                    enabled: isServerRunning
-                    model: ["Map Service", "Feature Service", "Geoprocessing Service"]
+                onClicked: {
+                    startLocalServer();
                 }
             }
 
-            Row {
-                spacing: 10 * scaleFactor
+            Button {
+                id: stopButton
+                text: "Stop Local Server"
+                width: localServerServicesSample.width * 0.475
+                enabled: isServerRunning & !isServiceRunning
 
-                Button {
-                    id: stopButton
-                    text: "Stop Local Server"
-                    width: localServerServicesSample.width * 0.25
-                    enabled: isServerRunning & !isServiceRunning
-
-                    onClicked: {
-                        stopLocalServer();
-                    }
+                onClicked: {
+                    stopLocalServer();
                 }
+            }
+        }
 
-                Button {
-                    id: startServiceButton
-                    text: "Start Service"
-                    width: localServerServicesSample.width * 0.343
-                    enabled: isServerRunning
+        Row {
+            spacing: 10 * scaleFactor
 
-                    onClicked: {
-                        startService(servicesCombo.currentText);
-                    }
-                }
+            ComboBox {
+                id: servicesCombo
+                width: startServiceButton.width
+                enabled: isServerRunning
+                model: ["Map Service", "Feature Service", "Geoprocessing Service"]
 
-                Button {
-                    id: stopServiceButton
-                    text: "Stop Service"
-                    width: localServerServicesSample.width * 0.343
-                    enabled: isServiceRunning
-
-                    onClicked: {
-                        stopService(servicesCombo.currentText);
-                    }
+                onCurrentIndexChanged: {
+                    filePathText.text = "";
                 }
             }
 
-            TextArea {
-                id: serverStatusTextArea
-                width: startButton.width + servicesCombo.width + (10 * scaleFactor)
-                height: 200 * scaleFactor
-                text: serverStatus
+            TextField {
+                id: filePathText
+                placeholderText: "Browse for a file."
+                width: startServiceButton.width - (40 * scaleFactor)
             }
 
-            Text {
-                text: "List of Running Services"
+            Button {
+                id: fileDialogButton
+                text: "..."
+                width: 30 * scaleFactor
+                enabled: isServerRunning
+
+                onClicked: {
+                    fileDialog.visible = true;
+                }
+            }
+        }
+
+        Row {
+            spacing: 10 * scaleFactor
+
+            Button {
+                id: startServiceButton
+                text: "Start Service"
+                width: localServerServicesSample.width * 0.475
+                enabled: isServerRunning
+
+                onClicked: {
+                    startService(servicesCombo.currentText, filePathText.text);
+                }
             }
 
-            ListView {
-                id: servicesView
-                width: startButton.width + servicesCombo.width + (10 * scaleFactor)
-                height: 200 * scaleFactor
-                model: servicesList.length
-                delegate: servicesDelegate
-                property string currentValue: ""
+            Button {
+                id: stopServiceButton
+                text: "Stop Service"
+                width: localServerServicesSample.width * 0.475
+                enabled: isServiceRunning
+
+                onClicked: {
+                    stopService(servicesView.currentValue);
+                }
+            }
+        }
+
+        TextArea {
+            id: serverStatusTextArea
+            width: startButton.width + servicesCombo.width + (10 * scaleFactor)
+            height: 200 * scaleFactor
+            text: serverStatus
+        }
+
+        Text {
+            text: "List of Running Services"
+        }
+
+        ListView {
+            id: servicesView
+            width: startButton.width + servicesCombo.width + (10 * scaleFactor)
+            height: 200 * scaleFactor
+            model: servicesList.length
+            delegate: servicesDelegate
+            property string currentValue: ""
+        }
+
+        Button {
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+            }
+            text: "Open Url"
+            visible: servicesView.model > 0
+
+            onClicked: {
+                openURL(servicesView.currentValue);
             }
         }
     }
@@ -137,11 +172,21 @@ LocalServerServices {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        servicesView.currentValue = services[index];
-                        openURL(display);
+                        rect.color = "lightgrey"
+                        servicesView.currentValue = servicesList[index];
                     }
                 }
             }
+        }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a file"
+        folder: System.userHomeFolder.url + "/ArcGIS/Runtime/Data"
+        nameFilters: servicesCombo.currentIndex === 0 || servicesCombo.currentIndex === 1 ? ["mpks (*.mpk)", "All files (*)"] : ["gpks (*.gpk)", "All files (*)"]
+        onAccepted: {
+            filePathText.text = fileUrl;
         }
     }
 

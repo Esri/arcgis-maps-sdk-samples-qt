@@ -19,7 +19,7 @@ import QtQuick.Controls 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-LocalServerFeatureLayer {
+LocalServerFeatureLayerSample {
     id: localServerFeatureLayerSample
     width: 800
     height: 600

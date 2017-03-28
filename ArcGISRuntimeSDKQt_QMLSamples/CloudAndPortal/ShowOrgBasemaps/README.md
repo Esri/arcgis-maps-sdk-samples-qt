@@ -1,10 +1,10 @@
-#Show organization basemaps
+# Show organization basemaps
 
 This sample demonstrates how to load a Portal and then use the organization's predefined basemaps query to get all basemaps. Thumbnails for these basemaps are then shown in a picker, to allow the user to select a basemap for use in a Map in a MapView.
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 1. The user is prompted to load a portal anonymously or with a log-in.
 2. A `Portal` is then loaded - if the user chose to log-in in step 1, this uses a `Credential` of type OAuth.
 3. When the app starts, the portal is loaded and if required, the `AuthenticationManager` issues a challenge for the supplied credential type.
@@ -16,7 +16,7 @@ This sample demonstrates how to load a Portal and then use the organization's pr
 9. The map is then loaded and once the operation is complete it is set on a `MapView` to show the user's selected basemap.
 10. A back button allows the user to return to the list of basemaps.
 
-##Features
+## Features
 - Portal
 - Credential
 - AuthenticationManager

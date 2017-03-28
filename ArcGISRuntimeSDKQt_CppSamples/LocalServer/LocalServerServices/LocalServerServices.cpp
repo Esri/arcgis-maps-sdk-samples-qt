@@ -54,6 +54,9 @@ void LocalServerServices::componentComplete()
 
   if (LocalServer::instance()->isInstallValid())
   {
+    if (LocalServer::status() == LocalServerStatus::Started)
+      LocalServer::stop();
+
     connectSignals();
   }
 }
@@ -136,46 +139,79 @@ void LocalServerServices::stopLocalServer()
 }
 
 // start a service
-void LocalServerServices::startService(const QString& serviceName)
+void LocalServerServices::startService(const QString& serviceName, const QUrl& filePath)
 {
+  QString path;
+  if (!filePath.isEmpty())
+    path = QUrl(filePath).toLocalFile();
+
   if (serviceName == "Map Service")
   {
-    if (m_localMapService->status() == LocalServerStatus::Started)
-      return;
-    m_localMapService->start();
+    if (path.isEmpty())
+    {
+      if (m_localMapService->status() == LocalServerStatus::Started)
+        return;
+
+      m_localMapService->start();
+    }
+    else
+    {
+      LocalMapService* mapService = new LocalMapService(path, this);
+      connect(mapService, &LocalMapService::statusChanged, this, [this, mapService]()
+      {
+        updateStatus(mapService, "Map");
+      });
+      mapService->start();
+    }
   }
   else if (serviceName == "Feature Service")
   {
-    if (m_localFeatureService->status() == LocalServerStatus::Started)
-      return;
-    m_localFeatureService->start();
+    if (path.isEmpty())
+    {
+      if (m_localFeatureService->status() == LocalServerStatus::Started)
+        return;
+
+      m_localFeatureService->start();
+    }
+    else
+    {
+      LocalFeatureService* featureService = new LocalFeatureService(path, this);
+      connect(featureService, &LocalFeatureService::statusChanged, this, [this, featureService]()
+      {
+        updateStatus(featureService, "Feature");
+      });
+      featureService->start();
+    }
   }
   else if (serviceName == "Geoprocessing Service")
   {
+    if (path.isEmpty())
+    {
     if (m_localGPService->status() == LocalServerStatus::Started)
       return;
+
     m_localGPService->start();
+    }
+    else
+    {
+      LocalGeoprocessingService* gpService = new LocalGeoprocessingService(path, this);
+      connect(gpService, &LocalGeoprocessingService::statusChanged, this, [this, gpService]()
+      {
+        updateStatus(gpService, "Geoprocessing");
+      });
+      gpService->start();
+    }
   }
 }
 
 // stop any service
-void LocalServerServices::stopService(const QString& serviceName)
+void LocalServerServices::stopService(const QUrl& serviceUrl)
 {
-  if (serviceName == "Map Service")
-  {
-    if (m_localMapService->status() == LocalServerStatus::Started)
-      m_localMapService->stop();
-  }
-  else if (serviceName == "Feature Service")
-  {
-    if (m_localFeatureService->status() == LocalServerStatus::Started)
-      m_localFeatureService->stop();
-  }
-  else if (serviceName == "Geoprocessing Service")
-  {
-    if (m_localGPService->status() == LocalServerStatus::Started)
-      m_localGPService->stop();
-  }
+  if (serviceUrl.isEmpty())
+    return;
+
+  LocalService* serviceToStop = m_servicesHash[serviceUrl];
+  serviceToStop->stop();
 }
 
 // open the link in a browser
@@ -219,6 +255,7 @@ void LocalServerServices::updateStatus(LocalService* service, const QString& ser
       emit isServiceRunningChanged();
 
       getCurrentServices();
+      m_servicesHash.insert(service->url(), service);
       break;
     }
     case LocalServerStatus::Stopping:
@@ -236,6 +273,7 @@ void LocalServerServices::updateStatus(LocalService* service, const QString& ser
       }
 
       getCurrentServices();
+      m_servicesHash.remove(service->url());
       break;
     }
     default:

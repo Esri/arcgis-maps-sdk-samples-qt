@@ -1,7 +1,7 @@
-#Animate 3D symbols
+# Animate 3D symbols
 Demonstrates how to animate a graphic's position and rotation and follow it with a camera. Also shows how to combine a SceneQuickView and MapQuickView in an MVC application with property binding.
 
-##How to use the sample
+## How to use the sample
 
 Animation Controls (Top Left Corner):
  - Select a mission -- selects a location with a route for the helicopter to fly
@@ -19,7 +19,7 @@ Camera Controls (Top Right Corner):
 
 ![](screenshot.png)
 
-##How it works
+## How it works
 To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
 
 1. Create a `GraphicsOverlay` and attach it to the `SceneQuickView`.
@@ -39,7 +39,7 @@ To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
 9. Update graphics's heading, pitch, and roll, `graphic->attributes()->replaceAttribute("heading", myHeading)`.
 10. Set the sceneViews's camera to be looking at the symbol with `sceneView->setViewpointCamera( Camera(myPoint, myZoomDist, myHeading, myAngle, myRoll), myDurationSeconds)`
 
-##Features
+## Features
  - Map
  - Scebe
  - Camera
@@ -55,7 +55,7 @@ To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
  - SceneQuickView
  - Viewpoint
  
- ##Offline Data
+ ## Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
