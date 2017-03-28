@@ -9,7 +9,7 @@ Barriers can also be added which can affect the impedance by not letting traffic
 ## How to use sample
 
 - In order to find any services areas at least one `ServiceAreaFaciltiy` needs to be added.
-- To add a facility, select "Facility" from the combo-box then click anywhere on the `MapView`.the `
+- To add a facility, select "Facility" from the combo-box then click anywhere on the `MapView`.
 - To add a barrier, select "Barrier" from the combo-box and click multiple locations on the `MapView` to draw a barrier.
 - To start a new line in a distinct location, click "new barrier"
 - To show service areas around facilities that were added, click the "Solve" button.
