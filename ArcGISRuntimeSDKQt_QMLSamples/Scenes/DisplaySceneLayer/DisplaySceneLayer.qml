@@ -18,7 +18,6 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import Esri.ArcGISRuntime 100.1
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
@@ -70,16 +69,6 @@ Rectangle {
                     roll: 2.194677223e-314
                 }
             }
-        }
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

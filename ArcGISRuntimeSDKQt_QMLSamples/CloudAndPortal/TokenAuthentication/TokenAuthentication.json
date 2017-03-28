@@ -1,5 +1,5 @@
 {
-    "sourceFiles" :  "TokenAuthentication.qml",
+    "source" :  "TokenAuthentication.qml",
     "otherSourceFiles" :  [],
     "name" : "Token authentication"
 }

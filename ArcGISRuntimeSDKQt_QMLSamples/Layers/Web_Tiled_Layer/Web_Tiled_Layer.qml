@@ -16,15 +16,12 @@
 
 import QtQuick 2.6
 import Esri.ArcGISRuntime 100.1
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
 
     // Map view UI presentation at top
     MapView {
@@ -54,16 +51,6 @@ Rectangle {
                 }
                 targetScale: 50000
             }
-        }
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

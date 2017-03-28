@@ -1,7 +1,5 @@
 {
     "source" :  "PortalUserInfo.qml",
     "otherSourceFiles" :  [],
-    "description" : "PortalUserInfo.html",
-    "thumbnail" : "PortalUserInfo.png",
     "name" : "Portal user info"
 }

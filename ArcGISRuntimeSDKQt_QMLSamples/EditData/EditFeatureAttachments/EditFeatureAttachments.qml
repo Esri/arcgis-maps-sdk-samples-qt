@@ -387,14 +387,4 @@ Rectangle {
     FileInfo {
         id: fileInfo
     }
-
-    // neatline
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }
