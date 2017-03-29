@@ -25,114 +25,122 @@
 using namespace Esri::ArcGISRuntime;
 
 ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
-    AuthenticationManager::instance()->setCredentialCacheEnabled(false);
+  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
 ShowOrgBasemaps::~ShowOrgBasemaps()
 {
 }
 
+void ShowOrgBasemaps::init()
+{
+  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<ShowOrgBasemaps>("Esri.Samples", 1, 0, "ShowOrgBasemapsSample");
+}
+
 void ShowOrgBasemaps::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    connect(m_portal, &Portal::loadStatusChanged, this, [this](){
-        m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
+  connect(m_portal, &Portal::loadStatusChanged, this, [this](){
+    m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
 
-        emit portalLoadedChanged();
-        emit orgNameChanged();
+    emit portalLoadedChanged();
+    emit orgNameChanged();
 
-        if (m_portalLoaded)
-            m_portal->fetchBasemaps();
-    });
+    if (m_portalLoaded)
+      m_portal->fetchBasemaps();
+  });
 
-    connect(m_portal, &Portal::basemapsChanged, this, [this](){
-        emit basemapsChanged();
-    });
+  connect(m_portal, &Portal::basemapsChanged, this, [this](){
+    emit basemapsChanged();
+  });
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
-    m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    emit authManagerChanged();
+  emit authManagerChanged();
 }
 
 bool ShowOrgBasemaps::portalLoaded() const
 {
-    return m_portalLoaded;
+  return m_portalLoaded;
 }
 
 QString ShowOrgBasemaps::orgName() const
 {
-    if (!portalLoaded() || !m_portal->portalInfo())
-        return "";
+  if (!portalLoaded() || !m_portal->portalInfo())
+    return "";
 
-    return m_portal->portalInfo()->organizationName();
+  return m_portal->portalInfo()->organizationName();
 }
 
 QAbstractListModel* ShowOrgBasemaps::basemaps() const
 {
-    return m_portal->basemaps();
+  return m_portal->basemaps();
 }
 
 QString ShowOrgBasemaps::mapLoadError() const
 {
-    return m_mapLoadError;
+  return m_mapLoadError;
 }
 
 void ShowOrgBasemaps::load(bool anonymous)
 {
-    if (anonymous)
-        m_portal->load();
-    else {
-        Credential* cred = new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this);
-        m_portal->setCredential(cred);
-        m_portal->load();
-    }
+  if (anonymous)
+    m_portal->load();
+  else {
+    Credential* cred = new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this);
+    m_portal->setCredential(cred);
+    m_portal->load();
+  }
 }
 
 void ShowOrgBasemaps::loadSelectedBasemap(int index)
 {
-    if (!m_portal->basemaps())
-        return;
+  if (!m_portal->basemaps())
+    return;
 
-    Basemap* selectedBasemap = m_portal->basemaps()->at(index);
-    if (!selectedBasemap)
-        return;
+  Basemap* selectedBasemap = m_portal->basemaps()->at(index);
+  if (!selectedBasemap)
+    return;
 
-    if (m_map)
-        m_map->disconnect();
+  if (m_map)
+    m_map->disconnect();
 
-    m_mapLoadError.clear();
+  m_mapLoadError.clear();
+  emit mapLoadErrorChanged();
+
+  m_map = new Map(selectedBasemap, this);
+
+  connect(m_map, &Map::errorOccurred, this, [this](){
+    m_mapLoadError = m_map->loadError().message();
     emit mapLoadErrorChanged();
+  });
 
-    m_map = new Map(selectedBasemap, this);
+  connect(m_map, &Map::loadStatusChanged, this, [this](){
+    if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
+      return;
 
-    connect(m_map, &Map::errorOccurred, this, [this](){
-        m_mapLoadError = m_map->loadError().message();
-        emit mapLoadErrorChanged();
-    });
+    m_mapView->setMap(m_map);
+    m_mapView->setVisible(true);
+  });
 
-    connect(m_map, &Map::loadStatusChanged, this, [this](){
-        if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
-            return;
-
-        m_mapView->setMap(m_map);
-        m_mapView->setVisible(true);
-    });
-
-    m_map->load();
+  m_map->load();
 }
 
 void ShowOrgBasemaps::errorAccepted()
 {
-    m_mapLoadError.clear();
-    emit mapLoadErrorChanged();
+  m_mapLoadError.clear();
+  emit mapLoadErrorChanged();
 }
 
 AuthenticationManager *ShowOrgBasemaps::authManager() const
 {
-    return AuthenticationManager::instance();
+  return AuthenticationManager::instance();
 }

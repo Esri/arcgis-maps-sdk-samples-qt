@@ -19,38 +19,39 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class FeatureLayer;
-        class ServiceFeatureTable;
-        class Feature;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class FeatureLayer;
+    class ServiceFeatureTable;
+    class Feature;
+  }
 }
 
 #include <QQuickItem>
 
 class UpdateGeometryFeatureService : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit UpdateGeometryFeatureService(QQuickItem* parent = nullptr);
-    ~UpdateGeometryFeatureService();
+  explicit UpdateGeometryFeatureService(QQuickItem* parent = nullptr);
+  ~UpdateGeometryFeatureService();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-
-private:
-    void connectSignals();
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
-    Esri::ArcGISRuntime::Feature* m_selectedFeature = nullptr;
-    bool m_featureSelected = false;
+  void connectSignals();
+
+private:
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+  Esri::ArcGISRuntime::Feature* m_selectedFeature = nullptr;
+  bool m_featureSelected = false;
 };
 
 #endif // UPDATE_GEOMETRY_FEATURE_SERVICE_H

@@ -21,51 +21,46 @@
 #include <Windows.h>
 #endif
 
-#include "SceneQuickView.h"
-
 #include "GraphicsOverlayDictionaryRenderer_3D.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
-using namespace Esri::ArcGISRuntime;
-
 int main(int argc, char *argv[])
 {
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
-    // Linux requires 3.2 OpenGL Context
-    // in order to instance 3D symbols
-    QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
-    fmt.setVersion(3, 2);
-    QSurfaceFormat::setDefaultFormat(fmt);
+  // Linux requires 3.2 OpenGL Context
+  // in order to instance 3D symbols
+  QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
+  fmt.setVersion(3, 2);
+  QSurfaceFormat::setDefaultFormat(fmt);
 #endif
 
-    QGuiApplication app(argc, argv);
-    
+  QGuiApplication app(argc, argv);
+
 #ifdef Q_OS_WIN
-    // Force usage of OpenGL ES through ANGLE on Windows
-    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+  // Force usage of OpenGL ES through ANGLE on Windows
+  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    // Register classes for QML
-    qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-    qmlRegisterType<GraphicsOverlayDictionaryRenderer_3D>("Esri.Samples", 1, 0, "GraphicsOverlayDictionaryRenderer_3DSample");
+  // Initialize the sample
+  GraphicsOverlayDictionaryRenderer_3D::init();
 
-    // Intialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-    // Add the Extras path
-    view.engine()->addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
-    // Add the Toolkit path
-    view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Add the Extras path
+  view.engine()->addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
+  // Add the Toolkit path
+  view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/DisplayInformation/GraphicsOverlayDictionaryRenderer_3D/GraphicsOverlayDictionaryRenderer_3D.qml"));
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/DisplayInformation/GraphicsOverlayDictionaryRenderer_3D/GraphicsOverlayDictionaryRenderer_3D.qml"));
 
-    view.show();
+  view.show();
 
-    return app.exec();
+  return app.exec();
 }

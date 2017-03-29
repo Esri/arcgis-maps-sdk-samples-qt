@@ -40,6 +40,7 @@ public:
   ~TokenAuthentication();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
   Esri::ArcGISRuntime::AuthenticationManager* authenticationManager() const;

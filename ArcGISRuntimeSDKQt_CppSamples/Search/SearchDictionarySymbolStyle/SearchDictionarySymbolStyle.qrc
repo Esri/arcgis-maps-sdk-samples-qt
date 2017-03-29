@@ -4,8 +4,8 @@
         <file>SearchDictionarySymbolStyle.qml</file>
         <file>SearchDictionarySymbolStyle.cpp</file>
         <file>SearchDictionarySymbolStyle.h</file>
-        <file>SearchDictionarySymbolStyle.html</file>
-        <file>SearchDictionarySymbolStyle.png</file>
+        <file>README.md</file>
+        <file>screenshot.png</file>
         <file>ic_menu_addencircled_dark.png</file>
         <file>ic_menu_find_dark.png</file>
         <file>ic_menu_find_light.png</file>

@@ -21,15 +21,10 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
-#include "AuthenticationManager.h"
-
 #include "TokenAuthentication.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
-
-using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
@@ -40,11 +35,8 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-  // Register the map view for QML
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<TokenAuthentication>("Esri.Samples", 1, 0, "TokenAuthenticationSample");
-  // Register the AuthenticationManager for QML
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
+  // Initialize the sample
+  TokenAuthentication::init();
 
   // Intialize application view
   QQuickView view;

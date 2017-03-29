@@ -37,6 +37,12 @@ Hillshade_Renderer::~Hillshade_Renderer()
 {
 }
 
+void Hillshade_Renderer::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<Hillshade_Renderer>("Esri.Samples", 1, 0, "Hillshade_RendererSample");
+}
+
 void Hillshade_Renderer::componentComplete()
 {
   QQuickItem::componentComplete();

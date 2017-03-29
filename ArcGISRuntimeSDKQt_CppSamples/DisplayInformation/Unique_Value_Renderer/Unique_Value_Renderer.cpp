@@ -36,7 +36,7 @@
 using namespace Esri::ArcGISRuntime;
 
 Unique_Value_Renderer::Unique_Value_Renderer(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -44,60 +44,66 @@ Unique_Value_Renderer::~Unique_Value_Renderer()
 {
 }
 
+void Unique_Value_Renderer::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<Unique_Value_Renderer>("Esri.Samples", 1, 0, "Unique_Value_RendererSample");
+}
+
 void Unique_Value_Renderer::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new basemap instance
-    Basemap* basemap = Basemap::topographic(this);
-    // create a new map instance
-    m_map = new Map(basemap, this);
+  // create a new basemap instance
+  Basemap* basemap = Basemap::topographic(this);
+  // create a new map instance
+  m_map = new Map(basemap, this);
 
-    // create featureLayer with URL
-    m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"), this);
-    m_featureLayer = new FeatureLayer(m_featureTable, this);
-    m_map->operationalLayers()->append(m_featureLayer);
+  // create featureLayer with URL
+  m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"), this);
+  m_featureLayer = new FeatureLayer(m_featureTable, this);
+  m_map->operationalLayers()->append(m_featureLayer);
 
-    // create unique renderer
-    m_uniqueValueRenderer = new UniqueValueRenderer(this);
-    // you can add multiple fields. In this case, only one is used
-    m_uniqueValueRenderer->setFieldNames(QStringList("STATE_ABBR"));
+  // create unique renderer
+  m_uniqueValueRenderer = new UniqueValueRenderer(this);
+  // you can add multiple fields. In this case, only one is used
+  m_uniqueValueRenderer->setFieldNames(QStringList("STATE_ABBR"));
 
-    // create symbols to be used in the renderer
-    m_defaultSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Null, QColor("black"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("gray"), 2, this), this);
-    m_californiaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("red"), 2, this), this);
-    m_arizonaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("green"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("green"), 2, this), this);
-    m_nevadaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("blue"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 2, this), this);
+  // create symbols to be used in the renderer
+  m_defaultSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Null, QColor("black"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("gray"), 2, this), this);
+  m_californiaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("red"), 2, this), this);
+  m_arizonaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("green"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("green"), 2, this), this);
+  m_nevadaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("blue"), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 2, this), this);
 
-    // create unique values and add to the UniqueValueRenderer
-    createUniqueValue("CA", m_californiaSymbol);
-    createUniqueValue("AZ", m_arizonaSymbol);
-    createUniqueValue("NV", m_nevadaSymbol);
+  // create unique values and add to the UniqueValueRenderer
+  createUniqueValue("CA", m_californiaSymbol);
+  createUniqueValue("AZ", m_arizonaSymbol);
+  createUniqueValue("NV", m_nevadaSymbol);
 
-    // set default symbol
-    m_uniqueValueRenderer->setDefaultSymbol(m_defaultSymbol);
+  // set default symbol
+  m_uniqueValueRenderer->setDefaultSymbol(m_defaultSymbol);
 
-    // set the renderer on the feature layer
-    m_featureLayer->setRenderer(m_uniqueValueRenderer);
+  // set the renderer on the feature layer
+  m_featureLayer->setRenderer(m_uniqueValueRenderer);
 
-    // set initial viewpoint
-    m_map->setInitialViewpoint(Viewpoint(Envelope(-13893029.0, 3573174.0, -12038972.0, 5309823.0, SpatialReference::webMercator())));
+  // set initial viewpoint
+  m_map->setInitialViewpoint(Viewpoint(Envelope(-13893029.0, 3573174.0, -12038972.0, 5309823.0, SpatialReference::webMercator())));
 
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 }
 
 void Unique_Value_Renderer::createUniqueValue(QString stateName, SimpleFillSymbol* fillSymbol)
 {
-    // add state's attribute value for field "STATE_ABBR" to QVariantList
-    QVariantList stateValue;
-    stateValue.append(stateName);
+  // add state's attribute value for field "STATE_ABBR" to QVariantList
+  QVariantList stateValue;
+  stateValue.append(stateName);
 
-    // set value for a State to be rendered. (label, description, attribute value list, symbol, parent)
-    UniqueValue* uniqueValue = new UniqueValue(stateName, "The State of " + stateName, stateValue, fillSymbol, this);
-    // append to UniqueValueRenderer
-    m_uniqueValueRenderer->uniqueValues()->append(uniqueValue);
+  // set value for a State to be rendered. (label, description, attribute value list, symbol, parent)
+  UniqueValue* uniqueValue = new UniqueValue(stateName, "The State of " + stateName, stateValue, fillSymbol, this);
+  // append to UniqueValueRenderer
+  m_uniqueValueRenderer->uniqueValues()->append(uniqueValue);
 }

@@ -44,6 +44,7 @@ public:
   ~AnalyzeHotspots();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
   Q_INVOKABLE void executeTaskWithDates(const QString& fromDate, const QString& toDate);
 

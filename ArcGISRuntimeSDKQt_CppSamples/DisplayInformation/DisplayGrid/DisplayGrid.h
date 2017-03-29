@@ -19,11 +19,11 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Map;
-class MapQuickView;
-}
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 #include <QQuickItem>
@@ -57,6 +57,7 @@ public:
   ~DisplayGrid();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
   Q_INVOKABLE void changeGrid(const QString& gridType);
   Q_INVOKABLE void changeGridColor(const QString& color);
   Q_INVOKABLE void changeLabelColor(const QString& color);

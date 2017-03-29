@@ -1,7 +1,9 @@
 {
-    "source" :  "ClosestFacilitySample",
-    "description" : "ClosestFacilitySample.html",
-    "thumbnail" : "ClosestFacilitySample.png",
+    "source" :  "ClosestFacilitySample.qml",
+    "otherSourceFiles" : [
+        "ClosestFacilitySample.h",
+        "ClosestFacilitySample.cpp"
+    ],
     "name" : "Closest Facility Sample"
 }
 

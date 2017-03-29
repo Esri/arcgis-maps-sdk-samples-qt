@@ -28,15 +28,19 @@
 
 using namespace Esri::ArcGISRuntime;
 
-// constructor
 LocalServerMapImageLayer::LocalServerMapImageLayer(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-// destructor
 LocalServerMapImageLayer::~LocalServerMapImageLayer()
 {
+}
+
+void LocalServerMapImageLayer::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<LocalServerMapImageLayer>("Esri.Samples", 1, 0, "LocalServerMapImageLayerSample");
 }
 
 void LocalServerMapImageLayer::componentComplete()

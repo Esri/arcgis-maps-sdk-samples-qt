@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/GraphicsOverlayDictionaryRenderer">
         <file alias="sample.json">GraphicsOverlayDictionaryRenderer.json</file>
-        <file>GraphicsOverlayDictionaryRenderer.png</file>
+        <file>screenshot.png</file>
         <file>GraphicsOverlayDictionaryRenderer.qml</file>
-        <file>GraphicsOverlayDictionaryRenderer.html</file>
+        <file>README.md</file>
         <file>GraphicsOverlayDictionaryRenderer.cpp</file>
         <file>GraphicsOverlayDictionaryRenderer.h</file>
     </qresource>

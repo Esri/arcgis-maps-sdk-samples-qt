@@ -1,7 +1,9 @@
 {
-    "source" :  "MapRotation",
-    "description" : "MapRotation.html",
-    "thumbnail" : "MapRotation.png",
+    "source" :  "MapRotation.qml",
+    "otherSourceFiles" : [
+        "MapRotation.h",
+        "MapRotation.cpp"
+    ],
     "name" : "Map rotation"
 }
 

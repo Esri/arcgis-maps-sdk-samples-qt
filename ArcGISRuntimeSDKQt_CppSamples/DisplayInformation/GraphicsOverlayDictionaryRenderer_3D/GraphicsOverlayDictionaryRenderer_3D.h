@@ -25,40 +25,41 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class GraphicsOverlay;
-        class SceneQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class GraphicsOverlay;
+    class SceneQuickView;
+  }
 }
 
 class GraphicsOverlayDictionaryRenderer_3D : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit GraphicsOverlayDictionaryRenderer_3D(QQuickItem* parent = nullptr);
-    ~GraphicsOverlayDictionaryRenderer_3D();
+  explicit GraphicsOverlayDictionaryRenderer_3D(QQuickItem* parent = nullptr);
+  ~GraphicsOverlayDictionaryRenderer_3D();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
-    void graphicsLoaded();
+  void graphicsLoaded();
 
 private:
-    static const QString FIELD_CONTROL_POINTS;
-    static const QString FIELD_WKID;
+  static const QString FIELD_CONTROL_POINTS;
+  static const QString FIELD_WKID;
 
-    void parseXmlFile();
-    void createGraphic(QVariantMap rawAttributes);
-    void zoomToGraphics();
+  void parseXmlFile();
+  void createGraphic(QVariantMap rawAttributes);
+  void zoomToGraphics();
 
-    double m_scaleFactor = 1.0;
-    QString m_dataPath;
-    QXmlStreamReader m_xmlParser;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-    Esri::ArcGISRuntime::Envelope m_bbox;
+  double m_scaleFactor = 1.0;
+  QString m_dataPath;
+  QXmlStreamReader m_xmlParser;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::Envelope m_bbox;
 };
 
 #endif // GraphicsOverlayDictionaryRenderer_3D_H

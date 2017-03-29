@@ -36,6 +36,7 @@ public:
   ~RasterLayerFile();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
   Q_INVOKABLE void createAndAddRasterLayer(QUrl rasterUrl);
 

@@ -21,32 +21,33 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Geodatabase;
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Geodatabase;
+    class MapQuickView;
+  }
 }
 
 class FeatureLayerDictionaryRenderer : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit FeatureLayerDictionaryRenderer(QQuickItem* parent = nullptr);
-    ~FeatureLayerDictionaryRenderer();
+  explicit FeatureLayerDictionaryRenderer(QQuickItem* parent = nullptr);
+  ~FeatureLayerDictionaryRenderer();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
-    void allLayersLoaded();
+  void allLayersLoaded();
 
 private:
-    QString m_dataPath;
-    double m_scaleFactor = 1.0;
-    int m_loadedLayerCount = 0;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
+  QString m_dataPath;
+  double m_scaleFactor = 1.0;
+  int m_loadedLayerCount = 0;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
 };
 
 #endif // FEATURELAYERDICTIONARYRENDERER_H

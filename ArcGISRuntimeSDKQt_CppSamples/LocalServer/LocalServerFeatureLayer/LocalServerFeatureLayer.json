@@ -1,7 +1,9 @@
 {
-    "source" :  "LocalServerFeatureLayer",
-    "description" : "LocalServerFeatureLayer.html",
-    "thumbnail" : "LocalServerFeatureLayer.png",
-    "name" : "Local Server Feature Layer"
+    "source" :  "LocalServerFeatureLayer.qml",
+    "otherSourceFiles" : [
+        "LocalServerFeatureLayer.h",
+        "LocalServerFeatureLayer.cpp"
+    ],
+    "name" : "Local server feature layer"
 }
 

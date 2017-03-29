@@ -57,6 +57,7 @@ public:
   ~PortalUserInfo();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
   void authManagerChanged();

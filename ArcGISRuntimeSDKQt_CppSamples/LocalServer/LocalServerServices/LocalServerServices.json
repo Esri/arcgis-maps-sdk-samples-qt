@@ -1,7 +1,9 @@
 {
-    "source" :  "LocalServerServices",
-    "description" : "LocalServerServices.html",
-    "thumbnail" : "LocalServerServices.png",
+    "source" :  "LocalServerServices.qml",
+    "otherSourceFiles" : [
+        "LocalServerServices.h",
+        "LocalServerServices.cpp"
+    ],
     "name" : "Local Server Services"
 }
 

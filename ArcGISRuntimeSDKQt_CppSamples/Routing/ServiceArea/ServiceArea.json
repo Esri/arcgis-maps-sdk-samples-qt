@@ -1,7 +1,9 @@
 {
-    "source" :  "ServiceArea",
-    "description" : "ServiceArea.html",
-    "thumbnail" : "ServiceArea.png",
+    "source" :  "ServiceArea.qml",
+    "otherSourceFiles" : [
+        "ServiceArea.h",
+        "ServiceArea.cpp"
+    ],
     "name" : "Service Area"
 }
 

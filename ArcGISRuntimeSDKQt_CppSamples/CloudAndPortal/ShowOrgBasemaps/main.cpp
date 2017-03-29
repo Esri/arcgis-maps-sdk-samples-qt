@@ -25,11 +25,6 @@
 #include <Windows.h>
 #endif
 
-#include "AuthenticationChallenge.h"
-#include "AuthenticationManager.h"
-#include "MapQuickView.h"
-#include "Item.h"
-
 #include "ShowOrgBasemaps.h"
 
 #define STRINGIZE(x) #x
@@ -50,11 +45,8 @@ int main(int argc, char *argv[])
   QtWebEngine::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
-  // Register the types for QML
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
-  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<ShowOrgBasemaps>("Esri.Samples", 1, 0, "ShowOrgBasemapsSample");
+  // Initialize the sample
+  ShowOrgBasemaps::init();
 
   // Intialize application view
   QQuickView view;

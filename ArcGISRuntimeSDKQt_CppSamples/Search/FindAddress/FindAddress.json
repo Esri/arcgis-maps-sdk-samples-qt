@@ -1,7 +1,9 @@
 {
-    "source" :  "FindAddress",
-    "description" : "FindAddress.html",
-    "thumbnail" : "FindAddress.png",
+    "source" :  "FindAddress.qml",
+    "otherSourceFiles" : [
+        "FindAddress.h",
+        "FindAddress.cpp"
+    ],
     "name" : "Find address"
 }
 

@@ -1,7 +1,9 @@
 {
-    "source" :  "Web_Tiled_Layer",
-    "description" : "Web_Tiled_Layer.html",
-    "thumbnail" : "Web_Tiled_Layer.png",
+    "source" :  "Web_Tiled_Layer.qml",
+    "otherSourceFiles" : [
+        "Web_Tiled_Layer.h",
+        "Web_Tiled_Layer.cpp"
+    ],
     "name" : "Web tiled layer"
 }
 

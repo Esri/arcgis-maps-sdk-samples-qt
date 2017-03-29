@@ -29,7 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 Simple_Renderer::Simple_Renderer(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -37,53 +37,59 @@ Simple_Renderer::~Simple_Renderer()
 {
 }
 
+void Simple_Renderer::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<Simple_Renderer>("Esri.Samples", 1, 0, "Simple_RendererSample");
+}
+
 void Simple_Renderer::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
-    m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // Create a map using the imagery basemap
-    m_map = new Map(Basemap::imagery(this), this);
+  // Create a map using the imagery basemap
+  m_map = new Map(Basemap::imagery(this), this);
 
-    // create graphics overlay
-    m_graphicsOverlay = new GraphicsOverlay();
+  // create graphics overlay
+  m_graphicsOverlay = new GraphicsOverlay();
 
-    // create red cross SimpleMarkerSymbol
-    SimpleMarkerSymbol* crossSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor("red"), 12, this);
+  // create red cross SimpleMarkerSymbol
+  SimpleMarkerSymbol* crossSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor("red"), 12, this);
 
-    // create renderer and set symbol to crossSymbol
-    SimpleRenderer* simpleRenderer = new SimpleRenderer(crossSymbol, this);
-    // set the SimpleRenderer to the GraphicsOverlay
-    m_graphicsOverlay->setRenderer(simpleRenderer);
+  // create renderer and set symbol to crossSymbol
+  SimpleRenderer* simpleRenderer = new SimpleRenderer(crossSymbol, this);
+  // set the SimpleRenderer to the GraphicsOverlay
+  m_graphicsOverlay->setRenderer(simpleRenderer);
 
-    // create points to render
-    Point oldFaithfulPoint(-110.828140, 44.460458, SpatialReference::wgs84());
-    Point cascadeGeyserPoint(-110.829004, 44.462438, SpatialReference::wgs84());
-    Point plumeGeyserPoint(-110.829381, 44.462735, SpatialReference::wgs84());
+  // create points to render
+  Point oldFaithfulPoint(-110.828140, 44.460458, SpatialReference::wgs84());
+  Point cascadeGeyserPoint(-110.829004, 44.462438, SpatialReference::wgs84());
+  Point plumeGeyserPoint(-110.829381, 44.462735, SpatialReference::wgs84());
 
-    // create graphics using points and add them to GraphicsOverlay
-    addPoint(oldFaithfulPoint);
-    addPoint(cascadeGeyserPoint);
-    addPoint(plumeGeyserPoint);
+  // create graphics using points and add them to GraphicsOverlay
+  addPoint(oldFaithfulPoint);
+  addPoint(cascadeGeyserPoint);
+  addPoint(plumeGeyserPoint);
 
-    // Set map to map view
-    m_mapView->setMap(m_map);
+  // Set map to map view
+  m_mapView->setMap(m_map);
 
-    // set viewpoint using the two farthest points as an envelope with padding
-    m_mapView->setViewpointGeometry(Envelope(oldFaithfulPoint, plumeGeyserPoint), 50);
+  // set viewpoint using the two farthest points as an envelope with padding
+  m_mapView->setViewpointGeometry(Envelope(oldFaithfulPoint, plumeGeyserPoint), 50);
 
-    // add GraphicsOverlay to MapView
-    m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
+  // add GraphicsOverlay to MapView
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 }
 
 void Simple_Renderer::addPoint(Point &point)
 {
-    // create graphic
-    Graphic* graphic = new Graphic(point, this);
+  // create graphic
+  Graphic* graphic = new Graphic(point, this);
 
-    // add graphic to Graphic Overlay
-    m_graphicsOverlay->graphics()->append(graphic);
+  // add graphic to Graphic Overlay
+  m_graphicsOverlay->graphics()->append(graphic);
 }

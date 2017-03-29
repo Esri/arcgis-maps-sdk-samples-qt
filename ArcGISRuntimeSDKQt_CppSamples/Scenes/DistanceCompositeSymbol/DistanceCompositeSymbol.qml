@@ -22,8 +22,7 @@ import Esri.ArcGISExtras 1.1
 DistanceCompositeSymbolSample {
     width: 800
     height: 600
-
-    property double scaleFactor: System.displayScaleFactor
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D/SkyCrane/SkyCrane.lwo"
 
     // add a mapView component
@@ -31,15 +30,4 @@ DistanceCompositeSymbolSample {
         anchors.fill: parent
         objectName: "sceneView"
     }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }
-
-

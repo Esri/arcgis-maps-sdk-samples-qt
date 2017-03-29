@@ -1,7 +1,9 @@
 {
-    "source" :  "ShowLegend",
-    "description" : "ShowLegend.html",
-    "thumbnail" : "ShowLegend.png",
+    "source" :  "ShowLegend.qml",
+    "otherSourceFiles" : [
+        "ShowLegend.h",
+        "ShowLegend.cpp"
+    ],
     "name" : "Show legend"
 }
 

@@ -19,32 +19,33 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 #include <QQuickItem>
 
 class ChangeViewpoint : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit ChangeViewpoint(QQuickItem* parent = nullptr);
-    ~ChangeViewpoint();
+  explicit ChangeViewpoint(QQuickItem* parent = nullptr);
+  ~ChangeViewpoint();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void changeViewpoint(QString viewpoint);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void changeViewpoint(QString viewpoint);
 
 private:
-    double screenRatio() const;
+  double screenRatio() const;
 
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    int m_rotationValue = 0;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  int m_rotationValue = 0;
 };
 
 #endif // CHANGE_VIEWPOINT_H

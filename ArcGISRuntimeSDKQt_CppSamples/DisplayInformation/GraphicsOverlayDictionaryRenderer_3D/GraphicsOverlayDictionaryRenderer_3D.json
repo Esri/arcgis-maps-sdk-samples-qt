@@ -1,7 +1,9 @@
 {
-    "source" :  "GraphicsOverlayDictionaryRenderer_3D",
-    "description" : "GraphicsOverlayDictionaryRenderer_3D.html",
-    "thumbnail" : "GraphicsOverlayDictionaryRenderer_3D.jpg",
+    "source" :  "GraphicsOverlayDictionaryRenderer_3D.qml",
+    "otherSourceFiles" : [
+        "GraphicsOverlayDictionaryRenderer_3D.h",
+        "GraphicsOverlayDictionaryRenderer_3D.cpp"
+    ],
     "name" : "Graphics overlay (dictionary renderer) 3D",
     "dataItems" : [
         {

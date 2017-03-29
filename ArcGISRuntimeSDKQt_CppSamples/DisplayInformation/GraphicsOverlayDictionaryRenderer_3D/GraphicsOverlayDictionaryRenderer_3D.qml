@@ -44,13 +44,4 @@ GraphicsOverlayDictionaryRenderer_3DSample {
         }
         indeterminate: true
     }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

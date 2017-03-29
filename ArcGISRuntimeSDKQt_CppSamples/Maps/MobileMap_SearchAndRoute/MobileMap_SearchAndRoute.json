@@ -1,7 +1,9 @@
 {
-    "source" :  "MobileMap_SearchAndRoute",
-    "description" : "MobileMap_SearchAndRoute.html",
-    "thumbnail" : "MobileMap_SearchAndRoute.png",
+    "source" :  "MobileMap_SearchAndRoute.qml",
+    "otherSourceFiles" : [
+        "MobileMap_SearchAndRoute.h",
+        "MobileMap_SearchAndRoute.cpp"
+    ],
     "name" : "Mobile map (search and route)",
 	"dataItems" : [
 		{

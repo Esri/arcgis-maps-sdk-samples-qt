@@ -19,30 +19,31 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Scene;
-        class SceneQuickView;
-        class ArcGISSceneLayer;
-    }
+  namespace ArcGISRuntime
+  {
+    class Scene;
+    class SceneQuickView;
+    class ArcGISSceneLayer;
+  }
 }
 
 #include <QQuickItem>
 
 class DisplaySceneLayer : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit DisplaySceneLayer(QQuickItem* parent = nullptr);
-    ~DisplaySceneLayer();
+  explicit DisplaySceneLayer(QQuickItem* parent = nullptr);
+  ~DisplaySceneLayer();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-    Esri::ArcGISRuntime::ArcGISSceneLayer* m_sceneLayer = nullptr;
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::ArcGISSceneLayer* m_sceneLayer = nullptr;
 };
 
 #endif // DISPLAYSCENELAYER_H

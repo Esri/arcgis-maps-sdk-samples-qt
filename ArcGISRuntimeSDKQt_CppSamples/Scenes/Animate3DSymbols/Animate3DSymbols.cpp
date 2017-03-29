@@ -86,6 +86,13 @@ Animate3DSymbols::~Animate3DSymbols()
 {
 }
 
+void Animate3DSymbols::init()
+{
+  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<Animate3DSymbols>("Esri.Samples", 1, 0, "Animate3DSymbolsSample");
+}
+
 void Animate3DSymbols::componentComplete()
 {
   QQuickItem::componentComplete();

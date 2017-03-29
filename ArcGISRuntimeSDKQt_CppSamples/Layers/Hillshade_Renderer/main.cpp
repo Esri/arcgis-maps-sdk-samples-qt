@@ -21,14 +21,10 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
-
 #include "Hillshade_Renderer.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
-
-using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
@@ -39,9 +35,8 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-  // Register the map view for QML
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<Hillshade_Renderer>("Esri.Samples", 1, 0, "Hillshade_RendererSample");
+  // Initialize the sample
+  Hillshade_Renderer::init();
 
   // Intialize application view
   QQuickView view;

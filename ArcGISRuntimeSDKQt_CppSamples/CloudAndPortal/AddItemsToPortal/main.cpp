@@ -24,15 +24,10 @@
 #include <Windows.h>
 #endif
 
-#include "AuthenticationChallenge.h"
-#include "AuthenticationManager.h"
-
 #include "AddItemsToPortal.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
-
-using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
@@ -47,9 +42,8 @@ int main(int argc, char *argv[])
   QtWebEngine::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
-  // Register the types for QML
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
-  qmlRegisterType<AddItemsToPortal>("Esri.Samples", 1, 0, "AddItemsToPortalSample");
+  // Initialize the sample
+  AddItemsToPortal::init();
 
   // Intialize application view
   QQuickView view;

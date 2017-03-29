@@ -19,18 +19,18 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;    
-        class RouteTask;
-        class LocatorTask;   
-        class CalloutData;
-        class MapQuickView;
-        class GraphicsOverlay;
-        class MobileMapPackage;
-        class PictureMarkerSymbol;
-        class ReverseGeocodeParameters;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class RouteTask;
+    class LocatorTask;
+    class CalloutData;
+    class MapQuickView;
+    class GraphicsOverlay;
+    class MobileMapPackage;
+    class PictureMarkerSymbol;
+    class ReverseGeocodeParameters;
+  }
 }
 
 #include "Stop.h"
@@ -44,65 +44,66 @@ namespace Esri
 
 class MobileMap_SearchAndRoute : public QQuickItem
 {
-    Q_OBJECT
-    Q_PROPERTY(bool canRoute READ canRoute NOTIFY canRouteChanged)
-    Q_PROPERTY(bool canClear READ canClear NOTIFY canClearChanged)
-    Q_PROPERTY(bool isGeocodeInProgress READ isGeocodeInProgress NOTIFY isGeocodeInProgressChanged)
-    Q_PROPERTY(QStringList mmpkList READ mmpkList NOTIFY mmpkListChanged)
-    Q_PROPERTY(QVariantList mapList READ mapList NOTIFY mapListChanged)
-    Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
+  Q_OBJECT
+  Q_PROPERTY(bool canRoute READ canRoute NOTIFY canRouteChanged)
+  Q_PROPERTY(bool canClear READ canClear NOTIFY canClearChanged)
+  Q_PROPERTY(bool isGeocodeInProgress READ isGeocodeInProgress NOTIFY isGeocodeInProgressChanged)
+  Q_PROPERTY(QStringList mmpkList READ mmpkList NOTIFY mmpkListChanged)
+  Q_PROPERTY(QVariantList mapList READ mapList NOTIFY mapListChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
 
 public:
-    explicit MobileMap_SearchAndRoute(QQuickItem* parent = nullptr);
-    ~MobileMap_SearchAndRoute();
+  explicit MobileMap_SearchAndRoute(QQuickItem* parent = nullptr);
+  ~MobileMap_SearchAndRoute();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void resetMapView();
-    Q_INVOKABLE void createMapList(int index);
-    Q_INVOKABLE void selectMap(int index);
-    Q_INVOKABLE void solveRoute();
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void resetMapView();
+  Q_INVOKABLE void createMapList(int index);
+  Q_INVOKABLE void selectMap(int index);
+  Q_INVOKABLE void solveRoute();
 
 signals:
-    void mmpkListChanged();
-    void mapListChanged();
-    void calloutDataChanged();
-    void canClearChanged();
-    void canRouteChanged();
-    void isGeocodeInProgressChanged();
+  void mmpkListChanged();
+  void mapListChanged();
+  void calloutDataChanged();
+  void canClearChanged();
+  void canRouteChanged();
+  void isGeocodeInProgressChanged();
 
 private:
-    void connectSignals();
-    bool canRoute() const;
-    bool canClear() const;
-    void createMobileMapPackages(int index);
-    QStringList mmpkList() const;
-    QVariantList mapList() const;
-    bool isGeocodeInProgress() const;
-    Esri::ArcGISRuntime::CalloutData* calloutData() const;
+  void connectSignals();
+  bool canRoute() const;
+  bool canClear() const;
+  void createMobileMapPackages(int index);
+  QStringList mmpkList() const;
+  QVariantList mapList() const;
+  bool isGeocodeInProgress() const;
+  Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
-    int m_selectedMmpkIndex = 0;
-    bool m_canRoute = false;
-    bool m_canClear = false;
-    bool m_isGeocodeInProgress = false;
-    QString m_dataPath;
-    QFileInfoList m_fileInfoList;
-    QStringList m_mobileMapPackageList;
-    QVariantList m_mapList;
-    Esri::ArcGISRuntime::Point m_clickedPoint;
-    Esri::ArcGISRuntime::RouteParameters m_currentRouteParameters;
-    Esri::ArcGISRuntime::ReverseGeocodeParameters m_reverseGeocodeParameters;
-    QList<Esri::ArcGISRuntime::Stop> m_stops;
-    QList<Esri::ArcGISRuntime::MobileMapPackage*> m_mobileMapPackages;
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::MobileMapPackage* m_mobileMap = nullptr;
-    Esri::ArcGISRuntime::LocatorTask* m_currentLocatorTask = nullptr;
-    Esri::ArcGISRuntime::PictureMarkerSymbol* m_bluePinSymbol = nullptr;
-    Esri::ArcGISRuntime::RouteTask* m_currentRouteTask = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay = nullptr;
-    Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
+  int m_selectedMmpkIndex = 0;
+  bool m_canRoute = false;
+  bool m_canClear = false;
+  bool m_isGeocodeInProgress = false;
+  QString m_dataPath;
+  QFileInfoList m_fileInfoList;
+  QStringList m_mobileMapPackageList;
+  QVariantList m_mapList;
+  Esri::ArcGISRuntime::Point m_clickedPoint;
+  Esri::ArcGISRuntime::RouteParameters m_currentRouteParameters;
+  Esri::ArcGISRuntime::ReverseGeocodeParameters m_reverseGeocodeParameters;
+  QList<Esri::ArcGISRuntime::Stop> m_stops;
+  QList<Esri::ArcGISRuntime::MobileMapPackage*> m_mobileMapPackages;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::MobileMapPackage* m_mobileMap = nullptr;
+  Esri::ArcGISRuntime::LocatorTask* m_currentLocatorTask = nullptr;
+  Esri::ArcGISRuntime::PictureMarkerSymbol* m_bluePinSymbol = nullptr;
+  Esri::ArcGISRuntime::RouteTask* m_currentRouteTask = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
 };
 
 #endif // MOBILEMAP_SEARCHANDROUTE_H

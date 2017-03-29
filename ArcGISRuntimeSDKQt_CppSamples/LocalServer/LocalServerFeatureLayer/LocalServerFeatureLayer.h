@@ -19,14 +19,14 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Map;
-class MapQuickView;
-class LocalServer;
-class LocalFeatureService;
-class LocalService;
-}
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class LocalServer;
+    class LocalFeatureService;
+    class LocalService;
+  }
 }
 
 #include <QQuickItem>
@@ -41,8 +41,7 @@ public:
   ~LocalServerFeatureLayer();
 
   void componentComplete() Q_DECL_OVERRIDE;
-
-signals:
+  static void init();
 
 private:
   void connectSignals();

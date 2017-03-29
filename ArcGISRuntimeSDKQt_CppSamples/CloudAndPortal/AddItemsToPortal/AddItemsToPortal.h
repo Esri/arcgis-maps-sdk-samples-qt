@@ -16,73 +16,74 @@
 #define ADDITEMSTOPORTAL_H
 
 namespace Esri
-{
-    namespace ArcGISRuntime
-    {
-        class AuthenticationManager;
-        class Portal;
-        class PortalItem;
-        class PortalUser;
-    }
+  {
+  namespace ArcGISRuntime
+  {
+    class AuthenticationManager;
+    class Portal;
+    class PortalItem;
+    class PortalUser;
+  }
 }
 
 #include <QQuickItem>
 
 class AddItemsToPortal : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
-    Q_PROPERTY(bool portalLoaded READ portalLoaded NOTIFY portalLoadedChanged)
-    Q_PROPERTY(bool portalItemLoaded READ portalItemLoaded NOTIFY portalItemLoadedChanged)
-    Q_PROPERTY(QString portalItemId READ portalItemId NOTIFY portalItemIdChanged)
-    Q_PROPERTY(QString portalItemTitle READ portalItemTitle NOTIFY portalItemTitleChanged)
-    Q_PROPERTY(QString portalItemTypeName READ portalItemTypeName NOTIFY portalItemTypeNameChanged)
-    Q_PROPERTY(bool itemDeleted READ itemDeleted NOTIFY itemDeletedChanged)
-    Q_PROPERTY(QString statusText READ statusText NOTIFY statusTextChanged)
-    Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
+  Q_PROPERTY(bool portalLoaded READ portalLoaded NOTIFY portalLoadedChanged)
+  Q_PROPERTY(bool portalItemLoaded READ portalItemLoaded NOTIFY portalItemLoadedChanged)
+  Q_PROPERTY(QString portalItemId READ portalItemId NOTIFY portalItemIdChanged)
+  Q_PROPERTY(QString portalItemTitle READ portalItemTitle NOTIFY portalItemTitleChanged)
+  Q_PROPERTY(QString portalItemTypeName READ portalItemTypeName NOTIFY portalItemTypeNameChanged)
+  Q_PROPERTY(bool itemDeleted READ itemDeleted NOTIFY itemDeletedChanged)
+  Q_PROPERTY(QString statusText READ statusText NOTIFY statusTextChanged)
+  Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
 
 public:
-    explicit AddItemsToPortal(QQuickItem* parent = nullptr);
-    ~AddItemsToPortal();
+  explicit AddItemsToPortal(QQuickItem* parent = nullptr);
+  ~AddItemsToPortal();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
-    Q_INVOKABLE void authenticatePortal();
-    Q_INVOKABLE void addItem();
-    Q_INVOKABLE void deleteItem();
+  Q_INVOKABLE void authenticatePortal();
+  Q_INVOKABLE void addItem();
+  Q_INVOKABLE void deleteItem();
 
 signals:
-    void authManagerChanged();
-    void portalLoadedChanged();
-    void portalItemLoadedChanged();
-    void portalItemTitleChanged();
-    void portalItemIdChanged();
-    void portalItemTypeNameChanged();
-    void itemDeletedChanged();
-    void statusTextChanged();
-    void busyChanged();
+  void authManagerChanged();
+  void portalLoadedChanged();
+  void portalItemLoadedChanged();
+  void portalItemTitleChanged();
+  void portalItemIdChanged();
+  void portalItemTypeNameChanged();
+  void itemDeletedChanged();
+  void statusTextChanged();
+  void busyChanged();
 
 private:
-    Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
-    bool portalLoaded() const;
-    bool portalItemLoaded() const;
-    QString portalItemId() const;
-    QString portalItemTitle() const;
-    QString portalItemTypeName() const;
-    bool itemDeleted() const;
-    QString statusText() const;
-    bool busy() const;
+  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
+  bool portalLoaded() const;
+  bool portalItemLoaded() const;
+  QString portalItemId() const;
+  QString portalItemTitle() const;
+  QString portalItemTypeName() const;
+  bool itemDeleted() const;
+  QString statusText() const;
+  bool busy() const;
 
-    void setStatusText(const QString& msg);
-    void connectUserSignals();
+  void setStatusText(const QString& msg);
+  void connectUserSignals();
 
-    Esri::ArcGISRuntime::Portal* m_portal;
-    Esri::ArcGISRuntime::PortalItem* m_item;
-    Esri::ArcGISRuntime::PortalUser* m_user;
-    bool m_itemDeleted;
-    QString m_statusText;
-    bool m_busy;
+  Esri::ArcGISRuntime::Portal* m_portal;
+  Esri::ArcGISRuntime::PortalItem* m_item;
+  Esri::ArcGISRuntime::PortalUser* m_user;
+  bool m_itemDeleted;
+  QString m_statusText;
+  bool m_busy;
 };
 
 #endif // ADDITEMSTOPORTAL_H

@@ -19,60 +19,61 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 #include <QQuickItem>
 
 class DisplayDeviceLocation : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(QString compassMode READ compassMode NOTIFY compassModeChanged)
-    Q_PROPERTY(QString navigationMode READ navigationMode NOTIFY navigationModeChanged)
-    Q_PROPERTY(QString recenterMode READ recenterMode NOTIFY recenterModeChanged)
-    Q_PROPERTY(QString onMode READ onMode NOTIFY onModeChanged)
-    Q_PROPERTY(QString stopMode READ stopMode NOTIFY stopModeChanged)
-    Q_PROPERTY(QString closeMode READ closeMode NOTIFY closeModeChanged)
+  Q_PROPERTY(QString compassMode READ compassMode NOTIFY compassModeChanged)
+  Q_PROPERTY(QString navigationMode READ navigationMode NOTIFY navigationModeChanged)
+  Q_PROPERTY(QString recenterMode READ recenterMode NOTIFY recenterModeChanged)
+  Q_PROPERTY(QString onMode READ onMode NOTIFY onModeChanged)
+  Q_PROPERTY(QString stopMode READ stopMode NOTIFY stopModeChanged)
+  Q_PROPERTY(QString closeMode READ closeMode NOTIFY closeModeChanged)
 
 public:
-    explicit DisplayDeviceLocation(QQuickItem* parent = nullptr);
-    ~DisplayDeviceLocation();
+  explicit DisplayDeviceLocation(QQuickItem* parent = nullptr);
+  ~DisplayDeviceLocation();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void startLocationDisplay();
-    Q_INVOKABLE void stopLocationDisplay();
-    Q_INVOKABLE void setAutoPanMode(QString autoPanMode);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void startLocationDisplay();
+  Q_INVOKABLE void stopLocationDisplay();
+  Q_INVOKABLE void setAutoPanMode(QString autoPanMode);
 
 signals:
-    void compassModeChanged();
-    void navigationModeChanged();
-    void recenterModeChanged();
-    void onModeChanged();
-    void stopModeChanged();
-    void closeModeChanged();
+  void compassModeChanged();
+  void navigationModeChanged();
+  void recenterModeChanged();
+  void onModeChanged();
+  void stopModeChanged();
+  void closeModeChanged();
 
 private:
-    static const QString compassMode();
-    static const QString navigationMode();
-    static const QString recenterMode();
-    static const QString onMode();
-    static const QString stopMode();
-    static const QString closeMode();
+  static const QString compassMode();
+  static const QString navigationMode();
+  static const QString recenterMode();
+  static const QString onMode();
+  static const QString stopMode();
+  static const QString closeMode();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    static const QString s_compassMode;
-    static const QString s_navigationMode;
-    static const QString s_recenterMode;
-    static const QString s_onMode;
-    static const QString s_stopMode;
-    static const QString s_closeMode;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  static const QString s_compassMode;
+  static const QString s_navigationMode;
+  static const QString s_recenterMode;
+  static const QString s_onMode;
+  static const QString s_stopMode;
+  static const QString s_closeMode;
 };
 
 #endif // DISPLAY_DEVICE_LOCATION_H

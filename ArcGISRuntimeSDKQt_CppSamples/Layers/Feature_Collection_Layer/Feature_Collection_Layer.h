@@ -42,6 +42,7 @@ public:
   ~Feature_Collection_Layer();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
   void createPointTable();

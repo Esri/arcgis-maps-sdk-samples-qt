@@ -34,154 +34,159 @@ const QString GraphicsOverlayDictionaryRenderer_3D::FIELD_CONTROL_POINTS = "_con
 const QString GraphicsOverlayDictionaryRenderer_3D::FIELD_WKID = "_wkid";
 
 GraphicsOverlayDictionaryRenderer_3D::GraphicsOverlayDictionaryRenderer_3D(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_graphicsOverlay(new GraphicsOverlay(this))
+  QQuickItem(parent),
+  m_graphicsOverlay(new GraphicsOverlay(this))
 {
-    m_graphicsOverlay->setRenderingMode(GraphicsRenderingMode::Dynamic);
+  m_graphicsOverlay->setRenderingMode(GraphicsRenderingMode::Dynamic);
 }
 
 GraphicsOverlayDictionaryRenderer_3D::~GraphicsOverlayDictionaryRenderer_3D()
-{
+{ 
+}
 
+void GraphicsOverlayDictionaryRenderer_3D::init()
+{
+  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<GraphicsOverlayDictionaryRenderer_3D>("Esri.Samples", 1, 0, "GraphicsOverlayDictionaryRenderer_3DSample");
 }
 
 void GraphicsOverlayDictionaryRenderer_3D::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // QML properties
-    m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
-    m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
+  // QML properties
+  m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
+  m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
 
-    // Set up DictionaryRenderer
-    DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
-    DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
-    m_graphicsOverlay->setRenderer(renderer);
+  // Set up DictionaryRenderer
+  DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+  DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
+  m_graphicsOverlay->setRenderer(renderer);
 
-    // Create a scene and give it to the SceneView
-    m_sceneView = findChild<SceneQuickView*>("sceneView");
-    Scene* scene = new Scene(Basemap::imagery(this), this);
-    Surface* surface = new Surface(this);
-    surface->elevationSources()->append(
-                new ArcGISTiledElevationSource(
-                    QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-                    this));
-    scene->setBaseSurface(surface);
-    m_sceneView->setArcGISScene(scene);
-    m_sceneView->graphicsOverlays()->append(m_graphicsOverlay);
+  // Create a scene and give it to the SceneView
+  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  Scene* scene = new Scene(Basemap::imagery(this), this);
+  Surface* surface = new Surface(this);
+  surface->elevationSources()->append(
+        new ArcGISTiledElevationSource(
+          QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
+          this));
+  scene->setBaseSurface(surface);
+  m_sceneView->setArcGISScene(scene);
+  m_sceneView->graphicsOverlays()->append(m_graphicsOverlay);
 
-    parseXmlFile();
+  parseXmlFile();
 
-    emit graphicsLoaded();
+  emit graphicsLoaded();
 
-    zoomToGraphics();
+  zoomToGraphics();
 }
 
 void GraphicsOverlayDictionaryRenderer_3D::parseXmlFile()
 {
-    bool readingMessage = false;
-    QVariantMap elementValues;
-    QString currentElementName;
+  bool readingMessage = false;
+  QVariantMap elementValues;
+  QString currentElementName;
 
-    QFile xmlFile(m_dataPath + "/xml/Mil2525DMessages.xml");
-    // Open the file for reading
-    if (xmlFile.isOpen())
-    {
-        xmlFile.reset();
-    }
-    else
-    {
-        xmlFile.open(QIODevice::ReadOnly | QIODevice::Text);
-    }
-    m_xmlParser.setDevice(&xmlFile);
+  QFile xmlFile(m_dataPath + "/xml/Mil2525DMessages.xml");
+  // Open the file for reading
+  if (xmlFile.isOpen())
+  {
+    xmlFile.reset();
+  }
+  else
+  {
+    xmlFile.open(QIODevice::ReadOnly | QIODevice::Text);
+  }
+  m_xmlParser.setDevice(&xmlFile);
 
-    // Traverse the XML in a loop
-    while (!m_xmlParser.atEnd())
-    {
-        m_xmlParser.readNext();
+  // Traverse the XML in a loop
+  while (!m_xmlParser.atEnd())
+  {
+    m_xmlParser.readNext();
 
-        // Is this the start or end of a message element?
-        if (m_xmlParser.name() == "message")
-        {
-            if (!readingMessage)
-            {
-                // This is the start of a message element.
-                elementValues.clear();
-            }
-            else
-            {
-                /**
+    // Is this the start or end of a message element?
+    if (m_xmlParser.name() == "message")
+    {
+      if (!readingMessage)
+      {
+        // This is the start of a message element.
+        elementValues.clear();
+      }
+      else
+      {
+        /**
                  * This is the end of a message element. Here we have a complete message that defines
                  * a military feature to display on the map. Create a graphic from its attributes.
                  */
-                createGraphic(elementValues);
-            }
-            // Either we just started reading a message, or we just finished reading a message.
-            readingMessage = !readingMessage;
-        }
-        // Are we already inside a message element?
-        else if (readingMessage)
-        {
-            // Is this the start of an element inside a message?
-            if (m_xmlParser.isStartElement())
-            {
-                // Remember which element we're reading
-                currentElementName = m_xmlParser.name().toString();
-            }
-            // Is this text?
-            else if (m_xmlParser.isCharacters())
-            {
-                // Is this text inside an element?
-                if (!currentElementName.isEmpty())
-                {
-                    // Get the text and store it as the current element's value
-                    QStringRef trimmedText = m_xmlParser.text().trimmed();
-                    if (!trimmedText.isEmpty())
-                    {
-                        elementValues[currentElementName] = trimmedText.toString();
-                    }
-                }
-            }
-        }
+        createGraphic(elementValues);
+      }
+      // Either we just started reading a message, or we just finished reading a message.
+      readingMessage = !readingMessage;
     }
+    // Are we already inside a message element?
+    else if (readingMessage)
+    {
+      // Is this the start of an element inside a message?
+      if (m_xmlParser.isStartElement())
+      {
+        // Remember which element we're reading
+        currentElementName = m_xmlParser.name().toString();
+      }
+      // Is this text?
+      else if (m_xmlParser.isCharacters())
+      {
+        // Is this text inside an element?
+        if (!currentElementName.isEmpty())
+        {
+          // Get the text and store it as the current element's value
+          QStringRef trimmedText = m_xmlParser.text().trimmed();
+          if (!trimmedText.isEmpty())
+          {
+            elementValues[currentElementName] = trimmedText.toString();
+          }
+        }
+      }
+    }
+  }
 }
 
 void GraphicsOverlayDictionaryRenderer_3D::createGraphic(QVariantMap rawAttributes)
 {
-    // If _wkid was absent, use WGS 1984 (4326) by default.
-    int wkid = rawAttributes.keys().contains(FIELD_WKID) ? rawAttributes[FIELD_WKID].toInt() : 4326;
-    SpatialReference sr(wkid);
-    Geometry geom;
-    QStringList pointStrings = rawAttributes[FIELD_CONTROL_POINTS].toString().split(";");
-    if (pointStrings.length() == 1)
-    {
-        // It's a point
-        QStringList coords = pointStrings[0].split(",");
-        geom = Point(coords[0].toDouble(), coords[1].toDouble(), sr);
-    }
+  // If _wkid was absent, use WGS 1984 (4326) by default.
+  int wkid = rawAttributes.keys().contains(FIELD_WKID) ? rawAttributes[FIELD_WKID].toInt() : 4326;
+  SpatialReference sr(wkid);
+  Geometry geom;
+  QStringList pointStrings = rawAttributes[FIELD_CONTROL_POINTS].toString().split(";");
+  if (pointStrings.length() == 1)
+  {
+    // It's a point
+    QStringList coords = pointStrings[0].split(",");
+    geom = Point(coords[0].toDouble(), coords[1].toDouble(), sr);
+  }
 
-    if (!geom.isEmpty())
-    {
-        /**
+  if (!geom.isEmpty())
+  {
+    /**
          * Get rid of _control_points and _wkid. They are not needed in the graphic's
          * attributes.
          */
-        rawAttributes.remove(FIELD_CONTROL_POINTS);
-        rawAttributes.remove(FIELD_WKID);
+    rawAttributes.remove(FIELD_CONTROL_POINTS);
+    rawAttributes.remove(FIELD_WKID);
 
-        Graphic* graphic = new Graphic(geom, rawAttributes, this);
-        m_graphicsOverlay->graphics()->append(graphic);
+    Graphic* graphic = new Graphic(geom, rawAttributes, this);
+    m_graphicsOverlay->graphics()->append(graphic);
 
-        m_bbox = m_bbox.isEmpty() ? geom.extent() : GeometryEngine::unionOf(m_bbox, geom).extent();
-    }
+    m_bbox = m_bbox.isEmpty() ? geom.extent() : GeometryEngine::unionOf(m_bbox, geom).extent();
+  }
 }
 
 void GraphicsOverlayDictionaryRenderer_3D::zoomToGraphics()
 {
-    m_bbox = GeometryEngine::project(m_bbox, m_sceneView->arcGISScene()->spatialReference());
+  m_bbox = GeometryEngine::project(m_bbox, m_sceneView->arcGISScene()->spatialReference());
 
-    // Create a camera that looks at the bbox center, height 15000, pitch 70
-    Camera camera(m_bbox.extent().center(), 15000, 0, 70, 0);
+  // Create a camera that looks at the bbox center, height 15000, pitch 70
+  Camera camera(m_bbox.extent().center(), 15000, 0, 70, 0);
 
-    m_sceneView->setViewpointCameraAndWait(camera);
+  m_sceneView->setViewpointCameraAndWait(camera);
 }

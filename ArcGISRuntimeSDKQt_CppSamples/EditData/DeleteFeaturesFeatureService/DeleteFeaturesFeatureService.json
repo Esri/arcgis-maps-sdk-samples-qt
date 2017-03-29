@@ -1,7 +1,9 @@
 {
-    "source" :  "DeleteFeaturesFeatureService",
-    "description" : "DeleteFeaturesFeatureService.html",
-    "thumbnail" : "DeleteFeaturesFeatureService.png",
+    "source" :  "DeleteFeaturesFeatureService.qml",
+    "otherSourceFiles" : [
+		"DeleteFeaturesFeatureService.h",
+		"DeleteFeaturesFeatureService.cpp"
+	],
     "name" : "Delete features feature service"
 }
 

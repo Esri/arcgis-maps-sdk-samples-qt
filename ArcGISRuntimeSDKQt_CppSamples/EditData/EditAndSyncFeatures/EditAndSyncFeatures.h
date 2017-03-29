@@ -46,6 +46,7 @@ public:
   ~EditAndSyncFeatures();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
   Q_INVOKABLE void generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2);
   Q_INVOKABLE void executeSync();
 

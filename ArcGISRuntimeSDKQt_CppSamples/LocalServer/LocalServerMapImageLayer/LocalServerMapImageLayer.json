@@ -1,7 +1,9 @@
 {
-    "source" :  "LocalServerMapImageLayer",
-    "description" : "LocalServerMapImageLayer.html",
-    "thumbnail" : "LocalServerMapImageLayer.png",
+    "source" :  "LocalServerMapImageLayer.qml",
+    "otherSourceFiles" : [
+        "LocalServerMapImageLayer.h",
+        "LocalServerMapImageLayer.cpp"
+    ],
     "name" : "Local Server Map Image Layer"
 }
 

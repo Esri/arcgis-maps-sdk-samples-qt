@@ -1,7 +1,9 @@
 {
-    "source" :  "GOSymbols",
-    "description" : "GOSymbols.html",
-    "thumbnail" : "GOSymbols.png",
+    "source" :  "GOSymbols.qml",
+    "otherSourceFiles" : [
+		"GOSymbols.h",
+		"GOSymbols.cpp"
+	],
     "name" : "Add graphics with symbols"
 }
 

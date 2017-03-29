@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/Samples/Maps/ManageBookmarks">
         <file alias="sample.json">ManageBookmarks.json</file>
-        <file>ManageBookmarks.png</file>
+        <file>screenshot.png</file>
         <file>ManageBookmarks.qml</file>
 		<file>ManageBookmarks.h</file>
 		<file>ManageBookmarks.cpp</file>
-        <file>ManageBookmarks.html</file>
+        <file>README.md</file>
         <file>add.png</file>
     </qresource>
 </RCC>
