@@ -1,0 +1,12 @@
+{
+    "source" :  "RasterRgbRenderer.qml",
+    "description" : "This sample demonstrates how to use rgb renderer on a raster layer.",
+    "name" : "RGB Renderer",
+    "otherSourceFiles" :  ["MinMaxRow.qml"],
+    "dataItems" : [
+        {
+            "itemId" : "c669445e6cb4490b8306f0c170a9cbb1",
+            "path" : "~/ArcGIS/Runtime/Data/raster/Shasta.tiff"
+        }
+    ]
+}
