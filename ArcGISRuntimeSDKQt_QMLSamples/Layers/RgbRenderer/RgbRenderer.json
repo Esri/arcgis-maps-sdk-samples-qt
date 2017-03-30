@@ -1,0 +1,6 @@
+{
+    "source" :  "RgbRenderer.qml",
+    "description" : "RgbRenderer.html",
+    "thumbnail" : "RgbRenderer.png",
+    "name" : "RGB Renderer"
+}
