@@ -37,7 +37,7 @@ ServiceFeatureTableNoCache::~ServiceFeatureTableNoCache()
 {
 }
 
-ServiceFeatureTableNoCache::init()
+void ServiceFeatureTableNoCache::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ServiceFeatureTableNoCache>("Esri.Samples", 1, 0, "ServiceFeatureTableNoCacheSample");

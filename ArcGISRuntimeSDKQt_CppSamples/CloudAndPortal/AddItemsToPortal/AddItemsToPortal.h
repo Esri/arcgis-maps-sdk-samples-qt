@@ -16,7 +16,7 @@
 #define ADDITEMSTOPORTAL_H
 
 namespace Esri
-  {
+{
   namespace ArcGISRuntime
   {
     class AuthenticationManager;
