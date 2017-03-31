@@ -2,12 +2,12 @@
     "source" :  "LocalServerFeatureLayer",
     "description" : "LocalServerFeatureLayer.html",
     "thumbnail" : "LocalServerFeatureLayer.png",
-    "name" : "Local Server Feature Layer"
-	 "dataItems" : [        
-        {
-            "itemId" : "4e94fec734434d1288e6ebe36c3c461f",
-            "path" : "~/ArcGIS/Runtime/Data/mpk/PointsofInterest.mpk"
-        }
+    "name" : "Local Server Feature Layer",
+	"dataItems" : [        
+		{
+			"itemId" : "4e94fec734434d1288e6ebe36c3c461f",
+			"path" : "~/ArcGIS/Runtime/Data/mpk/PointsofInterest.mpk"
+		}
     ]
 }
 

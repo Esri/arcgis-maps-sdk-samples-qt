@@ -2,8 +2,8 @@
     "source" :  "LocalServerMapImageLayer",
     "description" : "LocalServerMapImageLayer.html",
     "thumbnail" : "LocalServerMapImageLayer.png",
-    "name" : "Local Server Map Image Layer"
-		 "dataItems" : [        
+    "name" : "Local Server Map Image Layer",
+	"dataItems" : [        
         {
             "itemId" : " dee5d8060a6048a4b063484199a9546b",
             "path" : "~/ArcGIS/Runtime/Data/mpk/RelationshipID.mpk"
