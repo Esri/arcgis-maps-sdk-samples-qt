@@ -79,7 +79,7 @@ ServiceAreaSample {
 
         Button {
             id: serviceAreasButton
-            text: "Service Area"
+            text: "Solve"
             enabled: !busy
 
             onClicked: setSolveServiceAreaMode();
