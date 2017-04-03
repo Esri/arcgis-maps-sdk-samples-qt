@@ -105,7 +105,7 @@ void DisplayLayerViewDrawStatus::connectSignals()
   // connect layerViewStateChanged signal
   connect(m_mapView, &MapQuickView::layerViewStateChanged, this, [this](Layer* layer, LayerViewState viewState)
   {
-    int rIndex;
+    int rIndex = 0;
 
     // find index in QStringList of that layer
     for (int i = 0; i < m_map->operationalLayers()->size(); ++i)
