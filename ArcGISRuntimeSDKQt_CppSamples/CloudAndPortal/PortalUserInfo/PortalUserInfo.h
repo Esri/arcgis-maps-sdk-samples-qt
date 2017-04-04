@@ -91,9 +91,9 @@ private:
 
   static const QString UNKNOWN;
 
-  Esri::ArcGISRuntime::Credential* m_credential;
-  Esri::ArcGISRuntime::Portal* m_portal;
-  Esri::ArcGISRuntime::PortalUser* m_user;
+  Esri::ArcGISRuntime::Credential* m_credential = nullptr;
+  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+  Esri::ArcGISRuntime::PortalUser* m_user = nullptr;
 };
 
 #endif // PORTALUSERINFO_H
