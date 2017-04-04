@@ -25,7 +25,8 @@
 using namespace Esri::ArcGISRuntime;
 
 ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
-    QQuickItem(parent)
+    QQuickItem(parent),
+    m_portal(new Portal(this))
 {
     AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
@@ -38,23 +39,29 @@ void ShowOrgBasemaps::componentComplete()
 {
     QQuickItem::componentComplete();
 
-    connect(m_portal, &Portal::loadStatusChanged, this, [this](){
-        m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
+    if (m_portal)
+    {
+        connect(m_portal, &Portal::loadStatusChanged, this, [this]()
+        {
+            m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
 
-        emit portalLoadedChanged();
-        emit orgNameChanged();
+            emit portalLoadedChanged();
+            emit orgNameChanged();
 
-        if (m_portalLoaded)
-            m_portal->fetchBasemaps();
-    });
+            if (m_portalLoaded)
+                m_portal->fetchBasemaps();
+        });
 
-    connect(m_portal, &Portal::basemapsChanged, this, [this](){
-        emit basemapsChanged();
-    });
+        connect(m_portal, &Portal::basemapsChanged, this, [this]()
+        {
+            emit basemapsChanged();
+        });
+    }
 
     // find QML MapView component
     m_mapView = findChild<MapQuickView*>("mapView");
-    m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+    if (m_mapView)
+        m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
     emit authManagerChanged();
 }
@@ -66,15 +73,15 @@ bool ShowOrgBasemaps::portalLoaded() const
 
 QString ShowOrgBasemaps::orgName() const
 {
-    if (!portalLoaded() || !m_portal->portalInfo())
-        return "";
+    if (!m_portalLoaded || !m_portal || !m_portal->portalInfo())
+        return QString();
 
     return m_portal->portalInfo()->organizationName();
 }
 
 QAbstractListModel* ShowOrgBasemaps::basemaps() const
 {
-    return m_portal->basemaps();
+    return m_portal ? m_portal->basemaps() : nullptr;
 }
 
 QString ShowOrgBasemaps::mapLoadError() const
@@ -84,6 +91,9 @@ QString ShowOrgBasemaps::mapLoadError() const
 
 void ShowOrgBasemaps::load(bool anonymous)
 {
+    if (!m_portal)
+        return;
+
     if (anonymous)
         m_portal->load();
     else {
@@ -95,7 +105,7 @@ void ShowOrgBasemaps::load(bool anonymous)
 
 void ShowOrgBasemaps::loadSelectedBasemap(int index)
 {
-    if (!m_portal->basemaps())
+    if (!m_portal || !m_portal->basemaps())
         return;
 
     Basemap* selectedBasemap = m_portal->basemaps()->at(index);
@@ -103,19 +113,24 @@ void ShowOrgBasemaps::loadSelectedBasemap(int index)
         return;
 
     if (m_map)
-        m_map->disconnect();
+    {
+        delete m_map;
+        m_map = nullptr;
+    }
 
     m_mapLoadError.clear();
     emit mapLoadErrorChanged();
 
     m_map = new Map(selectedBasemap, this);
 
-    connect(m_map, &Map::errorOccurred, this, [this](){
+    connect(m_map, &Map::errorOccurred, this, [this]()
+    {
         m_mapLoadError = m_map->loadError().message();
         emit mapLoadErrorChanged();
     });
 
-    connect(m_map, &Map::loadStatusChanged, this, [this](){
+    connect(m_map, &Map::loadStatusChanged, this, [this]()
+    {
         if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
             return;
 

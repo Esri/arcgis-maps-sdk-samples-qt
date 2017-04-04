@@ -77,12 +77,12 @@ private:
     void setStatusText(const QString& msg);
     void connectUserSignals();
 
-    Esri::ArcGISRuntime::Portal* m_portal;
-    Esri::ArcGISRuntime::PortalItem* m_item;
-    Esri::ArcGISRuntime::PortalUser* m_user;
-    bool m_itemDeleted;
+    Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+    Esri::ArcGISRuntime::PortalItem* m_item = nullptr;
+    Esri::ArcGISRuntime::PortalUser* m_user = nullptr;
+    bool m_itemDeleted = false;
     QString m_statusText;
-    bool m_busy;
+    bool m_busy = false;
 };
 
 #endif // ADDITEMSTOPORTAL_H
