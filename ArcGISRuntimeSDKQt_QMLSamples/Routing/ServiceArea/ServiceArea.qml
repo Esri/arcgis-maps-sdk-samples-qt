@@ -1,6 +1,6 @@
-// [WriteFile Name=SrviceArea, Category=Routing]
+// [WriteFile Name=ServiceArea, Category=Routing]
 // [Legal]
-// Copyright 17 Esri.
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -200,7 +200,7 @@ Rectangle {
 
         Button {
             id: serviceAreasButton
-            text: "Service Area"
+            text: "Solve"
             enabled: !busy
 
             onClicked: startSolveTask();
