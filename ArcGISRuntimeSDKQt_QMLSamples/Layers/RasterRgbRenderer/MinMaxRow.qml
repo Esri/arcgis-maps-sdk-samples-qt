@@ -22,7 +22,7 @@ Row {
     property double maxRange
     property alias numVals: repeater.model
 
-    function v(index) {
+    function value(index) {
         if (index < numVals)
             return repeater.itemAt(index).value;
 

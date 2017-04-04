@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Layers/RgbRenderer">
-        <file alias="sample.json">RgbRenderer.json</file>
-        <file>RgbRenderer.png</file>
-        <file>RgbRenderer.qml</file>
-        <file>RgbRenderer.html</file>
-    </qresource>
-</RCC>

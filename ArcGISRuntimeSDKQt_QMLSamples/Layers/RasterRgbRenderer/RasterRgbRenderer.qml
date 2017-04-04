@@ -175,17 +175,17 @@ Rectangle {
     function applyRendererSettings(){
         var rgbRenderer = ArcGISRuntimeEnvironment.createObject("RGBRenderer");
 
-        if (stretchTypeCombo.currentText == minMax){
-            minMaxParams.minValues = [minMaxMin.v(0), minMaxMin.v(1), minMaxMin.v(2)];
-            minMaxParams.maxValues = [minMaxMax.v(0), minMaxMax.v(1), minMaxMax.v(2)];
+        if (stretchTypeCombo.currentText === minMax){
+            minMaxParams.minValues = [minMaxMin.value(0), minMaxMin.value(1), minMaxMin.value(2)];
+            minMaxParams.maxValues = [minMaxMax.value(0), minMaxMax.value(1), minMaxMax.value(2)];
             rgbRenderer.stretchParameters = minMaxParams;
         }
-        else if (stretchTypeCombo.currentText == percentClip){
-            percentClipParams.min =  percentClipMin.v(0);
-            percentClipParams.max = 100 - percentClipMax.v(0);
+        else if (stretchTypeCombo.currentText === percentClip){
+            percentClipParams.min =  percentClipMin.value(0);
+            percentClipParams.max = 100 - percentClipMax.value(0);
             rgbRenderer.stretchParameters = percentClipParams;
         }
-        else if (stretchTypeCombo.currentText == stdDeviation){
+        else if (stretchTypeCombo.currentText === stdDeviation){
             stdDevParams.factor =  sdFactor.value;
             rgbRenderer.stretchParameters = stdDevParams;
         }

@@ -1,7 +1,7 @@
 {
     "source" :  "RasterRgbRenderer.qml",
     "description" : "This sample demonstrates how to use rgb renderer on a raster layer.",
-    "name" : "RGB Renderer",
+    "name" : "RGB renderer",
     "otherSourceFiles" :  ["MinMaxRow.qml"],
     "dataItems" : [
         {

@@ -19,35 +19,35 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Map;
-class MapQuickView;
-class RasterLayer;
-}
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class RasterLayer;
+  }
 }
 
 #include <QQuickItem>
 
 class RasterRgbRenderer : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit RasterRgbRenderer(QQuickItem* parent = nullptr);
-    ~RasterRgbRenderer();
+  explicit RasterRgbRenderer(QQuickItem* parent = nullptr);
+  ~RasterRgbRenderer();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
 
-    Q_INVOKABLE void applyMinMax(double min0, double min1, double min2, double max0, double max1, double max2);
-    Q_INVOKABLE void applyPercentClip(double min, double max);
-    Q_INVOKABLE void applyStandardDeviation(double factor);
+  Q_INVOKABLE void applyMinMax(double min0, double min1, double min2, double max0, double max1, double max2);
+  Q_INVOKABLE void applyPercentClip(double min, double max);
+  Q_INVOKABLE void applyStandardDeviation(double factor);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
-    QString m_dataPath;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
+  QString m_dataPath;
 };
 
 #endif // RGBRENDERER_H

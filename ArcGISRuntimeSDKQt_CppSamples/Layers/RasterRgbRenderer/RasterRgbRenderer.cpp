@@ -25,13 +25,12 @@
 #include "RGBRenderer.h"
 #include "StandardDeviationStretchParameters.h"
 
-#include <QStringListModel>
 #include <QQmlProperty>
 
 using namespace Esri::ArcGISRuntime;
 
 RasterRgbRenderer::RasterRgbRenderer(QQuickItem* parent /* = nullptr */):
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -41,40 +40,40 @@ RasterRgbRenderer::~RasterRgbRenderer()
 
 void RasterRgbRenderer::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
-    m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // Create the raster and raster layer
-    m_dataPath = QUrl(QQmlProperty::read(this, "dataPath").toString()).toLocalFile();
-    Raster* raster = new Raster(m_dataPath + "/Shasta.tif", this);
-    m_rasterLayer = new RasterLayer(raster, this);
+  // Create the raster and raster layer
+  m_dataPath = QUrl(QQmlProperty::read(this, "dataPath").toString()).toLocalFile();
+  Raster* raster = new Raster(m_dataPath + "/Shasta.tif", this);
+  m_rasterLayer = new RasterLayer(raster, this);
 
-    // Add the raster to the map
-    Basemap* basemap = new Basemap(m_rasterLayer, this);
-    Map* map = new Map(basemap, this);
-    m_mapView->setMap(map);
+  // Add the raster to the map
+  Basemap* basemap = new Basemap(m_rasterLayer, this);
+  Map* map = new Map(basemap, this);
+  m_mapView->setMap(map);
 }
 
 void RasterRgbRenderer::applyMinMax(double min0, double min1, double min2, double max0, double max1, double max2)
 {
-    MinMaxStretchParameters stretchParams(QList<double>{min0, min1, min2}, QList<double>{max0, max1, max2});
-    RGBRenderer* renderer = new RGBRenderer(stretchParams, this);
-    m_rasterLayer->setRenderer(renderer);
+  MinMaxStretchParameters stretchParams(QList<double>{min0, min1, min2}, QList<double>{max0, max1, max2});
+  RGBRenderer* renderer = new RGBRenderer(stretchParams, this);
+  m_rasterLayer->setRenderer(renderer);
 }
 
 void RasterRgbRenderer::applyPercentClip(double min, double max)
 {
-    PercentClipStretchParameters stretchParams(min, max);
-    RGBRenderer* renderer = new RGBRenderer(stretchParams, this);
-    m_rasterLayer->setRenderer(renderer);
+  PercentClipStretchParameters stretchParams(min, max);
+  RGBRenderer* renderer = new RGBRenderer(stretchParams, this);
+  m_rasterLayer->setRenderer(renderer);
 }
 
 void RasterRgbRenderer::applyStandardDeviation(double factor)
 {
-    StandardDeviationStretchParameters stretchParams(factor);
-    RGBRenderer* renderer = new RGBRenderer(stretchParams, this);
-    m_rasterLayer->setRenderer(renderer);
+  StandardDeviationStretchParameters stretchParams(factor);
+  RGBRenderer* renderer = new RGBRenderer(stretchParams, this);
+  m_rasterLayer->setRenderer(renderer);
 }

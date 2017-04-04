@@ -151,14 +151,14 @@ RasterRgbRendererSample {
     }
 
     function applyRendererSettings(){
-        if (stretchTypeCombo.currentText == minMax){
-            applyMinMax(minMaxMin.v(0), minMaxMin.v(1), minMaxMin.v(2),
-                        minMaxMax.v(0), minMaxMax.v(1), minMaxMax.v(2));
+        if (stretchTypeCombo.currentText === minMax){
+            applyMinMax(minMaxMin.value(0), minMaxMin.value(1), minMaxMin.value(2),
+                        minMaxMax.value(0), minMaxMax.value(1), minMaxMax.value(2));
         }
-        else if (stretchTypeCombo.currentText == percentClip){
-            applyPercentClip(percentClipMin.v(0), 100 - percentClipMax.v(0));
+        else if (stretchTypeCombo.currentText === percentClip){
+            applyPercentClip(percentClipMin.value(0), 100 - percentClipMax.value(0));
         }
-        else if (stretchTypeCombo.currentText == stdDeviation){
+        else if (stretchTypeCombo.currentText === stdDeviation){
             applyStandardDeviation(sdFactor.value);
         }
     }
