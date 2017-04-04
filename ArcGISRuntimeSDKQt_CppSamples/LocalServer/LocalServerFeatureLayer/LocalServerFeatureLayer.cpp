@@ -66,7 +66,10 @@ void LocalServerFeatureLayer::componentComplete()
   if (LocalServer::instance()->isInstallValid())
   {
     connectSignals();
-    LocalServer::start();
+    if (LocalServer::status() == LocalServerStatus::Started)
+      m_localFeatureService->start();
+    else
+      LocalServer::start();
   }
 }
 

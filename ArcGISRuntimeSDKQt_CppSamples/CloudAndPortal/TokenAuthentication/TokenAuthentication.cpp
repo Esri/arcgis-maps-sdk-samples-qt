@@ -50,6 +50,9 @@ void TokenAuthentication::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
+  if (!m_mapView)
+      return;
+
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic basemap
