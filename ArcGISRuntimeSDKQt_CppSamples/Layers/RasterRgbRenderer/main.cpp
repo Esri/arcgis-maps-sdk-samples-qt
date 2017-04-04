@@ -21,8 +21,6 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
-
 #include "RasterRgbRenderer.h"
 
 #define STRINGIZE(x) #x
@@ -40,9 +38,8 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-  // Register the map view for QML
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<RasterRgbRenderer>("Esri.Samples", 1, 0, "RasterRgbRendererSample");
+  // Initialize the sample
+  RasterRgbRenderer::init();
 
   // Intialize application view
   QQuickView view;

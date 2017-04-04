@@ -38,6 +38,13 @@ RasterRgbRenderer::~RasterRgbRenderer()
 {
 }
 
+void RasterRgbRenderer::init()
+{
+  // Register the map view for QML
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<RasterRgbRenderer>("Esri.Samples", 1, 0, "RasterRgbRendererSample");
+}
+
 void RasterRgbRenderer::componentComplete()
 {
   QQuickItem::componentComplete();

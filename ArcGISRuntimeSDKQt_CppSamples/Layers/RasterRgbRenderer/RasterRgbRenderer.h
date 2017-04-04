@@ -37,6 +37,8 @@ public:
   explicit RasterRgbRenderer(QQuickItem* parent = nullptr);
   ~RasterRgbRenderer();
 
+  static void init();
+
   void componentComplete() Q_DECL_OVERRIDE;
 
   Q_INVOKABLE void applyMinMax(double min0, double min1, double min2, double max0, double max1, double max2);
