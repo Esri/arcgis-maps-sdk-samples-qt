@@ -26,7 +26,7 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    ClosestFacilitySample.qrc
+    ClosestFacility.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist
