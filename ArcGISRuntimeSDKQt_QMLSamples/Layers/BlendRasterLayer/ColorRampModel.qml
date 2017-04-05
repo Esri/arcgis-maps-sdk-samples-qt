@@ -19,18 +19,18 @@ import QtQuick 2.6
 ListModel {
     ListElement {
         name: "none"
-        value: -1
+        value: ""
     }
     ListElement {
         name: "elevation"
-        value: 0
+        value: "ColorRampElevation"
     }
     ListElement {
         name: "DEM screen"
-        value: 1
+        value: "ColorRampDemScreen"
     }
     ListElement {
         name: "DEM light"
-        value: 2
+        value: "ColorRampDemLight"
     }
 }

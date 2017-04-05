@@ -149,13 +149,10 @@ Rectangle {
     }
 
     function getColorRamp() {
-        if (colorRampCtrl.value() === 1)
-            return ArcGISRuntimeEnvironment.createObject("ColorRampElevation");
-        else if (colorRampCtrl.value() === 1)
-            return ArcGISRuntimeEnvironment.createObject("ColorRampDemScreen");
-        else if (colorRampCtrl.value() === 1)
-            return ArcGISRuntimeEnvironment.createObject("ColorRampDemLight");
+        if (colorRampCtrl.value().length === 0)
+            return null;
 
-        return null;
+        console.log(colorRampCtrl.value());
+        return ArcGISRuntimeEnvironment.createObject(colorRampCtrl.value());
     }
 }
