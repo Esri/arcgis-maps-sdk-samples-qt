@@ -3,6 +3,6 @@
         <file alias="sample.json">ClosestFacility.json</file>
         <file>screenshot.png</file>
         <file>ClosestFacility.qml</file>
-        <file>READEME.md</file>
+        <file>README.md</file>
     </qresource>
 </RCC>
