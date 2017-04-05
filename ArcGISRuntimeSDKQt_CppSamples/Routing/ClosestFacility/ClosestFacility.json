@@ -1,7 +1,7 @@
 {
-    "source" :  "ClosestFacilitySample",
-    "description" : "ClosestFacilitySample.html",
-    "thumbnail" : "ClosestFacilitySample.png",
-    "name" : "Closest facility sample"
+    "source" :  "ClosestFacility",
+    "description" : "ClosestFacility.html",
+    "thumbnail" : "ClosestFacility.png",
+    "name" : "Closest facility"
 }
 

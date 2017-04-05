@@ -1,4 +1,4 @@
-// [WriteFile Name=ClosestFacilitySample, Category=Routing]
+// [WriteFile Name=ClosestFacility, Category=Routing]
 // [Legal]
 // Copyright 2017 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef CLOSESTFACILITYSAMPLE_H
-#define CLOSESTFACILITYSAMPLE_H
+#ifndef CLOSESTFACILITY_H
+#define CLOSESTFACILITY_H
 
 namespace Esri
 {
@@ -36,7 +36,7 @@ namespace Esri
 #include <QQuickItem>
 #include <QUrl>
 
-class ClosestFacilitySample : public QQuickItem
+class ClosestFacility : public QQuickItem
 {
     Q_OBJECT
 
@@ -44,8 +44,8 @@ class ClosestFacilitySample : public QQuickItem
     Q_PROPERTY(QString message READ message NOTIFY messageChanged)
 
 public:
-    explicit ClosestFacilitySample(QQuickItem* parent = nullptr);
-    ~ClosestFacilitySample();
+    explicit ClosestFacility(QQuickItem* parent = nullptr);
+    ~ClosestFacility();
 
     void componentComplete() Q_DECL_OVERRIDE;
 
@@ -76,4 +76,4 @@ private:
     static const QUrl sanDiegoRegion;
 };
 
-#endif // CLOSESTFACILITYSAMPLE_H
+#endif // CLOSESTFACILITY_H

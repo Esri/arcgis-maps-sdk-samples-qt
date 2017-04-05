@@ -24,7 +24,7 @@ CONFIG += c++11
 QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
-TARGET = ClosestFacilitySample
+TARGET = ClosestFacility
 
 ARCGIS_RUNTIME_VERSION = 100.1
 include($$PWD/arcgisruntime.pri)
@@ -32,13 +32,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    ClosestFacilitySample.h
+    ClosestFacility.h
 
 SOURCES += \
     main.cpp \
-    ClosestFacilitySample.cpp
+    ClosestFacility.cpp
 
-RESOURCES += ClosestFacilitySample.qrc
+RESOURCES += ClosestFacility.qrc
 
 #-------------------------------------------------------------------------------
 
