@@ -18,3 +18,11 @@ You can get a hillshade blended with either a colored raster or color ramp.
 - `Raster`
 - `RasterLayer`
 - `BlendRenderer`
+
+## Offline Data
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+
+Link | Local Location
+---------|-------|
+|[Shasta.tif raster](https://www.arcgis.com/home/item.html?id=c669445e6cb4490b8306f0c170a9cbb1)| `<userhome>`/ArcGIS/Runtime/Data/raster/Shasta.tif |
+|[Shasta_Elevation.tif raster](https://www.arcgis.com/home/item.html?id=b051f5c3e01048f3bf11c59b41507896)| `<userhome>`/ArcGIS/Runtime/Data/raster/Shasta_Elevation.tif |
