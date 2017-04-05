@@ -13,55 +13,24 @@
 # limitations under the License.
 #-------------------------------------------------
 
-mac {
-    cache()
-}
+TEMPLATE = app
 
-#-------------------------------------------------------------------------------
+QT += qml quick positioning sensors
 
 CONFIG += c++11
-
-QT += opengl qml quick positioning sensors
-
-TEMPLATE = app
-TARGET = ClosestFacilitySample
 
 ARCGIS_RUNTIME_VERSION = 100.1
 include($$PWD/arcgisruntime.pri)
 
-#-------------------------------------------------------------------------------
-
-HEADERS += \
-    ClosestFacilitySample.h
-
 SOURCES += \
-    main.cpp \
-    ClosestFacilitySample.cpp
+    main.cpp
 
-RESOURCES += ClosestFacilitySample.qrc
-
-#-------------------------------------------------------------------------------
-
-win32 {
-    LIBS += \
-        Ole32.lib
-}
+RESOURCES += \
+    ClosestFacility.qrc
 
 ios {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-
-    OTHER_FILES += \
-        $$PWD/Info.plist
-
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
 
-android {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-}
-
-macx {
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.11
-}
+# Default rules for deployment.
+include(deployment.pri)
