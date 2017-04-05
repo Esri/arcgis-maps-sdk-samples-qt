@@ -1,9 +1,0 @@
-{
-    "source" :  "ClosestFacilitySample.qml",
-    "otherSourceFiles" : [
-        "ClosestFacilitySample.h",
-        "ClosestFacilitySample.cpp"
-    ],
-    "name" : "Closest Facility Sample"
-}
-

@@ -1,4 +1,4 @@
-// [WriteFile Name=ClosestFacilitySample, Category=Routing]
+// [WriteFile Name=ClosestFacility, Category=Routing]
 // [Legal]
 // Copyright 2017 Esri.
 
@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "ClosestFacilitySample.h"
+#include "ClosestFacility.h"
 
 #include "ClosestFacilityParameters.h"
 #include "ClosestFacilityTask.h"
@@ -27,29 +27,30 @@
 
 using namespace Esri::ArcGISRuntime;
 
-const QUrl ClosestFacilitySample::facilityImageUrl(
+const QUrl ClosestFacility::facilityImageUrl(
     QStringLiteral("http://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"));
 
-const QUrl ClosestFacilitySample::sanDiegoRegion(
+const QUrl ClosestFacility::sanDiegoRegion(
     QStringLiteral("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"));
 
-ClosestFacilitySample::ClosestFacilitySample(QQuickItem* parent /* = nullptr */):
+ClosestFacility::ClosestFacility(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
   m_task(new ClosestFacilityTask(sanDiegoRegion, this))
 {
 }
 
-ClosestFacilitySample::~ClosestFacilitySample()
+ClosestFacility::~ClosestFacility()
 {
 }
 
-void ClosestFacilitySample::init()
+void ClosestFacility::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ClosestFacilitySample>("Esri.Samples", 1, 0, "ClosestFacilitySample");
 }
 
-void ClosestFacilitySample::componentComplete()
+
+void ClosestFacility::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -83,17 +84,17 @@ void ClosestFacilitySample::componentComplete()
   m_task->load();
 }
 
-bool ClosestFacilitySample::busy() const
+bool ClosestFacility::busy() const
 {
   return m_busy;
 }
 
-QString ClosestFacilitySample::message() const
+QString ClosestFacility::message() const
 {
   return m_message;
 }
 
-void ClosestFacilitySample::setBusy(bool val)
+void ClosestFacility::setBusy(bool val)
 {
   if (m_busy == val)
     return;
@@ -104,7 +105,7 @@ void ClosestFacilitySample::setBusy(bool val)
   emit messageChanged();
 }
 
-void ClosestFacilitySample::createFacilities()
+void ClosestFacility::createFacilities()
 {
   // List of facilities to be placed around San Diego area
   m_facilities.append(Facility(Point(-1.3042129900625112E7, 3860127.9479775648, SpatialReference::webMercator())));
@@ -116,7 +117,7 @@ void ClosestFacilitySample::createFacilities()
   m_facilities.append(Facility(Point(-1.3049023883956768E7, 3861993.789732541, SpatialReference::webMercator())));
 }
 
-void ClosestFacilitySample::createGraphics()
+void ClosestFacility::createGraphics()
 {
   // create a symbol for the graphics
   PictureMarkerSymbol* facilitySymbol = new PictureMarkerSymbol(facilityImageUrl, this);
@@ -141,7 +142,7 @@ void ClosestFacilitySample::createGraphics()
   m_mapView->graphicsOverlays()->append(m_resultsOverlay);
 }
 
-void ClosestFacilitySample::setupRouting()
+void ClosestFacility::setupRouting()
 {
   connect(m_task, &ClosestFacilityTask::createDefaultParametersCompleted, this, [this](
           QUuid, Esri::ArcGISRuntime::ClosestFacilityParameters defaultParameters)
@@ -196,7 +197,7 @@ void ClosestFacilitySample::setupRouting()
   m_task->createDefaultParameters();
 }
 
-void ClosestFacilitySample::solveRoute(const Esri::ArcGISRuntime::Point& incidentPoint)
+void ClosestFacility::solveRoute(const Esri::ArcGISRuntime::Point& incidentPoint)
 {
   m_facilityParams.clearIncidents();
   m_facilityParams.setIncidents(QList<Incident> {Incident(incidentPoint)});
@@ -205,4 +206,3 @@ void ClosestFacilitySample::solveRoute(const Esri::ArcGISRuntime::Point& inciden
   // find the closest facility to the incident
   m_task->solveClosestFacility(m_facilityParams);
 }
-

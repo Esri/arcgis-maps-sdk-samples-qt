@@ -21,7 +21,7 @@
 #include <Windows.h>
 #endif
 
-#include "ClosestFacilitySample.h"
+#include "ClosestFacility.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Initialize the sample
-  ClosestFacilitySample::init();
+  ClosestFacility::init();
 
   // Intialize application view
   QQuickView view;
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Maps/ClosestFacilitySample/ClosestFacilitySample.qml"));
+  view.setSource(QUrl("qrc:/Samples/Routing/ClosestFacility/ClosestFacility.qml"));
 
   view.show();
 
