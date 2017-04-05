@@ -1,11 +1,11 @@
 {
     "source" :  "RgbRenderer.qml",
-    "description" : "This sample demonstrates how to use rgb renderer on a raster layer.",
     "name" : "RGB renderer",
     "otherSourceFiles" :  [
         "RasterRgbRenderer.h",
         "RasterRgbRenderer.cpp",
-        "MinMaxRow.qml"],
+        "MinMaxRow.qml"
+    ],
     "dataItems" : [
         {
             "itemId" : "c669445e6cb4490b8306f0c170a9cbb1",
