@@ -46,7 +46,7 @@ ClosestFacility::~ClosestFacility()
 void ClosestFacility::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<ClosestFacilitySample>("Esri.Samples", 1, 0, "ClosestFacilitySample");
+  qmlRegisterType<ClosestFacility>("Esri.Samples", 1, 0, "ClosestFacilitySample");
 }
 
 
