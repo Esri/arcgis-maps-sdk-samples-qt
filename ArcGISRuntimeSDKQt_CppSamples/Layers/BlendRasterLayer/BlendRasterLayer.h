@@ -21,6 +21,7 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class Basemap;
     class Map;
     class MapQuickView;
     class Raster;
@@ -45,9 +46,15 @@ public:
   Q_INVOKABLE void applyRenderSettings(double altitude, double azimuth, int slopeType, int colorRampType);
 
 private:
+
+  Esri::ArcGISRuntime::RasterLayer* rasterLayer(bool useColorRamp);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
+  Esri::ArcGISRuntime::Basemap* m_basemapColorRamp = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
+  Esri::ArcGISRuntime::RasterLayer* m_rasterLayerColorRamp = nullptr;
   Esri::ArcGISRuntime::Raster* m_elevationRaster = nullptr;
   QString m_dataPath;
 };

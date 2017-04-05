@@ -52,19 +52,27 @@ void BlendRasterLayer::componentComplete()
 
   // Create the raster and raster layer
   m_dataPath = QUrl(QQmlProperty::read(this, "dataPath").toString()).toLocalFile();
+
   Raster* raster = new Raster(m_dataPath + "/Shasta.tif", this);
   m_rasterLayer = new RasterLayer(raster, this);
 
   m_elevationRaster = new Raster(m_dataPath + "/Shasta_Elevation.tif", this);
+  m_rasterLayerColorRamp = new RasterLayer(m_elevationRaster, this);
 
   // Add the raster to the map
-  Basemap* basemap = new Basemap(m_rasterLayer, this);
-  Map* map = new Map(basemap, this);
-  m_mapView->setMap(map);
+  m_basemap = new Basemap(m_rasterLayer, this);
+  m_basemapColorRamp = new Basemap(m_rasterLayerColorRamp, this);
+  m_map = new Map(m_basemap, this);
+  m_mapView->setMap(m_map);
 }
 
 void BlendRasterLayer::applyRenderSettings(double altitude, double azimuth, int slopeTypeVal, int colorRampTypeVal)
 {
+  PresetColorRampType colorRampType = static_cast<PresetColorRampType>(colorRampTypeVal);
+  RasterLayer* rasterLyr = rasterLayer(colorRampType != PresetColorRampType::None);
+  if (!rasterLyr)
+    return;
+
   QList<double> outputMinValues{9};
   QList<double> outputMaxValues{255};
   QList<double> sourceMinValues;
@@ -75,7 +83,6 @@ void BlendRasterLayer::applyRenderSettings(double altitude, double azimuth, int 
   double pixelSizeFactor = 1.;
   double pixelSizePower = 1.;
   int outputBitDepth = 8;
-  PresetColorRampType colorRampType = static_cast<PresetColorRampType>(colorRampTypeVal);
   ColorRamp* colorRamp = ColorRamp::create(colorRampType, 800, this);
   SlopeType slopeType = static_cast<SlopeType>(slopeTypeVal);
 
@@ -96,5 +103,11 @@ void BlendRasterLayer::applyRenderSettings(double altitude, double azimuth, int 
                                               outputBitDepth,
                                               this);
 
-  m_rasterLayer->setRenderer(renderer);
+  rasterLyr->setRenderer(renderer);
+}
+
+RasterLayer* BlendRasterLayer::rasterLayer(bool useColorRamp)
+{
+  m_map->setBasemap(useColorRamp ? m_basemapColorRamp : m_basemap);
+  return useColorRamp ? m_rasterLayerColorRamp : m_rasterLayer;
 }
