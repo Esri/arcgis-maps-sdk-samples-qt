@@ -41,14 +41,31 @@ Rectangle {
     MapView {
         anchors.fill: parent
         Map {
-            Basemap {
-                RasterLayer {
-                    id: rasterLayer
+            id: map
+            basemap: colorRampCtrl.value().length === 0 ?
+                         basemap :
+                         basemapColorRamp
+        }
+    }
 
-                    Raster {
-                        path: dataPath + "/Shasta.tif"
-                    }
-                }
+    Basemap {
+        id: basemap
+        RasterLayer {
+            id: rasterLayer
+            Raster {
+                id: baseRaster
+                path: dataPath + "/Shasta.tif"
+            }
+        }
+    }
+
+    Basemap {
+        id: basemapColorRamp
+        RasterLayer {
+            id: rasterLayerColorRamp
+
+            Raster {
+                path: dataPath + "/Shasta_Elevation.tif"
             }
         }
     }
@@ -145,14 +162,23 @@ Rectangle {
         blendRenderer.sourceMaxValues = [];
         blendRenderer.sourceMinValues = [];
 
-        rasterLayer.renderer = blendRenderer;
+        applyRenderer(blendRenderer);
+    }
+
+    function applyRenderer(blendRenderer) {
+        if (colorRampCtrl.value().length === 0)
+            rasterLayer.renderer = blendRenderer;
+        else
+            rasterLayerColorRamp.renderer = blendRenderer;
     }
 
     function getColorRamp() {
         if (colorRampCtrl.value().length === 0)
             return null;
 
-        console.log(colorRampCtrl.value());
-        return ArcGISRuntimeEnvironment.createObject(colorRampCtrl.value());
+        var colorRamp = ArcGISRuntimeEnvironment.createObject(colorRampCtrl.value());
+        colorRamp.size = 800;
+
+        return colorRamp;
     }
 }
