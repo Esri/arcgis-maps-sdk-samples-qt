@@ -1,5 +1,5 @@
 {
-    "source" :  "ClosestFacility.qnl",
+    "source" :  "ClosestFacility.qml",
     "otherSourceFiles" : [
         "ClosestFacility.h",
         "ClosestFacility.cpp"
