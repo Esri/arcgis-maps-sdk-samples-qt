@@ -1,6 +1,5 @@
 {
     "source" :  "BlendRasterLayer.qml",
-    "description" : "This sample demonstrates how to use blend renderer on a raster layer.",
     "name" : "Blend raster layer",
     "otherSourceFiles" :  [
         "ColorRampModel.qml",

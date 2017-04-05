@@ -108,14 +108,14 @@ Rectangle {
             width: parent.width
             spacing: 16 * scaleFactor
 
-            TextWithSlider{
+            TextWithSlider {
                 id: altitudeCtrl
                 label: "altitde"
                 min: 0
                 max: 90
             }
 
-            TextWithSlider{
+            TextWithSlider {
                 id: azimithCtrl
                 label: "azimuth"
                 min: 0
@@ -147,7 +147,7 @@ Rectangle {
         Behavior on width { PropertyAnimation { duration: 500 } }
     }
 
-    function applyRendererSettings(){
+    function applyRendererSettings() {
         var blendRenderer = ArcGISRuntimeEnvironment.createObject("BlendRenderer");
         blendRenderer.elevationRaster = elevationRaster;
         blendRenderer.altitude = altitudeCtrl.sliderValue;

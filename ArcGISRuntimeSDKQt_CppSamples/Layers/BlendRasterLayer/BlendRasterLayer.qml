@@ -77,14 +77,14 @@ BlendRasterLayerSample {
             width: parent.width
             spacing: 16 * scaleFactor
 
-            TextWithSlider{
+            TextWithSlider {
                 id: altitudeCtrl
                 label: "altitde"
                 min: 0
                 max: 90
             }
 
-            TextWithSlider{
+            TextWithSlider {
                 id: azimithCtrl
                 label: "azimuth"
                 min: 0
@@ -108,18 +108,14 @@ BlendRasterLayerSample {
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     editingRenderer = false;
-                    applyRendererSettings();
+                    applyRenderSettings(altitudeCtrl.sliderValue,
+                                        azimithCtrl.sliderValue,
+                                        slopeTypeCtrl.value(),
+                                        colorRampCtrl.value());
                 }
             }
         }
 
         Behavior on width { PropertyAnimation { duration: 500 } }
-    }
-
-    function applyRendererSettings(){
-        applyRenderSettings(altitudeCtrl.sliderValue,
-                            azimithCtrl.sliderValue,
-                            slopeTypeCtrl.value(),
-                            colorRampCtrl.value());
     }
 }

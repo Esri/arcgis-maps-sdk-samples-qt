@@ -23,8 +23,7 @@ Row {
     property alias label: labelText.text
     property alias model: combo.model
 
-    function value()
-    {
+    function value() {
         return model.get(combo.currentIndex).value;
     }
 

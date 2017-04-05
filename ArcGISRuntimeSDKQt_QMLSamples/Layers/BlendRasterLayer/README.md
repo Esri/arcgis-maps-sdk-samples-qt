@@ -1,4 +1,4 @@
-# RGB Renderer
+# Blend raster layer
 
 This sample demonstrates how to use blend renderer on a raster layer.
 You can get a hillshade blended with either a colored raster or color ramp.
