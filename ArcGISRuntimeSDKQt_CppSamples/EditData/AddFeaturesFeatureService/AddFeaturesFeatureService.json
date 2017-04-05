@@ -1,9 +1,9 @@
 {
     "source" :  "AddFeaturesFeatureService.qml",
     "otherSourceFiles" : [
-		"AddFeaturesFeatureService.h",
-		"AddFeaturesFeatureService.cpp"
-	],
+        "AddFeaturesFeatureService.h",
+        "AddFeaturesFeatureService.cpp"
+    ],
     "name" : "Add features feature service"
 }
 

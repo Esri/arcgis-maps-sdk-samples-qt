@@ -1,9 +1,9 @@
 {
     "source" :  "GOSymbols.qml",
     "otherSourceFiles" : [
-		"GOSymbols.h",
-		"GOSymbols.cpp"
-	],
+        "GOSymbols.h",
+        "GOSymbols.cpp"
+    ],
     "name" : "Add graphics with symbols"
 }
 

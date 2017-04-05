@@ -1,9 +1,9 @@
 {
     "source" :  "AnalyzeViewshed.qml",
     "otherSourceFiles" : [
-		"AnalyzeViewshed.h",
-		"AnalyzeViewshed.cpp"
-	],
+        "AnalyzeViewshed.h",
+        "AnalyzeViewshed.cpp"
+    ],
     "name" : "Analyze viewshed"
 }
 

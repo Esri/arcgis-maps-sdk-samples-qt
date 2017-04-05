@@ -1,9 +1,9 @@
 {
     "source" :  "PortalUserInfo.qml",
     "otherSourceFiles" : [
-		"PortalUserInfo.h",
-		"PortalUserInfo.cpp"
-	],
+        "PortalUserInfo.h",
+        "PortalUserInfo.cpp"
+    ],
     "name" : "Portal user info"
 }
 
