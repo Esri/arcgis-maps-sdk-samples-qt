@@ -53,16 +53,14 @@ FormatCoordinatesSample {
             width: 1
         }
 
-//        Column {
-//            spacing: 10 * scaleFactor
-//            anchors.fill: parent
-//            anchors.margins: 10 * scaleFactor
+        ListView {
+            id: coordinatesListView
 
-            ListView {
-                model: coordinateTextModel
-                delegate: coordinateTextDelegate
-            }
-//        }
+            width: 200 * scaleFactor
+            height: 100 * scaleFactor
+            model: coordinateTextModel
+            delegate: coordinateTextDelegate
+        }
     }
 
     // Neatline rectangle
@@ -110,6 +108,9 @@ FormatCoordinatesSample {
             TextField {
                 width: coordinateTextWidth
                 placeholderText: startText
+                onAccepted: {
+                    setGraphicFromText(name, text);
+                }
             }
         }
     }

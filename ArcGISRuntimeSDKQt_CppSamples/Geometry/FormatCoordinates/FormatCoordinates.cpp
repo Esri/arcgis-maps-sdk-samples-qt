@@ -1,6 +1,6 @@
 // [WriteFile Name=DisplayMap, Category=Geometry]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,11 +19,13 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Basemap.h"
-#include "Point.h"
 #include "CoordinateFormatter.h"
 #include "SimpleMarkerSymbol.h"
 #include "Graphic.h"
+#include "CoordinateFormatter.h"
+#include "Point.h"
 
+#include <QDebug>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -45,25 +47,56 @@ void FormatCoordinates::componentComplete()
 
     // create a new basemap instance
     Basemap* basemap = Basemap::imagery(this);
+
     // create a new map instance
     m_map = new Map(basemap, this);
+
+
     // create a graphic and place in a graphic overlay
     Point geometry(m_startLongitude, m_startLatitude, m_map->spatialReference());
-    SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(this);
-
+    SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 15.0, this);
     Graphic* graphic = new Graphic(geometry, symbol, this);
+
+    // create a new graphics overlay instance
+    // and add it to the map view
+    GraphicsOverlay* go = new GraphicsOverlay(this);
+    go->graphics()->append(graphic);
+    m_mapView->graphicsOverlays()->append(go);
+
     // set map on the map view
     m_mapView->setMap(m_map);
 }
 
-//void FormatCoordinates::setPointFromText(QString textType, QString text)
-//{
-//  Point = CoordinateFormatter.fromUtm(text, m_map->spatialReference(),UtmConversionMode::NorthSouthIndicators);
+void FormatCoordinates::setGraphicFromText(QString textType, QString text)
+{
+  Point point = createPointFromText(textType, text);
+  if (!point.isEmpty()) {
+    m_mapView->graphicsOverlays()->at(0)->graphics()->at(0)->setGeometry(point);
+  }
+}
 
+Point FormatCoordinates::createPointFromText(QString textType, QString text)
+{
+  if ("Decimal Degrees" == textType
+   || "Degrees Minutes Seconds" == textType) {
+     return CoordinateFormatter::fromLatitudeLongitude(text, m_map->spatialReference());
+  }
+    else if ("UTM" == textType) {
+     return CoordinateFormatter::fromUtm(text, m_map->spatialReference(), UtmConversionMode::LatitudeBandIndicators);
 
-//}
+  }
+  else if ("USNG"== textType) {
+    return CoordinateFormatter::fromUsng(text, m_map->spatialReference());
+  }
+  else {
+    return Point();
+  }
+}
 
-//void FormatCoordinates::setTextFromPoint(Point point)
-//{
+void FormatCoordinates::setTextFromGraphic(Esri::ArcGISRuntime::Point point)
+{
+// Use QQuickItem *QQuickView::rootObject() const  ???
 
-//}
+// How would this work with the ListView?
+
+}

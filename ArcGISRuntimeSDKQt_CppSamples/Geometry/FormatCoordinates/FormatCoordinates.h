@@ -1,6 +1,6 @@
 // [WriteFile Name=FormatCoordinates, Category=Geometry]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ namespace Esri
         class Map;
         class MapQuickView;
         class GraphicsOverlay;
+        class Point;
     }
 }
 
@@ -38,8 +39,12 @@ public:
     ~FormatCoordinates();
 
     void componentComplete() Q_DECL_OVERRIDE;
+    Q_INVOKABLE void setGraphicFromText(QString textType, QString text);
 
 private:
+    Esri::ArcGISRuntime::Point createPointFromText(QString textType, QString text);
+    void setTextFromGraphic(Esri::ArcGISRuntime::Point point);
+
     Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
     Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
