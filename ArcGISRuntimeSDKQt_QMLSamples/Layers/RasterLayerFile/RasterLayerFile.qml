@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
 import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
@@ -28,7 +27,8 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
-    property var newRasterLayer: null
+
+    property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
 
     MapView {
         id: mapView
@@ -74,19 +74,18 @@ Rectangle {
         Button {
             text: "Add Raster"
             width: 100 * scaleFactor
-            onClicked: fileDialog.open();
+            onClicked: loader.open();
         }
     }
 
-    FileDialog {
-        id: fileDialog
-
-        // only display supported raster formats
-        nameFilters: ["Raster files (*.img *.I12 *.dt0 *.dt1 *.dt2 *.tc2 *.geotiff *.tif *.hr1 *.jpg *.jpeg *.jp2 *.ntf *.png *.i21 *.ovr)"]
+    RasterLoader {
+        id: loader
+        anchors.fill: rootRectangle
         folder: dataPath
+        supportedExtensions: supportedFormats
 
-        onAccepted: {
-            createAndAddRasterLayer(fileDialog.fileUrl)
+        onRasterFileChosen: {
+            createAndAddRasterLayer(url);
         }
     }
 

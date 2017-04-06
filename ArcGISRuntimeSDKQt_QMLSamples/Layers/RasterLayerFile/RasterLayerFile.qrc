@@ -4,5 +4,6 @@
         <file>RasterLayerFile.png</file>
         <file>RasterLayerFile.qml</file>
         <file>RasterLayerFile.html</file>
+        <file>RasterLoader.qml</file>
     </qresource>
 </RCC>
