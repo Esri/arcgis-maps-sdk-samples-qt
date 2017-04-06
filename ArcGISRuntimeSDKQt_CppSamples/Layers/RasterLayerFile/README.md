@@ -1,22 +1,33 @@
 # Raster layer (file)
 
-This sample demonstrates how to display local file based raster datasets with a RasterLayer.
+Demonstrates how to create and use a raster layer made from a local raster file.
 
 ![](screenshot.png)
 
+## How to use the sample
+- The sample will load with a map showing a basemap and a loaded raster layer.
+- Tap on the "Add Raster" button to browse for a new raster file.
+- On desktop platforms the sample also allows you to drag and drop supported raster files to load.
+
 ## How it works
-A `Raster` is created from the local file URL of a raster dataset. Next, this `Raster` is used to construct a new `RasterLayer`. Finally, the `RasterLayer` is added to a new `Basemap`, and the `Basemap` is added to a `Map`. Press the Add Raster button to navigate to a new raster dataset, and it will be added to the Map.
+To add a `RasterLayer` as an operational layer from a local raster file:
+
+- Create a `Map` with a `Basemap`. Once this has been loaded, raster layers will be re-projected on the fly to match the map.
+- Create a `Raster` from a raster file.
+- Create a `RasterLayer` from the raster.
+- Add it as an operational layer with `m_map->operationalLayers->append(rasterLayer)`.
+- Once the raster layer has been successfully loaded, zoom the map view to an appropriate extent to see it.
 
 ## Features
-- Raster
-- RasterLayer
-- Basemap
-- Map
-- MapView
+- `Raster`
+- `RasterLayer`
+- `Basemap`
+- `Map`
+- `MapQuickView`
 
 ## Offline Data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
 ---------|-------|
-|[Colorado DEM](https://www.arcgis.com/home/item.html?id=8ad45e34ccd4412f8c2ad7629fb43a24)| `<userhome>`/ArcGIS/Runtime/Data/raster/Colorado.tif |
+|[Shasta.tif raster](https://www.arcgis.com/home/item.html?id=c669445e6cb4490b8306f0c170a9cbb1)| `<userhome>`/ArcGIS/Runtime/Data/raster/Shasta.tif |

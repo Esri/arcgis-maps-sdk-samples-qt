@@ -27,7 +27,6 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
-
     property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
 
     MapView {
