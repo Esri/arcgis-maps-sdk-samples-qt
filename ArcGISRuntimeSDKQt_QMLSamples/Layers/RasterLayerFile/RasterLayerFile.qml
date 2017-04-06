@@ -59,23 +59,20 @@ Rectangle {
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
-            mapView.setViewpointGeometryAndPadding(fullExtent, 50);
+            mapView.setViewpointCenterAndScale(fullExtent.center, 80000);
         }
     }
 
-    Column {
+    Button {
         anchors {
-            left: parent.left
-            top: parent.top
-            margins: 15
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            margins: 24 * scaleFactor
         }
-        spacing: 10
 
-        Button {
-            text: "Add Raster"
-            width: 100 * scaleFactor
-            onClicked: loader.open();
-        }
+        text: "Add Raster"
+        width: 100 * scaleFactor
+        onClicked: loader.open();
     }
 
     RasterLoader {
@@ -93,15 +90,5 @@ Rectangle {
         map.operationalLayers.clear();
         raster.path = rasterUrl;
         map.operationalLayers.append(rasterLayer);
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }
