@@ -1,7 +1,9 @@
 {
-    "source" :  "DisplayDeviceLocation",
-    "description" : "DisplayDeviceLocation.html",
-    "thumbnail" : "DisplayDeviceLocation.png",
+    "source" :  "DisplayDeviceLocation.qml",
+    "otherSourceFiles" : [
+        "DisplayDeviceLocation.h",
+        "DisplayDeviceLocation.cpp"
+    ],
     "name" : "Display device location"
 }
 

@@ -22,9 +22,9 @@
 using namespace Esri::ArcGISRuntime;
 
 SearchDictionarySymbolStyle::SearchDictionarySymbolStyle(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_dictionarySymbolStyle(nullptr),
-    m_searchResults(nullptr)
+  QQuickItem(parent),
+  m_dictionarySymbolStyle(nullptr),
+  m_searchResults(nullptr)
 {
 }
 
@@ -32,40 +32,48 @@ SearchDictionarySymbolStyle::~SearchDictionarySymbolStyle()
 {
 }
 
+void SearchDictionarySymbolStyle::init()
+{
+  qmlRegisterType<SearchDictionarySymbolStyle>("Esri.Samples", 1, 0, "SearchDictionarySymbolStyleSample");
+  qmlRegisterUncreatableType<SymbolStyleSearchResultListModel>("Esri.Samples", 1, 0,
+                                                                                    "SymbolStyleSearchResultListModel",
+                                                                                    "SymbolStyleSearchResultListModel is an uncreatable type");
+}
+
 void SearchDictionarySymbolStyle::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    //Get the data path
-    QString datapath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
+  //Get the data path
+  QString datapath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
 
-    //Create the dictionary from datapath
-    m_dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", datapath, this);
+  //Create the dictionary from datapath
+  m_dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", datapath, this);
 
-    //Connect to the search completed signal of the dictionary
-    connect(m_dictionarySymbolStyle, &DictionarySymbolStyle::searchSymbolsCompleted, this, [this](QUuid, SymbolStyleSearchResultListModel* results)
-    {
-        m_searchResults = results;
-        emit searchResultsListModelChanged();
-        emit searchCompleted(results->size());
-    });
+  //Connect to the search completed signal of the dictionary
+  connect(m_dictionarySymbolStyle, &DictionarySymbolStyle::searchSymbolsCompleted, this, [this](QUuid, SymbolStyleSearchResultListModel* results)
+  {
+    m_searchResults = results;
+    emit searchResultsListModelChanged();
+    emit searchCompleted(results->size());
+  });
 }
 
 SymbolStyleSearchResultListModel* SearchDictionarySymbolStyle::searchResultsListModel() const
 {
-    return m_searchResults;
+  return m_searchResults;
 }
 
 void SearchDictionarySymbolStyle::search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
-                                    const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
-                                    const QStringList& keysSearchParam)
+                                         const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
+                                         const QStringList& keysSearchParam)
 {
-    //Create search parameters and search with the parameters
-    SymbolStyleSearchParameters searchParameters;
-    searchParameters.setCategories(categoriesSearchParam);
-    searchParameters.setKeys(keysSearchParam);
-    searchParameters.setNames(namesSearchParam);
-    searchParameters.setSymbolClasses(classesSearchParam);
-    searchParameters.setTags(tagsSearchParam);
-    m_dictionarySymbolStyle->searchSymbols(searchParameters);
+  //Create search parameters and search with the parameters
+  SymbolStyleSearchParameters searchParameters;
+  searchParameters.setCategories(categoriesSearchParam);
+  searchParameters.setKeys(keysSearchParam);
+  searchParameters.setNames(namesSearchParam);
+  searchParameters.setSymbolClasses(classesSearchParam);
+  searchParameters.setTags(tagsSearchParam);
+  m_dictionarySymbolStyle->searchSymbols(searchParameters);
 }

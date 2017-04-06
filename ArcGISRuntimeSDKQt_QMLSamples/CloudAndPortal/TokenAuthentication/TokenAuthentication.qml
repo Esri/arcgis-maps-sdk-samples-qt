@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import Esri.ArcGISRuntime 100.1
-import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.1
 
 Rectangle {
@@ -24,8 +23,6 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
 
     MapView {
         id: mapView
@@ -57,15 +54,5 @@ Rectangle {
     AuthenticationView {
         anchors.fill: parent
         authenticationManager: AuthenticationManager // set the authenticationManager property
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }

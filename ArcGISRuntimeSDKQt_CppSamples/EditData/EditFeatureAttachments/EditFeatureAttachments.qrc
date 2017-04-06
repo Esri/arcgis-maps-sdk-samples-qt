@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/Samples/EditData/EditFeatureAttachments">
         <file alias="sample.json">EditFeatureAttachments.json</file>
-        <file>EditFeatureAttachments.png</file>
+        <file>screenshot.png</file>
         <file>EditFeatureAttachments.qml</file>
         <file>EditFeatureAttachments.cpp</file>
         <file>EditFeatureAttachments.h</file>
-        <file>EditFeatureAttachments.html</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

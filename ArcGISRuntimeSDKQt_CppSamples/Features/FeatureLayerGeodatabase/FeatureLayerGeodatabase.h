@@ -19,31 +19,32 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class Geodatabase;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class Geodatabase;
+  }
 }
 
 #include <QQuickItem>
 
 class FeatureLayerGeodatabase : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit FeatureLayerGeodatabase(QQuickItem* parent = nullptr);
-    ~FeatureLayerGeodatabase();
+  explicit FeatureLayerGeodatabase(QQuickItem* parent = nullptr);
+  ~FeatureLayerGeodatabase();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
-    QString m_dataPath;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
+  QString m_dataPath;
 };
 
 #endif // FEATURE_LAYER_GEODATABASE_H

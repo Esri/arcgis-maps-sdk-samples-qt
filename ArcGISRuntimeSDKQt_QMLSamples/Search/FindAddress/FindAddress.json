@@ -1,7 +1,6 @@
 {
     "source" :  "FindAddress.qml",
-    "description" : "FindAddress.html",
-    "thumbnail" : "FindAddress.png",
+    "otherSourceFiles" :  [],
     "name" : "Find address"
 }
 

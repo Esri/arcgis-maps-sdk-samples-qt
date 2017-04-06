@@ -1,7 +1,6 @@
 {
     "source" :  "ChangeBasemap.qml",
-    "description" : "ChangeBasemap.html",
-    "thumbnail" : "ChangeBasemap.png",
+    "otherSourceFiles" :  [],
     "name" : "Change basemap"
 }
 

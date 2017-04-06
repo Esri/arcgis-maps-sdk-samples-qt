@@ -21,11 +21,9 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
 
     MapView {
@@ -61,16 +59,6 @@ Rectangle {
                     mapView.setViewpointScale(754479);
                 }
             }
-        }
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

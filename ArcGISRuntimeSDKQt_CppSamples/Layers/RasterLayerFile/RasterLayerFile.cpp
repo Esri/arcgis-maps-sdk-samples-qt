@@ -36,6 +36,12 @@ RasterLayerFile::~RasterLayerFile()
 {
 }
 
+void RasterLayerFile::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<RasterLayerFile>("Esri.Samples", 1, 0, "RasterLayerFileSample");
+}
+
 void RasterLayerFile::componentComplete()
 {
   QQuickItem::componentComplete();

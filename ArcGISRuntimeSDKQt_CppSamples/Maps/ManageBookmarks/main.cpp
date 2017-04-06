@@ -22,51 +22,48 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
-#include "BookmarkListModel.h"
 #include "ManageBookmarks.h"
-#include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
-using namespace Esri::ArcGISRuntime;
-
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
 
 #ifdef Q_OS_WIN
-    // Force usage of OpenGL ES through ANGLE on Windows
-    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+  // Force usage of OpenGL ES through ANGLE on Windows
+  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<ManageBookmarks>("Esri.Samples", 1, 0, "ManageBookmarksSample");
-    //! [Register the list model for QML]
-    qmlRegisterUncreatableType<BookmarkListModel>("Esri.Samples", 1, 0,
-                                                        "BookmarkListModel",
-                                                        "BookmarkListModel is an uncreatable type");
-    //! [Register the list model for QML]
+  // Initialize the sample
+  ManageBookmarks::init();
 
-    // Intialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  /* Leaving in for Doc snippet
+  //! [Register the list model for QML]
+  qmlRegisterUncreatableType<BookmarkListModel>("Esri.Samples", 1, 0,
+                                                "BookmarkListModel",
+                                                "BookmarkListModel is an uncreatable type");
+  //! [Register the list model for QML]
+  */
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-    // Add the Extras path
-    view.engine()->addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
-    // Add the Toolkit path
-    view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Maps/ManageBookmarks/ManageBookmarks.qml"));
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Add the Extras path
+  view.engine()->addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
+  // Add the Toolkit path
+  view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
 
-    view.show();
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/Maps/ManageBookmarks/ManageBookmarks.qml"));
 
-    return app.exec();
+  view.show();
+
+  return app.exec();
 }
 
 

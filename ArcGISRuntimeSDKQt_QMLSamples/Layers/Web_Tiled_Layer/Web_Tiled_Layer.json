@@ -1,6 +1,5 @@
 {
     "source" :  "Web_Tiled_Layer.qml",
-    "description" : "Web_Tiled_Layer.html",
-    "thumbnail" : "Web_Tiled_Layer.png",
+    "otherSourceFiles" :  [],
     "name" : "Web tiled layer"
 }

@@ -18,13 +18,11 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntime 100.1
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    
     property bool featureSelected: false
     property Point newLocation
     property var selectedFeature: null
@@ -144,16 +142,6 @@ Rectangle {
                     featureLayer.selectFeaturesWithQuery(params, Enums.SelectionModeNew);
                 }
             }
-        }
-    }
-
-    // neatline
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

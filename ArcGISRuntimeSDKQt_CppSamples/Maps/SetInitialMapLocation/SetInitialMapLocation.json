@@ -1,7 +1,9 @@
 {
-    "source" :  "SetInitialMapLocation",
-    "description" : "SetInitialMapLocation.html",
-    "thumbnail" : "SetInitialMapLocation.png",
+    "source" :  "SetInitialMapLocation.qml",
+    "otherSourceFiles" : [
+        "SetInitialMapLocation.h",
+        "SetInitialMapLocation.cpp"
+    ],
     "name" : "Set initial map location"
 }
 

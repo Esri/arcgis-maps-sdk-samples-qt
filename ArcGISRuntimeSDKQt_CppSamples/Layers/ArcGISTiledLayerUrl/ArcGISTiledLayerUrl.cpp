@@ -25,7 +25,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -33,22 +33,28 @@ ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
 {
 }
 
+void ArcGISTiledLayerUrl::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<ArcGISTiledLayerUrl>("Esri.Samples", 1, 0, "ArcGISTiledLayerUrlSample");
+}
+
 void ArcGISTiledLayerUrl::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    //! [display tiled layer from tiled map service]
-    // create a new tiled layer
-    ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"), this);
-    // create a new basemap instance with the tiled layer
-    Basemap* basemap = new Basemap(tiledLayer, this);
-    // create a new map instance
-    m_map = new Map(basemap, this);
-    // set map on the map view
-    m_mapView->setMap(m_map);
-    //! [display tiled layer from tiled map service]
+  //! [display tiled layer from tiled map service]
+  // create a new tiled layer
+  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"), this);
+  // create a new basemap instance with the tiled layer
+  Basemap* basemap = new Basemap(tiledLayer, this);
+  // create a new map instance
+  m_map = new Map(basemap, this);
+  // set map on the map view
+  m_mapView->setMap(m_map);
+  //! [display tiled layer from tiled map service]
 }
 

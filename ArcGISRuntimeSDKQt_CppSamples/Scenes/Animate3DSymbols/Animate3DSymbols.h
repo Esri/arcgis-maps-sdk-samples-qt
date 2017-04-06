@@ -58,7 +58,7 @@ public:
   ~Animate3DSymbols();
 
   void componentComplete() Q_DECL_OVERRIDE;
-
+  static void init();
 
   Q_INVOKABLE void animate();
   Q_INVOKABLE void changeMission(const QString& missionName);

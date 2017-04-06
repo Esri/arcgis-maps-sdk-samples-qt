@@ -1,6 +1,8 @@
 {
-    "source" :  "ExtrudeGraphics",
-    "description" : "ExtrudeGraphics.html",
-    "thumbnail" : "ExtrudeGraphics.png",
+    "source" :  "ExtrudeGraphics.qml",
+    "otherSourceFiles" : [
+        "ExtrudeGraphics.h",
+        "ExtrudeGraphics.cpp"
+    ],
     "name" : "Extrude graphics"
 }

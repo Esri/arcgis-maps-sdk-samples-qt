@@ -19,29 +19,30 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 #include <QQuickItem>
 
 class MapRotation : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit MapRotation(QQuickItem* parent = nullptr);
-    ~MapRotation();
+  explicit MapRotation(QQuickItem* parent = nullptr);
+  ~MapRotation();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void setMapViewRotation(double degrees);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void setMapViewRotation(double degrees);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // MAP_ROTATION_H

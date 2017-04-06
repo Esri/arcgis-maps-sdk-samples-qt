@@ -32,6 +32,12 @@ OpenMobileMap_MapPackage::~OpenMobileMap_MapPackage()
 {
 }
 
+void OpenMobileMap_MapPackage::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<OpenMobileMap_MapPackage>("Esri.Samples", 1, 0, "OpenMobileMap_MapPackageSample");
+}
+
 void OpenMobileMap_MapPackage::componentComplete()
 {
     QQuickItem::componentComplete();

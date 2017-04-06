@@ -23,7 +23,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ShowCallout::ShowCallout(QQuickItem* parent):
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -31,48 +31,55 @@ ShowCallout::~ShowCallout()
 {
 }
 
+void ShowCallout::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<ShowCallout>("Esri.Samples", 1, 0, "ShowCalloutSample");
+  qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
+}
+
 void ShowCallout::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
-    m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // Create a map using the topographic basemap
-    m_map = new Map(Basemap::topographic(this), this);
-    m_map->setInitialViewpoint(Viewpoint(Point(-1.2e7, 5e6, SpatialReference::webMercator()), 1e7));
+  // Create a map using the topographic basemap
+  m_map = new Map(Basemap::topographic(this), this);
+  m_map->setInitialViewpoint(Viewpoint(Point(-1.2e7, 5e6, SpatialReference::webMercator()), 1e7));
 
-    // Set map to map view
-    m_mapView->setMap(m_map);
+  // Set map to map view
+  m_mapView->setMap(m_map);
 
-    //! [initialize callout]
-    m_mapView->calloutData()->setVisible(false);
-    m_mapView->calloutData()->setTitle("Location");
-    QImage image(":/Samples/DisplayInformation/ShowCallout/RedShinyPin.png");
-    m_mapView->calloutData()->setImage(image);
-    m_calloutData = m_mapView->calloutData();
-    emit calloutDataChanged();
-    //! [initialize callout]
+  //! [initialize callout]
+  m_mapView->calloutData()->setVisible(false);
+  m_mapView->calloutData()->setTitle("Location");
+  QImage image(":/Samples/DisplayInformation/ShowCallout/RedShinyPin.png");
+  m_mapView->calloutData()->setImage(image);
+  m_calloutData = m_mapView->calloutData();
+  emit calloutDataChanged();
+  //! [initialize callout]
 
-    // display callout on mouseClicked
-    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent){
-        if (m_mapView->calloutData()->isVisible())
-            m_mapView->calloutData()->setVisible(false);
-        else
-        {
-            // set callout position
-            Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
-            m_mapView->calloutData()->setLocation(mapPoint);
+  // display callout on mouseClicked
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent){
+    if (m_mapView->calloutData()->isVisible())
+      m_mapView->calloutData()->setVisible(false);
+    else
+    {
+      // set callout position
+      Point mapPoint(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
+      m_mapView->calloutData()->setLocation(mapPoint);
 
-            // set detail as coordinates formatted to decimal numbers with precision 2
-            m_mapView->calloutData()->setDetail("x: " + QString::number(mapPoint.x(), 'f', 2) + " y: " + QString::number(mapPoint.y(), 'f', 2));
-            m_mapView->calloutData()->setVisible(true);
-        }
-    });
+      // set detail as coordinates formatted to decimal numbers with precision 2
+      m_mapView->calloutData()->setDetail("x: " + QString::number(mapPoint.x(), 'f', 2) + " y: " + QString::number(mapPoint.y(), 'f', 2));
+      m_mapView->calloutData()->setVisible(true);
+    }
+  });
 }
 
 CalloutData* ShowCallout::calloutData() const
 {
-    return m_calloutData;
+  return m_calloutData;
 }

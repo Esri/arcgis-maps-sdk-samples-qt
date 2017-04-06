@@ -232,15 +232,6 @@ Rectangle {
         visible: text.length > 0
     }
 
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
-
     function setupRouting() {
         busy = true;
         message = "";

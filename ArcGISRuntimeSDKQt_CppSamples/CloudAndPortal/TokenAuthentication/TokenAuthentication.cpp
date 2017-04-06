@@ -36,6 +36,14 @@ TokenAuthentication::~TokenAuthentication()
 {
 }
 
+void TokenAuthentication::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<TokenAuthentication>("Esri.Samples", 1, 0, "TokenAuthenticationSample");
+  // Register the AuthenticationManager for QML
+  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
+}
+
 void TokenAuthentication::componentComplete()
 {
   QQuickItem::componentComplete();

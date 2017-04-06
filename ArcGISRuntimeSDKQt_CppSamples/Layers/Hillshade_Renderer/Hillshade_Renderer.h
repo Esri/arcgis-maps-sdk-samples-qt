@@ -37,6 +37,7 @@ public:
   ~Hillshade_Renderer();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

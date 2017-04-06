@@ -35,6 +35,12 @@ AnalyzeHotspots::~AnalyzeHotspots()
 {
 }
 
+void AnalyzeHotspots::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<AnalyzeHotspots>("Esri.Samples", 1, 0, "AnalyzeHotspotsSample");
+}
+
 void AnalyzeHotspots::componentComplete()
 {
   QQuickItem::componentComplete();

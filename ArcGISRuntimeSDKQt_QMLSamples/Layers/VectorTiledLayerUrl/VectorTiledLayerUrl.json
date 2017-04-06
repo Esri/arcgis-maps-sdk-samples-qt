@@ -1,7 +1,6 @@
 {
     "source" :  "VectorTiledLayerUrl.qml",
-    "description" : "VectorTiledLayerUrl.html",
-    "thumbnail" : "VectorTiledLayerUrl.png",
+    "otherSourceFiles" :  [],
     "name" : "Vector tiled layer (URL)"
 }
 

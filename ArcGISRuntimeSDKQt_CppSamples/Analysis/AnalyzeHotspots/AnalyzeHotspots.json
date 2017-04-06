@@ -1,7 +1,9 @@
 {
-    "source" :  "AnalyzeHotspots",
-    "description" : "AnalyzeHotspots.html",
-    "thumbnail" : "AnalyzeHotspots.png",
+    "source" :  "AnalyzeHotspots.qml",
+    "otherSourceFiles" : [
+        "AnalyzeHotspots.h",
+        "AnalyzeHotspots.cpp"
+    ],
     "name" : "Analyze hotspots"
 }
 

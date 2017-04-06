@@ -1,6 +1,8 @@
 {
-    "source" :  "AddItemsToPortal",
-    "description" : "AddItemsToPortal.html",
-    "thumbnail" : "AddItemsToPortal.png",
+    "source" :  "AddItemsToPortal.qml",
+    "otherSourceFiles" : [
+        "AddItemsToPortal.h",
+        "AddItemsToPortal.cpp"
+    ],
     "name" : "Add items to portal"
 }

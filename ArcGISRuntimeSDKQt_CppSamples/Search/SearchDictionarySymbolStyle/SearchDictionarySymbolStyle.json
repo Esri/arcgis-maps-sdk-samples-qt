@@ -1,7 +1,9 @@
 {
-    "source" :  "SearchDictionarySymbolStyle",
-    "description" : "SearchDictionarySymbolStyle.html",
-    "thumbnail" : "SearchDictionarySymbolStyle.png",
+    "source" :  "SearchDictionarySymbolStyle.qml",
+    "otherSourceFiles" : [
+        "SearchDictionarySymbolStyle.h",
+        "SearchDictionarySymbolStyle.cpp"
+    ],
     "name" : "Search dictionary symbol style",
     "dataItems" : [
         {

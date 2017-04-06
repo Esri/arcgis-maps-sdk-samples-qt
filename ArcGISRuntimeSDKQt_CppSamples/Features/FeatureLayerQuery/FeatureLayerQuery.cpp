@@ -45,6 +45,12 @@ FeatureLayerQuery::~FeatureLayerQuery()
 {
 }
 
+void FeatureLayerQuery::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<FeatureLayerQuery>("Esri.Samples", 1, 0, "FeatureLayerQuerySample");
+}
+
 void FeatureLayerQuery::componentComplete()
 {
     QQuickItem::componentComplete();

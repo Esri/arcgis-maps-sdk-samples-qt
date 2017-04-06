@@ -1,7 +1,6 @@
 {
     "source" :  "Hillshade_Renderer.qml",
-    "description" : "Hillshade_Renderer.html",
-    "thumbnail" : "Hillshade_Renderer.png",
+    "otherSourceFiles" :  [],
     "name" : "Hillshade renderer",
     "dataItems" : [        
         {

@@ -19,41 +19,42 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class GraphicsOverlay;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class GraphicsOverlay;
+  }
 }
 
 #include <QQuickItem>
 
 class IdentifyGraphics : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(int identifiedGraphicsCount READ identifiedGraphicsCount NOTIFY identifiedGraphicsCountChanged)
+  Q_PROPERTY(int identifiedGraphicsCount READ identifiedGraphicsCount NOTIFY identifiedGraphicsCountChanged)
 
 public:
-    explicit IdentifyGraphics(QQuickItem* parent = nullptr);
-    ~IdentifyGraphics();
+  explicit IdentifyGraphics(QQuickItem* parent = nullptr);
+  ~IdentifyGraphics();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
-    void identifiedGraphicsCountChanged();
+  void identifiedGraphicsCountChanged();
 
 private:
-    void addPolygonGraphic();
-    void connectSignals();
-    int identifiedGraphicsCount();
+  void addPolygonGraphic();
+  void connectSignals();
+  int identifiedGraphicsCount();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-    int m_identifiedGraphicsCount = 0;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  int m_identifiedGraphicsCount = 0;
 };
 
 #endif // IDENTIFY_GRAPHICS_H

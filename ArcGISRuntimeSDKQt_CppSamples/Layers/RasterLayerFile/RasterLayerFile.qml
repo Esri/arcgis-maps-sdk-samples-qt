@@ -23,11 +23,9 @@ import Esri.ArcGISExtras 1.1
 RasterLayerFileSample {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
 
     // add a mapView component
@@ -60,15 +58,6 @@ RasterLayerFileSample {
 
         onAccepted: {
             createAndAddRasterLayer(fileDialog.fileUrl)
-        }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

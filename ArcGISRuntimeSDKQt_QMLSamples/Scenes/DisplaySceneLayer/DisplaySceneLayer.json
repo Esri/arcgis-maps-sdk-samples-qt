@@ -1,7 +1,6 @@
 {
     "source" :  "DisplaySceneLayer.qml",
-    "description" : "DisplaySceneLayer.html",
-    "thumbnail" : "DisplaySceneLayer.png",
+    "otherSourceFiles" :  [],
     "name" : "Display a scene layer"
 }
 

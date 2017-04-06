@@ -53,6 +53,12 @@ DisplayGrid::~DisplayGrid()
 {
 }
 
+void DisplayGrid::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<DisplayGrid>("Esri.Samples", 1, 0, "DisplayGridSample");
+}
+
 void DisplayGrid::componentComplete()
 {
   QQuickItem::componentComplete();

@@ -24,16 +24,10 @@
 #include <Windows.h>
 #endif
 
-#include "AuthenticationChallenge.h"
-#include "AuthenticationManager.h"
-#include "MapQuickView.h"
-
 #include "SearchForWebmap.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
-
-using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
@@ -48,10 +42,8 @@ int main(int argc, char *argv[])
   QtWebEngine::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
-  // Register the types for QML
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<SearchForWebmap>("Esri.Samples", 1, 0, "SearchForWebmapSample");
+  // Initialize the sample
+  SearchForWebmap::init();
 
   // Intialize application view
   QQuickView view;

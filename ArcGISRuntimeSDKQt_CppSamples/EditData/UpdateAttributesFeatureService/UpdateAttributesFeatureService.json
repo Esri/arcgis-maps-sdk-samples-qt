@@ -1,7 +1,9 @@
 {
-    "source" :  "UpdateAttributesFeatureService",
-    "description" : "UpdateAttributesFeatureService.html",
-    "thumbnail" : "UpdateAttributesFeatureService.png",
+    "source" :  "UpdateAttributesFeatureService.qml",
+    "otherSourceFiles" : [
+        "UpdateAttributesFeatureService.h",
+        "UpdateAttributesFeatureService.cpp"
+    ],
     "name" : "Update attributes feature service"
 }
 

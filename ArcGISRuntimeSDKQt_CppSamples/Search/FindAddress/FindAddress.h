@@ -19,13 +19,13 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class GraphicsOverlay;
-        class LocatorTask;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class GraphicsOverlay;
+    class LocatorTask;
+  }
 }
 
 #include "GeocodeParameters.h"
@@ -33,33 +33,34 @@ namespace Esri
 
 class FindAddress : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit FindAddress(QQuickItem* parent = nullptr);
-    ~FindAddress();
+  explicit FindAddress(QQuickItem* parent = nullptr);
+  ~FindAddress();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void geocodeAddress(QString address);
-    Q_INVOKABLE void clearGraphics();
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void geocodeAddress(QString address);
+  Q_INVOKABLE void clearGraphics();
 
 signals:
-    void hideCallout();
-    void showCallout(double x, double y, QString calloutText, QString calloutDetailedText);
+  void hideCallout();
+  void showCallout(double x, double y, QString calloutText, QString calloutDetailedText);
 
 private:
-    void connectSignals();
+  void connectSignals();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-    Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
-    Esri::ArcGISRuntime::GeocodeParameters m_geocodeParameters;
-    int m_screenX = 0;
-    int m_screenY = 0;
-    QString m_calloutText;
-    QString m_calloutDetailedText;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
+  Esri::ArcGISRuntime::GeocodeParameters m_geocodeParameters;
+  int m_screenX = 0;
+  int m_screenY = 0;
+  QString m_calloutText;
+  QString m_calloutDetailedText;
 };
 
 #endif // FIND_ADDRESS_H

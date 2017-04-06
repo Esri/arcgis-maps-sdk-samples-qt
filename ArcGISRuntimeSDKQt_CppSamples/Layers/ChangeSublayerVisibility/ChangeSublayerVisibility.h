@@ -19,40 +19,41 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class ArcGISMapImageLayer;
-        class ArcGISSublayerListModel;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class ArcGISMapImageLayer;
+    class ArcGISSublayerListModel;
+  }
 }
 
 #include <QQuickItem>
 
 class ChangeSublayerVisibility : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::ArcGISSublayerListModel* sublayerModel READ sublayerModel NOTIFY sublayerModelChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::ArcGISSublayerListModel* sublayerModel READ sublayerModel NOTIFY sublayerModelChanged)
 
 public:
-    explicit ChangeSublayerVisibility(QQuickItem* parent = nullptr);
-    ~ChangeSublayerVisibility();
+  explicit ChangeSublayerVisibility(QQuickItem* parent = nullptr);
+  ~ChangeSublayerVisibility();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
-    void sublayerModelChanged();
+  void sublayerModelChanged();
 
 private:
-    Esri::ArcGISRuntime::ArcGISSublayerListModel* sublayerModel();
+  Esri::ArcGISRuntime::ArcGISSublayerListModel* sublayerModel();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::ArcGISMapImageLayer* m_mapImageLayer = nullptr;
-    Esri::ArcGISRuntime::ArcGISSublayerListModel* m_sublayerModel = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::ArcGISMapImageLayer* m_mapImageLayer = nullptr;
+  Esri::ArcGISRuntime::ArcGISSublayerListModel* m_sublayerModel = nullptr;
 };
 
 #endif // CHANGE_SUBLAYER_VISIBILITY_H

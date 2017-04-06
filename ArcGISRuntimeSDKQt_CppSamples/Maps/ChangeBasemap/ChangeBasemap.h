@@ -19,29 +19,30 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 #include <QQuickItem>
 
 class ChangeBasemap : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit ChangeBasemap(QQuickItem* parent = nullptr);
-    ~ChangeBasemap();
+  explicit ChangeBasemap(QQuickItem* parent = nullptr);
+  ~ChangeBasemap();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void changeBasemap(QString basemap);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void changeBasemap(QString basemap);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // CHANGE_BASEMAP_H

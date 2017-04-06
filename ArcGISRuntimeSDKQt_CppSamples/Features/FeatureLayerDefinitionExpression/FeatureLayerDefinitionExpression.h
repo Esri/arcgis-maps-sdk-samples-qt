@@ -19,40 +19,41 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class FeatureLayer;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class FeatureLayer;
+  }
 }
 
 #include <QQuickItem>
 
 class FeatureLayerDefinitionExpression : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(bool layerInitialized READ layerInitialized NOTIFY layerInitializedChanged)
+  Q_PROPERTY(bool layerInitialized READ layerInitialized NOTIFY layerInitializedChanged)
 
 public:
-    explicit FeatureLayerDefinitionExpression(QQuickItem* parent = nullptr);
-    ~FeatureLayerDefinitionExpression();
+  explicit FeatureLayerDefinitionExpression(QQuickItem* parent = nullptr);
+  ~FeatureLayerDefinitionExpression();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void setDefExpression(QString whereClause);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void setDefExpression(QString whereClause);
 
 signals:
-    void layerInitializedChanged();
+  void layerInitializedChanged();
 
 private:
-    bool layerInitialized() const;
+  bool layerInitialized() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-    bool m_initialized = false;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  bool m_initialized = false;
 };
 
 #endif // FEATURE_LAYER_DEFINITION_EXPRESSION_H

@@ -1,7 +1,9 @@
 {
-    "source" :  "FindRoute",
-    "description" : "FindRoute.html",
-    "thumbnail" : "FindRoute.png",
+    "source" :  "FindRoute.qml",
+    "otherSourceFiles" : [
+        "FindRoute.h",
+        "FindRoute.cpp"
+    ],
     "name" : "Find a route"
 }
 

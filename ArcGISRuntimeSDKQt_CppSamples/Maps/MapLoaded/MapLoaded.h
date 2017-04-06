@@ -19,11 +19,11 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 class QString;
@@ -32,26 +32,27 @@ class QString;
 
 class MapLoaded : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(QString mapLoadStatus READ mapLoadStatus NOTIFY mapLoadStatusChanged)
+  Q_PROPERTY(QString mapLoadStatus READ mapLoadStatus NOTIFY mapLoadStatusChanged)
 
 public:
-    explicit MapLoaded(QQuickItem* parent = nullptr);
-    ~MapLoaded();
+  explicit MapLoaded(QQuickItem* parent = nullptr);
+  ~MapLoaded();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
-    void mapLoadStatusChanged();
+  void mapLoadStatusChanged();
 
 private:
-    QString mapLoadStatus() const;
+  QString mapLoadStatus() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    QString m_loadStatus;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  QString m_loadStatus;
 };
 
 #endif // MAP_LOADED_H

@@ -1,7 +1,6 @@
 {
     "source" :  "AddFeaturesFeatureService.qml",
-    "description" : "AddFeaturesFeatureService.html",
-    "thumbnail" : "AddFeaturesFeatureService.png",
+    "otherSourceFiles" :  [],
     "name" : "Add features (feature service)"
 }
 

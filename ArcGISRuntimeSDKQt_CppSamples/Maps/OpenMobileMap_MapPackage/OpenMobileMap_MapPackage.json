@@ -1,7 +1,9 @@
 {
-    "source" :  "OpenMobileMap_MapPackage",
-    "description" : "OpenMobileMap_MapPackage.html",
-    "thumbnail" : "OpenMobileMap_MapPackage.png",
+    "source" :  "OpenMobileMap_MapPackage.qml",
+    "otherSourceFiles" : [
+        "OpenMobileMap_MapPackage.h",
+        "OpenMobileMap_MapPackage.cpp"
+    ],
     "name" : "Open mobile map (map package)",
     "dataItems" : [
         {

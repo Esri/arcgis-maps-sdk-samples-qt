@@ -19,15 +19,15 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class ClosestFacilityTask;
-        class Facility;
-        class GraphicsOverlay;
-        class Map;
-        class MapQuickView;
-        class Point;
-    }
+  namespace ArcGISRuntime
+  {
+    class ClosestFacilityTask;
+    class Facility;
+    class GraphicsOverlay;
+    class Map;
+    class MapQuickView;
+    class Point;
+  }
 }
 
 #include "ClosestFacilityParameters.h"
@@ -38,42 +38,43 @@ namespace Esri
 
 class ClosestFacility : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
-    Q_PROPERTY(QString message READ message NOTIFY messageChanged)
+  Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
+  Q_PROPERTY(QString message READ message NOTIFY messageChanged)
 
 public:
-    explicit ClosestFacility(QQuickItem* parent = nullptr);
-    ~ClosestFacility();
+  explicit ClosestFacility(QQuickItem* parent = nullptr);
+  ~ClosestFacility();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
-    void busyChanged();
-    void messageChanged();
+  void busyChanged();
+  void messageChanged();
 
 private:
-    bool busy() const;
-    QString message() const;
+  bool busy() const;
+  QString message() const;
 
-    void setBusy(bool val);
-    void createFacilities();
-    void createGraphics();
-    void setupRouting();
-    void solveRoute(const Esri::ArcGISRuntime::Point& incidentPoint);
+  void setBusy(bool val);
+  void createFacilities();
+  void createGraphics();
+  void setupRouting();
+  void solveRoute(const Esri::ArcGISRuntime::Point& incidentPoint);
 
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    QList<Esri::ArcGISRuntime::Facility> m_facilities;
-    Esri::ArcGISRuntime::ClosestFacilityTask* m_task;
-    Esri::ArcGISRuntime::ClosestFacilityParameters m_facilityParams;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_resultsOverlay;
-    bool m_busy = false;
-    QString m_message;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  QList<Esri::ArcGISRuntime::Facility> m_facilities;
+  Esri::ArcGISRuntime::ClosestFacilityTask* m_task;
+  Esri::ArcGISRuntime::ClosestFacilityParameters m_facilityParams;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_resultsOverlay;
+  bool m_busy = false;
+  QString m_message;
 
-    static const QUrl facilityImageUrl;
-    static const QUrl sanDiegoRegion;
+  static const QUrl facilityImageUrl;
+  static const QUrl sanDiegoRegion;
 };
 
 #endif // CLOSESTFACILITY_H

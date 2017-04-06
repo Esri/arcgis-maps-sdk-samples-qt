@@ -19,32 +19,33 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class Basemap;
-        class ArcGISMapImageLayer;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class Basemap;
+    class ArcGISMapImageLayer;
+  }
 }
 
 #include <QQuickItem>
 
 class SetMapSpatialReference : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit SetMapSpatialReference(QQuickItem* parent = nullptr);
-    ~SetMapSpatialReference();
+  explicit SetMapSpatialReference(QQuickItem* parent = nullptr);
+  ~SetMapSpatialReference();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
-    Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
+  Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer = nullptr;
 };
 
 #endif // SET_MAP_SPATIAL_REFERENCE_H

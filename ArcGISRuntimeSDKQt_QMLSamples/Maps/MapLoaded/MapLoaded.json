@@ -1,7 +1,6 @@
 {
     "source" :  "MapLoaded.qml",
-    "description" : "MapLoaded.html",
-    "thumbnail" : "MapLoaded.png",
+    "otherSourceFiles" :  [],
     "name" : "Map loaded"
 }
 

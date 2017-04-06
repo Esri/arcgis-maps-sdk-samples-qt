@@ -19,39 +19,40 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class FeatureLayer;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class FeatureLayer;
+  }
 }
 
 #include <QQuickItem>
 
 class DisplayDrawingStatus : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(bool mapDrawing READ mapDrawing NOTIFY mapDrawStatusChanged)
+  Q_PROPERTY(bool mapDrawing READ mapDrawing NOTIFY mapDrawStatusChanged)
 
 public:
-    explicit DisplayDrawingStatus(QQuickItem* parent = nullptr);
-    ~DisplayDrawingStatus();
+  explicit DisplayDrawingStatus(QQuickItem* parent = nullptr);
+  ~DisplayDrawingStatus();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
-    void mapDrawStatusChanged();
+  void mapDrawStatusChanged();
 
 private:
-    bool mapDrawing() const;
+  bool mapDrawing() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-    bool m_mapDrawing = false;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  bool m_mapDrawing = false;
 };
 
 #endif // DISPLAYDRAWINGSTATUS_H

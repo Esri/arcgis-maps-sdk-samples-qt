@@ -1,0 +1,22 @@
+{
+    "source" :  "BlendRasterLayer.qml",
+    "name" : "Blend raster layer",
+    "otherSourceFiles" :  [
+        "BlendRasterLayer.h",
+        "BlendRasterLayer.cpp",
+        "ColorRampModel.qml",
+        "SlopeTypeModel.qml",
+        "TextWithComboBox.qml",
+        "TextWithSlider.qml"],
+    "dataItems" : [
+        {
+            "itemId" : "c669445e6cb4490b8306f0c170a9cbb1",
+            "path" : "~/ArcGIS/Runtime/Data/raster/Shasta.tiff"
+        },
+        {
+            "itemId" : "b051f5c3e01048f3bf11c59b41507896",
+            "path" : "~/ArcGIS/Runtime/Data/raster/Shasta_Elevation.tiff"
+        }
+    ]
+}
+

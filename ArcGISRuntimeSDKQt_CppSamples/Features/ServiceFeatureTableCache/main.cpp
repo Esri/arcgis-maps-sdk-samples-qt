@@ -22,45 +22,40 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
 #include "ServiceFeatureTableCache.h"
-#include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
-using namespace Esri::ArcGISRuntime;
-
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
 
 #ifdef Q_OS_WIN
-    // Force usage of OpenGL ES through ANGLE on Windows
-    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+  // Force usage of OpenGL ES through ANGLE on Windows
+  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<ServiceFeatureTableCache>("Esri.Samples", 1, 0, "ServiceFeatureTableCacheSample");
+  // Initialize the sample
+  ServiceFeatureTableCache::init();
 
-    // Intialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-    // Add the Extras path
-    view.engine()->addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
-    // Add the Toolkit path
-    view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Add the Extras path
+  view.engine()->addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
+  // Add the Toolkit path
+  view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.qml"));
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/Features/ServiceFeatureTableCache/ServiceFeatureTableCache.qml"));
 
-    view.show();
+  view.show();
 
-    return app.exec();
+  return app.exec();
 }
 
 

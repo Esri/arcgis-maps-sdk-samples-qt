@@ -139,15 +139,5 @@ Rectangle {
         }
     }
     //! [create a distance composite scene symbol]
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }
 

@@ -19,20 +19,19 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Map;
-class MapQuickView;
-class LocalServer;
-class LocalMapService;
-class LocalFeatureService;
-class LocalGeoprocessingService;
-class LocalService;
-}
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class LocalServer;
+    class LocalMapService;
+    class LocalFeatureService;
+    class LocalGeoprocessingService;
+    class LocalService;
+  }
 }
 
 #include <QQuickItem>
-#include <QStringListModel>
 
 class LocalServerServices : public QQuickItem
 {
@@ -48,6 +47,7 @@ public:
   ~LocalServerServices();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
   Q_INVOKABLE void startLocalServer();
   Q_INVOKABLE void stopLocalServer();
   Q_INVOKABLE void startService(const QString& serviceName, const QUrl& filePath = QUrl(""));

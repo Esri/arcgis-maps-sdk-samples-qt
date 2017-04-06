@@ -19,15 +19,15 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class GraphicsOverlay;
-        class Map;
-        class MapQuickView;
-        class Point;
-        class PolylineBuilder;
-        class ServiceAreaTask;
-    }
+  namespace ArcGISRuntime
+  {
+    class GraphicsOverlay;
+    class Map;
+    class MapQuickView;
+    class Point;
+    class PolylineBuilder;
+    class ServiceAreaTask;
+  }
 }
 
 #include "ServiceAreaParameters.h"
@@ -37,56 +37,57 @@ namespace Esri
 
 class ServiceArea : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
-    Q_PROPERTY(QString message READ message NOTIFY messageChanged)
+  Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
+  Q_PROPERTY(QString message READ message NOTIFY messageChanged)
 
 public:
-    explicit ServiceArea(QQuickItem* parent = nullptr);
-    ~ServiceArea();
+  explicit ServiceArea(QQuickItem* parent = nullptr);
+  ~ServiceArea();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
-    Q_INVOKABLE void setFacilityMode();
-    Q_INVOKABLE void setBarrierMode();
-    Q_INVOKABLE void setSolveServiceAreaMode();
-    Q_INVOKABLE void resetMode();
-    Q_INVOKABLE void newBarrier();
+  Q_INVOKABLE void setFacilityMode();
+  Q_INVOKABLE void setBarrierMode();
+  Q_INVOKABLE void setSolveServiceAreaMode();
+  Q_INVOKABLE void resetMode();
+  Q_INVOKABLE void newBarrier();
 
 signals:
-    void busyChanged();
-    void messageChanged();
+  void busyChanged();
+  void messageChanged();
 
 private:
 
-    enum class SampleMode {
-        Facility,
-        Barrier,
-        SolveServiceArea
-    };
+  enum class SampleMode {
+    Facility,
+    Barrier,
+    SolveServiceArea
+  };
 
-    bool busy() const;
-    QString message() const;
+  bool busy() const;
+  QString message() const;
 
-    void setBusy(bool val);
+  void setBusy(bool val);
 
-    void setupGraphics();
-    void setupRouting();
-    void handleFacilityPoint(const Esri::ArcGISRuntime::Point& p);
-    void handleBarrierPoint(const Esri::ArcGISRuntime::Point& p);
+  void setupGraphics();
+  void setupRouting();
+  void handleFacilityPoint(const Esri::ArcGISRuntime::Point& p);
+  void handleBarrierPoint(const Esri::ArcGISRuntime::Point& p);
 
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::ServiceAreaTask* m_task;
-    Esri::ArcGISRuntime::ServiceAreaParameters m_parameters;
-    Esri::ArcGISRuntime::PolylineBuilder* m_barrierBuilder = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_facilitiesOverlay;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_barrierOverlay;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_areasOverlay;
-    bool m_busy = true;
-    QString m_message;
-    SampleMode m_mode = SampleMode::Facility;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::ServiceAreaTask* m_task;
+  Esri::ArcGISRuntime::ServiceAreaParameters m_parameters;
+  Esri::ArcGISRuntime::PolylineBuilder* m_barrierBuilder = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_facilitiesOverlay;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_barrierOverlay;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_areasOverlay;
+  bool m_busy = true;
+  QString m_message;
+  SampleMode m_mode = SampleMode::Facility;
 };
 
 #endif // SERVICEAREA_H

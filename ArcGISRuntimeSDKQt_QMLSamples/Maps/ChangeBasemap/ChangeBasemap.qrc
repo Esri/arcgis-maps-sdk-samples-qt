@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/Samples/Maps/ChangeBasemap">
         <file alias="sample.json">ChangeBasemap.json</file>
-        <file>ChangeBasemap.png</file>
+        <file>screenshot.png</file>
         <file>ChangeBasemap.qml</file>
-        <file>ChangeBasemap.html</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

@@ -21,14 +21,10 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
-
 #include "DisplayGrid.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
-
-using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
@@ -40,9 +36,8 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-  // Register the map view for QML
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<DisplayGrid>("Esri.Samples", 1, 0, "DisplayGridSample");
+  // Initialize the sample
+  DisplayGrid::init();
 
   // Intialize application view
   QQuickView view;
