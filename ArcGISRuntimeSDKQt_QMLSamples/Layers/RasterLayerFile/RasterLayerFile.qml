@@ -28,18 +28,22 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
+    property var newRasterLayer: null
 
     MapView {
         id: mapView
         anchors.fill: parent
 
         Map {
-            Basemap {
-                RasterLayer {
-                    Raster {
-                        path: dataPath + "/Colorado.tif"
-                    }
-                }
+            id: map
+            BasemapImagery {
+            }
+
+            onLoadStatusChanged: {
+                if (loadStatus !== Enums.LoadStatusLoaded)
+                    return;
+
+                createAndAddRasterLayer(dataPath + "Shasta.tif");
             }
         }
     }
@@ -72,12 +76,21 @@ Rectangle {
     }
 
     function createAndAddRasterLayer(rasterUrl) {
+        console.log(rasterUrl);
         var newRaster = ArcGISRuntimeEnvironment.createObject("Raster", {path: rasterUrl});
-        var newRasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newRaster});
-        var newBasemap = ArcGISRuntimeEnvironment.createObject("Basemap");
-        newBasemap.baseLayers.append(newRasterLayer);
-        var newMap = ArcGISRuntimeEnvironment.createObject("Map", {basemap: newBasemap});
-        mapView.map = newMap;
+        newRasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newRaster});
+        map.operationalLayers.clear();
+        map.operationalLayers.append(newRasterLayer);
+
+        newRasterLayer.loadStatusChanged.connect(zoomToRaster);
+    }
+
+    function zoomToRaster() {
+        console.log(newRasterLayer.loadStatus)
+        if (newRasterLayer.loadStatus !== Enums.LoadStatusLoaded)
+            return;
+
+        mapView.setViewpointGeometryAndPadding(newRasterLayer.fullExtent, 50);
     }
 
     // Neatline rectangle
