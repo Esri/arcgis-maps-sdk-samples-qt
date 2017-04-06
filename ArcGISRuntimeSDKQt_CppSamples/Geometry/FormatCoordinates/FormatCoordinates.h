@@ -19,38 +19,64 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class GraphicsOverlay;
-        class Point;
-    }
+namespace ArcGISRuntime
+{
+class Map;
+class MapQuickView;
+class GraphicsOverlay;
+}
 }
 
 #include <QQuickItem>
 
+#include "Point.h"
+
 class FormatCoordinates : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
+
+  Q_PROPERTY(QString coordinatesInDD READ coordinatesInDD NOTIFY coordinatesInDDChanged)
+  Q_PROPERTY(QString coordinatesInDMS READ coordinatesInDMS NOTIFY coordinatesInDMSChanged)
+  Q_PROPERTY(QString coordinatesInUsng READ coordinatesInUsng NOTIFY coordinatesInUsngChanged)
+  Q_PROPERTY(QString coordinatesInUtm READ coordinatesInUtm NOTIFY coordinatesInUtmChanged)
 
 public:
-    explicit FormatCoordinates(QQuickItem* parent = nullptr);
-    ~FormatCoordinates();
+  explicit FormatCoordinates(QQuickItem* parent = nullptr);
+  ~FormatCoordinates();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void setGraphicFromText(QString textType, QString text);
+  void componentComplete() Q_DECL_OVERRIDE;
+  Q_INVOKABLE void handleTextUpdate(QString textType, QString text);
+  Q_INVOKABLE void handleLocationUpdate(Esri::ArcGISRuntime::Point point);
+
+signals:
+  void coordinatesInDDChanged();
+  void coordinatesInDMSChanged();
+  void coordinatesInUsngChanged();
+  void coordinatesInUtmChanged();
 
 private:
-    Esri::ArcGISRuntime::Point createPointFromText(QString textType, QString text);
-    void setTextFromGraphic(Esri::ArcGISRuntime::Point point);
+  QString coordinatesInDD();
+  QString coordinatesInDMS();
+  QString coordinatesInUsng();
+  QString coordinatesInUtm();
 
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+private:
+  void connectSignals();
+  void updateGraphicFromPoint(Esri::ArcGISRuntime::Point point);
+  Esri::ArcGISRuntime::Point createPointFromText(QString textType, QString text);
+  void setTextFromPoint(Esri::ArcGISRuntime::Point point);
 
-    const double m_startLongitude = 0.0;
-    const double m_startLatitude = 0.0;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+
+  const double m_startLongitude = 0.0;
+  const double m_startLatitude = 0.0;
+
+  QString m_coordinatesInDD;
+  QString m_coordinatesInDMS;
+  QString m_coordinatesInUsng;
+  QString m_coordinatesInUtm;
 };
 
 #endif // DISPLAY_MAP_H
