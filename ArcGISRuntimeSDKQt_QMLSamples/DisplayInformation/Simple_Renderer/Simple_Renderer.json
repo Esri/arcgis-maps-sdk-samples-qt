@@ -1,6 +1,5 @@
 {
     "source" :  "Simple_Renderer.qml",
-    "description" : "Simple_Renderer.html",
-    "thumbnail" : "Simple_Renderer.png",
+    "otherSourceFiles" :  [],
     "name" : "Simple renderer"
 }

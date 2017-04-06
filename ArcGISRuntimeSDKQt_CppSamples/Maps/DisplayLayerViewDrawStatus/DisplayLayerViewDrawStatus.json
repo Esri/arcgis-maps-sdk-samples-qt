@@ -1,7 +1,9 @@
 {
-    "source" :  "DisplayLayerViewDrawStatus",
-    "description" : "DisplayLayerViewDrawStatus.html",
-    "thumbnail" : "DisplayLayerViewDrawStatus.png",
+    "source" :  "DisplayLayerViewDrawStatus.qml",
+    "otherSourceFiles" : [
+        "DisplayLayerViewDrawStatus.h",
+        "DisplayLayerViewDrawStatus.cpp"
+    ],
     "name" : "Display layer view draw status"
 }
 

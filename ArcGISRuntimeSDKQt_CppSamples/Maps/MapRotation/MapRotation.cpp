@@ -34,6 +34,12 @@ MapRotation::~MapRotation()
 {
 }
 
+void MapRotation::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<MapRotation>("Esri.Samples", 1, 0, "MapRotationSample");
+}
+
 void MapRotation::componentComplete()
 {
     QQuickItem::componentComplete();

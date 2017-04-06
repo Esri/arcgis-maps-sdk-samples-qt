@@ -1,7 +1,9 @@
 {
-    "source" :  "FeatureLayerDictionaryRenderer",
-    "description" : "FeatureLayerDictionaryRenderer.html",
-    "thumbnail" : "FeatureLayerDictionaryRenderer.png",
+    "source" :  "FeatureLayerDictionaryRenderer.qml",
+    "otherSourceFiles" : [
+        "FeatureLayerDictionaryRenderer.h",
+        "FeatureLayerDictionaryRenderer.cpp"
+    ],
     "name" : "Feature layer (dictionary renderer)",
     "dataItems" : [
         {

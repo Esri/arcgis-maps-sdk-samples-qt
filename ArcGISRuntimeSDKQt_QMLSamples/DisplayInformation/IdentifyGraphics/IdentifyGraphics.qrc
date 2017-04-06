@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/IdentifyGraphics">
-        <file>IdentifyGraphics.html</file>
         <file alias="sample.json">IdentifyGraphics.json</file>
-        <file>IdentifyGraphics.png</file>
+        <file>screenshot.png</file>
         <file>IdentifyGraphics.qml</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

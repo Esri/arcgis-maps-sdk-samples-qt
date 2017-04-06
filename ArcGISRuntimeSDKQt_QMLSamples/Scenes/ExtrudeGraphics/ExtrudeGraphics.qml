@@ -18,7 +18,6 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import Esri.ArcGISRuntime 100.1
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
@@ -27,7 +26,6 @@ Rectangle {
     property real size: 0.01
     property int maxZ: 1000
     property var colors: []
-    property real scaleFactor: System.displayScaleFactor
 
     // Create a scene view
     SceneView {
@@ -83,16 +81,6 @@ Rectangle {
         heading: 10.0
         pitch: 80.0
         roll: 300.0
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 
     function createGraphics(){

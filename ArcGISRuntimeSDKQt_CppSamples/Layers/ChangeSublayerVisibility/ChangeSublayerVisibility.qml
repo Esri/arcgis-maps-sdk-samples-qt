@@ -121,15 +121,4 @@ ChangeSublayerVisibilitySample {
             }
         }
     }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }
-
-

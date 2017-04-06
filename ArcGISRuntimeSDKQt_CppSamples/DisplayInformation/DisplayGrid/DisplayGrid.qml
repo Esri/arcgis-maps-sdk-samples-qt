@@ -248,16 +248,4 @@ DisplayGridSample {
             }
         }
     }
-
-    // Neatline rectangle
-    Rectangle {
-        id: neatline
-        anchors.fill: parent
-        color: "transparent"
-        opacity: 0.0
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

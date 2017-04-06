@@ -1,7 +1,9 @@
 {
-    "source" :  "DistanceCompositeSymbol",
-    "description" : "DistanceCompositeSymbol.html",
-    "thumbnail" : "DistanceCompositeSymbol.png",
+    "source" :  "DistanceCompositeSymbol.qml",
+    "otherSourceFiles" : [
+        "DistanceCompositeSymbol.h",
+        "DistanceCompositeSymbol.cpp"
+    ],
     "name" : "Distance composite symbol",
     "dataItems" : [
         {

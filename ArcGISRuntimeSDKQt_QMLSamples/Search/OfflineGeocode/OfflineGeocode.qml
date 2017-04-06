@@ -381,14 +381,4 @@ Rectangle {
             font.pixelSize: 18 * scaleFactor
         }
     }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

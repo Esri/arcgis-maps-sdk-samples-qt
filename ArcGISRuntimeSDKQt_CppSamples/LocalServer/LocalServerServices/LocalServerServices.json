@@ -1,8 +1,10 @@
 {
-    "source" :  "LocalServerServices",
-    "description" : "LocalServerServices.html",
-    "thumbnail" : "LocalServerServices.png",
-    "name" : "Local Server Services",
+    "source" :  "LocalServerServices.qml",
+    "otherSourceFiles" : [
+        "LocalServerServices.h",
+        "LocalServerServices.cpp"
+    ],
+    "name" : "Local server services",
     "dataItems" : [        
         {
             "itemId" : "4e94fec734434d1288e6ebe36c3c461f",
@@ -13,5 +15,5 @@
             "path" : "~/ArcGIS/Runtime/Data/gpk/MessageInABottle.gpk"
         }
     ]
-}
+}    
 

@@ -316,16 +316,6 @@ Rectangle {
         onTriggered: animate();
     }
 
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
-
     FileFolder {
         id: missionsFolder
         path: System.resolvedPath(dataPath) + "/Missions/"

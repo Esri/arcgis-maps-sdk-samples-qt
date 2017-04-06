@@ -16,13 +16,10 @@
 
 import QtQuick 2.6
 import Esri.ArcGISRuntime 100.1
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
 
     // Create MapView that contains a Map with the Imagery Basemap
     MapView {
@@ -43,15 +40,6 @@ Rectangle {
             xMax: -12208257.879667
             yMax: 4650542.535773
             spatialReference: SpatialReference { wkid: 102100 }
-        }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

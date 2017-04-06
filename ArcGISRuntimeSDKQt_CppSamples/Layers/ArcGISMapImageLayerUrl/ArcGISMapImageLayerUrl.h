@@ -19,28 +19,29 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 #include <QQuickItem>
 
 class ArcGISMapImageLayerUrl : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit ArcGISMapImageLayerUrl(QQuickItem* parent = nullptr);
-    ~ArcGISMapImageLayerUrl();
+  explicit ArcGISMapImageLayerUrl(QQuickItem* parent = nullptr);
+  ~ArcGISMapImageLayerUrl();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // ARCGIS_MAP_IMAGE_LAYER_URL_H

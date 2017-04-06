@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/Samples/Features/FeatureLayer_Geodatabase">
-        <file>FeatureLayer_Geodatabase.html</file>
         <file alias="sample.json">FeatureLayer_Geodatabase.json</file>
-        <file>FeatureLayer_Geodatabase.png</file>
+        <file>screenshot.png</file>
         <file>FeatureLayer_Geodatabase.qml</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

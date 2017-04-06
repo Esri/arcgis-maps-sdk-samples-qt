@@ -19,17 +19,17 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class Graphic;
-        class LocatorTask;
-        class CalloutData;
-        class MapQuickView;
-        class GraphicsOverlay;
-        class ArcGISTiledLayer;
-        class SuggestListModel;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class Graphic;
+    class LocatorTask;
+    class CalloutData;
+    class MapQuickView;
+    class GraphicsOverlay;
+    class ArcGISTiledLayer;
+    class SuggestListModel;
+  }
 }
 
 #include "Point.h"
@@ -41,56 +41,57 @@ namespace Esri
 
 class OfflineGeocode : public QQuickItem
 {
-    Q_OBJECT
-    Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
-    Q_PROPERTY(Esri::ArcGISRuntime::SuggestListModel* suggestions READ suggestions NOTIFY suggestionsChanged)
-    Q_PROPERTY(bool geocodeInProgress READ geocodeInProgress NOTIFY geocodeInProgressChanged)
-    Q_PROPERTY(bool suggestInProgress READ suggestInProgress NOTIFY suggestInProgressChanged)
-    Q_PROPERTY(bool noResults READ noResults NOTIFY noResultsChanged)
+  Q_OBJECT
+  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::SuggestListModel* suggestions READ suggestions NOTIFY suggestionsChanged)
+  Q_PROPERTY(bool geocodeInProgress READ geocodeInProgress NOTIFY geocodeInProgressChanged)
+  Q_PROPERTY(bool suggestInProgress READ suggestInProgress NOTIFY suggestInProgressChanged)
+  Q_PROPERTY(bool noResults READ noResults NOTIFY noResultsChanged)
 
 public:
-    explicit OfflineGeocode(QQuickItem* parent = nullptr);
-    ~OfflineGeocode();
+  explicit OfflineGeocode(QQuickItem* parent = nullptr);
+  ~OfflineGeocode();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void geocodeWithSuggestion(int index);  
-    Q_INVOKABLE void geocodeWithText(const QString& address);
-    Q_INVOKABLE void setSuggestionsText(const QString& searchText);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void geocodeWithSuggestion(int index);
+  Q_INVOKABLE void geocodeWithText(const QString& address);
+  Q_INVOKABLE void setSuggestionsText(const QString& searchText);
 
 signals:
-    void noResultsChanged();
-    void calloutDataChanged();
-    void suggestionsChanged();
-    void suggestInProgressChanged();
-    void geocodeInProgressChanged();
-    void dismissSuggestions();
+  void noResultsChanged();
+  void calloutDataChanged();
+  void suggestionsChanged();
+  void suggestInProgressChanged();
+  void geocodeInProgressChanged();
+  void dismissSuggestions();
 
 private:
-    Esri::ArcGISRuntime::CalloutData* calloutData() const;
-    Esri::ArcGISRuntime::SuggestListModel* suggestions() const;
-    bool geocodeInProgress() const;
-    bool noResults() const;
-    bool suggestInProgress() const;
-    void connectSignals();
+  Esri::ArcGISRuntime::CalloutData* calloutData() const;
+  Esri::ArcGISRuntime::SuggestListModel* suggestions() const;
+  bool geocodeInProgress() const;
+  bool noResults() const;
+  bool suggestInProgress() const;
+  void connectSignals();
 
 private:
-    bool m_isReverseGeocode = false;
-    bool m_geocodeInProgress = false;
-    bool m_isPressAndHold = false;
-    bool m_noResults = false;
-    bool m_suggestInProgress = false;
-    QString m_dataPath;
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::Point m_clickedPoint;
-    Esri::ArcGISRuntime::Graphic* m_pinGraphic = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
-    Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
-    Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-    Esri::ArcGISRuntime::SuggestListModel* m_suggestListModel = nullptr;
-    Esri::ArcGISRuntime::GeocodeParameters m_geocodeParameters;
-    Esri::ArcGISRuntime::ReverseGeocodeParameters m_reverseGeocodeParameters;
+  bool m_isReverseGeocode = false;
+  bool m_geocodeInProgress = false;
+  bool m_isPressAndHold = false;
+  bool m_noResults = false;
+  bool m_suggestInProgress = false;
+  QString m_dataPath;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::Point m_clickedPoint;
+  Esri::ArcGISRuntime::Graphic* m_pinGraphic = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
+  Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
+  Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::SuggestListModel* m_suggestListModel = nullptr;
+  Esri::ArcGISRuntime::GeocodeParameters m_geocodeParameters;
+  Esri::ArcGISRuntime::ReverseGeocodeParameters m_reverseGeocodeParameters;
 };
 
 #endif // OFFLINEGEOCODE_H

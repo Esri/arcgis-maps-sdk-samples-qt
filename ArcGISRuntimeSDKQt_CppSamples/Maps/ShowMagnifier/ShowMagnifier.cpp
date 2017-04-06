@@ -24,7 +24,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ShowMagnifier::ShowMagnifier(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -32,24 +32,30 @@ ShowMagnifier::~ShowMagnifier()
 {
 }
 
+void ShowMagnifier::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<ShowMagnifier>("Esri.Samples", 1, 0, "ShowMagnifierSample");
+}
+
 void ShowMagnifier::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new basemap instance
-    Basemap* basemap = Basemap::imagery(this);
+  // create a new basemap instance
+  Basemap* basemap = Basemap::imagery(this);
 
-    // create a new map instance
-    m_map = new Map(basemap, this);
-    m_map->setInitialViewpoint(Viewpoint(Point(-110.8258, 32.1545089, SpatialReference::wgs84()), 2e4));
+  // create a new map instance
+  m_map = new Map(basemap, this);
+  m_map->setInitialViewpoint(Viewpoint(Point(-110.8258, 32.1545089, SpatialReference::wgs84()), 2e4));
 
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 
-    // enable magnifier
-    m_mapView->setMagnifierEnabled(true);
+  // enable magnifier
+  m_mapView->setMagnifierEnabled(true);
 }
 

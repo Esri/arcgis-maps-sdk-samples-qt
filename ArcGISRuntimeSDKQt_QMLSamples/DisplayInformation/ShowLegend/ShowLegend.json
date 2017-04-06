@@ -1,7 +1,6 @@
 {
     "source" :  "ShowLegend.qml",
-    "description" : "ShowLegend.html",
-    "thumbnail" : "ShowLegend.png",
+    "otherSourceFiles" :  [],
     "name" : "Show legend"
 }
 

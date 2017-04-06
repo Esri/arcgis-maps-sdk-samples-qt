@@ -19,30 +19,31 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class GraphicsOverlay;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class GraphicsOverlay;
+  }
 }
 
 #include <QQuickItem>
 
 class Simple_Marker_Symbol : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit Simple_Marker_Symbol(QQuickItem* parent = nullptr);
-    ~Simple_Marker_Symbol();
+  explicit Simple_Marker_Symbol(QQuickItem* parent = nullptr);
+  ~Simple_Marker_Symbol();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
 };
 
 #endif // SIMPLE_MARKER_SYMBOL_H

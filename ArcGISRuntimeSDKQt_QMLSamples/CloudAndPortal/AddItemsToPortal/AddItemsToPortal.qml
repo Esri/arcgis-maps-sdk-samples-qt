@@ -366,14 +366,4 @@ Rectangle {
                  myUser.addPortalItemStatus === Enums.TaskStatusInProgress ||
                  myUser.deletePortalItemStatus === Enums.TaskStatusInProgress
     }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

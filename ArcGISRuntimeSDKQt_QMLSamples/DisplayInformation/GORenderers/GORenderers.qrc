@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/GORenderers">
-        <file>GORenderers.html</file>
         <file alias="sample.json">GORenderers.json</file>
-        <file>GORenderers.png</file>
+        <file>screenshot.png</file>
         <file>GORenderers.qml</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

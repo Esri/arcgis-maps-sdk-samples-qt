@@ -19,31 +19,32 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 #include <QQuickItem>
 
 class GORenderers : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit GORenderers(QQuickItem* parent = nullptr);
-    ~GORenderers();
+  explicit GORenderers(QQuickItem* parent = nullptr);
+  ~GORenderers();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-
-private:
-    void addGraphicsOverlay();
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  void addGraphicsOverlay();
+
+private:
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // GO_RENDERERS_H

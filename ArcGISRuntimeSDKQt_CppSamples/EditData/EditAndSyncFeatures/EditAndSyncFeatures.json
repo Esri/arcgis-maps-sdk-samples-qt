@@ -1,7 +1,9 @@
 {
-    "source" :  "EditAndSyncFeatures",
-    "description" : "EditAndSyncFeatures.html",
-    "thumbnail" : "EditAndSyncFeatures.png",
+    "source" :  "EditAndSyncFeatures.qml",
+    "otherSourceFiles" : [
+        "EditAndSyncFeatures.h",
+        "EditAndSyncFeatures.cpp"
+    ],
     "name" : "Edit and sync features",
     "dataItems" : [
         {

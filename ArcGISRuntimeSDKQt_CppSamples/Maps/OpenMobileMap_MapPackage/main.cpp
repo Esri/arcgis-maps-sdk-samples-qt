@@ -22,14 +22,10 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
 #include "OpenMobileMap_MapPackage.h"
-#include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
-
-using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
@@ -40,9 +36,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<OpenMobileMap_MapPackage>("Esri.Samples", 1, 0, "OpenMobileMap_MapPackageSample");
+    // Initialize the sample
+    OpenMobileMap_MapPackage::init();
 
     // Intialize application view
     QQuickView view;

@@ -270,14 +270,4 @@ AddItemsToPortalSample {
         anchors.centerIn: parent
         running: busy
     }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

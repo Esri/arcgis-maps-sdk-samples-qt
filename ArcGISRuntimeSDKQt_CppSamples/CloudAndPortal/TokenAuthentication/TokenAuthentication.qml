@@ -39,13 +39,4 @@ TokenAuthenticationSample {
         anchors.fill: parent
         authenticationManager: authSample.authenticationManager // set the authenticationManager property (this needs to be registered)
     }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

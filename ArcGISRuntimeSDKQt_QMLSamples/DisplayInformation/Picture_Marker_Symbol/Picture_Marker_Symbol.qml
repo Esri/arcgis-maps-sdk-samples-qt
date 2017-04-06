@@ -23,7 +23,6 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Map view UI presentation at top
@@ -99,15 +98,6 @@ Rectangle {
                     height: 64.0
                 }
             }
-        }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

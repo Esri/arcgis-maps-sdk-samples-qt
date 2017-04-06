@@ -18,29 +18,30 @@
 #define WEB_TILED_LAYER_H
 
 namespace Esri
-    {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+{
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 #include <QQuickItem>
 
 class Web_Tiled_Layer : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit Web_Tiled_Layer(QQuickItem* parent = nullptr);
-    ~Web_Tiled_Layer();
+  explicit Web_Tiled_Layer(QQuickItem* parent = nullptr);
+  ~Web_Tiled_Layer();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // WEB_TILED_LAYER_H

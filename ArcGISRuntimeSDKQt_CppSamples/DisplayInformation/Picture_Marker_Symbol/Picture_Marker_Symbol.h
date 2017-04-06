@@ -19,14 +19,14 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class GraphicsOverlay;
-        class PictureMarkerSymbol;
-        class Point;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class GraphicsOverlay;
+    class PictureMarkerSymbol;
+    class Point;
+  }
 }
 
 #include <QString>
@@ -34,22 +34,23 @@ namespace Esri
 
 class Picture_Marker_Symbol : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit Picture_Marker_Symbol(QQuickItem* parent = nullptr);
-    ~Picture_Marker_Symbol();
+  explicit Picture_Marker_Symbol(QQuickItem* parent = nullptr);
+  ~Picture_Marker_Symbol();
 
-    void addGraphic(Esri::ArcGISRuntime::Point &point, Esri::ArcGISRuntime::PictureMarkerSymbol* symbol);
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    void setWidthAndHeight(Esri::ArcGISRuntime::PictureMarkerSymbol* symbol, float size);
+  void setWidthAndHeight(Esri::ArcGISRuntime::PictureMarkerSymbol* symbol, float size);
+  void addGraphic(Esri::ArcGISRuntime::Point &point, Esri::ArcGISRuntime::PictureMarkerSymbol* symbol);
 
-    QString m_dataPath;
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  QString m_dataPath;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
 };
 
 #endif // PICTURE_MARKER_SYMBOL_H

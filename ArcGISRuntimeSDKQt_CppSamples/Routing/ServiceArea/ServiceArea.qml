@@ -107,13 +107,4 @@ ServiceAreaSample {
         text: message
         visible: text.length > 0
     }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

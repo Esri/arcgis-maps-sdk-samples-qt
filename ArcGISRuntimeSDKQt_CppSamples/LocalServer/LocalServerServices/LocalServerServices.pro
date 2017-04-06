@@ -47,21 +47,6 @@ win32 {
         Ole32.lib
 }
 
-ios {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-
-    OTHER_FILES += \
-        $$PWD/Info.plist
-
-    QMAKE_INFO_PLIST = $$PWD/Info.plist
-}
-
-android {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-}
-
-macx {
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.11
+ios:android:macx {
+    message("Local Server not supported on this platform")
 }

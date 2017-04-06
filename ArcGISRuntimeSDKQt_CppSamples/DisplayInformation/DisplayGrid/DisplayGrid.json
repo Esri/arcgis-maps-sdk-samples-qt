@@ -1,7 +1,9 @@
 {
-    "source" :  "DisplayGrid",
-    "description" : "DisplayGrid.html",
-    "thumbnail" : "DisplayGrid.png",
+    "source" :  "DisplayGrid.qml",
+    "otherSourceFiles" : [
+        "DisplayGrid.h",
+        "DisplayGrid.cpp"
+    ],
     "name" : "Display a grid"
 }
 

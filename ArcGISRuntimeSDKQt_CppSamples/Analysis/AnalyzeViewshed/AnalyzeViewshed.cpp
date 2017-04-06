@@ -47,6 +47,12 @@ AnalyzeViewshed::~AnalyzeViewshed()
 {
 }
 
+void AnalyzeViewshed::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<AnalyzeViewshed>("Esri.Samples", 1, 0, "AnalyzeViewshedSample");
+}
+
 void AnalyzeViewshed::componentComplete()
 {
   QQuickItem::componentComplete();
@@ -160,27 +166,27 @@ void AnalyzeViewshed::calculateViewshed()
     {
       switch (viewshedJob->jobStatus())
       {
-        case JobStatus::Failed:
-          emit displayErrorDialog("Geoprocessing Task failed", !viewshedJob->error().isEmpty() ? viewshedJob->error().message() : "Unknown error.");
-          m_viewshedInProgress = false;
-          m_jobStatus = "Job failed";
-          break;
-        case JobStatus::Started:
-          m_viewshedInProgress = true;
-          m_jobStatus = "Job in progress...";
-          break;
-        case JobStatus::Paused:
-          m_viewshedInProgress = false;
-          m_jobStatus = "Job paused...";
-          break;
-        case JobStatus::Succeeded:
-          m_viewshedInProgress = false;
-          m_jobStatus = "Job succeeded";
-          // handle the results
-          processResults(viewshedJob->result());
-          break;
-        default:
-          break;
+      case JobStatus::Failed:
+        emit displayErrorDialog("Geoprocessing Task failed", !viewshedJob->error().isEmpty() ? viewshedJob->error().message() : "Unknown error.");
+        m_viewshedInProgress = false;
+        m_jobStatus = "Job failed";
+        break;
+      case JobStatus::Started:
+        m_viewshedInProgress = true;
+        m_jobStatus = "Job in progress...";
+        break;
+      case JobStatus::Paused:
+        m_viewshedInProgress = false;
+        m_jobStatus = "Job paused...";
+        break;
+      case JobStatus::Succeeded:
+        m_viewshedInProgress = false;
+        m_jobStatus = "Job succeeded";
+        // handle the results
+        processResults(viewshedJob->result());
+        break;
+      default:
+        break;
       }
 
       // emit signals

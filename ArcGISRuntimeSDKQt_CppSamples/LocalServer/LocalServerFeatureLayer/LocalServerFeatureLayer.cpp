@@ -29,15 +29,19 @@
 
 using namespace Esri::ArcGISRuntime;
 
-// constructor
 LocalServerFeatureLayer::LocalServerFeatureLayer(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-// destructor
 LocalServerFeatureLayer::~LocalServerFeatureLayer()
 {
+}
+
+void LocalServerFeatureLayer::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<LocalServerFeatureLayer>("Esri.Samples", 1, 0, "LocalServerFeatureLayerSample");
 }
 
 void LocalServerFeatureLayer::componentComplete()

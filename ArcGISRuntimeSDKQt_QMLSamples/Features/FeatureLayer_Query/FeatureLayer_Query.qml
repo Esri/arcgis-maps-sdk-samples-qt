@@ -153,16 +153,6 @@ Rectangle {
         }
     }
 
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
-
     // function to form and execute the query
     function query() {
         // set the where clause

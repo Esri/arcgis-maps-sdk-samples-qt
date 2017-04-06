@@ -110,16 +110,6 @@ DisplayLayerViewDrawStatusSample {
         }
     }
 
-    // Neatline Rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
-
     // initialize ListModel to display layer names and ViewStates
     onMapReady: {
         for (var i = 0; i < displayLayerView.layerNames.length; i++)

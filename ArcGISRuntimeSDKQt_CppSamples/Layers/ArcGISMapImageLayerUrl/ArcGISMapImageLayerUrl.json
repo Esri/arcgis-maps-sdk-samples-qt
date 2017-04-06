@@ -1,7 +1,9 @@
 {
-    "source" :  "ArcGISMapImageLayerUrl",
-    "description" : "ArcGISMapImageLayerUrl.html",
-    "thumbnail" : "ArcGISMapImageLayerUrl.png",
+    "source" :  "ArcGISMapImageLayerUrl.qml",
+    "otherSourceFiles" : [
+        "ArcGISMapImageLayerUrl.h",
+        "ArcGISMapImageLayerUrl.cpp"
+    ],
     "name" : "ArcGIS map image layer (URL)"
 }
 

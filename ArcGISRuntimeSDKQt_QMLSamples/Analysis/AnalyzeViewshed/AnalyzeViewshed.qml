@@ -250,14 +250,4 @@ Rectangle {
         title: "Error"
         text: "Executing geoprocessing failed."
     }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

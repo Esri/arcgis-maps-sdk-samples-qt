@@ -1,6 +1,5 @@
 {
     "source" :  "ServiceArea.qml",
-    "description" : "ServiceArea.html",
-    "thumbnail" : "ServiceArea.png",
+    "otherSourceFiles" :  [],
     "name" : "Service area"
 }

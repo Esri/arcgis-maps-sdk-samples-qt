@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/Samples/Layers/RasterLayerFile">
         <file alias="sample.json">RasterLayerFile.json</file>
-        <file>RasterLayerFile.png</file>
+        <file>screenshot.png</file>
         <file>RasterLayerFile.qml</file>
-        <file>RasterLayerFile.html</file>
         <file>RasterLoader.qml</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

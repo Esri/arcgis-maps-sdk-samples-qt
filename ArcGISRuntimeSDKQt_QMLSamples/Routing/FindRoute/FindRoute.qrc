@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/Samples/Routing/FindRoute">
         <file alias="sample.json">FindRoute.json</file>
-        <file>FindRoute.png</file>
         <file>FindRoute.qml</file>
-        <file>FindRoute.html</file>
+        <file>screenshot.png</file>
         <file>pinA.png</file>
         <file>pinB.png</file>
         <file>directions.png</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

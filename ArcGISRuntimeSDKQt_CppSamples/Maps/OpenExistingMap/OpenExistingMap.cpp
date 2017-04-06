@@ -23,7 +23,7 @@
 using namespace Esri::ArcGISRuntime;
 
 OpenExistingMap::OpenExistingMap(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -31,31 +31,37 @@ OpenExistingMap::~OpenExistingMap()
 {
 }
 
+void OpenExistingMap::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<OpenExistingMap>("Esri.Samples", 1, 0, "OpenExistingMapSample");
+}
+
 void OpenExistingMap::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new basemap instance
-    Basemap* basemap = Basemap::imagery(this);
-    // create a new map instance
-    Map* map = new Map(basemap, this);
-    // set map on the map view
-    m_mapView->setMap(map);
+  // create a new basemap instance
+  Basemap* basemap = Basemap::imagery(this);
+  // create a new map instance
+  Map* map = new Map(basemap, this);
+  // set map on the map view
+  m_mapView->setMap(map);
 }
 
 void OpenExistingMap::openMap(const QString& itemId)
 {
-    //! [Construct map from a webmap Url]
-    // create a QUrl using the item id QString
-    QString organizationPortalUrl("http://arcgis.com");
-    QUrl webmapUrl( QString(organizationPortalUrl + "/sharing/rest/content/items/" + itemId));
-    // create a new map from the webmap Url
-    Map* map = new Map(webmapUrl, this);
-    //! [Construct map from a webmap Url]
+  //! [Construct map from a webmap Url]
+  // create a QUrl using the item id QString
+  QString organizationPortalUrl("http://arcgis.com");
+  QUrl webmapUrl( QString(organizationPortalUrl + "/sharing/rest/content/items/" + itemId));
+  // create a new map from the webmap Url
+  Map* map = new Map(webmapUrl, this);
+  //! [Construct map from a webmap Url]
 
-    // set the map to the map view
-    m_mapView->setMap(map);
+  // set the map to the map view
+  m_mapView->setMap(map);
 }
