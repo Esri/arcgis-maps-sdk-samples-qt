@@ -1,7 +1,9 @@
 {
-    "source" :  "RasterLayerFile",
-    "description" : "RasterLayerFile.html",
-    "thumbnail" : "RasterLayerFile.png",
+    "source" :  "RasterLayerFile.qml",
+    "otherSourceFiles" : [
+        "RasterLayerFile.h",
+        "RasterLayerFile.cpp"
+    ],
     "name" : "Raster layer (file)",
     "dataItems" : [        
         {

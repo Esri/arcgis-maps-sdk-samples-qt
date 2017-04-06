@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/Samples/Maps/SetInitialMapLocation">
         <file alias="sample.json">SetInitialMapLocation.json</file>
-        <file>SetInitialMapLocation.png</file>
+        <file>screenshot.png</file>
         <file>SetInitialMapLocation.qml</file>
 		<file>SetInitialMapLocation.h</file>
 		<file>SetInitialMapLocation.cpp</file>
-        <file>SetInitialMapLocation.html</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

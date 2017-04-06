@@ -19,42 +19,43 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class FeatureLayer;
-        class ServiceFeatureTable;
-        class UniqueValueRenderer;
-        class SimpleFillSymbol;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class FeatureLayer;
+    class ServiceFeatureTable;
+    class UniqueValueRenderer;
+    class SimpleFillSymbol;
+  }
 }
 
 #include <QQuickItem>
 
 class Unique_Value_Renderer : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit Unique_Value_Renderer(QQuickItem* parent = nullptr);
-    ~Unique_Value_Renderer();
+  explicit Unique_Value_Renderer(QQuickItem* parent = nullptr);
+  ~Unique_Value_Renderer();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-
-private:
-    void createUniqueValue(QString stateName, Esri::ArcGISRuntime::SimpleFillSymbol* fillSymbol);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-    Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
-    Esri::ArcGISRuntime::SimpleFillSymbol* m_defaultSymbol = nullptr;
-    Esri::ArcGISRuntime::SimpleFillSymbol* m_californiaSymbol = nullptr;
-    Esri::ArcGISRuntime::SimpleFillSymbol* m_arizonaSymbol = nullptr;
-    Esri::ArcGISRuntime::SimpleFillSymbol* m_nevadaSymbol = nullptr;
+  void createUniqueValue(QString stateName, Esri::ArcGISRuntime::SimpleFillSymbol* fillSymbol);
+
+private:
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
+  Esri::ArcGISRuntime::SimpleFillSymbol* m_defaultSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleFillSymbol* m_californiaSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleFillSymbol* m_arizonaSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleFillSymbol* m_nevadaSymbol = nullptr;
 };
 
 #endif // UNIQUE_VALUE_RENDERER_H

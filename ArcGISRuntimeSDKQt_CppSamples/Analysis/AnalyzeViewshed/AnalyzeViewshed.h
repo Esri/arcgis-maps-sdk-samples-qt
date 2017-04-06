@@ -43,6 +43,7 @@ public:
   ~AnalyzeViewshed();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
   void viewshedInProgressChanged();

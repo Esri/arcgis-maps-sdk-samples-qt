@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/Samples/Maps/MapRotation">
         <file alias="sample.json">MapRotation.json</file>
-        <file>MapRotation.png</file>
+        <file>screenshot.png</file>
         <file>MapRotation.qml</file>
 		<file>MapRotation.h</file>
 		<file>MapRotation.cpp</file>
-        <file>MapRotation.html</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

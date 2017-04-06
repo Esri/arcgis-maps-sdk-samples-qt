@@ -114,14 +114,4 @@ Rectangle {
         var height = mv.mapHeight;
         return height > width ? width / height : height / width;
     }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

@@ -22,14 +22,10 @@
 #include <Windows.h>
 #endif
 
-#include "SceneQuickView.h"
-
 #include "Surface_Placement.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
-
-using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
@@ -48,11 +44,14 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-  // Register classes for QML
+  // Initialize the sample
+  Surface_Placement::init();
+
+  /* Leaving here for purpose of snippet
   //! [Register the scene view for QML]
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   //! [Register the scene view for QML]
-  qmlRegisterType<Surface_Placement>("Esri.Samples", 1, 0, "SurfacePlacementSample");
+  */
 
   // Intialize application view
   QQuickView view;

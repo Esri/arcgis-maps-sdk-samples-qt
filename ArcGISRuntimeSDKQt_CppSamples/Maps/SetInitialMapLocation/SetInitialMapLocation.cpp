@@ -22,7 +22,7 @@
 using namespace Esri::ArcGISRuntime;
 
 SetInitialMapLocation::SetInitialMapLocation(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -30,16 +30,22 @@ SetInitialMapLocation::~SetInitialMapLocation()
 {
 }
 
+void SetInitialMapLocation::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<SetInitialMapLocation>("Esri.Samples", 1, 0, "SetInitialMapLocationSample");
+}
+
 void SetInitialMapLocation::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // Create a new map with the basemap type enum and pass in initial lat, lon, and scale
-    m_map = new Map(BasemapType::ImageryWithLabels, -33.867886, -63.985, 16, this);
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // Create a new map with the basemap type enum and pass in initial lat, lon, and scale
+  m_map = new Map(BasemapType::ImageryWithLabels, -33.867886, -63.985, 16, this);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 }
 

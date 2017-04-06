@@ -1,7 +1,6 @@
 {
     "source" :  "ShowMagnifier.qml",
-    "description" : "ShowMagnifier.html",
-    "thumbnail" : "ShowMagnifier.png",
+    "otherSourceFiles" :  [],
     "name" : "Show magnifier"
 }
 

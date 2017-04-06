@@ -17,27 +17,15 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 ShowMagnifierSample {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
-
     // add a mapView component
     MapView {
         anchors.fill: parent
         objectName: "mapView"
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }
 

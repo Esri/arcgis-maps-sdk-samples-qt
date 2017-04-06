@@ -20,180 +20,187 @@
 using namespace Esri::ArcGISRuntime;
 
 AddItemsToPortal::AddItemsToPortal(QQuickItem* parent /* = nullptr */):
-    QQuickItem(parent),
-    m_portal(new Portal(new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this), this)),
-    m_item(new PortalItem(m_portal, this))
+  QQuickItem(parent),
+  m_portal(new Portal(new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this), this)),
+  m_item(new PortalItem(m_portal, this))
 {
-    // AuthenticationManager::instance()->setCredentialCacheEnabled(false);
-    m_item->setTitle("Add Items Sample");
-    m_item->setType(PortalItemType::CSV);
+  // AuthenticationManager::instance()->setCredentialCacheEnabled(false);
+  m_item->setTitle("Add Items Sample");
+  m_item->setType(PortalItemType::CSV);
 }
 
 AddItemsToPortal::~AddItemsToPortal()
 {
 }
 
+void AddItemsToPortal::init()
+{
+  // Register the types for QML
+  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
+  qmlRegisterType<AddItemsToPortal>("Esri.Samples", 1, 0, "AddItemsToPortalSample");
+}
+
 void AddItemsToPortal::componentComplete()
 {
-    QQuickItem::componentComplete();
-    emit authManagerChanged();
+  QQuickItem::componentComplete();
+  emit authManagerChanged();
 
-    if (m_portal)
+  if (m_portal)
+  {
+    connect(m_portal, &Portal::loadStatusChanged, this, [this]()
     {
-        connect(m_portal, &Portal::loadStatusChanged, this, [this]()
-        {
-            emit portalLoadedChanged();
+      emit portalLoadedChanged();
 
-            if (m_portal->loadStatus() != LoadStatus::Loaded)
-                return;
+      if (m_portal->loadStatus() != LoadStatus::Loaded)
+        return;
 
-            m_user = m_portal->portalUser();
-            m_busy = false;
-            connectUserSignals();
-        });
-    }
+      m_user = m_portal->portalUser();
+      m_busy = false;
+      connectUserSignals();
+    });
+  }
 
-    if (m_item)
+  if (m_item)
+  {
+    connect(m_item, &PortalItem::loadStatusChanged, this, [this]()
     {
-        connect(m_item, &PortalItem::loadStatusChanged, this, [this]()
-        {
-            if (m_item->loadStatus() != LoadStatus::Loaded)
-                return;
+      if (m_item->loadStatus() != LoadStatus::Loaded)
+        return;
 
-            m_busy = false;
-            emit portalItemIdChanged();
-            emit portalItemTitleChanged();
-            emit portalItemLoadedChanged();
-            setStatusText("Succesfully loaded item from portal." + m_item->itemId());
-        });
-    }
+      m_busy = false;
+      emit portalItemIdChanged();
+      emit portalItemTitleChanged();
+      emit portalItemLoadedChanged();
+      setStatusText("Succesfully loaded item from portal." + m_item->itemId());
+    });
+  }
 }
 
 bool AddItemsToPortal::portalLoaded() const
 {
-    return m_portal && (m_portal->loadStatus() == LoadStatus::Loaded);
+  return m_portal && (m_portal->loadStatus() == LoadStatus::Loaded);
 }
 
 bool AddItemsToPortal::portalItemLoaded() const
 {
-    return m_item && (m_item->loadStatus() == LoadStatus::Loaded);
+  return m_item && (m_item->loadStatus() == LoadStatus::Loaded);
 }
 
 QString AddItemsToPortal::portalItemId() const
 {
-    if (m_itemDeleted || !m_item)
-        return QString();
+  if (m_itemDeleted || !m_item)
+    return QString();
 
-    return m_item->itemId();
+  return m_item->itemId();
 }
 
 QString AddItemsToPortal::portalItemTitle() const
 {
-    if (m_itemDeleted || !m_item)
-        return QString();
+  if (m_itemDeleted || !m_item)
+    return QString();
 
-    return m_item->title();
+  return m_item->title();
 }
 
 QString AddItemsToPortal::portalItemTypeName() const
 {
-    if (m_itemDeleted || !m_item)
-        return QString();
+  if (m_itemDeleted || !m_item)
+    return QString();
 
-    return m_item->typeName();
+  return m_item->typeName();
 }
 
 bool AddItemsToPortal::itemDeleted() const
 {
-    return m_itemDeleted;
+  return m_itemDeleted;
 }
 
 QString AddItemsToPortal::statusText() const
 {
-    return m_statusText;
+  return m_statusText;
 }
 
 bool AddItemsToPortal::busy() const
 {
-    return m_busy;
+  return m_busy;
 }
 
 void AddItemsToPortal::authenticatePortal()
 {
-    if (m_portal)
-        m_portal->load();
+  if (m_portal)
+    m_portal->load();
 }
 
 void AddItemsToPortal::addItem()
 {
-    if (!m_user || !m_item)
-        return;
+  if (!m_user || !m_item)
+    return;
 
-    m_busy = true;
+  m_busy = true;
 
-    //! [PortalUser addItemWithUrl]
-    QUrl localCSV("qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv");
-    m_user->addPortalItemWithUrl(m_item, localCSV, "add_item_sample.csv" );
-    //! [PortalUser addItemWithUrl]
+  //! [PortalUser addItemWithUrl]
+  QUrl localCSV("qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv");
+  m_user->addPortalItemWithUrl(m_item, localCSV, "add_item_sample.csv" );
+  //! [PortalUser addItemWithUrl]
 }
 
 void AddItemsToPortal::deleteItem()
 {
-    if (!m_user || !m_item)
-        return;
+  if (!m_user || !m_item)
+    return;
 
-    m_busy = true;
-    m_user->deletePortalItem(m_item);
+  m_busy = true;
+  m_user->deletePortalItem(m_item);
 }
 
 void AddItemsToPortal::connectUserSignals()
 {
-    if (!m_user)
-        return;
+  if (!m_user)
+    return;
 
-    connect(m_user, &PortalUser::errorOccurred, this, [this](Esri::ArcGISRuntime::Error error)
-    {
-        m_busy = false;
-        setStatusText( QString(error.message() + ": " + error.additionalMessage()));
-    });
+  connect(m_user, &PortalUser::errorOccurred, this, [this](Esri::ArcGISRuntime::Error error)
+  {
+    m_busy = false;
+    setStatusText( QString(error.message() + ": " + error.additionalMessage()));
+  });
 
-    //! [PortalUser addPortalItemCompleted]
-    connect(m_user, &PortalUser::addPortalItemCompleted, this, [this](bool success)
-    {
-        m_busy = false;
+  //! [PortalUser addPortalItemCompleted]
+  connect(m_user, &PortalUser::addPortalItemCompleted, this, [this](bool success)
+  {
+    m_busy = false;
 
-        if (!success)
-            return;
+    if (!success)
+      return;
 
-        setStatusText("Successfully added item.");
-        m_item->load();
-    });
-    //! [PortalUser addPortalItemCompleted]
+    setStatusText("Successfully added item.");
+    m_item->load();
+  });
+  //! [PortalUser addPortalItemCompleted]
 
-    connect(m_user, &PortalUser::deletePortalItemCompleted, this, [this](bool success)
-    {
-        m_busy = false;
+  connect(m_user, &PortalUser::deletePortalItemCompleted, this, [this](bool success)
+  {
+    m_busy = false;
 
-        if (!success)
-            return;
+    if (!success)
+      return;
 
-        m_itemDeleted = true;
-        emit itemDeletedChanged();
-        emit portalItemIdChanged();
-        emit portalItemTitleChanged();
-        emit portalItemTypeNameChanged();
-        setStatusText("Successfully deleted item " + m_item->itemId());
-    });
+    m_itemDeleted = true;
+    emit itemDeletedChanged();
+    emit portalItemIdChanged();
+    emit portalItemTitleChanged();
+    emit portalItemTypeNameChanged();
+    setStatusText("Successfully deleted item " + m_item->itemId());
+  });
 }
 
 
 void AddItemsToPortal::setStatusText(const QString &statusText)
 {
-    m_statusText = statusText;
-    emit statusTextChanged();
+  m_statusText = statusText;
+  emit statusTextChanged();
 }
 
 AuthenticationManager* AddItemsToPortal::authManager() const
 {
-    return AuthenticationManager::instance();
+  return AuthenticationManager::instance();
 }

@@ -1,7 +1,6 @@
 {
     "source" :  "FeatureLayer_DictionaryRenderer.qml",
-    "description" : "FeatureLayer_DictionaryRenderer.html",
-    "thumbnail" : "FeatureLayer_DictionaryRenderer.png",
+    "otherSourceFiles" :  [],
     "name" : "Feature layer (dictionary renderer)",
     "dataItems" : [
         {

@@ -1,7 +1,9 @@
 {
-    "source" :  "ChangeBasemap",
-    "description" : "ChangeBasemap.html",
-    "thumbnail" : "ChangeBasemap.png",
+    "source" :  "ChangeBasemap.qml",
+    "otherSourceFiles" : [
+        "ChangeBasemap.h",
+        "ChangeBasemap.cpp"
+    ],
     "name" : "Change basemap"
 }
 

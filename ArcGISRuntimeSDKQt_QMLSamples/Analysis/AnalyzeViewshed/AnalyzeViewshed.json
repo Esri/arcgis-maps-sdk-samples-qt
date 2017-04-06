@@ -1,6 +1,5 @@
 {
     "source" :  "AnalyzeViewshed.qml",
-    "description" : "AnalyzeViewshed.html",
-    "thumbnail" : "AnalyzeViewshed.png",
+    "otherSourceFiles" :  [],
     "name" : "Analyze viewshed"
 }

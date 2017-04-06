@@ -19,15 +19,15 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class GraphicsOverlay;
-        class PictureMarkerSymbol;
-        class RouteTask;
-        class DirectionManeuverListModel;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class GraphicsOverlay;
+    class PictureMarkerSymbol;
+    class RouteTask;
+    class DirectionManeuverListModel;
+  }
 }
 
 #include <RouteParameters.h>
@@ -36,35 +36,36 @@ namespace Esri
 
 class FindRoute : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::DirectionManeuverListModel* directions READ directions NOTIFY directionsChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::DirectionManeuverListModel* directions READ directions NOTIFY directionsChanged)
 
 public:
-    explicit FindRoute(QQuickItem* parent = nullptr);
-    ~FindRoute();
+  explicit FindRoute(QQuickItem* parent = nullptr);
+  ~FindRoute();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void solveRoute();
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void solveRoute();
 
 signals:
-    void directionsChanged();
-    void solveRouteComplete();
+  void directionsChanged();
+  void solveRouteComplete();
 
 private:
-    void addStopGraphics();
-    void setupRouteTask();
-    Esri::ArcGISRuntime::DirectionManeuverListModel* directions();
-    Esri::ArcGISRuntime::PictureMarkerSymbol* getPictureMarkerSymbol(QUrl imageUrl);
+  void addStopGraphics();
+  void setupRouteTask();
+  Esri::ArcGISRuntime::DirectionManeuverListModel* directions();
+  Esri::ArcGISRuntime::PictureMarkerSymbol* getPictureMarkerSymbol(QUrl imageUrl);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay = nullptr;
-    Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
-    Esri::ArcGISRuntime::RouteParameters m_routeParameters;
-    Esri::ArcGISRuntime::DirectionManeuverListModel* m_directions = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
+  Esri::ArcGISRuntime::RouteParameters m_routeParameters;
+  Esri::ArcGISRuntime::DirectionManeuverListModel* m_directions = nullptr;
 };
 
 #endif // FIND_ROUTE_H

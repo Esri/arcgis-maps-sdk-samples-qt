@@ -19,12 +19,12 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class LegendInfoListModel;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class LegendInfoListModel;
+  }
 }
 
 class QString;
@@ -33,27 +33,28 @@ class QString;
 
 class ShowLegend : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::LegendInfoListModel* legendInfoListModel READ legendInfoListModel NOTIFY legendInfoListModelChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::LegendInfoListModel* legendInfoListModel READ legendInfoListModel NOTIFY legendInfoListModelChanged)
 
 public:
-    explicit ShowLegend(QQuickItem* parent = nullptr);
-    ~ShowLegend();
+  explicit ShowLegend(QQuickItem* parent = nullptr);
+  ~ShowLegend();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
-    void legendInfoListModelChanged();
+  void legendInfoListModelChanged();
 
 private:
-    Esri::ArcGISRuntime::LegendInfoListModel* legendInfoListModel() const { return m_legendInfoListModel; }
-    void addLayers();
+  Esri::ArcGISRuntime::LegendInfoListModel* legendInfoListModel() const { return m_legendInfoListModel; }
+  void addLayers();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::LegendInfoListModel* m_legendInfoListModel = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::LegendInfoListModel* m_legendInfoListModel = nullptr;
 };
 
 #endif // SHOW_LEGEND_H

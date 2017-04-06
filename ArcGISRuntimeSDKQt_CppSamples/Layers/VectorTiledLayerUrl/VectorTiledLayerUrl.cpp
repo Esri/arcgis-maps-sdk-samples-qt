@@ -28,7 +28,7 @@
 using namespace Esri::ArcGISRuntime;
 
 VectorTiledLayerUrl::VectorTiledLayerUrl(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -36,43 +36,49 @@ VectorTiledLayerUrl::~VectorTiledLayerUrl()
 {
 }
 
+void VectorTiledLayerUrl::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<VectorTiledLayerUrl>("Esri.Samples", 1, 0, "VectorTiledLayerUrlSample");
+}
+
 void VectorTiledLayerUrl::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    //! [display vector tiled layer]
-    // create a vector tiled basemap
-    ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"));
-    Basemap* basemap = new Basemap(vectorTiledLayer, this);
-    // create a new map instance
-    m_map = new Map(basemap, this);
-    //! [display vector tiled layer]
+  //! [display vector tiled layer]
+  // create a vector tiled basemap
+  ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"));
+  Basemap* basemap = new Basemap(vectorTiledLayer, this);
+  // create a new map instance
+  m_map = new Map(basemap, this);
+  //! [display vector tiled layer]
 
-    // set viewpoint
-    Point ptLocation(-80.18, 25.778135, SpatialReference(4236));
-    m_map->setInitialViewpoint(Viewpoint(ptLocation, 150000));
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // set viewpoint
+  Point ptLocation(-80.18, 25.778135, SpatialReference(4236));
+  m_map->setInitialViewpoint(Viewpoint(ptLocation, 150000));
+  // set map on the map view
+  m_mapView->setMap(m_map);
 }
 
 void VectorTiledLayerUrl::changeBasemap(QString basemap)
 {
-    if (m_map->loadStatus() == LoadStatus::Loaded)
-    {
-        ArcGISVectorTiledLayer* vectorTiledLayer = nullptr;
-        if (basemap == "Navigation")
-            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"));
-        else if (basemap == "Streets")
-            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=4e1133c28ac04cca97693cf336cd49ad"));
-        else if (basemap == "Night")
-            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=bf79e422e9454565ae0cbe9553cf6471"));
-        else if (basemap == "Dark Gray")
-            vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=850db44b9eb845d3bd42b19e8aa7a024"));
-        Basemap* basemap = new Basemap(vectorTiledLayer, this);
-        m_map->setBasemap(basemap);
-    }
+  if (m_map->loadStatus() == LoadStatus::Loaded)
+  {
+    ArcGISVectorTiledLayer* vectorTiledLayer = nullptr;
+    if (basemap == "Navigation")
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"));
+    else if (basemap == "Streets")
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=4e1133c28ac04cca97693cf336cd49ad"));
+    else if (basemap == "Night")
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=bf79e422e9454565ae0cbe9553cf6471"));
+    else if (basemap == "Dark Gray")
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=850db44b9eb845d3bd42b19e8aa7a024"));
+    Basemap* basemap = new Basemap(vectorTiledLayer, this);
+    m_map->setBasemap(basemap);
+  }
 }
 

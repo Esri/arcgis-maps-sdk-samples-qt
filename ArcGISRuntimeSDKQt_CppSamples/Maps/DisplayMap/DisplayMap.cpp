@@ -23,7 +23,7 @@
 using namespace Esri::ArcGISRuntime;
 
 DisplayMap::DisplayMap(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -31,20 +31,26 @@ DisplayMap::~DisplayMap()
 {
 }
 
+void DisplayMap::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<DisplayMap>("Esri.Samples", 1, 0, "DisplayMapSample");
+}
+
 void DisplayMap::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    //! [MapQuickView API Snippet]
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  //! [MapQuickView API Snippet]
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new basemap instance
-    Basemap* basemap = Basemap::imageryWithLabels(this);
-    // create a new map instance
-    m_map = new Map(basemap, this);
-    // set map on the map view
-    m_mapView->setMap(m_map);
-    //! [MapQuickView API Snippet]
+  // create a new basemap instance
+  Basemap* basemap = Basemap::imageryWithLabels(this);
+  // create a new map instance
+  m_map = new Map(basemap, this);
+  // set map on the map view
+  m_mapView->setMap(m_map);
+  //! [MapQuickView API Snippet]
 }
 

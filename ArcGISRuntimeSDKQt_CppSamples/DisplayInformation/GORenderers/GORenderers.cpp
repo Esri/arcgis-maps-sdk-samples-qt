@@ -42,6 +42,12 @@ GORenderers::~GORenderers()
 {
 }
 
+void GORenderers::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<GORenderers>("Esri.Samples", 1, 0, "GORenderersSample");
+}
+
 void GORenderers::componentComplete()
 {
     QQuickItem::componentComplete();

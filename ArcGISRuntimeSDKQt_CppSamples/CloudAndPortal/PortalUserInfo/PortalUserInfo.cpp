@@ -42,6 +42,12 @@ PortalUserInfo::~PortalUserInfo()
 {
 }
 
+void PortalUserInfo::init()
+{
+  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
+  qmlRegisterType<PortalUserInfo>("Esri.Samples", 1, 0, "PortalUserInfoSample");
+}
+
 void PortalUserInfo::componentComplete()
 {
   QQuickItem::componentComplete();

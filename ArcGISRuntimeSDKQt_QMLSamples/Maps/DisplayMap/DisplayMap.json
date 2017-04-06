@@ -1,7 +1,6 @@
 {
     "source" :  "DisplayMap.qml",
-    "description" : "DisplayMap.html",
-    "thumbnail" : "DisplayMap.png",
+    "otherSourceFiles" :  [],
     "name" : "Display a map"
 }
 

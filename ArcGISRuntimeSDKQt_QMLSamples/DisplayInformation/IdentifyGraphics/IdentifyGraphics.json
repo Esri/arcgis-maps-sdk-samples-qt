@@ -1,7 +1,6 @@
 {
     "source" :  "IdentifyGraphics.qml",
-    "description" : "IdentifyGraphics.html",
-    "thumbnail" : "IdentifyGraphics.png",
+    "otherSourceFiles" :  [],
     "name" : "Identify graphics"
 }
 

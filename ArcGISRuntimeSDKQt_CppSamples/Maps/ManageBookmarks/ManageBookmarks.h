@@ -19,13 +19,13 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class Viewpoint;
-        class BookmarkListModel;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class Viewpoint;
+    class BookmarkListModel;
+  }
 }
 
 class QStringList;
@@ -35,31 +35,32 @@ class QString;
 
 class ManageBookmarks : public QQuickItem
 {
-    Q_OBJECT
-    //! [Expose the list model to QML]
-    Q_PROPERTY(Esri::ArcGISRuntime::BookmarkListModel* bookmarks READ bookmarks NOTIFY bookmarksChanged)
-    //! [Expose the list model to QML]
+  Q_OBJECT
+  //! [Expose the list model to QML]
+  Q_PROPERTY(Esri::ArcGISRuntime::BookmarkListModel* bookmarks READ bookmarks NOTIFY bookmarksChanged)
+  //! [Expose the list model to QML]
 
 public:
-    explicit ManageBookmarks(QQuickItem* parent = nullptr);
-    ~ManageBookmarks();
+  explicit ManageBookmarks(QQuickItem* parent = nullptr);
+  ~ManageBookmarks();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void goToBookmark(int bookmarkIndex);
-    Q_INVOKABLE void addBookmark(QString newBookmarkName);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void goToBookmark(int bookmarkIndex);
+  Q_INVOKABLE void addBookmark(QString newBookmarkName);
 
 signals:
-    void bookmarksChanged();
+  void bookmarksChanged();
 
 private:
-    void createInitialBookmarks();
-    void createBookmark(QString name, Esri::ArcGISRuntime::Viewpoint viewpoint);
-    Esri::ArcGISRuntime::BookmarkListModel* bookmarks() const;
+  void createInitialBookmarks();
+  void createBookmark(QString name, Esri::ArcGISRuntime::Viewpoint viewpoint);
+  Esri::ArcGISRuntime::BookmarkListModel* bookmarks() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::BookmarkListModel* m_bookmarks = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::BookmarkListModel* m_bookmarks = nullptr;
 };
 
 #endif // MANAGE_BOOKMARKS_H

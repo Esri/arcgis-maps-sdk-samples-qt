@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/Samples/Features/ServiceFeatureTable_Cache">
-        <file>ServiceFeatureTable_Cache.html</file>
         <file alias="sample.json">ServiceFeatureTable_Cache.json</file>
-        <file>ServiceFeatureTable_Cache.png</file>
+        <file>screenshot.png</file>
         <file>ServiceFeatureTable_Cache.qml</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

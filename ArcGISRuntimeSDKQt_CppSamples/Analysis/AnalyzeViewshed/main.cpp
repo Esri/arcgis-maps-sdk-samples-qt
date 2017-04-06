@@ -21,18 +21,13 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
-
 #include "AnalyzeViewshed.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
-using namespace Esri::ArcGISRuntime;
-
 int main(int argc, char *argv[])
 {
-
   QGuiApplication app(argc, argv);
 
 #ifdef Q_OS_WIN
@@ -40,9 +35,8 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-  // Register the map view for QML
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<AnalyzeViewshed>("Esri.Samples", 1, 0, "AnalyzeViewshedSample");
+  // Initialize the sample
+  AnalyzeViewshed::init();
 
   // Intialize application view
   QQuickView view;

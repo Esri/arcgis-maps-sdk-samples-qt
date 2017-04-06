@@ -1,7 +1,9 @@
 {
-    "source" :  "EditFeatureAttachments",
-    "description" : "EditFeatureAttachments.html",
-    "thumbnail" : "EditFeatureAttachments.png",
+    "source" :  "EditFeatureAttachments.qml",
+    "otherSourceFiles" : [
+        "EditFeatureAttachments.h",
+        "EditFeatureAttachments.cpp"
+    ],
     "name" : "Edit feature attachments"
 }
 

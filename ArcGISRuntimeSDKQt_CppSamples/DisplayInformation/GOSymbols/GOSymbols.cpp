@@ -36,7 +36,7 @@
 using namespace Esri::ArcGISRuntime;
 
 GOSymbols::GOSymbols(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -44,72 +44,78 @@ GOSymbols::~GOSymbols()
 {
 }
 
+void GOSymbols::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<GOSymbols>("Esri.Samples", 1, 0, "GOSymbolsSample");
+}
+
 void GOSymbols::componentComplete()
 {
-    //! [GOSymbols create graphics overlay]
-    QQuickItem::componentComplete();
+  //! [GOSymbols create graphics overlay]
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // Create a map using the oceans basemap
-    m_map = new Map(BasemapType::Oceans, 56.075844, -2.681572, 11, this);
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // Create a map using the oceans basemap
+  m_map = new Map(BasemapType::Oceans, 56.075844, -2.681572, 11, this);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 
-    // create a new graphics overlay
-    GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
+  // create a new graphics overlay
+  GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
 
-    // add the overlay to the mapview
-    m_mapView->graphicsOverlays()->append(graphicsOverlay);
-    //! [GOSymbols create graphics overlay]
+  // add the overlay to the mapview
+  m_mapView->graphicsOverlays()->append(graphicsOverlay);
+  //! [GOSymbols create graphics overlay]
 
-    //! [GOSymbols add all graphics]
-    // add graphics to the graphics overlays
-    //  add point graphics
-    addBuoyPoints(graphicsOverlay);
+  //! [GOSymbols add all graphics]
+  // add graphics to the graphics overlays
+  //  add point graphics
+  addBuoyPoints(graphicsOverlay);
 
-    // add line graphics
-    addBoatTrip(graphicsOverlay);
+  // add line graphics
+  addBoatTrip(graphicsOverlay);
 
-    // add polygon graphics
-    addNestingGround(graphicsOverlay);
+  // add polygon graphics
+  addNestingGround(graphicsOverlay);
 
-    // add text
-    addText(graphicsOverlay);
-    //! [GOSymbols add all graphics]
+  // add text
+  addText(graphicsOverlay);
+  //! [GOSymbols add all graphics]
 }
 
 //! [GOSymbols addBuoyPoints]
 void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 {
-    // create a list of points
-    QList<Point> pointsList;
-    pointsList << Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84())
+  // create a list of points
+  QList<Point> pointsList;
+  pointsList << Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84())
              << Point(-2.6908416959572303, 56.06444173689877, SpatialReference::wgs84())
              << Point(-2.6697273884990937, 56.064250073402874, SpatialReference::wgs84())
              << Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84());
 
-    // create the symbology for the points
-    SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10, this);
+  // create the symbology for the points
+  SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10, this);
 
-    // create a graphic and add each of them to the overlay
-    foreach (const Point &buoyPoint, pointsList)
-    {
-        Graphic* graphic = new Graphic(buoyPoint, this);
-        graphic->setSymbol(sms);
-        graphicsOverlay->graphics()->append(graphic);
-    }
+  // create a graphic and add each of them to the overlay
+  foreach (const Point &buoyPoint, pointsList)
+  {
+    Graphic* graphic = new Graphic(buoyPoint, this);
+    graphic->setSymbol(sms);
+    graphicsOverlay->graphics()->append(graphic);
+  }
 }
 //! [GOSymbols addBuoyPoints]
 
 //! [GOSymbols addBoatTrip]
 void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
 {
-    SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 255, 180), 1, this);
+  SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 255, 180), 1, this);
 
-    // json for the polyline
-    QString polylineJson = "{\"paths\":[[[-2.7184791227926772,56.06147084563517],"
+  // json for the polyline
+  QString polylineJson = "{\"paths\":[[[-2.7184791227926772,56.06147084563517],"
                          "[-2.7196807500463924,56.06147084563517],"
                          "[-2.722084004553823,56.062141712059706],"
                          "[-2.726375530459948,56.06386674355254],"
@@ -169,55 +175,55 @@ void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
                          "[-2.718307461756433,56.06147084563517]]],"
                          "\"spatialReference\":{\"wkid\":4326}}";
 
-    // create a polyline from the json
-    Esri::ArcGISRuntime::Polyline polyline = Polyline::fromJson(polylineJson);
-    // create a new graphic using the polyline geometry
-    Graphic* graphic = new Graphic(polyline, this);
-    // set the symbology for the graphic
-    graphic->setSymbol(sls);
-    // add the graphic to the graphics overlay
-    graphicsOverlay->graphics()->append(graphic);
+  // create a polyline from the json
+  Esri::ArcGISRuntime::Polyline polyline = Polyline::fromJson(polylineJson);
+  // create a new graphic using the polyline geometry
+  Graphic* graphic = new Graphic(polyline, this);
+  // set the symbology for the graphic
+  graphic->setSymbol(sls);
+  // add the graphic to the graphics overlay
+  graphicsOverlay->graphics()->append(graphic);
 }
 //! [GOSymbols addBoatTrip]
 
 //! [GOSymbols addNestingGround]
 void GOSymbols::addNestingGround(GraphicsOverlay* graphicsOverlay)
 {
-    // outline for the polygon
-    SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 0, 128), 1, this);
-    // create a fill symbol for a polygon
-    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::DiagonalCross, QColor(0, 255, 0, 128), outline, this);
+  // outline for the polygon
+  SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 0, 128), 1, this);
+  // create a fill symbol for a polygon
+  SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::DiagonalCross, QColor(0, 255, 0, 128), outline, this);
 
-    // create a graphic using polygon as the geometry
-    Graphic* graphic = new Graphic(createNestingGround(), this);
-    // set the symbology for the graphic
-    graphic->setSymbol(sfs);
-    // add the graphic to the overlay
-    graphicsOverlay->graphics()->append(graphic);
+  // create a graphic using polygon as the geometry
+  Graphic* graphic = new Graphic(createNestingGround(), this);
+  // set the symbology for the graphic
+  graphic->setSymbol(sfs);
+  // add the graphic to the overlay
+  graphicsOverlay->graphics()->append(graphic);
 }
 //! [GOSymbols addNestingGround]
 
 //! [GOSymbols addText]
 void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
 {
-    // text symbol
-    TextSymbol* textSymbolBassRock = new TextSymbol(QString("Bass Rock"), QColor("blue"), 10, HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
-    TextSymbol* textSymbolCraigleith = new TextSymbol(QString("Craigleith"), QColor("blue"), 10, HorizontalAlignment::Right, VerticalAlignment::Top, this);
+  // text symbol
+  TextSymbol* textSymbolBassRock = new TextSymbol(QString("Bass Rock"), QColor("blue"), 10, HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
+  TextSymbol* textSymbolCraigleith = new TextSymbol(QString("Craigleith"), QColor("blue"), 10, HorizontalAlignment::Right, VerticalAlignment::Top, this);
 
-    // geometry for the graphics
-    Point bassRock(-2.640631, 56.078083, SpatialReference::wgs84());
-    Point craigleith(-2.720324, 56.073569, SpatialReference::wgs84());
+  // geometry for the graphics
+  Point bassRock(-2.640631, 56.078083, SpatialReference::wgs84());
+  Point craigleith(-2.720324, 56.073569, SpatialReference::wgs84());
 
-    // create the graphics and set their symbology
-    Graphic* graphicBass = new Graphic(bassRock, this);
-    graphicBass->setSymbol(textSymbolBassRock);
+  // create the graphics and set their symbology
+  Graphic* graphicBass = new Graphic(bassRock, this);
+  graphicBass->setSymbol(textSymbolBassRock);
 
-    Graphic* graphicCraig = new Graphic(craigleith, this);
-    graphicCraig->setSymbol(textSymbolCraigleith);
+  Graphic* graphicCraig = new Graphic(craigleith, this);
+  graphicCraig->setSymbol(textSymbolCraigleith);
 
-    // add the graphics to the overlay
-    graphicsOverlay->graphics()->append(graphicBass);
-    graphicsOverlay->graphics()->append(graphicCraig);
+  // add the graphics to the overlay
+  graphicsOverlay->graphics()->append(graphicBass);
+  graphicsOverlay->graphics()->append(graphicCraig);
 }
 //! [GOSymbols addText]
 
@@ -225,35 +231,35 @@ void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
 // create the polygon geometry
 Geometry GOSymbols::createNestingGround()
 {
-    PolygonBuilder nestingGroundPolygonBuilder(SpatialReference::wgs84());
+  PolygonBuilder nestingGroundPolygonBuilder(SpatialReference::wgs84());
 
-    // create the polygon using the builder class
-    nestingGroundPolygonBuilder.addPoint(-2.643077012566659, 56.077125346044475);
-    nestingGroundPolygonBuilder.addPoint(-2.6428195210159444, 56.07717324600376);
-    nestingGroundPolygonBuilder.addPoint(-2.6425405718360033, 56.07774804087097);
-    nestingGroundPolygonBuilder.addPoint(-2.6427122328698127, 56.077927662508635);
-    nestingGroundPolygonBuilder.addPoint(-2.642454741319098, 56.07829887790651);
-    nestingGroundPolygonBuilder.addPoint(-2.641853927700763, 56.078526395253725);
-    nestingGroundPolygonBuilder.addPoint(-2.6409741649024867, 56.078801809192434);
-    nestingGroundPolygonBuilder.addPoint(-2.6399871139580795, 56.07881378366685);
-    nestingGroundPolygonBuilder.addPoint(-2.6394077579689705, 56.07908919555142);
-    nestingGroundPolygonBuilder.addPoint(-2.638764029092183, 56.07917301616904);
-    nestingGroundPolygonBuilder.addPoint(-2.638485079912242, 56.07896945149566);
-    nestingGroundPolygonBuilder.addPoint(-2.638570910429147, 56.078203080726844);
-    nestingGroundPolygonBuilder.addPoint(-2.63878548672141, 56.077568418396);
-    nestingGroundPolygonBuilder.addPoint(-2.6391931816767085, 56.077197195961084);
-    nestingGroundPolygonBuilder.addPoint(-2.6399441986996273, 56.07675411934114);
-    nestingGroundPolygonBuilder.addPoint(-2.6406523004640934, 56.076730169108444);
-    nestingGroundPolygonBuilder.addPoint(-2.6406737580933193, 56.07632301287509);
-    nestingGroundPolygonBuilder.addPoint(-2.6401802326211157, 56.075999679860494);
-    nestingGroundPolygonBuilder.addPoint(-2.6402446055087943, 56.075844000034046);
-    nestingGroundPolygonBuilder.addPoint(-2.640416266542604, 56.07578412301025);
-    nestingGroundPolygonBuilder.addPoint(-2.6408883343855822, 56.075808073830935);
-    nestingGroundPolygonBuilder.addPoint(-2.6417680971838577, 56.076239186057734);
-    nestingGroundPolygonBuilder.addPoint(-2.642197249768383, 56.076251161328514);
-    nestingGroundPolygonBuilder.addPoint(-2.6428409786451708, 56.07661041772168);
-    nestingGroundPolygonBuilder.addPoint(-2.643077012566659, 56.077125346044475);
+  // create the polygon using the builder class
+  nestingGroundPolygonBuilder.addPoint(-2.643077012566659, 56.077125346044475);
+  nestingGroundPolygonBuilder.addPoint(-2.6428195210159444, 56.07717324600376);
+  nestingGroundPolygonBuilder.addPoint(-2.6425405718360033, 56.07774804087097);
+  nestingGroundPolygonBuilder.addPoint(-2.6427122328698127, 56.077927662508635);
+  nestingGroundPolygonBuilder.addPoint(-2.642454741319098, 56.07829887790651);
+  nestingGroundPolygonBuilder.addPoint(-2.641853927700763, 56.078526395253725);
+  nestingGroundPolygonBuilder.addPoint(-2.6409741649024867, 56.078801809192434);
+  nestingGroundPolygonBuilder.addPoint(-2.6399871139580795, 56.07881378366685);
+  nestingGroundPolygonBuilder.addPoint(-2.6394077579689705, 56.07908919555142);
+  nestingGroundPolygonBuilder.addPoint(-2.638764029092183, 56.07917301616904);
+  nestingGroundPolygonBuilder.addPoint(-2.638485079912242, 56.07896945149566);
+  nestingGroundPolygonBuilder.addPoint(-2.638570910429147, 56.078203080726844);
+  nestingGroundPolygonBuilder.addPoint(-2.63878548672141, 56.077568418396);
+  nestingGroundPolygonBuilder.addPoint(-2.6391931816767085, 56.077197195961084);
+  nestingGroundPolygonBuilder.addPoint(-2.6399441986996273, 56.07675411934114);
+  nestingGroundPolygonBuilder.addPoint(-2.6406523004640934, 56.076730169108444);
+  nestingGroundPolygonBuilder.addPoint(-2.6406737580933193, 56.07632301287509);
+  nestingGroundPolygonBuilder.addPoint(-2.6401802326211157, 56.075999679860494);
+  nestingGroundPolygonBuilder.addPoint(-2.6402446055087943, 56.075844000034046);
+  nestingGroundPolygonBuilder.addPoint(-2.640416266542604, 56.07578412301025);
+  nestingGroundPolygonBuilder.addPoint(-2.6408883343855822, 56.075808073830935);
+  nestingGroundPolygonBuilder.addPoint(-2.6417680971838577, 56.076239186057734);
+  nestingGroundPolygonBuilder.addPoint(-2.642197249768383, 56.076251161328514);
+  nestingGroundPolygonBuilder.addPoint(-2.6428409786451708, 56.07661041772168);
+  nestingGroundPolygonBuilder.addPoint(-2.643077012566659, 56.077125346044475);
 
-    return nestingGroundPolygonBuilder.toGeometry();
+  return nestingGroundPolygonBuilder.toGeometry();
 }
 //! [GOSymbols createNestingGround]

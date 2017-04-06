@@ -19,13 +19,13 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class GeodatabaseSyncTask;
-        class Geodatabase;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class GeodatabaseSyncTask;
+    class Geodatabase;
+  }
 }
 
 #include "Envelope.h"
@@ -36,32 +36,33 @@ namespace Esri
 
 class GenerateGeodatabase : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit GenerateGeodatabase(QQuickItem* parent = nullptr);
-    ~GenerateGeodatabase();
+  explicit GenerateGeodatabase(QQuickItem* parent = nullptr);
+  ~GenerateGeodatabase();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2);
 
 signals:
-    void updateStatus(QString status);
-    void hideWindow(int time, bool success);
+  void updateStatus(QString status);
+  void hideWindow(int time, bool success);
 
 private:
-    void addFeatureLayers(QString serviceUrl, QStringList serviceIds);
-    Esri::ArcGISRuntime::GenerateGeodatabaseParameters getUpdatedParameters(Esri::ArcGISRuntime::Envelope gdbExtent);
-    void addOfflineData(Esri::ArcGISRuntime::Geodatabase* gdb);
+  void addFeatureLayers(QString serviceUrl, QStringList serviceIds);
+  Esri::ArcGISRuntime::GenerateGeodatabaseParameters getUpdatedParameters(Esri::ArcGISRuntime::Envelope gdbExtent);
+  void addOfflineData(Esri::ArcGISRuntime::Geodatabase* gdb);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::GeodatabaseSyncTask* m_syncTask = nullptr;
-    QString m_dataPath;
-    QString m_featureServiceUrl = QStringLiteral("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/");
-    QStringList m_serviceIds;
-    Esri::ArcGISRuntime::ArcGISFeatureServiceInfo m_featureServiceInfo;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GeodatabaseSyncTask* m_syncTask = nullptr;
+  QString m_dataPath;
+  QString m_featureServiceUrl = QStringLiteral("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/");
+  QStringList m_serviceIds;
+  Esri::ArcGISRuntime::ArcGISFeatureServiceInfo m_featureServiceInfo;
 };
 
 #endif // GENERATE_GEODATABASE_H

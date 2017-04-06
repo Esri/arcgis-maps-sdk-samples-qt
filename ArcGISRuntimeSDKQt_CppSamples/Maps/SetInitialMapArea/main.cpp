@@ -22,45 +22,40 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
 #include "SetInitialMapArea.h"
-#include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
-using namespace Esri::ArcGISRuntime;
-
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
 
 #ifdef Q_OS_WIN
-    // Force usage of OpenGL ES through ANGLE on Windows
-    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+  // Force usage of OpenGL ES through ANGLE on Windows
+  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<SetInitialMapArea>("Esri.Samples", 1, 0, "SetInitialMapAreaSample");
+  // Initialize the sample
+  SetInitialMapArea::init();
 
-    // Intialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-    // Add the Extras path
-    view.engine()->addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
-    // Add the Toolkit path
-    view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Add the Extras path
+  view.engine()->addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
+  // Add the Toolkit path
+  view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Maps/SetInitialMapArea/SetInitialMapArea.qml"));
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/Maps/SetInitialMapArea/SetInitialMapArea.qml"));
 
-    view.show();
+  view.show();
 
-    return app.exec();
+  return app.exec();
 }
 
 

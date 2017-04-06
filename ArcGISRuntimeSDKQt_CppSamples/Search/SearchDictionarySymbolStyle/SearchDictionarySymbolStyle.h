@@ -32,37 +32,38 @@ namespace Esri
 
 class SearchDictionarySymbolStyle : public QQuickItem
 {
-    Q_OBJECT
-    Q_ENUMS(FieldEnum)
+  Q_OBJECT
+  Q_ENUMS(FieldEnum)
 
-    Q_PROPERTY(Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* searchResultsListModel READ searchResultsListModel NOTIFY searchResultsListModelChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* searchResultsListModel READ searchResultsListModel NOTIFY searchResultsListModelChanged)
 
 public:
-    explicit SearchDictionarySymbolStyle(QQuickItem* parent = nullptr);
-    ~SearchDictionarySymbolStyle();
+  explicit SearchDictionarySymbolStyle(QQuickItem* parent = nullptr);
+  ~SearchDictionarySymbolStyle();
 
-    enum class FieldEnum {
-        FieldNames,
-        FieldTags,
-        FieldClasses,
-        FieldCategories,
-        FieldKeys
-    };
+  enum class FieldEnum {
+    FieldNames,
+    FieldTags,
+    FieldClasses,
+    FieldCategories,
+    FieldKeys
+  };
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
-                            const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
-                            const QStringList& keysSearchParam);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
+                          const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
+                          const QStringList& keysSearchParam);
 
-    Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* searchResultsListModel() const;
+  Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* searchResultsListModel() const;
 
 signals:
-    void searchCompleted(int count);
-    void searchResultsListModelChanged();
+  void searchCompleted(int count);
+  void searchResultsListModelChanged();
 
 private:
-    Esri::ArcGISRuntime::DictionarySymbolStyle* m_dictionarySymbolStyle;
-    Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* m_searchResults;
+  Esri::ArcGISRuntime::DictionarySymbolStyle* m_dictionarySymbolStyle;
+  Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* m_searchResults;
 };
 
 #endif // SEARCHDICTIONARYSYMBOLSTYLE_H

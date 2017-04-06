@@ -1,7 +1,6 @@
 {
     "source" :  "SetMapSpatialReference.qml",
-    "description" : "SetMapSpatialReference.html",
-    "thumbnail" : "SetMapSpatialReference.png",
+    "otherSourceFiles" :  [],
     "name" : "Set map spatial reference"
 }
 

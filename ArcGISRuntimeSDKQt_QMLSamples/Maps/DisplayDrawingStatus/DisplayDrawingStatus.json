@@ -1,6 +1,5 @@
 {
     "source" :  "DisplayDrawingStatus.qml",
-    "description" : "DisplayDrawingStatus.html",
-    "thumbnail" : "DisplayDrawingStatus.png",
+    "otherSourceFiles" :  [],
     "name" : "Display drawing status"
 }

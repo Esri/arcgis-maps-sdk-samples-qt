@@ -51,10 +51,8 @@ int main(int argc, char *argv[])
 
   Q_INIT_RESOURCE(Animate3DSymbols);
 
-  // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<Animate3DSymbols>("Esri.Samples", 1, 0, "Animate3DSymbolsSample");
+  // Initialize the sample
+  Animate3DSymbols::init();
 
   // Intialize application view
   QQuickView view;

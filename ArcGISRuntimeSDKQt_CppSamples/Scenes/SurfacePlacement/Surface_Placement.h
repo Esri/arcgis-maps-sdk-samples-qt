@@ -19,34 +19,35 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class SceneQuickView;
-        class GraphicsOverlay;
-    }
+  namespace ArcGISRuntime
+  {
+    class SceneQuickView;
+    class GraphicsOverlay;
+  }
 }
 
 #include <QQuickItem>
 
 class Surface_Placement : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit Surface_Placement(QQuickItem* parent = nullptr);
-    ~Surface_Placement();
+  explicit Surface_Placement(QQuickItem* parent = nullptr);
+  ~Surface_Placement();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-
-private:
-    void addGraphics();
-    void addGraphicsOverlays();
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_drapedOverlay = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_relativeOverlay = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_absoluteOverlay = nullptr;
+  void addGraphics();
+  void addGraphicsOverlays();
+
+private:
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_drapedOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_relativeOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_absoluteOverlay = nullptr;
 };
 
 #endif // SURFACE_PLACEMENT_H

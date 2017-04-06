@@ -1,7 +1,9 @@
 {
-    "source" :  "OfflineGeocode",
-    "description" : "OfflineGeocode.html",
-    "thumbnail" : "OfflineGeocode.png",
+    "source" :  "OfflineGeocode.qml",
+    "otherSourceFiles" : [
+        "OfflineGeocode.h",
+        "OfflineGeocode.cpp"
+    ],
     "name" : "Offline geocode",
     "dataItems" : [
         {

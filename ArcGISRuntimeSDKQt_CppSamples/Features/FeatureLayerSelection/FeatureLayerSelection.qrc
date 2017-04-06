@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/Samples/Features/FeatureLayerSelection">
         <file alias="sample.json">FeatureLayerSelection.json</file>
-        <file>FeatureLayerSelection.png</file>
+        <file>screenshot.png</file>
         <file>FeatureLayerSelection.qml</file>
 		<file>FeatureLayerSelection.h</file>
 		<file>FeatureLayerSelection.cpp</file>
-        <file>FeatureLayerSelection.html</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

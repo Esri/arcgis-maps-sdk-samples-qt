@@ -1,7 +1,9 @@
 {
-    "source" :  "FeatureLayerQuery",
-    "description" : "FeatureLayerQuery.html",
-    "thumbnail" : "FeatureLayerQuery.png",
+    "source" :  "FeatureLayerQuery.qml",
+    "otherSourceFiles" : [
+        "FeatureLayerQuery.h",
+        "FeatureLayerQuery.cpp"
+    ],
     "name" : "Feature layer query"
 }
 

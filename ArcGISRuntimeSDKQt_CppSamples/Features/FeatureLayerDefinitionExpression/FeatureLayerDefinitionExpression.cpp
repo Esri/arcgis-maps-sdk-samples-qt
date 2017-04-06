@@ -29,7 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerDefinitionExpression::FeatureLayerDefinitionExpression(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -37,45 +37,51 @@ FeatureLayerDefinitionExpression::~FeatureLayerDefinitionExpression()
 {
 }
 
+void FeatureLayerDefinitionExpression::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<FeatureLayerDefinitionExpression>("Esri.Samples", 1, 0, "FeatureLayerDefinitionExpressionSample");
+}
+
 void FeatureLayerDefinitionExpression::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    //! [Obtain the instantiated map view in Cpp]
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
-    m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  //! [Obtain the instantiated map view in Cpp]
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // Create a map using the topographic basemap
-    m_map = new Map(Basemap::topographic(this), this);
-    m_map->setInitialViewpoint(Viewpoint(Point(-13630484, 4545415, SpatialReference(102100)), 300000));
+  // Create a map using the topographic basemap
+  m_map = new Map(Basemap::topographic(this), this);
+  m_map->setInitialViewpoint(Viewpoint(Point(-13630484, 4545415, SpatialReference(102100)), 300000));
 
-    // Set map to map view
-    m_mapView->setMap(m_map);
-    //! [Obtain the instantiated map view in Cpp]
+  // Set map to map view
+  m_mapView->setMap(m_map);
+  //! [Obtain the instantiated map view in Cpp]
 
-    // create the feature table
-    ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
-    // create the feature layer using the feature table
-    m_featureLayer = new FeatureLayer(featureTable, this);
+  // create the feature table
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
+  // create the feature layer using the feature table
+  m_featureLayer = new FeatureLayer(featureTable, this);
 
-    connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, [this](LoadStatus loadStatus)
-    {
-        loadStatus == LoadStatus::Loaded ? m_initialized = true : m_initialized = false;
-        emit layerInitializedChanged();
-    });
+  connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, [this](LoadStatus loadStatus)
+  {
+    loadStatus == LoadStatus::Loaded ? m_initialized = true : m_initialized = false;
+    emit layerInitializedChanged();
+  });
 
-    // add the feature layer to the map
-    m_map->operationalLayers()->append(m_featureLayer);
+  // add the feature layer to the map
+  m_map->operationalLayers()->append(m_featureLayer);
 }
 
 bool FeatureLayerDefinitionExpression::layerInitialized() const
 {
-    return m_initialized;
+  return m_initialized;
 }
 
 void FeatureLayerDefinitionExpression::setDefExpression(QString whereClause)
 {
-    // In QML, "req_Type = \'Tree Maintenance or Damage\'"
-    m_featureLayer->setDefinitionExpression(whereClause);
+  // In QML, "req_Type = \'Tree Maintenance or Damage\'"
+  m_featureLayer->setDefinitionExpression(whereClause);
 }

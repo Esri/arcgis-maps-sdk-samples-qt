@@ -1,6 +1,5 @@
 {
     "source" :  "ClosestFacility.qml",
-    "description" : "ClosestFacility.html",
-    "thumbnail" : "ClosestFacility.png",
+    "otherSourceFiles" : [],
     "name" : "Closest facility"
 }

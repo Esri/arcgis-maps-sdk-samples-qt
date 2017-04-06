@@ -79,14 +79,4 @@ Rectangle {
         var newMap = ArcGISRuntimeEnvironment.createObject("Map", {basemap: newBasemap});
         mapView.map = newMap;
     }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

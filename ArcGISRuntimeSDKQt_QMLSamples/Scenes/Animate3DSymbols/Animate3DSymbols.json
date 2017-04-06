@@ -1,7 +1,6 @@
 {
     "source" :  "Animate3DSymbols.qml",
-    "description" : "Animate3DSymbols.html",
-    "thumbnail" : "Animate3DSymbols.png",
+    "otherSourceFiles" :  [],
     "name" : "Animate 3D symbols",
     "dataItems" : [
         {

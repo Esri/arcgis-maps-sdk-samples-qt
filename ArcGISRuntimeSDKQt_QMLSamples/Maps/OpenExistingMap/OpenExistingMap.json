@@ -1,7 +1,6 @@
 {
     "source" :  "OpenExistingMap.qml",
-    "description" : "OpenExistingMap.html",
-    "thumbnail" : "OpenExistingMap.png",
+    "otherSourceFiles" :  [],
     "name" : "Open an existing map"
 }
 

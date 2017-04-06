@@ -1,7 +1,9 @@
 {
-    "source" :  "FeatureLayerGeodatabase",
-    "description" : "FeatureLayerGeodatabase.html",
-    "thumbnail" : "FeatureLayerGeodatabase.png",
+    "source" :  "FeatureLayerGeodatabase.qml",
+    "otherSourceFiles" : [
+        "FeatureLayerGeodatabase.h",
+        "FeatureLayerGeodatabase.cpp"
+    ],
     "name" : "Feature layer (geodatabase)",
     "dataItems" : [
         {

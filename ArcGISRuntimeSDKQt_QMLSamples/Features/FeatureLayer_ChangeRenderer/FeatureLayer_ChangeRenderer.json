@@ -1,7 +1,6 @@
 {
     "source" :  "FeatureLayer_ChangeRenderer.qml",
-    "description" : "FeatureLayer_ChangeRenderer.html",
-    "thumbnail" : "FeatureLayer_ChangeRenderer.png",
+    "otherSourceFiles" :  [],
     "name" : "Feature layer change renderer"
 }
 

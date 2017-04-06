@@ -237,15 +237,4 @@ FindAddressSample {
         ListElement { name: "Москва" }
         ListElement { name: "北京" }
     }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }
-
-

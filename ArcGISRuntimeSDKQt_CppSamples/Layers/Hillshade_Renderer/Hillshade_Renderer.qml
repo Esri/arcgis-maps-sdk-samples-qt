@@ -22,25 +22,14 @@ import Esri.ArcGISExtras 1.1
 Hillshade_RendererSample {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
 
     // add a mapView component
     MapView {
         anchors.fill: parent
         objectName: "mapView"
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }

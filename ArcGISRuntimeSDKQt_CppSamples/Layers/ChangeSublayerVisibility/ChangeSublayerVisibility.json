@@ -1,7 +1,9 @@
 {
-    "source" : "ChangeSublayerVisibility",
-    "description" : "ChangeSublayerVisibility.html",
-    "thumbnail" : "ChangeSublayerVisibility.png",
+    "source" : "ChangeSublayerVisibility.qml",
+    "otherSourceFiles" : [
+        "ChangeSublayerVisibility.h",
+        "ChangeSublayerVisibility.cpp"
+    ],
     "name" : "Change sublayer visibility"
 }
 

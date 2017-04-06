@@ -33,102 +33,108 @@
 using namespace Esri::ArcGISRuntime;
 
 ExtrudeGraphics::ExtrudeGraphics(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
-    srand(time(nullptr));
+  srand(time(nullptr));
 }
 
 ExtrudeGraphics::~ExtrudeGraphics()
 {
 }
 
+void ExtrudeGraphics::init()
+{
+  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<ExtrudeGraphics>("Esri.Samples", 1, 0, "ExtrudeGraphicsSample");
+}
+
 void ExtrudeGraphics::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML SceneView component
-    m_sceneView = findChild<SceneQuickView*>("sceneView");
+  // find QML SceneView component
+  m_sceneView = findChild<SceneQuickView*>("sceneView");
 
-    // create a new basemap instance
-    Basemap* basemap = Basemap::imagery(this);
-    // create a new scene instance
-    m_scene = new Scene(basemap, this);
-    // set scene on the scene view
-    m_sceneView->setArcGISScene(m_scene);
+  // create a new basemap instance
+  Basemap* basemap = Basemap::imagery(this);
+  // create a new scene instance
+  m_scene = new Scene(basemap, this);
+  // set scene on the scene view
+  m_sceneView->setArcGISScene(m_scene);
 
-    // create a new elevation source
-    ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(m_elevationSourceUrl, this);
-    // add the elevation source to the scene to display elevation
-    m_scene->baseSurface()->elevationSources()->append(elevationSource);
+  // create a new elevation source
+  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(m_elevationSourceUrl, this);
+  // add the elevation source to the scene to display elevation
+  m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-    // create a camera
-    Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
-    // set the viewpoint
-    m_sceneView->setViewpointCameraAndWait(camera);
+  // create a camera
+  Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
+  // set the viewpoint
+  m_sceneView->setViewpointCameraAndWait(camera);
 
-    // graphics location
-    double lon = camera.location().x() - 0.03;
-    double lat = camera.location().y() + 0.2;
+  // graphics location
+  double lon = camera.location().x() - 0.03;
+  double lat = camera.location().y() + 0.2;
 
-    GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
+  GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
 
-    // set renderer with extrusion property
-    SimpleRenderer* renderer = new SimpleRenderer(this);
-    RendererSceneProperties props = renderer->sceneProperties();
-    props.setExtrusionMode(ExtrusionMode::BaseHeight);
-    props.setExtrusionExpression("[height]");
-    renderer->setSceneProperties(props);
-    SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), this);
-    renderer->setSymbol(sfs);
-    graphicsOverlay->setRenderer(renderer);
+  // set renderer with extrusion property
+  SimpleRenderer* renderer = new SimpleRenderer(this);
+  RendererSceneProperties props = renderer->sceneProperties();
+  props.setExtrusionMode(ExtrusionMode::BaseHeight);
+  props.setExtrusionExpression("[height]");
+  renderer->setSceneProperties(props);
+  SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), this);
+  renderer->setSymbol(sfs);
+  graphicsOverlay->setRenderer(renderer);
 
-    // setup graphic locations
-    QList<Point> pointsList;
-    for (auto i = 0; i <= 100; i++)
-    {
-        Point point(i / 10 * (m_size * 2) + lon, i % 10 * (m_size * 2) + lat, m_sceneView->spatialReference());
-        pointsList.append(point);
-    }
+  // setup graphic locations
+  QList<Point> pointsList;
+  for (auto i = 0; i <= 100; i++)
+  {
+    Point point(i / 10 * (m_size * 2) + lon, i % 10 * (m_size * 2) + lat, m_sceneView->spatialReference());
+    pointsList.append(point);
+  }
 
-    foreach (auto point, pointsList)
-    {
-        // create a random z value
-        int randNum = rand() % 6 + 1;
-        double z = m_maxZ * randNum;
+  foreach (auto point, pointsList)
+  {
+    // create a random z value
+    int randNum = rand() % 6 + 1;
+    double z = m_maxZ * randNum;
 
-        // create a list of points
-        QList<Point> points;
-        points << Point(point.x(), point.y(), z)
-               << Point(point.x() + m_size, point.y(), z)
-               << Point(point.x() + m_size, point.y() + m_size, z)
-               << Point(point.x(), point.y() + m_size, z);
+    // create a list of points
+    QList<Point> points;
+    points << Point(point.x(), point.y(), z)
+           << Point(point.x() + m_size, point.y(), z)
+           << Point(point.x() + m_size, point.y() + m_size, z)
+           << Point(point.x(), point.y() + m_size, z);
 
-        // create a new graphic
-        Graphic* graphic = new Graphic(createPolygonFromPoints(points), this);
-        // add a height attribute to the graphic using the attribute list model
-        // the extrusion will be applied to this attribute. See the expression above
-        graphic->attributes()->insertAttribute("height", z);
-        // add the graphic to the graphic overlay
-        graphicsOverlay->graphics()->append(graphic);
-    }
+    // create a new graphic
+    Graphic* graphic = new Graphic(createPolygonFromPoints(points), this);
+    // add a height attribute to the graphic using the attribute list model
+    // the extrusion will be applied to this attribute. See the expression above
+    graphic->attributes()->insertAttribute("height", z);
+    // add the graphic to the graphic overlay
+    graphicsOverlay->graphics()->append(graphic);
+  }
 
-    m_sceneView->graphicsOverlays()->append(graphicsOverlay);
+  m_sceneView->graphicsOverlays()->append(graphicsOverlay);
 }
 
 // helper to create polygon from points
 Esri::ArcGISRuntime::Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Point> points)
 {
-    Esri::ArcGISRuntime::Polygon polygon;
-    if (points.length() == 0)
-      return polygon;
+  Esri::ArcGISRuntime::Polygon polygon;
+  if (points.length() == 0)
+    return polygon;
 
-    // create a polygon builder
-    PolygonBuilder* pb = new PolygonBuilder(m_sceneView->spatialReference(), this);
-    foreach (auto point, points)
-    {
-      // add each point to the builder object
-      pb->addPoint(point);
-    }
-    return polygon = pb->toGeometry();
+  // create a polygon builder
+  PolygonBuilder* pb = new PolygonBuilder(m_sceneView->spatialReference(), this);
+  foreach (auto point, points)
+  {
+    // add each point to the builder object
+    pb->addPoint(point);
+  }
+  return polygon = pb->toGeometry();
 }
 

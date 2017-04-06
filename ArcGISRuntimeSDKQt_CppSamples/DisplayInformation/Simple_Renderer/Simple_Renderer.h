@@ -19,34 +19,35 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class GraphicsOverlay;
-        class Point;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class GraphicsOverlay;
+    class Point;
+  }
 }
 
 #include <QQuickItem>
 
 class Simple_Renderer : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit Simple_Renderer(QQuickItem* parent = nullptr);
-    ~Simple_Renderer();
+  explicit Simple_Renderer(QQuickItem* parent = nullptr);
+  ~Simple_Renderer();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-
-private:
-    void addPoint(Esri::ArcGISRuntime::Point &point);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  void addPoint(Esri::ArcGISRuntime::Point &point);
+
+private:
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
 };
 
 #endif // SIMPLE_RENDERER_H

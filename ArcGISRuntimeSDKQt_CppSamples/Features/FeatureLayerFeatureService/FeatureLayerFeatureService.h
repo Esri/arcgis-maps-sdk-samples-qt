@@ -19,32 +19,33 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class FeatureLayer;
-        class ServiceFeatureTable;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class FeatureLayer;
+    class ServiceFeatureTable;
+  }
 }
 
 #include <QQuickItem>
 
 class FeatureLayerFeatureService : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit FeatureLayerFeatureService(QQuickItem* parent = nullptr);
-    ~FeatureLayerFeatureService();
+  explicit FeatureLayerFeatureService(QQuickItem* parent = nullptr);
+  ~FeatureLayerFeatureService();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
 };
 
 #endif // FEATURE_LAYER_FEATURE_SERVICE_H

@@ -224,16 +224,6 @@ Rectangle {
         visible: text.length > 0
     }
 
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
-
     function createFacilities() {
         facilitiesOverlay.graphics.forEach(function(graphic) {
             var facility = ArcGISRuntimeEnvironment.createObject("Facility", {geometry: graphic.geometry});

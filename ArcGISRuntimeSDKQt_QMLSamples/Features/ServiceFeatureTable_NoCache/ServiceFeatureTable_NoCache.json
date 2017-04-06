@@ -1,7 +1,6 @@
 {
     "source" :  "ServiceFeatureTable_NoCache.qml",
-    "description" : "ServiceFeatureTable_NoCache.html",
-    "thumbnail" : "ServiceFeatureTable_NoCache.png",
+    "otherSourceFiles" :  [],
     "name" : "Service feature table (no cache)"
 }
 
