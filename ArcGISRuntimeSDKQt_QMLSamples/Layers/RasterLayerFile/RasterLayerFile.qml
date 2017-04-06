@@ -36,8 +36,8 @@ Rectangle {
 
         Map {
             id: map
-            BasemapImagery {
-            }
+
+            BasemapImagery {}
 
             onLoadStatusChanged: {
                 if (loadStatus !== Enums.LoadStatusLoaded)
@@ -45,6 +45,21 @@ Rectangle {
 
                 createAndAddRasterLayer(dataPath + "Shasta.tif");
             }
+        }
+    }
+
+    RasterLayer {
+        id: rasterLayer
+
+        Raster {
+            id: raster
+        }
+
+        onLoadStatusChanged: {
+            if (loadStatus !== Enums.LoadStatusLoaded)
+                return;
+
+            mapView.setViewpointGeometryAndPadding(fullExtent, 50);
         }
     }
 
@@ -76,21 +91,9 @@ Rectangle {
     }
 
     function createAndAddRasterLayer(rasterUrl) {
-        console.log(rasterUrl);
-        var newRaster = ArcGISRuntimeEnvironment.createObject("Raster", {path: rasterUrl});
-        newRasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newRaster});
         map.operationalLayers.clear();
-        map.operationalLayers.append(newRasterLayer);
-
-        newRasterLayer.loadStatusChanged.connect(zoomToRaster);
-    }
-
-    function zoomToRaster() {
-        console.log(newRasterLayer.loadStatus)
-        if (newRasterLayer.loadStatus !== Enums.LoadStatusLoaded)
-            return;
-
-        mapView.setViewpointGeometryAndPadding(newRasterLayer.fullExtent, 50);
+        raster.path = rasterUrl;
+        map.operationalLayers.append(rasterLayer);
     }
 
     // Neatline rectangle
