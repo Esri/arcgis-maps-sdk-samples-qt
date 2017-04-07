@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
 import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
@@ -28,55 +27,67 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
+    property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
+    property var rasterLayer: null
 
     MapView {
         id: mapView
         anchors.fill: parent
 
         Map {
-            Basemap {
-                RasterLayer {
-                    Raster {
-                        path: dataPath + "/Colorado.tif"
-                    }
-                }
+            id: map
+
+            BasemapImagery {}
+
+            onLoadStatusChanged: {
+                if (loadStatus !== Enums.LoadStatusLoaded)
+                    return;
+
+                createAndAddRasterLayer(dataPath + "Shasta.tif");
             }
         }
     }
 
-    Column {
+    Button {
         anchors {
-            left: parent.left
-            top: parent.top
-            margins: 15
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            margins: 24 * scaleFactor
         }
-        spacing: 10
 
-        Button {
-            text: "Add Raster"
-            width: 100 * scaleFactor
-            onClicked: fileDialog.open();
-        }
+        text: "Add Raster"
+        width: 100 * scaleFactor
+        onClicked: loader.open();
     }
 
-    FileDialog {
-        id: fileDialog
-
-        // only display supported raster formats
-        nameFilters: ["Raster files (*.img *.I12 *.dt0 *.dt1 *.dt2 *.tc2 *.geotiff *.tif *.hr1 *.jpg *.jpeg *.jp2 *.ntf *.png *.i21 *.ovr)"]
+    RasterLoader {
+        id: loader
+        anchors.fill: rootRectangle
         folder: dataPath
+        supportedExtensions: supportedFormats
 
-        onAccepted: {
-            createAndAddRasterLayer(fileDialog.fileUrl)
+        onRasterFileChosen: {
+            createAndAddRasterLayer(url);
         }
     }
 
     function createAndAddRasterLayer(rasterUrl) {
         var newRaster = ArcGISRuntimeEnvironment.createObject("Raster", {path: rasterUrl});
-        var newRasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newRaster});
-        var newBasemap = ArcGISRuntimeEnvironment.createObject("Basemap");
-        newBasemap.baseLayers.append(newRasterLayer);
-        var newMap = ArcGISRuntimeEnvironment.createObject("Map", {basemap: newBasemap});
-        mapView.map = newMap;
+        rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newRaster});
+
+        rasterLayer.loadStatusChanged.connect(zoomToRaster);
+
+        map.operationalLayers.clear();
+        map.operationalLayers.append(rasterLayer);
+    }
+
+    function zoomToRaster(){
+        if (rasterLayer === null)
+            return;
+
+        if (rasterLayer.loadStatus !== Enums.LoadStatusLoaded)
+            return;
+
+        mapView.setViewpointCenterAndScale(rasterLayer.fullExtent.center, 80000);
     }
 }

@@ -3,6 +3,7 @@
         <file alias="sample.json">RasterLayerFile.json</file>
         <file>screenshot.png</file>
         <file>RasterLayerFile.qml</file>
-        <file>README.md</file> 
+        <file>RasterLoader.qml</file>
+        <file>README.md</file>
     </qresource>
 </RCC>
