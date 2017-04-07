@@ -1,7 +1,9 @@
 {
-    "source" :  "FormatCoordinates",
-    "description" : "DisFormatCoordinatesplayMap.html",
-    "thumbnail" : "DisplFormatCoordinatesayMap.png",
+    "source" :  "FormatCoordinates.qml",
+    "otherSourceFiles" : [
+        "FormatCoordinates.h",
+        "FormatCoordinates.cpp",
+    ]
     "name" : "Format coordinates"
 }
 
