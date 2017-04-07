@@ -1,7 +1,7 @@
 # Colormap renderer
 
 Demonstrates how to use a colormap renderer on raster layer.
-Colormap renderers can be used to replace values on a raster layer with a color based on the original value brightness.
+Colormap renderers can be used to replace values on a raster layer with a color based on the original brightness value.
 
 ![](screenshot.png)
 
