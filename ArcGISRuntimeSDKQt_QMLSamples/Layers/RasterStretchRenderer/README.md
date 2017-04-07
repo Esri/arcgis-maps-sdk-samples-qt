@@ -15,7 +15,7 @@ To apply a `StretchRenderer` to a `RasterLayer`:
 - Create a `RasterLayer` from the raster.
 - Create a `Basemap` from the raster layer and set it to the map.
 - Create a `StretchRenderer`, specifying the `StretchParameters` and other properties.
-- Set the renderer on the raster layer with `RasterLayer::setRenderer(RasterRenderer *renderer)`.
+- Set the renderer on the raster layer with `rasterLayer.renderer = renderer`.
 
 ## Features
 - `Map`
