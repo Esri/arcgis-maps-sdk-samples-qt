@@ -216,20 +216,26 @@ Rectangle {
     function setTextFromPoint(point) {
         if (point.isEmpty)
             return;
+        //! [FormatCoordinates CoordinateFormatter point to text]
+        var decimalPlaces = 6;
+        textDD.text   = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDecimalDegrees, decimalPlaces);
 
-        textDD.text   = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDecimalDegrees, 6);
+        decimalPlaces = 1;
+        textDMS.text  = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDegreesMinutesSeconds, decimalPlaces);
 
-        textDMS.text  = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDegreesMinutesSeconds, 1);
+        var addSpaces = true;
+        textUsng.text = CoordinateFormatter.toUsng(point, 5, addSpaces);
 
-        textUsng.text = CoordinateFormatter.toUsng(point, 5, true);
-
-        textUtm.text  = CoordinateFormatter.toUtm(point, Enums.UtmConversionModeLatitudeBandIndicators, true);
+        textUtm.text  = CoordinateFormatter.toUtm(point, Enums.UtmConversionModeLatitudeBandIndicators, addSpaces);
+        //! [FormatCoordinates CoordinateFormatter point to text]
     }
 
     function createPointFromText(textType, text) {
         if ("Decimal Degrees" === textType
                 || "Degrees Minutes Seconds" === textType) {
+            //! [FormatCoordinates CoordinateFormatter text to point]
             return CoordinateFormatter.fromLatitudeLongitude(text, map.spatialReference);
+            //! [FormatCoordinates CoordinateFormatter text to point]
         }
         if ("USNG" === textType) {
             return CoordinateFormatter.fromUsng(text, map.spatialReference);

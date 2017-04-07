@@ -108,6 +108,7 @@ void FormatCoordinates::handleLocationUpdate(Esri::ArcGISRuntime::Point point)
 
 Esri::ArcGISRuntime::Point FormatCoordinates::createPointFromText(QString textType, QString text)
 {
+  //! [FormatCoordinates CoordinateFormatter various text to point]
   if ("Decimal Degrees" == textType
    || "Degrees Minutes Seconds" == textType) {
      return CoordinateFormatter::fromLatitudeLongitude(text, m_map->spatialReference());
@@ -119,6 +120,7 @@ Esri::ArcGISRuntime::Point FormatCoordinates::createPointFromText(QString textTy
    return CoordinateFormatter::fromUtm(text, m_map->spatialReference(), UtmConversionMode::LatitudeBandIndicators);
   }
   return Esri::ArcGISRuntime::Point();
+  //! [FormatCoordinates CoordinateFormatter various text to point]
 }
 
 void FormatCoordinates::setTextFromPoint(Esri::ArcGISRuntime::Point point)
@@ -129,8 +131,12 @@ void FormatCoordinates::setTextFromPoint(Esri::ArcGISRuntime::Point point)
   m_coordinatesInDMS = CoordinateFormatter::toLatitudeLongitude(point, LatitudeLongitudeFormat::DegreesMinutesSeconds, 1); // last parm = decimal places
   emit coordinatesInDMSChanged();
 
-  m_coordinatesInUsng = CoordinateFormatter::toUsng(point, 5, true);
+  //! [FormatCoordinates CoordinateFormatter point to USNG]
+  int decimalPlaces = 5;
+  bool addSpaces = true;
+  m_coordinatesInUsng = CoordinateFormatter::toUsng(point, decimalPlaces, addSpaces);
   emit coordinatesInUsngChanged();
+  //! [FormatCoordinates CoordinateFormatter point to USNG]
 
   m_coordinatesInUtm = CoordinateFormatter::toUtm(point, UtmConversionMode::LatitudeBandIndicators, true); // last parm = add spaces
   emit coordinatesInUtmChanged();

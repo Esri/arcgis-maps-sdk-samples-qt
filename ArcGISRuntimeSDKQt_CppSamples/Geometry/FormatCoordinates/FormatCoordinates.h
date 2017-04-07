@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef DISPLAY_MAP_H
-#define DISPLAY_MAP_H
+#ifndef FORMATCOORDINATES_H
+#define FORMATCOORDINATES_H
 
 namespace Esri
 {
@@ -79,5 +79,5 @@ private:
   QString m_coordinatesInUtm;
 };
 
-#endif // DISPLAY_MAP_H
+#endif // FORMATCOORDINATES_H
 
