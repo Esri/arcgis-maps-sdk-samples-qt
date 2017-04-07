@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/RasterStretchRenderer">
+        <file alias="sample.json">RasterStretchRenderer.json</file>
+        <file>RasterStretchRenderer.qml</file>
+        <file>RasterStretchRenderer.h</file>
+        <file>RasterStretchRenderer.cpp</file>
+        <file>InputWithLabel.qml</file>
+        <file>README.md</file>
+        <file>screenshot.png</file>
+    </qresource>
+</RCC>
