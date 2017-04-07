@@ -1,6 +1,6 @@
-// [WriteFile Name=FormatCoordinates, Category=Geometry]
+// [WriteFile Name=IdentifyGraphics, Category=DisplayInformation]
 // [Legal]
-// Copyright 2017 Esri.
+// Copyright 2016 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.Samples 1.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
-FormatCoordinatesSample {
+Rectangle {
     width: 800
     height: 600
 
@@ -30,6 +30,8 @@ FormatCoordinatesSample {
     property int textPadding: 4 * scaleFactor
 
     MapView {
+        id: mapView
+
         anchors {
             top: parent.top
             left: parent.left
@@ -37,7 +39,41 @@ FormatCoordinatesSample {
             bottom: leftColumnRect.top
         }
 
-        objectName: "mapView"
+        // Nest a map inside of the map view
+        Map {
+            id: map
+            // set the basemap
+            BasemapImagery {}
+        }
+
+        // Add a graphics overlay to the map view
+        GraphicsOverlay {
+            id: graphicsOverlay
+            // assign a render to the graphics overlay
+            renderer: SimpleRenderer {
+                symbol: SimpleMarkerSymbol {
+                    style: Enums.SimpleMarkerSymbolStyleX
+                    color: Qt.rgba(1.0, 0.0, 0.0, 1.0)
+                    size: 15.0
+                }
+            }
+            Graphic {
+                id: locationGraphic
+                geometry: Point {
+                    x: 0.0
+                    y: 0.0
+                    spatialReference: map.spatialReference
+                }
+            }
+        }
+
+        onMouseClicked: {  // on MapView
+            handleLocationUpdate(mouse.mapPoint);
+        }
+
+//        Component.onCompleted: {
+//            handleLocationUpdate(locationGraphic.geometry);
+//        }
     }
 
     Rectangle {
@@ -120,7 +156,6 @@ FormatCoordinatesSample {
             }
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
-            text: coordinatesInDD
             onAccepted: {
                 handleTextUpdate("Decimal Degrees", text);
             }
@@ -134,7 +169,6 @@ FormatCoordinatesSample {
             }
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
-            text: coordinatesInDMS
             onAccepted: {
                 handleTextUpdate("Degrees Minutes Seconds", text);
             }
@@ -148,7 +182,6 @@ FormatCoordinatesSample {
             }
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
-            text: coordinatesInUtm
             onAccepted: {
                 handleTextUpdate("UTM", text);
             }
@@ -162,7 +195,6 @@ FormatCoordinatesSample {
             }
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
-            text: coordinatesInUsng
             onAccepted: {
                 handleTextUpdate("USNG", text);
             }
@@ -176,6 +208,38 @@ FormatCoordinatesSample {
         border {
             width: 0.5 * scaleFactor
             color: "black"
+        }
+    }
+
+    function handleLocationUpdate(point) {
+        locationGraphic.geometry = point;
+        setTextFromPoint(point);
+    }
+
+    function handleTextUpdate(textType, text) {
+        handleLocationUpdate(createPointFromText(textType, text));
+    }
+
+    function setTextFromPoint(point) {
+        if (point.isEmpty) {
+            return;
+        }
+        textDD.text   = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDecimalDegrees, 6);
+        textDMS.text  = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDegreesMinutesSeconds, 1);
+        textUsng.text = CoordinateFormatter.toUsng(point, 5, true);
+        textUtm.text  = CoordinateFormatter.toUtm(point, Enums.UtmConversionModeLatitudeBandIndicators, true);
+    }
+
+    function createPointFromText(textType, text) {
+        if ("Decimal Degrees" === textType
+                || "Degrees Minutes Seconds" === textType) {
+            return CoordinateFormatter.fromLatitudeLongitude(text, map.spatialReference);
+        }
+        if ("USNG" === textType) {
+            return CoordinateFormatter.fromUsng(text, map.spatialReference);
+        }
+        if ("UTM" === textType) {
+            return CoordinateFormatter.fromUtm(text, map.spatialReference);
         }
     }
 }

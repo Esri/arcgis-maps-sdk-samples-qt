@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Geometry/FormatCoordinates">
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>FormatCoordinates.qml</file>
+        <file>FormatCoordinates.json</file>
+    </qresource>
+</RCC>

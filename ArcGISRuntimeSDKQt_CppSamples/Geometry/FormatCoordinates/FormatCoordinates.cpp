@@ -106,15 +106,13 @@ Esri::ArcGISRuntime::Point FormatCoordinates::createPointFromText(QString textTy
    || "Degrees Minutes Seconds" == textType) {
      return CoordinateFormatter::fromLatitudeLongitude(text, m_map->spatialReference());
   }
-  else if ("USNG"== textType) {
+  if ("USNG" == textType) {
     return CoordinateFormatter::fromUsng(text, m_map->spatialReference());
   }
-  else if ("UTM" == textType) {
+  if ("UTM" == textType) {
    return CoordinateFormatter::fromUtm(text, m_map->spatialReference(), UtmConversionMode::LatitudeBandIndicators);
-}
-  else {
-    return Esri::ArcGISRuntime::Point();
   }
+  return Esri::ArcGISRuntime::Point();
 }
 
 void FormatCoordinates::setTextFromPoint(Esri::ArcGISRuntime::Point point)
