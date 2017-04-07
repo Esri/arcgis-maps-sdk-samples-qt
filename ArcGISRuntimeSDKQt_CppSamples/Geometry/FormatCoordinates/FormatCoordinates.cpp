@@ -16,14 +16,13 @@
 
 #include "FormatCoordinates.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
 #include "Basemap.h"
 #include "CoordinateFormatter.h"
-#include "SimpleMarkerSymbol.h"
 #include "Graphic.h"
-#include "CoordinateFormatter.h"
+#include "Map.h"
+#include "MapQuickView.h"
 #include "Point.h"
+#include "SimpleMarkerSymbol.h"
 
 #include <QDebug>
 
@@ -51,7 +50,7 @@ void FormatCoordinates::componentComplete()
     // create a new map instance
     m_map = new Map(basemap, this);
 
-    // create a graphic and place in a graphic overlay
+    // create a graphic
     Esri::ArcGISRuntime::Point geometry(m_startLongitude, m_startLatitude, m_map->spatialReference());
     SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 15.0, this);
     Graphic* graphic = new Graphic(geometry, symbol, this);
@@ -79,28 +78,26 @@ void FormatCoordinates::connectSignals()
     // get the point from the mouse point
     Esri::ArcGISRuntime::Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
 
+    // using the point, refresh the graphic and the text
     handleLocationUpdate(mapPoint);
   });
 }
 
+// handle case where the user changed one of the text fields
 void FormatCoordinates::handleTextUpdate(QString textType, QString text)
 {
   Esri::ArcGISRuntime::Point point = createPointFromText(textType, text);
   handleLocationUpdate(point);
 }
 
+// handle case where user clicked on the map
 void FormatCoordinates::handleLocationUpdate(Esri::ArcGISRuntime::Point point)
 {
   if (!point.isEmpty())
   {
-    updateGraphicFromPoint(point);
+    m_mapView->graphicsOverlays()->at(0)->graphics()->at(0)->setGeometry(point);
     setTextFromPoint(point);
   }
-}
-
-void FormatCoordinates::updateGraphicFromPoint(Esri::ArcGISRuntime::Point point)
-{
-  m_mapView->graphicsOverlays()->at(0)->graphics()->at(0)->setGeometry(point);
 }
 
 Esri::ArcGISRuntime::Point FormatCoordinates::createPointFromText(QString textType, QString text)

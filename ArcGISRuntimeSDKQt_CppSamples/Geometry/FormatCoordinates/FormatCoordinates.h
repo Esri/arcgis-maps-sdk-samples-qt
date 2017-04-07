@@ -62,7 +62,6 @@ private:
 
 private:
   void connectSignals();
-  void updateGraphicFromPoint(Esri::ArcGISRuntime::Point point);
   Esri::ArcGISRuntime::Point createPointFromText(QString textType, QString text);
   void setTextFromPoint(Esri::ArcGISRuntime::Point point);
 
