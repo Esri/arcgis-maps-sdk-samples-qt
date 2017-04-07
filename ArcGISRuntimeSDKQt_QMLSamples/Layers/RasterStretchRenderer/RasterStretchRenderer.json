@@ -1,0 +1,14 @@
+{
+    "source" :  "RasterStretchRenderer.qml",
+    "name" : "Stretch renderer",
+    "otherSourceFiles" :  [
+        "InputWithLabel.qml"
+    ],
+    "dataItems" : [
+        {
+            "itemId" : "cc68728b5904403ba637e1f1cd2995ae",
+            "path" : "~/ArcGIS/Runtime/Data/raster/ShastaBW.tiff"
+        }
+    ]
+}
+

@@ -1,11 +1,11 @@
 {
     "source" :  "RasterLayerFile.qml",
-    "otherSourceFiles" :  [],
+    "otherSourceFiles" :  ["RasterLoader.qml"],
     "name" : "Raster layer (file)",
-    "dataItems" : [        
+    "dataItems" : [
         {
-            "itemId" : "8ad45e34ccd4412f8c2ad7629fb43a24",
-            "path" : "~/ArcGIS/Runtime/Data/raster/Colorado.tif"
+            "itemId" : "c669445e6cb4490b8306f0c170a9cbb1",
+            "path" : "~/ArcGIS/Runtime/Data/raster/Shasta.tiff"
         }
     ]
 }

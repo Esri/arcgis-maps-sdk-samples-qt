@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/RasterColormapRenderer">
+        <file alias="sample.json">RasterColormapRenderer.json</file>
+        <file>RasterColormapRenderer.qml</file>
+        <file>README.md</file>
+        <file>screenshot.png</file>
+    </qresource>
+</RCC>

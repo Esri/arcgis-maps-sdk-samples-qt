@@ -26,7 +26,9 @@ RasterLayerFileSample {
     width: 800
     height: 600
 
+    property real scaleFactor: System.displayScaleFactor
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
+    property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
 
     // add a mapView component
     MapView {
@@ -34,30 +36,24 @@ RasterLayerFileSample {
         objectName: "mapView"
     }
 
-    Column {
+    Button {
         anchors {
-            left: parent.left
-            top: parent.top
-            margins: 15
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            margins: 24 * scaleFactor
         }
-        spacing: 10
 
-        Button {
-            text: "Add Raster"
-            width: 100 * scaleFactor
-            onClicked: fileDialog.open();
-        }
+        text: "Add Raster"
+        width: 100 * scaleFactor
+        onClicked: loader.open();
     }
 
-    FileDialog {
-        id: fileDialog
-
-        // only display supported raster formats
-        nameFilters: ["Raster files (*.img *.I12 *.dt0 *.dt1 *.dt2 *.tc2 *.geotiff *.tif *.hr1 *.jpg *.jpeg *.jp2 *.ntf *.png *.i21 *.ovr)"]
+    RasterLoader {
+        id: loader
+        anchors.fill: rootRectangle
         folder: dataPath
+        supportedExtensions: supportedFormats
 
-        onAccepted: {
-            createAndAddRasterLayer(fileDialog.fileUrl)
-        }
+        onRasterFileChosen: createAndAddRasterLayer(url);
     }
 }
