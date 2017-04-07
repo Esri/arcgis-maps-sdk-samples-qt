@@ -66,11 +66,14 @@ Rectangle {
                         wkid: 4326
                     }
                 }
+                onComponentCompleted: {
+                    setTextFromPoint(locationGraphic.geometry);
+                }
             }
         }
 
         onMouseClicked: {  // on MapView
-            handleTextUpdate(mouse.mapPoint);
+            handleLocationUpdate(mouse.mapPoint);
         }
     }
 
@@ -205,16 +208,21 @@ Rectangle {
     }
 
     function handleTextUpdate(textType, text) {
-        handleLocationUpdate(createPointFromText(textType, text));
+        var point = createPointFromText(textType, text);
+        if (point)
+            handleLocationUpdate(point);
     }
 
     function setTextFromPoint(point) {
-        if (point.isEmpty) {
+        if (point.isEmpty)
             return;
-        }
+
         textDD.text   = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDecimalDegrees, 6);
+
         textDMS.text  = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDegreesMinutesSeconds, 1);
+
         textUsng.text = CoordinateFormatter.toUsng(point, 5, true);
+
         textUtm.text  = CoordinateFormatter.toUtm(point, Enums.UtmConversionModeLatitudeBandIndicators, true);
     }
 

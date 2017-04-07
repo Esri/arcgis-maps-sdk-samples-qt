@@ -20,6 +20,8 @@ import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
 FormatCoordinatesSample {
+    id: formatCoordinates
+    clip: true
     width: 800
     height: 600
 
