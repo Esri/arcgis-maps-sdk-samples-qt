@@ -28,6 +28,7 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
     property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
+    property var rasterLayer: null
 
     MapView {
         id: mapView
@@ -44,21 +45,6 @@ Rectangle {
 
                 createAndAddRasterLayer(dataPath + "Shasta.tif");
             }
-        }
-    }
-
-    RasterLayer {
-        id: rasterLayer
-
-        Raster {
-            id: raster
-        }
-
-        onLoadStatusChanged: {
-            if (loadStatus !== Enums.LoadStatusLoaded)
-                return;
-
-            mapView.setViewpointCenterAndScale(fullExtent.center, 80000);
         }
     }
 
@@ -86,8 +72,22 @@ Rectangle {
     }
 
     function createAndAddRasterLayer(rasterUrl) {
+        var newRaster = ArcGISRuntimeEnvironment.createObject("Raster", {path: rasterUrl});
+        rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newRaster});
+
+        rasterLayer.loadStatusChanged.connect(zoomToRaster);
+
         map.operationalLayers.clear();
-        raster.path = rasterUrl;
         map.operationalLayers.append(rasterLayer);
+    }
+
+    function zoomToRaster(){
+        if (rasterLayer === null)
+            return;
+
+        if (rasterLayer.loadStatus !== Enums.LoadStatusLoaded)
+            return;
+
+        mapView.setViewpointCenterAndScale(rasterLayer.fullExtent.center, 80000);
     }
 }

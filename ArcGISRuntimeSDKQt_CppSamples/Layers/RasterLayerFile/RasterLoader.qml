@@ -19,7 +19,7 @@ import QtQuick.Dialogs 1.2
 
 Item {
     id: root
-    signal rasterFileChosen(string url);
+    signal rasterFileChosen(url url);
 
     property var supportedExtensions: []
     property alias folder: fileDialog.folder
