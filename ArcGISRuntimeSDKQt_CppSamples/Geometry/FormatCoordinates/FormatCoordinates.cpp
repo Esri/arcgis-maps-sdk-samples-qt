@@ -37,6 +37,12 @@ FormatCoordinates::~FormatCoordinates()
 {
 }
 
+void FormatCoordinates::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<FormatCoordinates>("Esri.Samples", 1, 0, "FormatCoordinatesSample");
+}
+
 void FormatCoordinates::componentComplete()
 {
     QQuickItem::componentComplete();
@@ -51,7 +57,7 @@ void FormatCoordinates::componentComplete()
     m_map = new Map(basemap, this);
 
     // create a graphic
-    Esri::ArcGISRuntime::Point geometry(m_startLongitude, m_startLatitude, m_map->spatialReference());
+    Esri::ArcGISRuntime::Point geometry(m_startLongitude, m_startLatitude, SpatialReference::wgs84());
     SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 15.0, this);
     Graphic* graphic = new Graphic(geometry, symbol, this);
 

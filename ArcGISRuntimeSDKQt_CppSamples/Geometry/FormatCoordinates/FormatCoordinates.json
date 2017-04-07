@@ -3,7 +3,7 @@
     "otherSourceFiles" : [
         "FormatCoordinates.h",
         "FormatCoordinates.cpp",
-    ]
+    ],
     "name" : "Format coordinates"
 }
 

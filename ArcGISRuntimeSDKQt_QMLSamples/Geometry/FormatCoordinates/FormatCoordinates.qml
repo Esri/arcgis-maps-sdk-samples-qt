@@ -39,7 +39,6 @@ Rectangle {
             bottom: leftColumnRect.top
         }
 
-        // Nest a map inside of the map view
         Map {
             id: map
             // set the basemap
@@ -57,23 +56,22 @@ Rectangle {
                     size: 15.0
                 }
             }
+
             Graphic {
                 id: locationGraphic
                 geometry: Point {
-                    x: 0.0
-                    y: 0.0
-                    spatialReference: map.spatialReference
+                    x: -117.195723
+                    y: 34.056195
+                    spatialReference: SpatialReference {
+                        wkid: 4326
+                    }
                 }
             }
         }
 
         onMouseClicked: {  // on MapView
-            handleLocationUpdate(mouse.mapPoint);
+            handleTextUpdate(mouse.mapPoint);
         }
-
-//        Component.onCompleted: {
-//            handleLocationUpdate(locationGraphic.geometry);
-//        }
     }
 
     Rectangle {
@@ -198,16 +196,6 @@ Rectangle {
             onAccepted: {
                 handleTextUpdate("USNG", text);
             }
-        }
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 

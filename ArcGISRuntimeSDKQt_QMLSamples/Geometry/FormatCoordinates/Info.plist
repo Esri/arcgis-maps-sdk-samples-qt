@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
         <string>FormatCoordinates</string>
 	<key>CFBundleExecutable</key>
-        <string>IdentifyGraphics</string>
+        <string>FormatCoordinates</string>
 	<key>CFBundleGetInfoString</key>
 	<string>ArcGIS</string>
 	<key>CFBundleIcons~ipad</key>

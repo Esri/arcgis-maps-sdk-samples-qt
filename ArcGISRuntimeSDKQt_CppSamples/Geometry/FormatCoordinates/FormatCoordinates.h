@@ -45,6 +45,7 @@ public:
   ~FormatCoordinates();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
   Q_INVOKABLE void handleTextUpdate(QString textType, QString text);
   Q_INVOKABLE void handleLocationUpdate(Esri::ArcGISRuntime::Point point);
 
@@ -69,8 +70,8 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
 
-  const double m_startLongitude = 0.0;
-  const double m_startLatitude = 0.0;
+  const double m_startLongitude = -117.195723;
+  const double m_startLatitude = 34.056195;
 
   QString m_coordinatesInDD;
   QString m_coordinatesInDMS;
