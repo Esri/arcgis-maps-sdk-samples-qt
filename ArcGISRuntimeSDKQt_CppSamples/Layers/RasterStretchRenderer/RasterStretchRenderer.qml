@@ -103,7 +103,7 @@ RasterStretchRendererSample {
                 visible: stretchTypeCombo.currentText === percentClip
                 spacing: 8 * scaleFactor
                 label: "min value"
-                maxRange: 255
+                maxRange: 100
                 value: 0
             }
 
