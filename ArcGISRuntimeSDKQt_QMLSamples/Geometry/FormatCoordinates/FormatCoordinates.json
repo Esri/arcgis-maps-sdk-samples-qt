@@ -1,9 +1,6 @@
 {
     "source" :  "FormatCoordinates.qml",
-    "otherSourceFiles" : [
-        "FormatCoordinates.h",
-        "FormatCoordinates.cpp",
-    ]
+    "otherSourceFiles" :  [],
     "name" : "Format coordinates"
 }
 
