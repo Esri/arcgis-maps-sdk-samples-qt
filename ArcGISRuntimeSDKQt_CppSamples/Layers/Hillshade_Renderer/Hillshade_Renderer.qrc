@@ -3,8 +3,10 @@
         <file alias="sample.json">Hillshade_Renderer.json</file>
         <file>screenshot.png</file>
         <file>Hillshade_Renderer.qml</file>
-		<file>Hillshade_Renderer.h</file>
-		<file>Hillshade_Renderer.cpp</file>
+        <file>Hillshade_Renderer.h</file>
+        <file>Hillshade_Renderer.cpp</file>
         <file>README.md</file>
+        <file>HillshadeSettings.qml</file>
+        <file>SlopeTypeModel.qml</file>
     </qresource>
 </RCC>

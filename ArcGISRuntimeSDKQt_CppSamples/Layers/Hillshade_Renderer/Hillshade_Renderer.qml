@@ -26,10 +26,26 @@ Hillshade_RendererSample {
     height: 600
 
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
+    property real scaleFactor: System.displayScaleFactor
 
     // add a mapView component
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+    }
+
+    Button {
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: 25 * scaleFactor
+        }
+        text: "Edit Renderer"
+        onClicked: hillshadeSettings.visible = true;
+    }
+
+    HillshadeSettings {
+        id: hillshadeSettings
+        anchors.fill: parent
     }
 }

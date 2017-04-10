@@ -54,10 +54,10 @@ void Hillshade_Renderer::componentComplete()
   // Create the raster and raster layer
   QString dataPath = QUrl(QQmlProperty::read(this, "dataPath").toString()).toLocalFile();
   Raster* raster = new Raster(dataPath + "/srtm.tiff", this);
-  RasterLayer* rasterLayer = new RasterLayer(raster, this);
+  m_rasterLayer = new RasterLayer(raster, this);
 
   // Add the raster to the map
-  Basemap* basemap = new Basemap(rasterLayer, this);
+  Basemap* basemap = new Basemap(m_rasterLayer, this);
   Map* map = new Map(basemap, this);
 
   // zoom to the new layer once loaded
@@ -73,6 +73,16 @@ void Hillshade_Renderer::componentComplete()
   //! [HillshadeRenderer apply to layer snippet]
   // Apply the hillshade renderer to the raster layer
   HillshadeRenderer* hillshadeRenderer = new HillshadeRenderer(45.0, 315.0, 0.000016, SlopeType::None, 1.0, 1.0, 8, this);
-  rasterLayer->setRenderer(hillshadeRenderer);
+  m_rasterLayer->setRenderer(hillshadeRenderer);
   //! [HillshadeRenderer apply to layer snippet]
+}
+
+void Hillshade_Renderer::applyHillshadeRenderer(double altitude, double azimuth, int slope)
+{
+  // create the new renderer
+  SlopeType slopeType = static_cast<SlopeType>(slope);
+  HillshadeRenderer* hillshadeRenderer = new HillshadeRenderer(altitude, azimuth, 0.000016, slopeType, 1.0, 1.0, 8, this);
+
+  // set the renderer on the layer
+  m_rasterLayer->setRenderer(hillshadeRenderer);
 }
