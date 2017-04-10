@@ -162,12 +162,12 @@ QString FormatCoordinates::coordinatesInUtm() const
 
 QString FormatCoordinates::strDecimalDegrees() const
 {
-  return tr("Decimal Degrees");
+  return tr("Degrees");
 }
 
 QString FormatCoordinates::strDegreesMinutesSeconds() const
 {
-  return tr("Degrees Minutes Seconds");
+  return tr("DMS");
 }
 
 QString FormatCoordinates::strUsng() const

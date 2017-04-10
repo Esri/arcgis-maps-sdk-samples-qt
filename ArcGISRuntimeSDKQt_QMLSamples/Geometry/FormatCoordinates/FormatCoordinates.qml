@@ -24,14 +24,14 @@ Rectangle {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
-    property int labelWidth: 200 * scaleFactor
+    property int labelWidth: 100 * scaleFactor
     property int coordinateTextWidth: 200 * scaleFactor
     property int fontPixelSize: 14 * scaleFactor
-    property int textPadding: 4 * scaleFactor
+    property int textPadding: Qt.platform.os === "android" ? (10 * scaleFactor) : (4 * scaleFactor)
     property string labelSuffix: ":  "
 
-    property string strDecimalDegrees: qsTr("Decimal Degrees")
-    property string strDegreesMinutesSeconds: qsTr("Degrees Minutes Seconds")
+    property string strDecimalDegrees: qsTr("Degrees")
+    property string strDegreesMinutesSeconds: qsTr("DMS")
     property string strUsng: qsTr("USNG")
     property string strUtm: qsTr("UTM")
 
@@ -79,7 +79,7 @@ Rectangle {
         }
 
         onMouseClicked: {  // on MapView
-            handleLocationUpdate(mouse.mapPoint);
+            handleLocationUpdate(mouse.mapPoint);   
         }
     }
 
@@ -209,8 +209,11 @@ Rectangle {
     }
 
     function handleLocationUpdate(point) {
-        locationGraphic.geometry = point;
-        setTextFromPoint(point);
+        if (! point.isEmpty)
+        {
+            locationGraphic.geometry = point;
+            setTextFromPoint(point);
+        }
     }
 
     function handleTextUpdate(textType, text) {
