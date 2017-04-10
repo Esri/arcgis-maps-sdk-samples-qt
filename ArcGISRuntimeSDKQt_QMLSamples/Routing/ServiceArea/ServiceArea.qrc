@@ -4,6 +4,5 @@
         <file>screenshot.png</file>
         <file>ServiceArea.qml</file>
         <file>README.md</file>
-        <file>ic_menu_closeclear_light.png</file>
     </qresource>
 </RCC>
