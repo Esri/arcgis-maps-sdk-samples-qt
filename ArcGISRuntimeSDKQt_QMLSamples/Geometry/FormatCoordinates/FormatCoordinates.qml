@@ -1,6 +1,6 @@
-// [WriteFile Name=IdentifyGraphics, Category=DisplayInformation]
+// [WriteFile Name=FormatCoordinates, Category=Geometry]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2017 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,6 +28,12 @@ Rectangle {
     property int coordinateTextWidth: 200 * scaleFactor
     property int fontPixelSize: 14 * scaleFactor
     property int textPadding: 4 * scaleFactor
+    property string labelSuffix: ":  "
+
+    property string strDecimalDegrees: qsTr("Decimal Degrees")
+    property string strDegreesMinutesSeconds: qsTr("Degrees Minutes Seconds")
+    property string strUsng: qsTr("USNG")
+    property string strUtm: qsTr("UTM")
 
     MapView {
         id: mapView
@@ -49,8 +55,8 @@ Rectangle {
         GraphicsOverlay {
             id: graphicsOverlay
             // assign a render to the graphics overlay
-            renderer: SimpleRenderer {
-                symbol: SimpleMarkerSymbol {
+            SimpleRenderer {
+                SimpleMarkerSymbol {
                     style: Enums.SimpleMarkerSymbolStyleX
                     color: Qt.rgba(1.0, 0.0, 0.0, 1.0)
                     size: 15.0
@@ -59,10 +65,10 @@ Rectangle {
 
             Graphic {
                 id: locationGraphic
-                geometry: Point {
+                Point {
                     x: -117.195723
                     y: 34.056195
-                    spatialReference: SpatialReference {
+                    SpatialReference {
                         wkid: 4326
                     }
                 }
@@ -97,7 +103,7 @@ Rectangle {
             font.pixelSize: fontPixelSize
             padding: textPadding
             horizontalAlignment: Text.AlignRight
-            text: qsTr("Decimal Degrees:  ")
+            text: strDecimalDegrees + labelSuffix
         }
 
         Text {
@@ -109,7 +115,7 @@ Rectangle {
             font.pixelSize: fontPixelSize
             padding: textPadding
             horizontalAlignment: Text.AlignRight
-            text: qsTr("Degrees Minutes Seconds:  ")
+            text: strDegreesMinutesSeconds + labelSuffix
         }
 
         Text {
@@ -121,7 +127,7 @@ Rectangle {
             font.pixelSize: fontPixelSize
             padding: textPadding
             horizontalAlignment: Text.AlignRight
-            text: qsTr("UTM:  ")
+            text: strUtm + labelSuffix
         }
 
         Text {
@@ -133,7 +139,7 @@ Rectangle {
             font.pixelSize: fontPixelSize
             padding: textPadding
             horizontalAlignment: Text.AlignRight
-            text: qsTr("USNG:  ")
+            text: strUsng + labelSuffix
         }
     }
 
@@ -158,7 +164,7 @@ Rectangle {
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
             onAccepted: {
-                handleTextUpdate("Decimal Degrees", text);
+                handleTextUpdate(strDecimalDegrees, text);
             }
         }
 
@@ -171,7 +177,7 @@ Rectangle {
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
             onAccepted: {
-                handleTextUpdate("Degrees Minutes Seconds", text);
+                handleTextUpdate(strDegreesMinutesSeconds, text);
             }
         }
 
@@ -184,7 +190,7 @@ Rectangle {
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
             onAccepted: {
-                handleTextUpdate("UTM", text);
+                handleTextUpdate(strUtm, text);
             }
         }
 
@@ -197,7 +203,7 @@ Rectangle {
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
             onAccepted: {
-                handleTextUpdate("USNG", text);
+                handleTextUpdate(strUsng, text);
             }
         }
     }
@@ -231,17 +237,17 @@ Rectangle {
     }
 
     function createPointFromText(textType, text) {
-        if ("Decimal Degrees" === textType
-                || "Degrees Minutes Seconds" === textType) {
+        if (strDecimalDegrees === textType
+                || strDegreesMinutesSeconds === textType) {
             //! [FormatCoordinates CoordinateFormatter text to point]
             return CoordinateFormatter.fromLatitudeLongitude(text, map.spatialReference);
             //! [FormatCoordinates CoordinateFormatter text to point]
         }
-        if ("USNG" === textType) {
+        if (strUsng === textType) {
             return CoordinateFormatter.fromUsng(text, map.spatialReference);
         }
-        if ("UTM" === textType) {
-            return CoordinateFormatter.fromUtm(text, map.spatialReference);
+        if (strUtm === textType) {
+            return CoordinateFormatter.fromUtm(text, map.spatialReference, Enums.UtmConversionModeLatitudeBandIndicators);
         }
     }
 }

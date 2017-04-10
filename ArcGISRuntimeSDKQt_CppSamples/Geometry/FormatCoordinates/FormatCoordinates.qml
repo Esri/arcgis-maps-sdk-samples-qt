@@ -30,6 +30,7 @@ FormatCoordinatesSample {
     property int coordinateTextWidth: 200 * scaleFactor
     property int fontPixelSize: 14 * scaleFactor
     property int textPadding: 4 * scaleFactor
+    property string labelSuffix: ":  "
 
     MapView {
         anchors {
@@ -62,7 +63,7 @@ FormatCoordinatesSample {
             font.pixelSize: fontPixelSize
             padding: textPadding
             horizontalAlignment: Text.AlignRight
-            text: qsTr("Decimal Degrees:  ")
+            text: strDecimalDegrees + labelSuffix
         }
 
         Text {
@@ -74,7 +75,7 @@ FormatCoordinatesSample {
             font.pixelSize: fontPixelSize
             padding: textPadding
             horizontalAlignment: Text.AlignRight
-            text: qsTr("Degrees Minutes Seconds:  ")
+            text: strDegreesMinutesSeconds + labelSuffix
         }
 
         Text {
@@ -86,7 +87,7 @@ FormatCoordinatesSample {
             font.pixelSize: fontPixelSize
             padding: textPadding
             horizontalAlignment: Text.AlignRight
-            text: qsTr("UTM:  ")
+            text: strUtm + labelSuffix
         }
 
         Text {
@@ -98,7 +99,7 @@ FormatCoordinatesSample {
             font.pixelSize: fontPixelSize
             padding: textPadding
             horizontalAlignment: Text.AlignRight
-            text: qsTr("USNG:  ")
+            text: strUsng + labelSuffix
         }
     }
 
@@ -124,7 +125,7 @@ FormatCoordinatesSample {
             font.pixelSize: fontPixelSize
             text: coordinatesInDD
             onAccepted: {
-                handleTextUpdate("Decimal Degrees", text);
+                handleTextUpdate(strDecimalDegrees, text);
             }
         }
 
@@ -138,7 +139,7 @@ FormatCoordinatesSample {
             font.pixelSize: fontPixelSize
             text: coordinatesInDMS
             onAccepted: {
-                handleTextUpdate("Degrees Minutes Seconds", text);
+                handleTextUpdate(strDegreesMinutesSeconds, text);
             }
         }
 
@@ -152,7 +153,7 @@ FormatCoordinatesSample {
             font.pixelSize: fontPixelSize
             text: coordinatesInUtm
             onAccepted: {
-                handleTextUpdate("UTM", text);
+                handleTextUpdate(strUtm, text);
             }
         }
 
@@ -166,7 +167,7 @@ FormatCoordinatesSample {
             font.pixelSize: fontPixelSize
             text: coordinatesInUsng
             onAccepted: {
-                handleTextUpdate("USNG", text);
+                handleTextUpdate(strUsng, text);
             }
         }
     }

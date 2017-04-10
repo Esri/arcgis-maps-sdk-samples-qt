@@ -22,9 +22,7 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
 #include "FormatCoordinates.h"
-#include "ArcGISRuntimeEnvironment.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)

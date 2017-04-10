@@ -19,12 +19,12 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Map;
-class MapQuickView;
-class GraphicsOverlay;
-}
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class GraphicsOverlay;
+  }
 }
 
 #include <QQuickItem>
@@ -39,6 +39,10 @@ class FormatCoordinates : public QQuickItem
   Q_PROPERTY(QString coordinatesInDMS READ coordinatesInDMS NOTIFY coordinatesInDMSChanged)
   Q_PROPERTY(QString coordinatesInUsng READ coordinatesInUsng NOTIFY coordinatesInUsngChanged)
   Q_PROPERTY(QString coordinatesInUtm READ coordinatesInUtm NOTIFY coordinatesInUtmChanged)
+  Q_PROPERTY(QString strDecimalDegrees READ strDecimalDegrees CONSTANT)
+  Q_PROPERTY(QString strDegreesMinutesSeconds READ strDegreesMinutesSeconds CONSTANT)
+  Q_PROPERTY(QString strUsng READ strUsng CONSTANT)
+  Q_PROPERTY(QString strUtm READ strUtm CONSTANT)
 
 public:
   explicit FormatCoordinates(QQuickItem* parent = nullptr);
@@ -56,15 +60,20 @@ signals:
   void coordinatesInUtmChanged();
 
 private:
-  QString coordinatesInDD();
-  QString coordinatesInDMS();
-  QString coordinatesInUsng();
-  QString coordinatesInUtm();
+  QString coordinatesInDD() const;
+  QString coordinatesInDMS() const;
+  QString coordinatesInUsng() const;
+  QString coordinatesInUtm() const;
+  QString strDecimalDegrees() const;
+  QString strDegreesMinutesSeconds() const;
+  QString strUsng() const;
+  QString strUtm() const;
 
-private:
   void connectSignals();
   Esri::ArcGISRuntime::Point createPointFromText(QString textType, QString text);
   void setTextFromPoint(Esri::ArcGISRuntime::Point point);
+
+private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -72,6 +81,7 @@ private:
 
   const double m_startLongitude = -117.195723;
   const double m_startLatitude = 34.056195;
+  const QString m_startLatLong = "34.056195N 117.195723W";
 
   QString m_coordinatesInDD;
   QString m_coordinatesInDMS;

@@ -4,7 +4,7 @@
         <file>screenshot.png</file>
         <file>README.md</file>
         <file>FormatCoordinates.qml</file>
-        <file alias="sample.qml">FormatCoordinates.h</file>
+        <file>FormatCoordinates.h</file>
         <file>FormatCoordinates.cpp</file>
     </qresource>
 </RCC>

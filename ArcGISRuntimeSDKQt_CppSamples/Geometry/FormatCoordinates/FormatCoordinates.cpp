@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayMap, Category=Geometry]
+// [WriteFile Name=FormatCoordinates, Category=Geometry]
 // [Legal]
 // Copyright 2017 Esri.
 
@@ -24,12 +24,10 @@
 #include "Point.h"
 #include "SimpleMarkerSymbol.h"
 
-#include <QDebug>
-
 using namespace Esri::ArcGISRuntime;
 
 FormatCoordinates::FormatCoordinates(QQuickItem* parent) :
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
@@ -45,35 +43,35 @@ void FormatCoordinates::init()
 
 void FormatCoordinates::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new basemap instance
-    Basemap* basemap = Basemap::imagery(this);
+  // create a new basemap instance
+  Basemap* basemap = Basemap::imagery(this);
 
-    // create a new map instance
-    m_map = new Map(basemap, this);
+  // create a new map instance
+  m_map = new Map(basemap, this);
 
-    // create a graphic
-    Esri::ArcGISRuntime::Point geometry(m_startLongitude, m_startLatitude, SpatialReference::wgs84());
-    SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 15.0, this);
-    Graphic* graphic = new Graphic(geometry, symbol, this);
+  // create a graphic
+  Point geometry(m_startLongitude, m_startLatitude, SpatialReference::wgs84());
+  SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 15.0, this);
+  Graphic* graphic = new Graphic(geometry, symbol, this);
 
-    // create a new graphics overlay instance
-    // and add insert the graphic
-    GraphicsOverlay* go = new GraphicsOverlay(this);
-    go->graphics()->append(graphic);
+  // create a new graphics overlay instance
+  // and add insert the graphic
+  GraphicsOverlay* go = new GraphicsOverlay(this);
+  go->graphics()->append(graphic);
 
-    // set map and graphics overlay on the map view
-    m_mapView->setMap(m_map);
-    m_mapView->graphicsOverlays()->append(go);
+  // set map and graphics overlay on the map view
+  m_mapView->setMap(m_map);
+  m_mapView->graphicsOverlays()->append(go);
 
-    connectSignals();
+  connectSignals();
 
-    // Set initial position to Building Q
-    handleTextUpdate("Decimal Degrees", "34.056195N 117.195723W");
+  // Set initial position to Building Q
+  handleTextUpdate(strDecimalDegrees(), m_startLatLong);
 }
 
 void FormatCoordinates::connectSignals()
@@ -82,7 +80,7 @@ void FormatCoordinates::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // get the point from the mouse point
-    Esri::ArcGISRuntime::Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
 
     // using the point, refresh the graphic and the text
     handleLocationUpdate(mapPoint);
@@ -92,12 +90,12 @@ void FormatCoordinates::connectSignals()
 // handle case where the user changed one of the text fields
 void FormatCoordinates::handleTextUpdate(QString textType, QString text)
 {
-  Esri::ArcGISRuntime::Point point = createPointFromText(textType, text);
+  Point point = createPointFromText(textType, text);
   handleLocationUpdate(point);
 }
 
 // handle case where user clicked on the map
-void FormatCoordinates::handleLocationUpdate(Esri::ArcGISRuntime::Point point)
+void FormatCoordinates::handleLocationUpdate(Point point)
 {
   if (!point.isEmpty())
   {
@@ -106,24 +104,24 @@ void FormatCoordinates::handleLocationUpdate(Esri::ArcGISRuntime::Point point)
   }
 }
 
-Esri::ArcGISRuntime::Point FormatCoordinates::createPointFromText(QString textType, QString text)
+Point FormatCoordinates::createPointFromText(QString textType, QString text)
 {
   //! [FormatCoordinates CoordinateFormatter various text to point]
-  if ("Decimal Degrees" == textType
-   || "Degrees Minutes Seconds" == textType) {
-     return CoordinateFormatter::fromLatitudeLongitude(text, m_map->spatialReference());
+  if (strDecimalDegrees() == textType
+      || strDegreesMinutesSeconds() == textType) {
+    return CoordinateFormatter::fromLatitudeLongitude(text, m_map->spatialReference());
   }
-  if ("USNG" == textType) {
+  if (strUsng() == textType) {
     return CoordinateFormatter::fromUsng(text, m_map->spatialReference());
   }
-  if ("UTM" == textType) {
-   return CoordinateFormatter::fromUtm(text, m_map->spatialReference(), UtmConversionMode::LatitudeBandIndicators);
+  if (strUtm() == textType) {
+    return CoordinateFormatter::fromUtm(text, m_map->spatialReference(), UtmConversionMode::LatitudeBandIndicators);
   }
-  return Esri::ArcGISRuntime::Point();
+  return Point();
   //! [FormatCoordinates CoordinateFormatter various text to point]
 }
 
-void FormatCoordinates::setTextFromPoint(Esri::ArcGISRuntime::Point point)
+void FormatCoordinates::setTextFromPoint(Point point)
 {
   m_coordinatesInDD = CoordinateFormatter::toLatitudeLongitude(point, LatitudeLongitudeFormat::DecimalDegrees, 6); // last parm = decimal places
   emit coordinatesInDDChanged();
@@ -142,22 +140,42 @@ void FormatCoordinates::setTextFromPoint(Esri::ArcGISRuntime::Point point)
   emit coordinatesInUtmChanged();
 }
 
-QString FormatCoordinates::coordinatesInDD()
+QString FormatCoordinates::coordinatesInDD() const
 {
   return m_coordinatesInDD;
 }
 
-QString FormatCoordinates::coordinatesInDMS()
+QString FormatCoordinates::coordinatesInDMS() const
 {
   return m_coordinatesInDMS;
 }
 
-QString FormatCoordinates::coordinatesInUsng()
+QString FormatCoordinates::coordinatesInUsng() const
 {
   return m_coordinatesInUsng;
 }
 
-QString FormatCoordinates::coordinatesInUtm()
+QString FormatCoordinates::coordinatesInUtm() const
 {
   return m_coordinatesInUtm;
+}
+
+QString FormatCoordinates::strDecimalDegrees() const
+{
+  return tr("Decimal Degrees");
+}
+
+QString FormatCoordinates::strDegreesMinutesSeconds() const
+{
+  return tr("Degrees Minutes Seconds");
+}
+
+QString FormatCoordinates::strUsng() const
+{
+  return tr("Usng");
+}
+
+QString FormatCoordinates::strUtm() const
+{
+  return tr("Utm");
 }
