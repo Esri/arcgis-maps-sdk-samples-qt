@@ -164,7 +164,7 @@ Rectangle {
 
         ComboBox {
             id: modeComboBox
-            width: 64 * scaleFactor
+            width: 100 * scaleFactor
             model: ["Facility", "Barrier"]
 
             onCurrentTextChanged: {
@@ -210,7 +210,6 @@ Rectangle {
             text: "Reset"
             width: serviceAreasButton.width
             enabled: !busy
-            iconSource: "qrc:/Samples/Routing/ServiceArea/ic_menu_closeclear_light.png"
             onClicked: {
                 facilitiesOverlay.graphics.clear();
                 barriersOverlay.graphics.clear();

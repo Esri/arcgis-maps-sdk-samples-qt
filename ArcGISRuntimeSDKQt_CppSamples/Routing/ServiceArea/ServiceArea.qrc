@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Routing/ServiceArea">
         <file alias="sample.json">ServiceArea.json</file>
-        <file>screenshot.png</file>
         <file>ServiceArea.qml</file>
         <file>ServiceArea.h</file>
         <file>ServiceArea.cpp</file>
