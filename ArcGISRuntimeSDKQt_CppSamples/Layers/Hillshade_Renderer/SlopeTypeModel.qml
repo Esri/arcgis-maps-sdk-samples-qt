@@ -14,35 +14,23 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef HILLSHADE_RENDERER_H
-#define HILLSHADE_RENDERER_H
+import QtQuick 2.5
 
-namespace Esri
-{
-  namespace ArcGISRuntime
-  {
-    class MapQuickView;
-    class RasterLayer;
-  }
+ListModel {
+    ListElement {
+        name: "None"
+        value: -1
+    }
+    ListElement {
+        name: "Degree"
+        value: 0
+    }
+    ListElement {
+        name: "Percent Rise"
+        value: 1
+    }
+    ListElement {
+        name: "Scaled"
+        value: 2
+    }
 }
-
-#include <QQuickItem>
-
-class Hillshade_Renderer : public QQuickItem
-{
-  Q_OBJECT
-
-public:
-  explicit Hillshade_Renderer(QQuickItem* parent = nullptr);
-  ~Hillshade_Renderer();
-
-  void componentComplete() Q_DECL_OVERRIDE;
-  static void init();
-  Q_INVOKABLE void applyHillshadeRenderer(double altitude, double azimuth, int slope);
-
-private:
-  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
-};
-
-#endif // HILLSHADE_RENDERER_H

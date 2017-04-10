@@ -37,6 +37,8 @@ Rectangle {
             Basemap {
                 // add a raster to the basemap
                 RasterLayer {
+                    id: rasterLayer
+
                     Raster {
                         path: dataPath + "/srtm.tiff"
                     }
@@ -68,7 +70,30 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 20 * scaleFactor
+            bottomMargin: 25 * scaleFactor
         }
+        text: "Edit Renderer"
+        onClicked: hillshadeSettings.visible = true;
+    }
+
+    HillshadeSettings {
+        id: hillshadeSettings
+        anchors.fill: parent
+    }
+
+    function applyHillshadeRenderer(altitude, azimuth, slope) {
+        // create the new renderer
+        var hillshadeRenderer = ArcGISRuntimeEnvironment.createObject("HillshadeRenderer", {
+                                                                          altitude: altitude,
+                                                                          azimuth: azimuth,
+                                                                          zFactor: 0.000016,
+                                                                          slopeType: slope,
+                                                                          pixelSizeFactor: 1,
+                                                                          pixelSizePower: 1,
+                                                                          outputBitDepth: 8
+                                                                      });
+
+        // set the renderer on the layer
+        rasterLayer.renderer = hillshadeRenderer;
     }
 }
