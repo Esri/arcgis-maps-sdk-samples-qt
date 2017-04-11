@@ -35,12 +35,23 @@ ServiceAreaSample {
         objectName: "mapView"
     }
 
+    Rectangle {
+        anchors.centerIn: editRow
+        radius: 8 * scaleFactor
+        height: editRow.height + (16 * scaleFactor)
+        width: editRow.width + (16 * scaleFactor)
+        color: "lightgrey"
+        border.color: "darkgrey"
+        border.width: 2 * scaleFactor
+        opacity: 0.75
+    }
+
     Row {
+        id: editRow
         anchors {
             top: parent.top
             left: parent.left
-            right: parent.right
-            margins: 8 * scaleFactor
+            margins: 24 * scaleFactor
         }
         spacing: 8 * scaleFactor
 
@@ -69,11 +80,23 @@ ServiceAreaSample {
         }
     }
 
+    Rectangle {
+        anchors.centerIn: solveRow
+        radius: 8 * scaleFactor
+        height: solveRow.height + (16 * scaleFactor)
+        width: solveRow.width + (16 * scaleFactor)
+        color: "lightgrey"
+        border.color: "darkgrey"
+        border.width: 2 * scaleFactor
+        opacity: 0.75
+    }
+
     Row {
+        id: solveRow
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            margins: 24 * scaleFactor
+            margins: 32 * scaleFactor
         }
         spacing: 8 * scaleFactor
 
