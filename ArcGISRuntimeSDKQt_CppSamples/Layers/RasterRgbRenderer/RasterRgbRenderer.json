@@ -1,5 +1,5 @@
 {
-    "source" :  "RgbRenderer.qml",
+    "source" :  "RasterRgbRenderer.qml",
     "name" : "RGB renderer",
     "otherSourceFiles" :  [
         "RasterRgbRenderer.h",
