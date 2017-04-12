@@ -43,7 +43,7 @@ Rectangle {
                     id: rasterLayer
 
                     Raster {
-                        path: dataPath + "/ShastaBW.tif"
+                        path: dataPath + "/Shasta.tif"
                     }
                 }
             }

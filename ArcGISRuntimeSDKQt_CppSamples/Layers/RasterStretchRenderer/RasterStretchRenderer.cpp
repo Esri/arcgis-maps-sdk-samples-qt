@@ -55,7 +55,7 @@ void RasterStretchRenderer::componentComplete()
 
   // Create the raster and raster layer
   m_dataPath = QUrl(QQmlProperty::read(this, "dataPath").toString()).toLocalFile();
-  Raster* raster = new Raster(m_dataPath + "/ShastaBW.tif", this);
+  Raster* raster = new Raster(m_dataPath + "/Shasta.tif", this);
   m_rasterLayer = new RasterLayer(raster, this);
 
   // Add the raster to the map
