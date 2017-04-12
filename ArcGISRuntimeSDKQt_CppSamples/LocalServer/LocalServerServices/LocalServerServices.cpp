@@ -38,7 +38,6 @@ LocalServerServices::~LocalServerServices()
 
 void LocalServerServices::init()
 {
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<LocalServerServices>("Esri.Samples", 1, 0, "LocalServerServicesSample");
 }
 
