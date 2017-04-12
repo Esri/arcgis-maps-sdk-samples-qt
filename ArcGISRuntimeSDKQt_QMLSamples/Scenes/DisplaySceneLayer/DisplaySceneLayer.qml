@@ -34,7 +34,7 @@ Rectangle {
 
             //! [add a scene service with ArcGISSceneLayer]
             ArcGISSceneLayer {
-                url: "http://scene.arcgis.com/arcgis/rest/services/Hosted/Buildings_Brest/SceneServer/layers/0"
+                url: "http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"
             }
             //! [add a scene service with ArcGISSceneLayer]
 
