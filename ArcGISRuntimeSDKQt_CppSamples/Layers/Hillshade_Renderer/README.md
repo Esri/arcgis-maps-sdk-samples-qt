@@ -1,6 +1,6 @@
 # Hillshade renderer
 
-This sample shows how to apply a HillshadeRenderer to a RasterLayer.
+This sample shows how to apply a HillshadeRenderer to a RasterLayer. A hillshade, also known as shaded relief, is a grayscale representation of a 3D surface, with the sun's relative position taken into account for shading the image.
 
 ![](screenshot.png)
 
