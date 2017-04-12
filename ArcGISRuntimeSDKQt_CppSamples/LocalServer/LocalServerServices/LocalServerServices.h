@@ -21,8 +21,6 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class Map;
-    class MapQuickView;
     class LocalServer;
     class LocalMapService;
     class LocalFeatureService;
@@ -71,8 +69,6 @@ private:
   void getCurrentServices();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map = nullptr;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::LocalMapService* m_localMapService = nullptr;
   Esri::ArcGISRuntime::LocalFeatureService* m_localFeatureService = nullptr;
   Esri::ArcGISRuntime::LocalGeoprocessingService* m_localGPService = nullptr;

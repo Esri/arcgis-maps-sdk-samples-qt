@@ -17,8 +17,6 @@
 #include "LocalServerServices.h"
 
 #include "Basemap.h"
-#include "MapQuickView.h"
-#include "Map.h"
 #include "LocalServer.h"
 #include "LocalMapService.h"
 #include "LocalFeatureService.h"
