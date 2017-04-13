@@ -75,11 +75,24 @@ Rectangle {
         path: dataPath + "/Shasta_Elevation.tif"
     }
 
+    Rectangle {
+        visible: editButton.visible
+        anchors.centerIn: editButton
+        radius: 8 * scaleFactor
+        height: editButton.height + (16 * scaleFactor)
+        width: editButton.width + (16 * scaleFactor)
+        color: "lightgrey"
+        border.color: "darkgrey"
+        border.width: 2 * scaleFactor
+        opacity: 0.75
+    }
+
     Button {
+        id: editButton
         anchors {
-            horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            margins: 24 * scaleFactor
+            horizontalCenter: parent.horizontalCenter
+            margins: 32 * scaleFactor
         }
         visible: rendererBox.width === 0
         text: "Edit Renderer"
