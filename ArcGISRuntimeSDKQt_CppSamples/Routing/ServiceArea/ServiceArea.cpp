@@ -88,9 +88,10 @@ void ServiceArea::setBarrierMode()
   m_mode = SampleMode::Barrier;
 }
 
-void ServiceArea::setSolveServiceAreaMode()
+void ServiceArea::solveServiceArea()
 {
-  m_mode = SampleMode::SolveServiceArea;
+  setBusy(true);
+
   m_parameters.clearFacilities();
   m_parameters.clearPolylineBarriers();
 
@@ -101,8 +102,6 @@ void ServiceArea::setSolveServiceAreaMode()
     emit messageChanged();
     return;
   }
-
-  setBusy(true);
 
   QList<ServiceAreaFacility> facilities;
   facilities.reserve(facilitiesGraphics->rowCount());
@@ -134,7 +133,7 @@ void ServiceArea::setSolveServiceAreaMode()
   m_task->solveServiceArea(m_parameters);
 }
 
-void ServiceArea::resetMode()
+void ServiceArea::reset()
 {
   m_facilitiesOverlay->graphics()->clear();
   m_barrierOverlay->graphics()->clear();
@@ -253,7 +252,7 @@ void ServiceArea::setupRouting()
     case SampleMode::Facility:
       break;
     default:
-      return; // don't handle mouse-clicks for other modes
+      return;
     }
 
     setBusy(true);

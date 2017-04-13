@@ -35,6 +35,7 @@ Row {
     Slider {
         id: slider
         value: 0
+        width: 100 * scaleFactor
     }
 
     Text {

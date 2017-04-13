@@ -105,15 +105,14 @@ ServiceAreaSample {
             text: "Solve"
             enabled: !busy
 
-            onClicked: setSolveServiceAreaMode();
+            onClicked: solveServiceArea();
         }
 
         Button {
             text: "Reset"
-            width: serviceAreasButton.width
             enabled: !busy
             onClicked: {
-                resetMode();
+                reset();
             }
         }
     }

@@ -242,7 +242,6 @@ Rectangle {
         }
     }
 
-
     BusyIndicator {
         anchors.centerIn: parent
         running: busy

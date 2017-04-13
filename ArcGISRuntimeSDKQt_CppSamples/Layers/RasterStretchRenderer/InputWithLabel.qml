@@ -30,11 +30,24 @@ Row {
 
     Slider {
         id: slider
+        width: 100 * scaleFactor
         minimumValue: 0
         maximumValue: maxRange
+
+        onValueChanged: {
+            if (spinBox.value !== value)
+                spinBox.value = value;
+        }
     }
 
-    Text {
-        text: slider.value.toFixed(0)
+    SpinBox {
+        id: spinBox
+        minimumValue: 0
+        maximumValue: slider.maximumValue
+
+        onValueChanged: {
+            if (slider.value !== value)
+                slider.value = value;
+        }
     }
 }
