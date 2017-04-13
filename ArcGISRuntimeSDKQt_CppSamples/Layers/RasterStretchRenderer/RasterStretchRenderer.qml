@@ -40,11 +40,24 @@ RasterStretchRendererSample {
         objectName: "mapView"
     }
 
+    Rectangle {
+        visible: editButton.visible
+        anchors.centerIn: editButton
+        radius: 8 * scaleFactor
+        height: editButton.height + (16 * scaleFactor)
+        width: editButton.width + (16 * scaleFactor)
+        color: "lightgrey"
+        border.color: "darkgrey"
+        border.width: 2 * scaleFactor
+        opacity: 0.75
+    }
+
     Button {
+        id: editButton
         anchors {
-            horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            margins: 24 * scaleFactor
+            horizontalCenter: parent.horizontalCenter
+            margins: 32 * scaleFactor
         }
         visible: rendererBox.width === 0
         text: "Edit Renderer"
@@ -121,7 +134,7 @@ RasterStretchRendererSample {
                 visible: stretchTypeCombo.currentText === stdDeviation
                 spacing: 8 * scaleFactor
                 label: "factor"
-                maxRange: 100
+                maxRange: 25
                 value: 0
             }
 
