@@ -36,15 +36,27 @@ RasterLayerFileSample {
         objectName: "mapView"
     }
 
+    Rectangle {
+        visible: addButton.visible
+        anchors.centerIn: addButton
+        radius: 8 * scaleFactor
+        height: addButton.height + (16 * scaleFactor)
+        width: addButton.width + (16 * scaleFactor)
+        color: "lightgrey"
+        border.color: "darkgrey"
+        border.width: 2 * scaleFactor
+        opacity: 0.75
+    }
+
     Button {
+        id: addButton
         anchors {
-            horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            margins: 24 * scaleFactor
+            horizontalCenter: parent.horizontalCenter
+            margins: 32 * scaleFactor
         }
 
         text: "Add Raster"
-        width: 100 * scaleFactor
         onClicked: loader.open();
     }
 
