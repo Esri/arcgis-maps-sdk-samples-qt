@@ -110,7 +110,6 @@ ServiceAreaSample {
 
         Button {
             text: "Reset"
-            width: serviceAreasButton.width
             enabled: !busy
             onClicked: {
                 reset();
