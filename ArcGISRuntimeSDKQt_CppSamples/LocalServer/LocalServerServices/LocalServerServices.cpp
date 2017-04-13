@@ -17,8 +17,6 @@
 #include "LocalServerServices.h"
 
 #include "Basemap.h"
-#include "MapQuickView.h"
-#include "Map.h"
 #include "LocalServer.h"
 #include "LocalMapService.h"
 #include "LocalFeatureService.h"
@@ -40,7 +38,6 @@ LocalServerServices::~LocalServerServices()
 
 void LocalServerServices::init()
 {
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<LocalServerServices>("Esri.Samples", 1, 0, "LocalServerServicesSample");
 }
 
