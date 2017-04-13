@@ -51,8 +51,8 @@ public:
 
   Q_INVOKABLE void setFacilityMode();
   Q_INVOKABLE void setBarrierMode();
-  Q_INVOKABLE void setSolveServiceAreaMode();
-  Q_INVOKABLE void resetMode();
+  Q_INVOKABLE void solveServiceArea();
+  Q_INVOKABLE void reset();
   Q_INVOKABLE void newBarrier();
 
 signals:
@@ -63,8 +63,7 @@ private:
 
   enum class SampleMode {
     Facility,
-    Barrier,
-    SolveServiceArea
+    Barrier
   };
 
   bool busy() const;
