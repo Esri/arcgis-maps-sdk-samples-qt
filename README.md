@@ -127,7 +127,3 @@ limitations under the License.
 
 
 A copy of the license is available in the repository's [license.txt]( https://github.com/Esri/arcgis-runtime-samples-qt/blob/master/license.txt) file
-
-
-[](Esri Tags: ArcGIS Runtime SDK QML Qt Samples) 
-[](Esri Language: Qt)
