@@ -4,7 +4,7 @@ Demonstrates how to start and stop the Local Server and start and stop a local m
 
 **Note:** Local Server is not supported on macOS.
 
-![](LocalServerServices.png)
+![](screenshot.png)
 
 ## How to use the sample
 
