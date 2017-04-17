@@ -4,7 +4,7 @@ Demonstrates how to start the Local Server and Local Map Service, create an ArcG
 
 **Note:** Local Server is not supported on macOS.
 
-![](LocalServerMapImageLayer.png)
+![](screenshot.png)
 
 ## How to use the sample
 
