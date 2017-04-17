@@ -4,7 +4,7 @@ Demonstrates how to start the Local Server and local feature service, create a f
 
 **Note:** Local Server is not supported on macOS.
 
-![](LocalServerFeatureLayer.png)
+![](screenshot.png)
 
 ## How to use the sample
 
