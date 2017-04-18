@@ -30,12 +30,16 @@ Row {
     }
 
     Text {
+        id: text
         text: isMin ? "Min" : "Max"
+        anchors.verticalCenter: parent.verticalCenter
     }
 
     Repeater {
         id: repeater
         SpinBox {
+            anchors.verticalCenter: text.verticalCenter
+            width: 64 * scaleFactor
             minimumValue: 0
             maximumValue: maxRange
             value: isMin ? minimumValue : maximumValue
