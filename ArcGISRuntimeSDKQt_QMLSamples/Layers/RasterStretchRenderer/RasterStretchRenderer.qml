@@ -1,4 +1,4 @@
-// [WriteFile Name=RasterRgbRenderer, Category=Layers]
+// [WriteFile Name=RasterStretchRenderer, Category=Layers]
 // [Legal]
 // Copyright 2017 Esri.
 

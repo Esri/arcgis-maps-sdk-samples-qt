@@ -6,5 +6,6 @@
         <file>ServiceArea.cpp</file>
         <file>README.md</file>
         <file>ic_menu_closeclear_light.png</file>
+        <file>screenshot.png</file>
     </qresource>
 </RCC>

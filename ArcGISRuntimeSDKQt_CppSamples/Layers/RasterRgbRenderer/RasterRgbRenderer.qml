@@ -40,11 +40,24 @@ RasterRgbRendererSample {
         objectName: "mapView"
     }
 
+    Rectangle {
+        visible: editButton.visible
+        anchors.centerIn: editButton
+        radius: 8 * scaleFactor
+        height: editButton.height + (16 * scaleFactor)
+        width: editButton.width + (16 * scaleFactor)
+        color: "lightgrey"
+        border.color: "darkgrey"
+        border.width: 2 * scaleFactor
+        opacity: 0.75
+    }
+
     Button {
+        id: editButton
         anchors {
-            horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            margins: 24 * scaleFactor
+            horizontalCenter: parent.horizontalCenter
+            margins: 32 * scaleFactor
         }
         visible: rendererBox.width === 0
         text: "Edit Renderer"
@@ -63,6 +76,7 @@ RasterRgbRendererSample {
         color: "white"
         opacity: 0.75
         width: editingRenderer ? parent.width : 0
+        visible: width > 0
 
         Column {
             anchors {
@@ -76,7 +90,7 @@ RasterRgbRendererSample {
             ComboBox {
                 id: stretchTypeCombo
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 128 * scaleFactor
+                width: 175 * scaleFactor
                 model: stretchTypes
             }
 
@@ -126,14 +140,17 @@ RasterRgbRendererSample {
                 spacing: 8 * scaleFactor
                 Text {
                     text: "Factor"
+                    anchors.verticalCenter: parent.verticalCenter
                 }
 
                 SpinBox {
                     id: sdFactor
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 75 * scaleFactor
                     decimals: 2
                     minimumValue: 0
-                    maximumValue: 100
-                    value: 100
+                    maximumValue: 25
+                    value: 0
                 }
             }
 
