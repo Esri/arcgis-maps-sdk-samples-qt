@@ -106,7 +106,7 @@ Rectangle {
                 ComboBox {
                     id: slopeBox
                     width: 125 * scaleFactor
-                    model: SlopeTypeModel{}
+                    model: HillshadeSlopeTypeModel{}
                     textRole: "name"
                 }
             }

@@ -4,7 +4,7 @@
         <file>Hillshade_Renderer.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>SlopeTypeModel.qml</file>
+        <file>HillshadeSlopeTypeModel.qml</file>
         <file>HillshadeSettings.qml</file>
     </qresource>
 </RCC>
