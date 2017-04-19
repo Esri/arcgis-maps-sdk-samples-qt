@@ -2,7 +2,9 @@
     "source" :  "Hillshade_Renderer.qml",
     "otherSourceFiles" : [
         "Hillshade_Renderer.h",
-        "Hillshade_Renderer.cpp"
+        "Hillshade_Renderer.cpp",
+        "HillshadeSettings.qml",
+        "HilshadeSlopeTypeModel.qml"
     ],
     "name" : "Hillshade renderer",
     "dataItems" : [        

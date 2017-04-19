@@ -1,6 +1,9 @@
 {
     "source" :  "Hillshade_Renderer.qml",
-    "otherSourceFiles" :  [],
+    "otherSourceFiles" :  [
+        "HillshadeSettings.qml",
+        "HillshadeSlopeTypeModel.qml"
+    ],
     "name" : "Hillshade renderer",
     "dataItems" : [        
         {
