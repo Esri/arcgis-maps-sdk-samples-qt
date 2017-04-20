@@ -24,6 +24,7 @@ Rectangle {
     height: 600
 
     property url wmtsServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS"
+    property WmtsService service;
 
     MapView {
         id: mapView
@@ -34,7 +35,7 @@ Rectangle {
 
     function createWmtsLayer() {
         // create the service
-        var service = ArcGISRuntimeEnvironment.createObject("WmtsService", { url: wmtsServiceUrl });
+        service = ArcGISRuntimeEnvironment.createObject("WmtsService", { url: wmtsServiceUrl });
         // connect to loadStatusChanged signal
         service.loadStatusChanged.connect(function() {
             if (service.loadStatus === Enums.LoadStatusLoaded) {
