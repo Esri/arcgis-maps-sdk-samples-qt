@@ -52,7 +52,7 @@ void WMTS_Layer::componentComplete()
 void WMTS_Layer::createWmtsLayer()
 {
   // create the service
-  m_service = new WmtsService(m_wmtsServiceUrl);
+  m_service = new WmtsService(m_wmtsServiceUrl, this);
 
   // connect to the doneLoading signal of the service
   connect(m_service, &WmtsService::doneLoading, this, [this](Error loadError)

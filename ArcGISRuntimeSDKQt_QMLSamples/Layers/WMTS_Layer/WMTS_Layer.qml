@@ -1,4 +1,4 @@
-// [WriteFile Name=WMTS_Layer, Category=Geometry]
+// [WriteFile Name=WMTS_Layer, Category=Layers]
 // [Legal]
 // Copyright 2017 Esri.
 
