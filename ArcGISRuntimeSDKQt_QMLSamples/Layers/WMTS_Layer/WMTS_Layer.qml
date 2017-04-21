@@ -36,7 +36,8 @@ Rectangle {
     function createWmtsLayer() {
         // create the service
         service = ArcGISRuntimeEnvironment.createObject("WmtsService", { url: wmtsServiceUrl });
-        // connect to loadStatusChanged signal
+
+        // connect to loadStatusChanged signal of the service
         service.loadStatusChanged.connect(function() {
             if (service.loadStatus === Enums.LoadStatusLoaded) {
                 // get the layer info list
@@ -60,6 +61,7 @@ Rectangle {
                 mapView.map = map;
             }
         });
+
         // load the service
         service.load();
     }
