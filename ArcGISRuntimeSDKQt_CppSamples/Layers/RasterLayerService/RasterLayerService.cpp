@@ -49,21 +49,11 @@ void RasterLayerService::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-  // Add a basemap to the map
-  m_map = new Map(Basemap::darkGrayCanvasVector(this), this);
-  m_mapView->setMap(m_map);
-
   // create an image service raster
   ImageServiceRaster* imageServiceRaster = new ImageServiceRaster(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"), this);
-  // zoom to the extent of the raster once it is loaded.
-  connect(imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this, imageServiceRaster]()
-  {
-    Viewpoint vp(imageServiceRaster->serviceInfo().fullExtent());
-    m_mapView->setViewpointAnimated(vp, 0.5f, AnimationCurve::EaseInOutQuad);
-  });
-
   // create a raster layer using the image service raster
   m_rasterLayer = new RasterLayer(imageServiceRaster, this);
   // add the raster layer to the map's operational layers
-  m_map->operationalLayers()->append(m_rasterLayer);
+  m_map = new Map(new Basemap(m_rasterLayer, this), this);
+  m_mapView->setMap(m_map);
 }
