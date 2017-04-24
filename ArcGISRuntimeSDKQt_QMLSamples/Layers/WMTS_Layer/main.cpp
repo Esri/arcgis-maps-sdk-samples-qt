@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(arcGISToolkitImportPath);
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Geometry/WMTS_Layer/WMTS_Layer.qml"));
+    view.setSource(QUrl("qrc:/Samples/Layers/WMTS_Layer/WMTS_Layer.qml"));
 
     view.show();
 
