@@ -17,7 +17,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.ArcGISRuntime 100.1
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -26,18 +25,30 @@ Rectangle {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
-    
     MapView {
         anchors.fill: parent
+        id: mapView
+
         Map {
-            // add a basemap to the map
+            // create a basemap from a tiled layer and add to the map
             Basemap {
-                // create the basemap using a raster layer
-                RasterLayer {
-                    // create the raster layer from an image service raster
-                    ImageServiceRaster {
-                        url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"
+                ArcGISTiledLayer {
+                    url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
+                }
+            }
+
+            // create and add a raster layer to the map
+            RasterLayer {
+                // create the raster layer from an image service raster
+                ImageServiceRaster {
+                    id: imageServiceRaster
+                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"
+
+                    // zoom to the extent of the raster once it's loaded
+                    onLoadStatusChanged: {
+                        if (loadStatus === Enums.LoadStatusLoaded) {
+                            mapView.setViewpointGeometry(imageServiceRaster.serviceInfo.fullExtent);
+                        }
                     }
                 }
             }

@@ -3,7 +3,7 @@
     "name" : "Raster layer (service)",
     "otherSourceFiles" :  [
         "RasterLayerService.h",
-        "RasterLayerService.cpp",
+        "RasterLayerService.cpp"
 	]
 }
 

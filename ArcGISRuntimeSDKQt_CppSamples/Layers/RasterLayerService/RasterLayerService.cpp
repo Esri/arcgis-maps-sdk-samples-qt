@@ -19,6 +19,8 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "RasterLayer.h"
+#include "Basemap.h"
+#include "ArcGISTiledLayer.h"
 #include "ImageServiceRaster.h"
 
 #include <QQmlProperty>
@@ -49,11 +51,21 @@ void RasterLayerService::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
+  // create a new tiled layer to add a basemap
+  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"), this);
+  m_map = new Map(new Basemap(tiledLayer, this));
+  m_mapView->setMap(m_map);
+
   // create an image service raster
   ImageServiceRaster* imageServiceRaster = new ImageServiceRaster(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"), this);
+  // zoom to the raster's extent once it's loaded
+  connect(imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this, imageServiceRaster]()
+  {
+      m_mapView->setViewpoint(Viewpoint(imageServiceRaster->serviceInfo().fullExtent()));
+  });
+
   // create a raster layer using the image service raster
   m_rasterLayer = new RasterLayer(imageServiceRaster, this);
   // add the raster layer to the map's operational layers
-  m_map = new Map(new Basemap(m_rasterLayer, this), this);
-  m_mapView->setMap(m_map);
+  m_map->operationalLayers()->append(m_rasterLayer);
 }
