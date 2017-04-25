@@ -64,19 +64,19 @@ void VectorTiledLayerUrl::componentComplete()
   m_mapView->setMap(m_map);
 }
 
-void VectorTiledLayerUrl::changeBasemap(QString basemap)
+void VectorTiledLayerUrl::changeBasemap(const QString& basemap)
 {
   if (m_map->loadStatus() == LoadStatus::Loaded)
   {
     ArcGISVectorTiledLayer* vectorTiledLayer = nullptr;
-    if (basemap == "Navigation")
-      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"));
-    else if (basemap == "Streets")
+    if (basemap == "Streets")
       vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=a60a37a27cc140ddad15f919cd5a69f2"));
     else if (basemap == "Night")
       vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=92c551c9f07b4147846aae273e822714"));
     else if (basemap == "Dark Gray")
       vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=5ad3948260a147a993ef4865e3fad476"));
+    else
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"));
     Basemap* basemap = new Basemap(vectorTiledLayer, this);
     m_map->setBasemap(basemap);
   }
