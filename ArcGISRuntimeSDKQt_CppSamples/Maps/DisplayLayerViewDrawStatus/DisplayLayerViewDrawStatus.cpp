@@ -118,15 +118,15 @@ void DisplayLayerViewDrawStatus::connectSignals()
     m_layerNames[rIndex] = layer->name();
 
     // use insert to replace values mapped to layer name
-    if (viewState.status() == Esri::ArcGISRuntime::LayerViewStatus::Active)
+    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Active)
       m_layerViewStates[rIndex] = QString("Active");
-    else if (viewState.status() == Esri::ArcGISRuntime::LayerViewStatus::NotVisible)
+    else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::NotVisible)
       m_layerViewStates[rIndex] = QString("Not Visible");
-    else if (viewState.status() == Esri::ArcGISRuntime::LayerViewStatus::OutOfScale)
+    else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::OutOfScale)
       m_layerViewStates[rIndex] = QString("Out of Scale");
-    else if (viewState.status() == Esri::ArcGISRuntime::LayerViewStatus::Loading)
+    else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Loading)
       m_layerViewStates[rIndex] = QString("Loading");
-    else if (viewState.status() == Esri::ArcGISRuntime::LayerViewStatus::Error)
+    else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Error)
       m_layerViewStates[rIndex] = QString("Error");
     else
       m_layerViewStates[rIndex] = QString("Unknown");

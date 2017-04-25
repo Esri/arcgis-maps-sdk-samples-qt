@@ -85,20 +85,19 @@ Rectangle {
         }
 
         function viewStatusString(layerViewState) {
-            switch(layerViewState.status) {
-            case Enums.LayerViewStatusActive:
+            var stateFlag = layerViewState.statusFlags;
+            if (stateFlag & Enums.LayerViewStatusActive)
                 return "Active";
-            case Enums.LayerViewStatusNotVisible:
+            if (stateFlag & Enums.LayerViewStatusNotVisible)
                 return "Not Visible";
-            case Enums.LayerViewStatusOutOfScale:
-                return "Out of Scale";
-            case Enums.LayerViewStatusLoading:
+            if (stateFlag & Enums.LayerViewStatusOutOfScale)
+                return "Out of scale";
+            if (stateFlag & Enums.LayerViewStatusLoading)
                 return "Loading";
-            case Enums.LayerViewStatusError:
+            if (stateFlag & Enums.LayerViewStatusError)
                 return "Error";
-            default:
-                return "Unknown";
-            }
+
+            return "Unknown";
         }
 
         function getindex(layer) {
