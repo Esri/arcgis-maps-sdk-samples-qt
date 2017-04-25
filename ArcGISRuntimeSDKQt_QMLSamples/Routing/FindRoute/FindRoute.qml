@@ -92,11 +92,7 @@ Rectangle {
 
         // Create a map with a basemap and initial viewpoint
         Map {
-            Basemap {
-                ArcGISVectorTiledLayer {
-                    url: "http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"
-                }
-            }
+            BasemapNavigationVector {}
 
             initialViewpoint: ViewpointCenter {
                 Point {
