@@ -51,7 +51,7 @@ void VectorTiledLayerUrl::componentComplete()
 
   //! [display vector tiled layer]
   // create a vector tiled basemap
-  ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"));
+  ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"));
   Basemap* basemap = new Basemap(vectorTiledLayer, this);
   // create a new map instance
   m_map = new Map(basemap, this);
@@ -70,13 +70,13 @@ void VectorTiledLayerUrl::changeBasemap(QString basemap)
   {
     ArcGISVectorTiledLayer* vectorTiledLayer = nullptr;
     if (basemap == "Navigation")
-      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"));
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"));
     else if (basemap == "Streets")
-      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=4e1133c28ac04cca97693cf336cd49ad"));
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=a60a37a27cc140ddad15f919cd5a69f2"));
     else if (basemap == "Night")
-      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=bf79e422e9454565ae0cbe9553cf6471"));
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=92c551c9f07b4147846aae273e822714"));
     else if (basemap == "Dark Gray")
-      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=850db44b9eb845d3bd42b19e8aa7a024"));
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=5ad3948260a147a993ef4865e3fad476"));
     Basemap* basemap = new Basemap(vectorTiledLayer, this);
     m_map->setBasemap(basemap);
   }
