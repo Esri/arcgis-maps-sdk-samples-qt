@@ -120,7 +120,6 @@ Rectangle {
                                                                  anchorPosition: Enums.SceneSymbolAnchorPositionCenter
                                                              });
 
-            smss.style = elem.symbolStyle;
             // create a new point geometry
             var point = ArcGISRuntimeEnvironment.createObject("Point", {
                                                                   x: pointX + 0.01 * i,
