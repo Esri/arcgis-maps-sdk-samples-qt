@@ -38,8 +38,6 @@ Rectangle {
     property string rollAtt: "roll";
     property string attrFormat: "[%1]"
 
-    property Graphic graphic3d
-    property Graphic graphic2d
     property Graphic routeGraphic
 
     /**
@@ -51,6 +49,8 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
         attributionTextVisible: (sceneView.width - mapView.width) > mapView.width // only show attribution text on the widest view
+
+        cameraController: followButton.checked && missionReady ? followController : globeController
 
         // create a scene...scene is a default property of sceneview
         // and thus will get added to the sceneview
@@ -64,7 +64,7 @@ Rectangle {
                 ArcGISTiledElevationSource {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
-            }
+            }     
         }
 
         GraphicsOverlay {
@@ -90,13 +90,37 @@ Rectangle {
                 scale: 10.0
                 heading: 0.0
             }
-        }
 
-        MouseArea {
-            anchors.fill: parent
-            onPressed: mouse.accepted = followButton.checked
-            onWheel: wheel.accepted = followButton.checked
+            Graphic {
+                id: graphic3d
+                symbol: mms
+
+                geometry: Point {
+                    x: 0.
+                    y: 0.
+                    z: 100.
+                    spatialReference: sceneView.spatialReference
+                }
+
+                Component.onCompleted: {
+                    graphic3d.attributes.insertAttribute(headingAtt, 0.);
+                    graphic3d.attributes.insertAttribute(rollAtt, 0.);
+                    graphic3d.attributes.insertAttribute(pitchAtt, 0.);
+                }
+            }
         }
+    }
+
+    GlobeCameraController {
+        id: globeController
+    }
+
+    OrbitGeoElementCameraController {
+        id: followController
+        targetElement: graphic3d
+        cameraDistance: cameraDistanceSlider.value
+        cameraPitchOffset: cameraAngle.value
+        cameraHeadingOffset: 90 // account for the orientation of the model
     }
 
     ListModel {
@@ -185,11 +209,11 @@ Rectangle {
             }
 
             Slider {
-                id: cameraDistance
+                id: cameraDistanceSlider
                 enabled: following && missionReady
-                minimumValue: 10.0
-                maximumValue: 500.0
-                value: 200.0
+                minimumValue: followController.minCameraDistance
+                maximumValue: 5000.0
+                value: 500.0
                 width: Math.max(implicitWidth, playButton.width)
             }
 
@@ -203,9 +227,9 @@ Rectangle {
             Slider {
                 id: cameraAngle
                 enabled: following && missionReady
-                minimumValue: 0.0
-                maximumValue: 180.0
-                value: 75.0
+                minimumValue: followController.minCameraPitchOffset
+                maximumValue: followController.maxCameraPitchOffset
+                value: 45.0
                 width: Math.max(implicitWidth, playButton.width)
             }
 
@@ -220,8 +244,8 @@ Rectangle {
                 id: animationSpeed
                 enabled: missionReady
                 minimumValue: 50
-                maximumValue: 200
-                value: 50
+                maximumValue: 500
+                value: 300
                 width: Math.max(implicitWidth, playButton.width)
             }
         }
@@ -309,7 +333,7 @@ Rectangle {
 
     Timer {
         id: timer
-        interval: 210 - animationSpeed.value;
+        interval: Math.min(animationSpeed.maximumValue - animationSpeed.value,1);
         running: playButton.checked;
         repeat: true
         onTriggered: animate();
@@ -359,23 +383,10 @@ Rectangle {
         var firstData = currentMissionModel.get(0);
         var firstPos = createPoint(firstData);
 
-        if (!graphic3d) {
-            // create model graphic with attributes
-            graphic3d = ArcGISRuntimeEnvironment.createObject("Graphic");
-            graphic3d.symbol = mms;
-
-            graphic3d.attributes.insertAttribute(headingAtt, firstData.heading);
-            graphic3d.attributes.insertAttribute(rollAtt, firstData.roll);
-            graphic3d.attributes.insertAttribute(pitchAtt, firstData.pitch);
-
-            // add model graphic to the graphics overlay
-            sceneOverlay.graphics.append(graphic3d);
-        } else {
-            // update model graphic's attributes
-            graphic3d.attributes.replaceAttribute(headingAtt, firstData.heading);
-            graphic3d.attributes.replaceAttribute(rollAtt, firstData.roll);
-            graphic3d.attributes.replaceAttribute(pitchAtt, firstData.pitch);
-        }
+        // update model graphic's attributes
+        graphic3d.attributes.replaceAttribute(headingAtt, firstData.heading);
+        graphic3d.attributes.replaceAttribute(rollAtt, firstData.roll);
+        graphic3d.attributes.replaceAttribute(pitchAtt, firstData.pitch);
 
         // update model graphic's geomtry
         graphic3d.geometry = firstPos;
@@ -392,20 +403,6 @@ Rectangle {
         // update route graphic's geomtry
         routeGraphic.geometry = rtBldr.geometry;
 
-        if (!graphic2d) {
-            // create 2D plane graphic
-            graphic2d = ArcGISRuntimeEnvironment.createObject("Graphic");
-            graphic2d.symbol = plane2DSymbol;
-
-            // add 3D plane graphic to the graphics overlay
-            //graphicsOverlay.graphics.append(graphic2d);
-        }
-
-        // update 2D plane graphic's geomtry
-        //graphic2d.geometry = firstPos;
-
-        // set initial camera and map viewpoints
-        setCamera(firstPos, firstData.heading);
         mapView.setViewpointGeometryAndPadding(routeGraphic.geometry, 30);
     }
 
@@ -418,11 +415,6 @@ Rectangle {
             graphic3d.attributes.replaceAttribute(headingAtt, missionData.heading);
             graphic3d.attributes.replaceAttribute(pitchAtt, missionData.pitch);
             graphic3d.attributes.replaceAttribute(rollAtt, missionData.roll);
-
-            //graphic2d.geometry = newPos;
-
-            if (followButton.checked)
-                setCamera(newPos, missionData.heading);
         }
 
         nextFrameRequested();
@@ -450,22 +442,5 @@ Rectangle {
                 z: missionData.elevation,
                 spatialReference: SpatialReference.createWgs84()
             });
-    }
-
-    function setCamera(point, headingVal) {
-        var cam = ArcGISRuntimeEnvironment.createObject(
-            "Camera", {
-                location: point,
-                distance: cameraDistance.maximumValue - cameraDistance.value,
-                heading: headingVal,
-                pitch: cameraAngle.value,
-                roll: 0.0
-            });
-
-        if (!playButton.checked)
-            sceneView.setViewpointCameraAndWait(cam);
-        else {
-            sceneView.setViewpointCameraAndWait(cam);
-        }
     }
 }

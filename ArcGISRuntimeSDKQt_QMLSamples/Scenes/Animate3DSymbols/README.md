@@ -1,17 +1,18 @@
 # Animate 3D symbols
-Demonstrates how to animate a graphic's position and rotation and follow it with a camera. Also shows how to combine a SceneView and MapView in an MVC application with property binding.
+Demonstrates how to animate a graphic's position and rotation and follow it using a `OrbitGeoElementCameraController`.
+Also shows how to combine a `SceneView` and `MapView` in an MVC application with property binding.
 
 ## How to use the sample
 
 Animation Controls (Top Left Corner):
- - Select a mission -- selects a location with a route for the helicopter to fly
- - Mission progress -- shows how far along the route the helicopter is. Slide to change keyframe in animation
+ - Select a mission -- selects a location with a route for the plane to fly
+ - Mission progress -- shows how far along the route the plane is. Slide to change keyframe in animation
  - Play -- toggles playing and stopping the animation
  - Toggle -- toggles the camera's follow mode and free cam mode
  
 Camera Controls (Top Right Corner):
- - Camare zoom -- distance between camera and helicopter
- - Camera angle -- viewing angle between camera and helicopter
+ - Camare zoom -- distance between camera and plane
+ - Camera angle -- viewing angle between camera and plane
  - Flight speed -- controls speed of animation
 
  2D Map Controls (Bottom Left Corner):
@@ -33,19 +34,23 @@ To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
 5. Create a ```SimpleRenderer``` to access and set it's expression properties - e.g. ``headingExpression: "[heading]"`.
 6. Add graphic to the graphics overlay.
 7. Add a renderer to graphics overlay
+8. Create a `OrbitGeoElementCameraController` which is set to target the graphic.
+9. Assign the camera controller too the `SceneView`
 8. Update graphic's location, `graphic.geometry = geometry`.
 9. Update graphics's heading, pitch, and roll, `graphic.attributes.replaceAttribute("heading", myHeading)`.
-10. Set the sceneViews's camera to be looking at the symbol with `sceneView.setViewpointCamera`
+10. The camera controller will automatically update the view to follow the graphic.
 
 ## Features
  - Map
  - Scene
  - Camera
+ - GlobeCameraController
  - Graphic
  - GraphicsOverlay
  - SurfacePlacement
  - MapView
  - ModelSceneSymbol
+ - OrbitGeoElementCameraController
  - Point
  - Polyline
  - Renderer
