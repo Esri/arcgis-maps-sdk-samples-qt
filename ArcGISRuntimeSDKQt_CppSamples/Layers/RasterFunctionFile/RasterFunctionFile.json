@@ -1,0 +1,8 @@
+{
+    "source" :  "RasterFunctionFile.qml",
+    "otherSourceFiles" :  [
+        "RasterFunctionFile.h",
+        "RasterFunctionFile.cpp"
+    ],
+    "name" : "Raster function (file)"
+}
