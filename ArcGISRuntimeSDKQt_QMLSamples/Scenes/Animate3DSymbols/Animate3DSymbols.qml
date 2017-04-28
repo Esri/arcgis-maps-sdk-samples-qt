@@ -120,7 +120,7 @@ Rectangle {
         targetElement: graphic3d
         cameraDistance: cameraDistanceSlider.value
         cameraPitchOffset: cameraAngle.value
-        cameraHeadingOffset: 90 // account for the orientation of the symbol
+        cameraHeadingOffset: 90 // account for the orientation of the model
     }
 
     ListModel {
@@ -443,3 +443,4 @@ Rectangle {
                 spatialReference: SpatialReference.createWgs84()
             });
     }
+}
