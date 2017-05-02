@@ -43,8 +43,6 @@ public:
   static void init();
   void componentComplete() Q_DECL_OVERRIDE;
   Q_INVOKABLE void applyRenderingRule(int index);
-  Q_INVOKABLE void applyRenderingRuleByString(const QString& name);
-  Q_INVOKABLE void applyRenderingRuleJson(int index);
 
 signals:
   void renderingRuleNamesChanged();
