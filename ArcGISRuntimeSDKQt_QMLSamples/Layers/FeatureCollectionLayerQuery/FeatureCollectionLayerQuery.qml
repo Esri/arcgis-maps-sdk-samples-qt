@@ -44,11 +44,9 @@ Rectangle {
             if (queryFeaturesStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            var featureCollectionTable = ArcGISRuntimeEnvironment.createObject(
-                        "FeatureCollectionTable", {featureSet: queryFeaturesResult});
+            var featureCollectionTable = ArcGISRuntimeEnvironment.createObject("FeatureCollectionTable", {featureSet: queryFeaturesResult});
 
-            var featureCollection = ArcGISRuntimeEnvironment.createObject(
-                        "FeatureCollection");
+            var featureCollection = ArcGISRuntimeEnvironment.createObject("FeatureCollection");
             featureCollection.tables.append(featureCollectionTable);
 
             featureCollectionLayer.featureCollection = featureCollection;
