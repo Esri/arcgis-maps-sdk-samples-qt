@@ -23,22 +23,22 @@ Camera Controls (Top Right Corner):
 ## How it works
 To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
 
-1. Create a ```GraphicsOverlay``` and add it to the ```SceneView```.
-2. Create a ```ModelSceneSymbol```.
-3. Create a ```Graphic```.
- 1. Set geometry to a point where graphic will be located in scene view
- 2. Set symbol to the one we made above
+1. Create a `GraphicsOverlay` and add it to the `SceneView`.
+2. Create a `ModelSceneSymbol`.
+3. Create a `Graphic`.
+ a. Set geometry to a point where graphic will be located in scene view
+ b. Set symbol to the one we made above
 4. Add Attributes to graphic.
- 1. Get attributes from graphic, `graphic.attributes()`.
- 2. Add heading, pitch, and roll attribute, `attributes.insertAttribute("heading", myHeading)`;
-5. Create a ```SimpleRenderer``` to access and set it's expression properties - e.g. ``headingExpression: "[heading]"`.
+ a. Get attributes from graphic, `graphic.attributes()`.
+ b. Add heading, pitch, and roll attribute, `attributes.insertAttribute("heading", myHeading)`;
+5. Create a `SimpleRenderer` to access and set it's expression properties - e.g. `headingExpression: "[heading]"`.
 6. Add graphic to the graphics overlay.
 7. Add a renderer to graphics overlay
 8. Create a `OrbitGeoElementCameraController` which is set to target the graphic.
 9. Assign the camera controller too the `SceneView`
-8. Update graphic's location, `graphic.geometry = geometry`.
-9. Update graphics's heading, pitch, and roll, `graphic.attributes.replaceAttribute("heading", myHeading)`.
-10. The camera controller will automatically update the view to follow the graphic.
+10. Update graphic's location, `graphic.geometry = geometry`.
+11. Update graphics's heading, pitch, and roll, `graphic.attributes.replaceAttribute("heading", myHeading)`.
+12. The camera controller will automatically update the view to follow the graphic.
 
 ## Features
  - Map
