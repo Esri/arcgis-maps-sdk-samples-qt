@@ -53,7 +53,10 @@ on windows the sample makes use of the `QtSingleApplication` from qt-solutions. 
 is notified of the authorization code as a command line argument.
 
 ### Linux
-_NOTE - this approach for defining a URL scheme on Linux will only work when Mozilla Firefox is the browser used for authentication._
+_NOTE - As there are a variety of approaches for defining a custom URL protocol on linux platforms,
+this sample is not fully supported on these systems. For example, the following approach for defining a URL scheme
+on Linux may work when Mozilla Firefox is the browser used for authentication.
+Another approach is to set the custom protocol as a MIME-Type in a *.desktop file._
 
 First build the project and take a note of the absolute path to the App - check the App can be run directly by entering this path from a terminal.
 There are a number of ways to record the protocol for Firefox:
