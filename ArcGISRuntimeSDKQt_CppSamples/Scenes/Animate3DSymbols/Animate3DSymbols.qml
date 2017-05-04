@@ -158,9 +158,9 @@ Animate3DSymbolsSample {
             Slider {
                 id: animationSpeed
                 enabled: missionReady
-                minimumValue: 50
-                maximumValue: 500
-                value: 300
+                minimumValue: 1
+                maximumValue: 100
+                value: 50
                 width: Math.max(implicitWidth, playButton.width)
             }
         }
@@ -228,7 +228,7 @@ Animate3DSymbolsSample {
 
     Timer {
         id: timer
-        interval: Math.min(animationSpeed.maximumValue - animationSpeed.value,1);
+        interval: Math.max(animationSpeed.maximumValue - animationSpeed.value,1);
         running: playButton.checked;
         repeat: true
         onTriggered: animate();
