@@ -100,11 +100,8 @@ RasterFunction* RasterFunctionFile::createRasterFunction()
   // set the number of rasters required - 2 in this case
   Raster* rasterArg1 = new Raster(m_rasterPath);
   Raster* rasterArg2 = new Raster(m_rasterPath);
-  if (rasterFunction)
-  {
-    rasterFunction->arguments()->setRaster("raster", rasterArg1);
-    rasterFunction->arguments()->setRaster("raster", rasterArg2);
-  }
+  rasterFunction->arguments()->setRaster("raster", rasterArg1);
+  rasterFunction->arguments()->setRaster("raster", rasterArg2);
 
   return rasterFunction;
 }
