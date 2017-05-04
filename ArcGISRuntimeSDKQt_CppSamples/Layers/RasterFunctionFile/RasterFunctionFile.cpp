@@ -72,6 +72,10 @@ void RasterFunctionFile::applyRasterFunction()
   // create raster function
   RasterFunction* rasterFunction = createRasterFunction();
 
+  // check for valid raster function
+  if (!rasterFunction)
+    return;
+
   // create the raster from the raster function
   Raster* raster = new Raster(rasterFunction, this);
 

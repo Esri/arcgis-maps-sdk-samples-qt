@@ -109,16 +109,20 @@ Rectangle {
         // create raster function
         var rasterFunction = createRasterFunction();
 
+        // check for valid raster function
+        if (!rasterFunction)
+            return;
+
         // create the raster from the raster function
         var raster = ArcGISRuntimeEnvironment.createObject("Raster", { rasterFunction: rasterFunction });
 
         // create raster layer from raster
-        var rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster });
-        rasterLayer.opacity = 0.5;
+        var newRasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster });
+        newRasterLayer.opacity = 0.5;
 
         // add raster to map
         mapView.map.operationalLayers.clear();
-        mapView.map.operationalLayers.append(rasterLayer);
+        mapView.map.operationalLayers.append(newRasterLayer);
     }
 
     function createRasterFunction() {
