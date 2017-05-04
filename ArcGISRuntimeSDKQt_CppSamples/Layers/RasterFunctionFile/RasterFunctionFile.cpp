@@ -24,6 +24,7 @@
 #include "RasterFunction.h"
 #include "Envelope.h"
 #include <QQmlProperty>
+#include <QFileInfo>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -90,6 +91,11 @@ void RasterFunctionFile::applyRasterFunction()
 
 RasterFunction* RasterFunctionFile::createRasterFunction()
 {
+  // Check if the raster function json exists
+  QFileInfo colorJson(m_dataPath + "/color.json");
+  if (!colorJson.exists())
+    return nullptr;
+
   // create a RasterFunction
   RasterFunction* rasterFunction = new RasterFunction(m_dataPath + "/color.json");
 

@@ -126,6 +126,10 @@ Rectangle {
     }
 
     function createRasterFunction() {
+        // Check if the raster function json exists
+        if (!colorJson.exists)
+          return;
+
         // create the raster function
         var rasterFunction = ArcGISRuntimeEnvironment.createObject("RasterFunction", {path: dataPath + "/color.json"});
 
@@ -140,5 +144,10 @@ Rectangle {
         rasterFunction.arguments.setRaster("raster", rasterArg2);
 
         return rasterFunction;
+    }
+
+    FileInfo {
+        id: colorJson
+        url: dataPath + "/color.json"
     }
 }
