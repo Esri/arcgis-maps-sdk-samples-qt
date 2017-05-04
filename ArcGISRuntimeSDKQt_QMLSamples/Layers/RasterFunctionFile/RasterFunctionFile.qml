@@ -126,7 +126,12 @@ Rectangle {
     }
 
     function createRasterFunction() {
+        // create the raster function
         var rasterFunction = ArcGISRuntimeEnvironment.createObject("RasterFunction", {path: dataPath + "/color.json"});
+
+        // check for valid raster function
+        if (!rasterFunction)
+          return;
 
         // set raster function arguments
         var rasterArg1 = ArcGISRuntimeEnvironment.createObject("Raster", { path: rasterPath });

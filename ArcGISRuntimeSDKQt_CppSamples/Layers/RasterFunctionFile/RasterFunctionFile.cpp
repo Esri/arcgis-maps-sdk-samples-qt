@@ -93,6 +93,10 @@ RasterFunction* RasterFunctionFile::createRasterFunction()
   // create a RasterFunction
   RasterFunction* rasterFunction = new RasterFunction(m_dataPath + "/color.json");
 
+  // check for valid raster function
+  if (!rasterFunction)
+    return nullptr;
+
   // set the number of rasters required - 2 in this case
   Raster* rasterArg1 = new Raster(m_rasterPath);
   Raster* rasterArg2 = new Raster(m_rasterPath);
