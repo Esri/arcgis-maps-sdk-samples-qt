@@ -109,29 +109,45 @@ Rectangle {
         // create raster function
         var rasterFunction = createRasterFunction();
 
+        // check for valid raster function
+        if (!rasterFunction)
+            return;
+
         // create the raster from the raster function
         var raster = ArcGISRuntimeEnvironment.createObject("Raster", { rasterFunction: rasterFunction });
 
         // create raster layer from raster
-        var rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster });
-        rasterLayer.opacity = 0.5;
+        var newRasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster });
+        newRasterLayer.opacity = 0.5;
 
         // add raster to map
         mapView.map.operationalLayers.clear();
-        mapView.map.operationalLayers.append(rasterLayer);
+        mapView.map.operationalLayers.append(newRasterLayer);
     }
 
     function createRasterFunction() {
+        // Check if the raster function json exists
+        if (!colorJson.exists)
+          return;
+
+        // create the raster function
         var rasterFunction = ArcGISRuntimeEnvironment.createObject("RasterFunction", {path: dataPath + "/color.json"});
+
+        // check for valid raster function
+        if (!rasterFunction)
+          return;
 
         // set raster function arguments
         var rasterArg1 = ArcGISRuntimeEnvironment.createObject("Raster", { path: rasterPath });
         var rasterArg2 = ArcGISRuntimeEnvironment.createObject("Raster", { path: rasterPath });
-        if (rasterFunction) {
-            rasterFunction.arguments.setRaster("raster", rasterArg1);
-            rasterFunction.arguments.setRaster("raster", rasterArg2);
-        }
+        rasterFunction.arguments.setRaster("raster", rasterArg1);
+        rasterFunction.arguments.setRaster("raster", rasterArg2);
 
         return rasterFunction;
+    }
+
+    FileInfo {
+        id: colorJson
+        url: dataPath + "/color.json"
     }
 }
