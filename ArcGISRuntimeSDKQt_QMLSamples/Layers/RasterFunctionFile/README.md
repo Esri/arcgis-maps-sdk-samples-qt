@@ -16,4 +16,4 @@ A `RasterFunction` object is created by setting the path to a JSON file on disk.
 Link | Local Location
 ---------|-------|
 |[Shasta.tif raster](https://www.arcgis.com/home/item.html?id=b051f5c3e01048f3bf11c59b41507896)| `<userhome>`/ArcGIS/Runtime/Data/raster/Shasta_Elevation.tif |
-|[Shasta.tif raster](https://www.arcgis.com/home/item.html?id=5356dbf91788474493467519e268cf87)| `<userhome>`/ArcGIS/Runtime/Data/raster/color.json |
+|[color.json raster function](https://www.arcgis.com/home/item.html?id=5356dbf91788474493467519e268cf87)| `<userhome>`/ArcGIS/Runtime/Data/raster/color.json |
