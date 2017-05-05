@@ -25,20 +25,18 @@ To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
 
 1. Create a `GraphicsOverlay` and add it to the `SceneView`.
 2. Create a `ModelSceneSymbol`.
-3. Create a `Graphic`.
- a. Set geometry to a point where graphic will be located in scene view
- b. Set symbol to the one we made above
-4. Add Attributes to graphic.
- a. Get attributes from graphic, `graphic.attributes()`.
- b. Add heading, pitch, and roll attribute, `attributes.insertAttribute("heading", myHeading)`;
-5. Create a `SimpleRenderer` to access and set it's expression properties - e.g. `headingExpression: "[heading]"`.
-6. Add graphic to the graphics overlay.
-7. Add a renderer to graphics overlay
-8. Create a `OrbitGeoElementCameraController` which is set to target the graphic.
-9. Assign the camera controller too the `SceneView`
-10. Update graphic's location, `graphic.geometry = geometry`.
-11. Update graphics's heading, pitch, and roll, `graphic.attributes.replaceAttribute("heading", myHeading)`.
-12. The camera controller will automatically update the view to follow the graphic.
+3. Create a `Graphic` and set the geometry to a point where the graphic will be located in the scene view.
+4. Set the graphic's symbol to the one we made above.
+5. Add Attributes to graphic. Get the attributes from the graphic with `graphic.attributes()`.
+6. Add heading, pitch, and roll attribute, `attributes.insertAttribute("heading", myHeading)`;
+7. Create a `SimpleRenderer` to access and set it's expression properties - e.g. `headingExpression: "[heading]"`.
+8. Add graphic to the graphics overlay.
+9. Add a renderer to graphics overlay
+10. Create a `OrbitGeoElementCameraController` which is set to target the graphic.
+11. Assign the camera controller too the `SceneView`
+12. Update graphic's location, `graphic.geometry = geometry`.
+13. Update graphics's heading, pitch, and roll, `graphic.attributes.replaceAttribute("heading", myHeading)`.
+14. The camera controller will automatically update the view to follow the graphic.
 
 ## Features
  - Map
