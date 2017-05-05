@@ -30,7 +30,6 @@
 #include "PictureMarkerSymbol.h"
 #include "IdentifyGraphicsOverlayResult.h"
 
-#include <QFileInfo>
 #include <QQmlProperty>
 
 using namespace Esri::ArcGISRuntime;
@@ -63,15 +62,7 @@ void OfflineGeocode::componentComplete()
   m_dataPath = QQmlProperty::read(this, "dataPath").toString();
 
   // create a tiled layer using a local .tpk file
-  QString tpkPath = m_dataPath + "tpk/streetmap_SD.tpk";
-  if (!QFileInfo::exists(tpkPath))
-  {
-    qDebug() << tpkPath;
-    setErrorMessage(".tpk data not found - see README.md");
-    return;
-  }
-
-  TileCache* tileCache = new TileCache(tpkPath, this);
+  TileCache* tileCache = new TileCache(m_dataPath + "tpk/streetmap_SD.tpk", this);
   connect(tileCache, &TileCache::errorOccurred, this, &OfflineGeocode::logError);
 
   m_tiledLayer = new ArcGISTiledLayer(tileCache, this);
@@ -88,13 +79,7 @@ void OfflineGeocode::componentComplete()
   m_mapView->setMap(m_map);
 
   // create locator task
-  QString locPath = m_dataPath + "Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc";
-  if (!QFileInfo::exists(tpkPath))
-  {
-    setErrorMessage(".loc data not found - see README.md");
-    return;
-  }
-  m_locatorTask = new LocatorTask(locPath);
+  m_locatorTask = new LocatorTask(m_dataPath + "Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc");
 
   // set the suggestions Q_PROPERTY
   m_suggestListModel = m_locatorTask->suggestions();
@@ -127,20 +112,17 @@ void OfflineGeocode::componentComplete()
 
 void OfflineGeocode::geocodeWithText(const QString& address)
 {
-  if (m_locatorTask)
-    m_locatorTask->geocodeWithParameters(address, m_geocodeParameters);
+  m_locatorTask->geocodeWithParameters(address, m_geocodeParameters);
 }
 
 void OfflineGeocode::geocodeWithSuggestion(int index)
 {
-  if (m_locatorTask && m_suggestListModel)
-    m_locatorTask->geocodeWithSuggestResultAndParameters(m_suggestListModel->suggestResults().at(index), m_geocodeParameters);
+  m_locatorTask->geocodeWithSuggestResultAndParameters(m_suggestListModel->suggestResults().at(index), m_geocodeParameters);
 }
 
 void OfflineGeocode::setSuggestionsText(const QString& searchText)
 {
-  if (m_suggestListModel)
-    m_suggestListModel->setSearchText(searchText);
+  m_suggestListModel->setSearchText(searchText);
 }
 
 void OfflineGeocode::logError(const Error& error)

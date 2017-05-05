@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Dialogs 1.2
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISRuntime.Toolkit.Controls 100.1
@@ -34,6 +35,7 @@ Rectangle {
     property Point clickedPoint: null
     property bool isReverseGeocode: false
     property bool isPressAndHold: false
+    property string errorMessage: ""
 
     // Map view UI presentation at top
     MapView {
@@ -67,6 +69,8 @@ Rectangle {
                 }
                 targetScale: 2e4
             }
+
+            onErrorChanged: errorMessage = error.message;
         }
 
         // add a graphics overlay to the mapview
@@ -148,6 +152,8 @@ Rectangle {
             isPressAndHold = false;
             isReverseGeocode = false;
         }
+
+        onErrorChanged: errorMessage = error.message;
     }
 
     LocatorTask {
@@ -205,6 +211,8 @@ Rectangle {
                 }
             }
         }
+
+        onErrorChanged: errorMessage = error.message;
     }
 
     Column {
@@ -380,5 +388,11 @@ Rectangle {
             renderType: Text.NativeRendering
             font.pixelSize: 18 * scaleFactor
         }
+    }
+
+    MessageDialog {
+        visible: text.length > 0
+        text: errorMessage
+        informativeText: "please consult README.md"
     }
 }
