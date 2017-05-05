@@ -62,7 +62,9 @@ void OfflineGeocode::componentComplete()
   m_dataPath = QQmlProperty::read(this, "dataPath").toString();
 
   // create a tiled layer using a local .tpk file
-  TileCache* tileCache = new TileCache(m_dataPath + "/tpk/streetmap_SD.tpk", this);
+  TileCache* tileCache = new TileCache(m_dataPath + "tpk/streetmap_SD.tpk", this);
+  connect(tileCache, &TileCache::errorOccurred, this, &OfflineGeocode::logError);
+
   m_tiledLayer = new ArcGISTiledLayer(tileCache, this);
 
   // create basemap and add tiled layer
@@ -77,7 +79,7 @@ void OfflineGeocode::componentComplete()
   m_mapView->setMap(m_map);
 
   // create locator task
-  m_locatorTask = new LocatorTask(m_dataPath + "/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc");
+  m_locatorTask = new LocatorTask(m_dataPath + "Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc");
 
   // set the suggestions Q_PROPERTY
   m_suggestListModel = m_locatorTask->suggestions();
@@ -123,6 +125,11 @@ void OfflineGeocode::setSuggestionsText(const QString& searchText)
   m_suggestListModel->setSearchText(searchText);
 }
 
+void OfflineGeocode::logError(const Error& error)
+{
+  setErrorMessage( QString("%1: %2").arg(error.message(), error.additionalMessage()));
+}
+
 CalloutData* OfflineGeocode::calloutData() const
 {
   return m_calloutData;
@@ -150,6 +157,8 @@ bool OfflineGeocode::suggestInProgress() const
 
 void OfflineGeocode::connectSignals()
 {
+  connect(m_map, &Map::errorOccurred, this, &OfflineGeocode::logError);
+  connect(m_mapView, &MapQuickView::errorOccurred, this, &OfflineGeocode::logError);
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
@@ -196,6 +205,7 @@ void OfflineGeocode::connectSignals()
     emit dismissSuggestions();
   });
 
+  connect(m_suggestListModel, &SuggestListModel::errorOccurred, this, &OfflineGeocode::logError);
   connect(m_suggestListModel, &SuggestListModel::suggestInProgressChanged, this, [this]()
   {
     m_suggestInProgress = m_suggestListModel->suggestInProgress();
@@ -226,6 +236,7 @@ void OfflineGeocode::connectSignals()
     identifyResult->deleteLater();
   });
 
+  connect(m_locatorTask, &LocatorTask::errorOccurred, this, &OfflineGeocode::logError);
   connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, QList<GeocodeResult> geocodeResults)
   {
     // dismiss busy indicator
@@ -267,4 +278,16 @@ void OfflineGeocode::connectSignals()
       emit noResultsChanged();
     }
   });
+}
+
+QString OfflineGeocode::errorMessage() const
+{
+  return m_errorMsg;
+}
+
+void OfflineGeocode::setErrorMessage(const QString &msg)
+{
+  m_errorMsg = msg;
+  qDebug() << m_errorMsg;
+  emit errorMessageChanged();
 }

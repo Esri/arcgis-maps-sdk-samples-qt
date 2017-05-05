@@ -21,6 +21,7 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class Error;
     class Map;
     class Graphic;
     class LocatorTask;
@@ -47,6 +48,7 @@ class OfflineGeocode : public QQuickItem
   Q_PROPERTY(bool geocodeInProgress READ geocodeInProgress NOTIFY geocodeInProgressChanged)
   Q_PROPERTY(bool suggestInProgress READ suggestInProgress NOTIFY suggestInProgressChanged)
   Q_PROPERTY(bool noResults READ noResults NOTIFY noResultsChanged)
+  Q_PROPERTY(QString errorMessage READ errorMessage NOTIFY errorMessageChanged)
 
 public:
   explicit OfflineGeocode(QQuickItem* parent = nullptr);
@@ -65,6 +67,10 @@ signals:
   void suggestInProgressChanged();
   void geocodeInProgressChanged();
   void dismissSuggestions();
+  void errorMessageChanged();
+
+private slots:
+  void logError(const Esri::ArcGISRuntime::Error& error);
 
 private:
   Esri::ArcGISRuntime::CalloutData* calloutData() const;
@@ -73,14 +79,16 @@ private:
   bool noResults() const;
   bool suggestInProgress() const;
   void connectSignals();
+  QString errorMessage() const;
+  void setErrorMessage(const QString& msg);
 
-private:
   bool m_isReverseGeocode = false;
   bool m_geocodeInProgress = false;
   bool m_isPressAndHold = false;
   bool m_noResults = false;
   bool m_suggestInProgress = false;
   QString m_dataPath;
+  QString m_errorMsg;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::Point m_clickedPoint;
   Esri::ArcGISRuntime::Graphic* m_pinGraphic = nullptr;
