@@ -16,6 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
+import QtQuick.Dialogs 1.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
@@ -28,5 +29,11 @@ FeatureLayerGeodatabaseSample {
         property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
         anchors.fill: parent
         objectName: "mapView"
+    }
+
+    MessageDialog {
+        visible: text.length > 0
+        text: errorMessage
+        informativeText: "Please consult the README.md"
     }
 }

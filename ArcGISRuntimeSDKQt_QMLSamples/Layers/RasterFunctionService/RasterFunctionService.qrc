@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/RasterFunctionService">
+        <file alias="sample.json">RasterFunctionService.json</file>
+        <file>RasterFunctionService.qml</file>
+        <file>README.md</file>
+        <file>screenshot.png</file>
+        <file>RasterImageAnalysisHillshade.png</file>
+    </qresource>
+</RCC>

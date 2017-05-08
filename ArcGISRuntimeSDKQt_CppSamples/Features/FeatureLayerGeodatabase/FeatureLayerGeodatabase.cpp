@@ -46,6 +46,23 @@ void FeatureLayerGeodatabase::init()
   qmlRegisterType<FeatureLayerGeodatabase>("Esri.Samples", 1, 0, "FeatureLayerGeodatabaseSample");
 }
 
+void FeatureLayerGeodatabase::logError(const Esri::ArcGISRuntime::Error& error)
+{
+  setErrorMessage(QString("%1: %2").arg(error.message(), error.additionalMessage()));
+}
+
+QString FeatureLayerGeodatabase::errorMessage() const
+{
+  return m_errorMsg;
+}
+
+void FeatureLayerGeodatabase::setErrorMessage(const QString& msg)
+{
+  m_errorMsg = msg;
+  qDebug() << m_errorMsg;
+  emit errorMessageChanged();
+}
+
 void FeatureLayerGeodatabase::componentComplete()
 {
   QQuickItem::componentComplete();
@@ -64,6 +81,9 @@ void FeatureLayerGeodatabase::componentComplete()
   m_map = new Map(basemap, this);
   //! [FeatureLayer Geodatabase add basemap]
 
+  connect(m_map, &Map::errorOccurred, this, &FeatureLayerGeodatabase::logError);
+  connect(m_mapView, &MapQuickView::errorOccurred, this, &FeatureLayerGeodatabase::logError);
+
   // set initial viewpoint
   m_map->setInitialViewpoint(Viewpoint(Point(-13214155, 4040194, SpatialReference(3857)), 35e4));
 
@@ -74,6 +94,8 @@ void FeatureLayerGeodatabase::componentComplete()
   // create the geodatabase using a local file path
   m_geodatabase = new Geodatabase(m_dataPath + "geodatabase/LA_Trails.geodatabase", this);
   //! [FeatureLayer Geodatabase create gdb]
+
+  connect(m_geodatabase, &Geodatabase::errorOccurred, this, &FeatureLayerGeodatabase::logError);
 
   // connect to doneLoading signal of geodatabase to access feature tables
   connect(m_geodatabase, &Geodatabase::doneLoading, this, [this](Error error)

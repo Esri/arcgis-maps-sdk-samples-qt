@@ -21,6 +21,7 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class Error;
     class Map;
     class MapQuickView;
     class Geodatabase;
@@ -33,6 +34,8 @@ class FeatureLayerGeodatabase : public QQuickItem
 {
   Q_OBJECT
 
+  Q_PROPERTY(QString errorMessage READ errorMessage NOTIFY errorMessageChanged)
+
 public:
   explicit FeatureLayerGeodatabase(QQuickItem* parent = nullptr);
   ~FeatureLayerGeodatabase();
@@ -40,11 +43,21 @@ public:
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
 
+signals:
+  void errorMessageChanged();
+
+private slots:
+  void logError(const Esri::ArcGISRuntime::Error& error);
+
 private:
+  QString errorMessage() const;
+  void setErrorMessage(const QString& msg);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
   QString m_dataPath;
+  QString m_errorMsg;
 };
 
 #endif // FEATURE_LAYER_GEODATABASE_H

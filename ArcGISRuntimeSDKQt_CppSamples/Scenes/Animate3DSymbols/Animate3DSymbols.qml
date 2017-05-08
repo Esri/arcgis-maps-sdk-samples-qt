@@ -28,12 +28,11 @@ Animate3DSymbolsSample {
 
     property double scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D"
+    property bool following: followButton.checked
 
-    following: followButton.checked
     missionFrame: progressSlider.value
     zoom: cameraDistance.maximumValue - cameraDistance.value
     angle: cameraAngle.value
-    speed: animationSpeed.value
 
     onNextFrameRequested: {
         progressSlider.value = progressSlider.value + 1;
@@ -47,11 +46,6 @@ Animate3DSymbolsSample {
         id: sceneView
         objectName: "sceneView"
         anchors.fill: parent
-        MouseArea {
-            anchors.fill: parent
-            onPressed: mouse.accepted = following
-            onWheel: wheel.accepted = following
-        }
     }
 
     GroupBox {
@@ -103,8 +97,9 @@ Animate3DSymbolsSample {
                 id: followButton
                 enabled: missionReady
                 text: "follow"
-                checked: following
+                checked: true
 
+                onCheckedChanged: setFollowing(checked);
             }
         }
     }
@@ -132,8 +127,8 @@ Animate3DSymbolsSample {
                 id: cameraDistance
                 enabled: following && missionReady
                 minimumValue: 10.0
-                maximumValue: 500.0
-                value: 200.0
+                maximumValue: 5000.0
+                value: 500.0
                 width: Math.max(implicitWidth, playButton.width)
             }
 
@@ -149,7 +144,7 @@ Animate3DSymbolsSample {
                 enabled: following && missionReady
                 minimumValue: 0.0
                 maximumValue: 180.0
-                value: 75.0
+                value: 45.0
                 width: Math.max(implicitWidth, playButton.width)
             }
 
@@ -163,8 +158,8 @@ Animate3DSymbolsSample {
             Slider {
                 id: animationSpeed
                 enabled: missionReady
-                minimumValue: 50
-                maximumValue: 200
+                minimumValue: 1
+                maximumValue: 100
                 value: 50
                 width: Math.max(implicitWidth, playButton.width)
             }
@@ -233,7 +228,7 @@ Animate3DSymbolsSample {
 
     Timer {
         id: timer
-        interval: 210 - animationSpeed.value;
+        interval: Math.max(animationSpeed.maximumValue - animationSpeed.value,1);
         running: playButton.checked;
         repeat: true
         onTriggered: animate();
