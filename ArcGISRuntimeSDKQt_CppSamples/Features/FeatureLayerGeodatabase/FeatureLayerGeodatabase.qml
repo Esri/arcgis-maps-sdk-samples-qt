@@ -34,6 +34,6 @@ FeatureLayerGeodatabaseSample {
     MessageDialog {
         visible: text.length > 0
         text: errorMessage
-        informativeText: "please consult README.md"
+        informativeText: "Please consult the README.md"
     }
 }
