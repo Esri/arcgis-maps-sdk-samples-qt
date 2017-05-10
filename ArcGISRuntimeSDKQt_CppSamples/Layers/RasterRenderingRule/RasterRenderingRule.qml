@@ -46,11 +46,14 @@ RasterRenderingRuleSample {
 
             Column {
                 spacing: 10 * scaleFactor
-                anchors.fill: parent
-                anchors.margins: 5 * scaleFactor
+                anchors {
+                    fill: parent
+                    margins: 5 * scaleFactor
+                }
 
                 Label {
                     text: "Apply a Rendering Rule"
+                    font.pixelSize: 16 * scaleFactor
                 }
 
                 Row {

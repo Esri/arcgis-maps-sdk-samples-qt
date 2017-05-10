@@ -48,7 +48,7 @@ signals:
   void renderingRuleNamesChanged();
 
 private:
-  QStringList renderingRuleNames() { return m_renderingRuleNames; }
+  QStringList renderingRuleNames() const { return m_renderingRuleNames; }
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
