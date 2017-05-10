@@ -217,7 +217,7 @@ QString GODictionaryRenderer_3D::errorMessage() const
   return m_errorMsg;
 }
 
-void GODictionaryRenderer_3D::setErrorMessage(const QString &msg)
+void GODictionaryRenderer_3D::setErrorMessage(const QString& msg)
 {
   m_errorMsg = msg;
   qDebug() << m_errorMsg;
