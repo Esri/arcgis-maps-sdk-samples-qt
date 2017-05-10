@@ -38,7 +38,7 @@ class RasterRenderingRule : public QQuickItem
 
 public:
   explicit RasterRenderingRule(QQuickItem* parent = nullptr);
-  ~RasterRenderingRule();
+  ~RasterRenderingRule() = default;
 
   static void init();
   void componentComplete() Q_DECL_OVERRIDE;
@@ -56,6 +56,7 @@ private:
   Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
   Esri::ArcGISRuntime::ImageServiceRaster* m_imageServiceRaster = nullptr;
   QStringList m_renderingRuleNames;
+  QUrl m_url;
 };
 
 #endif // RasterRenderingRule_H

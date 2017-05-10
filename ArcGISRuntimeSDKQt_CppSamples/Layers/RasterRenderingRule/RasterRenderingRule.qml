@@ -33,28 +33,43 @@ RasterRenderingRuleSample {
         anchors.fill: parent
         objectName: "mapView"
 
-        Row {
-            spacing: 10 * scaleFactor
+        Rectangle {
             anchors {
                 left: parent.left
                 top: parent.top
                 margins: 5 * scaleFactor
             }
+            height: 80 * scaleFactor
+            width: 200 * scaleFactor
+            color: "silver"
+            radius: 5 * scaleFactor
 
-            Label {
-                text: "Rendering Rules: "
-            }
+            Column {
+                spacing: 10 * scaleFactor
+                anchors.fill: parent
+                anchors.margins: 5 * scaleFactor
 
-            ComboBox {
-                id: renderingRulesCombo
-                model: renderingRuleNames
-            }
+                Label {
+                    text: "Apply a Rendering Rule"
+                }
 
-            Button {
-                id: applyButton
-                text: "Apply"
-                onClicked: {
-                    applyRenderingRule(renderingRulesCombo.currentIndex);
+                Row {
+                    spacing: 5 * scaleFactor
+
+                    ComboBox {
+                        id: renderingRulesCombo
+                        width: 130 * scaleFactor
+                        model: renderingRuleNames
+                    }
+
+                    Button {
+                        id: applyButton
+                        text: "Apply"
+                        width: 50 * scaleFactor
+                        onClicked: {
+                            applyRenderingRule(renderingRulesCombo.currentIndex);
+                        }
+                    }
                 }
             }
         }

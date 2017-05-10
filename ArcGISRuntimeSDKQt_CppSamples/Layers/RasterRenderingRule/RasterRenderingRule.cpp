@@ -36,10 +36,6 @@ RasterRenderingRule::RasterRenderingRule(QQuickItem* parent /* = nullptr */):
 {
 }
 
-RasterRenderingRule::~RasterRenderingRule()
-{
-}
-
 void RasterRenderingRule::init()
 {
   // Register the map view for QML
@@ -58,23 +54,29 @@ void RasterRenderingRule::componentComplete()
   m_map = new Map(Basemap::streets(this), this);
   m_mapView->setMap(m_map);
 
+  // set the url
+  m_url = QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer");
+
   // create an image service raster
-  m_imageServiceRaster = new ImageServiceRaster(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer"), this);
+  m_imageServiceRaster = new ImageServiceRaster(m_url, this);
 
   // zoom to the raster's extent once it's loaded
   connect(m_imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this]()
   {
-      m_mapView->setViewpoint(Viewpoint(m_imageServiceRaster->serviceInfo().fullExtent()));
+    // set the extent of the mapview to the extent defined in the image service raster's service info
+    m_mapView->setViewpoint(Viewpoint(m_imageServiceRaster->serviceInfo().fullExtent()));
 
-      QList<RenderingRuleInfo> renderingRuleInfos = m_imageServiceRaster->serviceInfo().renderingRuleInfos();
-      if (renderingRuleInfos.length() > 0)
+    // get the rendering rule infos
+    QList<RenderingRuleInfo> renderingRuleInfos = m_imageServiceRaster->serviceInfo().renderingRuleInfos();
+    if (renderingRuleInfos.length() > 0)
+    {
+      for (const RenderingRuleInfo& renderingRuleInfo : renderingRuleInfos)
       {
-        for (const RenderingRuleInfo& renderingRuleInfo : renderingRuleInfos)
-        {
-          m_renderingRuleNames << renderingRuleInfo.name();
-        }
-        emit renderingRuleNamesChanged();
+        // populate the list with the rendering rule names
+        m_renderingRuleNames << renderingRuleInfo.name();
       }
+      emit renderingRuleNamesChanged();
+    }
   });
 
   // create a raster layer using the image service raster
@@ -85,11 +87,16 @@ void RasterRenderingRule::componentComplete()
 
 void RasterRenderingRule::applyRenderingRule(int index)
 {
+  // get the rendering rule info from the service info
   RenderingRuleInfo renderingRuleInfo = m_imageServiceRaster->serviceInfo().renderingRuleInfos().at(index);
+  // create a new rendering rule with the rendering rule info
   RenderingRule* renderingRule = new RenderingRule(renderingRuleInfo, this);
-  ImageServiceRaster* isr = new ImageServiceRaster(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer"), this);
+  // create an image service raster
+  ImageServiceRaster* isr = new ImageServiceRaster(m_url, this);
+  // set the rendering rule
   isr->setRenderingRule(renderingRule);
+  // create a new raster layer using the image service raster
   RasterLayer* rasterLayer = new RasterLayer(isr, this);
-  m_map->operationalLayers()->clear();
+  // add the raster layer to the map
   m_map->operationalLayers()->append(rasterLayer);
 }

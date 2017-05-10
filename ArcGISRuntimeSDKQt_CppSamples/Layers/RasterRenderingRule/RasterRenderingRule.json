@@ -1,6 +1,6 @@
 {
     "source" :  "RasterRenderingRule.qml",
-    "name" : "Raster layer (service)",
+    "name" : "Raster rendering rule",
     "otherSourceFiles" :  [
         "RasterRenderingRule.h",
         "RasterRenderingRule.cpp"
