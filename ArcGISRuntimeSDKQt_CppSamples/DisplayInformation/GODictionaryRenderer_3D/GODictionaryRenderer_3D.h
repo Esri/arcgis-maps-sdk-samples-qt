@@ -27,6 +27,7 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class Error;
     class GraphicsOverlay;
     class SceneQuickView;
   }
@@ -35,6 +36,8 @@ namespace Esri
 class GODictionaryRenderer_3D : public QQuickItem
 {
   Q_OBJECT
+
+  Q_PROPERTY(QString errorMessage READ errorMessage NOTIFY errorMessageChanged)
 
 public:
   explicit GODictionaryRenderer_3D(QQuickItem* parent = nullptr);
@@ -45,6 +48,10 @@ public:
 
 signals:
   void graphicsLoaded();
+  void errorMessageChanged();
+
+private slots:
+  void logError(const Esri::ArcGISRuntime::Error& error);
 
 private:
   static const QString FIELD_CONTROL_POINTS;
@@ -53,6 +60,8 @@ private:
   void parseXmlFile();
   void createGraphic(QVariantMap rawAttributes);
   void zoomToGraphics();
+  QString errorMessage() const;
+  void setErrorMessage(const QString& msg);
 
   double m_scaleFactor = 1.0;
   QString m_dataPath;
@@ -60,6 +69,7 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Envelope m_bbox;
+  QString m_errorMsg;
 };
 
 #endif // GraphicsOverlayDictionaryRenderer_3D_H

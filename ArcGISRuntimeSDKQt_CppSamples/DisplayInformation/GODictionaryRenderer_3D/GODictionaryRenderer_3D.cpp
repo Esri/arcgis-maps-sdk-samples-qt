@@ -16,6 +16,7 @@
 
 #include "GODictionaryRenderer_3D.h"
 
+#include <QFileInfo>
 #include <QQmlProperty>
 
 #include "ArcGISTiledElevationSource.h"
@@ -37,6 +38,7 @@ GODictionaryRenderer_3D::GODictionaryRenderer_3D(QQuickItem* parent) :
   QQuickItem(parent),
   m_graphicsOverlay(new GraphicsOverlay(this))
 {
+  connect(m_graphicsOverlay, &GraphicsOverlay::errorOccurred, this, &GODictionaryRenderer_3D::logError);
   m_graphicsOverlay->setRenderingMode(GraphicsRenderingMode::Dynamic);
 }
 
@@ -50,6 +52,11 @@ void GODictionaryRenderer_3D::init()
   qmlRegisterType<GODictionaryRenderer_3D>("Esri.Samples", 1, 0, "GODictionaryRenderer_3DSample");
 }
 
+void GODictionaryRenderer_3D::logError(const Error& error)
+{
+  setErrorMessage(QString("%1: %2").arg(error.message(), error.additionalMessage()));
+}
+
 void GODictionaryRenderer_3D::componentComplete()
 {
   QQuickItem::componentComplete();
@@ -59,14 +66,25 @@ void GODictionaryRenderer_3D::componentComplete()
   m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
 
   // Set up DictionaryRenderer
+  if (!QFileInfo::exists(m_dataPath + "/styles/mil2525d.stylx"))
+    setErrorMessage("mil2525d.stylx not found");
+
   DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+  connect(dictionarySymbolStyle, &DictionarySymbolStyle::errorOccurred, this, &GODictionaryRenderer_3D::logError);
+
   DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
+  connect(renderer, &DictionaryRenderer::errorOccurred, this, &GODictionaryRenderer_3D::logError);
   m_graphicsOverlay->setRenderer(renderer);
 
   // Create a scene and give it to the SceneView
   m_sceneView = findChild<SceneQuickView*>("sceneView");
+  connect(m_sceneView, &SceneQuickView::errorOccurred, this, &GODictionaryRenderer_3D::logError);
+
   Scene* scene = new Scene(Basemap::imagery(this), this);
+  connect(scene, &Scene::errorOccurred, this, &GODictionaryRenderer_3D::logError);
+
   Surface* surface = new Surface(this);
+  connect(surface, &Surface::errorOccurred, this, &GODictionaryRenderer_3D::logError);
   surface->elevationSources()->append(
         new ArcGISTiledElevationSource(
           QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
@@ -87,6 +105,9 @@ void GODictionaryRenderer_3D::parseXmlFile()
   bool readingMessage = false;
   QVariantMap elementValues;
   QString currentElementName;
+
+  if (!QFileInfo::exists(m_dataPath + "/xml/Mil2525DMessages.xml"))
+    setErrorMessage("xml/Mil2525DMessages.xml file is missing");
 
   QFile xmlFile(m_dataPath + "/xml/Mil2525DMessages.xml");
   // Open the file for reading
@@ -189,4 +210,16 @@ void GODictionaryRenderer_3D::zoomToGraphics()
   Camera camera(m_bbox.extent().center(), 15000, 0, 70, 0);
 
   m_sceneView->setViewpointCameraAndWait(camera);
+}
+
+QString GODictionaryRenderer_3D::errorMessage() const
+{
+  return m_errorMsg;
+}
+
+void GODictionaryRenderer_3D::setErrorMessage(const QString& msg)
+{
+  m_errorMsg = msg;
+  qDebug() << m_errorMsg;
+  emit errorMessageChanged();
 }
