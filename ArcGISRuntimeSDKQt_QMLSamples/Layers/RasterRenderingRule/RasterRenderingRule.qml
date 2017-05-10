@@ -52,9 +52,11 @@ Rectangle {
                             mapView.setViewpointGeometry(imageServiceRaster.serviceInfo.fullExtent);
 
                             var renderingRuleInfos = imageServiceRaster.serviceInfo.renderingRuleInfos;
+                            var names = [];
                             for (var i = 0; i < renderingRuleInfos.length; i++) {
-                                renderingRuleNames.push(renderingRuleInfos[i].name);
+                                names.push(renderingRuleInfos[i].name);
                             }
+                            renderingRuleNames = names;
                         }
                     }
                 }
