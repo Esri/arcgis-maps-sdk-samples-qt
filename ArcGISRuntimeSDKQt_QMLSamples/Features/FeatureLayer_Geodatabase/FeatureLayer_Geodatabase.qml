@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Dialogs 1.2
 import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
@@ -26,6 +26,7 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    property string errorMessage: ""
 
     // Map view UI presentation at top
     MapView {
@@ -63,9 +64,23 @@ Rectangle {
                 Geodatabase {
                     id: gdb
                     path: dataPath + "geodatabase/LA_Trails.geodatabase"
+
+                    onErrorChanged: errorMessage = error.message;
                 }
+
+                onErrorChanged: errorMessage = error.message;
             }
             //! [FeatureLayer Geodatabase create]
+
+            onErrorChanged: errorMessage = error.message;
         }
+
+        onErrorChanged: errorMessage = error.message;
+    }
+
+    MessageDialog {
+        visible: text.length > 0
+        text: errorMessage
+        informativeText: "Please consult the README.md"
     }
 }
