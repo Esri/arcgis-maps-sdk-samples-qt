@@ -132,7 +132,7 @@ Rectangle {
                         attributeView.height = 200 * scaleFactor
                     });
 
-                    // query related FeatureServiceCapabilities
+                    // query related features
                     selectedTable.queryRelatedFeatures(arcGISFeature);
                 }
             }

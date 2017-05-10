@@ -24,7 +24,7 @@ class RelatedFeature
 
 public:
   explicit RelatedFeature(const QString& displayFieldName, const QString& displayFieldValue,
-                      const QString& serviceLayerName);
+                          const QString& serviceLayerName);
   ~RelatedFeature() = default;
 
 public:

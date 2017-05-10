@@ -124,7 +124,7 @@ void ListRelatedFeatures::connectSignals()
               m_mapView->setViewpointGeometry(arcGISFeature->geometry(), 100);
             });
 
-            // query related FeatureServiceCapabilities
+            // query related features
             selectedTable->queryRelatedFeatures(arcGISFeature);
           }
         });
