@@ -94,6 +94,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
   {
     m_parameters = parameters;
 
+    //! [ExportTiles start job]
     // execute the task and obtain the job
     auto exportJob = m_exportTileCacheTask->exportTileCache(m_parameters, dataPath);
 
@@ -131,6 +132,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
       // start the export job
       exportJob->start();
     }
+    //! [ExportTiles start job]
     else
     {
       emit updateStatus("Export failed");

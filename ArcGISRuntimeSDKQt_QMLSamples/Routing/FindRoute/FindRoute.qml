@@ -207,6 +207,8 @@ Rectangle {
         }
     }    
 
+    //! [FindRoute RouteTask]
+
     // Create a RouteTask pointing to an online service
     RouteTask {
         id: routeTask
@@ -242,6 +244,7 @@ Rectangle {
             }
         }
     }
+    //! [FindRoute RouteTask]
 
     Component {
         id: directionDelegate

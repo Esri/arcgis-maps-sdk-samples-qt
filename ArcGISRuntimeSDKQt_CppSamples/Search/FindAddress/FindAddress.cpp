@@ -71,7 +71,9 @@ void FindAddress::componentComplete()
   m_graphicsOverlay->setRenderer(simpleRenderer);
 
   // create locator task and parameters
+  //! [FindAddress create LocatorTask]
   m_locatorTask = new LocatorTask(QUrl("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"));
+  //! [FindAddress create LocatorTask]
   m_geocodeParameters.setMinScore(75);
   m_geocodeParameters.setResultAttributeNames(QStringList() << "Place_addr" << "Match_addr");
 
@@ -81,6 +83,7 @@ void FindAddress::componentComplete()
 void FindAddress::connectSignals()
 {
   // connect to geocode complete signal on the LocatorTask
+  //! [FindAddress geocodeCompleted handler]
   connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, QList<GeocodeResult> geocodeResults)
   {
     if (geocodeResults.length() > 0)
@@ -91,6 +94,7 @@ void FindAddress::connectSignals()
       m_mapView->setViewpointGeometry(geocodeResults.at(0).extent());
     }
   });
+  //! [FindAddress geocodeCompleted handler]
 
   // connect to the viewpoint changed signal on the MapQuickView
   connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
@@ -130,7 +134,9 @@ void FindAddress::connectSignals()
 
 void FindAddress::geocodeAddress(QString address)
 {
+  //! [FindAddress geocodeWithParameters]
   m_locatorTask->geocodeWithParameters(address, m_geocodeParameters);
+  //! [FindAddress geocodeWithParameters]
 }
 
 void FindAddress::clearGraphics()

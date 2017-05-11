@@ -117,6 +117,7 @@ PictureMarkerSymbol* FindRoute::getPictureMarkerSymbol(QUrl imageUrl)
 
 void FindRoute::setupRouteTask()
 {
+  //! [FindRoute new RouteTask]
   // create the route task pointing to an online service
   m_routeTask = new RouteTask(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"), this);
 
@@ -129,7 +130,9 @@ void FindRoute::setupRouteTask()
       m_routeTask->createDefaultParameters();
     }
   });
+  //! [FindRoute new RouteTask]
 
+  //! [FindRoute connect RouteTask signals]
   // connect to createDefaultParametersCompleted signal
   connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
   {
@@ -152,6 +155,7 @@ void FindRoute::setupRouteTask()
     // emit that the route has solved successfully
     emit solveRouteComplete();
   });
+  //! [FindRoute connect RouteTask signals]
 
   // load the route task
   m_routeTask->load();
@@ -162,6 +166,7 @@ DirectionManeuverListModel* FindRoute::directions()
   return m_directions;
 }
 
+//! [FindRoute solveRoute]
 void FindRoute::solveRoute()
 {
   if (m_routeTask->loadStatus() == LoadStatus::Loaded)
@@ -189,3 +194,4 @@ void FindRoute::solveRoute()
     }
   }
 }
+//! [FindRoute solveRoute]

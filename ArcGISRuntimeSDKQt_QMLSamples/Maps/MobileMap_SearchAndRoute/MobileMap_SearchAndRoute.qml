@@ -239,7 +239,9 @@ Rectangle {
             mapView.resetMap();
 
             // change the locatorTask
+            //! [MobileMap_SearchAndRoute create LocatorTask]
             currentLocatorTask = mobileMapList[selectedMmpkIndex].locatorTask;
+            //! [MobileMap_SearchAndRoute create LocatorTask]
 
             // determine if map supports routing
             if (mobileMapList[selectedMmpkIndex].maps[selectedMapInBundleIndex].transportationNetworks.length > 0) {

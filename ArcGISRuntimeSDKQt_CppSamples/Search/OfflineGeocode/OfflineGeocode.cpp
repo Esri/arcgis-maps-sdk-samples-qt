@@ -79,7 +79,9 @@ void OfflineGeocode::componentComplete()
   m_mapView->setMap(m_map);
 
   // create locator task
+  //! [OfflineGeocode create LocatorTask]
   m_locatorTask = new LocatorTask(m_dataPath + "Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc");
+  //! [OfflineGeocode create LocatorTask]
 
   // set the suggestions Q_PROPERTY
   m_suggestListModel = m_locatorTask->suggestions();
