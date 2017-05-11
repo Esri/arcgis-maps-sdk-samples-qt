@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Analysis/ListRelatedFeatures/ListRelatedFeatures.qml"));
+  view.setSource(QUrl("qrc:/Samples/Features/ListRelatedFeatures/ListRelatedFeatures.qml"));
 
   view.show();
 
