@@ -229,7 +229,9 @@ void MobileMap_SearchAndRoute::selectMap(int index)
     resetMapView();
 
     // set the locatorTask
+    //! [MobileMap_SearchAndRoute create LocatorTask]
     m_currentLocatorTask = m_mobileMapPackages[m_selectedMmpkIndex]->locatorTask();
+    //! [MobileMap_SearchAndRoute create LocatorTask]
 
     // set the MapView
     m_mapView->setMap(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index));

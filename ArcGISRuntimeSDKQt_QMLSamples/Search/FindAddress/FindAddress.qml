@@ -83,6 +83,7 @@ Rectangle {
         }
     }
 
+    //! [FindAddress create LocatorTask]
     // Create a locator task using the World Geocoding Service
     LocatorTask {
         id: locatorTask
@@ -109,6 +110,7 @@ Rectangle {
         minScore: 75
         resultAttributeNames: ["Place_addr", "Match_addr"]
     }
+    //! [FindAddress create LocatorTask]
 
     // map callout window
     Rectangle {
@@ -183,7 +185,9 @@ Rectangle {
                 Keys.onReturnPressed: geocodeAddress();
 
                 function geocodeAddress() {
+                    //! [FindAddress geocodeWithParameters]
                     locatorTask.geocodeWithParameters(textField.text, geocodeParameters);
+                    //! [FindAddress geocodeWithParameters]
                     suggestView.visible = false;
                     Qt.inputMethod.hide();
                 }

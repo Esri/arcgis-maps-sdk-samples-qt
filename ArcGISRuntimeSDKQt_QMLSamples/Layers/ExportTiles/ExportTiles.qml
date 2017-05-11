@@ -60,6 +60,8 @@ Rectangle {
     }
 
     // Create ExportTileCacheTask
+    //! [ExportTiles ExportTileCacheTask]
+
     ExportTileCacheTask {
         id: exportTask
         url: tiledServiceUrl
@@ -151,6 +153,7 @@ Rectangle {
             exportJob.jobStatusChanged.disconnect(updateJobStatus);
         }
     }
+    //! [ExportTiles ExportTileCacheTask]
 
     Rectangle {
         id: extentRectangle

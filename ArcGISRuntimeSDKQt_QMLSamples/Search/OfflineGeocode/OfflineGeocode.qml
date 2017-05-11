@@ -156,9 +156,13 @@ Rectangle {
         onErrorChanged: errorMessage = error.message;
     }
 
+    //! [OfflineGeocode LocatorTask]
+
     LocatorTask {
         id: locatorTask
         url: dataPath + "/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc"
+        //! [OfflineGeocode LocatorTask]
+
         suggestions {
             // suggestions will update whenever textField's text property changes
             searchText: textField.text
