@@ -37,7 +37,7 @@ ListRelatedFeaturesSample {
         objectName: "mapView"
 
         // bind the insets to the attribute view so the attribution text shows when the view expands
-        viewInsets.bottom: attributeView.height
+        viewInsets.bottom: attributeView.height / scaleFactor
     }
 
     Rectangle {
