@@ -33,7 +33,7 @@ Rectangle {
         anchors.fill: parent
 
         // bind the insets to the attribute view so the attribution text shows when the view expands
-        viewInsets.bottom: attributeView.height
+        viewInsets.bottom: attributeView.height / scaleFactor
 
         Map {
             id: map
@@ -130,6 +130,7 @@ Rectangle {
 
                         // show the attribute view
                         attributeView.height = 200 * scaleFactor
+                        mapView.setViewpointGeometryAndPadding(arcGISFeature.geometry, 100)
                     });
 
                     // query related features
