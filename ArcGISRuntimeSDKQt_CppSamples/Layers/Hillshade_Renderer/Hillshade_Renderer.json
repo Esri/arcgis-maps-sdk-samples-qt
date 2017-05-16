@@ -4,7 +4,7 @@
         "Hillshade_Renderer.h",
         "Hillshade_Renderer.cpp",
         "HillshadeSettings.qml",
-        "HilshadeSlopeTypeModel.qml"
+        "HillshadeSlopeTypeModel.qml"
     ],
     "name" : "Hillshade renderer",
     "dataItems" : [        
