@@ -117,10 +117,9 @@ Rectangle {
 
     OrbitGeoElementCameraController {
         id: followController
-        targetElement: graphic3d
+        targetGeoElement: graphic3d
         cameraDistance: cameraDistanceSlider.value
         cameraPitchOffset: cameraAngle.value
-        cameraHeadingOffset: 90 // account for the orientation of the model
     }
 
     ListModel {
