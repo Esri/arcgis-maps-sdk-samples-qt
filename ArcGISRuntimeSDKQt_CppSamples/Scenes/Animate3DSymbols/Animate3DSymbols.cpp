@@ -249,7 +249,6 @@ void Animate3DSymbols::createGraphic3D()
 
     // create the camera controller to follow the graphic
     m_followingController = new OrbitGeoElementCameraController(m_graphic3d, 500);
-    m_followingController->setCameraHeadingOffset(90); // account for the orientation of the model
     m_sceneView->setCameraController(m_followingController);
   }
   else
