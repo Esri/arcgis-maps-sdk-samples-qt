@@ -154,6 +154,10 @@ void Animate3DSymbols::animate()
     m_graphic3d->attributes()->replaceAttribute(HEADING, dp.m_heading);
     m_graphic3d->attributes()->replaceAttribute(PITCH, dp.m_pitch);
     m_graphic3d->attributes()->replaceAttribute(ROLL, dp.m_roll);
+
+    // move 2D graphic to the new position
+    m_graphic2d->setGeometry(dp.m_pos);
+    m_symbol2d->setAngle(dp.m_heading);
   }
 
   // increment the frame count
@@ -202,15 +206,22 @@ void Animate3DSymbols::setAngle(double angle)
     m_followingController->setCameraPitchOffset(angle);
 }
 
-void Animate3DSymbols::createModel2d(GraphicsOverlay *mapOverlay)
+void Animate3DSymbols::createModel2d(GraphicsOverlay* mapOverlay)
 {
+  if (m_symbol2d || m_graphic2d)
+    return;
+
+  // get the mission data for the frame
+  const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
+
   // create a blue triangle symbol to represent the plane on the mini map
-  SimpleMarkerSymbol* plane2DSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, Qt::blue, 10, this);
+  m_symbol2d = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, Qt::blue, 10, this);
+  m_symbol2d->setAngle(dp.m_heading);
 
   // create a graphic with the symbol
-  m_graphic2d = new Graphic(Point(0, 0, SpatialReference::wgs84()), plane2DSymbol, this);
-  Q_UNUSED(mapOverlay)
-  //mapOverlay->graphics()->append(m_graphic2d);
+  m_graphic2d = new Graphic(dp.m_pos, m_symbol2d, this);
+
+  mapOverlay->graphics()->append(m_graphic2d);
 }
 
 void Animate3DSymbols::createRoute2d(GraphicsOverlay* mapOverlay)
@@ -229,9 +240,7 @@ void Animate3DSymbols::createGraphic3D()
 
   // create the ModelSceneSymbol to be animated in the 3d view
   if (!m_model3d)
-  {
     m_model3d = new ModelSceneSymbol(QUrl(m_dataPath + "/Bristol/Collada/Bristol.dae"), 10.0f, this);
-  }
 
   // get the mission data for the frame
   const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
@@ -344,7 +353,7 @@ MissionData::~MissionData()
 
 }
 
-bool MissionData::parse(const QString &dataPath)
+bool MissionData::parse(const QString& dataPath)
 {
   m_data.clear();
   m_ready = false;
@@ -395,7 +404,7 @@ bool MissionData::parse(const QString &dataPath)
   return m_ready;
 }
 
-const MissionData::DataPoint &MissionData::dataAt(size_t i) const
+const MissionData::DataPoint& MissionData::dataAt(size_t i) const
 {
   if(i < m_data.size())
     return m_data[i];
