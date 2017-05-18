@@ -33,6 +33,43 @@ ServiceAreaSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+
+        Rectangle {
+            anchors.centerIn: solveRow
+            radius: 8 * scaleFactor
+            height: solveRow.height + (16 * scaleFactor)
+            width: solveRow.width + (16 * scaleFactor)
+            color: "lightgrey"
+            border.color: "darkgrey"
+            border.width: 2 * scaleFactor
+            opacity: 0.75
+        }
+
+        Row {
+            id: solveRow
+            anchors {
+                bottom: parent.attributionTop
+                horizontalCenter: parent.horizontalCenter
+                margins: 15 * scaleFactor
+            }
+            spacing: 8 * scaleFactor
+
+            Button {
+                id: serviceAreasButton
+                text: "Solve"
+                enabled: !busy
+
+                onClicked: solveServiceArea();
+            }
+
+            Button {
+                text: "Reset"
+                enabled: !busy
+                onClicked: {
+                    reset();
+                }
+            }
+        }
     }
 
     Rectangle {
@@ -76,43 +113,6 @@ ServiceAreaSample {
 
             onClicked: {
                 newBarrier();
-            }
-        }
-    }
-
-    Rectangle {
-        anchors.centerIn: solveRow
-        radius: 8 * scaleFactor
-        height: solveRow.height + (16 * scaleFactor)
-        width: solveRow.width + (16 * scaleFactor)
-        color: "lightgrey"
-        border.color: "darkgrey"
-        border.width: 2 * scaleFactor
-        opacity: 0.75
-    }
-
-    Row {
-        id: solveRow
-        anchors {
-            bottom: parent.bottom
-            horizontalCenter: parent.horizontalCenter
-            margins: 32 * scaleFactor
-        }
-        spacing: 8 * scaleFactor
-
-        Button {
-            id: serviceAreasButton
-            text: "Solve"
-            enabled: !busy
-
-            onClicked: solveServiceArea();
-        }
-
-        Button {
-            text: "Reset"
-            enabled: !busy
-            onClicked: {
-                reset();
             }
         }
     }

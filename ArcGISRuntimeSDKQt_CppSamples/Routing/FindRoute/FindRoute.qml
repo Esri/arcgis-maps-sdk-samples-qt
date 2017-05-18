@@ -78,8 +78,8 @@ FindRouteSample {
             property bool pressed: false
             anchors {
                 horizontalCenter: parent.horizontalCenter
-                bottom: parent.bottom
-                bottomMargin: 25 * scaleFactor
+                bottom: parent.attributionTop
+                bottomMargin: 5 * scaleFactor
             }
 
             width: 130 * scaleFactor
