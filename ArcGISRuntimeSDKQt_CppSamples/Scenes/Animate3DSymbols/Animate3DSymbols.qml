@@ -65,6 +65,7 @@ Animate3DSymbolsSample {
                 enabled: !playButton.checked
                 model: missionsModel()
                 textRole: "display"
+                width: 150 * scaleFactor
                 onCurrentTextChanged: {
                     changeMission(currentText);
                     progressSlider.value = 0;
@@ -90,7 +91,7 @@ Animate3DSymbolsSample {
                 minimumValue: 0
                 maximumValue: missionSize
                 enabled : missionReady
-                width: Math.max(implicitWidth, playButton.width) * scaleFactor
+                width: Math.max(implicitWidth, 150) * scaleFactor
             }
 
             CheckBox {
@@ -129,7 +130,7 @@ Animate3DSymbolsSample {
                 minimumValue: 10.0
                 maximumValue: 5000.0
                 value: 500.0
-                width: Math.max(implicitWidth, playButton.width) * scaleFactor
+                width: Math.max(implicitWidth, 100) * scaleFactor
             }
 
             Text {
@@ -145,7 +146,7 @@ Animate3DSymbolsSample {
                 minimumValue: 0.0
                 maximumValue: 180.0
                 value: 45.0
-                width: Math.max(implicitWidth, playButton.width) * scaleFactor
+                width: Math.max(implicitWidth, 100) * scaleFactor
             }
 
             Text {
@@ -161,7 +162,7 @@ Animate3DSymbolsSample {
                 minimumValue: 1
                 maximumValue: 100
                 value: 50
-                width: Math.max(implicitWidth, playButton.width) * scaleFactor
+                width: Math.max(implicitWidth, 100) * scaleFactor
             }
         }
     }
