@@ -176,7 +176,7 @@ Rectangle {
                 minimumValue: 0
                 maximumValue: missionSize
                 enabled : missionReady
-                width: Math.max(implicitWidth, playButton.width)
+                width: Math.max(implicitWidth, playButton.width) * scaleFactor
             }
 
             CheckBox {
@@ -213,7 +213,7 @@ Rectangle {
                 minimumValue: followController.minCameraDistance
                 maximumValue: 5000.0
                 value: 500.0
-                width: Math.max(implicitWidth, playButton.width)
+                width: Math.max(implicitWidth, playButton.width) * scaleFactor
             }
 
             Text {
@@ -229,7 +229,7 @@ Rectangle {
                 minimumValue: followController.minCameraPitchOffset
                 maximumValue: followController.maxCameraPitchOffset
                 value: 45.0
-                width: Math.max(implicitWidth, playButton.width)
+                width: Math.max(implicitWidth, playButton.width) * scaleFactor
             }
 
             Text {
@@ -245,7 +245,7 @@ Rectangle {
                 minimumValue: 1
                 maximumValue: 100
                 value: 50
-                width: Math.max(implicitWidth, playButton.width)
+                width: Math.max(implicitWidth, playButton.width) * scaleFactor
             }
         }
     }
@@ -305,6 +305,11 @@ Rectangle {
 
             GraphicsOverlay {
                 id: graphicsOverlay
+
+                Graphic {
+                    id: graphic2d
+                    symbol: plane2DSymbol
+                }
             }
 
             MouseArea {
@@ -325,7 +330,7 @@ Rectangle {
 
     SimpleMarkerSymbol {
         id: plane2DSymbol
-        style: Enums.SimpleMarkerSymbolStyleDiamond
+        style: Enums.SimpleMarkerSymbolStyleTriangle
         color: "blue"
         size: 10
     }
@@ -390,13 +395,17 @@ Rectangle {
         // update model graphic's geomtry
         graphic3d.geometry = firstPos;
 
+        // update the 2d graphic
+        graphic2d.geometry = firstPos;
+        plane2DSymbol.angle = firstData.heading;
+
         if (!routeGraphic) {
             // create route graphic with the route symbol
             routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic");
             routeGraphic.symbol = routeSymbol;
 
             // add route graphic to the graphics overlay
-            graphicsOverlay.graphics.append(routeGraphic);
+            graphicsOverlay.graphics.insert(0, routeGraphic);
         }
 
         // update route graphic's geomtry
@@ -414,6 +423,10 @@ Rectangle {
             graphic3d.attributes.replaceAttribute(headingAtt, missionData.heading);
             graphic3d.attributes.replaceAttribute(pitchAtt, missionData.pitch);
             graphic3d.attributes.replaceAttribute(rollAtt, missionData.roll);
+
+            // update the 2d graphic
+            graphic2d.geometry = newPos;
+            plane2DSymbol.angle = missionData.heading;
         }
 
         nextFrameRequested();

@@ -30,6 +30,7 @@ namespace Esri
     class ModelSceneSymbol;
     class OrbitGeoElementCameraController;
     class SceneQuickView;
+    class SimpleMarkerSymbol;
   }
 }
 
@@ -102,6 +103,7 @@ private:
   Esri::ArcGISRuntime::ModelSceneSymbol* m_model3d = nullptr;
   Esri::ArcGISRuntime::Graphic* m_graphic3d = nullptr;
   Esri::ArcGISRuntime::Graphic* m_graphic2d = nullptr;
+  Esri::ArcGISRuntime::SimpleMarkerSymbol* m_symbol2d = nullptr;
   Esri::ArcGISRuntime::Graphic* m_routeGraphic = nullptr;
   Esri::ArcGISRuntime::GlobeCameraController* m_globeController = nullptr;
   Esri::ArcGISRuntime::OrbitGeoElementCameraController* m_followingController = nullptr;
