@@ -90,7 +90,7 @@ Animate3DSymbolsSample {
                 minimumValue: 0
                 maximumValue: missionSize
                 enabled : missionReady
-                width: Math.max(implicitWidth, playButton.width)
+                width: Math.max(implicitWidth, playButton.width) * scaleFactor
             }
 
             CheckBox {
@@ -129,7 +129,7 @@ Animate3DSymbolsSample {
                 minimumValue: 10.0
                 maximumValue: 5000.0
                 value: 500.0
-                width: Math.max(implicitWidth, playButton.width)
+                width: Math.max(implicitWidth, playButton.width) * scaleFactor
             }
 
             Text {
@@ -145,7 +145,7 @@ Animate3DSymbolsSample {
                 minimumValue: 0.0
                 maximumValue: 180.0
                 value: 45.0
-                width: Math.max(implicitWidth, playButton.width)
+                width: Math.max(implicitWidth, playButton.width) * scaleFactor
             }
 
             Text {
@@ -161,7 +161,7 @@ Animate3DSymbolsSample {
                 minimumValue: 1
                 maximumValue: 100
                 value: 50
-                width: Math.max(implicitWidth, playButton.width)
+                width: Math.max(implicitWidth, playButton.width) * scaleFactor
             }
         }
     }
