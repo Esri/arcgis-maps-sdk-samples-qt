@@ -62,6 +62,7 @@ FindRouteSample {
 
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
 
@@ -78,7 +79,7 @@ FindRouteSample {
             property bool pressed: false
             anchors {
                 horizontalCenter: parent.horizontalCenter
-                bottom: parent.attributionTop
+                bottom: mapView.attributionTop
                 bottomMargin: 5 * scaleFactor
             }
 

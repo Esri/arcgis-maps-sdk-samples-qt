@@ -122,7 +122,7 @@ Rectangle {
         Row {
             id: solveRow
             anchors {
-                bottom: parent.attributionTop
+                bottom: mapView.attributionTop
                 horizontalCenter: parent.horizontalCenter
                 margins: 15 * scaleFactor
             }

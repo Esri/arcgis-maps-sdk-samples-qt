@@ -64,6 +64,7 @@ Rectangle {
 
     // Create MapView that contains a Map with the Topographic Basemap
     MapView {
+        id: mapView
         anchors.fill: parent
 
         // set the transform to animate showing the direction window
@@ -116,7 +117,7 @@ Rectangle {
             property bool pressed: false
             anchors {
                 horizontalCenter: parent.horizontalCenter
-                bottom: parent.attributionTop
+                bottom: mapView.attributionTop
                 bottomMargin: 5 * scaleFactor
             }
 

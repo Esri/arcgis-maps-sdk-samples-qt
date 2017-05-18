@@ -31,6 +31,7 @@ ServiceAreaSample {
 
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
 
@@ -48,7 +49,7 @@ ServiceAreaSample {
         Row {
             id: solveRow
             anchors {
-                bottom: parent.attributionTop
+                bottom: mapView.attributionTop
                 horizontalCenter: parent.horizontalCenter
                 margins: 15 * scaleFactor
             }
