@@ -151,6 +151,7 @@ Rectangle {
                 enabled: !playButton.checked
                 model: missionsModel
                 textRole: "name"
+                width: 150 * scaleFactor
                 onCurrentTextChanged: {
                     changeMission(currentText);
                     progressSlider.value = 0;
@@ -176,7 +177,7 @@ Rectangle {
                 minimumValue: 0
                 maximumValue: missionSize
                 enabled : missionReady
-                width: Math.max(implicitWidth, playButton.width) * scaleFactor
+                width: Math.max(implicitWidth, 150) * scaleFactor
             }
 
             CheckBox {
@@ -213,7 +214,7 @@ Rectangle {
                 minimumValue: followController.minCameraDistance
                 maximumValue: 5000.0
                 value: 500.0
-                width: Math.max(implicitWidth, playButton.width) * scaleFactor
+                width: Math.max(implicitWidth, 100) * scaleFactor
             }
 
             Text {
@@ -229,7 +230,7 @@ Rectangle {
                 minimumValue: followController.minCameraPitchOffset
                 maximumValue: followController.maxCameraPitchOffset
                 value: 45.0
-                width: Math.max(implicitWidth, playButton.width) * scaleFactor
+                width: Math.max(implicitWidth, 100) * scaleFactor
             }
 
             Text {
@@ -245,7 +246,7 @@ Rectangle {
                 minimumValue: 1
                 maximumValue: 100
                 value: 50
-                width: Math.max(implicitWidth, playButton.width) * scaleFactor
+                width: Math.max(implicitWidth, 100) * scaleFactor
             }
         }
     }
