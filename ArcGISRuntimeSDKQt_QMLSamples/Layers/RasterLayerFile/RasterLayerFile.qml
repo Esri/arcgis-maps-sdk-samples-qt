@@ -39,11 +39,17 @@ Rectangle {
 
             BasemapImagery {}
 
-            onLoadStatusChanged: {
-                if (loadStatus !== Enums.LoadStatusLoaded)
-                    return;
+            RasterLayer {
+                Raster {
+                    path: dataPath + "Shasta.tif"
+                }
 
-                createAndAddRasterLayer(dataPath + "Shasta.tif");
+                onLoadStatusChanged: {
+                    if (loadStatus !== Enums.LoadStatusLoaded)
+                        return;
+
+                    mapView.setViewpointCenterAndScale(fullExtent.center, 80000);
+                }
             }
         }
     }
