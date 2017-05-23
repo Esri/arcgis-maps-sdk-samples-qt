@@ -52,10 +52,10 @@ void Web_Tiled_Layer::componentComplete()
   // Set up the tiled layer parameters
   const QString templateUrl = "http://{subDomain}.tile.stamen.com/terrain/{level}/{col}/{row}.png";
   const QStringList subDomains = QStringList() << "a" << "b" << "c" << "d";
-  const QString attributionText = "Map tiles by <a href=\"http://stamen.com/\">Stamen Design</a>, "
+  const QString attributionText = "Map tiles by <a href=\"http://stamen.com\">Stamen Design</a>, "
                                   "under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. "
-                                  "Data by <a href=\"http://openstreetmap.org/\">OpenStreetMap</a>, "
-                                  "under <a href=\"http://creativecommons.org/licenses/by-sa/3.0\">CC BY SA</a>.";
+                                  "Data by <a href=\"http://openstreetmap.org\">OpenStreetMap</a>, "
+                                  "under <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>.";
 
   // Create the WebTiledLayer with a template URL, sub domains, and copyright information
   WebTiledLayer* webTiledLayer = new WebTiledLayer(templateUrl, subDomains, this);
