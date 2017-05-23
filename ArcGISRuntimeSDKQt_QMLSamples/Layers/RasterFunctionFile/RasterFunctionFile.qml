@@ -37,15 +37,10 @@ Rectangle {
 
             RasterLayer {
                 id: rasterLayer
+                opacity: 0.5
 
                 Raster {
                     path: rasterPath
-                }
-
-                onLoadStatusChanged: {
-                    if (loadStatus !== Enums.LoadStatusLoaded)
-                        return;
-                    rasterLayer.opacity = 0.5;
                 }
             }
 
