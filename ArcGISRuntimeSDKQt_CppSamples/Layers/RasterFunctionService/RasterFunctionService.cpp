@@ -75,6 +75,7 @@ void RasterFunctionService::applyRasterFunction()
       return;
   }
 
+  //! [ImageServiceRaster Apply a raster function]
   RasterFunction* rasterFunction = new RasterFunction(m_dataPath + "/hillshade_simplified.json", this);
   RasterFunctionArguments* arguments = rasterFunction->arguments();
   arguments->setRaster("raster", m_imageServiceRaster);
@@ -82,6 +83,8 @@ void RasterFunctionService::applyRasterFunction()
   // create a new raster with the raster function and add to the operational layer
   Raster* raster = new Raster(rasterFunction, this);
   RasterLayer* rasterLayer = new RasterLayer(raster, this);
+  //! [ImageServiceRaster Apply a raster function]
+
   m_map->operationalLayers()->clear();
   m_map->operationalLayers()->append(rasterLayer);
 }

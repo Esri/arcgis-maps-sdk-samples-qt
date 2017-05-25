@@ -100,6 +100,7 @@ Rectangle {
             return;
         }
 
+        //! [ImageServiceRaster Apply a raster function]
         // create raster function
         var rasterFunction = ArcGISRuntimeEnvironment.createObject("RasterFunction", {path: dataPath + "/hillshade_simplified.json"});
         // get the arguments
@@ -112,6 +113,7 @@ Rectangle {
 
         // create raster layer from raster
         var rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster });
+        //! [ImageServiceRaster Apply a raster function]
 
         // add raster to map
         mapView.map.operationalLayers.clear();

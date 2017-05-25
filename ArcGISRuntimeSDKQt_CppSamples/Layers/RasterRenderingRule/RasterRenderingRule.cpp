@@ -87,6 +87,7 @@ void RasterRenderingRule::componentComplete()
 
 void RasterRenderingRule::applyRenderingRule(int index)
 {
+  //! [ImageServiceRaster Create a rendering rule]
   // get the rendering rule info from the service info
   RenderingRuleInfo renderingRuleInfo = m_imageServiceRaster->serviceInfo().renderingRuleInfos().at(index);
   // create a new rendering rule with the rendering rule info
@@ -95,6 +96,7 @@ void RasterRenderingRule::applyRenderingRule(int index)
   ImageServiceRaster* isr = new ImageServiceRaster(m_url, this);
   // set the rendering rule
   isr->setRenderingRule(renderingRule);
+  //! [ImageServiceRaster Create a rendering rule]
   // create a new raster layer using the image service raster
   RasterLayer* rasterLayer = new RasterLayer(isr, this);
   // add the raster layer to the map
