@@ -39,6 +39,7 @@ Rectangle {
 
             // create and add a raster layer to the map
             RasterLayer {
+                //! [ImageServiceRaster Create an image service raster]
                 // create the raster layer from an image service raster
                 ImageServiceRaster {
                     id: imageServiceRaster
@@ -51,6 +52,7 @@ Rectangle {
                         }
                     }
                 }
+                //! [ImageServiceRaster Create an image service raster]
             }
         }
     }

@@ -56,6 +56,7 @@ void RasterLayerService::componentComplete()
   m_map = new Map(new Basemap(tiledLayer, this));
   m_mapView->setMap(m_map);
 
+  //! [ImageServiceRaster Create a new image service raster]
   // create an image service raster
   ImageServiceRaster* imageServiceRaster = new ImageServiceRaster(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"), this);
   // zoom to the raster's extent once it's loaded
@@ -68,4 +69,5 @@ void RasterLayerService::componentComplete()
   m_rasterLayer = new RasterLayer(imageServiceRaster, this);
   // add the raster layer to the map's operational layers
   m_map->operationalLayers()->append(m_rasterLayer);
+  //! [ImageServiceRaster Create a new image service raster]
 }

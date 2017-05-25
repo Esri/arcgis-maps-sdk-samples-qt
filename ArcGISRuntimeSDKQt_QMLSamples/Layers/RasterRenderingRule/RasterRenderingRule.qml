@@ -109,6 +109,7 @@ Rectangle {
     }
 
     function applyRenderingRule(index) {
+        //! [ImageServiceRaster Create a rendering rule]
         // get the rendering rule info at the selected index
         var renderingRuleInfo = imageServiceRaster.serviceInfo.renderingRuleInfos[index];
         // create a rendering rule object using the rendering rule info
@@ -119,6 +120,7 @@ Rectangle {
         newImageServiceRaster.renderingRule = renderingRule;
         // create a raster layer using the image service raster
         var rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newImageServiceRaster});
+        //! [ImageServiceRaster Create a rendering rule]
         // add the raster layer to the map
         map.operationalLayers.append(rasterLayer);
     }
