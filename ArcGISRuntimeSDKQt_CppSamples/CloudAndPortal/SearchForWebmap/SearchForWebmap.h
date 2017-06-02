@@ -10,7 +10,7 @@
 // notice and use restrictions.
 //
 // See the Sample code usage restrictions document for further information.
-//
+// [Legal]
 
 #ifndef SEARCHFORWEBMAP_H
 #define SEARCHFORWEBMAP_H

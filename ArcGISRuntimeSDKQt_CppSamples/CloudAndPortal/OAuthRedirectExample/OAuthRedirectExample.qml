@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayMap, Category=Maps]
+// [WriteFile Name=OAuthRedirectExample, Category=CloudAndPortal]
 // [Legal]
 // Copyright 2016 Esri.
 

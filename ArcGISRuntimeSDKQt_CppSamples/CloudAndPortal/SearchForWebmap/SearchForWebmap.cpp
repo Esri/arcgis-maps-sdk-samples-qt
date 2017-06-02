@@ -10,7 +10,7 @@
 // notice and use restrictions.
 //
 // See the Sample code usage restrictions document for further information.
-//
+// [Legal]
 
 #include "AuthenticationManager.h"
 #include "Map.h"
