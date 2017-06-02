@@ -1,3 +1,5 @@
+// [WriteFile Name=OAuthRedirectExample, Category=CloudAndPortal]
+// [Legal]
 // Copyright 2016 ESRI
 //
 // All rights reserved under the copyright laws of the United States
@@ -8,7 +10,7 @@
 // notice and use restrictions.
 //
 // See the Sample code usage restrictions document for further information.
-//
+// [Legal]
 #ifndef OAUTHREDIRECTEXAMPLE_H
 #define OAUTHREDIRECTEXAMPLE_H
 

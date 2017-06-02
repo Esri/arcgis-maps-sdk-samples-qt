@@ -10,7 +10,7 @@
 // notice and use restrictions.
 //
 // See the Sample code usage restrictions document for further information.
-//
+// [Legal]
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
