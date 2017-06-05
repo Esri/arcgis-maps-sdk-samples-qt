@@ -60,9 +60,9 @@ Rectangle {
             id: areasOverlay
             opacity: 0.5
 
-            renderer: SimpleRenderer {
-                symbol: SimpleFillSymbol {
-                    style: "SimpleFillSymbolStyleSolid"
+            SimpleRenderer {
+                SimpleFillSymbol {
+                    style: Enums.SimpleFillSymbolStyleSolid
                     color: "green"
                     outline: lineSymbol
                 }
@@ -84,10 +84,10 @@ Rectangle {
         GraphicsOverlay {
             id: barriersOverlay
 
-            renderer: SimpleRenderer {
-                symbol: SimpleLineSymbol {
+            SimpleRenderer {
+                SimpleLineSymbol {
                     id: lineSymbol
-                    style: "SimpleLineSymbolStyleSolid"
+                    style: Enums.SimpleLineSymbolStyleSolid
                     color: "black"
                     width: 3.0
                 }
