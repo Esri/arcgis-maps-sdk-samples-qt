@@ -48,7 +48,7 @@ Rectangle {
                         color: "black"
 
                         SimpleLineSymbol {
-                            style: "SimpleLineSymbolStyleSolid"
+                            style: Enums.SimpleLineSymbolStyleSolid
                             color: "grey"
                             width: 2
                         }

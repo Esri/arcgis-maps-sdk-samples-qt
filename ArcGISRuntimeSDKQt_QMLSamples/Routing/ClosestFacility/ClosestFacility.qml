@@ -52,7 +52,6 @@ Rectangle {
             }
 
             onLoadStatusChanged: {
-
                 createFacilities();
                 task.load();
             }
@@ -61,8 +60,8 @@ Rectangle {
         GraphicsOverlay {
             id: facilitiesOverlay
 
-            renderer: SimpleRenderer {
-                symbol: PictureMarkerSymbol {
+            SimpleRenderer {
+                PictureMarkerSymbol {
                     url: "http://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"
                     height: 30
                     width: 30
@@ -157,14 +156,14 @@ Rectangle {
 
     SimpleMarkerSymbol {
         id: incidentSymbol
-        style: "SimpleMarkerSymbolStyleCross"
+        style: Enums.SimpleMarkerSymbolStyleCross
         color: "black"
         size: 20
     }
 
     SimpleLineSymbol {
         id: routeSymbol
-        style: "SimpleLineSymbolStyleSolid"
+        style: Enums.SimpleLineSymbolStyleSolid
         color: "blue"
         width: 2.0
     }
