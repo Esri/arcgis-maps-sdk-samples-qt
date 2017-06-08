@@ -182,8 +182,8 @@ Rectangle {
             rgbRenderer.stretchParameters = minMaxParams;
         }
         else if (stretchTypeCombo.currentText === percentClip){
-            percentClipParams.min =  percentClipMin.value(0);
-            percentClipParams.max = 100 - percentClipMax.value(0);
+            percentClipParams.min =  percentClipMin.value;
+            percentClipParams.max = 100 - percentClipMax.value;
             rgbRenderer.stretchParameters = percentClipParams;
         }
         else if (stretchTypeCombo.currentText === stdDeviation){
