@@ -27,7 +27,7 @@ ARCGIS_RUNTIME_VERSION = 100.1
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
-TARGET = Surface_Placement
+TARGET = SurfacePlacement
 
 #-------------------------------------------------------------------------------
 

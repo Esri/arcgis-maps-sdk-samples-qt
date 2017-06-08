@@ -27,7 +27,7 @@ include($$PWD/arcgisruntime.pri)
 win32:CONFIG += \
   embed_manifest_exe
 
-TARGET = MapBasemap
+TARGET = ArcGISTiledLayerUrl
 TEMPLATE = app
 
 SOURCES += \
