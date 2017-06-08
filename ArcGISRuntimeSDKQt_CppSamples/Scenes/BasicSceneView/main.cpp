@@ -16,6 +16,7 @@
 #include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>
+#include <QQmlEngine>
 #include <QSurfaceFormat>
 
 #ifdef Q_OS_WIN
