@@ -56,6 +56,9 @@ void DisplayDrawingStatus::componentComplete()
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
   m_featureLayer = new FeatureLayer(featureTable, this);
 
+  // add the layer to the map
+  m_map->operationalLayers()->append(m_featureLayer);
+
   // Set map to map view
   m_mapView->setMap(m_map);
 
