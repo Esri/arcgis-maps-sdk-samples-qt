@@ -69,8 +69,8 @@ Rectangle {
                 top: parent.top
                 margins: 5 * scaleFactor
             }
-            height: 80 * scaleFactor
-            width: 200 * scaleFactor
+            height: 100 * scaleFactor
+            width: 250 * scaleFactor
             color: "silver"
             radius: 5 * scaleFactor
 
@@ -91,14 +91,16 @@ Rectangle {
 
                     ComboBox {
                         id: renderingRulesCombo
-                        width: 130 * scaleFactor
+                        width: 150 * scaleFactor
+                        height: 40 * scaleFactor
                         model: renderingRuleNames
                     }
 
                     Button {
                         id: applyButton
                         text: "Apply"
-                        width: 50 * scaleFactor
+                        width: 75 * scaleFactor
+                        height: 40 * scaleFactor
                         onClicked: {
                             applyRenderingRule(renderingRulesCombo.currentIndex);
                         }
