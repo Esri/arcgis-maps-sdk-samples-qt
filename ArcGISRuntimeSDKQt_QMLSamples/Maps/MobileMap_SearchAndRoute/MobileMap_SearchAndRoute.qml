@@ -84,8 +84,8 @@ Rectangle {
 
             PictureMarkerSymbol {
                 id: bluePinSymbol
-                height: 36 * scaleFactor
-                width: 36 * scaleFactor
+                height: 36
+                width: 36
                 url: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/bluePinSymbol.png"
                 offsetY: height / 2
             }
@@ -300,8 +300,8 @@ Rectangle {
                         var textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
                                                                                    color: "white",
                                                                                    text: routeStops.length,
-                                                                                   size: 18 * scaleFactor,
-                                                                                   offsetY: 19 * scaleFactor
+                                                                                   size: 18,
+                                                                                   offsetY: 19
                                                                                });
 
                         // create graphic using the text symbol
