@@ -21,7 +21,7 @@
 #endif
 
 MyApplication::MyApplication(int& argc, char** argv, bool GUIenabled):
-#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
     QtSingleApplication(argc, argv, GUIenabled)
 {
 #else
@@ -32,7 +32,7 @@ MyApplication::MyApplication(int& argc, char** argv, bool GUIenabled):
 }
 
 MyApplication::MyApplication(const QString& id, int& argc, char** argv):
-#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
     QtSingleApplication(id, argc, argv)
 {
 #else
