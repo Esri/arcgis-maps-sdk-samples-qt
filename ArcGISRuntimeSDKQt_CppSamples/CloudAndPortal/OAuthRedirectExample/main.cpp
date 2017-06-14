@@ -15,7 +15,7 @@
 #include <QDir>
 #include <QQmlEngine>
 
-#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
 #include <QCommandLineParser>
 #include <QSettings>
 #endif
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 {
   MyApplication app(argc, argv);
 
-#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
   QCommandLineParser commandLineParser;
   commandLineParser.process(app);
 
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
   // Set the source
   view.setSource(QUrl("qrc:/Samples/CloudAndPortal/OAuthRedirectExample/OAuthRedirectExample.qml"));
 
-#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
   QObject::connect(&app, &MyApplication::messageReceived, [&app, &view](const QString& msg)
   {
     Q_UNUSED(msg);

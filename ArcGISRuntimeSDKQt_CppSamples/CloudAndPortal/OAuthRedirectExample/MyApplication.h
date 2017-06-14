@@ -15,13 +15,13 @@
 
 #include <QtGlobal>
 
-#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
 #include  <QtSingleApplication>
 #else
 #include <QApplication>
 #endif
 
-#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+#if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
 class MyApplication : public QtSingleApplication
 #else
 class MyApplication : public QApplication
