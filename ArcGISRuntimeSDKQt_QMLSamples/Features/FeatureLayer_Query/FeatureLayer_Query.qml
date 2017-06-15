@@ -53,7 +53,7 @@ Rectangle {
                         SimpleLineSymbol {
                             style: Enums.SimpleLineSymbolStyleSolid
                             color: "black"
-                            width: 2.0 * scaleFactor
+                            width: 2.0
                             antiAlias: true
                         }
                     }
