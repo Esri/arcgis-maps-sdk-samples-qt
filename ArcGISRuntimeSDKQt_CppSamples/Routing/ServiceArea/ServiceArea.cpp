@@ -147,11 +147,12 @@ void ServiceArea::reset()
 
 void ServiceArea::newBarrier()
 {
-  if (!m_barrierBuilder)
-    return;
+  if (m_barrierBuilder)
+  {
+    delete m_barrierBuilder;
+    m_barrierBuilder = nullptr;
+  }
 
-  delete m_barrierBuilder;
-  m_barrierBuilder = nullptr;
   setBarrierMode();
   m_barrierOverlay->graphics()->append(new Graphic(m_barrierBuilder->toPolyline(), this));
 }
