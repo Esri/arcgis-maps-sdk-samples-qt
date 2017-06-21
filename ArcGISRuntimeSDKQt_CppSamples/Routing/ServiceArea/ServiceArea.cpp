@@ -140,7 +140,7 @@ void ServiceArea::reset()
   if (m_barrierBuilder)
   {
     delete m_barrierBuilder;
-    m_barrierBuilder = nullptr;
+    m_barrierBuilder = new PolylineBuilder(SpatialReference::webMercator(), this);
   }
   m_areasOverlay->graphics()->clear();
 }
@@ -281,7 +281,10 @@ void ServiceArea::handleBarrierPoint(const Point &p)
 {
   m_barrierBuilder->addPoint(p);
   // update the geometry for the current barrier - or create 1 if it does not exist
-  Graphic* barrier = m_barrierOverlay->graphics()->last();
+  Graphic* barrier = m_barrierOverlay->graphics()->isEmpty() ?
+                       nullptr :
+                       m_barrierOverlay->graphics()->last();
+
   if (barrier)
     barrier->setGeometry(m_barrierBuilder->toPolyline());
   else
