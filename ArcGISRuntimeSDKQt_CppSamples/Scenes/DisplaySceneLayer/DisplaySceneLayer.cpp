@@ -54,7 +54,7 @@ void DisplaySceneLayer::componentComplete()
   m_scene = new Scene(basemap, this);
 
   //! [add a scene service with ArcGISSceneLayer]
-  m_sceneLayer = new ArcGISSceneLayer(QUrl("http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"));
+  m_sceneLayer = new ArcGISSceneLayer(QUrl("http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
   m_scene->operationalLayers()->append(m_sceneLayer);
   //! [add a scene service with ArcGISSceneLayer]
 
