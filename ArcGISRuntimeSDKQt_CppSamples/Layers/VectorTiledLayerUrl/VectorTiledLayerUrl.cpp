@@ -51,7 +51,7 @@ void VectorTiledLayerUrl::componentComplete()
 
   //! [display vector tiled layer]
   // create a vector tiled basemap
-  ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"));
+  ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"), this);
   Basemap* basemap = new Basemap(vectorTiledLayer, this);
   // create a new map instance
   m_map = new Map(basemap, this);
