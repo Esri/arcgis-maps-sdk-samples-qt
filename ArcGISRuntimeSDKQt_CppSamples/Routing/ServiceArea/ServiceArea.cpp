@@ -98,6 +98,7 @@ void ServiceArea::solveServiceArea()
   GraphicListModel* facilitiesGraphics = m_facilitiesOverlay->graphics();
   if (facilitiesGraphics == nullptr || facilitiesGraphics->rowCount() == 0)
   {
+    setBusy(false);
     m_message = "At least 1 Facility is required.";
     emit messageChanged();
     return;
