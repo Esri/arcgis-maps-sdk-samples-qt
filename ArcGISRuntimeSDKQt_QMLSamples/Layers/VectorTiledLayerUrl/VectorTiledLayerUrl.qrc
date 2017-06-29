@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/Samples/Layers/VectorTiledLayerUrl">
         <file alias="sample.json">VectorTiledLayerUrl.json</file>
-        <file>VectorTiledLayerUrl.png</file>
         <file>VectorTiledLayerUrl.qml</file>
-        <file>VectorTiledLayerUrl.html</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

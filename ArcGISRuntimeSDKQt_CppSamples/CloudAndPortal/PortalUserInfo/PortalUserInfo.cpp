@@ -30,8 +30,7 @@ const QString PortalUserInfo::UNKNOWN = "????";
 PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
   m_credential(new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this)),
-  m_portal(new Portal(m_credential, this)),
-  m_user(nullptr)
+  m_portal(new Portal(m_credential, this))
 {
   connect(m_portal, &Portal::loadStatusChanged, this, &PortalUserInfo::onPortalLoadStatusChanged);
   connect(m_portal, &Portal::doneLoading, this, &PortalUserInfo::loadErrorMessageChanged);
@@ -41,6 +40,12 @@ PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
 
 PortalUserInfo::~PortalUserInfo()
 {
+}
+
+void PortalUserInfo::init()
+{
+  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
+  qmlRegisterType<PortalUserInfo>("Esri.Samples", 1, 0, "PortalUserInfoSample");
 }
 
 void PortalUserInfo::componentComplete()
@@ -134,6 +139,46 @@ QUrl PortalUserInfo::thumbnailUrl() const
   return QUrl("qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png");
 }
 
+QString PortalUserInfo::orgTitle() const
+{
+    if (m_portal && m_portal->portalInfo())
+        return m_portal->portalInfo()->organizationName();
+
+    return "";
+}
+
+QString PortalUserInfo::orgDescription() const
+{
+    if (m_portal && m_portal->portalInfo())
+        return m_portal->portalInfo()->organizationDescription();
+
+    return "";
+}
+
+QUrl PortalUserInfo::orgThumbnailUrl() const
+{
+    if (m_portal && m_portal->portalInfo())
+        return m_portal->portalInfo()->thumbnailUrl();
+
+    return QUrl();
+}
+
+QString PortalUserInfo::canSearchPublic() const
+{
+    if (m_portal && m_portal->portalInfo())
+        return m_portal->portalInfo()->isCanSearchPublic() ? "True" : "False";
+
+    return "";
+}
+
+QString PortalUserInfo::canSharePublic() const
+{
+    if (m_portal && m_portal->portalInfo())
+        return m_portal->portalInfo()->isCanSharePublic() ? "True" : "False";
+
+    return "";
+}
+
 QString PortalUserInfo::loadErrorMessage() const
 {
   if (m_portal)
@@ -144,29 +189,29 @@ QString PortalUserInfo::loadErrorMessage() const
 
 void PortalUserInfo::onPortalLoadStatusChanged(LoadStatus loadStatus)
 {
-  switch (loadStatus) {
-  case LoadStatus::Loaded:
-    m_user = m_portal->portalUser();
-    emit fullNameChanged();
-    emit usernameChanged();
-    emit emailChanged();
-    emit bioChanged();
-    emit accessChanged();
-    emit thumbnailUrlChanged();
-    break;
-  case LoadStatus::Loading:
-    break;
-  case LoadStatus::FailedToLoad:
-  {
-    m_portal->retryLoad();
-    break;
-  }
-  case LoadStatus::NotLoaded:
-    break;
-  case LoadStatus::Unknown:
-    break;
-  default:
-    break;
+    switch (loadStatus) {
+    case LoadStatus::Loaded:
+        if (m_portal)
+            m_user = m_portal->portalUser();
+        emit fullNameChanged();
+        emit usernameChanged();
+        emit emailChanged();
+        emit bioChanged();
+        emit accessChanged();
+        emit thumbnailUrlChanged();
+        break;
+    case LoadStatus::Loading:
+        break;
+    case LoadStatus::FailedToLoad:
+        if (m_portal)
+            m_portal->retryLoad();
+        break;
+    case LoadStatus::NotLoaded:
+        break;
+    case LoadStatus::Unknown:
+        break;
+    default:
+        break;
   }
 
   emit loadedChanged();

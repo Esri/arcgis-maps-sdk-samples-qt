@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtPositioning 5.3
 import QtSensors 5.3
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -158,8 +158,7 @@ Rectangle {
         anchors {
             right: parent.right
             bottom: parent.bottom
-            margins: 10 * scaleFactor
-            bottomMargin: 25 * scaleFactor
+            margins: 25 * scaleFactor
         }
         spacing: 10
 
@@ -187,15 +186,6 @@ Rectangle {
                     autoPanListView.visible = true;
                 }
             }
-        }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

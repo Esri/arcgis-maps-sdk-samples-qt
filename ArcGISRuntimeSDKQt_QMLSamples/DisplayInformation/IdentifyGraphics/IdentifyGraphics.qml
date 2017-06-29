@@ -17,14 +17,11 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.0
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.1
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
 
     // Declare a map view inside the rectangle
     MapView {
@@ -76,16 +73,6 @@ Rectangle {
     MessageDialog {
         id: msgDialog
         text: "Tapped on graphic"
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 
     Component.onCompleted: {

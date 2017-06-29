@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/OSM_Layer">
+        <file alias="sample.json">OSM_Layer.json</file>        
+        <file>OSM_Layer.qml</file>
+        <file>OSM_Layer.h</file>
+        <file>OSM_Layer.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

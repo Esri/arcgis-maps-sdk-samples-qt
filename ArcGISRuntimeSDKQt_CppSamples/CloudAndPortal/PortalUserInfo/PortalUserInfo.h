@@ -45,23 +45,19 @@ class PortalUserInfo : public QQuickItem
   Q_PROPERTY(QString bio READ bio NOTIFY bioChanged)
   Q_PROPERTY(QString access READ access NOTIFY accessChanged)
   Q_PROPERTY(QUrl thumbnailUrl READ thumbnailUrl NOTIFY thumbnailUrlChanged)
-  Q_PROPERTY(QString loadErrorMessage READ loadErrorMessage NOTIFY loadErrorMessageChanged)
+  Q_PROPERTY(QString orgTitle READ orgTitle NOTIFY loadedChanged)
+  Q_PROPERTY(QString orgDescription READ orgDescription NOTIFY loadedChanged)
+  Q_PROPERTY(QUrl orgThumbnailUrl READ orgThumbnailUrl NOTIFY loadedChanged)
+  Q_PROPERTY(QUrl canSearchPublic READ canSearchPublic NOTIFY loadedChanged)
+  Q_PROPERTY(QUrl canSharePublic READ canSharePublic NOTIFY loadedChanged)
+  Q_PROPERTY(QString loadErrorMessage READ loadErrorMessage NOTIFY loadedChanged)
 
 public:
-  PortalUserInfo(QQuickItem* parent = nullptr);
+  explicit PortalUserInfo(QQuickItem* parent = nullptr);
   ~PortalUserInfo();
 
   void componentComplete() Q_DECL_OVERRIDE;
-
-  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
-  QString username() const;
-  bool loaded();
-  QString fullName() const;
-  QString email() const;
-  QString bio() const;
-  QString access() const;
-  QUrl thumbnailUrl() const;
-  QString loadErrorMessage() const;
+  static void init();
 
 signals:
   void authManagerChanged();
@@ -78,14 +74,27 @@ private slots:
   void onPortalLoadStatusChanged(Esri::ArcGISRuntime::LoadStatus loadStatus);
 
 private:
-
+  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
+  QString username() const;
+  bool loaded();
+  QString fullName() const;
+  QString email() const;
+  QString bio() const;
+  QString access() const;
+  QUrl thumbnailUrl() const;
+  QString orgTitle() const;
+  QString orgDescription() const;
+  QUrl orgThumbnailUrl() const;
+  QString canSearchPublic() const;
+  QString canSharePublic() const;
+  QString loadErrorMessage() const;
   void load();
 
   static const QString UNKNOWN;
 
-  Esri::ArcGISRuntime::Credential* m_credential;
-  Esri::ArcGISRuntime::Portal* m_portal;
-  Esri::ArcGISRuntime::PortalUser* m_user;
+  Esri::ArcGISRuntime::Credential* m_credential = nullptr;
+  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+  Esri::ArcGISRuntime::PortalUser* m_user = nullptr;
 };
 
 #endif // PORTALUSERINFO_H

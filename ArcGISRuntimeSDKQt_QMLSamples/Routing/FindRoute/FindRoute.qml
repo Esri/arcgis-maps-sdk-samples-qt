@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -64,6 +64,7 @@ Rectangle {
 
     // Create MapView that contains a Map with the Topographic Basemap
     MapView {
+        id: mapView
         anchors.fill: parent
 
         // set the transform to animate showing the direction window
@@ -92,11 +93,7 @@ Rectangle {
 
         // Create a map with a basemap and initial viewpoint
         Map {
-            Basemap {
-                ArcGISVectorTiledLayer {
-                    url: "http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"
-                }
-            }
+            BasemapNavigationVector {}
 
             initialViewpoint: ViewpointCenter {
                 Point {
@@ -120,8 +117,8 @@ Rectangle {
             property bool pressed: false
             anchors {
                 horizontalCenter: parent.horizontalCenter
-                bottom: parent.bottom
-                bottomMargin: 25 * scaleFactor
+                bottom: mapView.attributionTop
+                bottomMargin: 5 * scaleFactor
             }
 
             width: 130 * scaleFactor
@@ -211,6 +208,8 @@ Rectangle {
         }
     }    
 
+    //! [FindRoute RouteTask]
+
     // Create a RouteTask pointing to an online service
     RouteTask {
         id: routeTask
@@ -246,6 +245,7 @@ Rectangle {
             }
         }
     }
+    //! [FindRoute RouteTask]
 
     Component {
         id: directionDelegate
@@ -319,14 +319,5 @@ Rectangle {
     function setupRouteTask() {
         // load the RouteTask
         routeTask.load();
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }

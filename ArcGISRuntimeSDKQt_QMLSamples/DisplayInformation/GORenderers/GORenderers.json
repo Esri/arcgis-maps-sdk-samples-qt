@@ -1,7 +1,6 @@
 {
     "source" :  "GORenderers.qml",
-    "description" : "GORenderers.html",
-    "thumbnail" : "GORenderers.png",
+    "otherSourceFiles" :  [],
     "name" : "Add graphics with renderers"
 }
 

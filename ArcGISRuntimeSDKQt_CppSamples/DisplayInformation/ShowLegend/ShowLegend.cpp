@@ -29,10 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ShowLegend::ShowLegend(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_legendInfoListModel(nullptr)
+  QQuickItem(parent)
 {
 }
 
@@ -40,43 +37,52 @@ ShowLegend::~ShowLegend()
 {
 }
 
+void ShowLegend::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<ShowLegend>("Esri.Samples", 1, 0, "ShowLegendSample");
+  qmlRegisterUncreatableType<LegendInfoListModel>("Esri.Samples", 1, 0,
+                                                  "LegendInfoListModel",
+                                                  "LegendInfoListModel is an uncreatable type");
+}
+
 void ShowLegend::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new basemap instance
-    Basemap* basemap = Basemap::topographic(this);
-    // create a new map instance
-    m_map = new Map(basemap, this);
-    // set map to auto fetch LegendInfo
-    m_map->setAutoFetchLegendInfos(true);
-    // set initial viewpoint
-    m_map->setInitialViewpoint(Viewpoint(Point(-11e6, 6e6, SpatialReference(3857)), 9e7));
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // create a new basemap instance
+  Basemap* basemap = Basemap::topographic(this);
+  // create a new map instance
+  m_map = new Map(basemap, this);
+  // set map to auto fetch LegendInfo
+  m_map->setAutoFetchLegendInfos(true);
+  // set initial viewpoint
+  m_map->setInitialViewpoint(Viewpoint(Point(-11e6, 6e6, SpatialReference(3857)), 9e7));
+  // set map on the map view
+  m_mapView->setMap(m_map);
 
-    addLayers();
+  addLayers();
 
-    connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, this, [this]()
-    {
-        // set the legend info list model
-        m_legendInfoListModel = m_map->legendInfos();
-        emit legendInfoListModelChanged();
-    });
+  connect(m_map->legendInfos(), &LegendInfoListModel::fetchLegendInfosCompleted, this, [this]()
+  {
+    // set the legend info list model
+    m_legendInfoListModel = m_map->legendInfos();
+    emit legendInfoListModelChanged();
+  });
 }
 
 void ShowLegend::addLayers()
 {
-    ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer"), this);
-    m_map->operationalLayers()->append(tiledLayer);
+  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer"), this);
+  m_map->operationalLayers()->append(tiledLayer);
 
-    ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
-    m_map->operationalLayers()->append(mapImageLayer);
+  ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
+  m_map->operationalLayers()->append(mapImageLayer);
 
-    ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"), this);
-    FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
-    m_map->operationalLayers()->append(featureLayer);
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"), this);
+  FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
+  m_map->operationalLayers()->append(featureLayer);
 }

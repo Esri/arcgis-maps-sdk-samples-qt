@@ -21,11 +21,10 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
-
 #include "MobileMap_SearchAndRoute.h"
 
-using namespace Esri::ArcGISRuntime;
+#define STRINGIZE(x) #x
+#define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
@@ -36,10 +35,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<MobileMap_SearchAndRoute>("Esri.Samples", 1, 0, "MobileMap_SearchAndRouteSample");
-    qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
+    // Initialize the sample
+    MobileMap_SearchAndRoute::init();
 
     // Intialize application view
     QQuickView view;
@@ -47,6 +44,22 @@ int main(int argc, char *argv[])
 
     // Add the import Path
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  
+  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+  QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
+
+ #if defined(LINUX_PLATFORM_REPLACEMENT)
+  // on some linux platforms the string 'linux' is replaced with 1
+  // fix the replacement paths which were created
+  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
+  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+  arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+ #endif
+
+  // Add the Runtime and Extras path
+  view.engine()->addImportPath(arcGISRuntimeImportPath);
+  // Add the Toolkit path
+  view.engine()->addImportPath(arcGISToolkitImportPath);
 
     // Set the source
     view.setSource(QUrl("qrc:/Samples/Maps/MobileMap_SearchAndRoute/MobileMap_SearchAndRoute.qml"));

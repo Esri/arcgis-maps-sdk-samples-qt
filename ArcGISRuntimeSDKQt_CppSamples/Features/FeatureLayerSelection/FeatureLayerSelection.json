@@ -1,7 +1,9 @@
 {
-    "source" :  "FeatureLayerSelection",
-    "description" : "FeatureLayerSelection.html",
-    "thumbnail" : "FeatureLayerSelection.png",
+    "source" :  "FeatureLayerSelection.qml",
+    "otherSourceFiles" : [
+        "FeatureLayerSelection.h",
+        "FeatureLayerSelection.cpp"
+    ],
     "name" : "Feature layer selection"
 }
 

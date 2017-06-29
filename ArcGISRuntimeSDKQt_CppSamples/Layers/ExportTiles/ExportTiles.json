@@ -1,7 +1,9 @@
 {
-    "source" :  "ExportTiles",
-    "description" : "ExportTiles.html",
-    "thumbnail" : "ExportTiles.png",
+    "source" :  "ExportTiles.qml",
+    "otherSourceFiles" : [
+        "ExportTiles.h",
+        "ExportTiles.cpp"
+    ],
     "name" : "Export tiles"
 }
 

@@ -1,7 +1,9 @@
 {
-    "source" :  "UpdateGeometryFeatureService",
-    "description" : "UpdateGeometryFeatureService.html",
-    "thumbnail" : "UpdateGeometryFeatureService.png",
+    "source" :  "UpdateGeometryFeatureService.qml",
+    "otherSourceFiles" : [
+        "UpdateGeometryFeatureService.h",
+        "UpdateGeometryFeatureService.cpp"
+    ],
     "name" : "Update geometry feature service"
 }
 

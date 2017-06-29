@@ -17,9 +17,10 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Dialogs 1.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.0
-import Esri.ArcGISRuntime.Toolkit.Controls 2.0
+import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime.Toolkit.Controls 100.1
 
 Rectangle {
     clip: true
@@ -34,6 +35,7 @@ Rectangle {
     property Point clickedPoint: null
     property bool isReverseGeocode: false
     property bool isPressAndHold: false
+    property string errorMessage: ""
 
     // Map view UI presentation at top
     MapView {
@@ -67,6 +69,8 @@ Rectangle {
                 }
                 targetScale: 2e4
             }
+
+            onErrorChanged: errorMessage = error.message;
         }
 
         // add a graphics overlay to the mapview
@@ -148,11 +152,17 @@ Rectangle {
             isPressAndHold = false;
             isReverseGeocode = false;
         }
+
+        onErrorChanged: errorMessage = error.message;
     }
+
+    //! [OfflineGeocode LocatorTask]
 
     LocatorTask {
         id: locatorTask
         url: dataPath + "/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc"
+        //! [OfflineGeocode LocatorTask]
+
         suggestions {
             // suggestions will update whenever textField's text property changes
             searchText: textField.text
@@ -205,6 +215,8 @@ Rectangle {
                 }
             }
         }
+
+        onErrorChanged: errorMessage = error.message;
     }
 
     Column {
@@ -382,13 +394,9 @@ Rectangle {
         }
     }
 
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
+    MessageDialog {
+        visible: text.length > 0
+        text: errorMessage
+        informativeText: "Please consult the README.md"
     }
 }

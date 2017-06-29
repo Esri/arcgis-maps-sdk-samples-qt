@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -163,8 +163,8 @@ Rectangle {
                         spacing: 5
                         anchors.verticalCenter: parent.verticalCenter
                         Image {
-                            width: Math.min(symbolWidth, 24) * scaleFactor
-                            height: Math.min(symbolHeight, 24) * scaleFactor
+                            width: symbolWidth
+                            height: symbolHeight
                             source: symbolUrl
                         }
                         Text {
@@ -194,16 +194,6 @@ Rectangle {
                     }
                 }
             }
-        }
-    }
-
-    // neatline
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

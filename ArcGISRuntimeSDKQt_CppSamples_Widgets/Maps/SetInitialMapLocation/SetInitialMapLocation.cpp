@@ -22,7 +22,7 @@
 using namespace Esri::ArcGISRuntime;
 
 SetInitialMapLocation::SetInitialMapLocation(QWidget* parent) :
-  QWidget(parent)
+    QWidget(parent)
 {
     // Create a new map with the basemap type enum and pass in initial lat, lon, and scale
     m_map = new Map(BasemapType::ImageryWithLabels, -33.867886, -63.985, 16, this);

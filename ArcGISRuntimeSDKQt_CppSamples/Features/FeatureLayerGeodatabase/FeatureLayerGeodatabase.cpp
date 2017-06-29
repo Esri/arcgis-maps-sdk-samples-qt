@@ -32,11 +32,7 @@
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerGeodatabase::FeatureLayerGeodatabase(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_geodatabase(nullptr),
-    m_dataPath("")
+  QQuickItem(parent)
 {
 }
 
@@ -44,55 +40,83 @@ FeatureLayerGeodatabase::~FeatureLayerGeodatabase()
 {
 }
 
+void FeatureLayerGeodatabase::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<FeatureLayerGeodatabase>("Esri.Samples", 1, 0, "FeatureLayerGeodatabaseSample");
+}
+
+void FeatureLayerGeodatabase::logError(const Esri::ArcGISRuntime::Error& error)
+{
+  setErrorMessage(QString("%1: %2").arg(error.message(), error.additionalMessage()));
+}
+
+QString FeatureLayerGeodatabase::errorMessage() const
+{
+  return m_errorMsg;
+}
+
+void FeatureLayerGeodatabase::setErrorMessage(const QString& msg)
+{
+  m_errorMsg = msg;
+  qDebug() << m_errorMsg;
+  emit errorMessageChanged();
+}
+
 void FeatureLayerGeodatabase::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
-    m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // get the data path
-    m_dataPath = QQmlProperty::read(m_mapView, "dataPath").toUrl().toLocalFile();
+  // get the data path
+  m_dataPath = QQmlProperty::read(m_mapView, "dataPath").toUrl().toLocalFile();
 
-    //! [FeatureLayer Geodatabase add basemap]
-    // Create a map using a local vector tile package
-    ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(m_dataPath + "vtpk/LosAngeles.vtpk"), this);
-    Basemap* basemap = new Basemap(vectorTiledLayer, this);
-    m_map = new Map(basemap, this);
-    //! [FeatureLayer Geodatabase add basemap]
+  //! [FeatureLayer Geodatabase add basemap]
+  // Create a map using a local vector tile package
+  ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl::fromLocalFile(m_dataPath + "vtpk/LosAngeles.vtpk"), this);
+  Basemap* basemap = new Basemap(vectorTiledLayer, this);
+  m_map = new Map(basemap, this);
+  //! [FeatureLayer Geodatabase add basemap]
 
-    // Set map to map view
-    m_mapView->setMap(m_map);
+  connect(m_map, &Map::errorOccurred, this, &FeatureLayerGeodatabase::logError);
+  connect(m_mapView, &MapQuickView::errorOccurred, this, &FeatureLayerGeodatabase::logError);
 
-    // set initial viewpoint
-    m_map->setInitialViewpoint(Viewpoint(Point(-13214155, 4040194, SpatialReference(3857)), 35e4));
+  // set initial viewpoint
+  m_map->setInitialViewpoint(Viewpoint(Point(-13214155, 4040194, SpatialReference(3857)), 35e4));
 
-    //! [FeatureLayer Geodatabase create gdb]
-    // create the geodatabase using a local file path
-    m_geodatabase = new Geodatabase(m_dataPath + "geodatabase/LA_Trails.geodatabase", this);
-    //! [FeatureLayer Geodatabase create gdb]
+  // Set map to map view
+  m_mapView->setMap(m_map);
 
-    // connect to doneLoading signal of geodatabase to access feature tables
-    connect(m_geodatabase, &Geodatabase::doneLoading, this, [this](Error error)
+  //! [FeatureLayer Geodatabase create gdb]
+  // create the geodatabase using a local file path
+  m_geodatabase = new Geodatabase(m_dataPath + "geodatabase/LA_Trails.geodatabase", this);
+  //! [FeatureLayer Geodatabase create gdb]
+
+  connect(m_geodatabase, &Geodatabase::errorOccurred, this, &FeatureLayerGeodatabase::logError);
+
+  // connect to doneLoading signal of geodatabase to access feature tables
+  connect(m_geodatabase, &Geodatabase::doneLoading, this, [this](Error error)
+  {
+    if (error.isEmpty())
     {
-        if (error.isEmpty())
-        {
-            //! [FeatureLayer Geodatabase create feature layer]
-            // access the feature table by name
-            auto featureTable = m_geodatabase->geodatabaseFeatureTable("Trailheads");
+      //! [FeatureLayer Geodatabase create feature layer]
+      // access the feature table by name
+      auto featureTable = m_geodatabase->geodatabaseFeatureTable("Trailheads");
 
-            // create a feature layer from the feature table
-            auto featureLayer = new FeatureLayer(featureTable, this);
-            //! [FeatureLayer Geodatabase create feature layer]
+      // create a feature layer from the feature table
+      auto featureLayer = new FeatureLayer(featureTable, this);
+      //! [FeatureLayer Geodatabase create feature layer]
 
-            //! [FeatureLayer Geodatabase add to map]
-            // add the feature layer to the map
-            m_map->operationalLayers()->append(featureLayer);
-            //! [FeatureLayer Geodatabase add to map]
-        }
-    });
+      //! [FeatureLayer Geodatabase add to map]
+      // add the feature layer to the map
+      m_map->operationalLayers()->append(featureLayer);
+      //! [FeatureLayer Geodatabase add to map]
+    }
+  });
 
-    // load the geodatabase
-    m_geodatabase->load();
+  // load the geodatabase
+  m_geodatabase->load();
 }

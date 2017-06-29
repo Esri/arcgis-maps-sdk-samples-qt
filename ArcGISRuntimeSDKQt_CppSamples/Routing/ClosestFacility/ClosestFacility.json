@@ -1,0 +1,9 @@
+{
+    "source" :  "ClosestFacility.qml",
+    "otherSourceFiles" : [
+        "ClosestFacility.h",
+        "ClosestFacility.cpp"
+    ],
+    "name" : "Closest facility"
+}
+

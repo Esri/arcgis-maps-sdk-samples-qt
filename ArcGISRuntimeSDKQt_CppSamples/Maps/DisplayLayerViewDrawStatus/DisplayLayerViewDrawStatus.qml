@@ -39,8 +39,7 @@ DisplayLayerViewDrawStatusSample {
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            margins: 10 * scaleFactor
-            bottomMargin: 25 * scaleFactor
+            margins: 25 * scaleFactor
         }
         height: 150 * scaleFactor
         width: 230 * scaleFactor
@@ -108,16 +107,6 @@ DisplayLayerViewDrawStatusSample {
                     color: "steelblue"
                 }
             }
-        }
-    }
-
-    // Neatline Rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 

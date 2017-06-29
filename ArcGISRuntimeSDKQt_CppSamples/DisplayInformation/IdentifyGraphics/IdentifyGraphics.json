@@ -1,7 +1,9 @@
 {
-    "source" :  "IdentifyGraphics",
-    "description" : "IdentifyGraphics.html",
-    "thumbnail" : "IdentifyGraphics.png",
+    "source" :  "IdentifyGraphics.qml",
+    "otherSourceFiles" : [
+        "IdentifyGraphics.h",
+        "IdentifyGraphics.cpp"
+    ],
     "name" : "Identify graphics"
 }
 

@@ -22,11 +22,10 @@
 #include <Windows.h>
 #endif
 
-#include "SceneQuickView.h"
-
 #include "Surface_Placement.h"
 
-using namespace Esri::ArcGISRuntime;
+#define STRINGIZE(x) #x
+#define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
@@ -45,11 +44,14 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-  // Register classes for QML
+  // Initialize the sample
+  Surface_Placement::init();
+
+  /* Leaving here for purpose of snippet
   //! [Register the scene view for QML]
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   //! [Register the scene view for QML]
-  qmlRegisterType<Surface_Placement>("Esri.Samples", 1, 0, "SurfacePlacementSample");
+  */
 
   // Intialize application view
   QQuickView view;
@@ -57,6 +59,22 @@ int main(int argc, char *argv[])
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  
+  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+  QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
+
+ #if defined(LINUX_PLATFORM_REPLACEMENT)
+  // on some linux platforms the string 'linux' is replaced with 1
+  // fix the replacement paths which were created
+  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
+  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+  arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+ #endif
+
+  // Add the Runtime and Extras path
+  view.engine()->addImportPath(arcGISRuntimeImportPath);
+  // Add the Toolkit path
+  view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Scenes/Surface_Placement/Surface_Placement.qml"));

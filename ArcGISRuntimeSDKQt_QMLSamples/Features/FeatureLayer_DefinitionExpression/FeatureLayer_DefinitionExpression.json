@@ -1,7 +1,6 @@
 {
     "source" :  "FeatureLayer_DefinitionExpression.qml",
-    "description" : "FeatureLayer_DefinitionExpression.html",
-    "thumbnail" : "FeatureLayer_DefinitionExpression.png",
+    "otherSourceFiles" :  [],
     "name" : "Feature layer definition expression"
 }
 

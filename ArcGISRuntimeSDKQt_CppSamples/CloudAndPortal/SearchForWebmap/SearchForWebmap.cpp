@@ -10,7 +10,7 @@
 // notice and use restrictions.
 //
 // See the Sample code usage restrictions document for further information.
-//
+// [Legal]
 
 #include "AuthenticationManager.h"
 #include "Map.h"
@@ -22,138 +22,174 @@
 #include "PortalQueryParametersForItems.h"
 #include "SearchForWebmap.h"
 
+#include <QDate>
+
 using namespace Esri::ArcGISRuntime;
 
 SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */):
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_portal(new Portal(new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this), this)),
-    m_webmapResults(nullptr),
-    m_webmaps(nullptr),
-    m_selectedItem(nullptr),
-    m_portalLoaded(false)
+  QQuickItem(parent),
+  m_portal(new Portal(this))
 {
-    AuthenticationManager::instance()->setCredentialCacheEnabled(false);
+  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
 SearchForWebmap::~SearchForWebmap()
 {
 }
 
+void SearchForWebmap::init()
+{
+  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<SearchForWebmap>("Esri.Samples", 1, 0, "SearchForWebmapSample");
+}
+
 void SearchForWebmap::componentComplete()
 {
-    QQuickItem::componentComplete();
-    emit authManagerChanged();
+  QQuickItem::componentComplete();
+  emit authManagerChanged();
 
-    connect(m_portal, &Portal::loadStatusChanged, this, [this](){
-        m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
-        emit portalLoadedChanged();
+  if (m_portal)
+  {
+    connect(m_portal, &Portal::loadStatusChanged, this, [this]()
+    {
+      m_portalLoaded = m_portal->loadStatus() == LoadStatus::Loaded;
+      emit portalLoadedChanged();
     });
 
-    connect(m_portal, &Portal::findItemsCompleted, this, [this](PortalQueryResultSetForItems *webmapResults){
-        m_webmapResults = webmapResults;
-        m_webmaps = m_webmapResults->itemResults();
-        emit webmapsChanged();
-        emit hasMoreResultsChanged();
+    //! [SearchForWebmap CPP Portal find items completed]
+    connect(m_portal, &Portal::findItemsCompleted, this, [this](PortalQueryResultSetForItems *webmapResults)
+    {
+      m_webmapResults = webmapResults;
+      m_webmaps = m_webmapResults->itemResults();
+      emit webmapsChanged();
+      emit hasMoreResultsChanged();
     });
+    //! [SearchForWebmap CPP Portal find items completed]
 
     m_portal->load();
+  }
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
+  if(m_mapView)
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 }
 
 bool SearchForWebmap::portalLoaded() const
 {
-    return m_portalLoaded;
+  return m_portalLoaded;
 }
 
 QAbstractListModel* SearchForWebmap::webmaps() const
 {
-    return m_webmaps;
+  return m_webmaps;
 }
 
 bool SearchForWebmap::hasMoreResults() const
 {
-    return m_webmapResults && m_webmapResults->nextQueryParameters().startIndex() > -1;
+  return m_webmapResults && m_webmapResults->nextQueryParameters().startIndex() > -1;
 }
 
 QString SearchForWebmap::mapLoadError() const
 {
-    return m_mapLoadeError;
+  return m_mapLoadeError;
 }
 
 void SearchForWebmap::search(const QString keyword)
 {
-    PortalQueryParametersForItems query;
-    query.setSearchString(QString("tags:\"%1\"").arg(keyword));
-    query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
-    m_portal->findItems(query);
+  if (!m_portal)
+    return;
 
+  //! [SearchForWebmap CPP Portal find items]
+  // webmaps authored prior to July 2nd, 2014 are not supported - so search only from that date to the current time
+  QString fromDate = QString("000000%1").arg(QDateTime(QDate(2014, 7, 2)).toTime_t());
+  QString toDate = QString("000000%1").arg(QDateTime::currentDateTime().toTime_t());
+
+  PortalQueryParametersForItems query;
+  query.setSearchString(QString("tags:\"%1\" AND +uploaded:[%2 TO %3]")
+                        .arg(keyword)
+                        .arg(fromDate)
+                        .arg(toDate));
+  query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
+
+  m_portal->findItems(query);
+  //! [SearchForWebmap CPP Portal find items]
+
+  if(m_mapView)
     m_mapView->setVisible(false);
 }
 
 void SearchForWebmap::searchNext()
 {
-    if (!m_webmapResults || m_webmapResults->nextQueryParameters().startIndex() == -1)
-        return;
+  if (!m_webmapResults || !m_portal)
+    return;
 
-    m_portal->findItems(m_webmapResults->nextQueryParameters());
+  //! [Portal find with nextQueryParameters]
+  PortalQueryParametersForItems nextQuery = m_webmapResults->nextQueryParameters();
+  // check whether the startIndex of the new query is valid
+  if (nextQuery.startIndex() != -1)
+    m_portal->findItems(nextQuery);
+  //! [Portal find with nextQueryParameters]
 }
 
 void SearchForWebmap::loadSelectedWebmap(int index)
 {
-    if (!m_webmaps)
-        return;
+  if (!m_webmaps)
+    return;
 
-    PortalItem* selectedItem = m_webmaps->at(index);
-    if (!selectedItem)
-        return;
+  PortalItem* selectedItem = m_webmaps->at(index);
+  if (!selectedItem)
+    return;
 
-    if (m_selectedItem)
-        m_selectedItem->disconnect();
+  if (m_selectedItem)
+    m_selectedItem->disconnect();
 
-    m_selectedItem = selectedItem;
+  m_selectedItem = selectedItem;
 
-    connect(m_selectedItem, &PortalItem::loadStatusChanged, this, [this]{
-        if (!m_selectedItem || m_selectedItem->loadStatus() != LoadStatus::Loaded)
-            return;
+  connect(m_selectedItem, &PortalItem::loadStatusChanged, this, [this]
+  {
+    if (!m_selectedItem || m_selectedItem->loadStatus() != LoadStatus::Loaded)
+      return;
 
-        if (m_map)
-            m_map->disconnect();
+    if (m_map)
+    {
+      delete m_map;
+      m_map = nullptr;
+    }
 
-        m_mapLoadeError.clear();
-        emit mapLoadErrorChanged();
+    m_mapLoadeError.clear();
+    emit mapLoadErrorChanged();
 
-        m_map = new Map(m_selectedItem, this);
+    m_map = new Map(m_selectedItem, this);
 
-        connect(m_map, &Map::errorOccurred, this, [this](){
-            m_mapLoadeError = m_map->loadError().message();
-            emit mapLoadErrorChanged();
-        });
-
-        connect(m_map, &Map::loadStatusChanged, this, [this](){
-            if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
-                return;
-
-            m_mapView->setMap(m_map);
-            m_mapView->setVisible(true);
-        });
-
-        m_map->load();
+    connect(m_map, &Map::errorOccurred, this, [this]()
+    {
+      m_mapLoadeError = m_map->loadError().message();
+      emit mapLoadErrorChanged();
     });
-    m_selectedItem->load();
+
+    connect(m_map, &Map::loadStatusChanged, this, [this]()
+    {
+      if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
+        return;
+
+      m_mapView->setMap(m_map);
+      m_mapView->setVisible(true);
+    });
+
+    m_map->load();
+  });
+  m_selectedItem->load();
 }
 
 void SearchForWebmap::errorAccepted()
 {
-    m_mapLoadeError.clear();
-    emit mapLoadErrorChanged();
+  m_mapLoadeError.clear();
+  emit mapLoadErrorChanged();
 }
 
 AuthenticationManager *SearchForWebmap::authManager() const
 {
-    return AuthenticationManager::instance();
+  return AuthenticationManager::instance();
 }

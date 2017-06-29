@@ -34,14 +34,7 @@
 using namespace Esri::ArcGISRuntime;
 
 FindRoute::FindRoute(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_routeGraphicsOverlay(nullptr),
-    m_stopsGraphicsOverlay(nullptr),
-    m_routeTask(nullptr),
-    m_routeParameters(),
-    m_directions(nullptr)
+  QQuickItem(parent)
 {
 }
 
@@ -49,144 +42,156 @@ FindRoute::~FindRoute()
 {
 }
 
+void FindRoute::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterUncreatableType<DirectionManeuverListModel>("Esri.Samples", 1, 0, "DirectionManeuverListModel", "DirectionManeuverListModel is an uncreatable type");
+  qmlRegisterType<FindRoute>("Esri.Samples", 1, 0, "FindRouteSample");
+}
+
 void FindRoute::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new basemap instance
-    auto navigationLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"), this);
-    auto basemap = new Basemap(navigationLayer, this);
+  // create a new basemap instance
+  auto basemap = Basemap::navigationVector(this);
 
-    // create a new map instance
-    m_map = new Map(basemap, this);
-    m_map->setInitialViewpoint(Viewpoint(Point(-13041154, 3858170, SpatialReference(3857)), 1e5));
+  // create a new map instance
+  m_map = new Map(basemap, this);
+  m_map->setInitialViewpoint(Viewpoint(Point(-13041154, 3858170, SpatialReference(3857)), 1e5));
 
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 
-    // create initial graphics overlays
-    m_routeGraphicsOverlay = new GraphicsOverlay(this);
-    auto simpleLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("cyan"), 4, this);
-    auto simpleRenderer = new SimpleRenderer(simpleLineSymbol, this);
-    m_routeGraphicsOverlay->setRenderer(simpleRenderer);
-    m_stopsGraphicsOverlay = new GraphicsOverlay(this);
-    m_mapView->graphicsOverlays()->append(m_routeGraphicsOverlay);
-    m_mapView->graphicsOverlays()->append(m_stopsGraphicsOverlay);
+  // create initial graphics overlays
+  m_routeGraphicsOverlay = new GraphicsOverlay(this);
+  auto simpleLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("cyan"), 4, this);
+  auto simpleRenderer = new SimpleRenderer(simpleLineSymbol, this);
+  m_routeGraphicsOverlay->setRenderer(simpleRenderer);
+  m_stopsGraphicsOverlay = new GraphicsOverlay(this);
+  m_mapView->graphicsOverlays()->append(m_routeGraphicsOverlay);
+  m_mapView->graphicsOverlays()->append(m_stopsGraphicsOverlay);
 
-    // connect to loadStatusChanged signal
-    connect(m_map, &Map::loadStatusChanged, this, [this](LoadStatus loadStatus)
+  // connect to loadStatusChanged signal
+  connect(m_map, &Map::loadStatusChanged, this, [this](LoadStatus loadStatus)
+  {
+    if (loadStatus == LoadStatus::Loaded)
     {
-        if (loadStatus == LoadStatus::Loaded)
-        {
-            addStopGraphics();
-            setupRouteTask();
-        }
-    });
+      addStopGraphics();
+      setupRouteTask();
+    }
+  });
 }
 
 void FindRoute::addStopGraphics()
 {
-    // create the stop graphics' geometry
-    Point stop1Geometry(-13041171, 3860988, SpatialReference(3857));
-    Point stop2Geometry(-13041693, 3856006, SpatialReference(3857));
+  // create the stop graphics' geometry
+  Point stop1Geometry(-13041171, 3860988, SpatialReference(3857));
+  Point stop2Geometry(-13041693, 3856006, SpatialReference(3857));
 
-    // create the stop graphics' symbols
-    auto stop1Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing/FindRoute/pinA.png"));
-    auto stop2Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing/FindRoute/pinB.png"));
+  // create the stop graphics' symbols
+  auto stop1Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing/FindRoute/pinA.png"));
+  auto stop2Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing/FindRoute/pinB.png"));
 
-    // create the stop graphics
-    auto stop1Graphic = new Graphic(stop1Geometry, stop1Symbol, this);
-    auto stop2Graphic = new Graphic(stop2Geometry, stop2Symbol, this);
+  // create the stop graphics
+  auto stop1Graphic = new Graphic(stop1Geometry, stop1Symbol, this);
+  auto stop2Graphic = new Graphic(stop2Geometry, stop2Symbol, this);
 
-    // add to the overlay
-    m_stopsGraphicsOverlay->graphics()->append(stop1Graphic);
-    m_stopsGraphicsOverlay->graphics()->append(stop2Graphic);
+  // add to the overlay
+  m_stopsGraphicsOverlay->graphics()->append(stop1Graphic);
+  m_stopsGraphicsOverlay->graphics()->append(stop2Graphic);
 }
 
 // Helper function for creating picture marker symbols
 PictureMarkerSymbol* FindRoute::getPictureMarkerSymbol(QUrl imageUrl)
 {
-    auto pictureMarkerSymbol = new PictureMarkerSymbol(imageUrl, this);
-    pictureMarkerSymbol->setWidth(32);
-    pictureMarkerSymbol->setHeight(32);
-    pictureMarkerSymbol->setOffsetY(16);
-    return pictureMarkerSymbol;
+  auto pictureMarkerSymbol = new PictureMarkerSymbol(imageUrl, this);
+  pictureMarkerSymbol->setWidth(32);
+  pictureMarkerSymbol->setHeight(32);
+  pictureMarkerSymbol->setOffsetY(16);
+  return pictureMarkerSymbol;
 }
 
 void FindRoute::setupRouteTask()
 {
-    // create the route task pointing to an online service
-    m_routeTask = new RouteTask(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"), this);
+  //! [FindRoute new RouteTask]
+  // create the route task pointing to an online service
+  m_routeTask = new RouteTask(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"), this);
 
-    // connect to loadStatusChanged signal
-    connect(m_routeTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
+  // connect to loadStatusChanged signal
+  connect(m_routeTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)
+  {
+    if (loadStatus == LoadStatus::Loaded)
     {
-        if (loadStatus == LoadStatus::Loaded)
-        {
-            // Request default parameters once the task is loaded
-            m_routeTask->createDefaultParameters();
-        }
-    });
+      // Request default parameters once the task is loaded
+      m_routeTask->createDefaultParameters();
+    }
+  });
+  //! [FindRoute new RouteTask]
 
-    // connect to createDefaultParametersCompleted signal
-    connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
-    {
-        // Store the resulting route parameters
-        m_routeParameters = routeParameters;
-    });
+  //! [FindRoute connect RouteTask signals]
+  // connect to createDefaultParametersCompleted signal
+  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters routeParameters)
+  {
+    // Store the resulting route parameters
+    m_routeParameters = routeParameters;
+  });
 
-    // connect to solveRouteCompleted signal
-    connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
-    {
-        // Add the route graphic once the solve completes
-        auto generatedRoute = routeResult.routes().at(0);
-        auto routeGraphic = new Graphic(generatedRoute.routeGeometry());
-        m_routeGraphicsOverlay->graphics()->append(routeGraphic);
+  // connect to solveRouteCompleted signal
+  connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
+  {
+    // Add the route graphic once the solve completes
+    auto generatedRoute = routeResult.routes().at(0);
+    auto routeGraphic = new Graphic(generatedRoute.routeGeometry());
+    m_routeGraphicsOverlay->graphics()->append(routeGraphic);
 
-        // set the direction maneuver list model
-        m_directions = generatedRoute.directionManeuvers(this);
-        emit directionsChanged();
+    // set the direction maneuver list model
+    m_directions = generatedRoute.directionManeuvers(this);
+    emit directionsChanged();
 
-        // emit that the route has solved successfully
-        emit solveRouteComplete();
-    });
+    // emit that the route has solved successfully
+    emit solveRouteComplete();
+  });
+  //! [FindRoute connect RouteTask signals]
 
-    // load the route task
-    m_routeTask->load();
+  // load the route task
+  m_routeTask->load();
 }
 
 DirectionManeuverListModel* FindRoute::directions()
 {
-    return m_directions;
+  return m_directions;
 }
 
+//! [FindRoute solveRoute]
 void FindRoute::solveRoute()
 {
-    if (m_routeTask->loadStatus() == LoadStatus::Loaded)
+  if (m_routeTask->loadStatus() == LoadStatus::Loaded)
+  {
+    if (!m_routeParameters.isEmpty())
     {
-        if (!m_routeParameters.isEmpty())
-        {
-            // set parameters to return directions
-            m_routeParameters.setReturnDirections(true);
+      // set parameters to return directions
+      m_routeParameters.setReturnDirections(true);
 
-            // clear previous route graphics
-            m_routeGraphicsOverlay->graphics()->clear();
+      // clear previous route graphics
+      m_routeGraphicsOverlay->graphics()->clear();
 
-            // clear previous stops from the parameters
-            m_routeParameters.clearStops();
+      // clear previous stops from the parameters
+      m_routeParameters.clearStops();
 
-            // set the stops to the parameters
-            Stop stop1(m_stopsGraphicsOverlay->graphics()->at(0)->geometry());
-            stop1.setName("Origin");
-            Stop stop2(m_stopsGraphicsOverlay->graphics()->at(1)->geometry());
-            stop2.setName("Destination");
-            m_routeParameters.setStops(QList<Stop>() << stop1 << stop2);
+      // set the stops to the parameters
+      Stop stop1(m_stopsGraphicsOverlay->graphics()->at(0)->geometry());
+      stop1.setName("Origin");
+      Stop stop2(m_stopsGraphicsOverlay->graphics()->at(1)->geometry());
+      stop2.setName("Destination");
+      m_routeParameters.setStops(QList<Stop>() << stop1 << stop2);
 
-            // solve the route with the parameters
-            m_routeTask->solveRoute(m_routeParameters);
-        }
+      // solve the route with the parameters
+      m_routeTask->solveRoute(m_routeParameters);
     }
+  }
 }
+//! [FindRoute solveRoute]

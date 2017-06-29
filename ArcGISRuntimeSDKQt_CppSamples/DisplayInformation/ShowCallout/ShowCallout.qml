@@ -16,17 +16,14 @@
 
 import QtQuick 2.6
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 2.0
+import Esri.ArcGISRuntime.Toolkit.Controls 100.1
 
 ShowCalloutSample {
     id: showCalloutSample
     clip: true
-
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
 
     // add a mapView component
     MapView {
@@ -41,14 +38,5 @@ ShowCalloutSample {
             accessoryButtonHidden: true
         }
         //! [set callout data]
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }

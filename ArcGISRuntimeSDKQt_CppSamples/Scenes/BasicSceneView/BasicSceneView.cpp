@@ -24,9 +24,7 @@
 using namespace Esri::ArcGISRuntime;
 
 BasicSceneView::BasicSceneView(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_scene(nullptr),
-    m_sceneView(nullptr)
+  QQuickItem(parent)
 {
 }
 
@@ -34,30 +32,36 @@ BasicSceneView::~BasicSceneView()
 {
 }
 
+void BasicSceneView::init()
+{
+  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<BasicSceneView>("Esri.Samples", 1, 0, "BasicSceneSample");
+}
+
 void BasicSceneView::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML SceneView component
-    m_sceneView = findChild<SceneQuickView*>("sceneView");
+  // find QML SceneView component
+  m_sceneView = findChild<SceneQuickView*>("sceneView");
 
-    // create a new basemap instance
-    Basemap* basemap = Basemap::imagery(this);
-    // create a new scene instance
-    m_scene = new Scene(basemap, this);
-    // set scene on the scene view
-    m_sceneView->setArcGISScene(m_scene);
+  // create a new basemap instance
+  Basemap* basemap = Basemap::imagery(this);
+  // create a new scene instance
+  m_scene = new Scene(basemap, this);
+  // set scene on the scene view
+  m_sceneView->setArcGISScene(m_scene);
 
-    //! [create a new elevation source]
-    ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
-    // add the elevation source to the scene to display elevation
-    m_scene->baseSurface()->elevationSources()->append(elevationSource);
-    //! [create a new elevation source]
+  //! [create a new elevation source]
+  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  // add the elevation source to the scene to display elevation
+  m_scene->baseSurface()->elevationSources()->append(elevationSource);
+  //! [create a new elevation source]
 
-    //! [create a camera]
-    Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
-    // set the viewpoint
-    m_sceneView->setViewpointCameraAndWait(camera);
-    //! [create a camera]
+  //! [create a camera]
+  Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
+  // set the viewpoint
+  m_sceneView->setViewpointCameraAndWait(camera);
+  //! [create a camera]
 }
 

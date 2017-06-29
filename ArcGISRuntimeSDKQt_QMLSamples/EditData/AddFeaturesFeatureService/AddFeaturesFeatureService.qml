@@ -17,14 +17,11 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.0
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.1
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
 
     // Create MapView that contains a Map
     MapView {
@@ -78,7 +75,7 @@ Rectangle {
         }
 
         //! [AddFeaturesFeatureService new feature at mouse click]
-        onMouseClicked: {
+        onMouseClicked: {  // mouseClicked came from the MapView
             // create attributes json for the new feature
             var featureAttributes = {"typdamage" : "Minor", "primcause" : "Earthquake"};
 
@@ -89,15 +86,5 @@ Rectangle {
             featureTable.addFeature(feature);
         }
         //! [AddFeaturesFeatureService new feature at mouse click]
-    }
-
-    // neatline
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }

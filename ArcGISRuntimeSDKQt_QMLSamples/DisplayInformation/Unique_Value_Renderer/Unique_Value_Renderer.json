@@ -1,6 +1,5 @@
 {
     "source" :  "Unique_Value_Renderer.qml",
-    "description" : "Unique_Value_Renderer.html",
-    "thumbnail" : "Unique_Value_Renderer.png",
+    "otherSourceFiles" :  [],
     "name" : "Unique value renderer"
 }

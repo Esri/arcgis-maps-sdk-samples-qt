@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/Samples/Features/FeatureLayerDefinitionExpression">
         <file alias="sample.json">FeatureLayerDefinitionExpression.json</file>
-        <file>FeatureLayerDefinitionExpression.png</file>
+        <file>screenshot.png</file>
         <file>FeatureLayerDefinitionExpression.qml</file>
 		<file>FeatureLayerDefinitionExpression.h</file>
 		<file>FeatureLayerDefinitionExpression.cpp</file>
-        <file>FeatureLayerDefinitionExpression.html</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -83,6 +83,7 @@ Rectangle {
         }
     }
 
+    //! [FindAddress create LocatorTask]
     // Create a locator task using the World Geocoding Service
     LocatorTask {
         id: locatorTask
@@ -109,6 +110,7 @@ Rectangle {
         minScore: 75
         resultAttributeNames: ["Place_addr", "Match_addr"]
     }
+    //! [FindAddress create LocatorTask]
 
     // map callout window
     Rectangle {
@@ -183,7 +185,9 @@ Rectangle {
                 Keys.onReturnPressed: geocodeAddress();
 
                 function geocodeAddress() {
+                    //! [FindAddress geocodeWithParameters]
                     locatorTask.geocodeWithParameters(textField.text, geocodeParameters);
+                    //! [FindAddress geocodeWithParameters]
                     suggestView.visible = false;
                     Qt.inputMethod.hide();
                 }
@@ -299,14 +303,5 @@ Rectangle {
         ListElement { name: "Београд" }
         ListElement { name: "Москва" }
         ListElement { name: "北京" }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }

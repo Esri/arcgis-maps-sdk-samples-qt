@@ -1,0 +1,11 @@
+{
+    "source" :  "RasterRgbRenderer.qml",
+    "name" : "RGB renderer",
+    "otherSourceFiles" :  ["MinMaxRow.qml"],
+    "dataItems" : [
+        {
+            "itemId" : "c669445e6cb4490b8306f0c170a9cbb1",
+            "path" : "~/ArcGIS/Runtime/Data/raster/Shasta.tif"
+        }
+    ]
+}

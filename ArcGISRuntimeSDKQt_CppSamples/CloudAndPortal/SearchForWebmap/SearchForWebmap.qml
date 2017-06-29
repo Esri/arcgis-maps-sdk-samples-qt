@@ -10,14 +10,14 @@
 // notice and use restrictions.
 //
 // See the Sample code usage restrictions document for further information.
-//
+// [Legal]
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.1
 
 SearchForWebmapSample {
     id: root
@@ -46,20 +46,25 @@ SearchForWebmapSample {
         Rectangle {
             anchors.margins: 25
             width: webmapsList.width
-            height: 24 * scaleFactor
+            height: 32 * scaleFactor
             border.color: "white"
             border.width: 2 * scaleFactor
             color: index === webmapsList.currentIndex ? "orange" : "lightgrey"
             radius: 10
 
+            //! [PortalItemListModel example QML delegate]
             Text {
-                anchors{fill: parent; margins: 10}
-                text: model.title
+                anchors {
+                    fill: parent;
+                    margins: 10
+                }
+                text: title // access the title role of the model
                 color: "white"
                 elide: Text.ElideRight
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
             }
+            //! [PortalItemListModel example QML delegate]
 
             MouseArea {
                 anchors.fill: parent
@@ -195,15 +200,5 @@ SearchForWebmapSample {
         visible: mapLoadError.length > 0
         text: mapLoadError
         onAccepted: errorAccepted();
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }

@@ -10,23 +10,23 @@
 // notice and use restrictions.
 //
 // See the Sample code usage restrictions document for further information.
-//
+// [Legal]
 
 #ifndef SEARCHFORWEBMAP_H
 #define SEARCHFORWEBMAP_H
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class AuthenticationManager;
-        class Map;
-        class MapQuickView;
-        class Portal;
-        class PortalItem;
-        class PortalItemListModel;
-        class PortalQueryResultSetForItems;
-    }
+  namespace ArcGISRuntime
+  {
+    class AuthenticationManager;
+    class Map;
+    class MapQuickView;
+    class Portal;
+    class PortalItem;
+    class PortalItemListModel;
+    class PortalQueryResultSetForItems;
+  }
 }
 
 #include <QAbstractListModel>
@@ -34,47 +34,48 @@ namespace Esri
 
 class SearchForWebmap : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
-    Q_PROPERTY(bool portalLoaded READ portalLoaded NOTIFY portalLoadedChanged)
-    Q_PROPERTY(QAbstractListModel* webmaps READ webmaps NOTIFY webmapsChanged)
-    Q_PROPERTY(bool hasMoreResults READ hasMoreResults NOTIFY hasMoreResultsChanged)
-    Q_PROPERTY(QString mapLoadError READ mapLoadError NOTIFY mapLoadErrorChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
+  Q_PROPERTY(bool portalLoaded READ portalLoaded NOTIFY portalLoadedChanged)
+  Q_PROPERTY(QAbstractListModel* webmaps READ webmaps NOTIFY webmapsChanged)
+  Q_PROPERTY(bool hasMoreResults READ hasMoreResults NOTIFY hasMoreResultsChanged)
+  Q_PROPERTY(QString mapLoadError READ mapLoadError NOTIFY mapLoadErrorChanged)
 
 public:
-    SearchForWebmap(QQuickItem* parent = nullptr);
-    ~SearchForWebmap();
+  explicit SearchForWebmap(QQuickItem* parent = nullptr);
+  ~SearchForWebmap();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
-    Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
-    bool portalLoaded() const;
-    QAbstractListModel* webmaps() const;
-    bool hasMoreResults() const;
-    QString mapLoadError() const;
+  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
+  bool portalLoaded() const;
+  QAbstractListModel* webmaps() const;
+  bool hasMoreResults() const;
+  QString mapLoadError() const;
 
-    Q_INVOKABLE void search(const QString keyword);
-    Q_INVOKABLE void searchNext();
-    Q_INVOKABLE void loadSelectedWebmap(int index);
-    Q_INVOKABLE void errorAccepted();
+  Q_INVOKABLE void search(const QString keyword);
+  Q_INVOKABLE void searchNext();
+  Q_INVOKABLE void loadSelectedWebmap(int index);
+  Q_INVOKABLE void errorAccepted();
 
 signals:
-    void authManagerChanged();
-    void portalLoadedChanged();
-    void webmapsChanged();
-    void hasMoreResultsChanged();
-    void mapLoadErrorChanged();
+  void authManagerChanged();
+  void portalLoadedChanged();
+  void webmapsChanged();
+  void hasMoreResultsChanged();
+  void mapLoadErrorChanged();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::Portal* m_portal;
-    Esri::ArcGISRuntime::PortalQueryResultSetForItems* m_webmapResults;
-    Esri::ArcGISRuntime::PortalItemListModel* m_webmaps;
-    Esri::ArcGISRuntime::PortalItem* m_selectedItem;
-    bool m_portalLoaded;
-    QString m_mapLoadeError;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+  Esri::ArcGISRuntime::PortalQueryResultSetForItems* m_webmapResults = nullptr;
+  Esri::ArcGISRuntime::PortalItemListModel* m_webmaps = nullptr;
+  Esri::ArcGISRuntime::PortalItem* m_selectedItem = nullptr;
+  bool m_portalLoaded = false;
+  QString m_mapLoadeError;
 };
 
 #endif // SEARCHFORWEBMAP_H

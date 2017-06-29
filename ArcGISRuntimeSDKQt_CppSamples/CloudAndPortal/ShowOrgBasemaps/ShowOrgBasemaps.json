@@ -1,6 +1,8 @@
 {
     "source" :  "ShowOrgBasemaps.qml",
-    "description" : "ShowOrgBasemaps.html",
-    "thumbnail" : "ShowOrgBasemaps.png",
+    "otherSourceFiles" : [
+        "ShowOrgBasemaps.h",
+        "ShowOrgBasemaps.cpp"
+    ],
     "name" : "Show organization basemaps"
 }

@@ -37,18 +37,18 @@
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerQuery::FeatureLayerQuery(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_featureLayer(nullptr),
-    m_featureTable(nullptr),
-    m_initialized(false),
-    m_queryResultsCount(0)
+    QQuickItem(parent)
 {
 }
 
 FeatureLayerQuery::~FeatureLayerQuery()
 {
+}
+
+void FeatureLayerQuery::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<FeatureLayerQuery>("Esri.Samples", 1, 0, "FeatureLayerQuerySample");
 }
 
 void FeatureLayerQuery::componentComplete()
@@ -131,12 +131,31 @@ bool FeatureLayerQuery::layerInitialized() const
     return m_initialized;
 }
 
-void FeatureLayerQuery::runQuery(QString whereClause)
+void FeatureLayerQuery::runQuery(const QString& stateName)
 {
     // create a query parameter object and set the where clause
     QueryParameters queryParams;
-    queryParams.setWhereClause(QString("STATE_NAME LIKE \'" + whereClause.toUpper() + "%\'"));
+    queryParams.setWhereClause(QString("STATE_NAME LIKE '" + formatStateNameForQuery(stateName) + "%'"));
     m_featureTable->queryFeatures(queryParams);
+}
+
+QString FeatureLayerQuery::formatStateNameForQuery(const QString& stateName) const
+{
+    // format state names as expected by the service, for instance "Rhode Island"
+    if (stateName.isEmpty())
+        return QString();
+
+    QStringList words = stateName.split(" ", QString::SkipEmptyParts);
+    QStringList formattedWords;
+
+    for (const QString& word : words)
+    {
+        QString formattedWord = word.toLower();
+        formattedWord[0] = formattedWord[0].toUpper();
+        formattedWords.append(formattedWord);
+    }
+
+    return QString(formattedWords.join(" "));
 }
 
 int FeatureLayerQuery::queryResultsCount() const

@@ -19,31 +19,45 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class Geodatabase;
-    }
+  namespace ArcGISRuntime
+  {
+    class Error;
+    class Map;
+    class MapQuickView;
+    class Geodatabase;
+  }
 }
 
 #include <QQuickItem>
 
 class FeatureLayerGeodatabase : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
+
+  Q_PROPERTY(QString errorMessage READ errorMessage NOTIFY errorMessageChanged)
 
 public:
-    FeatureLayerGeodatabase(QQuickItem* parent = 0);
-    ~FeatureLayerGeodatabase();
+  explicit FeatureLayerGeodatabase(QQuickItem* parent = nullptr);
+  ~FeatureLayerGeodatabase();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+
+signals:
+  void errorMessageChanged();
+
+private slots:
+  void logError(const Esri::ArcGISRuntime::Error& error);
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::Geodatabase* m_geodatabase;
-    QString m_dataPath;
+  QString errorMessage() const;
+  void setErrorMessage(const QString& msg);
+
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;
+  QString m_dataPath;
+  QString m_errorMsg;
 };
 
 #endif // FEATURE_LAYER_GEODATABASE_H

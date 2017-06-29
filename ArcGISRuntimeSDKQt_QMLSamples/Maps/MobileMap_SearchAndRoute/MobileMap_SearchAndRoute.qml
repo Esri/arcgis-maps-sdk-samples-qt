@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.0
-import Esri.ArcGISRuntime.Toolkit.Controls 2.0
+import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime.Toolkit.Controls 100.1
 
 Rectangle {
     clip: true
@@ -84,8 +84,8 @@ Rectangle {
 
             PictureMarkerSymbol {
                 id: bluePinSymbol
-                height: 36 * scaleFactor
-                width: 36 * scaleFactor
+                height: 36
+                width: 36
                 url: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/bluePinSymbol.png"
                 offsetY: height / 2
             }
@@ -239,7 +239,9 @@ Rectangle {
             mapView.resetMap();
 
             // change the locatorTask
+            //! [MobileMap_SearchAndRoute create LocatorTask]
             currentLocatorTask = mobileMapList[selectedMmpkIndex].locatorTask;
+            //! [MobileMap_SearchAndRoute create LocatorTask]
 
             // determine if map supports routing
             if (mobileMapList[selectedMmpkIndex].maps[selectedMapInBundleIndex].transportationNetworks.length > 0) {
@@ -298,8 +300,8 @@ Rectangle {
                         var textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
                                                                                    color: "white",
                                                                                    text: routeStops.length,
-                                                                                   size: 18 * scaleFactor,
-                                                                                   offsetY: 19 * scaleFactor
+                                                                                   size: 18,
+                                                                                   offsetY: 19
                                                                                });
 
                         // create graphic using the text symbol
@@ -647,16 +649,6 @@ Rectangle {
 
             // then create a MobileMapPackage with the stored paths
             loadMmpks();
-        }
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

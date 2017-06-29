@@ -18,9 +18,9 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.1
 
 Rectangle {
     id: rootRectangle
@@ -35,11 +35,18 @@ Rectangle {
     function search() {
         mapView.visible = false;
         mapView.map = null;
+        //! [Portal findItems webmaps part 2]
         portal.findItems(webmapQuery);
+        //! [Portal findItems webmaps part 2]
     }
 
     function searchNext(){
-        portal.findItems(portal.findItemsResult.nextQueryParameters);
+        //! [Portal find with nextQueryParameters]
+        var nextQuery = portal.findItemsResult.nextQueryParameters;
+        // check whether the startIndex of the new query is valid
+        if (nextQuery.startIndex !== -1)
+            portal.findItems(nextQuery);
+        //! [Portal find with nextQueryParameters]
     }
 
     function loadSelectedWebmap(selectedWebmap) {
@@ -77,21 +84,21 @@ Rectangle {
         mapView.visible = true;
     }
 
+    //! [Portal findItems webmaps part 1]
+    // webmaps authored prior to July 2nd, 2014 are not supported - so search only from that date to the current time
+    property string fromDate: "000000" + new Date('Wed, 02 Jul 2014 00:00:00 GMT').getTime()
+    property string toDate: "000000" + new Date().getTime()
+
     PortalQueryParametersForItems {
         id: webmapQuery
         types: [ Enums.PortalItemTypeWebMap ]
-        searchString: "tags:\"" + keyWordField.text + "\"";
+
+        searchString: 'tags:\"' + keyWordField.text + '\" AND + uploaded:[' + fromDate + ' TO ' + toDate +']';
     }
+    //! [Portal findItems webmaps part 1]
 
     Portal {
         id: portal
-        loginRequired: true
-        credential: Credential {
-            oAuthClientInfo: OAuthClientInfo {
-                oAuthMode: Enums.OAuthModeUser
-                clientId: "W3hPKzPbeJ0tr8aj"
-            }
-        }
 
         Component.onCompleted: load();
 
@@ -106,14 +113,17 @@ Rectangle {
             keyWordField.focus = true
         }
 
+        //! [Portal findItems completed]
         onFindItemsResultChanged: {
             if (portal.findItemsStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            webmapsList.visible = true;
+            // bind the item list model to the view
             webmapsList.model = portal.findItemsResult.itemResults
+            webmapsList.visible = true;
             webmapsList.focus = true;
         }
+        //! [Portal findItems completed]
     }
 
     Component {
@@ -127,14 +137,19 @@ Rectangle {
             color: "lightgrey"
             radius: 10
 
+            //! [PortalItemListModel example QML delegate]
             Text {
-                anchors{fill: parent; margins: 10}
-                text: webmapsList.model.get(index).title
+                anchors {
+                    fill: parent;
+                    margins: 10
+                }
+                text: title
                 color: "white"
                 elide: Text.ElideRight
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
             }
+            //! [PortalItemListModel example QML delegate]
 
             MouseArea {
                 anchors.fill: parent
@@ -155,7 +170,10 @@ Rectangle {
             radius: 4
 
             Text {
-                anchors{fill: parent; margins: 10}
+                anchors {
+                    fill: parent
+                    margins: 10
+                }
                 text: webmapsList.model.count > 0 ? webmapsList.model.get(webmapsList.currentIndex).title : ""
                 font.bold: true
                 elide: Text.ElideRight
@@ -273,15 +291,5 @@ Rectangle {
         visible: false
 
         onAccepted: visible = false;
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }

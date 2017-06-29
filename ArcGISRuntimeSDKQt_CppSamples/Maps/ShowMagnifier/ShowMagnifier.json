@@ -1,7 +1,9 @@
 {
-    "source" :  "ShowMagnifier",
-    "description" : "ShowMagnifier.html",
-    "thumbnail" : "ShowMagnifier.png",
+    "source" :  "ShowMagnifier.qml",
+    "otherSourceFiles" : [
+        "ShowMagnifier.h",
+        "ShowMagnifier.cpp"
+    ],
     "name" : "Show magnifier"
 }
 

@@ -16,14 +16,13 @@
 
 import QtQuick 2.6
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 
 Rectangle {
     clip: true
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Map view UI presentation at top
@@ -63,8 +62,8 @@ Rectangle {
 
                 PictureMarkerSymbol {
                     url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0/images/e82f744ebb069bb35b234b3fea46deae"
-                    width: 38
-                    height: 38
+                    width: 38.0
+                    height: 38.0
                 }
             }
 
@@ -79,8 +78,8 @@ Rectangle {
 
                 PictureMarkerSymbol {
                     url: "qrc:/Samples/DisplayInformation/Picture_Marker_Symbol/blue_symbol.png"
-                    width: 80
-                    height: 80
+                    width: 80.0
+                    height: 80.0
                 }
             }
 
@@ -95,19 +94,10 @@ Rectangle {
 
                 PictureMarkerSymbol {
                     url: dataPath + "/symbol/orange_symbol.png"
-                    width: 64
-                    height: 64
+                    width: 64.0
+                    height: 64.0
                 }
             }
-        }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

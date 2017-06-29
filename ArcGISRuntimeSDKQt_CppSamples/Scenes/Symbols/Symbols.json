@@ -1,6 +1,8 @@
 {
-    "source" :  "Symbols",
-    "description" : "Symbols.html",
-    "thumbnail" : "Symbols.png",
+    "source" :  "Symbols.qml",
+    "otherSourceFiles" : [
+        "Symbols.h",
+        "Symbols.cpp"
+    ],
     "name" : "Scene symbols"
 }

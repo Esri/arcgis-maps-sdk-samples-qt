@@ -1,6 +1,5 @@
 {
     "source" :  "TokenAuthentication.qml",
-    "description" : "TokenAuthentication.html",
-    "thumbnail" : "TokenAuthentication.png",
+    "otherSourceFiles" :  [],
     "name" : "Token authentication"
 }

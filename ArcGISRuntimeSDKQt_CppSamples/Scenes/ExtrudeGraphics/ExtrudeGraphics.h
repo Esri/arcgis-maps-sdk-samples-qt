@@ -19,11 +19,11 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Scene;
-        class SceneQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Scene;
+    class SceneQuickView;
+  }
 }
 
 #include "Polygon.h"
@@ -31,22 +31,23 @@ namespace Esri
 
 class ExtrudeGraphics : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    ExtrudeGraphics(QQuickItem* parent = 0);
-    ~ExtrudeGraphics();
+  explicit ExtrudeGraphics(QQuickItem* parent = nullptr);
+  ~ExtrudeGraphics();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Polygon createPolygonFromPoints(QList<Esri::ArcGISRuntime::Point>);
+  Esri::ArcGISRuntime::Polygon createPolygonFromPoints(QList<Esri::ArcGISRuntime::Point>);
 
-    Esri::ArcGISRuntime::Scene* m_scene;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
-    QUrl m_elevationSourceUrl;
-    int m_maxZ;
-    double m_size;
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  QUrl m_elevationSourceUrl = QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer");
+  int m_maxZ = 1000;
+  double m_size = 0.01;
 };
 
 #endif // EXTRUDE_GRAPHICS_H

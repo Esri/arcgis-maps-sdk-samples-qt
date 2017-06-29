@@ -31,12 +31,12 @@ class DisplayMap : public QWidget
   Q_OBJECT
 
 public:
-  explicit DisplayMap(QWidget* parent = 0);
+  explicit DisplayMap(QWidget* parent = nullptr);
    ~DisplayMap();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
 };
 
 #endif // DISPLAY_MAP_H

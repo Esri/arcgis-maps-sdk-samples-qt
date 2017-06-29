@@ -43,15 +43,6 @@ FeatureLayerDictionaryRendererSample {
         indeterminate: true
     }
 
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
-
     onAllLayersLoaded: {
         progressBar_loading.visible = false;
     }

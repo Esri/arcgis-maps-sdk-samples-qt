@@ -23,10 +23,7 @@
 using namespace Esri::ArcGISRuntime;
 
 MapLoaded::MapLoaded(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_loadStatus("")
+  QQuickItem(parent)
 {
 }
 
@@ -34,46 +31,52 @@ MapLoaded::~MapLoaded()
 {
 }
 
+void MapLoaded::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<MapLoaded>("Esri.Samples", 1, 0, "MapLoadedSample");
+}
+
 void MapLoaded::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new basemap instance
-    Basemap* basemap = Basemap::streets(this);
-    // create a new map instance
-    m_map = new Map(basemap, this);
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // create a new basemap instance
+  Basemap* basemap = Basemap::streets(this);
+  // create a new map instance
+  m_map = new Map(basemap, this);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 
-    connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, this, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
+  connect(m_map, &Esri::ArcGISRuntime::Map::loadStatusChanged, this, [this](Esri::ArcGISRuntime::LoadStatus loadStatus)
+  {
+    switch (loadStatus)
     {
-        switch (loadStatus)
-        {
-        case LoadStatus::Loaded:
-            m_loadStatus = "Map Load Status: Loaded";
-            break;
-        case LoadStatus::Loading:
-            m_loadStatus = "Map Load Status: Loading...";
-            break;
-        case LoadStatus::FailedToLoad:
-            m_loadStatus = "Map Load Status: Failed to Load";
-            break;
-        case LoadStatus::NotLoaded:
-            m_loadStatus = "Map Load Status: Not Loaded";
-            break;
-        case LoadStatus::Unknown:
-            m_loadStatus = "Map Load Status: Unknown";
-            break;
-        }
-        emit mapLoadStatusChanged();
-    });
+    case LoadStatus::Loaded:
+      m_loadStatus = "Map Load Status: Loaded";
+      break;
+    case LoadStatus::Loading:
+      m_loadStatus = "Map Load Status: Loading...";
+      break;
+    case LoadStatus::FailedToLoad:
+      m_loadStatus = "Map Load Status: Failed to Load";
+      break;
+    case LoadStatus::NotLoaded:
+      m_loadStatus = "Map Load Status: Not Loaded";
+      break;
+    case LoadStatus::Unknown:
+      m_loadStatus = "Map Load Status: Unknown";
+      break;
+    }
+    emit mapLoadStatusChanged();
+  });
 }
 
 QString MapLoaded::mapLoadStatus() const
 {
-    return m_loadStatus;
+  return m_loadStatus;
 }
 

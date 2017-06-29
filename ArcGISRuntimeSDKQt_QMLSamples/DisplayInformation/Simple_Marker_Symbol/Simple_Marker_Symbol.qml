@@ -15,15 +15,12 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 
 Rectangle {
     clip: true
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
 
     // Map view UI presentation at top
     MapView {
@@ -66,14 +63,5 @@ Rectangle {
                 }
             }
         }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        border {
-            color: "black"
-            width: 0.5 * scaleFactor
-        }
-        color: "transparent"
     }
 }

@@ -19,28 +19,29 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 #include <QQuickItem>
 
 class SetInitialMapArea : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    SetInitialMapArea(QQuickItem* parent = 0);
-    ~SetInitialMapArea();
+  explicit SetInitialMapArea(QQuickItem* parent = nullptr);
+  ~SetInitialMapArea();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // SET_INITIAL_MAP_AREA_H

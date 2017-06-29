@@ -1,7 +1,9 @@
 {
-    "source" :  "ChangeViewpoint",
-    "description" : "ChangeViewpoint.html",
-    "thumbnail" : "ChangeViewpoint.png",
+    "source" :  "ChangeViewpoint.qml",
+    "otherSourceFiles" : [
+        "ChangeViewpoint.h",
+        "ChangeViewpoint.cpp"
+    ],
     "name" : "Change viewpoint"
 }
 

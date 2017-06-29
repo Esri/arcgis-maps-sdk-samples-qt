@@ -42,10 +42,11 @@ class EditAndSyncFeatures : public QQuickItem
   Q_PROPERTY(bool isOffline READ isOffline NOTIFY isOfflineChanged)
 
 public:
-  EditAndSyncFeatures(QQuickItem* parent = nullptr);
+  explicit EditAndSyncFeatures(QQuickItem* parent = nullptr);
   ~EditAndSyncFeatures();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
   Q_INVOKABLE void generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2);
   Q_INVOKABLE void executeSync();
 
@@ -64,15 +65,15 @@ private:
   bool isOffline() const;
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
-  Esri::ArcGISRuntime::GeodatabaseSyncTask* m_syncTask;
-  Esri::ArcGISRuntime::Geodatabase* m_offlineGdb;
-  Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GeodatabaseSyncTask* m_syncTask = nullptr;
+  Esri::ArcGISRuntime::Geodatabase* m_offlineGdb = nullptr;
+  Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
   QString m_dataPath;
-  qint64 m_featureLayerId;
-  QString m_featureServiceUrl;
-  bool m_isOffline;
+  qint64 m_featureLayerId = 0;
+  QString m_featureServiceUrl = QStringLiteral("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/");
+  bool m_isOffline = false;
 };
 
 #endif // EDITANDSYNCFEATURES_H

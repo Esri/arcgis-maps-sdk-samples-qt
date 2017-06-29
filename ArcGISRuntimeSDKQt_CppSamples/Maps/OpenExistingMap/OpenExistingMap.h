@@ -19,10 +19,10 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class MapQuickView;
+  }
 }
 
 class QString;
@@ -31,17 +31,18 @@ class QString;
 
 class OpenExistingMap : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    OpenExistingMap(QQuickItem* parent = 0);
-    ~OpenExistingMap();
+  explicit OpenExistingMap(QQuickItem* parent = nullptr);
+  ~OpenExistingMap();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void openMap(QString itemId);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void openMap(const QString& itemId);
 
 private:
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // OPEN_EXISTING_MAP_H

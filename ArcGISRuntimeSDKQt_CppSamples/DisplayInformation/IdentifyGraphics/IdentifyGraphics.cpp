@@ -32,11 +32,7 @@
 using namespace Esri::ArcGISRuntime;
 
 IdentifyGraphics::IdentifyGraphics(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_graphicsOverlay(nullptr),
-    m_identifiedGraphicsCount(0)
+  QQuickItem(parent)
 {
 }
 
@@ -44,74 +40,84 @@ IdentifyGraphics::~IdentifyGraphics()
 {
 }
 
+void IdentifyGraphics::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<IdentifyGraphics>("Esri.Samples", 1, 0, "IdentifyGraphicsSample");
+}
+
 void IdentifyGraphics::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // Create a map using the topographic basemap
-    m_map = new Map(Basemap::topographic(this), this);
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // Create a map using the topographic basemap
+  m_map = new Map(Basemap::topographic(this), this);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 
-    // create a new graphics overlay
-    m_graphicsOverlay = new GraphicsOverlay(this);
+  // create a new graphics overlay
+  m_graphicsOverlay = new GraphicsOverlay(this);
 
-    // assign a renderer to the graphics overlay
-    SimpleFillSymbol* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 255, 0, 180), this);
-    SimpleRenderer* simpleRenderer = new SimpleRenderer(simpleFillSymbol, this);
-    m_graphicsOverlay->setRenderer(simpleRenderer);
+  // assign a renderer to the graphics overlay
+  SimpleFillSymbol* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 255, 0, 180), this);
+  SimpleRenderer* simpleRenderer = new SimpleRenderer(simpleFillSymbol, this);
+  m_graphicsOverlay->setRenderer(simpleRenderer);
 
-    // add the overlay to the mapview
-    m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
+  // add the overlay to the mapview
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-    // add polygon graphics
-    addPolygonGraphic();
+  // add polygon graphics
+  addPolygonGraphic();
 
-    // connect signals
-    connectSignals();
+  // connect signals
+  connectSignals();
 }
 
 // create the polygon geometry and graphic
 void IdentifyGraphics::addPolygonGraphic()
 {
-    // create the polygon using the builder class
-    PolygonBuilder polygonBuilder(SpatialReference::webMercator());
-    polygonBuilder.addPoint(-20e5, 20e5);
-    polygonBuilder.addPoint(20e5, 20e5);
-    polygonBuilder.addPoint(20e5, -20e5);
-    polygonBuilder.addPoint(-20e5, -20e5);
+  // create the polygon using the builder class
+  PolygonBuilder polygonBuilder(SpatialReference::webMercator());
+  polygonBuilder.addPoint(-20e5, 20e5);
+  polygonBuilder.addPoint(20e5, 20e5);
+  polygonBuilder.addPoint(20e5, -20e5);
+  polygonBuilder.addPoint(-20e5, -20e5);
 
-    // create the graphic and add to the graphics overlay
-    Graphic* graphic = new Graphic(polygonBuilder.toGeometry(), this);
-    m_graphicsOverlay->graphics()->append(graphic);
+  // create the graphic and add to the graphics overlay
+  Graphic* graphic = new Graphic(polygonBuilder.toGeometry(), this);
+  m_graphicsOverlay->graphics()->append(graphic);
 }
 
 void IdentifyGraphics::connectSignals()
 {
-    //! [identify graphics api snippet]
-    // connect to the mouse clicked signal on the MapQuickView
-    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
-    {
-        // call identify on the map view
-        m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
-    });
+  //! [identify graphics api snippet]
+  // connect to the mouse clicked signal on the MapQuickView
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+  {
+    // call identify on the map view
+    double tolerance = 5.0;
+    bool returnPopupsOnly = false;
+    int maximumResults = 1;
 
-    // connect to the identifyLayerCompleted signal on the map view
-    connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
+    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly, maximumResults);
+  });
+
+  // connect to the identifyLayerCompleted signal on the map view
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
+  {
+    if (identifyResult)
     {
-        if (identifyResult)
-        {
-          m_identifiedGraphicsCount = identifyResult->graphics().size();
-          emit identifiedGraphicsCountChanged();
-        }
-    });
-    //! [identify graphics api snippet]
+      m_identifiedGraphicsCount = identifyResult->graphics().size();
+      emit identifiedGraphicsCountChanged();
+    }
+  });
+  //! [identify graphics api snippet]
 }
 
 int IdentifyGraphics::identifiedGraphicsCount()
 {
-    return m_identifiedGraphicsCount;
+  return m_identifiedGraphicsCount;
 }

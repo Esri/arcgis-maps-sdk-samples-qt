@@ -19,37 +19,38 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class Geometry;
-        class GraphicsOverlay;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class Geometry;
+    class GraphicsOverlay;
+  }
 }
 
 #include <QQuickItem>
 
 class GOSymbols : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    GOSymbols(QQuickItem* parent = 0);
-    ~GOSymbols();
+  explicit GOSymbols(QQuickItem* parent = nullptr);
+  ~GOSymbols();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-
-private:
-    void addBuoyPoints(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
-    void addBoatTrip(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
-    void addNestingGround(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
-    void addText(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
-    Esri::ArcGISRuntime::Geometry createNestingGround();
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  void addBuoyPoints(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
+  void addBoatTrip(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
+  void addNestingGround(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
+  void addText(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);
+  Esri::ArcGISRuntime::Geometry createNestingGround();
+
+private:
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // GOSYMBOLS_H

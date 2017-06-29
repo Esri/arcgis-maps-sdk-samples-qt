@@ -1,7 +1,6 @@
 {
     "source" :  "BasicSceneView.qml",
-    "description" : "BasicSceneView.html",
-    "thumbnail" : "BasicSceneView.png",
+    "otherSourceFiles" :  [],
     "name" : "Display a scene"
 }
 

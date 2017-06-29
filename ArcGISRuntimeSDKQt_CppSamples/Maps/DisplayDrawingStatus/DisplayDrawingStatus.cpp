@@ -26,11 +26,7 @@
 using namespace Esri::ArcGISRuntime;
 
 DisplayDrawingStatus::DisplayDrawingStatus(QQuickItem* parent):
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_featureLayer(nullptr),
-    m_mapDrawing(false)
+  QQuickItem(parent)
 {
 }
 
@@ -38,33 +34,42 @@ DisplayDrawingStatus::~DisplayDrawingStatus()
 {
 }
 
+void DisplayDrawingStatus::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<DisplayDrawingStatus>("Esri.Samples", 1, 0, "DisplayDrawingStatusSample");
+}
+
 void DisplayDrawingStatus::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
-    m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // Create a map using the topographic basemap
-    m_map = new Map(Basemap::topographic(this), this);
-    m_map->setInitialViewpoint(Viewpoint(Envelope(-13639984, 4537387, -13606734, 4558866, SpatialReference::webMercator())));
+  // Create a map using the topographic basemap
+  m_map = new Map(Basemap::topographic(this), this);
+  m_map->setInitialViewpoint(Viewpoint(Envelope(-13639984, 4537387, -13606734, 4558866, SpatialReference::webMercator())));
 
-    // create feature layer
-    ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
-    m_featureLayer = new FeatureLayer(featureTable, this);
+  // create feature layer
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
+  m_featureLayer = new FeatureLayer(featureTable, this);
 
-    // Set map to map view
-    m_mapView->setMap(m_map);
+  // add the layer to the map
+  m_map->operationalLayers()->append(m_featureLayer);
 
-    connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
-    {
-        drawStatus == DrawStatus::InProgress ? m_mapDrawing = true : m_mapDrawing = false;
-        emit mapDrawStatusChanged();
-    });
+  // Set map to map view
+  m_mapView->setMap(m_map);
+
+  connect(m_mapView, &MapQuickView::drawStatusChanged, this, [this](DrawStatus drawStatus)
+  {
+    drawStatus == DrawStatus::InProgress ? m_mapDrawing = true : m_mapDrawing = false;
+    emit mapDrawStatusChanged();
+  });
 }
 
 bool DisplayDrawingStatus::mapDrawing() const
 {
-    return m_mapDrawing;
+  return m_mapDrawing;
 }

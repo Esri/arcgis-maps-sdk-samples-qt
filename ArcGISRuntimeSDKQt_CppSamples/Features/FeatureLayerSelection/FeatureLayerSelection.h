@@ -19,13 +19,13 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class FeatureLayer;
-        class ServiceFeatureTable;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class FeatureLayer;
+    class ServiceFeatureTable;
+  }
 }
 
 class QString;
@@ -34,29 +34,30 @@ class QString;
 
 class FeatureLayerSelection : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(QString selectedFeatureText READ selectedFeatureText NOTIFY selectedFeatureTextChanged)
+  Q_PROPERTY(QString selectedFeatureText READ selectedFeatureText NOTIFY selectedFeatureTextChanged)
 
 public:
-    FeatureLayerSelection(QQuickItem* parent = 0);
-    ~FeatureLayerSelection();
+  explicit FeatureLayerSelection(QQuickItem* parent = nullptr);
+  ~FeatureLayerSelection();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
-    void selectedFeatureTextChanged();
+  void selectedFeatureTextChanged();
 
 private:
-    void connectSignals();
-    QString selectedFeatureText() const;
+  void connectSignals();
+  QString selectedFeatureText() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-    QString m_selectedFeatureText;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+  QString m_selectedFeatureText = "Click or tap to select features.";
 };
 
 #endif // FEATURE_LAYER_SELECTION_H

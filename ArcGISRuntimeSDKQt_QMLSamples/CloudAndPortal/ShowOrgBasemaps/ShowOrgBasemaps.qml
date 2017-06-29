@@ -16,9 +16,9 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.1
 
 Rectangle {
     id: rootRectangle
@@ -42,21 +42,21 @@ Rectangle {
 
     BusyIndicator {
         anchors.centerIn: parent
-        running: !mapView.visible && portal.loadStatus !== Enums.LoadStatusLoaded;
+        running: !anonymousLogIn.visible && !mapView.visible && portal.loadStatus !== Enums.LoadStatusLoaded;
+    }
+
+    Credential {
+        id: oAuthCredential
+        oAuthClientInfo: OAuthClientInfo {
+            oAuthMode: Enums.OAuthModeUser
+            clientId: "W3hPKzPbeJ0tr8aj"
+        }
     }
 
     Portal {
         id: portal
 
-        credential: Credential {
-            oAuthClientInfo: OAuthClientInfo {
-                oAuthMode: Enums.OAuthModeUser
-                clientId: "W3hPKzPbeJ0tr8aj"
-            }
-        }
-
-        Component.onCompleted: load();
-
+        //! [Portal fetchBasemaps after loaded]
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusFailedToLoad) {
                 retryLoad();
@@ -76,6 +76,7 @@ Rectangle {
             basemapsGrid.model = basemaps;
             gridFadeIn.running = true;
         }
+        //! [Portal fetchBasemaps after loaded]
     }
 
     Text{
@@ -90,7 +91,8 @@ Rectangle {
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignTop
-        text: porInfo ? porInfo.organizationName + " Basemaps" : "Loading Organization Basemaps..."
+        text: anonymousLogIn.visible ? "Load Portal" :
+                                       (basemapsGrid.count > 0 ? porInfo.organizationName + " Basemaps" : "Loading Organization Basemaps...")
         wrapMode: Text.Wrap
         elide: Text.ElideRight
     }
@@ -104,6 +106,25 @@ Rectangle {
             right: parent.right
         }
         visible: false
+    }
+
+    Button {
+        id: backButton
+        anchors {
+            top: mapView.top
+            right: mapView.right
+            margins: 16 * scaleFactor
+        }
+        visible: mapView.visible
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
+        text: "Back"
+        opacity: hovered ? 1 : 0.5
+
+        onClicked: {
+            mapView.visible = false;
+            basemapsGrid.enabled = true;
+            gridFadeIn.running = true;
+        }
     }
 
     GridView {
@@ -132,6 +153,7 @@ Rectangle {
             radius: 2
             clip: true
 
+            //! [BasemapListModel example QML delegate]
             Image {
                 id: basemapImg
                 anchors {
@@ -160,6 +182,7 @@ Rectangle {
                 font.pointSize: 8
                 font.bold: index === basemapsGrid.currentIndex
             }
+            //! [BasemapListModel example QML delegate]
 
             MouseArea {
                 enabled: !mapView.visible && portal.loadStatus === Enums.LoadStatusLoaded
@@ -207,17 +230,43 @@ Rectangle {
         }
     }
 
-    AuthenticationView {
-        authenticationManager: AuthenticationManager
+    Button {
+        id: anonymousLogIn
+        anchors {
+            margins: 16 * scaleFactor
+            horizontalCenter: parent.horizontalCenter
+            top: title.bottom
+        }
+        text: "Anonymous"
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
+
+        onClicked: {
+            portal.load();
+            anonymousLogIn.visible = false;
+            userLogIn.visible = false;
+        }
     }
 
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
+    Button {
+        id: userLogIn
+        anchors {
+            margins: 16 * scaleFactor
+            horizontalCenter: anonymousLogIn.horizontalCenter
+            top: anonymousLogIn.bottom
         }
+        width: anonymousLogIn.width
+        text: "Sign-in"
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
+
+        onClicked: {
+            portal.credential = oAuthCredential;
+            portal.load();
+            anonymousLogIn.visible = false;
+            userLogIn.visible = false;
+        }
+    }
+
+    AuthenticationView {
+        authenticationManager: AuthenticationManager
     }
 }

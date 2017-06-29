@@ -1,7 +1,9 @@
 {
-    "source" :  "ShowCallout",
-    "description" : "ShowCallout.html",
-    "thumbnail" : "ShowCallout.png",
+    "source" :  "ShowCallout.qml",
+    "otherSourceFiles" : [
+        "ShowCallout.h",
+        "ShowCallout.cpp"
+    ],
     "name" : "Show callout"
 }
 

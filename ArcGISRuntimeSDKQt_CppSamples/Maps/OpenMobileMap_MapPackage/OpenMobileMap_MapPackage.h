@@ -19,28 +19,29 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class MapQuickView;
-        class MobileMapPackage;
-    }
+  namespace ArcGISRuntime
+  {
+    class MapQuickView;
+    class MobileMapPackage;
+  }
 }
 
 #include <QQuickItem>
 
 class OpenMobileMap_MapPackage : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    OpenMobileMap_MapPackage(QQuickItem* parent = 0);
-    ~OpenMobileMap_MapPackage();
+  explicit OpenMobileMap_MapPackage(QQuickItem* parent = nullptr);
+  ~OpenMobileMap_MapPackage();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage = nullptr;
 };
 
 #endif // OPEN_MOBILE_MAP_MAP_PACKAGE_H

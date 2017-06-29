@@ -29,11 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ChangeSublayerVisibility::ChangeSublayerVisibility(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_mapImageLayer(nullptr),
-    m_sublayerModel(nullptr)
+  QQuickItem(parent)
 {
 }
 
@@ -41,31 +37,38 @@ ChangeSublayerVisibility::~ChangeSublayerVisibility()
 {
 }
 
+void ChangeSublayerVisibility::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterUncreatableType<ArcGISSublayerListModel>("Esri.Samples", 1, 0, "ArcGISSublayerListModel", "ArcGISSublayerListModel is an uncreatable type");
+  qmlRegisterType<ChangeSublayerVisibility>("Esri.Samples", 1, 0, "ChangeSublayerVisibilitySample");
+}
+
 void ChangeSublayerVisibility::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new map instance
-    m_map = new Map(Basemap::topographic(this), this);
-    m_map->setInitialViewpoint(Viewpoint(Point(-11e6, 6e6, SpatialReference(102100)), 9e7));
+  // create a new map instance
+  m_map = new Map(Basemap::topographic(this), this);
+  m_map->setInitialViewpoint(Viewpoint(Point(-11e6, 6e6, SpatialReference(102100)), 9e7));
 
-    // add the map image layer
-    m_mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"), this);
-    m_map->operationalLayers()->append(m_mapImageLayer);
+  // add the map image layer
+  m_mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"), this);
+  m_map->operationalLayers()->append(m_mapImageLayer);
 
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 
-    // set the map image layer's sublayer list model to the Q_PROPERTY
-    m_sublayerModel = m_mapImageLayer->mapImageSublayers();
-    sublayerModelChanged();
+  // set the map image layer's sublayer list model to the Q_PROPERTY
+  m_sublayerModel = m_mapImageLayer->mapImageSublayers();
+  sublayerModelChanged();
 }
 
 ArcGISSublayerListModel* ChangeSublayerVisibility::sublayerModel()
 {
-    return m_sublayerModel;
+  return m_sublayerModel;
 }
 
