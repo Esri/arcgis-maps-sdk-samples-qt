@@ -36,7 +36,7 @@ class OpenExistingMap : public QWidget
   Q_OBJECT
 
 public:
-  explicit OpenExistingMap(QWidget* parent = 0);
+  explicit OpenExistingMap(QWidget* parent = nullptr);
   ~OpenExistingMap();
 
 private:

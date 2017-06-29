@@ -19,10 +19,12 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
 #include "DistanceCompositeSceneSymbol.h"
+#include "GlobeCameraController.h"
 #include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "ModelSceneSymbol.h"
+#include "OrbitGeoElementCameraController.h"
 #include "PointCollection.h"
 #include "Polyline.h"
 #include "PolylineBuilder.h"
@@ -41,54 +43,32 @@
 
 using namespace Esri::ArcGISRuntime;
 
-const QString Animate3DSymbols::HEADING = "heading";
-const QString Animate3DSymbols::ROLL = "roll";
-const QString Animate3DSymbols::PITCH = "pitch";
-const QString Animate3DSymbols::ANGLE = "angle";
-
-struct Animate3DSymbols::CameraHandler
-{
-
-  void setZoomDist(double zoomDist)
-  {
-    m_zoomDist = zoomDist;
-  }
-
-  void setAngle(double angle)
-  {
-    m_angle = angle;
-  }
-
-  void setIntervalMs(int intervalMs)
-  {
-    m_intervalMs = intervalMs;
-  }
-
-  float m_intervalMs = 0.0;
-  double m_zoomDist = 0.0;
-  double m_angle = 90.0;
-};
+const QString Animate3DSymbols::HEADING = QStringLiteral("heading");
+const QString Animate3DSymbols::ROLL = QStringLiteral("roll");
+const QString Animate3DSymbols::PITCH = QStringLiteral("pitch");
+const QString Animate3DSymbols::ANGLE = QStringLiteral("angle");
 
 Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_sceneView(nullptr),
-  m_mapView(nullptr),
-  m_model3d(nullptr),
-  m_graphic3d(nullptr),
-  m_graphic2d(nullptr),
-  m_routeGraphic(nullptr),
-  m_missionsModel(new QStringListModel({"Grand Canyon", "Hawaii", "Pyrenees", "Snowdon"}, this)),
-  m_missionData(new MissionData()),
-  m_camHandler(new CameraHandler),
-  m_frame(0),
-  m_following(true),
-  m_mapZoomFactor(5.0)
+  m_missionsModel(new QStringListModel({QStringLiteral("Grand Canyon"),
+                                        QStringLiteral("Hawaii"),
+                                        QStringLiteral("Pyrenees"),
+                                        QStringLiteral("Snowdon")},
+                                       this)),
+  m_missionData(new MissionData())
 {
   Q_INIT_RESOURCE(Animate3DSymbols);
 }
 
 Animate3DSymbols::~Animate3DSymbols()
 {
+}
+
+void Animate3DSymbols::init()
+{
+  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<Animate3DSymbols>("Esri.Samples", 1, 0, "Animate3DSymbolsSample");
 }
 
 void Animate3DSymbols::componentComplete()
@@ -105,6 +85,9 @@ void Animate3DSymbols::componentComplete()
 
   // set scene on the scene view
   m_sceneView->setArcGISScene(scene);
+
+  // for use when not in following mode
+  m_globeController = new GlobeCameraController(this);
 
   // create a new elevation source
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -140,6 +123,9 @@ void Animate3DSymbols::componentComplete()
 
   // set up route graphic
   createRoute2d(mapOverlay);
+
+  // set up overlay 2D graphic
+  createModel2d(mapOverlay);
 }
 
 void Animate3DSymbols::setMissionFrame(int newFrame)
@@ -152,11 +138,6 @@ void Animate3DSymbols::setMissionFrame(int newFrame)
   m_frame = newFrame;
 }
 
-void Animate3DSymbols::setSpeed(int intervalMs)
-{
-  m_camHandler->setIntervalMs(intervalMs);
-}
-
 void Animate3DSymbols::animate()
 {
   if (m_missionData == nullptr)
@@ -167,20 +148,16 @@ void Animate3DSymbols::animate()
     // get the data for this stage in the mission
     const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
 
-    if (m_following)
-    {
-      // move the camera to follow the 3d model
-      Camera camera(dp.m_pos, m_camHandler->m_zoomDist, dp.m_heading, m_camHandler->m_angle, dp.m_roll);
-      m_sceneView->setViewpointCameraAndWait(camera);
-
-    }
-
     // move 3D graphic to the new position
     m_graphic3d->setGeometry(dp.m_pos);
     // update attribute expressions to immediately update rotation
     m_graphic3d->attributes()->replaceAttribute(HEADING, dp.m_heading);
     m_graphic3d->attributes()->replaceAttribute(PITCH, dp.m_pitch);
     m_graphic3d->attributes()->replaceAttribute(ROLL, dp.m_roll);
+
+    // move 2D graphic to the new position
+    m_graphic2d->setGeometry(dp.m_pos);
+    m_symbol2d->setAngle(dp.m_heading);
   }
 
   // increment the frame count
@@ -209,11 +186,8 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
     // set the polyline as a graphic on the mapView
     m_routeGraphic->setGeometry(routeBldr->toGeometry());
 
-    const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
-    Camera camera(dp.m_pos, m_camHandler->m_zoomDist, dp.m_heading, m_camHandler->m_angle, dp.m_roll);
-    m_sceneView->setViewpointCameraAndWait(camera);
     m_mapView->setViewpointAndWait(Viewpoint(m_routeGraphic->geometry()));
-    createModel3d();
+    createGraphic3D();
   }
 
   emit missionReadyChanged();
@@ -222,57 +196,31 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
 
 void Animate3DSymbols::setZoom(double zoomDist)
 {
-  m_camHandler->setZoomDist(zoomDist);
+  if (m_followingController)
+    m_followingController->setCameraDistance(zoomDist);
 }
 
 void Animate3DSymbols::setAngle(double angle)
 {
-  m_camHandler->setAngle(angle);
+  if (m_followingController)
+    m_followingController->setCameraPitchOffset(angle);
 }
 
-void Animate3DSymbols::clearGraphic3D()
+void Animate3DSymbols::createModel2d(GraphicsOverlay* mapOverlay)
 {
-  if (m_graphic3d == nullptr)
+  if (m_symbol2d || m_graphic2d)
     return;
 
-  if (m_sceneView->graphicsOverlays()->size() > 0 && m_sceneView->graphicsOverlays()->at(0))
-    m_sceneView->graphicsOverlays()->at(0)->graphics()->clear();
+  // get the mission data for the frame
+  const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
 
-  delete m_graphic3d;
-  m_graphic3d = nullptr;
-}
-
-void Animate3DSymbols::createModel3d()
-{
-  // load the ModelSceneSymbol to be animated in the 3d view
-  if (m_model3d == nullptr)
-  {
-    m_model3d = new ModelSceneSymbol(QUrl(m_dataPath + "/Bristol/Collada/Bristol.dae"), 10.0f, this);
-  }
-
-  // when the model is successfully loaded, setup the 3g draphic to show it it the scene
-  connect(m_model3d, &ModelSceneSymbol::loadStatusChanged, this, [this]()
-    {
-      if (m_model3d->loadStatus() == LoadStatus::Loaded)
-        createGraphic3D();
-    }
-  );
-
-  if (m_model3d->loadStatus() == LoadStatus::Loaded)
-    createGraphic3D(); // if the model is already loaded just recreate the graphic
-  else
-    m_model3d->load(); // if the model has not been loaded before, call load
-}
-
-void Animate3DSymbols::createModel2d(GraphicsOverlay *mapOverlay)
-{
   // create a blue triangle symbol to represent the plane on the mini map
-  SimpleMarkerSymbol* plane2DSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, Qt::blue, 10, this);
+  m_symbol2d = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, Qt::blue, 10, this);
+  m_symbol2d->setAngle(dp.m_heading);
 
-  // create a graphic with the symbol and attributes
-  QVariantMap attributes;
-  attributes.insert(ANGLE, 0.f);
-  m_graphic2d = new Graphic(Point(0, 0, SpatialReference::wgs84()), attributes, plane2DSymbol, this);
+  // create a graphic with the symbol
+  m_graphic2d = new Graphic(dp.m_pos, m_symbol2d, this);
+
   mapOverlay->graphics()->append(m_graphic2d);
 }
 
@@ -287,31 +235,47 @@ void Animate3DSymbols::createRoute2d(GraphicsOverlay* mapOverlay)
 
 void Animate3DSymbols::createGraphic3D()
 {
-  if (m_model3d == nullptr || !missionReady())
+  if (!missionReady())
     return;
 
-  clearGraphic3D();
+  // create the ModelSceneSymbol to be animated in the 3d view
+  if (!m_model3d)
+    m_model3d = new ModelSceneSymbol(QUrl(m_dataPath + "/Bristol/Collada/Bristol.dae"), 10.0f, this);
 
   // get the mission data for the frame
   const MissionData::DataPoint& dp = m_missionData->dataAt(missionFrame());
 
-  // create a graphic using the model symbol
-  m_graphic3d = new Graphic(dp.m_pos, m_model3d, this);
-  m_graphic3d->attributes()->insertAttribute(HEADING, dp.m_heading);
-  m_graphic3d->attributes()->insertAttribute(PITCH, dp.m_pitch);
-  m_graphic3d->attributes()->insertAttribute(ROLL, dp.m_roll);
+  if (!m_graphic3d)
+  {
+    // create a graphic using the model symbol
+    m_graphic3d = new Graphic(dp.m_pos, m_model3d, this);
+    m_graphic3d->attributes()->insertAttribute(HEADING, dp.m_heading);
+    m_graphic3d->attributes()->insertAttribute(PITCH, dp.m_pitch);
+    m_graphic3d->attributes()->insertAttribute(ROLL, dp.m_roll);
 
-  // add the graphic to the graphics overlay
-  m_sceneView->graphicsOverlays()->at(0)->graphics()->append(m_graphic3d);
+    // add the graphic to the graphics overlay
+    m_sceneView->graphicsOverlays()->at(0)->graphics()->append(m_graphic3d);
+
+    // create the camera controller to follow the graphic
+    m_followingController = new OrbitGeoElementCameraController(m_graphic3d, 500);
+    m_sceneView->setCameraController(m_followingController);
+  }
+  else
+  {
+    // update existing graphic's geometry and attributes
+    m_graphic3d->setGeometry(dp.m_pos);
+    m_graphic3d->attributes()->replaceAttribute(HEADING, dp.m_heading);
+    m_graphic3d->attributes()->replaceAttribute(PITCH, dp.m_pitch);
+    m_graphic3d->attributes()->replaceAttribute(ROLL, dp.m_roll);
+  }
 }
 
 void Animate3DSymbols::setFollowing(bool following)
 {
-  if (m_following == following)
-    return;
-
-  m_following = following;
-  emit followingChanged();
+  if (following)
+    m_sceneView->setCameraController(m_followingController);
+  else
+    m_sceneView->setCameraController(m_globeController);
 }
 
 void Animate3DSymbols::zoomMapIn()
@@ -357,11 +321,6 @@ int Animate3DSymbols::missionSize() const
   return (int)m_missionData->size();
 }
 
-bool Animate3DSymbols::following() const
-{
-  return m_following;
-}
-
 int Animate3DSymbols::missionFrame() const
 {
   return m_frame;
@@ -369,17 +328,17 @@ int Animate3DSymbols::missionFrame() const
 
 double Animate3DSymbols::zoom() const
 {
-  return m_camHandler ? m_camHandler->m_zoomDist : 200.0;
+  return m_followingController ? m_followingController->cameraDistance() : 200.0;
 }
 
 double Animate3DSymbols::angle() const
 {
-  return m_camHandler ? m_camHandler->m_angle : 90.0;
+  return m_followingController ? m_followingController->cameraDistance() : 45.0;
 }
 
-int Animate3DSymbols::speed() const
+double Animate3DSymbols::minZoom() const
 {
-  return m_camHandler ? m_camHandler->m_intervalMs : 50;
+  return m_followingController ? m_followingController->minCameraDistance() : 0;
 }
 
 // MissionData
@@ -394,7 +353,7 @@ MissionData::~MissionData()
 
 }
 
-bool MissionData::parse(const QString &dataPath)
+bool MissionData::parse(const QString& dataPath)
 {
   m_data.clear();
   m_ready = false;
@@ -445,7 +404,7 @@ bool MissionData::parse(const QString &dataPath)
   return m_ready;
 }
 
-const MissionData::DataPoint &MissionData::dataAt(size_t i) const
+const MissionData::DataPoint& MissionData::dataAt(size_t i) const
 {
   if(i < m_data.size())
     return m_data[i];

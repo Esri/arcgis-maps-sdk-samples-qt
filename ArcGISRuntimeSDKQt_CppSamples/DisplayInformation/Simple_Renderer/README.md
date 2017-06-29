@@ -1,6 +1,6 @@
-# Simple_Renderer
+# Simple Renderer
 
-This sample demonstrates how to create a `SimpleRenderer` and add it to a `GraphicsOverlay`.
+This sample demonstrates how to create a `SimpleRenderer` and add it to a `GraphicsOverlay`. 
 
 ![](screenshot.png)
 

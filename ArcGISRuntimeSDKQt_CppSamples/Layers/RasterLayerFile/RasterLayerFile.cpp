@@ -28,13 +28,18 @@
 using namespace Esri::ArcGISRuntime;
 
 RasterLayerFile::RasterLayerFile(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_mapView(nullptr)
+  QQuickItem(parent)
 {
 }
 
 RasterLayerFile::~RasterLayerFile()
 {
+}
+
+void RasterLayerFile::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<RasterLayerFile>("Esri.Samples", 1, 0, "RasterLayerFileSample");
 }
 
 void RasterLayerFile::componentComplete()
@@ -47,8 +52,12 @@ void RasterLayerFile::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
+  Basemap* basemap = Basemap::imagery(this);
+  m_map = new Map(basemap, this);
+  m_mapView->setMap(m_map);
+
   // Create a map using a raster layer
-  createAndAddRasterLayer(dataPath + "Colorado.tif");
+  createAndAddRasterLayer(dataPath + "Shasta.tif");
 }
 
 void RasterLayerFile::createAndAddRasterLayer(QUrl rasterUrl)
@@ -56,7 +65,15 @@ void RasterLayerFile::createAndAddRasterLayer(QUrl rasterUrl)
   QString dataPath = rasterUrl.toLocalFile();
   Raster* raster = new Raster(dataPath, this);
   RasterLayer* rasterLayer = new RasterLayer(raster, this);
-  Basemap* basemap = new Basemap(rasterLayer, this);
-  Map* map = new Map(basemap, this);
-  m_mapView->setMap(map);
+
+  connect(rasterLayer, &RasterLayer::doneLoading, this, [this, rasterLayer](Error loadError)
+  {
+    if (!loadError.isEmpty())
+      return;
+
+    m_mapView->setViewpointCenter(rasterLayer->fullExtent().center(), 80000);
+  });
+
+  m_map->operationalLayers()->clear();
+  m_map->operationalLayers()->append(rasterLayer);
 }

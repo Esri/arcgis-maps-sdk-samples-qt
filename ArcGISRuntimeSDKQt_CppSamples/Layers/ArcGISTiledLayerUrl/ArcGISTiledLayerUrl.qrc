@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/Samples/Layers/ArcGISTiledLayerUrl">
         <file alias="sample.json">ArcGISTiledLayerUrl.json</file>
-        <file>ArcGISTiledLayerUrl.png</file>
+        <file>screenshot.png</file>
         <file>ArcGISTiledLayerUrl.qml</file>
 		<file>ArcGISTiledLayerUrl.cpp</file>
 		<file>ArcGISTiledLayerUrl.h</file>
-        <file>ArcGISTiledLayerUrl.html</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

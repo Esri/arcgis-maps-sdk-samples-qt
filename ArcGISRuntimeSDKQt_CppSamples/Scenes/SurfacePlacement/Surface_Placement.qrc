@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/Samples/Scenes/Surface_Placement">
         <file alias="sample.json">Surface_Placement.json</file>
-        <file>Surface_Placement.png</file>
+        <file>screenshot.png</file>
         <file>Surface_Placement.qml</file>
 		<file>Surface_Placement.h</file>
 		<file>Surface_Placement.cpp</file>
-        <file>Surface_Placement.html</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

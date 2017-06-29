@@ -62,6 +62,13 @@ MobileMap_SearchAndRoute::~MobileMap_SearchAndRoute()
 {
 }
 
+void MobileMap_SearchAndRoute::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<MobileMap_SearchAndRoute>("Esri.Samples", 1, 0, "MobileMap_SearchAndRouteSample");
+  qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
+}
+
 void MobileMap_SearchAndRoute::componentComplete()
 {
     QQuickItem::componentComplete();
@@ -71,7 +78,7 @@ void MobileMap_SearchAndRoute::componentComplete()
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
     m_dataPath = QQmlProperty::read(this, "dataPath").toString();
-    m_fileInfoList = QDir(QUrl(m_dataPath).path()).entryInfoList();
+    m_fileInfoList = QDir(m_dataPath).entryInfoList();
 
     // initialize Callout
     m_mapView->calloutData()->setTitle("Address");
@@ -222,7 +229,9 @@ void MobileMap_SearchAndRoute::selectMap(int index)
     resetMapView();
 
     // set the locatorTask
+    //! [MobileMap_SearchAndRoute create LocatorTask]
     m_currentLocatorTask = m_mobileMapPackages[m_selectedMmpkIndex]->locatorTask();
+    //! [MobileMap_SearchAndRoute create LocatorTask]
 
     // set the MapView
     m_mapView->setMap(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index));

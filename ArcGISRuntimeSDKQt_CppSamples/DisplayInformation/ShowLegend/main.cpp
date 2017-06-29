@@ -22,43 +22,52 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
 #include "ShowLegend.h"
-#include "LegendInfoListModel.h"
-#include "ArcGISRuntimeEnvironment.h"
 
-using namespace Esri::ArcGISRuntime;
+#define STRINGIZE(x) #x
+#define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
 
 #ifdef Q_OS_WIN
-    // Force usage of OpenGL ES through ANGLE on Windows
-    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+  // Force usage of OpenGL ES through ANGLE on Windows
+  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<ShowLegend>("Esri.Samples", 1, 0, "ShowLegendSample");
+  // Initialize the sample
+  ShowLegend::init();
 
-    qmlRegisterUncreatableType<LegendInfoListModel>("Esri.Samples", 1, 0,
-                                                    "LegendInfoListModel",
-                                                    "LegendInfoListModel is an uncreatable type");
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Intialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  
+  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+  QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+ #if defined(LINUX_PLATFORM_REPLACEMENT)
+  // on some linux platforms the string 'linux' is replaced with 1
+  // fix the replacement paths which were created
+  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
+  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+  arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+ #endif
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/DisplayInformation/ShowLegend/ShowLegend.qml"));
+  // Add the Runtime and Extras path
+  view.engine()->addImportPath(arcGISRuntimeImportPath);
+  // Add the Toolkit path
+  view.engine()->addImportPath(arcGISToolkitImportPath);
 
-    view.show();
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/DisplayInformation/ShowLegend/ShowLegend.qml"));
 
-    return app.exec();
+  view.show();
+
+  return app.exec();
 }
 
 

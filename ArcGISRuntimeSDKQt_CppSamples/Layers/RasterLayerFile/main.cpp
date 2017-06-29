@@ -21,11 +21,10 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
-
 #include "RasterLayerFile.h"
 
-using namespace Esri::ArcGISRuntime;
+#define STRINGIZE(x) #x
+#define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
@@ -36,9 +35,8 @@ int main(int argc, char *argv[])
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-  // Register the map view for QML
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<RasterLayerFile>("Esri.Samples", 1, 0, "RasterLayerFileSample");
+  // Initialize the sample
+  RasterLayerFile::init();
 
   // Intialize application view
   QQuickView view;
@@ -46,6 +44,10 @@ int main(int argc, char *argv[])
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Add the Extras path
+  view.engine()->addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
+  // Add the Toolkit path
+  view.engine()->addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Layers/RasterLayerFile/RasterLayerFile.qml"));

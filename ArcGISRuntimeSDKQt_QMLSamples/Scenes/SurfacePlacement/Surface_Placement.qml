@@ -15,14 +15,11 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.0
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.1
 
 Rectangle {
     width: 800
-    height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    height: 600    
 
     // Add a scene view
     SceneView {
@@ -162,15 +159,5 @@ Rectangle {
         y: 53.06
         z: 1000
         spatialReference: SpatialReference.createWgs84()
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }

@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "GoRenderers.h"
+#include "GORenderers.h"
 #include <QApplication>
 #include <QMessageBox>
 

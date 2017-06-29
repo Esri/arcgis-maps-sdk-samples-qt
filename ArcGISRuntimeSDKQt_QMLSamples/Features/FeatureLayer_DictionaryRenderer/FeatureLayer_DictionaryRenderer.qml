@@ -16,14 +16,13 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Create MapView that contains a Map with the Topographic Basemap
@@ -125,17 +124,6 @@ Rectangle {
                     map.operationalLayers.append(layer);
                 }
             }
-        }
-    }
-
-    Rectangle {
-        anchors {
-            fill: parent
-        }
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

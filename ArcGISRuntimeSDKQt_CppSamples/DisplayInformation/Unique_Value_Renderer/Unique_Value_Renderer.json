@@ -1,7 +1,9 @@
 {
-    "source" :  "Unique_Value_Renderer",
-    "description" : "Unique_Value_Renderer.html",
-    "thumbnail" : "Unique_Value_Renderer.png",
+    "source" :  "Unique_Value_Renderer.qml",
+    "otherSourceFiles" : [
+        "Unique_Value_Renderer.h",
+        "Unique_Value_Renderer.cpp"
+    ],
     "name" : "Unique value renderer"
 }
 

@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.1
 
 TokenAuthenticationSample {
     id: authSample
@@ -38,14 +38,5 @@ TokenAuthenticationSample {
     AuthenticationView {
         anchors.fill: parent
         authenticationManager: authSample.authenticationManager // set the authenticationManager property (this needs to be registered)
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }

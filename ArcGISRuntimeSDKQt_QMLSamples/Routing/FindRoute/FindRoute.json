@@ -1,7 +1,6 @@
 {
     "source" :  "FindRoute.qml",
-    "description" : "FindRoute.html",
-    "thumbnail" : "FindRoute.png",
+    "otherSourceFiles" :  [],
     "name" : "Find a route"
 }
 

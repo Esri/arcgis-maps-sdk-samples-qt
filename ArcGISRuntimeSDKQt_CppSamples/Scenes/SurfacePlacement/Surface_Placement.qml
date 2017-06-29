@@ -17,13 +17,10 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 SurfacePlacementSample {
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
 
     // Create SceneView here, and create its Scene and GraphicsOverlay in C++ code
     //! [add a sceneView component]
@@ -32,13 +29,4 @@ SurfacePlacementSample {
         anchors.fill: parent
     }
     //! [add a sceneView component]
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

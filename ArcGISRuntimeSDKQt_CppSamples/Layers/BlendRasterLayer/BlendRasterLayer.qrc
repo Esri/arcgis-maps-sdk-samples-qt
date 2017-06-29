@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/BlendRasterLayer">
+        <file alias="sample.json">BlendRasterLayer.json</file>
+        <file>BlendRasterLayer.qml</file>
+        <file>BlendRasterLayer.h</file>
+        <file>BlendRasterLayer.cpp</file>
+        <file>README.md</file>
+        <file>screenshot.png</file>
+        <file>SlopeTypeModel.qml</file>
+        <file>ColorRampModel.qml</file>
+        <file>TextWithSlider.qml</file>
+        <file>TextWithComboBox.qml</file>
+    </qresource>
+</RCC>

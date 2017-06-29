@@ -19,28 +19,29 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 #include <QQuickItem>
 
 class ShowMagnifier : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    ShowMagnifier(QQuickItem* parent = 0);
-    ~ShowMagnifier();
+  explicit ShowMagnifier(QQuickItem* parent = nullptr);
+  ~ShowMagnifier();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // SHOW_MAGNIFIER_H

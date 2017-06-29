@@ -21,24 +21,11 @@ import Esri.ArcGISExtras 1.1
 
 BasicSceneSample {
     width: 800
-    height: 600
-
-    property double scaleFactor: System.displayScaleFactor
+    height: 600    
 
     // add a mapView component
     SceneView {
         anchors.fill: parent
         objectName: "sceneView"
     }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }
-
-

@@ -16,10 +16,9 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.0
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 2.0
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.1
 
 ShowOrgBasemapsSample {
     width: 800
@@ -32,7 +31,7 @@ ShowOrgBasemapsSample {
 
     BusyIndicator {
         anchors.centerIn: parent
-        running: !mapView.visible && !portalLoaded
+        running: !mapView.visible && !portalLoaded & !anonymousLogIn.visible
     }
 
     Text{
@@ -47,7 +46,8 @@ ShowOrgBasemapsSample {
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignTop
-        text: orgName.length > 0 ? orgName + " Basemaps" : "Loading Organization Basemaps..."
+        text: anonymousLogIn.visible ? "Load Portal" :
+                                       (basemapsGrid.count > 0 ? orgName + " Basemaps" : "Loading Organization Basemaps...")
         wrapMode: Text.Wrap
         elide: Text.ElideRight
     }
@@ -77,6 +77,7 @@ ShowOrgBasemapsSample {
             radius: 2
             clip: true
 
+            //! [BasemapListModel example QML delegate]
             Image {
                 id: basemapImg
                 anchors {
@@ -84,7 +85,7 @@ ShowOrgBasemapsSample {
                     horizontalCenter: parent.horizontalCenter
                 }
                 height: parent.height - ( basemapLabel.height * 2 );
-                source: thumbnailUrl
+                source: thumbnailUrl // use the thumbnailUrl role of the model
                 width: height
                 fillMode: Image.PreserveAspectCrop
             }
@@ -100,10 +101,11 @@ ShowOrgBasemapsSample {
                 z: 100
                 wrapMode: Text.Wrap
                 elide: Text.ElideRight
-                text: title
+                text: title // use the title role of the model
                 font.pointSize: 8
                 font.bold: index === basemapsGrid.currentIndex
             }
+            //! [BasemapListModel example QML delegate]
 
             MouseArea {
                 enabled: !mapView.visible && portalLoaded
@@ -163,17 +165,61 @@ ShowOrgBasemapsSample {
         visible: false
     }
 
-    AuthenticationView {
-        authenticationManager: authManager
+    Button {
+        id: backButton
+        anchors {
+            top: mapView.top
+            right: mapView.right
+            margins: 16 * scaleFactor
+        }
+        visible: mapView.visible
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
+        text: "Back"
+        opacity: hovered ? 1 : 0.5
+
+        onClicked: {
+            mapView.visible = false;
+            basemapsGrid.enabled = true;
+            gridFadeIn.running = true;
+        }
     }
 
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
+    Button {
+        id: anonymousLogIn
+        anchors {
+            margins: 16 * scaleFactor
+            horizontalCenter: parent.horizontalCenter
+            top: title.bottom
         }
+        text: "Anonymous"
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
+
+        onClicked: {
+            load(true);
+            anonymousLogIn.visible = false;
+            userLogIn.visible = false;
+        }
+    }
+
+    Button {
+        id: userLogIn
+        anchors {
+            margins: 16 * scaleFactor
+            horizontalCenter: anonymousLogIn.horizontalCenter
+            top: anonymousLogIn.bottom
+        }
+        width: anonymousLogIn.width
+        text: "Sign-in"
+        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
+
+        onClicked: {
+            load(false);
+            anonymousLogIn.visible = false;
+            userLogIn.visible = false;
+        }
+    }
+
+    AuthenticationView {
+        authenticationManager: authManager
     }
 }

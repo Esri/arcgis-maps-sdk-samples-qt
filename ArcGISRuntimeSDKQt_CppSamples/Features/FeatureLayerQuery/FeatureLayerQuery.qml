@@ -18,14 +18,11 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 FeatureLayerQuerySample {
     id: featureLayerQuerySample
     width: 800
     height: 600
-
-    property double scaleFactor: System.displayScaleFactor
 
     // add a mapView component
     MapView {
@@ -82,14 +79,5 @@ FeatureLayerQuerySample {
         // Use the C++ property to determine if no features were returned
         if (featureLayerQuerySample.queryResultsCount === 0)
             errorMsgDialog.visible = true;
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 }

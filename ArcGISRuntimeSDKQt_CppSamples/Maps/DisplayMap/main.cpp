@@ -22,39 +22,58 @@
 #include <Windows.h>
 #endif
 
-#include "MapQuickView.h"
 #include "DisplayMap.h"
-#include "ArcGISRuntimeEnvironment.h"
 
-using namespace Esri::ArcGISRuntime;
+#define STRINGIZE(x) #x
+#define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
 
 #ifdef Q_OS_WIN
-    // Force usage of OpenGL ES through ANGLE on Windows
-    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
+  // Force usage of OpenGL ES through ANGLE on Windows
+  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
 
-    //! [Register the map view for QML]
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    //! [Register the map view for QML]
-    qmlRegisterType<DisplayMap>("Esri.Samples", 1, 0, "DisplayMapSample");
+  // Initialize the sample
+  DisplayMap::init();
 
-    // Intialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  /* Leaving in for doc snippet
+  //! [Register the map view for QML]
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  //! [Register the map view for QML]
+  */
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Maps/DisplayMap/DisplayMap.qml"));
- 
-    view.show();
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  
+  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+  QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
 
-    return app.exec();
+ #if defined(LINUX_PLATFORM_REPLACEMENT)
+  // on some linux platforms the string 'linux' is replaced with 1
+  // fix the replacement paths which were created
+  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
+  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+  arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+ #endif
+
+  // Add the Runtime and Extras path
+  view.engine()->addImportPath(arcGISRuntimeImportPath);
+  // Add the Toolkit path
+  view.engine()->addImportPath(arcGISToolkitImportPath);
+
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/Maps/DisplayMap/DisplayMap.qml"));
+
+  view.show();
+
+  return app.exec();
 }
 
 

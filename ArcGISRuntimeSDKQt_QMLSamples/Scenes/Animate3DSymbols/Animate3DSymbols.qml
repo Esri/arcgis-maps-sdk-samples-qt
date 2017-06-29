@@ -16,8 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import QtQuick.Extras 1.4
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -39,7 +38,7 @@ Rectangle {
     property string rollAtt: "roll";
     property string attrFormat: "[%1]"
 
-    property var graphic3d;
+    property Graphic routeGraphic
 
     /**
      * Create SceneView that contains a Scene with the Imagery Basemap
@@ -50,6 +49,8 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
         attributionTextVisible: (sceneView.width - mapView.width) > mapView.width // only show attribution text on the widest view
+
+        cameraController: followButton.checked && missionReady ? followController : globeController
 
         // create a scene...scene is a default property of sceneview
         // and thus will get added to the sceneview
@@ -63,7 +64,7 @@ Rectangle {
                 ArcGISTiledElevationSource {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
-            }
+            }     
         }
 
         GraphicsOverlay {
@@ -89,13 +90,36 @@ Rectangle {
                 scale: 10.0
                 heading: 0.0
             }
-        }
 
-        MouseArea {
-            anchors.fill: parent
-            onPressed: mouse.accepted = followButton.checked
-            onWheel: wheel.accepted = followButton.checked
+            Graphic {
+                id: graphic3d
+                symbol: mms
+
+                geometry: Point {
+                    x: 0.
+                    y: 0.
+                    z: 100.
+                    spatialReference: sceneView.spatialReference
+                }
+
+                Component.onCompleted: {
+                    graphic3d.attributes.insertAttribute(headingAtt, 0.);
+                    graphic3d.attributes.insertAttribute(rollAtt, 0.);
+                    graphic3d.attributes.insertAttribute(pitchAtt, 0.);
+                }
+            }
         }
+    }
+
+    GlobeCameraController {
+        id: globeController
+    }
+
+    OrbitGeoElementCameraController {
+        id: followController
+        targetGeoElement: graphic3d
+        cameraDistance: cameraDistanceSlider.value
+        cameraPitchOffset: cameraAngle.value
     }
 
     ListModel {
@@ -127,6 +151,7 @@ Rectangle {
                 enabled: !playButton.checked
                 model: missionsModel
                 textRole: "name"
+                width: 150 * scaleFactor
                 onCurrentTextChanged: {
                     changeMission(currentText);
                     progressSlider.value = 0;
@@ -152,7 +177,7 @@ Rectangle {
                 minimumValue: 0
                 maximumValue: missionSize
                 enabled : missionReady
-                width: Math.max(implicitWidth, playButton.width)
+                width: Math.max(implicitWidth, 150) * scaleFactor
             }
 
             CheckBox {
@@ -184,12 +209,12 @@ Rectangle {
             }
 
             Slider {
-                id: cameraDistance
+                id: cameraDistanceSlider
                 enabled: following && missionReady
-                minimumValue: 10.0
-                maximumValue: 500.0
-                value: 200.0
-                width: Math.max(implicitWidth, playButton.width)
+                minimumValue: followController.minCameraDistance
+                maximumValue: 5000.0
+                value: 500.0
+                width: Math.max(implicitWidth, 100) * scaleFactor
             }
 
             Text {
@@ -202,10 +227,10 @@ Rectangle {
             Slider {
                 id: cameraAngle
                 enabled: following && missionReady
-                minimumValue: 0.0
-                maximumValue: 180.0
-                value: 75.0
-                width: Math.max(implicitWidth, playButton.width)
+                minimumValue: followController.minCameraPitchOffset
+                maximumValue: followController.maxCameraPitchOffset
+                value: 45.0
+                width: Math.max(implicitWidth, 100) * scaleFactor
             }
 
             Text {
@@ -218,10 +243,10 @@ Rectangle {
             Slider {
                 id: animationSpeed
                 enabled: missionReady
-                minimumValue: 50
-                maximumValue: 200
+                minimumValue: 1
+                maximumValue: 100
                 value: 50
-                width: Math.max(implicitWidth, playButton.width)
+                width: Math.max(implicitWidth, 100) * scaleFactor
             }
         }
     }
@@ -281,6 +306,11 @@ Rectangle {
 
             GraphicsOverlay {
                 id: graphicsOverlay
+
+                Graphic {
+                    id: graphic2d
+                    symbol: plane2DSymbol
+                }
             }
 
             MouseArea {
@@ -299,22 +329,19 @@ Rectangle {
         antiAlias: true
     }
 
+    SimpleMarkerSymbol {
+        id: plane2DSymbol
+        style: Enums.SimpleMarkerSymbolStyleTriangle
+        color: "blue"
+        size: 10
+    }
+
     Timer {
         id: timer
-        interval: 210 - animationSpeed.value;
+        interval: Math.max(animationSpeed.maximumValue - animationSpeed.value,1);
         running: playButton.checked;
         repeat: true
         onTriggered: animate();
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
     }
 
     FileFolder {
@@ -349,12 +376,8 @@ Rectangle {
         if (missionSize === 0)
             return;
 
-        sceneOverlay.graphics.clear();
-        graphic3d = ArcGISRuntimeEnvironment.createObject("Graphic");
-        graphic3d.symbol = mms;
-
-        sceneOverlay.graphics.append(graphic3d);
-
+        // create polyline builder and fill with points
+        // for the mission polyline
         var rtBldr = ArcGISRuntimeEnvironment.createObject(
             "PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
         for (var j = 0; j < currentMissionModel.count; j++) {
@@ -362,18 +385,33 @@ Rectangle {
             rtBldr.addPointXY(missionData.lon, missionData.lat);
         }
 
-        var routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic");
-        routeGraphic.geometry = rtBldr.geometry;
-        routeGraphic.symbol = routeSymbol;
-        graphicsOverlay.graphics.append(routeGraphic);
-
         var firstData = currentMissionModel.get(0);
         var firstPos = createPoint(firstData);
+
+        // update model graphic's attributes
+        graphic3d.attributes.replaceAttribute(headingAtt, firstData.heading);
+        graphic3d.attributes.replaceAttribute(rollAtt, firstData.roll);
+        graphic3d.attributes.replaceAttribute(pitchAtt, firstData.pitch);
+
+        // update model graphic's geomtry
         graphic3d.geometry = firstPos;
-        graphic3d.attributes.insertAttribute(headingAtt, firstData.heading);
-        graphic3d.attributes.insertAttribute(rollAtt, firstData.roll);
-        graphic3d.attributes.insertAttribute(pitchAtt, firstData.pitch);
-        setCamera(firstPos, firstData.heading);
+
+        // update the 2d graphic
+        graphic2d.geometry = firstPos;
+        plane2DSymbol.angle = firstData.heading;
+
+        if (!routeGraphic) {
+            // create route graphic with the route symbol
+            routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+            routeGraphic.symbol = routeSymbol;
+
+            // add route graphic to the graphics overlay
+            graphicsOverlay.graphics.insert(0, routeGraphic);
+        }
+
+        // update route graphic's geomtry
+        routeGraphic.geometry = rtBldr.geometry;
+
         mapView.setViewpointGeometryAndPadding(routeGraphic.geometry, 30);
     }
 
@@ -387,8 +425,9 @@ Rectangle {
             graphic3d.attributes.replaceAttribute(pitchAtt, missionData.pitch);
             graphic3d.attributes.replaceAttribute(rollAtt, missionData.roll);
 
-            if (followButton.checked)
-                setCamera(newPos, missionData.heading);
+            // update the 2d graphic
+            graphic2d.geometry = newPos;
+            plane2DSymbol.angle = missionData.heading;
         }
 
         nextFrameRequested();
@@ -416,22 +455,5 @@ Rectangle {
                 z: missionData.elevation,
                 spatialReference: SpatialReference.createWgs84()
             });
-    }
-
-    function setCamera(point, headingVal) {
-        var cam = ArcGISRuntimeEnvironment.createObject(
-            "Camera", {
-                location: point,
-                distance: cameraDistance.maximumValue - cameraDistance.value,
-                heading: headingVal,
-                pitch: cameraAngle.value,
-                roll: 0.0
-            });
-
-        if (!playButton.checked)
-            sceneView.setViewpointCameraAndWait(cam);
-        else {
-            sceneView.setViewpointCameraAndWait(cam);
-        }
     }
 }

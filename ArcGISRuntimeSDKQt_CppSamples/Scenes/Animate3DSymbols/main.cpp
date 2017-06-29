@@ -27,6 +27,9 @@
 
 #include "Animate3DSymbols.h"
 
+#define STRINGIZE(x) #x
+#define QUOTE(x) STRINGIZE(x)
+
 using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
@@ -48,10 +51,8 @@ int main(int argc, char *argv[])
 
   Q_INIT_RESOURCE(Animate3DSymbols);
 
-  // Register classes for QML
-  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<Animate3DSymbols>("Esri.Samples", 1, 0, "Animate3DSymbolsSample");
+  // Initialize the sample
+  Animate3DSymbols::init();
 
   // Intialize application view
   QQuickView view;
@@ -59,6 +60,22 @@ int main(int argc, char *argv[])
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  
+  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+  QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
+
+ #if defined(LINUX_PLATFORM_REPLACEMENT)
+  // on some linux platforms the string 'linux' is replaced with 1
+  // fix the replacement paths which were created
+  QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
+  arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+  arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+ #endif
+
+  // Add the Runtime and Extras path
+  view.engine()->addImportPath(arcGISRuntimeImportPath);
+  // Add the Toolkit path
+  view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Scenes/Animate3DSymbols/Animate3DSymbols.qml"));

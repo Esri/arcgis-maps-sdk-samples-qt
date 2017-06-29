@@ -31,7 +31,7 @@ class BasicSceneView : public QWidget
   Q_OBJECT
 
 public:
-  explicit BasicSceneView(QWidget* parent = 0);
+  explicit BasicSceneView(QWidget* parent = nullptr);
    ~BasicSceneView();
 
 private:

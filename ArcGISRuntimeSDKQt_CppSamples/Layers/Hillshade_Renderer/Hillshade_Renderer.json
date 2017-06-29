@@ -1,7 +1,11 @@
 {
-    "source" :  "Hillshade_Renderer",
-    "description" : "Hillshade_Renderer.html",
-    "thumbnail" : "Hillshade_Renderer.png",
+    "source" :  "Hillshade_Renderer.qml",
+    "otherSourceFiles" : [
+        "Hillshade_Renderer.h",
+        "Hillshade_Renderer.cpp",
+        "HillshadeSettings.qml",
+        "HillshadeSlopeTypeModel.qml"
+    ],
     "name" : "Hillshade renderer",
     "dataItems" : [        
         {

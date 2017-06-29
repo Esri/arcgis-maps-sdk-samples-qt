@@ -19,47 +19,50 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class FeatureLayer;
-        class ServiceFeatureTable;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class FeatureLayer;
+    class ServiceFeatureTable;
+  }
 }
 
 #include <QQuickItem>
 
 class FeatureLayerQuery : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(bool layerInitialized READ layerInitialized NOTIFY layerInitializedChanged)
-    Q_PROPERTY(int queryResultsCount READ queryResultsCount NOTIFY queryResultsCountChanged)
+  Q_PROPERTY(bool layerInitialized READ layerInitialized NOTIFY layerInitializedChanged)
+  Q_PROPERTY(int queryResultsCount READ queryResultsCount NOTIFY queryResultsCountChanged)
 
 public:
-    FeatureLayerQuery(QQuickItem* parent = 0);
-    ~FeatureLayerQuery();
+  explicit FeatureLayerQuery(QQuickItem* parent = nullptr);
+  ~FeatureLayerQuery();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void runQuery(QString whereClause);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void runQuery(const QString& stateName);
 
 signals:
-    void layerInitializedChanged();
-    void queryResultsCountChanged();
+  void layerInitializedChanged();
+  void queryResultsCountChanged();
 
 private:
-    void connectSignals();
-    bool layerInitialized() const;
-    int queryResultsCount() const;
+  void connectSignals();
+  bool layerInitialized() const;
+  int queryResultsCount() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-    bool m_initialized;
-    int m_queryResultsCount;
+  QString formatStateNameForQuery(const QString& stateName) const;
+
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+  bool m_initialized = false;
+  int m_queryResultsCount = 0;
 };
 
 #endif // FEATURE_LAYER_QUERY_H

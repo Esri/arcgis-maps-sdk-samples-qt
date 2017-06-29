@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -53,7 +53,7 @@ Rectangle {
                         SimpleLineSymbol {
                             style: Enums.SimpleLineSymbolStyleSolid
                             color: "black"
-                            width: 2.0 * scaleFactor
+                            width: 2.0
                             antiAlias: true
                         }
                     }
@@ -153,22 +153,28 @@ Rectangle {
         }
     }
 
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
-
     // function to form and execute the query
     function query() {
         // set the where clause
-        params.whereClause = "STATE_NAME LIKE \'" + findText.text.toUpperCase() + "%\'";
+        params.whereClause = "STATE_NAME LIKE '" + formatStateNameForQuery(findText.text) + "%'";
 
         // start the query
         featureTable.queryFeatures(params);
+    }
+
+    function formatStateNameForQuery(stateName) {
+        // format state names as expected by the service, for instance "Rhode Island"
+        if (stateName === "")
+            return "";
+
+        var formattedWords = [];
+
+        var lowerStateName = stateName.toLowerCase();
+        var words = lowerStateName.split(" ");
+        words.forEach(function(word) {
+            formattedWords.push(word.charAt(0).toUpperCase() + word.slice(1));
+        });
+
+        return formattedWords.join(" ");
     }
 }

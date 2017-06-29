@@ -1,7 +1,6 @@
 {
     "source" :  "ServiceFeatureTable_Cache.qml",
-    "description" : "ServiceFeatureTable_Cache.html",
-    "thumbnail" : "ServiceFeatureTable_Cache.png",
+    "otherSourceFiles" :  [],
     "name" : "Service feature table (cache)"
 }
 

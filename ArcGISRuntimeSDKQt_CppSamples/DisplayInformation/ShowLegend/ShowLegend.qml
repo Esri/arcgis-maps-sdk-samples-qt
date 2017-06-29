@@ -126,8 +126,8 @@ ShowLegendSample {
                         spacing: 5
                         anchors.verticalCenter: parent.verticalCenter
                         Image {
-                            width: Math.min(symbolWidth, 24) * scaleFactor
-                            height: Math.min(symbolHeight, 24) * scaleFactor
+                            width: symbolWidth
+                            height: symbolHeight
                             source: symbolUrl
                         }
                         Text {
@@ -157,15 +157,6 @@ ShowLegendSample {
                     }
                 }
             }
-        }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

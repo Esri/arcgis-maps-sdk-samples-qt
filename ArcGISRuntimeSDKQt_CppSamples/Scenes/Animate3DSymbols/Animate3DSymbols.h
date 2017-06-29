@@ -23,11 +23,14 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class GlobeCameraController;
     class Graphic;
     class GraphicsOverlay;
     class MapQuickView;
     class ModelSceneSymbol;
+    class OrbitGeoElementCameraController;
     class SceneQuickView;
+    class SimpleMarkerSymbol;
   }
 }
 
@@ -38,7 +41,7 @@ class QAbstractItemModel;
 #include <QQuickItem>
 #include <QString>
 
-#include <math.h>
+#include <cmath>
 #include <memory>
 
 class Animate3DSymbols : public QQuickItem
@@ -47,18 +50,17 @@ class Animate3DSymbols : public QQuickItem
 
   Q_PROPERTY(bool missionReady READ missionReady NOTIFY missionReadyChanged)
   Q_PROPERTY(int missionSize READ missionSize NOTIFY missionSizeChanged)
-  Q_PROPERTY(bool following READ following WRITE setFollowing NOTIFY followingChanged)
   Q_PROPERTY(int missionFrame READ missionFrame WRITE setMissionFrame)
+  Q_PROPERTY(double minZoom READ minZoom NOTIFY minZoomChanged)
   Q_PROPERTY(double zoom READ zoom WRITE setZoom)
   Q_PROPERTY(double angle READ angle WRITE setAngle)
-  Q_PROPERTY(int speed READ speed WRITE setSpeed)
 
 public:
-  Animate3DSymbols(QQuickItem* parent = nullptr);
+  explicit Animate3DSymbols(QQuickItem* parent = nullptr);
   ~Animate3DSymbols();
 
   void componentComplete() Q_DECL_OVERRIDE;
-
+  static void init();
 
   Q_INVOKABLE void animate();
   Q_INVOKABLE void changeMission(const QString& missionName);
@@ -66,16 +68,15 @@ public:
   Q_INVOKABLE void zoomMapIn();
   Q_INVOKABLE void zoomMapOut();
   Q_INVOKABLE void viewWidthChanged(bool sceneViewIsWider);
+  Q_INVOKABLE void setFollowing(bool following);
 
   bool missionReady() const;
   int missionSize() const;
-  bool following() const;
   int missionFrame() const;
   double zoom() const;
   double angle() const;
-  int speed() const;
+  double minZoom() const;
 
-  void setFollowing(bool following);
   void setMissionFrame(int newFrame);
   void setZoom(double zoomDist);
   void setAngle(double angle);
@@ -84,36 +85,33 @@ public:
 signals:
   void missionReadyChanged();
   void missionSizeChanged();
-  void followingChanged();
   void nextFrameRequested();
+  void minZoomChanged();
 
 private:
-  void createModel3d();
   void createModel2d(Esri::ArcGISRuntime::GraphicsOverlay* mapOverlay);
   void createRoute2d(Esri::ArcGISRuntime::GraphicsOverlay* mapOverlay);
   void createGraphic3D();
-  void clearGraphic3D();
 
   static const QString HEADING;
   static const QString ROLL;
   static const QString PITCH;
   static const QString ANGLE;
 
-  struct CameraHandler;
-
-  Esri::ArcGISRuntime::SceneQuickView* m_sceneView;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
-  Esri::ArcGISRuntime::ModelSceneSymbol* m_model3d;
-  Esri::ArcGISRuntime::Graphic* m_graphic3d;
-  Esri::ArcGISRuntime::Graphic* m_graphic2d;
-  Esri::ArcGISRuntime::Graphic* m_routeGraphic;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::ModelSceneSymbol* m_model3d = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_graphic3d = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_graphic2d = nullptr;
+  Esri::ArcGISRuntime::SimpleMarkerSymbol* m_symbol2d = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_routeGraphic = nullptr;
+  Esri::ArcGISRuntime::GlobeCameraController* m_globeController = nullptr;
+  Esri::ArcGISRuntime::OrbitGeoElementCameraController* m_followingController = nullptr;
   QString m_dataPath;
-  QAbstractItemModel* m_missionsModel;
+  QAbstractItemModel* m_missionsModel = nullptr;
   std::unique_ptr<MissionData> m_missionData;
-  std::unique_ptr<CameraHandler> m_camHandler;
-  int m_frame;
-  bool m_following;
-  double m_mapZoomFactor;
+  int m_frame = 0;
+  double m_mapZoomFactor = 5.0;
 };
 
 class MissionData

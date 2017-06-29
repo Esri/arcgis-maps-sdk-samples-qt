@@ -21,6 +21,7 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class Map;
     class MapQuickView;
   }
 }
@@ -32,15 +33,17 @@ class RasterLayerFile : public QQuickItem
   Q_OBJECT
 
 public:
-  RasterLayerFile(QQuickItem* parent = nullptr);
+  explicit RasterLayerFile(QQuickItem* parent = nullptr);
   ~RasterLayerFile();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
   Q_INVOKABLE void createAndAddRasterLayer(QUrl rasterUrl);
 
 private:
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // RASTERLAYERFILE_H

@@ -1,0 +1,8 @@
+{
+    "source" :  "FeatureCollectionLayerQuery.qml",
+    "otherSourceFiles" :  [
+        "FeatureCollectionLayerQuery.h",
+        "FeatureCollectionLayerQuery.cpp"
+    ],
+    "name" : "Feature collection layer (query)"
+}

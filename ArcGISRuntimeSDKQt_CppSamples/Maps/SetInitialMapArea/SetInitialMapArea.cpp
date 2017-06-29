@@ -25,9 +25,7 @@
 using namespace Esri::ArcGISRuntime;
 
 SetInitialMapArea::SetInitialMapArea(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr)
+  QQuickItem(parent)
 {
 }
 
@@ -35,21 +33,27 @@ SetInitialMapArea::~SetInitialMapArea()
 {
 }
 
+void SetInitialMapArea::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<SetInitialMapArea>("Esri.Samples", 1, 0, "SetInitialMapAreaSample");
+}
+
 void SetInitialMapArea::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new basemap instance
-    Basemap* basemap = Basemap::imagery(this);
-    // create a new map instance
-    m_map = new Map(basemap, this);
-    // set the initial viewpoint
-    Envelope envelope(-12211308.778729, 4645116.003309, -12208257.879667, 4650542.535773, SpatialReference(102100));
-    m_map->setInitialViewpoint(Viewpoint(envelope));
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // create a new basemap instance
+  Basemap* basemap = Basemap::imagery(this);
+  // create a new map instance
+  m_map = new Map(basemap, this);
+  // set the initial viewpoint
+  Envelope envelope(-12211308.778729, 4645116.003309, -12208257.879667, 4650542.535773, SpatialReference(102100));
+  m_map->setInitialViewpoint(Viewpoint(envelope));
+  // set map on the map view
+  m_mapView->setMap(m_map);
 }
 

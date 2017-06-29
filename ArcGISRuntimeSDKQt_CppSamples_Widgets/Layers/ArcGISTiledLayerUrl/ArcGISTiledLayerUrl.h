@@ -33,14 +33,14 @@ class ArcGISTiledLayerUrl : public QWidget
   Q_OBJECT
 
 public:
-  explicit ArcGISTiledLayerUrl(QWidget* parent = 0);
+  explicit ArcGISTiledLayerUrl(QWidget* parent = nullptr);
   ~ArcGISTiledLayerUrl();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
-  Esri::ArcGISRuntime::Basemap* m_basemap;
-  Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Basemap* m_basemap = nullptr;
+  Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
   QString m_path;
 };
 

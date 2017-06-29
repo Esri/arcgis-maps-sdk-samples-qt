@@ -21,8 +21,8 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class Map;
     class MapQuickView;
+    class RasterLayer;
   }
 }
 
@@ -33,13 +33,16 @@ class Hillshade_Renderer : public QQuickItem
   Q_OBJECT
 
 public:
-  Hillshade_Renderer(QQuickItem* parent = nullptr);
+  explicit Hillshade_Renderer(QQuickItem* parent = nullptr);
   ~Hillshade_Renderer();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void applyHillshadeRenderer(double altitude, double azimuth, int slope);
 
 private:
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
 };
 
 #endif // HILLSHADE_RENDERER_H

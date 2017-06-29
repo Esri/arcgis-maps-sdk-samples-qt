@@ -19,28 +19,29 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+  }
 }
 
 #include <QQuickItem>
 
 class ArcGISTiledLayerUrl : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    ArcGISTiledLayerUrl(QQuickItem* parent = 0);
-    ~ArcGISTiledLayerUrl();
+  explicit ArcGISTiledLayerUrl(QQuickItem* parent = nullptr);
+  ~ArcGISTiledLayerUrl();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // ARCGIS_TILED_LAYER_URL_H

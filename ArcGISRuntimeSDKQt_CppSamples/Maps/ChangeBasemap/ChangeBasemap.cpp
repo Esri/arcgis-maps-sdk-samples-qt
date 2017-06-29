@@ -23,9 +23,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ChangeBasemap::ChangeBasemap(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr)
+  QQuickItem(parent)
 {
 }
 
@@ -33,33 +31,39 @@ ChangeBasemap::~ChangeBasemap()
 {
 }
 
+void ChangeBasemap::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<ChangeBasemap>("Esri.Samples", 1, 0, "ChangeBasemapSample");
+}
+
 void ChangeBasemap::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new basemap instance
-    Basemap* basemap = Basemap::topographic(this);
-    // create a new map instance
-    m_map = new Map(basemap, this);
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // create a new basemap instance
+  Basemap* basemap = Basemap::topographic(this);
+  // create a new map instance
+  m_map = new Map(basemap, this);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 }
 
 void ChangeBasemap::changeBasemap(QString basemap)
 {
-    if (m_map->loadStatus() == LoadStatus::Loaded)
-    {
-        if (basemap == "Topographic")
-            m_map->setBasemap(Basemap::topographic(this));
-        else if (basemap == "Streets")
-            m_map->setBasemap(Basemap::streets(this));
-        else if (basemap == "Imagery")
-            m_map->setBasemap(Basemap::imagery(this));
-        else if (basemap == "Oceans")
-            m_map->setBasemap(Basemap::oceans(this));
-    }
+  if (m_map->loadStatus() == LoadStatus::Loaded)
+  {
+    if (basemap == "Topographic")
+      m_map->setBasemap(Basemap::topographic(this));
+    else if (basemap == "Streets")
+      m_map->setBasemap(Basemap::streets(this));
+    else if (basemap == "Imagery")
+      m_map->setBasemap(Basemap::imagery(this));
+    else if (basemap == "Oceans")
+      m_map->setBasemap(Basemap::oceans(this));
+  }
 }
 

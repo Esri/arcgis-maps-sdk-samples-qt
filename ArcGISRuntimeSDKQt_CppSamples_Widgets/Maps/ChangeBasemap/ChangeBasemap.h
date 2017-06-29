@@ -33,13 +33,13 @@ class ChangeBasemap : public QWidget
   Q_OBJECT
 
 public:
-  explicit ChangeBasemap(QWidget* parent = 0);
+  explicit ChangeBasemap(QWidget* parent = nullptr);
   ~ChangeBasemap();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
-  QComboBox* m_basemapCombo;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
+  QComboBox* m_basemapCombo = nullptr;
 };
 
 #endif // CHANGE_BASEMAP_H

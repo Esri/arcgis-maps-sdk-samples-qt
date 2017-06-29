@@ -19,14 +19,14 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class FeatureLayer;
-        class ServiceFeatureTable;
-        class Feature;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class FeatureLayer;
+    class ServiceFeatureTable;
+    class Feature;
+  }
 }
 
 class QString;
@@ -35,41 +35,42 @@ class QString;
 
 class DeleteFeaturesFeatureService : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(int screenX READ screenX NOTIFY screenXChanged)
-    Q_PROPERTY(int screenY READ screenY NOTIFY screenYChanged)
-    Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
+  Q_PROPERTY(int screenX READ screenX NOTIFY screenXChanged)
+  Q_PROPERTY(int screenY READ screenY NOTIFY screenYChanged)
+  Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
 
 public:
-    DeleteFeaturesFeatureService(QQuickItem* parent = 0);
-    ~DeleteFeaturesFeatureService();
+  explicit DeleteFeaturesFeatureService(QQuickItem* parent = nullptr);
+  ~DeleteFeaturesFeatureService();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void deleteSelectedFeature();
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void deleteSelectedFeature();
 
 signals:
-    void screenXChanged();
-    void screenYChanged();
-    void featureSelected();
-    void featureTypeChanged();
-    void hideWindow();
+  void screenXChanged();
+  void screenYChanged();
+  void featureSelected();
+  void featureTypeChanged();
+  void hideWindow();
 
 private:
-    void connectSignals();
-    int screenX() const;
-    int screenY() const;
-    QString featureType() const;
+  void connectSignals();
+  int screenX() const;
+  int screenY() const;
+  QString featureType() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
-    Esri::ArcGISRuntime::Feature* m_selectedFeature;
-    int m_screenX;
-    int m_screenY;
-    QString m_featureType;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+  Esri::ArcGISRuntime::Feature* m_selectedFeature = nullptr;
+  int m_screenX = 0;
+  int m_screenY = 0;
+  QString m_featureType;
 };
 
 #endif // DELETE_FEATURES_FEATURE_SERVICE_H

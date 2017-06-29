@@ -28,14 +28,20 @@
 using namespace Esri::ArcGISRuntime;
 
 TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_map(nullptr),
-  m_mapView(nullptr)
+  QQuickItem(parent)
 {
 }
 
 TokenAuthentication::~TokenAuthentication()
 {
+}
+
+void TokenAuthentication::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<TokenAuthentication>("Esri.Samples", 1, 0, "TokenAuthenticationSample");
+  // Register the AuthenticationManager for QML
+  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
 }
 
 void TokenAuthentication::componentComplete()
@@ -44,6 +50,9 @@ void TokenAuthentication::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
+  if (!m_mapView)
+      return;
+
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic basemap

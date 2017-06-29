@@ -31,12 +31,12 @@ class SetInitialMapArea : public QWidget
   Q_OBJECT
 
 public:
-  explicit SetInitialMapArea(QWidget* parent = 0);
+  explicit SetInitialMapArea(QWidget* parent = nullptr);
   ~SetInitialMapArea();
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
 };
 
 #endif // SET_INITIAL_MAP_AREA_H

@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Samples/Features/ListRelatedFeatures">
+        <file alias="sample.json">ListRelatedFeatures.json</file>        
+        <file>ListRelatedFeatures.qml</file>
+        <file>ListRelatedFeatures.h</file>
+        <file>ListRelatedFeatures.cpp</file>
+        <file>RelatedFeature.h</file>
+        <file>RelatedFeature.cpp</file>
+        <file>RelatedFeatureListModel.h</file>
+        <file>RelatedFeatureListModel.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

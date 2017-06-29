@@ -36,17 +36,18 @@ class TokenAuthentication : public QQuickItem
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authenticationManager READ authenticationManager CONSTANT)
 
 public:
-  TokenAuthentication(QQuickItem* parent = nullptr);
+  explicit TokenAuthentication(QQuickItem* parent = nullptr);
   ~TokenAuthentication();
 
   void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
   Esri::ArcGISRuntime::AuthenticationManager* authenticationManager() const;
 
 private:
-  Esri::ArcGISRuntime::Map* m_map;
-  Esri::ArcGISRuntime::MapQuickView* m_mapView;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // TOKENAUTHENTICATION_H

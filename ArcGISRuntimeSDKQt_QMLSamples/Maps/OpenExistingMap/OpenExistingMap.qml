@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -35,17 +35,17 @@ Rectangle {
         }
     }
 
-    // Create a list model with information about different portal items
+    // Create a list model with information about different webmaps
     ListModel {
-        id: portalItemListModel
+        id: webmapListModel
         ListElement { itemTitle: "Housing with Mortgages"; imageUrl: "qrc:/Samples/Maps/OpenExistingMap/Housing.png"; itemId: "2d6fa24b357d427f9c737774e7b0f977"}
         ListElement { itemTitle: "USA Tapestry Segmentation"; imageUrl: "qrc:/Samples/Maps/OpenExistingMap/Tapestry.png"; itemId: "01f052c8995e4b9e889d73c3e210ebe3"}
         ListElement { itemTitle: "Geology of United States"; imageUrl: "qrc:/Samples/Maps/OpenExistingMap/geology.jpg"; itemId: "92ad152b9da94dee89b9e387dfe21acd"}
     }
 
-    // Create a delegate for how the portal items display in the view
+    // Create a delegate for how the webmaps display in the view
     Component {
-        id: portalItemDelegate
+        id: webmapsDelegate
         Item {
             width: parent.width
             height: 65 * scaleFactor
@@ -70,13 +70,16 @@ Rectangle {
                 anchors.fill: parent
                 // When an item in the list view is clicked
                 onClicked: {
-                    portalItemListView.currentIndex = index
-                    // Create a new, blank map
-                    var newMap = ArcGISRuntimeEnvironment.createObject("Map");
-                    // Create a PortalItem and assign it a URL and item ID
-                    var newPortalItem = ArcGISRuntimeEnvironment.createObject("PortalItem", {url:"http://arcgis.com/sharing/rest/content/items/" + itemId});
-                    // Set the portalItem property on the Map
-                    newMap.item = newPortalItem;
+                    webmapsListView.currentIndex = index
+
+                    //! [Construct map from a webmap url]
+                    // construct the webmap Url using the itemId
+                    var organizationPortalUrl = "http://arcgis.com/sharing/rest/content/items/";
+                    var webmapUrl = organizationPortalUrl + itemId;
+                    // Create a new map and assign it the initUrl
+                    var newMap = ArcGISRuntimeEnvironment.createObject("Map", {initUrl: webmapUrl});
+                    //! [Construct map from a webmap url]
+
                     // Set the map to the MapView
                     mapView.map = newMap;
                     mapPickerWindow.visible = false;
@@ -85,7 +88,7 @@ Rectangle {
         }
     }
 
-    // Create a window to display the different Portal Items that can be selected
+    // Create a window to display the different webmaps that can be selected
     Rectangle {
         id: mapPickerWindow
         anchors.fill: parent
@@ -118,17 +121,17 @@ Rectangle {
                 width: 1
             }
 
-            // Create a list view to display the items
+            // Create a list view to display the webmaps
             ListView {
-                id: portalItemListView
+                id: webmapsListView
                 anchors {
                     fill: parent
                     margins: 10 * scaleFactor
                 }
-                // Assign the model to the list model of portal items
-                model: portalItemListModel
+                // Assign the model to the list model of webmaps
+                model: webmapListModel
                 // Assign the delegate to the delegate created above
-                delegate: portalItemDelegate
+                delegate: webmapsDelegate
                 spacing: 10
                 clip: true
                 highlightFollowsCurrentItem: true
@@ -174,15 +177,6 @@ Rectangle {
                 // Show the add window when it is clicked
                 mapPickerWindow.visible = true;
             }
-        }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

@@ -19,39 +19,40 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class CalloutData;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class CalloutData;
+  }
 }
 
 #include <QQuickItem>
 
 class ShowCallout : public QQuickItem
 {
-    Q_OBJECT
-    //! [expose callout property]
-    Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
-    //! [expose callout property]
+  Q_OBJECT
+  //! [expose callout property]
+  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
+  //! [expose callout property]
 
 public:
-    ShowCallout(QQuickItem* parent = nullptr);
-    ~ShowCallout();
+  explicit ShowCallout(QQuickItem* parent = nullptr);
+  ~ShowCallout();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 signals:
-    void calloutDataChanged();
+  void calloutDataChanged();
 
 private:
-    Esri::ArcGISRuntime::CalloutData* calloutData() const;
+  Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::CalloutData* m_calloutData;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
 };
 
 #endif // SHOWCALLOUT_H

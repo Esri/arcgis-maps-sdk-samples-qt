@@ -29,10 +29,7 @@
 using namespace Esri::ArcGISRuntime;
 
 Simple_Marker_Symbol::Simple_Marker_Symbol(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_graphicsOverlay(nullptr)
+  QQuickItem(parent)
 {
 }
 
@@ -40,34 +37,40 @@ Simple_Marker_Symbol::~Simple_Marker_Symbol()
 {
 }
 
+void Simple_Marker_Symbol::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<Simple_Marker_Symbol>("Esri.Samples", 1, 0, "Simple_Marker_SymbolSample");
+}
+
 void Simple_Marker_Symbol::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
-    m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // create a map using the imagery basemap
-    m_map = new Map(Basemap::imagery(this), this);
+  // create a map using the imagery basemap
+  m_map = new Map(Basemap::imagery(this), this);
 
-    // set initial viewpoint
-    m_map->setInitialViewpoint(Viewpoint(Point(-226773, 6550477, SpatialReference::webMercator()), 7500));
+  // set initial viewpoint
+  m_map->setInitialViewpoint(Viewpoint(Point(-226773, 6550477, SpatialReference::webMercator()), 7500));
 
-    // create a GraphicsOverlay
-    m_graphicsOverlay = new GraphicsOverlay(this);
+  // create a GraphicsOverlay
+  m_graphicsOverlay = new GraphicsOverlay(this);
 
-    // create red circle graphic
-    Graphic* redCircle = new Graphic(Point(-226773, 6550477, SpatialReference::webMercator()), this);
-    SimpleMarkerSymbol* redCircleSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 12, this);
-    redCircle->setSymbol(redCircleSymbol);
+  // create red circle graphic
+  Graphic* redCircle = new Graphic(Point(-226773, 6550477, SpatialReference::webMercator()), this);
+  SimpleMarkerSymbol* redCircleSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 12, this);
+  redCircle->setSymbol(redCircleSymbol);
 
-    // append to graphics overlay
-    m_graphicsOverlay->graphics()->append(redCircle);
+  // append to graphics overlay
+  m_graphicsOverlay->graphics()->append(redCircle);
 
-    // add the GraphicsOverlay to map view
-    m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
+  // add the GraphicsOverlay to map view
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-    // set map to map view
-    m_mapView->setMap(m_map);
+  // set map to map view
+  m_mapView->setMap(m_map);
 }

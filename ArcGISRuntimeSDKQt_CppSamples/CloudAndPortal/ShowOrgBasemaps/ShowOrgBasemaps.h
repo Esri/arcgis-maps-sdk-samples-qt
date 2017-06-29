@@ -19,14 +19,14 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class AuthenticationManager;
-        class BasemapListModel;
-        class Map;
-        class MapQuickView;
-        class Portal;
-    }
+  namespace ArcGISRuntime
+  {
+    class AuthenticationManager;
+    class BasemapListModel;
+    class Map;
+    class MapQuickView;
+    class Portal;
+  }
 }
 
 #include <QAbstractListModel>
@@ -34,42 +34,44 @@ namespace Esri
 
 class ShowOrgBasemaps : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
-    Q_PROPERTY(bool portalLoaded READ portalLoaded NOTIFY portalLoadedChanged)
-    Q_PROPERTY(QString orgName READ orgName NOTIFY orgNameChanged)
-    Q_PROPERTY(QAbstractListModel* basemaps READ basemaps NOTIFY basemapsChanged)
-    Q_PROPERTY(QString mapLoadError READ mapLoadError NOTIFY mapLoadErrorChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
+  Q_PROPERTY(bool portalLoaded READ portalLoaded NOTIFY portalLoadedChanged)
+  Q_PROPERTY(QString orgName READ orgName NOTIFY orgNameChanged)
+  Q_PROPERTY(QAbstractListModel* basemaps READ basemaps NOTIFY basemapsChanged)
+  Q_PROPERTY(QString mapLoadError READ mapLoadError NOTIFY mapLoadErrorChanged)
 
 public:
-    ShowOrgBasemaps(QQuickItem* parent = nullptr);
-    ~ShowOrgBasemaps();
+  explicit ShowOrgBasemaps(QQuickItem* parent = nullptr);
+  ~ShowOrgBasemaps();
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
-    Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
-    bool portalLoaded() const;
-    QString orgName() const;
-    QAbstractListModel* basemaps() const;
-    QString mapLoadError() const;
+  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
+  bool portalLoaded() const;
+  QString orgName() const;
+  QAbstractListModel* basemaps() const;
+  QString mapLoadError() const;
 
-    Q_INVOKABLE void loadSelectedBasemap(int index);
-    Q_INVOKABLE void errorAccepted();
+  Q_INVOKABLE void load(bool anonymous);
+  Q_INVOKABLE void loadSelectedBasemap(int index);
+  Q_INVOKABLE void errorAccepted();
 
 signals:
-    void authManagerChanged();
-    void portalLoadedChanged();
-    void orgNameChanged();
-    void basemapsChanged();
-    void mapLoadErrorChanged();
+  void authManagerChanged();
+  void portalLoadedChanged();
+  void orgNameChanged();
+  void basemapsChanged();
+  void mapLoadErrorChanged();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::Portal* m_portal;
-    bool m_portalLoaded;
-    QString m_mapLoadError;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+  bool m_portalLoaded = false;
+  QString m_mapLoadError;
 };
 
 #endif // SHOWORGBASEMAPS_H

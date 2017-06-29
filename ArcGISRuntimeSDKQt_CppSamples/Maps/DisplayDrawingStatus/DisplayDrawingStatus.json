@@ -1,7 +1,9 @@
 {
-    "source" :  "DisplayDrawingStatus",
-    "description" : "DisplayDrawingStatus.html",
-    "thumbnail" : "DisplayDrawingStatus.png",
+    "source" :  "DisplayDrawingStatus.qml",
+    "otherSourceFiles" : [
+        "DisplayDrawingStatus.h",
+        "DisplayDrawingStatus.cpp"
+    ],
     "name" : "Display drawing status"
 }
 

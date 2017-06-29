@@ -17,28 +17,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 DisplaySceneLayerSample {
     width: 800
     height: 600
-
-    property double scaleFactor: System.displayScaleFactor
 
     // add a mapView component
     SceneView {
         anchors.fill: parent
         objectName: "sceneView"
     }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }
-
-

@@ -1,7 +1,9 @@
 {
-    "source" :  "GenerateGeodatabase",
-    "description" : "GenerateGeodatabase.html",
-    "thumbnail" : "GenerateGeodatabase.png",
+    "source" :  "GenerateGeodatabase.qml",
+    "otherSourceFiles" : [
+        "GenerateGeodatabase.h",
+        "GenerateGeodatabase.cpp"
+    ],
     "name" : "Generate geodatabase",
     "dataItems" : [
         {

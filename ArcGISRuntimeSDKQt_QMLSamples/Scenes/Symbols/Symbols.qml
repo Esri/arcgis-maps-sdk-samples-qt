@@ -17,8 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.0
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.1
 
 Rectangle {
     width: 800
@@ -106,16 +105,6 @@ Rectangle {
         }
     }
 
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
-
     // function to dynamically create the graphics and add them to the graphics overlay
     function addSymbols() {
         for (var i = 0; i < symbolModel.count; i++) {
@@ -131,7 +120,6 @@ Rectangle {
                                                                  anchorPosition: Enums.SceneSymbolAnchorPositionCenter
                                                              });
 
-            smss.style = elem.symbolStyle;
             // create a new point geometry
             var point = ArcGISRuntimeEnvironment.createObject("Point", {
                                                                   x: pointX + 0.01 * i,

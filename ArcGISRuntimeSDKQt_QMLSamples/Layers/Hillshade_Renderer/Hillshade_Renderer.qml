@@ -15,27 +15,30 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.0
+import QtQuick.Controls 1.4
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
+    property real scaleFactor: System.displayScaleFactor
 
     MapView {
         id: mapView
         anchors.fill: parent
 
+        //! [HillshadeRenderer QML apply to layer snippet]
         Map {
             Basemap {
                 // add a raster to the basemap
                 RasterLayer {
+                    id: rasterLayer
+
                     Raster {
                         path: dataPath + "/srtm.tiff"
                     }
@@ -53,6 +56,7 @@ Rectangle {
                     }
                 }
             }
+            //! [HillshadeRenderer QML apply to layer snippet]
 
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
@@ -62,13 +66,34 @@ Rectangle {
         }
     }
 
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
+    Button {
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: 25 * scaleFactor
         }
+        text: "Edit Renderer"
+        onClicked: hillshadeSettings.visible = true;
+    }
+
+    HillshadeSettings {
+        id: hillshadeSettings
+        anchors.fill: parent
+    }
+
+    function applyHillshadeRenderer(altitude, azimuth, slope) {
+        // create the new renderer
+        var hillshadeRenderer = ArcGISRuntimeEnvironment.createObject("HillshadeRenderer", {
+                                                                          altitude: altitude,
+                                                                          azimuth: azimuth,
+                                                                          zFactor: 0.000016,
+                                                                          slopeType: slope,
+                                                                          pixelSizeFactor: 1,
+                                                                          pixelSizePower: 1,
+                                                                          outputBitDepth: 8
+                                                                      });
+
+        // set the renderer on the layer
+        rasterLayer.renderer = hillshadeRenderer;
     }
 }

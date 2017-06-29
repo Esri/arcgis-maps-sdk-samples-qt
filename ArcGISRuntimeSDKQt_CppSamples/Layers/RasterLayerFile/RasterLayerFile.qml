@@ -23,12 +23,12 @@ import Esri.ArcGISExtras 1.1
 RasterLayerFileSample {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property real scaleFactor: System.displayScaleFactor
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
+    property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
 
     // add a mapView component
     MapView {
@@ -36,39 +36,36 @@ RasterLayerFileSample {
         objectName: "mapView"
     }
 
-    Column {
-        anchors {
-            left: parent.left
-            top: parent.top
-            margins: 15
-        }
-        spacing: 10
-
-        Button {
-            text: "Add Raster"
-            width: 100 * scaleFactor
-            onClicked: fileDialog.open();
-        }
-    }
-
-    FileDialog {
-        id: fileDialog
-
-        // only display supported raster formats
-        nameFilters: ["Raster files (*.img *.I12 *.dt0 *.dt1 *.dt2 *.tc2 *.geotiff *.tif *.hr1 *.jpg *.jpeg *.jp2 *.ntf *.png *.i21 *.ovr)"]
-        folder: dataPath
-
-        onAccepted: {
-            createAndAddRasterLayer(fileDialog.fileUrl)
-        }
-    }
-
     Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
+        visible: addButton.visible
+        anchors.centerIn: addButton
+        radius: 8 * scaleFactor
+        height: addButton.height + (16 * scaleFactor)
+        width: addButton.width + (16 * scaleFactor)
+        color: "lightgrey"
+        border.color: "darkgrey"
+        border.width: 2 * scaleFactor
+        opacity: 0.75
+    }
+
+    Button {
+        id: addButton
+        anchors {
+            bottom: parent.bottom
+            horizontalCenter: parent.horizontalCenter
+            margins: 32 * scaleFactor
         }
+
+        text: "Add Raster"
+        onClicked: loader.open();
+    }
+
+    RasterLoader {
+        id: loader
+        anchors.fill: rootRectangle
+        folder: dataPath
+        supportedExtensions: supportedFormats
+
+        onRasterFileChosen: createAndAddRasterLayer(url);
     }
 }

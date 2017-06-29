@@ -19,33 +19,34 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Map;
-        class MapQuickView;
-        class FeatureLayer;
-        class ServiceFeatureTable;
-    }
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class FeatureLayer;
+    class ServiceFeatureTable;
+  }
 }
 
 #include <QQuickItem>
 
 class ServiceFeatureTableManualCache : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    ServiceFeatureTableManualCache(QQuickItem* parent = 0);
-    ~ServiceFeatureTableManualCache();
+  explicit ServiceFeatureTableManualCache(QQuickItem* parent = nullptr);
+  ~ServiceFeatureTableManualCache();
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    Q_INVOKABLE void populate();
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void populate();
 
 private:
-    Esri::ArcGISRuntime::Map* m_map;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
 };
 
 #endif // SERVICE_FEATURE_TABLE_MANUAL_CACHE_H

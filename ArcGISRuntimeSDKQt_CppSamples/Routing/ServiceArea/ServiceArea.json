@@ -1,0 +1,9 @@
+{
+    "source" :  "ServiceArea.qml",
+    "otherSourceFiles" : [
+        "ServiceArea.h",
+        "ServiceArea.cpp"
+    ],
+    "name" : "Service area"
+}
+

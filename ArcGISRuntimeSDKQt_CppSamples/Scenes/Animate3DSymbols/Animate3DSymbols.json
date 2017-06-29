@@ -1,7 +1,9 @@
 {
-    "source" :  "Animate3DSymbols",
-    "description" : "Animate3DSymbols.html",
-    "thumbnail" : "Animate3DSymbols.png",
+    "source" :  "Animate3DSymbols.qml",
+    "otherSourceFiles" : [
+        "Animate3DSymbols.h",
+        "Animate3DSymbols.cpp"
+    ],
     "name" : "Animate 3D symbols",
     "dataItems" : [
         {

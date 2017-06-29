@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -79,7 +79,10 @@ Rectangle {
 
         //! [identify feature layer qml api snippet]
         onMouseClicked: {
-            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 22, false, 1000);
+            var tolerance = 22;
+            var returnPopupsOnly = false;
+            var maximumResults = 1000;
+            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, tolerance, returnPopupsOnly, maximumResults);
         }
 
         onIdentifyLayerStatusChanged: {
@@ -127,16 +130,6 @@ Rectangle {
             }
             text: displayText
             font.pixelSize: 14 * scaleFactor
-        }
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

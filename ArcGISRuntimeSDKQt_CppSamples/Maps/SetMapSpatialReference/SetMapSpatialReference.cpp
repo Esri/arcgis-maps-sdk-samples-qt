@@ -26,11 +26,7 @@
 using namespace Esri::ArcGISRuntime;
 
 SetMapSpatialReference::SetMapSpatialReference(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr),
-    m_basemap(nullptr),
-    m_imageLayer(nullptr)
+  QQuickItem(parent)
 {    
 }
 
@@ -38,29 +34,35 @@ SetMapSpatialReference::~SetMapSpatialReference()
 {
 }
 
+void SetMapSpatialReference::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<SetMapSpatialReference>("Esri.Samples", 1, 0, "SetMapSpatialReferenceSample");
+}
+
 void SetMapSpatialReference::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
-    m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    // Create a new map with the spatial reference
-    m_map = new Map(SpatialReference(54024), this);
+  // Create a new map with the spatial reference
+  m_map = new Map(SpatialReference(54024), this);
 
-    // create the URL pointing to the map image layer
-    QUrl imageLayerUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer");
+  // create the URL pointing to the map image layer
+  QUrl imageLayerUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer");
 
-    // construct the ArcGISMapImageLayer using the URL
-    m_imageLayer = new ArcGISMapImageLayer(imageLayerUrl, this);
+  // construct the ArcGISMapImageLayer using the URL
+  m_imageLayer = new ArcGISMapImageLayer(imageLayerUrl, this);
 
-    // create a Basemap and pass in the ArcGISMapImageLayer
-    m_basemap = new Basemap(m_imageLayer, this);
+  // create a Basemap and pass in the ArcGISMapImageLayer
+  m_basemap = new Basemap(m_imageLayer, this);
 
-    // set the ArcGISMapImageLayer as basemap
-    m_map->setBasemap(m_basemap);
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // set the ArcGISMapImageLayer as basemap
+  m_map->setBasemap(m_basemap);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 }
 

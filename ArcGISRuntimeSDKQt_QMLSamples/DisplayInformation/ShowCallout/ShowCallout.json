@@ -1,6 +1,5 @@
 {
     "source" :  "ShowCallout.qml",
-    "description" : "ShowCallout.html",
-    "thumbnail" : "ShowCallout.png",
+    "otherSourceFiles" :  [],
     "name" : "Show callout"
 }

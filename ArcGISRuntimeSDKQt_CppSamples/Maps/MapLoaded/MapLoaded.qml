@@ -57,15 +57,4 @@ MapLoadedSample {
             font.pixelSize: 14 * scaleFactor
         }
     }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }
-
-

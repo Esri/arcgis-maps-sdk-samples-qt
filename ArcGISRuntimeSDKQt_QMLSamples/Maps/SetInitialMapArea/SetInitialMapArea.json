@@ -1,7 +1,6 @@
 {
     "source" :  "SetInitialMapArea.qml",
-    "description" : "SetInitialMapArea.html",
-    "thumbnail" : "SetInitialMapArea.png",
+    "otherSourceFiles" :  [],
     "name" : "Set initial map area"
 }
 

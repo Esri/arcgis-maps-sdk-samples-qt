@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -35,7 +35,7 @@ Rectangle {
             Basemap {
                 // Nest an ArcGISVectorTiledLayer Layer in the Basemap
                 ArcGISVectorTiledLayer {
-                    url: "http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"
+                    url: "http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"
                 }
             }
             initialViewpoint: ViewpointCenter {
@@ -67,30 +67,21 @@ Rectangle {
             switch (comboBoxBasemap.currentText) {
             case "Navigation":
             default:
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=dcbbba0edf094eaa81af19298b9c6247"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"});
                 break;
             case "Streets":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=4e1133c28ac04cca97693cf336cd49ad"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=a60a37a27cc140ddad15f919cd5a69f2"});
                 break;
             case "Night":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=bf79e422e9454565ae0cbe9553cf6471"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=92c551c9f07b4147846aae273e822714"});
                 break;
             case "Dark Gray":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=850db44b9eb845d3bd42b19e8aa7a024"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=5ad3948260a147a993ef4865e3fad476"});
                 break;
             }
             var newBasemap = ArcGISRuntimeEnvironment.createObject("Basemap");
             newBasemap.baseLayers.append(layer);
             map.basemap = newBasemap;
-        }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

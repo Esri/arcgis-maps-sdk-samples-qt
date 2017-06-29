@@ -1,7 +1,6 @@
 {
     "source" :  "ExtrudeGraphics.qml",
-    "description" : "ExtrudeGraphics.html",
-    "thumbnail" : "ExtrudeGraphics.png",
+    "otherSourceFiles" :  [],
     "name" : "Extrude graphics"
 }
 

@@ -19,13 +19,11 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Basemap.h"
-#include "PortalItem.h"
 
 using namespace Esri::ArcGISRuntime;
 
 OpenExistingMap::OpenExistingMap(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_mapView(nullptr)
+  QQuickItem(parent)
 {
 }
 
@@ -33,29 +31,37 @@ OpenExistingMap::~OpenExistingMap()
 {
 }
 
-void OpenExistingMap::componentComplete()
+void OpenExistingMap::init()
 {
-    QQuickItem::componentComplete();
-
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
-
-    // create a new basemap instance
-    Basemap* basemap = Basemap::imagery(this);
-    // create a new map instance
-    Map* map = new Map(basemap, this);
-    // set map on the map view
-    m_mapView->setMap(map);
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<OpenExistingMap>("Esri.Samples", 1, 0, "OpenExistingMapSample");
 }
 
-void OpenExistingMap::openMap(QString itemId)
+void OpenExistingMap::componentComplete()
 {
-    // create a portal item with the item id
-    auto portalItem = new PortalItem(QUrl("http://arcgis.com/sharing/rest/content/items/" + itemId));
+  QQuickItem::componentComplete();
 
-    // create a new map from the portal item
-    Map* map = new Map(portalItem, this);
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // set the map to the map view
-    m_mapView->setMap(map);
+  // create a new basemap instance
+  Basemap* basemap = Basemap::imagery(this);
+  // create a new map instance
+  Map* map = new Map(basemap, this);
+  // set map on the map view
+  m_mapView->setMap(map);
+}
+
+void OpenExistingMap::openMap(const QString& itemId)
+{
+  //! [Construct map from a webmap Url]
+  // create a QUrl using the item id QString
+  QString organizationPortalUrl("http://arcgis.com");
+  QUrl webmapUrl( QString(organizationPortalUrl + "/sharing/rest/content/items/" + itemId));
+  // create a new map from the webmap Url
+  Map* map = new Map(webmapUrl, this);
+  //! [Construct map from a webmap Url]
+
+  // set the map to the map view
+  m_mapView->setMap(map);
 }

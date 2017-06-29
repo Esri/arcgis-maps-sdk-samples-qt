@@ -18,8 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 2.0
-
+import Esri.ArcGISRuntime.Toolkit.Controls 100.1
 
 MobileMap_SearchAndRouteSample {
     id: mobileMapSearchRoute
@@ -388,16 +387,6 @@ MobileMap_SearchAndRouteSample {
         BusyIndicator {
             anchors.centerIn: parent
             visible: mobileMapSearchRoute.isGeocodeInProgress
-        }
-    }
-
-    // neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

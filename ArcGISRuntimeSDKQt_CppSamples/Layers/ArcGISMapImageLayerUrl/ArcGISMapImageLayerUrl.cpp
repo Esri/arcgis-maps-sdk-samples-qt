@@ -25,9 +25,7 @@
 using namespace Esri::ArcGISRuntime;
 
 ArcGISMapImageLayerUrl::ArcGISMapImageLayerUrl(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr)
+  QQuickItem(parent)
 {
 }
 
@@ -35,23 +33,29 @@ ArcGISMapImageLayerUrl::~ArcGISMapImageLayerUrl()
 {
 }
 
+void ArcGISMapImageLayerUrl::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<ArcGISMapImageLayerUrl>("Esri.Samples", 1, 0, "ArcGISMapImageLayerUrlSample");
+}
+
 void ArcGISMapImageLayerUrl::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // create a new map image layer
-    ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"), this);
+  // create a new map image layer
+  ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"), this);
 
-    // create a new basemap from the layer
-    Basemap* basemap = new Basemap(mapImageLayer, this);
+  // create a new basemap from the layer
+  Basemap* basemap = new Basemap(mapImageLayer, this);
 
-    // create a new map instance
-    m_map = new Map(basemap, this);
+  // create a new map instance
+  m_map = new Map(basemap, this);
 
-    // set map on the map view
-    m_mapView->setMap(m_map);
+  // set map on the map view
+  m_mapView->setMap(m_map);
 }
 

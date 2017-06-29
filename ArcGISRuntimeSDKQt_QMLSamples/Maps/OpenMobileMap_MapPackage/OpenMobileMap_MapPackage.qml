@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -23,7 +23,6 @@ Rectangle {
     height: 600
 
     //! [open mobile map package qml api snippet]
-    property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
 
     // Create MapView
@@ -51,13 +50,4 @@ Rectangle {
         }
     }
     //! [open mobile map package qml api snippet]
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
-        }
-    }
 }

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.0
+import Esri.ArcGISRuntime 100.1
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -85,20 +85,19 @@ Rectangle {
         }
 
         function viewStatusString(layerViewState) {
-            switch(layerViewState.status) {
-            case Enums.LayerViewStatusActive:
+            var stateFlag = layerViewState.statusFlags;
+            if (stateFlag & Enums.LayerViewStatusActive)
                 return "Active";
-            case Enums.LayerViewStatusNotVisible:
+            if (stateFlag & Enums.LayerViewStatusNotVisible)
                 return "Not Visible";
-            case Enums.LayerViewStatusOutOfScale:
-                return "Out of Scale";
-            case Enums.LayerViewStatusLoading:
+            if (stateFlag & Enums.LayerViewStatusOutOfScale)
+                return "Out of scale";
+            if (stateFlag & Enums.LayerViewStatusLoading)
                 return "Loading";
-            case Enums.LayerViewStatusError:
+            if (stateFlag & Enums.LayerViewStatusError)
                 return "Error";
-            default:
-                return "Unknown";
-            }
+
+            return "Unknown";
         }
 
         function getindex(layer) {
@@ -115,8 +114,7 @@ Rectangle {
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            margins: 10 * scaleFactor
-            bottomMargin: 25 * scaleFactor
+            margins: 25 * scaleFactor
         }
         height: 150 * scaleFactor
         width: 230 * scaleFactor
@@ -184,15 +182,6 @@ Rectangle {
                     color: "steelblue"
                 }
             }
-        }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

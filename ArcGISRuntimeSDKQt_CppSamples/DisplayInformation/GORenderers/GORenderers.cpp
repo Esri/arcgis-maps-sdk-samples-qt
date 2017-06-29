@@ -34,14 +34,18 @@
 using namespace Esri::ArcGISRuntime;
 
 GORenderers::GORenderers(QQuickItem* parent) :
-    QQuickItem(parent),
-    m_map(nullptr),
-    m_mapView(nullptr)
+    QQuickItem(parent)
 {
 }
 
 GORenderers::~GORenderers()
 {
+}
+
+void GORenderers::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<GORenderers>("Esri.Samples", 1, 0, "GORenderersSample");
 }
 
 void GORenderers::componentComplete()

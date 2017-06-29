@@ -1,7 +1,9 @@
 {
-    "source" :  "ManageBookmarks",
-    "description" : "ManageBookmarks.html",
-    "thumbnail" : "ManageBookmarks.png",
+    "source" :  "ManageBookmarks.qml",
+    "otherSourceFiles" : [
+        "ManageBookmarks.h",
+        "ManageBookmarks.cpp"
+    ],
     "name" : "Manage bookmarks"
 }
 

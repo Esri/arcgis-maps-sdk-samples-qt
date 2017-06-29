@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/Samples/Maps/MapLoaded">
         <file alias="sample.json">MapLoaded.json</file>
-        <file>MapLoaded.png</file>
+        <file>screenshot.png</file>
         <file>MapLoaded.qml</file>
 		<file>MapLoaded.cpp</file>
 		<file>MapLoaded.h</file>
-        <file>MapLoaded.html</file>
+        <file>README.md</file>
     </qresource>
 </RCC>

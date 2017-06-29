@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/Samples/Maps/OpenMobileMap_MapPackage">
         <file alias="sample.json">OpenMobileMap_MapPackage.json</file>
-        <file>OpenMobileMap_MapPackage.png</file>
+        <file>screenshot.png</file>
         <file>OpenMobileMap_MapPackage.qml</file>
 		<file>OpenMobileMap_MapPackage.h</file>
 		<file>OpenMobileMap_MapPackage.cpp</file>
-        <file>OpenMobileMap_MapPackage.html</file>
+        <file>README.md</file>
     </qresource>
 </RCC>
