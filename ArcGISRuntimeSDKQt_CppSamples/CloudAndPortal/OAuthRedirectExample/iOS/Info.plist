@@ -60,6 +60,8 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
 	</array>
 </dict>
 </plist>
