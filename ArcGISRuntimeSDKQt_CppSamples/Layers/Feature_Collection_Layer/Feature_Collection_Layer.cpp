@@ -174,7 +174,7 @@ void Feature_Collection_Layer::addPolylineToTable(QString attrName, QString attr
   Feature* feature = table->createFeature(this);
   feature->attributes()->replaceAttribute(attrName, attrValue);
   PolylineBuilder* builder = new PolylineBuilder(SpatialReference(4326));
-  foreach (Point pt, points)
+  for (const Point& pt : points)
   {
     builder->addPoint(pt);
   }
@@ -190,7 +190,7 @@ void Feature_Collection_Layer::addPolygonToTable(QString attrName, QString attrV
   Feature* feature = table->createFeature(this);
   feature->attributes()->replaceAttribute(attrName, attrValue);
   PolygonBuilder* builder = new PolygonBuilder(SpatialReference(4326));
-  foreach (Point pt, points)
+  for (const Point& pt : points)
   {
     builder->addPoint(pt);
   }
