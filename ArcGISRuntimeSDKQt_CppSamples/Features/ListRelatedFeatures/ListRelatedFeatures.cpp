@@ -100,7 +100,7 @@ void ListRelatedFeatures::connectSignals()
             // connect to queryRelatedFeaturesCompleted signal
             connect(selectedTable, &ArcGISFeatureTable::queryRelatedFeaturesCompleted, this, [this, arcGISFeature](QUuid, QList<RelatedFeatureQueryResult*> relatedResults)
             {
-              foreach (RelatedFeatureQueryResult* relatedResult, relatedResults)
+              for (const RelatedFeatureQueryResult* relatedResult : relatedResults)
               {
                 while (relatedResult->iterator().hasNext())
                 {
