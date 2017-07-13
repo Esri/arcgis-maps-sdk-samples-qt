@@ -96,7 +96,7 @@ void ExtrudeGraphics::componentComplete()
     pointsList.append(point);
   }
 
-  foreach (auto point, pointsList)
+  for (const auto& point : pointsList)
   {
     // create a random z value
     int randNum = rand() % 6 + 1;
@@ -130,7 +130,7 @@ Esri::ArcGISRuntime::Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Poin
 
   // create a polygon builder
   PolygonBuilder* pb = new PolygonBuilder(m_sceneView->spatialReference(), this);
-  foreach (auto point, points)
+  for (const auto& point : points)
   {
     // add each point to the builder object
     pb->addPoint(point);
