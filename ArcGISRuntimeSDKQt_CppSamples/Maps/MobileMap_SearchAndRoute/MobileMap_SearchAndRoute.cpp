@@ -210,7 +210,7 @@ void MobileMap_SearchAndRoute::createMapList(int index)
 
     int counter = 1;
 
-    foreach (const auto& map, m_mobileMapPackages[index]->maps())
+    for (const auto& map : m_mobileMapPackages[index]->maps())
     {
         QVariantMap mapList;
         mapList["name"] = map->item()->title() + " " + QString::number(counter);

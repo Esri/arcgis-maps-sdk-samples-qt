@@ -160,7 +160,7 @@ void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
     // It's a multipoint
     auto builder = new MultipointBuilder(sr, this);
     PointCollection* collection = new PointCollection(sr, this);
-    foreach (auto pointString, pointStrings)
+    for (const auto& pointString : pointStrings)
     {
       QStringList coords = pointString.split(",");
       if (coords.length() >= 2)
