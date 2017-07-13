@@ -88,7 +88,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
       DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
       //! [Create Dictionary Symbol Style Cpp]
 
-      foreach (auto table, m_geodatabase->geodatabaseFeatureTables())
+      for (const auto& table : m_geodatabase->geodatabaseFeatureTables())
       {
         //! [Apply Dictionary Renderer Feature Layer Cpp]
         // Create a layer and set the feature table
