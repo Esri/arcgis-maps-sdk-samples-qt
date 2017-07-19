@@ -1,5 +1,5 @@
 # Overview
-ArcGIS Runtime SDK 100.1 for Qt samples for Qt Creator.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
+ArcGIS Runtime SDK 100.2 for Qt samples for Qt Creator.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
 
 # Prerequisites
 * Qt SDK 5.6.2 or higher (Open source or commercial)
