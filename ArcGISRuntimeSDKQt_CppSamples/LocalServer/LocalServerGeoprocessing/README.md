@@ -1,39 +1,60 @@
-# Local Server Feature Layer
+# Local Server geoprocessing
 
-Demonstrates how to start the Local Server and Local Feature Service, then create a Feature Layer from the Local Feature Service and add it to a map.
+Demonstrates how to create contour lines from local raster data using a local geoprocessing package (.gpk) and the contour geoprocessing tool.
 
-**Note:** Local Server is not supported on MacOS
+**Note:** Local Server is not supported on macOS.
 
-![](LocalServerFeatureLayer.png)
+![](screenshot.png)
 
 ## How to use the sample
 
-The Local Server and Local Feature Service will automatically be started and once running a Feature Layer will be created and added to the map.
+Contour Line Controls (Top Left):
+
+ * Interval-- Specifies the spacing between contour lines.
+ * Generate Contours -- Adds contour lines to map using interval.
+ * Clear Results -- Removes contour lines from map.
 
 ## How it works
 
 To create a `FeatureLayer` from a `LocalFeatureService`:
 
-1. Create and run the local server.
-    * `LocalServer::instance` creates the local server
-    * `LocalServer::start()` starts the server asynchronously
-2. Wait for server to be in the  `LocalServerStatus::STARTED` state.
-    * `LocalServer::statusChanged()` fires whenever the running status of the local server has changed.
-3. Create and run a local service, example of running a `LocalMapService`.
-    * `new LocalFeatureService(Url)`, creates a local feature service with the given url path to mpk file
-    * `LocalFeatureService::start()`, starts the service asynchronously
-    * service will be added to the local server automatically
-4. Wait for feature service to be in the LocalServerStatus::STARTED state.
-    * `LocalFeatureService::statusChanged()` signal fires whenever the status of the local service has changed.
-5. Create a feature layer from local feature service.
-    * create a `ServiceFeatureTable(Url)` from local feature service url, `LocalFeatureService::url()`
-	* create a `FeatureLayer` using the service feature table
-	* add the feature layer to the map's operational layer
-	* connect to the feature layer's `LoadStatusChanged` signal
-	* once the status is `Loaded`, set the mapview's extent to the layer's full extent.
+1. Add raster data to map using as an `ArcGISTiledLayer`.
+2. Create and run the Local Server.
+    * `LocalServer::instance` creates the Local Server.
+    * `LocalServer::start()` starts the server asynchronously.
+3. Wait for server to be in the `LocalServerStatus::STARTED` state.
+    * `LocalServer::statusChanged()` fires whenever the running status of the Local Server changes.
+4. Start a `LocalGeoprocessingService` and run a `GeoprocessingTask`
+    * `new LocalGeoprocessingService(Url, ServiceType)`, creates a local geoprocessing service
+    * `LocalGeoprocessingService::start()` starts the service asynchronously.
+    * `new GeoprocessingTask(LocalGeoprocessingService.url() + "/Contour")`, creates a geoprocessing task that uses the contour lines tool
+5. Create `GeoprocessingParameters` and add a `GeoprocessingDouble` as a parameter using set interval.
+    * `new GeoprocessingParameters(ExecutionType)`, creates geoprocessing parameters
+    * `inputs().insert("Interval", new GeoprocessingDouble(double))`, creates a parameter with name `Interval` with the interval set as its value.
+6. Create and start a `GeoprocessingJob` using the parameters from above.
+    * `GeoprocessingTask::createJob(GeoprocessingParameters)`, creates a geoprocessing job
+	* `GeoprocessingJob::start()`, starts the job.
+7. Add contour lines as an `ArcGISMapImageLayer` to map.
+    * Get url from local geoprocessing service, `LocalGeoprocessingService::url()`
+    * Get server job id of geoprocessing job, `GeoprocessingJob::serverJobId()`
+    * Replace `GPServer` from url with `MapServer/jobs/jobId`, to get generate contour lines data
+    * create a map image layer from that new url and add that layer to the map
 
 ## Features
-* Feature Layer
-* LocalFeatureService
+
+* GeoprocessingDouble
+* GeoprocessingJob
+* GeoprocessingParameter
+* GeoprocessingParameters
+* GeoprocessingTask
+* LocalGeoprocessingService
+* LocalGeoprocessingService.ServiceType
 * LocalServer
 * LocalServerStatus
+
+## Offline Data
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+
+Link | Local Location
+---------|-------|
+|[Contour geoprocessing package](https://www.arcgis.com/home/item.html?id=TODO)| `<userhome>`/ArcGIS/Runtime/Data/gpk/Contour.gpk |

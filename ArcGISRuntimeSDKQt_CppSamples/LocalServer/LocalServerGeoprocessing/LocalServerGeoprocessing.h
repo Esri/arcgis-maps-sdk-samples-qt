@@ -1,4 +1,4 @@
-// [WriteFile Name=LocalServerFeatureLayer, Category=LocalServer]
+// [WriteFile Name=LocalServerGeoprocessing, Category=LocalServer]
 // [Legal]
 // Copyright 2017 Esri.
 
@@ -37,32 +37,33 @@ class LocalServerGeoprocessing : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(double interval READ interval WRITE setInterval NOTIFY intervalChanged)
+  Q_PROPERTY(bool isReady READ isReady NOTIFY isReadyChanged)
 
 public:
   explicit LocalServerGeoprocessing(QQuickItem* parent = nullptr);
   ~LocalServerGeoprocessing();
 
-  void componentComplete() Q_DECL_OVERRIDE;
-  Q_INVOKABLE void generateContours();
+  void componentComplete() override;
+
+  static void init();
+  Q_INVOKABLE void generateContours(double interval);
   Q_INVOKABLE void clearResults();
 
 signals:
-  void intervalChanged();
+  void isReadyChanged();
 
 private:
   void connectSignals();
-  double interval() { return m_interval; }
-  void setInterval(const double& value);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
   Esri::ArcGISRuntime::LocalGeoprocessingService* m_localGPService = nullptr;
-  Esri::ArcGISRuntime::GeoprocessingTask* m_gpTask;
+  Esri::ArcGISRuntime::GeoprocessingTask* m_gpTask = nullptr;
 
-  double m_interval = 0.0;
+  bool isReady() { return m_isReady; }
+  double m_isReady = false;
 };
 
 #endif // LOCAL_SERVER_GEOPROCESSING_H

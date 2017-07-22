@@ -1,4 +1,4 @@
-// [WriteFile Name=LocalServerFeatureLayer, Category=LocalServer]
+// [WriteFile Name=LocalServerGeoprocessing, Category=LocalServer]
 // [Legal]
 // Copyright 2017 Esri.
 
@@ -46,6 +46,12 @@ LocalServerGeoprocessing::~LocalServerGeoprocessing()
 {
 }
 
+void LocalServerGeoprocessing::init()
+{
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<LocalServerGeoprocessing>("Esri.Samples", 1, 0, "LocalServerGeoprocessingSample");
+}
+
 void LocalServerGeoprocessing::componentComplete()
 {
   QQuickItem::componentComplete();
@@ -87,12 +93,14 @@ void LocalServerGeoprocessing::connectSignals()
     }
   });
 
-  // local server status
+  // start the gp service once local server has started
   connect(LocalServer::instance(), &LocalServer::statusChanged, this, [this]()
   {
     if (LocalServer::status() == LocalServerStatus::Started)
     {
       m_localGPService->start();
+      m_isReady = false;
+      emit isReadyChanged();
     }
   });
 
@@ -102,44 +110,32 @@ void LocalServerGeoprocessing::connectSignals()
     if (m_localGPService->status() == LocalServerStatus::Started)
     {
       m_gpTask = new GeoprocessingTask(QUrl(m_localGPService->url().toString() + "/Contour"));
+      m_isReady = true;
+      emit isReadyChanged();
     }
   });
 }
 
-void LocalServerGeoprocessing::setInterval(const double &value)
+void LocalServerGeoprocessing::generateContours(double interval)
 {
-  if (m_interval <= 0.0)
-    return;
-
-  m_interval = value;
-  emit intervalChanged();
-}
-
-void LocalServerGeoprocessing::generateContours()
-{
+  m_isReady = false;
+  emit isReadyChanged();
   GeoprocessingParameters gpParams(GeoprocessingExecutionType::AsynchronousSubmit);
   QMap<QString, GeoprocessingParameter*> inputs = gpParams.inputs(this);
-  inputs.insert("Interval", new GeoprocessingDouble(m_interval, this));
+  inputs.insert("Interval", new GeoprocessingDouble(interval, this));
 
   GeoprocessingJob* gpJob = m_gpTask->createJob(gpParams);
 
   connect(gpJob, &GeoprocessingJob::jobDone, this, [this, gpJob]()
   {
-    qDebug() << "Job status: " << (int)gpJob->jobStatus();
     if (gpJob->jobStatus() == JobStatus::Succeeded)
     {
-      QUrl url = m_localGPService->url();
-//      qDebug() << url.toString()
-      QUrl mapServerUrl = QUrl(url.toString().replace("GPServer", "MapServer/jobs/" + gpJob->serverJobId()));
-      ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(mapServerUrl);
-      qDebug() << gpJob->serverJobId();
+      QString url = m_localGPService->url().toString().replace("GPServer", "MapServer/jobs/" + gpJob->serverJobId());
+      ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl(url), this);
       m_map->operationalLayers()->append(mapImageLayer);
+      m_isReady = true;
+      emit isReadyChanged();
     }
-  });
-
-  connect(gpJob, &GeoprocessingJob::errorOccurred, this, [this](Error error)
-  {
-     qDebug() << "Error: " << error.message();
   });
 
   gpJob->start();

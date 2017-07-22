@@ -1,7 +1,15 @@
 {
-    "source" :  "LocalServerGeoprocessing",
-    "description" : "LocalServerGeoprocessing.html",
-    "thumbnail" : "LocalServerGeoprocessing.png",
-    "name" : "Local Server Geoprocessing"
+    "source" :  "LocalServerGeoprocessing.qml",
+    "otherSourceFiles" : [
+        "LocalServerGeoprocessing.h",
+        "LocalServerGeoprocessing.cpp"
+    ],
+    "name" : "Local server geoprocessing",
+    "dataItems" : [        
+        {
+            "itemId" : "TODO",
+            "path" : "~/ArcGIS/Runtime/Data/gpk/Contour.gpk"
+        }
+    ]
 }
 

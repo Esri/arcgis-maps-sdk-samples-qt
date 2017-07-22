@@ -20,7 +20,7 @@ import QtQuick.Controls.Styles 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-LocalServerGeoprocessing {
+LocalServerGeoprocessingSample {
     id: localServerGeoprocessingSample
     width: 800
     height: 600
@@ -43,14 +43,16 @@ LocalServerGeoprocessing {
             }
             width: parent.width * 0.3 * scaleFactor
             height: parent.height * 0.30 * scaleFactor
-            color: "black"
+            color: isReady ? "black" : "silver"
             opacity: 0.7
             radius: 5 * scaleFactor
 
             Column {
+                id: contentColumn
                 spacing: 5 * scaleFactor
                 anchors.fill: parent
                 anchors.margins: 5 * scaleFactor
+                visible: isReady
 
                 Text {
                     text: qsTr("Specify the interval, or distance, between contour lines and click the 'Generate Contours' button.")
@@ -84,10 +86,7 @@ LocalServerGeoprocessing {
                             verticalCenter: parent.verticalCenter
                             margins: 5 * scaleFactor
                         }
-
-                        onTextChanged: {
-                            interval = text;
-                        }
+                        text: "200"
                     }
                 }
 
@@ -109,7 +108,7 @@ LocalServerGeoprocessing {
                         }
                     }
                     onClicked: {
-                        generateContours();
+                        generateContours(intervalText.text);
                     }
                 }
 
@@ -134,6 +133,16 @@ LocalServerGeoprocessing {
                         clearResults();
                     }
                 }
+
+            }
+
+            BusyIndicator {
+                id: busyIndicator
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: 22 * scaleFactor
+                height: width
+                running: !isReady
             }
         }
     }
