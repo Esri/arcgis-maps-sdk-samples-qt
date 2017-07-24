@@ -30,7 +30,7 @@ To create a `FeatureLayer` from a `LocalFeatureService`:
     * `new GeoprocessingTask(LocalGeoprocessingService.url() + "/Contour")`, creates a geoprocessing task that uses the contour lines tool
 5. Create `GeoprocessingParameters` and add a `GeoprocessingDouble` as a parameter using set interval.
     * `new GeoprocessingParameters(ExecutionType)`, creates geoprocessing parameters
-    * `inputs().insert("ContourInterval", new GeoprocessingDouble(double))`, creates a parameter with name `ContourInterval` with the interval set as its value.
+    * `inputs.insert("ContourInterval", new GeoprocessingDouble(double))`, creates a parameter with name `ContourInterval` with the interval set as its value.
     * `gpParams.setInputs(inputs)`, sets the input with the interval value.
 6. Create and start a `GeoprocessingJob` using the parameters from above.
     * `GeoprocessingTask::createJob(GeoprocessingParameters)`, creates a geoprocessing job
