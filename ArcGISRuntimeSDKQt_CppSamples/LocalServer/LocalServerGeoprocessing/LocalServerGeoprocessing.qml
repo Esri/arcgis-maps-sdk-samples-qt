@@ -87,6 +87,7 @@ LocalServerGeoprocessingSample {
                             margins: 5 * scaleFactor
                         }
                         text: "200"
+                        validator: DoubleValidator {bottom: 100; top: 500}
                     }
                 }
 

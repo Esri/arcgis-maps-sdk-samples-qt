@@ -121,8 +121,9 @@ void LocalServerGeoprocessing::generateContours(double interval)
   m_isReady = false;
   emit isReadyChanged();
   GeoprocessingParameters gpParams(GeoprocessingExecutionType::AsynchronousSubmit);
-  QMap<QString, GeoprocessingParameter*> inputs = gpParams.inputs(this);
-  inputs.insert("Interval", new GeoprocessingDouble(interval, this));
+  QMap<QString, GeoprocessingParameter*> inputs = gpParams.inputs();
+  inputs.insert("ContourInterval", new GeoprocessingDouble(interval, this));
+  gpParams.setInputs(inputs);
 
   GeoprocessingJob* gpJob = m_gpTask->createJob(gpParams);
 
