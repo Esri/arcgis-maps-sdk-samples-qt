@@ -25,7 +25,7 @@ CONFIG += c++11
 
 SOURCES += main.cpp
 
-RESOURCES += OpenExistingMap.qrc
+RESOURCES += OpenMapUrl.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

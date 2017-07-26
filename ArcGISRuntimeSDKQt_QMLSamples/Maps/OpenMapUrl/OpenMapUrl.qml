@@ -1,4 +1,4 @@
-// [WriteFile Name=OpenExistingMap, Category=Maps]
+// [WriteFile Name=OpenMapUrl, Category=Maps]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -38,9 +38,9 @@ Rectangle {
     // Create a list model with information about different webmaps
     ListModel {
         id: webmapListModel
-        ListElement { itemTitle: "Housing with Mortgages"; imageUrl: "qrc:/Samples/Maps/OpenExistingMap/Housing.png"; itemId: "2d6fa24b357d427f9c737774e7b0f977"}
-        ListElement { itemTitle: "USA Tapestry Segmentation"; imageUrl: "qrc:/Samples/Maps/OpenExistingMap/Tapestry.png"; itemId: "01f052c8995e4b9e889d73c3e210ebe3"}
-        ListElement { itemTitle: "Geology of United States"; imageUrl: "qrc:/Samples/Maps/OpenExistingMap/geology.jpg"; itemId: "92ad152b9da94dee89b9e387dfe21acd"}
+        ListElement { itemTitle: "Housing with Mortgages"; imageUrl: "qrc:/Samples/Maps/OpenMapUrl/Housing.png"; itemId: "2d6fa24b357d427f9c737774e7b0f977"}
+        ListElement { itemTitle: "USA Tapestry Segmentation"; imageUrl: "qrc:/Samples/Maps/OpenMapUrl/Tapestry.png"; itemId: "01f052c8995e4b9e889d73c3e210ebe3"}
+        ListElement { itemTitle: "Geology of United States"; imageUrl: "qrc:/Samples/Maps/OpenMapUrl/geology.jpg"; itemId: "92ad152b9da94dee89b9e387dfe21acd"}
     }
 
     // Create a delegate for how the webmaps display in the view
@@ -166,7 +166,7 @@ Rectangle {
             anchors.centerIn: parent
             width: 35 * scaleFactor
             height: width
-            source: "qrc:/Samples/Maps/OpenExistingMap/SwitchMap.png"
+            source: "qrc:/Samples/Maps/OpenMapUrl/SwitchMap.png"
         }
 
         MouseArea {

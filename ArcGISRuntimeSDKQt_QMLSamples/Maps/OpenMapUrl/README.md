@@ -1,6 +1,6 @@
-# Open an existing map
+# Open Map (URL)
 
-This sample demonstrates how to open an existing map.
+This sample demonstrates how to open an existing map from a URL.
 
 ![](screenshot.png)
 

@@ -1,4 +1,4 @@
-// [WriteFile Name=OpenExistingMap, Category=Maps]
+// [WriteFile Name=OpenMapUrl, Category=Maps]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef OPEN_EXISTING_MAP_H
-#define OPEN_EXISTING_MAP_H
+#ifndef OPEN_MAP_URL_H
+#define OPEN_MAP_URL_H
 
 namespace Esri
 {
@@ -29,13 +29,13 @@ class QString;
 
 #include <QQuickItem>
 
-class OpenExistingMap : public QQuickItem
+class OpenMapUrl : public QQuickItem
 {
   Q_OBJECT
 
 public:
-  explicit OpenExistingMap(QQuickItem* parent = nullptr);
-  ~OpenExistingMap();
+  explicit OpenMapUrl(QQuickItem* parent = nullptr);
+  ~OpenMapUrl();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
@@ -45,5 +45,5 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
-#endif // OPEN_EXISTING_MAP_H
+#endif // OPEN_MAP_URL_H
 

@@ -22,7 +22,7 @@
 #include <Windows.h>
 #endif
 
-#include "OpenExistingMap.h"
+#include "OpenMapUrl.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Initialize the sample
-  OpenExistingMap::init();
+  OpenMapUrl::init();
 
   // Intialize application view
   QQuickView view;
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Maps/OpenExistingMap/OpenExistingMap.qml"));
+  view.setSource(QUrl("qrc:/Samples/Maps/OpenMapUrl/OpenMapUrl.qml"));
 
   view.show();
 
