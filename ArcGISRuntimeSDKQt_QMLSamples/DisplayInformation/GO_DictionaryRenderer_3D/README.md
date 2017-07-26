@@ -2,7 +2,7 @@
 
 This sample demonstrates applying a dictionary renderer to a graphics overlay in a 3D scene to display military symbology.
 
-![](screenshot.jpg)
+![](screenshot.png)
 
 ## How it works
 

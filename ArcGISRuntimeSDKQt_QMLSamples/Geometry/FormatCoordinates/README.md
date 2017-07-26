@@ -1,4 +1,4 @@
-# Format coordinates (URL)
+# Format coordinates
 
 Coordinates can be written as text that is formatted in different ways. For example, latitude-longitude coordinates can be formatted as decimal degrees, or as degrees, minutes, and seconds. This sample demonstrates how to convert a map location `Point` to a number of different coordinate notations (decimal degrees; degrees, minutes, seconds; Universal Transverse Mercator (UTM), and United States National Grid (USNG)), by using `CoordinateFormatter`. 
 
