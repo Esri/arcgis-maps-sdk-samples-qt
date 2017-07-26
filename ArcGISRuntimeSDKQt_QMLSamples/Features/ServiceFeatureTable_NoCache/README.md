@@ -1,4 +1,4 @@
-# Service feature table - no cache
+# Service feature table (no cache)
 
 This sample demonstrates how to use a feature table in on interaction no cache mode. In this mode, an app requests features from the remote service and does not cache them. This means that new features are requested from the service each time the viewpoint's visible extent changes.
 
