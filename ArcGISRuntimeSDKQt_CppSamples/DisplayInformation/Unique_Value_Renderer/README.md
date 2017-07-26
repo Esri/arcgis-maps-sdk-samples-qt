@@ -1,4 +1,4 @@
-# UniqueValueRenderer
+# Unique value renderer
 
 This sample demonstrates how to use a `UniqueValueRenderer` to style different Features in a `FeatureLayer` with different Symbols.
 
