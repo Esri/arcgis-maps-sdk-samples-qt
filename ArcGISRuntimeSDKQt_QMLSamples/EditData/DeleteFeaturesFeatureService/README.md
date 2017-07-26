@@ -1,4 +1,4 @@
-# Delete features feature service
+# Delete features (feature service)
 
 This sample demonstrates how to delete a feature from a feature service.
 

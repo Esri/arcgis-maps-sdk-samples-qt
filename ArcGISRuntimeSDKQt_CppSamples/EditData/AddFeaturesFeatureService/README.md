@@ -1,4 +1,4 @@
-# Add features feature service
+# Add features (feature service)
 
 This sample demonstrates how to add features to a feature service. Click or tap on a location in the map view to add a feature at that location.
 
