@@ -1,4 +1,4 @@
-# Raster function service
+# Raster function (service)
 
 This sample demonstrates how to create an `ImageServiceRaster` and apply a `RasterFunction` to it.  The `RasterFunction` applied in this case is `Hillshade`.
 
