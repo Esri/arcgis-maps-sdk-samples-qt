@@ -27,18 +27,18 @@ ARCGIS_RUNTIME_VERSION = 100.2
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
-TARGET = OpenExistingMap
+TARGET = OpenMapUrl
 
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    OpenExistingMap.h
+    OpenMapUrl.h
 
 SOURCES += \
     main.cpp \
-    OpenExistingMap.cpp
+    OpenMapUrl.cpp
 
-RESOURCES += OpenExistingMap.qrc
+RESOURCES += OpenMapUrl.qrc
 
 #-------------------------------------------------------------------------------
 
