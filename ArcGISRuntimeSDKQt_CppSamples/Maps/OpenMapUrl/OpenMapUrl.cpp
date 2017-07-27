@@ -1,4 +1,4 @@
-// [WriteFile Name=OpenExistingMap, Category=Maps]
+// [WriteFile Name=OpenMapUrl, Category=Maps]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "OpenExistingMap.h"
+#include "OpenMapUrl.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
@@ -22,22 +22,22 @@
 
 using namespace Esri::ArcGISRuntime;
 
-OpenExistingMap::OpenExistingMap(QQuickItem* parent) :
+OpenMapUrl::OpenMapUrl(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-OpenExistingMap::~OpenExistingMap()
+OpenMapUrl::~OpenMapUrl()
 {
 }
 
-void OpenExistingMap::init()
+void OpenMapUrl::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<OpenExistingMap>("Esri.Samples", 1, 0, "OpenExistingMapSample");
+  qmlRegisterType<OpenMapUrl>("Esri.Samples", 1, 0, "OpenMapUrlSample");
 }
 
-void OpenExistingMap::componentComplete()
+void OpenMapUrl::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -52,7 +52,7 @@ void OpenExistingMap::componentComplete()
   m_mapView->setMap(map);
 }
 
-void OpenExistingMap::openMap(const QString& itemId)
+void OpenMapUrl::openMap(const QString& itemId)
 {
   //! [Construct map from a webmap Url]
   // create a QUrl using the item id QString
