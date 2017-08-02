@@ -39,6 +39,7 @@ Rectangle {
             // create a basemap from a tiled layer and add to the map
             BasemapStreets {}
 
+            //! [RasterRenderingRule qml ImageServiceRaster]
             // create and add a raster layer to the map
             RasterLayer {
                 // create the raster layer from an image service raster
@@ -61,6 +62,7 @@ Rectangle {
                     }
                 }
             }
+            //! [RasterRenderingRule qml ImageServiceRaster]
         }
 
         Rectangle {

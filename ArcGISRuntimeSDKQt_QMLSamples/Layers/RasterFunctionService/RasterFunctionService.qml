@@ -117,7 +117,9 @@ Rectangle {
 
         // add raster to map
         mapView.map.operationalLayers.clear();
+        //! [ImageServiceRaster qml add raster operational]
         mapView.map.operationalLayers.append(rasterLayer);
+        //! [ImageServiceRaster qml add raster operational]
     }
 
     FileInfo {
