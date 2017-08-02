@@ -54,6 +54,7 @@ void RasterRenderingRule::componentComplete()
   m_map = new Map(Basemap::streets(this), this);
   m_mapView->setMap(m_map);
 
+  //! [RasterRenderingRule cpp ImageServiceRaster]
   // set the url
   m_url = QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer");
 
@@ -78,6 +79,7 @@ void RasterRenderingRule::componentComplete()
       emit renderingRuleNamesChanged();
     }
   });
+  //! [RasterRenderingRule cpp ImageServiceRaster]
 
   // create a raster layer using the image service raster
   m_rasterLayer = new RasterLayer(m_imageServiceRaster, this);

@@ -39,10 +39,13 @@ Rectangle {
 
             BasemapImagery {}
 
+            //! [RasterLayerFile qml new raster layer]
             RasterLayer {
                 Raster {
                     path: dataPath + "Shasta.tif"
                 }
+                // ...
+                //! [RasterLayerFile qml new raster layer]
 
                 onLoadStatusChanged: {
                     if (loadStatus !== Enums.LoadStatusLoaded)

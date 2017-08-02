@@ -63,8 +63,10 @@ void RasterLayerFile::componentComplete()
 void RasterLayerFile::createAndAddRasterLayer(QUrl rasterUrl)
 {
   QString dataPath = rasterUrl.toLocalFile();
+  //! [RasterLayerFile cpp new raster layer]
   Raster* raster = new Raster(dataPath, this);
   RasterLayer* rasterLayer = new RasterLayer(raster, this);
+  //! [RasterLayerFile cpp new raster layer]
 
   connect(rasterLayer, &RasterLayer::doneLoading, this, [this, rasterLayer](Error loadError)
   {

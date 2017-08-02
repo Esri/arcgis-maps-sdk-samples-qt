@@ -173,6 +173,7 @@ Rectangle {
         Behavior on width { PropertyAnimation { duration: 500 } }
     }
 
+    //! [RasterStretchRenderer qml set renderers]
     function applyRendererSettings(){
         var rgbRenderer = ArcGISRuntimeEnvironment.createObject("StretchRenderer");
 
@@ -193,4 +194,5 @@ Rectangle {
 
         rasterLayer.renderer = rgbRenderer;
     }
+    //! [RasterStretchRenderer qml set renderers]
 }
