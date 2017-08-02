@@ -42,6 +42,7 @@ Rectangle {
         width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 250 * scaleFactor : 350 * scaleFactor
         color: "#FBFBFB"
 
+        //! [FindRoute qml ListView directionsView]
         ListView {
             id: directionsView
             anchors {
@@ -60,6 +61,7 @@ Rectangle {
             model: directionListModel
             delegate: directionDelegate
         }
+        //! [FindRoute qml ListView directionsView]
     }
 
     // Create MapView that contains a Map with the Topographic Basemap
@@ -281,6 +283,7 @@ Rectangle {
     }
 
     function addStopGraphics() {
+        //! [FindRoute qml addStopGraphics]
         // create the stop graphics' geometry
         stop1Geometry = ArcGISRuntimeEnvironment.createObject("Point", {
                                                                   x: -13041171,
@@ -314,6 +317,7 @@ Rectangle {
         // add to the overlay
         stopsGraphicsOverlay.graphics.append(stop1Graphic);
         stopsGraphicsOverlay.graphics.append(stop2Graphic);
+        //! [FindRoute qml addStopGraphics]
     }
 
     function setupRouteTask() {
