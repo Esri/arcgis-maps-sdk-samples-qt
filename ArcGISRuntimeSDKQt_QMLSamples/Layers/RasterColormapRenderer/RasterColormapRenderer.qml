@@ -27,6 +27,7 @@ Rectangle {
     height: 600
 
     property double scaleFactor: System.displayScaleFactor
+    //! [RasterColormapRenderer qml add raster basemap]
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
 
     MapView {
@@ -77,4 +78,5 @@ Rectangle {
         // apply the renderer to the raster layer
         rasterLayer.renderer = colormapRenderer;
     }
+    //! [RasterColormapRenderer qml add raster basemap]
 }
