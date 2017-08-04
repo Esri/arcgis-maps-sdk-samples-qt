@@ -88,6 +88,7 @@ void FindRoute::componentComplete()
 
 void FindRoute::addStopGraphics()
 {
+  //! [FindRoute cpp addStopGraphics]
   // create the stop graphics' geometry
   Point stop1Geometry(-13041171, 3860988, SpatialReference(3857));
   Point stop2Geometry(-13041693, 3856006, SpatialReference(3857));
@@ -103,6 +104,7 @@ void FindRoute::addStopGraphics()
   // add to the overlay
   m_stopsGraphicsOverlay->graphics()->append(stop1Graphic);
   m_stopsGraphicsOverlay->graphics()->append(stop2Graphic);
+  //! [FindRoute cpp addStopGraphics]
 }
 
 // Helper function for creating picture marker symbols

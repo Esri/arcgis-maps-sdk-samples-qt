@@ -40,6 +40,7 @@ FindRouteSample {
         width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 250 * scaleFactor : 350 * scaleFactor
         color: "#FBFBFB"
 
+        //! [FindRoute cpp ListView directionsView]
         ListView {
             id: directionsView
             anchors {
@@ -58,6 +59,7 @@ FindRouteSample {
             model: findRouteSample.directions
             delegate: directionDelegate
         }
+        //! [FindRoute cpp ListView directionsView]
     }
 
     // add a mapView component

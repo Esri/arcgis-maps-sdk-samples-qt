@@ -52,6 +52,8 @@ void RasterColormapRenderer::componentComplete()
 
   // Create the raster and raster layer
   m_dataPath = QUrl(QQmlProperty::read(this, "dataPath").toString()).toLocalFile();
+
+  //! [RasterColormapRenderer cpp add raster basemap]
   Raster* raster = new Raster(m_dataPath + "/ShastaBW.tif", this);
   m_rasterLayer = new RasterLayer(raster, this);
 
@@ -77,6 +79,7 @@ void RasterColormapRenderer::componentComplete()
   map->operationalLayers()->append(m_rasterLayer);
 
   m_mapView->setMap(map);
+  //! [RasterColormapRenderer cpp add raster basemap]
 }
 
 ColormapRenderer *RasterColormapRenderer::createRenderer()

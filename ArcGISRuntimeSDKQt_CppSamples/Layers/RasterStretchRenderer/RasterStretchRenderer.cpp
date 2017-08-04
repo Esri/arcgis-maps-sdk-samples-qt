@@ -64,6 +64,7 @@ void RasterStretchRenderer::componentComplete()
   m_mapView->setMap(map);
 }
 
+//! [RasterStretchRenderer cpp set renderers]
 void RasterStretchRenderer::applyMinMax(double min, double max)
 {
   MinMaxStretchParameters stretchParams(QList<double>{min}, QList<double>{max});
@@ -93,3 +94,4 @@ void RasterStretchRenderer::applyStandardDeviation(double factor)
 
   m_rasterLayer->setRenderer(renderer);
 }
+//! [RasterStretchRenderer cpp set renderers]
