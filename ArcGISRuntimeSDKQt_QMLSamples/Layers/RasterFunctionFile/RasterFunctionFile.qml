@@ -100,6 +100,7 @@ Rectangle {
         }
     }
 
+    //! [RasterFunctionFile qml raster from function]
     function applyRasterFunction() {
         // create raster function
         var rasterFunction = createRasterFunction();
@@ -145,4 +146,5 @@ Rectangle {
         id: colorJson
         url: dataPath + "/color.json"
     }
+    //! [RasterFunctionFile qml raster from function]
 }
