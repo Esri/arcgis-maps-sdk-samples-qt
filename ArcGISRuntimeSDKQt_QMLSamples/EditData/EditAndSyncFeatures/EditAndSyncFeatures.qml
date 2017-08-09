@@ -1,4 +1,4 @@
-// [WriteFile Name=GenerateGeodatabase, Category=EditData]
+// [WriteFile Name=EditAndSyncFeatures, Category=EditData]
 // [Legal]
 // Copyright 2016 Esri.
 

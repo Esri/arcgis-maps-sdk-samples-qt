@@ -1,4 +1,4 @@
-# Add items to Portal
+# Add items to portal
 
 This sample demonstrates how to add and delete items (in this case a local .csv file) in a user's portal.
 

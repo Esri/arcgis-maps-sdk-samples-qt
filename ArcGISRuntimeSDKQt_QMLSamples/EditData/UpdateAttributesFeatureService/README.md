@@ -1,4 +1,4 @@
-# Update attributes feature service
+# Update attributes (feature service)
 
 This sample demonstrates how to edit attributes of a feature in a feature service.
 

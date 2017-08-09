@@ -1,4 +1,4 @@
-# Update geometry feature service
+# Update geometry (feature service)
 
 The sample demonstrates how to update geometry of a feature in a feature service.
 

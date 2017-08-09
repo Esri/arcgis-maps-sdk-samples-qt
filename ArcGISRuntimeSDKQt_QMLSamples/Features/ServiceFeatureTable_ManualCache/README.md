@@ -1,4 +1,4 @@
-# Service feature table - manual cache
+# Service feature table (manual cache)
 
 This sample demonstrates how to use a feature service in manual cache mode. 
 In this mode, an app explicitly requests features as needed from the remote 

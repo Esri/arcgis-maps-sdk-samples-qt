@@ -1,4 +1,4 @@
-# Service Area
+# Service area
 
 Demonstrates how to find services areas around a point using the ServiceAreaTask.
 A service area shows locations that can be reached from a facility based off a certain impedance [such as travel time].

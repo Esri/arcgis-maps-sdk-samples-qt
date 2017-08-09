@@ -1,4 +1,4 @@
-# DisplayLayerViewDrawStatus
+# Display layer view draw status
 
 This sample demonstrates how to get the view status of a `Layer` in a `Map`.
 

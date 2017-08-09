@@ -1,4 +1,4 @@
-# Simple Renderer 
+# Simple renderer 
 
 This sample demonstrates how to create a `SimpleRenderer` and add it to a `GraphicsOverlay`. 
 
