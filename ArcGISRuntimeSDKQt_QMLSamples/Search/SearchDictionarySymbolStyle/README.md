@@ -1,4 +1,4 @@
-# Search symbol dictionary
+# Search dictionary symbol style
 
 This sample demonstrates how to search a DictionarySymbolStyle and return the results in a ListView. 
 In this case, the sample uses The Joint Military Symbology MIL-STD-2525D standard but the same code could be used for other symbol dictionaries.

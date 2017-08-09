@@ -1,4 +1,4 @@
-# Closest Facility Sample
+# Closest facility
 
 This sample demonstrates how to solve a Closest Facility Task to find the closest route between a facility (hospital) and an incident (black cross).
 

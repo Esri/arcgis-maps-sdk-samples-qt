@@ -1,4 +1,4 @@
-# Distance Composite Symbol (URL)
+# Distance composite symbol
 
 This sample demonstrates how to create a graphic using a distance composite scene symbol. Distance composite scene symbols can render different symbols depending on the distance between the camera and the graphic.
 
