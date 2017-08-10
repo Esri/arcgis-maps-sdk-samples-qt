@@ -8,5 +8,6 @@
         <file>discardSymbol.png</file>
         <file>README.md</file>
         <file>forwardIcon.png</file>
+        <file>screenshot.png</file>
     </qresource>
 </RCC>
