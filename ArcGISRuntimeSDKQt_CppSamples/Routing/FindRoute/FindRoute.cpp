@@ -147,7 +147,7 @@ void FindRoute::setupRouteTask()
   {
     // Add the route graphic once the solve completes
     auto generatedRoute = routeResult.routes().at(0);
-    auto routeGraphic = new Graphic(generatedRoute.routeGeometry());
+    auto routeGraphic = new Graphic(generatedRoute.routeGeometry(), this);
     m_routeGraphicsOverlay->graphics()->append(routeGraphic);
 
     // set the direction maneuver list model
