@@ -4,6 +4,6 @@
         "AddFeaturesFeatureService.h",
         "AddFeaturesFeatureService.cpp"
     ],
-    "name" : "Add features feature service"
+    "name" : "Add features (feature service)”
 }
 

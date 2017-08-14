@@ -1,4 +1,4 @@
-# PortalUser Info
+# Portal user info
 
 This sample demonstrates how to retrieve a user's details via a Portal.
 
