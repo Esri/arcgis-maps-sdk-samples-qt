@@ -4,6 +4,6 @@
         "UpdateGeometryFeatureService.h",
         "UpdateGeometryFeatureService.cpp"
     ],
-    "name" : "Update geometry feature service"
+    "name" : "Update geometry (feature service)”
 }
 
