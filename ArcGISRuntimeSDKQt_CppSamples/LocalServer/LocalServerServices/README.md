@@ -23,7 +23,7 @@ To start a `LocalServer` and start a `LocalService` to it:
 
 To stop a `LocalServer` and stop any `LocalServices` that are added to it:
 
-1. Get any services that are currently running on the local server, `LocalServer::services()`.
+1. Get any services that are currently running on the local server with `LocalServer::services()`.
 2. Loop through all services and stop the selected service (from the dropdown) if it is started.
 3. Use `LocalService::status()` to check if the service's status is `LocalServerStatus::STARTED`.
 4. `LocalService::stop()` stops the service asynchronously.
