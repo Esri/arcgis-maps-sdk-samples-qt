@@ -4,6 +4,8 @@
         "DeleteFeaturesFeatureService.h",
         "DeleteFeaturesFeatureService.cpp"
     ],
-    "name" : "Delete features (feature service)”
+    "name" : "Delete features (feature service)"
 }
+
+
 
