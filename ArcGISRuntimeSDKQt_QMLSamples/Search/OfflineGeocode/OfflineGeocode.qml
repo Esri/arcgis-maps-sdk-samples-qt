@@ -85,8 +85,8 @@ Rectangle {
 
                 PictureMarkerSymbol {
                     id: pictureMarker
-                    height: 36 * scaleFactor
-                    width: 19 * scaleFactor
+                    height: 36
+                    width: 19
                     url: "qrc:/Samples/Search/OfflineGeocode/red_pin.png"
                     offsetY: height / 2
                 }
@@ -96,7 +96,7 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            screenOffsetY: -19 * scaleFactor
+            screenOffsetY: (pictureMarker.height / 2) * -1
             accessoryButtonHidden: true
         }
 
