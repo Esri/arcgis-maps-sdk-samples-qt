@@ -125,23 +125,50 @@ void ClosestFacility::createGraphics()
   facilitySymbol->setWidth(30);
 
   // create a graphics overlay for the facilities and add a renderer for the symbol
-  GraphicsOverlay* facilityOverlay = new GraphicsOverlay(this);
-  SimpleRenderer* renderer = new SimpleRenderer(facilitySymbol, this);
-  facilityOverlay->setRenderer(renderer);
+  m_facilityOverlay = new GraphicsOverlay(this);
+  SimpleRenderer* facilityRenderer = new SimpleRenderer(facilitySymbol, this);
+  m_facilityOverlay->setRenderer(facilityRenderer);
 
   // add a graphic at the location of each of the facilities
-  if (!m_graphicParent)
-    m_graphicParent = new QObject(this);
   for (const Facility& facility : m_facilities)
   {
-    Graphic* facilityGraphic = new Graphic(facility.geometry(), m_graphicParent);
-    facilityOverlay->graphics()->append(facilityGraphic);
+    Graphic* facilityGraphic = new Graphic(facility.geometry(), this);
+    m_facilityOverlay->graphics()->append(facilityGraphic);
   }
 
-  m_mapView->graphicsOverlays()->append(facilityOverlay);
+  // add the overlay to the map view
+  m_mapView->graphicsOverlays()->append(m_facilityOverlay);
 
+  // create a symbol for the route graphic
+  float lineWidth = 2.0f;
+  SimpleLineSymbol* routeSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, lineWidth, this);
+
+  // create a graphics overlay for the routes and add a renderer for the symbol
   m_resultsOverlay = new GraphicsOverlay(this);
+  SimpleRenderer* routeRenderer = new SimpleRenderer(routeSymbol, this);
+  m_resultsOverlay->setRenderer(routeRenderer);
+
+  // add the overlay to the map view
   m_mapView->graphicsOverlays()->append(m_resultsOverlay);
+
+  // add a graphic to the route overlay
+  m_routeGraphic = new Graphic(this);
+  m_resultsOverlay->graphics()->append(m_routeGraphic);
+
+  // create a symbol for the incident graphics
+  SimpleMarkerSymbol* incidentSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, Qt::black, 20, this);
+
+  // create a graphics overlay for the incidents and add a renderer for the symbol
+  m_incidentsOverlay = new GraphicsOverlay(this);
+  SimpleRenderer* incidentRenderer = new SimpleRenderer(incidentSymbol, this);
+  m_incidentsOverlay->setRenderer(incidentRenderer);
+
+  // add the overlay to the map view
+  m_mapView->graphicsOverlays()->append(m_incidentsOverlay);
+
+  // add a graphic to the incident overlay
+  m_incidentGraphic = new Graphic(this);
+  m_incidentsOverlay->graphics()->append(m_incidentGraphic);
 }
 
 void ClosestFacility::setupRouting()
@@ -155,9 +182,7 @@ void ClosestFacility::setupRouting()
     m_facilityParams.setFacilities(m_facilities);
   });
 
-  float lineWidth = 2.0f;
-  SimpleLineSymbol* routeSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, lineWidth, this);
-  connect(m_task, &ClosestFacilityTask::solveClosestFacilityCompleted, this, [this, routeSymbol]
+  connect(m_task, &ClosestFacilityTask::solveClosestFacilityCompleted, this, [this]
           (QUuid, ClosestFacilityResult closestFacilityResult)
   {
     setBusy(false);
@@ -174,34 +199,18 @@ void ClosestFacility::setupRouting()
     int incidentIndex = 0; // 0 since there is just 1 incident at a time
     ClosestFacilityRoute route = closestFacilityResult.route(closestFacilityIdx, incidentIndex);
 
-    // create parent object for the graphic
-    if (!m_graphicParent)
-      m_graphicParent = new QObject(this);
-    Graphic* routeGraphic = new Graphic(route.routeGeometry(), routeSymbol, m_graphicParent);
-    m_resultsOverlay->graphics()->append(routeGraphic);
+    m_routeGraphic->setGeometry(route.routeGeometry());
   });
 
-  SimpleMarkerSymbol* incidentSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, Qt::black, 20, this);
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this, incidentSymbol](QMouseEvent& mouseEvent)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     if (busy())
-      return;
-
-    // clear the graphics
-    m_resultsOverlay->graphics()->clear();
-    if (m_graphicParent)
-    {
-      delete m_graphicParent;
-      m_graphicParent = nullptr;
-    }
+      return;    
 
     Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
     Point incidentPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());
 
-    // create parent object for the graphic
-    m_graphicParent = new QObject(this);
-    Graphic* incidentGraphic = new Graphic(incidentPoint, incidentSymbol, m_graphicParent);
-    m_resultsOverlay->graphics()->append(incidentGraphic);
+    m_incidentGraphic->setGeometry(incidentPoint);
 
     solveRoute(incidentPoint);
   });
