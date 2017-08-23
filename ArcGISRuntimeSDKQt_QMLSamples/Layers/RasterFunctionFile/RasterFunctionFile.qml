@@ -133,11 +133,8 @@ Rectangle {
         if (!rasterFunction)
           return;
 
-        // set raster function arguments
-        var rasterArg1 = ArcGISRuntimeEnvironment.createObject("Raster", { path: rasterPath });
-        var rasterArg2 = ArcGISRuntimeEnvironment.createObject("Raster", { path: rasterPath });
-        rasterFunction.arguments.setRaster("raster", rasterArg1);
-        rasterFunction.arguments.setRaster("raster", rasterArg2);
+        rasterFunction.arguments.setRaster("raster", theRaster);
+        rasterFunction.arguments.setRaster("raster", theRaster);
 
         return rasterFunction;
     }
