@@ -24,6 +24,7 @@ namespace Esri
     class Map;
     class MapQuickView;
     class GraphicsOverlay;
+    class Graphic;
     class LocatorTask;
   }
 }
@@ -57,6 +58,7 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
   Esri::ArcGISRuntime::GeocodeParameters m_geocodeParameters;
+  Esri::ArcGISRuntime::Graphic* m_graphic = nullptr;
   int m_screenX = 0;
   int m_screenY = 0;
   QString m_calloutText;

@@ -164,10 +164,19 @@ void FindPlace::createLocator()
       return;
 
     m_graphicsOverlay->graphics()->clear();
+
+    // delete parent if it exists
+    if (m_graphicParent)
+    {
+      delete m_graphicParent;
+      m_graphicParent = nullptr;
+    }
+    m_graphicParent = new QObject(this);
+
     Geometry bbox;
     for (auto result : results)
     {
-      Graphic* graphic = new Graphic(result.displayLocation(), result.attributes(), this);
+      Graphic* graphic = new Graphic(result.displayLocation(), result.attributes(), m_graphicParent);
       m_graphicsOverlay->graphics()->append(graphic);
       // create bounding box so we can set the viewpoint at the end
       if (bbox.isEmpty())

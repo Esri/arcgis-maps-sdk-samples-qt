@@ -257,7 +257,7 @@ void Animate3DSymbols::createGraphic3D()
     m_sceneView->graphicsOverlays()->at(0)->graphics()->append(m_graphic3d);
 
     // create the camera controller to follow the graphic
-    m_followingController = new OrbitGeoElementCameraController(m_graphic3d, 500);
+    m_followingController = new OrbitGeoElementCameraController(m_graphic3d, 500, this);
     m_sceneView->setCameraController(m_followingController);
   }
   else
