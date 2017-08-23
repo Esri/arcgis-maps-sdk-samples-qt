@@ -130,9 +130,11 @@ void ClosestFacility::createGraphics()
   facilityOverlay->setRenderer(renderer);
 
   // add a graphic at the location of each of the facilities
+  if (!m_graphicParent)
+    m_graphicParent = new QObject(this);
   for (const Facility& facility : m_facilities)
   {
-    Graphic* facilityGraphic = new Graphic(facility.geometry(), this);
+    Graphic* facilityGraphic = new Graphic(facility.geometry(), m_graphicParent);
     facilityOverlay->graphics()->append(facilityGraphic);
   }
 
@@ -172,7 +174,10 @@ void ClosestFacility::setupRouting()
     int incidentIndex = 0; // 0 since there is just 1 incident at a time
     ClosestFacilityRoute route = closestFacilityResult.route(closestFacilityIdx, incidentIndex);
 
-    Graphic* routeGraphic = new Graphic(route.routeGeometry(), routeSymbol, this);
+    // create parent object for the graphic
+    if (!m_graphicParent)
+      m_graphicParent = new QObject(this);
+    Graphic* routeGraphic = new Graphic(route.routeGeometry(), routeSymbol, m_graphicParent);
     m_resultsOverlay->graphics()->append(routeGraphic);
   });
 
@@ -182,12 +187,20 @@ void ClosestFacility::setupRouting()
     if (busy())
       return;
 
+    // clear the graphics
     m_resultsOverlay->graphics()->clear();
+    if (m_graphicParent)
+    {
+      delete m_graphicParent;
+      m_graphicParent = nullptr;
+    }
 
     Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
     Point incidentPoint(mapPoint.x(), mapPoint.y(), SpatialReference::webMercator());
 
-    Graphic* incidentGraphic = new Graphic(incidentPoint, incidentSymbol, this);
+    // create parent object for the graphic
+    m_graphicParent = new QObject(this);
+    Graphic* incidentGraphic = new Graphic(incidentPoint, incidentSymbol, m_graphicParent);
     m_resultsOverlay->graphics()->append(incidentGraphic);
 
     solveRoute(incidentPoint);

@@ -61,6 +61,7 @@ private:
   int m_screenY = 0;
   QString m_calloutText;
   QString m_calloutDetailedText;
+  QObject* m_graphicParent = nullptr;
 };
 
 #endif // FIND_ADDRESS_H
