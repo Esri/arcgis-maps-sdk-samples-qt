@@ -23,6 +23,7 @@ namespace Esri
   {
     class Map;
     class MapQuickView;
+    class Raster;
     class RasterFunction;
   }
 }
@@ -47,6 +48,7 @@ private:
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Raster* m_raster = nullptr;
   QString m_dataPath;
   QString m_rasterPath;
 };

@@ -55,8 +55,8 @@ void RasterFunctionFile::componentComplete()
   m_map = new Map(Basemap::imagery(this), this);
 
   // Add the Raster Layer
-  Raster* raster = new Raster(m_rasterPath, this);
-  RasterLayer* rasterLayer = new RasterLayer(raster, this);
+  m_raster = new Raster(m_rasterPath, this);
+  RasterLayer* rasterLayer = new RasterLayer(m_raster, this);
   rasterLayer->setOpacity(0.5);
   m_map->operationalLayers()->append(rasterLayer);
 
@@ -104,10 +104,8 @@ RasterFunction* RasterFunctionFile::createRasterFunction()
     return nullptr;
 
   // set the number of rasters required - 2 in this case
-  Raster* rasterArg1 = new Raster(m_rasterPath);
-  Raster* rasterArg2 = new Raster(m_rasterPath);
-  rasterFunction->arguments()->setRaster("raster", rasterArg1);
-  rasterFunction->arguments()->setRaster("raster", rasterArg2);
+  rasterFunction->arguments()->setRaster("raster", m_raster);
+  rasterFunction->arguments()->setRaster("raster", m_raster);
 
   return rasterFunction;
 }
