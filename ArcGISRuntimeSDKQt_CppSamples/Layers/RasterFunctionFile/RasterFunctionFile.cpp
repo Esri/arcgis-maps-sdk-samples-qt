@@ -97,7 +97,7 @@ RasterFunction* RasterFunctionFile::createRasterFunction()
     return nullptr;
 
   // create a RasterFunction
-  RasterFunction* rasterFunction = new RasterFunction(m_dataPath + "/color.json");
+  RasterFunction* rasterFunction = new RasterFunction(m_dataPath + "/color.json", this);
 
   // check for valid raster function
   if (!rasterFunction)

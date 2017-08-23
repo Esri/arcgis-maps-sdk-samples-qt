@@ -104,6 +104,8 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay = nullptr;
   Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
+  QObject* m_stopGraphicParent = nullptr;
+  QObject* m_routeGraphicParent = nullptr;
 };
 
 #endif // MOBILEMAP_SEARCHANDROUTE_H

@@ -91,6 +91,7 @@ private:
   bool m_isSearchingLocation = false;
   QString m_poiSearchText;
   QString m_currentLocationText = "Current Location";
+  QObject* m_graphicParent = nullptr;
 };
 
 #endif // FINDPLACE_H

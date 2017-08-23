@@ -146,8 +146,8 @@ void FindRoute::setupRouteTask()
   connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
   {
     // Add the route graphic once the solve completes
-    auto generatedRoute = routeResult.routes().at(0);
-    auto routeGraphic = new Graphic(generatedRoute.routeGeometry(), this);
+    Route generatedRoute = routeResult.routes().at(0);
+    Graphic* routeGraphic = new Graphic(generatedRoute.routeGeometry(), this);
     m_routeGraphicsOverlay->graphics()->append(routeGraphic);
 
     // set the direction maneuver list model
@@ -177,9 +177,6 @@ void FindRoute::solveRoute()
     {
       // set parameters to return directions
       m_routeParameters.setReturnDirections(true);
-
-      // clear previous route graphics
-      m_routeGraphicsOverlay->graphics()->clear();
 
       // clear previous stops from the parameters
       m_routeParameters.clearStops();

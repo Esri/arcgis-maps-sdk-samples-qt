@@ -55,7 +55,7 @@ void Simple_Renderer::componentComplete()
   m_map = new Map(Basemap::imagery(this), this);
 
   // create graphics overlay
-  m_graphicsOverlay = new GraphicsOverlay();
+  m_graphicsOverlay = new GraphicsOverlay(this);
 
   // create red cross SimpleMarkerSymbol
   SimpleMarkerSymbol* crossSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor("red"), 12, this);
