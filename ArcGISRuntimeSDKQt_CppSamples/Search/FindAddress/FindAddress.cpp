@@ -69,6 +69,8 @@ void FindAddress::componentComplete()
   pictureMarkerSymbol->setOffsetY(pictureMarkerSymbol->height() / 2);
   simpleRenderer->setSymbol(pictureMarkerSymbol);
   m_graphicsOverlay->setRenderer(simpleRenderer);
+  m_graphic = new Graphic(this);
+  m_graphicsOverlay->graphics()->append(m_graphic);
 
   // create locator task and parameters
   //! [FindAddress create LocatorTask]
@@ -88,16 +90,8 @@ void FindAddress::connectSignals()
   {
     if (geocodeResults.length() > 0)
     {
-      m_graphicsOverlay->graphics()->clear();
-      // delete parent if it exists
-      if (m_graphicParent)
-      {
-        delete m_graphicParent;
-        m_graphicParent = nullptr;
-      }
-      m_graphicParent = new QObject(this);
-      Graphic* graphic = new Graphic(geocodeResults.at(0).displayLocation(), geocodeResults.at(0).attributes(), m_graphicParent);
-      m_graphicsOverlay->graphics()->append(graphic);
+      m_graphic->setGeometry(geocodeResults.at(0).displayLocation());
+      m_graphic->attributes()->setAttributesMap(geocodeResults.at(0).attributes());
       m_mapView->setViewpointGeometry(geocodeResults.at(0).extent());
     }
   });
@@ -148,11 +142,5 @@ void FindAddress::geocodeAddress(QString address)
 
 void FindAddress::clearGraphics()
 {  
-  m_graphicsOverlay->graphics()->clear();
-  // delete parent if it exists
-  if (m_graphicParent)
-  {
-    delete m_graphicParent;
-    m_graphicParent = nullptr;
-  }
+  m_graphic->setGeometry(Point());
 }
