@@ -109,10 +109,12 @@ void FindPlace::connectSignals()
   {
     if (result->graphics().length() == 0)
       return;
+
     // display the callout with the identify result
-    m_calloutData->setGeoElement(result->graphics().at(0));
-    m_calloutData->setTitle(result->graphics().at(0)->attributes()->attributeValue("ShortLabel").toString());
-    m_calloutData->setDetail(result->graphics().at(0)->attributes()->attributeValue("Place_addr").toString());
+    Graphic* graphic = result->graphics().at(0);
+    m_calloutData->setGeoElement(graphic);
+    m_calloutData->setTitle(graphic->attributes()->attributeValue("ShortLabel").toString());
+    m_calloutData->setDetail(graphic->attributes()->attributeValue("Place_addr").toString());
     emit showCallout();
   });
 }
@@ -151,6 +153,7 @@ void FindPlace::createLocator()
       m_isSearchingLocation = false;
       if (results.length() == 0)
         return;
+
       GeocodeResult topLocation = results.at(0);
       geocodePOIs(m_poiSearchText, topLocation.displayLocation());
       return;
@@ -159,6 +162,7 @@ void FindPlace::createLocator()
     // create graphics for each geocode result
     if (results.length() == 0)
       return;
+
     m_graphicsOverlay->graphics()->clear();
     Geometry bbox;
     for (auto result : results)
@@ -178,6 +182,9 @@ void FindPlace::createLocator()
 
 void FindPlace::setPoiTextHasFocus(bool hasFocus)
 {
+  if (m_poiTextHasFocus == hasFocus)
+    return;
+
   m_poiTextHasFocus = hasFocus;
 
   // create and update the suggestion parameters
@@ -215,6 +222,7 @@ void FindPlace::geocodePOIs(const QString& poi, SearchMode mode)
 
   GeocodeParameters params = createParameters();
 
+  // If the Mode is CurrentLocation, use the Location Display as preferred search location
   if (mode == SearchMode::CurrentLocation)
   {
     params.setPreferredSearchLocation(m_mapView->locationDisplay()->location().position());
@@ -222,6 +230,7 @@ void FindPlace::geocodePOIs(const QString& poi, SearchMode mode)
 
     m_locatorTask->geocodeWithParameters(m_poiSearchText, params);
   }
+  // If the Mode is BoundingGeometry, use the MapView's current viewpoint as the search area
   else
   {
     GeocodeParameters params = createParameters();
@@ -264,7 +273,7 @@ void FindPlace::geocodePOIs(const QString& poi, const QString& location)
 GeocodeParameters FindPlace::createParameters()
 {
   GeocodeParameters params;
-  params.setResultAttributeNames(QStringList() << "*");
+  params.setResultAttributeNames(QStringList{"*"});
   params.setMaxResults(50);
   params.setMinScore(75.0);
   return params;
