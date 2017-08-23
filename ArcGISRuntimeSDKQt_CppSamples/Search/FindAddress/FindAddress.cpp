@@ -72,7 +72,7 @@ void FindAddress::componentComplete()
 
   // create locator task and parameters
   //! [FindAddress create LocatorTask]
-  m_locatorTask = new LocatorTask(QUrl("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"));
+  m_locatorTask = new LocatorTask(QUrl("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"), this);
   //! [FindAddress create LocatorTask]
   m_geocodeParameters.setMinScore(75);
   m_geocodeParameters.setResultAttributeNames(QStringList() << "Place_addr" << "Match_addr");
@@ -89,7 +89,14 @@ void FindAddress::connectSignals()
     if (geocodeResults.length() > 0)
     {
       m_graphicsOverlay->graphics()->clear();
-      auto graphic = new Graphic(geocodeResults.at(0).displayLocation(), geocodeResults.at(0).attributes(), this);
+      // delete parent if it exists
+      if (m_graphicParent)
+      {
+        delete m_graphicParent;
+        m_graphicParent = nullptr;
+      }
+      m_graphicParent = new QObject(this);
+      Graphic* graphic = new Graphic(geocodeResults.at(0).displayLocation(), geocodeResults.at(0).attributes(), m_graphicParent);
       m_graphicsOverlay->graphics()->append(graphic);
       m_mapView->setViewpointGeometry(geocodeResults.at(0).extent());
     }
@@ -140,6 +147,12 @@ void FindAddress::geocodeAddress(QString address)
 }
 
 void FindAddress::clearGraphics()
-{
+{  
   m_graphicsOverlay->graphics()->clear();
+  // delete parent if it exists
+  if (m_graphicParent)
+  {
+    delete m_graphicParent;
+    m_graphicParent = nullptr;
+  }
 }

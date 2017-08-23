@@ -72,6 +72,7 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_resultsOverlay;
   bool m_busy = false;
   QString m_message;
+  QObject* m_graphicParent = nullptr;
 
   static const QUrl facilityImageUrl;
   static const QUrl sanDiegoRegion;

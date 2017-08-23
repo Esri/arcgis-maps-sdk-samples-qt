@@ -98,8 +98,11 @@ void FindRoute::addStopGraphics()
   auto stop2Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing/FindRoute/pinB.png"));
 
   // create the stop graphics
-  auto stop1Graphic = new Graphic(stop1Geometry, stop1Symbol, this);
-  auto stop2Graphic = new Graphic(stop2Geometry, stop2Symbol, this);
+  // create parent for graphic
+  if (!m_graphicParent)
+    m_graphicParent = new QObject(this);
+  auto stop1Graphic = new Graphic(stop1Geometry, stop1Symbol, m_graphicParent);
+  auto stop2Graphic = new Graphic(stop2Geometry, stop2Symbol, m_graphicParent);
 
   // add to the overlay
   m_stopsGraphicsOverlay->graphics()->append(stop1Graphic);
@@ -146,8 +149,11 @@ void FindRoute::setupRouteTask()
   connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
   {
     // Add the route graphic once the solve completes
-    auto generatedRoute = routeResult.routes().at(0);
-    auto routeGraphic = new Graphic(generatedRoute.routeGeometry(), this);
+    Route generatedRoute = routeResult.routes().at(0);
+    // create parent for graphic
+    if (!m_graphicParent)
+      m_graphicParent = new QObject(this);
+    Graphic* routeGraphic = new Graphic(generatedRoute.routeGeometry(), m_graphicParent);
     m_routeGraphicsOverlay->graphics()->append(routeGraphic);
 
     // set the direction maneuver list model
@@ -180,6 +186,11 @@ void FindRoute::solveRoute()
 
       // clear previous route graphics
       m_routeGraphicsOverlay->graphics()->clear();
+      if (m_graphicParent)
+      {
+        delete m_graphicParent;
+        m_graphicParent = nullptr;
+      }
 
       // clear previous stops from the parameters
       m_routeParameters.clearStops();

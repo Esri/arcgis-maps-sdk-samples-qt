@@ -58,6 +58,8 @@ private:
   Esri::ArcGISRuntime::GeoprocessingTask* m_viewshedTask = nullptr;
   bool m_viewshedInProgress = false;
   QString m_jobStatus;
+  QObject* m_inputGraphicParent = nullptr;
+  QObject* m_resultGraphicParent = nullptr;
 
 private:
   void connectSignals();

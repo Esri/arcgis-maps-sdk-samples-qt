@@ -109,11 +109,25 @@ void AnalyzeViewshed::connectSignals()
 
     // Clear previous user click location and the viewshed geoprocessing task results
     m_inputOverlay->graphics()->clear();
+    if (m_inputGraphicParent)
+    {
+      delete m_inputGraphicParent;
+      m_inputGraphicParent = nullptr;
+    }
     m_resultsOverlay->graphics()->clear();
+    if (m_resultGraphicParent)
+    {
+      delete m_resultGraphicParent;
+      m_resultGraphicParent = nullptr;
+    }
+
+    // Create the parent for the graphic
+    if (!m_inputGraphicParent)
+      m_inputGraphicParent = new QObject(this);
 
     // Create a marker graphic where the user clicked on the map and add it to the existing graphics overlay
     Point mapPoint = m_mapView->screenToLocation(mouse.x(), mouse.y());
-    Graphic* inputGraphic = new Graphic(mapPoint);
+    Graphic* inputGraphic = new Graphic(mapPoint, m_inputGraphicParent);
     m_inputOverlay->graphics()->append(inputGraphic);
 
     // Setup the geoprocessing task
@@ -207,12 +221,16 @@ void AnalyzeViewshed::processResults(GeoprocessingResult *results)
   // Get the results from the outputs as GeoprocessingFeatures
   GeoprocessingFeatures* viewshedResultFeatures = static_cast<GeoprocessingFeatures*>(results->outputs()["Viewshed_Result"]);
 
+  // Create the parent for the graphic
+  if (!m_resultGraphicParent)
+    m_resultGraphicParent = new QObject(this);
+
   // Add all the features from the result feature set as a graphics to the map
   FeatureIterator features = viewshedResultFeatures->features()->iterator();
   while (features.hasNext())
   {
     Feature* feat = features.next(this);
-    Graphic* graphic = new Graphic(feat->geometry(), this);
+    Graphic* graphic = new Graphic(feat->geometry(), m_resultGraphicParent);
     m_resultsOverlay->graphics()->append(graphic);
   }
 }

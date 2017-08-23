@@ -66,6 +66,7 @@ private:
   Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
   Esri::ArcGISRuntime::RouteParameters m_routeParameters;
   Esri::ArcGISRuntime::DirectionManeuverListModel* m_directions = nullptr;
+  QObject* m_graphicParent = nullptr;
 };
 
 #endif // FIND_ROUTE_H
