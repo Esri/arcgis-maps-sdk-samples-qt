@@ -98,7 +98,7 @@ void GenerateGeodatabase::componentComplete()
 
       // add the layer to the map
       QUrl featureLayerUrl(m_featureServiceInfo.url().toString() + "/" + id);
-      ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(featureLayerUrl);
+      ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(featureLayerUrl, this);
       FeatureLayer* featureLayer = new FeatureLayer(serviceFeatureTable, this);
       m_map->operationalLayers()->append(featureLayer);
 
@@ -123,7 +123,7 @@ void GenerateGeodatabase::addFeatureLayers(QString serviceUrl, QStringList servi
 {
   for (const auto& id : serviceIds)
   {
-    ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(QUrl(serviceUrl + id));
+    ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(QUrl(serviceUrl + id), this);
     FeatureLayer* featureLayer = new FeatureLayer(serviceFeatureTable, this);
     m_map->operationalLayers()->append(featureLayer);
   }

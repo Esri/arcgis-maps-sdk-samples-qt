@@ -54,7 +54,7 @@ void ExportTiles::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // create a tiled basemap
-  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(m_serviceUrl);
+  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(m_serviceUrl, this);
   Basemap* basemap = new Basemap(tiledLayer, this);
 
   // create a new map instance

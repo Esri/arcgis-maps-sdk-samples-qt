@@ -109,7 +109,7 @@ void LocalServerGeoprocessing::connectSignals()
   {
     if (m_localGPService->status() == LocalServerStatus::Started)
     {
-      m_gpTask = new GeoprocessingTask(QUrl(m_localGPService->url().toString() + "/Contour"));
+      m_gpTask = new GeoprocessingTask(QUrl(m_localGPService->url().toString() + "/Contour"), this);
       m_isReady = true;
       emit isReadyChanged();
     }
