@@ -76,7 +76,7 @@ private:
   void connectSignals();
   Esri::ArcGISRuntime::CalloutData* calloutData() const { return m_calloutData; }
   Esri::ArcGISRuntime::SuggestListModel* suggestions() const { return m_suggestListModel; }
-  bool poiTextHasFocus() { return m_poiTextHasFocus; }
+  bool poiTextHasFocus() const { return m_poiTextHasFocus; }
   void setPoiTextHasFocus(bool hasFocus);
   Esri::ArcGISRuntime::GeocodeParameters createParameters();
 
@@ -89,7 +89,7 @@ private:
   Esri::ArcGISRuntime::SuggestListModel* m_suggestListModel = nullptr;
   bool m_poiTextHasFocus = true;
   bool m_isSearchingLocation = false;
-  QString m_poiSearchText = "";
+  QString m_poiSearchText;
   QString m_currentLocationText = "Current Location";
 };
 

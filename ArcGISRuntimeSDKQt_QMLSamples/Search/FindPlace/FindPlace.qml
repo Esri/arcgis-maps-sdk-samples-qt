@@ -42,6 +42,7 @@ Rectangle {
             onLoadStatusChanged: {
                 if (loadStatus !== Enums.LoadStatusLoaded)
                     return;
+
                 mapView.locationDisplay.start();
             }
         }
@@ -101,6 +102,7 @@ Rectangle {
             if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted){
                 if (!identifyGraphicsOverlayResult.graphics.length > 0)
                     return;
+
                 mapView.calloutData.geoElement = identifyGraphicsOverlayResult.graphics[0];
                 mapView.calloutData.title = identifyGraphicsOverlayResult.graphics[0].attributes.attributeValue("ShortLabel");
                 mapView.calloutData.detail = identifyGraphicsOverlayResult.graphics[0].attributes.attributeValue("Place_addr");
@@ -136,6 +138,7 @@ Rectangle {
                     isSearchingLocation = false;
                     if (!geocodeResults.length > 0)
                         return;
+
                     var topLocation = geocodeResults[0];
                     geocodePOIs(poiTextField.text, topLocation.displayLocation);
                     return;
