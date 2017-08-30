@@ -40,6 +40,7 @@ Rectangle {
                 opacity: 0.5
 
                 Raster {
+                    id: theRaster
                     path: rasterPath
                 }
             }
