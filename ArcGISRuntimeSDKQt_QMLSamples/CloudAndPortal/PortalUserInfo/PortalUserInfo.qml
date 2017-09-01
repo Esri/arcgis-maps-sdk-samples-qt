@@ -191,9 +191,11 @@ Rectangle {
         }
     }
 
+    /* Uncomment this section when running as standalone application
     AuthenticationView {
         id: authView
         authenticationManager: AuthenticationManager
     }
+    */
     //! [PortalUserInfo create portal]
 }
