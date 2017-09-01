@@ -262,9 +262,11 @@ AddItemsToPortalSample {
         }
     }
 
+    /* Uncomment this section when running as standalone application
     AuthenticationView {
         authenticationManager: authManager
     }
+    */
 
     BusyIndicator {
         anchors.centerIn: parent
