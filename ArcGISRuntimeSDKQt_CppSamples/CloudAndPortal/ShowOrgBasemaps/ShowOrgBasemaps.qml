@@ -219,7 +219,9 @@ ShowOrgBasemapsSample {
         }
     }
 
+    /* Uncomment this section when running as standalone application
     AuthenticationView {
         authenticationManager: authManager
     }
+    */
 }
