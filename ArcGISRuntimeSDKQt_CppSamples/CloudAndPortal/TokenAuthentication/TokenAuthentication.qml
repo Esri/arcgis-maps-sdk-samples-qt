@@ -35,8 +35,10 @@ TokenAuthenticationSample {
     }
 
     // Declare an AuthenticationView
+    /* Uncomment this section when running as standalone application
     AuthenticationView {
         anchors.fill: parent
         authenticationManager: authSample.authenticationManager // set the authenticationManager property (this needs to be registered)
     }
+    */
 }

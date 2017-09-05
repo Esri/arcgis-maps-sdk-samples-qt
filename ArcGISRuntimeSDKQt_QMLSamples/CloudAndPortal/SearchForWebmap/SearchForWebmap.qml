@@ -281,9 +281,11 @@ Rectangle {
         anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
     }
 
+    /* Uncomment this section when running as standalone application
     AuthenticationView {
         authenticationManager: AuthenticationManager
     }
+    */
 
     MessageDialog {
         id: webMapMsg
