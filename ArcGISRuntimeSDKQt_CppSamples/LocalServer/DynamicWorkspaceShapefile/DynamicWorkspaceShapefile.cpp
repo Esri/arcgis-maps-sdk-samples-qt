@@ -84,6 +84,7 @@ void DynamicWorkspaceShapefile::startLocalService(const QString& filePath, const
 {
   if (!LocalServer::instance()->isInstallValid())
     return;
+
   // Setup file and folder variables
   QFile f(filePath);
   QFileInfo fileInfo(f.fileName());
@@ -93,11 +94,12 @@ void DynamicWorkspaceShapefile::startLocalService(const QString& filePath, const
   QString mapPackagePath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpk/mpk_blank.mpk";
   if (m_localMapService)
     m_localMapService->deleteLater();
+
   m_localMapService = new LocalMapService(mapPackagePath, this);
 
   // Create a shapefile workspace
   ShapefileWorkspace* shapefileWorkspace = new ShapefileWorkspace("shp_wkspc", workspacePath, m_localMapService);
-  TableSublayerSource * source = new TableSublayerSource (shapefileWorkspace->id(), fileInfo.fileName(), m_localMapService);
+  TableSublayerSource * source = new TableSublayerSource(shapefileWorkspace->id(), fileInfo.fileName(), m_localMapService);
 
   // Add the dynamic workspace to the local map service
   // This must be added before the service is started
@@ -105,7 +107,7 @@ void DynamicWorkspaceShapefile::startLocalService(const QString& filePath, const
   m_localMapService->setDynamicWorkspaces(dynamicWorkspaces);
 
   // Connect to the status change signal of the local map service
-  connect(m_localMapService, &LocalMapService::statusChanged, this, [=]()
+  connect(m_localMapService, &LocalMapService::statusChanged, this, [this, source]()
   {
     if (m_localMapService->status() == LocalServerStatus::Started)
     {
@@ -127,12 +129,14 @@ void DynamicWorkspaceShapefile::startLocalService(const QString& filePath, const
         // apply symbology depending on geometry
         Symbol* symbol = nullptr;
         GeometryType geomType = imageSublayer->mapServiceSublayerInfo().geometryType();
+
         if (geomType == GeometryType::Point || geomType == GeometryType::Multipoint)
-          symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 14.0, imageSublayer);
+          symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10.0, imageSublayer);
         else if (geomType == GeometryType::Polygon)
           symbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), imageSublayer);
         else
           symbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("red"), 3.0, imageSublayer);
+
         SimpleRenderer* simpleRenderer = new SimpleRenderer(symbol, imageSublayer);
         imageSublayer->setRenderer(simpleRenderer);
 

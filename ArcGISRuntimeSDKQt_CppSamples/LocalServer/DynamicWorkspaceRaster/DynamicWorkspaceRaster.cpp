@@ -89,6 +89,7 @@ void DynamicWorkspaceRaster::startLocalService(const QString& filePath, const QS
   QString mapPackagePath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpk/mpk_blank.mpk";
   if (m_localMapService)
     m_localMapService->deleteLater();
+
   m_localMapService = new LocalMapService(mapPackagePath, this);
 
   // Create a raster workspace
@@ -101,7 +102,7 @@ void DynamicWorkspaceRaster::startLocalService(const QString& filePath, const QS
   m_localMapService->setDynamicWorkspaces(dynamicWorkspaces);
 
   // Connect to the status change signal of the local map service
-  connect(m_localMapService, &LocalMapService::statusChanged, this, [=]()
+  connect(m_localMapService, &LocalMapService::statusChanged, this, [this, source]()
   {
     if (m_localMapService->status() == LocalServerStatus::Started)
     {
@@ -119,6 +120,7 @@ void DynamicWorkspaceRaster::startLocalService(const QString& filePath, const QS
       {
         if (!e.isEmpty())
           return;
+
         Envelope fullExtent = imageSublayer->mapServiceSublayerInfo().extent();
         m_mapView->setViewpointGeometry(fullExtent, 25);
       });
