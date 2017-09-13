@@ -23,4 +23,4 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 Link | Local Location
 ---------|-------|
 |[Blank map package](https://www.arcgis.com/home/item.html?id=ea619b4f0f8f4d108c5b87e90c1b5be0)| `<userhome>`/ArcGIS/Runtime/Data/mpk/mpk_blank.mpk |
-|[USA Raster](https://www.arcgis.com/home/item.html?id=80b43ba48f524a8eb0cb54f0f1ee9a5f)| `<userhome>`/ArcGIS/Runtime/Data/raster/usa_raster.tif |
+|[Major Roads Shapefile](https://www.arcgis.com/home/item.html?id=c6183a41b91d4cea80717d9dba831649)| `<userhome>`/ArcGIS/Runtime/Data/shapefile/mjrroads.shp |
