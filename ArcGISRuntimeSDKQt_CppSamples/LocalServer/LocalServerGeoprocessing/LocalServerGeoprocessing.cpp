@@ -79,7 +79,10 @@ void LocalServerGeoprocessing::componentComplete()
   if (LocalServer::instance()->isInstallValid())
   {
     connectSignals();
-    LocalServer::start();
+    if (LocalServer::instance()->status() == LocalServerStatus::Started)
+      m_localGPService->start();
+    else
+      LocalServer::start();
   }
 }
 
