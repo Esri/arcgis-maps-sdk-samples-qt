@@ -111,7 +111,10 @@ LocalServerServicesSample {
                 enabled: isServiceRunning
 
                 onClicked: {
-                    stopService(servicesView.currentValue);
+                    if (servicesList.length === 1)
+                        stopService(servicesList[0]);
+                    else
+                        stopService(servicesView.currentValue);
                 }
             }
         }
@@ -134,29 +137,34 @@ LocalServerServicesSample {
             model: servicesList.length
             delegate: servicesDelegate
             property string currentValue: ""
+            onCurrentIndexChanged: currentValue = servicesList[currentIndex]
         }
+    }
 
-        Button {
-            anchors {
-                right: parent.right
-                bottom: parent.bottom
-            }
-            text: "Open Url"
-            visible: servicesView.model > 0
 
-            onClicked: {
-                openURL(servicesView.currentValue);
-            }
+    Button {
+        anchors {
+            right: parent.right
+            bottom: parent.bottom
+            margins: 10 * scaleFactor
+        }
+        text: "Open Url"
+        visible: servicesView.model > 0
+
+        onClicked: {
+            openURL(servicesView.currentValue);
         }
     }
 
     Component {
         id: servicesDelegate
+
         Rectangle {
             id: rect
             width: parent.width
             height: 35 * scaleFactor
-            color: (index % 2) ? "white" : "#DDF3EF"
+            color: ListView.isCurrentItem ? "lightsteelblue" : "white"
+
             Text {
                 text: servicesList[index]
                 anchors {
@@ -171,10 +179,7 @@ LocalServerServicesSample {
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        rect.color = "lightgrey"
-                        servicesView.currentValue = servicesList[index];
-                    }
+                    onClicked: servicesView.currentIndex = index;
                 }
             }
         }
