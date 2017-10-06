@@ -10,7 +10,7 @@ The sample creates a `GraphicsOverlay` each for a Point, Line and Polygon graphi
 
 ## Tips
 
-You may modify the sample code so that you can add all the symbols to the same graphics overlay instead of creating multiple ones.  You can do this by changing setting a symbol on each graphic and adding to the graphics overlay.  
+You may modify the sample code so that you can add all the symbols to the same graphics overlay instead of creating multiple ones.  You can do this by setting a symbol on each graphic and adding to the graphics overlay.  
 
 
 ## Features
