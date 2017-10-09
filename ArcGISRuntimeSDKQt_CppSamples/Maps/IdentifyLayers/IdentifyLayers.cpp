@@ -70,16 +70,16 @@ void IdentifyLayers::componentComplete()
   });
 
   // add a feature layer
-  QUrl featureServiceUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0");
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(featureServiceUrl, this);
+  QUrl featureLayerUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0");
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(featureLayerUrl, this);
   FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
   m_map->operationalLayers()->append(featureLayer);
 
   // set an initial viewpoint
-  double mapScale = 68015210;
-  double x = -10977012.785807;
-  double y = 4514257.550369;
-  Point pt(x, y, SpatialReference::webMercator());
+  const double mapScale = 68015210;
+  const double x = -10977012.785807;
+  const double y = 4514257.550369;
+  const Point pt(x, y, SpatialReference::webMercator());
   Viewpoint initialViewpoint(pt, mapScale);
   m_map->setInitialViewpoint(initialViewpoint);
 
@@ -93,16 +93,16 @@ void IdentifyLayers::componentComplete()
 void IdentifyLayers::connectSignals()
 {
   // identify layers on mouse click
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent mouseEvent)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
-    double tolerance = 12.0;
-    bool returnPopups = false;
-    int maxResults = 10;
+    const double tolerance = 12.0;
+    const bool returnPopups = false;
+    const int maxResults = 10;
     m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), tolerance, returnPopups, maxResults);
   });
 
   // handle the identify results
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](QUuid, QList<IdentifyLayerResult*> results)
+  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](QUuid, const QList<IdentifyLayerResult*>& results)
   {
     // reset the message text
     m_message = QString();
@@ -143,7 +143,7 @@ void IdentifyLayers::connectSignals()
         return count;
       };
 
-      int count = geoElementsCountFromResult(result);
+      const int count = geoElementsCountFromResult(result);
       QString layerName = result->layerContent()->name();
       m_message += QString("%1 : %2").arg(layerName).arg(count);
       // add new line character if not the final element inthe array
