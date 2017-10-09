@@ -75,7 +75,8 @@ Rectangle {
             var screenY = mouse.y;
             var tolerance = 12;
             var returnPopups = false;
-            mapView.identifyLayers(screenX, screenY, tolerance, returnPopups);
+            var maxResults = 10;
+            mapView.identifyLayersWithMaxResults(screenX, screenY, tolerance, returnPopups, maxResults);
         }
 
         // handle the identify results
