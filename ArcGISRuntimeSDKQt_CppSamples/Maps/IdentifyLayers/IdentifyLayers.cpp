@@ -111,7 +111,7 @@ void IdentifyLayers::connectSignals()
     {
       ++i;
       // lambda for calculating result count
-      auto geoElementsCountFromResult = [] (IdentifyLayerResult* result)
+      auto geoElementsCountFromResult = [] (IdentifyLayerResult* result) -> int
       {
         // create temp list
         QList<IdentifyLayerResult*> tempResults{result};
@@ -149,10 +149,8 @@ void IdentifyLayers::connectSignals()
       if (i != results.length())
         m_message += "\n";
     }
-    qDebug() << m_message;
+
     emit messageChanged();
     emit showMessage();
   });
-
-
 }
