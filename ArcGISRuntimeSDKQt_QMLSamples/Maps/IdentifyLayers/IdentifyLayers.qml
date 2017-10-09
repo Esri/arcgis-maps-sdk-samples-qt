@@ -111,30 +111,28 @@ Rectangle {
 
     function geoElementsCountFromResult(identifyLayerResult) {
         // create temp array
-        var tempResults = [identifyLayerResult]
+        var tempResults = [identifyLayerResult];
 
-
-        // using Depth First Search approach to handle recursion
-        var count = 0
-        var index = 0
+        // use Depth First Search approach to handle recursion
+        var count = 0;
+        var index = 0;
 
         while (index < tempResults.length) {
             //get the result object from the array
             var identifyResult = tempResults[index];
 
             // update count with geoElements from the result
-            console.log(identifyResult.geoElements.length)
             count += identifyResult.geoElements.length;
 
             // check if the result has any sublayer results
             // if yes then add those result objects in the tempResults
             // array after the current result
             if (identifyResult.sublayerResults.length > 0) {
-                tempResults.push(identifyResult.sublayerResults[index])
+                tempResults.push(identifyResult.sublayerResults[index]);
             }
 
             // update the count and repeat
-            index += 1
+            index += 1;
         }
 
         return count;
