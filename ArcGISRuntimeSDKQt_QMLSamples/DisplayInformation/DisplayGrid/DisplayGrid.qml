@@ -102,10 +102,6 @@ Rectangle {
                                                                         horizontalAlignment: Enums.HorizontalAlignmentLeft,
                                                                         verticalAlignment: Enums.VerticalAlignmentBottom
                                                                     });
-
-                textSym.outlineColor = "black";
-                textSym.outlineWidth = 2;
-
                 textSym.haloColor = "white";
                 textSym.haloWidth = 2 + level;
 
