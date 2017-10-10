@@ -144,8 +144,6 @@ void DisplayGrid::changeLabelColor(const QString& color)
     for (int level = 0; level < gridLevels; level++)
     {
       TextSymbol* textSym = new TextSymbol("text", QColor(color), 14, HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
-      textSym->setOutlineColor(QColor("black"));
-      textSym->setOutlineWidth(2.0 + level);
       textSym->setHaloColor(QColor("white"));
       textSym->setHaloWidth(2.0 + level);
       m_mapView->grid()->setTextSymbol(level, textSym);
