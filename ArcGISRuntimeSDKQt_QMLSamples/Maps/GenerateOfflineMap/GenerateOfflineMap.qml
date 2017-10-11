@@ -174,8 +174,10 @@ Rectangle {
         anchors.fill: parent
     }
 
+    /* Uncomment this section when running as standalone application
     AuthenticationView {
         anchors.fill: parent
         authenticationManager: AuthenticationManager
     }
+    */
 }
