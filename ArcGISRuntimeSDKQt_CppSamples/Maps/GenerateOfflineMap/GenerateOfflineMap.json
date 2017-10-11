@@ -1,0 +1,8 @@
+{
+    "source" :  "GenerateOfflineMap.qml",
+    "otherSourceFiles" :  [
+        "GenerateOfflineMap.h",
+        "GenerateOfflineMap.cpp"
+    ],
+    "name" : "Generate offline map"
+}
