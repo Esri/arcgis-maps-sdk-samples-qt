@@ -35,5 +35,8 @@ IdentifyLayersSample {
         text: message
     }
 
-    onShowMessage: msgDialog.open();
+    onShowMessage: {
+        if (message.length > 0)
+            msgDialog.open();
+    }
 }
