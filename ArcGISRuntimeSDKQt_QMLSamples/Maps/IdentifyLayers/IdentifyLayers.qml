@@ -100,7 +100,8 @@ Rectangle {
             }
 
             // show the message box
-            msgDialog.open();
+            if (msgText.length > 0)
+                msgDialog.open();
         }
 
         // handle any errors on the map view
