@@ -68,8 +68,7 @@ Rectangle {
             // Get the first feature table
             var gpkgFeatureTable = gpkg.geoPackageFeatureTables[0];
             // Create a FeatureLayer with the table
-            var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
-            featureLayer.featureTable = gpkgFeatureTable;
+            var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: gpkgFeatureTable});
             // Append the layer to the map
             map.operationalLayers.append(featureLayer);
         }
