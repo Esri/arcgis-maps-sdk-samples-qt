@@ -1,6 +1,6 @@
 {
     "source" :  "FeatureLayerGeoPackage.qml",
-    "name" : "Feature layer (geopackage)",
+    "name" : "Feature layer (GeoPackage)",
     "dataItems" : [
         {
             "itemId" : "68ec42517cdd439e81b036210483e8e7",
