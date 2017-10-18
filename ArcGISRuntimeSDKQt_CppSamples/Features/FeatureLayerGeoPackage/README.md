@@ -12,3 +12,10 @@ A GeoPackage is created by passing the path to a `.gpkg` file. Once the `Map` lo
 - GeoPackageFeatureTable
 - FeatureLayer
 - Map
+
+## Offline Data
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+
+Link | Local Location
+---------|-------|
+|[Aurora, Colorado GeoPackage](https://www.arcgis.com/home/item.html?id=68ec42517cdd439e81b036210483e8e7)| `<userhome>`/ArcGIS/Runtime/Data/gpkg/AuroraCO.gpkg |
