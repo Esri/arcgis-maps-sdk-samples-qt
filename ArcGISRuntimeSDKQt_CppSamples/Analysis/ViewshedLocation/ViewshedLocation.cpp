@@ -93,6 +93,12 @@ void ViewshedLocation::connectSignals()
   {
     if (!m_locationViewshed && !m_locationViewshedGraphic)
       createViewshedTask(event.x(), event.y());
+    else
+    {
+      const Point pt = m_sceneView->screenToBaseSurface(event.x(), event.y());
+      m_locationViewshed->setLocation(pt);
+      m_locationViewshedGraphic->setGeometry(pt);
+    }
   });
 
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& event)
@@ -105,9 +111,6 @@ void ViewshedLocation::connectSignals()
 
   connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& event)
   {
-    if (!m_locationViewshed && !m_locationViewshedGraphic)
-      createViewshedTask(event.x(), event.y());
-
     if (m_calculating)
     {
       const Point pt = m_sceneView->screenToBaseSurface(event.x(), event.y());
