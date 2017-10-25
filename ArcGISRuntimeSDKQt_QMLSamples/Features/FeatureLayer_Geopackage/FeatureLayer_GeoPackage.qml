@@ -1,4 +1,4 @@
-// [WriteFile Name=FeatureLayerGeoPackage, Category=Features]
+// [WriteFile Name=FeatureLayer_GeoPackage, Category=Features]
 // [Legal]
 // Copyright 2017 Esri.
 
