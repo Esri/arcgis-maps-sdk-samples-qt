@@ -2,7 +2,8 @@
     "source" :  "ViewshedLocation.qml",
     "otherSourceFiles" :  [
         "ViewshedLocation.h",
-        "ViewshedLocation.cpp"
+        "ViewshedLocation.cpp",
+        "ViewshedSlider.qml"
     ],
     "name" : "Viewshed (location)"
 }
