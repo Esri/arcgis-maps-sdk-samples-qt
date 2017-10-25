@@ -67,6 +67,7 @@ Rectangle {
         onClicked: {
             // apply the new renderer
             featureLayer.renderer = simpleRenderer;
+            visible = false;
         }
     }
 
