@@ -33,7 +33,7 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            BasemapStreetsVector {}
 
             // Declare a FeatureLayer for displaying the shapefile
             FeatureLayer {
@@ -80,7 +80,7 @@ Rectangle {
 
             SimpleLineSymbol {
                 color: "red"
-                style: Enums.SimpleLineSymbolStyleDash
+                style: Enums.SimpleLineSymbolStyleSolid
                 width: 1
             }
         }
