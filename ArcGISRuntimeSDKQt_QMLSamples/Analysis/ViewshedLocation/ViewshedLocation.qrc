@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/ViewshedLocation">
+        <file alias="sample.json">ViewshedLocation.json</file>
+        <file>ViewshedLocation.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>ViewshedSlider.qml</file>
+        <file>close.png</file>
+        <file>settings.png</file>
+    </qresource>
+</RCC>
