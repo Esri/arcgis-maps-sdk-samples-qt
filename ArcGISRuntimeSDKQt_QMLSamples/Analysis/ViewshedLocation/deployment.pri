@@ -3,7 +3,7 @@
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# You may obtain a copy of the License at:
 # http://www.apache.org/licenses/LICENSE-2.0
 
 # Unless required by applicable law or agreed to in writing, software
@@ -13,24 +13,31 @@
 # limitations under the License.
 #-------------------------------------------------
 
-TEMPLATE = app
 
-QT += qml quick positioning sensors
-
-CONFIG += c++11
-
-ARCGIS_RUNTIME_VERSION = 100.2
-include($$PWD/arcgisruntime.pri)
-
-SOURCES += \
-    main.cpp
-
-RESOURCES += \
-    FeatureLayer_GeoPackage.qrc
-
-ios {
-    QMAKE_INFO_PLIST = $$PWD/Info.plist
+android-no-sdk {
+    target.path = /data/user/qt
+    export(target.path)
+    INSTALLS += target
+} else:android {
+    x86 {
+        target.path = /libs/x86
+    } else: armeabi-v7a {
+        target.path = /libs/armeabi-v7a
+    } else {
+        target.path = /libs/armeabi
+    }
+    export(target.path)
+    INSTALLS += target
+} else:unix {
+    isEmpty(target.path) {
+        qnx {
+            target.path = /tmp/$${TARGET}/bin
+        } else {
+            target.path = /opt/$${TARGET}/bin
+        }
+        export(target.path)
+    }
+    INSTALLS += target
 }
 
-# Default rules for deployment.
-include(deployment.pri)
+export(INSTALLS)

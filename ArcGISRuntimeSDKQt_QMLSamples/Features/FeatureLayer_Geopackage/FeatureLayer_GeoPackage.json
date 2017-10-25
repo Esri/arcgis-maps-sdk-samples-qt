@@ -1,5 +1,5 @@
 {
-    "source" :  "FeatureLayerGeoPackage.qml",
+    "source" :  "FeatureLayer_GeoPackage.qml",
     "name" : "Feature layer (GeoPackage)",
     "dataItems" : [
         {

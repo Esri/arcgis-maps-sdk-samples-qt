@@ -26,7 +26,7 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    FeatureLayer_GeoPackage.qrc
+    ViewshedLocation.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist
