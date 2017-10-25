@@ -11,18 +11,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <QSettings>
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+#include <QSurfaceFormat>
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
+
+#include "ViewshedLocation.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
+  // Linux requires 3.2 OpenGL Context
+  // in order to instance 3D symbols
+  QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
+  fmt.setVersion(3, 2);
+  QSurfaceFormat::setDefaultFormat(fmt);
+#endif
 
   QGuiApplication app(argc, argv);
 
@@ -30,6 +43,9 @@ int main(int argc, char *argv[])
   // Force usage of OpenGL ES through ANGLE on Windows
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
 #endif
+
+  // Initialize the sample
+  ViewshedLocation::init();
 
   // Intialize application view
   QQuickView view;
@@ -54,7 +70,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Features/FeatureLayer_GeoPackage/FeatureLayer_GeoPackage.qml"));
+  view.setSource(QUrl("qrc:/Samples/Analysis/ViewshedLocation/ViewshedLocation.qml"));
 
   view.show();
 
