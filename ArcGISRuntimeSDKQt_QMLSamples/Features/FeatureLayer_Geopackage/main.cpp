@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Features/FeatureLayerGeoPackage/FeatureLayerGeoPackage.qml"));
+  view.setSource(QUrl("qrc:/Samples/Features/FeatureLayer_GeoPackage/FeatureLayer_GeoPackage.qml"));
 
   view.show();
 
