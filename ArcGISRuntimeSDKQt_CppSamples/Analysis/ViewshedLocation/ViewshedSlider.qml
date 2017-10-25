@@ -43,7 +43,7 @@ Column {
             orientation: Qt.Horizontal
             from: minValue
             to: maxValue
-            width: parent.width * 0.85
+            width: parent.width * 0.75
             value: parameterValue
 
             onValueChanged: {

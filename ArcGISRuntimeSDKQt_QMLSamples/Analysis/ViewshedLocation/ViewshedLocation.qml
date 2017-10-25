@@ -202,6 +202,7 @@ Rectangle {
                         Rectangle {
                             anchors {
                                 right: parent.right
+                                margins: 10 * scaleFactor
                                 verticalCenter: parent.verticalCenter
                             }
                             width: 45 * scaleFactor
@@ -236,6 +237,7 @@ Rectangle {
                         Switch {
                             anchors {
                                 right: parent.right
+                                margins: 10 * scaleFactor
                                 verticalCenter: parent.verticalCenter
                             }
                             checked: true
@@ -257,6 +259,7 @@ Rectangle {
                         Switch {
                             anchors {
                                 right: parent.right
+                                margins: 10 * scaleFactor
                                 verticalCenter: parent.verticalCenter
                             }
                             checked: false
@@ -325,15 +328,18 @@ Rectangle {
                         }
 
                         Rectangle {
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors {
+                                margins: 10 * scaleFactor
+                                verticalCenter: parent.verticalCenter
+                            }
                             width: 25 * scaleFactor
                             height: width
-                            radius: 4 * scaleFactor
                             border {
                                 color: "black"
                                 width: 1 * scaleFactor
                             }
                             color: locationViewshed.visibleColor
+                            radius: 4 * scaleFactor
 
                             MouseArea {
                                 anchors.fill: parent
@@ -357,15 +363,18 @@ Rectangle {
                         }
 
                         Rectangle {
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors {
+                                margins: 10 * scaleFactor
+                                verticalCenter: parent.verticalCenter
+                            }
                             width: 25 * scaleFactor
                             height: width
-                            radius: 4 * scaleFactor
                             border {
                                 color: "black"
                                 width: 1 * scaleFactor
                             }
                             color: locationViewshed.obstructedColor
+                            radius: 4 * scaleFactor
 
                             MouseArea {
                                 anchors.fill: parent
