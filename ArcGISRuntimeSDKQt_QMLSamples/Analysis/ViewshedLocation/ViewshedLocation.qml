@@ -90,11 +90,6 @@ Rectangle {
                     else
                         locationViewshed.frustumOutlineColor = "yellow";
                 }
-
-                Component.onCompleted: {
-                    locationViewshed.visibleColor = "#8aff7c";
-                    locationViewshed.obstructedColor = "#ff8983";
-                }
             }
         }
 

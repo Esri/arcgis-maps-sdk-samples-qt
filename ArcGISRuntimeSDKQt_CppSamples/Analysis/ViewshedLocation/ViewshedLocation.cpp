@@ -127,8 +127,6 @@ void ViewshedLocation::createViewshed(double x, double y)
                                             m_minDistance, m_maxDistance,
                                             SurfacePlacement::Absolute, this);
   m_locationViewshed->setVisible(m_viewshedVisible);
-  m_locationViewshed->setVisibleColor(m_visibleColor);
-  m_locationViewshed->setObstructedColor(m_obstructedColor);
   LocationViewshed::setFrustumOutlineColor(QColor("transparent"));
 
   // Add the Viewshed to the Analysis Overlay
@@ -341,52 +339,30 @@ void ViewshedLocation::setPitch(double pitch)
 
 QColor ViewshedLocation::visibleColor() const
 {
-  return m_locationViewshed ? LocationViewshed::visibleColor() : m_visibleColor;
+  return LocationViewshed::visibleColor();
 }
 
 void ViewshedLocation::setVisibleColor(const QColor& visibleColor)
 {
-  if (m_locationViewshed)
-  {
-    if (LocationViewshed::visibleColor() == visibleColor)
-      return;
+  if (LocationViewshed::visibleColor() == visibleColor)
+    return;
 
-    m_visibleColor = visibleColor;
-    LocationViewshed::setVisibleColor(visibleColor);
-  }
-  else
-  {
-    if (m_visibleColor == visibleColor)
-      return;
-
-    m_visibleColor = visibleColor;
-  }
+  LocationViewshed::setVisibleColor(visibleColor);
 
   emit visibleColorChanged();
 }
 
 QColor ViewshedLocation::obstructedColor() const
 {
-  return m_locationViewshed ? LocationViewshed::obstructedColor() : m_obstructedColor;
+  return LocationViewshed::obstructedColor();
 }
 
 void ViewshedLocation::setObstructedColor(const QColor& obstructedColor)
 {
-  if (m_locationViewshed)
-  {
-    if (LocationViewshed::obstructedColor() == obstructedColor)
-      return;
+  if (LocationViewshed::obstructedColor() == obstructedColor)
+    return;
 
-    m_obstructedColor = obstructedColor;
-    LocationViewshed::setObstructedColor(obstructedColor);
-  }
-  else
-  {
-    if (m_obstructedColor == obstructedColor)
-      return;
-
-    m_obstructedColor = obstructedColor;
-  }
+  LocationViewshed::setObstructedColor(obstructedColor);
 
   emit obstructedColorChanged();
 }

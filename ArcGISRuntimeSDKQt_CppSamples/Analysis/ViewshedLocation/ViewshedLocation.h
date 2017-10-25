@@ -111,8 +111,6 @@ private:
   double m_veriticalAngle = 90;
   double m_heading = 0;
   double m_pitch = 90;
-  QColor m_visibleColor = QColor(138,255,124);
-  QColor m_obstructedColor = QColor(255,137,131);
   bool m_calculating = false;
 };
 
