@@ -43,7 +43,7 @@ ViewshedLocationSample {
             width: 45 * scaleFactor
             height: width
             color: "white"
-            radius: 25
+            radius: 25 * scaleFactor
 
             Image {
                 anchors.centerIn: parent
@@ -134,6 +134,7 @@ ViewshedLocationSample {
                         Switch {
                             anchors {
                                 right: parent.right
+                                margins: 10 * scaleFactor
                                 verticalCenter: parent.verticalCenter
                             }
                             checked: true
@@ -155,6 +156,7 @@ ViewshedLocationSample {
                         Switch {
                             anchors {
                                 right: parent.right
+                                margins: 10 * scaleFactor
                                 verticalCenter: parent.verticalCenter
                             }
                             checked: false
@@ -217,21 +219,24 @@ ViewshedLocationSample {
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
-                            width: parent.width * 0.85
+                            width: parent.width * 0.75
                             text: qsTr("Visible Color")
                             font.pixelSize: 14 * scaleFactor
                         }
 
                         Rectangle {
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors {
+                                margins: 10 * scaleFactor
+                                verticalCenter: parent.verticalCenter
+                            }
                             width: 25 * scaleFactor
                             height: width
-                            radius: 4 * scaleFactor
                             border {
                                 color: "black"
                                 width: 1 * scaleFactor
                             }
                             color: viewshedSample.visibleColor
+                            radius: 4 * scaleFactor
 
                             MouseArea {
                                 anchors.fill: parent
@@ -249,21 +254,24 @@ ViewshedLocationSample {
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
-                            width: parent.width * 0.85
+                            width: parent.width * 0.75
                             text: qsTr("Obstructed Color")
                             font.pixelSize: 14 * scaleFactor
                         }
 
                         Rectangle {
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors {
+                                margins: 10 * scaleFactor
+                                verticalCenter: parent.verticalCenter
+                            }
                             width: 25 * scaleFactor
                             height: width
-                            radius: 4 * scaleFactor
                             border {
                                 color: "black"
                                 width: 1 * scaleFactor
                             }
                             color: viewshedSample.obstructedColor
+                            radius: 4 * scaleFactor
 
                             MouseArea {
                                 anchors.fill: parent
