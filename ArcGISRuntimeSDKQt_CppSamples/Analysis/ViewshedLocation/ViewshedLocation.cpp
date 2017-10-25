@@ -23,9 +23,7 @@
 #include "Camera.h"
 #include "Point.h"
 #include "AnalysisOverlay.h"
-#include "Graphic.h"
-#include "SimpleMarkerSceneSymbol.h"
-#include "SimpleRenderer.h"
+
 
 using namespace Esri::ArcGISRuntime;
 
@@ -57,11 +55,9 @@ void ViewshedLocation::componentComplete()
   scene->setBaseSurface(surface);
   m_sceneView->setArcGISScene(scene);
 
-  // Add an Analysis Overlay and a Graphics Overlay
+  // Add an Analysis Overlay
   m_analysisOverlay = new AnalysisOverlay(this);
   m_sceneView->analysisOverlays()->append(m_analysisOverlay);
-  m_graphicsOverlay = new GraphicsOverlay(this);
-  m_sceneView->graphicsOverlays()->append(m_graphicsOverlay);
 
   // set initial viewpoint
   setInitialViewpoint();
@@ -89,19 +85,18 @@ void ViewshedLocation::connectSignals()
   // on mouse click perform the location viewshed
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
-    if (!m_locationViewshed && !m_locationViewshedGraphic)
+    if (!m_locationViewshed)
       createViewshedTask(event.x(), event.y());
     else
     {
       const Point pt = m_sceneView->screenToBaseSurface(event.x(), event.y());
       m_locationViewshed->setLocation(pt);
-      m_locationViewshedGraphic->setGeometry(pt);
     }
   });
 
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& event)
   {
-    if (!m_locationViewshed && !m_locationViewshedGraphic)
+    if (!m_locationViewshed)
       createViewshedTask(event.x(), event.y());
 
     m_calculating = true;
@@ -113,7 +108,6 @@ void ViewshedLocation::connectSignals()
     {
       const Point pt = m_sceneView->screenToBaseSurface(event.x(), event.y());
       m_locationViewshed->setLocation(pt);
-      m_locationViewshedGraphic->setGeometry(pt);
     }
   });
 
@@ -140,15 +134,6 @@ void ViewshedLocation::createViewshedTask(double x, double y)
   // Add the Viewshed to the Analysis Overlay
   m_analysisOverlay->analyses()->append(m_locationViewshed);
 
-  // Create the Observer Graphic
-  SimpleMarkerSceneSymbol* smss = SimpleMarkerSceneSymbol::cone(QColor("red"), 20, 70, this);
-  smss->setWidth(12);
-  m_locationViewshedGraphic = new Graphic(m_locationViewshed->location(), smss, this);
-  m_graphicsOverlay->graphics()->append(m_locationViewshedGraphic);
-
-  smss->setHeading(m_locationViewshed->heading()-180);
-  smss->setPitch(qAbs(m_locationViewshed->pitch()-180));
-
   return;
 }
 
@@ -160,14 +145,13 @@ bool ViewshedLocation::isViewshedVisible() const
 
 void ViewshedLocation::setViewshedVisible(bool viewshedVisible)
 {
-  if (m_locationViewshed && m_locationViewshedGraphic)
+  if (m_locationViewshed)
   {
     if (m_locationViewshed->isVisible() == viewshedVisible)
       return;
 
     m_viewshedVisible = viewshedVisible;
     m_locationViewshed->setVisible(viewshedVisible);
-    m_locationViewshedGraphic->setVisible(viewshedVisible);
   }
   else
   {
@@ -310,16 +294,13 @@ double ViewshedLocation::heading() const
 
 void ViewshedLocation::setHeading(double heading)
 {
-  if (m_locationViewshed && m_locationViewshedGraphic)
+  if (m_locationViewshed)
    {
      if (m_locationViewshed->heading() == heading)
        return;
 
      m_heading = heading;
      m_locationViewshed->setHeading(heading);
-
-     SimpleMarkerSceneSymbol* smss = static_cast<SimpleMarkerSceneSymbol*>(m_locationViewshedGraphic->symbol());
-     smss->setHeading(m_locationViewshed->heading()-180);
    }
    else
    {
@@ -346,9 +327,6 @@ void ViewshedLocation::setPitch(double pitch)
 
     m_pitch = pitch;
     m_locationViewshed->setPitch(pitch);
-
-    SimpleMarkerSceneSymbol* smss = static_cast<SimpleMarkerSceneSymbol*>(m_locationViewshedGraphic->symbol());
-    smss->setPitch(qAbs(m_locationViewshed->pitch()-180));
   }
   else
   {
