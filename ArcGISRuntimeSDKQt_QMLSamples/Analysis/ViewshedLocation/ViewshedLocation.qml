@@ -17,21 +17,123 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
-import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.2
 
-ViewshedLocationSample {
+Rectangle {
     id: viewshedSample
     clip: true
     width: 800
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
+    property bool calculating: false
 
     SceneView {
         id: sceneView
-        objectName: "sceneView"
         anchors.fill: parent
+        focus: true
+
+        Scene {
+            id: scene
+            BasemapTopographic {}
+
+            Surface {
+                ArcGISTiledElevationSource {
+                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                }
+            }
+
+            onLoadStatusChanged: {
+                if (loadStatus === Enums.LoadStatusLoaded) {
+                    // Set a viewpoint
+                    var point = ArcGISRuntimeEnvironment.createObject("Point", {
+                                                                          x: 6.86088,
+                                                                          y: 45.3604,
+                                                                          z: 3582.55,
+                                                                          spatialReference: SpatialReference.createWgs84()
+                                                                      });
+
+                    var camera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                                                                           location: point,
+                                                                           heading: 345,
+                                                                           pitch: 70,
+                                                                           roll: 0
+                                                                       });
+
+                    sceneView.setViewpointCamera(camera)
+                }
+            }
+        }
+
+        // Add an Analysis Overlay
+        AnalysisOverlay {
+            id: analysisOverlay
+
+            LocationViewshed {
+                id: locationViewshed
+
+                property bool frustumVisible: false
+
+                minDistance: 50
+                maxDistance: 1000;
+                horizontalAngle: 45
+                verticalAngle: 90
+                heading: 180
+                pitch: 90
+                surfacePlacement: Enums.SurfacePlacementAbsolute
+                visible: true
+
+                onFrustumVisibleChanged: {
+                    if (frustumVisible)
+                        locationViewshed.frustumOutlineColor = "transparent";
+                    else
+                        locationViewshed.frustumOutlineColor = "yellow";
+                }
+
+                Component.onCompleted: {
+                    locationViewshed.visibleColor = "#8aff7c";
+                    locationViewshed.obstructedColor = "#ff8983";
+                }
+            }
+        }
+
+        // Add a GraphicsOverlay
+        GraphicsOverlay {
+            id: graphicsOverlay
+
+            Graphic {
+                id: coneGraphic
+                SimpleMarkerSceneSymbol {
+                    style: Enums.SimpleMarkerSceneSymbolStyleCone
+                    color: "red"
+                    width: 12
+                    depth: 20
+                    height: 70
+                    anchorPosition: Enums.SceneSymbolAnchorPositionBottom
+                    pitch: locationViewshed.pitch
+                    heading: locationViewshed.heading
+                }
+            }
+        }
+
+        onMouseClicked: {
+            var pt = sceneView.screenToBaseSurface(mouse.x, mouse.y);
+            coneGraphic.geometry = pt;
+            locationViewshed.location = pt;
+        }
+
+        onMousePressedAndHeld: calculating = true;
+
+        onMouseReleased: calculating = false;
+
+        onMousePositionChanged: {
+            if (calculating) {
+                var pt = sceneView.screenToBaseSurface(mouse.x, mouse.y);
+                coneGraphic.geometry = pt;
+                locationViewshed.location = pt;
+            }
+        }
 
         Rectangle {
             anchors {
@@ -137,7 +239,7 @@ ViewshedLocationSample {
                                 verticalCenter: parent.verticalCenter
                             }
                             checked: true
-                            onCheckedChanged: viewshedSample.viewshedVisible = checked;
+                            onCheckedChanged: locationViewshed.visible = checked;
                         }
                     }
 
@@ -158,56 +260,56 @@ ViewshedLocationSample {
                                 verticalCenter: parent.verticalCenter
                             }
                             checked: false
-                            onCheckedChanged: viewshedSample.frustumVisible = checked;
+                            onCheckedChanged: locationViewshed.frustumVisible = checked;
                         }
                     }
 
                     ViewshedSlider {
                         titleText: qsTr("Min Distance (m)")
-                        parameterValue: viewshedSample.minDistance
+                        parameterValue: locationViewshed.minDistance
                         minValue: 1
                         maxValue: 2000
-                        onParameterValueChanged: viewshedSample.minDistance = parameterValue;
+                        onParameterValueChanged: locationViewshed.minDistance = parameterValue;
                     }
 
                     ViewshedSlider {
                         titleText: qsTr("Max Distance (m)")
-                        parameterValue: viewshedSample.maxDistance
+                        parameterValue: locationViewshed.maxDistance
                         minValue: 1
                         maxValue: 2000
-                        onParameterValueChanged: viewshedSample.maxDistance = parameterValue;
+                        onParameterValueChanged: locationViewshed.maxDistance = parameterValue;
                     }
 
                     ViewshedSlider {
                         titleText: qsTr("Vertical Angle")
-                        parameterValue: viewshedSample.verticalAngle
+                        parameterValue: locationViewshed.verticalAngle
                         minValue: 1
                         maxValue: 179
-                        onParameterValueChanged: viewshedSample.verticalAngle = parameterValue;
+                        onParameterValueChanged: locationViewshed.verticalAngle = parameterValue;
                     }
 
                     ViewshedSlider {
                         titleText: qsTr("Horizontal Angle")
-                        parameterValue: viewshedSample.horizontalAngle
+                        parameterValue: locationViewshed.horizontalAngle
                         minValue: 1
                         maxValue: 179
-                        onParameterValueChanged: viewshedSample.horizontalAngle = parameterValue;
+                        onParameterValueChanged: locationViewshed.horizontalAngle = parameterValue;
                     }
 
                     ViewshedSlider {
                         titleText: qsTr("Heading")
-                        parameterValue: viewshedSample.heading
+                        parameterValue: locationViewshed.heading
                         minValue: 1
                         maxValue: 359
-                        onParameterValueChanged: viewshedSample.heading = parameterValue;
+                        onParameterValueChanged: locationViewshed.heading = parameterValue;
                     }
 
                     ViewshedSlider {
                         titleText: qsTr("Pitch")
-                        parameterValue: viewshedSample.pitch
+                        parameterValue: locationViewshed.pitch
                         minValue: 1
                         maxValue: 179
-                        onParameterValueChanged: viewshedSample.pitch = parameterValue;
+                        onParameterValueChanged: locationViewshed.pitch = parameterValue;
                     }
 
                     Row {
@@ -231,7 +333,7 @@ ViewshedLocationSample {
                                 color: "black"
                                 width: 1 * scaleFactor
                             }
-                            color: viewshedSample.visibleColor
+                            color: locationViewshed.visibleColor
 
                             MouseArea {
                                 anchors.fill: parent
@@ -263,7 +365,7 @@ ViewshedLocationSample {
                                 color: "black"
                                 width: 1 * scaleFactor
                             }
-                            color: viewshedSample.obstructedColor
+                            color: locationViewshed.obstructedColor
 
                             MouseArea {
                                 anchors.fill: parent
@@ -282,7 +384,7 @@ ViewshedLocationSample {
         id: visibleColorDialog
         onAccepted: {
             close();
-            viewshedSample.visibleColor = color;
+            locationViewshed.visibleColor = color;
         }
     }
 
@@ -290,7 +392,7 @@ ViewshedLocationSample {
         id: obstructedColorDialog
         onAccepted: {
             close();
-            viewshedSample.obstructedColor = color;
+            locationViewshed.obstructedColor = color;
         }
     }
 }

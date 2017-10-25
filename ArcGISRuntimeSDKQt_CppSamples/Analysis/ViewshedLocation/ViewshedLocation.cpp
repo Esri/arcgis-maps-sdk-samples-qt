@@ -48,8 +48,6 @@ void ViewshedLocation::componentComplete()
   // Create a scene and give it to the SceneView
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
-  m_sceneView->setAcceptHoverEvents(true);
-
   Scene* scene = new Scene(Basemap::topographic(this), this);
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
@@ -154,7 +152,7 @@ void ViewshedLocation::createViewshedTask(double x, double y)
   return;
 }
 
-// Getters/Setters for every Q_PROPERTY
+// Getters/Setters for each Q_PROPERTY
 bool ViewshedLocation::isViewshedVisible() const
 {
   return m_viewshedVisible;
@@ -414,5 +412,3 @@ void ViewshedLocation::setObstructedColor(const QColor& obstructedColor)
 
   emit obstructedColorChanged();
 }
-
-
