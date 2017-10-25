@@ -1,0 +1,8 @@
+{
+    "source" :  "SymbolizeShapefile.qml",
+    "otherSourceFiles" :  [
+        "SymbolizeShapefile.h",
+        "SymbolizeShapefile.cpp"
+    ],
+    "name" : "Symbolize a shapefile"
+}
