@@ -18,7 +18,4 @@ This is achieved by first creating a `LocationViewshed`, and assigning values fo
 - SceneView
 - Surface
 - ArcGISTiledElevationSource
-- GraphicsOverlay
-- Graphic
-- SimpleMarkerSceneSymbol
 - Camera

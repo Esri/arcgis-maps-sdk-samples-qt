@@ -24,8 +24,6 @@ namespace ArcGISRuntime
 class SceneQuickView;
 class LocationViewshed;
 class AnalysisOverlay;
-class GraphicsOverlay;
-class Graphic;
 }
 }
 
@@ -103,9 +101,7 @@ private:
 
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::LocationViewshed* m_locationViewshed = nullptr;
-  Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-  Esri::ArcGISRuntime::Graphic* m_locationViewshedGraphic = nullptr;
+  Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;  
 
   bool m_viewshedVisible = true;
   bool m_frustumVisible = true;

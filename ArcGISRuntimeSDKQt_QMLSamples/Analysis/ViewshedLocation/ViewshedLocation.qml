@@ -98,42 +98,10 @@ Rectangle {
             }
         }
 
-        // Add a GraphicsOverlay
-        GraphicsOverlay {
-            id: graphicsOverlay
-
-            Graphic {
-                id: coneGraphic
-                SimpleMarkerSceneSymbol {
-                    style: Enums.SimpleMarkerSceneSymbolStyleCone
-                    color: "red"
-                    width: 12
-                    depth: 20
-                    height: 70
-                    anchorPosition: Enums.SceneSymbolAnchorPositionBottom
-                    pitch: locationViewshed.pitch
-                    heading: locationViewshed.heading
-                }
-            }
-        }
-
-        onMouseClicked: {
-            var pt = sceneView.screenToBaseSurface(mouse.x, mouse.y);
-            coneGraphic.geometry = pt;
-            locationViewshed.location = pt;
-        }
-
+        onMouseClicked: locationViewshed.location = sceneView.screenToBaseSurface(mouse.x, mouse.y);
         onMousePressedAndHeld: calculating = true;
-
         onMouseReleased: calculating = false;
-
-        onMousePositionChanged: {
-            if (calculating) {
-                var pt = sceneView.screenToBaseSurface(mouse.x, mouse.y);
-                coneGraphic.geometry = pt;
-                locationViewshed.location = pt;
-            }
-        }
+        onMousePositionChanged: locationViewshed.location = sceneView.screenToBaseSurface(mouse.x, mouse.y);
 
         Rectangle {
             anchors {
