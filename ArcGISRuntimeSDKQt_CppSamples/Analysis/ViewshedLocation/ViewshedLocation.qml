@@ -137,6 +137,27 @@ ViewshedLocationSample {
                     }
                 }
 
+                Item {
+                    width: parent.width
+                    height: 25 * scaleFactor
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width * 0.75
+                        text: qsTr("Frustum Visible")
+                        font.pixelSize: 14 * scaleFactor
+                    }
+
+                    Switch {
+                        anchors {
+                            right: parent.right
+                            verticalCenter: parent.verticalCenter
+                        }
+                        checked: false
+                        onCheckedChanged: viewshedSample.frustumVisible = checked;
+                    }
+                }
+
                 ViewshedSlider {
                     titleText: qsTr("Min Distance (m)")
                     parameterValue: viewshedSample.minDistance

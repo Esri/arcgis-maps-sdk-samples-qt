@@ -44,6 +44,7 @@ public:
   static void init();
 
   Q_PROPERTY(bool viewshedVisible READ isViewshedVisible WRITE setViewshedVisible NOTIFY viewshedVisibleChanged)
+  Q_PROPERTY(bool frustumVisible READ isFrustumVisible WRITE setFrustumVisible NOTIFY frustumVisibleChanged)
   Q_PROPERTY(double minDistance READ minDistance WRITE setMinDistance NOTIFY minDistanceChanged)
   Q_PROPERTY(double maxDistance READ maxDistance WRITE setMaxDistance NOTIFY maxDistanceChanged)
   Q_PROPERTY(double horizontalAngle READ horizontalAngle WRITE setHorizontalAngle NOTIFY horizontalAngleChanged)
@@ -55,6 +56,9 @@ public:
 
   bool isViewshedVisible() const;
   void setViewshedVisible(bool viewshedVisible);
+
+  bool isFrustumVisible() const;
+  void setFrustumVisible(bool frustumVisible);
 
   double minDistance() const;
   void setMinDistance(double minDistance);
@@ -82,6 +86,7 @@ public:
 
 signals:
   void viewshedVisibleChanged();
+  void frustumVisibleChanged();
   void minDistanceChanged();
   void maxDistanceChanged();
   void horizontalAngleChanged();
