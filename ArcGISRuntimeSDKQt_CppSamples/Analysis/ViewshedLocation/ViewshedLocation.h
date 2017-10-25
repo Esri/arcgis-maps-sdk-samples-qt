@@ -97,7 +97,7 @@ signals:
 private:
   void connectSignals();
   void setInitialViewpoint();
-  void createViewshedTask(double x, double y);
+  void createViewshed(double x, double y);
 
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::LocationViewshed* m_locationViewshed = nullptr;

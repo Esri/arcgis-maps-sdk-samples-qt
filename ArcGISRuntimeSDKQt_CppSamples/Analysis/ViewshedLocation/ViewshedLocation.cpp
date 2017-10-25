@@ -86,7 +86,7 @@ void ViewshedLocation::connectSignals()
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
   {
     if (!m_locationViewshed)
-      createViewshedTask(event.x(), event.y());
+      createViewshed(event.x(), event.y());
     else
     {
       const Point pt = m_sceneView->screenToBaseSurface(event.x(), event.y());
@@ -97,7 +97,7 @@ void ViewshedLocation::connectSignals()
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& event)
   {
     if (!m_locationViewshed)
-      createViewshedTask(event.x(), event.y());
+      createViewshed(event.x(), event.y());
 
     m_calculating = true;
   });
@@ -117,7 +117,7 @@ void ViewshedLocation::connectSignals()
   });
 }
 
-void ViewshedLocation::createViewshedTask(double x, double y)
+void ViewshedLocation::createViewshed(double x, double y)
 {
   const Point pt = m_sceneView->screenToBaseSurface(x, y);
 
@@ -341,18 +341,18 @@ void ViewshedLocation::setPitch(double pitch)
 
 QColor ViewshedLocation::visibleColor() const
 {
-  return m_locationViewshed ? m_locationViewshed->visibleColor() : m_visibleColor;
+  return m_locationViewshed ? LocationViewshed::visibleColor() : m_visibleColor;
 }
 
 void ViewshedLocation::setVisibleColor(const QColor& visibleColor)
 {
   if (m_locationViewshed)
   {
-    if (m_locationViewshed->visibleColor() == visibleColor)
+    if (LocationViewshed::visibleColor() == visibleColor)
       return;
 
     m_visibleColor = visibleColor;
-    m_locationViewshed->setVisibleColor(visibleColor);
+    LocationViewshed::setVisibleColor(visibleColor);
   }
   else
   {
@@ -367,18 +367,18 @@ void ViewshedLocation::setVisibleColor(const QColor& visibleColor)
 
 QColor ViewshedLocation::obstructedColor() const
 {
-  return m_locationViewshed ? m_locationViewshed->obstructedColor() : m_obstructedColor;
+  return m_locationViewshed ? LocationViewshed::obstructedColor() : m_obstructedColor;
 }
 
 void ViewshedLocation::setObstructedColor(const QColor& obstructedColor)
 {
   if (m_locationViewshed)
   {
-    if (m_locationViewshed->obstructedColor() == obstructedColor)
+    if (LocationViewshed::obstructedColor() == obstructedColor)
       return;
 
     m_obstructedColor = obstructedColor;
-    m_locationViewshed->setObstructedColor(obstructedColor);
+    LocationViewshed::setObstructedColor(obstructedColor);
   }
   else
   {
