@@ -1,5 +1,5 @@
 {
     "source" :  "ViewshedLocation.qml",
-    "otherSourceFiles" :  [],
+    "otherSourceFiles" :  ["ViewshedSlider.qml"],
     "name" : "Viewshed (location)"
 }
