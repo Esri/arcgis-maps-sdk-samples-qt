@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/ViewshedCamera">
+        <file alias="sample.json">ViewshedCamera.json</file>        
+        <file>ViewshedCamera.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
