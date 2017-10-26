@@ -1,0 +1,8 @@
+{
+    "source" :  "ViewshedCamera.qml",
+    "otherSourceFiles" :  [
+        "ViewshedCamera.h",
+        "ViewshedCamera.cpp"
+    ],
+    "name" : "Viewshed (camera)"
+}

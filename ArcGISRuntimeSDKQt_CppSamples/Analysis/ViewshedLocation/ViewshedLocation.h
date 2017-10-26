@@ -104,7 +104,6 @@ private:
   Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;  
 
   bool m_viewshedVisible = true;
-  bool m_frustumVisible = true;
   double m_minDistance = 50;
   double m_maxDistance = 1000;
   double m_horizontalAngle = 45;
