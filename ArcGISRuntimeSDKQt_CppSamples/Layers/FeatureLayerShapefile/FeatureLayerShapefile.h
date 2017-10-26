@@ -39,11 +39,11 @@ public:
     void componentComplete() Q_DECL_OVERRIDE;
     static void init();
 
-    Q_INVOKABLE void createAndAddShapefileLayer(QUrl file);
-
 private:
     Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+
+    void createAndAddShapefileLayer(QUrl const &file);
 };
 
 #endif // FEATURELAYERSHAPEFILE_H
