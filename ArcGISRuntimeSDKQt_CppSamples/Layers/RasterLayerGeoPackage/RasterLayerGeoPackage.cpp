@@ -52,8 +52,8 @@ void RasterLayerGeoPackage::componentComplete()
   m_map = new Map(Basemap::lightGrayCanvas(this), this);
 
   // Set an initial viewpoint
-  const Point pt(-11653429, 4819156, SpatialReference(3857));
-  const Viewpoint vp(pt, 500000);
+  const Point pt(-104.8319, 39.7294, SpatialReference(4326));
+  const Viewpoint vp(pt, 200000);
   m_map->setInitialViewpoint(vp);
 
   // Create the GeoPackage
@@ -72,11 +72,6 @@ void RasterLayerGeoPackage::componentComplete()
     GeoPackageRaster* gpkgRaster = gpkg->geoPackageRasters().at(0);
     RasterLayer* rasterLayer = new RasterLayer(gpkgRaster, this);
     m_map->operationalLayers()->append(rasterLayer);
-  });
-
-  connect(m_mapView, &MapQuickView::mouseClicked, [this](QMouseEvent e)
-  {
-    qDebug() << m_mapView->screenToLocation(e.x(), e.y()).toJson();
   });
 
   // Connect to Map::doneLoading
