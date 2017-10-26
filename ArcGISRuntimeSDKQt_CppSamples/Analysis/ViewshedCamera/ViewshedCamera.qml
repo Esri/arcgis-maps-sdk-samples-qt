@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
+import Esri.ArcGISExtras 1.1
 
 ViewshedCameraSample {
     id: rootRectangle
@@ -24,8 +25,20 @@ ViewshedCameraSample {
     width: 800
     height: 600
 
+    property real scaleFactor: System.displayScaleFactor
+
     SceneView {
         objectName: "sceneView"
         anchors.fill: parent
+    }
+
+    Button {
+        anchors {
+            left: parent.left
+            top: parent.top
+            margins: 10 * scaleFactor
+        }
+        text: "Calculate Viewshed"
+        onClicked: calculateViewshed();
     }
 }
