@@ -21,7 +21,10 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Scene;
 class SceneQuickView;
+class AnalysisOverlay;
+class LocationViewshed;
 }
 }
 
@@ -37,9 +40,15 @@ public:
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
+  Q_INVOKABLE void calculateViewshed();
 
 private:
+  void setInitialViewpoint();
+
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::AnalysisOverlay* m_analysisOverlay = nullptr;
+  Esri::ArcGISRuntime::LocationViewshed* m_viewshed = nullptr;
 };
 
 #endif // VIEWSHEDCAMERA_H

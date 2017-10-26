@@ -19,6 +19,12 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
+#include "ArcGISSceneLayer.h"
+#include "AnalysisOverlay.h"
+#include "Point.h"
+#include "Camera.h"
+#include "Viewpoint.h"
+#include "LocationViewshed.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -38,14 +44,62 @@ void ViewshedCamera::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  // Create a scene and give it to the SceneView
+  // Create a scene
   m_sceneView = findChild<SceneQuickView*>("sceneView");
-  Scene* scene = new Scene(Basemap::imagery(this), this);
+  m_scene = new Scene(Basemap::topographic(this), this);
+
+  // Set a base surface
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
         new ArcGISTiledElevationSource(
-          QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
+          QUrl("http://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"),
           this));
-  scene->setBaseSurface(surface);
-  m_sceneView->setArcGISScene(scene);
+  m_scene->setBaseSurface(surface);
+
+  // Add a Scene Layer
+  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
+  m_scene->operationalLayers()->append(sceneLayer);
+
+  // Add an AnalysisOverlay
+  m_analysisOverlay = new AnalysisOverlay(this);
+  m_sceneView->analysisOverlays()->append(m_analysisOverlay);
+
+  // Set initial viewpoint
+  setInitialViewpoint();
+
+  // Add the Scene to the Sceneview
+  m_sceneView->setArcGISScene(m_scene);
+}
+
+void ViewshedCamera::calculateViewshed()
+{
+  if (!m_viewshed)
+  {
+    // Create the viewshed
+    const double minDistance = 1;
+    const double maxDistance = 1000;
+    m_viewshed = new LocationViewshed(m_sceneView->currentViewpointCamera(), minDistance, maxDistance, this);
+
+    // Add the viewshed to the overlay
+    m_analysisOverlay->analyses()->append(m_viewshed);
+  }
+  else
+  {
+    m_viewshed->updateFromCamera(m_sceneView->currentViewpointCamera());
+  }
+}
+
+void ViewshedCamera::setInitialViewpoint()
+{
+  // create a camera and set the initial viewpoint
+  const double x = -4.49492;
+  const double y = 48.3808;
+  const double z = 48.2511;
+  Point pt(x, y, z, SpatialReference(4326));
+  const double heading = 344.488;
+  const double pitch = 74.1212;
+  const double roll = 0;
+  Camera camera(pt, heading, pitch, roll);
+  Viewpoint initViewpoint(pt, camera);
+  m_scene->setInitialViewpoint(initViewpoint);
 }
