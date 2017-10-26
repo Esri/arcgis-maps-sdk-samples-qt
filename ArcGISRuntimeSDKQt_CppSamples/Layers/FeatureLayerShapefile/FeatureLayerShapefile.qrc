@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/FeatureLayerShapefile">
+        <file alias="sample.json">FeatureLayerShapefile.json</file>        
+        <file>FeatureLayerShapefile.qml</file>
+        <file>FeatureLayerShapefile.h</file>
+        <file>FeatureLayerShapefile.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
