@@ -56,9 +56,9 @@ void FeatureLayerShapefile::componentComplete()
 
     // Create and add the shapefile to the map
     createAndAddShapefileLayer(dataPath + "Public_Art.shp");
-
 }
-void FeatureLayerShapefile::createAndAddShapefileLayer(QUrl file){
+void FeatureLayerShapefile::createAndAddShapefileLayer(QUrl const &file)
+{
 
     QString dataPath = file.toLocalFile();
 
@@ -66,9 +66,9 @@ void FeatureLayerShapefile::createAndAddShapefileLayer(QUrl file){
     ShapefileFeatureTable* featureTable = new ShapefileFeatureTable(dataPath, this);
 
     // Create the feature layer from the ShapefileFeatureTable
-    FeatureLayer* layer = new FeatureLayer(featureTable);
+    FeatureLayer* layer = new FeatureLayer(featureTable, this);
 
-    connect(layer,&FeatureLayer::doneLoading,this,[this, layer](Error loadError)
+    connect(layer, &FeatureLayer::doneLoading, this, [this, layer](Error loadError)
     {
         if (!loadError.isEmpty())
           return;
@@ -80,5 +80,4 @@ void FeatureLayerShapefile::createAndAddShapefileLayer(QUrl file){
     // Add the shapefile layer to the map
     m_map->operationalLayers()->clear();
     m_map->operationalLayers()->append(layer);
-
 }
