@@ -1,0 +1,8 @@
+{
+    "source" :  "FeatureLayerShapefile.qml",
+    "otherSourceFiles" :  [
+        "FeatureLayerShapefile.h",
+        "FeatureLayerShapefile.cpp"
+    ],
+    "name" : "Feature layer (shapefile)"
+}
