@@ -43,7 +43,7 @@ private:
     Esri::ArcGISRuntime::Map* m_map = nullptr;
     Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
-    void createAndAddShapefileLayer(QUrl const &file);
+    void createAndAddShapefileLayer(const QUrl& file);
 };
 
 #endif // FEATURELAYERSHAPEFILE_H
