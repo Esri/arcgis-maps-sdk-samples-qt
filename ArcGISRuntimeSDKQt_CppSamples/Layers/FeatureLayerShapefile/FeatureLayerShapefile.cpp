@@ -57,7 +57,7 @@ void FeatureLayerShapefile::componentComplete()
     // Create and add the shapefile to the map
     createAndAddShapefileLayer(dataPath + "Public_Art.shp");
 }
-void FeatureLayerShapefile::createAndAddShapefileLayer(QUrl const &file)
+void FeatureLayerShapefile::createAndAddShapefileLayer(const QUrl& file)
 {
 
     QString dataPath = file.toLocalFile();
