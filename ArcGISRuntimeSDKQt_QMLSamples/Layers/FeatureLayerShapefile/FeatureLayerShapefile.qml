@@ -15,7 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Controls 1.4
 import Esri.ArcGISRuntime 100.2
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -23,12 +25,30 @@ Rectangle {
     width: 800
     height: 600
 
+    property real scaleFactor: System.displayScaleFactor
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shp/"
+
     MapView {
         id: mapView
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            id: map
+            BasemapStreetsVector {}
+
+            FeatureLayer {
+
+                ShapefileFeatureTable {
+                    path: dataPath + "Public_Art.shp"
+                }
+
+                onLoadStatusChanged: {
+                    if (loadStatus !== Enums.LoadStatusLoaded)
+                        return;
+
+                    mapView.setViewpointCenterAndScale(fullExtent.center, 80000);
+                }
+            }
         }
     }
 }
