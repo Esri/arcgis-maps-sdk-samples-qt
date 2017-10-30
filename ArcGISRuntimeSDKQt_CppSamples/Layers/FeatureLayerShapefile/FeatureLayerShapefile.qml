@@ -27,7 +27,7 @@ FeatureLayerShapefileSample {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shapefile/"
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shp/"
 
     // add a mapView component
     MapView {
