@@ -1,0 +1,5 @@
+{
+    "source" :  "FeatureLayerShapefile.qml",
+    "otherSourceFiles" :  [],
+    "name" : "Feature layer (shapefile)"
+}
