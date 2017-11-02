@@ -35,6 +35,12 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        OrbitGeoElementCameraController {
+            id: followController
+            targetGeoElement: tank
+            cameraDistance: 100
+        }
+
         Scene {
             id: scene
             BasemapImagery {}
@@ -127,30 +133,31 @@ Rectangle {
         }
 
         onMouseClicked: {
-            timer.start();
             waypoint = sceneView.screenToBaseSurface(mouse.x, mouse.y);
+            timer.start();
         }
     }
 
     function animate() {
-        if (waypoint !== null) {
-            // get current location and distance from waypoint
-            var location = tank.geometry;
-            var distance = GeometryEngine.distanceGeodetic(location, waypoint, linearUnit, angularUnit, geodeticCurveType);
+        if (waypoint === null)
+            return;
 
-            // move toward waypoint based on speed and update orientation
-            location = GeometryEngine.moveGeodetic([location], 1.0, linearUnit, distance.azimuth1, angularUnit, geodeticCurveType);
-            tank.geometry = location[0];
+        // get current location and distance from waypoint
+        var location = tank.geometry;
+        var distance = GeometryEngine.distanceGeodetic(location, waypoint, linearUnit, angularUnit, geodeticCurveType);
 
-            // update the heading
-            var heading = tank.attributes.attributeValue(headingAttr);
-            tank.attributes.replaceAttribute(headingAttr, heading + ((distance.azimuth1 - heading) / 10));
+        // move toward waypoint based on speed and update orientation
+        location = GeometryEngine.moveGeodetic([location], 1.0, linearUnit, distance.azimuth1, angularUnit, geodeticCurveType);
+        tank.geometry = location[0];
 
-            // reached waypoint
-            if (distance.distance <= 5) {
-                waypoint = null;
-                timer.stop();
-            }
+        // update the heading
+        var heading = tank.attributes.attributeValue(headingAttr);
+        tank.attributes.replaceAttribute(headingAttr, heading + (distance.azimuth1 - heading) / 10);
+
+        // reached waypoint
+        if (distance.distance <= 5) {
+            waypoint = null;
+            timer.stop();
         }
     }
 

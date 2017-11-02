@@ -1,0 +1,8 @@
+{
+    "source" :  "ViewshedGeoElement.qml",
+    "otherSourceFiles" :  [
+        "ViewshedGeoElement.h",
+        "ViewshedGeoElement.cpp"
+    ],
+    "name" : "Viewshed (GeoElement)"
+}
