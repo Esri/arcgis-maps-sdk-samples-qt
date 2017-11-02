@@ -63,25 +63,6 @@ Rectangle {
             }
         }
 
-        // Declare an Analysis Overlay
-        AnalysisOverlay {
-            id: analysisOverlay
-
-            // Create the Location Viewshed
-            GeoElementViewshed {
-                id: geoelementViewshed
-                minDistance: 1.0
-                maxDistance: 250.0
-                horizontalAngle: 90.0
-                verticalAngle: 25.0
-                offsetX: 5
-                offsetY: 5
-                headingOffset: 0
-                pitchOffset: 0
-                geoElement: tank
-            }
-        }
-
         // Declare a GraphicsOverlay
         GraphicsOverlay {
 
@@ -118,6 +99,25 @@ Rectangle {
                 Component.onCompleted: {
                     tank.attributes.insertAttribute(headingAttr, 0.0)
                 }
+            }
+        }
+
+        // Declare an Analysis Overlay
+        AnalysisOverlay {
+            id: analysisOverlay
+
+            // Create the Location Viewshed
+            GeoElementViewshed {
+                id: geoelementViewshed
+                minDistance: 1.0
+                maxDistance: 250.0
+                horizontalAngle: 90.0
+                verticalAngle: 25.0
+                offsetX: 5
+                offsetY: 5
+                headingOffset: 0
+                pitchOffset: 0
+                geoElement: tank
             }
         }
 
