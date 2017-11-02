@@ -55,6 +55,7 @@ Rectangle {
                 if (loadStatus !== Enums.LoadStatusLoaded)
                     return;
 
+                // Set the Camera Controller
                 var controller = ArcGISRuntimeEnvironment.createObject("OrbitGeoElementCameraController", {
                                                                            targetGeoElement: tank, cameraDistance: 100
                                                                        });
@@ -85,7 +86,7 @@ Rectangle {
         GraphicsOverlay {
 
             SimpleRenderer {
-                // set up heading expression for tank
+                // set up heading expression for the tank
                 sceneProperties: RendererSceneProperties {
                     headingExpression: "[%1]".arg(headingAttr)
                 }
