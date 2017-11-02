@@ -4,5 +4,11 @@
         "ViewshedGeoElement.h",
         "ViewshedGeoElement.cpp"
     ],
-    "name" : "Viewshed (GeoElement)"
+    "name" : "Viewshed (GeoElement)",
+    "dataItems" : [
+        {
+            "itemId" : "681d6f7694644709a7c830ec57a2d72b",
+            "path" : "~/ArcGIS/Runtime/Data/3D/bradley_low_3ds/bradle.3ds"
+        }
+    ]
 }
