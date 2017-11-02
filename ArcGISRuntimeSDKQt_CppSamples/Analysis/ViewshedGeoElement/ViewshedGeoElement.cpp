@@ -70,11 +70,6 @@ void ViewshedGeoElement::componentComplete()
   ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
   scene->operationalLayers()->append(sceneLayer);
 
-  // Set an initial viewpoint
-  Point initialPoint(-4.506390, 48.385624, 0, SpatialReference::wgs84());
-  Camera camera(initialPoint, 200, 0, 45, 0);
-  scene->setInitialViewpoint(Viewpoint(initialPoint, 62.01, camera));
-
   // Add an AnalysisOverlay
   m_analysisOverlay = new AnalysisOverlay(this);
   m_sceneView->analysisOverlays()->append(m_analysisOverlay);
@@ -91,7 +86,7 @@ void ViewshedGeoElement::componentComplete()
   const double minDistance = 1.0;
   const double maxDistance = 250.0;
   const double headingOffset = 0.0;
-  const double pitchOffset = 90.0;
+  const double pitchOffset = 0.0;
   m_viewshed = new GeoElementViewshed(m_tank, horizontalAngle,
                                       verticalAngle, minDistance,
                                       maxDistance, headingOffset,
@@ -139,10 +134,10 @@ void ViewshedGeoElement::createGraphicsOverlay()
 void ViewshedGeoElement::createGraphic()
 {
   // Create the Graphic Point
-  const double x = -4.506390;
-  const double y = 48.385624;
+  const double x = -4.506643192123373;
+  const double y = 48.38570385245972;
   const double z = 0;
-  Point tankPoint(x, y, z, SpatialReference(4326));
+  const Point tankPoint(x, y, z, SpatialReference(4326));
   const QString dataPath = QQmlProperty::read(this, "dataPath").toString();
   const float scale = 10;
 

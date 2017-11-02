@@ -35,12 +35,6 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
-        OrbitGeoElementCameraController {
-            id: followController
-            targetGeoElement: tank
-            cameraDistance: 100
-        }
-
         Scene {
             id: scene
             BasemapImagery {}
@@ -57,20 +51,14 @@ Rectangle {
                 url: "http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"
             }
 
+            onLoadStatusChanged: {
+                if (loadStatus !== Enums.LoadStatusLoaded)
+                    return;
 
-            // Set an initial viewpoint
-            ViewpointCenter {
-                center: tank.geometry
-                targetScale: 62.01
-
-                Camera {
-                    id: camera
-                    location: tank.geometry
-                    distance: 200
-                    heading: 0
-                    pitch: 45
-                    roll: 0
-                }
+                var controller = ArcGISRuntimeEnvironment.createObject("OrbitGeoElementCameraController", {
+                                                                           targetGeoElement: tank, cameraDistance: 100
+                                                                       });
+                sceneView.cameraController = controller;
             }
         }
 
@@ -88,7 +76,7 @@ Rectangle {
                 offsetX: 5
                 offsetY: 5
                 headingOffset: 0
-                pitchOffset: 90
+                pitchOffset: 0
                 geoElement: tank
             }
         }
@@ -112,8 +100,8 @@ Rectangle {
                 id: tank
 
                 Point {
-                    x: -4.506390
-                    y: 48.385624
+                    x: -4.506643192123373
+                    y: 48.38570385245972
                     z: 0
                     spatialReference: SpatialReference.createWgs84()
                 }
