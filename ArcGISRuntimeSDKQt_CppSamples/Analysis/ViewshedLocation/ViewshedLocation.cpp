@@ -125,7 +125,7 @@ void ViewshedLocation::createViewshed(double x, double y)
   m_locationViewshed = new LocationViewshed(pt, m_heading, m_pitch,
                                             m_horizontalAngle, m_veriticalAngle,
                                             m_minDistance, m_maxDistance,
-                                            SurfacePlacement::Absolute, this);
+                                            SurfacePlacement::Relative, this);
   m_locationViewshed->setVisible(m_viewshedVisible);
   LocationViewshed::setFrustumOutlineColor(QColor("transparent"));
 

@@ -76,12 +76,12 @@ Rectangle {
                 property bool frustumVisible: false
 
                 minDistance: 50
-                maxDistance: 1000;
+                maxDistance: 1000
                 horizontalAngle: 45
                 verticalAngle: 90
                 heading: 180
                 pitch: 90
-                surfacePlacement: Enums.SurfacePlacementAbsolute
+                surfacePlacement: Enums.SurfacePlacementRelative
                 visible: true
 
                 onFrustumVisibleChanged: {
