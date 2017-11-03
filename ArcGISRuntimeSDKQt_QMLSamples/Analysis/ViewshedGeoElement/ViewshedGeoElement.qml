@@ -82,8 +82,8 @@ Rectangle {
                 id: tank
 
                 Point {
-                    x: -4.506643192123373
-                    y: 48.38570385245972
+                    x: -4.508708007847015
+                    y: 48.38823243446344
                     z: 0
                     spatialReference: SpatialReference.createWgs84()
                 }
@@ -109,9 +109,9 @@ Rectangle {
             // Create the Location Viewshed
             GeoElementViewshed {
                 id: geoelementViewshed
-                horizontalAngle: 90
-                verticalAngle: 25
-                minDistance: 1.0
+                horizontalAngle: 90.0
+                verticalAngle: 25.0
+                minDistance: 5.0
                 maxDistance: 250.0
                 headingOffset: 0
                 pitchOffset: 0
@@ -122,6 +122,7 @@ Rectangle {
         }
 
         onMouseClicked: {
+            console.log(JSON.stringify(mouse.mapPoint.json))
             waypoint = sceneView.screenToBaseSurface(mouse.x, mouse.y);
             timer.start();
         }

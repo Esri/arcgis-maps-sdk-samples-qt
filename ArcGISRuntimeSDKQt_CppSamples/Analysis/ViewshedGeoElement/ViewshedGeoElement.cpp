@@ -83,7 +83,7 @@ void ViewshedGeoElement::componentComplete()
   // Create the GeoElementViewshed
   const double horizontalAngle = 90.0;
   const double verticalAngle = 25.0;
-  const double minDistance = 1.0;
+  const double minDistance = 5.0;
   const double maxDistance = 250.0;
   const double headingOffset = 0.0;
   const double pitchOffset = 0.0;
@@ -136,8 +136,8 @@ void ViewshedGeoElement::createGraphicsOverlay()
 void ViewshedGeoElement::createGraphic()
 {
   // Create the Graphic Point
-  const double x = -4.506643192123373;
-  const double y = 48.38570385245972;
+  const double x = -4.508708007847015;
+  const double y = 48.38823243446344;
   const double z = 0;
   const Point tankPoint(x, y, z, SpatialReference(4326));
   const QString dataPath = QQmlProperty::read(this, "dataPath").toString();
