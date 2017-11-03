@@ -19,7 +19,7 @@ import QtQuick.Controls 1.4
 //! [Import the namespace that has QML type that was registered in Cpp]
 import Esri.Samples 1.0
 //! [Import the namespace that has QML type that was registered in Cpp]
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISExtras 1.2
 
 FeatureLayerDefinitionExpressionSample {
     id: definitionExpressionSample
