@@ -21,7 +21,7 @@ import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISExtras 1.2
 
 SearchDictionarySymbolStyleSample {
     id: searchDictionarySymbolStyleSample

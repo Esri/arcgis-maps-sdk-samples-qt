@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.XmlListModel 2.0
 import Esri.ArcGISRuntime 100.2
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISExtras 1.2
 
 Rectangle {
     width: 800
