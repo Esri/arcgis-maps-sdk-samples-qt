@@ -105,7 +105,7 @@ void ViewshedGeoElement::componentComplete()
   // Create a Timer
   m_timer = new QTimer(this);
   m_timer->setInterval(100);
-  connect(m_timer, SIGNAL(timeout()), this, SLOT(animate()));
+  connect(m_timer, &QTimer::timeout, this, &ViewshedGeoElement::animate);
 
   // connect to the mouse clicked signal
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& event)
