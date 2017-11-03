@@ -91,6 +91,8 @@ void ViewshedGeoElement::componentComplete()
                                       verticalAngle, minDistance,
                                       maxDistance, headingOffset,
                                       pitchOffset, this);
+  m_viewshed->setOffsetY(0.5);
+  m_viewshed->setOffsetZ(0.5);
   m_analysisOverlay->analyses()->append(m_viewshed);
 
   // Add the Scene to the SceneView
