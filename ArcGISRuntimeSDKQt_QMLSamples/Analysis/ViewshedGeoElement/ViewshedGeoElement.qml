@@ -109,12 +109,14 @@ Rectangle {
             // Create the Location Viewshed
             GeoElementViewshed {
                 id: geoelementViewshed
-                minDistance: 1.0
-                maxDistance: 250.0
                 horizontalAngle: 90
                 verticalAngle: 25
+                minDistance: 1.0
+                maxDistance: 250.0
                 headingOffset: 0
                 pitchOffset: 0
+                offsetY: 0.5
+                offsetZ: 0.5
                 geoElement: tank
             }
         }
