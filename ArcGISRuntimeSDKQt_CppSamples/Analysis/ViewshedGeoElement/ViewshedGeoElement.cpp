@@ -148,7 +148,7 @@ void ViewshedGeoElement::createGraphic()
 
   // Create the Graphic
   QVariantMap attr;
-  attr[m_headingAttr] = 0.0;
+  attr[m_headingAttr] = 150.0;
   m_tank = new Graphic(tankPoint, attr, sceneSymbol, this);
   m_graphicsOverlay->graphics()->append(m_tank);
 }
