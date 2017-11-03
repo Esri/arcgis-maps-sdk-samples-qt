@@ -68,7 +68,7 @@ Rectangle {
 
             SimpleRenderer {
                 // set up heading expression for the tank
-                sceneProperties: RendererSceneProperties {
+                RendererSceneProperties {
                     headingExpression: "[%1]".arg(headingAttr)
                 }
             }
