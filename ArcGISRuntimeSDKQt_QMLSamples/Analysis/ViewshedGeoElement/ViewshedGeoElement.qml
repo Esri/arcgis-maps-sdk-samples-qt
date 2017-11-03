@@ -97,7 +97,7 @@ Rectangle {
                 }
 
                 Component.onCompleted: {
-                    tank.attributes.insertAttribute(headingAttr, 0.0)
+                    tank.attributes.insertAttribute(headingAttr, 150.0)
                 }
             }
         }
@@ -111,10 +111,8 @@ Rectangle {
                 id: geoelementViewshed
                 minDistance: 1.0
                 maxDistance: 250.0
-                horizontalAngle: 90.0
-                verticalAngle: 25.0
-                offsetX: 5
-                offsetY: 5
+                horizontalAngle: 90
+                verticalAngle: 25
                 headingOffset: 0
                 pitchOffset: 0
                 geoElement: tank
