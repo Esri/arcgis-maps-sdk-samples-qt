@@ -33,7 +33,7 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapTopographic {}
+            BasemapImagery {}
 
             // Set the Scene's Surface
             Surface {
