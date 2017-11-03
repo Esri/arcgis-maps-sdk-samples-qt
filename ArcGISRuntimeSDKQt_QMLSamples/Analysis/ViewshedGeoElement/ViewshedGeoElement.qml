@@ -122,7 +122,6 @@ Rectangle {
         }
 
         onMouseClicked: {
-            console.log(JSON.stringify(mouse.mapPoint.json))
             waypoint = sceneView.screenToBaseSurface(mouse.x, mouse.y);
             timer.start();
         }
