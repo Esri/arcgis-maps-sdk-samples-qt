@@ -130,8 +130,10 @@ Rectangle {
 
                         // show the attribute view
                         attributeView.height = 200 * scaleFactor
-                        mapView.setViewpointGeometryAndPadding(arcGISFeature.geometry, 100)
                     });
+
+                    // zoom to the feature
+                    mapView.setViewpointGeometryAndPadding(arcGISFeature.geometry, 100)
 
                     // query related features
                     selectedTable.queryRelatedFeatures(arcGISFeature);
