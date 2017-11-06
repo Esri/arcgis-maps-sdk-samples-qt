@@ -72,24 +72,13 @@ Rectangle {
 
             LocationViewshed {
                 id: locationViewshed
-
-                property bool frustumVisible: false
-
                 minDistance: 50
                 maxDistance: 1000
                 horizontalAngle: 45
                 verticalAngle: 90
                 heading: 180
                 pitch: 90
-                surfacePlacement: Enums.SurfacePlacementRelative
                 visible: true
-
-                onFrustumVisibleChanged: {
-                    if (frustumVisible)
-                        locationViewshed.frustumOutlineColor = "transparent";
-                    else
-                        locationViewshed.frustumOutlineColor = "yellow";
-                }
             }
         }
 
@@ -225,7 +214,7 @@ Rectangle {
                                 margins: 10 * scaleFactor
                                 verticalCenter: parent.verticalCenter
                             }
-                            checked: false
+                            checked: locationViewshed.frustumVisible
                             onCheckedChanged: locationViewshed.frustumVisible = checked;
                         }
                     }
@@ -291,6 +280,7 @@ Rectangle {
                         }
 
                         Rectangle {
+                            id: visibleColorRect
                             anchors {
                                 margins: 10 * scaleFactor
                                 verticalCenter: parent.verticalCenter
@@ -301,7 +291,7 @@ Rectangle {
                                 color: "black"
                                 width: 1 * scaleFactor
                             }
-                            color: locationViewshed.visibleColor
+                            color: Viewshed.visibleColor()
                             radius: 4 * scaleFactor
 
                             MouseArea {
@@ -326,6 +316,7 @@ Rectangle {
                         }
 
                         Rectangle {
+                            id: obstructedColorRect
                             anchors {
                                 margins: 10 * scaleFactor
                                 verticalCenter: parent.verticalCenter
@@ -336,7 +327,7 @@ Rectangle {
                                 color: "black"
                                 width: 1 * scaleFactor
                             }
-                            color: locationViewshed.obstructedColor
+                            color: Viewshed.obstructedColor()
                             radius: 4 * scaleFactor
 
                             MouseArea {
@@ -356,7 +347,8 @@ Rectangle {
         id: visibleColorDialog
         onAccepted: {
             close();
-            locationViewshed.visibleColor = color;
+            visibleColorRect.color = color;
+            Viewshed.setVisibleColor(color);
         }
     }
 
@@ -364,7 +356,8 @@ Rectangle {
         id: obstructedColorDialog
         onAccepted: {
             close();
-            locationViewshed.obstructedColor = color;
+            obstructedColorRect.color = color;
+            Viewshed.setObstructedColor(color);
         }
     }
 }

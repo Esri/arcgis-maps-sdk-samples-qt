@@ -124,10 +124,8 @@ void ViewshedLocation::createViewshed(double x, double y)
   // Create the Location Viewshed
   m_locationViewshed = new LocationViewshed(pt, m_heading, m_pitch,
                                             m_horizontalAngle, m_veriticalAngle,
-                                            m_minDistance, m_maxDistance,
-                                            SurfacePlacement::Relative, this);
+                                            m_minDistance, m_maxDistance, this);
   m_locationViewshed->setVisible(m_viewshedVisible);
-  LocationViewshed::setFrustumOutlineColor(QColor("transparent"));
 
   // Add the Viewshed to the Analysis Overlay
   m_analysisOverlay->analyses()->append(m_locationViewshed);
@@ -164,18 +162,27 @@ void ViewshedLocation::setViewshedVisible(bool viewshedVisible)
 
 bool ViewshedLocation::isFrustumVisible() const
 {
-  if (LocationViewshed::frustumOutlineColor() == QColor("transparent"))
-    return false;
-  else
-    return true;
+  return m_locationViewshed ? m_locationViewshed->isFrustumVisible() : m_frustumVisible;
 }
 
 void ViewshedLocation::setFrustumVisible(bool frustumVisible)
 {
-  if (frustumVisible)
-    LocationViewshed::setFrustumOutlineColor(QColor("yellow"));
+  if (m_locationViewshed)
+  {
+    if (m_locationViewshed->isFrustumVisible() == frustumVisible)
+      return;
+
+    m_frustumVisible = frustumVisible;
+    m_locationViewshed->setFrustumVisible(frustumVisible);
+  }
   else
-    LocationViewshed::setFrustumOutlineColor(QColor("transparent"));
+  {
+    if (m_frustumVisible == frustumVisible)
+      return;
+
+    m_frustumVisible = frustumVisible;
+  }
+
   emit frustumVisibleChanged();
 }
 
