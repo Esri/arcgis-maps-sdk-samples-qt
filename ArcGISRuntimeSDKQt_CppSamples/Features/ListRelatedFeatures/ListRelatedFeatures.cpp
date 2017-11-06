@@ -121,8 +121,10 @@ void ListRelatedFeatures::connectSignals()
               }
 
               emit showAttributeTable();
-              m_mapView->setViewpointGeometry(arcGISFeature->geometry(), 100);
             });
+
+            // zoom to the selected feature
+            m_mapView->setViewpointGeometry(arcGISFeature->geometry().extent(), 100);
 
             // query related features
             selectedTable->queryRelatedFeatures(arcGISFeature);
