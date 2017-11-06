@@ -80,6 +80,9 @@ void ViewshedCamera::calculateViewshed()
     const double maxDistance = 1000;
     m_viewshed = new LocationViewshed(m_sceneView->currentViewpointCamera(), minDistance, maxDistance, this);
 
+    // display the frustum
+    m_viewshed->setFrustumVisible(true);
+
     // Add the viewshed to the overlay
     m_analysisOverlay->analyses()->append(m_viewshed);
   }
