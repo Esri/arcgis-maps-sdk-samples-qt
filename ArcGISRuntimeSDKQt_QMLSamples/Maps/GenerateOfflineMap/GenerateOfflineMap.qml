@@ -15,6 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Dialogs 1.2
 import Esri.ArcGISRuntime 100.2
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.2
@@ -140,6 +141,21 @@ Rectangle {
                 generateWindow.statusText = "In progress";
                 break;
             case Enums.JobStatusSucceeded:
+                // show any layer errors
+                if (generateJob.result.hasErrors) {
+                    console.log("has errors")
+                    var layerErrors = generateJob.result.layerErrors;
+                    var errorText = "";
+                    for (var i = 0; i < layerErrors.length; i++) {
+                        var errorPair = layerErrors[i];
+                        errorText += errorPair.layer.name + ": " + errorPair.error.message;
+                    }
+                    console.log(errorText);
+                    msgDialog.detailedText = errorText;
+                    msgDialog.open();
+                }
+
+                // show the map
                 generateWindow.statusText = "Loading Map...";
                 generateWindow.hideWindow(1500);
                 displayOfflineMap(generateJob.result);
@@ -172,6 +188,12 @@ Rectangle {
     GenerateWindow {
         id: generateWindow
         anchors.fill: parent
+    }
+
+    MessageDialog {
+        id: msgDialog
+        title: "Layer Errors"
+        text: "Some layers could not be taken offline."
     }
 
     /* Uncomment this section when running as standalone application
