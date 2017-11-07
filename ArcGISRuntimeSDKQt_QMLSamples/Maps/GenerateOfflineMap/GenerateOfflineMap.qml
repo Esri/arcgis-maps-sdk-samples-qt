@@ -147,7 +147,7 @@ Rectangle {
                     var errorText = "";
                     for (var i = 0; i < layerErrors.length; i++) {
                         var errorPair = layerErrors[i];
-                        errorText += errorPair.layer.name + ": " + errorPair.error.message;
+                        errorText += errorPair.layer.name + ": " + errorPair.error.message + "\n";
                     }
                     msgDialog.detailedText = errorText;
                     msgDialog.open();
