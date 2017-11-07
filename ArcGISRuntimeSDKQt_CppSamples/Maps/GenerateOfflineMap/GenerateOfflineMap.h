@@ -53,6 +53,7 @@ signals:
   void hideWindow(int time, bool success);
   void updateStatus(const QString& status);
   void updateProgress(int progress);
+  void showLayerErrors(const QString& error);
 
 private:
   static const QString webMapId() { return s_webMapId; }
