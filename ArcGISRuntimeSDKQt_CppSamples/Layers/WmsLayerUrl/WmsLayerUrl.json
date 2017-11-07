@@ -1,0 +1,8 @@
+{
+    "source" :  "WmsLayerUrl.qml",
+    "otherSourceFiles" :  [
+        "WmsLayerUrl.h",
+        "WmsLayerUrl.cpp"
+    ],
+    "name" : "WMS layer (URL)"
+}
