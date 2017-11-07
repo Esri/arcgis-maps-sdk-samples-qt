@@ -48,8 +48,8 @@ void WmsLayerUrl::componentComplete()
   m_map = new Map(Basemap::imagery(this), this);
 
   // Add a WMS Layer by specifying the URL and layer name
-  QUrl wmsServiceUrl("https://certmapper.cr.usgs.gov/arcgis/services/geology/africa/MapServer/WMSServer?request=GetCapabilities&service=WMS");
-  QStringList layerNames{"0"};
+  const QUrl wmsServiceUrl("https://certmapper.cr.usgs.gov/arcgis/services/geology/africa/MapServer/WMSServer?request=GetCapabilities&service=WMS");
+  const QStringList layerNames{"0"};
   WmsLayer* wmsLayer = new WmsLayer(wmsServiceUrl, layerNames, this);
   m_map->operationalLayers()->append(wmsLayer);
 
