@@ -53,7 +53,7 @@ void GenerateOfflineMap::componentComplete()
   // Create a Portal Item for use by the Map and OfflineMapTask
   bool loginRequired = true;
   Portal* portal = new Portal(loginRequired, this);
-  m_portalItem = new PortalItem(portal, webMapId(), this);;
+  m_portalItem = new PortalItem(portal, webMapId(), this);
 
   // Create a map from the Portal Item
   m_map = new Map(m_portalItem, this);
@@ -121,7 +121,20 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
           emit updateStatus("In progress");
           break;
         case JobStatus::Succeeded:
-          emit updateStatus("Loading Map...");
+          // show any layer errors
+          if (generateJob->result()->hasErrors())
+          {
+            QString layerErrors = "";
+            for (Layer* layer : generateJob->result()->layerErrors().keys())
+            {
+              Error error = generateJob->result()->layerErrors().value(layer);
+              layerErrors += layer->name() + ": " + error.message() + "\n";
+            }
+            emit showLayerErrors(layerErrors);
+          }
+
+          // show the map
+          emit updateStatus("Complete");
           emit hideWindow(1500, true);
           m_mapView->setMap(generateJob->result()->offlineMap(this));
           break;
