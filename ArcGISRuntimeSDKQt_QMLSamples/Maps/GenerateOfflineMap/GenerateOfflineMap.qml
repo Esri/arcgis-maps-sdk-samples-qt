@@ -143,20 +143,18 @@ Rectangle {
             case Enums.JobStatusSucceeded:
                 // show any layer errors
                 if (generateJob.result.hasErrors) {
-                    console.log("has errors")
                     var layerErrors = generateJob.result.layerErrors;
                     var errorText = "";
                     for (var i = 0; i < layerErrors.length; i++) {
                         var errorPair = layerErrors[i];
                         errorText += errorPair.layer.name + ": " + errorPair.error.message;
                     }
-                    console.log(errorText);
                     msgDialog.detailedText = errorText;
                     msgDialog.open();
                 }
 
                 // show the map
-                generateWindow.statusText = "Loading Map...";
+                generateWindow.statusText = "Complete";
                 generateWindow.hideWindow(1500);
                 displayOfflineMap(generateJob.result);
                 break;
