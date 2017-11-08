@@ -75,7 +75,7 @@ Rectangle {
                 id: locationViewshed
                 minDistance: 1
                 maxDistance: 1000
-                frustumVisible: true
+                frustumOutlineVisible: true
             }
         }
     }

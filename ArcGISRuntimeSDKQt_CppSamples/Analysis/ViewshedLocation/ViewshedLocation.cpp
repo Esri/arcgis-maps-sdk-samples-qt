@@ -160,20 +160,20 @@ void ViewshedLocation::setViewshedVisible(bool viewshedVisible)
   emit viewshedVisibleChanged();
 }
 
-bool ViewshedLocation::isFrustumVisible() const
+bool ViewshedLocation::isFrustumOutlineVisible() const
 {
-  return m_locationViewshed ? m_locationViewshed->isFrustumVisible() : m_frustumVisible;
+  return m_locationViewshed ? m_locationViewshed->isFrustumOutlineVisible() : m_frustumVisible;
 }
 
-void ViewshedLocation::setFrustumVisible(bool frustumVisible)
+void ViewshedLocation::setFrustumOutlineVisible(bool frustumVisible)
 {
   if (m_locationViewshed)
   {
-    if (m_locationViewshed->isFrustumVisible() == frustumVisible)
+    if (m_locationViewshed->isFrustumOutlineVisible() == frustumVisible)
       return;
 
     m_frustumVisible = frustumVisible;
-    m_locationViewshed->setFrustumVisible(frustumVisible);
+    m_locationViewshed->setFrustumOutlineVisible(frustumVisible);
   }
   else
   {
