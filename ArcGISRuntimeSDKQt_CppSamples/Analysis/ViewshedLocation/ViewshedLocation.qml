@@ -149,7 +149,7 @@ ViewshedLocationSample {
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
-                            text: qsTr("Frustum Visible")
+                            text: qsTr("Frustum Outline Visible")
                             font.pixelSize: 14 * scaleFactor
                         }
 

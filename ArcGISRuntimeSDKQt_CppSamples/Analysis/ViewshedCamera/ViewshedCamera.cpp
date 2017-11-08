@@ -81,7 +81,7 @@ void ViewshedCamera::calculateViewshed()
     m_viewshed = new LocationViewshed(m_sceneView->currentViewpointCamera(), minDistance, maxDistance, this);
 
     // display the frustum
-    m_viewshed->setFrustumVisible(true);
+    m_viewshed->setFrustumOutlineVisible(true);
 
     // Add the viewshed to the overlay
     m_analysisOverlay->analyses()->append(m_viewshed);

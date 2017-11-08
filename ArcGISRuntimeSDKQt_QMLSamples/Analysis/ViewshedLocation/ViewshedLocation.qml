@@ -204,7 +204,7 @@ Rectangle {
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
-                            text: qsTr("Frustum Visible")
+                            text: qsTr("Frustum Outline Visible")
                             font.pixelSize: 14 * scaleFactor
                         }
 
@@ -214,8 +214,8 @@ Rectangle {
                                 margins: 10 * scaleFactor
                                 verticalCenter: parent.verticalCenter
                             }
-                            checked: locationViewshed.frustumVisible
-                            onCheckedChanged: locationViewshed.frustumVisible = checked;
+                            checked: locationViewshed.frustumOutlineVisible
+                            onCheckedChanged: locationViewshed.frustumOutlineVisible = checked;
                         }
                     }
 
