@@ -5,7 +5,7 @@ This sample demonstrates how to calculate a Viewshed from a GeoElement.
 ![](screenshot.png)
 
 ## How it works
-A Viewshed analysis is a type of visual analysis you can perform on a scene. The viewshed aims to answer the question 'What can I see from a given location?'. The output is an overlay with two different colors - one representing the visible areas an the other representing the obstructed areas.
+A Viewshed analysis is a type of visual analysis you can perform on a scene. The viewshed aims to answer the question 'What can I see from a given location?'. The output is an overlay with two different colors - one representing the visible areas and the other representing the obstructed areas.
 
 This is achieved by first creating a Graphic from a 3D model symbol. Next, a GeoElementViewshed is created by assigning values for the GeoElement, heading, pitch, and various other properties. Once the viewshed is created, it is added to an AnalysisOverlay, which is then added to the SceneView. Whenever the GeoElement's geometry is updated, the viewshed is recalculated and displayed in the overlay.
 
