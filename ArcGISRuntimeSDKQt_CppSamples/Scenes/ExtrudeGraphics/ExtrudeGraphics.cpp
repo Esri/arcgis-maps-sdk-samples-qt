@@ -68,7 +68,13 @@ void ExtrudeGraphics::componentComplete()
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
   // create a camera
-  Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
+  const double latitude = 28.4;
+  const double longitude = 83.9;
+  const double altitude = 10010.0;
+  const double heading = 10.0;
+  const double pitch = 80.0;
+  const double roll = 0.0;
+  Camera camera(latitude, longitude, altitude, heading, pitch, roll);
   // set the viewpoint
   m_sceneView->setViewpointCameraAndWait(camera);
 
