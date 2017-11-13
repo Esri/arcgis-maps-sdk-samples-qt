@@ -22,6 +22,9 @@
 #include "LoadSettings.h"
 #include "ServiceFeatureTable.h"
 #include "FeatureLayer.h"
+#include "Point.h"
+#include "SpatialReference.h"
+#include "Camera.h"
 
 #include <QString>
 #include <QStringList>
@@ -71,7 +74,6 @@ void FeatureLayerRenderingModeScene::componentComplete()
       m_isZoomedOut = true;
     else
       m_isZoomedOut = false;
-    //qDebug() << m_isZoomedOut << round(m_topSceneView->currentViewpointCamera().pitch());
   });
 
   // Create Zoom Out Camera Viewpoint
