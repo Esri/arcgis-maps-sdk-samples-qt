@@ -184,7 +184,7 @@ ViewshedLocationSample {
                         titleText: qsTr("Vertical Angle")
                         parameterValue: viewshedSample.verticalAngle
                         minValue: 1
-                        maxValue: 179
+                        maxValue: 120
                         onParameterValueChanged: viewshedSample.verticalAngle = parameterValue;
                     }
 
@@ -192,7 +192,7 @@ ViewshedLocationSample {
                         titleText: qsTr("Horizontal Angle")
                         parameterValue: viewshedSample.horizontalAngle
                         minValue: 1
-                        maxValue: 179
+                        maxValue: 120
                         onParameterValueChanged: viewshedSample.horizontalAngle = parameterValue;
                     }
 
