@@ -29,7 +29,6 @@
 #include <QString>
 #include <QStringList>
 #include <QTimer>
-#include <cmath>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -66,15 +65,6 @@ void FeatureLayerRenderingModeScene::componentComplete()
   bottomScene->loadSettings()->setPreferredPolylineFeatureRenderingMode(FeatureRenderingMode::Dynamic);
   addFeatureLayers(bottomScene);
   m_bottomSceneView->setArcGISScene(bottomScene);
-
-  // Connect to SceneView::viewpointChanged to know if zoomed out or in
-  connect(m_topSceneView, &SceneQuickView::viewpointChanged, this, [this]()
-  {
-    if (round(m_topSceneView->currentViewpointCamera().pitch()) == 0)
-      m_isZoomedOut = true;
-    else
-      m_isZoomedOut = false;
-  });
 
   // Create Zoom Out Camera Viewpoint
   const Point outPoint(-118.37, 34.46, SpatialReference::wgs84());
@@ -125,6 +115,7 @@ void FeatureLayerRenderingModeScene::animate()
 
   m_bottomSceneView->setViewpointCamera(camera, 5.0f);
   m_topSceneView->setViewpointCamera(camera, 5.0f);
+  m_isZoomedOut = !m_isZoomedOut;
 }
 
 void FeatureLayerRenderingModeScene::startAnimation()
