@@ -57,7 +57,7 @@ private:
   Esri::ArcGISRuntime::Camera m_zoomInCamera;
   QTimer* m_timer = nullptr;
   const QString m_featureServiceUrl = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer";
-  bool m_isZoomedOut;
+  bool m_isZoomedOut = true;
 };
 
 #endif // FEATURELAYERRENDERINGMODESCENE_H
