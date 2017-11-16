@@ -71,14 +71,6 @@ Rectangle {
             }
         }
 
-        onCurrentViewpointCameraChanged: {
-            if (Math.round(currentViewpointCamera.pitch) === 0)
-                zoomedOut = true;
-            else
-                zoomedOut = false
-        }
-
-
         Rectangle {
             anchors {
                 horizontalCenter: parent.horizontalCenter
@@ -221,6 +213,7 @@ Rectangle {
                 camera = zoomOutCamera;
             topSceneView.setViewpointCameraAndSeconds(camera, 5);
             bottomSceneView.setViewpointCameraAndSeconds(camera, 5);
+            zoomedOut = !zoomedOut;
         }
     }
 }
