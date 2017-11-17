@@ -46,15 +46,13 @@ public:
 signals:
   void graphicsLoaded();
 
-public slots:
-  void zoomToGraphics();
-
 private:
   static const QString FIELD_CONTROL_POINTS;
   static const QString FIELD_WKID;
 
   void parseXmlFile();
   void createGraphic(QVariantMap rawAttributes);
+  void zoomToGraphics();
 
   QString m_dataPath;
   QXmlStreamReader m_xmlParser;

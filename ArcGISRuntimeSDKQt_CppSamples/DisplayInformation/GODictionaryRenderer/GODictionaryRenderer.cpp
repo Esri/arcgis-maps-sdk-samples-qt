@@ -72,6 +72,7 @@ void GODictionaryRenderer::componentComplete()
 
   parseXmlFile();
   emit graphicsLoaded();
+  zoomToGraphics();
 }
 
 void GODictionaryRenderer::parseXmlFile()

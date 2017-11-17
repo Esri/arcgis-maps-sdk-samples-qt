@@ -28,7 +28,6 @@ GODictionaryRendererSample {
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     onGraphicsLoaded: {
-        zoomToGraphics();
         progressBar_loading.visible = false;
     }
 
