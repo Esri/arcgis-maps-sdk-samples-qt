@@ -117,7 +117,6 @@ Rectangle {
 
         QueryParameters {
             id: params
-            maxFeatures: 1
         }
 
         onMouseClicked: {
@@ -129,7 +128,7 @@ Rectangle {
                 featureLayer.selectedFeatures();
             } else {
                 // call identify on the mapview
-                mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10, false);
+                mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 10, false, 1);
             }
         }
 
