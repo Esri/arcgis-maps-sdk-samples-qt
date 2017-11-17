@@ -179,6 +179,7 @@ Rectangle {
                 }
             }
 
+            highlightMoveDuration: 1
             highlightFollowsCurrentItem: true
             highlight: Rectangle {
                 color: "#d6d6d6"
