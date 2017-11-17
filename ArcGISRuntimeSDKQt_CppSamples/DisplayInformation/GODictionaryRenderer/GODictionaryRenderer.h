@@ -36,6 +36,8 @@ class GODictionaryRenderer : public QQuickItem
 {
   Q_OBJECT
 
+  Q_PROPERTY(bool graphicsLoaded READ graphicsLoaded NOTIFY graphicsLoadedChanged)
+
 public:
   explicit GODictionaryRenderer(QQuickItem* parent = nullptr);
   ~GODictionaryRenderer();
@@ -44,22 +46,23 @@ public:
   static void init();
 
 signals:
-  void graphicsLoaded();
+  void graphicsLoadedChanged();
 
 private:
   static const QString FIELD_CONTROL_POINTS;
   static const QString FIELD_WKID;
 
+  bool graphicsLoaded() const;
   void parseXmlFile();
   void createGraphic(QVariantMap rawAttributes);
   void zoomToGraphics();
 
+  bool m_graphicsLoaded = false;
   QString m_dataPath;
   QXmlStreamReader m_xmlParser;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-  Esri::ArcGISRuntime::Envelope m_bbox;
 };
 
 #endif // GraphicsOverlayDictionaryRenderer_H
