@@ -75,12 +75,12 @@ void GODictionaryRenderer::componentComplete()
   parseXmlFile();
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-  m_mapView->setMap(m_map);
-
   connect(m_map, &Map::doneLoading, this, [this]()
   {
     zoomToGraphics();
   });
+  
+  m_mapView->setMap(m_map);
 }
 
 void GODictionaryRenderer::parseXmlFile()
