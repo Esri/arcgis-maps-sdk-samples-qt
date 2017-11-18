@@ -93,7 +93,6 @@ Rectangle {
 
         QueryParameters {
             id: params
-            maxFeatures: 1
         }
 
         // hide the callout after navigation
@@ -112,7 +111,7 @@ Rectangle {
             mousePointY = mouse.y - callout.height;
 
             // call identify on the mapview
-            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, 10, false);
+            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 10, false, 1);
         }
 
         onIdentifyLayerStatusChanged: {

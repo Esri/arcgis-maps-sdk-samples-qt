@@ -111,7 +111,6 @@ Rectangle {
 
         QueryParameters {
             id: params
-            maxFeatures: 1
         }
 
         // hide the callout after navigation
@@ -130,7 +129,7 @@ Rectangle {
             // call identify on the feature layer
             var tolerance = 10;
             var returnPopupsOnly = false;
-            mapView.identifyLayer(featureLayer, mouse.x, mouse.y, tolerance, returnPopupsOnly);
+            mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, tolerance, returnPopupsOnly, 1);
             //! [DeleteFeaturesFeatureService identify feature]
         }
 

@@ -103,7 +103,6 @@ Rectangle {
 
         QueryParameters {
             id: params
-            maxFeatures: 1
         }
 
         // hide the callout after navigation
