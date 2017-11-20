@@ -75,11 +75,13 @@ void GODictionaryRenderer::componentComplete()
   parseXmlFile();
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-  connect(m_map, &Map::doneLoading, this, [this]()
+  // The GraphicsOverlay will not have a valid extent until it is part of
+  // a MapQuickView with a valid spatial referenence
+  connect(m_mapView, &MapQuickView::spatialReferenceChanged, this, [this]()
   {
     zoomToGraphics();
   });
-  
+
   m_mapView->setMap(m_map);
 }
 
