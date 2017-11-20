@@ -107,7 +107,7 @@ Rectangle {
             top: mapView.bottom
         }
 
-        height: (parent.height / 2)
+        height: parent.height / 2
         color: "#f7f7f7"
 
         CheckBox {
