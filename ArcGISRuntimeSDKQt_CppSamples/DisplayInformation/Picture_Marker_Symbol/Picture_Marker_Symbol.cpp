@@ -64,7 +64,7 @@ void Picture_Marker_Symbol::componentComplete()
   m_mapView->setMap(m_map);
 
   // set initial viewpoint
-  m_mapView->setViewpointGeometry(Envelope(-228835, 6550763, -223560, 6552021, SpatialReference::webMercator()), 200);
+  m_map->setInitialViewpoint(Viewpoint(Envelope(-229100, 6550700, -223300, 6552100, SpatialReference::webMercator())));
 
   // create graphics overlay
   m_graphicsOverlay = new GraphicsOverlay(this);
