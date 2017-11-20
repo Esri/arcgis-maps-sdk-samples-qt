@@ -26,15 +26,23 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    property bool graphicsLoaded: false
 
-    // Create MapView that contains a Map with the Topographic Basemap, as well as a GraphicsOverlay
+    Map {
+        id: map
+        BasemapTopographic {}
+    }
+
+    // Create MapView that a GraphicsOverlay
     // for the military symbols.
     MapView {
         id: mapView
         anchors.fill: parent
-        Map {
-            id: map
-            BasemapTopographic {}
+
+        // The GraphicsOverlay does not have a valid extent until it has been added
+        // to a MapView with a valid SpatialReference
+        onSpatialReferenceChanged: {
+            setViewpointGeometryAndPadding( graphicsOverlay.extent, 20 );
         }
 
         //! [Apply Dictionary Renderer Graphics Overlay QML]
@@ -59,6 +67,7 @@ Rectangle {
             margins: 5 * scaleFactor
         }
         indeterminate: true
+        visible: !graphicsLoaded
     }
 
     // Use XmlListModel to parse the XML messages file.
@@ -82,7 +91,6 @@ Rectangle {
 
         onStatusChanged: {
             if (status === XmlListModel.Ready) {
-                var bbox;
                 for (var i = 0; i < count; i++) {
                     var element = get(i);
                     var wkid = element._wkid;
@@ -119,20 +127,11 @@ Rectangle {
                         var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: geom });
                         graphic.attributes.attributesJson = element;
                         graphicsOverlay.graphics.append(graphic);
-
-                        if (bbox) {
-                            bbox = GeometryEngine.unionOf(bbox, graphic.geometry.extent);
-                        } else {
-                            bbox = geom.extent;
-                        }
                     }
                 }
 
-                // Zoom to graphics
-                if (bbox)
-                   mapView.setViewpointGeometryAndPadding(bbox, 20);
-
-                progressBar_loading.visible = false;
+                graphicsLoaded = true;
+                mapView.map = map;
             }
         }
     }
