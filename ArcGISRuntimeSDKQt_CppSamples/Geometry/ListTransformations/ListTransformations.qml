@@ -1,4 +1,4 @@
-// [WriteFile Name=ListTransformations, Category=Features]
+// [WriteFile Name=ListTransformations, Category=Geometry]
 // [Legal]
 // Copyright 2017 Esri.
 
