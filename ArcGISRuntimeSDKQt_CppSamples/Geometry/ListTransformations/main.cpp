@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Features/ListTransformations/ListTransformations.qml"));
+  view.setSource(QUrl("qrc:/Samples/Geometry/ListTransformations/ListTransformations.qml"));
 
   view.show();
 

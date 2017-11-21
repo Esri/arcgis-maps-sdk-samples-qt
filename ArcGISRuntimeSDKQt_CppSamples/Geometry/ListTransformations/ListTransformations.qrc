@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/Features/ListTransformations">
+    <qresource prefix="/Samples/Geometry/ListTransformations">
         <file alias="sample.json">ListTransformations.json</file>        
         <file>ListTransformations.qml</file>
         <file>ListTransformations.h</file>
