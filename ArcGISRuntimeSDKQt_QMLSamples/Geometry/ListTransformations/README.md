@@ -9,7 +9,7 @@ This sample demonstrates how to use the TransformationCatalog to get a list of a
 ## How it works
 The sample sets the location of projection engine data on the device by calling `TransformationCatalog::setProjectionEngineDirectory`. If the directory is not accessible, an error is reported.
 
-The list of `DatumTransformations` is created by calling `TransformationsCatalog::transformationsBySuitability`, passing in the `SpatialReference` of the original Geometry (the input spatial reference) and that of the `MapView` (the output spatial reference). Depending on the state of a check box, the current visible extent of the map is used to sort the list by suitability.
+The list of `DatumTransformations` is created by calling `TransformationsCatalog::transformationsBySuitability`, passing in the `SpatialReference` of the original Geometry (the input spatial reference) and that of the `Map` (the output spatial reference). Depending on the state of a check box, the current visible extent of the map is used to sort the list by suitability.
 
 When the user taps on a transformation in the list, the selected transformation is used to reproject a `Point`. The `Graphic's` geometry is then updated with the new `Point`. If the selected transformation is not usable (has missing grid files) then an error is displayed.
 
@@ -21,7 +21,7 @@ When the user taps on a transformation in the list, the selected transformation 
 - GeometryEngine
 
 ## Provision your device
-This sample can be used with or without provisioning projection engine data to your device.
+This sample can be used with or without provisioning projection engine data to your device. If you do not provision data, a limited number of transformations will be available to you.
 
 To download projection engine data to your device:
 1. Log in to the ArcGIS for Developers site using your Developer account.
