@@ -27,7 +27,7 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property bool peDataSet: true
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataa"
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEData"
 
     Component.onCompleted: TransformationCatalog.projectionEngineDirectory = dataPath
 
