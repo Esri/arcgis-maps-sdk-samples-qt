@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Features/ListTransformations">
+        <file alias="sample.json">ListTransformations.json</file>        
+        <file>ListTransformations.qml</file>
+        <file>ListTransformations.h</file>
+        <file>ListTransformations.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

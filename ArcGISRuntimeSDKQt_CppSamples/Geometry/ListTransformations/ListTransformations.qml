@@ -1,4 +1,4 @@
-// [WriteFile Name=ListTransformations, Category=Geometry]
+// [WriteFile Name=ListTransformations, Category=Features]
 // [Legal]
 // Copyright 2017 Esri.
 
@@ -16,26 +16,19 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.2
+import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-Rectangle {
+ListTransformationsSample {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property bool peDataSet: true
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataa"
 
-    Component.onCompleted: TransformationCatalog.projectionEngineDirectory = dataPath
-
-    Connections {
-        target: TransformationCatalog
-        onErrorChanged: peDataSet = false;
-    }
-
+    // add a mapView component
     MapView {
         id: mapView
         anchors {
@@ -44,58 +37,7 @@ Rectangle {
             top: parent.top
         }
         height: parent.height / 2
-
-        Map {
-            id: map
-            BasemapLightGrayCanvas {}
-
-            ViewpointCenter {
-                center: originalGeometry
-                targetScale: 5000
-            }
-
-            onLoadStatusChanged: {
-                if (loadStatus !== Enums.LoadStatusLoaded)
-                    return;
-
-                getTransformations();
-                statusBar.expand();
-            }
-        }
-
-        // Create a GraphicsOverlay with two Graphics - one to hold the default
-        // transformed geometry, and the other to use the selected transformation
-        GraphicsOverlay {
-            Graphic {
-                geometry: originalGeometry
-
-                SimpleMarkerSymbol {
-                    style: Enums.SimpleMarkerSymbolStyleSquare
-                    color: "blue"
-                    size: 20
-                }
-            }
-
-            Graphic {
-                id: projectedGraphic
-                geometry: originalGeometry
-
-                SimpleMarkerSymbol {
-                    style: Enums.SimpleMarkerSymbolStyleCross
-                    color: "red"
-                    size: 20
-                }
-            }
-        }
-
-        // Create a geometry located in the Greenwich observatory courtyard in London, UK, the location of the
-        // Greenwich prime meridian. This will be projected using the selected transformation.
-        Point {
-            id: originalGeometry
-            x: 538985.355
-            y: 177329.516
-            SpatialReference { wkid: 27700 }
-        }
+        objectName: "mapView"
     }
 
     Rectangle {
@@ -118,13 +60,11 @@ Rectangle {
                 margins: 10 * scaleFactor
             }
             text: "Order by suitability for map extent"
-            onCheckedChanged: {
-                getTransformations();
-            }
+            onCheckedChanged: refreshTransformationList(checked);
         }
 
         ListView {
-            id: transformationList
+            id: transformationListView
             anchors {
                 left: parent.left
                 right: parent.right
@@ -133,6 +73,7 @@ Rectangle {
                 margins: 10 * scaleFactor
             }
             clip: true
+            model: transformationList
 
             delegate: Item {
                 id: itemDelegate
@@ -149,7 +90,7 @@ Rectangle {
                         right: parent.right
                     }
                     width: parent.width
-                    text: model.modelData.missingProjectionEngineFiles ? "%1 <font color=red><b>Missing grid files</b></font>".arg(model.modelData.name) : model.modelData.name
+                    text: model.modelData.isMissingProjectionEngineFiles ? "%1 <font color=red><b>Missing grid files</b></font>".arg(model.modelData.name) : model.modelData.name
                     textFormat: Text.RichText
                     wrapMode: Text.WrapAnywhere
                     maximumLineCount: 2
@@ -160,24 +101,8 @@ Rectangle {
                     id: itemMouseArea
                     anchors.fill: parent
                     onClicked: {
-                        transformationList.currentIndex = index;
-                        var transform = transformationList.model[index];
-                        if (transform.missingProjectionEngineFiles) {
-                            var missingFiles = "Missing grid files: ";
-                            var steps = transform.steps;
-                            for (var i = 0; i < steps.length; i++) {
-                                for (var j = 0; j < steps[i].projectionEngineFilenames.length; j++) {
-                                    missingFiles += steps[i].projectionEngineFilenames[j];
-                                }
-                            }
-                            statusText.text = missingFiles + " ";
-                            if (statusBar.isExpanded)
-                                timer.restart();
-                            else
-                                statusBar.expand();
-                        } else {
-                            projectedGraphic.geometry = GeometryEngine.project(originalGeometry, map.spatialReference, transform);
-                        }
+                        transformationListView.currentIndex = index;
+                        updateGraphicTransformation(index);
                     }
                 }
             }
@@ -214,9 +139,7 @@ Rectangle {
             }
             color: "white"
             wrapMode: Text.WrapAnywhere
-            text: peDataSet ?
-                      "Projection engine directory set %1".arg(dataPath) :
-                      "Error setting projection engine directory: %1. %2".arg(TransformationCatalog.error.message).arg(TransformationCatalog.error.additionalMessage)
+            text: "Projection engine directory set %1".arg(dataPath)
         }
 
         Timer {
@@ -258,10 +181,12 @@ Rectangle {
         }
     }
 
-    function getTransformations() {
-        if (orderCheckbox.checked)
-            transformationList.model = TransformationCatalog.transformationsBySuitability(originalGeometry.spatialReference, map.spatialReference, mapView.visibleArea.extent);
+    onShowStatusBar: {
+        if (message.length > 0)
+            statusText.text = message;
+        if (statusBar.isExpanded)
+            timer.restart();
         else
-            transformationList.model = TransformationCatalog.transformationsBySuitability(originalGeometry.spatialReference, map.spatialReference);
+            statusBar.expand();
     }
 }
