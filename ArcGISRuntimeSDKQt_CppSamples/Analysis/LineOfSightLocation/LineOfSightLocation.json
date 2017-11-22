@@ -1,0 +1,8 @@
+{
+    "source" :  "LineOfSightLocation.qml",
+    "otherSourceFiles" :  [
+        "LineOfSightLocation.h",
+        "LineOfSightLocation.cpp"
+    ],
+    "name" : "Line of Sight (location)"
+}
