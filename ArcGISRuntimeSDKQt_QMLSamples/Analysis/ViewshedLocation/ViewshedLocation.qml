@@ -239,7 +239,7 @@ Rectangle {
                         titleText: qsTr("Vertical Angle")
                         parameterValue: locationViewshed.verticalAngle
                         minValue: 1
-                        maxValue: 179
+                        maxValue: 120
                         onParameterValueChanged: locationViewshed.verticalAngle = parameterValue;
                     }
 
@@ -247,7 +247,7 @@ Rectangle {
                         titleText: qsTr("Horizontal Angle")
                         parameterValue: locationViewshed.horizontalAngle
                         minValue: 1
-                        maxValue: 179
+                        maxValue: 120
                         onParameterValueChanged: locationViewshed.horizontalAngle = parameterValue;
                     }
 
