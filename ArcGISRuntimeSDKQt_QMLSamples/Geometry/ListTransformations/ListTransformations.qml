@@ -176,7 +176,7 @@ Rectangle {
                             else
                                 statusBar.expand();
                         } else {
-                            projectedGraphic.geometry = GeometryEngine.project(originalGeometry, map.spatialReference, transform);
+                            projectedGraphic.geometry = GeometryEngine.projectWithDatumTransformation(originalGeometry, map.spatialReference, transform);
                         }
                     }
                 }
@@ -260,7 +260,7 @@ Rectangle {
 
     function getTransformations() {
         if (orderCheckbox.checked)
-            transformationList.model = TransformationCatalog.transformationsBySuitability(originalGeometry.spatialReference, map.spatialReference, mapView.visibleArea.extent);
+            transformationList.model = TransformationCatalog.transformationsBySuitabilityWithAreaOfInterest(originalGeometry.spatialReference, map.spatialReference, mapView.visibleArea.extent);
         else
             transformationList.model = TransformationCatalog.transformationsBySuitability(originalGeometry.spatialReference, map.spatialReference);
     }
