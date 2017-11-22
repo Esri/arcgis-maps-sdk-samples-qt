@@ -70,8 +70,8 @@ void LineOfSightLocation::componentComplete()
 void LineOfSightLocation::createLineOfSight()
 {
   // create the observer/target points
-  Point observerPt(-73.06958032962375, -49.253112971555446, 2000, SpatialReference::wgs84());
-  Point targetPt(-73.079266999709162, -49.300457676730559, 1312, SpatialReference::wgs84());
+  const Point observerPt(-73.06958032962375, -49.253112971555446, 2000, SpatialReference::wgs84());
+  const Point targetPt(-73.079266999709162, -49.300457676730559, 1312, SpatialReference::wgs84());
 
   // create the line of site
   m_lineOfSight = new LocationLineOfSight(observerPt, targetPt, this);
@@ -86,13 +86,10 @@ void LineOfSightLocation::createLineOfSight()
 void LineOfSightLocation::setInitialViewpoint()
 {
   // Set a viewpoint
-  double x = -73.0815;
-  double y = -49.3272;
-  double z = 4059;
-  Point point(x, y, z, SpatialReference::wgs84());
-  double heading = 11;
-  double pitch = 62;
-  double roll = 0;
+  Point point(-73.0815, -49.3272, 4059, SpatialReference::wgs84());
+  const double heading = 11;
+  const double pitch = 62;
+  const double roll = 0;
   Camera camera(point, heading, pitch, roll);
   m_sceneView->setViewpointCamera(camera);
 }
