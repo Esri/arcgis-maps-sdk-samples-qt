@@ -26,6 +26,6 @@ This sample can be used with or without provisioning projection engine data to y
 To download projection engine data to your device:
 1. Log in to the ArcGIS for Developers site using your Developer account.
 2. In the Dashboard page, click 'Download APIs and SDKs'.
-3. Click the download button next to 'ArcGIS_Runtime_Coordinate_System_Data' to download projection engine data to your computer.
+3. Click the download button next to `ArcGIS Runtime Coordinate System Data 100.x` to download projection engine data to your computer.
 4. Unzip the downloaded data on your computer.
 5. Create an `~/ArcGIS/Runtime/Data/PEData` directory on your device and copy the files to this directory.
