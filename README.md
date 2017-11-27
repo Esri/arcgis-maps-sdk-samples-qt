@@ -1,11 +1,10 @@
 # Overview
-ArcGIS Runtime SDK 100.2 for Qt samples for Qt Creator.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
+ArcGIS Runtime SDK 100.2 for Qt sample applications.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
 
 # Prerequisites
-* Qt SDK 5.6.2 or higher (Open source or commercial)
+* Qt SDK 5.9.2 or higher (Open source or commercial)
 * Qt Creator
-* For Windows: Microsoft Visual C++ Compiler 14.0 
-* For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/quartz/qml/guide/arcgis-runtime-sdk-for-qt-system-requirements.htm) page.
+* For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/latest/qml/guide/arcgis-runtime-sdk-for-qt-system-requirements.htm) page.
 
 ## Fork the repo
 If you haven't already, fork [the repo](https://github.com/Esri/arcgis-runtime-samples-qt/fork).
@@ -96,7 +95,7 @@ iOS      | `<your app bundle>`| `<appbundle>/ArcGIS/Runtime/Data`  |
 
 ## Resources
 
-* [ArcGIS Runtime QtSDK Resource Center](https://developers.arcgis.com/qt/quartz/)
+* [ArcGIS Runtime QtSDK Resource Center](https://developers.arcgis.com/qt/latest/)
 * [Qt and QML](http://www.qt.io/)
 * [ArcGIS Blog](http://blogs.esri.com/esri/arcgis/)
 * [twitter@esri](http://twitter.com/esri)
