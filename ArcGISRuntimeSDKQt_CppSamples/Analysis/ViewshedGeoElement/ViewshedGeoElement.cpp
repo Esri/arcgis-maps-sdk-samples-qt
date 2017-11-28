@@ -99,7 +99,8 @@ void ViewshedGeoElement::componentComplete()
   m_sceneView->setArcGISScene(scene);
 
   // create the camera controller to follow the graphic
-  OrbitGeoElementCameraController* followingController = new OrbitGeoElementCameraController(m_tank, 100, this);
+  OrbitGeoElementCameraController* followingController = new OrbitGeoElementCameraController(m_tank, 200.0, this);
+  followingController->setCameraPitchOffset(45.0);
   m_sceneView->setCameraController(followingController);
 
   // Create a Timer
