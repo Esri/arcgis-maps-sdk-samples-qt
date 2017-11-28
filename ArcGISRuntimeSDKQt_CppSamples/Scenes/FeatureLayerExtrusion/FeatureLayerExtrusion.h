@@ -38,26 +38,24 @@ enum class FeatureRenderingMode;
 
 class FeatureLayerExtrusion : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    Q_INVOKABLE void popDensity();
-    explicit FeatureLayerExtrusion(QQuickItem* parent = nullptr);
-    ~FeatureLayerExtrusion() = default;
+  Q_INVOKABLE void popDensity();
+  explicit FeatureLayerExtrusion(QQuickItem* parent = nullptr);
+  ~FeatureLayerExtrusion() = default;
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    static void init();
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
 
 private:
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-    Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-    Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
-    Esri::ArcGISRuntime::Camera m_camera;
-    Esri::ArcGISRuntime::Point m_lookAtPoint;
-    Esri::ArcGISRuntime::OrbitLocationCameraController* m_orbitController = nullptr;
-    Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
-    Esri::ArcGISRuntime::SimpleFillSymbol* m_fillSymbol = nullptr;
-    Esri::ArcGISRuntime::SimpleRenderer* renderer = nullptr;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+  Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleFillSymbol* m_fillSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleRenderer* m_renderer = nullptr;
+  bool m_showTotalPopulation = true;
 
 
 };

@@ -31,31 +31,25 @@ FeatureLayerExtrusionSample {
         id: sceneView
         objectName: "sceneView"
         anchors.fill: parent
-    }
 
-    Row {
-        id: expressionRow
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-            margins: 350 * scaleFactor
-            bottomMargin: 25 * scaleFactor
-        }
-        spacing: 5
 
-    // button to populate from service
-      Button {
-          id: popButton
-          text: "TOTAL POPULATION"
-          onClicked: {
-            if(text == "TOTAL POPULATION"){
-                text = qsTr("POPULATION DENSITY");
-            }else{
-                text = qsTr("TOTAL POPULATION");
-            }
-              featureLayerExtrusionSample.popDensity();
+        // button to populate from service
+          Button {
+              anchors{
+
+                  bottom: sceneView.attributionTop
+              }
+              id: popButton
+              text: "TOTAL POPULATION"
+              onClicked: {
+                if(text === "TOTAL POPULATION"){
+                    text = qsTr("POPULATION DENSITY");
+                }else
+                    text = qsTr("TOTAL POPULATION");
+
+                  popDensity();
+              }
           }
-      }
+
     }
 }
