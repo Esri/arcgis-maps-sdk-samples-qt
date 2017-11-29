@@ -84,7 +84,7 @@ StatisticalQuerySample {
     }
 
     onShowStatistics: {
-        msgDialog.open();
         msgDialog.informativeText = results;
+        msgDialog.open();
     }
 }
