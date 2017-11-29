@@ -1,4 +1,4 @@
-// [WriteFile Name=FeatureLayerExtrusion, Category=Analysis]
+// [WriteFile Name=FeatureLayerExtrusion, Category=Scenes]
 // [Legal]
 // Copyright 2017 Esri.
 
@@ -30,21 +30,22 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
         cameraController: orbCamCont
-        currentViewpointCenter.camera: cam
 
         Button {
             anchors{
                 bottom: sceneView.attributionTop
+                horizontalCenter: sceneView.horizontalCenter
+                bottomMargin: 10
             }
             id: popButton
             text: "TOTAL POPULATION"
             onClicked: {
-                if(text === "TOTAL POPULATION"){
+                if (text === "TOTAL POPULATION") {
                     text = qsTr("POPULATION DENSITY");
-                    sceneProperties.extrusionExpression = "[POP07_SQMI] * 5000"
-                }else{
+                    sceneProperties.extrusionExpression = "[POP07_SQMI] * 5000";
+                } else {
                     text = qsTr("TOTAL POPULATION");
-                    sceneProperties.extrusionExpression = "[POP2007] / 10"
+                    sceneProperties.extrusionExpression = "[POP2007] / 10";
                 }
             }
         }
@@ -55,7 +56,7 @@ Rectangle {
 
             ServiceFeatureTable {
                 id: featureTable
-                url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3"
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3"
             }
 
             FeatureLayer {
@@ -68,7 +69,7 @@ Rectangle {
             Surface {
                 id: baseSurface
                 ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
         }
@@ -96,15 +97,6 @@ Rectangle {
             color: "Blue"
         }
 
-        Camera {
-            id: cam
-            location: lookAtPoint
-            distance: 20000000.0
-            heading: 0.0
-            pitch: 55.0
-            roll: 0.0
-        }
-
         Point {
             id: lookAtPoint
             x: -10974490.0
@@ -112,7 +104,7 @@ Rectangle {
             spatialReference: SpatialReference.createWebMercator()
         }
 
-        OrbitLocationCameraController{
+        OrbitLocationCameraController {
             id: orbCamCont
             targetLocation: lookAtPoint
             cameraDistance: 20000000.0
