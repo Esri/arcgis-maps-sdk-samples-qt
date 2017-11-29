@@ -26,7 +26,7 @@ ListTransformationsSample {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEData"
+    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataRuntime"
 
     // add a mapView component
     MapView {

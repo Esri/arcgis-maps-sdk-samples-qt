@@ -24,7 +24,7 @@ CONFIG += c++11
 QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
-TARGET = DynamicWorkspaceShapefile
+TARGET = FeatureLayerExtrusion
 
 ARCGIS_RUNTIME_VERSION = 100.2
 include($$PWD/arcgisruntime.pri)
@@ -32,13 +32,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    DynamicWorkspaceShapefile.h
+    FeatureLayerExtrusion.h
 
 SOURCES += \
     main.cpp \
-    DynamicWorkspaceShapefile.cpp
+    FeatureLayerExtrusion.cpp
 
-RESOURCES += DynamicWorkspaceShapefile.qrc
+RESOURCES += FeatureLayerExtrusion.qrc
 
 #-------------------------------------------------------------------------------
 
@@ -47,6 +47,21 @@ win32 {
         Ole32.lib
 }
 
-ios:android:macx {
-    message("Local Server not supported on this platform")
+ios {
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+
+    OTHER_FILES += \
+        $$PWD/Info.plist
+
+    QMAKE_INFO_PLIST = $$PWD/Info.plist
+}
+
+android {
+    INCLUDEPATH += $$PWD
+    DEPENDPATH += $$PWD
+}
+
+macx {
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.11
 }
