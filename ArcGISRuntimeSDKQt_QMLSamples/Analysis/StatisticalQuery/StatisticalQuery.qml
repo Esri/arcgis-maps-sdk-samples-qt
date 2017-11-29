@@ -21,7 +21,6 @@ import Esri.ArcGISRuntime 100.2
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
-    id: rootRectangle
     clip: true
     width: 800
     height: 600
@@ -72,60 +71,65 @@ Rectangle {
                 }
             }
         }
+    }
 
-        Rectangle {
-            anchors {
-                fill: controlColumn
-                margins: -10 * scaleFactor
-            }
-            color: "#E9E9EA"
-            radius: 3 * scaleFactor
+    Rectangle {
+        anchors {
+            fill: controlColumn
+            margins: -10 * scaleFactor
+        }
+        color: "#E9E9EA"
+        radius: 3 * scaleFactor
+        opacity: 0.8
+        border {
+            color: "black"
+            width: 1 * scaleFactor
+        }
+    }
+
+    Column {
+        id: controlColumn
+        anchors {
+            left: parent.left
+            top: parent.top
+            margins: 15 * scaleFactor
+        }
+        spacing: 5 * scaleFactor
+
+        CheckBox {
+            id: extentCheckbox
+            text: "Only cities in current extent"
         }
 
-        Column {
-            id: controlColumn
-            anchors {
-                left: parent.left
-                top: parent.top
-                margins: 15 * scaleFactor
-            }
-            spacing: 5 * scaleFactor
+        CheckBox {
+            id: bigCitiesCheckbox
+            text: "Only cities greater than 5M"
+        }
 
-            CheckBox {
-                id: extentCheckbox
-                text: "Only cities in current extent"
-            }
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Get Statistics"
+            onClicked: {
+                // If only using features in the current extent, set up the spatial filter for the statistics query parameters
+                if (extentOnly) {
+                    // Set the statistics query parameters geometry with the envelope
+                    queryParameters.geometry = mapView.currentViewpointExtent.extent;
 
-            CheckBox {
-                id: bigCitiesCheckbox
-                text: "Only cities greater than 5M"
-            }
-
-            Button {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: "Get Statistics"
-                onClicked: {
-                    // If only using features in the current extent, set up the spatial filter for the statistics query parameters
-                    if (extentOnly) {
-                        // Set the statistics query parameters geometry with the envelope
-                        queryParameters.geometry = mapView.currentViewpointExtent.extent;
-
-                        // Set the spatial relationship to Intersects (which is the default)
-                        queryParameters.spatialRelationship = Enums.SpatialRelationshipIntersects;
-                    } else {
-                        // Reset the query parameters
-                        queryParameters.geometry = null;
-                    }
-
-                    // If only evaluating the largest cities (over 5 million in population), set up an attribute filter
-                    if (bigCitiesOnly)
-                        queryParameters.whereClause = "POP_RANK = 1";
-                    else
-                        queryParameters.whereClause = "1=1"
-
-                    // Execute the statistical query with these parameters
-                    featureTable.queryStatistics(queryParameters);
+                    // Set the spatial relationship to Intersects (which is the default)
+                    queryParameters.spatialRelationship = Enums.SpatialRelationshipIntersects;
+                } else {
+                    // Reset the query parameters
+                    queryParameters.geometry = null;
                 }
+
+                // If only evaluating the largest cities (over 5 million in population), set up an attribute filter
+                if (bigCitiesOnly)
+                    queryParameters.whereClause = "POP_RANK = 1";
+                else
+                    queryParameters.whereClause = "1=1";
+
+                // Execute the statistical query with these parameters
+                featureTable.queryStatistics(queryParameters);
             }
         }
     }
@@ -141,7 +145,7 @@ Rectangle {
         StatisticDefinition { onFieldName: "POP"; statisticType: Enums.StatisticTypeSum}
         StatisticDefinition { onFieldName: "POP"; statisticType: Enums.StatisticTypeStandardDeviation}
         StatisticDefinition { onFieldName: "POP"; statisticType: Enums.StatisticTypeVariance}
-        StatisticDefinition { onFieldName: "POP"; statisticType: Enums.StatisticTypeAverage; outputAlias: "CityCount"}
+        StatisticDefinition { onFieldName: "POP"; statisticType: Enums.StatisticTypeCount; outputAlias: "CityCount"}
     }
 
     // Create a dialog to display the result
