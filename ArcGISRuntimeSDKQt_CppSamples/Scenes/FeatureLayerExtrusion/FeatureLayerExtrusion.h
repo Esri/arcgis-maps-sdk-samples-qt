@@ -57,7 +57,6 @@ private:
   Esri::ArcGISRuntime::SimpleRenderer* m_renderer = nullptr;
   bool m_showTotalPopulation = true;
 
-
 };
 
 #endif // FEATURELAYEREXTRUSION_H
