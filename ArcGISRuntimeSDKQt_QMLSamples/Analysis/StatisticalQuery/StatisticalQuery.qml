@@ -144,6 +144,7 @@ Rectangle {
         StatisticDefinition { onFieldName: "POP"; statisticType: Enums.StatisticTypeAverage; outputAlias: "CityCount"}
     }
 
+    // Create a dialog to display the result
     MessageDialog {
         id: msgDialog
         text: "Query Statistics Results:"
