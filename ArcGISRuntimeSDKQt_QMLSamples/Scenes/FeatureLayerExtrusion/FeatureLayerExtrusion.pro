@@ -13,40 +13,24 @@
 # limitations under the License.
 #-------------------------------------------------
 
-mac {
-    cache()
-}
+TEMPLATE = app
 
-#-------------------------------------------------------------------------------
+QT += qml quick positioning sensors
 
 CONFIG += c++11
-
-QT += opengl qml quick positioning sensors
-
-TEMPLATE = app
-TARGET = DynamicWorkspaceShapefile
 
 ARCGIS_RUNTIME_VERSION = 100.2
 include($$PWD/arcgisruntime.pri)
 
-#-------------------------------------------------------------------------------
-
-HEADERS += \
-    DynamicWorkspaceShapefile.h
-
 SOURCES += \
-    main.cpp \
-    DynamicWorkspaceShapefile.cpp
+    main.cpp
 
-RESOURCES += DynamicWorkspaceShapefile.qrc
+RESOURCES += \
+    FeatureLayerExtrusion.qrc
 
-#-------------------------------------------------------------------------------
-
-win32 {
-    LIBS += \
-        Ole32.lib
+ios {
+    QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
 
-ios:android:macx {
-    message("Local Server not supported on this platform")
-}
+# Default rules for deployment.
+include(deployment.pri)
