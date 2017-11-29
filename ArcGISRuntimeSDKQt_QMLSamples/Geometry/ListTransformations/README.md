@@ -28,4 +28,4 @@ To download projection engine data to your device:
 2. In the Dashboard page, click 'Download APIs and SDKs'.
 3. Click the download button next to `ArcGIS Runtime Coordinate System Data 100.x` to download projection engine data to your computer.
 4. Unzip the downloaded data on your computer.
-5. Create an `~/ArcGIS/Runtime/Data/PEData` directory on your device and copy the files to this directory.
+5. Create an `~/ArcGIS/Runtime/Data/PEDataRuntime` directory on your device and copy the files to this directory.
