@@ -35,18 +35,18 @@ FeatureLayerExtrusionSample {
 
         // button to populate from service
           Button {
-              anchors{
-
+              anchors {
+                  horizontalCenter: parent.horizontalCenter
                   bottom: sceneView.attributionTop
+                  margins: 10 * scaleFactor
               }
               id: popButton
               text: "TOTAL POPULATION"
               onClicked: {
-                if(text === "TOTAL POPULATION"){
-                    text = qsTr("POPULATION DENSITY");
-                }else
-                    text = qsTr("TOTAL POPULATION");
-
+                  if (text === "TOTAL POPULATION")
+                      text = qsTr("POPULATION DENSITY");
+                  else
+                      text = qsTr("TOTAL POPULATION");
                   popDensity();
               }
           }
