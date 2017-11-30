@@ -44,7 +44,7 @@ Rectangle {
                 Point {
                     x: -1.2e7
                     y: 5e6
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
                 targetScale: 1e7
             }

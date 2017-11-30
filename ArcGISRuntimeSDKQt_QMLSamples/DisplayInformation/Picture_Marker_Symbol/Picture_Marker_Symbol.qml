@@ -33,7 +33,7 @@ Rectangle {
             xMax: -223300
             yMin: 6550700
             yMax: 6552100
-            spatialReference: SpatialReference.createWebMercator()
+            spatialReference: SpatialReference { wkid: 3857 }
         }
     }
 
@@ -56,7 +56,7 @@ Rectangle {
                 Point {
                     x: -228835
                     y: 6550763
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
 
                 PictureMarkerSymbol {
@@ -72,7 +72,7 @@ Rectangle {
                 Point {
                     x: -223560
                     y: 6552021
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
 
                 PictureMarkerSymbol {
@@ -88,7 +88,7 @@ Rectangle {
                 Point {
                     x: -226773
                     y: 6550477
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
 
                 PictureMarkerSymbol {

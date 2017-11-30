@@ -156,7 +156,7 @@ Rectangle {
         Point {
             x: -118.37
             y: 34.46
-            spatialReference: SpatialReference.createWgs84()
+            spatialReference: SpatialReference { wkid: 4326 }
         }
 
         distance: 42000
@@ -171,7 +171,7 @@ Rectangle {
         Point {
             x: -118.45
             y: 34.395
-            spatialReference: SpatialReference.createWgs84()
+            spatialReference: SpatialReference { wkid: 4326 }
         }
 
         distance: 2500

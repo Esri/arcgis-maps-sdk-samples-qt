@@ -46,7 +46,7 @@ Rectangle {
                 Point {
                     x: -13041154
                     y: 3858170
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
                 targetScale: 1e5
             }
@@ -72,7 +72,7 @@ Rectangle {
                 geometry: Point {
                     x: -1.3042129900625112E7
                     y: 3860127.9479775648
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
 
@@ -80,7 +80,7 @@ Rectangle {
                 geometry: Point {
                     x: -1.3042129900625112E7
                     y: 3860127.9479775648
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
 
@@ -88,7 +88,7 @@ Rectangle {
                 geometry: Point {
                     x: -1.3042193400557665E7
                     y: 3862448.873041752
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
 
@@ -96,7 +96,7 @@ Rectangle {
                 geometry: Point {
                     x: -1.3046882875518233E7
                     y: 3862704.9896770366
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
 
@@ -104,7 +104,7 @@ Rectangle {
                 geometry: Point {
                     x: -1.3040539754780494E7
                     y: 3862924.5938606677
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
 
@@ -112,7 +112,7 @@ Rectangle {
                 geometry: Point {
                     x: -1.3042571225655518E7
                     y: 3858981.773018156
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
 
@@ -120,7 +120,7 @@ Rectangle {
                 geometry: Point {
                     x: -1.3039784633928463E7
                     y: 3856692.5980474586
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
 
@@ -128,7 +128,7 @@ Rectangle {
                 geometry: Point {
                     x: -1.3049023883956768E7
                     y: 3861993.789732541
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
         }

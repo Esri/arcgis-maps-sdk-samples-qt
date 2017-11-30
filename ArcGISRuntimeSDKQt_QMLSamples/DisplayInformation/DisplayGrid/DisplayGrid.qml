@@ -62,7 +62,7 @@ Rectangle {
                 Point {
                     x: -10336141.70018318
                     y: 5418213.05332071
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
         }
