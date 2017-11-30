@@ -29,6 +29,24 @@ TARGET = ViewshedLocation
 ARCGIS_RUNTIME_VERSION = 100.2
 include($$PWD/arcgisruntime.pri)
 
+#  message("building against the local dev build")
+#  include ($$PWD/../../../common/qt_api_config.pri)
+
+#  # when defined, the QML ArcGISRuntimePlugin will not be linked or copied
+#  CONFIG += CPP_API_APP
+
+#  # comment out if you do not want QML plugins to be linked/recopied
+#  include (/Users/mich5148/applications/qt/common/arcgis_qml_imports.pri)
+
+#  LIBS += \
+#    -L$${DESTDIR} \
+#    -L$${LIB_FOLDER_STATICLIB} \
+#    -lEsriRuntimeQt$${LIB_SUFFIX} \
+#    -lEsriCommonQt$${LIB_SUFFIX}
+
+#  INCLUDEPATH += /Users/mich5148/applications/qt/api/qt_cpp/Include \
+#                 /Users/mich5148/applications/qt/api/qt_cpp/Include/LocalServer
+
 #-------------------------------------------------------------------------------
 
 HEADERS += \
@@ -62,6 +80,3 @@ android {
     DEPENDPATH += $$PWD
 }
 
-macx {
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.11
-}

@@ -47,6 +47,3 @@ win32 {
         Ole32.lib
 }
 
-ios:android:macx {
-    message("Local Server not supported on this platform")
-}
