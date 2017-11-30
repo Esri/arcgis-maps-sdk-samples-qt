@@ -76,6 +76,12 @@ $ git merge upstream/master
 Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to a project file (.pro) within your forked repo location.
 Configure the project and run the sample.
 
+## Use a previous version
+The `master` branch contains samples for the current, most up-to-date version of ArcGIS Runtime. To access previous versions, you can checkout by a tag or commit, or alternativley, you can download the source zip:
+
+- [100.0](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1529)
+- [100.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1744)
+
 ## Use offline data in the samples
 Some of the samples consume offline data, including TPKs, VTPKs, mobile geodatabases, and mobile map packages, among other data formats. If the sample does consume offline data, the sample's associated readme.md will note where you can download the data (from ArcGIS Online), and where the data can be placed once downloaded. For example, it may say something like:
 
