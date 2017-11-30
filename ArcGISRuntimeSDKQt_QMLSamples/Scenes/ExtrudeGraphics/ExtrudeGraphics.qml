@@ -76,7 +76,7 @@ Rectangle {
             x: 83.9
             y: 28.4
             z: 10010.0
-            spatialReference: SpatialReference.createWgs84()
+            spatialReference: SpatialReference { wkid: 4326 }
         }
         heading: 10.0
         pitch: 80.0

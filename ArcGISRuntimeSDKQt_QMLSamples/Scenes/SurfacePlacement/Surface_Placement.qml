@@ -42,7 +42,7 @@ Rectangle {
                     x: -4.04
                     y: 53.04
                     z: 1300
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: SpatialReference { wkid: 4326 }
                 }
                 targetScale: 62.013264927081764
 
@@ -52,7 +52,7 @@ Rectangle {
                         x: -4.04
                         y: 53.04
                         z: 1300
-                        spatialReference: SpatialReference.createWgs84()
+                        spatialReference: SpatialReference { wkid: 4326 }
                     }
                     heading: 0
                     pitch: 90.0
@@ -158,6 +158,6 @@ Rectangle {
         x: -4.04
         y: 53.06
         z: 1000
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: SpatialReference { wkid: 4326 }
     }
 }

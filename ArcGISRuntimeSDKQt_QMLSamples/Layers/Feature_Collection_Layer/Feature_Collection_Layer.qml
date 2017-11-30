@@ -42,7 +42,7 @@ Rectangle {
 
                         // define the schema of the table
                         geometryType: Enums.GeometryTypePoint
-                        spatialReference: SpatialReference.createWgs84()
+                        spatialReference: SpatialReference { wkid: 4326 }
                         Field {
                             id: placeField
                             alias: "Place Name"
@@ -78,7 +78,7 @@ Rectangle {
 
                         // define the schema of the table
                         geometryType: Enums.GeometryTypePolyline
-                        spatialReference: SpatialReference.createWgs84()
+                        spatialReference: SpatialReference { wkid: 4326 }
                         Field {
                             alias: "Boundary Name"
                             name: "Boundary"
@@ -117,7 +117,7 @@ Rectangle {
 
                         // define the schema of the table
                         geometryType: Enums.GeometryTypePolygon
-                        spatialReference: SpatialReference.createWgs84()
+                        spatialReference: SpatialReference { wkid: 4326 }
                         Field {
                             alias: "Area Name"
                             name: "Area"
@@ -168,7 +168,7 @@ Rectangle {
                     xMin: -8917856.590171767
                     yMax: 1100327.8941287803
                     yMin: 903277.583136797
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
         }

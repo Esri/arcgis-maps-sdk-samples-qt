@@ -37,7 +37,7 @@ Rectangle {
                 Point {
                     x: -226773
                     y: 6550477
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
         }
@@ -52,7 +52,7 @@ Rectangle {
                 Point {
                     x: -226773
                     y: 6550477
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
 
                 // set graphic to be rendered as a red circle symbol
