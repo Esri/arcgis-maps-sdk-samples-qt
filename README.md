@@ -77,7 +77,7 @@ Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open 
 Configure the project and run the sample.
 
 ## Use a previous version
-The `master` branch contains samples for the current, most up-to-date version of ArcGIS Runtime. To access previous versions, you can checkout by a tag or commit, or alternativley, you can download the source zip:
+The `master` branch contains samples for the current, most up-to-date version of ArcGIS Runtime. To access previous versions, you can checkout by a tag or commit, or alternativley you can download the source zip:
 
 - [100.0](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1529)
 - [100.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1744)
