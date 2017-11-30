@@ -61,7 +61,7 @@ Rectangle {
             x: 83.9
             y: 28.4
             z: 10010.0
-            spatialReference: SpatialReference.createWgs84()
+            spatialReference: SpatialReference { wkid: 4326 }
         }
     }
     //! [create the camera to be used as the scene view's viewpoint]

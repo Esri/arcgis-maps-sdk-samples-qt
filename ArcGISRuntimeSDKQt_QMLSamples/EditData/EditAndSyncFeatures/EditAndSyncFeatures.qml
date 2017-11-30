@@ -256,7 +256,7 @@ Rectangle {
     GenerateGeodatabaseParameters {
         id: generateParameters
         extent: generateExtent
-        outSpatialReference: SpatialReference.createWebMercator()
+        outSpatialReference: SpatialReference { wkid: 3857 }
         returnAttachments: false
 
         // only generate a geodatabase with 1 layer
