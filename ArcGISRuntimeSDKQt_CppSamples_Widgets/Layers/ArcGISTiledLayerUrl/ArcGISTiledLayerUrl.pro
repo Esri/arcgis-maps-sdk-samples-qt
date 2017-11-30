@@ -37,6 +37,3 @@ SOURCES += \
 HEADERS  += \
     ArcGISTiledLayerUrl.h
 
-macx {
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.11
-}
