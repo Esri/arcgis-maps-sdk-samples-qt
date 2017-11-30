@@ -30,12 +30,12 @@ Rectangle {
 
     PointBuilder {
         id: ptBuilder
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: SpatialReference { wkid: 4326 }
     }
 
     EnvelopeBuilder {
         id: envBuilder
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: SpatialReference { wkid: 4326 }
     }
 
     ViewpointExtent {

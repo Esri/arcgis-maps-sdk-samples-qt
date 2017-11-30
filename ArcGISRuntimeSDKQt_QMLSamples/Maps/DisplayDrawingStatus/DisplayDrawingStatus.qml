@@ -49,7 +49,7 @@ Rectangle {
                     yMin: 4537387
                     xMax: -13606734
                     yMax: 4558866
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
         }
