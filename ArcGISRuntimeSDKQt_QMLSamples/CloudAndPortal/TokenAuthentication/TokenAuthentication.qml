@@ -15,8 +15,10 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Controls 1.4
 import Esri.ArcGISRuntime 100.2
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.2
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -24,18 +26,16 @@ Rectangle {
     width: 800
     height: 600
 
+    property real scaleFactor: System.displayScaleFactor
+
     MapView {
         id: mapView
         anchors.fill: parent
 
-        Map {
-            BasemapTopographic {}
 
-            // add a map service that is secured with token-based authentication
-            // username/password is user1/user1
-            ArcGISMapImageLayer {
-                url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA_secure_user1/MapServer"
-            }
+        Map {
+            id: map
+            BasemapTopographic {}
 
             ViewpointExtent {
                 Envelope {
@@ -47,11 +47,41 @@ Rectangle {
                     }
                 }
             }
+        }       
+
+        Column {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: mapView.attributionTop
+                margins: 10 * scaleFactor
+            }
+            spacing: 10 * scaleFactor
+
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: 14 * scaleFactor
+                text: "username/password: user1/user1"
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Load Secured Layer"
+                onClicked: map.operationalLayers.append(mapImagelayer);
+            }
         }
     }
 
+    // add a map service that is secured with token-based authentication
+    // username/password is user1/user1
+    ArcGISMapImageLayer {
+        id: mapImagelayer
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA_secure_user1/MapServer"
+    }
+
+
+    // Uncomment this section when running as standalone application
+    /*
     // Declare an AuthenticationView
-    /* Uncomment this section when running as standalone application
     AuthenticationView {
         anchors.fill: parent
         authenticationManager: AuthenticationManager // set the authenticationManager property
