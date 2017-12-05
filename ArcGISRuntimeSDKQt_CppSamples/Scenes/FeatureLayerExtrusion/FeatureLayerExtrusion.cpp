@@ -63,6 +63,7 @@ void FeatureLayerExtrusion::componentComplete()
   // set renderer extrusion mode to base height, which includes base height of each vertex in calculating z values
   RendererSceneProperties props = m_renderer->sceneProperties();
   props.setExtrusionMode(ExtrusionMode::BaseHeight);
+  props.setExtrusionExpression("[POP2007] / 10");
   m_renderer->setSceneProperties(props);
 
   // set the simple renderer to the feature layer
