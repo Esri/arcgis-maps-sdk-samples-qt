@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(arcGISToolkitImportPath);
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Analysis/FeatureLayerExtrusion/FeatureLayerExtrusion.qml"));
+    view.setSource(QUrl("qrc:/Samples/Scenes/FeatureLayerExtrusion/FeatureLayerExtrusion.qml"));
 
     view.show();
 
