@@ -52,17 +52,21 @@ void RasterLayerService::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // create a new tiled layer to add a basemap
-  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"), this);
+  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(
+        QUrl(QStringLiteral("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer")), this);
   m_map = new Map(new Basemap(tiledLayer, this));
   m_mapView->setMap(m_map);
 
   //! [ImageServiceRaster Create a new image service raster]
   // create an image service raster
-  ImageServiceRaster* imageServiceRaster = new ImageServiceRaster(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"), this);
-  // zoom to the raster's extent once it's loaded
+  ImageServiceRaster* imageServiceRaster = new ImageServiceRaster(
+        QUrl(QStringLiteral("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer")), this);
+  // zoom to the center of the raster once it's loaded
   connect(imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this, imageServiceRaster]()
   {
-      m_mapView->setViewpoint(Viewpoint(imageServiceRaster->serviceInfo().fullExtent()));
+    constexpr double scale = 50000000.;
+    Viewpoint vpCenter = Viewpoint(imageServiceRaster->serviceInfo().fullExtent().center(), scale);
+    m_mapView->setViewpoint(vpCenter);
   });
 
   // create a raster layer using the image service raster
