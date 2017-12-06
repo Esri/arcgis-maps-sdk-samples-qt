@@ -26,7 +26,7 @@ priLocation = $$replace(cleanDirPath, '"', "")
   message("Error. Cannot locate ArcGIS Runtime PRI file")
 }
 ios {
-    !include($$priLocation/sdk/toolkit/Plugin/ArcGISRuntimeToolkitPlugin.pri) {
+  !include($$priLocation/sdk/toolkit/Plugin/ArcGISRuntimeToolkitPlugin.pri) {
       message("Error. Cannot locate ArcGIS Runtime Toolkit PRI file")
-    }
+  }
 }
