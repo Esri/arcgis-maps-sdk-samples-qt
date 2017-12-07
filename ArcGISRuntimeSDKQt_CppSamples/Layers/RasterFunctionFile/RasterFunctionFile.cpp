@@ -58,6 +58,9 @@ void RasterFunctionFile::componentComplete()
   m_raster = new Raster(m_rasterPath, this);
   RasterLayer* rasterLayer = new RasterLayer(m_raster, this);
   rasterLayer->setOpacity(0.5);
+
+  connect(rasterLayer, &RasterLayer::doneLoading, this, &RasterFunctionFile::readyChanged);
+
   m_map->operationalLayers()->append(rasterLayer);
 
   // Set initial Extent
@@ -108,4 +111,9 @@ RasterFunction* RasterFunctionFile::createRasterFunction()
   rasterFunction->arguments()->setRaster("raster", m_raster);
 
   return rasterFunction;
+}
+
+bool RasterFunctionFile::ready() const
+{
+  return m_raster && m_raster->loadStatus() == LoadStatus::Loaded;
 }

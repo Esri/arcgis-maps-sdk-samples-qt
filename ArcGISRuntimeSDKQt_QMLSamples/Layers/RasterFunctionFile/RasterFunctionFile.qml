@@ -65,6 +65,7 @@ Rectangle {
     // Create a button to apply the raster function
     Rectangle {
         id: button
+        enabled: theRaster.loadStatus === Enums.LoadStatusLoaded
         property bool pressed: false
 
         anchors {
