@@ -37,6 +37,7 @@ RasterFunctionFileSample {
     // Create a button to apply the raster function
     Rectangle {
         id: button
+        enabled: ready
         property bool pressed: false
 
         anchors {
