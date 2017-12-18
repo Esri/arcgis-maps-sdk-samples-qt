@@ -23,7 +23,7 @@ CONFIG += c++11
 
 QT += opengl qml quick positioning sensors
 
-ARCGIS_RUNTIME_VERSION = 100.1
+ARCGIS_RUNTIME_VERSION = 100.2
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
@@ -58,6 +58,3 @@ android {
     DEPENDPATH += $$PWD
 }
 
-macx {
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.11
-}

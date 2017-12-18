@@ -23,6 +23,7 @@ namespace Esri
   {
     class Map;
     class MapQuickView;
+    class Raster;
     class RasterFunction;
   }
 }
@@ -33,6 +34,8 @@ class RasterFunctionFile : public QQuickItem
 {
   Q_OBJECT
 
+  Q_PROPERTY(bool ready READ ready NOTIFY readyChanged)
+
 public:
   explicit RasterFunctionFile(QQuickItem* parent = nullptr);
   ~RasterFunctionFile() = default;
@@ -41,12 +44,16 @@ public:
   static void init();
   Q_INVOKABLE void applyRasterFunction();
 
-private:
-  Esri::ArcGISRuntime::RasterFunction* createRasterFunction();
+signals:
+  void readyChanged();
 
 private:
+  Esri::ArcGISRuntime::RasterFunction* createRasterFunction();
+  bool ready() const;
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Raster* m_raster = nullptr;
   QString m_dataPath;
   QString m_rasterPath;
 };

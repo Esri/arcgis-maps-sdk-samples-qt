@@ -19,7 +19,6 @@
 #include <QQmlProperty>
 
 #include "DictionaryRenderer.h"
-#include "GeometryEngine.h"
 #include "GraphicListModel.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -47,6 +46,11 @@ void GODictionaryRenderer::init()
   qmlRegisterType<GODictionaryRenderer>("Esri.Samples", 1, 0, "GODictionaryRendererSample");
 }
 
+bool GODictionaryRenderer::graphicsLoaded() const
+{
+  return m_graphicsLoaded;
+}
+
 void GODictionaryRenderer::componentComplete()
 {
   QQuickItem::componentComplete();
@@ -67,11 +71,18 @@ void GODictionaryRenderer::componentComplete()
   // Create a map and give it to the MapView
   m_mapView = findChild<MapQuickView*>("mapView");
   m_map = new Map(Basemap::topographic(this), this);
-  m_mapView->setMap(m_map);
-  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
   parseXmlFile();
-  emit graphicsLoaded();
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
+
+  // The GraphicsOverlay will not have a valid extent until it is part of
+  // a MapQuickView with a valid spatial referenence
+  connect(m_mapView, &MapQuickView::spatialReferenceChanged, this, [this]()
+  {
+    zoomToGraphics();
+  });
+
+  m_mapView->setMap(m_map);
 }
 
 void GODictionaryRenderer::parseXmlFile()
@@ -141,6 +152,8 @@ void GODictionaryRenderer::parseXmlFile()
       }
     }
   }
+
+  emit graphicsLoadedChanged();
 }
 
 void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
@@ -172,7 +185,6 @@ void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
 
   if (!geom.isEmpty())
   {
-
     // Get rid of _control_points and _wkid. They are not needed in the graphic's
     // attributes.
     rawAttributes.remove(FIELD_CONTROL_POINTS);
@@ -180,11 +192,11 @@ void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
 
     Graphic* graphic = new Graphic(geom, rawAttributes, this);
     m_graphicsOverlay->graphics()->append(graphic);
-    m_bbox = m_bbox.isEmpty() ? graphic->geometry().extent() : GeometryEngine::unionOf(m_bbox.extent(),  graphic->geometry().extent()).extent();
   }
 }
 
 void GODictionaryRenderer::zoomToGraphics()
 {
-  m_mapView->setViewpointGeometry(m_bbox.extent(), 20);
+  if (m_graphicsOverlay)
+    m_mapView->setViewpointGeometry(m_graphicsOverlay->extent(), 20);
 }

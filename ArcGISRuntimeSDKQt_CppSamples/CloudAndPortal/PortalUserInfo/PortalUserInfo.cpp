@@ -25,7 +25,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-const QString PortalUserInfo::UNKNOWN = "????";
+const QString PortalUserInfo::UNKNOWN = "Unknown";
 
 PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),

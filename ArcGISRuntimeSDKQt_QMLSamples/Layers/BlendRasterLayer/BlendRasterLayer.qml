@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -29,6 +29,7 @@ Rectangle {
     property double scaleFactor: System.displayScaleFactor
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property bool editingRenderer: false
+    property bool useColorRamp: colorRampCtrl.value().length === 0
 
     SlopeTypeModel {
         id: slopeTypeModel
@@ -42,7 +43,7 @@ Rectangle {
         anchors.fill: parent
         Map {
             id: map
-            basemap: colorRampCtrl.value().length === 0 ?
+            basemap: useColorRamp ?
                          basemap :
                          basemapColorRamp
         }

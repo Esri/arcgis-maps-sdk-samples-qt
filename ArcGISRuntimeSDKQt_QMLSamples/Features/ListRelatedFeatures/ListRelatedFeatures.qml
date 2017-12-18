@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -130,8 +130,10 @@ Rectangle {
 
                         // show the attribute view
                         attributeView.height = 200 * scaleFactor
-                        mapView.setViewpointGeometryAndPadding(arcGISFeature.geometry, 100)
                     });
+
+                    // zoom to the feature
+                    mapView.setViewpointGeometryAndPadding(arcGISFeature.geometry, 100)
 
                     // query related features
                     selectedTable.queryRelatedFeatures(arcGISFeature);

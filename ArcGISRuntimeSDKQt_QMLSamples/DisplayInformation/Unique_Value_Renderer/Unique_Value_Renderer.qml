@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 
 Rectangle {
     width: 800
@@ -121,7 +121,7 @@ Rectangle {
                     yMin: 3573174.0
                     xMax: -12038972.0
                     yMax: 5309823.0
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
         }

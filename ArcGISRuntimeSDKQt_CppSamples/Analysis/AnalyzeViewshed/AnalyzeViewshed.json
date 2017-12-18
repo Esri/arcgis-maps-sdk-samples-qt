@@ -4,6 +4,6 @@
         "AnalyzeViewshed.h",
         "AnalyzeViewshed.cpp"
     ],
-    "name" : "Analyze viewshed"
+    "name" : "Viewshed (Geoprocessing)"
 }
 

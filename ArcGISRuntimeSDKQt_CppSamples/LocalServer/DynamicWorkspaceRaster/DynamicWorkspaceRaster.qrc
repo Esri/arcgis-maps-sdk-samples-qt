@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/LocalServer/DynamicWorkspaceRaster">
+        <file alias="sample.json">DynamicWorkspaceRaster.json</file>        
+        <file>DynamicWorkspaceRaster.qml</file>
+        <file>DynamicWorkspaceRaster.h</file>
+        <file>DynamicWorkspaceRaster.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

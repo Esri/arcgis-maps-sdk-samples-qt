@@ -72,7 +72,7 @@ void OfflineGeocode::componentComplete()
   basemap->baseLayers()->append(m_tiledLayer);
 
   // create map using basemap
-  m_map = new Map(basemap);
+  m_map = new Map(basemap, this);
   m_map->setInitialViewpoint(Viewpoint(Point(-13042254.715252, 3857970.236806, SpatialReference(3857)), 2e4));
 
   // Set map to map view

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 
 Rectangle {
     width: 800
@@ -52,7 +52,7 @@ Rectangle {
                     x: -4.49779155626782
                     y: 48.38282454039932
                     z: 62.013264927081764
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: SpatialReference { wkid: 4326 }
                 }
                 targetScale: 62.013264927081764
 
@@ -62,7 +62,7 @@ Rectangle {
                         x: -4.49779155626782
                         y: 48.38282454039932
                         z: 62.013264927081764
-                        spatialReference: SpatialReference.createWgs84()
+                        spatialReference: SpatialReference { wkid: 4326 }
                     }
                     heading: 41.64729875588979
                     pitch: 71.2017391571523

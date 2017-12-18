@@ -88,6 +88,7 @@ void FindRoute::componentComplete()
 
 void FindRoute::addStopGraphics()
 {
+  //! [FindRoute cpp addStopGraphics]
   // create the stop graphics' geometry
   Point stop1Geometry(-13041171, 3860988, SpatialReference(3857));
   Point stop2Geometry(-13041693, 3856006, SpatialReference(3857));
@@ -103,6 +104,7 @@ void FindRoute::addStopGraphics()
   // add to the overlay
   m_stopsGraphicsOverlay->graphics()->append(stop1Graphic);
   m_stopsGraphicsOverlay->graphics()->append(stop2Graphic);
+  //! [FindRoute cpp addStopGraphics]
 }
 
 // Helper function for creating picture marker symbols
@@ -144,8 +146,8 @@ void FindRoute::setupRouteTask()
   connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
   {
     // Add the route graphic once the solve completes
-    auto generatedRoute = routeResult.routes().at(0);
-    auto routeGraphic = new Graphic(generatedRoute.routeGeometry());
+    Route generatedRoute = routeResult.routes().at(0);
+    Graphic* routeGraphic = new Graphic(generatedRoute.routeGeometry(), this);
     m_routeGraphicsOverlay->graphics()->append(routeGraphic);
 
     // set the direction maneuver list model
@@ -175,9 +177,6 @@ void FindRoute::solveRoute()
     {
       // set parameters to return directions
       m_routeParameters.setReturnDirections(true);
-
-      // clear previous route graphics
-      m_routeGraphicsOverlay->graphics()->clear();
 
       // clear previous stops from the parameters
       m_routeParameters.clearStops();

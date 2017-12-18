@@ -1,5 +1,5 @@
 {
     "source" :  "AnalyzeViewshed.qml",
     "otherSourceFiles" :  [],
-    "name" : "Analyze viewshed"
+    "name" : "Viewshed (Geoprocessing)"
 }

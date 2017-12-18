@@ -27,11 +27,6 @@ GODictionaryRendererSample {
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
-    onGraphicsLoaded: {
-        zoomToGraphics();
-        progressBar_loading.visible = false;
-    }
-
     // Create MapView here, and create its Map and GraphicsOverlay in C++ code
     MapView {
         objectName: "mapView"
@@ -39,12 +34,12 @@ GODictionaryRendererSample {
     }
 
     ProgressBar {
-        id: progressBar_loading
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
             margins: 5 * scaleFactor
         }
         indeterminate: true
+        visible: graphicsLoaded
     }
 }

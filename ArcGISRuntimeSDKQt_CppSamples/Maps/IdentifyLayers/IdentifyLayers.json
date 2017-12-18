@@ -1,0 +1,8 @@
+{
+    "source" :  "IdentifyLayers.qml",
+    "otherSourceFiles" :  [
+        "IdentifyLayers.h",
+        "IdentifyLayers.cpp"
+    ],
+    "name" : "Identify layers"
+}

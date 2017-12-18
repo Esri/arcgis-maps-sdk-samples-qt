@@ -24,6 +24,7 @@ namespace Esri
     class ClosestFacilityTask;
     class Facility;
     class GraphicsOverlay;
+    class Graphic;
     class Map;
     class MapQuickView;
     class Point;
@@ -67,11 +68,15 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   QList<Esri::ArcGISRuntime::Facility> m_facilities;
-  Esri::ArcGISRuntime::ClosestFacilityTask* m_task;
+  Esri::ArcGISRuntime::ClosestFacilityTask* m_task = nullptr;
   Esri::ArcGISRuntime::ClosestFacilityParameters m_facilityParams;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_resultsOverlay;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_facilityOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_incidentsOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_resultsOverlay = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_routeGraphic = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_incidentGraphic = nullptr;
   bool m_busy = false;
-  QString m_message;
+  QString m_message;  
 
   static const QUrl facilityImageUrl;
   static const QUrl sanDiegoRegion;

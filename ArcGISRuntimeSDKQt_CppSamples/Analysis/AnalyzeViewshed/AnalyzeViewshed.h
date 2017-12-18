@@ -26,6 +26,7 @@ namespace Esri
     class GraphicsOverlay;
     class GeoprocessingTask;
     class GeoprocessingResult;
+    class Graphic;
   }
 }
 
@@ -56,8 +57,10 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_inputOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_resultsOverlay = nullptr;
   Esri::ArcGISRuntime::GeoprocessingTask* m_viewshedTask = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_inputGraphic = nullptr;
   bool m_viewshedInProgress = false;
   QString m_jobStatus;
+  QObject* m_graphicParent = nullptr;
 
 private:
   void connectSignals();

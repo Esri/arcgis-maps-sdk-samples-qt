@@ -100,7 +100,7 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
   SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10, this);
 
   // create a graphic and add each of them to the overlay
-  for (const auto& buoyPoint : pointsList)
+  for (const Point& buoyPoint : pointsList)
   {
     Graphic* graphic = new Graphic(buoyPoint, this);
     graphic->setSymbol(sms);

@@ -18,9 +18,9 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.1
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.2
 
 Rectangle {
     id: rootRectangle
@@ -281,9 +281,11 @@ Rectangle {
         anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
     }
 
+    /* Uncomment this section when running as standalone application
     AuthenticationView {
         authenticationManager: AuthenticationManager
     }
+    */
 
     MessageDialog {
         id: webMapMsg

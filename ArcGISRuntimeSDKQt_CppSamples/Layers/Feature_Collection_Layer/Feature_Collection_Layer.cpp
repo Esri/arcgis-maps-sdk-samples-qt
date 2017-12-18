@@ -116,7 +116,7 @@ void Feature_Collection_Layer::createPolylineTable()
   FeatureCollectionTable* linesTable =  new FeatureCollectionTable(lineFields, GeometryType::Polyline, SpatialReference(4326), this);
 
   // Define the renderer
-  SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor("green"), 3.0);
+  SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor("green"), 3.0, this);
   SimpleRenderer* renderer = new SimpleRenderer(sls, this);
   linesTable->setRenderer(renderer);
 
@@ -173,7 +173,7 @@ void Feature_Collection_Layer::addPolylineToTable(QString attrName, QString attr
   // Create the new feature
   Feature* feature = table->createFeature(this);
   feature->attributes()->replaceAttribute(attrName, attrValue);
-  PolylineBuilder* builder = new PolylineBuilder(SpatialReference(4326));
+  PolylineBuilder* builder = new PolylineBuilder(SpatialReference(4326), this);
   for (const Point& pt : points)
   {
     builder->addPoint(pt);
@@ -189,7 +189,7 @@ void Feature_Collection_Layer::addPolygonToTable(QString attrName, QString attrV
   // Create the new feature
   Feature* feature = table->createFeature(this);
   feature->attributes()->replaceAttribute(attrName, attrValue);
-  PolygonBuilder* builder = new PolygonBuilder(SpatialReference(4326));
+  PolygonBuilder* builder = new PolygonBuilder(SpatialReference(4326), this);
   for (const Point& pt : points)
   {
     builder->addPoint(pt);

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -62,7 +62,7 @@ Rectangle {
                 Point {
                     x: -10336141.70018318
                     y: 5418213.05332071
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
         }
@@ -102,10 +102,6 @@ Rectangle {
                                                                         horizontalAlignment: Enums.HorizontalAlignmentLeft,
                                                                         verticalAlignment: Enums.VerticalAlignmentBottom
                                                                     });
-
-                textSym.outlineColor = "black";
-                textSym.outlineWidth = 2;
-
                 textSym.haloColor = "white";
                 textSym.haloWidth = 2 + level;
 

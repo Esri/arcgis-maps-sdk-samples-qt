@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -173,6 +173,7 @@ Rectangle {
         Behavior on width { PropertyAnimation { duration: 500 } }
     }
 
+    //! [RasterStretchRenderer qml set renderers]
     function applyRendererSettings(){
         var rgbRenderer = ArcGISRuntimeEnvironment.createObject("StretchRenderer");
 
@@ -193,4 +194,5 @@ Rectangle {
 
         rasterLayer.renderer = rgbRenderer;
     }
+    //! [RasterStretchRenderer qml set renderers]
 }

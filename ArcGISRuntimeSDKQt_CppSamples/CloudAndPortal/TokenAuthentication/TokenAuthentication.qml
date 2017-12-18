@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.1
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.2
 
 TokenAuthenticationSample {
     id: authSample
@@ -30,13 +30,38 @@ TokenAuthenticationSample {
 
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
+
+        Column {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: mapView.attributionTop
+                margins: 10 * scaleFactor
+            }
+            spacing: 10 * scaleFactor
+
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: 14 * scaleFactor
+                text: "username/password: user1/user1"
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Load Secured Layer"
+                onClicked: loadSecuredLayer();
+            }
+        }
     }
 
+    // Uncomment this section when running as standalone application
+    /*
     // Declare an AuthenticationView
     AuthenticationView {
         anchors.fill: parent
         authenticationManager: authSample.authenticationManager // set the authenticationManager property (this needs to be registered)
     }
+    */
 }

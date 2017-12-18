@@ -4,6 +4,6 @@
         "UpdateAttributesFeatureService.h",
         "UpdateAttributesFeatureService.cpp"
     ],
-    "name" : "Update attributes feature service"
+    "name" : "Update attributes (feature service)"
 }
 

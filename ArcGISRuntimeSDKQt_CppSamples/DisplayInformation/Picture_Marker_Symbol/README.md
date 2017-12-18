@@ -1,4 +1,4 @@
-# Picture_Marker_Symbol
+# Picture marker symbol
 
 This sample demonstrates how to create `PictureMarkerSymbol`s from the different types of image resources.
 

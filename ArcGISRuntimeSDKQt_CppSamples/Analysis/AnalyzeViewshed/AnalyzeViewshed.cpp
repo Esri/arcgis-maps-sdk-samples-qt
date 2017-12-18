@@ -82,6 +82,8 @@ void AnalyzeViewshed::createOverlays()
 {
   // Create the graphics overlays for the input and output
   m_inputOverlay = new GraphicsOverlay(this);
+  m_inputGraphic = new Graphic(this);
+  m_inputOverlay->graphics()->append(m_inputGraphic);
   SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 12.0, this);
   SimpleRenderer* inputRenderer = new SimpleRenderer(sms, this);
   m_inputOverlay->setRenderer(inputRenderer);
@@ -107,14 +109,18 @@ void AnalyzeViewshed::connectSignals()
     // Indicate that the geoprocessing is running
     m_viewshedInProgress = true;
 
-    // Clear previous user click location and the viewshed geoprocessing task results
-    m_inputOverlay->graphics()->clear();
+    // Clear previous viewshed geoprocessing task results
     m_resultsOverlay->graphics()->clear();
+    if (m_graphicParent)
+    {
+      delete m_graphicParent;
+      m_graphicParent = nullptr;
+    }
 
     // Create a marker graphic where the user clicked on the map and add it to the existing graphics overlay
     Point mapPoint = m_mapView->screenToLocation(mouse.x(), mouse.y());
-    Graphic* inputGraphic = new Graphic(mapPoint);
-    m_inputOverlay->graphics()->append(inputGraphic);
+    if (m_inputGraphic)
+      m_inputGraphic->setGeometry(mapPoint);
 
     // Setup the geoprocessing task
     calculateViewshed();
@@ -207,12 +213,16 @@ void AnalyzeViewshed::processResults(GeoprocessingResult *results)
   // Get the results from the outputs as GeoprocessingFeatures
   GeoprocessingFeatures* viewshedResultFeatures = static_cast<GeoprocessingFeatures*>(results->outputs()["Viewshed_Result"]);
 
+  // Create the parent for the graphic
+  if (!m_graphicParent)
+    m_graphicParent = new QObject(this);
+
   // Add all the features from the result feature set as a graphics to the map
   FeatureIterator features = viewshedResultFeatures->features()->iterator();
   while (features.hasNext())
   {
     Feature* feat = features.next(this);
-    Graphic* graphic = new Graphic(feat->geometry(), this);
+    Graphic* graphic = new Graphic(feat->geometry(), m_graphicParent);
     m_resultsOverlay->graphics()->append(graphic);
   }
 }
