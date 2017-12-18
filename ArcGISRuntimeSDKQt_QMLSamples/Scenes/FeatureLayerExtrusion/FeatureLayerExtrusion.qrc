@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/FeatureLayerExtrusion">
+        <file alias="sample.json">FeatureLayerExtrusion.json</file>        
+        <file>FeatureLayerExtrusion.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

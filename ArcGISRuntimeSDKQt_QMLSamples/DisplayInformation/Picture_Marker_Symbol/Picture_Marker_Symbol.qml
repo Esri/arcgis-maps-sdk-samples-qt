@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 
 Rectangle {
     clip: true
@@ -24,6 +24,18 @@ Rectangle {
     height: 600
 
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+
+    ViewpointExtent {
+        id: startingVP
+
+        extent: Envelope {
+            xMin: -229100
+            xMax: -223300
+            yMin: 6550700
+            yMax: 6552100
+            spatialReference: SpatialReference { wkid: 3857 }
+        }
+    }
 
     // Map view UI presentation at top
     MapView {
@@ -33,20 +45,7 @@ Rectangle {
         Map {
             BasemapTopographic {}
 
-            Envelope {
-                id: envelope
-                xMin: -228835
-                xMax: -223560
-                yMin: 6550763
-                yMax: 6552021
-                spatialReference: SpatialReference.createWebMercator()
-            }
-
-            // set initial viewpoint using envelope with padding
-            onLoadStatusChanged: {
-                if (loadStatus === Enums.LoadStatusLoaded)
-                    mapView.setViewpointGeometryAndPadding(envelope, 30);
-            }
+            initialViewpoint: startingVP
         }
 
         GraphicsOverlay {
@@ -57,7 +56,7 @@ Rectangle {
                 Point {
                     x: -228835
                     y: 6550763
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
 
                 PictureMarkerSymbol {
@@ -73,7 +72,7 @@ Rectangle {
                 Point {
                     x: -223560
                     y: 6552021
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
 
                 PictureMarkerSymbol {
@@ -89,7 +88,7 @@ Rectangle {
                 Point {
                     x: -226773
                     y: 6550477
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
 
                 PictureMarkerSymbol {

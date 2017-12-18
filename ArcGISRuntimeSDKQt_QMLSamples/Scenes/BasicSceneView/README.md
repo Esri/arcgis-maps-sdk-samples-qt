@@ -1,4 +1,4 @@
-# Basic SceneView (URL)
+# Display a scene
 
 This sample demonstrates how to display a scene with an elevation surface.
 

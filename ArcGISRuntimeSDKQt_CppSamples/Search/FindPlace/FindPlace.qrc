@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/Samples/Search/FindPlace">
+        <file alias="sample.json">FindPlace.json</file>
+        <file>FindPlace.qml</file>
+        <file>FindPlace.h</file>
+        <file>FindPlace.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>find.png</file>
+        <file>red_pin.png</file>
+        <file>SearchBox.qml</file>
+        <file>SearchButton.qml</file>
+        <file>SuggestionView.qml</file>
+        <file>location.png</file>
+    </qresource>
+</RCC>

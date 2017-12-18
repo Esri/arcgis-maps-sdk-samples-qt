@@ -37,7 +37,7 @@ BasicSceneView::BasicSceneView(QWidget* parent) :
     m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
     // create a camera
-    Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 300.0);
+    Camera camera(28.4, 83.9, 10010.0, 10.0, 80.0, 0.0);
     // set the viewpoint to the camera
     m_sceneView->setViewpointCameraAndWait(camera);
 

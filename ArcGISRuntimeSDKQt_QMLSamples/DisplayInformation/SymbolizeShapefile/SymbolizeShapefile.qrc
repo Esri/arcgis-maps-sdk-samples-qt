@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/SymbolizeShapefile">
+        <file alias="sample.json">SymbolizeShapefile.json</file>        
+        <file>SymbolizeShapefile.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

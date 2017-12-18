@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -49,7 +49,7 @@ Rectangle {
                     yMin: 4537387
                     xMax: -13606734
                     yMax: 4558866
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
         }

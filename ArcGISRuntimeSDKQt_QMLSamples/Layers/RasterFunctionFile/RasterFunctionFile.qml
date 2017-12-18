@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -40,6 +40,7 @@ Rectangle {
                 opacity: 0.5
 
                 Raster {
+                    id: theRaster
                     path: rasterPath
                 }
             }
@@ -64,6 +65,7 @@ Rectangle {
     // Create a button to apply the raster function
     Rectangle {
         id: button
+        enabled: theRaster.loadStatus === Enums.LoadStatusLoaded
         property bool pressed: false
 
         anchors {
@@ -100,6 +102,7 @@ Rectangle {
         }
     }
 
+    //! [RasterFunctionFile qml raster from function]
     function applyRasterFunction() {
         // create raster function
         var rasterFunction = createRasterFunction();
@@ -132,11 +135,8 @@ Rectangle {
         if (!rasterFunction)
           return;
 
-        // set raster function arguments
-        var rasterArg1 = ArcGISRuntimeEnvironment.createObject("Raster", { path: rasterPath });
-        var rasterArg2 = ArcGISRuntimeEnvironment.createObject("Raster", { path: rasterPath });
-        rasterFunction.arguments.setRaster("raster", rasterArg1);
-        rasterFunction.arguments.setRaster("raster", rasterArg2);
+        rasterFunction.arguments.setRaster("raster", theRaster);
+        rasterFunction.arguments.setRaster("raster", theRaster);
 
         return rasterFunction;
     }
@@ -145,4 +145,5 @@ Rectangle {
         id: colorJson
         url: dataPath + "/color.json"
     }
+    //! [RasterFunctionFile qml raster from function]
 }

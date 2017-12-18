@@ -87,6 +87,7 @@ private:
   bool m_busy = true;
   QString m_message;
   SampleMode m_mode = SampleMode::Facility;
+  QObject* m_graphicParent = nullptr;
 };
 
 #endif // SERVICEAREA_H

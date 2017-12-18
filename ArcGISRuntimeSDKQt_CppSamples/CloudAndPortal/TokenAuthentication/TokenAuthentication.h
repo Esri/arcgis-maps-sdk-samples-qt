@@ -41,6 +41,7 @@ public:
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
+  Q_INVOKABLE void loadSecuredLayer();
 
 private:
   Esri::ArcGISRuntime::AuthenticationManager* authenticationManager() const;

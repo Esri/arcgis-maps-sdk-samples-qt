@@ -116,7 +116,7 @@ void MobileMap_SearchAndRoute::createMobileMapPackages(int index)
         if (m_fileInfoList[index].completeSuffix() == "mmpk")
         {
             // create a new MobileMapPackage
-            MobileMapPackage* mobileMapPackage = new MobileMapPackage(m_fileInfoList[index].absoluteFilePath());
+            MobileMapPackage* mobileMapPackage = new MobileMapPackage(m_fileInfoList[index].absoluteFilePath(), this);
 
             // once MMPK is finished loading, add it and its information to lists
             connect(mobileMapPackage, &MobileMapPackage::doneLoading, this, [mobileMapPackage, this](Error error)
@@ -199,7 +199,17 @@ void MobileMap_SearchAndRoute::resetMapView()
 
     // clear the graphics overlays and stops
     m_stopsGraphicsOverlay->graphics()->clear();
+    if (m_stopGraphicParent)
+    {
+      delete m_stopGraphicParent;
+      m_stopGraphicParent = nullptr;
+    }
     m_routeGraphicsOverlay->graphics()->clear();
+    if (m_routeGraphicParent)
+    {
+      delete m_routeGraphicParent;
+      m_routeGraphicParent = nullptr;
+    }
     m_stops.clear();
 }
 
@@ -249,8 +259,12 @@ void MobileMap_SearchAndRoute::selectMap(int index)
 
             if (geocodeResults.count() > 0)
             {
+                // create parent for the graphic
+                if (!m_stopGraphicParent)
+                  m_stopGraphicParent = new QObject(this);
+
                 // create a blue pin graphic to display location
-                Graphic* bluePinGraphic = new Graphic(geocodeResults[0].displayLocation(), m_bluePinSymbol, this);
+                Graphic* bluePinGraphic = new Graphic(geocodeResults[0].displayLocation(), m_bluePinSymbol, m_stopGraphicParent);
                 bluePinGraphic->attributes()->insertAttribute("AddressLabel", geocodeResults[0].label());
 
                 m_stopsGraphicsOverlay->graphics()->append(bluePinGraphic);
@@ -266,14 +280,14 @@ void MobileMap_SearchAndRoute::selectMap(int index)
                     m_stops << Stop(bluePinGraphic->geometry());
 
                     // create a Text Symbol to display stop number
-                    TextSymbol* textSymbol = new TextSymbol(this);
+                    TextSymbol* textSymbol = new TextSymbol(m_stopGraphicParent);
                     textSymbol->setText(QString::number(m_stops.count()));
                     textSymbol->setColor(QColor("white"));
                     textSymbol->setSize(18);
                     textSymbol->setOffsetY(m_bluePinSymbol->height() / 2);
 
                     // create a Graphic using the textSymbol
-                    Graphic* stopNumberGraphic = new Graphic(geocodeResults[0].displayLocation(), textSymbol, this);
+                    Graphic* stopNumberGraphic = new Graphic(geocodeResults[0].displayLocation(), textSymbol, m_stopGraphicParent);
                     m_stopsGraphicsOverlay->graphics()->append(stopNumberGraphic);
 
                     if (m_stops.count() > 1)
@@ -308,7 +322,9 @@ void MobileMap_SearchAndRoute::selectMap(int index)
         // create a graphic using the routeResult
         connect(m_currentRouteTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
         {
-            Graphic* routeGraphic = new Graphic(routeResult.routes()[0].routeGeometry());
+            if (!m_routeGraphicParent)
+              m_routeGraphicParent = new QObject(this);
+            Graphic* routeGraphic = new Graphic(routeResult.routes()[0].routeGeometry(), m_routeGraphicParent);
             m_routeGraphicsOverlay->graphics()->append(routeGraphic);
         });
     }
@@ -320,6 +336,11 @@ void MobileMap_SearchAndRoute::solveRoute()
 {
     // clear previously displayed routes
     m_routeGraphicsOverlay->graphics()->clear();
+    if (m_routeGraphicParent)
+    {
+      delete m_routeGraphicParent;
+      m_routeGraphicParent = nullptr;
+    }
 
     // set stops and solve route
     m_currentRouteParameters.setStops(m_stops);

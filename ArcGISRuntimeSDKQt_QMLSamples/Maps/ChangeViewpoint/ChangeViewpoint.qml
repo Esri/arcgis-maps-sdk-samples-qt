@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -30,12 +30,12 @@ Rectangle {
 
     PointBuilder {
         id: ptBuilder
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: SpatialReference { wkid: 4326 }
     }
 
     EnvelopeBuilder {
         id: envBuilder
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: SpatialReference { wkid: 4326 }
     }
 
     ViewpointExtent {

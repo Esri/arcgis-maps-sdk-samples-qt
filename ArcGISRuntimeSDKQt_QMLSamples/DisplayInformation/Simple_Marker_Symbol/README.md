@@ -1,4 +1,4 @@
-# Simple_Marker_Symbol
+# Simple marker symbol
 
 This sample demonstrates how to add a point graphic, symbolized by a red circle specified via a `SimpleMarkerSymbol`, to a `GraphicsOverlay`.
 

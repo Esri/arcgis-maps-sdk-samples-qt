@@ -144,6 +144,11 @@ void ServiceArea::reset()
     m_barrierBuilder = new PolylineBuilder(SpatialReference::webMercator(), this);
   }
   m_areasOverlay->graphics()->clear();
+  if (m_graphicParent)
+  {
+    delete m_graphicParent;
+    m_graphicParent = nullptr;
+  }
 }
 
 void ServiceArea::newBarrier()
@@ -155,7 +160,9 @@ void ServiceArea::newBarrier()
   }
 
   setBarrierMode();
-  m_barrierOverlay->graphics()->append(new Graphic(m_barrierBuilder->toPolyline(), this));
+  if (!m_graphicParent)
+    m_graphicParent = new QObject(this);
+  m_barrierOverlay->graphics()->append(new Graphic(m_barrierBuilder->toPolyline(), m_graphicParent));
 }
 
 bool ServiceArea::busy() const
@@ -239,8 +246,10 @@ void ServiceArea::setupRouting()
     for (int i = 0; i < numFacilities; ++i)
     {
       QList<ServiceAreaPolygon> results = serviceAreaResult.resultPolygons(i);
+      if (!m_graphicParent)
+        m_graphicParent = new QObject(this);
       for (const ServiceAreaPolygon& poly : results)
-        m_areasOverlay->graphics()->append(new Graphic(poly.geometry(), this));
+        m_areasOverlay->graphics()->append(new Graphic(poly.geometry(), m_graphicParent));
     }
   });
 
@@ -275,11 +284,15 @@ void ServiceArea::setupRouting()
 
 void ServiceArea::handleFacilityPoint(const Point &p)
 {
-  m_facilitiesOverlay->graphics()->append(new Graphic(p, this));
+  if (!m_graphicParent)
+    m_graphicParent = new QObject(this);
+  m_facilitiesOverlay->graphics()->append(new Graphic(p, m_graphicParent));
 }
 
 void ServiceArea::handleBarrierPoint(const Point &p)
 {
+  if (!m_graphicParent)
+    m_graphicParent = new QObject(this);
   m_barrierBuilder->addPoint(p);
   // update the geometry for the current barrier - or create 1 if it does not exist
   Graphic* barrier = m_barrierOverlay->graphics()->isEmpty() ?
@@ -289,5 +302,5 @@ void ServiceArea::handleBarrierPoint(const Point &p)
   if (barrier)
     barrier->setGeometry(m_barrierBuilder->toPolyline());
   else
-    m_barrierOverlay->graphics()->append(new Graphic(m_barrierBuilder->toPolyline(), this));
+    m_barrierOverlay->graphics()->append(new Graphic(m_barrierBuilder->toPolyline(), m_graphicParent));
 }

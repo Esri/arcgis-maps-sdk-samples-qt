@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 
 Rectangle {
     id: rootRectangle
@@ -45,10 +45,11 @@ Rectangle {
                     id: imageServiceRaster
                     url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"
 
-                    // zoom to the extent of the raster once it's loaded
+                    // zoom to the center of the raster once it's loaded
                     onLoadStatusChanged: {
                         if (loadStatus === Enums.LoadStatusLoaded) {
-                            mapView.setViewpointGeometry(imageServiceRaster.serviceInfo.fullExtent);
+                            var scale = 50000000.;
+                            mapView.setViewpointCenterAndScale(imageServiceRaster.serviceInfo.fullExtent.center, scale);
                         }
                     }
                 }

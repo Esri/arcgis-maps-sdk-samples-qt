@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 
 Rectangle {
     width: 800
@@ -55,13 +55,13 @@ Rectangle {
         id: camera
         heading: 10.0
         pitch: 80.0
-        roll: 300.0
+        roll: 0.0
 
         Point {
             x: 83.9
             y: 28.4
             z: 10010.0
-            spatialReference: SpatialReference.createWgs84()
+            spatialReference: SpatialReference { wkid: 4326 }
         }
     }
     //! [create the camera to be used as the scene view's viewpoint]

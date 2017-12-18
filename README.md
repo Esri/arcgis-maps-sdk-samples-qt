@@ -1,11 +1,10 @@
 # Overview
-ArcGIS Runtime SDK 100.1 for Qt samples for Qt Creator.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
+ArcGIS Runtime SDK 100.2 for Qt sample applications.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
 
 # Prerequisites
-* Qt SDK 5.6.2 or higher (Open source or commercial)
+* Qt SDK 5.9.2 or higher (Open source or commercial)
 * Qt Creator
-* For Windows: Microsoft Visual C++ Compiler 14.0 
-* For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/quartz/qml/guide/arcgis-runtime-sdk-for-qt-system-requirements.htm) page.
+* For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/latest/qml/guide/arcgis-runtime-sdk-for-qt-system-requirements.htm) page.
 
 ## Fork the repo
 If you haven't already, fork [the repo](https://github.com/Esri/arcgis-runtime-samples-qt/fork).
@@ -77,6 +76,12 @@ $ git merge upstream/master
 Start Qt Creator. When the IDE opens to the Welcome screen, click on the **Open Project** button and browse to a project file (.pro) within your forked repo location.
 Configure the project and run the sample.
 
+## Use a previous version
+The `master` branch contains samples for the current, most up-to-date version of ArcGIS Runtime. To access previous versions, you can checkout by a tag or commit, or alternativley you can download the source zip:
+
+- [100.0](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1529)
+- [100.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1744)
+
 ## Use offline data in the samples
 Some of the samples consume offline data, including TPKs, VTPKs, mobile geodatabases, and mobile map packages, among other data formats. If the sample does consume offline data, the sample's associated readme.md will note where you can download the data (from ArcGIS Online), and where the data can be placed once downloaded. For example, it may say something like:
 
@@ -96,7 +101,7 @@ iOS      | `<your app bundle>`| `<appbundle>/ArcGIS/Runtime/Data`  |
 
 ## Resources
 
-* [ArcGIS Runtime QtSDK Resource Center](https://developers.arcgis.com/qt/quartz/)
+* [ArcGIS Runtime QtSDK Resource Center](https://developers.arcgis.com/qt/latest/)
 * [Qt and QML](http://www.qt.io/)
 * [ArcGIS Blog](http://blogs.esri.com/esri/arcgis/)
 * [twitter@esri](http://twitter.com/esri)

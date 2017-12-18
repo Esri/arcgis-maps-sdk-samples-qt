@@ -64,7 +64,7 @@ void Picture_Marker_Symbol::componentComplete()
   m_mapView->setMap(m_map);
 
   // set initial viewpoint
-  m_mapView->setViewpointGeometry(Envelope(-228835, 6550763, -223560, 6552021, SpatialReference::webMercator()), 200);
+  m_map->setInitialViewpoint(Viewpoint(Envelope(-229100, 6550700, -223300, 6552100, SpatialReference::webMercator())));
 
   // create graphics overlay
   m_graphicsOverlay = new GraphicsOverlay(this);
@@ -82,7 +82,7 @@ void Picture_Marker_Symbol::componentComplete()
   addGraphic(blueSymbolPoint, blueSymbol);
 
   // create an orange symbol from a file path
-  PictureMarkerSymbol* orangeSymbol = new PictureMarkerSymbol(QUrl(m_dataPath + "/symbol/orange_symbol.png"));
+  PictureMarkerSymbol* orangeSymbol = new PictureMarkerSymbol(QUrl(m_dataPath + "/symbol/orange_symbol.png"), this);
   setWidthAndHeight(orangeSymbol, 64.0f);
   Point orangeSymbolPoint(-226773, 6550477, SpatialReference::webMercator());
   addGraphic(orangeSymbolPoint, orangeSymbol);
@@ -94,7 +94,7 @@ void Picture_Marker_Symbol::componentComplete()
 void Picture_Marker_Symbol::addGraphic(Point &point, PictureMarkerSymbol* symbol)
 {
   // create graphic
-  Graphic* graphic = new Graphic(point, symbol);
+  Graphic* graphic = new Graphic(point, symbol, this);
   // append to graphicsoverlay
   m_graphicsOverlay->graphics()->append(graphic);
 }

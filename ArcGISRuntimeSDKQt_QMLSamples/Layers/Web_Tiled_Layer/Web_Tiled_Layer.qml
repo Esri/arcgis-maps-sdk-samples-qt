@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.1
+import Esri.ArcGISRuntime 100.2
 
 Rectangle {
     id: rootRectangle
@@ -47,7 +47,7 @@ Rectangle {
                 Point {
                     x: -13167861
                     y: 4382202
-                    spatialReference: SpatialReference.createWebMercator()
+                    spatialReference: SpatialReference { wkid: 3857 }
                 }
                 targetScale: 50000
             }

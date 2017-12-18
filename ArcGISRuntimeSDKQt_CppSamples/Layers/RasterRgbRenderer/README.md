@@ -1,4 +1,4 @@
-# RGB Renderer
+# RGB renderer
 
 This sample demonstrates how to use rgb renderer on a raster layer.
 

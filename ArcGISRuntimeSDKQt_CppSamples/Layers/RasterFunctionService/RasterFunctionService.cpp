@@ -86,5 +86,7 @@ void RasterFunctionService::applyRasterFunction()
   //! [ImageServiceRaster Apply a raster function]
 
   m_map->operationalLayers()->clear();
+  //! [ImageServiceRaster cpp add raster operational]
   m_map->operationalLayers()->append(rasterLayer);
+  //! [ImageServiceRaster cpp add raster operational]
 }
