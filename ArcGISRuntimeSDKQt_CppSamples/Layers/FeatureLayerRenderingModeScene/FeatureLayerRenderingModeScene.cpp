@@ -57,7 +57,7 @@ void FeatureLayerRenderingModeScene::componentComplete()
   addFeatureLayers(topScene);
   m_topSceneView->setArcGISScene(topScene);
 
-  // Create a scene for static rendering
+  // Create a scene for dynamic rendering
   m_bottomSceneView = findChild<SceneQuickView*>("bottomSceneView");
   Scene* bottomScene = new Scene(this);
   bottomScene->loadSettings()->setPreferredPointFeatureRenderingMode(FeatureRenderingMode::Dynamic);
