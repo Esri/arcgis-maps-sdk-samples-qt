@@ -1,0 +1,5 @@
+{
+    "source" :  "StatisticalQueryGroupSort.qml",
+    "otherSourceFiles" :  [],
+    "name" : "Statistical query (group & sort)"
+}
