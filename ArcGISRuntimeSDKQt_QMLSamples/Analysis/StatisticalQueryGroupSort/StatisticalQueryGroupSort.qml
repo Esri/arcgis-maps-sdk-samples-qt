@@ -28,8 +28,11 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
 
     ServiceFeatureTable {
+        id: censusTable
         url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3"
+
         Component.onCompleted: load();
+
         onLoadStatusChanged: {
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
@@ -38,8 +41,42 @@ Rectangle {
             for (var i = 0; i < fields.length; i++) {
                 fieldModel.push(fields[i].name)
             }
-            console.log(fieldModel)
             statisticOptionsPage.fields = fieldModel;
+        }
+
+        onQueryStatisticsStatusChanged: {
+            if (queryStatisticsStatus === Enums.TaskStatusErrored) {
+                resultsModel.clear();
+                resultsModel.append({"section": "", "statistic": "Error. %1".arg(error.message)});
+                return;
+            }
+
+            if (queryStatisticsStatus !== Enums.TaskStatusCompleted)
+                return;
+
+            // reset the model and check the results
+            resultsModel.clear();
+            if (!queryStatisticsResult) {
+                resultsModel.append({"section": "", "statistic": "Error. %1".arg(error.message)});
+                return;
+            }
+
+            // iterate the results and add to a model
+            var iter = queryStatisticsResult.iterator;
+            while (iter.hasNext) {
+                var record = iter.next();
+                var sectionString = JSON.stringify(record.group).replace("{","").replace("}","");
+
+                for (var statKey in record.statistics) {
+                    if (record.statistics.hasOwnProperty(statKey)) {
+                        var result = {
+                            "section" : sectionString,
+                            "statistic" : statKey + ": " + record.statistics[statKey]
+                        };
+                        resultsModel.append(result)
+                    }
+                }
+            }
         }
     }
 
@@ -47,17 +84,93 @@ Rectangle {
         id: stackView
         anchors.fill: parent
 
+        // Initial page is the OptionsPage
         initialItem: OptionsPage {
             id: statisticOptionsPage
             width: parent.width
             height: parent.height
-            onStatisticButtonClicked: stackView.push(resultsPage)
+            onStatisticButtonClicked: {
+                // create the parameter object
+                var params = ArcGISRuntimeEnvironment.createObject("StatisticsQueryParameters");
+
+                // add the statistic definition objects
+                var statisticDefinitions = [];
+                for (var i = 0; i < statisticsModel.count; i++) {
+                    var statistic = statisticsModel.get(i);
+                    var definition = ArcGISRuntimeEnvironment.createObject("StatisticDefinition", {
+                                                                               onFieldName: statistic.field,
+                                                                               statisticType: statisticStringToEnum(statistic.statistic)
+                                                                           });
+                    statisticDefinitions.push(definition);
+                }
+                params.statisticDefinitions = statisticDefinitions;
+
+                // add the order by objects
+                var orderBys = [];
+                var orderFields = [];
+                for (var j = 0; j < groupingModel.count; j++) {
+                    var group = groupingModel.get(j);
+                    var orderBy = ArcGISRuntimeEnvironment.createObject("OrderBy", {
+                                                                            fieldName: group.field,
+                                                                            sortOrder: orderStringToEnum(group.grouping)
+                                                                        });
+                    orderBys.push(orderBy);
+                    orderFields.push(group.field);
+                }
+                params.orderByFields = orderBys;
+                params.groupByFieldNames = orderFields;
+
+                // execute the query
+                censusTable.queryStatistics(params);
+
+                // show the results page
+                stackView.push(resultsPage);
+            }
         }
 
+        // The ResultsPage is shown when a query is executed
         ResultsPage {
             id: resultsPage
             width: parent.width
             height: parent.height
+            statisticResult: resultsModel
+            onBackClicked: stackView.pop();
         }
+    }
+
+    // helper to convert from statistic type string to enum
+    function statisticStringToEnum(statString) {
+        switch(statString) {
+        default:
+        case "Average":
+            return Enums.StatisticTypeAverage;
+        case "Count":
+            return Enums.StatisticTypeCount;
+        case "Maximum":
+            return Enums.StatisticTypeMaximum;
+        case "Minimum":
+            return Enums.StatisticTypeMinimum;
+        case "Standard Deviation":
+            return Enums.StatisticTypeStandardDeviation;
+        case "Sum":
+            return Enums.StatisticTypeSum;
+        case "Variance":
+            return Enums.StatisticTypeVariance;
+        }
+    }
+
+    // helper to convert from sort order string to enum
+    function orderStringToEnum(orderString) {
+        switch(orderString) {
+        default:
+        case "Ascending":
+            return Enums.SortOrderAscending;
+        case "Descending":
+            return Enums.SortOrderDescending;
+        }
+    }
+
+    ListModel {
+        id: resultsModel
     }
 }
