@@ -23,19 +23,72 @@ Rectangle {
     signal statisticButtonClicked()
     property var fields: null
     property var statisticTypes: ["Average", "Count", "Maximum", "Minimum", "Standard Deviation", "Sum", "Variance"]
-    property var statisticsModel: [{field: "POP2007", statistic: "Sum"}, {field: "POP2007", statistic: "Average"}, {field: "AGE_5_17", statistic: "Minimum"}]
-    property var groupingModel: [{field: "SUB_REGION", grouping: "Ascending"}]
+    property alias statisticsModel: statisticsModel
+    property alias groupingModel: groupingModel
+    property real labelTextSize: 12 * scaleFactor
 
+    // Setup a list model with some defaults pre-set
+    ListModel {
+        id: statisticsModel
+
+        ListElement {
+            field: "POP2007"
+            statistic: "Sum"
+        }
+        ListElement {
+            field: "POP2007"
+            statistic: "Average"
+        }
+        ListElement {
+            field: "AGE_5_17"
+            statistic: "Minimum"
+        }
+    }
+
+    // Setup a list model with some defaults pre-set
+    ListModel {
+        id: groupingModel
+
+        ListElement {
+            field: "SUB_REGION"
+            grouping: "Ascending"
+        }
+    }
+
+    // Create a Title Bar for the Options Page
+    Rectangle {
+        id: titleBar
+        anchors {
+            left: parent.left
+            top: parent.top
+            right: parent.right
+        }
+        color: "#005e95"
+        height: 40 * scaleFactor
+        clip: true
+
+        Text {
+            anchors.centerIn: parent
+            text: "Statistics: US States"
+            color: "white"
+            font.pixelSize: 28 * scaleFactor
+        }
+    }
+
+    // Create a Flickable Column to hold the various options for configuring statistics
     Flickable {
         id: flickable
         anchors {
-            fill: parent
+            top: titleBar.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
             margins: 10 * scaleFactor
         }
-
         contentWidth: column.width
         contentHeight: column.height
         flickableDirection: Flickable.VerticalFlick
+        clip: true
 
         Column {
             id: column
@@ -44,7 +97,7 @@ Rectangle {
 
             Rectangle {
                 width: pageWidth
-                height: 250 * scaleFactor
+                height: 225 * scaleFactor
                 color: "transparent"
                 clip: true
                 border {
@@ -59,12 +112,6 @@ Rectangle {
                     }
                     spacing: 5 * scaleFactor
 
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: "Statistics: US States"
-                        font.underline: true
-                    }
-
                     Row {
                         anchors.horizontalCenter: parent.horizontalCenter
                         spacing: 5 * scaleFactor
@@ -72,38 +119,40 @@ Rectangle {
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             text: "Field"
+                            font.pixelSize: labelTextSize
                         }
 
                         ComboBox {
                             id: fieldComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             model: fields
+                            width: 100 * scaleFactor
                         }
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             text: "Type"
+                            font.pixelSize: labelTextSize
                         }
 
                         ComboBox {
                             id: statisticComboBox
                             anchors.verticalCenter: parent.verticalCenter
                             model: statisticTypes
+                            width: 100 * scaleFactor
                         }
 
                         Button {
                             text: "+"
-                            width: 25 * scaleFactor
-                            onClicked: {
-                                statisticsModel.push({field: fieldComboBox.currentText, statistic: statisticComboBox.currentText});
-                                statisticsModelChanged();
-                            }
+                            width: 30 * scaleFactor
+                            height: width
+                            onClicked: statisticsModel.append({field: fieldComboBox.currentText, statistic: statisticComboBox.currentText});
                         }
                     }
 
                     Rectangle {
                         width: parent.width
-                        height: 150 * scaleFactor
+                        height: 125 * scaleFactor
                         color: "transparent"
                         clip: true
                         border {
@@ -120,11 +169,9 @@ Rectangle {
                             highlightFollowsCurrentItem: true
                             model: statisticsModel
                             clip: true
-                            highlight: Rectangle {
-                                color: "cyan"
-                                opacity: 0.9
-                            }
-                            highlightResizeVelocity: 100000
+                            highlight: highlightRectangle
+                            highlightResizeVelocity: 1000000
+                            highlightMoveVelocity: 1000000
 
                             delegate: Item {
                                 width: parent.width
@@ -134,10 +181,12 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     spacing: 10 * scaleFactor
                                     Text {
-                                        text: modelData.field
+                                        text: field
+                                        font.pixelSize: labelTextSize
                                     }
                                     Text {
-                                        text: "(%1)".arg(modelData.statistic)
+                                        text: "(%1)".arg(statistic)
+                                        font.pixelSize: labelTextSize
                                     }
                                 }
 
@@ -154,10 +203,7 @@ Rectangle {
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Remove Statistic"
-                        onClicked: {
-                            statisticsModel.splice(statisticView.currentIndex, 1);
-                            statisticsModelChanged();
-                        }
+                        onClicked: statisticsModel.remove(statisticView.currentIndex, 1);
                     }
                 }
             }
@@ -165,7 +211,7 @@ Rectangle {
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width
-                height: 200 * scaleFactor
+                height: 175 * scaleFactor
                 spacing: 5 * scaleFactor
 
                 Column {
@@ -175,11 +221,12 @@ Rectangle {
 
                     Text {
                         text: "Group Field(s):"
+                        font.pixelSize: labelTextSize
                     }
 
                     Rectangle {
                         width: parent.width
-                        height: 175 * scaleFactor
+                        height: 125 * scaleFactor
                         color: "transparent"
                         border {
                             width: 1 * scaleFactor
@@ -193,12 +240,9 @@ Rectangle {
                                 fill: parent
                                 margins: 5 * scaleFactor
                             }
-                            highlight: Rectangle {
-                                color: "cyan"
-                                opacity: 0.9
-                            }
-                            highlightResizeVelocity: 100000
-
+                            highlight: highlightRectangle
+                            highlightResizeVelocity: 1000000
+                            highlightMoveVelocity: 1000000
                             clip: true
                             model: fields
                             delegate: Item {
@@ -208,6 +252,7 @@ Rectangle {
                                 Text {
                                     anchors.verticalCenter: parent.verticalCenter
                                     text: modelData
+                                    font.pixelSize: labelTextSize
                                 }
 
                                 MouseArea {
@@ -228,21 +273,25 @@ Rectangle {
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: 25 * scaleFactor
-                        text: ">>"
+                        width: 30 * scaleFactor
+                        height: width
+                        text: ">"
                         onClicked: {
-                            groupingModel.push({field: statisticsModel[fieldView.currentIndex].field, grouping: "Ascending"});
-                            groupingModelChanged();
+                            // return if the field is already added
+                            for (var i =  0; i < groupingModel.count; i++) {
+                                if (groupingModel.get(i).field === fields[fieldView.currentIndex])
+                                    return;
+                            };
+                            groupingModel.append({field: fields[fieldView.currentIndex], grouping: "Ascending"});
                         }
                     }
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: 25 * scaleFactor
-                        text: "<<"
-                        onClicked: {
-
-                        }
+                        width: 30 * scaleFactor
+                        height: width
+                        text: "<"
+                        onClicked: groupingModel.remove(groupingView.currentIndex, 1);
                     }
                 }
 
@@ -253,11 +302,12 @@ Rectangle {
 
                     Text {
                         text: "Order by Field:"
+                        font.pixelSize: labelTextSize
                     }
 
                     Rectangle {
                         width: parent.width
-                        height: 175 * scaleFactor
+                        height: 100 * scaleFactor
                         color: "transparent"
                         border {
                             width: 1 * scaleFactor
@@ -271,11 +321,9 @@ Rectangle {
                                 fill: parent
                                 margins: 5 * scaleFactor
                             }
-                            highlight: Rectangle {
-                                color: "cyan"
-                                opacity: 0.9
-                            }
-                            highlightResizeVelocity: 100000
+                            highlight: highlightRectangle
+                            highlightResizeVelocity: 1000000
+                            highlightMoveVelocity: 1000000
 
                             clip: true
                             model: groupingModel
@@ -287,20 +335,32 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     spacing: 10 * scaleFactor
                                     Text {
-                                        text: modelData.field
+                                        text: field
+                                        font.pixelSize: labelTextSize
                                     }
                                     Text {
-                                        text: "(%1)".arg(modelData.grouping)
+                                        text: "(%1)".arg(grouping)
+                                        font.pixelSize: labelTextSize
                                     }
                                 }
 
                                 MouseArea {
                                     anchors.fill: parent
-                                    onClicked: {
-                                        statisticView.currentIndex = index;
-                                    }
+                                    onClicked: groupingView.currentIndex = index;
                                 }
                             }
+                        }
+                    }
+
+                    Button {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: "Change Sort Order"
+                        onClicked: {
+                            var i = groupingView.currentIndex;
+                            if (groupingModel.get(i).grouping === "Ascending")
+                                groupingModel.get(i).grouping = "Descending";
+                            else
+                                groupingModel.get(i).grouping = "Ascending";
                         }
                     }
                 }
@@ -313,6 +373,14 @@ Rectangle {
                 text: "<u><b>Get Statistics</b></u>"
                 onClicked: statisticButtonClicked()
             }
+        }
+    }
+
+    Component {
+        id: highlightRectangle
+        Rectangle {
+            color: "cyan"
+            opacity: 0.4
         }
     }
 }
