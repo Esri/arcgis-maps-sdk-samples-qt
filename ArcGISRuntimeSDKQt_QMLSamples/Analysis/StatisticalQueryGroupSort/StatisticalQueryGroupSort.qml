@@ -39,7 +39,7 @@ Rectangle {
 
             var fieldModel = [];
             for (var i = 0; i < fields.length; i++) {
-                fieldModel.push(fields[i].name)
+                fieldModel.push(fields[i].name);
             }
             statisticOptionsPage.fields = fieldModel;
         }
@@ -105,20 +105,20 @@ Rectangle {
                 }
                 params.statisticDefinitions = statisticDefinitions;
 
+                // set the grouping fields
+                params.groupByFieldNames = groupingFields;
+
                 // add the order by objects
                 var orderBys = [];
-                var orderFields = [];
-                for (var j = 0; j < groupingModel.count; j++) {
-                    var group = groupingModel.get(j);
+                for (var j = 0; j < orderByModel.count; j++) {
+                    var group = orderByModel.get(j);
                     var orderBy = ArcGISRuntimeEnvironment.createObject("OrderBy", {
                                                                             fieldName: group.field,
                                                                             sortOrder: orderStringToEnum(group.grouping)
                                                                         });
                     orderBys.push(orderBy);
-                    orderFields.push(group.field);
                 }
                 params.orderByFields = orderBys;
-                params.groupByFieldNames = orderFields;
 
                 // execute the query
                 censusTable.queryStatistics(params);
