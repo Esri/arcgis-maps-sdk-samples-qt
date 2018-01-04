@@ -39,7 +39,7 @@ Rectangle {
                     verticalCenter: parent.verticalCenter
                 }
                 height: 30 * scaleFactor
-                width: height
+                width: 100 * scaleFactor
 
                 MouseArea {
                     anchors.fill: parent
@@ -47,11 +47,15 @@ Rectangle {
                 }
 
                 Text {
-                    anchors.centerIn: parent
-                    text: "<"
+                    anchors {
+                        left: parent.left
+                        verticalCenter: parent.verticalCenter
+                    }
+
+                    text: "< Options"
                     color: "white"
                     font {
-                        pixelSize: 26 * scaleFactor
+                        pixelSize: 18 * scaleFactor
                         bold: true
                     }
                 }
