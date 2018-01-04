@@ -22,9 +22,10 @@ Rectangle {
     property real pageWidth: rootOptionsPage.width - flickable.anchors.margins * 2
     signal statisticButtonClicked()
     property var fields: null
+    property var groupingFields: ["SUB_REGION"]
     property var statisticTypes: ["Average", "Count", "Maximum", "Minimum", "Standard Deviation", "Sum", "Variance"]
     property alias statisticsModel: statisticsModel
-    property alias groupingModel: groupingModel
+    property alias orderByModel: orderByModel
     property real labelTextSize: 12 * scaleFactor
 
     // Setup a list model with some defaults pre-set
@@ -47,7 +48,7 @@ Rectangle {
 
     // Setup a list model with some defaults pre-set
     ListModel {
-        id: groupingModel
+        id: orderByModel
 
         ListElement {
             field: "SUB_REGION"
@@ -249,17 +250,27 @@ Rectangle {
                                 width: parent.width
                                 height: 25 * scaleFactor
 
-                                Text {
+                                CheckBox {
                                     anchors.verticalCenter: parent.verticalCenter
                                     text: modelData
-                                    font.pixelSize: labelTextSize
-                                }
+                                    checked: text === "SUB_REGION"
+                                    onCheckedChanged: {
+                                        if (checked) {
+                                            groupingFields.push(text);
+                                        } else {
+                                            // remove the item from the selected list
+                                            var i = groupingFields.indexOf(text);
+                                            if (i !== -1)
+                                                groupingFields.splice(i, 1);
 
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: {
-                                        fieldView.currentIndex = index;
+                                            // remove the item from the orderBy list
+                                            for (var j = 0; j < orderByModel.count; j++) {
+                                                if (orderByModel.get(j).field === text)
+                                                    orderByModel.remove(j, 1);
+                                            }
+                                        }
                                     }
+                                    onClicked: fieldView.currentIndex = index;
                                 }
                             }
                         }
@@ -277,12 +288,16 @@ Rectangle {
                         height: width
                         text: ">"
                         onClicked: {
+                            // return if the field is not selected
+                            if (groupingFields.indexOf(fields[fieldView.currentIndex]) === -1)
+                                return;
+
                             // return if the field is already added
-                            for (var i =  0; i < groupingModel.count; i++) {
-                                if (groupingModel.get(i).field === fields[fieldView.currentIndex])
+                            for (var i =  0; i < orderByModel.count; i++) {
+                                if (orderByModel.get(i).field === fields[fieldView.currentIndex])
                                     return;
                             };
-                            groupingModel.append({field: fields[fieldView.currentIndex], grouping: "Ascending"});
+                            orderByModel.append({field: fields[fieldView.currentIndex], grouping: "Ascending"});
                         }
                     }
 
@@ -291,7 +306,7 @@ Rectangle {
                         width: 30 * scaleFactor
                         height: width
                         text: "<"
-                        onClicked: groupingModel.remove(groupingView.currentIndex, 1);
+                        onClicked: orderByModel.remove(groupingView.currentIndex, 1);
                     }
                 }
 
@@ -326,7 +341,7 @@ Rectangle {
                             highlightMoveVelocity: 1000000
 
                             clip: true
-                            model: groupingModel
+                            model: orderByModel
                             delegate: Item {
                                 width: parent.width
                                 height: 25 * scaleFactor
@@ -357,10 +372,10 @@ Rectangle {
                         text: "Change Sort Order"
                         onClicked: {
                             var i = groupingView.currentIndex;
-                            if (groupingModel.get(i).grouping === "Ascending")
-                                groupingModel.get(i).grouping = "Descending";
+                            if (orderByModel.get(i).grouping === "Ascending")
+                                orderByModel.get(i).grouping = "Descending";
                             else
-                                groupingModel.get(i).grouping = "Ascending";
+                                orderByModel.get(i).grouping = "Ascending";
                         }
                     }
                 }
