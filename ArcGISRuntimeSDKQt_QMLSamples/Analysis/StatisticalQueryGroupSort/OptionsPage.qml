@@ -201,9 +201,7 @@ Rectangle {
 
                                 MouseArea {
                                     anchors.fill: parent
-                                    onClicked: {
-                                        statisticView.currentIndex = index;
-                                    }
+                                    onClicked: statisticView.currentIndex = index;
                                 }
                             }
                         }
@@ -278,6 +276,7 @@ Rectangle {
                                             }
                                         }
                                     }
+
                                     onClicked: fieldView.currentIndex = index;
                                 }
                             }

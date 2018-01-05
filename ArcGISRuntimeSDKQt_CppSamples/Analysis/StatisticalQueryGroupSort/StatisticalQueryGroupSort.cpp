@@ -135,7 +135,6 @@ void StatisticalQueryGroupSort::queryStatistics()
     StatisticDefinition statisticDefinition;
     statisticDefinition.setOnFieldName(definitionMap["field"].toString());
     statisticDefinition.setStatisticType(statisticStringToEnum(definitionMap["statistic"].toString()));
-    qDebug() << statisticDefinition.onFieldName() << definitionMap["statistic"].toString();
     statisticDefinitionList.append(statisticDefinition);
   }
   params.setStatisticDefinitions(statisticDefinitionList);
