@@ -114,7 +114,7 @@ Rectangle {
                     var group = orderByModel.get(j);
                     var orderBy = ArcGISRuntimeEnvironment.createObject("OrderBy", {
                                                                             fieldName: group.field,
-                                                                            sortOrder: orderStringToEnum(group.grouping)
+                                                                            sortOrder: orderStringToEnum(group.order)
                                                                         });
                     orderBys.push(orderBy);
                 }

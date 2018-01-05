@@ -20,40 +20,12 @@ Rectangle {
 
     property real pageWidth: rootOptionsPage.width - flickable.anchors.margins * 2
     signal statisticButtonClicked()
-    property var fields: null
-    property var groupingFields: []
-    property var statisticTypes: ["Average", "Count", "Maximum", "Minimum", "Standard Deviation", "Sum", "Variance"]
-    property alias statisticsModel: statisticsModel
-    property alias orderByModel: orderByModel
+    property var fields: rootRectangle.fields
+    property var groupingFields: rootRectangle.groupingFields
+    property var statisticTypes: rootRectangle.statisticTypes
+    property var statisticsModel: rootRectangle.statisticDefinitions
+    property var orderByModel: rootRectangle.orderBys
     property real labelTextSize: 12 * scaleFactor
-
-    // Setup a list model with some defaults pre-set
-    ListModel {
-        id: statisticsModel
-
-        ListElement {
-            field: "POP2007"
-            statistic: "Sum"
-        }
-        ListElement {
-            field: "POP2007"
-            statistic: "Average"
-        }
-        ListElement {
-            field: "AGE_5_17"
-            statistic: "Minimum"
-        }
-    }
-
-    // Setup a list model with some defaults pre-set
-    ListModel {
-        id: orderByModel
-
-        ListElement {
-            field: "SUB_REGION"
-            order: "Ascending"
-        }
-    }
 
     // Create a Title Bar for the Options Page
     Rectangle {
@@ -146,16 +118,7 @@ Rectangle {
                             text: "+"
                             width: 30 * scaleFactor
                             height: width
-                            onClicked: {
-                                for (var i = 0; i < statisticsModel.count; i++) {
-                                    if (statisticsModel.get(i).field === fieldComboBox.currentText) {
-                                        if (statisticsModel.get(i).statistic === statisticComboBox.currentText)
-                                            return;
-                                    }
-                                }
-
-                                statisticsModel.append({field: fieldComboBox.currentText, statistic: statisticComboBox.currentText});
-                            }
+                            onClicked: rootRectangle.addStatisticDefinition(fieldComboBox.currentText, statisticComboBox.currentText);
                         }
                     }
 
@@ -190,11 +153,11 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     spacing: 10 * scaleFactor
                                     Text {
-                                        text: field
+                                        text: modelData.field
                                         font.pixelSize: labelTextSize
                                     }
                                     Text {
-                                        text: "(%1)".arg(statistic)
+                                        text: "(%1)".arg(modelData.statistic)
                                         font.pixelSize: labelTextSize
                                     }
                                 }
@@ -212,7 +175,7 @@ Rectangle {
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Remove Statistic"
-                        onClicked: statisticsModel.remove(statisticView.currentIndex, 1);
+                        onClicked: rootRectangle.removeStatisticDefinition(statisticView.currentIndex);
                     }
                 }
             }
@@ -263,20 +226,11 @@ Rectangle {
                                     text: modelData
                                     checked: text === "SUB_REGION"
                                     onCheckedChanged: {
-                                        if (checked) {
-                                            groupingFields.push(text);
-                                        } else {
-                                            // remove the item from the selected list
-                                            var i = groupingFields.indexOf(text);
-                                            if (i !== -1)
-                                                groupingFields.splice(i, 1);
+                                        if (checked)
+                                            rootRectangle.addGroupingField(text);
+                                        else
+                                            rootRectangle.removeGroupingField(text);
 
-                                            // remove the item from the orderBy list
-                                            for (var j = 0; j < orderByModel.count; j++) {
-                                                if (orderByModel.get(j).field === text)
-                                                    orderByModel.remove(j, 1);
-                                            }
-                                        }
                                     }
                                     onClicked: fieldView.currentIndex = index;
                                 }
@@ -300,14 +254,8 @@ Rectangle {
                             if (groupingFields.indexOf(fields[fieldView.currentIndex]) === -1)
                                 return;
 
-                            // return if the field is already added
-                            for (var i =  0; i < orderByModel.count; i++) {
-                                if (orderByModel.get(i).field === fields[fieldView.currentIndex])
-                                    return;
-                            };
-
                             // add the data to the model
-                            orderByModel.append({field: fields[fieldView.currentIndex], order: "Ascending"});
+                            rootRectangle.addOrderBy(fields[fieldView.currentIndex], "Ascending")
                         }
                     }
 
@@ -316,7 +264,7 @@ Rectangle {
                         width: 30 * scaleFactor
                         height: width
                         text: "<"
-                        onClicked: orderByModel.remove(groupingView.currentIndex, 1);
+                        onClicked: rootRectangle.removeOrderBy(groupingView.currentIndex);
                     }
                 }
 
@@ -360,11 +308,11 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     spacing: 10 * scaleFactor
                                     Text {
-                                        text: field
+                                        text: modelData.field
                                         font.pixelSize: labelTextSize
                                     }
                                     Text {
-                                        text: "(%1)".arg(order)
+                                        text: "(%1)".arg(modelData.order)
                                         font.pixelSize: labelTextSize
                                     }
                                 }
