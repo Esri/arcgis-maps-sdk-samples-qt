@@ -164,9 +164,7 @@ Rectangle {
 
                                 MouseArea {
                                     anchors.fill: parent
-                                    onClicked: {
-                                        statisticView.currentIndex = index;
-                                    }
+                                    onClicked: statisticView.currentIndex = index;
                                 }
                             }
                         }
@@ -225,13 +223,14 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     text: modelData
                                     checked: text === "SUB_REGION"
+
                                     onCheckedChanged: {
                                         if (checked)
                                             rootRectangle.addGroupingField(text);
                                         else
                                             rootRectangle.removeGroupingField(text);
-
                                     }
+
                                     onClicked: fieldView.currentIndex = index;
                                 }
                             }
