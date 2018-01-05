@@ -1,6 +1,6 @@
 # Feature layer rendering mode (map)
 
-This sample demonstrates the differences between static and dynamic rendering mode for a FeatureLayer in a map.
+This sample demonstrates the differences between static and dynamic rendering mode for a FeatureLayer in a Map.
 
 ![](screenshot.png)
 
