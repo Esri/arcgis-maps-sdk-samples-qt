@@ -5,7 +5,7 @@ This sample demonstrates how to query a feature table to get statistics for one 
 ![](screenshot.png)
 
 ## How it works
-A `ServiceFeatureTable` is created with the `URL` to the REST endpoing of a feature service. `StatisticQueryParameters` are created, and the `statisticDefinitions` list, `groupByFieldNames` list, and the `orderByFields` list are set on the parameters, matching the options selected in the UI. Next, `queryStatistics()` is executed on the `ServiceFeatureTable`. A signal handler is created for the `queryStatisticsStatusChanged` signal, and once this signal emits, the `StatisticQueryResult` is hydrated with the results from the statistical query.
+A `ServiceFeatureTable` is created with the `URL` to the REST endpoing of a feature service. `StatisticQueryParameters` are created, and the `statisticDefinitions` list, `groupByFieldNames` list, and the `orderByFields` list are set on the parameters, matching the options selected in the UI. Next, `queryStatistics()` is executed on the `ServiceFeatureTable`. A lambda connection is made for the `queryStatisticsCompleted` signal, and once this signal emits, the `StatisticQueryResult` is obtained and displayed in the UI.
 
 ## Instructions
 - Select a combination of fields and statistic types to include in the query.
