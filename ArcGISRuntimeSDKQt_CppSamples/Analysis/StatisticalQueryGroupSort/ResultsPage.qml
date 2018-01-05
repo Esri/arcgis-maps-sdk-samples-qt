@@ -86,6 +86,7 @@ Rectangle {
 
                 section {
                     property: "section"
+                    criteria: ViewSection.FullString
                     delegate: Rectangle {
                         width: resultView.width
                         height: 25 * scaleFactor
