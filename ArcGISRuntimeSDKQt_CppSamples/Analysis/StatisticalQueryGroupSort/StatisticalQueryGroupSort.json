@@ -1,0 +1,12 @@
+{
+    "source" :  "StatisticalQueryGroupSort.qml",
+    "otherSourceFiles" :  [
+        "StatisticalQueryGroupSort.h",
+        "StatisticalQueryGroupSort.cpp",
+        "StatisticResultListModel.h",
+        "StatisticResultListModel.cpp",
+        "OptionsPage.qml",
+        "ResultsPage.qml"
+    ],
+    "name" : "Statistical query (group & sort)"
+}
