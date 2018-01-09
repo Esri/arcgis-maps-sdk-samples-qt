@@ -64,7 +64,7 @@ void Feature_Collection_Layer::componentComplete()
 
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::oceans(this), this);
-  m_map->setInitialViewpoint(Viewpoint(Envelope(-8917856.590171767, 903277.583136797, -8800611.655131537, 1100327.8941287803, SpatialReference(102100))));
+  m_map->setInitialViewpoint(Viewpoint(Envelope(-8917856.590171767, 903277.583136797, -8800611.655131537, 1100.37.8941287803, SpatialReference(102100))));
 
   // Set map to map view
   m_mapView->setMap(m_map);
