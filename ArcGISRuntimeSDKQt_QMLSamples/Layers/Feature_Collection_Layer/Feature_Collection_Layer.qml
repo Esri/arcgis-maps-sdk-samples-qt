@@ -166,7 +166,7 @@ Rectangle {
                 Envelope {
                     xMax: -8800611.655131537
                     xMin: -8917856.590171767
-                    yMax: 1100.37.8941287803
+                    yMax: 1100327.8941287803
                     yMin: 903277.583136797
                     spatialReference: SpatialReference { wkid: 3857 }
                 }
