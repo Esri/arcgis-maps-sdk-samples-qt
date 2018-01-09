@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.2
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.2
+import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.3
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
