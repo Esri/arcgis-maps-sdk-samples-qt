@@ -1,5 +1,3 @@
-
-
 // Copyright 2016 ESRI
 //
 // All rights reserved under the copyright laws of the United States
