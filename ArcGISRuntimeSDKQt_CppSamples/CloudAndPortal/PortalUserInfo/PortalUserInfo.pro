@@ -23,7 +23,7 @@ CONFIG += c++11
 
 QT += opengl qml quick positioning sensors
 
-ARCGIS_RUNTIME_VERSION = 100.2
+ARCGIS_RUNTIME_VERSION = 100.2.1
 include($$PWD/arcgisruntime.pri)
 
 qtHaveModule(webengine) {
