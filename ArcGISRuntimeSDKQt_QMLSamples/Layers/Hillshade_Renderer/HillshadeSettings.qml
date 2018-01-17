@@ -17,7 +17,7 @@
 import QtQuick 2.5
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 1.2
-import Esri.ArcGISRuntime 100.2
+import Esri.ArcGISRuntime 100.3
 
 Rectangle {
     id: root
