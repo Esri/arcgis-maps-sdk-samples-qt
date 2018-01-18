@@ -379,7 +379,13 @@ Rectangle {
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Change Sort Order"
-                        onClicked: rootRectangle.updateOrder(groupingView.currentIndex);
+                        onClicked: {
+                            var i = groupingView.currentIndex;
+                            if (orderByModel.get(i).order === "Ascending")
+                                orderByModel.get(i).order = "Descending";
+                            else
+                                orderByModel.get(i).order = "Ascending";
+                        }
                     }
                 }
             }
