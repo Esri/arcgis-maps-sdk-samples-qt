@@ -60,8 +60,26 @@ void ChangeBasemap::changeBasemap(QString basemap)
       m_map->setBasemap(Basemap::topographic(this));
     else if (basemap == "Streets")
       m_map->setBasemap(Basemap::streets(this));
-    else if (basemap == "Imagery")
+    else if (basemap == "Streets (Vector)")
+      m_map->setBasemap(Basemap::streetsVector(this));
+    else if (basemap == "Streets - Night (Vector)")
+      m_map->setBasemap(Basemap::streetsNightVector(this));
+    else if (basemap == "Imagery (Raster)")
       m_map->setBasemap(Basemap::imagery(this));
+    else if (basemap == "Imagery with Labels (Raster)")
+      m_map->setBasemap(Basemap::imageryWithLabels(this));
+    else if (basemap == "Imagery with Labels (Vector)")
+      m_map->setBasemap(Basemap::imageryWithLabelsVector(this));
+    else if (basemap == "Dark Gray Canvas (Vector)")
+      m_map->setBasemap(Basemap::darkGrayCanvasVector(this));
+    else if (basemap == "Light Gray Canvas (Raster)")
+      m_map->setBasemap(Basemap::lightGrayCanvas(this));
+    else if (basemap == "Light Gray Canvas (Vector)")
+      m_map->setBasemap(Basemap::lightGrayCanvasVector(this));
+    else if (basemap == "Navigation (Vector)")
+      m_map->setBasemap(Basemap::navigationVector(this));
+    else if (basemap == "OpenStreetMap (Raster)")
+      m_map->setBasemap(Basemap::openStreetMap(this));
     else if (basemap == "Oceans")
       m_map->setBasemap(Basemap::oceans(this));
   }
