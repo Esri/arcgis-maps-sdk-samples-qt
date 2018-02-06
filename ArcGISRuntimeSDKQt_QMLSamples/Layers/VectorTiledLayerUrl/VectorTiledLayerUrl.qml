@@ -35,7 +35,7 @@ Rectangle {
             Basemap {
                 // Nest an ArcGISVectorTiledLayer Layer in the Basemap
                 ArcGISVectorTiledLayer {
-                    url: "http://www.arcgis.com/home/item.html?id=7675d44bb1e4428aa2c30a9b68f97822"
+                    url: "http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"
                 }
             }
             initialViewpoint: ViewpointCenter {
@@ -54,7 +54,7 @@ Rectangle {
             margins: 15 * scaleFactor
         }
         width: 175 * scaleFactor
-        model: ["Mid-Century","Colored Pencil","Newspaper","Nova", "World Street Map (Night)"]
+        model: ["Navigation","Streets","Night","Dark Gray"]
         onCurrentTextChanged: {
             // Call this JavaScript function when the current selection changes
             if (map.loadStatus === Enums.LoadStatusLoaded)
@@ -65,21 +65,18 @@ Rectangle {
             // Determine the selected basemap, create that type, and set the Map's basemap
             var layer;
             switch (comboBoxBasemap.currentText) {
-            case "Mid-Century":
+            case "Navigation":
             default:
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=7675d44bb1e4428aa2c30a9b68f97822"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"});
                 break;
-            case "Colored Pencil":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=4cf7e1fb9f254dcda9c8fbadb15cf0f8"});
+            case "Streets":
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=a60a37a27cc140ddad15f919cd5a69f2"});
                 break;
-            case "Newspaper":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=dfb04de5f3144a80bc3f9f336228d24a"});
+            case "Night":
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=92c551c9f07b4147846aae273e822714"});
                 break;
-            case "Nova":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=75f4dfdff19e445395653121a95a85db"});
-                break;
-            case "World Street Map (Night)":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=86f556a2d1fd468181855a35e344567f"});
+            case "Dark Gray":
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=5ad3948260a147a993ef4865e3fad476"});
                 break;
             }
             var newBasemap = ArcGISRuntimeEnvironment.createObject("Basemap");

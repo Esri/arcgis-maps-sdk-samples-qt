@@ -51,7 +51,7 @@ void VectorTiledLayerUrl::componentComplete()
 
   //! [display vector tiled layer]
   // create a vector tiled basemap
-  ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=7675d44bb1e4428aa2c30a9b68f97822"), this);
+  ArcGISVectorTiledLayer* vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"), this);
   Basemap* basemap = new Basemap(vectorTiledLayer, this);
   // create a new map instance
   m_map = new Map(basemap, this);
@@ -69,18 +69,14 @@ void VectorTiledLayerUrl::changeBasemap(const QString& basemap)
   if (m_map->loadStatus() == LoadStatus::Loaded)
   {
     ArcGISVectorTiledLayer* vectorTiledLayer = nullptr;
-    if (basemap == "Mid-Century")
-      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=7675d44bb1e4428aa2c30a9b68f97822"), this);
-    else if (basemap == "Colored Pencil")
-      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=4cf7e1fb9f254dcda9c8fbadb15cf0f8"), this);
-    else if (basemap == "Newspaper")
-      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=dfb04de5f3144a80bc3f9f336228d24a"), this);
-    else if (basemap == "Nova")
-      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=75f4dfdff19e445395653121a95a85db"), this);
-    else if (basemap == "World Street Map (Night)")
-      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=86f556a2d1fd468181855a35e344567f"), this);
+    if (basemap == "Streets")
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=a60a37a27cc140ddad15f919cd5a69f2"), this);
+    else if (basemap == "Night")
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=92c551c9f07b4147846aae273e822714"), this);
+    else if (basemap == "Dark Gray")
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=5ad3948260a147a993ef4865e3fad476"), this);
     else
-      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=7675d44bb1e4428aa2c30a9b68f97822"), this);
+      vectorTiledLayer = new ArcGISVectorTiledLayer(QUrl("http://www.arcgis.com/home/item.html?id=e19e9330bf08490ca8353d76b5e2e658"), this);
     Basemap* basemap = new Basemap(vectorTiledLayer, this);
     m_map->setBasemap(basemap);
   }
