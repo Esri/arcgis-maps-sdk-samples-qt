@@ -20,7 +20,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtPositioning 5.6
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 100.2
+import Esri.ArcGISRuntime.Toolkit.Controls 100.3
 import Esri.Samples 1.0
 
 FindPlaceSample {
