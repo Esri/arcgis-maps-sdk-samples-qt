@@ -41,18 +41,7 @@ ChangeBasemapSample {
             margins: 15 * scaleFactor
         }
         width: 175 * scaleFactor
-        model: ["Topographic","Streets",
-            "Streets (Vector)",
-            "Streets - Night (Vector)",
-            "Imagery (Raster)",
-            "Imagery with Labels (Raster)",
-            "Imagery with Labels (Vector)",
-            "Dark Gray Canvas (Vector)",
-            "Light Gray Canvas (Raster)",
-            "Light Gray Canvas (Vector)",
-            "Navigation (Vector)",
-            "OpenStreetMap (Raster)",
-            "Oceans"]
+        model: ["Topographic","Streets","Imagery","Oceans"]
         onCurrentTextChanged: {
             // Call C++ invokable function to switch the basemaps
             changeBasemapSample.changeBasemap(currentText);
