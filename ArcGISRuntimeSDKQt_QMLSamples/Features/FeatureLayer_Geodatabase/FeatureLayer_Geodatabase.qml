@@ -58,7 +58,9 @@ Rectangle {
             // create a feature layer
             FeatureLayer {
                 // obtain the feature table from the geodatabase by name
-                featureTable: gdb.geodatabaseFeatureTablesByTableName["Trailheads"]
+                featureTable: gdb.geodatabaseFeatureTablesByTableName["Trailheads"] ?
+                                  gdb.geodatabaseFeatureTablesByTableName["Trailheads"] :
+                                  null
 
                 // create the geodatabase
                 Geodatabase {
