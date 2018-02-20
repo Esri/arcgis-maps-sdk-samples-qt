@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/StatisticalQueryGroupSort">
+        <file alias="sample.json">StatisticalQueryGroupSort.json</file>
+        <file>StatisticalQueryGroupSort.qml</file>
+        <file>StatisticalQueryGroupSort.h</file>
+        <file>StatisticalQueryGroupSort.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>OptionsPage.qml</file>
+        <file>ResultsPage.qml</file>
+        <file>StatisticResultListModel.h</file>
+        <file>StatisticResultListModel.cpp</file>
+    </qresource>
+</RCC>

@@ -26,7 +26,7 @@ QT += opengl qml quick positioning sensors
 TEMPLATE = app
 TARGET = FindPlace
 
-ARCGIS_RUNTIME_VERSION = 100.2
+ARCGIS_RUNTIME_VERSION = 100.2.1
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
