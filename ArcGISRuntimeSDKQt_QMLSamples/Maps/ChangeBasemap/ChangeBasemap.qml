@@ -43,7 +43,18 @@ Rectangle {
             margins: 15 * scaleFactor
         }
         width: 175 * scaleFactor
-        model: ["Topographic","Streets","Imagery","Oceans"]
+        model: ["Topographic","Streets",
+            "Streets (Vector)",
+            "Streets - Night (Vector)",
+            "Imagery (Raster)",
+            "Imagery with Labels (Raster)",
+            "Imagery with Labels (Vector)",
+            "Dark Gray Canvas (Vector)",
+            "Light Gray Canvas (Raster)",
+            "Light Gray Canvas (Vector)",
+            "Navigation (Vector)",
+            "OpenStreetMap (Raster)",
+            "Oceans"]
         onCurrentTextChanged: {
             // Call this JavaScript function when the current selection changes
             if (map.loadStatus === Enums.LoadStatusLoaded)
@@ -56,11 +67,37 @@ Rectangle {
             case "Topographic":
                 map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapTopographic");
                 break;
-            case "Streets":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreets");
+            case "Streets (Vector)":
+                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreetsVector");
                 break;
-            case "Imagery":
+
+            case "Streets - Night (Vector)":
+                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreetsNightVector");
+                break;
+            case "Imagery (Raster)":
                 map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapImagery");
+                break;
+            case "Imagery with Labels (Raster)":
+                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapImageryWithLabels");
+                break;
+            case "Imagery with Labels (Vector)":
+                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapImageryWithLabelsVector");
+                break;
+            case "Dark Gray Canvas (Vector)":
+                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapDarkGrayCanvasVector");
+                break;
+            case "Light Gray Canvas (Raster)":
+                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapLightGrayCanvas");
+                break;
+            case "Light Gray Canvas (Vector)":
+                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapLightGrayCanvasVector");
+                break;
+
+            case "Navigation (Vector)":
+                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapNavigationVector");
+                break;
+            case "OpenStreetMap (Raster)":
+                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapOpenStreetMap");
                 break;
             case "Oceans":
                 map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapOceans");
