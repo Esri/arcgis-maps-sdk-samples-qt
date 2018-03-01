@@ -73,7 +73,7 @@ void LineOfSightLocation::createLineOfSight()
   const Point observerPt(-73.06958032962375, -49.253112971555446, 2000, SpatialReference::wgs84());
   const Point targetPt(-73.079266999709162, -49.300457676730559, 1312, SpatialReference::wgs84());
 
-  // create the line of site
+  // create the line of sight
   m_lineOfSight = new LocationLineOfSight(observerPt, targetPt, this);
   m_analysisOverlay->analyses()->append(m_lineOfSight);
 
