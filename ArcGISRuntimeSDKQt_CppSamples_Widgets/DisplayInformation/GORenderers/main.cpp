@@ -19,11 +19,6 @@ int main(int argc, char *argv[])
 {
   QApplication application(argc, argv);
   
-#ifdef Q_OS_WIN
-  // Force usage of OpenGL ES through ANGLE on Windows
-  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-#endif
-
   GORenderers applicationWindow;
   applicationWindow.setMinimumWidth(800);
   applicationWindow.setMinimumHeight(600);

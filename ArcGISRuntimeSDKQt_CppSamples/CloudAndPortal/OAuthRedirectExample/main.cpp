@@ -47,9 +47,6 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef Q_OS_WIN
-  // Force usage of OpenGL ES through ANGLE on Windows
-  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-
   const QString urlScheme = OAuthRedirectExample::customUrlProtocol();
   const QString appPath(QDir::toNativeSeparators(QCoreApplication::applicationFilePath()));
   const QString regPath = QStringLiteral("HKEY_CURRENT_USER\\Software\\Classes\\") + urlScheme;
@@ -72,7 +69,7 @@ int main(int argc, char *argv[])
   // Register the OAuthRedirectTest (QQuickItem) for QML
   qmlRegisterType<OAuthRedirectExample>("Esri.Samples", 1, 0, "OAuthRedirectExample");
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 

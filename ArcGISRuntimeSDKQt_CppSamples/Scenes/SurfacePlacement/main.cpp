@@ -39,11 +39,6 @@ int main(int argc, char *argv[])
 
   QGuiApplication app(argc, argv);
 
-#ifdef Q_OS_WIN
-  // Force usage of OpenGL ES through ANGLE on Windows
-  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-#endif
-
   // Initialize the sample
   Surface_Placement::init();
 
@@ -53,7 +48,7 @@ int main(int argc, char *argv[])
   //! [Register the scene view for QML]
   */
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 
