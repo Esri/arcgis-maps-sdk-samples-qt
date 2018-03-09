@@ -34,11 +34,6 @@ int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
 
-#ifdef Q_OS_WIN
-  // Force usage of OpenGL ES through ANGLE on Windows
-  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-#endif
-
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngine::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
@@ -46,7 +41,7 @@ int main(int argc, char *argv[])
   // Initialize the sample
   ShowOrgBasemaps::init();
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 
