@@ -32,44 +32,41 @@ SpatialOperationsSample {
     // add a mapView component
     MapView {
         anchors.fill: parent
-        objectName: "mapView"
+        objectName: "mapView"        
+    }
 
-        Rectangle {
-            anchors {
-                left: parent.left
-                top: parent.top
-                margins: 10 * scaleFactor
-            }
-            width: groupBox.width
-            height: groupBox.height
-            color: "lightgray"
+    Rectangle {
+        anchors {
+            fill: operationColumn
+            margins: -5 * scaleFactor
+        }
+        radius: 2 * scaleFactor
+        color: "lightgray"
+    }
 
-            GroupBox {
-                id: groupBox
-                anchors.centerIn: parent
+    Column {
+        id: operationColumn
+        anchors {
+            left: parent.left
+            top: parent.top
+            margins: 10 * scaleFactor
+        }
 
-                ColumnLayout {
-                    Layout.fillWidth: true
+        spacing: 10 * scaleFactor
 
-                    ExclusiveGroup { id: radiobuttongroup }
+        ExclusiveGroup {
+            id: radiobuttongroup
+        }
 
-                    ColumnLayout {
-                        anchors.fill: parent
+        // Display a RadioButton for each operation
+        Repeater {
+            model: geometryOperations
 
-                        // Display a RadioButton for each operation
-                        Repeater {
-                            model: geometryOperations
-
-                            RadioButton {
-                                text: modelData
-                                checked: index === 0
-                                exclusiveGroup: radiobuttongroup
-                                Layout.fillWidth: true
-                                onClicked: applyGeometryOperation(index);
-                            }
-                        }
-                    }
-                }
+            RadioButton {
+                text: modelData
+                checked: index === 0
+                exclusiveGroup: radiobuttongroup
+                onClicked: applyGeometryOperation(index);
             }
         }
     }

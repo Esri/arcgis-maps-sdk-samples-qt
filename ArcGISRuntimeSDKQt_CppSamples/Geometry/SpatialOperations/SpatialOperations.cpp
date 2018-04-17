@@ -64,6 +64,7 @@ void SpatialOperations::componentComplete()
 }
 void SpatialOperations::addPolygons()
 {
+  // create blue polygon
   PolygonBuilder polygonBuilder1(SpatialReference::webMercator());
   polygonBuilder1.addPoint(-13960, 6709400);
   polygonBuilder1.addPoint(-14660, 6710000);
@@ -84,6 +85,7 @@ void SpatialOperations::addPolygons()
   outerRing->addPoint(-14560, 6710730);
   outerRing->addPoint(-13060, 6711030);
 
+  // inner ring
   Part* innerRing = new Part(SpatialReference::webMercator(), this);
   innerRing->addPoint(-13060, 6710910);
   innerRing->addPoint(-14160, 6710630);
