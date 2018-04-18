@@ -32,8 +32,8 @@ SpatialOperations::SpatialOperations(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
   m_polygon1(Geometry()),
   m_polygon2(Geometry()),
-  m_inputsOverlay (new GraphicsOverlay()),
-  m_outputsOverlay (new GraphicsOverlay())
+  m_inputsOverlay (new GraphicsOverlay(this)),
+  m_outputsOverlay (new GraphicsOverlay(this))
 {
   m_geometryOperations << QStringLiteral("None") << QStringLiteral("Union")
                        << QStringLiteral("Difference") << QStringLiteral("Symmetric difference")
