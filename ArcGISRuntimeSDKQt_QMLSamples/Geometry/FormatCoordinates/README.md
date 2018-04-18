@@ -1,24 +1,30 @@
-# Format coordinates
+# Spatial operations
 
-Coordinates can be written as text that is formatted in different ways. For example, latitude-longitude coordinates can be formatted as decimal degrees, or as degrees, minutes, and seconds. This sample demonstrates how to convert a map location `Point` to a number of different coordinate notations (decimal degrees; degrees, minutes, seconds; Universal Transverse Mercator (UTM), and United States National Grid (USNG)), by using `CoordinateFormatter`. 
-
-The `CoordinateFormatter` also supports Military Grid Reference System (MGRS), Global Area Reference System (GARS), and World Geographic Reference System (GEOREF) notations, using similar methods to those shown in this sample app.
-
-Click or tap on the map to indicate a location. The location will be formatted into each of the four formats demonstrated. Additionally, coordinate notation strings can be converted to a `Point` and shown in the map by clicking or tapping on the notation values shown and entering a coordinate in the appropriate notation.
+This sample demonstrates how to perform spatial operations on geometries using the GeometryEngine. Spatial operations allow you to perform spatial analysis between two geometries. For example, you can union (combine) two geomeries together or find the areas of two geometries that intersect. For example, if you had a polygon representing rivers and another polygon representing counties, you could find the rivers that intersect a given county.
 
 ![](screenshot.png)
 
+## How to use the sample
+The sample provides an option to select a geometry operation. When you choose a geometry operation, the application performs this operation between the overlapping polygons and applies the result to the geometries.
+
 ## How it works
+The sample creates two overlapping polygons using the `PolygonBuilder` class and adds them as graphics to a `GraphicsOverlay`. These polygons are used for performing all the spatial operations. For each operation, a method on the `GeometryEngine` is called with the two polygons as input. The resulting geometry is added as a red colored graphic to the overlay. The methods used are as follows:
 
-Changing the text for any of the coordinate strings calls an invokable C++ function 
-that attempts to convert the changed string to a `Point`. If successful, the `Point`
-is used to update all the coordinate strings and the geometry of the `Graphic`. 
+- `GeometryEngine::union` - This method returns the two geometries unioned together as one geometry.
+- `GeometryEngine::difference` - This method returns any part of Geometry2 that does not intersect Geometry1.
+- `GeometryEngine::symmetricDifference` - This method returns any part of Geometry1 or Geometry2 which do not intersect.
+- `GeometryEngine::intersection` - This method returns the intersection of Geometry1 and Geometry2.
 
-When you click or tap on the `MapView`, the location is converted from screen coordinates
-to a `Point` in map coordinates. As in the previous case, the `Point`
-is used to update all the coordinate strings and the geometry of the `Graphic`. 
-
-## Features
-- CoordinateFormatter
-- Point
+## Relevant API
+- GeometryEngine
+- GeometryEngine::union
+- GeometryEngine::difference
+- GeometryEngine::symmetricDifference
+- GeometryEngine::intersection
+- Geometry
 - Graphic
+- GraphicsOverlay
+- PolygonBuilder
+
+## Tags
+Geometry Engine, Spatial Operations, Geometry, Analysis
