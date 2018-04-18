@@ -102,8 +102,6 @@ Rectangle {
         wkid: 3857
     }
 
-    Part{}
-
     function addPolygons() {
         // create blue polygon
         var polygonBuilder1 = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", { spatialReference: spatialRef });
@@ -153,6 +151,38 @@ Rectangle {
     }
 
     function applyGeometryOperation(index) {
+        // Perform geometry calculations
+        var resultPolygon;
+        switch (index) {
+        case 1:
+          resultPolygon = GeometryEngine.unionOf(geometry1, geometry2);
+          break;
+        case 2:
+          resultPolygon = GeometryEngine.difference(geometry1, geometry2);
+          break;
+        case 3:
+          resultPolygon = GeometryEngine.symmetricDifference(geometry1, geometry2);
+          break;
+        case 4:
+          resultPolygon = GeometryEngine.intersection(geometry1, geometry2);
+          break;
+        case 0:
+        default:
+          break;
+        }
 
+        // Clear previous results
+        outputOverlay.graphics.clear();
+        if (!resultPolygon)
+          return;
+
+        // Add the resulting polygon as a Graphic
+        var fillSymbol = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
+        fillSymbol.style = Enums.SimpleFillSymbolStyleSolid;
+        fillSymbol.color = "red";
+        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+        graphic.geometry = resultPolygon;
+        graphic.symbol = fillSymbol;
+        outputOverlay.graphics.append(graphic);
     }
 }
