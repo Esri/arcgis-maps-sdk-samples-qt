@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Geometry/SpatialOperations">
+        <file alias="sample.json">SpatialOperations.json</file>        
+        <file>SpatialOperations.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
