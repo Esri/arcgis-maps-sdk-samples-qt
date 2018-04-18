@@ -42,6 +42,10 @@ SpatialOperationsSample {
         }
         radius: 2 * scaleFactor
         color: "lightgray"
+        border {
+            color: "gray"
+            width:  1 * scaleFactor
+        }
     }
 
     Column {
