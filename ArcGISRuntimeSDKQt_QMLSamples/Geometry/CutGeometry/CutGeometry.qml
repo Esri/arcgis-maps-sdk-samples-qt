@@ -20,7 +20,6 @@ import Esri.ArcGISRuntime 100.3
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
-    id: rootRectangle
     clip: true
     width: 800
     height: 600
@@ -36,8 +35,8 @@ Rectangle {
 
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
-                    createBorder();
-                    createLakeSuperiorPolygon();
+                    borderGraphic.geometry = createBorder();
+                    lakeSuperiorGraphic.geometry = createLakeSuperiorPolygon();
                     mapView.setViewpointGeometry(lakeSuperiorGraphic.geometry);
                 }
             }
@@ -47,6 +46,7 @@ Rectangle {
         GraphicsOverlay {
             id: graphicsOverlay
 
+            // Lake Superior
             Graphic {
                 id: lakeSuperiorGraphic
 
@@ -63,6 +63,7 @@ Rectangle {
                 }
             }
 
+            // U.S. / Canada Border
             Graphic {
                 id: borderGraphic
                 zIndex: 10
@@ -137,7 +138,7 @@ Rectangle {
         polylineBuilder.addPointXY(-9446115.050097, 5927209.572793);
         polylineBuilder.addPointXY(-9430885.393759, 5876081.440801);
         polylineBuilder.addPointXY(-9415655.737420, 5860851.784463);
-        borderGraphic.geometry = polylineBuilder.geometry;
+        return polylineBuilder.geometry;
     }
 
     // Creates a polygon of Lake Superior
@@ -173,6 +174,6 @@ Rectangle {
         polygonBuilder.addPointXY(-10111283.079633, 5933406.315128);
         polygonBuilder.addPointXY(-10214761.742852, 5888134.399970);
         polygonBuilder.addPointXY(-10254374.668616, 5901877.659929);
-        lakeSuperiorGraphic.geometry = polygonBuilder.geometry;
+        return polygonBuilder.geometry;
     }
 }
