@@ -1,6 +1,6 @@
 # Spatial operations
 
-This sample demonstrates how to perform spatial operations on geometries using the GeometryEngine. Spatial operations allow you to perform spatial analysis between two geometries. For example, you can union (combine) two geomeries together or find the areas of two geometries that intersect. For example, if you had a polygon representing rivers and another polygon representing counties, you could find the rivers that intersect a given county.
+This sample demonstrates how to perform spatial operations on geometries using the GeometryEngine. Spatial operations allow you to perform spatial analysis between two geometries. For example, you can union (combine) two geometries together or find the areas of two geometries that intersect. For example, if you had a polygon representing rivers and another polygon representing counties, you could find the rivers that intersect a given county.
 
 ![](screenshot.png)
 
