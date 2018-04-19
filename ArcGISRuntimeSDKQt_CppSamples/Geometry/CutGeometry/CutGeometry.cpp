@@ -72,15 +72,13 @@ void CutGeometry::cutPolygon()
   QList<Geometry> geoms = GeometryEngine::cut(m_lakeSuperiorGraphic->geometry(), m_borderGraphic->geometry());
 
   // create graphics for the U.S. side
-  Graphic* usSide = new Graphic(this);
-  usSide->setGeometry(geoms.at(0));
   SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 1.0f, this);
-  usSide->setSymbol(new SimpleFillSymbol(SimpleFillSymbolStyle::ForwardDiagonal, QColor("#40ff00"), outline, this));
+  SimpleFillSymbol* usSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::ForwardDiagonal, QColor("#40ff00"), outline, this);
+  Graphic* usSide = new Graphic(geoms.at(0), usSymbol, this);
 
   // create graphics for the Canada side
-  Graphic* canadaSide = new Graphic(this);
-  canadaSide->setGeometry(geoms.at(1));
-  canadaSide->setSymbol(new SimpleFillSymbol(SimpleFillSymbolStyle::ForwardDiagonal, QColor("#ffff00"), outline, this));
+  SimpleFillSymbol* canadaSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::ForwardDiagonal, QColor("#ffff00"), outline, this);
+  Graphic* canadaSide = new Graphic(geoms.at(1), canadaSymbol, this);
 
   // add graphics
   m_overlay->graphics()->append(canadaSide);
@@ -91,17 +89,15 @@ void CutGeometry::cutPolygon()
 void CutGeometry::createGraphics()
 {
   // Lake Superior Graphic
-  m_lakeSuperiorGraphic = new Graphic(this);
   SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 1.0f, this);
-  m_lakeSuperiorGraphic->setSymbol(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(198, 204, 255, 178), outline, this));
-  m_lakeSuperiorGraphic->setGeometry(createLakeSuperiorPolygon());
+  SimpleFillSymbol* usSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(198, 204, 255, 178), outline, this);
+  m_lakeSuperiorGraphic = new Graphic(createLakeSuperiorPolygon(), usSymbol, this);
   m_overlay->graphics()->append(m_lakeSuperiorGraphic);
 
   // Border Graphic
-  m_borderGraphic = new Graphic(this);
-  m_borderGraphic->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, QColor("red"), 5.0f, this));
+  SimpleLineSymbol* borderSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, QColor("red"), 5.0f, this);
+  m_borderGraphic = new Graphic(createBorderPolyline(), borderSymbol, this);
   m_borderGraphic->setZIndex(10);
-  m_borderGraphic->setGeometry(createBorderPolyline());
   m_overlay->graphics()->append(m_borderGraphic);
 }
 
