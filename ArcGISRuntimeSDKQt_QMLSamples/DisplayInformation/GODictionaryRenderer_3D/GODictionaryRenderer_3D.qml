@@ -1,4 +1,4 @@
-// [WriteFile Name=GO_DictionaryRenderer, Category=DisplayInformation]
+// [WriteFile Name=GODictionaryRenderer_3D, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -26,28 +26,26 @@ Rectangle {
 
     property real scaleFactor: System.displayScaleFactor
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
-    property bool graphicsLoaded: false
 
-    Map {
-        id: map
-        BasemapTopographic {}
-    }
-
-    // Create MapView that a GraphicsOverlay
-    // for the military symbols.
-    MapView {
-        id: mapView
+    /**
+     * Create SceneView that contains a Scene with the Imagery Basemap, as well as a GraphicsOverlay
+     * for the military symbols.
+     */
+    SceneView {
+        id: sceneView
         anchors.fill: parent
-
-        // The GraphicsOverlay does not have a valid extent until it has been added
-        // to a MapView with a valid SpatialReference
-        onSpatialReferenceChanged: {
-            setViewpointGeometryAndPadding( graphicsOverlay.extent, 20 );
+        Scene {
+            id: scene
+            BasemapImagery {}
+            Surface {
+                ArcGISTiledElevationSource {
+                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                }
+            }
         }
-
-        //! [Apply Dictionary Renderer Graphics Overlay QML]
         GraphicsOverlay {
             id: graphicsOverlay
+            renderingMode: Enums.GraphicsRenderingModeDynamic
 
             DictionaryRenderer {
                 DictionarySymbolStyle {
@@ -56,7 +54,6 @@ Rectangle {
                 }
             }
         }
-        //! [Apply Dictionary Renderer Graphics Overlay QML]
     }
 
     ProgressBar {
@@ -67,7 +64,6 @@ Rectangle {
             margins: 5 * scaleFactor
         }
         indeterminate: true
-        visible: !graphicsLoaded
     }
 
     // Use XmlListModel to parse the XML messages file.
@@ -91,6 +87,7 @@ Rectangle {
 
         onStatusChanged: {
             if (status === XmlListModel.Ready) {
+                var bbox;
                 for (var i = 0; i < count; i++) {
                     var element = get(i);
                     var wkid = element._wkid;
@@ -103,35 +100,54 @@ Rectangle {
                     var geom;
                     if (pointStrings.length === 1) {
                         // It's a point
-                        var pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder");
-                        pointBuilder.spatialReference = sr;
+                        var pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {
+                            spatialReference: sr
+                        });
                         var coords = pointStrings[0].split(",");
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
-                    } else {
-                        var builder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder");
-                        builder.spatialReference = sr;
-
-                        for (var ptIndex = 0; ptIndex < pointStrings.length; ptIndex++) {
-                            var coords = pointStrings[ptIndex].split(",");
-                            builder.points.addPointXY(coords[0], coords[1]);
-                        }
-                        geom = builder.geometry;
                     }
                     if (geom) {
-                        // Get rid of _control_points and _wkid. They are not needed in the graphic's
-                        // attributes.
+                        /**
+                         * Get rid of _control_points and _wkid. They are not needed in the graphic's
+                         * attributes.
+                         */
                         element._control_points = undefined;
                         element._wkid = undefined;
 
-                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: geom });
+                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                            geometry: geom
+                        });
                         graphic.attributes.attributesJson = element;
                         graphicsOverlay.graphics.append(graphic);
+
+                        if (bbox) {
+                            bbox = GeometryEngine.unionOf(bbox, geom);
+                        } else {
+                            bbox = geom;
+                        }
                     }
                 }
 
-                graphicsLoaded = true;
-                mapView.map = map;
+                // Zoom to graphics
+                if (bbox) {
+                    bbox = GeometryEngine.project(bbox.extent, scene.spatialReference);
+
+                    /**
+                     * Create a camera directly above the center of the features, and then rotate that
+                     * camera around the center to tip it.
+                     */
+                    var camera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                        location: bbox.extent.center,
+                        heading: 0,
+                        pitch: 0,
+                        roll: 0,
+                        distance: 15000
+                    });
+                    camera = camera.rotateAround(bbox.extent.center, 0, 70, 0);
+                    sceneView.setViewpointCameraAndWait(camera);
+                }
+                progressBar_loading.visible = false;
             }
         }
     }

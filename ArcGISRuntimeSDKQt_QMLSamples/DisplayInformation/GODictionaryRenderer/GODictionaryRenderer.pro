@@ -25,7 +25,7 @@ CONFIG += c++11
 
 SOURCES += main.cpp
 
-RESOURCES += GO_DictionaryRenderer_3D.qrc
+RESOURCES += GODictionaryRenderer.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist
