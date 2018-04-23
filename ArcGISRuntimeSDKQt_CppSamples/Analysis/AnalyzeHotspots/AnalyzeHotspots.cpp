@@ -47,7 +47,6 @@ void AnalyzeHotspots::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::topographic(this), this);   
