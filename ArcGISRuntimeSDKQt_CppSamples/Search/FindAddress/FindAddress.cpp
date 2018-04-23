@@ -92,7 +92,7 @@ void FindAddress::connectSignals()
     {
       m_graphic->setGeometry(geocodeResults.at(0).displayLocation());
       m_graphic->attributes()->setAttributesMap(geocodeResults.at(0).attributes());
-      m_mapView->setViewpointGeometry(geocodeResults.at(0).extent());
+      m_mapView->setViewpointCenter(geocodeResults.at(0).extent().center(), 8000);
     }
   });
   //! [FindAddress geocodeCompleted handler]
