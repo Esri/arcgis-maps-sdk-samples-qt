@@ -143,8 +143,8 @@ Rectangle {
     SimpleLineSymbol {
         id: boatRouteSymbol
         style: Enums.SimpleLineSymbolStyleDash
-        color: Qt.rgba(0.5, 0.0, 0.5, 1)
-        width: 4
+        color: Qt.rgba(0, 0, 1, 0.7)
+        width: 1
         antiAlias: true
     }
     //! [GOSymbol line symbol]
