@@ -162,7 +162,7 @@ Rectangle {
                             margins: 8 * scaleFactor
                         }
                         placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
-                        validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z][\da-zA-Z\s]*$/ }
+                        validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
                         onAccepted:  addCategoryButton.clicked();
                     }
 
