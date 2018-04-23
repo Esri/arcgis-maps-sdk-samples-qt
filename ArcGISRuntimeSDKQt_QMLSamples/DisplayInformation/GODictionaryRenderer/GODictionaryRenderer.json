@@ -1,5 +1,5 @@
 {
-    "source" :  "GO_DictionaryRenderer.qml",
+    "source" :  "GODictionaryRenderer.qml",
     "otherSourceFiles" :  [],
     "name" : "Graphics overlay (dictionary renderer)",
     "dataItems" : [
