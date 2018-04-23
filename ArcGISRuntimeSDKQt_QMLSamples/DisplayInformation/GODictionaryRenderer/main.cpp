@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/DisplayInformation/GO_DictionaryRenderer/GO_DictionaryRenderer.qml"));
+    view.setSource(QUrl("qrc:/Samples/DisplayInformation/GODictionaryRenderer/GODictionaryRenderer.qml"));
 
     view.show();
 

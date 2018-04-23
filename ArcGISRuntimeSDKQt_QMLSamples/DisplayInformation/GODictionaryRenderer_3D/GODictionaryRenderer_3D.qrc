@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/GODictionaryRenderer_3D">
+        <file alias="sample.json">GODictionaryRenderer_3D.json</file>        
+        <file>GODictionaryRenderer_3D.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

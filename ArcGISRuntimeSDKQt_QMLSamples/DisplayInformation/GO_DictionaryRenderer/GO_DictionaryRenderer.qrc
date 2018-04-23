@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/DisplayInformation/GO_DictionaryRenderer">
-        <file alias="sample.json">GO_DictionaryRenderer.json</file>
-        <file>GO_DictionaryRenderer.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>
