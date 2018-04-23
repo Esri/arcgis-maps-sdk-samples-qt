@@ -114,6 +114,7 @@ Rectangle {
                         opacity: 0.7
                     }
                 }
+                readOnly: true
                 font.pixelSize: 20 * scaleFactor
                 text: slider1.value.toFixed(0)
             }
