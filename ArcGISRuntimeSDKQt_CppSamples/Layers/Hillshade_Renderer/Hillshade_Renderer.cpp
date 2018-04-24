@@ -72,7 +72,14 @@ void Hillshade_Renderer::componentComplete()
 
   //! [HillshadeRenderer apply to layer snippet]
   // Apply the hillshade renderer to the raster layer
-  HillshadeRenderer* hillshadeRenderer = new HillshadeRenderer(45.0, 315.0, 0.000016, SlopeType::None, 1.0, 1.0, 8, this);
+  constexpr double altitude = 45.0;
+  constexpr double azimuth = 315.0;
+  constexpr double zFactor = 0.000016;
+  constexpr SlopeType slopeType = SlopeType::None;
+  constexpr double pixelSizeFactor = 1.0;
+  constexpr double pixelSizePower = 1.0;
+  constexpr int outputBitDepth = 8;
+  HillshadeRenderer* hillshadeRenderer = new HillshadeRenderer(altitude, azimuth, zFactor, slopeType, pixelSizeFactor, pixelSizePower, outputBitDepth, this);
   m_rasterLayer->setRenderer(hillshadeRenderer);
   //! [HillshadeRenderer apply to layer snippet]
 }
