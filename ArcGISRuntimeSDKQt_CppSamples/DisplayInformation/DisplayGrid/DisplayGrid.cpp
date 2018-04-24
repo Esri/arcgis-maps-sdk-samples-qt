@@ -123,7 +123,7 @@ void DisplayGrid::changeGridColor(const QString& color)
     //! [DisplayGrid Set_Grid_Lines_Cpp]
     for (int level = 0; level < gridLevels; level++)
     {
-      constexpr float width = 1 + level;
+      const float width = 1 + level;
       SimpleLineSymbol* lineSym = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(color), width, this);
       m_mapView->grid()->setLineSymbol(level, lineSym);
     }
