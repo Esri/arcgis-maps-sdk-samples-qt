@@ -82,8 +82,8 @@ void AddFeaturesFeatureService::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // obtain the map point
-    constexpr double screenX = mouseEvent.x();
-    constexpr double screenY = mouseEvent.y();
+    const double screenX = mouseEvent.x();
+    const double screenY = mouseEvent.y();
     Point newPoint = m_mapView->screenToLocation(screenX, screenY);
 
     // create the feature attributes
