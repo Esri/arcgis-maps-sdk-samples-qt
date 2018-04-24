@@ -42,7 +42,7 @@ public:
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
-  Q_INVOKABLE void geocodeAddress(QString address);
+  Q_INVOKABLE void geocodeAddress(const QString& address);
   Q_INVOKABLE void clearGraphics();
 
 signals:

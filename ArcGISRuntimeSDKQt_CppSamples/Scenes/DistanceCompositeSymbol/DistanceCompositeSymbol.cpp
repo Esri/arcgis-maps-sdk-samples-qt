@@ -77,7 +77,8 @@ void DistanceCompositeSymbol::componentComplete()
   m_sceneView->graphicsOverlays()->append(graphicsOverlay);
 
   //! [create model scene symbol]
-  ModelSceneSymbol* mms = new ModelSceneSymbol(QUrl(dataPath), 0.01f, this);
+  constexpr float scale = 0.01f;
+  ModelSceneSymbol* mms = new ModelSceneSymbol(QUrl(dataPath), scale, this);
   mms->setHeading(180);
   //! [create model scene symbol]
 
@@ -86,7 +87,13 @@ void DistanceCompositeSymbol::componentComplete()
     {
       SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10.0f, this);
       //! [create simple marker scene symbol]
-      SimpleMarkerSceneSymbol* smss = new SimpleMarkerSceneSymbol(SimpleMarkerSceneSymbolStyle::Cone, QColor("red"), 75, 75, 75, SceneSymbolAnchorPosition::Bottom, this);
+      const SimpleMarkerSceneSymbolStyle style = SimpleMarkerSceneSymbolStyle::Cone;
+      const QColor color("red");
+      constexpr double height = 75.0;
+      constexpr double width = 75.0;
+      constexpr double depth = 75.0;
+      const SceneSymbolAnchorPosition anchorPosition = SceneSymbolAnchorPosition::Bottom;
+      SimpleMarkerSceneSymbol* smss = new SimpleMarkerSceneSymbol(style, color, height, width, depth, anchorPosition, this);
       //! [create simple marker scene symbol]
 
       //! [create distance symbol ranges with each symbol type and a distance range(meters)]

@@ -59,7 +59,10 @@ void GOSymbols::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the oceans basemap
-  m_map = new Map(BasemapType::Oceans, 56.075844, -2.681572, 11, this);
+  constexpr double lat = 56.075844;
+  constexpr double lon = -2.681572;
+  constexpr int levelOfDetail = 11;
+  m_map = new Map(BasemapType::Oceans, lat, lon, levelOfDetail, this);
   // set map on the map view
   m_mapView->setMap(m_map);
 
@@ -97,7 +100,8 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
              << Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84());
 
   // create the symbology for the points
-  SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 10, this);
+  constexpr float size = 10.0f;
+  SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), size, this);
 
   // create a graphic and add each of them to the overlay
   for (const Point& buoyPoint : pointsList)
@@ -112,7 +116,8 @@ void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 //! [GOSymbols addBoatTrip]
 void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
 {
-  SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 255, 180), 1, this);
+  constexpr float width = 1.0f;
+  SimpleLineSymbol* sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 255, 180), width, this);
 
   // json for the polyline
   QString polylineJson = "{\"paths\":[[[-2.7184791227926772,56.06147084563517],"
@@ -190,7 +195,8 @@ void GOSymbols::addBoatTrip(GraphicsOverlay* graphicsOverlay)
 void GOSymbols::addNestingGround(GraphicsOverlay* graphicsOverlay)
 {
   // outline for the polygon
-  SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 0, 128), 1, this);
+  constexpr float width = 1.0f;
+  SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(0, 0, 0, 128), width, this);
   // create a fill symbol for a polygon
   SimpleFillSymbol* sfs = new SimpleFillSymbol(SimpleFillSymbolStyle::DiagonalCross, QColor(0, 255, 0, 128), outline, this);
 
@@ -207,8 +213,9 @@ void GOSymbols::addNestingGround(GraphicsOverlay* graphicsOverlay)
 void GOSymbols::addText(GraphicsOverlay* graphicsOverlay)
 {
   // text symbol
-  TextSymbol* textSymbolBassRock = new TextSymbol(QString("Bass Rock"), QColor("blue"), 10, HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
-  TextSymbol* textSymbolCraigleith = new TextSymbol(QString("Craigleith"), QColor("blue"), 10, HorizontalAlignment::Right, VerticalAlignment::Top, this);
+  const float size = 10.0f;
+  TextSymbol* textSymbolBassRock = new TextSymbol(QString("Bass Rock"), QColor("blue"), size, HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
+  TextSymbol* textSymbolCraigleith = new TextSymbol(QString("Craigleith"), QColor("blue"), size, HorizontalAlignment::Right, VerticalAlignment::Top, this);
 
   // geometry for the graphics
   Point bassRock(-2.640631, 56.078083, SpatialReference::wgs84());

@@ -54,7 +54,9 @@ void FeatureLayerDefinitionExpression::componentComplete()
 
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::topographic(this), this);
-  m_map->setInitialViewpoint(Viewpoint(Point(-13630484, 4545415, SpatialReference(102100)), 300000));
+  const Point center = Point(-13630484, 4545415, SpatialReference(102100));
+  constexpr double scale = 300000.0;
+  m_map->setInitialViewpoint(Viewpoint(center, scale));
 
   // Set map to map view
   m_mapView->setMap(m_map);
