@@ -35,9 +35,7 @@ SearchDictionarySymbolStyle::~SearchDictionarySymbolStyle()
 void SearchDictionarySymbolStyle::init()
 {
   qmlRegisterType<SearchDictionarySymbolStyle>("Esri.Samples", 1, 0, "SearchDictionarySymbolStyleSample");
-  qmlRegisterUncreatableType<SymbolStyleSearchResultListModel>("Esri.Samples", 1, 0,
-                                                                                    "SymbolStyleSearchResultListModel",
-                                                                                    "SymbolStyleSearchResultListModel is an uncreatable type");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
 void SearchDictionarySymbolStyle::componentComplete()
@@ -59,7 +57,7 @@ void SearchDictionarySymbolStyle::componentComplete()
   });
 }
 
-SymbolStyleSearchResultListModel* SearchDictionarySymbolStyle::searchResultsListModel() const
+QAbstractListModel* SearchDictionarySymbolStyle::searchResultsListModel() const
 {
   return m_searchResults;
 }

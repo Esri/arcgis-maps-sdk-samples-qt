@@ -41,9 +41,7 @@ void BuildLegend::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<BuildLegend>("Esri.Samples", 1, 0, "BuildLegendSample");
-  qmlRegisterUncreatableType<LegendInfoListModel>("Esri.Samples", 1, 0,
-                                                  "LegendInfoListModel",
-                                                  "LegendInfoListModel is an uncreatable type");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
 void BuildLegend::componentComplete()

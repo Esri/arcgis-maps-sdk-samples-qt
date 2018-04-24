@@ -26,7 +26,6 @@ namespace Esri
     class GraphicsOverlay;
     class PictureMarkerSymbol;
     class RouteTask;
-    class DirectionManeuverListModel;
   }
 }
 
@@ -38,7 +37,7 @@ class FindRoute : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::DirectionManeuverListModel* directions READ directions NOTIFY directionsChanged)
+  Q_PROPERTY(QAbstractListModel* directions READ directions NOTIFY directionsChanged)
 
 public:
   explicit FindRoute(QQuickItem* parent = nullptr);
@@ -55,7 +54,7 @@ signals:
 private:
   void addStopGraphics();
   void setupRouteTask();
-  Esri::ArcGISRuntime::DirectionManeuverListModel* directions();
+  QAbstractListModel* directions();
   Esri::ArcGISRuntime::PictureMarkerSymbol* getPictureMarkerSymbol(QUrl imageUrl);
 
 private:
@@ -65,7 +64,7 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay = nullptr;
   Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
   Esri::ArcGISRuntime::RouteParameters m_routeParameters;
-  Esri::ArcGISRuntime::DirectionManeuverListModel* m_directions = nullptr;
+  QAbstractListModel* m_directions = nullptr;
 };
 
 #endif // FIND_ROUTE_H

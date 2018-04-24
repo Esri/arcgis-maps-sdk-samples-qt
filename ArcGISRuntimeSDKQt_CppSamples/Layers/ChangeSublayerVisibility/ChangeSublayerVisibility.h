@@ -24,17 +24,17 @@ namespace Esri
     class Map;
     class MapQuickView;
     class ArcGISMapImageLayer;
-    class ArcGISSublayerListModel;
   }
 }
 
+#include <QAbstractListModel>
 #include <QQuickItem>
 
 class ChangeSublayerVisibility : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::ArcGISSublayerListModel* sublayerModel READ sublayerModel NOTIFY sublayerModelChanged)
+  Q_PROPERTY(QAbstractListModel* sublayerModel READ sublayerModel NOTIFY sublayerModelChanged)
 
 public:
   explicit ChangeSublayerVisibility(QQuickItem* parent = nullptr);
@@ -47,13 +47,13 @@ signals:
   void sublayerModelChanged();
 
 private:
-  Esri::ArcGISRuntime::ArcGISSublayerListModel* sublayerModel();
+  QAbstractListModel* sublayerModel();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::ArcGISMapImageLayer* m_mapImageLayer = nullptr;
-  Esri::ArcGISRuntime::ArcGISSublayerListModel* m_sublayerModel = nullptr;
+  QAbstractListModel* m_sublayerModel = nullptr;
 };
 
 #endif // CHANGE_SUBLAYER_VISIBILITY_H
