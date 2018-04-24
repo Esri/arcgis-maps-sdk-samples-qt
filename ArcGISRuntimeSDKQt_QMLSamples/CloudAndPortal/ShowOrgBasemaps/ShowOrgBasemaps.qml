@@ -34,7 +34,7 @@ Rectangle {
         title.text = selectedBasemap.item.title;
         basemapsGrid.enabled = false;
 
-        var newMap = ArcGISRuntimeEnvironment.createObject("Map", {basemap: selectedBasemap});
+        var newMap = ArcGISRuntimeEnvironment.createObject("Map", {item: selectedBasemap.item});
         mapView.map = newMap;
         gridFadeOut.running = true;
         mapView.visible = true;
@@ -266,7 +266,8 @@ Rectangle {
         }
     }
 
-    /* Uncomment this section when running as standalone application
+    /*
+    // Uncomment this section when running as standalone application
     AuthenticationView {
         authenticationManager: AuthenticationManager
     }
