@@ -22,7 +22,7 @@
 #include <Windows.h>
 #endif
 
-#include "ShowLegend.h"
+#include "BuildLegend.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
 
   // Initialize the sample
-  ShowLegend::init();
+  BuildLegend::init();
 
   // Initialize application view
   QQuickView view;
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/DisplayInformation/ShowLegend/ShowLegend.qml"));
+  view.setSource(QUrl("qrc:/Samples/DisplayInformation/BuildLegend/BuildLegend.qml"));
 
   view.show();
 
