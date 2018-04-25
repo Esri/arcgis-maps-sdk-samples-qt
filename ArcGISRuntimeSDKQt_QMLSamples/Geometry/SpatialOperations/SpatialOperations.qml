@@ -35,6 +35,7 @@ Rectangle {
         anchors.fill: parent
 
         Map {
+            id: map
             BasemapTopographic {}
 
             ViewpointCenter {
@@ -61,44 +62,16 @@ Rectangle {
         }
     }
 
-    Rectangle {
-        anchors {
-            fill: operationColumn
-            margins: -5 * scaleFactor
-        }
-        radius: 2 * scaleFactor
-        color: "lightgray"
-        border {
-            color: "gray"
-            width:  1 * scaleFactor
-        }
-    }
-
-    Column {
-        id: operationColumn
+    // Display a ComboBox with options for each operation
+    ComboBox {
         anchors {
             left: parent.left
             top: parent.top
             margins: 10 * scaleFactor
         }
-
-        spacing: 10 * scaleFactor
-
-        ExclusiveGroup {
-            id: radiobuttongroup
-        }
-
-        // Display a RadioButton for each operation
-        Repeater {
-            model: geometryOperations
-
-            RadioButton {
-                text: modelData
-                checked: index === 0
-                exclusiveGroup: radiobuttongroup
-                onClicked: applyGeometryOperation(index);
-            }
-        }
+        width: 175 * scaleFactor
+        model: geometryOperations
+        onCurrentIndexChanged: applyGeometryOperation(currentIndex);
     }
 
     SpatialReference {
@@ -107,6 +80,9 @@ Rectangle {
     }
 
     function addPolygons() {
+        if (!inputOverlay)
+            return;
+
         // create blue polygon
         var polygonBuilder1 = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", { spatialReference: spatialRef });
         polygonBuilder1.addPointXY(-13960, 6709400);
@@ -155,6 +131,9 @@ Rectangle {
     }
 
     function applyGeometryOperation(index) {
+        if (map.loadStatus !== Enums.LoadStatusLoaded)
+            return;
+
         // Perform geometry calculations
         var resultPolygon;
         switch (index) {

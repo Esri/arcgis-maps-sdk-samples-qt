@@ -32,46 +32,18 @@ SpatialOperationsSample {
     // add a mapView component
     MapView {
         anchors.fill: parent
-        objectName: "mapView"        
+        objectName: "mapView"
     }
 
-    Rectangle {
-        anchors {
-            fill: operationColumn
-            margins: -5 * scaleFactor
-        }
-        radius: 2 * scaleFactor
-        color: "lightgray"
-        border {
-            color: "gray"
-            width:  1 * scaleFactor
-        }
-    }
-
-    Column {
-        id: operationColumn
+    // Display a ComboBox with options for each operation
+    ComboBox {
         anchors {
             left: parent.left
             top: parent.top
             margins: 10 * scaleFactor
         }
-
-        spacing: 10 * scaleFactor
-
-        ExclusiveGroup {
-            id: radiobuttongroup
-        }
-
-        // Display a RadioButton for each operation
-        Repeater {
-            model: geometryOperations
-
-            RadioButton {
-                text: modelData
-                checked: index === 0
-                exclusiveGroup: radiobuttongroup
-                onClicked: applyGeometryOperation(index);
-            }
-        }
+        width: 175 * scaleFactor
+        model: geometryOperations
+        onCurrentIndexChanged: applyGeometryOperation(currentIndex);
     }
 }

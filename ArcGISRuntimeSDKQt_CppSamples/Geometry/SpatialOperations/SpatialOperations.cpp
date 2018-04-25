@@ -103,6 +103,9 @@ void SpatialOperations::addPolygons()
 
 void SpatialOperations::applyGeometryOperation(int index)
 {
+  if (m_map->loadStatus() != LoadStatus::Loaded)
+    return;
+
   // Perform geometry calculations
   Geometry resultPolygon;
   switch (index) {
