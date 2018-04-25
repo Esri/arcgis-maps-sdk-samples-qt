@@ -39,9 +39,7 @@ void ManageBookmarks::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ManageBookmarks>("Esri.Samples", 1, 0, "ManageBookmarksSample");
-  qmlRegisterUncreatableType<BookmarkListModel>("Esri.Samples", 1, 0,
-                                                "BookmarkListModel",
-                                                "BookmarkListModel is an uncreatable type");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
 void ManageBookmarks::componentComplete()
@@ -99,7 +97,11 @@ void ManageBookmarks::createBookmark(QString name, Viewpoint viewpoint)
   Bookmark* bookmark = new Bookmark(name, viewpoint, this);
 
   // Add it to the map's bookmark list
-  m_map->bookmarks()->append(bookmark);
+  BookmarkListModel* bookmarks = dynamic_cast<BookmarkListModel*>(m_bookmarks);
+  if (!bookmarks)
+    return;
+
+  bookmarks->append(bookmark);
 
   // emit that model has changed
   emit bookmarksChanged();
@@ -108,10 +110,14 @@ void ManageBookmarks::createBookmark(QString name, Viewpoint viewpoint)
 
 void ManageBookmarks::goToBookmark(int bookmarkIndex)
 {
-  m_mapView->setViewpoint(m_bookmarks->at(bookmarkIndex)->viewpoint());
+  BookmarkListModel* bookmarks = dynamic_cast<BookmarkListModel*>(m_bookmarks);
+  if (!bookmarks)
+    return;
+
+  m_mapView->setViewpoint(bookmarks->at(bookmarkIndex)->viewpoint());
 }
 
-BookmarkListModel* ManageBookmarks::bookmarks() const
+QAbstractListModel* ManageBookmarks::bookmarks() const
 {
   return m_bookmarks;
 }

@@ -34,7 +34,7 @@ ShowCalloutSample {
         //! [set callout data]
         Callout {
             id: callout
-            calloutData: showCalloutSample.calloutData
+            calloutData: showCalloutSample.calloutData // bind to the property that is exposed
             accessoryButtonHidden: true
         }
         //! [set callout data]

@@ -47,7 +47,7 @@ void FindPlace::init()
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<FindPlace>("Esri.Samples", 1, 0, "FindPlaceSample");
   qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
-  qmlRegisterUncreatableType<SuggestListModel>("Esri.Samples", 1, 0, "SuggestListModel", "SuggestionListModel is an uncreatable type");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
 void FindPlace::componentComplete()
@@ -212,8 +212,14 @@ void FindPlace::setPoiTextHasFocus(bool hasFocus)
 // set the suggestion search text to fetch suggestions
 void FindPlace::setSuggestionsText(const QString& searchText)
 {
-  if (m_suggestListModel)
-    m_suggestListModel->setSearchText(searchText);
+  if (!m_suggestListModel)
+    return;
+
+  SuggestListModel* suggestListModel = dynamic_cast<SuggestListModel*>(m_suggestListModel);
+  if (!suggestListModel)
+    return;
+
+  suggestListModel->setSearchText(searchText);
 }
 
 // geocode without any spatial filter

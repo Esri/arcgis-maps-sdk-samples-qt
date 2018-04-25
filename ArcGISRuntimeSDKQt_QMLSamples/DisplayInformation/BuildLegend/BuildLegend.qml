@@ -1,4 +1,4 @@
-// [WriteFile Name=ShowLegend, Category=DisplayInformation]
+// [WriteFile Name=BuildLegend, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -125,7 +125,7 @@ Rectangle {
 
                 // Legend icon to allow expanding and collapsing
                 Image {
-                    source: legendRect.expanded ? "qrc:/Samples/DisplayInformation/ShowLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/ShowLegend/ic_menu_legendpopover_light.png"
+                    source: legendRect.expanded ? "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light.png"
                     width: 28 * scaleFactor
                     height: width
 

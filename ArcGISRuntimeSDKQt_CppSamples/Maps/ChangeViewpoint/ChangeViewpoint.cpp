@@ -94,8 +94,14 @@ void ChangeViewpoint::changeViewpoint(QString viewpoint)
   else if (viewpoint == "Animation")
   {
     //! [set viewpoint api snippet]
-    Viewpoint vpSpring(Envelope(-12338668.348591767, 5546908.424239618, -12338247.594362013, 5547223.989911933, SpatialReference(102100)));
-    m_mapView->setViewpointAnimated(vpSpring, 4.0, AnimationCurve::EaseInOutCubic);
+    constexpr double xMin = -12338668.348591767;
+    constexpr double yMin = 5546908.424239618;
+    constexpr double xMax = -12338247.594362013;
+    constexpr double yMax = 5547223.989911933;
+    constexpr int wkid = 102100;
+    Viewpoint vpSpring(Envelope(xMin, yMin, xMax, yMax, SpatialReference(wkid)));
+    constexpr float duration = 4.0f;
+    m_mapView->setViewpointAnimated(vpSpring, duration, AnimationCurve::EaseInOutCubic);
     //! [set viewpoint api snippet]
   }
 }

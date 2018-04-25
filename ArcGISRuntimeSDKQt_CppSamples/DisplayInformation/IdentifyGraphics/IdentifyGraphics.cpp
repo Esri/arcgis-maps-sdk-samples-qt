@@ -98,9 +98,9 @@ void IdentifyGraphics::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // call identify on the map view
-    double tolerance = 5.0;
-    bool returnPopupsOnly = false;
-    int maximumResults = 1;
+    constexpr double tolerance = 5.0;
+    constexpr bool returnPopupsOnly = false;
+    constexpr int maximumResults = 1;
 
     m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly, maximumResults);
   });

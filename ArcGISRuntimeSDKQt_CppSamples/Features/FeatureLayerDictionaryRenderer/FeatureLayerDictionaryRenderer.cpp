@@ -85,7 +85,9 @@ void FeatureLayerDictionaryRenderer::componentComplete()
       //            textFieldOverrides["uniquedesignation"] = "uniqueId";
 
       //! [Create Dictionary Symbol Style Cpp]
-      DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+      const QString specType = QStringLiteral("mil2525d");
+      const QString stylePath = m_dataPath + "/styles/mil2525d.stylx";
+      DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle(specType, stylePath, this);
       //! [Create Dictionary Symbol Style Cpp]
 
       for (const auto& table : m_geodatabase->geodatabaseFeatureTables())

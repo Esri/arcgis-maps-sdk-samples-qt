@@ -45,7 +45,7 @@ FindRoute::~FindRoute()
 void FindRoute::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterUncreatableType<DirectionManeuverListModel>("Esri.Samples", 1, 0, "DirectionManeuverListModel", "DirectionManeuverListModel is an uncreatable type");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
   qmlRegisterType<FindRoute>("Esri.Samples", 1, 0, "FindRouteSample");
 }
 
@@ -163,7 +163,7 @@ void FindRoute::setupRouteTask()
   m_routeTask->load();
 }
 
-DirectionManeuverListModel* FindRoute::directions()
+QAbstractListModel* FindRoute::directions()
 {
   return m_directions;
 }

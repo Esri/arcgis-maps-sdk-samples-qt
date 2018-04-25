@@ -1,6 +1,6 @@
-# Show legend
+# Build legend
 
-This sample demonstrates how to show a legend for all the operational layers in the map.
+This sample demonstrates how to build a legend for all the operational layers in the map.
 
 ![](screenshot.png)
 

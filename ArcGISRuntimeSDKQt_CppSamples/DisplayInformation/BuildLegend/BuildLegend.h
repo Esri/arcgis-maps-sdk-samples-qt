@@ -1,4 +1,4 @@
-// [WriteFile Name=ShowLegend, Category=DisplayInformation]
+// [WriteFile Name=BuildLegend, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef SHOW_LEGEND_H
-#define SHOW_LEGEND_H
+#ifndef BUILD_LEGEND_H
+#define BUILD_LEGEND_H
 
 namespace Esri
 {
@@ -23,23 +23,23 @@ namespace Esri
   {
     class Map;
     class MapQuickView;
-    class LegendInfoListModel;
   }
 }
 
 class QString;
 
+#include <QAbstractListModel>
 #include <QQuickItem>
 
-class ShowLegend : public QQuickItem
+class BuildLegend : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::LegendInfoListModel* legendInfoListModel READ legendInfoListModel NOTIFY legendInfoListModelChanged)
+  Q_PROPERTY(QAbstractListModel* legendInfoListModel READ legendInfoListModel NOTIFY legendInfoListModelChanged)
 
 public:
-  explicit ShowLegend(QQuickItem* parent = nullptr);
-  ~ShowLegend();
+  explicit BuildLegend(QQuickItem* parent = nullptr);
+  ~BuildLegend();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
@@ -48,14 +48,14 @@ signals:
   void legendInfoListModelChanged();
 
 private:
-  Esri::ArcGISRuntime::LegendInfoListModel* legendInfoListModel() const { return m_legendInfoListModel; }
+  QAbstractListModel* legendInfoListModel() const { return m_legendInfoListModel; }
   void addLayers();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::LegendInfoListModel* m_legendInfoListModel = nullptr;
+  QAbstractListModel* m_legendInfoListModel = nullptr;
 };
 
-#endif // SHOW_LEGEND_H
+#endif // BUILD_LEGEND_H
 

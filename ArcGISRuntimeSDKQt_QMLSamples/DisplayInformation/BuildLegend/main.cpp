@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(arcGISToolkitImportPath);
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/DisplayInformation/ShowLegend/ShowLegend.qml"));
+    view.setSource(QUrl("qrc:/Samples/DisplayInformation/BuildLegend/BuildLegend.qml"));
 
     view.show();
 

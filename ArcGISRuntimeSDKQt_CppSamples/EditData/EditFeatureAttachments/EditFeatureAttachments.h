@@ -26,12 +26,12 @@ namespace Esri
     class FeatureLayer;
     class ServiceFeatureTable;
     class ArcGISFeature;
-    class AttachmentListModel;
   }
 }
 
 class QString;
 
+#include <QAbstractListModel>
 #include <QQuickItem>
 
 class EditFeatureAttachments : public QQuickItem
@@ -42,7 +42,7 @@ class EditFeatureAttachments : public QQuickItem
   Q_PROPERTY(int screenY READ screenY NOTIFY screenYChanged)
   Q_PROPERTY(int attachmentCount READ attachmentCount NOTIFY attachmentCountChanged)
   Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
-  Q_PROPERTY(Esri::ArcGISRuntime::AttachmentListModel* attachmentModel READ attachmentModel NOTIFY attachmentModelChanged)
+  Q_PROPERTY(QAbstractListModel* attachmentModel READ attachmentModel NOTIFY attachmentModelChanged)
 
 public:
   explicit EditFeatureAttachments(QQuickItem* parent = nullptr);
@@ -64,7 +64,7 @@ signals:
 
 private:
   void connectSignals();
-  Esri::ArcGISRuntime::AttachmentListModel* attachmentModel() const;
+  QAbstractListModel* attachmentModel() const;
   int screenX() const;
   int screenY() const;
   int attachmentCount() const;
