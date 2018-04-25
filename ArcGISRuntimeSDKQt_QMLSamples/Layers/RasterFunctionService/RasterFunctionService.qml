@@ -47,7 +47,8 @@ Rectangle {
                     // zoom to the extent of the raster once it's loaded
                     onLoadStatusChanged: {
                         if (loadStatus === Enums.LoadStatusLoaded) {
-                            mapView.setViewpointGeometry(imageServiceRaster.serviceInfo.fullExtent);
+                            var scale = 50000000.;
+                            mapView.setViewpointCenterAndScale(imageServiceRaster.serviceInfo.fullExtent.center, scale);
                         }
                     }
                 }
@@ -79,7 +80,6 @@ Rectangle {
         Image {
             anchors {
                 centerIn: parent
-                verticalCenterOffset: -3 * scaleFactor
             }
             width: 26 * scaleFactor
             height: width

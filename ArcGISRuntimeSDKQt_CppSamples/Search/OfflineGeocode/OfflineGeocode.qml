@@ -54,7 +54,11 @@ OfflineGeocodeSample {
 
         Rectangle {
             id: addressSearchRect
-            width: 350 * scaleFactor
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+
             height: 35 * scaleFactor
             color: "#f7f8fa"
             border {

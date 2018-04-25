@@ -1,4 +1,4 @@
-// [WriteFile Name=ShowLegend, Category=Maps]
+// [WriteFile Name=BuildLegend, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -19,7 +19,7 @@ import QtQuick.Controls 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-ShowLegendSample {
+BuildLegendSample {
     id: showLegendSample
     width: 800
     height: 600
@@ -88,7 +88,7 @@ ShowLegendSample {
 
                 // Legend icon to allow expanding and collapsing
                 Image {
-                    source: legendRect.expanded ? "qrc:/Samples/DisplayInformation/ShowLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/ShowLegend/ic_menu_legendpopover_light.png"
+                    source: legendRect.expanded ? "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light.png"
                     width: 28 * scaleFactor
                     height: width
 

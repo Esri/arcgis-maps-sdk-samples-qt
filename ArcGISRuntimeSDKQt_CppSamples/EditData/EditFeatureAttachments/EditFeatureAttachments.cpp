@@ -49,7 +49,7 @@ void EditFeatureAttachments::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<EditFeatureAttachments>("Esri.Samples", 1, 0, "EditFeatureAttachmentsSample");
-  qmlRegisterUncreatableType<AttachmentListModel>("Esri.Samples", 1, 0, "AttachmentListModel", "AttachmentListModel is an uncreatable type");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
 void EditFeatureAttachments::componentComplete()
@@ -192,7 +192,7 @@ QString EditFeatureAttachments::featureType() const
   return m_featureType;
 }
 
-AttachmentListModel* EditFeatureAttachments::attachmentModel() const
+QAbstractListModel* EditFeatureAttachments::attachmentModel() const
 {    
   return m_selectedFeature ? m_selectedFeature->attachments() : nullptr;
 }

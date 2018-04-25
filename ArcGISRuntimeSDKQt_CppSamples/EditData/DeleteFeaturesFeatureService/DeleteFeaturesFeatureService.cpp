@@ -92,9 +92,12 @@ void DeleteFeaturesFeatureService::connectSignals()
 
     //! [DeleteFeaturesFeatureService identify feature]
     // call identify on the map view
-    double tolerance = 5.0;
-    int maxResults = 1;
-    m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), tolerance, false, maxResults);
+    constexpr double tolerance = 5.0;
+    constexpr int maxResults = 1;
+    const double screenX = mouseEvent.x();
+    const double screenY = mouseEvent.y();
+    constexpr bool returnPopupsOnly = false;
+    m_mapView->identifyLayer(m_featureLayer, screenX, screenY, tolerance, returnPopupsOnly, maxResults);
     //! [DeleteFeaturesFeatureService identify feature]
   });
 

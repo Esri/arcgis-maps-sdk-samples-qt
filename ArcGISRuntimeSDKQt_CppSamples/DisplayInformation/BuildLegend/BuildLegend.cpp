@@ -1,4 +1,4 @@
-// [WriteFile Name=ShowLegend, Category=DisplayInformation]
+// [WriteFile Name=BuildLegend, Category=DisplayInformation]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "ShowLegend.h"
+#include "BuildLegend.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
@@ -28,25 +28,23 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ShowLegend::ShowLegend(QQuickItem* parent) :
+BuildLegend::BuildLegend(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-ShowLegend::~ShowLegend()
+BuildLegend::~BuildLegend()
 {
 }
 
-void ShowLegend::init()
+void BuildLegend::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<ShowLegend>("Esri.Samples", 1, 0, "ShowLegendSample");
-  qmlRegisterUncreatableType<LegendInfoListModel>("Esri.Samples", 1, 0,
-                                                  "LegendInfoListModel",
-                                                  "LegendInfoListModel is an uncreatable type");
+  qmlRegisterType<BuildLegend>("Esri.Samples", 1, 0, "BuildLegendSample");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
-void ShowLegend::componentComplete()
+void BuildLegend::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -74,7 +72,7 @@ void ShowLegend::componentComplete()
   });
 }
 
-void ShowLegend::addLayers()
+void BuildLegend::addLayers()
 {
   ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer"), this);
   m_map->operationalLayers()->append(tiledLayer);

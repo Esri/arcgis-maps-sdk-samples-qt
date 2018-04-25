@@ -22,7 +22,6 @@ namespace Esri
   namespace ArcGISRuntime
   {
     class DictionarySymbolStyle;
-    class SymbolStyleSearchResultListModel;
   }
 }
 
@@ -35,7 +34,7 @@ class SearchDictionarySymbolStyle : public QQuickItem
   Q_OBJECT
   Q_ENUMS(FieldEnum)
 
-  Q_PROPERTY(Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* searchResultsListModel READ searchResultsListModel NOTIFY searchResultsListModelChanged)
+  Q_PROPERTY(QAbstractListModel* searchResultsListModel READ searchResultsListModel NOTIFY searchResultsListModelChanged)
 
 public:
   explicit SearchDictionarySymbolStyle(QQuickItem* parent = nullptr);
@@ -55,7 +54,7 @@ public:
                           const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,
                           const QStringList& keysSearchParam);
 
-  Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* searchResultsListModel() const;
+  QAbstractListModel* searchResultsListModel() const;
 
 signals:
   void searchCompleted(int count);
@@ -63,7 +62,7 @@ signals:
 
 private:
   Esri::ArcGISRuntime::DictionarySymbolStyle* m_dictionarySymbolStyle;
-  Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* m_searchResults;
+  QAbstractListModel* m_searchResults;
 };
 
 #endif // SEARCHDICTIONARYSYMBOLSTYLE_H

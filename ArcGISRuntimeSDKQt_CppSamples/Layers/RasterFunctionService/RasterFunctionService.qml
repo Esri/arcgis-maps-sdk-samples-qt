@@ -59,7 +59,6 @@ RasterFunctionServiceSample {
         Image {
             anchors {
                 centerIn: parent
-                verticalCenterOffset: -3 * scaleFactor
             }
             width: 26 * scaleFactor
             height: width

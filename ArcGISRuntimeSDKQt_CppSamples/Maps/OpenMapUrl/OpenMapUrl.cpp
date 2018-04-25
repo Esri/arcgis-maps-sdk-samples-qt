@@ -56,8 +56,8 @@ void OpenMapUrl::openMap(const QString& itemId)
 {
   //! [Construct map from a webmap Url]
   // create a QUrl using the item id QString
-  QString organizationPortalUrl("http://arcgis.com");
-  QUrl webmapUrl( QString(organizationPortalUrl + "/sharing/rest/content/items/" + itemId));
+  QString organizationPortalUrl(QStringLiteral("http://arcgis.com"));
+  const QUrl webmapUrl(QString(organizationPortalUrl + "/sharing/rest/content/items/" + itemId));
   // create a new map from the webmap Url
   Map* map = new Map(webmapUrl, this);
   //! [Construct map from a webmap Url]
