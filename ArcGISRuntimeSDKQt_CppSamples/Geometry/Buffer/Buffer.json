@@ -1,0 +1,8 @@
+{
+    "source" :  "Buffer.qml",
+    "otherSourceFiles" :  [
+        "Buffer.h",
+        "Buffer.cpp"
+    ],
+    "name" : "Buffer"
+}
