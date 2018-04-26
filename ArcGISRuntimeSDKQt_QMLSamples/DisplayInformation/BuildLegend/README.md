@@ -1,4 +1,4 @@
-# Build legend
+# Build a legend
 
 This sample demonstrates how to build a legend for all the operational layers in the map.
 
