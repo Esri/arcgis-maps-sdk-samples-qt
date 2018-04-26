@@ -64,7 +64,7 @@ BufferSample {
             id: bufferSizeText
             validator: RegExpValidator{ regExp: /^[1-9][0-9]?$|^100$/ }
             text: bufferSize
-            onTextChanged: bufferSize = text;
+            onTextChanged: bufferSize = Number(text);
         }
     }
 }

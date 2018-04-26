@@ -110,7 +110,6 @@ int Buffer::bufferSize() const
 
 void Buffer::setBufferSize(int size)
 {
-  qDebug() << "sizee";
   if (size == m_bufferSize)
     return;
 
