@@ -92,7 +92,7 @@ void Buffer::onMouseClicked(QMouseEvent& mouse)
   const int bufferInMeters = bufferSize() * 1609.34;
 
   // Buffer the point
-  Geometry buffer = GeometryEngine::buffer(point, bufferInMeters);
+  const Geometry buffer = GeometryEngine::buffer(point, bufferInMeters);
 
   // Add the result buffer as a graphic
   Graphic* resultGraphic = new Graphic(buffer, m_bufferSymbol, this);
