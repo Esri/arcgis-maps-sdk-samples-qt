@@ -1,31 +1,25 @@
 # Time based query
 
-This sample demonstrates how to TODO.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+This sample demonstrates how to query data using a time extent. This workflow can be used to return records that are between a specified start and end date. For example, you could specify to only show records that are before September 16, 2000.
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Run the sample, and a subset of records will be displayed on the map.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+1. An instance of `ServiceFeatureTable` is created by passing the URL to a REST endpoint of a time-enabled service. Time-enabled services will have TimeInfo defined in the service description. This information is specified in ArcMap or ArcGIS Pro prior to publishing the service.
+2. The feature request mode of the `ServiceFeatureTable` is set to `ManualCache`, so that the developer can control how and when the feature table is populated with data.
+3. A `FeatureLayer` is created by passing in the instance of the `ServiceFeatureTable`.
+4. A `TimeExtent` object is created by specifying start and end date/time objects.
+5. A `QueryParmaters` object is created with the `TimeExtent`.
+6. `ServiceFeatureTable::populateFromService` is executed by passing in the `QueryParameters`.
+7. The feature table is populated with data that matches the provided query.
 
 ## Relevant API
- - ClassName1
- - MethodName
-
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+ - TimeExtent
+ - QueryParameters
+ - ServiceFeatureTable::populateFromService
 
 ## Tags
-Routing, Network analysis, Geocode
-
+Time, Time Extent, Query
