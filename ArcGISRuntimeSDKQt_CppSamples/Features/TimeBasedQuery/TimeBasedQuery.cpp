@@ -56,10 +56,8 @@ void TimeBasedQuery::componentComplete()
   m_map->operationalLayers()->append(hurricaneLayer);
 
   // Create DateTime ranges anything prior to Sep 16, 2000
-  QDateTime startTime;
-  startTime.setDate(QDate(0, 0, 0));
-  QDateTime endTime;
-  endTime.setDate(QDate(2000, 9, 16));
+  QDateTime startTime(QDate(0, 0, 0));
+  QDateTime endTime(QDate(2000, 9, 16));
   TimeExtent timeExtent(startTime, endTime);
 
   // Create Query Parameters and set time extent
