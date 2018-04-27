@@ -54,7 +54,7 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::SimpleFillSymbol* m_bufferSymbol = nullptr;
   Esri::ArcGISRuntime::SimpleMarkerSymbol* m_pointSymbol = nullptr;
-  int m_bufferSize;
+  int m_bufferSize = 5;
 
 private:
   int bufferSize() const;
