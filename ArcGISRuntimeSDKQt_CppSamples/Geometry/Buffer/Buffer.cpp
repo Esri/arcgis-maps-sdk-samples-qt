@@ -32,8 +32,7 @@
 using namespace Esri::ArcGISRuntime;
 
 Buffer::Buffer(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_bufferSize(5)
+  QQuickItem(parent)
 {
   emit bufferSizeChanged();
 }
