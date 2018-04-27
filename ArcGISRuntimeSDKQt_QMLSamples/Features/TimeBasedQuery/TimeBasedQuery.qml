@@ -35,39 +35,23 @@ Rectangle {
                     id: hurricaneTable
                     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/0"
                     featureRequestMode: Enums.FeatureRequestModeManualCache // set the cache mode to manual
-                    onPopulateFromServiceStatusChanged: {
-                        if (populateFromServiceStatus === Enums.TaskStatusCompleted) {
-                            console.log("complete")
+                    onLoadStatusChanged: {
+                        if (loadStatus === Enums.LoadStatusLoaded) {
+                            // create query parameters
+                            var queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+                            var clearCache = true;
+                            var outFields = ["*"];
+                            // create a time extent for anything before September 16, 2000
+                            queryParams.timeExtent = ArcGISRuntimeEnvironment.createObject("TimeExtent", {
+                                                                                               startTime: new Date("January 1, 0001"),
+                                                                                               endTime: new Date("September 16, 2000")
+                                                                                           });
+                            // populate the table with records matching the query
+                            hurricaneTable.populateFromService(queryParams, clearCache, outFields);
                         }
-                        else if (populateFromServiceStatus === Enums.TaskStatusInProgress)
-                            console.log("in progress")
-                        else if (populateFromServiceStatus === Enums.TaskStatusErrored)
-                            console.log("error", error.message, error.additionalMessage)
-                    }
-                    onErrorChanged: {
-                        if (error)
-                            console.log("error", error.message, error.additionalMessage)
                     }
                 }
             }
-
-            onLoadStatusChanged: {
-                if (loadStatus === Enums.LoadStatusLoaded) {
-                    var clearCache = true;
-                    var outFields = ["*"];
-                    hurricaneTable.populateFromService(queryParams, clearCache, outFields);
-                }
-            }
         }
-    }
-
-    QueryParameters {
-        id: queryParams
-
-        TimeExtent {
-            startTime: new Date("January 1, 1900")
-            endTime: new Date("September 16, 2000")
-        }
-        Component.onCompleted: console.log("start time", timeExtent.startTime, "end time", timeExtent.endTime)
     }
 }

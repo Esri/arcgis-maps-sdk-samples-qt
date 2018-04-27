@@ -55,7 +55,7 @@ void TimeBasedQuery::componentComplete()
   FeatureLayer* hurricaneLayer = new FeatureLayer(hurricaneTable, this);
   m_map->operationalLayers()->append(hurricaneLayer);
 
-  // Create DateTime ranges from beginning of time to Sep 16, 2000
+  // Create DateTime ranges anything prior to Sep 16, 2000
   QDateTime startTime;
   startTime.setDate(QDate(0, 0, 0));
   QDateTime endTime;
