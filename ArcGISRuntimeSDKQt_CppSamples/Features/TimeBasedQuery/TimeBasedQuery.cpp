@@ -23,6 +23,8 @@
 #include "TimeExtent.h"
 #include "QueryParameters.h"
 
+#include <QDateTime>
+
 using namespace Esri::ArcGISRuntime;
 
 TimeBasedQuery::TimeBasedQuery(QQuickItem* parent /* = nullptr */):
