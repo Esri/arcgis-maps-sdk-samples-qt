@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Geometry/GeodesicOperations">
+        <file alias="sample.json">GeodesicOperations.json</file>        
+        <file>GeodesicOperations.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
