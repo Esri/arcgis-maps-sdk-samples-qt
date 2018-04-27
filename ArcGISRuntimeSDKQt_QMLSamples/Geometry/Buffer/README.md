@@ -11,7 +11,7 @@ Tap on the map to create center map-points to generate buffer(s). You can option
 ## How it works
 The static method, `GeometryEngine.buffer`, is called by passing in a Point and a distance. The unit of measurement for the distances is automatically set to be the same as the input geometries, which in this case is meters. To provide a better user experience, the units entered in the User Interface (UI) for generating the buffer is in miles, so the provided number must be multiplied by 1609.34, which is the number of meters in a mile.
 
-## Revlevant API
+## Relevant API
  - GeometryEngine::buffer
  - GraphicsOverlay
 
