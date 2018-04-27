@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Geometry/Buffer">
+        <file alias="sample.json">Buffer.json</file>        
+        <file>Buffer.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
