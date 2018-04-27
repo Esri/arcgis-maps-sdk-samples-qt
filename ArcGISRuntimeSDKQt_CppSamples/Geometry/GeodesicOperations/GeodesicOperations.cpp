@@ -88,7 +88,7 @@ void GeodesicOperations::componentComplete()
     m_destinationGraphic->setGeometry(destination);
 
     // create line with start/end points
-    QList<Point> points = {nycPoint, destination};
+    const QList<Point> points = {nycPoint, destination};
     const Polyline polyline = pointsToPolyline(points);
 
     // densify the path as a geodesic curve and show it with the path graphic
