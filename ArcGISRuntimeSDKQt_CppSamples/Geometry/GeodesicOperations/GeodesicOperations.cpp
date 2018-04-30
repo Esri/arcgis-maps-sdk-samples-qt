@@ -101,7 +101,7 @@ void GeodesicOperations::componentComplete()
     m_pathGraphic->setGeometry(pathGeometry);
 
     // calculate the path's geodetic length
-    m_distanceText = QString::number((int)GeometryEngine::lengthGeodetic(pathGeometry, unitOfMeasurement, curveType));
+    m_distanceText = QString::number(GeometryEngine::lengthGeodetic(pathGeometry, unitOfMeasurement, curveType), 'f', 2);
     emit distanceTextChanged();
   });
 }

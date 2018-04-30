@@ -86,7 +86,7 @@ Rectangle {
             pathGraphic.geometry = pathGeometry;
 
             // calculate the path's geodetic length
-            distanceText = Math.round(GeometryEngine.lengthGeodetic(pathGeometry, unitOfMeasurement, curveType));
+            distanceText = GeometryEngine.lengthGeodetic(pathGeometry, unitOfMeasurement, curveType).toFixed(2);
         }
     }    
 
