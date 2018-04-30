@@ -1,0 +1,8 @@
+{
+    "source" :  "ShowLabelsOnLayers.qml",
+    "otherSourceFiles" :  [
+        "ShowLabelsOnLayers.h",
+        "ShowLabelsOnLayers.cpp"
+    ],
+    "name" : "Show labels on layers"
+}

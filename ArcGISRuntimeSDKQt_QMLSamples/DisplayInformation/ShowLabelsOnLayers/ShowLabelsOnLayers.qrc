@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/ShowLabelsOnLayers">
+        <file alias="sample.json">ShowLabelsOnLayers.json</file>        
+        <file>ShowLabelsOnLayers.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
