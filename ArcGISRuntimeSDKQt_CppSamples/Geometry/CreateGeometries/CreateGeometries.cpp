@@ -116,7 +116,6 @@ Geometry CreateGeometries::createEnvelope() const
   return Envelope(xMin, yMin, xMax, yMax, spatialRef);
 }
 
-
 Geometry CreateGeometries::createPolygon() const
 {
   // Create a polygon builder
