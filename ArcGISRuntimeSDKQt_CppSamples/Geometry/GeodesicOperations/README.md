@@ -1,8 +1,8 @@
 # Geodesic operations
 
-This sample demonstrates how to perform geodesic operations on geometries using the GeometryEngine. Geodesic means that calculations will take into account the curvature of the Earth, as opposed to being a planar calculation based on a 2D Cartesian plane.
+This sample demonstrates how to perform geodesic operations on geometries using the GeometryEngine. Geodesic calculations take into account the curvature of the Earth, while planar calculations are based on a 2D Cartesian plane.
 
-A common example of utilizing geodesic operations is in visualizing flight paths from one city to another - the lines are not simply a straight line between two points, but rather a curved line. Additionally, the distance between the two locations must be calculated as geodesic distances to get an accurate account of real world length.
+Visualizing flight paths between cities is a common example of a geodesic operation--notice the lines are not straight, but curved. A geodesic distance must be calculated, to get an accurate real world distance between two points on a 2D map.
 
 ![](screenshot.png)
 
