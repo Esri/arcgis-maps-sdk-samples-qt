@@ -3,7 +3,7 @@ This sample demonstrates how to use the GeometryEngine::buffer to generate a pol
 
 Creating buffers is a core concept in GIS as it allows for proximity analysis to find geographic features contained within a polygon. For example, suppose you wanted to know how many resturants are within a short walking distance of your home. The first step in this proximity analysis would be to generate a buffer polygon of a certain distance (say 1 mile) around your house.  
 
-![Image](screenshot.png)
+![](screenshot.png)
 
 ## How to use the sample
 Tap on the map to create center map-points to generate buffer(s). You can optionally change the buffer distance (in miles) by adjusting the value in the text box before each tap on the map.
