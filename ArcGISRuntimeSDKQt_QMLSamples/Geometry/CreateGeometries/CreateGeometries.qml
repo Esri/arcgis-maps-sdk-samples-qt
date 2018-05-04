@@ -85,7 +85,7 @@ Rectangle {
         // Add a graphic to the graphic collection - multi-point with a simple marker symbol.
         graphicsOverlay.graphics.append(createGraphic(createMultipoint(), simpleMarkerSymbol));
 
-        // Zoom to the extent of an envelope with some padding (10 pixels).
+        // Zoom to the extent of an envelope with some padding (10 device-independent pixels).
         mapView.setViewpointGeometryAndPadding(createEnvelope(), 10);
     }
 
@@ -96,7 +96,7 @@ Rectangle {
                                                          yMin: 33.5,
                                                          xMax: -101.0,
                                                          yMax: 48.0,
-                                                         spatialReference: ArcGISRuntimeEnvironment.createObject("SpatialReference", {wkid: 4326})
+                                                         spatialReference: SpatialReference.createWgs84()
                                                      });
     }
 
@@ -104,7 +104,7 @@ Rectangle {
     function createPolygon() {
         // Create a polygon builder
         var polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {
-                                                                       spatialReference: ArcGISRuntimeEnvironment.createObject("SpatialReference", {wkid: 4326})
+                                                                       spatialReference: SpatialReference.createWgs84()
                                                                    });
 
         // add points to the builder that approximates the boundary of Colorado.
@@ -120,7 +120,7 @@ Rectangle {
     function createPolyline() {
         // Create a polyline builder
         var polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {
-                                                                        spatialReference: ArcGISRuntimeEnvironment.createObject("SpatialReference", {wkid: 4326})
+                                                                        spatialReference: SpatialReference.createWgs84()
                                                                     });
 
         // add points to the builder that approximates the border between California and Nevada.
@@ -137,14 +137,14 @@ Rectangle {
         return ArcGISRuntimeEnvironment.createObject("Point", {
                                                          x: -117.195800,
                                                          y: 34.056295,
-                                                         spatialReference: ArcGISRuntimeEnvironment.createObject("SpatialReference", {wkid: 4326})
+                                                         spatialReference: SpatialReference.createWgs84()
                                                      });
     }
 
     function createMultipoint() {
         // Create a polygon builder
         var multipointBuilder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder", {
-                                                                          spatialReference: ArcGISRuntimeEnvironment.createObject("SpatialReference", {wkid: 4326})
+                                                                          spatialReference: SpatialReference.createWgs84()
                                                                       });
 
         // add points to the builder representing various state capital locations in the Western United States.

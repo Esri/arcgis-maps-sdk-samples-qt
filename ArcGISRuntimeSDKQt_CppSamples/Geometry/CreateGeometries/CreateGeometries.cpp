@@ -100,7 +100,7 @@ void CreateGeometries::addGraphics()
   // Add a graphic to the graphic collection - multi-point with a simple marker symbol.
   m_graphicsOverlay->graphics()->append(new Graphic(createMultipoint(), simpleMarkerSymbol, this));
 
-  // Zoom to the extent of an envelope with some padding (10 pixels).
+  // Zoom to the extent of an envelope with some padding (10 device-independent pixels).
   m_mapView->setViewpointGeometry(createEnvelope(), 10);
 }
 
