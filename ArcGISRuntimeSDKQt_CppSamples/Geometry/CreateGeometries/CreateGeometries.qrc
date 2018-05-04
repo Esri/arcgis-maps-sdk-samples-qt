@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Geometry/CreateGeometries">
+        <file alias="sample.json">CreateGeometries.json</file>        
+        <file>CreateGeometries.qml</file>
+        <file>CreateGeometries.h</file>
+        <file>CreateGeometries.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
