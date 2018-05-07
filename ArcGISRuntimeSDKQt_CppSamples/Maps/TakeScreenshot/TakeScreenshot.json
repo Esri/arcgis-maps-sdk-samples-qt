@@ -2,7 +2,10 @@
     "source" :  "TakeScreenshot.qml",
     "otherSourceFiles" :  [
         "TakeScreenshot.h",
-        "TakeScreenshot.cpp"
+        "TakeScreenshot.cpp",
+        "MapImageProvider.h",
+        "MapImageProvider.cpp",
+        "main.cpp"
     ],
     "name" : "Take screenshot"
 }

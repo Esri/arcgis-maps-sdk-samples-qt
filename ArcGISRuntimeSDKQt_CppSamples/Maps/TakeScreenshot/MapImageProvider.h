@@ -15,12 +15,17 @@
 #define MAPIMAGEPROVIDER_H
 
 #include <QQuickImageProvider>
+#include <QMap>
+#include <QImage>
 
 class MapImageProvider : public QQuickImageProvider
 {
 
 public:
   MapImageProvider();
+  ~MapImageProvider() = default;
+
+public:
   QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;
   void addImage(const QString& id, const QImage& img);
   static QString imageProviderId();

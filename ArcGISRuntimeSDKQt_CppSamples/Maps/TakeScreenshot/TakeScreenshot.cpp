@@ -20,7 +20,6 @@
 #include "MapQuickView.h"
 #include "MapImageProvider.h"
 
-#include <QQmlEngine>
 #include <QQmlContext>
 
 using namespace Esri::ArcGISRuntime;
@@ -30,15 +29,11 @@ TakeScreenshot::TakeScreenshot(QQuickItem* parent /* = nullptr */):
 {
 }
 
-void TakeScreenshot::init(QQmlEngine* engine)
+void TakeScreenshot::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<TakeScreenshot>("Esri.Samples", 1, 0, "TakeScreenshotSample");
-
-  // Add Image Provider to the QQmlEngine instance
-  const QString name = MapImageProvider::imageProviderId();
-  engine->addImageProvider(name, new MapImageProvider);
 }
 
 void TakeScreenshot::componentComplete()
