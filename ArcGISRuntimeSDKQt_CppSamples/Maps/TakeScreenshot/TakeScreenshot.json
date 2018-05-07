@@ -1,0 +1,8 @@
+{
+    "source" :  "TakeScreenshot.qml",
+    "otherSourceFiles" :  [
+        "TakeScreenshot.h",
+        "TakeScreenshot.cpp"
+    ],
+    "name" : "Take screenshot"
+}
