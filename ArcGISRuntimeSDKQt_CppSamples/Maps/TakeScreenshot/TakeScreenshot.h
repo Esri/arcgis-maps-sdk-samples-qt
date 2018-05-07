@@ -26,7 +26,7 @@ class MapQuickView;
 }
 }
 
-#include "MapImageProvider.h"
+class MapImageProvider;
 
 #include <QQuickItem>
 
@@ -41,7 +41,7 @@ public:
   ~TakeScreenshot() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
-  static void init(QQmlEngine* engine);
+  static void init();
   Q_INVOKABLE void captureScreenshot();
 
 signals:

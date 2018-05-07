@@ -16,12 +16,14 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+#include <QQmlContext>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
 #include "TakeScreenshot.h"
+#include "MapImageProvider.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -31,12 +33,12 @@ int main(int argc, char *argv[])
 
   QGuiApplication app(argc, argv);
 
+  // Initialize the sample
+  TakeScreenshot::init();
+
   // Intialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
-
-  // Initialize the sample
-  TakeScreenshot::init(view.engine());
 
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
   QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
@@ -55,6 +57,10 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
   // Add the Toolkit path
   view.engine()->addImportPath(arcGISToolkitImportPath);  
+
+  // Add Image Provider to the QQmlEngine instance
+  const QString name = MapImageProvider::imageProviderId();
+  view.engine()->addImageProvider(name, new MapImageProvider);
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/TakeScreenshot/TakeScreenshot.qml"));

@@ -9,5 +9,6 @@
         <file>close.png</file>
         <file>MapImageProvider.h</file>
         <file>MapImageProvider.cpp</file>
+        <file>main.cpp</file>
     </qresource>
 </RCC>
