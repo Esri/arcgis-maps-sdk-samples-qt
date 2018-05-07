@@ -1,31 +1,25 @@
 # Take screenshot
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+This sample demonstrates how to take a screenshot of the MapView. This could be useful for sending an image of your map to a coworker, or it could be used for testing and debugging your applications. This same workflow works with the 3D SceneView as well.
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Open the sample and navigate to a desired location on the map. Press the `Take screenshot` button, and an screenshot image will display over the map. You can close the image by pressing the close button. Continue navigating the map and generating new screenshots.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+- The `exportImage` function is executed on the `MapView`.
+- When the asynchronous task completes, a `QImage` is returned.
+- QML cannot render a `QImage`. Instead, a QML Image Provider must be created for generating an in-memory URL to the returned `QImage`. This is done with the following steps:
+  - Subclass `QQuickImageProvider`.
+  - Reimplement the `requestImage` function.
+  - Add an image provider to the `QQmlEngine` instance using `QQmlEngine::addImageProvider`.
+  - Create a `Q_PROPERTY` that returns the image URL from the Image Provider.
+  - Bind the QML Image to the image URL property. When this property changes, it will automatically trigger the `requestImage` function and return the URL to the image.
 
 ## Relevant API
- - ClassName1
- - MethodName
-
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+ - GeoView::exportImage
 
 ## Tags
-Routing, Network analysis, Geocode
+screenshot, screen capture, export
 

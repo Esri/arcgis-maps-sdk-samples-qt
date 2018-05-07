@@ -1,31 +1,19 @@
 # Take screenshot
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+This sample demonstrates how to take a screenshot of the MapView. This could be useful for sending an image of your map to a coworker, or it could be used for testing and debugging your applications. This same workflow works with the 3D SceneView as well.
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Open the sample and navigate to a desired location on the map. Press the `Take screenshot` button, and an screenshot image will display over the map. You can close the image by pressing the close button. Continue navigating the map and generating new screenshots.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+- The `exportImage` function is executed on the `MapView`.
+- Once the asynchronous task completes, a QML Image uses the image URL to render an Image on the screen.
 
 ## Relevant API
- - ClassName1
- - MethodName
-
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+ - GeoView::exportImage
 
 ## Tags
-Routing, Network analysis, Geocode
+screenshot, screen capture, export
 
