@@ -5,7 +5,7 @@ This sample demonstrates how to take a screenshot of the MapView. This could be 
 ![](screenshot.png)
 
 ## How to use the sample
-Open the sample and navigate to a desired location on the map. Press the `Take screenshot` button, and an screenshot image will display over the map. You can close the image by pressing the close button. Continue navigating the map and generating new screenshots.
+Open the sample and navigate to a desired location on the map. Press the `Take screenshot` button, and a screenshot image will display over the map. You can close the image by pressing the close button. Continue navigating the map and generating new screenshots.
 
 ## How it works
 - The `exportImage` function is executed on the `MapView`.
