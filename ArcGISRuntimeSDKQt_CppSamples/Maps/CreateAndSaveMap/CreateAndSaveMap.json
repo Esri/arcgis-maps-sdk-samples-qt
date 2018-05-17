@@ -1,6 +1,8 @@
 {
     "source" :  "CreateAndSaveMap.qml",
     "otherSourceFiles" :  [
+        "CreateAndSaveMap.h",
+        "CreateAndSaveMap.cpp",
         "LayerWindow.qml",
         "SaveOptionsWindow.qml"
     ],

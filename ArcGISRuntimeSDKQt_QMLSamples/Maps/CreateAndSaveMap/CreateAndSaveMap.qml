@@ -24,15 +24,13 @@ Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600
+    height: 600    
 
     property real scaleFactor: System.displayScaleFactor
 
     StackView {
         id: stackView
-        anchors {
-            fill: parent
-        }
+        anchors.fill: parent
 
         initialItem: LayerWindow {
             onCreateMapSelected: {
@@ -41,45 +39,47 @@ Rectangle {
                 var map = createMap(basemap, layerList);
                 mapView.map = map;
             }
-        }
+        }        
+    }
 
-        MapView {
-            id: mapView
-            visible: false
+    // MapView that will display the Map created from the user options
+    MapView {
+        id: mapView
+        visible: false
 
-            Button {
-                anchors {
-                    left: parent.left
-                    top: parent.top
-                    margins: 5 * scaleFactor
-                }
-                text: "Save map"
+        Button {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: mapView.attributionTop
+                margins: 5 * scaleFactor
+            }
+            text: "Save map"
 
-                onClicked: {
-                    if (portal.loadStatus !== Enums.LoadStatusLoaded)
-                        portal.load();
-                    else {
-                        options.visible = true;
-                        stackView.push(options);
-                    }
+            onClicked: {
+                if (portal.loadStatus !== Enums.LoadStatusLoaded)
+                    portal.load();
+                else {
+                    options.visible = true;
+                    stackView.push(options);
                 }
             }
+        }
 
-            Connections {
-                target: mapView.map
-                onSaveStatusChanged: {
-                    if (mapView.map.saveStatus === Enums.TaskStatusCompleted) {
-                        console.log("sve complete", mapView.map.item.itemId);
-                    } else if (mapView.map.saveStatus === Enums.TaskStatusInProgress) {
-                        console.log("in progress");
-                    } else if (mapView.map.saveStatus === Enums.TaskStatusErrored) {
-                        console.log("error", mapView.map.error.message);
-                    }
+        Connections {
+            target: mapView.map
+            onSaveStatusChanged: {
+                if (mapView.map.saveStatus === Enums.TaskStatusCompleted) {
+                    completeText.webmapUrl = "https://www.arcgis.com/home/item.html?id=%1".arg(mapView.map.item.itemId);
+                    completeText.text = 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(completeText.webmapUrl);
+                } else if (mapView.map.saveStatus === Enums.TaskStatusErrored) {
+                    completeText.text = 'An error occurred while saving the map.\nPlease restart the sample and try again.\nDetails:'.arg(mapView.map.error.message);
                 }
+                stackView.push(completionRect);
             }
         }
     }
 
+    // Window to display options for setting title, tags, and description
     SaveOptionsWindow {
         id: options
         visible: false
@@ -93,7 +93,24 @@ Rectangle {
             var thumbnail = null;
             var folder = null;
             var forceSave = true;
-            mapView.map.saveAs(portal, title, tags, forceSave, folder, description, thumbnail);
+            var tagsList = tags.split(",");
+            mapView.map.saveAs(portal, title, tagsList, forceSave, folder, description, thumbnail);
+        }
+    }
+
+    // Rectangle to display completion text
+    Rectangle {
+        id: completionRect
+
+        Text {
+            id: completeText
+            anchors.centerIn: parent
+
+            property string webmapUrl
+
+            textFormat: Text.RichText
+            horizontalAlignment: Text.AlignHCenter
+            onLinkActivated: Qt.openUrlExternally(webmapUrl)
         }
     }
 
