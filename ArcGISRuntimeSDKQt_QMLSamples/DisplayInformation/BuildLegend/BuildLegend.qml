@@ -160,14 +160,17 @@ Rectangle {
                     clip: true
 
                     Row {
-                        spacing: 5
+                        spacing: 5 * scaleFactor
                         anchors.verticalCenter: parent.verticalCenter
+
                         Image {
-                            width: symbolWidth
-                            height: symbolHeight
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 24 * scaleFactor
+                            height: width
                             source: symbolUrl
                         }
                         Text {
+                            anchors.verticalCenter: parent.verticalCenter
                             width: 125 * scaleFactor
                             text: name
                             wrapMode: Text.WordWrap

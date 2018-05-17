@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/TakeScreenshot">
+        <file alias="sample.json">TakeScreenshot.json</file>
+        <file>TakeScreenshot.qml</file>
+        <file>TakeScreenshot.h</file>
+        <file>TakeScreenshot.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>close.png</file>
+        <file>MapImageProvider.h</file>
+        <file>MapImageProvider.cpp</file>
+        <file>main.cpp</file>
+    </qresource>
+</RCC>
