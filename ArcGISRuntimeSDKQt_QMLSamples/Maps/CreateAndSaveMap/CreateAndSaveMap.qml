@@ -71,10 +71,11 @@ Rectangle {
                 if (mapView.map.saveStatus === Enums.TaskStatusCompleted) {
                     completeText.webmapUrl = "https://www.arcgis.com/home/item.html?id=%1".arg(mapView.map.item.itemId);
                     completeText.text = 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(completeText.webmapUrl);
+                    stackView.push(completionRect);
                 } else if (mapView.map.saveStatus === Enums.TaskStatusErrored) {
                     completeText.text = 'An error occurred while saving the map.\nPlease restart the sample and try again.\nDetails:'.arg(mapView.map.error.message);
-                }
-                stackView.push(completionRect);
+                    stackView.push(completionRect);
+                }                
             }
         }
     }
