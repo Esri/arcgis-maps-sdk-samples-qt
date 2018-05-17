@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/CreateAndSaveMap">
+        <file alias="sample.json">CreateAndSaveMap.json</file>
+        <file>CreateAndSaveMap.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>LayerWindow.qml</file>
+        <file>SaveOptionsWindow.qml</file>
+    </qresource>
+</RCC>
