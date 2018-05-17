@@ -1,0 +1,8 @@
+{
+    "source" :  "CreateGeometries.qml",
+    "otherSourceFiles" :  [
+        "CreateGeometries.h",
+        "CreateGeometries.cpp"
+    ],
+    "name" : "Create geometries"
+}
