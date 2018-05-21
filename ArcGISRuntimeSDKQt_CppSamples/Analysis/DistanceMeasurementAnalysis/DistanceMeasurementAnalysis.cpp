@@ -112,31 +112,39 @@ void DistanceMeasurementAnalysis::connectSignals()
   });
 
   // connect to mouse signals to update the analysis
-  connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent mouseEvent)
-  {
-    qDebug() << "mouse clicked";
-    m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-  });
-
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent mouseEvent)
   {
-    qDebug() << "mouse press and held";
     m_isPressAndHold = true;
     m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
   });
 
-  connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this](QMouseEvent)
+  connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this](QMouseEvent mouseEvent)
   {
-    qDebug() << "mouse released";
-    m_isPressAndHold = false;
+    qDebug() << "released" << m_isNavigating;
+    if (m_isNavigating)
+    {
+      m_isNavigating = false;
+      return;
+    }
+
+    if (mouseEvent.button() == Qt::RightButton)
+      return;
+
+    if (m_isPressAndHold)
+      m_isPressAndHold = false;
+    else
+      m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
   });
 
   connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent mouseEvent)
   {
-    if (m_isPressAndHold) {
-      qDebug() << "mouse moved";
+    if (m_isPressAndHold)
       m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-    }
+  });
+
+  connect(m_sceneView, &SceneQuickView::mousePressed, this, [this]
+  {
+    m_isNavigating = false;
   });
 
   connect(m_sceneView, &SceneQuickView::screenToLocationCompleted, this, [this](QUuid, Point pt)
@@ -145,6 +153,12 @@ void DistanceMeasurementAnalysis::connectSignals()
       m_distanceAnalysis->setEndLocation(pt);
     else
       m_distanceAnalysis->setStartLocation(pt);
+  });
+
+  connect(m_sceneView, &SceneQuickView::viewpointChanged, this, [this]
+  {
+
+    m_isNavigating = true;
   });
 }
 
