@@ -69,6 +69,9 @@ void StyleWmsLayer::componentComplete()
 
 void StyleWmsLayer::setCurrentStyle(int index)
 {
+  if (!m_wmsSublayer)
+    return;
+
   // get the style
   const QString style = m_wmsSublayer->sublayerInfo().styles().at(index);
 
