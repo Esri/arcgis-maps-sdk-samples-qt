@@ -120,7 +120,6 @@ void DistanceMeasurementAnalysis::connectSignals()
 
   connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this](QMouseEvent mouseEvent)
   {
-    qDebug() << "released" << m_isNavigating;
     if (m_isNavigating)
     {
       m_isNavigating = false;
