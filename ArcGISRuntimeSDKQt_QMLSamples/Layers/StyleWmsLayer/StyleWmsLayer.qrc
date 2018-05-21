@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/StyleWmsLayer">
+        <file alias="sample.json">StyleWmsLayer.json</file>        
+        <file>StyleWmsLayer.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
