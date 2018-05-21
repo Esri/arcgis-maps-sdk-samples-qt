@@ -55,6 +55,7 @@ private:
   QString m_horizontalDistance;
   QString m_verticalDistance;
   bool m_isPressAndHold = false;
+  bool m_isNavigating = false;
   QString directDistance() const;
   QString horizontalDistance() const;
   QString verticalDistance() const;

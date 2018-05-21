@@ -103,18 +103,17 @@ Rectangle {
             }
         }
 
-        // handle mouse click to update the analysis
-        onMouseClicked: {
-            // need way to know if this is a click or a release
-            sceneView.screenToLocation(mouse.x, mouse.y);
-        }
+        // handle mouse signals to update the analysis
         onMousePressedAndHeld: {
             isPressAndHeld = true;
             sceneView.screenToLocation(mouse.x, mouse.y);
         }
         onMouseReleased: {
             console.log("mouse released")
-            isPressAndHeld = false;
+            if (isPressAndHeld)
+                isPressAndHeld = false;
+            else
+                sceneView.screenToLocation(mouse.x, mouse.y);
         }
         onMousePositionChanged: {
             if (isPressAndHeld)
