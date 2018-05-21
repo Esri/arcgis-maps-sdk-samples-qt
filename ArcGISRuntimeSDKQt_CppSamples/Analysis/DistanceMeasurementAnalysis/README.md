@@ -1,31 +1,27 @@
 # Distance measurement analysis
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+This sample demonstrates measuring 3D distances between two points in a scene.
+
+The distance measurement analysis allows you to add the same measuring experience found in ArcGIS Pro, City Engine, and the ArcGIS API for JavaScript to your app. You can set the unit system of measurement (metric or imperial) and have the units automatically switch to one appropriate for the current scale. The rendering is handled internally so they do not interfere with other analyses like viewsheds.
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Choose a unit system for the measurement in the UI dropdown. Click any location in the scene to set the starting measuring point. Press, hold, and drag to a location to update the end location.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+To measure distances with the `LocationDistanceMeasurement` analysis:
+1. Create an `AnalysisOverlay` and add it to your scene view's analysis overlay collection.
+2. Create a `LocationDistanceMeasurement`, specifying the `startLocation` and `endLocation`. These can be the same point to start with. Add the analysis to the analysis overlay. The measuring line will be drawn for you between the two points.
+3. The `measurementChanged` signal will emit when the distances change. You can get the new values for the `directDistance`, `horizontalDistance`, and `verticalDistance` from the `measurementChanged` signal. The distance objects contain both the scalar value and unit of measurement.
 
 ## Relevant API
- - ClassName1
- - MethodName
-
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+- AnalysisOverlay
+- LocationDistanceMeasurement
 
 ## Additional information
-A standard level license is required to ...
+The `LocationDistanceMeasurement` analysis only performs planar distance calculations. This may not be appropriate for large distances where the Earth's curvature needs to be taken into account.
 
 ## Tags
-Routing, Network analysis, Geocode
+Analysis, 3D
 
