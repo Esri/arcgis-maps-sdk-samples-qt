@@ -26,6 +26,7 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
+    property bool isNavigating: false
 
     SceneView {
         id: sceneView
@@ -108,22 +109,40 @@ Rectangle {
             isPressAndHeld = true;
             sceneView.screenToLocation(mouse.x, mouse.y);
         }
+
         onMouseReleased: {
-            console.log("mouse released")
+            if (isNavigating) {
+                isNavigating = false;
+                return;
+            }
+
+            if (mouse.button === Qt.RightButton)
+                return;
+
             if (isPressAndHeld)
                 isPressAndHeld = false;
             else
                 sceneView.screenToLocation(mouse.x, mouse.y);
         }
+
+        onMousePressed: {
+            isNavigating = false;
+        }
+
         onMousePositionChanged: {
             if (isPressAndHeld)
                 sceneView.screenToLocation(mouse.x, mouse.y);
         }
+
         onScreenToLocationCompleted: {
             if (isPressAndHeld)
                 locationDistanceMeasurement.endLocation = location;
             else
                 locationDistanceMeasurement.startLocation = location;
+        }
+
+        onViewpointChanged: {
+            isNavigating = true;
         }
     }
 
