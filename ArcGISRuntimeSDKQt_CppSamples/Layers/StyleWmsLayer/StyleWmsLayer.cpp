@@ -60,7 +60,8 @@ void StyleWmsLayer::componentComplete()
     m_mapView->setViewpointGeometry(wmsLayer->fullExtent());
 
     // get the subLayer
-    m_wmsSublayer = wmsLayer->subLayers().at(0);
+    if (wmsLayer->subLayers().length() > 0)
+      m_wmsSublayer = wmsLayer->subLayers().at(0);
   });
 
   // Set map to map view
@@ -72,8 +73,13 @@ void StyleWmsLayer::setCurrentStyle(int index)
   if (!m_wmsSublayer)
     return;
 
+  // get the styles
+  const QStringList styles = m_wmsSublayer->sublayerInfo().styles();
+  if (styles.length() < index + 1)
+    return;
+
   // get the style
-  const QString style = m_wmsSublayer->sublayerInfo().styles().at(index);
+  const QString style = styles.at(index);
 
   // set the style on the WMS Sublayer
   m_wmsSublayer->setCurrentStyle(style);

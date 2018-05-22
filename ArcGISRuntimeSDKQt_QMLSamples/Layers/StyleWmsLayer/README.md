@@ -16,7 +16,7 @@ Select one of the styles and the map will update the display with the selected s
 - WmsLayer
 - WmsSublayer
 - WmsLayerInfo
-- WmsSublayer::currentStyle
+- WmsSublayer.currentStyle
 
 ## Tags
 WMS Style, Change Style
