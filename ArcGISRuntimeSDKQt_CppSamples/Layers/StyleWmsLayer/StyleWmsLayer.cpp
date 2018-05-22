@@ -60,7 +60,7 @@ void StyleWmsLayer::componentComplete()
     m_mapView->setViewpointGeometry(wmsLayer->fullExtent());
 
     // get the subLayer
-    if (wmsLayer->subLayers().length() > 0)
+    if (!wmsLayer->subLayers().empty())
       m_wmsSublayer = wmsLayer->subLayers().at(0);
   });
 
