@@ -112,51 +112,63 @@ void DistanceMeasurementAnalysis::connectSignals()
   });
 
   // connect to mouse signals to update the analysis
+
+  // When the mouse is pressed and held, start updating the distance analysis end point
   connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent mouseEvent)
   {
     m_isPressAndHold = true;
     m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
   });
 
+  // When the mouse is released...
   connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this](QMouseEvent mouseEvent)
   {
+    // Check if the mouse was released from a pan gesture
     if (m_isNavigating)
     {
       m_isNavigating = false;
       return;
     }
 
+    // Ignore if Right click
     if (mouseEvent.button() == Qt::RightButton)
       return;
 
+    // If pressing and holding, do nothing
     if (m_isPressAndHold)
       m_isPressAndHold = false;
+    // Else get the location from the screen coordinates
     else
       m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
   });
 
+  // Update the distance analysis when the mouse moves if it is a press and hold movement
   connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent mouseEvent)
   {
     if (m_isPressAndHold)
       m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
   });
 
+  // Set a flag when mousePressed signal emits
   connect(m_sceneView, &SceneQuickView::mousePressed, this, [this]
   {
     m_isNavigating = false;
   });
 
+  // When screenToLocation completes...
   connect(m_sceneView, &SceneQuickView::screenToLocationCompleted, this, [this](QUuid, Point pt)
   {
+    // If it was from a press and hold, update the end location
     if (m_isPressAndHold)
       m_distanceAnalysis->setEndLocation(pt);
+    // Else if it was a normal mouse click (press and release), update the start location
     else
       m_distanceAnalysis->setStartLocation(pt);
   });
 
+  // Set a flag when viewpointChanged signal emits
   connect(m_sceneView, &SceneQuickView::viewpointChanged, this, [this]
   {
-
     m_isNavigating = true;
   });
 }
