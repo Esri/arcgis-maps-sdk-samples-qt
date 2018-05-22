@@ -106,7 +106,9 @@ void CreateAndSaveMap::loadPortal()
   if (!m_portal)
     return;
 
-  if (m_portal->loadStatus() != LoadStatus::Loaded)
+  if (m_portal->loadStatus() == LoadStatus::Loaded)
+    emit portalLoaded();
+  else
     m_portal->load();
 }
 

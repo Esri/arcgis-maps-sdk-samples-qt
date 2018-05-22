@@ -33,6 +33,7 @@ Rectangle {
         anchors.fill: parent
 
         initialItem: LayerWindow {
+            id: layerWindow
             onCreateMapSelected: {
                 mapView.visible = true;
                 stackView.push(mapView)
@@ -60,22 +61,9 @@ Rectangle {
                     portal.load();
                 else {
                     options.visible = true;
+                    options.reset();
                     stackView.push(options);
                 }
-            }
-        }
-
-        Connections {
-            target: mapView.map
-            onSaveStatusChanged: {
-                if (mapView.map.saveStatus === Enums.TaskStatusCompleted) {
-                    completeText.webmapUrl = "https://www.arcgis.com/home/item.html?id=%1".arg(mapView.map.item.itemId);
-                    completeText.text = 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(completeText.webmapUrl);
-                    stackView.push(completionRect);
-                } else if (mapView.map.saveStatus === Enums.TaskStatusErrored) {
-                    completeText.text = 'An error occurred while saving the map.\nPlease restart the sample and try again.\nDetails:'.arg(mapView.map.error.message);
-                    stackView.push(completionRect);
-                }                
             }
         }
     }
@@ -112,6 +100,19 @@ Rectangle {
             textFormat: Text.RichText
             horizontalAlignment: Text.AlignHCenter
             onLinkActivated: Qt.openUrlExternally(webmapUrl)
+        }
+
+        Button {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.bottom
+                margins: 10 * scaleFactor
+            }
+            text: "Create New Map"
+            onClicked: {
+                stackView.clear();
+                stackView.push(layerWindow)
+            }
         }
     }
 
@@ -150,7 +151,18 @@ Rectangle {
             selectedBasemap = ArcGISRuntimeEnvironment.createObject("BasemapOceans");
 
         // Create the Map with the basemap
-        var map = ArcGISRuntimeEnvironment.createObject("Map", { basemap: selectedBasemap });
+        var map = ArcGISRuntimeEnvironment.createObject("Map", { basemap: selectedBasemap }, mapView);
+
+        map.saveStatusChanged.connect(function() {
+            if (mapView.map.saveStatus === Enums.TaskStatusCompleted) {
+                completeText.webmapUrl = "https://www.arcgis.com/home/item.html?id=%1".arg(mapView.map.item.itemId);
+                completeText.text = 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(completeText.webmapUrl);
+                stackView.push(completionRect);
+            } else if (mapView.map.saveStatus === Enums.TaskStatusErrored) {
+                completeText.text = 'An error occurred while saving the map.\nPlease restart the sample and try again.\nDetails:'.arg(mapView.map.error.message);
+                stackView.push(completionRect);
+            }
+        });
 
         // Add Operational Layers
         for (var i = 0; i < layerList.length; i++) {
