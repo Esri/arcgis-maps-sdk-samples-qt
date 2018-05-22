@@ -105,35 +105,45 @@ Rectangle {
         }
 
         // handle mouse signals to update the analysis
+
+        // When the mouse is pressed and held, start updating the distance analysis end point
         onMousePressedAndHeld: {
             isPressAndHeld = true;
             sceneView.screenToLocation(mouse.x, mouse.y);
         }
 
+        // When the mouse is released...
         onMouseReleased: {
+            // Check if the mouse was released from a pan gesture
             if (isNavigating) {
                 isNavigating = false;
                 return;
             }
 
+            // Ignore if Right click
             if (mouse.button === Qt.RightButton)
                 return;
 
+            // If pressing and holding, do nothing
             if (isPressAndHeld)
                 isPressAndHeld = false;
+            // Else get the location from the screen coordinates
             else
                 sceneView.screenToLocation(mouse.x, mouse.y);
         }
 
+        // Set a flag when mousePressed signal emits
         onMousePressed: {
             isNavigating = false;
         }
 
+        // Update the distance analysis when the mouse moves if it is a press and hold movement
         onMousePositionChanged: {
             if (isPressAndHeld)
                 sceneView.screenToLocation(mouse.x, mouse.y);
         }
 
+        // When screenToLocation completes...
         onScreenToLocationCompleted: {
             if (isPressAndHeld)
                 locationDistanceMeasurement.endLocation = location;
@@ -141,6 +151,7 @@ Rectangle {
                 locationDistanceMeasurement.startLocation = location;
         }
 
+        // Set a flag when viewpointChanged signal emits
         onViewpointChanged: {
             isNavigating = true;
         }
