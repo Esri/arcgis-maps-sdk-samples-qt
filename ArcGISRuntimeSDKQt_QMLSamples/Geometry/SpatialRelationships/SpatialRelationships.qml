@@ -29,7 +29,7 @@ Rectangle {
 
         Map {
             BasemapTopographic {}
-        }                
+        }
 
         // Add a GraphicsOverlay
         GraphicsOverlay {
@@ -123,5 +123,25 @@ Rectangle {
             graphicsOverlay.clearSelection();
             graphic.selected = true;
         }
+    }
+
+    // function to return list of relaionships
+    function getSpatialRelationships(geom1, geom2) {
+        var relationships = [];
+        if (GeometryEngine.crosses(geom1, geom2))
+            relationships.push("CROSSES");
+        if (GeometryEngine.contains(geom1, geom2))
+            relationships.push("CONTAINS");
+        if (GeometryEngine.disjoint(geom1, geom2))
+            relationships.push("DISJOINT");
+        if (GeometryEngine.intersects(geom1, geom2))
+            relationships.push("INTERSECTS");
+        if (GeometryEngine.overlaps(geom1, geom2))
+            relationships.push("OVERLAPS");
+        if (GeometryEngine.touches(geom1, geom2))
+            relationships.push("TOUCHES");
+        if (GeometryEngine.within(geom1, geom2))
+            relationships.push("WITHIN");
+        return relationships;
     }
 }
