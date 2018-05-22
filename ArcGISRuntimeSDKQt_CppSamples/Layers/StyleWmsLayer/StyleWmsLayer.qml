@@ -15,9 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Window 2.3
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 StyleWmsLayerSample {
     id: rootRectangle
@@ -25,7 +25,7 @@ StyleWmsLayerSample {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
 
     // add a mapView component
     MapView {
