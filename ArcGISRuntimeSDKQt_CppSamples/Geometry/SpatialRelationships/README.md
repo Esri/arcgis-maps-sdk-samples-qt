@@ -1,31 +1,27 @@
 # Spatial relationships
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+This sample demonstrates how to determine the spatial relationships between two geometries.
+
+For example, you may want to determine if geometry A intersects, touches, or is within geometry B.
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Tap on one of the graphics to select it. The UI will list the relationships the selected graphic has to the other graphic geometries.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+- Get the geometry from two different graphics. In this example the geometry of the selected graphic is compared to the geometry of each graphic not selected.
+- Use the methods in `GeometryEngine` to check the relationship between the geometries, e.g. contains, disjoint, intersects, touches, etc. If the method returns true, the relationship exists.
 
 ## Relevant API
- - ClassName1
- - MethodName
-
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+- GeometryEngine::intersects
+- GeometryEngine::touches
+- GeometryEngine::disjoint
+- GeometryEngine::crosses
+- GeometryEngine::within
+- GeometryEngine::overlaps
+- GeometryEngine::contains
 
 ## Tags
-Routing, Network analysis, Geocode
+Geometry Engine, Spatial Analysis, Spatial Relationships
 
