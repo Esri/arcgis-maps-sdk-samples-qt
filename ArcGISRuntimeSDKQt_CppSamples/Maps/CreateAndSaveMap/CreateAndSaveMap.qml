@@ -30,6 +30,7 @@ CreateAndSaveMapSample {
 
     onPortalLoaded: {
         options.visible = true;
+        options.reset();
         stackView.push(options);
     }
 
@@ -48,6 +49,7 @@ CreateAndSaveMapSample {
         anchors.fill: parent
 
         initialItem: LayerWindow {
+            id: layerWindow
             onCreateMapSelected: {
                 mapView.visible = true;
                 stackView.push(mapView)
@@ -104,6 +106,19 @@ CreateAndSaveMapSample {
             textFormat: Text.RichText
             horizontalAlignment: Text.AlignHCenter
             onLinkActivated: Qt.openUrlExternally(webmapUrl)
+        }
+
+        Button {
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: parent.bottom
+                margins: 10 * scaleFactor
+            }
+            text: "Create New Map"
+            onClicked: {
+                stackView.clear();
+                stackView.push(layerWindow)
+            }
         }
     }
 
