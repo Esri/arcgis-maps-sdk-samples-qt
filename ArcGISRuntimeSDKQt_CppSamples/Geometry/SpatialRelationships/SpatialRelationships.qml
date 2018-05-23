@@ -57,7 +57,7 @@ SpatialRelationshipsSample {
         spacing: 5 * scaleFactor
 
         Text {
-            text: "Relationships"
+            text: "Relationships:"
             font {
                 pixelSize: 16 * scaleFactor
                 bold: true
