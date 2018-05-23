@@ -1,6 +1,6 @@
 # Local server services
 
-Demonstrates how to start and stop the Local Server and start and stop a local map, feature, and geoprocessing gervice running on the Local Server.
+Demonstrates how to start and stop the Local Server and start and stop a local map, feature, and geoprocessing service running on the Local Server.
 
 **Note:** Local Server is not supported on macOS.
 
