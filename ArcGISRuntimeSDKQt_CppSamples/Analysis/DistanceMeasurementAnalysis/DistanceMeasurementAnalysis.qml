@@ -49,14 +49,11 @@ DistanceMeasurementAnalysisSample {
             top: parent.top
             margins: 10 * scaleFactor
         }
-        width: 200 * scaleFactor
         spacing: 5 * scaleFactor
 
         Row {
-            width: parent.width
             spacing: 5 * scaleFactor
             Text {
-                width: parent.width * 0.6
                 text: "Direct Distance:"
                 color: "white"
             }
@@ -67,10 +64,8 @@ DistanceMeasurementAnalysisSample {
             }
         }
         Row {
-            width: parent.width
             spacing: 5 * scaleFactor
             Text {
-                width: parent.width * 0.6
                 text: "Vertical Distance:"
                 color: "white"
             }
@@ -81,10 +76,8 @@ DistanceMeasurementAnalysisSample {
             }
         }
         Row {
-            width: parent.width
             spacing: 5 * scaleFactor
             Text {
-                width: parent.width * 0.6
                 text: "Horizontal Distance:"
                 color: "white"
             }
@@ -95,10 +88,8 @@ DistanceMeasurementAnalysisSample {
             }
         }
         Row {
-            width: parent.width
             spacing: 5 * scaleFactor
             Text {
-                width: parent.width * 0.6
                 text: "Unit System:"
                 color: "white"
             }

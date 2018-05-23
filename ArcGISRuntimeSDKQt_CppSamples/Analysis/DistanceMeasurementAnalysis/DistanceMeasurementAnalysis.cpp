@@ -81,7 +81,7 @@ void DistanceMeasurementAnalysis::componentComplete()
   analysisOverlay->analyses()->append(m_distanceAnalysis);
 
   // Set initial viewpoint
-  constexpr double distance = 200.0;
+  constexpr double distance = 400.0;
   constexpr double pitch = 45.0;
   constexpr double heading = 0.0;
   constexpr double roll = 0.0;
