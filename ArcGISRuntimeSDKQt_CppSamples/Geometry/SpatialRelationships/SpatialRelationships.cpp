@@ -142,7 +142,7 @@ void SpatialRelationships::connectSignals()
 
   connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* result)
   {
-    QList<Graphic*>  identifiedGraphics = result->graphics();
+    const QList<Graphic*> identifiedGraphics = result->graphics();
     if (identifiedGraphics.isEmpty())
       return;
 
@@ -154,8 +154,8 @@ void SpatialRelationships::connectSignals()
     graphic->setSelected(true);
 
     // get the geometry
-    Geometry selectedGeometry = graphic->geometry();
-    GeometryType selectedGeometryType = selectedGeometry.geometryType();
+    const Geometry selectedGeometry = graphic->geometry();
+    const GeometryType selectedGeometryType = selectedGeometry.geometryType();
 
     // reset the output text
     m_pointRelationships = "";
@@ -164,16 +164,19 @@ void SpatialRelationships::connectSignals()
 
     // populate the view with the spatial relationships the selected graphic has to the other graphics
     // ignore testing relationships between the geometry and itself
-    if (selectedGeometryType != GeometryType::Point) {
-      QString pointRelationships = getSpatialRelationships(selectedGeometry, m_pointGraphic->geometry()).join(",");
+    if (selectedGeometryType != GeometryType::Point)
+    {
+      const QString pointRelationships = getSpatialRelationships(selectedGeometry, m_pointGraphic->geometry()).join(",");
       m_pointRelationships = QString("Point: %1").arg(pointRelationships);
     }
-    if (selectedGeometryType != GeometryType::Polyline) {
-      QString polylineRelationships = getSpatialRelationships(selectedGeometry, m_polylineGraphic->geometry()).join(",");
+    if (selectedGeometryType != GeometryType::Polyline)
+    {
+      const QString polylineRelationships = getSpatialRelationships(selectedGeometry, m_polylineGraphic->geometry()).join(",");
       m_polylineRelationships = QString("Polyline: %1").arg(polylineRelationships);
     }
-    if (selectedGeometryType != GeometryType::Polygon) {
-      QString polygonRelationships = getSpatialRelationships(selectedGeometry, m_polygonGraphic->geometry()).join(",");
+    if (selectedGeometryType != GeometryType::Polygon)
+    {
+      const QString polygonRelationships = getSpatialRelationships(selectedGeometry, m_polygonGraphic->geometry()).join(",");
       m_polygonRelationships = QString("Polygon: %1").arg(polygonRelationships);
     }
 
