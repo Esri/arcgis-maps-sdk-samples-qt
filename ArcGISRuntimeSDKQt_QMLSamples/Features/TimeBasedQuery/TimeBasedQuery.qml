@@ -37,21 +37,25 @@ Rectangle {
                     featureRequestMode: Enums.FeatureRequestModeManualCache // set the cache mode to manual
                     onLoadStatusChanged: {
                         if (loadStatus === Enums.LoadStatusLoaded) {
-                            // create query parameters
-                            var queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
                             var clearCache = true;
                             var outFields = ["*"];
-                            // create a time extent for anything before September 16, 2000
-                            queryParams.timeExtent = ArcGISRuntimeEnvironment.createObject("TimeExtent", {
-                                                                                               startTime: new Date("January 1, 0001"),
-                                                                                               endTime: new Date("September 16, 2000")
-                                                                                           });
+
                             // populate the table with records matching the query
                             hurricaneTable.populateFromService(queryParams, clearCache, outFields);
                         }
                     }
                 }
             }
+        }
+    }
+
+    // create query parameters with time extent that includes anything before September 16, 2000
+    QueryParameters {
+        id: queryParams
+
+        TimeExtent {
+            startTime: new Date("January 1, 0001")
+            endTime: new Date("September 16, 2000")
         }
     }
 }
