@@ -16,12 +16,15 @@
 
 import QtQuick 2.6
 import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
+
+    property real scaleFactor: System.displayScaleFactor
 
     MapView {
         id: mapView
@@ -105,7 +108,7 @@ Rectangle {
         // connect to mouse click signal
         onMouseClicked: {
             mapView.identifyGraphicsOverlay(graphicsOverlay, mouse.x, mouse.y, 1 /*tolerance*/, false /*returnPopupsOnly*/);
-        }
+        }       
 
         // connect to identify signal
         onIdentifyGraphicsOverlayStatusChanged: {
@@ -122,6 +125,30 @@ Rectangle {
             // select the graphic
             graphicsOverlay.clearSelection();
             graphic.selected = true;
+
+            // get the geometry
+            var selectedGeometry = graphic.geometry;
+            var selectedGeometryType = selectedGeometry.geometryType;
+
+            // reset the output text
+            pointText.text = "";
+            lineText.text = "";
+            polygonText.text = "";
+
+            // populate the view with the spatial relationships the selected graphic has to the other graphics
+            // ignore testing relationships between the geometry and itself
+            if (selectedGeometryType !== Enums.GeometryTypePoint) {
+                var pointRelationships = getSpatialRelationships(selectedGeometry, pointGraphic.geometry).toString();
+                pointText.text = "Point: %1".arg(pointRelationships);
+            }
+            if (selectedGeometryType !== Enums.GeometryTypePolyline) {
+                var polylineRelationships = getSpatialRelationships(selectedGeometry, polylineGraphic.geometry).toString();
+                lineText.text = "Polyline: %1".arg(polylineRelationships);
+            }
+            if (selectedGeometryType !== Enums.GeometryTypePolygon) {
+                var polygonRelationships = getSpatialRelationships(selectedGeometry, polygonGraphic.geometry).toString();
+                polygonText.text = "Polygon: %1".arg(polygonRelationships);
+            }
         }
     }
 
@@ -143,5 +170,56 @@ Rectangle {
         if (GeometryEngine.within(geom1, geom2))
             relationships.push("WITHIN");
         return relationships;
+    }
+
+    Rectangle {
+        anchors {
+            fill: relationshipColumn
+            margins: -10 * scaleFactor
+        }
+        opacity: 0.85
+        radius: 5 * scaleFactor
+        color: "#e2e2e2"
+        border {
+            color: "darkgray"
+            width: 1 * scaleFactor
+        }
+    }
+
+    Column {
+        id: relationshipColumn
+        anchors {
+            left: parent.left
+            top: parent.top
+            margins: 15 * scaleFactor
+        }
+        spacing: 5 * scaleFactor
+
+        Text {
+            text: "Relationships"
+            font {
+                pixelSize: 16 * scaleFactor
+                bold: true
+                family: "helvetica"
+            }
+        }
+
+        Text {
+            id: pointText
+            visible: text.length > 0
+            font.family: "helvetica"
+        }
+
+        Text {
+            id: lineText
+            visible: text.length > 0
+            font.family: "helvetica"
+        }
+
+        Text {
+            id: polygonText
+            visible: text.length > 0
+            font.family: "helvetica"
+        }
     }
 }
