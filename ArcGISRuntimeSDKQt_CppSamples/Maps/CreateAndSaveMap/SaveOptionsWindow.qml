@@ -122,4 +122,10 @@ Rectangle {
             onClicked: cancelClicked()
         }
     }
+
+    function reset() {
+        titleText.text = "";
+        descriptionText.text = "";
+        tagsText.text = "";
+    }
 }
