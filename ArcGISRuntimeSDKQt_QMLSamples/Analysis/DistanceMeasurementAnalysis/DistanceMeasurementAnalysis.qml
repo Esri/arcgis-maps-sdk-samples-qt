@@ -62,7 +62,7 @@ Rectangle {
 
                 Camera {
                     location: locationDistanceMeasurement.startLocation
-                    distance: 200
+                    distance: 400
                     pitch: 45
                     heading: 0
                     roll: 0
@@ -174,14 +174,11 @@ Rectangle {
             top: parent.top
             margins: 10 * scaleFactor
         }
-        width: 200 * scaleFactor
         spacing: 5 * scaleFactor
 
         Row {
-            width: parent.width
             spacing: 5 * scaleFactor
             Text {
-                width: parent.width * 0.6
                 text: "Direct Distance:"
                 color: "white"
             }
@@ -191,10 +188,8 @@ Rectangle {
             }
         }
         Row {
-            width: parent.width
             spacing: 5 * scaleFactor
-            Text {
-                width: parent.width * 0.6
+            Text {                
                 text: "Vertical Distance:"
                 color: "white"
             }
@@ -204,10 +199,8 @@ Rectangle {
             }
         }
         Row {
-            width: parent.width
             spacing: 5 * scaleFactor
             Text {
-                width: parent.width * 0.6
                 text: "Horizontal Distance:"
                 color: "white"
             }
@@ -217,10 +210,8 @@ Rectangle {
             }
         }
         Row {
-            width: parent.width
             spacing: 5 * scaleFactor
             Text {
-                width: parent.width * 0.6
                 text: "Unit System:"
                 color: "white"
             }

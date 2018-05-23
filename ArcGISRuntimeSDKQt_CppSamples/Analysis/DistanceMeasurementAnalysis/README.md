@@ -12,7 +12,7 @@ Choose a unit system for the measurement in the UI dropdown. Click any location 
 ## How it works
 To measure distances with the `LocationDistanceMeasurement` analysis:
 1. Create an `AnalysisOverlay` and add it to your scene view's analysis overlay collection.
-2. Create a `LocationDistanceMeasurement`, specifying the `startLocation` and `endLocation`. These can be the same point to start with. Add the analysis to the analysis overlay. The measuring line will be drawn for you between the two points.
+2. Create a `LocationDistanceMeasurement`, specifying the `startLocation` and `endLocation`. To start with, these locations can be the same. Add the analysis to the analysis overlay. The measuring line will be drawn between the two points.
 3. The `measurementChanged` signal will emit when the distances change. You can get the new values for the `directDistance`, `horizontalDistance`, and `verticalDistance` from the `measurementChanged` signal. The distance objects contain both the scalar value and unit of measurement.
 
 ## Relevant API
