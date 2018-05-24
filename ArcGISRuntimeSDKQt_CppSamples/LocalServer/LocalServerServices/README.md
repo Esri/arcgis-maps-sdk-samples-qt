@@ -1,6 +1,6 @@
 # Local server services
 
-Demonstrates how to start and stop the Local Server and start and stop a local map, feature, and geoprocessing gervice running on the Local Server.
+Demonstrates how to start and stop the Local Server and start and stop a local map, feature, and geoprocessing service running on the Local Server.
 
 **Note:** Local Server is not supported on macOS.
 
@@ -17,7 +17,7 @@ To start a `LocalServer` and start a `LocalService` to it:
 1. Create it with `LocalServer::instance` and use `LocalServer::start()` to start the server asynchronously.
 2. `LocalServer::statusChanged()` fires whenever the running status of the Local Server changes. Wait for the server to be in the `LocalServerStatus::STARTED` state. 
 3. Create and run a local service. Here is an example of running a `LocalMapService`:
-    * `new LocalMapService(Url)` creates a local map service with the given URL path to map package (`mpk` file).
+    * `new LocalMapService(Url)` creates a local map service with the given URL path to map package (`mpk` or `mpkx` file).
     * `LocalMapService::start()` starts the service asynchronously.
     * The service is added to the `LocalServer` automatically.
 
