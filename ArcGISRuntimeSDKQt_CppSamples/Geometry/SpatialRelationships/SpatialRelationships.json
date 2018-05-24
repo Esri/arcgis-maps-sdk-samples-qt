@@ -1,0 +1,8 @@
+{
+    "source" :  "SpatialRelationships.qml",
+    "otherSourceFiles" :  [
+        "SpatialRelationships.h",
+        "SpatialRelationships.cpp"
+    ],
+    "name" : "Spatial relationships"
+}
