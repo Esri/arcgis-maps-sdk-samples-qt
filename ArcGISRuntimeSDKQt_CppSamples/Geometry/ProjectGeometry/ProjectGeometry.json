@@ -1,0 +1,8 @@
+{
+    "source" :  "ProjectGeometry.qml",
+    "otherSourceFiles" :  [
+        "ProjectGeometry.h",
+        "ProjectGeometry.cpp"
+    ],
+    "name" : "Project"
+}

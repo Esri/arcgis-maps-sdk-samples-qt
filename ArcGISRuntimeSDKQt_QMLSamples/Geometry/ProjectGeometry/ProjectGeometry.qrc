@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Geometry/ProjectGeometry">
+        <file alias="sample.json">ProjectGeometry.json</file>        
+        <file>ProjectGeometry.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
