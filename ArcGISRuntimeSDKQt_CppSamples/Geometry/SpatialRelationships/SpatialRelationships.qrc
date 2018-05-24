@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Geometry/SpatialRelationships">
+        <file alias="sample.json">SpatialRelationships.json</file>        
+        <file>SpatialRelationships.qml</file>
+        <file>SpatialRelationships.h</file>
+        <file>SpatialRelationships.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
