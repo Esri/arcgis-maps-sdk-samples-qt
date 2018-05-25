@@ -88,6 +88,7 @@ Rectangle {
                 outline: SimpleLineSymbol {
                     id: outlineSymbol
                     color: Qt.rgba(0.6, 0.6, 0.6, 1)
+                    width: 1
                 }
                 style: Enums.SimpleFillSymbolStyleSolid
             }
