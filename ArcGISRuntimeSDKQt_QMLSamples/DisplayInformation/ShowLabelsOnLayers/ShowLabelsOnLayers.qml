@@ -56,7 +56,7 @@ Rectangle {
                             "expression":"'I - ' + $feature.rte_num1"
                         },
                         "labelPlacement":"esriServerLinePlacementAboveAlong",
-                        "where":"$feature.rte_num1 <> ' '",
+                        "where":"rte_num1 <> ' '",
                         "symbol": {
                             "angle":0,
                             "backgroundColor":[0,0,0,0],
