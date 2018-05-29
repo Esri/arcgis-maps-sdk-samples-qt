@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/ChangeSublayerRenderer">
+        <file alias="sample.json">ChangeSublayerRenderer.json</file>        
+        <file>ChangeSublayerRenderer.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
