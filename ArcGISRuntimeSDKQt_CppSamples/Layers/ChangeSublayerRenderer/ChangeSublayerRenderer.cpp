@@ -120,7 +120,7 @@ ClassBreak* ChangeSublayerRenderer::createClassBreak(const QColor &color, double
 // apply the class breaks renderer
 void ChangeSublayerRenderer::applyRenderer()
 {
-  if (!m_sublayer | !m_classBreaksRenderer)
+  if (!m_sublayer || !m_classBreaksRenderer)
     return;
 
   m_sublayer->setRenderer(m_classBreaksRenderer);
@@ -129,7 +129,7 @@ void ChangeSublayerRenderer::applyRenderer()
 // reset to the original renderer
 void ChangeSublayerRenderer::resetRenderer()
 {
-  if (!m_sublayer | !m_originalRenderer)
+  if (!m_sublayer || !m_originalRenderer)
     return;
 
   m_sublayer->setRenderer(m_originalRenderer);
