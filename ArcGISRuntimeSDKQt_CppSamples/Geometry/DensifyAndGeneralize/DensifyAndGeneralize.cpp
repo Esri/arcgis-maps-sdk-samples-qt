@@ -64,6 +64,7 @@ void DensifyAndGeneralize::componentComplete()
   multipointBuilder.setPoints(pointCollection);
   SimpleMarkerSymbol* originalSms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 7.0f /*size*/, this);
   m_originalMultipointGraphic = new Graphic(multipointBuilder.toGeometry(), originalSms, this);
+  m_originalMultipointGraphic->setZIndex(0);
   m_graphicsOverlay->graphics()->append(m_originalMultipointGraphic);
 
   // original red dotted line graphic
@@ -74,18 +75,21 @@ void DensifyAndGeneralize::componentComplete()
   }
   SimpleLineSymbol* originalSls = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, QColor("red"), 3.0f /*size*/, this);
   m_originalLineGraphic = new Graphic(polylineBuilder.toGeometry(), originalSls, this);
+  m_originalLineGraphic->setZIndex(1);
   m_graphicsOverlay->graphics()->append(m_originalLineGraphic);
 
   // resulting (densified and generalized) multipart magenta graphic
   SimpleMarkerSymbol* resultSms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("magenta"), 7.0f /*size*/, this);
   m_resultMultipointGraphic = new Graphic(this);
   m_resultMultipointGraphic->setSymbol(resultSms);
+  m_resultMultipointGraphic->setZIndex(2);
   m_graphicsOverlay->graphics()->append(m_resultMultipointGraphic);
 
   // resulting (densified and generalized) multipart magenta graphic
   SimpleLineSymbol* resultSls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("magenta"), 3.0f /*size*/, this);
   m_resultLineGraphic = new Graphic(this);
   m_resultLineGraphic->setSymbol(resultSls);
+  m_resultLineGraphic->setZIndex(3);
   m_graphicsOverlay->graphics()->append(m_resultLineGraphic);
 
   // Set map to map view
