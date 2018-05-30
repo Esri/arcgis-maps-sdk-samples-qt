@@ -44,6 +44,7 @@ Rectangle {
             // original multipart red graphic
             Graphic {
                 id: originalMultipointGraphic
+                zIndex: 0
 
                 SimpleMarkerSymbol {
                     color: "red"
@@ -63,6 +64,7 @@ Rectangle {
             // original red dotted line graphic
             Graphic {
                 id: originalLineGraphic
+                zIndex: 1
 
                 SimpleLineSymbol {
                     color: "red"
@@ -84,6 +86,7 @@ Rectangle {
             Graphic {
                 id: resultMultipointGraphic
                 visible: showResultCheckbox.checked
+                zIndex: 2
 
                 SimpleMarkerSymbol {
                     color: "magenta"
@@ -96,6 +99,7 @@ Rectangle {
             Graphic {
                 id: resultPolylineGraphic
                 visible: showResultCheckbox.checked
+                zIndex: 3
 
                 SimpleLineSymbol {
                     color: "magenta"
@@ -126,6 +130,8 @@ Rectangle {
         // Update the multipoint graphic
         var multipointBuilder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder", { spatialReference: polyline.spatialReference });
         var pointCollection = ArcGISRuntimeEnvironment.createObject("PointCollection", { spatialReference: polyline.spatialReference });
+        if (polyline.parts.size < 1)
+            return;
         var polylinePoints = polyline.parts.part(0).points();
         for (var i = 0; i < polylinePoints.size; i++) {
             pointCollection.addPoint(polylinePoints.point(i));
