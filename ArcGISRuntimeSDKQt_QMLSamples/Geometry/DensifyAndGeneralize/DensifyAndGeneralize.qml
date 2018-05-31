@@ -31,7 +31,6 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
-
         // Declare a map with the streets night vector basemap
         Map {
             BasemapStreetsNightVector {}
@@ -132,6 +131,7 @@ Rectangle {
         var pointCollection = ArcGISRuntimeEnvironment.createObject("PointCollection", { spatialReference: polyline.spatialReference });
         if (polyline.parts.size < 1)
             return;
+
         var polylinePoints = polyline.parts.part(0).points();
         for (var i = 0; i < polylinePoints.size; i++) {
             pointCollection.addPoint(polylinePoints.point(i));
