@@ -69,7 +69,8 @@ void DensifyAndGeneralize::componentComplete()
 
   // original red dotted line graphic
   PolylineBuilder polylineBuilder(pointCollection->spatialReference());
-  for (int i = 0; i < pointCollection->size(); i++)
+  const int pointCollectionSize = pointCollection->size();
+  for (int i = 0; i < pointCollectionSize; i++)
   {
     polylineBuilder.addPoint(pointCollection->point(i));
   }
@@ -125,8 +126,11 @@ void DensifyAndGeneralize::updateGeometry(bool densify, double maxSegmentLength,
   PointCollection* pointCollection = new PointCollection(polyline.spatialReference(), this);
   if (polyline.parts().size() < 1)
     return;
+
   ImmutablePointCollection polylinePoints = polyline.parts().part(0).points();
-  for (int i = 0; i < polylinePoints.size(); i++) {
+  const int polylinePointsSize = polylinePoints.size();
+  for (int i = 0; i < polylinePointsSize; i++)
+  {
     pointCollection->addPoint(polylinePoints.point(i));
   }
   multipointBuilder.setPoints(pointCollection);
