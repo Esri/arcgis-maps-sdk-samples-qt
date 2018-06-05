@@ -48,7 +48,7 @@ public:
 
 signals:
   void portalLoaded();
-  void saveMapCompleted(const bool& success, const QString& itemId = "", const QString& error = "");
+  void saveMapCompleted(bool success, const QString& itemId = "", const QString& error = "");
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
