@@ -92,8 +92,20 @@ void CreateAndSaveMap::createMap(const QString& basemap, const QStringList& oper
   // Handle Map save complete signal
   connect(m_map, &Map::saveAsCompleted, this, [this](QUuid, bool success)
   {
+    if (!success)
+      return;
+
     const QString itemId = m_map->item()->itemId();
     emit saveMapCompleted(success, itemId);
+  });
+
+  // Handle Map error signal
+  connect(m_map, &Map::errorOccurred, this, [this](Error e)
+  {
+    if (e.isEmpty())
+      return;
+
+    emit saveMapCompleted(false, "", QString("%1 %2").arg(e.message(), e.additionalMessage()));
   });
 
   // Set the Map on the MapView
