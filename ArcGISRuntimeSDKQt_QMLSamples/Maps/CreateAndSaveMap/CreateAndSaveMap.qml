@@ -130,7 +130,7 @@ Rectangle {
                 stackView.push(options);
             }
         }
-    }   
+    }
 
     /*
     // Declare AuthenticationView to handle any authentication challenges
