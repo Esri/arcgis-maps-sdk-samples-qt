@@ -70,19 +70,8 @@ Rectangle {
                         if (citiesTable.queryFeaturesStatus !== Enums.TaskStatusCompleted)
                             return;
 
-                        // get the iterator of features
-                        var citiesIter = citiesTable.queryFeaturesResult.iterator;
-                        // add a graphic for each feature
-                        while (citiesIter.hasNext) {
-                            var feat = citiesIter.next();
-                            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic",
-                                                                                    {
-                                                                                        geometry: feat.geometry,
-                                                                                        symbol: citySymbol
-                                                                                    }
-                                                                                );
-                            selectedFeaturesOverlay.graphics.append(graphic);
-                        }
+                        // add the results as graphics
+                        addResultsAsGraphics(citiesTable.queryFeaturesResult, citySymbol);
                     });
 
                     // connect to state sublayer query signal
@@ -90,19 +79,8 @@ Rectangle {
                         if (statesTable.queryFeaturesStatus !== Enums.TaskStatusCompleted)
                             return;
 
-                        // get the iterator of features
-                        var statesIter = statesTable.queryFeaturesResult.iterator;
-                        // add a graphic for each feature
-                        while (statesIter.hasNext) {
-                            var feat = statesIter.next();
-                            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic",
-                                                                                    {
-                                                                                        geometry: feat.geometry,
-                                                                                        symbol: stateFillSymbol
-                                                                                    }
-                                                                                );
-                            selectedFeaturesOverlay.graphics.append(graphic);
-                        }
+                        // add the results as graphics
+                        addResultsAsGraphics(statesTable.queryFeaturesResult, stateFillSymbol);
                     });
 
                     // connect to county sublayer query signal
@@ -110,19 +88,8 @@ Rectangle {
                         if (countiesTable.queryFeaturesStatus !== Enums.TaskStatusCompleted)
                             return;
 
-                        // get the iterator of features
-                        var countiesIter = countiesTable.queryFeaturesResult.iterator;
-                        // add a graphic for each feature
-                        while (countiesIter.hasNext) {
-                            var feat = countiesIter.next();
-                            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic",
-                                                                                    {
-                                                                                        geometry: feat.geometry,
-                                                                                        symbol: countyFillSymbol
-                                                                                    }
-                                                                                );
-                            selectedFeaturesOverlay.graphics.append(graphic);
-                        }
+                        // add the results as graphics
+                        addResultsAsGraphics(countiesTable.queryFeaturesResult, countyFillSymbol);
                     });
                 }
             }
@@ -141,6 +108,22 @@ Rectangle {
         // Add a graphics overlay to show selected features
         GraphicsOverlay {
             id: selectedFeaturesOverlay
+        }
+    }
+
+    function addResultsAsGraphics(results, symbol) {
+        // get the iterator of features
+        var iter = results.iterator;
+        // add a graphic for each feature in the result
+        while (iter.hasNext) {
+            var feat = iter.next();
+            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic",
+                                                                    {
+                                                                        geometry: feat.geometry,
+                                                                        symbol: symbol
+                                                                    }
+                                                                );
+            selectedFeaturesOverlay.graphics.append(graphic);
         }
     }
 
