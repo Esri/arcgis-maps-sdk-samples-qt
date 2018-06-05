@@ -95,6 +95,7 @@ DensifyAndGeneralizeSample {
             id: showResultCheckbox
             text: "Show Result"
             checked: true
+            onCheckedChanged: showResults(checked);
         }
     }
 }
