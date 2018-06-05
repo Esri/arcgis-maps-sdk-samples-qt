@@ -43,6 +43,7 @@ public:
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
   Q_INVOKABLE void updateGeometry(bool densify, double maxSegmentLength, bool generalize, double maxDeviation);
+  Q_INVOKABLE void showResults(bool show);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
