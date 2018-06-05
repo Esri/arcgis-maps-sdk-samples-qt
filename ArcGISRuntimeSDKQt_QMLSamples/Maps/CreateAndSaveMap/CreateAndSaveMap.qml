@@ -94,6 +94,8 @@ Rectangle {
         Text {
             id: completeText
             anchors.centerIn: parent
+            width: 200 * scaleFactor
+            wrapMode: Text.Wrap
 
             property string webmapUrl
 
@@ -128,7 +130,7 @@ Rectangle {
                 stackView.push(options);
             }
         }
-    }
+    }   
 
     /*
     // Declare AuthenticationView to handle any authentication challenges
@@ -154,12 +156,15 @@ Rectangle {
         var map = ArcGISRuntimeEnvironment.createObject("Map", { basemap: selectedBasemap }, mapView);
 
         map.saveStatusChanged.connect(function() {
-            if (mapView.map.saveStatus === Enums.TaskStatusCompleted) {
-                completeText.webmapUrl = "https://www.arcgis.com/home/item.html?id=%1".arg(mapView.map.item.itemId);
+            if (map.saveStatus === Enums.TaskStatusCompleted) {
+                completeText.webmapUrl = "https://www.arcgis.com/home/item.html?id=%1".arg(map.item.itemId);
                 completeText.text = 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(completeText.webmapUrl);
                 stackView.push(completionRect);
-            } else if (mapView.map.saveStatus === Enums.TaskStatusErrored) {
-                completeText.text = 'An error occurred while saving the map.\nPlease restart the sample and try again.\nDetails:'.arg(mapView.map.error.message);
+            } else if (map.saveStatus === Enums.TaskStatusErrored) {
+                if (stackView.currentItem === completionRect)
+                    return;
+
+                completeText.text = 'An error occurred while saving the map. Details: %1 %2'.arg(map.error.message).arg(map.error.additionalMessage);
                 stackView.push(completionRect);
             }
         });
