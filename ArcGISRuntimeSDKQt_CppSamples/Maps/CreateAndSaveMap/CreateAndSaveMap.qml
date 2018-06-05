@@ -35,11 +35,14 @@ CreateAndSaveMapSample {
     }
 
     onSaveMapCompleted: {
+        if (stackView.currentItem === completionRect)
+            return;
+
         if (success) {
             completeText.webmapUrl = "https://www.arcgis.com/home/item.html?id=%1".arg(itemId);
             completeText.text = 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(completeText.webmapUrl);
         } else {
-            completeText.text = "An error occurred while saving the map.\nPlease restart the sample and try again.";
+            completeText.text = "An error occurred while saving the map. Details: %1".arg(error);
         }
         stackView.push(completionRect);
     }
@@ -100,6 +103,8 @@ CreateAndSaveMapSample {
         Text {
             id: completeText
             anchors.centerIn: parent
+            width: 200 * scaleFactor
+            wrapMode: Text.Wrap
 
             property string webmapUrl
 
