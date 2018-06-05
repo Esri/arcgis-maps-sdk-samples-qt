@@ -160,3 +160,9 @@ PointCollection* DensifyAndGeneralize::createPointCollection()
   pointCollection->addPoint(2330485.861737, 207742.298501, 0.000000);
   return pointCollection;
 }
+
+void DensifyAndGeneralize::showResults(bool show)
+{
+  m_resultMultipointGraphic->setVisible(show);
+  m_resultLineGraphic->setVisible(show);
+}
