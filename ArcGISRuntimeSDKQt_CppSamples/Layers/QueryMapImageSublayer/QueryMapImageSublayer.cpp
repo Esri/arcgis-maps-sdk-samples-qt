@@ -89,18 +89,21 @@ void QueryMapImageSublayer::connectSignals()
     connect(m_citiesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* result)
     {
       addResultsAsGraphics(result, m_citySymbol);
+      delete result;
     });
 
     // connect to county sublayer query signal
     connect(m_countiesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* result)
     {
       addResultsAsGraphics(result, m_countySymbol);
+      delete result;
     });
 
-    // connect to county sublayer query signal
+    // connect to states sublayer query signal
     connect(m_statesTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* result)
     {
       addResultsAsGraphics(result, m_stateSymbol);
+      delete result;
     });
   });
 
@@ -151,12 +154,13 @@ void QueryMapImageSublayer::query(const QString& whereClause)
     return;
 
   // clear & delete previous graphics
-  const int graphicSize = m_selectionOverlay->graphics()->size();
+  const GraphicsOverlay graphics = m_selectionOverlay->graphics();
+  const int graphicSize = graphics->size();
   for (int i = 0; i < graphicSize; i++)
   {
-    delete m_selectionOverlay->graphics()->at(i);
+    delete graphics->at(i);
   }
-  m_selectionOverlay->graphics()->clear();
+  graphics->clear();
 
   // create the parameters
   QueryParameters queryParams;

@@ -81,10 +81,11 @@ Rectangle {
 
     // Uncomment this section when running as standalone application
 
+    /*
     // Declare an AuthenticationView
     AuthenticationView {
         anchors.fill: parent
         authenticationManager: AuthenticationManager // set the authenticationManager property
     }
-
+    */
 }
