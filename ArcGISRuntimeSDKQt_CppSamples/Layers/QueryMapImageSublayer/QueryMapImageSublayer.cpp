@@ -25,6 +25,9 @@
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "QueryParameters.h"
+#include "Graphic.h"
+#include "GraphicsOverlay.h"
+#include "GraphicListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -150,11 +153,11 @@ void QueryMapImageSublayer::addResultsAsGraphics(FeatureQueryResult* result, Sym
 
 void QueryMapImageSublayer::query(const QString& whereClause)
 {
-  if (!m_citiesTable || !m_countiesTable || !m_statesTable || !m_mapView)
+  if (!m_citiesTable || !m_countiesTable || !m_statesTable || !m_mapView || !m_selectionOverlay)
     return;
 
   // clear & delete previous graphics
-  const GraphicsOverlay graphics = m_selectionOverlay->graphics();
+  GraphicListModel* graphics = m_selectionOverlay->graphics();
   const int graphicSize = graphics->size();
   for (int i = 0; i < graphicSize; i++)
   {
