@@ -29,7 +29,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-
+  app.setApplicationName("Statistical Query Group Sort - C++");
   // Initialize the sample
   StatisticalQueryGroupSort::init();
 

@@ -29,6 +29,8 @@
 
 int main(int argc, char *argv[])
 {
+  app.setApplicationName("Viewshed Camera - C++");
+
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   // Linux requires 3.2 OpenGL Context
   // in order to instance 3D symbols
