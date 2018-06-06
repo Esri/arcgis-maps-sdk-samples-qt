@@ -191,7 +191,7 @@ Rectangle {
                     callout.dismiss();
 
                     // zoom to geocoded location
-                    mapView.setViewpointGeometry(geocodeResults[0].extent)
+                    mapView.setViewpointCenter(geocodeResults[0].displayLocation)
 
                     // set pin and edit callout
                     pinLocation = geocodeResults[0].displayLocation;
