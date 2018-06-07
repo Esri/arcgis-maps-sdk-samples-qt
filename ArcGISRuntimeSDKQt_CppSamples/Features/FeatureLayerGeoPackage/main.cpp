@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
 
-  // Initialize the sample
+app.setApplicationName("FeatureLayerGeoPackage- C++"); 
   FeatureLayer_GeoPackage::init();
 
   // Initialize application view
