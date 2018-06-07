@@ -29,8 +29,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("RasterFunctionFile - C++");
 
-  // Initialize the sample
+  //Initialize the sample
   RasterFunctionFile::init();
 
   // Initialize application view

@@ -34,7 +34,8 @@ using namespace Esri::ArcGISRuntime;
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-
+  app.setApplicationName("ArcGISTiledLayerUrl - C++");
+  
   // Initialize the sample
   ArcGISTiledLayerUrl::init();
 
