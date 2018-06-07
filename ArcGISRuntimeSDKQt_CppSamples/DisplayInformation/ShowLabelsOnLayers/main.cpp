@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Show Labels on Layers - C++");
 
   // Initialize the sample
   ShowLabelsOnLayers::init();
