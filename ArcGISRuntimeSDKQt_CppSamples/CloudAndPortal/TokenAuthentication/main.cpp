@@ -29,6 +29,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Token Authentication - C++");
 
   // Initialize the sample
   TokenAuthentication::init();
