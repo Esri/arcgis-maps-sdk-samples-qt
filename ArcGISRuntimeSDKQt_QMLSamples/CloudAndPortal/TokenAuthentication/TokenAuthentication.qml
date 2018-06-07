@@ -80,6 +80,7 @@ Rectangle {
 
 
     // Uncomment this section when running as standalone application
+
     /*
     // Declare an AuthenticationView
     AuthenticationView {
