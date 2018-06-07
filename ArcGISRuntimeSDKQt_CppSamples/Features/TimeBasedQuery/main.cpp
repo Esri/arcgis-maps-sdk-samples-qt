@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-
+app.setApplicationName("TimeBasedQuery- C++"); 
   // Initialize the sample
   TimeBasedQuery::init();
 

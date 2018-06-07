@@ -30,7 +30,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-
+app.setApplicationName("ServiceFeatureTableCache- C++"); 
   // Initialize the sample
   ServiceFeatureTableCache::init();
 
