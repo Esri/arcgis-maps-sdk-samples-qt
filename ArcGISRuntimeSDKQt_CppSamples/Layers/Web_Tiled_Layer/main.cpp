@@ -29,6 +29,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Web_Tiled_Layer - C++");
 
   // Initialize the sample
   Web_Tiled_Layer::init();

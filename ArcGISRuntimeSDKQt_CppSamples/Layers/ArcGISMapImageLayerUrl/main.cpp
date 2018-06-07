@@ -34,7 +34,8 @@ using namespace Esri::ArcGISRuntime;
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-
+  app.setApplicationName("ArcGISMapImageLayerUrl - C++");
+  
   // Initialize the sample
   ArcGISMapImageLayerUrl::init();
 

@@ -29,8 +29,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("WmsLayerUrl - C++");
 
-  // Initialize the sample
+  // Initalize the sample
   WmsLayerUrl::init();
 
   // Initialize application view
