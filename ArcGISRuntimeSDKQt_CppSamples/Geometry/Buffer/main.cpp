@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-
+   app.setApplicationName("Buffer - C++"); 
   // Initialize the sample
   Buffer::init();
 

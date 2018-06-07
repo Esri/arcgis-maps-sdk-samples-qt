@@ -30,7 +30,7 @@
 using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
-{
+   app.setApplicationName("FormatCoordinates - C++"); 
   QGuiApplication app(argc, argv);
 
   // Initialize the sample
