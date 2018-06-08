@@ -29,7 +29,7 @@ const QString PortalUserInfo::UNKNOWN = "Unknown";
 
 PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
-  m_credential(new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this)),
+  m_credential(new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this)),
   m_portal(new Portal(m_credential, this))
 {
   connect(m_portal, &Portal::loadStatusChanged, this, &PortalUserInfo::onPortalLoadStatusChanged);
