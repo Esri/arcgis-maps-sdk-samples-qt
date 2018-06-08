@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Animate3DSymbols - C++");
 
   Q_INIT_RESOURCE(Animate3DSymbols);
 
