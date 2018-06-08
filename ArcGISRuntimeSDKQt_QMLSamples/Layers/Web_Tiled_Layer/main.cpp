@@ -24,6 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+  app.setApplicationName("Web_Tiled_Layer - C++");
 
     // Initialize application view
     QQuickView view;
