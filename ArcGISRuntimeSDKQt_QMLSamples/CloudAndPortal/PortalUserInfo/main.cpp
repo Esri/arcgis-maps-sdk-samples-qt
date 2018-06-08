@@ -27,6 +27,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("PortalUserInfo - C++");
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngine::initialize();

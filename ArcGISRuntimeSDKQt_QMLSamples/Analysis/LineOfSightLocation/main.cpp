@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
+  app.setApplicationName("LineOfSightLocation - C++");
 
   // Initialize application view
   QQuickView view;
