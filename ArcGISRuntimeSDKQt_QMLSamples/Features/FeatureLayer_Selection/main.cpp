@@ -24,6 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+  app.setApplicationName("FeatureLayer_Selection - C++");
 
     // Initialize application view
     QQuickView view;
