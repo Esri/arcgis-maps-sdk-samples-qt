@@ -29,6 +29,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("OfflineGeocode - C++");
 
   // Initialize the sample
   OfflineGeocode::init();
