@@ -30,8 +30,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("DisplayMap - C++");
 
-  // Initialize the sample
+ // Initialize the sample  // Initialize the sample
   DisplayMap::init();
 
   /* Leaving in for doc snippet

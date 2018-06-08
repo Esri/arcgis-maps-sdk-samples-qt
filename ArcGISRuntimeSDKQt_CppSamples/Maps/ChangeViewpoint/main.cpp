@@ -30,8 +30,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("ChangeViewpoint - C++");
 
-  // Initialize the sample
+ // Initialize the sample  // Initialize the sample
   ChangeViewpoint::init();
 
   // Initialize application view

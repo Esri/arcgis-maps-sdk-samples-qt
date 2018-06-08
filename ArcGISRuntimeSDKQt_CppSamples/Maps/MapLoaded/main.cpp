@@ -30,8 +30,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("MapLoaded - C++");
 
-  // Initialize the sample
+ // Initialize the sample  // Initialize the sample
   MapLoaded::init();
 
   // Initialize application view

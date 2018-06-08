@@ -30,8 +30,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("SetMapSpatialReference - C++");
 
-  // Initialize the sample
+ // Initialize the sample  // Initialize the sample
   SetMapSpatialReference::init();
 
   // Initialize application view
