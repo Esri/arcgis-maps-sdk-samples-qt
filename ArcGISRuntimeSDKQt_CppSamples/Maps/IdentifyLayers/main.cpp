@@ -29,8 +29,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("IdentifyLayers - C++");
 
-  // Initialize the sample
+  // Initialize the sample  
   IdentifyLayers::init();
 
   // Initialize application view

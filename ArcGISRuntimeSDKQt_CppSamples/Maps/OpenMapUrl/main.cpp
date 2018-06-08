@@ -30,8 +30,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("OpenMapUrl - C++");
 
-  // Initialize the sample
+ // Initialize the sample  // Initialize the sample
   OpenMapUrl::init();
 
   // Initialize application view

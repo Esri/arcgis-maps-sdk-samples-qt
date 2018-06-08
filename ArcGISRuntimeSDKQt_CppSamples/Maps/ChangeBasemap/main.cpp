@@ -30,8 +30,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("ChangeBasemap - C++");
 
-  // Initialize the sample
+ // Initialize the sample
   ChangeBasemap::init();
 
   // Initialize application view
