@@ -49,7 +49,7 @@ Rectangle {
         id: oAuthCredential
         oAuthClientInfo: OAuthClientInfo {
             oAuthMode: Enums.OAuthModeUser
-            clientId: "W3hPKzPbeJ0tr8aj"
+            clientId: "iLkGIj0nX8A4EJda"
         }
     }
 
