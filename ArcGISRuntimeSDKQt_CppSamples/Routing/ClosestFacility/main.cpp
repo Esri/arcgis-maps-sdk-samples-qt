@@ -29,8 +29,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("ClosestFacility - C++");
 
-  // Initialize the sample
+// Initialize the sample  // Initialize the sample
   ClosestFacility::init();
 
   // Initialize application view
