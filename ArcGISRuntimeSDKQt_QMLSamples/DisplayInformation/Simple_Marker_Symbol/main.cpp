@@ -24,6 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+  app.setApplicationName("Simple_Marker_Symbol - C++");
 
     // Initialize application view
     QQuickView view;
