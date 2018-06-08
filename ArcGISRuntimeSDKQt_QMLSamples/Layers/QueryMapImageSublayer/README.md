@@ -9,7 +9,7 @@ Sublayers of an `ArcGISMapImageLayer` may expose a `ServiceFeatureTable` through
 ## How to use the sample
 - Launch the sample, the map displays at an extent where individual states, counties, and cities can be seen clearly.
 - Provide a numeric value for the population query (values under 1810000 will produce a selection in all layers).
-- Click the Query button to find all features in the current map extent that have a population greater than the value entered.
+- Click the Query in extent button to find all features in the current map extent that have a population greater than the value entered.
 - All features (cities, counties, or states) meeting the query criteria are selected in the map.
 - Experiment with different map extents and population values and see the results.
 
