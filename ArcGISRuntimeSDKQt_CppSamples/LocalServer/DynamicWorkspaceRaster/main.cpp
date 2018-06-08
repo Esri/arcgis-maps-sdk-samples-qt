@@ -29,6 +29,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("DynamicWorkspaceRaster - C++");
 
   // Initialize the sample
   DynamicWorkspaceRaster::init();

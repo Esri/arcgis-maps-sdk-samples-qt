@@ -30,7 +30,8 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-
+  app.setApplicationName("LocalServerFeatureLayer - C++");
+  
   // Initialize the sample
   LocalServerFeatureLayer::init();
 
