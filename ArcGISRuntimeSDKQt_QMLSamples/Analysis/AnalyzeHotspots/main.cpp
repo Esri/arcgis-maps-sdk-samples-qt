@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("AnalyzeHotspots - C++");
+  app.setApplicationName("AnalyzeHotspots - QML");
 
   // Initialize application view
   QQuickView view;
