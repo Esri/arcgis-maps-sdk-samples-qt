@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("ChangeBasemap - C++");
+    app.setApplicationName("ChangeBasemap - QML");
 
     // Set the source
     QQuickView view;

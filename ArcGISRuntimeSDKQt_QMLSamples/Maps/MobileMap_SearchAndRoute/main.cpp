@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("MobileMap_SearchAndRoute - C++");
+    app.setApplicationName("MobileMap_SearchAndRoute - QML");
 
     // Initialize application view
     QQuickView view;

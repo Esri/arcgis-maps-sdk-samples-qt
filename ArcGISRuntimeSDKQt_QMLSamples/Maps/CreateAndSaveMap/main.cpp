@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("CreateAndSaveMap - C++");
+  app.setApplicationName("CreateAndSaveMap - QML");
 
   // Intialize application view
   QQuickView view;

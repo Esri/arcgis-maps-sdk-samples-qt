@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("ChangeViewpoint - C++");
+    app.setApplicationName("ChangeViewpoint - QML");
 
     // Initialize application view
     QQuickView view;

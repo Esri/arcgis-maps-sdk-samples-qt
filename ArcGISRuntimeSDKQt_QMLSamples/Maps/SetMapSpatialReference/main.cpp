@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("SetMapSpatialReference - C++");
+    app.setApplicationName("SetMapSpatialReference - QML");
 
     // Initialize application view
     QQuickView view;
