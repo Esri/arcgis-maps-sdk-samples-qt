@@ -121,6 +121,7 @@ Rectangle {
         opacity: hovered ? 1 : 0.5
 
         onClicked: {
+            title.text = "Basemaps";
             mapView.visible = false;
             basemapsGrid.enabled = true;
             gridFadeIn.running = true;
