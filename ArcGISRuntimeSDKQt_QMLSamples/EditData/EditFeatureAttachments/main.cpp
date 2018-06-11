@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("EditFeatureAttachments - C++");
+    app.setApplicationName("EditFeatureAttachments - QML");
 
     // Initialize application view
     QQuickView view;

@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("UpdateGeometryFeatureService - C++");
+    app.setApplicationName("UpdateGeometryFeatureService - QML");
 
     // Initialize application view
     QQuickView view;
