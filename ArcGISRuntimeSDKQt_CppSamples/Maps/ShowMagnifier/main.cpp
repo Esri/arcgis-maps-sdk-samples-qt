@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
   app.setApplicationName("ShowMagnifier - C++");
 
- // Initialize the sample
+  // Initialize the sample
   ShowMagnifier::init();
 
   // Initialize application view
