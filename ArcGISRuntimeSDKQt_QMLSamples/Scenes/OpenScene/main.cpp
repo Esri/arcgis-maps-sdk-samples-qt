@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("OpenScene - C++");
+  app.setApplicationName("OpenScene - QML");
 
   // Intialize application view
   QQuickView view;
