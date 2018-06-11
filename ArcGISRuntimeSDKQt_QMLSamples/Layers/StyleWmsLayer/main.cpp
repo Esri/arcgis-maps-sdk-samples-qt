@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("StyleWmsLayer - C++");
+  app.setApplicationName("StyleWmsLayer - QML");
 
   // Intialize application view
   QQuickView view;

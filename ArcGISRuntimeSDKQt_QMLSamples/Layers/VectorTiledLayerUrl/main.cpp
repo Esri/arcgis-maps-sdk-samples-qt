@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("VectorTiledLayerUrl - C++");
+    app.setApplicationName("VectorTiledLayerUrl - QML");
 
     // Set the source
     QQuickView view;

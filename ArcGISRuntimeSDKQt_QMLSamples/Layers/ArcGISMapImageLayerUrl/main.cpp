@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("ArcGISMapImageLayerUrl - C++");
+    app.setApplicationName("ArcGISMapImageLayerUrl - QML");
 
     // Initialize application view
     QQuickView view;

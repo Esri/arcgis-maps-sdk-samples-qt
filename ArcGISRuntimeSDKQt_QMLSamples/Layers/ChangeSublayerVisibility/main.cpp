@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("ChangeSublayerVisibility - C++");
+    app.setApplicationName("ChangeSublayerVisibility - QML");
 
     // Initialize application view
     QQuickView view;
