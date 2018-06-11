@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("BuildLegend - C++");
+    app.setApplicationName("BuildLegend - QML");
 
     // Initialize application view
     QQuickView view;

@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("Unique_Value_Renderer - C++");
+    app.setApplicationName("Unique_Value_Renderer - QML");
 
     // Initialize application view
     QQuickView view;

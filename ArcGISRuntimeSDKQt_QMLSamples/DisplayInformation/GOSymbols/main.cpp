@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("GOSymbols - C++");
+  app.setApplicationName("GOSymbols - QML");
 
   // Initialize application view
   QQuickView view;

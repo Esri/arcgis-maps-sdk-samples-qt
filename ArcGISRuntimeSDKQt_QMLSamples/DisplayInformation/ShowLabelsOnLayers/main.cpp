@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("ShowLabelsOnLayers - C++");
+  app.setApplicationName("ShowLabelsOnLayers - QML");
 
   // Intialize application view
   QQuickView view;
