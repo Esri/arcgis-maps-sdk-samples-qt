@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("FormatCoordinates - C++");
+  app.setApplicationName("FormatCoordinates - QML");
 
   // Initialize application view
   QQuickView view;
