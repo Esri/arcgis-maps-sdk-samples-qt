@@ -30,6 +30,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("SetInitialMapLocation - C++");
 
   // Initialize the sample
   SetInitialMapLocation::init();

@@ -29,8 +29,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Feature_Collection_Layer - C++");
 
-  // Initialize the sample
+  //Initialize the sample
   Feature_Collection_Layer::init();
 
   // Initialize application view

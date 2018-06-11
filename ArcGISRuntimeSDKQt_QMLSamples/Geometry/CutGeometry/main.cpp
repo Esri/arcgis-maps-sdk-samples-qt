@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
+  app.setApplicationName("CutGeometry - QML");
 
 #ifdef Q_OS_WIN
   // Force usage of OpenGL ES through ANGLE on Windows

@@ -24,7 +24,8 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    
+    app.setApplicationName("OpenMapUrl - QML");
+
     // Initialize application view
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);

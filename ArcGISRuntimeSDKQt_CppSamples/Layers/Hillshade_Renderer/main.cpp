@@ -29,6 +29,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Hillshade_Renderer - C++");
 
   // Initialize the sample
   Hillshade_Renderer::init();

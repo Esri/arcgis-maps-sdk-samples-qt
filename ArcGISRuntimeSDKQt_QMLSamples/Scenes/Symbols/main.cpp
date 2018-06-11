@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 #endif
 
     QGuiApplication app(argc, argv);
+    app.setApplicationName("Symbols - QML");
 
     // Initialize application view
     QQuickView view;

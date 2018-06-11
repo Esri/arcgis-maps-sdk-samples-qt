@@ -30,7 +30,8 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-
+  app.setApplicationName("VectorTiledLayerUrl - C++");
+  
   // Initialize the sample
   VectorTiledLayerUrl::init();
 

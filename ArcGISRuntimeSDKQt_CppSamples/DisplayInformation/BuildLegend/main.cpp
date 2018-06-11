@@ -30,6 +30,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Build Legend - C++");
 
   // Initialize the sample
   BuildLegend::init();

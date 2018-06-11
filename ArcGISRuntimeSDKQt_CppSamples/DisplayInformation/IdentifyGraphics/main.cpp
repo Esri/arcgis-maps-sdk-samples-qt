@@ -30,6 +30,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Identify Graphics - C++");
 
   // Initialize the sample
   IdentifyGraphics::init();

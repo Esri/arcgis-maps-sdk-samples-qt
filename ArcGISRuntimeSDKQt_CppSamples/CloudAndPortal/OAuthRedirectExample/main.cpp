@@ -35,6 +35,7 @@ using namespace Esri::ArcGISRuntime;
 int main(int argc, char *argv[])
 {
   MyApplication app(argc, argv);
+  app.setApplicationName("OAuth Redirect Example - C++");
 
 #if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
   QCommandLineParser commandLineParser;

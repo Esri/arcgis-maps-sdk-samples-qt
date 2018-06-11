@@ -30,6 +30,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("GOSymbols - C++");
 
   // Initialize the sample
   GOSymbols::init();

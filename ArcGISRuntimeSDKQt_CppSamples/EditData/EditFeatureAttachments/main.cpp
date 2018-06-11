@@ -30,6 +30,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Edit Feature Attachments - C++");
 
   // Initialize the sample
   EditFeatureAttachments::init();

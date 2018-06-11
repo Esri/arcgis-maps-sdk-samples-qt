@@ -29,8 +29,9 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    app.setApplicationName("FeatureCollectionLayerQuery - C++");
 
-    // Initialize the sample
+    //Initialize the sample
     FeatureCollectionLayerQuery::init();
 
     // Initialize application view

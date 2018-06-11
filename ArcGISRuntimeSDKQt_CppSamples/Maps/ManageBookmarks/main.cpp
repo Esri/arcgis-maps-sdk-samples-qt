@@ -30,6 +30,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("ManageBookmarks - C++");
 
   // Initialize the sample
   ManageBookmarks::init();

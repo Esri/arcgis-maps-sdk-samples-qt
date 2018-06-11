@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-
+  app.setApplicationName("ProjectGeometry - C++"); 
+  
   // Initialize the sample
   ProjectGeometry::init();
 

@@ -24,6 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    app.setApplicationName("ServiceFeatureTable_ManualCache - QML");
 
     // Initialize application view
     QQuickView view;

@@ -29,8 +29,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("GenerateOfflineMap - C++");
 
-  // Initialize the sample
+  // Initialize the sample  
   GenerateOfflineMap::init();
 
   // Initialize application view
