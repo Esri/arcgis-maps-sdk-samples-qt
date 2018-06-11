@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("RasterFunctionService - C++");
+  app.setApplicationName("RasterFunctionService - QML");
 
   // Initialize application view
   QQuickView view;

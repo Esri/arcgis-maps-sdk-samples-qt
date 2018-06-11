@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("FeatureCollectionLayerQuery - C++");
+    app.setApplicationName("FeatureCollectionLayerQuery - QML");
 
     // Initialize application view
     QQuickView view;

@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("BlendRasterLayer - C++");
+  app.setApplicationName("BlendRasterLayer - QML");
 
   // Initialize application view
   QQuickView view;

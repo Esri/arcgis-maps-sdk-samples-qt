@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("ChangeSublayerRenderer - C++");
+  app.setApplicationName("ChangeSublayerRenderer - QML");
 
   // Intialize application view
   QQuickView view;
