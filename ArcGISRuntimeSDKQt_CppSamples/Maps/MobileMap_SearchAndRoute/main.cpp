@@ -57,10 +57,10 @@ int main(int argc, char *argv[])
   // Add the Toolkit path
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Maps/MobileMap_SearchAndRoute/MobileMap_SearchAndRoute.qml"));
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/Maps/MobileMap_SearchAndRoute/MobileMap_SearchAndRoute.qml"));
 
-    view.show();
+  view.show();
 
-    return app.exec();
+  return app.exec();
 }

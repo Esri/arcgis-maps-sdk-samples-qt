@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
   app.setApplicationName("CreateAndSaveMap - C++");
 
- // Initialize the sample
+  // Initialize the sample
   CreateAndSaveMap::init();
 
   // Intialize application view
