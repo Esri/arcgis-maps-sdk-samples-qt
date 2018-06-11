@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("SpatialOperations - C++");
+  app.setApplicationName("SpatialOperations - QML");
 
   // Intialize application view
   QQuickView view;

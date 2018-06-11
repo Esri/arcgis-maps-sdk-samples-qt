@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("GeodesicOperations - C++");
+  app.setApplicationName("GeodesicOperations - QML");
 
   // Intialize application view
   QQuickView view;

@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("CreateGeometries - C++");
+  app.setApplicationName("CreateGeometries - QML");
 
   // Intialize application view
   QQuickView view;
