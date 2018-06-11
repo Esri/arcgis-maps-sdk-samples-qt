@@ -30,9 +30,9 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("OpenMobileMap_MapPackage - C++");
+    app.setApplicationName("OpenMobileMap_MapPackage - C++");
 
- // Initialize the sample    // Initialize the sample
+    // Initialize the sample
     OpenMobileMap_MapPackage::init();
 
     // Initialize application view

@@ -29,7 +29,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("FindPlace - C++");
+    app.setApplicationName("FindPlace - C++");
 
     // Initialize the sample
     FindPlace::init();

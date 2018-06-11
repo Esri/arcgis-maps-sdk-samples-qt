@@ -30,7 +30,8 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-   app.setApplicationName("ExportTiles - C++");
+  app.setApplicationName("ExportTiles - C++");
+  
   // Initialize the sample
   ExportTiles::init();
 

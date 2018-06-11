@@ -29,8 +29,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("ListTransformations - C++"); 
 
-   app.setApplicationName("ListTransformations - C++"); 
+  // Initialize the sample
   ListTransformations::init();
 
   // Initialize application view
