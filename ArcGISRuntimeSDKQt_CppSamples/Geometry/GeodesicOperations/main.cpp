@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-   app.setApplicationName("GeodesicOperations - C++"); 
+  app.setApplicationName("GeodesicOperations - C++"); 
+  
   // Initialize the sample
   GeodesicOperations::init();
 

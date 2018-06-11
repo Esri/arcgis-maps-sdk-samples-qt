@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
   app.setApplicationName("WMTS_Layer - C++");
 
-  // Initiqlize the sample
+  // Initialize the sample
   WMTS_Layer::init();
 
   // Initialize application view
