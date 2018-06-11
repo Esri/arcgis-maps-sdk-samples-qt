@@ -30,6 +30,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    app.setApplicationName("FindRoute - C++");
 
     // Initialize the sample
     FindRoute::init();

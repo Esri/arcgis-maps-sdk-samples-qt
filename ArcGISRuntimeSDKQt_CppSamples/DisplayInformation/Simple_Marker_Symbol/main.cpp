@@ -29,6 +29,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Simple Marker Symbol - C++");
 
   // Initialize the sample
   Simple_Marker_Symbol::init();

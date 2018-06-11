@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-
+  app.setApplicationName("FeatureLayerRenderingModeScene - C++");
   // Initialize the sample
   FeatureLayerRenderingModeScene::init();
 

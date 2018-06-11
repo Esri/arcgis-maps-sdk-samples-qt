@@ -29,6 +29,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Display Grid - C++");
 
   // Initialize the sample
   DisplayGrid::init();

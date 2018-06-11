@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
+  app.setApplicationName("DistanceCompositeSymbol - C++");
 
   // Initialize the sample
   DistanceCompositeSymbol::init();

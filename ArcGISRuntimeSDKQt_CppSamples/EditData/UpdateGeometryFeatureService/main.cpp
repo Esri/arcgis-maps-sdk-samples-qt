@@ -30,6 +30,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Update Geometry Feature Service - C++");
 
   // Initialize the sample
   UpdateGeometryFeatureService::init();

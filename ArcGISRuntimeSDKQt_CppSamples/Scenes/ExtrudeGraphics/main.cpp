@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
+  app.setApplicationName("ExtrudeGraphics - C++");
 
   // Initialize the sample
   ExtrudeGraphics::init();

@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
+  app.setApplicationName("SurfacePlacement - C++");
 
   // Initialize the sample
   Surface_Placement::init();

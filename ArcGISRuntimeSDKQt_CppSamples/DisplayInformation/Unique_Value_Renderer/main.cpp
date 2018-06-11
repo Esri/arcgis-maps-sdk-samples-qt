@@ -30,6 +30,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("Unique Value Renderer - C++");
 
   // Initialize the sample
   Unique_Value_Renderer::init();

@@ -24,6 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    app.setApplicationName("ExportTiles - QML");
 
     // Set the source
     QQuickView view;

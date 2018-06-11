@@ -30,8 +30,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("DisplayDeviceLocation - C++");
 
-  // Initialize the sample
+ // Initialize the sample
   DisplayDeviceLocation::init();
 
   // Initialize application view

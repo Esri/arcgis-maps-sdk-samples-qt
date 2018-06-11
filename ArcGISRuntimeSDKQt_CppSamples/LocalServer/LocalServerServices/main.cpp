@@ -30,7 +30,8 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-
+  app.setApplicationName("LocalServerServices - C++");
+  
   // Initialize the sample
   LocalServerServices::init();
 

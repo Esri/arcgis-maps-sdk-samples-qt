@@ -29,8 +29,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-
-  // Initialize the sample
+  app.setApplicationName("ListRelatedFeatures- C++"); 
+  
+  // Initialize the sample≥÷.;
   ListRelatedFeatures::init();
 
   // Initialize application view

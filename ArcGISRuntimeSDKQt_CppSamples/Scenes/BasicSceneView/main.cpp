@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
+  app.setApplicationName("BasicSceneView - C++");
 
   // Initialize the sample
   BasicSceneView::init();

@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-
+  app.setApplicationName("CreateGeometries - C++"); 
+  
   // Initialize the sample
   CreateGeometries::init();
 

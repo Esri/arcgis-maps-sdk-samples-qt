@@ -29,7 +29,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-
+  app.setApplicationName("Analyze Viewshed - C++");
   // Initialize the sample
   AnalyzeViewshed::init();
 

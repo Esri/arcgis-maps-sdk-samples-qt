@@ -29,6 +29,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("SearchDictionarySymbolStyle - C++");
 
   // Initialize the sample
   SearchDictionarySymbolStyle::init();

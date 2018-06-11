@@ -28,7 +28,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-
+  app.setApplicationName("FeatureLayerDictionaryRenderer- C++");
   // Initialize the sample
   FeatureLayerDictionaryRenderer::init();
 

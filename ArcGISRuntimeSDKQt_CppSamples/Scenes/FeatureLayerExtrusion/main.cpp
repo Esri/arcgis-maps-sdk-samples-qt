@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
 #endif
 
     QGuiApplication app(argc, argv);
+    app.setApplicationName("FeatureLayerExtrusion - C++");
 
     // Initialize the sample
     FeatureLayerExtrusion::init();

@@ -28,6 +28,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("GODictionary Renderer - C++");
 
   // Initialize the sample
   GODictionaryRenderer::init();

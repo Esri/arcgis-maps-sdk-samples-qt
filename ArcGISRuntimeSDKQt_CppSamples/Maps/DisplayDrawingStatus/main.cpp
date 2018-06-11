@@ -29,8 +29,9 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
+  app.setApplicationName("DisplayDrawingStatus - C++");
 
-  // Initialize the sample
+  // Initialize the sample  
   DisplayDrawingStatus::init();
 
   // Initialize application view
