@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 #endif
 
     QGuiApplication app(argc, argv);
-  app.setApplicationName("BasicSceneView - C++");
+    app.setApplicationName("BasicSceneView - QML");
 
     // Initialize application view
     QQuickView view;
