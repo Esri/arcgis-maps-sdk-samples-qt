@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("DisplayDrawingStatus - C++");
+    app.setApplicationName("DisplayDrawingStatus - QML");
 
     // Initialize application view
     QQuickView view;

@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("MapLoaded - C++");
+    app.setApplicationName("MapLoaded - QML");
 
     // Initialize application view
     QQuickView view;

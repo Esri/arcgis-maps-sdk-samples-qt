@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("IdentifyLayers - C++");
+  app.setApplicationName("IdentifyLayers - QML");
 
   // Initialize application view
   QQuickView view;

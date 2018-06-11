@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("OpenMobileMap_MapPackage - C++");
+    app.setApplicationName("OpenMobileMap_MapPackage - QML");
 
     // Initialize application view
     QQuickView view;
