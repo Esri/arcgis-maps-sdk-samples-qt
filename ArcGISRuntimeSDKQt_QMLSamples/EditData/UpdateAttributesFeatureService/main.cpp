@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-  app.setApplicationName("UpdateAttributesFeatureService - C++");
+    app.setApplicationName("UpdateAttributesFeatureService - QML");
 
     // Initialize application view
     QQuickView view;
