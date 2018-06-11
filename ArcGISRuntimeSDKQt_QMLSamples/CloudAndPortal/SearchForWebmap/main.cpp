@@ -27,7 +27,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("SearchForWebmap - C++");
+  app.setApplicationName("SearchForWebmap - QML");
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
     QtWebEngine::initialize();

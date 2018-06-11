@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName("DistanceMeasurementAnalysis - C++");
+  app.setApplicationName("DistanceMeasurementAnalysis - QML");
 
   // Intialize application view
   QQuickView view;
