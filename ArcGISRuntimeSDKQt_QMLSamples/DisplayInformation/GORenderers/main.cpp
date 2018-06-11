@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("GORenderers - C++");
+  app.setApplicationName("GORenderers - QML");
 
   // Initialize application view
   QQuickView view;

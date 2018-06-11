@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setApplicationName("SymbolizeShapefile - C++");
+  app.setApplicationName("SymbolizeShapefile - QML");
 
   // Initialize application view
   QQuickView view;
