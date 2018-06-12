@@ -287,7 +287,8 @@ void MobileMap_SearchAndRoute::selectMap(int index)
                     textSymbol->setOffsetY(m_bluePinSymbol->height() / 2);
 
                     // create a Graphic using the textSymbol
-                    Graphic* stopNumberGraphic = new Graphic(geocodeResults[0].displayLocation(), textSymbol, m_stopGraphicParent);
+                    Graphic* stopNumberGraphic = new Graphic(bluePinGraphic->geometry(), textSymbol, m_stopGraphicParent);
+                    stopNumberGraphic->setZIndex(bluePinGraphic->zIndex() + 1);
                     m_stopsGraphicsOverlay->graphics()->append(stopNumberGraphic);
 
                     if (m_stops.count() > 1)
