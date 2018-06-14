@@ -93,11 +93,6 @@ void SceneLayerSelection::connectSignals()
     // cast the GeoElement to a Feature
     Feature* feature = dynamic_cast<Feature*>(geoElement);
 
-    if (feature)
-      qDebug() << "featue";
-    else
-      qDebug() << "null";
-
     // select the Feature in the SceneLayer
     if (feature)
       m_sceneLayer->selectFeature(feature);
