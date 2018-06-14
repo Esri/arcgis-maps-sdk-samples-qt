@@ -77,7 +77,7 @@ void SceneLayerSelection::componentComplete()
 
 void SceneLayerSelection::connectSignals()
 {
-  // handle the identifyLayerStatusChanged signal
+  // handle the identifyLayerCompleted signal
   connect(m_sceneView, &SceneQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* result)
   {
     // get the results
