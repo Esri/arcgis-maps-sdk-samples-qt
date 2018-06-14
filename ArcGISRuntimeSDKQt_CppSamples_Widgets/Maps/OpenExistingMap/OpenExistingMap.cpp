@@ -80,7 +80,7 @@ OpenExistingMap::~OpenExistingMap()
 
 void OpenExistingMap::createPortalMaps()
 {
-    m_portalIds.insert("Housing with Mortgages", "2d6fa24b357d427f9c737774e7b0f977");
+    m_portalIds.insert("Population Pressure", "392451c381ad4109bf04f7bd442bc038");
     m_portalIds.insert("USA Tapestry Segmentation", "01f052c8995e4b9e889d73c3e210ebe3");
     m_portalIds.insert("Geology of United States", "92ad152b9da94dee89b9e387dfe21acd");
 }
