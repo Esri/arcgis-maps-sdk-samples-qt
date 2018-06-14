@@ -1,0 +1,8 @@
+{
+    "source" :  "SceneLayerSelection.qml",
+    "otherSourceFiles" :  [
+        "SceneLayerSelection.h",
+        "SceneLayerSelection.cpp"
+    ],
+    "name" : "Scene layer selection"
+}

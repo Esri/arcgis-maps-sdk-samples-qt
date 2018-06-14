@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/SceneLayerSelection">
+        <file alias="sample.json">SceneLayerSelection.json</file>        
+        <file>SceneLayerSelection.qml</file>
+        <file>SceneLayerSelection.h</file>
+        <file>SceneLayerSelection.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
