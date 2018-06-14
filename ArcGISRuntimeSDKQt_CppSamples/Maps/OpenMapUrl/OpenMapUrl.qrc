@@ -3,11 +3,11 @@
         <file alias="sample.json">OpenMapUrl.json</file>
         <file>screenshot.png</file>
         <file>OpenMapUrl.qml</file>
-		<file>OpenMapUrl.h</file>
-		<file>OpenMapUrl.cpp</file>
+        <file>OpenMapUrl.h</file>
+        <file>OpenMapUrl.cpp</file>
         <file>README.md</file>
         <file>geology.jpg</file>
-        <file>Housing.png</file>
+        <file>population.png</file>
         <file>SwitchMap.png</file>
         <file>Tapestry.png</file>
     </qresource>
