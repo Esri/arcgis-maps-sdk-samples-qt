@@ -3,10 +3,10 @@
         <file alias="sample.json">OpenMapUrl.json</file>
         <file>OpenMapUrl.qml</file>
         <file>screenshot.png</file>
-        <file>Housing.png</file>
         <file>Tapestry.png</file>
         <file>SwitchMap.png</file>
         <file>geology.jpg</file>
         <file>README.md</file>
+        <file>population.png</file>
     </qresource>
 </RCC>
