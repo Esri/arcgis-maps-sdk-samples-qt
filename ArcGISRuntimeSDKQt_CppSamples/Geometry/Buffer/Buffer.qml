@@ -58,7 +58,7 @@ BufferSample {
 
         Text {
             text: "Buffer size (miles):"
-        }        
+        }
 
         TextField {
             id: bufferSizeText
