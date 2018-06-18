@@ -49,7 +49,10 @@ Rectangle {
             Surface {
                 ArcGISTiledElevationSource {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
-                }                
+                }
+                ArcGISTiledElevationSource {
+                    url: "https://tiles.arcgis.com/tiles/d3voDfTFbHOCRwVR/arcgis/rest/services/MNT_IDF/ImageServer"
+                }
             }
 
             // set initial viewpoint
