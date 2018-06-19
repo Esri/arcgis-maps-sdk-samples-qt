@@ -42,7 +42,7 @@ Rectangle {
             onClicked: {
                 if (text === "TOTAL POPULATION") {
                     text = qsTr("POPULATION DENSITY");
-                    sceneProperties.extrusionExpression = "[POP07_SQMI] * 5000 + 1000";
+                    sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 1000";
                 } else {
                     text = qsTr("TOTAL POPULATION");
                     sceneProperties.extrusionExpression = "[POP2007] / 10";
