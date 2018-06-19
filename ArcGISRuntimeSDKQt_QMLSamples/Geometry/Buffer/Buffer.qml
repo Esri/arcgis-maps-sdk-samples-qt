@@ -35,25 +35,67 @@ Rectangle {
         // Add a map with a basemap
         Map {
             BasemapTopographic {}
-
-            // Set an initial viewpoint
-            ViewpointExtent {
-                Envelope {
-                    xMin: -10863035.97
-                    yMin: 3838021.34
-                    xMax: -10744801.344
-                    yMax: 3887145.299
-                    spatialReference: SpatialReference { wkid: 3857 }
-                }
-            }
         }
 
         // handle the mouse click - perform a buffer on click
         onMouseClicked: bufferPoint(mouse.mapPoint);
 
-        // add a graphics overlay to the map view
+        // create graphics overlay for geodesic buffer graphics
         GraphicsOverlay {
-            id: graphicsOverlay
+            id: graphicsOverlaygeodesic
+
+            // Set the renderer
+            SimpleRenderer {
+                // create a simple fill symbol for the geodesic buffer result
+                SimpleFillSymbol {
+                    id: geodesicBufferSymbol
+                    color: Qt.rgba(1, 0, 0, 0.5)
+                    style: Enums.SimpleFillSymbolStyleSolid
+
+                    SimpleLineSymbol {
+                        color: geodesicBufferSymbol.color
+                        style: Enums.SimpleLineSymbolStyleSolid
+                        width: 2
+                    }
+                }
+            }
+        }
+
+        // create graphics overlay for planar buffer graphics
+        GraphicsOverlay {
+            id: graphicsOverlayPlanar
+
+            // Set the renderer
+            SimpleRenderer {
+                // create a simple fill symbol for the planar buffer result
+                SimpleFillSymbol {
+                    id: planarBufferSymbol
+                    color: Qt.rgba(0, 0, 1, 0.5)
+                    style: Enums.SimpleFillSymbolStyleSolid
+
+                    SimpleLineSymbol {
+                        color: planarBufferSymbol.color
+                        style: Enums.SimpleLineSymbolStyleSolid
+                        width: 2
+                    }
+                }
+            }
+        }
+
+        // create graphics overlay for the mouse clicks
+        GraphicsOverlay {
+            id: graphicsOverlayPoints
+
+            // Set the renderer
+            SimpleRenderer {
+                // create a marker symbol for the clicked point
+                SimpleMarkerSymbol {
+                    id: pointSymbol
+                    color: "white"
+                    size: 14
+                    style: Enums.SimpleMarkerSymbolStyleCross
+                }
+            }
         }
     }
 
@@ -62,20 +104,29 @@ Rectangle {
         // Create a variable to be the buffer size in meters. There are 1609.34 meters in one mile.
         var bufferInMeters = bufferSizeText.text * 1609.34;
 
-        // Buffer the point
+        // Create a planar buffer graphic around the input location at the specified distance.
         var buffer = GeometryEngine.buffer(point, bufferInMeters);
 
-        // Add the result buffer as a graphic
-        var resultGraphic = ArcGISRuntimeEnvironment.createObject("Graphic");
-        resultGraphic.symbol = bufferSymbol;
-        resultGraphic.geometry = buffer;
-        graphicsOverlay.graphics.append(resultGraphic);
+        // Add the result planar buffer as a graphic
+        var resultGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                      geometry: buffer
+                                                                  });
+        graphicsOverlayPlanar.graphics.append(resultGraphic);
+
+        // Create a geodesic buffer graphic using the same location and distance.
+        var bufferGeodesic = GeometryEngine.bufferGeodetic(point, bufferInMeters, Enums.LinearUnitIdMeters, NaN, Enums.geodesicCurveTypeGeodesic);
+
+        // Add the result planar buffer as a graphic
+        var resultGraphicGeodesic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                              geometry: bufferGeodesic
+                                                                          });
+        graphicsOverlaygeodesic.graphics.append(resultGraphicGeodesic);
 
         // Add the clicked point as a graphic
-        var clickedPointGraphic = ArcGISRuntimeEnvironment.createObject("Graphic");
-        clickedPointGraphic.symbol = pointSymbol;
-        clickedPointGraphic.geometry = point;
-        graphicsOverlay.graphics.append(clickedPointGraphic);
+        var clickedPointGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                            geometry: point
+                                                                        });
+        graphicsOverlayPoints.graphics.append(clickedPointGraphic);
     }
 
     // display a control pane to change size
@@ -107,29 +158,48 @@ Rectangle {
 
         TextField {
             id: bufferSizeText
-            validator: RegExpValidator{ regExp: /^[1-9][0-9]?$|^100$/ }
-            text: "5"
+            validator: IntValidator { bottom: 1; top: 10000 }
+            text: "1000"
         }
-    }
 
-    // create a simple fill symbol for the buffer result
-    SimpleFillSymbol {
-        id: bufferSymbol
-        color: Qt.rgba(0, 1, 0, 0.5)
-        style: Enums.SimpleFillSymbolStyleSolid
+        Row {
+            spacing: 10 * scaleFactor
 
-        SimpleLineSymbol {
-            color: "green"
-            style: Enums.SimpleLineSymbolStyleSolid
-            width: 5
+            Rectangle {
+                radius: 100 * scaleFactor
+                width: 15 * scaleFactor
+                height: width
+                color: planarBufferSymbol.color
+            }
+
+            Text {
+                text: "Planar Buffer"
+            }
         }
-    }
 
-    // create a marker symbol for the clicked point
-    SimpleMarkerSymbol {
-        id: pointSymbol
-        color: "red"
-        size: 5
-        style: Enums.SimpleMarkerSymbolStyleCircle
+        Row {
+            spacing: 10 * scaleFactor
+
+            Rectangle {
+                radius: 100 * scaleFactor
+                width: 15 * scaleFactor
+                height: width
+                color: geodesicBufferSymbol.color
+            }
+
+            Text {
+                text: "Geodesic Buffer"
+            }
+        }
+
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Clear"
+            onClicked: {
+                graphicsOverlaygeodesic.graphics.clear();
+                graphicsOverlayPlanar.graphics.clear();
+                graphicsOverlayPoints.graphics.clear();
+            }
+        }
     }
 }
