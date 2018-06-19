@@ -44,6 +44,7 @@ public:
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
+  Q_INVOKABLE void clear();
 
 signals:
   void bufferSizeChanged();
@@ -51,10 +52,10 @@ signals:
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-  Esri::ArcGISRuntime::SimpleFillSymbol* m_bufferSymbol = nullptr;
-  Esri::ArcGISRuntime::SimpleMarkerSymbol* m_pointSymbol = nullptr;
-  int m_bufferSize = 5;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlayPlanar = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlayGeodesic = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlayPoints = nullptr;
+  int m_bufferSize = 1000;
 
 private:
   int bufferSize() const;

@@ -62,9 +62,49 @@ BufferSample {
 
         TextField {
             id: bufferSizeText
-            validator: RegExpValidator{ regExp: /^[1-9][0-9]?$|^100$/ }
-            text: bufferSize
+            validator: IntValidator { bottom: 1; top: 10000 }
+            text: "1000"
             onTextChanged: bufferSize = Number(text);
+        }
+
+        Row {
+            spacing: 10 * scaleFactor
+
+            Rectangle {
+                radius: 100 * scaleFactor
+                width: 15 * scaleFactor
+                height: width
+                color: "blue"
+                opacity: 0.5
+            }
+
+            Text {
+                text: "Planar Buffer"
+            }
+        }
+
+        Row {
+            spacing: 10 * scaleFactor
+
+            Rectangle {
+                radius: 100 * scaleFactor
+                width: 15 * scaleFactor
+                height: width
+                color: "red"
+                opacity: 0.5
+            }
+
+            Text {
+                text: "Geodesic Buffer"
+            }
+        }
+
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Clear"
+            onClicked: {
+                clear();
+            }
         }
     }
 }

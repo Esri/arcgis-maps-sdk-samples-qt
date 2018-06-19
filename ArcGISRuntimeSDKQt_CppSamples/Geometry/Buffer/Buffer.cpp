@@ -25,9 +25,8 @@
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
-#include "Envelope.h"
-#include "Viewpoint.h"
-#include "SpatialReference.h"
+#include "SimpleRenderer.h"
+#include <cmath>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -52,30 +51,36 @@ void Buffer::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a map using the topographic basemap
-  m_map = new Map(Basemap::topographic(this), this);
+  m_map = new Map(Basemap::topographic(this), this);  
 
-  // Set an initial viewpoint
-  constexpr double xMin = -10863035.97;
-  constexpr double yMin = 3838021.34;
-  constexpr double xMax = -10744801.344;
-  constexpr double yMax = 3887145.299;
-  const SpatialReference sr(3857);
-  const Envelope env(xMin, yMin, xMax, yMax, sr);
-  m_map->setInitialViewpoint(Viewpoint(env));
+  // add a graphics overlay for the geodesic buffer
+  m_graphicsOverlayGeodesic = new GraphicsOverlay(this);
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlayGeodesic);
 
-  // add a graphics overlay
-  m_graphicsOverlay = new GraphicsOverlay(this);
-  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
+  // add a graphics overlay for the planar buffer
+  m_graphicsOverlayPlanar = new GraphicsOverlay(this);
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlayPlanar);
+
+  // add a graphics overlay for the mouse click
+  m_graphicsOverlayPoints = new GraphicsOverlay(this);
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlayPoints);
 
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  // create symbol for the buffer result
-  SimpleLineSymbol* outline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("green"), 5.0f /*width*/, this);
-  m_bufferSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(0, 255, 0, 122), outline, this);
+  // create symbol for the geodesic buffer result
+  SimpleLineSymbol* outlineGeodesic = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("red"), 2.0f /*width*/, this);
+  SimpleFillSymbol* sfsGeodesic = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 0, 0, 122), outlineGeodesic, this);
+  m_graphicsOverlayGeodesic->setRenderer(new SimpleRenderer(sfsGeodesic, this));
+
+  // create symbol for the planar buffer result
+  SimpleLineSymbol* outlinePlanar = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 2.0f /*width*/, this);
+  SimpleFillSymbol* sfsPlanar = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(0, 0, 255, 122), outlinePlanar, this);
+  m_graphicsOverlayPlanar->setRenderer(new SimpleRenderer(sfsPlanar, this));
 
   // create symbol for the mouse click
-  m_pointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 5.0f /*width*/, this);
+  SimpleMarkerSymbol* sms = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor("white"), 14.0f /*width*/, this);
+  m_graphicsOverlayPoints->setRenderer(new SimpleRenderer(sms, this));
 
   // connect to mouse clicked signal
   connect(m_mapView, SIGNAL(mouseClicked(QMouseEvent&)), this, SLOT(onMouseClicked(QMouseEvent&)));
@@ -90,16 +95,23 @@ void Buffer::onMouseClicked(QMouseEvent& mouse)
   // Create a variable to be the buffer size in meters. There are 1609.34 meters in one mile.
   const int bufferInMeters = bufferSize() * 1609.34;
 
-  // Buffer the point
+  // Create a planar buffer graphic around the input location at the specified distance.
   const Geometry buffer = GeometryEngine::buffer(point, bufferInMeters);
 
-  // Add the result buffer as a graphic
-  Graphic* resultGraphic = new Graphic(buffer, m_bufferSymbol, this);
-  m_graphicsOverlay->graphics()->append(resultGraphic);
+  // Add the result planar buffer as a graphic
+  Graphic* resultGraphicPlanar = new Graphic(buffer, this);
+  m_graphicsOverlayPlanar->graphics()->append(resultGraphicPlanar);
+
+  // Create a geodesic buffer graphic around the input location at the specified distance.
+  const Geometry bufferGeodesic = GeometryEngine::bufferGeodetic(point, bufferInMeters, LinearUnitId::Meters, NAN, GeodeticCurveType::Geodesic);
+
+  // Add the result geodesic buffer as a graphic
+  Graphic* resultGraphicGeodesic = new Graphic(bufferGeodesic, this);
+  m_graphicsOverlayGeodesic->graphics()->append(resultGraphicGeodesic);
 
   // Add the clicked point as a graphic
-  Graphic* clickedPointGraphic = new Graphic(point, m_pointSymbol, this);
-  m_graphicsOverlay->graphics()->append(clickedPointGraphic);
+  Graphic* clickedPointGraphic = new Graphic(point, this);
+  m_graphicsOverlayPoints->graphics()->append(clickedPointGraphic);
 }
 
 int Buffer::bufferSize() const
@@ -113,4 +125,11 @@ void Buffer::setBufferSize(int size)
     return;
 
   m_bufferSize = size;
+}
+
+void Buffer::clear()
+{
+  m_graphicsOverlayGeodesic->graphics()->clear();
+  m_graphicsOverlayPlanar->graphics()->clear();
+  m_graphicsOverlayPoints->graphics()->clear();
 }
