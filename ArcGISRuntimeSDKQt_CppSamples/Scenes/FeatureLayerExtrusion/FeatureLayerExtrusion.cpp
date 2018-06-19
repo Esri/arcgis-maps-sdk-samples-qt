@@ -102,7 +102,7 @@ void FeatureLayerExtrusion::popDensity()
   {
     // multiply population density by 5000 to make data legible
     RendererSceneProperties props = m_renderer->sceneProperties();
-    props.setExtrusionExpression("([POP07_SQMI] * 5000) + 1000");
+    props.setExtrusionExpression("([POP07_SQMI] * 5000) + 10000");
     m_renderer->setSceneProperties(props);
     m_showTotalPopulation = true;
   }
