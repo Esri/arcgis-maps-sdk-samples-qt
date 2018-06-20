@@ -23,29 +23,39 @@
 using namespace Esri::ArcGISRuntime;
 
 TerrainExaggeration::TerrainExaggeration(QQuickItem* parent /* = nullptr */):
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
 void TerrainExaggeration::init()
 {
-    // Register classes for QML
-    qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-    qmlRegisterType<TerrainExaggeration>("Esri.Samples", 1, 0, "TerrainExaggerationSample");
+  // Register classes for QML
+  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<TerrainExaggeration>("Esri.Samples", 1, 0, "TerrainExaggerationSample");
 }
 
 void TerrainExaggeration::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    // Create a scene and give it to the SceneView
-    m_sceneView = findChild<SceneQuickView*>("sceneView");
-    Scene* scene = new Scene(Basemap::imagery(this), this);
-    Surface* surface = new Surface(this);
-    surface->elevationSources()->append(
-                new ArcGISTiledElevationSource(
-                    QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
-                    this));
-    scene->setBaseSurface(surface);
-    m_sceneView->setArcGISScene(scene);
+  // Create a scene and give it to the SceneView
+  m_sceneView = findChild<SceneQuickView*>("sceneView");
+  Scene* scene = new Scene(Basemap::nationalGeographic(this), this);
+  m_surface = new Surface(this);
+  m_surface->elevationSources()->append(
+        new ArcGISTiledElevationSource(
+          QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
+          this));
+  Viewpoint initialViewpoint(Point(46.75792111605992, -119.94891542688772, 0, SpatialReference(4326)));
+  Camera initialViewpointCamera(46.75792111605992, -119.94891542688772, 15000, 60, 40, 0);
+  m_sceneView->setViewpoint(initialViewpoint);
+  m_sceneView->setViewpointCamera(initialViewpointCamera);
+  scene->setBaseSurface(m_surface);
+  m_sceneView->setArcGISScene(scene);
+}
+
+void TerrainExaggeration::setElevationExaggeration(double factor)
+{
+  if (m_surface)
+    m_surface->setElevationExaggeration(factor);
 }

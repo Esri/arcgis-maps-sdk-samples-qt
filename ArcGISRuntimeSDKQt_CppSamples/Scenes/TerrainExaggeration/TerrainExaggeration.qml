@@ -17,48 +17,21 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.3
+import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
-Rectangle {
-    id: rootRectangle
+TerrainExaggerationSample {
+    id: terrainExaggerationSample
     clip: true
-    width: 800
-    height: 600
+    width: 500
+    height: 500
 
     property real scaleFactor: System.displayScaleFactor
 
     SceneView {
         id: sceneView
         anchors.fill: parent
-
-        Scene {
-            id: scene
-            BasemapImagery {}
-            Surface {
-                id: surface
-                ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
-                }
-            }
-            ViewpointCenter {
-                Point {
-                    id: initialPoint
-                    x: 83.9
-                    y: 28.4
-                    z: 10010
-                    spatialReference: SpatialReference { wkid: 4326 }
-                }
-                targetScale: 10010 //62.013264927081764
-
-                Camera {
-                    location: initialPoint
-                    heading: 41.64729875588979
-                    pitch: 71.2017391571523
-                    roll: 2.194677223e-314
-                }
-            }
-        }
+        objectName: "sceneView"
     }
 
     // Slider UI presentation at bottom
@@ -105,7 +78,7 @@ Rectangle {
                 minimumValue: 1.0
                 maximumValue: 10
                 onValueChanged: {
-                   surface.elevationExaggeration = Qt.binding(function() { return slider1.value })
+                   terrainExaggerationSample.setElevationExaggeration(slider1.value)
                 }
             }
 

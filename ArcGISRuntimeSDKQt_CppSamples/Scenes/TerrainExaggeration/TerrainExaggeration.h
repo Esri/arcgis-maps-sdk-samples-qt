@@ -22,6 +22,7 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class SceneQuickView;
+class Surface;
 }
 }
 
@@ -37,9 +38,11 @@ public:
 
     void componentComplete() Q_DECL_OVERRIDE;
     static void init();
+    Q_INVOKABLE void setElevationExaggeration(double factor);
 
 private:
     Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+    Esri::ArcGISRuntime::Surface* m_surface = nullptr;
 };
 
 #endif // TERRAINEXAGGERATION_H
