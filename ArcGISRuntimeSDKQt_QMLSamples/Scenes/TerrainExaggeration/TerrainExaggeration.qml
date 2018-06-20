@@ -32,33 +32,38 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
+        // add a Scene to the SceneView
         Scene {
-            id: scene
-            BasemapNationalGeographic {}
+            // add the BasemapTopographic basemap to the scene
+            BasemapTopographic {}
+
+            // add a surface...surface is a default property of scene
             Surface {
-                id: surface
-                elevationExaggeration: slider1.value
+                // add an arcgis tiled elevation source...elevation source is a default property of surface
                 ArcGISTiledElevationSource {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
+                elevationExaggeration: slider1.value
             }
-            ViewpointCenter {
-                Point {
-                    id: initialPoint
-                    x: -119.94891542688772
-                    y: 46.75792111605992
-                    z: 0
-                    spatialReference: SpatialReference { wkid: 4326 }
-                }
-                targetScale: 1500.0
+        }
 
-                Camera {
-                    location: initialPoint
-                    heading: 40.0
-                    pitch: 60.0
-                    roll: 0
-                }
-            }
+        Component.onCompleted: {
+            sceneView.setViewpointCamera(camera);
+        }
+    }
+
+    Camera {
+        id: camera
+        distance: 15000
+        heading: 40.0
+        pitch: 60.0
+        roll: 0.0
+
+        Point {
+            x: -119.94891542688772
+            y: 46.75792111605992
+            z: 0
+            spatialReference: SpatialReference { wkid: 4326 }
         }
     }
 
@@ -104,7 +109,7 @@ Rectangle {
                 }
                 // Slider controls the magnitude of exaggeration
                 minimumValue: 1.0
-                maximumValue: 10
+                maximumValue: 10.0
             }
 
             TextField {

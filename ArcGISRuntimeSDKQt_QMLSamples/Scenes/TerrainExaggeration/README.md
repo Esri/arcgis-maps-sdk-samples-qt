@@ -1,31 +1,22 @@
-# Terrain exaggeration
+# Terrain Exaggeration
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+This sample demonstrates how to exaggerate a scene's terrain surface.
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Click and drag the slider at the top to change how exaggerated the terrain becomes.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+1. Create a scene.
+2. Add a surface feature layer.
+3. Surfaces have a property known as `elevationExaggeration` which allows you to change the surface exaggeration. Set this value as an attribute of the `Surface` object.
+4. In this case, we have a slider object with values between 1 and 10. We've bound the surface's elevationExaggeration to the slider's value, which allows for a dynamic demonstration of the exaggeration effects.
 
 ## Relevant API
- - ClassName1
- - MethodName
-
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+ - `Surface`
+ - `elevationExaggeration`
 
 ## Tags
-Routing, Network analysis, Geocode
+Scenes, Elevation, 3D, Exaggeration
 
