@@ -42,10 +42,10 @@ Rectangle {
             onClicked: {
                 if (text === "TOTAL POPULATION") {
                     text = qsTr("POPULATION DENSITY");
-                    sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 10000";
+                    sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 100000";
                 } else {
                     text = qsTr("TOTAL POPULATION");
-                    sceneProperties.extrusionExpression = "[POP2007] / 10";
+                    sceneProperties.extrusionExpression = "([POP2007] / 10) + 100000";
                 }
             }
         }
@@ -83,7 +83,7 @@ Rectangle {
         RendererSceneProperties {
             id: sceneProperties
             extrusionMode: Enums.ExtrusionModeAbsoluteHeight
-            extrusionExpression: "[POP2007] / 10"
+            extrusionExpression: "([POP2007] / 10) + 100000"
         }
 
         SimpleFillSymbol {
