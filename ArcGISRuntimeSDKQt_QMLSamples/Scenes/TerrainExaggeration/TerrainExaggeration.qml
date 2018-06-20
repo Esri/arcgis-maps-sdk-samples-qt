@@ -34,9 +34,10 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImagery {}
+            BasemapNationalGeographic {}
             Surface {
                 id: surface
+                elevationExaggeration: slider1.value
                 ArcGISTiledElevationSource {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
@@ -44,18 +45,18 @@ Rectangle {
             ViewpointCenter {
                 Point {
                     id: initialPoint
-                    x: 83.9
-                    y: 28.4
-                    z: 10010.0
+                    x: -119.94891542688772
+                    y: 46.75792111605992
+                    z: 0
                     spatialReference: SpatialReference { wkid: 4326 }
                 }
-                targetScale: 10010
+                targetScale: 1500.0
 
                 Camera {
                     location: initialPoint
-                    heading: 41.64729875588979
-                    pitch: 71.2017391571523
-                    roll: 2.194677223e-314
+                    heading: 40.0
+                    pitch: 60.0
+                    roll: 0
                 }
             }
         }
@@ -66,7 +67,7 @@ Rectangle {
         height: 46 * scaleFactor
         anchors {
             horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
+            bottom: sceneView.attributionTop
             bottomMargin: 20 * scaleFactor
         }
 
@@ -104,9 +105,6 @@ Rectangle {
                 // Slider controls the magnitude of exaggeration
                 minimumValue: 1.0
                 maximumValue: 10
-                onValueChanged: {
-                   surface.elevationExaggeration = Qt.binding(function() { return slider1.value })
-                }
             }
 
             TextField {
