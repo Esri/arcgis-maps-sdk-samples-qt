@@ -94,7 +94,7 @@ Rectangle {
 
         SimpleLineSymbol {
             id: lineSymbol
-            color: "Blue"
+            color: "Black"
         }
 
         Point {
