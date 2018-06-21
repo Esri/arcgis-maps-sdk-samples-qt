@@ -23,8 +23,8 @@ import Esri.ArcGISExtras 1.1
 TerrainExaggerationSample {
     id: terrainExaggerationSample
     clip: true
-    width: 500
-    height: 500
+    width: 800
+    height: 600
 
     property real scaleFactor: System.displayScaleFactor
 
@@ -49,10 +49,10 @@ TerrainExaggerationSample {
             anchors {
                 centerIn: parent
             }
-            spacing: 5
+            spacing: 5 * scaleFactor
 
             Slider {
-                id: slider1
+                id: slider
                 anchors {
                     verticalCenter: parent.verticalCenter
                 }
@@ -75,10 +75,10 @@ TerrainExaggerationSample {
                     }
                 }
                 // Slider controls the magnitude of exaggeration
-                minimumValue: 1.0
+                minimumValue: 1
                 maximumValue: 10
                 onValueChanged: {
-                   terrainExaggerationSample.setElevationExaggeration(slider1.value)
+                    terrainExaggerationSample.setElevationExaggeration(slider.value)
                 }
             }
 
@@ -100,7 +100,7 @@ TerrainExaggerationSample {
                 }
                 readOnly: true
                 font.pixelSize: 20 * scaleFactor
-                text: slider1.value.toFixed(0)
+                text: slider.value.toFixed(0)
             }
         }
     }

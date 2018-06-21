@@ -46,16 +46,23 @@ void TerrainExaggeration::componentComplete()
         new ArcGISTiledElevationSource(
           QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
           this));
+  // Create a viewpoint where the camera will be
   Viewpoint initialViewpoint(Point(46.75792111605992, -119.94891542688772, 0, SpatialReference(4326)));
+  // Create the camera object at our initial viewpoint
   Camera initialViewpointCamera(46.75792111605992, -119.94891542688772, 15000, 60, 40, 0);
+
+  // Set the initial camera/viewpoint combination for the scene
   m_sceneView->setViewpoint(initialViewpoint);
   m_sceneView->setViewpointCamera(initialViewpointCamera);
+
+  // Initialize the sceneview by applying the surface
   scene->setBaseSurface(m_surface);
   m_sceneView->setArcGISScene(scene);
 }
 
 void TerrainExaggeration::setElevationExaggeration(double factor)
 {
+  // If the surface exists, trigger a change in elevation exaggeration by [factor] amount
   if (m_surface)
     m_surface->setElevationExaggeration(factor);
 }
