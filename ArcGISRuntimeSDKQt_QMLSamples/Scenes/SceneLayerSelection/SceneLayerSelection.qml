@@ -76,11 +76,8 @@ Rectangle {
 
             // get the first GeoElement
             if (geoElements.length > 0) {
-                var geoElement = geoElements[0];
-                if (geoElement instanceof Feature) {
-                    // select the feature
-                    sceneLayer.selectFeature(geoElement);
-                }
+                // select the feature
+                sceneLayer.selectFeature(geoElements[0]);
             }
         }
 
