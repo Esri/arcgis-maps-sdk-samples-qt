@@ -30,19 +30,19 @@ class Surface;
 
 class TerrainExaggeration : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit TerrainExaggeration(QQuickItem* parent = nullptr);
-    ~TerrainExaggeration() = default;
+  explicit TerrainExaggeration(QQuickItem* parent = nullptr);
+  ~TerrainExaggeration() = default;
 
-    void componentComplete() Q_DECL_OVERRIDE;
-    static void init();
-    Q_INVOKABLE void setElevationExaggeration(double factor);
+  void componentComplete() Q_DECL_OVERRIDE;
+  static void init();
+  Q_INVOKABLE void setElevationExaggeration(double factor);
 
 private:
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-    Esri::ArcGISRuntime::Surface* m_surface = nullptr;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::Surface* m_surface = nullptr;
 };
 
 #endif // TERRAINEXAGGERATION_H

@@ -43,7 +43,8 @@ Rectangle {
                 ArcGISTiledElevationSource {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
-                elevationExaggeration: slider1.value
+                // elevationExaggeration is bound to the value of the slider
+                elevationExaggeration: slider.value
             }
         }
 
@@ -82,10 +83,10 @@ Rectangle {
             anchors {
                 centerIn: parent
             }
-            spacing: 5
+            spacing: 5 * scaleFactor
 
             Slider {
-                id: slider1
+                id: slider
                 anchors {
                     verticalCenter: parent.verticalCenter
                 }
@@ -108,8 +109,8 @@ Rectangle {
                     }
                 }
                 // Slider controls the magnitude of exaggeration
-                minimumValue: 1.0
-                maximumValue: 10.0
+                minimumValue: 1
+                maximumValue: 10
             }
 
             TextField {
@@ -130,7 +131,7 @@ Rectangle {
                 }
                 readOnly: true
                 font.pixelSize: 20 * scaleFactor
-                text: slider1.value.toFixed(0)
+                text: slider.value.toFixed(0)
             }
         }
     }
