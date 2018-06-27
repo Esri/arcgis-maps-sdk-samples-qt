@@ -9,13 +9,13 @@ Click and drag the slider at the top to change how exaggerated the terrain becom
 
 ## How it works
 1. Create a scene.
-2. Add a surface feature layer.
-3. Surfaces have a property known as `elevationExaggeration` which allows you to change the surface exaggeration. Set this value as an attribute of the `Surface` object.
-4. In this case, we have a slider object with values between 1 and 10. We've bound the surface's elevationExaggeration to the slider's value, which allows for a dynamic demonstration of the exaggeration effects.
+2. Create and add a surface with an ArcGISTiledElevationService.
+3. Create a slider object.
+4. Bind the surface's `elevationExaggeration` property to the slider's value.
 
 ## Relevant API
  - `Surface`
- - `elevationExaggeration`
+ - `Surface.elevationExaggeration`
 
 ## Tags
 Scenes, Elevation, 3D, Exaggeration
