@@ -1,8 +1,8 @@
 # Buffer
 
-This sample demonstrates how to use GeometryEngine::buffer to create polygons from a map location and linear distance (radius). For each input location, the sample creates two buffer polygons (using the same distance) and displays them on the map using different symbols. One polygon is calculated using the planar (flat) coordinate space of the map's spatial reference. The other is created using a geodesic technique that considers the curved shape of the Earth's surface, and therefore provides a more accurate representation. Distortion in the map increases as you move away from the standard parallels of the spatial reference's projection. This map is in Web Mercator so areas near the equator are the most accurate. As you move the buffer location north or south from that line, you'll see a greater difference in the polygon size and shape.
+This sample demonstrates how to use GeometryEngine::buffer to create polygons from a map location and linear distance (radius). For each input location, the sample creates two buffer polygons (using the same distance) and displays them on the map using different symbols. One polygon is calculated using the planar (flat) coordinate space of the map's spatial reference. The other is created using a geodesic technique that considers the curved shape of the Earth's surface (which is generally a more accurate representation). Distortion in the map increases as you move away from the standard parallels of the spatial reference's projection. This map is in Web Mercator so areas near the equator are the most accurate. As you move the buffer location north or south from that line, you'll see a greater difference in the polygon size and shape. Planar operations are generally faster, but performance improvement may only be noticeable for large operations (buffering a great number or complex geometry).
 
-Creating buffers is a core concept in GIS as it allows for proximity analysis to find geographic features contained within a polygon. For example, suppose you wanted to know how many restaurants are within a short walking distance of your home. The first step in this proximity analysis would be to generate a buffer polygon of a certain distance (say 1 mile) around your house. If you are using planar buffers, make sure that the input locations and distance are suited to the spatial reference you're using. Remember that you can also create your buffers using geodesic and then project them to the spatial reference you need for display or analysis.
+Creating buffers is a core concept in GIS proximity analysis, allowing you to visualize and locate geographic features contained within a polygon. For example, suppose you wanted to visualize areas of your city where alcohol sales are prohibited because they are within 500 meters of a school. The first step in this proximity analysis would be to generate 500 meter buffer polygons around all schools in the city. Any such businesses you find inside one of the resulting polygons are violating the law. If you are using planar buffers, make sure that the input locations and distance are suited to the spatial reference you're using. Remember that you can also create your buffers using geodesic and then project them to the spatial reference you need for display or analysis. For more information about using buffer analysis, see [How buffer analysis works](https://pro.arcgis.com/en/pro-app/tool-reference/analysis/how-buffer-analysis-works.htm) in the ArcGIS Pro documentation.
 
 ![](screenshot.png)
 
@@ -17,11 +17,8 @@ The map point for a tap on the display is captured and the buffer distance enter
 
 ## Relevant API
 - GeometryEngine::buffer
-- GeometryEngine::bufferGeodesic
+- GeometryEngine::bufferGeodetic
 - GraphicsOverlay
 
 ## Tags
 Analysis, Buffer, GeometryEngine
-
-## Additional Information
-For more details on how the buffer analysis works, please see the ArcGIS Pro [documentation](https://pro.arcgis.com/en/pro-app/tool-reference/analysis/how-buffer-analysis-works.htm).
