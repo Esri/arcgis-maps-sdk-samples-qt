@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Maps/MinMaxScaleSample">
-        <file alias="sample.json">MinMaxScaleSample.json</file>        
-        <file>MinMaxScaleSample.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>
