@@ -15,13 +15,18 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
   id: rootRectangle
   clip: true
   width: 800
   height: 600
+
+  property real scaleFactor: System.displayScaleFactor
 
   MapView {
     id: mapView
@@ -49,22 +54,8 @@ Rectangle {
         color: "#FFFF0000"
         width: 3
       }
-    }
 
-    // Create an envelope outside of Colorado
-    Envelope {
-      id: outsideEnvelope
-      xMax: -11858344.321294
-      xMin: -12201990.219681
-      yMax: 5297071.577304
-      yMin: 5147942.225174
-    }
-
-    GraphicsOverlay {
-      Graphic {
-        geometry: colorado
-        symbol: coloradoFillSymbol
-      }
+      // Create the outline and fill for Colorado
       SimpleFillSymbol {
         id: coloradoFillSymbol
         color: "#220000FF"
@@ -76,5 +67,70 @@ Rectangle {
         }
       }
     }
+
+    // Create an envelope outside of Colorado
+    Envelope {
+      id: outsideEnvelope
+      xMax: -11858344.321294
+      xMin: -12201990.219681
+      yMax: 5297071.577304
+      yMin: 5147942.225174
+    }
+
+    // Create an envelope intersecting Colorado
+    Envelope {
+      id: intersectingEnvelope
+      xMax: -11962086.479298
+      xMin: -12260345.183558
+      yMax: 4566553.881363
+      yMin: 4332053.378376
+    }
+
+    // Create an envelope inside of Colorado
+    Envelope {
+      id: containedEnvelope
+      xMax: -11431488.567009
+      xMin: -11655182.595204
+      yMax: 4741618.772994
+      yMin: 4593570.068343
+    }
+
+    // Create a graphics overlay to contain the clipping envelopes
+    GraphicsOverlay {
+
+      // Colorado
+      Graphic {
+        geometry: colorado
+        symbol: coloradoFillSymbol
+      }
+
+      // Outside envelope
+      Graphic {
+        geometry: outsideEnvelope
+        symbol: redOutline
+      }
+
+      // Intersecting envelope
+      Graphic {
+        geometry: intersectingEnvelope
+        symbol: redOutline
+      }
+
+      // Contained envelope
+      Graphic {
+        geometry: containedEnvelope
+        symbol: redOutline
+      }
+    }
+
+    // Create a graphics overlay for the clipped graphics
+    GraphicsOverlay {
+      id: clipAreasOverlay
+    }
   }
+
+  Button {
+    id: clipButton
+  }
+
 }
