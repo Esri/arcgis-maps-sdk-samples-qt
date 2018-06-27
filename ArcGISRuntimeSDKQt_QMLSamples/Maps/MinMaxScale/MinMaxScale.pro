@@ -26,7 +26,7 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    MinMaxScaleSample.qrc
+    MinMaxScale.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

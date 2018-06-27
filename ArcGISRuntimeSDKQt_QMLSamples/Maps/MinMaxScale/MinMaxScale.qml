@@ -1,4 +1,4 @@
-// [WriteFile Name=MinMaxScaleSample, Category=Maps]
+// [WriteFile Name=MinMaxScale, Category=Maps]
 // [Legal]
 // Copyright 2018 Esri.
 

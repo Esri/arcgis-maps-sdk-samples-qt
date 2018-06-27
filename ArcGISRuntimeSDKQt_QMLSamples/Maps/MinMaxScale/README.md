@@ -1,19 +1,19 @@
-# Min Max Scale
+# Min-Max Scale
 
-This demonstrates how to set the minimum and maximum scale of an ArcGIS Map.
+This sample demonstrates how to set the minimum and maximum scale of a map.
 
 ![](screenshot.png)
 
 ## How to use the sample
-Use the mousewheel to zoom in and out of the map. Notice that the scale of which you can do that is limited by the application.
+Use the mousewheel or pinch gesture to zoom in and out of the map. Notice that the scale of which you can do that is limited by the application.
 
 ## How it works
-1. Create a MapView QML object, and create a Map child. Set the basemap and dimensions to whatever you like.
-2. Map QML objects have two properties called `minScale` and `maxScale`: the latter restricts how far you can zoom out, and the former how far you can zoom in. Individually, set these properties to the desired range (`maxScale` must be less than `minScale`, though).
+1. A MapView is declared with a nested Map object as a child. The streets basemap is then added as the map's basemap.
+2. The Map QML object has two properties called `minScale` and `maxScale`. The latter restricts how far you can zoom out, and the former how far you can zoom in. These properties are set to a desired range while ensuring that `maxScale` is less than `minScale`.
 
 ## Relevant API
- - minScale
- - maxScale
+ - Map.minScale
+ - Map.maxScale
 
 ## Tags
 Maps, 2D, scale, minScale, maxScale
