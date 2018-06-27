@@ -1,0 +1,8 @@
+{
+    "source" :  "MinMaxScale.qml",
+    "otherSourceFiles" :  [
+        "MinMaxScale.h",
+        "MinMaxScale.cpp"
+    ],
+    "name" : "Min-Max Scale"
+}
