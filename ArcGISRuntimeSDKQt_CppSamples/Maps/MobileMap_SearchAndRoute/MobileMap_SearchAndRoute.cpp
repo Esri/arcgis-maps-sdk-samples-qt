@@ -325,8 +325,12 @@ void MobileMap_SearchAndRoute::selectMap(int index)
         {
             if (!m_routeGraphicParent)
               m_routeGraphicParent = new QObject(this);
-            Graphic* routeGraphic = new Graphic(routeResult.routes()[0].routeGeometry(), m_routeGraphicParent);
-            m_routeGraphicsOverlay->graphics()->append(routeGraphic);
+
+            if (!routeResult.isEmpty())
+            {
+              Graphic* routeGraphic = new Graphic(routeResult.routes()[0].routeGeometry(), m_routeGraphicParent);
+              m_routeGraphicsOverlay->graphics()->append(routeGraphic);
+            }
         });
     }
     else
