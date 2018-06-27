@@ -39,7 +39,7 @@ Rectangle {
                         wkid: 4326
                     }
                 }
-                targetScale: 3000
+                targetScale: 8000
             }
         }
     }
