@@ -17,8 +17,7 @@ Click and drag the slider at the bottom to change how exaggerated the terrain be
 
 ## Relevant API
  - `Surface`
- - `setElevationExaggeration`
+ - `Surface::setElevationExaggeration`
 
 ## Tags
-Scenes, 3D, elevation, exaggeration, C++
-
+Scenes, 3D, elevation, exaggeration

@@ -51,8 +51,7 @@ void TerrainExaggeration::componentComplete()
   // Create the camera object at our initial viewpoint
   Camera initialViewpointCamera(46.75792111605992, -119.94891542688772, 15000, 60, 40, 0);
 
-  // Set the initial camera/viewpoint combination for the scene
-  m_sceneView->setViewpoint(initialViewpoint);
+  // Set the initial ViewpointCamera for the scene
   m_sceneView->setViewpointCamera(initialViewpointCamera);
 
   // Initialize the sceneview by applying the surface
