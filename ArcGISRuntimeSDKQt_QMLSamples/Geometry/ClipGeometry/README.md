@@ -1,31 +1,23 @@
 # Clip Geometry
 
 This sample demonstrates how to clip a geometry with an envelope using the GeometryEngine.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
 
 ![](screenshot.png)
 
-## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Click or tap the "Clip" button to clip the blue graphic with the red envelopes.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+1. Create a `graphicsOverlay` containing an envelope.
+2. Create another that contains three other envelopes: one that intersects a part of the first graphic, one that is entirely within it, and another completely outside of it.
+3. Create one more that contains no graphics.
+4. Create a button object that, when clicked, calls a function that hides the main graphic *only*.
+5. In the same function, iterate through the overlay with the three envelopes. `forEach` one, a `Graphic` object is created using by calling `GeometryEngine.clip` method, passing in the main graphic and the current envelope in the iteration as arguments.
+6. Add each iteration to the empty graphics overlay.
 
 ## Relevant API
- - ClassName1
- - MethodName
+ - GeometryEngine.clip
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
 
 ## Tags
-Routing, Network analysis, Geocode
+Geometry, Clip, Envelopes, Graphics, GraphicsOverlay
 
