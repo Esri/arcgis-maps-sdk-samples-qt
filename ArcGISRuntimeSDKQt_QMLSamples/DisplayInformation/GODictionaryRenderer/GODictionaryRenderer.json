@@ -1,0 +1,16 @@
+{
+    "source" :  "GODictionaryRenderer.qml",
+    "otherSourceFiles" :  [],
+    "name" : "Graphics overlay (dictionary renderer)",
+    "dataItems" : [
+        {
+            "itemId" : "e34835bf5ec5430da7cf16bb8c0b075c",
+            "path" : "~/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
+        },
+        {
+            "itemId" : "3db12175479147ea9c89ebaaf3b89996",
+            "path" : "~/ArcGIS/Runtime/Data/xml/Mil2525DMessages.xml"
+        }
+    ]
+}
+

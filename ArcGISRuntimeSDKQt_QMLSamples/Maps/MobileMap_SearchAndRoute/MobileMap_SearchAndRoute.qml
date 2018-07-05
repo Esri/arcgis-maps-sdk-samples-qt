@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.2
-import Esri.ArcGISRuntime.Toolkit.Controls 100.2
+import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime.Toolkit.Controls 100.3
 
 Rectangle {
     clip: true
@@ -279,7 +279,7 @@ Rectangle {
             if (currentLocatorTask.geocodeStatus === Enums.TaskStatusCompleted) {
                 busyIndicator.visible = false;
 
-                if(currentLocatorTask.geocodeResults.length > 0) {
+                if (currentLocatorTask.geocodeResults.length > 0) {
                     // create a pin graphic to display location
                     var pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: currentLocatorTask.geocodeResults[0].displayLocation, symbol: bluePinSymbol});
                     stopsGraphicsOverlay.graphics.append(pinGraphic);
@@ -290,7 +290,7 @@ Rectangle {
 
                     // add geocoded point as a stop if routing is available for current map
                     if (currentRouteTask !== null) {
-                        var stop = ArcGISRuntimeEnvironment.createObject("Stop", {name: "stop", geometry: currentLocatorTask.geocodeResults[0].displayLocation});
+                        var stop = ArcGISRuntimeEnvironment.createObject("Stop", {name: "stop", geometry: pinGraphic.geometry});
                         routeStops.push(stop);
 
                         if (routeStops.length > 1)
@@ -305,7 +305,8 @@ Rectangle {
                                                                                });
 
                         // create graphic using the text symbol
-                        var labelGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: currentLocatorTask.geocodeResults[0].displayLocation, symbol: textSymbol});
+                        var labelGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: pinGraphic.geometry, symbol: textSymbol});
+                        labelGraphic.zIndex = pinGraphic.zIndex + 1;
                         stopsGraphicsOverlay.graphics.append(labelGraphic);
                     }
                 }

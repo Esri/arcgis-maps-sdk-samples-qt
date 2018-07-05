@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.2
+import Esri.ArcGISRuntime 100.3
 
 Rectangle {
     width: 800
@@ -136,7 +136,7 @@ Rectangle {
             if (identifyLayerStatus === Enums.TaskStatusCompleted) {
                 if (identifyLayerResult.geoElements.length > 0) {
                     // get the objectid of the identifed object
-                    params.objectIds = [identifyLayerResult.geoElements[0].attributes.attributeValue("objectid")];
+                    params.objectIdsAsInts = [identifyLayerResult.geoElements[0].attributes.attributeValue("objectid")];
                     // query for the feature using the objectid
                     featureLayer.selectFeaturesWithQuery(params, Enums.SelectionModeNew);
                 }

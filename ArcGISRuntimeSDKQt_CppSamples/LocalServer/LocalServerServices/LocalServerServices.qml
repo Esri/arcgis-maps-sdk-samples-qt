@@ -189,7 +189,7 @@ LocalServerServicesSample {
         id: fileDialog
         title: "Please choose a file"
         folder: System.userHomeFolder.url + "/ArcGIS/Runtime/Data"
-        nameFilters: servicesCombo.currentIndex === 0 || servicesCombo.currentIndex === 1 ? ["mpks (*.mpk)", "All files (*)"] : ["gpks (*.gpk)", "All files (*)"]
+        nameFilters: servicesCombo.currentIndex === 0 || servicesCombo.currentIndex === 1 ? ["Map Packages (*.mpk *.mpkx)", "All files (*)"] : ["Geoprocessing Packages (*gpk *.gpkx)", "All files (*)"]
         onAccepted: {
             filePathText.text = fileUrl;
         }

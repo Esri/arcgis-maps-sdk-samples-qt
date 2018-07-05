@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.2
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.3
 
 ShowOrgBasemapsSample {
     width: 800
@@ -34,8 +34,8 @@ ShowOrgBasemapsSample {
         running: !mapView.visible && !portalLoaded & !anonymousLogIn.visible
     }
 
-    Text{
-        id: title
+    Text {
+        id: titleLabel
         anchors {
             top: parent.top;
             left: parent.left;
@@ -55,7 +55,7 @@ ShowOrgBasemapsSample {
     GridView {
         id: basemapsGrid
         anchors {
-            top: title.bottom;
+            top: titleLabel.bottom;
             bottom: parent.bottom;
             left: parent.left;
             right: parent.right
@@ -100,6 +100,7 @@ ShowOrgBasemapsSample {
                 height: 16 * scaleFactor
                 z: 100
                 wrapMode: Text.Wrap
+                horizontalAlignment: Text.AlignHCenter
                 elide: Text.ElideRight
                 text: title // use the title role of the model
                 font.pointSize: 8
@@ -122,6 +123,7 @@ ShowOrgBasemapsSample {
                         return;
 
                     selectedAnimation.running = true;
+                    titleLabel.text = title;
                     loadSelectedBasemap(index);
                     gridFadeOut.running = true;
                 }
@@ -157,7 +159,7 @@ ShowOrgBasemapsSample {
         id: mapView
         objectName: "mapView"
         anchors {
-            top: title.bottom;
+            top: titleLabel.bottom;
             bottom: parent.bottom;
             left: parent.left;
             right: parent.right
@@ -178,6 +180,7 @@ ShowOrgBasemapsSample {
         opacity: hovered ? 1 : 0.5
 
         onClicked: {
+            titleLabel.text = "Basemaps";
             mapView.visible = false;
             basemapsGrid.enabled = true;
             gridFadeIn.running = true;
@@ -189,7 +192,7 @@ ShowOrgBasemapsSample {
         anchors {
             margins: 16 * scaleFactor
             horizontalCenter: parent.horizontalCenter
-            top: title.bottom
+            top: titleLabel.bottom
         }
         text: "Anonymous"
         iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
@@ -219,7 +222,8 @@ ShowOrgBasemapsSample {
         }
     }
 
-    /* Uncomment this section when running as standalone application
+    /*
+    // Uncomment this section when running as standalone application
     AuthenticationView {
         authenticationManager: authManager
     }

@@ -58,7 +58,9 @@ void RasterFunctionService::componentComplete()
   // zoom to the raster's extent once it's loaded
   connect(m_imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this]()
   {
-      m_mapView->setViewpoint(Viewpoint(m_imageServiceRaster->serviceInfo().fullExtent()));
+    constexpr double scale = 50000000.;
+    Viewpoint vpCenter = Viewpoint(m_imageServiceRaster->serviceInfo().fullExtent().center(), scale);
+    m_mapView->setViewpoint(vpCenter);
   });
 
   // create a raster layer using the image service raster
@@ -71,8 +73,8 @@ void RasterFunctionService::applyRasterFunction()
 {
   if (!QFile::exists(m_dataPath + "/hillshade_simplified.json"))
   {
-      qDebug() << "JSON file for the raster function does not exist.";
-      return;
+    qDebug() << "JSON file for the raster function does not exist.";
+    return;
   }
 
   //! [ImageServiceRaster Apply a raster function]

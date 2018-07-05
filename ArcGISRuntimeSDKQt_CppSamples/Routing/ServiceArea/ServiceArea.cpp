@@ -81,11 +81,12 @@ void ServiceArea::setFacilityMode()
 
 void ServiceArea::setBarrierMode()
 {
+  m_mode = SampleMode::Barrier;
+
   if (m_barrierBuilder != nullptr)
     return;
 
   m_barrierBuilder = new PolylineBuilder(SpatialReference::webMercator(), this);
-  m_mode = SampleMode::Barrier;
 }
 
 void ServiceArea::solveServiceArea()

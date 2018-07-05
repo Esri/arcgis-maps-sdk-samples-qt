@@ -17,7 +17,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.2
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.3
 
 SearchForWebmapSample {
     id: root
@@ -32,10 +32,10 @@ SearchForWebmapSample {
         id: mapView
         objectName: "mapView"
         anchors {
-            top: searchBox.bottom;
-            bottom: parent.bottom;
-            left: parent.left;
-            right: parent.right;
+            top: searchBox.bottom
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
             margins: 10 * scaleFactor
         }
         visible: false
@@ -43,20 +43,21 @@ SearchForWebmapSample {
 
     Component {
         id: webmapDelegate
+
         Rectangle {
-            anchors.margins: 25
+            anchors.margins: 25 * scaleFactor
             width: webmapsList.width
             height: 32 * scaleFactor
             border.color: "white"
             border.width: 2 * scaleFactor
             color: index === webmapsList.currentIndex ? "orange" : "lightgrey"
-            radius: 10
+            radius: 10 * scaleFactor
 
             //! [PortalItemListModel example QML delegate]
             Text {
                 anchors {
-                    fill: parent;
-                    margins: 10
+                    fill: parent
+                    margins: 10 * scaleFactor
                 }
                 text: title // access the title role of the model
                 color: "white"
@@ -82,10 +83,10 @@ SearchForWebmapSample {
     Rectangle {
         id: resultsBox
         anchors {
-            top: searchBox.bottom;
-            bottom: parent.bottom;
-            left: parent.left;
-            right: parent.right;
+            top: searchBox.bottom
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
             margins: 10 * scaleFactor
         }
         visible: webmaps && !mapView.visible
@@ -96,9 +97,9 @@ SearchForWebmapSample {
         Text {
             id: resultsTitle
             anchors {
-                margins: 10;
-                top: parent.top;
-                left: parent.left;
+                margins: 10 * scaleFactor
+                top: parent.top
+                left: parent.left
                 right: parent.right
             }
             text: "web maps: " + keyWordField.text
@@ -112,10 +113,10 @@ SearchForWebmapSample {
         ListView {
             id: webmapsList
             anchors {
-                margins: 20;
-                top: resultsTitle.bottom;
-                bottom: moreResultsButton.top;
-                left: parent.left;
+                margins: 20 * scaleFactor
+                top: resultsTitle.bottom
+                bottom: moreResultsButton.top
+                left: parent.left
                 right: parent.right
             }
             clip: true
@@ -127,11 +128,10 @@ SearchForWebmapSample {
         Button {
             id: moreResultsButton
             anchors {
-                margins: 20;
-                bottom: parent.bottom;
+                margins: 20 * scaleFactor
+                bottom: parent.bottom
                 horizontalCenter: resultsBox.horizontalCenter
             }
-            height: 20 * scaleFactor
             visible: hasMoreResults
             text: "More Results"
             onClicked: searchNext();
@@ -142,11 +142,11 @@ SearchForWebmapSample {
         id: searchBox
         anchors {
             top: parent.top;
-            horizontalCenter: parent.horizontalCenter;
+            horizontalCenter: parent.horizontalCenter
             margins: 10 * scaleFactor
         }
         visible: portalLoaded
-        spacing:5
+        spacing: 5 * scaleFactor
 
         Text {
             id: instruction
@@ -155,7 +155,8 @@ SearchForWebmapSample {
         }
 
         Row {
-            spacing: 5
+            spacing: 5 * scaleFactor
+
             TextField {
                 id: keyWordField
                 placeholderText: "enter keyword"
@@ -189,7 +190,8 @@ SearchForWebmapSample {
         }
     }
 
-    /* Uncomment this section when running as standalone application
+    // Uncomment this section when running as standalone application
+    /*
     AuthenticationView {
         authenticationManager: authManager
     }

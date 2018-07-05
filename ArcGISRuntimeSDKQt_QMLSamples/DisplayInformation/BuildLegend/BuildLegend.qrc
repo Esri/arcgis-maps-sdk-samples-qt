@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/BuildLegend">
+        <file alias="sample.json">BuildLegend.json</file>
+        <file>BuildLegend.qml</file>
+        <file>screenshot.png</file>
+        <file>ic_menu_legendpopover_light.png</file>
+        <file>ic_menu_legendpopover_light_d.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

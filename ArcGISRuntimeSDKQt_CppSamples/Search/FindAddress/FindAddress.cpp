@@ -92,7 +92,8 @@ void FindAddress::connectSignals()
     {
       m_graphic->setGeometry(geocodeResults.at(0).displayLocation());
       m_graphic->attributes()->setAttributesMap(geocodeResults.at(0).attributes());
-      m_mapView->setViewpointGeometry(geocodeResults.at(0).extent());
+      constexpr double scale = 8000.0;
+      m_mapView->setViewpointCenter(geocodeResults.at(0).extent().center(), scale);
     }
   });
   //! [FindAddress geocodeCompleted handler]
@@ -133,7 +134,7 @@ void FindAddress::connectSignals()
   });
 }
 
-void FindAddress::geocodeAddress(QString address)
+void FindAddress::geocodeAddress(const QString& address)
 {
   //! [FindAddress geocodeWithParameters]
   m_locatorTask->geocodeWithParameters(address, m_geocodeParameters);

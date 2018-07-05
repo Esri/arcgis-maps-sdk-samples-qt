@@ -18,7 +18,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.2
+import Esri.ArcGISRuntime 100.3
 
 Rectangle {
     id: rootRectangle
@@ -42,7 +42,7 @@ Rectangle {
             onClicked: {
                 if (text === "TOTAL POPULATION") {
                     text = qsTr("POPULATION DENSITY");
-                    sceneProperties.extrusionExpression = "[POP07_SQMI] * 5000";
+                    sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 10000";
                 } else {
                     text = qsTr("TOTAL POPULATION");
                     sceneProperties.extrusionExpression = "[POP2007] / 10";
@@ -82,7 +82,7 @@ Rectangle {
 
         RendererSceneProperties {
             id: sceneProperties
-            extrusionMode: Enums.ExtrusionModeBaseHeight
+            extrusionMode: Enums.ExtrusionModeAbsoluteHeight
             extrusionExpression: "[POP2007] / 10"
         }
 

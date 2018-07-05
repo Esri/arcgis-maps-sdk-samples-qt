@@ -18,9 +18,9 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.2
+import Esri.ArcGISRuntime 100.3
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.2
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.3
 
 Rectangle {
     id: rootRectangle
@@ -129,19 +129,19 @@ Rectangle {
     Component {
         id: webmapDelegate
         Rectangle {
-            anchors.margins: 25
+            anchors.margins: 25 * scaleFactor
             width: webmapsList.width
             height: 32 * scaleFactor
             border.color: "white"
             border.width: 2 * scaleFactor
             color: "lightgrey"
-            radius: 10
+            radius: 10 * scaleFactor
 
             //! [PortalItemListModel example QML delegate]
             Text {
                 anchors {
-                    fill: parent;
-                    margins: 10
+                    fill: parent
+                    margins: 10 * scaleFactor
                 }
                 text: title
                 color: "white"
@@ -161,18 +161,19 @@ Rectangle {
 
     Component {
         id: highlightDelegate
+
         Rectangle {
             z: 110
-            anchors.margins: 25
+            anchors.margins: 25 * scaleFactor
             width: webmapsList.width
             height: 24 * scaleFactor
             color: "orange"
-            radius: 4
+            radius: 4 * scaleFactor
 
             Text {
                 anchors {
                     fill: parent
-                    margins: 10
+                    margins: 10 * scaleFactor
                 }
                 text: webmapsList.model.count > 0 ? webmapsList.model.get(webmapsList.currentIndex).title : ""
                 font.bold: true
@@ -192,14 +193,25 @@ Rectangle {
     Rectangle {
         id: resultsBox
         visible: webmapsList.model && webmapsList.model.count > 0
-        anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        anchors {
+            top: searchBox.bottom
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+            margins: 10 * scaleFactor
+        }
         border.color: "grey"
         border.width: 2
         radius: 5
 
         Text {
             id: resultsTitle
-            anchors { margins: 10; top: parent.top; left: parent.left; right: parent.right }
+            anchors {
+                margins: 10 * scaleFactor
+                top: parent.top
+                left: parent.left
+                right: parent.right
+            }
             text: "web maps: " + keyWordField.text
             elide: Text.ElideRight
             wrapMode: Text.Wrap
@@ -210,7 +222,13 @@ Rectangle {
 
         ListView {
             id: webmapsList
-            anchors { margins: 20; top: resultsTitle.bottom; bottom: moreResultsButton.top; left: parent.left; right: parent.right }
+            anchors {
+                margins: 20 * scaleFactor
+                top: resultsTitle.bottom
+                bottom: moreResultsButton.top
+                left: parent.left
+                right: parent.right
+            }
             clip: true
             delegate: webmapDelegate
             highlightFollowsCurrentItem: true
@@ -220,8 +238,11 @@ Rectangle {
 
         Button {
             id: moreResultsButton
-            height: 20 * scaleFactor
-            anchors { margins: 20; bottom: parent.bottom; horizontalCenter: resultsBox.horizontalCenter }
+            anchors {
+                margins: 20 * scaleFactor
+                bottom: parent.bottom
+                horizontalCenter: resultsBox.horizontalCenter
+            }
             text: "More Results"
             visible: portal.findItemsStatus === Enums.TaskStatusCompleted && portal.findItemsResult.nextQueryParameters !== null
             onClicked: searchNext();
@@ -231,8 +252,12 @@ Rectangle {
     Column {
         visible: portal.loadStatus === Enums.LoadStatusLoaded
         id: searchBox
-        anchors {top: parent.top; horizontalCenter: parent.horizontalCenter; margins: 10 * scaleFactor}
-        spacing:5
+        anchors {
+            top: parent.top
+            horizontalCenter: parent.horizontalCenter
+            margins: 10 * scaleFactor
+        }
+        spacing: 5 * scaleFactor
 
         Text {
             id: instruction
@@ -241,7 +266,8 @@ Rectangle {
         }
 
         Row {
-            spacing: 5
+            spacing: 5 * scaleFactor
+
             TextField {
                 id: keyWordField
                 placeholderText: "enter keyword"
@@ -281,7 +307,8 @@ Rectangle {
         anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
     }
 
-    /* Uncomment this section when running as standalone application
+    // Uncomment this section when running as standalone application
+    /*
     AuthenticationView {
         authenticationManager: AuthenticationManager
     }

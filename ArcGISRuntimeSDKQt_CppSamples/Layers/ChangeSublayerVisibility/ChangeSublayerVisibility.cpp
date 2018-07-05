@@ -40,8 +40,8 @@ ChangeSublayerVisibility::~ChangeSublayerVisibility()
 void ChangeSublayerVisibility::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterUncreatableType<ArcGISSublayerListModel>("Esri.Samples", 1, 0, "ArcGISSublayerListModel", "ArcGISSublayerListModel is an uncreatable type");
   qmlRegisterType<ChangeSublayerVisibility>("Esri.Samples", 1, 0, "ChangeSublayerVisibilitySample");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
 void ChangeSublayerVisibility::componentComplete()
@@ -67,7 +67,7 @@ void ChangeSublayerVisibility::componentComplete()
   sublayerModelChanged();
 }
 
-ArcGISSublayerListModel* ChangeSublayerVisibility::sublayerModel()
+QAbstractListModel* ChangeSublayerVisibility::sublayerModel()
 {
   return m_sublayerModel;
 }

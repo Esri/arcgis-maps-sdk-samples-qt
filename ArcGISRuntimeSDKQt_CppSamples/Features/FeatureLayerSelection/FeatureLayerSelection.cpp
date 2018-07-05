@@ -83,10 +83,12 @@ void FeatureLayerSelection::connectSignals()
   // lambda expression for the mouse press event on the mapview... do an identify operation
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
-    double tolerance = 22.0;
-    bool returnPopupsOnly = false;
-    int maximumResults = 1000;
-    m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly, maximumResults);
+    constexpr double tolerance = 22.0;
+    constexpr bool returnPopupsOnly = false;
+    constexpr int maximumResults = 1000;
+    const double screenX = mouseEvent.x();
+    const double screenY = mouseEvent.y();
+    m_mapView->identifyLayer(m_featureLayer, screenX, screenY, tolerance, returnPopupsOnly, maximumResults);
   });
 
   // once the identify is done

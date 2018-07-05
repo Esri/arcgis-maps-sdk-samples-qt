@@ -80,7 +80,7 @@ void OfflineGeocode::componentComplete()
 
   // create locator task
   //! [OfflineGeocode create LocatorTask]
-  m_locatorTask = new LocatorTask(m_dataPath + "Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc");
+  m_locatorTask = new LocatorTask(m_dataPath + "Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc", this);
   //! [OfflineGeocode create LocatorTask]
 
   // set the suggestions Q_PROPERTY
@@ -163,7 +163,7 @@ void OfflineGeocode::connectSignals()
   connect(m_mapView, &MapQuickView::errorOccurred, this, &OfflineGeocode::logError);
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
-    m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
+    m_clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
     m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
   });
 
@@ -255,7 +255,7 @@ void OfflineGeocode::connectSignals()
       m_calloutData->setVisible(false);
 
       // zoom to result's extent
-      m_mapView->setViewpointGeometry(geocodeResults.at(0).extent());
+      m_mapView->setViewpointCenter(geocodeResults.at(0).displayLocation());
 
       // set pin graphic's location
       m_pinGraphic->setGeometry(geocodeResults.at(0).displayLocation());
@@ -287,7 +287,7 @@ QString OfflineGeocode::errorMessage() const
   return m_errorMsg;
 }
 
-void OfflineGeocode::setErrorMessage(const QString &msg)
+void OfflineGeocode::setErrorMessage(const QString& msg)
 {
   m_errorMsg = msg;
   qDebug() << m_errorMsg;

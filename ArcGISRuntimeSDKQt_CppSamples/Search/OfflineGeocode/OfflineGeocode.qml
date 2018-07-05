@@ -20,7 +20,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 100.2
+import Esri.ArcGISRuntime.Toolkit.Controls 100.3
 
 OfflineGeocodeSample {
     id: offlineGeocodeSample
@@ -54,7 +54,11 @@ OfflineGeocodeSample {
 
         Rectangle {
             id: addressSearchRect
-            width: 350 * scaleFactor
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+
             height: 35 * scaleFactor
             color: "#f7f8fa"
             border {

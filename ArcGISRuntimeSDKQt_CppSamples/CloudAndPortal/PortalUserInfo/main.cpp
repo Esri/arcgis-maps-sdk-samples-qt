@@ -32,11 +32,7 @@
 int main(int argc, char *argv[])
 {
   QGuiApplication app(argc, argv);
-
-#ifdef Q_OS_WIN
-  // Force usage of OpenGL ES through ANGLE on Windows
-  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-#endif
+  app.setApplicationName("Portal User Info - C++");
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
   QtWebEngine::initialize();
@@ -45,7 +41,7 @@ int main(int argc, char *argv[])
   // Initialize the sample
   PortalUserInfo::init();
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 

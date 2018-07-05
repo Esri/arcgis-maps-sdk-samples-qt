@@ -60,9 +60,9 @@ void FeatureLayerExtrusion::componentComplete()
   m_fillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("Blue"), m_lineSymbol, this);
   m_renderer = new SimpleRenderer(m_fillSymbol, this);
 
-  // set renderer extrusion mode to base height, which includes base height of each vertex in calculating z values
+  // set renderer extrusion mode to absolute to prevent clipping
   RendererSceneProperties props = m_renderer->sceneProperties();
-  props.setExtrusionMode(ExtrusionMode::BaseHeight);
+  props.setExtrusionMode(ExtrusionMode::AbsoluteHeight);
   props.setExtrusionExpression("[POP2007] / 10");
   m_renderer->setSceneProperties(props);
 
@@ -102,7 +102,7 @@ void FeatureLayerExtrusion::popDensity()
   {
     // multiply population density by 5000 to make data legible
     RendererSceneProperties props = m_renderer->sceneProperties();
-    props.setExtrusionExpression("[POP07_SQMI] * 5000");
+    props.setExtrusionExpression("([POP07_SQMI] * 5000) + 10000");
     m_renderer->setSceneProperties(props);
     m_showTotalPopulation = true;
   }

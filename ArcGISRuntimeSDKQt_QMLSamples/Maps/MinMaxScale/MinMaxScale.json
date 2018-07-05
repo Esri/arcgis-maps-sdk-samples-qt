@@ -1,0 +1,5 @@
+{
+    "source" :  "MinMaxScale.qml",
+    "otherSourceFiles" :  [],
+    "name" : "Min-Max Scale"
+}

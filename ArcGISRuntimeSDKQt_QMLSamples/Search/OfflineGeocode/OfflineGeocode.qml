@@ -19,8 +19,8 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.2
-import Esri.ArcGISRuntime.Toolkit.Controls 100.2
+import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime.Toolkit.Controls 100.3
 
 Rectangle {
     clip: true
@@ -191,7 +191,7 @@ Rectangle {
                     callout.dismiss();
 
                     // zoom to geocoded location
-                    mapView.setViewpointGeometry(geocodeResults[0].extent)
+                    mapView.setViewpointCenter(geocodeResults[0].displayLocation)
 
                     // set pin and edit callout
                     pinLocation = geocodeResults[0].displayLocation;
@@ -227,7 +227,11 @@ Rectangle {
 
         Rectangle {
             id: addressSearchRect
-            width: 350 * scaleFactor
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+
             height: 35 * scaleFactor
             color: "#f7f8fa"
             border {

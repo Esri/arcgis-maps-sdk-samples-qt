@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/QueryMapImageSublayer">
+        <file alias="sample.json">QueryMapImageSublayer.json</file>        
+        <file>QueryMapImageSublayer.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

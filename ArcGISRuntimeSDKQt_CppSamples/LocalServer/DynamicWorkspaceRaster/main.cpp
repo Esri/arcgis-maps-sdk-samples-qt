@@ -28,18 +28,13 @@
 
 int main(int argc, char *argv[])
 {
-
   QGuiApplication app(argc, argv);
-
-#ifdef Q_OS_WIN
-  // Force usage of OpenGL ES through ANGLE on Windows
-  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-#endif
+  app.setApplicationName("DynamicWorkspaceRaster - C++");
 
   // Initialize the sample
   DynamicWorkspaceRaster::init();
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 

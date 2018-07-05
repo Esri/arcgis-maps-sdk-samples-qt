@@ -26,7 +26,7 @@ QT += opengl qml quick positioning sensors
 TEMPLATE = app
 TARGET = LineOfSightLocation
 
-ARCGIS_RUNTIME_VERSION = 100.2.1
+ARCGIS_RUNTIME_VERSION = 100.3
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

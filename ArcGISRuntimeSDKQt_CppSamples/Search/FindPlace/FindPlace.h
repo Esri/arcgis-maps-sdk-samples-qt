@@ -26,20 +26,21 @@ namespace Esri
     class MapQuickView;
     class GraphicsOverlay;
     class LocatorTask;
-    class SuggestListModel;
   }
 }
 
 #include "Point.h"
 #include "Envelope.h"
 #include "GeocodeParameters.h"
+
+#include <QAbstractListModel>
 #include <QQuickItem>
 
 class FindPlace : public QQuickItem
 {
   Q_OBJECT
   Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
-  Q_PROPERTY(Esri::ArcGISRuntime::SuggestListModel* suggestions READ suggestions NOTIFY suggestionsChanged)
+  Q_PROPERTY(QAbstractListModel* suggestions READ suggestions NOTIFY suggestionsChanged)
   Q_PROPERTY(bool poiTextHasFocus READ poiTextHasFocus WRITE setPoiTextHasFocus NOTIFY poiTextHasFocusChanged)
 
 public:
@@ -75,7 +76,7 @@ private:
   void createLocator();
   void connectSignals();
   Esri::ArcGISRuntime::CalloutData* calloutData() const { return m_calloutData; }
-  Esri::ArcGISRuntime::SuggestListModel* suggestions() const { return m_suggestListModel; }
+  QAbstractListModel* suggestions() const { return m_suggestListModel; }
   bool poiTextHasFocus() const { return m_poiTextHasFocus; }
   void setPoiTextHasFocus(bool hasFocus);
   Esri::ArcGISRuntime::GeocodeParameters createParameters();
@@ -86,7 +87,7 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
   Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
-  Esri::ArcGISRuntime::SuggestListModel* m_suggestListModel = nullptr;
+  QAbstractListModel* m_suggestListModel = nullptr;
   bool m_poiTextHasFocus = true;
   bool m_isSearchingLocation = false;
   QString m_poiSearchText;

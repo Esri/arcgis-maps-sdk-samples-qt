@@ -82,7 +82,9 @@ void AddFeaturesFeatureService::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // obtain the map point
-    Point newPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    const double screenX = mouseEvent.x();
+    const double screenY = mouseEvent.y();
+    Point newPoint = m_mapView->screenToLocation(screenX, screenY);
 
     // create the feature attributes
     QMap<QString, QVariant> featureAttributes;
@@ -90,7 +92,7 @@ void AddFeaturesFeatureService::connectSignals()
     featureAttributes.insert("primcause", "Earthquake");
 
     // create a new feature and add it to the feature table
-    Feature* feature = m_featureTable->createFeature(featureAttributes,newPoint,this);
+    Feature* feature = m_featureTable->createFeature(featureAttributes, newPoint, this);
     m_featureTable->addFeature(feature);
   });
   //! [AddFeaturesFeatureService add at mouse click]

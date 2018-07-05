@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.2
+import Esri.ArcGISRuntime 100.3
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -162,7 +162,7 @@ Rectangle {
                             margins: 8 * scaleFactor
                         }
                         placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
-                        validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z][\da-zA-Z\s]*$/ }
+                        validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
                         onAccepted:  addCategoryButton.clicked();
                     }
 

@@ -16,9 +16,9 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.2
+import Esri.ArcGISRuntime 100.3
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.2
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.3
 
 Rectangle {
     id: rootRectangle
@@ -34,7 +34,7 @@ Rectangle {
         title.text = selectedBasemap.item.title;
         basemapsGrid.enabled = false;
 
-        var newMap = ArcGISRuntimeEnvironment.createObject("Map", {basemap: selectedBasemap});
+        var newMap = ArcGISRuntimeEnvironment.createObject("Map", {item: selectedBasemap.item});
         mapView.map = newMap;
         gridFadeOut.running = true;
         mapView.visible = true;
@@ -49,7 +49,7 @@ Rectangle {
         id: oAuthCredential
         oAuthClientInfo: OAuthClientInfo {
             oAuthMode: Enums.OAuthModeUser
-            clientId: "W3hPKzPbeJ0tr8aj"
+            clientId: "iLkGIj0nX8A4EJda"
         }
     }
 
@@ -121,6 +121,7 @@ Rectangle {
         opacity: hovered ? 1 : 0.5
 
         onClicked: {
+            title.text = "Basemaps";
             mapView.visible = false;
             basemapsGrid.enabled = true;
             gridFadeIn.running = true;
@@ -266,7 +267,8 @@ Rectangle {
         }
     }
 
-    /* Uncomment this section when running as standalone application
+    /*
+    // Uncomment this section when running as standalone application
     AuthenticationView {
         authenticationManager: AuthenticationManager
     }

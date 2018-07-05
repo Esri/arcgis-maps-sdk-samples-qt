@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.2
+import Esri.ArcGISRuntime 100.3
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -128,6 +128,7 @@ Rectangle {
                 width: parent.width * 0.25
                 placeholderText: "Enter a state name to select"
                 inputMethodHints: Qt.ImhNoPredictiveText
+                validator: RegExpValidator{ regExp: /^[a-zA-Z ]*$/ }
                 Keys.onReturnPressed: {
                     query();
                 }

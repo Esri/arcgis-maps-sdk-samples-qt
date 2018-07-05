@@ -28,6 +28,7 @@
 
 int main(int argc, char *argv[])
 {
+  
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   // Linux requires 3.2 OpenGL Context
   // in order to instance 3D symbols
@@ -37,16 +38,12 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-
-#ifdef Q_OS_WIN
-  // Force usage of OpenGL ES through ANGLE on Windows
-  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-#endif
-
+  app.setApplicationName("GODictionary Renderer (3D) - C++");
+  
   // Initialize the sample
   GODictionaryRenderer_3D::init();
 
-  // Intialize application view
+  // Initialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 

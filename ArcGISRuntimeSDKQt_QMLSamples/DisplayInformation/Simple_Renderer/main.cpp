@@ -24,13 +24,9 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    app.setApplicationName("Simple_Renderer - QML");
 
-#ifdef Q_OS_WIN
-    // Force usage of OpenGL ES through ANGLE on Windows
-    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-#endif
-
-    // Intialize application view
+    // Initialize application view
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
 

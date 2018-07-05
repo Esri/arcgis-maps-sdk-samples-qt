@@ -24,20 +24,20 @@ namespace Esri
     class Map;
     class MapQuickView;
     class Viewpoint;
-    class BookmarkListModel;
   }
 }
 
 class QStringList;
 class QString;
 
+#include <QAbstractListModel>
 #include <QQuickItem>
 
 class ManageBookmarks : public QQuickItem
 {
   Q_OBJECT
   //! [Expose the list model to QML]
-  Q_PROPERTY(Esri::ArcGISRuntime::BookmarkListModel* bookmarks READ bookmarks NOTIFY bookmarksChanged)
+  Q_PROPERTY(QAbstractListModel* bookmarks READ bookmarks NOTIFY bookmarksChanged)
   //! [Expose the list model to QML]
 
 public:
@@ -55,12 +55,12 @@ signals:
 private:
   void createInitialBookmarks();
   void createBookmark(QString name, Esri::ArcGISRuntime::Viewpoint viewpoint);
-  Esri::ArcGISRuntime::BookmarkListModel* bookmarks() const;
+  QAbstractListModel* bookmarks() const;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::BookmarkListModel* m_bookmarks = nullptr;
+  QAbstractListModel* m_bookmarks = nullptr;
 };
 
 #endif // MANAGE_BOOKMARKS_H

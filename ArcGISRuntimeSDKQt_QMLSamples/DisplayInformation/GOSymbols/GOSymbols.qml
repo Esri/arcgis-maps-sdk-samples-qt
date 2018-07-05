@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.2
+import Esri.ArcGISRuntime 100.3
 
 Rectangle {
     width: 800
@@ -143,8 +143,8 @@ Rectangle {
     SimpleLineSymbol {
         id: boatRouteSymbol
         style: Enums.SimpleLineSymbolStyleDash
-        color: Qt.rgba(0.5, 0.0, 0.5, 1)
-        width: 4
+        color: Qt.rgba(0, 0, 1, 0.7)
+        width: 1
         antiAlias: true
     }
     //! [GOSymbol line symbol]

@@ -69,8 +69,6 @@ void ShowOrgBasemaps::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-  if (m_mapView)
-    m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   emit authManagerChanged();
 }
@@ -106,7 +104,7 @@ void ShowOrgBasemaps::load(bool anonymous)
   if (anonymous)
     m_portal->load();
   else {
-    Credential* cred = new Credential(OAuthClientInfo("W3hPKzPbeJ0tr8aj", OAuthMode::User), this);
+    Credential* cred = new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this);
     m_portal->setCredential(cred);
     m_portal->load();
   }
@@ -130,7 +128,7 @@ void ShowOrgBasemaps::loadSelectedBasemap(int index)
   m_mapLoadError.clear();
   emit mapLoadErrorChanged();
 
-  m_map = new Map(selectedBasemap, this);
+  m_map = new Map(selectedBasemap->item(), this);
 
   connect(m_map, &Map::errorOccurred, this, [this]()
   {

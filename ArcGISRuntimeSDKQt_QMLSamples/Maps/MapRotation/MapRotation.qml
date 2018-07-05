@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.2
+import Esri.ArcGISRuntime 100.3
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -114,6 +114,7 @@ Rectangle {
                         opacity: 0.7
                     }
                 }
+                readOnly: true
                 font.pixelSize: 20 * scaleFactor
                 text: slider1.value.toFixed(0)
             }

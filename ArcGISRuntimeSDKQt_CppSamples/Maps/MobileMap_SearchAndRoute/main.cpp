@@ -28,25 +28,21 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+  QGuiApplication app(argc, argv);
+  app.setApplicationName("MobileMap_SearchAndRoute - C++");
 
-#ifdef Q_OS_WIN
-    // Force usage of OpenGL ES through ANGLE on Windows
-    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES);
-#endif
+ // Initialize the sample    
+  MobileMap_SearchAndRoute::init();
 
-    // Initialize the sample
-    MobileMap_SearchAndRoute::init();
+ // Initialize application view
+ QQuickView view;
+ view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Intialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
-
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+ // Add the import Path
+ view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   
-  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-  QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
+ QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+ QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
 
  #if defined(LINUX_PLATFORM_REPLACEMENT)
   // on some linux platforms the string 'linux' is replaced with 1
@@ -61,10 +57,10 @@ int main(int argc, char *argv[])
   // Add the Toolkit path
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Maps/MobileMap_SearchAndRoute/MobileMap_SearchAndRoute.qml"));
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/Maps/MobileMap_SearchAndRoute/MobileMap_SearchAndRoute.qml"));
 
-    view.show();
+  view.show();
 
-    return app.exec();
+  return app.exec();
 }

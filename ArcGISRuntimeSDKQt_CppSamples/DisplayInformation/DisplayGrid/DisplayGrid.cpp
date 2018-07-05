@@ -123,7 +123,8 @@ void DisplayGrid::changeGridColor(const QString& color)
     //! [DisplayGrid Set_Grid_Lines_Cpp]
     for (int level = 0; level < gridLevels; level++)
     {
-      SimpleLineSymbol* lineSym = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(color), 1 + level, this);
+      const float width = 1 + level;
+      SimpleLineSymbol* lineSym = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(color), width, this);
       m_mapView->grid()->setLineSymbol(level, lineSym);
     }
     //! [DisplayGrid Set_Grid_Lines_Cpp]
@@ -143,7 +144,8 @@ void DisplayGrid::changeLabelColor(const QString& color)
     //! [DisplayGrid Set_Grid_Labels_Cpp]
     for (int level = 0; level < gridLevels; level++)
     {
-      TextSymbol* textSym = new TextSymbol("text", QColor(color), 14, HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
+      constexpr float size = 14.0f;
+      TextSymbol* textSym = new TextSymbol("text", QColor(color), size, HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
       textSym->setHaloColor(QColor("white"));
       textSym->setHaloWidth(2.0 + level);
       m_mapView->grid()->setTextSymbol(level, textSym);
