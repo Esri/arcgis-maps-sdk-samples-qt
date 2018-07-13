@@ -34,7 +34,7 @@ Rectangle {
 
         // add a Scene to the SceneView
         Scene {
-            // add the BasemapTopographic basemap to the scene
+            // add the BasemapNationalGeographic basemap to the scene
             BasemapNationalGeographic {}
 
             // add a surface...surface is a default property of scene
