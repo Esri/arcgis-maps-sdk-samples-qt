@@ -43,7 +43,7 @@ ClipGeometrySample {
       bottomMargin: 25 * scaleFactor
     }
     text: "Clip"
-    onClicked: function() {
+    onClicked: {
       // Only allow clipAreas(); to be called once
       clipButton.enabled = false;
       clipAreas();

@@ -71,7 +71,6 @@ private:
   Esri::ArcGISRuntime::SimpleLineSymbol* m_coloradoOutline = nullptr;
   Esri::ArcGISRuntime::SimpleLineSymbol* envelopeOutline = nullptr;
   Esri::ArcGISRuntime::SimpleLineSymbol* m_envelopeGraphic = nullptr;
-
 };
 
 #endif // CLIPGEOMETRY_H
