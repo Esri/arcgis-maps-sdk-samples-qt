@@ -78,7 +78,7 @@ Rectangle {
           wkid: 3857
         }
       }
-     targetScale: 15151632
+      targetScale: 15151632
     }
 
     // Create an envelope outside of Colorado
