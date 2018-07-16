@@ -97,6 +97,9 @@ void ClipGeometry::createGraphics(){
   m_envelopesOverlay->graphics()->append(m_outsideGraphic);
   m_envelopesOverlay->graphics()->append(m_intersectingGraphic);
   m_envelopesOverlay->graphics()->append(m_insideGraphic);
+
+  // Append the (empty) final graphicsOverlay to the mapView to render. Later on, clipAreas() will populate this with the clipped graphics
+  m_mapView->graphicsOverlays()->append(m_clippedAreasOverlay);
 }
 
 // Clips the overlapping geometries and displays them on the map
@@ -121,6 +124,4 @@ void ClipGeometry::clipAreas(){
       m_clippedAreasOverlay->graphics()->append(clippedGraphic);
     }
   }
-  // Append the graphicsOverlay to the mapView to render
-  m_mapView->graphicsOverlays()->append(m_clippedAreasOverlay);
 }
