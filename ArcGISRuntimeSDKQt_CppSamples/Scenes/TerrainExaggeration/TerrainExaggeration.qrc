@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/TerrainExaggeration">
+        <file alias="sample.json">TerrainExaggeration.json</file>        
+        <file>TerrainExaggeration.qml</file>
+        <file>TerrainExaggeration.h</file>
+        <file>TerrainExaggeration.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
