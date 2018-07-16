@@ -27,11 +27,11 @@ class Graphic;
 class GraphicsOverlay;
 class SimpleLineSymbol;
 class SimpleFillSymbol;
-class Envelope;
 }
 }
 
 #include <QQuickItem>
+#include "Envelope.h"
 
 class ClipGeometry : public QQuickItem
 {
