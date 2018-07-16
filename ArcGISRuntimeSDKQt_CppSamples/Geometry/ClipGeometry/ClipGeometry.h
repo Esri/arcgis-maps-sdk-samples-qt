@@ -32,9 +32,6 @@ class Envelope;
 }
 
 #include <QQuickItem>
-#include "Envelope.h"
-#include "SimpleFillSymbol.h"
-#include "SimpleLineSymbol.h"
 
 class ClipGeometry : public QQuickItem
 {

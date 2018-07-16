@@ -78,7 +78,8 @@ void ClipGeometry::componentComplete()
 }
 
 // Creates the visual elements and adds them to their respective overlays
-void ClipGeometry::createGraphics(){
+void ClipGeometry::createGraphics()
+{
   // Colorado outline + fill
   m_coloradoOutline = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("#FF0000FF"), 2.0f, this);
   m_coloradoFill = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("#220000FF"), m_coloradoOutline, this);
@@ -103,7 +104,8 @@ void ClipGeometry::createGraphics(){
 }
 
 // Clips the overlapping geometries and displays them on the map
-void ClipGeometry::clipAreas(){
+void ClipGeometry::clipAreas()
+{
   // Immediately hide the reference graphic
   m_coloradoGraphic->setVisible(false);
 
@@ -116,7 +118,8 @@ void ClipGeometry::clipAreas(){
    * fillSymbol of the reference graphic as arguments. Append the new graphic to its respective
    * graphicsOverlay. */
   const int graphicsSize = graphics->size();
-  for(int i = 0; i < graphicsSize; i++){
+  for(int i = 0; i < graphicsSize; i++)
+  {
     m_clippedGeometry = GeometryEngine::clip(m_coloradoGraphic->geometry(), graphics->at(i)->geometry().extent());
     if(!m_clippedGeometry.isEmpty())
     {
