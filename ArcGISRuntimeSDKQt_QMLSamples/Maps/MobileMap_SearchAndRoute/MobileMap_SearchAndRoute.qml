@@ -337,9 +337,14 @@ Rectangle {
         onSolveRouteStatusChanged: {
             // if route solve is successful, add a route graphic
             if(currentRouteTask.solveRouteStatus === Enums.TaskStatusCompleted) {
-                var generatedRoute = currentRouteTask.solveRouteResult.routes[0];
-                var routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: generatedRoute.routeGeometry});
-                routeGraphicsOverlay.graphics.append(routeGraphic);
+                var routeTaskResult = currentRouteTask.solveRouteResult;
+                if (routeTaskResult !== null && routeTaskResult.routes.length > 0) {
+                    var routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeTaskResult.routes[0].routeGeometry});
+                    routeGraphicsOverlay.graphics.append(routeGraphic);
+                }
+                else {
+                    console.log("Route could not be solved");
+                }
             }
 
             // otherwise, console error message
