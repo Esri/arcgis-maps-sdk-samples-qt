@@ -209,7 +209,7 @@ Rectangle {
     }
 
     function handleLocationUpdate(point) {
-        if (! point.isEmpty)
+        if (!point.isEmpty)
         {
             locationGraphic.geometry = point;
             setTextFromPoint(point);
@@ -237,6 +237,19 @@ Rectangle {
 
         textUtm.text  = CoordinateFormatter.toUtm(point, Enums.UtmConversionModeLatitudeBandIndicators, addSpaces);
         //! [FormatCoordinates CoordinateFormatter point to text]
+
+        // check for invalid points and update the text boxes
+        if (textDD.text.length === 0)
+            textDD.text = "invalid point";
+
+        if (textDMS.text.length === 0)
+            textDMS.text = "invalid point";
+
+        if (textUsng.text.length === 0)
+            textUsng.text = "invalid point";
+
+        if (textUtm.text.length === 0)
+            textUtm.text = "invalid point";
     }
 
     function createPointFromText(textType, text) {
