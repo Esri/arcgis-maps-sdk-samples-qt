@@ -67,10 +67,12 @@ Rectangle {
             case "Topographic":
                 map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapTopographic");
                 break;
+            case "Streets":
+                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreets");
+                break;
             case "Streets (Vector)":
                 map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreetsVector");
                 break;
-
             case "Streets - Night (Vector)":
                 map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreetsNightVector");
                 break;
