@@ -45,23 +45,14 @@ Rectangle {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
-
-            onLoadStatusChanged: {
-                if (loadStatus === Enums.LoadStatusLoaded) {
-                    // create a graphic using the composite symbol
-                    var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                            geometry: point,
-                                                                            symbol: distanceCompositeSceneSymbol
-                                                                        });
-                    // add the graphic to the graphics overlay
-                    graphicsOverlay.graphics.append(graphic);
-                }
-            }
         }
 
-        Component.onCompleted: {
-            // set viewpoint to the specified camera
-            setViewpointCameraAndWait(camera)
+        // add an orbit camera controller to lock the camera to the graphic
+        cameraController: OrbitGeoElementCameraController {
+            targetGeoElement: aircraftGraphic
+            cameraPitchOffset: 80
+            cameraHeadingOffset: -30
+            cameraDistance: 200
         }
 
         GraphicsOverlay {
@@ -69,6 +60,12 @@ Rectangle {
 
             LayerSceneProperties {
                 surfacePlacement: Enums.SurfacePlacementRelative
+            }
+
+            Graphic {
+                id: aircraftGraphic
+                geometry: point
+                symbol: distanceCompositeSceneSymbol
             }
         }
     }
@@ -80,16 +77,6 @@ Rectangle {
         z: 5000
         spatialReference: SpatialReference { wkid: 4326 }
     }
-
-    // create the camera to be used as the scene view's viewpoint
-    Camera {
-        id: camera
-        location: point
-        distance: 1500
-        heading: 0
-        pitch: 80.0
-        roll: 0
-    }    
 
     //! [create a distance composite scene symbol]
     DistanceCompositeSceneSymbol {
