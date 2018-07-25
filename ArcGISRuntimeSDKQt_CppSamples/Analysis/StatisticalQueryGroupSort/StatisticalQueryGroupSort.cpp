@@ -80,16 +80,14 @@ void StatisticalQueryGroupSort::connectSignals()
     if (error.isEmpty())
       return;
 
+    m_resultsModel->clear();
     addResultToModel("", QString("Error. %1").arg(error.message()));
   });
 
   connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* result)
   {
-    if (!result)
-    {
-      addResultToModel("", "An unknown error occurred.");
-      return;
-    }
+    if (!result)    
+      return;    
 
     // clear previous results
     m_resultsModel->clear();
