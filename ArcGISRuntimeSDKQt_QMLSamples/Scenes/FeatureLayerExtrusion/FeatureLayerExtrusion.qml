@@ -19,6 +19,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -26,28 +27,11 @@ Rectangle {
     width: 800
     height: 600
 
+    property real scaleFactor: System.displayScaleFactor
+
     SceneView {
         id: sceneView
-        anchors.fill: parent
-
-        Button {
-            anchors{
-                bottom: sceneView.attributionTop
-                horizontalCenter: sceneView.horizontalCenter
-                bottomMargin: 10
-            }
-            id: popButton
-            text: "TOTAL POPULATION"
-            onClicked: {
-                if (text === "TOTAL POPULATION") {
-                    text = qsTr("POPULATION DENSITY");
-                    sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 10000";
-                } else {
-                    text = qsTr("TOTAL POPULATION");
-                    sceneProperties.extrusionExpression = "[POP2007] / 10";
-                }
-            }
-        }
+        anchors.fill: parent        
 
         Scene {
             id: scene
@@ -89,6 +73,24 @@ Rectangle {
                     pitch: 15
                     heading: 0
                 }
+            }
+        }
+
+        // combo box to update the extrusion
+        ComboBox {
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 10 * scaleFactor
+            }
+            width: 200 * scaleFactor
+            model: ["TOTAL POPULATION", "POPULATION DENSITY"]
+
+            onCurrentTextChanged: {
+                if (currentText === "TOTAL POPULATION")
+                    sceneProperties.extrusionExpression = "[POP2007] / 10";
+                else
+                    sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 10000";
             }
         }
 

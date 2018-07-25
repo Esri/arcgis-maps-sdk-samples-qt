@@ -86,26 +86,27 @@ void FeatureLayerExtrusion::componentComplete()
   const Viewpoint initialVp(lookAtPoint, distance, camera);
   scene->setInitialViewpoint(initialVp);
 
+  // apply initial extrusion
+  totalPopulation();
+
   m_sceneView->setArcGISScene(scene);
 }
 
 void FeatureLayerExtrusion::popDensity()
 {
-  if (m_showTotalPopulation)
-  {
-    // divide total population by 10 to make data legible
-    RendererSceneProperties props = m_renderer->sceneProperties();
-    props.setExtrusionExpression("[POP2007] / 10");
-    m_renderer->setSceneProperties(props);
-    m_showTotalPopulation = false;
-  } 
-  else 
-  {
-    // multiply population density by 5000 to make data legible
-    RendererSceneProperties props = m_renderer->sceneProperties();
-    props.setExtrusionExpression("([POP07_SQMI] * 5000) + 10000");
-    m_renderer->setSceneProperties(props);
-    m_showTotalPopulation = true;
-  }
+  // multiply population density by 5000 to make data legible
+  RendererSceneProperties props = m_renderer->sceneProperties();
+  props.setExtrusionExpression("([POP07_SQMI] * 5000) + 10000");
+  m_renderer->setSceneProperties(props);
 }
+
+void FeatureLayerExtrusion::totalPopulation()
+{
+  // divide total population by 10 to make data legible
+  RendererSceneProperties props = m_renderer->sceneProperties();
+  props.setExtrusionExpression("[POP2007] / 10");
+  m_renderer->setSceneProperties(props);
+}
+
+
 
