@@ -29,7 +29,6 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
-        cameraController: orbCamCont
 
         Button {
             anchors{
@@ -72,6 +71,25 @@ Rectangle {
                     url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
+
+            ViewpointCenter {
+                Point {
+                    id: lookAtPoint
+                    x: -99.659448
+                    y: 20.513652
+                    z: 12940924
+                    spatialReference: SpatialReference { wkid: 4326 }
+                }
+                targetScale: 12940924
+
+                Camera {
+                    id: initialCamera
+                    location: lookAtPoint
+                    roll: 0
+                    pitch: 15
+                    heading: 0
+                }
+            }
         }
 
         SimpleRenderer {
@@ -88,26 +106,13 @@ Rectangle {
 
         SimpleFillSymbol {
             id: fillSymbol
-            color: "Blue"
+            color: "blue"
             outline: lineSymbol
         }
 
         SimpleLineSymbol {
             id: lineSymbol
-            color: "Blue"
-        }
-
-        Point {
-            id: lookAtPoint
-            x: -10974490.0
-            y: 4814376
-            spatialReference: SpatialReference.createWebMercator()
-        }
-
-        OrbitLocationCameraController {
-            id: orbCamCont
-            targetLocation: lookAtPoint
-            cameraDistance: 20000000.0
+            color: "black"
         }
     }
 }

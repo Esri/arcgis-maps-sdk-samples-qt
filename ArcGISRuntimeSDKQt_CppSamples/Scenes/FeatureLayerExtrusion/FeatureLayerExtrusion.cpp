@@ -21,7 +21,6 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "OrbitLocationCameraController.h"
 #include "Point.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleFillSymbol.h"
@@ -79,13 +78,15 @@ void FeatureLayerExtrusion::componentComplete()
           this));
   scene->setBaseSurface(surface);
   scene->operationalLayers()->append(m_featureLayer);
+
+  // set initial viewpoint
+  const double distance = 12940924;
+  const Point lookAtPoint = Point(-99.659448, 20.513652, distance, SpatialReference::wgs84());
+  const Camera camera(lookAtPoint, 0, 15, 0);
+  const Viewpoint initialVp(lookAtPoint, distance, camera);
+  scene->setInitialViewpoint(initialVp);
+
   m_sceneView->setArcGISScene(scene);
-
-  const Point m_lookAtPoint = Point(-10974490, 4814376, 0, SpatialReference::webMercator());
-  const double distance = 20000000;
-  OrbitLocationCameraController* m_orbitController = new OrbitLocationCameraController(m_lookAtPoint, distance, this);
-
-  m_sceneView->setCameraController(m_orbitController);
 }
 
 void FeatureLayerExtrusion::popDensity()
