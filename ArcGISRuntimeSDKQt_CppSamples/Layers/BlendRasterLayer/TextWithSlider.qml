@@ -16,10 +16,10 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Window 2.2
 
 Row {
-    property double scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
     property alias label: labelText.text
     property alias sliderValue: slider.value
     property alias min: slider.minimumValue
