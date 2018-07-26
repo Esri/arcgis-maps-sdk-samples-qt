@@ -81,7 +81,7 @@ void FeatureLayerExtrusion::componentComplete()
 
   // set initial viewpoint
   const double distance = 12940924;
-  const Point lookAtPoint = Point(-99.659448, 20.513652, distance, SpatialReference::wgs84());
+  const Point lookAtPoint(-99.659448, 20.513652, distance, SpatialReference::wgs84());
   const Camera camera(lookAtPoint, 0, 15, 0);
   const Viewpoint initialVp(lookAtPoint, distance, camera);
   scene->setInitialViewpoint(initialVp);
