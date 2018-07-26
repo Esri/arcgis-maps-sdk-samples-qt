@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISExtras 1.1
+import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
 ListRelatedFeaturesSample {
@@ -26,7 +26,7 @@ ListRelatedFeaturesSample {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
 
     onHideAttributeTable: attributeView.height = 0;
     onShowAttributeTable: attributeView.height = 200 * scaleFactor;

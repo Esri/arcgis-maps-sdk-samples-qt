@@ -17,6 +17,7 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
+import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
@@ -25,7 +26,7 @@ GenerateGeodatabaseSample {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
     property string statusText: ""
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
     property string outputGdb: System.temporaryFolder.path + "/WildfireCpp_%1.geodatabase".arg(new Date().getTime().toString())
