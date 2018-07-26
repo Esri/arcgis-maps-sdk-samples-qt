@@ -33,23 +33,22 @@ FeatureLayerExtrusionSample {
         anchors.fill: parent
 
 
-        // button to populate from service
-          Button {
-              anchors {
-                  horizontalCenter: parent.horizontalCenter
-                  bottom: sceneView.attributionTop
-                  margins: 10 * scaleFactor
-              }
-              id: popButton
-              text: "TOTAL POPULATION"
-              onClicked: {
-                  if (text === "TOTAL POPULATION")
-                      text = qsTr("POPULATION DENSITY");
-                  else
-                      text = qsTr("TOTAL POPULATION");
-                  popDensity();
-              }
-          }
+        // combo box to update the extrusion
+        ComboBox {
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 10 * scaleFactor
+            }
+            width: 200 * scaleFactor
+            model: ["TOTAL POPULATION", "POPULATION DENSITY"]
 
+            onCurrentTextChanged: {
+                if (currentText === "TOTAL POPULATION")
+                    totalPopulation();
+                else
+                    popDensity();
+            }
+        }
     }
 }

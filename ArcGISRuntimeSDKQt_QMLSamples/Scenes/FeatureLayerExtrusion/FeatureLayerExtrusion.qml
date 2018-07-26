@@ -19,6 +19,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -26,29 +27,11 @@ Rectangle {
     width: 800
     height: 600
 
+    property real scaleFactor: System.displayScaleFactor
+
     SceneView {
         id: sceneView
-        anchors.fill: parent
-        cameraController: orbCamCont
-
-        Button {
-            anchors{
-                bottom: sceneView.attributionTop
-                horizontalCenter: sceneView.horizontalCenter
-                bottomMargin: 10
-            }
-            id: popButton
-            text: "TOTAL POPULATION"
-            onClicked: {
-                if (text === "TOTAL POPULATION") {
-                    text = qsTr("POPULATION DENSITY");
-                    sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 10000";
-                } else {
-                    text = qsTr("TOTAL POPULATION");
-                    sceneProperties.extrusionExpression = "[POP2007] / 10";
-                }
-            }
-        }
+        anchors.fill: parent        
 
         Scene {
             id: scene
@@ -72,6 +55,43 @@ Rectangle {
                     url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
+
+            ViewpointCenter {
+                Point {
+                    id: lookAtPoint
+                    x: -99.659448
+                    y: 20.513652
+                    z: 12940924
+                    spatialReference: SpatialReference { wkid: 4326 }
+                }
+                targetScale: 12940924
+
+                Camera {
+                    id: initialCamera
+                    location: lookAtPoint
+                    roll: 0
+                    pitch: 15
+                    heading: 0
+                }
+            }
+        }
+
+        // combo box to update the extrusion
+        ComboBox {
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 10 * scaleFactor
+            }
+            width: 200 * scaleFactor
+            model: ["TOTAL POPULATION", "POPULATION DENSITY"]
+
+            onCurrentTextChanged: {
+                if (currentText === "TOTAL POPULATION")
+                    sceneProperties.extrusionExpression = "[POP2007] / 10";
+                else
+                    sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 10000";
+            }
         }
 
         SimpleRenderer {
@@ -88,26 +108,13 @@ Rectangle {
 
         SimpleFillSymbol {
             id: fillSymbol
-            color: "Blue"
+            color: "blue"
             outline: lineSymbol
         }
 
         SimpleLineSymbol {
             id: lineSymbol
-            color: "Blue"
-        }
-
-        Point {
-            id: lookAtPoint
-            x: -10974490.0
-            y: 4814376
-            spatialReference: SpatialReference.createWebMercator()
-        }
-
-        OrbitLocationCameraController {
-            id: orbCamCont
-            targetLocation: lookAtPoint
-            cameraDistance: 20000000.0
+            color: "black"
         }
     }
 }
