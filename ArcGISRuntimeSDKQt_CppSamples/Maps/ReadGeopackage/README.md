@@ -16,14 +16,7 @@ Use the top-left menu to select individual geopackage layers to add to the map. 
 6. For each `Item` in the `model`, create a row and a switch as child components that, when `checked`, appends the current `lyr` `Item` to the `map`'s `operationalLayers`. When `unchecked`, it hides the layer.
 
 ## Relevant API
- - ListView
  - Esri::ArcGISRuntime::GeoPackage
- - QVariantList
- - QVariantMap
- - QList<>
- - delegate
- - Switch
-
 
 ## Tags
 GeoPackage, Maps, data, UI, listView
