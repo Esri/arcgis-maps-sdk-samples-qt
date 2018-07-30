@@ -29,8 +29,6 @@ class Layer;
 }
 }
 
-#include <QList>
-#include <QString>
 #include <Layer.h>
 #include <QListView>
 #include <QQuickItem>
@@ -52,8 +50,10 @@ class ReadGeopackage : public QQuickItem
 public:
   explicit ReadGeopackage(QQuickItem* parent = nullptr);
   ~ReadGeopackage() = default;
+
   void readGeopackage();
   void componentComplete() Q_DECL_OVERRIDE;
+
   static void init();
 
   Q_INVOKABLE void addOrShowLayer(int index, bool onOff);
@@ -64,11 +64,10 @@ signals:
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::GeoPackage* auroraGpkg;
+  Esri::ArcGISRuntime::GeoPackage* auroraGpkg = nullptr;
 
   QVariantList m_layerList;
   QVariantList layerList() const;
-
 };
 
 #endif // READGEOPACKAGE_H

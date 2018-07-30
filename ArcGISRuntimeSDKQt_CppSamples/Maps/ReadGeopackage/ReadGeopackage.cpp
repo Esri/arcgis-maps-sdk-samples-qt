@@ -50,7 +50,7 @@ void ReadGeopackage::componentComplete()
   m_mapView->setMap(m_map);
 
   // Create the initial view area
-  Viewpoint initialViewpoint(39.7294, -104.8319, 500000);
+  const Viewpoint initialViewpoint(39.7294, -104.8319, 500000);
   m_mapView->setViewpoint(initialViewpoint);
 
   // Initialize the read operation
@@ -60,10 +60,8 @@ void ReadGeopackage::componentComplete()
 // Read the geopackage and create lists for the names and layer data
 void ReadGeopackage::readGeopackage()
 {
-
-  // Load the geopackagea the beginning
-  QString homedir = QDir::homePath();
-  const QString path = homedir + "/ArcGIS/Runtime/Data/gpkg/AuroraCO.gpkg";
+  // Load the geopackage at the beginning
+  const QString path = "/Users/andr9668/ArcGIS/Runtime/Data/gpkg/AuroraCO.gpkg";
   GeoPackage* auroraGpkg = new GeoPackage(path, this);
   m_layerList.clear();
 
@@ -72,7 +70,6 @@ void ReadGeopackage::readGeopackage()
   {
     if (error.isEmpty())
     {
-
       // Create two QLists for the different types of layer data within the geopackage (these are combined into m_layerList later on)
       QList<GeoPackageRaster*> gpkgRasters = auroraGpkg->geoPackageRasters();
       QList<GeoPackageFeatureTable*> gpkgFeatures = auroraGpkg->geoPackageFeatureTables();
@@ -107,18 +104,18 @@ QVariantList ReadGeopackage::layerList() const
 }
 
 // Called by the QML to toggle visibility at a certain index
-void ReadGeopackage::addOrShowLayer(int index, bool onOff)
+void ReadGeopackage::addOrShowLayer(int index, bool visible)
 {
-  auto opLayer = m_map->operationalLayers();
+  auto opLayers = m_map->operationalLayers();
   auto layer = qvariant_cast<Layer*>(m_layerList[index].toMap()["lyr"]);
-  int indexOfLayer = opLayer->indexOf(layer);
-  if(indexOfLayer != -1 && onOff == false)
+  int indexOfLayer = opLayers->indexOf(layer);
+  if (indexOfLayer != -1 && !visible)
   {
-    opLayer->at(indexOfLayer)->setVisible(false);
+    opLayers->at(indexOfLayer)->setVisible(false);
   }
   else
   {
-    opLayer->insert(index, layer);
+    opLayers->insert(index, layer);
     layer->setVisible(true);
   }
 }

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 import Esri.Samples 1.0
 
@@ -34,9 +34,6 @@ ReadGeopackageSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
-        Component.onCompleted: {
-            layerVisibilityListView.model = ReadGeopackage.layerList;
-        }
     }
 
     // Create the layer selection menu
@@ -63,10 +60,10 @@ ReadGeopackageSample {
             height: layerVisibilityRect.height
             color: "lightgrey"
             opacity: 0.9
-            radius: 5
+            radius: 5 * scaleFactor
             border {
                 color: "#4D4D4D"
-                width: 1
+                width: 1 * scaleFactor
             }
 
             Column {
@@ -94,17 +91,17 @@ ReadGeopackageSample {
                     width: parent.width
                     height: parent.height
                     clip: true
-                    model: rootRectangle.m_layerList
+                    model: rootRectangle.layerList
                     delegate: Item {
                         id: visibilityDelegate
                         width: parent.width
                         height: 35 * scaleFactor
                         Row {
-                            spacing: 5
+                            spacing: 5 * scaleFactor
                             anchors.verticalCenter: parent.verticalCenter
                             Text {
                                 width: 150 * scaleFactor
-                                text:  modelData["name"];
+                                text:  modelData.name;
                                 wrapMode: Text.WordWrap
                                 font.pixelSize: 14 * scaleFactor
                             }

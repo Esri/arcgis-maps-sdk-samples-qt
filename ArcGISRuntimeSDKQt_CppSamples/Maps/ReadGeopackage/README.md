@@ -9,15 +9,14 @@ Use the top-left menu to select individual geopackage layers to add to the map. 
 
 ## How it works
 1. Create an empty menu UI using QML, along with empty `listView` and `listModel` objects.
-2. Create a `GeoPackage` QML object within the `listView` and load it locally, or download if remote.
+2. Create a `GeoPackage` object within the `listView` and load it locally, or download if remote.
 3. Iterate through the geopackage, once for the `featureTables` layers and once for the `raster` layers. In each iteration, create an `ArcGISRuntime` Object that constructs the appropriate layer.
-4. Still within the iteration, create a JSON object that has a `lyr` (layer) property and a `name` (name) key, both set to the corresponding `ArcGISRuntime` object values. Append these to the `listModel`.
-5. Within `listView`, but outside of the iterator, create a `delegate` that takes `listModel` as a `model`.
-6. For each `Item` in the `model`, create a row and a switch within that, when `checked`, appends the current `lyr` `Item` to the `map`'s `operationalLayers`.
+4. Still within the iteration, create a `QVariantMap` that has "lyr" (layer object) and "name" (layer name) keys. Append these to a `QVariantMap`.
+5. Within `listView`, ensure the `delegate` takes the `QVariantList` as the `model`.
+6. For each `Item` in the `model`, create a row and a switch as child components that, when `checked`, appends the current `lyr` `Item` to the `map`'s `operationalLayers`. When `unchecked`, it hides the layer.
 
 ## Relevant API
  - ListView
- - ListModel
  - Esri::ArcGISRuntime::GeoPackage
  - QVariantList
  - QVariantMap
