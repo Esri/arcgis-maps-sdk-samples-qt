@@ -5,7 +5,7 @@ This sample demonstrates how to read rasters and feature tables from geoPackages
 ![](screenshot.png)
 
 ## How to use the sample
-Use the top-left menu to select individual geopackage layers to add to the map. Unselect them to remove them.
+Use the top-left menu to select individual geopackage layers to add to the map. Unselect them to hide them.
 
 ## How it works
 1. Create an empty menu UI using QML, along with empty `listView` and `listModel` objects.

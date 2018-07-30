@@ -29,49 +29,45 @@ class Layer;
 }
 }
 
-#include <QQuickItem>
-#include <Viewpoint.h>
-#include <GeoPackage.h>
-#include <QListView>
 #include <QList>
 #include <QString>
-#include <GeoPackageRaster.h>
-#include <GeoPackageFeatureTable.h>
+#include <Layer.h>
+#include <QListView>
+#include <QQuickItem>
+#include <Viewpoint.h>
+#include <QVariantMap>
+#include <GeoPackage.h>
+#include <QVariantList>
+#include <RasterLayer.h>
 #include <FeatureTable.h>
 #include <FeatureLayer.h>
-#include <RasterLayer.h>
-#include <QVariantMap>
-#include <QVariantList>
-#include <Layer.h>
+#include <GeoPackageRaster.h>
+#include <GeoPackageFeatureTable.h>
 
 class ReadGeopackage : public QQuickItem
 {
   Q_OBJECT
-  Q_PROPERTY(QVariantList layerNamesList READ layerNamesList NOTIFY layerNamesListChanged)
+  Q_PROPERTY(QVariantList layerList READ layerList NOTIFY layerListChanged)
 
 public:
   explicit ReadGeopackage(QQuickItem* parent = nullptr);
   ~ReadGeopackage() = default;
-  void listMaps();
-  Q_INVOKABLE void addOrShowLayer(int index, bool onOff);
+  void readGeopackage();
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
 
-signals:
+  Q_INVOKABLE void addOrShowLayer(int index, bool onOff);
 
-  void layerNamesListChanged();
+signals:
+  void layerListChanged();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-
   Esri::ArcGISRuntime::GeoPackage* auroraGpkg;
-  QVariantList layerNamesList() const;
-  QVariantMap layerMap;
-  QVariantList m_layerNamesList;
 
-  QList<Esri::ArcGISRuntime::Layer*> m_layerList;
-
+  QVariantList m_layerList;
+  QVariantList layerList() const;
 
 };
 

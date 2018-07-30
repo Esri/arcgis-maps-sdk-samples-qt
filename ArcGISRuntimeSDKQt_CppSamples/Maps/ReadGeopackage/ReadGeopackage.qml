@@ -28,14 +28,14 @@ ReadGeopackageSample {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    onLayerNamesListChanged: layerVisibilityListView.model = layerNamesList;
+    onLayerListChanged: layerVisibilityListView.model = layerList;
 
     // add a mapView component
     MapView {
         anchors.fill: parent
         objectName: "mapView"
         Component.onCompleted: {
-            layerVisibilityListView.model = ReadGeopackage.layerNamesList;
+            layerVisibilityListView.model = ReadGeopackage.layerList;
         }
     }
 
@@ -94,7 +94,7 @@ ReadGeopackageSample {
                     width: parent.width
                     height: parent.height
                     clip: true
-                    model: rootRectangle.layerNamesList
+                    model: rootRectangle.m_layerList
                     delegate: Item {
                         id: visibilityDelegate
                         width: parent.width
@@ -104,7 +104,7 @@ ReadGeopackageSample {
                             anchors.verticalCenter: parent.verticalCenter
                             Text {
                                 width: 150 * scaleFactor
-                                text:  modelData["name"]
+                                text:  modelData["name"];
                                 wrapMode: Text.WordWrap
                                 font.pixelSize: 14 * scaleFactor
                             }

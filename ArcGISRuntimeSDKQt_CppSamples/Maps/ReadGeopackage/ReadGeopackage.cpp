@@ -49,27 +49,23 @@ void ReadGeopackage::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  // Create a member variable to contain the layers
-  QList<Layer*> m_layerList;
-
   // Create the initial view area
   Viewpoint initialViewpoint(39.7294, -104.8319, 500000);
   m_mapView->setViewpoint(initialViewpoint);
 
   // Initialize the read operation
-  listMaps();
+  readGeopackage();
 }
 
 // Read the geopackage and create lists for the names and layer data
-void ReadGeopackage::listMaps()
+void ReadGeopackage::readGeopackage()
 {
 
   // Load the geopackagea the beginning
   QString homedir = QDir::homePath();
   const QString path = homedir + "/ArcGIS/Runtime/Data/gpkg/AuroraCO.gpkg";
   GeoPackage* auroraGpkg = new GeoPackage(path, this);
-  auroraGpkg->load();
-  m_layerNamesList.clear();
+  m_layerList.clear();
 
   // Make sure there are no errors in loading the geopackage before interacting with it
   connect(auroraGpkg, &GeoPackage::doneLoading, this, [auroraGpkg, this](Error error)
@@ -87,38 +83,42 @@ void ReadGeopackage::listMaps()
         QVariantMap layerMap;
         FeatureLayer* layer = new FeatureLayer(featureTbl, this);
         layerMap["name"] = layer->name();
-        m_layerList.append(layer);
-        m_layerNamesList << layerMap;
+        layerMap["lyr"] = QVariant::fromValue<Layer*>(layer);
+        m_layerList << layerMap;
       }
       for (const auto& rasterItm : gpkgRasters)
       {
         QVariantMap rasterMap;
         RasterLayer* rasterLyr = new RasterLayer(rasterItm, this);
         rasterMap["name"] = rasterLyr->raster()->path().mid(55, 25);
-        m_layerList.append(rasterLyr);
-        m_layerNamesList << rasterMap;
+        rasterMap["lyr"] = QVariant::fromValue<Layer*>(rasterLyr);
+        m_layerList << rasterMap;
       }
-      emit layerNamesListChanged();
+      emit layerListChanged();
     }
   });
+  auroraGpkg->load();
 }
 
 // Getter for the menu names data
-QVariantList ReadGeopackage::layerNamesList() const
+QVariantList ReadGeopackage::layerList() const
 {
-  return m_layerNamesList;
+  return m_layerList;
 }
 
 // Called by the QML to toggle visibility at a certain index
 void ReadGeopackage::addOrShowLayer(int index, bool onOff)
 {
-  auto layer = m_layerList[index];
-  int indexOfLayer = m_map->operationalLayers()->indexOf(layer);
+  auto opLayer = m_map->operationalLayers();
+  auto layer = qvariant_cast<Layer*>(m_layerList[index].toMap()["lyr"]);
+  int indexOfLayer = opLayer->indexOf(layer);
   if(indexOfLayer != -1 && onOff == false)
   {
-    m_map->operationalLayers()->at(indexOfLayer)->setVisible(false);
-  } else {
-    m_map->operationalLayers()->insert(index, layer);
+    opLayer->at(indexOfLayer)->setVisible(false);
+  }
+  else
+  {
+    opLayer->insert(index, layer);
     layer->setVisible(true);
   }
 }
