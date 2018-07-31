@@ -18,6 +18,8 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
+#include "GeoPackage.h"
+#include "Layer.h"
 
 #include <QDir>
 

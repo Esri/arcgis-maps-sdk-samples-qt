@@ -25,16 +25,14 @@ class Map;
 class MapQuickView;
 class listModel;
 class listView;
+class GeoPackage;
 class Layer;
 }
 }
 
-#include <Layer.h>
-#include <QListView>
 #include <QQuickItem>
 #include <Viewpoint.h>
 #include <QVariantMap>
-#include <GeoPackage.h>
 #include <QVariantList>
 #include <RasterLayer.h>
 #include <FeatureTable.h>
