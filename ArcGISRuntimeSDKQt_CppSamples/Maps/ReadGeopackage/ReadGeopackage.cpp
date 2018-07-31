@@ -17,10 +17,10 @@
 #include "ReadGeoPackage.h"
 
 #include "Map.h"
-#include "MapQuickView.h"
-#include "GeoPackage.h"
 #include "Layer.h"
+#include "GeoPackage.h"
 #include "RasterLayer.h"
+#include "MapQuickView.h"
 #include "FeatureTable.h"
 #include "FeatureLayer.h"
 #include "GeoPackageRaster.h"
@@ -29,7 +29,6 @@
 #include <QDir>
 
 using namespace Esri::ArcGISRuntime;
-using namespace std;
 
 ReadGeoPackage::ReadGeoPackage(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -78,8 +77,8 @@ void ReadGeoPackage::readGeoPackage()
     if (error.isEmpty())
     {
       // Create two QLists for the different types of layer data within the geoPackage (these are combined into m_layerList later on)
-      QList<GeoPackageRaster*> gpkgRasters = auroraGpkg->geoPackageRasters();
-      QList<GeoPackageFeatureTable*> gpkgFeatures = auroraGpkg->geoPackageFeatureTables();
+      const QList<GeoPackageRaster*> gpkgRasters = auroraGpkg->geoPackageRasters();
+      const QList<GeoPackageFeatureTable*> gpkgFeatures = auroraGpkg->geoPackageFeatureTables();
 
       // Loop through both lists to get the name and layer data. The name data is only used to populate the menu.
       for (const auto& featureTbl : gpkgFeatures)

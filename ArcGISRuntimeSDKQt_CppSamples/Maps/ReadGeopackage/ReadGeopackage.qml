@@ -28,7 +28,6 @@ ReadGeoPackageSample {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    onLayerListChanged: layerVisibilityListView.model = layerList;
 
     // add a mapView component
     MapView {
