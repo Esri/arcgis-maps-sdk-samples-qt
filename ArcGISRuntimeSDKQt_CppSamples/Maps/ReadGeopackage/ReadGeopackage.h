@@ -1,4 +1,4 @@
-// [WriteFile Name=ReadGeopackage, Category=Maps]
+// [WriteFile Name=ReadGeoPackage, Category=Maps]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -27,6 +27,12 @@ class listModel;
 class listView;
 class GeoPackage;
 class Layer;
+class RasterLayer;
+class FeatureTable;
+class FeatureLayer;
+class GeoPackageRaster;
+class GeoPackageFeatureTable;
+
 }
 }
 
@@ -34,22 +40,18 @@ class Layer;
 #include <Viewpoint.h>
 #include <QVariantMap>
 #include <QVariantList>
-#include <RasterLayer.h>
-#include <FeatureTable.h>
-#include <FeatureLayer.h>
-#include <GeoPackageRaster.h>
-#include <GeoPackageFeatureTable.h>
 
-class ReadGeopackage : public QQuickItem
+
+class ReadGeoPackage : public QQuickItem
 {
   Q_OBJECT
   Q_PROPERTY(QVariantList layerList READ layerList NOTIFY layerListChanged)
 
 public:
-  explicit ReadGeopackage(QQuickItem* parent = nullptr);
-  ~ReadGeopackage() = default;
+  explicit ReadGeoPackage(QQuickItem* parent = nullptr);
+  ~ReadGeoPackage() = default;
 
-  void readGeopackage();
+  void readGeoPackage();
   void componentComplete() Q_DECL_OVERRIDE;
 
   static void init();

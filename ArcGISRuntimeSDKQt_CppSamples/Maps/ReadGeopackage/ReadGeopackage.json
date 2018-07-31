@@ -1,8 +1,8 @@
 {
-    "source" :  "ReadGeopackage.qml",
+    "source" :  "ReadGeoPackage.qml",
     "otherSourceFiles" :  [
-        "ReadGeopackage.h",
-        "ReadGeopackage.cpp"
+        "ReadGeoPackage.h",
+        "ReadGeoPackage.cpp"
     ],
-    "name" : "Read geopackage"
+    "name" : "Read geoPackage"
 }

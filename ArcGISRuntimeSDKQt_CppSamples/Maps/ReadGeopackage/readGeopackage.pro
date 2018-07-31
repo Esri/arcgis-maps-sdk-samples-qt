@@ -24,7 +24,7 @@ CONFIG += c++11
 QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
-TARGET = ReadGeopackage
+TARGET = ReadGeoPackage
 
 ARCGIS_RUNTIME_VERSION = 100.4
 include($$PWD/arcgisruntime.pri)
@@ -32,13 +32,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    ReadGeopackage.h
+    ReadGeoPackage.h
 
 SOURCES += \
     main.cpp \
-    ReadGeopackage.cpp
+    ReadGeoPackage.cpp
 
-RESOURCES += ReadGeopackage.qrc
+RESOURCES += ReadGeoPackage.qrc
 
 #-------------------------------------------------------------------------------
 

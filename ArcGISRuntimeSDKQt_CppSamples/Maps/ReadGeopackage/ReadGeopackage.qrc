@@ -1,9 +1,9 @@
 <RCC>
-    <qresource prefix="/Samples/Maps/ReadGeopackage">
-        <file alias="sample.json">ReadGeopackage.json</file>        
-        <file>ReadGeopackage.qml</file>
-        <file>ReadGeopackage.h</file>
-        <file>ReadGeopackage.cpp</file>
+    <qresource prefix="/Samples/Maps/ReadGeoPackage">
+        <file alias="sample.json">ReadGeoPackage.json</file>        
+        <file>ReadGeoPackage.qml</file>
+        <file>ReadGeoPackage.h</file>
+        <file>ReadGeoPackage.cpp</file>
         <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>

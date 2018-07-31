@@ -1,4 +1,4 @@
-// [WriteFile Name=ReadGeopackage, Category=Maps]
+// [WriteFile Name=ReadGeoPackage, Category=Maps]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -21,7 +21,7 @@ import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 import Esri.Samples 1.0
 
-ReadGeopackageSample {
+ReadGeoPackageSample {
     id: rootRectangle
     clip: true
     width: 800
@@ -75,7 +75,7 @@ ReadGeopackageSample {
 
                 Text {
                     width: parent.width
-                    text: "Geopackage Layers"
+                    text: "GeoPackage Layers"
                     wrapMode: Text.WordWrap
                     clip:true
                     font {
@@ -84,7 +84,7 @@ ReadGeopackageSample {
                     }
                 }
 
-                // Populate the menu with the layers from the geopackage
+                // Populate the menu with the layers from the geoPackage
                 ListView {
                     id: layerVisibilityListView
                     anchors.margins: 20 * scaleFactor

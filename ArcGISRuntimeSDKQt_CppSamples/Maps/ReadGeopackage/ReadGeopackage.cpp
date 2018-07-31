@@ -1,4 +1,4 @@
-// [WriteFile Name=ReadGeopackage, Category=Maps]
+// [WriteFile Name=ReadGeoPackage, Category=Maps]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -14,31 +14,36 @@
 // limitations under the License.
 // [Legal]
 
-#include "ReadGeopackage.h"
+#include "ReadGeoPackage.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
 #include "GeoPackage.h"
 #include "Layer.h"
+#include "RasterLayer.h"
+#include "FeatureTable.h"
+#include "FeatureLayer.h"
+#include "GeoPackageRaster.h"
+#include "GeoPackageFeatureTable.h"
 
 #include <QDir>
 
 using namespace Esri::ArcGISRuntime;
 using namespace std;
 
-ReadGeopackage::ReadGeopackage(QQuickItem* parent /* = nullptr */):
+ReadGeoPackage::ReadGeoPackage(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
 }
 
-void ReadGeopackage::init()
+void ReadGeoPackage::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<ReadGeopackage>("Esri.Samples", 1, 0, "ReadGeopackageSample");
+  qmlRegisterType<ReadGeoPackage>("Esri.Samples", 1, 0, "ReadGeoPackageSample");
 }
 
-void ReadGeopackage::componentComplete()
+void ReadGeoPackage::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -56,23 +61,23 @@ void ReadGeopackage::componentComplete()
   m_mapView->setViewpoint(initialViewpoint);
 
   // Initialize the read operation
-  readGeopackage();
+  readGeoPackage();
 }
 
-// Read the geopackage and create lists for the names and layer data
-void ReadGeopackage::readGeopackage()
+// Read the geoPackage and create lists for the names and layer data
+void ReadGeoPackage::readGeoPackage()
 {
-  // Load the geopackage at the beginning
+  // Load the geoPackage at the beginning
   const QString path = "/Users/andr9668/ArcGIS/Runtime/Data/gpkg/AuroraCO.gpkg";
   GeoPackage* auroraGpkg = new GeoPackage(path, this);
   m_layerList.clear();
 
-  // Make sure there are no errors in loading the geopackage before interacting with it
+  // Make sure there are no errors in loading the geoPackage before interacting with it
   connect(auroraGpkg, &GeoPackage::doneLoading, this, [auroraGpkg, this](Error error)
   {
     if (error.isEmpty())
     {
-      // Create two QLists for the different types of layer data within the geopackage (these are combined into m_layerList later on)
+      // Create two QLists for the different types of layer data within the geoPackage (these are combined into m_layerList later on)
       QList<GeoPackageRaster*> gpkgRasters = auroraGpkg->geoPackageRasters();
       QList<GeoPackageFeatureTable*> gpkgFeatures = auroraGpkg->geoPackageFeatureTables();
 
@@ -100,13 +105,13 @@ void ReadGeopackage::readGeopackage()
 }
 
 // Getter for the menu names data
-QVariantList ReadGeopackage::layerList() const
+QVariantList ReadGeoPackage::layerList() const
 {
   return m_layerList;
 }
 
 // Called by the QML to toggle visibility at a certain index
-void ReadGeopackage::addOrShowLayer(int index, bool visible)
+void ReadGeoPackage::addOrShowLayer(int index, bool visible)
 {
   auto opLayers = m_map->operationalLayers();
   auto layer = qvariant_cast<Layer*>(m_layerList[index].toMap()["lyr"]);

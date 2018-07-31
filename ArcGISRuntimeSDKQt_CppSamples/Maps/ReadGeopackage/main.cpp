@@ -21,7 +21,7 @@
 #include <Windows.h>
 #endif
 
-#include "ReadGeopackage.h"
+#include "ReadGeoPackage.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
 
   // Initialize the sample
-  ReadGeopackage::init();
+  ReadGeoPackage::init();
 
   // Intialize application view
   QQuickView view;
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Maps/ReadGeopackage/ReadGeopackage.qml"));
+  view.setSource(QUrl("qrc:/Samples/Maps/ReadGeoPackage/ReadGeoPackage.qml"));
 
   view.show();
 
