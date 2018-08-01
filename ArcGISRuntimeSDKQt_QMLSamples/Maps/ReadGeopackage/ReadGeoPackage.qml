@@ -37,6 +37,7 @@ Rectangle {
       initialViewpoint: vc
       BasemapTopographic {}
     }
+
     ViewpointCenter {
       id: vc
       center: Point {
@@ -46,6 +47,7 @@ Rectangle {
           wkid: 4326
         }
       }
+
       targetScale: 500000
     }
   }
@@ -61,10 +63,6 @@ Rectangle {
     onErrorChanged: {
       console.log("Error: ", error.message);
     }
-
-    onCountChanged: {
-      console.log("count changed");
-    }
   }
 
   // Layer selection menu (interaction area)
@@ -75,6 +73,7 @@ Rectangle {
       left: parent.left
       top: parent.top
     }
+
     height: 210 * scaleFactor
     width: 225 * scaleFactor
     color: "transparent"
@@ -92,10 +91,10 @@ Rectangle {
       height: layerVisibilityRect.height
       color: "lightgrey"
       opacity: 0.9
-      radius: 5
+      radius: 5 * scaleFactor
       border {
         color: "#4D4D4D"
-        width: 1
+        width: 1 * scaleFactor
       }
 
       Column {
@@ -103,11 +102,12 @@ Rectangle {
           fill: parent
           margins: 10 * scaleFactor
         }
+
         clip: true
 
         Text {
           width: parent.width
-          text: "Geopackage Layers"
+          text: "GeoPackage Layers"
           wrapMode: Text.WordWrap
           clip:true
           font {
@@ -121,7 +121,7 @@ Rectangle {
           id: gpkg
           path: dataPath + "AuroraCO.gpkg"
 
-          // Initial check to see if geopackage is loaded and not empty
+          // Initial check to see if geoPackage is loaded and not empty
           onLoadStatusChanged: {
             if (loadStatus !== Enums.LoadStatusLoaded)
               return;
@@ -133,9 +133,6 @@ Rectangle {
             for (var i = 0; i < gpkg.geoPackageFeatureTables.length; i++){
               var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: gpkg.geoPackageFeatureTables[i]}, gpkg);
               layerList.append({lyr: featureLayer, name: featureLayer.name});
-              featureLayer.loadStatusChanged.connect(function() {
-                console.log("featureLayer load status: ", featureLayer.loadStatus);
-              });
               featureLayer.load();
             }
 
@@ -144,9 +141,6 @@ Rectangle {
               var rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: raster}, gpkg);
               var rasterName = String(raster.path).substring(String(raster.path).lastIndexOf("/") + 1);
               layerList.append({lyr: rasterLayer, name: rasterName});
-              rasterLayer.loadStatusChanged.connect(function() {
-                console.log("rasterLayer load status: ", rasterLayer.loadStatus);
-              });
               rasterLayer.load();
             }
           }
@@ -157,8 +151,8 @@ Rectangle {
           id: layerList
         }
 
-        // This will populate the menu by using a delegate to list through the previous listModel with the layers in it. For each later in the listModel, a row is added to the menu with an
-        // accompanying label and enable/disable switch.
+        // This will populate the menu by using a delegate to list through the previous listModel with the layers in it. For each layer in the listModel, a row is added to the menu with an
+        // accompanying label and toggleß switch.
         ListView {
           id: layerVisibilityListView
           anchors.margins: 20 * scaleFactor
@@ -182,14 +176,13 @@ Rectangle {
               }
 
               Switch {
-
-                // Fires whenever the switch is clicked. If checked, add layer to the map and make visible. If unchecked, hide the layer.
+                // Fires whenever the switch is toggled. If checked, add layer to the map (if not already within the oprational layers) and make visible. If unchecked, hide the layer.
                 onCheckedChanged: {
                   if (checked) {
-                    console.log("lyr: ", lyr);
-                    map.operationalLayers.append(lyr);
+                    if(!map.operationalLayers.contains(lyr)) {
+                      map.operationalLayers.append(lyr);
+                    }
                     lyr.visible = true;
-                    console.log(map.operationalLayers.count);
                   } else {
                     lyr.visible = false;
                   }
