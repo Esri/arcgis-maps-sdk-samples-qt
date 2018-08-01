@@ -68,6 +68,7 @@ private:
 
   QVariantList m_layerList;
   QVariantList layerList() const;
+  QString m_dataPath;
 };
 
 #endif // READGEOPACKAGE_H

@@ -27,6 +27,7 @@
 #include "GeoPackageFeatureTable.h"
 
 #include <QDir>
+#include <QQmlProperty>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -48,6 +49,7 @@ void ReadGeoPackage::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
+  m_dataPath = QQmlProperty::read(m_mapView, "dataPath").toUrl().toLocalFile();
 
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::topographic(this), this);
@@ -67,8 +69,7 @@ void ReadGeoPackage::componentComplete()
 void ReadGeoPackage::readGeoPackage()
 {
   // Load the geoPackage at the beginning
-  const QString path = "/Users/andr9668/ArcGIS/Runtime/Data/gpkg/AuroraCO.gpkg";
-  GeoPackage* auroraGpkg = new GeoPackage(path, this);
+  GeoPackage* auroraGpkg = new GeoPackage(m_dataPath + "gpkg/AuroraCO.gpkg", this);
   m_layerList.clear();
 
   // Make sure there are no errors in loading the geoPackage before interacting with it

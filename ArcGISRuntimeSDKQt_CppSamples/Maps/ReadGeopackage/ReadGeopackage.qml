@@ -29,10 +29,12 @@ ReadGeoPackageSample {
 
     property real scaleFactor: System.displayScaleFactor
 
+
     // add a mapView component
     MapView {
         anchors.fill: parent
         objectName: "mapView"
+        property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
     }
 
     // Create the layer selection menu
