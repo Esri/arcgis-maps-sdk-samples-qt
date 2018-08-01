@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 {
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("%{Clip geometry} - C++"));
+  app.setApplicationName(QStringLiteral("%{Clip Geometry} - C++"));
 
   // Initialize the sample
   ClipGeometry::init();

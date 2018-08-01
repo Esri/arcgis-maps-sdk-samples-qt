@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -38,7 +38,7 @@ Rectangle {
 
       // Create the envelope for Colorado
       Envelope {
-        id: colorado
+        id: coloradoGeometry
         xMax: -11362327.128340
         xMin: -12138232.018408
         yMin: 4441198.773776
@@ -124,7 +124,7 @@ Rectangle {
       // Colorado
       Graphic {
         id: coloradoGraphic
-        geometry: colorado
+        geometry: coloradoGeometry
         symbol: coloradoFillSymbol
       }
     }
@@ -177,17 +177,15 @@ Rectangle {
       // Iterate through the clipping envelopes
       envelopesOverlay.graphics.forEach(function(graphic) {
 
-        // Create a variable that contains the clip result, which is an envelope of the overlap between colorado and the current graphic iteration
+        // Create a variable that contains the clip result, which is an envelope of the overlap between colorado and the current graphic
         var clippedGeometry = GeometryEngine.clip(coloradoGraphic.geometry, graphic.geometry.extent);
-
-        // Check if null
         if (clippedGeometry !== null) {
 
           // Create a new graphic using the clip envelope, and fill it in with the colorado fill symbol
-          var clippedArea = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: clippedGeometry, symbol: coloradoFillSymbol });
+          var clippedGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: clippedGeometry, symbol: coloradoFillSymbol });
 
           // Add the new clipped graphic to the map
-          clippedAreasOverlay.graphics.append(clippedArea);
+          clippedAreasOverlay.graphics.append(clippedGraphic);
         }
       });
 

@@ -51,9 +51,7 @@ void ClipGeometry::componentComplete()
 
   // Create a graphics overlay for the Colorado graphic
   m_coloradoOverlay = new GraphicsOverlay(this);
-
   m_envelopesOverlay = new GraphicsOverlay(this);
-
   m_clippedAreasOverlay = new GraphicsOverlay(this);
 
   // Create an envelope to be used as the Colorado geometry
@@ -70,7 +68,7 @@ void ClipGeometry::componentComplete()
   m_mapView->graphicsOverlays()->append(m_envelopesOverlay);
 
   // Set initialViewpoint
-  Viewpoint initialViewpoint(Envelope(-12500000, 4000000, -11000000, 5500000, SpatialReference(3857)));
+  const Viewpoint initialViewpoint(Envelope(-12500000, 4000000, -11000000, 5500000, SpatialReference(3857)));
   m_mapView->setViewpoint(initialViewpoint);
 
   // Create the graphics
@@ -112,16 +110,17 @@ void ClipGeometry::clipAreas()
   // Get the graphicsListModel from the overlay containing the clipping envelopes
   GraphicListModel* graphics = m_envelopesOverlay->graphics();
 
-  /* Iterate through the envelope graphics and call the static 'clip' function, passing in
-   * the reference graphic and the current iteration's envelope geometry as arguments.
-   * If the return value is valid, create a new graphic using the returned geometry and the
-   * fillSymbol of the reference graphic as arguments. Append the new graphic to its respective
+  /* Iterate through the graphics' geometries and call the static 'clip' function, passing in
+   * the reference graphic and the current graphics' geometry as arguments.
+   * If the return value is valid, create a new graphic using the returned  clipped geometry and the
+   * fillSymbol of the reference geometry as arguments. Append the new graphic to its respective
    * graphicsOverlay. */
   const int graphicsSize = graphics->size();
-  for(int i = 0; i < graphicsSize; i++)
+  const Geometry coloradoGeometry = m_coloradoGraphic->geometry();
+  for (int i = 0; i < graphicsSize; i++)
   {
-    m_clippedGeometry = GeometryEngine::clip(m_coloradoGraphic->geometry(), graphics->at(i)->geometry().extent());
-    if(!m_clippedGeometry.isEmpty())
+    m_clippedGeometry = GeometryEngine::clip(coloradoGeometry, graphics->at(i)->geometry().extent());
+    if (!m_clippedGeometry.isEmpty())
     {
       Graphic* clippedGraphic = new Graphic(m_clippedGeometry, m_coloradoFill, this);
       m_clippedAreasOverlay->graphics()->append(clippedGraphic);
