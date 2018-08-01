@@ -121,7 +121,10 @@ void ReadGeoPackage::addOrShowLayer(int index, bool visible)
   }
   else
   {
-    opLayers->insert(index, layer);
+    if (!opLayers->contains(layer))
+    {
+      opLayers->insert(index, layer);
+    }
     layer->setVisible(true);
   }
 }

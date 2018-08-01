@@ -22,7 +22,7 @@ import Esri.ArcGISExtras 1.1
 import Esri.Samples 1.0
 
 ReadGeoPackageSample {
-    id: rootRectangle
+    id: root
     clip: true
     width: 800
     height: 600
@@ -90,7 +90,7 @@ ReadGeoPackageSample {
                     width: parent.width
                     height: parent.height
                     clip: true
-                    model: rootRectangle.layerList
+                    model: root.layerList
                     delegate: Item {
                         id: visibilityDelegate
                         width: parent.width
@@ -107,7 +107,7 @@ ReadGeoPackageSample {
 
                             Switch {
                                 onCheckedChanged: {
-                                    rootRectangle.addOrShowLayer(index, checked);
+                                    root.addOrShowLayer(index, checked);
                                 }
                             }
                         }
