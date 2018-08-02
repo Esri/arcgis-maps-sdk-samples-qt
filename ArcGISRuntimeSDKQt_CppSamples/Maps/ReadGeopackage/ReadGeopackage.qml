@@ -29,7 +29,6 @@ ReadGeoPackageSample {
 
     property real scaleFactor: System.displayScaleFactor
 
-
     // add a mapView component
     MapView {
         anchors.fill: parent
@@ -102,7 +101,7 @@ ReadGeoPackageSample {
                             anchors.verticalCenter: parent.verticalCenter
                             Text {
                                 width: 150 * scaleFactor
-                                text:  modelData.name;
+                                text:  modelData.name
                                 wrapMode: Text.WordWrap
                                 font.pixelSize: 14 * scaleFactor
                             }

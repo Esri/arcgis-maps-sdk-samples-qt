@@ -18,6 +18,5 @@ Use the top-left menu to select individual geoPackage layers to add to the map. 
 ## Relevant API
  - GeoPackage
 
-
 ## Tags
 GeoPackage, Maps

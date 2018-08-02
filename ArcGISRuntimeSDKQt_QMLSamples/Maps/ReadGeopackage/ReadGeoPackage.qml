@@ -59,10 +59,6 @@ Rectangle {
     onLayerAdded: {
       console.log("Layer added");
     }
-
-    onErrorChanged: {
-      console.log("Error: ", error.message);
-    }
   }
 
   // Layer selection menu (interaction area)

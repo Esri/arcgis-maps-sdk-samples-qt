@@ -19,28 +19,26 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Map;
-class MapQuickView;
-class listModel;
-class listView;
-class GeoPackage;
-class Layer;
-class RasterLayer;
-class FeatureTable;
-class FeatureLayer;
-class GeoPackageRaster;
-class GeoPackageFeatureTable;
-
-}
+  namespace ArcGISRuntime
+  {
+    class Map;
+    class MapQuickView;
+    class listModel;
+    class listView;
+    class GeoPackage;
+    class Layer;
+    class RasterLayer;
+    class FeatureTable;
+    class FeatureLayer;
+    class GeoPackageRaster;
+    class GeoPackageFeatureTable;
+  }
 }
 
 #include <QQuickItem>
 #include <Viewpoint.h>
 #include <QVariantMap>
 #include <QVariantList>
-
 
 class ReadGeoPackage : public QQuickItem
 {
