@@ -112,7 +112,7 @@ void ClipGeometry::clipAreas()
 
   /* Iterate through the graphics' geometries and call the static 'clip' function, passing in
    * the reference graphic and the current graphics' geometry as arguments.
-   * If the return value is valid, create a new graphic using the returned  clipped geometry and the
+   * If the return value is valid, create a new graphic using the returned clipped geometry and the
    * fillSymbol of the reference geometry as arguments. Append the new graphic to its respective
    * graphicsOverlay. */
   const int graphicsSize = graphics->size();
