@@ -22,31 +22,31 @@ import Esri.ArcGISExtras 1.1
 import Esri.Samples 1.0
 
 ClipGeometrySample {
-  id: rootRectangle
-  clip: true
-  width: 800
-  height: 600
+    id: rootRectangle
+    clip: true
+    width: 800
+    height: 600
 
-  property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: System.displayScaleFactor
 
-  // add a mapView component
-  MapView {
-    anchors.fill: parent
-    objectName: "mapView"
-  }
+    // add a mapView component
+    MapView {
+        anchors.fill: parent
+        objectName: "mapView"
+    }
 
-  Button {
-    id: clipButton
-    anchors {
-      horizontalCenter: parent.horizontalCenter
-      bottom: parent.bottom
-      bottomMargin: 25 * scaleFactor
+    Button {
+        id: clipButton
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: 25 * scaleFactor
     }
     text: "Clip"
     onClicked: {
-      // Only allow clipAreas(); to be called once
-      clipButton.enabled = false;
-      clipAreas();
+        // Only allow clipAreas(); to be called once
+        clipButton.enabled = false;
+        clipAreas();
     }
   }
 }
