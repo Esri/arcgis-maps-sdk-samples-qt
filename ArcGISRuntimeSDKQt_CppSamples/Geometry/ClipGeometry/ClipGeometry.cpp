@@ -49,7 +49,7 @@ void ClipGeometry::componentComplete()
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::topographic(this), this);
 
-  // Create a graphics overlay for the Colorado graphic
+  // Create a graphics overlays
   m_coloradoOverlay = new GraphicsOverlay(this);
   m_envelopesOverlay = new GraphicsOverlay(this);
   m_clippedAreasOverlay = new GraphicsOverlay(this);
@@ -111,9 +111,9 @@ void ClipGeometry::clipAreas()
   GraphicListModel* graphics = m_envelopesOverlay->graphics();
 
   /* Iterate through the graphics' geometries and call the static 'clip' function, passing in
-   * the reference graphic and the current graphics' geometry as arguments.
+   * the reference graphic's geometry.
    * If the return value is valid, create a new graphic using the returned clipped geometry and the
-   * fillSymbol of the reference geometry as arguments. Append the new graphic to its respective
+   * fillSymbol of the reference graphic as arguments. Append the new graphic to its respective
    * graphicsOverlay. */
   const int graphicsSize = graphics->size();
   const Geometry coloradoGeometry = m_coloradoGraphic->geometry();
