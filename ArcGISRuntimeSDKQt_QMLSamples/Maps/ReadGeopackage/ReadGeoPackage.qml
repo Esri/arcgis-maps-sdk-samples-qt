@@ -117,7 +117,7 @@ Rectangle {
           id: gpkg
           path: dataPath + "AuroraCO.gpkg"
 
-          // Initial check to see if geoPackage is loaded and not empty
+          // Initial check to see if GeoPackage is loaded and not empty
           onLoadStatusChanged: {
             if (loadStatus !== Enums.LoadStatusLoaded)
               return;
