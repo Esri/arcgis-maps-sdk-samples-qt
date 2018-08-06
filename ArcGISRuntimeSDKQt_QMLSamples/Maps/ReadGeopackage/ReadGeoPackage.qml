@@ -52,15 +52,6 @@ Rectangle {
     }
   }
 
-  // Create error handlers for the map layers
-  Connections {
-    target: map.operationalLayers
-
-    onLayerAdded: {
-      console.log("Layer added");
-    }
-  }
-
   // Layer selection menu (interaction area)
   Rectangle {
     id: layerVisibilityRect
