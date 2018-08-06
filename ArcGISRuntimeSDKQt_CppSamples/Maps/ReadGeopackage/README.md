@@ -1,6 +1,6 @@
 # Read GeoPackage
 
-This sample demonstrates how to read rasters and feature tables from geoPackages to show them as layers in a map.
+This sample demonstrates how to read rasters and feature tables from GeoPackages to show them as layers in a map.
 
 ![](screenshot.png)
 

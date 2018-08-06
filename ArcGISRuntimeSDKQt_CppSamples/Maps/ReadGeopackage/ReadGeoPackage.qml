@@ -84,7 +84,7 @@ ReadGeoPackageSample {
                     }
                 }
 
-                // Populate the menu with the layers from the geoPackage
+                // Populate the menu with the layers from the GeoPackage
                 ListView {
                     id: layerVisibilityListView
                     anchors.margins: 20 * scaleFactor

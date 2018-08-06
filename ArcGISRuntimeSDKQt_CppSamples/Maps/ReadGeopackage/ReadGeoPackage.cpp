@@ -65,19 +65,19 @@ void ReadGeoPackage::componentComplete()
   readGeoPackage();
 }
 
-// Read the geoPackage and create lists for the names and layer data
+// Read the GeoPackage and create lists for the names and layer data
 void ReadGeoPackage::readGeoPackage()
 {
-  // Load the geoPackage at the beginning
+  // Load the GeoPackage at the beginning
   GeoPackage* auroraGpkg = new GeoPackage(m_dataPath + "gpkg/AuroraCO.gpkg", this);
   m_layerList.clear();
 
-  // Make sure there are no errors in loading the geoPackage before interacting with it
+  // Make sure there are no errors in loading the GeoPackage before interacting with it
   connect(auroraGpkg, &GeoPackage::doneLoading, this, [auroraGpkg, this](Error error)
   {
     if (error.isEmpty())
     {
-      // Create two QLists for the different types of layer data within the geoPackage (these are combined into m_layerList later on)
+      // Create two QLists for the different types of layer data within the GeoPackage (these are combined into m_layerList later on)
       const QList<GeoPackageRaster*> gpkgRasters = auroraGpkg->geoPackageRasters();
       const QList<GeoPackageFeatureTable*> gpkgFeatures = auroraGpkg->geoPackageFeatureTables();
 
