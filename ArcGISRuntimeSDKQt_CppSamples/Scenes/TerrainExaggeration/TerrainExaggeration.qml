@@ -15,10 +15,10 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 TerrainExaggerationSample {
     id: terrainExaggerationSample
@@ -26,7 +26,7 @@ TerrainExaggerationSample {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
 
     SceneView {
         id: sceneView
