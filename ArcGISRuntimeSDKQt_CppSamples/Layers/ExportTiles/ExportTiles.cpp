@@ -84,10 +84,10 @@ void ExportTiles::componentComplete()
 void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2, QString dataPath)
 {
   // create an envelope from the QML rectangle corners
-  auto corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
-  auto corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
-  auto extent = Envelope(corner1, corner2);
-  auto tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
+  Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
+  Envelope extent(corner1, corner2);
+  Geometry tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
   // connect to sync task doneLoading signal
   connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, this, [this, dataPath](QUuid, ExportTileCacheParameters parameters)
@@ -96,7 +96,7 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
 
     //! [ExportTiles start job]
     // execute the task and obtain the job
-    auto exportJob = m_exportTileCacheTask->exportTileCache(m_parameters, dataPath);
+    ExportTileCacheJob* exportJob = m_exportTileCacheTask->exportTileCache(m_parameters, dataPath);
 
     // check if there is a valid job
     if (exportJob)
@@ -148,10 +148,10 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
 void ExportTiles::displayOutputTileCache(TileCache* tileCache)
 {
   // create a new tiled layer from the output tile cache
-  auto tiledLayer = new ArcGISTiledLayer(tileCache, this);
+  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);
 
   // add the new layer to a basemap
-  auto basemap = new Basemap(tiledLayer, this);
+  Basemap* basemap = new Basemap(tiledLayer, this);
 
   // set the new basemap on the map
   m_map->setBasemap(basemap);

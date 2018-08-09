@@ -122,7 +122,7 @@ void FindAddress::connectSignals()
     if (!identifyResult)
       return;
 
-    auto graphics = identifyResult->graphics();
+    const QList<Graphic*> graphics = identifyResult->graphics();
     if (graphics.length() > 0)
     {
       m_calloutText = graphics.at(0)->attributes()->attributeValue("Match_addr").toString();

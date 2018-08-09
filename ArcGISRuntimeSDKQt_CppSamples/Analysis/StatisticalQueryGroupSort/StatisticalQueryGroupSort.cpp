@@ -101,7 +101,7 @@ void StatisticalQueryGroupSort::connectSignals()
 
       // get the group string
       QString sectionString;
-      for (auto group : record->group().keys())
+      for (const QString& group : record->group().keys())
       {
         if (sectionString.length() > 0)
           sectionString += ",";
@@ -109,7 +109,7 @@ void StatisticalQueryGroupSort::connectSignals()
       }
 
       // obtain the statistics
-      for (auto stats : record->statistics().keys())
+      for (const QString& stats : record->statistics().keys())
       {
         QString statString = QString("%1: %2").arg(stats, record->statistics().value(stats).toString());
         addResultToModel(sectionString, statString);

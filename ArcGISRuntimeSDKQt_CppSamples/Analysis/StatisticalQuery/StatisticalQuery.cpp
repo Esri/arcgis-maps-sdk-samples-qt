@@ -74,7 +74,7 @@ void StatisticalQuery::componentComplete()
     while (iter.hasNext())
     {
       StatisticRecord* record = iter.next(&parent);
-      for (auto key : record->statistics().keys())
+      for (const QString& key : record->statistics().keys())
       {
         resultText += QString("%1: %2\n").arg(key, record->statistics().value(key).toString());
       }

@@ -96,13 +96,13 @@ void ExtrudeGraphics::componentComplete()
 
   // setup graphic locations
   QList<Point> pointsList;
-  for (auto i = 0; i <= 100; i++)
+  for (int i = 0; i <= 100; i++)
   {
     Point point(i / 10 * (m_size * 2) + lon, i % 10 * (m_size * 2) + lat, m_sceneView->spatialReference());
     pointsList.append(point);
   }
 
-  for (const auto& point : pointsList)
+  for (const Point& point : pointsList)
   {
     // create a random z value
     int randNum = rand() % 6 + 1;
@@ -136,7 +136,7 @@ Esri::ArcGISRuntime::Polygon ExtrudeGraphics::createPolygonFromPoints(QList<Poin
 
   // create a polygon builder
   PolygonBuilder* pb = new PolygonBuilder(m_sceneView->spatialReference(), this);
-  for (const auto& point : points)
+  for (const Point& point : points)
   {
     // add each point to the builder object
     pb->addPoint(point);

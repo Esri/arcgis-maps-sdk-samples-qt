@@ -161,11 +161,11 @@ void MobileMap_SearchAndRoute::connectSignals()
           return;
 
         // get graphics list
-        auto graphics = identifyResult->graphics();
+        QList<Graphic*> graphics = identifyResult->graphics();
         if (graphics.count() > 0)
         {
             // use the blue pin graphic instead of text graphic to as calloutData's geoElement
-            auto graphic = graphics[0];
+            Graphic* graphic = graphics[0];
             if (graphic->symbol()->symbolType() != SymbolType::PictureMarkerSymbol && graphics.count() > 1)
                 graphic = graphics[1];
 
@@ -220,7 +220,7 @@ void MobileMap_SearchAndRoute::createMapList(int index)
 
     int counter = 1;
 
-    for (const auto& map : m_mobileMapPackages[index]->maps())
+    for (const Map* map : m_mobileMapPackages[index]->maps())
     {
         QVariantMap mapList;
         mapList["name"] = map->item()->title() + " " + QString::number(counter);

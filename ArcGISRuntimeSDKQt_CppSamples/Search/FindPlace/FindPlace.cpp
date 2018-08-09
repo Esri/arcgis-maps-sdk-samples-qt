@@ -174,7 +174,7 @@ void FindPlace::createLocator()
     m_graphicParent = new QObject(this);
 
     Geometry bbox;
-    for (auto result : results)
+    for (const GeocodeResult& result : results)
     {
       Graphic* graphic = new Graphic(result.displayLocation(), result.attributes(), m_graphicParent);
       m_graphicsOverlay->graphics()->append(graphic);

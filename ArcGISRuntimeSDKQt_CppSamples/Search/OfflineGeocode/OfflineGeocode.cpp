@@ -221,7 +221,7 @@ void OfflineGeocode::connectSignals()
       return;
 
     // if user clicked on pin, display callout
-    auto graphics = identifyResult->graphics();
+    const QList<Graphic*> graphics = identifyResult->graphics();
     if (graphics.count() > 0)
       m_calloutData->setVisible(true);
 

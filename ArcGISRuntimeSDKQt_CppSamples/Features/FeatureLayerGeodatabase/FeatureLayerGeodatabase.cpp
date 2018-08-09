@@ -104,10 +104,10 @@ void FeatureLayerGeodatabase::componentComplete()
     {
       //! [FeatureLayer Geodatabase create feature layer]
       // access the feature table by name
-      auto featureTable = m_geodatabase->geodatabaseFeatureTable("Trailheads");
+      GeodatabaseFeatureTable* featureTable = m_geodatabase->geodatabaseFeatureTable("Trailheads");
 
       // create a feature layer from the feature table
-      auto featureLayer = new FeatureLayer(featureTable, this);
+      FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
       //! [FeatureLayer Geodatabase create feature layer]
 
       //! [FeatureLayer Geodatabase add to map]

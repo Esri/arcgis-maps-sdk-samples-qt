@@ -151,7 +151,7 @@ void UpdateAttributesFeatureService::connectSignals()
     if (!featureEditResults.isEmpty())
     {
       // obtain the first item in the list
-      auto featureEditResult = featureEditResults.first();
+      FeatureEditResult* featureEditResult = featureEditResults.first();
       // check if there were errors, and if not, log the new object ID
       if (!featureEditResult->isCompletedWithErrors())
         qDebug() << "Successfully updated attribute for Object ID:" << featureEditResult->objectId();

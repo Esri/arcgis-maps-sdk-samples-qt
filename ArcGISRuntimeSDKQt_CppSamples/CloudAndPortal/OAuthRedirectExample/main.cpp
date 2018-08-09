@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
   QCommandLineParser commandLineParser;
   commandLineParser.process(app);
 
-  auto argList = commandLineParser.positionalArguments();
+  QStringList argList = commandLineParser.positionalArguments();
 
   if (app.sendMessage(argList.join(",")))
     return 0;

@@ -91,10 +91,10 @@ void GenerateGeodatabase::componentComplete()
 
     // add online feature layers to the map, and obtain service IDs
     m_featureServiceInfo = m_syncTask->featureServiceInfo();
-    for (const auto& idInfo : m_featureServiceInfo.layerInfos())
+    for (const IdInfo& idInfo : m_featureServiceInfo.layerInfos())
     {
       // get the layer ID from the idInfo
-      auto id = QString::number(idInfo.infoId());
+      QString id = QString::number(idInfo.infoId());
 
       // add the layer to the map
       QUrl featureLayerUrl(m_featureServiceInfo.url().toString() + "/" + id);
@@ -121,7 +121,7 @@ void GenerateGeodatabase::componentComplete()
 
 void GenerateGeodatabase::addFeatureLayers(QString serviceUrl, QStringList serviceIds)
 {
-  for (const auto& id : serviceIds)
+  for (const QString& id : serviceIds)
   {
     ServiceFeatureTable* serviceFeatureTable = new ServiceFeatureTable(QUrl(serviceUrl + id), this);
     FeatureLayer* featureLayer = new FeatureLayer(serviceFeatureTable, this);
@@ -140,7 +140,7 @@ GenerateGeodatabaseParameters GenerateGeodatabase::getUpdatedParameters(Envelope
 
   // set the layer options for all of the service IDs
   QList<GenerateLayerOption> layerOptions;
-  for (const auto& id : m_serviceIds)
+  for (const QString& id : m_serviceIds)
   {
     GenerateLayerOption generateLayerOption(id.toInt());
     layerOptions << generateLayerOption;
@@ -153,17 +153,17 @@ GenerateGeodatabaseParameters GenerateGeodatabase::getUpdatedParameters(Envelope
 void GenerateGeodatabase::generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
 {
   // create an envelope from the QML rectangle corners
-  auto corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
-  auto corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
-  auto extent = Envelope(corner1, corner2);
-  auto geodatabaseExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
+  Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
+  Envelope extent(corner1, corner2);
+  Geometry geodatabaseExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
   // get the updated parameters
-  auto params = getUpdatedParameters(geodatabaseExtent);
+  GenerateGeodatabaseParameters params = getUpdatedParameters(geodatabaseExtent);
 
   // execute the task and obtain the job
   QString outputGdb = QQmlProperty::read(this, "outputGdb").toString();
-  auto generateJob = m_syncTask->generateGeodatabase(params, outputGdb);
+  GenerateGeodatabaseJob* generateJob = m_syncTask->generateGeodatabase(params, outputGdb);
 
   // connect to the job's status changed signal
   if (generateJob)
@@ -215,7 +215,7 @@ void GenerateGeodatabase::addOfflineData(Geodatabase* gdb)
   connect(gdb, &Geodatabase::doneLoading, this, [this, gdb](Error)
   {
     // create a feature layer from each feature table, and add to the map
-    for (const auto& featureTable : gdb->geodatabaseFeatureTables())
+    for (GeodatabaseFeatureTable* featureTable : gdb->geodatabaseFeatureTables())
     {
       FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
       m_map->operationalLayers()->append(featureLayer);
