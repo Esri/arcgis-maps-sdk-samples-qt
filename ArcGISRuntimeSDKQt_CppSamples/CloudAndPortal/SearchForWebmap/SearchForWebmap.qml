@@ -13,10 +13,10 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
 
 SearchForWebmapSample {
@@ -24,7 +24,7 @@ SearchForWebmapSample {
     width: 800
     height: 600
     clip: true
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
     property string selItem
 
     // Create MapQuickView here, and create its Map etc. in C++ code
