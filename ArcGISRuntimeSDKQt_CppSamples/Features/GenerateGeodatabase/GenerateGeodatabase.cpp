@@ -40,10 +40,6 @@ GenerateGeodatabase::GenerateGeodatabase(QQuickItem* parent) :
 {
 }
 
-GenerateGeodatabase::~GenerateGeodatabase()
-{
-}
-
 void GenerateGeodatabase::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

@@ -40,10 +40,6 @@ GOSymbols::GOSymbols(QQuickItem* parent) :
 {
 }
 
-GOSymbols::~GOSymbols()
-{
-}
-
 void GOSymbols::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

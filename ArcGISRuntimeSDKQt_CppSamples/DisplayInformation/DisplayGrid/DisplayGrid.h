@@ -54,7 +54,7 @@ class DisplayGrid : public QQuickItem
 
 public:
   explicit DisplayGrid(QQuickItem* parent = nullptr);
-  ~DisplayGrid();
+  ~DisplayGrid() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

@@ -42,7 +42,7 @@ class ManageBookmarks : public QQuickItem
 
 public:
   explicit ManageBookmarks(QQuickItem* parent = nullptr);
-  ~ManageBookmarks();
+  ~ManageBookmarks() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

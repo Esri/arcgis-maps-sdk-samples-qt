@@ -34,7 +34,7 @@ class Hillshade_Renderer : public QQuickItem
 
 public:
   explicit Hillshade_Renderer(QQuickItem* parent = nullptr);
-  ~Hillshade_Renderer();
+  ~Hillshade_Renderer() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

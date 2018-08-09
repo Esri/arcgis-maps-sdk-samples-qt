@@ -36,7 +36,7 @@ class RasterLayerService : public QQuickItem
 
 public:
   explicit RasterLayerService(QQuickItem* parent = nullptr);
-  ~RasterLayerService();
+  ~RasterLayerService() = default;
 
   static void init();
 

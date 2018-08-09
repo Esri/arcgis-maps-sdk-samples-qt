@@ -41,7 +41,7 @@ class AnalyzeHotspots : public QQuickItem
 
 public:
   explicit AnalyzeHotspots(QQuickItem* parent = nullptr);
-  ~AnalyzeHotspots();
+  ~AnalyzeHotspots() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

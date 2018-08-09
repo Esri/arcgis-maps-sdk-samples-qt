@@ -60,10 +60,6 @@ Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   Q_INIT_RESOURCE(Animate3DSymbols);
 }
 
-Animate3DSymbols::~Animate3DSymbols()
-{
-}
-
 void Animate3DSymbols::init()
 {
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
@@ -346,11 +342,6 @@ double Animate3DSymbols::minZoom() const
 MissionData::MissionData():
   m_ready(false)
 {
-}
-
-MissionData::~MissionData()
-{
-
 }
 
 bool MissionData::parse(const QString& dataPath)

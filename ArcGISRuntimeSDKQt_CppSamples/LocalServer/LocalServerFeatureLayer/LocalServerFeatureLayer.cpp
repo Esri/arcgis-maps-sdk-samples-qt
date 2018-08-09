@@ -34,10 +34,6 @@ LocalServerFeatureLayer::LocalServerFeatureLayer(QQuickItem* parent) :
 {
 }
 
-LocalServerFeatureLayer::~LocalServerFeatureLayer()
-{
-}
-
 void LocalServerFeatureLayer::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

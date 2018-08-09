@@ -27,10 +27,6 @@ ChangeBasemap::ChangeBasemap(QQuickItem* parent) :
 {
 }
 
-ChangeBasemap::~ChangeBasemap()
-{
-}
-
 void ChangeBasemap::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

@@ -36,7 +36,7 @@ class Simple_Renderer : public QQuickItem
 
 public:
   explicit Simple_Renderer(QQuickItem* parent = nullptr);
-  ~Simple_Renderer();
+  ~Simple_Renderer() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

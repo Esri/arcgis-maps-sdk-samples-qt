@@ -35,10 +35,6 @@ ServiceFeatureTableManualCache::ServiceFeatureTableManualCache(QQuickItem* paren
 {
 }
 
-ServiceFeatureTableManualCache::~ServiceFeatureTableManualCache()
-{
-}
-
 void ServiceFeatureTableManualCache::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

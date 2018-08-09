@@ -34,10 +34,6 @@ RasterRgbRenderer::RasterRgbRenderer(QQuickItem* parent /* = nullptr */):
 {
 }
 
-RasterRgbRenderer::~RasterRgbRenderer()
-{
-}
-
 void RasterRgbRenderer::init()
 {
   // Register the map view for QML

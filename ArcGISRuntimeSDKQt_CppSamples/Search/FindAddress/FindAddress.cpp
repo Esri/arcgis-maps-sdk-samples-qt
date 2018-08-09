@@ -34,10 +34,6 @@ FindAddress::FindAddress(QQuickItem* parent) :
 {
 }
 
-FindAddress::~FindAddress()
-{
-}
-
 void FindAddress::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

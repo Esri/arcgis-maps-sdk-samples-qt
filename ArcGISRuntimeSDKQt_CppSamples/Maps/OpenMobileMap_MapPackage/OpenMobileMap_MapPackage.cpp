@@ -28,10 +28,6 @@ OpenMobileMap_MapPackage::OpenMobileMap_MapPackage(QQuickItem* parent) :
 {
 }
 
-OpenMobileMap_MapPackage::~OpenMobileMap_MapPackage()
-{
-}
-
 void OpenMobileMap_MapPackage::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

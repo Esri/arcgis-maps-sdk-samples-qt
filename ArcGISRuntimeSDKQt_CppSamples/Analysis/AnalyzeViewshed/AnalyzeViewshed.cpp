@@ -43,10 +43,6 @@ AnalyzeViewshed::AnalyzeViewshed(QQuickItem* parent /* = nullptr */):
 {
 }
 
-AnalyzeViewshed::~AnalyzeViewshed()
-{
-}
-
 void AnalyzeViewshed::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

@@ -31,10 +31,6 @@ ChangeViewpoint::ChangeViewpoint(QQuickItem* parent) :
 {
 }
 
-ChangeViewpoint::~ChangeViewpoint()
-{
-}
-
 void ChangeViewpoint::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

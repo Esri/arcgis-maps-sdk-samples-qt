@@ -34,7 +34,7 @@ class GORenderers : public QQuickItem
 
 public:
   explicit GORenderers(QQuickItem* parent = nullptr);
-  ~GORenderers();
+  ~GORenderers() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

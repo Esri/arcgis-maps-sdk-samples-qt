@@ -36,7 +36,7 @@ class FeatureLayerFeatureService : public QQuickItem
 
 public:
   explicit FeatureLayerFeatureService(QQuickItem* parent = nullptr);
-  ~FeatureLayerFeatureService();
+  ~FeatureLayerFeatureService() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

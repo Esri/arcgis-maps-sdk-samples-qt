@@ -29,10 +29,6 @@ Symbols::Symbols(QQuickItem* parent) :
 {
 }
 
-Symbols::~Symbols()
-{
-}
-
 void Symbols::init()
 {
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");

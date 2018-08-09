@@ -31,10 +31,6 @@ BlendRasterLayer::BlendRasterLayer(QQuickItem* parent /* = nullptr */):
 {
 }
 
-BlendRasterLayer::~BlendRasterLayer()
-{
-}
-
 void BlendRasterLayer::init()
 {
   // Register the map view for QML

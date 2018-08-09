@@ -38,7 +38,7 @@ class SearchDictionarySymbolStyle : public QQuickItem
 
 public:
   explicit SearchDictionarySymbolStyle(QQuickItem* parent = nullptr);
-  ~SearchDictionarySymbolStyle();
+  ~SearchDictionarySymbolStyle() = default;
 
   enum class FieldEnum {
     FieldNames,

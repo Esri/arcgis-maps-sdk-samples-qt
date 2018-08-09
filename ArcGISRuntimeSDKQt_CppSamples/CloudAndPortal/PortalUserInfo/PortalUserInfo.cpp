@@ -38,10 +38,6 @@ PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
   AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
-PortalUserInfo::~PortalUserInfo()
-{
-}
-
 void PortalUserInfo::init()
 {
   qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");

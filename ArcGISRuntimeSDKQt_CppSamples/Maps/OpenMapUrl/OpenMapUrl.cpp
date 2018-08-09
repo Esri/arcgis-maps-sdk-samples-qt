@@ -27,10 +27,6 @@ OpenMapUrl::OpenMapUrl(QQuickItem* parent) :
 {
 }
 
-OpenMapUrl::~OpenMapUrl()
-{
-}
-
 void OpenMapUrl::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

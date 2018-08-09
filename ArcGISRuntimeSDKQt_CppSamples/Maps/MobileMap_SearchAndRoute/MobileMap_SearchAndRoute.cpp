@@ -58,10 +58,6 @@ MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
 {
 }
 
-MobileMap_SearchAndRoute::~MobileMap_SearchAndRoute()
-{
-}
-
 void MobileMap_SearchAndRoute::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

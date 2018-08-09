@@ -35,7 +35,7 @@ class RasterRgbRenderer : public QQuickItem
 
 public:
   explicit RasterRgbRenderer(QQuickItem* parent = nullptr);
-  ~RasterRgbRenderer();
+  ~RasterRgbRenderer() = default;
 
   static void init();
 

@@ -39,7 +39,7 @@ class OAuthRedirectHandler : public QObject
 public:
 
   OAuthRedirectHandler(const QString& urlScheme, QObject* parent = nullptr);
-  ~OAuthRedirectHandler();
+  ~OAuthRedirectHandler() = default;
 
   OAuthRedirectHandlerStatus status() const;
 

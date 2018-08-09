@@ -36,7 +36,7 @@ class GOSymbols : public QQuickItem
 
 public:
   explicit GOSymbols(QQuickItem* parent = nullptr);
-  ~GOSymbols();
+  ~GOSymbols() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

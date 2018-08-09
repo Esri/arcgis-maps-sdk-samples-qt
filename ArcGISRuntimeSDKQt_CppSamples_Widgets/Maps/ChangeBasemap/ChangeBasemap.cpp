@@ -77,6 +77,3 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-ChangeBasemap::~ChangeBasemap()
-{
-}

@@ -43,7 +43,7 @@ class DisplayLayerViewDrawStatus : public QQuickItem
 
 public:
   explicit DisplayLayerViewDrawStatus(QQuickItem* parent = nullptr);
-  ~DisplayLayerViewDrawStatus();
+  ~DisplayLayerViewDrawStatus() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

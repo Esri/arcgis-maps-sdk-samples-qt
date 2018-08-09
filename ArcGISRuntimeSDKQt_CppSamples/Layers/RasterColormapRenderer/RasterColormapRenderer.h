@@ -36,7 +36,7 @@ class RasterColormapRenderer : public QQuickItem
 
 public:
   explicit RasterColormapRenderer(QQuickItem* parent = nullptr);
-  ~RasterColormapRenderer();
+  ~RasterColormapRenderer() = default;
 
   static void init();
 

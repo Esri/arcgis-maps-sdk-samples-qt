@@ -39,10 +39,6 @@ UpdateAttributesFeatureService::UpdateAttributesFeatureService(QQuickItem* paren
 {    
 }
 
-UpdateAttributesFeatureService::~UpdateAttributesFeatureService()
-{
-}
-
 void UpdateAttributesFeatureService::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

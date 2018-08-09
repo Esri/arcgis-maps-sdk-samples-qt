@@ -36,10 +36,6 @@ IdentifyGraphics::IdentifyGraphics(QQuickItem* parent) :
 {
 }
 
-IdentifyGraphics::~IdentifyGraphics()
-{
-}
-
 void IdentifyGraphics::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

@@ -41,7 +41,7 @@ class DisplayDeviceLocation : public QQuickItem
 
 public:
   explicit DisplayDeviceLocation(QQuickItem* parent = nullptr);
-  ~DisplayDeviceLocation();
+  ~DisplayDeviceLocation() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

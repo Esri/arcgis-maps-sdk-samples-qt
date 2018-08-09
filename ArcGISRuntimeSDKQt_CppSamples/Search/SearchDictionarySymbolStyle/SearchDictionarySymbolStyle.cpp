@@ -28,10 +28,6 @@ SearchDictionarySymbolStyle::SearchDictionarySymbolStyle(QQuickItem* parent) :
 {
 }
 
-SearchDictionarySymbolStyle::~SearchDictionarySymbolStyle()
-{
-}
-
 void SearchDictionarySymbolStyle::init()
 {
   qmlRegisterType<SearchDictionarySymbolStyle>("Esri.Samples", 1, 0, "SearchDictionarySymbolStyleSample");

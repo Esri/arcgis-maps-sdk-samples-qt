@@ -38,7 +38,7 @@ class Picture_Marker_Symbol : public QQuickItem
 
 public:
   explicit Picture_Marker_Symbol(QQuickItem* parent = nullptr);
-  ~Picture_Marker_Symbol();
+  ~Picture_Marker_Symbol() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

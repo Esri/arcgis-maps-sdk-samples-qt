@@ -34,7 +34,7 @@ class BasicSceneView : public QQuickItem
 
 public:
   explicit BasicSceneView(QQuickItem* parent = nullptr);
-  ~BasicSceneView();
+  ~BasicSceneView() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

@@ -38,10 +38,6 @@ GORenderers::GORenderers(QQuickItem* parent) :
 {
 }
 
-GORenderers::~GORenderers()
-{
-}
-
 void GORenderers::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

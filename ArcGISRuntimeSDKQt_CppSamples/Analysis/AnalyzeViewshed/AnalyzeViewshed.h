@@ -41,7 +41,7 @@ class AnalyzeViewshed : public QQuickItem
 
 public:
   explicit AnalyzeViewshed(QQuickItem* parent = nullptr);
-  ~AnalyzeViewshed();
+  ~AnalyzeViewshed() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

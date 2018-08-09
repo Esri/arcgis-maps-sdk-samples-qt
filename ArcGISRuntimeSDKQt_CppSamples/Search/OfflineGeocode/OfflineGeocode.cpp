@@ -39,10 +39,6 @@ OfflineGeocode::OfflineGeocode(QQuickItem* parent):
 {
 }
 
-OfflineGeocode::~OfflineGeocode()
-{
-}
-
 void OfflineGeocode::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

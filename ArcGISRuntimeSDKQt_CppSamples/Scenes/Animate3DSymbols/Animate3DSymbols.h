@@ -57,7 +57,7 @@ class Animate3DSymbols : public QQuickItem
 
 public:
   explicit Animate3DSymbols(QQuickItem* parent = nullptr);
-  ~Animate3DSymbols();
+  ~Animate3DSymbols() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
@@ -136,7 +136,7 @@ public:
   typedef std::vector<DataPoint> DataPointList;
 
   MissionData();
-  ~MissionData();
+  ~MissionData() = default;
 
   bool parse(const QString& dataPath);
   bool isEmpty() const {return m_data.empty();}

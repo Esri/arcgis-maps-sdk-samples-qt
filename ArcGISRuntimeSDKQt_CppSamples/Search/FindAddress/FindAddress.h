@@ -38,7 +38,7 @@ class FindAddress : public QQuickItem
 
 public:
   explicit FindAddress(QQuickItem* parent = nullptr);
-  ~FindAddress();
+  ~FindAddress() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

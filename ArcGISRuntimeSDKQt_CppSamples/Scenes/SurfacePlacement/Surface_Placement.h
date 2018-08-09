@@ -34,7 +34,7 @@ class Surface_Placement : public QQuickItem
 
 public:
   explicit Surface_Placement(QQuickItem* parent = nullptr);
-  ~Surface_Placement();
+  ~Surface_Placement() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

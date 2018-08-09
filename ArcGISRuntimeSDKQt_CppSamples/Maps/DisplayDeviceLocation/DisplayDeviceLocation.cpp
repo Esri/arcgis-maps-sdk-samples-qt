@@ -36,10 +36,6 @@ DisplayDeviceLocation::DisplayDeviceLocation(QQuickItem* parent) :
 {
 }
 
-DisplayDeviceLocation::~DisplayDeviceLocation()
-{
-}
-
 void DisplayDeviceLocation::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

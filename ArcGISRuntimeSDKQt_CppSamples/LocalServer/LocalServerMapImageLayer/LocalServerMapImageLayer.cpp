@@ -33,10 +33,6 @@ LocalServerMapImageLayer::LocalServerMapImageLayer(QQuickItem* parent) :
 {
 }
 
-LocalServerMapImageLayer::~LocalServerMapImageLayer()
-{
-}
-
 void LocalServerMapImageLayer::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

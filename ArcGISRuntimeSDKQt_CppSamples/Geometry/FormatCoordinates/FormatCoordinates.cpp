@@ -31,10 +31,6 @@ FormatCoordinates::FormatCoordinates(QQuickItem* parent) :
 {
 }
 
-FormatCoordinates::~FormatCoordinates()
-{
-}
-
 void FormatCoordinates::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

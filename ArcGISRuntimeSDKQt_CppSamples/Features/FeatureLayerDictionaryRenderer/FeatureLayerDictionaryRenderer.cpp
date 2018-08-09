@@ -34,10 +34,6 @@ FeatureLayerDictionaryRenderer::FeatureLayerDictionaryRenderer(QQuickItem* paren
 { 
 }
 
-FeatureLayerDictionaryRenderer::~FeatureLayerDictionaryRenderer()
-{ 
-}
-
 void FeatureLayerDictionaryRenderer::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

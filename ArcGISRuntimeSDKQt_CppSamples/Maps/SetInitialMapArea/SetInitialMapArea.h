@@ -34,7 +34,7 @@ class SetInitialMapArea : public QQuickItem
 
 public:
   explicit SetInitialMapArea(QQuickItem* parent = nullptr);
-  ~SetInitialMapArea();
+  ~SetInitialMapArea() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

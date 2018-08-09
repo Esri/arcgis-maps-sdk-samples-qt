@@ -33,10 +33,6 @@ FeatureLayerDefinitionExpression::FeatureLayerDefinitionExpression(QQuickItem* p
 {
 }
 
-FeatureLayerDefinitionExpression::~FeatureLayerDefinitionExpression()
-{
-}
-
 void FeatureLayerDefinitionExpression::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

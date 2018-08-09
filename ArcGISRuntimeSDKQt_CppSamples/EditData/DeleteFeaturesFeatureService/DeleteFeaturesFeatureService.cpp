@@ -39,10 +39,6 @@ DeleteFeaturesFeatureService::DeleteFeaturesFeatureService(QQuickItem* parent) :
 {
 }
 
-DeleteFeaturesFeatureService::~DeleteFeaturesFeatureService()
-{
-}
-
 void DeleteFeaturesFeatureService::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

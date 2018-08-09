@@ -39,10 +39,6 @@ UpdateGeometryFeatureService::UpdateGeometryFeatureService(QQuickItem* parent) :
 {
 }
 
-UpdateGeometryFeatureService::~UpdateGeometryFeatureService()
-{
-}
-
 void UpdateGeometryFeatureService::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

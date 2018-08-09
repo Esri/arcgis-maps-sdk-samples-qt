@@ -34,7 +34,7 @@ class OpenMobileMap_MapPackage : public QQuickItem
 
 public:
   explicit OpenMobileMap_MapPackage(QQuickItem* parent = nullptr);
-  ~OpenMobileMap_MapPackage();
+  ~OpenMobileMap_MapPackage() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

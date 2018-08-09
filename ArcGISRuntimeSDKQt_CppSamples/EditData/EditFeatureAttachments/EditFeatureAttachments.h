@@ -46,7 +46,7 @@ class EditFeatureAttachments : public QQuickItem
 
 public:
   explicit EditFeatureAttachments(QQuickItem* parent = nullptr);
-  ~EditFeatureAttachments();
+  ~EditFeatureAttachments() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

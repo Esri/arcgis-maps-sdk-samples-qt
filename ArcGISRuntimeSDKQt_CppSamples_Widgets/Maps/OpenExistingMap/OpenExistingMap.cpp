@@ -74,10 +74,6 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
     createUi();
 }
 
-OpenExistingMap::~OpenExistingMap()
-{
-}
-
 void OpenExistingMap::createPortalMaps()
 {
     m_portalIds.insert("Population Pressure", "392451c381ad4109bf04f7bd442bc038");

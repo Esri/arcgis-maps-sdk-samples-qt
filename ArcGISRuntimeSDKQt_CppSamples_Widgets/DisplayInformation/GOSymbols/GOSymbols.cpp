@@ -67,10 +67,6 @@ GOSymbols::GOSymbols(QWidget* parent) :
   createUi();
 }
 
-GOSymbols::~GOSymbols()
-{
-}
-
 void GOSymbols::createUi()
 {
   QVBoxLayout* layout = new QVBoxLayout();

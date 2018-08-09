@@ -36,7 +36,7 @@ class SetMapSpatialReference : public QQuickItem
 
 public:
   explicit SetMapSpatialReference(QQuickItem* parent = nullptr);
-  ~SetMapSpatialReference();
+  ~SetMapSpatialReference() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

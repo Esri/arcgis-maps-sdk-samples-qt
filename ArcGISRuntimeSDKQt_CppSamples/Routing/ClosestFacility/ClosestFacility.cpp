@@ -39,10 +39,6 @@ ClosestFacility::ClosestFacility(QQuickItem* parent /* = nullptr */):
 {
 }
 
-ClosestFacility::~ClosestFacility()
-{
-}
-
 void ClosestFacility::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

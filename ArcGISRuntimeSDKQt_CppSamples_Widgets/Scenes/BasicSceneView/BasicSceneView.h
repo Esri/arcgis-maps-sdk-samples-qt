@@ -32,7 +32,7 @@ class BasicSceneView : public QWidget
 
 public:
   explicit BasicSceneView(QWidget* parent = nullptr);
-   ~BasicSceneView();
+   ~BasicSceneView() = default;
 
 private:
   Esri::ArcGISRuntime::Scene* m_scene;
