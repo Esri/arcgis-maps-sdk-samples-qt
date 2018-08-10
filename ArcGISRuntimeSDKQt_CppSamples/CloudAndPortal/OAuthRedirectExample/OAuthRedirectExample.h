@@ -59,8 +59,8 @@ private:
     QString status() const;
     QString portalName() const;
 
-    Esri::ArcGISRuntime::Portal* m_portal;
-    OAuthRedirectHandler* m_handler;
+    Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+    OAuthRedirectHandler* m_handler = nullptr;
 };
 
 #endif // OAUTHREDIRECTEXAMPLE_H

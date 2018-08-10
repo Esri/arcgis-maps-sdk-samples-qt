@@ -35,8 +35,8 @@ public:
    ~BasicSceneView() = default;
 
 private:
-  Esri::ArcGISRuntime::Scene* m_scene;
-  Esri::ArcGISRuntime::SceneGraphicsView* m_sceneView;
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+  Esri::ArcGISRuntime::SceneGraphicsView* m_sceneView = nullptr;
 };
 
 #endif // BASIC_SCENEVIEW_H
