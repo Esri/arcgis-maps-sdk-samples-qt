@@ -4,7 +4,8 @@ This sample demonstrates how to clip a geometry with an envelope using the Geome
 
 ![](screenshot.png)
 
-Click or tap the "Clip" button to clip the blue graphic with the red envelopes.
+## How to use the sample
+Click or tap the 'Clip' button to display the clipping results of the blue graphic and the red outlines.
 
 ## How it works
 1. Create a `graphicsOverlay` containing an envelope.
