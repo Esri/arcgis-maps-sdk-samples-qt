@@ -9,7 +9,7 @@ Click and drag the slider at the bottom to change how exaggerated the terrain be
 ## How it works
 1. Create a scene and add a slider (with an ID) to the UI via QML.
 2. Create a new function for this called `setExaggerationElevation` that accepts a `double` argument.
-3. Check that m_surface exists using an `if` statement; if this check does not happen, it's possible that the function runs before the scene is even created.
+3. Check that the surface exists using an `if` statement; if this check does not happen, it's possible that the function runs before the scene is even created.
 4. If `m_surface` exists, then access its `setElevationExaggeration` method and pass in the `double` parameter.
 5. In the `.qml` file, ensure that the main sample object at the root of the QML heirarchy has an ID for reference.
 6. Connect to the QML Slider's `OnValueChanged` signal handler.
