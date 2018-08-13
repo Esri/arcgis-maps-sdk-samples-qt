@@ -125,7 +125,7 @@ You need to update the following code with your custome URL scheme in place of `
 
 The App will then be notified of the URL as a `QFileOpenEvent`.
 
-## QtSingleApplication dependancy
+## QtSingleApplication dependency
 On Windows and Linux, the sample depends upon the `QtSingleApplication` type from qt-solutions.
 You can download the project from [GitHub](http://links.esri.com/qtSingleApplication).
 The sample is designed to include the source files directly: update the `QT_SINGLEAPP_DIR`
