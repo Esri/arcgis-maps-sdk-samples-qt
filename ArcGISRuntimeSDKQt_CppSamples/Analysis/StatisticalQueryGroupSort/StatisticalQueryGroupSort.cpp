@@ -84,8 +84,11 @@ void StatisticalQueryGroupSort::connectSignals()
     addResultToModel("", QString("Error. %1").arg(error.message()));
   });
 
-  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* result)
+  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* rawResult)
   {
+    // Delete rawResult when we leave local scope.
+    QScopedPointer<StatisticsQueryResult> result(rawResult);
+
     if (!result)    
       return;    
 
@@ -97,7 +100,7 @@ void StatisticalQueryGroupSort::connectSignals()
     while (iter.hasNext())
     {
       // get the statistic record
-      StatisticRecord* record = iter.next(result);
+      StatisticRecord* record = iter.next(result.get());
 
       // get the group string
       QString sectionString;
@@ -115,8 +118,6 @@ void StatisticalQueryGroupSort::connectSignals()
         addResultToModel(sectionString, statString);
       }
     }
-
-    delete result;
   });
 }
 

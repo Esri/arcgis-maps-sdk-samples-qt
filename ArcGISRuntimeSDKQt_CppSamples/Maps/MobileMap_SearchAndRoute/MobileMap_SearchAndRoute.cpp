@@ -177,8 +177,6 @@ void MobileMap_SearchAndRoute::connectSignals()
             m_isGeocodeInProgress = true;
             emit isGeocodeInProgressChanged();
         }
-
-        identifyResult->deleteLater();
     });
 }
 
@@ -247,7 +245,7 @@ void MobileMap_SearchAndRoute::selectMap(int index)
         // prevent connecting same signal to multiple slots
         m_currentLocatorTask->disconnect();
 
-        connect(m_currentLocatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, QList<GeocodeResult> geocodeResults)
+        connect(m_currentLocatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, const QList<GeocodeResult>& geocodeResults)
         {
             // make busy indicator invisible
             m_isGeocodeInProgress = false;

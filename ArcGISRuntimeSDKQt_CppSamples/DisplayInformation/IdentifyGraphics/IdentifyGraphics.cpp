@@ -102,8 +102,11 @@ void IdentifyGraphics::connectSignals()
   });
 
   // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
+    // Delete rawIdentifyResult on leaving scope.
+    QScopedPointer<IdentifyGraphicsOverlayResult> identifyResult(rawIdentifyResult);
+    
     if (identifyResult)
     {
       m_identifiedGraphicsCount = identifyResult->graphics().size();

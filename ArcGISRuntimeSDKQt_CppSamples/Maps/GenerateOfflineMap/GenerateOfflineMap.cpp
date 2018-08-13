@@ -59,7 +59,7 @@ void GenerateOfflineMap::componentComplete()
   m_map = new Map(m_portalItem, this);
 
   // Update property once map is done loading
-  connect(m_map, &Map::doneLoading, this, [this](const Error& e)
+  connect(m_map, &Map::doneLoading, this, [this](Error e)
   {
     if (!e.isEmpty())
       return;

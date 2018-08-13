@@ -101,9 +101,12 @@ void FeatureLayerSelection::connectSignals()
     for (int i = 0; i < identifyResult->geoElements().size(); i++)
     {
       GeoElement* element = identifyResult->geoElements().at(i);
-      if (static_cast<Feature*>(element))
-        // add the element to the list
+      if (nullptr != element)
+      {
+        // add the element to the list and take ownership of it.
+        element->setParent(this);
         identifiedFeatures.append(static_cast<Feature*>(element));
+      }
     }
 
     // select the identified features

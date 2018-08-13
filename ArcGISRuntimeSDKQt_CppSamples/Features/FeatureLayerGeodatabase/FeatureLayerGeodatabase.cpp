@@ -42,7 +42,7 @@ void FeatureLayerGeodatabase::init()
   qmlRegisterType<FeatureLayerGeodatabase>("Esri.Samples", 1, 0, "FeatureLayerGeodatabaseSample");
 }
 
-void FeatureLayerGeodatabase::logError(const Esri::ArcGISRuntime::Error& error)
+void FeatureLayerGeodatabase::logError(Esri::ArcGISRuntime::Error error)
 {
   setErrorMessage(QString("%1: %2").arg(error.message(), error.additionalMessage()));
 }

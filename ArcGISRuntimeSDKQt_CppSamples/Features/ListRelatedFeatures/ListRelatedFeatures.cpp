@@ -105,7 +105,7 @@ void ListRelatedFeatures::connectSignals()
                 while (relatedResult->iterator().hasNext())
                 {
                   // get the related feature
-                  ArcGISFeature* feature = static_cast<ArcGISFeature*>(relatedResult->iterator().next(this));
+                  ArcGISFeature* feature = static_cast<ArcGISFeature*>(relatedResult->iterator().next());
                   ArcGISFeatureTable* relatedTable = static_cast<ArcGISFeatureTable*>(feature->featureTable());
                   QString displayFieldName = relatedTable->layerInfo().displayFieldName();
                   QString serviceLayerName = relatedTable->layerInfo().serviceLayerName();
@@ -121,6 +121,8 @@ void ListRelatedFeatures::connectSignals()
               }
 
               emit showAttributeTable();
+              
+              qDeleteAll(relatedResults);
             });
 
             // zoom to the selected feature
@@ -136,7 +138,7 @@ void ListRelatedFeatures::connectSignals()
 
 
   // connect to the mouseClicked signal
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent mouseEvent)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // hide the attribute view
     emit hideAttributeTable();

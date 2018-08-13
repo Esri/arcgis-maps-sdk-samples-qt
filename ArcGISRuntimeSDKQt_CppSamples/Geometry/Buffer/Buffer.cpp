@@ -83,7 +83,7 @@ void Buffer::componentComplete()
   m_graphicsOverlayPoints->setRenderer(new SimpleRenderer(sms, this));
 
   // connect to mouse clicked signal
-  connect(m_mapView, SIGNAL(mouseClicked(QMouseEvent&)), this, SLOT(onMouseClicked(QMouseEvent&)));
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &Buffer::onMouseClicked);
 }
 
 // handle the mouse click - perform a buffer on click

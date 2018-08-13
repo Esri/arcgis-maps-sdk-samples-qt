@@ -116,11 +116,12 @@ void UpdateGeometryFeatureService::connectSignals()
       if (m_selectedFeature != nullptr)
         delete m_selectedFeature;
 
+      m_selectedFeature = static_cast<Feature*>(identifyResult->geoElements().at(0));
+      // Prevent the feature from being deleted along with the identifyResult.
+      m_selectedFeature->setParent(this);
+      
       // select the item in the result
-      m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
-
-      // set selected feature member
-      m_selectedFeature = static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0));
+      m_featureLayer->selectFeature(m_selectedFeature);
       m_featureSelected = true;
     }
   });
@@ -143,5 +144,7 @@ void UpdateGeometryFeatureService::connectSignals()
       qDebug() << "Successfully updated geometry for Object ID:" << featureEditResult->objectId();
     else
       qDebug() << "Apply edits error.";
+  
+    qDeleteAll(featureEditResults);
   });
 }

@@ -79,7 +79,7 @@ void ProjectGeometry::componentComplete()
   emit calloutDataChanged();
 }
 
-void ProjectGeometry::onMouseClicked(const QMouseEvent& event)
+void ProjectGeometry::onMouseClicked(QMouseEvent& event)
 {
   // get the mouse click as a point
   const Point originalPoint = m_mapView->screenToLocation(event.x(), event.y());

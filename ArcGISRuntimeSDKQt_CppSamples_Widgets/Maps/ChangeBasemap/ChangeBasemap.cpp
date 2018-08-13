@@ -42,7 +42,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
                              << "Oceans");
 
     // Connect the combo box signal to lambda for setting new basemaps
-    connect(m_basemapCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=](int i) {
+    connect(m_basemapCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](int i) {
         switch (i)
         {
         // Call setBasemap and pass in the appropriate basemap

@@ -31,6 +31,7 @@
 #include <QUrl>
 #include <QUuid>
 #include <QMouseEvent>
+#include <QStringLiteral>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -108,32 +109,51 @@ void DeleteFeaturesFeatureService::connectSignals()
   connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
   {
     if(!identifyResult)
-      return;
-    if (identifyResult->geoElements().size() > 0)
     {
-      // delete selected feature member if not nullptr
-      if (m_selectedFeature != nullptr)
-        delete m_selectedFeature;
-
-      // select the item in the result
-      QueryParameters query;
-      query.setObjectIds(QList<qint64>() << identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toLongLong());
-      m_featureLayer->selectFeatures(query, SelectionMode::New);
-
-      // set selected feature member
-      m_selectedFeature = static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0));
+      return;
     }
+
+    if (identifyResult->geoElements().isEmpty())
+    {
+      return;
+    }
+
+    // delete selected feature member if not nullptr
+    if (m_selectedFeature != nullptr)
+    {
+      delete m_selectedFeature;
+      m_selectedFeature = nullptr;
+    }
+
+    GeoElement* element = identifyResult->geoElements().at(0);
+    if (nullptr == element)
+    {
+      return;
+    }
+
+    // select the item in the result
+    QueryParameters query;
+    query.setObjectIds(QList<qint64> { element->attributes()->attributeValue(QStringLiteral("objectid")).toLongLong() });
+    m_featureLayer->selectFeatures(query, SelectionMode::New);
+
+    // set selected feature member
+    m_selectedFeature = static_cast<ArcGISFeature*>(element);
+    // Don't delete the selected feature when the IdentityResult is deleted.
+    m_selectedFeature->setParent(this);
   });
 
   // connect to the selectedFeatures signal on the feature layer
-  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawFeatureQueryResult)
   {
+    // Delete rawFeatureQueryResult pointer when we leave scope.
+    QScopedPointer<FeatureQueryResult> featureQueryResult(rawFeatureQueryResult);
+    
     FeatureIterator iter = featureQueryResult->iterator();
     if (iter.hasNext())
     {
       Feature* feat = iter.next();
       // emit signal for QML
-      m_featureType = feat->attributes()->attributeValue("typdamage").toString();
+      m_featureType = feat->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
       emit featureTypeChanged();
       emit featureSelected();
     }
@@ -148,7 +168,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   });
 
   // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
+  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](QUuid, const QList<FeatureEditResult*>& featureEditResults)
   {
     // obtain the first item in the list
     FeatureEditResult* featureEditResult = featureEditResults.isEmpty() ? nullptr : featureEditResults.first();
@@ -157,6 +177,8 @@ void DeleteFeaturesFeatureService::connectSignals()
       qDebug() << "Successfully deleted Object ID:" << featureEditResult->objectId();
     else
       qDebug() << "Apply edits error.";
+
+    qDeleteAll(featureEditResults);
   });
 }
 

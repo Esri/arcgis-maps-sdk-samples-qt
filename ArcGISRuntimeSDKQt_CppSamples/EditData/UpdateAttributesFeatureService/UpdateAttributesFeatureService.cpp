@@ -106,6 +106,8 @@ void UpdateAttributesFeatureService::connectSignals()
     {
       // select the item in the result
       m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
+      // Update the parent so the featureLayer is not deleted when the identifyResult is deleted.
+      m_featureLayer->setParent(this);
 
       // obtain the selected feature with attributes
       QueryParameters queryParams;
@@ -126,6 +128,7 @@ void UpdateAttributesFeatureService::connectSignals()
 
       // set selected feature member
       m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
+      m_selectedFeature->setParent(this);
       m_featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
       emit featureTypeChanged();
       emit featureSelected();
@@ -155,6 +158,7 @@ void UpdateAttributesFeatureService::connectSignals()
         qDebug() << "Apply edits error.";
     }
     m_featureLayer->clearSelection();
+    qDeleteAll(featureEditResults);
   });
 }
 

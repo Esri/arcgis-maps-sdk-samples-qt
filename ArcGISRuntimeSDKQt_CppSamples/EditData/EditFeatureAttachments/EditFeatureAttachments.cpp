@@ -41,10 +41,6 @@ EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
 {
 }
 
-EditFeatureAttachments::~EditFeatureAttachments()
-{
-}
-
 void EditFeatureAttachments::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
@@ -136,14 +132,18 @@ void EditFeatureAttachments::connectSignals()
 
       // set selected feature and attachment model members
       m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
+      // Don't delete selected feature when parent featureQueryResult is deleted.
+      m_selectedFeature->setParent(this);
+      
       m_featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
+      
       emit featureTypeChanged();
       emit featureSelected();
       emit attachmentModelChanged();
 
       // get the number of attachments
       connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted,
-              this, [this](QUuid, const QList<Attachment*>&)
+              this, [this](QUuid, const QList<Attachment*>& attachments)
       {
         m_attachmentCount = m_selectedFeature->attachments()->rowCount();
         emit attachmentCountChanged();
@@ -174,6 +174,7 @@ void EditFeatureAttachments::connectSignals()
         qDebug() << "Apply edits error:" << featureEditResult->error().code() << featureEditResult->error().message();
       }
     }
+    qDeleteAll(featureEditResults);
   });
 }
 
@@ -231,6 +232,7 @@ void EditFeatureAttachments::deleteAttachment(int index)
 
   if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
   {
+    qDebug() << "Attachments size: " << m_selectedFeature->attachments()->rowCount();
     m_selectedFeature->attachments()->deleteAttachment(index);
   }
   else

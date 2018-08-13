@@ -111,7 +111,7 @@ void ViewshedLocation::connectSignals()
     }
   });
 
-  connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this](QMouseEvent)
+  connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this]
   {
     m_calculating = false;
   });

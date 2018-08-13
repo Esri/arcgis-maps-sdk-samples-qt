@@ -114,5 +114,7 @@ void AddFeaturesFeatureService::connectSignals()
       qDebug() << "New Object ID is:" << featureEditResult->objectId();
     else
       qDebug() << "Apply edits error.";
+  
+    qDeleteAll(featureEditResults);
   });
 }

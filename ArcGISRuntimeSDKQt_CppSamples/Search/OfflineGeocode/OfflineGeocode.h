@@ -21,7 +21,6 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class Error;
     class Map;
     class Graphic;
     class LocatorTask;
@@ -34,6 +33,7 @@ namespace Esri
 }
 
 #include "Point.h"
+#include "Error.h"
 #include "SuggestResult.h"
 #include "GeocodeParameters.h"
 #include "ReverseGeocodeParameters.h"
@@ -70,7 +70,7 @@ signals:
   void errorMessageChanged();
 
 private slots:
-  void logError(const Esri::ArcGISRuntime::Error& error);
+  void logError(const Esri::ArcGISRuntime::Error error);
 
 private:
   Esri::ArcGISRuntime::CalloutData* calloutData() const;
