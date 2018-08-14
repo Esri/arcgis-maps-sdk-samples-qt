@@ -72,5 +72,5 @@ void ServiceFeatureTableManualCache::populate()
   QueryParameters params;
   params.setWhereClause("req_Type = \'Tree Maintenance or Damage\'");
 
-  m_featureTable->populateFromService(params, true, QStringList() << "*");
+  m_featureTable->populateFromService(params, true, QStringList { "*" });
 }

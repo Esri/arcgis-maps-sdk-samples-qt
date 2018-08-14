@@ -182,7 +182,7 @@ void FindRoute::solveRoute()
       stop1.setName("Origin");
       Stop stop2(m_stopsGraphicsOverlay->graphics()->at(1)->geometry());
       stop2.setName("Destination");
-      m_routeParameters.setStops(QList<Stop>() << stop1 << stop2);
+      m_routeParameters.setStops(QList<Stop> { stop1, stop2 });
 
       // solve the route with the parameters
       m_routeTask->solveRoute(m_routeParameters);

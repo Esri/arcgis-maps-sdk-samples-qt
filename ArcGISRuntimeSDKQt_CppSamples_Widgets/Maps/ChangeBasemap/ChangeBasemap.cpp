@@ -36,10 +36,7 @@ ChangeBasemap::ChangeBasemap(QWidget* parent) :
     m_basemapCombo = new QComboBox(this);
     m_basemapCombo->adjustSize();
     m_basemapCombo->setStyleSheet("QComboBox#combo {color: black; background-color:#000000;}");
-    m_basemapCombo->addItems(QStringList() << "Topographic"
-                             << "Streets"
-                             << "Imagery"
-                             << "Oceans");
+    m_basemapCombo->addItems(QStringList { "Topographic", "Streets", "Imagery", "Oceans" });
 
     // Connect the combo box signal to lambda for setting new basemaps
     connect(m_basemapCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), [this](int i) {

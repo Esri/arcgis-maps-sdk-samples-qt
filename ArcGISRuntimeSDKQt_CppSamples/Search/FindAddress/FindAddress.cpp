@@ -73,7 +73,7 @@ void FindAddress::componentComplete()
   m_locatorTask = new LocatorTask(QUrl("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"), this);
   //! [FindAddress create LocatorTask]
   m_geocodeParameters.setMinScore(75);
-  m_geocodeParameters.setResultAttributeNames(QStringList() << "Place_addr" << "Match_addr");
+  m_geocodeParameters.setResultAttributeNames(QStringList { "Place_addr", "Match_addr" });
 
   connectSignals();
 }
