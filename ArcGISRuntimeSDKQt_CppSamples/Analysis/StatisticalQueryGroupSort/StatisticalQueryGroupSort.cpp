@@ -100,7 +100,7 @@ void StatisticalQueryGroupSort::connectSignals()
     while (iter.hasNext())
     {
       // get the statistic record
-      StatisticRecord* record = iter.next(result.get());
+      StatisticRecord* record = iter.next(result.data());
 
       // get the group string
       QString sectionString;
