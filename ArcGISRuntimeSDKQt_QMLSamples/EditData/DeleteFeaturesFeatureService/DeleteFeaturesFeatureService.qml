@@ -18,15 +18,15 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
-    property double mousePointX
-    property double mousePointY
+    property real   scaleFactor: System.displayScaleFactor
+    property Point  calloutLocation
     property string damageType
 
     // Create MapView that contains a Map
@@ -99,11 +99,10 @@ Rectangle {
 
                         var feat  = selectFeaturesResult.iterator.next();
                         damageType = feat.attributes.attributeValue("typdamage");
+                        calloutLocation = feat.geometry.extent.center;
 
                         // show the callout
-                        callout.x = mousePointX;
-                        callout.y = mousePointY;
-                        callout.visible = true;
+                        callout.showCallout();
                     }
                 }
             }
@@ -115,16 +114,16 @@ Rectangle {
 
         // hide the callout after navigation
         onViewpointChanged: {
-            callout.visible = false;
+            if (callout.calloutVisible)
+                callout.dismiss()
         }
 
         onMouseClicked: {
             // reset the map callout and update window
             featureLayer.clearSelection();
-            callout.visible = false;
+            if (callout.calloutVisible)
+                callout.dismiss()
 
-            mousePointX = mouse.x;
-            mousePointY = mouse.y - callout.height;
             //! [DeleteFeaturesFeatureService identify feature]
             // call identify on the feature layer
             var tolerance = 10;
@@ -143,71 +142,25 @@ Rectangle {
                 }
             }
         }
-    }
 
-    // map callout window
-    Rectangle {
-        id: callout
-        width: row.width + (10 * scaleFactor) // add 10 for padding
-        height: 40 * scaleFactor
-        radius: 5
-        border {
-            color: "lightgrey"
-            width: .5
-        }
-        visible: false
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
+        calloutData {
+            location: calloutLocation
+            title: "Damage Type"
+            detail: damageType
         }
 
-        Row {
-            id: row
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: parent.left
-                margins: 5 * scaleFactor
-            }
-            spacing: 10
-
-            Text {
-                text: damageType
-                font.pixelSize: 18 * scaleFactor
-            }
-
-            Rectangle {
-                radius: 100
-                width: 22 * scaleFactor
-                height: width
-                color: "transparent"
-                antialiasing: true
-                border {
-                    width: 2
-                    color: "red"
-                }
-
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    y: -4 * scaleFactor
-
-                    text: "-"
-                    font {
-                        bold: true
-                        pixelSize: 22 * scaleFactor
-                    }
-                    color: "red"
-                }
-
-                // create a mouse area over the (-) text to delete the feature
-                MouseArea {
-                    anchors.fill: parent
-                    // once the delete button is clicked, hide the window and fetch the currently selected features
-                    onClicked: {
-                        callout.visible = false;
-                        featureLayer.selectedFeatures();
-                    }
-                }
+        // map callout window
+        Callout {
+            id: callout
+            accessoryButtonType: "Custom"
+            customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/DeleteButton.png"
+            calloutData: parent.calloutData
+            borderWidth: 1
+            borderColor: "lightgrey"
+            onAccessoryButtonClicked: {
+                if (callout.calloutVisible)
+                    callout.dismiss();
+                featureLayer.selectedFeatures();
             }
         }
     }
