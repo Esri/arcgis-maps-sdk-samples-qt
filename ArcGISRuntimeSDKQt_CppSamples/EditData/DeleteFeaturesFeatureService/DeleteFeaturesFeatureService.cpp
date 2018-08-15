@@ -106,8 +106,11 @@ void DeleteFeaturesFeatureService::connectSignals()
   });
 
   // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* rawIdentifyResult)
   {
+    // Deletes rawIdentifyResult instance when we leave scope.
+    QScopedPointer<IdentifyLayerResult> identifyResult(rawIdentifyResult);
+
     if(!identifyResult)
     {
       return;

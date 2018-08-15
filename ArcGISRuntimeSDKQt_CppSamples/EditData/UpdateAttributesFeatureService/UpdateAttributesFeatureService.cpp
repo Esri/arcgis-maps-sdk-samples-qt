@@ -34,6 +34,17 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+  // Conveience RAII struct that deletes all pointers in given container.
+  struct FeatureEditListResultLock
+  {
+    FeatureEditListResultLock(const QList<FeatureEditResult*>& list) : results(list) { }
+    ~FeatureEditListResultLock() { qDeleteAll(results);  }
+    const QList<FeatureEditResult*>& results;
+  };
+}
+
 UpdateAttributesFeatureService::UpdateAttributesFeatureService(QQuickItem* parent) :
   QQuickItem(parent)
 {    
@@ -146,11 +157,14 @@ void UpdateAttributesFeatureService::connectSignals()
   // connect to the applyEditsCompleted signal from the ServiceFeatureTable
   connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
   {
+    // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
+    FeatureEditListResultLock lock(featureEditResults);
+
     // check if result list is not empty
-    if (!featureEditResults.isEmpty())
+    if (!lock.results.isEmpty())
     {
       // obtain the first item in the list
-      FeatureEditResult* featureEditResult = featureEditResults.first();
+      FeatureEditResult* featureEditResult = lock.results.first();
       // check if there were errors, and if not, log the new object ID
       if (!featureEditResult->isCompletedWithErrors())
         qDebug() << "Successfully updated attribute for Object ID:" << featureEditResult->objectId();
@@ -158,27 +172,37 @@ void UpdateAttributesFeatureService::connectSignals()
         qDebug() << "Apply edits error.";
     }
     m_featureLayer->clearSelection();
-    qDeleteAll(featureEditResults);
   });
 }
 
 void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)
 {
+  // Shared connection object that we will use to disconnect the connection in the slot.
+  // We do this to create a form of fire-and-forget where the slot can only ever be invoked once.
+  QSharedPointer<QMetaObject::Connection> connection { QSharedPointer<QMetaObject::Connection>::create() };
+
   // connect to load status changed signal
-  connect(m_selectedFeature, &ArcGISFeature::loadStatusChanged,
-          this, [this, fieldVal](Esri::ArcGISRuntime::LoadStatus)
-  {
-    if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
-    {
-      disconnect(m_selectedFeature, &ArcGISFeature::loadStatusChanged, 0, 0); // bad...
+  QMetaObject::Connection c =
+      connect(
+          m_selectedFeature, &ArcGISFeature::loadStatusChanged,
+          this, [this, fieldVal, connection](Esri::ArcGISRuntime::LoadStatus)
+                {
+                  if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
+                  {
+                    // The conenction is invoked so we now forget all about this connection after this point.
+                    disconnect(*connection);
 
-      // update the select feature's attribute value
-      m_selectedFeature->attributes()->replaceAttribute("typdamage", fieldVal);
+                    // update the select feature's attribute value
+                    m_selectedFeature->attributes()->replaceAttribute("typdamage", fieldVal);
 
-      // update the feature in the feature table
-      m_featureTable->updateFeature(m_selectedFeature);
-    }
-  });
+                    // update the feature in the feature table
+                    m_featureTable->updateFeature(m_selectedFeature);
+                  }
+                }
+  );
+
+  // Copy out the connection data to the shared connection.
+  *connection = c;
 
   // load selecte feature
   m_selectedFeature->load();

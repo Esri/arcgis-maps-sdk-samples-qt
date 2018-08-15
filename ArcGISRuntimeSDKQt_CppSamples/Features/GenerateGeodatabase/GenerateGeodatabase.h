@@ -51,7 +51,7 @@ signals:
   void hideWindow(int time, bool success);
 
 private:
-  void addFeatureLayers(QString serviceUrl, QStringList serviceIds);
+  void addFeatureLayers(const QString& serviceUrl, const QStringList& serviceIds);
   Esri::ArcGISRuntime::GenerateGeodatabaseParameters getUpdatedParameters(Esri::ArcGISRuntime::Envelope gdbExtent);
   void addOfflineData(Esri::ArcGISRuntime::Geodatabase* gdb);
 

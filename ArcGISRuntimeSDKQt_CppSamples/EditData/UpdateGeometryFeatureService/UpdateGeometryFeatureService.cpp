@@ -34,6 +34,17 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+  // Conveience RAII struct that deletes all pointers in given container.
+  struct FeatureEditListResultLock
+  {
+    FeatureEditListResultLock(const QList<FeatureEditResult*>& list) : results(list) { }
+    ~FeatureEditListResultLock() { qDeleteAll(results);  }
+    const QList<FeatureEditResult*>& results;
+  };
+}
+
 UpdateGeometryFeatureService::UpdateGeometryFeatureService(QQuickItem* parent) :
   QQuickItem(parent)
 {
@@ -135,16 +146,17 @@ void UpdateGeometryFeatureService::connectSignals()
   });
 
   // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
+  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](QUuid, const QList<FeatureEditResult*>& featureEditResults)
   {
+    // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
+    FeatureEditListResultLock lock(featureEditResults);
+
     // obtain the first item in the list
-    FeatureEditResult* featureEditResult = featureEditResults.isEmpty() ? nullptr : featureEditResults.first();
+    FeatureEditResult* featureEditResult = lock.results.isEmpty() ? nullptr : lock.results.first();
     // check if there were errors, and if not, log the new object ID
     if (featureEditResult && !featureEditResult->isCompletedWithErrors())
       qDebug() << "Successfully updated geometry for Object ID:" << featureEditResult->objectId();
     else
       qDebug() << "Apply edits error.";
-  
-    qDeleteAll(featureEditResults);
   });
 }

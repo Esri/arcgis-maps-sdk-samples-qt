@@ -53,4 +53,3 @@ void ArcGISTiledLayerUrl::componentComplete()
   m_mapView->setMap(m_map);
   //! [display tiled layer from tiled map service]
 }
-

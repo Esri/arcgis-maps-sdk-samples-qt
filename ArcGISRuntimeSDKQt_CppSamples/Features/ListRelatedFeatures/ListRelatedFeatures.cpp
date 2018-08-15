@@ -36,6 +36,17 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+  // Conveience RAII struct that deletes all pointers in given container.   
+  struct FeatureQueryListResultLock
+  {
+    FeatureQueryListResultLock(const QList<RelatedFeatureQueryResult*>& list) : results(list) { }
+    ~FeatureQueryListResultLock() { qDeleteAll(results);  }
+    const QList<RelatedFeatureQueryResult*>& results;
+  };
+}
+
 ListRelatedFeatures::ListRelatedFeatures(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
@@ -98,9 +109,12 @@ void ListRelatedFeatures::connectSignals()
             ArcGISFeatureTable* selectedTable = static_cast<ArcGISFeatureTable*>(arcGISFeature->featureTable());
 
             // connect to queryRelatedFeaturesCompleted signal
-            connect(selectedTable, &ArcGISFeatureTable::queryRelatedFeaturesCompleted, this, [this, arcGISFeature](QUuid, QList<RelatedFeatureQueryResult*> relatedResults)
+            connect(selectedTable, &ArcGISFeatureTable::queryRelatedFeaturesCompleted, this, [this](QUuid, QList<RelatedFeatureQueryResult*> relatedResults)
             {
-              for (const RelatedFeatureQueryResult* relatedResult : relatedResults)
+              // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
+              FeatureQueryListResultLock lock(relatedResults);
+
+              for (const RelatedFeatureQueryResult* relatedResult : lock.results)
               {
                 while (relatedResult->iterator().hasNext())
                 {
@@ -121,8 +135,6 @@ void ListRelatedFeatures::connectSignals()
               }
 
               emit showAttributeTable();
-              
-              qDeleteAll(relatedResults);
             });
 
             // zoom to the selected feature

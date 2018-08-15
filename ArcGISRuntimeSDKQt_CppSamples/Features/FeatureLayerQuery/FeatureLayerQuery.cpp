@@ -86,8 +86,10 @@ void FeatureLayerQuery::componentComplete()
 void FeatureLayerQuery::connectSignals()
 {
     // iterate over the query results once the query is done
-    connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* queryResult)
+    connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
     {
+        QScopedPointer<FeatureQueryResult> queryResult(rawQueryResult);
+
         if (queryResult && !queryResult->iterator().hasNext())
         {
             m_queryResultsCount = 0;

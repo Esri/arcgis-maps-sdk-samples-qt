@@ -88,8 +88,10 @@ void FeatureLayerSelection::connectSignals()
   });
 
   // once the identify is done
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
   {
+    QScopedPointer<IdentifyLayerResult> identifyResult(rawIdentifyResult);
+
     if (!identifyResult)
       return;
 

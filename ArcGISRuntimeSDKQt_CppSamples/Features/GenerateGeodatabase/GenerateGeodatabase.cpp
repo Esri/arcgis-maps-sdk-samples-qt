@@ -115,7 +115,7 @@ void GenerateGeodatabase::componentComplete()
   });
 }
 
-void GenerateGeodatabase::addFeatureLayers(QString serviceUrl, QStringList serviceIds)
+void GenerateGeodatabase::addFeatureLayers(const QString& serviceUrl, const QStringList& serviceIds)
 {
   for (const QString& id : serviceIds)
   {

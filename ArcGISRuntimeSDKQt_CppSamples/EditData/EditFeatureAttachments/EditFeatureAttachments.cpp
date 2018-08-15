@@ -36,6 +36,17 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+  // Conveience RAII struct that deletes all pointers in given container.
+  struct FeatureEditListResultLock
+  {
+    FeatureEditListResultLock(const QList<FeatureEditResult*>& list) : results(list) { }
+    ~FeatureEditListResultLock() { qDeleteAll(results);  }
+    const QList<FeatureEditResult*>& results;
+  };
+}
+
 EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
   QQuickItem(parent)
 {
@@ -143,7 +154,7 @@ void EditFeatureAttachments::connectSignals()
 
       // get the number of attachments
       connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted,
-              this, [this](QUuid, const QList<Attachment*>& attachments)
+              this, [this](QUuid, const QList<Attachment*>& /*attachments*/)
       {
         m_attachmentCount = m_selectedFeature->attachments()->rowCount();
         emit attachmentCountChanged();
@@ -155,10 +166,13 @@ void EditFeatureAttachments::connectSignals()
   connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted,
           this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
   {
-    if (featureEditResults.length() > 0)
+    // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
+    FeatureEditListResultLock lock(featureEditResults);
+
+    if (lock.results.length() > 0)
     {
       // obtain the first item in the list
-      FeatureEditResult* featureEditResult = featureEditResults.first();
+      FeatureEditResult* featureEditResult = lock.results.first();
       // check if there were errors
       if (!featureEditResult->isCompletedWithErrors())
       {
@@ -174,7 +188,6 @@ void EditFeatureAttachments::connectSignals()
         qDebug() << "Apply edits error:" << featureEditResult->error().code() << featureEditResult->error().message();
       }
     }
-    qDeleteAll(featureEditResults);
   });
 }
 
