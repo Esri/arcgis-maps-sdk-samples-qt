@@ -36,7 +36,7 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-  // Conveience RAII struct that deletes all pointers in given container.
+  // Convenience RAII struct that deletes all pointers in given container.
   struct FeatureListResultLock
   {
     FeatureListResultLock(const QList<FeatureEditResult*>& list) : results(list) { }
