@@ -18,6 +18,8 @@
 
 #include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
+#include "Camera.h"
+#include "Point.h"
 #include "SceneQuickView.h"
 
 using namespace Esri::ArcGISRuntime;
@@ -46,10 +48,10 @@ void TerrainExaggeration::componentComplete()
         new ArcGISTiledElevationSource(
           QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
           this));
-  // Create a viewpoint where the camera will be
-  Viewpoint initialViewpoint(Point(46.75792111605992, -119.94891542688772, 0, SpatialReference(4326)));
+
   // Create the camera object at our initial viewpoint
-  Camera initialViewpointCamera(46.75792111605992, -119.94891542688772, 15000, 60, 40, 0);
+  const Point initialPoint(-119.9616962169934, 46.7000413426849, 3183, SpatialReference(4326));
+  const Camera initialViewpointCamera(initialPoint, 0, 7, 70, 0);
 
   // Set the initial ViewpointCamera for the scene
   m_sceneView->setViewpointCamera(initialViewpointCamera);

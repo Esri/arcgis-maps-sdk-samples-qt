@@ -51,88 +51,88 @@ Rectangle {
         Component.onCompleted: {
             sceneView.setViewpointCamera(camera);
         }
+
+        // Slider UI presentation at bottom
+        Rectangle {
+            height: 46 * scaleFactor
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: sceneView.attributionTop
+                bottomMargin: 20 * scaleFactor
+            }
+
+            // sliderCombo: A slider and text for its value
+            Row {
+                id: sliderCombo
+                anchors {
+                    centerIn: parent
+                }
+                spacing: 5 * scaleFactor
+
+                Slider {
+                    id: slider
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                    }
+                    style: SliderStyle {
+                        groove: Rectangle {
+                            implicitWidth: 200 * scaleFactor
+                            implicitHeight: 8 * scaleFactor
+                            color: "gray"
+                            opacity: 0.7
+                            radius: 8 * scaleFactor
+                        }
+                        handle: Rectangle {
+                            anchors.centerIn: parent
+                            color: control.pressed ? "white" : "lightgray"
+                            border.color: "gray"
+                            border.width: 2 * scaleFactor
+                            implicitWidth: 34 * scaleFactor
+                            implicitHeight: 34 * scaleFactor
+                            radius: 12 * scaleFactor
+                        }
+                    }
+                    // Slider controls the magnitude of exaggeration
+                    minimumValue: 1
+                    maximumValue: 10
+                }
+
+                TextField {
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                    }
+                    horizontalAlignment: TextInput.AlignHCenter
+                    style: TextFieldStyle {
+                        textColor: "white"
+                        background: Rectangle {
+                            implicitWidth: 55 * scaleFactor
+                            implicitHeight: 34 * scaleFactor
+                            border.width: 0
+                            radius: 5 * scaleFactor
+                            color: "gray"
+                            opacity: 0.7
+                        }
+                    }
+                    readOnly: true
+                    font.pixelSize: 20 * scaleFactor
+                    text: slider.value.toFixed(0)
+                }
+            }
+        }
     }
 
     Camera {
         id: camera
-        distance: 15000
-        heading: 40.0
-        pitch: 60.0
+        distance: 0
+        heading: 7
+        pitch: 70
         roll: 0.0
 
         Point {
-            x: -119.94891542688772
-            y: 46.75792111605992
-            z: 0
+            x: -119.9616962169934
+            y: 46.7000413426849
+            z: 3183
             spatialReference: SpatialReference { wkid: 4326 }
-        }
-    }
-
-    // Slider UI presentation at bottom
-    Rectangle {
-        height: 46 * scaleFactor
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: sceneView.attributionTop
-            bottomMargin: 20 * scaleFactor
-        }
-
-        // sliderCombo: A slider and text for its value
-        Row {
-            id: sliderCombo
-            anchors {
-                centerIn: parent
-            }
-            spacing: 5 * scaleFactor
-
-            Slider {
-                id: slider
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                }
-                style: SliderStyle {
-                    groove: Rectangle {
-                        implicitWidth: 200 * scaleFactor
-                        implicitHeight: 8 * scaleFactor
-                        color: "gray"
-                        opacity: 0.7
-                        radius: 8 * scaleFactor
-                    }
-                    handle: Rectangle {
-                        anchors.centerIn: parent
-                        color: control.pressed ? "white" : "lightgray"
-                        border.color: "gray"
-                        border.width: 2 * scaleFactor
-                        implicitWidth: 34 * scaleFactor
-                        implicitHeight: 34 * scaleFactor
-                        radius: 12 * scaleFactor
-                    }
-                }
-                // Slider controls the magnitude of exaggeration
-                minimumValue: 1
-                maximumValue: 10
-            }
-
-            TextField {
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                }
-                horizontalAlignment: TextInput.AlignHCenter
-                style: TextFieldStyle {
-                    textColor: "white"
-                    background: Rectangle {
-                        implicitWidth: 55 * scaleFactor
-                        implicitHeight: 34 * scaleFactor
-                        border.width: 0
-                        radius: 5 * scaleFactor
-                        color: "gray"
-                        opacity: 0.7
-                    }
-                }
-                readOnly: true
-                font.pixelSize: 20 * scaleFactor
-                text: slider.value.toFixed(0)
-            }
         }
     }
 }

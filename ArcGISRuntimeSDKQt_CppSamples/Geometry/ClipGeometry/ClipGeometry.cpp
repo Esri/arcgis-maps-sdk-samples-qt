@@ -21,6 +21,7 @@
 #include "Geometry.h"
 #include "Graphic.h"
 #include "GeometryEngine.h"
+#include "Viewpoint.h"
 #include "GraphicsOverlay.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleFillSymbol.h"
@@ -62,14 +63,14 @@ void ClipGeometry::componentComplete()
   m_intersectingEnvelope = Envelope(-12260345.183558, 4332053.378376, -11962086.479298, 4566553.881363, SpatialReference(3857));
   m_insideEnvelope = Envelope(-11655182.595204, 4593570.068343, -11431488.567009, 4741618.772994, SpatialReference(3857));
 
+  // Set initial Viewpoint
+  const Viewpoint initialViewpoint(Point(-11655182, 4741618, SpatialReference(3857)), 15151632);
+  m_map->setInitialViewpoint(initialViewpoint);
+
   // Set map to map view and append the two initial graphics overlays
   m_mapView->setMap(m_map);
   m_mapView->graphicsOverlays()->append(m_coloradoOverlay);
   m_mapView->graphicsOverlays()->append(m_envelopesOverlay);
-
-  // Set initialViewpoint
-  const Viewpoint initialViewpoint(Envelope(-12500000, 4000000, -11000000, 5500000, SpatialReference(3857)));
-  m_mapView->setViewpoint(initialViewpoint);
 
   // Create the graphics
   createGraphics();
