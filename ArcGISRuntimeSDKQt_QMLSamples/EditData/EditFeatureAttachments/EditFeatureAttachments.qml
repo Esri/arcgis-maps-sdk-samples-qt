@@ -20,16 +20,16 @@ import QtQuick.Dialogs 1.2
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
     width: 800
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property double mousePointX
-    property double mousePointY
     property string damageType
     property var selectedFeature: null
+    property Point calloutLocation;
 
     // Create MapView that contains a Map
     MapView {
@@ -81,11 +81,10 @@ Rectangle {
 
                         selectedFeature = selectFeaturesResult.iterator.next();
                         damageType = selectedFeature.attributes.attributeValue("typdamage");
+                        calloutLocation = selectedFeature.geometry.extent.center;
 
                         // show the callout
-                        callout.x = mousePointX;
-                        callout.y = mousePointY;
-                        callout.visible = true;
+                        callout.showCallout();
                     }
                 }
             }
@@ -97,18 +96,18 @@ Rectangle {
 
         // hide the callout after navigation
         onViewpointChanged: {
-            callout.visible = false;
+            if (callout.visible)
+                callout.dismiss();
             attachmentWindow.visible = false;
         }
 
         onMouseClicked: {
             // reset to defaults
             featureLayer.clearSelection();
-            callout.visible = false;
+            if (callout.visible)
+                callout.dismiss();
             attachmentWindow.visible = false;
             selectedFeature = null;
-            mousePointX = mouse.x;
-            mousePointY = mouse.y - callout.height;
 
             // call identify on the mapview
             mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 10, false, 1);
@@ -124,78 +123,23 @@ Rectangle {
                 }
             }
         }
-    }
 
-    // map callout window
-    Rectangle {
-        id: callout
-        width: col.width + (10 * scaleFactor) // add 10 for padding
-        height: 60 * scaleFactor
-        radius: 5
-        border {
-            color: "lightgrey"
-            width: .5
-        }
-        visible: false
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
+        calloutData {
+            title: damageType
+            location: calloutLocation
+            detail: selectedFeature === null ? "" : "Number of attachments: %1".arg(selectedFeature.attachments.count)
         }
 
-        Column {
-            id: col
-            anchors {
-                top: parent.top
-                left: parent.left
-                margins: 5 * scaleFactor
-            }
-            spacing: 10
-
-            Row {
-                spacing: 10
-
-                Text {
-                    text: damageType
-                    font.pixelSize: 18 * scaleFactor
-                }
-
-                Rectangle {
-                    radius: 100
-                    width: 22 * scaleFactor
-                    height: width
-                    color: "transparent"
-                    border.color: "blue"
-                    antialiasing: true
-
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: "i"
-                        font.pixelSize: 18 * scaleFactor
-                        color: "blue"
-                    }
-
-                    // create a mouse area over the (i) text to open the update window
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            attachmentWindow.visible = true;
-                        }
-                    }
-                }
+        Callout {
+            id: callout
+            borderColor:  "lightgrey"
+            borderWidth: 1
+            calloutData : parent.calloutData
+            onAccessoryButtonClicked: {
+                attachmentWindow.visible = true;
             }
 
-            Row {
-                spacing: 10
-
-                Text {
-                    id: attachmentText
-                    text: selectedFeature === null ? "" : "Number of attachments: %1".arg(selectedFeature.attachments.count)
-                    font.pixelSize: 12 * scaleFactor
-                }
-            }
         }
-
     }
 
     // attachment window

@@ -25,7 +25,6 @@ Rectangle {
     width: 800
     height: 600
 
-    property real   scaleFactor: System.displayScaleFactor
     property Point  calloutLocation
     property string damageType
 
