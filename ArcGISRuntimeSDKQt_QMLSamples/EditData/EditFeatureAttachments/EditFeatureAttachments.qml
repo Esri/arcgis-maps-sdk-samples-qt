@@ -125,7 +125,7 @@ Rectangle {
         }
 
         calloutData {
-            title: "<b><font size=\"+2\">" + damageType + "</font></b>"
+            title: "<b>" + damageType + "</b>"
             location: calloutLocation
             detail: selectedFeature === null ? "" : "Number of attachments: %1".arg(selectedFeature.attachments.count)
         }

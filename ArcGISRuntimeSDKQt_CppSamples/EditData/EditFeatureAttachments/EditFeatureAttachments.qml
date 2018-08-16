@@ -20,6 +20,8 @@ import QtQuick.Dialogs 1.2
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
+import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
@@ -34,89 +36,28 @@ EditFeatureAttachmentsSample {
         id: mapView
         anchors.fill: parent
         objectName: "mapView"
+
+        Callout {
+            id: callout
+            borderColor: "lightgrey"
+            borderWidth: 1 * scaleFactor
+            calloutData: editAttachmentsSample.calloutData
+            onAccessoryButtonClicked: {
+                attachmentWindow.visible = true;
+            }
+        }
     }
 
     onFeatureSelected: {
         // show the callout
-        callout.x = editAttachmentsSample.screenX;
-        callout.y = editAttachmentsSample.screenY;
-        callout.visible = true;
+        callout.showCallout();
     }
 
     onHideWindow: {
         // hide the callout
-        callout.visible = false;
+        if (callout.visible)
+            callout.dismiss();
         attachmentWindow.visible = false;
-    }
-
-    // map callout window
-    Rectangle {
-        id: callout
-        width: col.width + (10 * scaleFactor) // add 10 for padding
-        height: 60 * scaleFactor
-        radius: 5
-        border {
-            color: "lightgrey"
-            width: .5
-        }
-        visible: false
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
-        }
-
-        Column {
-            id: col
-            anchors {
-                top: parent.top
-                left: parent.left
-                margins: 5 * scaleFactor
-            }
-            spacing: 10
-
-            Row {
-                spacing: 10
-
-                Text {
-                    text: editAttachmentsSample.featureType
-                    font.pixelSize: 18 * scaleFactor
-                }
-
-                Rectangle {
-                    radius: 100
-                    width: 22 * scaleFactor
-                    height: width
-                    color: "transparent"
-                    border.color: "blue"
-                    antialiasing: true
-
-                    Text {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        text: "i"
-                        font.pixelSize: 18 * scaleFactor
-                        color: "blue"
-                    }
-
-                    // create a mouse area over the (i) text to open the update window
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            attachmentWindow.visible = true;
-                        }
-                    }
-                }
-            }
-
-            Row {
-                spacing: 10
-
-                Text {
-                    text: editAttachmentsSample.attachmentModel === null ? "" : "Number of attachments: %1".arg(editAttachmentsSample.attachmentCount)
-                    font.pixelSize: 12 * scaleFactor
-                }
-            }
-        }
     }
 
     // attachment window
