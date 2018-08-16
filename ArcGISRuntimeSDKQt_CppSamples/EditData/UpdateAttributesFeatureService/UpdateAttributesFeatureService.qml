@@ -19,6 +19,7 @@ import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 UpdateAttributesFeatureServiceSample {
     id: updateFeaturesSample
@@ -33,13 +34,21 @@ UpdateAttributesFeatureServiceSample {
         id: mapView
         anchors.fill: parent
         objectName: "mapView"
+
+        Callout {
+            id: callout
+            borderWidth: 1 * scaleFactor;
+            borderColor: "lightgrey"
+            calloutData: updateFeaturesSample.calloutData
+            onAccessoryButtonClicked: {
+                updateWindow.visible = true;
+            }
+        }
     }
 
     onFeatureSelected: {
         // show the callout
-        callout.x = updateFeaturesSample.screenX;
-        callout.y = updateFeaturesSample.screenY;
-        callout.visible = true;
+        callout.showCallout();
 
         // set the combo box's default value
         damageComboBox.currentIndex = featAttributes.indexOf(updateFeaturesSample.featureType);
@@ -47,132 +56,77 @@ UpdateAttributesFeatureServiceSample {
 
     onHideWindow: {
         // hide the callout
-        callout.visible = false;
+        if (callout.visible)
+            callout.dismiss();
         // hide the update window
         updateWindow.visible = false;
     }
 
-    // map callout window
-       Rectangle {
-           id: callout
-           width: row.width + (10 * scaleFactor) // add 10 for padding
-           height: 40 * scaleFactor
-           radius: 5
-           border {
-               color: "lightgrey"
-               width: .5
-           }
-           visible: false
+    // Update Window
+    Rectangle {
+        id: updateWindow
+        anchors.centerIn: parent
+        width: 200 * scaleFactor
+        height: 110 * scaleFactor
+        radius: 10
+        visible: false
 
-           MouseArea {
-               anchors.fill: parent
-               onClicked: mouse.accepted = true
-           }
+        GaussianBlur {
+            anchors.fill: updateWindow
+            source: mapView
+            radius: 40
+            samples: 20
+        }
 
-           Row {
-               id: row
-               anchors {
-                   verticalCenter: parent.verticalCenter
-                   left: parent.left
-                   margins: 5 * scaleFactor
-               }
-               spacing: 10
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse.accepted = true
+            onWheel: wheel.accepted = true
+        }
 
-               Text {
-                   text: updateFeaturesSample.featureType
-                   font.pixelSize: 18 * scaleFactor
-               }
+        Column {
+            anchors {
+                fill: parent
+                margins: 10 * scaleFactor
+            }
+            spacing: 10
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                Text {
+                    text: "Update Attribute"
+                    font.pixelSize: 16 * scaleFactor
+                }
+            }
 
-               Rectangle {
-                   radius: 100
-                   width: 22 * scaleFactor
-                   height: width
-                   color: "transparent"
-                   border.color: "blue"
-                   antialiasing: true
+            ComboBox {
+                id: damageComboBox
+                width: updateWindow.width - (20 * scaleFactor)
+                model: featAttributes
+            }
 
-                   Text {
-                       anchors.centerIn: parent
-                       text: "i"
-                       font.pixelSize: 18 * scaleFactor
-                       color: "blue"
-                   }
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 10
 
-                   // create a mouse area over the (i) text to open the update window
-                   MouseArea {
-                       anchors.fill: parent
-                       onClicked: {
-                           updateWindow.visible = true;
-                       }
-                   }
-               }
-           }
-       }
+                Button {
+                    width: (updateWindow.width / 2) - (20 * scaleFactor)
+                    text: "Update"
+                    // once the update button is clicked, hide the windows, and fetch the currently selected features
+                    onClicked: {
+                        if (callout.visible)
+                            callout.dismiss();
+                        updateWindow.visible = false;
+                        updateFeaturesSample.updateSelectedFeature(damageComboBox.currentText)
+                    }
+                }
 
-       // Update Window
-       Rectangle {
-           id: updateWindow
-           anchors.centerIn: parent
-           width: 200 * scaleFactor
-           height: 110 * scaleFactor
-           radius: 10
-           visible: false
-
-           GaussianBlur {
-               anchors.fill: updateWindow
-               source: mapView
-               radius: 40
-               samples: 20
-           }
-
-           MouseArea {
-               anchors.fill: parent
-               onClicked: mouse.accepted = true
-               onWheel: wheel.accepted = true
-           }
-
-           Column {
-               anchors {
-                   fill: parent
-                   margins: 10 * scaleFactor
-               }
-               spacing: 10
-               Row {
-                   anchors.horizontalCenter: parent.horizontalCenter
-                   Text {
-                       text: "Update Attribute"
-                       font.pixelSize: 16 * scaleFactor
-                   }
-               }
-
-               ComboBox {
-                   id: damageComboBox
-                   width: updateWindow.width - (20 * scaleFactor)
-                   model: featAttributes
-               }
-
-               Row {
-                   anchors.horizontalCenter: parent.horizontalCenter
-                   spacing: 10
-
-                   Button {
-                       width: (updateWindow.width / 2) - (20 * scaleFactor)
-                       text: "Update"
-                       // once the update button is clicked, hide the windows, and fetch the currently selected features
-                       onClicked: {
-                           callout.visible = false;
-                           updateWindow.visible = false;
-                           updateFeaturesSample.updateSelectedFeature(damageComboBox.currentText)
-                       }
-                   }
-
-                   Button {
-                       width: (updateWindow.width / 2) - (20 * scaleFactor)
-                       text: "Cancel"
-                       // once the cancel button is clicked, hide the window
-                       onClicked: updateWindow.visible = false;
-                   }
-               }
-           }
-       }
+                Button {
+                    width: (updateWindow.width / 2) - (20 * scaleFactor)
+                    text: "Cancel"
+                    // once the cancel button is clicked, hide the window
+                    onClicked: updateWindow.visible = false;
+                }
+            }
+        }
+    }
 }
