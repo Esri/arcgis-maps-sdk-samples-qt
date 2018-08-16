@@ -125,7 +125,7 @@ Rectangle {
         }
 
         calloutData {
-            title: damageType
+            title: "<b><font size=\"+2\">" + damageType + "</font></b>"
             location: calloutLocation
             detail: selectedFeature === null ? "" : "Number of attachments: %1".arg(selectedFeature.attachments.count)
         }
@@ -133,7 +133,7 @@ Rectangle {
         Callout {
             id: callout
             borderColor:  "lightgrey"
-            borderWidth: 1
+            borderWidth: 1 * scaleFactor
             calloutData : parent.calloutData
             onAccessoryButtonClicked: {
                 attachmentWindow.visible = true;

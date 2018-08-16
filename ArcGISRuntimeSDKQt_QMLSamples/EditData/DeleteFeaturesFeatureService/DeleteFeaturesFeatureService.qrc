@@ -4,6 +4,6 @@
         <file>DeleteFeaturesFeatureService.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>DeleteButton.png</file>
+        <file>ic_menu_trash_light.png</file>
     </qresource>
 </RCC>

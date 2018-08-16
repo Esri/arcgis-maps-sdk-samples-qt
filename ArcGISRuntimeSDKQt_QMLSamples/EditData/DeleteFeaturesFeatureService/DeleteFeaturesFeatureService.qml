@@ -27,6 +27,7 @@ Rectangle {
 
     property Point  calloutLocation
     property string damageType
+    property real scaleFactor: System.displayScaleFactor
 
     // Create MapView that contains a Map
     MapView {
@@ -144,17 +145,16 @@ Rectangle {
 
         calloutData {
             location: calloutLocation
-            title: "Damage Type"
-            detail: damageType
+            title: "<br><b><font size=\"+2\">" + damageType + "</font></b>"
         }
 
         // map callout window
         Callout {
             id: callout
             accessoryButtonType: "Custom"
-            customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/DeleteButton.png"
+            customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/ic_menu_trash_light.png"
             calloutData: parent.calloutData
-            borderWidth: 1
+            borderWidth: 1 * scaleFactor
             borderColor: "lightgrey"
             onAccessoryButtonClicked: {
                 if (callout.calloutVisible)

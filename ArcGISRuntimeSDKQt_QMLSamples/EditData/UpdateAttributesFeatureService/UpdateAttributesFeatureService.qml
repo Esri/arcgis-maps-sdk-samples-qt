@@ -133,7 +133,7 @@ Rectangle {
 
 
         calloutData {
-            title: damageType
+            title: "<br><b><font size=\"+2\">" + damageType + "</font></b>"
             location: calloutLocation
         }
 

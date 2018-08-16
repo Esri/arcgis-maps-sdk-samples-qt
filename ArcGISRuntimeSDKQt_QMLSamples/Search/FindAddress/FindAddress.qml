@@ -24,6 +24,7 @@ import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 Rectangle {
     width: 800
     height: 600
+    id: root
 
     property real scaleFactor: System.displayScaleFactor
     property string calloutText
@@ -94,6 +95,8 @@ Rectangle {
             calloutData: parent.calloutData
             borderColor: "lightgrey"
             accessoryButtonHidden: true
+            maxWidth: root.width * 0.75
+            leaderPosition: leaderPositionEnum.Automatic
         }
     }
 
