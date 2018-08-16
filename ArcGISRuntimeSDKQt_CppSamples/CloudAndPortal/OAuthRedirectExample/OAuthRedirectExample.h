@@ -38,7 +38,7 @@ class OAuthRedirectExample : public QQuickItem
 
 public:
     OAuthRedirectExample(QQuickItem* parent = nullptr);
-    ~OAuthRedirectExample() = default;
+    ~OAuthRedirectExample();
 
     void componentComplete() Q_DECL_OVERRIDE;
 

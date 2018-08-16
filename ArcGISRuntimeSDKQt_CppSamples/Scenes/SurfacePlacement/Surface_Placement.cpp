@@ -36,6 +36,10 @@ Surface_Placement::Surface_Placement(QQuickItem* parent /* = nullptr */):
 {
 }
 
+Surface_Placement::~Surface_Placement()
+{
+}
+
 void Surface_Placement::init()
 {
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");

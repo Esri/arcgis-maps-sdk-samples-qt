@@ -29,6 +29,10 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QQuickItem* parent) :
 {
 }
 
+ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
+{
+}
+
 void ArcGISTiledLayerUrl::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

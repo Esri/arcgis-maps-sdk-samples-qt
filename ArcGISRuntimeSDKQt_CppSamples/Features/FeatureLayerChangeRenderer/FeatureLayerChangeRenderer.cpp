@@ -36,6 +36,10 @@ FeatureLayerChangeRenderer::FeatureLayerChangeRenderer(QQuickItem* parent) :
 {
 }
 
+FeatureLayerChangeRenderer::~FeatureLayerChangeRenderer()
+{
+}
+
 void FeatureLayerChangeRenderer::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

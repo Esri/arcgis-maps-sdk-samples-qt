@@ -36,6 +36,10 @@ DisplayLayerViewDrawStatus::DisplayLayerViewDrawStatus(QQuickItem* parent) :
 {
 }
 
+DisplayLayerViewDrawStatus::~DisplayLayerViewDrawStatus()
+{
+}
+
 void DisplayLayerViewDrawStatus::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

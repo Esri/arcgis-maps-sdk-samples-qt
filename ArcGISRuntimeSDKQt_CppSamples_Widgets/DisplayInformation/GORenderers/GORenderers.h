@@ -32,7 +32,7 @@ class GORenderers : public QWidget
 
 public:
   explicit GORenderers(QWidget* parent = nullptr);
-  ~GORenderers() = default;
+  ~GORenderers();
 
 private:
   void createUi();

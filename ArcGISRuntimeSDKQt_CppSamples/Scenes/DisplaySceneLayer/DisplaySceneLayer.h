@@ -35,7 +35,7 @@ class DisplaySceneLayer : public QQuickItem
 
 public:
   explicit DisplaySceneLayer(QQuickItem* parent = nullptr);
-  ~DisplaySceneLayer() = default;
+  ~DisplaySceneLayer();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

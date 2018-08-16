@@ -36,6 +36,10 @@ ExportTiles::ExportTiles(QQuickItem* parent) :
 {
 }
 
+ExportTiles::~ExportTiles()
+{
+}
+
 void ExportTiles::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

@@ -38,7 +38,7 @@ class ExportTiles : public QQuickItem
 
 public:
   explicit ExportTiles(QQuickItem* parent = nullptr);
-  ~ExportTiles() = default;
+  ~ExportTiles();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

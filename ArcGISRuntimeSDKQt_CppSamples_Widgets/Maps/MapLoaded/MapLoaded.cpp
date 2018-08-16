@@ -63,3 +63,7 @@ MapLoaded::MapLoaded(QWidget* parent) :
     vBoxLayout->addWidget(m_loadStatus);
     setLayout(vBoxLayout);
 }
+
+MapLoaded::~MapLoaded()
+{
+}

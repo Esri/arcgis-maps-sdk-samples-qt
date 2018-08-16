@@ -37,7 +37,7 @@ class BlendRasterLayer : public QQuickItem
 
 public:
   explicit BlendRasterLayer(QQuickItem* parent = nullptr);
-  ~BlendRasterLayer() = default;
+  ~BlendRasterLayer();
 
   static void init();
 

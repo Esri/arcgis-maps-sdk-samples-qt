@@ -43,6 +43,11 @@ MyApplication::MyApplication(const QString& id, int& argc, char** argv):
 
 }
 
+MyApplication::~MyApplication()
+{
+
+}
+
 bool MyApplication::event(QEvent* event)
 {
     if (event->type() == QEvent::FileOpen)

@@ -77,6 +77,10 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
     createUi();
 }
 
+ManageBookmarks::~ManageBookmarks()
+{
+}
+
 void ManageBookmarks::createInitialBookmarks()
 {
     // Mysterious Desert Pattern

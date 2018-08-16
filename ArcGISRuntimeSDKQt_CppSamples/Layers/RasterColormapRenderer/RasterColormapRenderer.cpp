@@ -31,6 +31,10 @@ RasterColormapRenderer::RasterColormapRenderer(QQuickItem* parent /* = nullptr *
 {
 }
 
+RasterColormapRenderer::~RasterColormapRenderer()
+{
+}
+
 void RasterColormapRenderer::init()
 {
   // Register the map view for QML

@@ -32,6 +32,10 @@ RasterLayerService::RasterLayerService(QQuickItem* parent /* = nullptr */):
 {
 }
 
+RasterLayerService::~RasterLayerService()
+{
+}
+
 void RasterLayerService::init()
 {
   // Register the map view for QML

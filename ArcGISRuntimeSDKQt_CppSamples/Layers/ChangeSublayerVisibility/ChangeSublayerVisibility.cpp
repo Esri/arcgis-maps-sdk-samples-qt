@@ -33,6 +33,10 @@ ChangeSublayerVisibility::ChangeSublayerVisibility(QQuickItem* parent) :
 {
 }
 
+ChangeSublayerVisibility::~ChangeSublayerVisibility()
+{
+}
+
 void ChangeSublayerVisibility::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

@@ -33,6 +33,10 @@ SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */):
   AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
+SearchForWebmap::~SearchForWebmap()
+{
+}
+
 void SearchForWebmap::init()
 {
   qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");

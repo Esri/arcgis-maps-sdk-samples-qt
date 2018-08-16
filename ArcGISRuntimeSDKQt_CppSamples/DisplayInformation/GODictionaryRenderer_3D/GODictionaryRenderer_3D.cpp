@@ -42,6 +42,10 @@ GODictionaryRenderer_3D::GODictionaryRenderer_3D(QQuickItem* parent) :
   m_graphicsOverlay->setRenderingMode(GraphicsRenderingMode::Dynamic);
 }
 
+GODictionaryRenderer_3D::~GODictionaryRenderer_3D()
+{ 
+}
+
 void GODictionaryRenderer_3D::init()
 {
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");

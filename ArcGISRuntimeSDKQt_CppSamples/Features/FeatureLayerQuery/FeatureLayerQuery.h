@@ -39,7 +39,7 @@ class FeatureLayerQuery : public QQuickItem
 
 public:
   explicit FeatureLayerQuery(QQuickItem* parent = nullptr);
-  ~FeatureLayerQuery() = default;
+  ~FeatureLayerQuery();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

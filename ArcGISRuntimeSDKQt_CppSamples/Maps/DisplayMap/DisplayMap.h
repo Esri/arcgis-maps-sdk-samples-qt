@@ -34,7 +34,7 @@ class DisplayMap : public QQuickItem
 
 public:
   explicit DisplayMap(QQuickItem* parent = nullptr);
-  ~DisplayMap() = default;
+  ~DisplayMap();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

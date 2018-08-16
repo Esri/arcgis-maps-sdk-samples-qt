@@ -36,6 +36,10 @@ FeatureLayerGeodatabase::FeatureLayerGeodatabase(QQuickItem* parent) :
 {
 }
 
+FeatureLayerGeodatabase::~FeatureLayerGeodatabase()
+{
+}
+
 void FeatureLayerGeodatabase::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

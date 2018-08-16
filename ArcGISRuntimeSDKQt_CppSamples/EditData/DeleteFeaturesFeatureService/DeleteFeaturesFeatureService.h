@@ -43,7 +43,7 @@ class DeleteFeaturesFeatureService : public QQuickItem
 
 public:
   explicit DeleteFeaturesFeatureService(QQuickItem* parent = nullptr);
-  ~DeleteFeaturesFeatureService() = default;
+  ~DeleteFeaturesFeatureService();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

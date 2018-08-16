@@ -31,6 +31,10 @@ ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
   AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
+ShowOrgBasemaps::~ShowOrgBasemaps()
+{
+}
+
 void ShowOrgBasemaps::init()
 {
   qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");

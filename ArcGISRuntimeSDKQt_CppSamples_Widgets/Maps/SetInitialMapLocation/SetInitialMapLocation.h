@@ -32,7 +32,7 @@ class SetInitialMapLocation : public QWidget
 
 public:
   explicit SetInitialMapLocation(QWidget* parent = nullptr);
-  ~SetInitialMapLocation() = default;
+  ~SetInitialMapLocation();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

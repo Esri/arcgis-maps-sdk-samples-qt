@@ -32,7 +32,7 @@ class DisplayMap : public QWidget
 
 public:
   explicit DisplayMap(QWidget* parent = nullptr);
-   ~DisplayMap() = default;
+   ~DisplayMap();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

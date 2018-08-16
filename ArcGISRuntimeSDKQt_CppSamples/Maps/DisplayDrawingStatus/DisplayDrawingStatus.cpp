@@ -30,6 +30,10 @@ DisplayDrawingStatus::DisplayDrawingStatus(QQuickItem* parent):
 {
 }
 
+DisplayDrawingStatus::~DisplayDrawingStatus()
+{
+}
+
 void DisplayDrawingStatus::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

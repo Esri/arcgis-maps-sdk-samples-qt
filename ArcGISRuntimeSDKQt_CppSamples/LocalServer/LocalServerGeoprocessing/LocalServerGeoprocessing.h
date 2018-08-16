@@ -41,7 +41,7 @@ class LocalServerGeoprocessing : public QQuickItem
 
 public:
   explicit LocalServerGeoprocessing(QQuickItem* parent = nullptr);
-  ~LocalServerGeoprocessing() = default;
+  ~LocalServerGeoprocessing();
 
   void componentComplete() override;
 

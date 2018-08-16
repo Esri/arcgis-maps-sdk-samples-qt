@@ -46,3 +46,7 @@ BasicSceneView::BasicSceneView(QWidget* parent) :
     vBoxLayout->addWidget(m_sceneView);
     setLayout(vBoxLayout);
 }
+
+BasicSceneView::~BasicSceneView()
+{
+}

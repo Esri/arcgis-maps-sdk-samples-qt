@@ -33,6 +33,10 @@ Hillshade_Renderer::Hillshade_Renderer(QQuickItem* parent /* = nullptr */):
 {
 }
 
+Hillshade_Renderer::~Hillshade_Renderer()
+{
+}
+
 void Hillshade_Renderer::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

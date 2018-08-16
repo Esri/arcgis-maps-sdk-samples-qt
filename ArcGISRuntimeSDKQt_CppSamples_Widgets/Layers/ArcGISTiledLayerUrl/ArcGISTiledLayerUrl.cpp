@@ -47,3 +47,7 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
     vBoxLayout->addWidget(m_mapView);
     setLayout(vBoxLayout);
 }
+
+ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
+{
+}

@@ -34,6 +34,10 @@ ServiceArea::ServiceArea(QQuickItem* parent /* = nullptr */):
 {
 }
 
+ServiceArea::~ServiceArea()
+{
+}
+
 void ServiceArea::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

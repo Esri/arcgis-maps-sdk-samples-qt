@@ -30,6 +30,10 @@ SetMapSpatialReference::SetMapSpatialReference(QQuickItem* parent) :
 {    
 }
 
+SetMapSpatialReference::~SetMapSpatialReference()
+{
+}
+
 void SetMapSpatialReference::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

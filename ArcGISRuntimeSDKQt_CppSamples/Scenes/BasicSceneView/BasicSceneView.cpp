@@ -28,6 +28,10 @@ BasicSceneView::BasicSceneView(QQuickItem* parent) :
 {
 }
 
+BasicSceneView::~BasicSceneView()
+{
+}
+
 void BasicSceneView::init()
 {
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");

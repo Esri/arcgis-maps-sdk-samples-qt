@@ -33,6 +33,10 @@ BuildLegend::BuildLegend(QQuickItem* parent) :
 {
 }
 
+BuildLegend::~BuildLegend()
+{
+}
+
 void BuildLegend::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

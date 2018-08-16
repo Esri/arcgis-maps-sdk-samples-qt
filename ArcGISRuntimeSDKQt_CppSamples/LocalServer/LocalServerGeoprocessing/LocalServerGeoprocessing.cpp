@@ -41,6 +41,11 @@ LocalServerGeoprocessing::LocalServerGeoprocessing(QQuickItem* parent) :
 {
 }
 
+// destructor
+LocalServerGeoprocessing::~LocalServerGeoprocessing()
+{
+}
+
 void LocalServerGeoprocessing::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

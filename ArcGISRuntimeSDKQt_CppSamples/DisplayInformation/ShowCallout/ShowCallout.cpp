@@ -27,6 +27,10 @@ ShowCallout::ShowCallout(QQuickItem* parent):
 {
 }
 
+ShowCallout::~ShowCallout()
+{
+}
+
 void ShowCallout::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

@@ -48,6 +48,10 @@ GORenderers::GORenderers(QWidget* parent) :
   createUi();
 }
 
+GORenderers::~GORenderers()
+{
+}
+
 void GORenderers::createUi()
 {
   QVBoxLayout* layout = new QVBoxLayout();

@@ -46,7 +46,7 @@ class ClosestFacility : public QQuickItem
 
 public:
   explicit ClosestFacility(QQuickItem* parent = nullptr);
-  ~ClosestFacility() = default;
+  ~ClosestFacility();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

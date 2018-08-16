@@ -60,6 +60,10 @@ OAuthRedirectHandler::OAuthRedirectHandler(const QString& urlScheme, QObject* pa
   });
 }
 
+OAuthRedirectHandler::~OAuthRedirectHandler()
+{
+}
+
 void OAuthRedirectHandler::handleAppMessage(const QString& msg)
 {
   m_status = OAuthRedirectHandlerStatus::MessageReceived;

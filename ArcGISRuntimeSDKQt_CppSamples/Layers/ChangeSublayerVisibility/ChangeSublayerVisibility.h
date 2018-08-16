@@ -38,7 +38,7 @@ class ChangeSublayerVisibility : public QQuickItem
 
 public:
   explicit ChangeSublayerVisibility(QQuickItem* parent = nullptr);
-  ~ChangeSublayerVisibility() = default;
+  ~ChangeSublayerVisibility();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

@@ -28,6 +28,10 @@ ShowMagnifier::ShowMagnifier(QQuickItem* parent) :
 {
 }
 
+ShowMagnifier::~ShowMagnifier()
+{
+}
+
 void ShowMagnifier::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

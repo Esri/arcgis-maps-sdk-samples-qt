@@ -35,7 +35,7 @@ class RasterStretchRenderer : public QQuickItem
 
 public:
   explicit RasterStretchRenderer(QQuickItem* parent = nullptr);
-  ~RasterStretchRenderer() = default;
+  ~RasterStretchRenderer();
 
   static void init();
 

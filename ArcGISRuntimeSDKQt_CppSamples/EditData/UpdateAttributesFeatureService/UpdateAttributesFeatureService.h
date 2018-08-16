@@ -43,7 +43,7 @@ class UpdateAttributesFeatureService : public QQuickItem
 
 public:
   explicit UpdateAttributesFeatureService(QQuickItem* parent = nullptr);
-  ~UpdateAttributesFeatureService() = default;
+  ~UpdateAttributesFeatureService();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

@@ -31,6 +31,10 @@ AnalyzeHotspots::AnalyzeHotspots(QQuickItem* parent /* = nullptr */):
 {
 }
 
+AnalyzeHotspots::~AnalyzeHotspots()
+{
+}
+
 void AnalyzeHotspots::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

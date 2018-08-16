@@ -36,7 +36,7 @@ class MapRotation : public QWidget
 
 public:
   explicit MapRotation(QWidget* parent = nullptr);
-  ~MapRotation() = default;
+  ~MapRotation();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

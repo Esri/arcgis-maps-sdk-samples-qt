@@ -32,6 +32,10 @@ DisplaySceneLayer::DisplaySceneLayer(QQuickItem* parent) :
 {
 }
 
+DisplaySceneLayer::~DisplaySceneLayer()
+{
+}
+
 void DisplaySceneLayer::init()
 {
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");

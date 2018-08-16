@@ -34,7 +34,7 @@ class MapLoaded : public QWidget
 
 public:
   explicit MapLoaded(QWidget* parent = nullptr);
-  ~MapLoaded() = default;
+  ~MapLoaded();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

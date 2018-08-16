@@ -34,7 +34,7 @@ class Web_Tiled_Layer : public QQuickItem
 
 public:
   explicit Web_Tiled_Layer(QQuickItem* parent = nullptr);
-  ~Web_Tiled_Layer() = default;
+  ~Web_Tiled_Layer();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

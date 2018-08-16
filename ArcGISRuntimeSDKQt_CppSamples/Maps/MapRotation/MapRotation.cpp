@@ -30,6 +30,10 @@ MapRotation::MapRotation(QQuickItem* parent) :
 {
 }
 
+MapRotation::~MapRotation()
+{
+}
+
 void MapRotation::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

@@ -38,6 +38,10 @@ FindRoute::FindRoute(QQuickItem* parent) :
 {
 }
 
+FindRoute::~FindRoute()
+{
+}
+
 void FindRoute::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

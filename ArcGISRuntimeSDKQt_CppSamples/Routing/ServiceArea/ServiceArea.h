@@ -44,7 +44,7 @@ class ServiceArea : public QQuickItem
 
 public:
   explicit ServiceArea(QQuickItem* parent = nullptr);
-  ~ServiceArea() = default;
+  ~ServiceArea();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

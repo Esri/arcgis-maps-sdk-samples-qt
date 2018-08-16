@@ -39,7 +39,7 @@ class Feature_Collection_Layer : public QQuickItem
 
 public:
   explicit Feature_Collection_Layer(QQuickItem* parent = nullptr);
-  ~Feature_Collection_Layer() = default;
+  ~Feature_Collection_Layer();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

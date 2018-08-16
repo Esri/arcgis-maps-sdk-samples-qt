@@ -37,6 +37,10 @@ Picture_Marker_Symbol::Picture_Marker_Symbol(QQuickItem* parent) :
 {
 }
 
+Picture_Marker_Symbol::~Picture_Marker_Symbol()
+{
+}
+
 void Picture_Marker_Symbol::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

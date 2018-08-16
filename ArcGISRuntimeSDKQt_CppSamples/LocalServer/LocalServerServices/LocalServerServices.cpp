@@ -32,6 +32,10 @@ LocalServerServices::LocalServerServices(QQuickItem* parent) :
 {
 }
 
+LocalServerServices::~LocalServerServices()
+{
+}
+
 void LocalServerServices::init()
 {
   qmlRegisterType<LocalServerServices>("Esri.Samples", 1, 0, "LocalServerServicesSample");

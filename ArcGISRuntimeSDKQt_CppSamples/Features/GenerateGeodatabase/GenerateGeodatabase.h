@@ -40,7 +40,7 @@ class GenerateGeodatabase : public QQuickItem
 
 public:
   explicit GenerateGeodatabase(QQuickItem* parent = nullptr);
-  ~GenerateGeodatabase() = default;
+  ~GenerateGeodatabase();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

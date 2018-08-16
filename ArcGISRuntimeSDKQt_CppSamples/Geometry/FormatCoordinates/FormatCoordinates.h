@@ -46,7 +46,7 @@ class FormatCoordinates : public QQuickItem
 
 public:
   explicit FormatCoordinates(QQuickItem* parent = nullptr);
-  ~FormatCoordinates() = default;
+  ~FormatCoordinates();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

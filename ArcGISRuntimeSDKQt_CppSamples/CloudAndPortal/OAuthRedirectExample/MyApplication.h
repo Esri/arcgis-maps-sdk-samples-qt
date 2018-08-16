@@ -33,7 +33,7 @@ public:
 
     MyApplication(int& argc, char** argv, bool GUIenabled = true);
     MyApplication(const QString& id, int& argc, char** argv);
-    ~MyApplication() = default;
+    ~MyApplication();
 
     bool event(QEvent* event) override;
 };

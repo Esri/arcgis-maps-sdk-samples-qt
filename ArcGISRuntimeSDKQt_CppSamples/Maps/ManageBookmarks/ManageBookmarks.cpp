@@ -31,6 +31,10 @@ ManageBookmarks::ManageBookmarks(QQuickItem* parent) :
 {
 }
 
+ManageBookmarks::~ManageBookmarks()
+{
+}
+
 void ManageBookmarks::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

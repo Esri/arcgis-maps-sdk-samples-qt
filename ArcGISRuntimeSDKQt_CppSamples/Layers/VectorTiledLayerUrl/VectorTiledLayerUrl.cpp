@@ -32,6 +32,10 @@ VectorTiledLayerUrl::VectorTiledLayerUrl(QQuickItem* parent) :
 {
 }
 
+VectorTiledLayerUrl::~VectorTiledLayerUrl()
+{
+}
+
 void VectorTiledLayerUrl::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

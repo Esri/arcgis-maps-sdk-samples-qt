@@ -31,6 +31,11 @@ TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
 }
+
+TokenAuthentication::~TokenAuthentication()
+{
+}
+
 void TokenAuthentication::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

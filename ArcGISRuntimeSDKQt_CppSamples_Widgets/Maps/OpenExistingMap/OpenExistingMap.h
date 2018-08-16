@@ -37,7 +37,7 @@ class OpenExistingMap : public QWidget
 
 public:
   explicit OpenExistingMap(QWidget* parent = nullptr);
-  ~OpenExistingMap() = default;
+  ~OpenExistingMap();
 
 private:
   void createUi();

@@ -54,7 +54,7 @@ class MobileMap_SearchAndRoute : public QQuickItem
 
 public:
   explicit MobileMap_SearchAndRoute(QQuickItem* parent = nullptr);
-  ~MobileMap_SearchAndRoute() = default;
+  ~MobileMap_SearchAndRoute();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

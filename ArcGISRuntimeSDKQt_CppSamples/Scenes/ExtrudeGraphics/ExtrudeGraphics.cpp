@@ -38,6 +38,10 @@ ExtrudeGraphics::ExtrudeGraphics(QQuickItem* parent) :
   srand(time(nullptr));
 }
 
+ExtrudeGraphics::~ExtrudeGraphics()
+{
+}
+
 void ExtrudeGraphics::init()
 {
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");

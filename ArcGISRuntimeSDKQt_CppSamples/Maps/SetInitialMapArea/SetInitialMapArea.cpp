@@ -29,6 +29,10 @@ SetInitialMapArea::SetInitialMapArea(QQuickItem* parent) :
 {
 }
 
+SetInitialMapArea::~SetInitialMapArea()
+{
+}
+
 void SetInitialMapArea::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

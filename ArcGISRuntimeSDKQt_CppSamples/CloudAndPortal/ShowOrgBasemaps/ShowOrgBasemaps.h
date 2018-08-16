@@ -44,7 +44,7 @@ class ShowOrgBasemaps : public QQuickItem
 
 public:
   explicit ShowOrgBasemaps(QQuickItem* parent = nullptr);
-  ~ShowOrgBasemaps() = default;
+  ~ShowOrgBasemaps();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

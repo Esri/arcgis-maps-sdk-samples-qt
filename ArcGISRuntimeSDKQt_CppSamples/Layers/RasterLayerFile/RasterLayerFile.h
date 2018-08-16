@@ -34,7 +34,7 @@ class RasterLayerFile : public QQuickItem
 
 public:
   explicit RasterLayerFile(QQuickItem* parent = nullptr);
-  ~RasterLayerFile() = default;
+  ~RasterLayerFile();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

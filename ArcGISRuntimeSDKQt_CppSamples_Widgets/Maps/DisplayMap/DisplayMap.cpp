@@ -35,3 +35,7 @@ DisplayMap::DisplayMap(QWidget* parent) :
     vBoxLayout->addWidget(m_mapView);
     setLayout(vBoxLayout);
 }
+
+DisplayMap::~DisplayMap()
+{
+}

@@ -37,7 +37,7 @@ class IdentifyGraphics : public QQuickItem
 
 public:
   explicit IdentifyGraphics(QQuickItem* parent = nullptr);
-  ~IdentifyGraphics() = default;
+  ~IdentifyGraphics();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

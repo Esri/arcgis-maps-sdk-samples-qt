@@ -40,6 +40,10 @@ Unique_Value_Renderer::Unique_Value_Renderer(QQuickItem* parent) :
 {
 }
 
+Unique_Value_Renderer::~Unique_Value_Renderer()
+{
+}
+
 void Unique_Value_Renderer::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

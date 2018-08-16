@@ -44,3 +44,7 @@ SetInitialMapArea::SetInitialMapArea(QWidget* parent) :
     vBoxLayout->addWidget(m_mapView);
     setLayout(vBoxLayout);
 }
+
+SetInitialMapArea::~SetInitialMapArea()
+{
+}

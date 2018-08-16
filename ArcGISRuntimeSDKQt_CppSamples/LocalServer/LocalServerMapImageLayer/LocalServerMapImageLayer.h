@@ -36,7 +36,7 @@ class LocalServerMapImageLayer : public QQuickItem
 
 public:
   explicit LocalServerMapImageLayer(QQuickItem* parent = nullptr);
-  ~LocalServerMapImageLayer() = default;
+  ~LocalServerMapImageLayer();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

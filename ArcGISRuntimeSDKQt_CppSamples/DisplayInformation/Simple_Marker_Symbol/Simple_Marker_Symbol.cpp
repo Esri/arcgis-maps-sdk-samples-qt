@@ -32,6 +32,11 @@ Simple_Marker_Symbol::Simple_Marker_Symbol(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
+
+Simple_Marker_Symbol::~Simple_Marker_Symbol()
+{
+}
+
 void Simple_Marker_Symbol::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

@@ -29,6 +29,10 @@ AddItemsToPortal::AddItemsToPortal(QQuickItem* parent /* = nullptr */):
   m_item->setType(PortalItemType::CSV);
 }
 
+AddItemsToPortal::~AddItemsToPortal()
+{
+}
+
 void AddItemsToPortal::init()
 {
   // Register the types for QML

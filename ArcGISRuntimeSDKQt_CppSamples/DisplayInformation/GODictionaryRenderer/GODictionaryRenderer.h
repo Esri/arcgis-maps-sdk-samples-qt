@@ -40,7 +40,7 @@ class GODictionaryRenderer : public QQuickItem
 
 public:
   explicit GODictionaryRenderer(QQuickItem* parent = nullptr);
-  ~GODictionaryRenderer() = default;
+  ~GODictionaryRenderer();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

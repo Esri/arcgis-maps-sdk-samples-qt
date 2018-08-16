@@ -44,6 +44,10 @@ Feature_Collection_Layer::Feature_Collection_Layer(QQuickItem* parent /* = nullp
 {
 }
 
+Feature_Collection_Layer::~Feature_Collection_Layer()
+{
+}
+
 void Feature_Collection_Layer::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

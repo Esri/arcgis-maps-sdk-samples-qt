@@ -40,6 +40,10 @@ FeatureLayerSelection::FeatureLayerSelection(QQuickItem* parent) :
 {
 }
 
+FeatureLayerSelection::~FeatureLayerSelection()
+{
+}
+
 void FeatureLayerSelection::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

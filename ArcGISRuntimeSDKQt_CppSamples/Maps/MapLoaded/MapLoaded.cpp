@@ -27,6 +27,10 @@ MapLoaded::MapLoaded(QQuickItem* parent) :
 {
 }
 
+MapLoaded::~MapLoaded()
+{
+}
+
 void MapLoaded::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

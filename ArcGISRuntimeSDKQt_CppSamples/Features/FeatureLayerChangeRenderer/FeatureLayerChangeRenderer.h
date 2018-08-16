@@ -37,7 +37,7 @@ class FeatureLayerChangeRenderer : public QQuickItem
 
 public:
   explicit FeatureLayerChangeRenderer(QQuickItem* parent = nullptr);
-  ~FeatureLayerChangeRenderer() = default;
+  ~FeatureLayerChangeRenderer();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

@@ -34,7 +34,7 @@ class Symbols : public QQuickItem
 
 public:
   explicit Symbols(QQuickItem* parent = nullptr);
-  ~Symbols() = default;
+  ~Symbols();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

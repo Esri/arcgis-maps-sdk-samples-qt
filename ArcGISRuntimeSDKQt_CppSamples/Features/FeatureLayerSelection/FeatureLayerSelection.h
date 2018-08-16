@@ -40,7 +40,7 @@ class FeatureLayerSelection : public QQuickItem
 
 public:
   explicit FeatureLayerSelection(QQuickItem* parent = nullptr);
-  ~FeatureLayerSelection() = default;
+  ~FeatureLayerSelection();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

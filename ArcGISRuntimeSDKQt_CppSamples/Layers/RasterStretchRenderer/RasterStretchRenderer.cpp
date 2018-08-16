@@ -34,6 +34,10 @@ RasterStretchRenderer::RasterStretchRenderer(QQuickItem* parent /* = nullptr */)
 {
 }
 
+RasterStretchRenderer::~RasterStretchRenderer()
+{
+}
+
 void RasterStretchRenderer::init()
 {
   // Register the map view for QML

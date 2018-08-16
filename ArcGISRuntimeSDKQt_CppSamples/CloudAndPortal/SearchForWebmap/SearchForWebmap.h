@@ -44,7 +44,7 @@ class SearchForWebmap : public QQuickItem
 
 public:
   explicit SearchForWebmap(QQuickItem* parent = nullptr);
-  ~SearchForWebmap() = default;
+  ~SearchForWebmap();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();

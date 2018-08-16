@@ -51,3 +51,7 @@ SetMapSpatialReference::SetMapSpatialReference(QWidget* parent) :
     vBoxLayout->addWidget(m_mapView);
     setLayout(vBoxLayout);
 }
+
+SetMapSpatialReference::~SetMapSpatialReference()
+{
+}

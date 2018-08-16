@@ -41,7 +41,7 @@ class FindRoute : public QQuickItem
 
 public:
   explicit FindRoute(QQuickItem* parent = nullptr);
-  ~FindRoute() = default;
+  ~FindRoute();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
