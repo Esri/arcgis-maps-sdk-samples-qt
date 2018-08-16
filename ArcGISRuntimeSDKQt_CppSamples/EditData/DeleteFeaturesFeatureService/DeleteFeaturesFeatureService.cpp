@@ -56,6 +56,7 @@ void DeleteFeaturesFeatureService::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  emit calloutDataChanged();
 
   // create a Map by passing in the Basemap
   m_map = new Map(Basemap::streets(this), this);
@@ -84,10 +85,6 @@ void DeleteFeaturesFeatureService::connectSignals()
     m_featureLayer->clearSelection();
 
     // set the properties for qml
-    m_screenX = mouseEvent.x();
-    emit screenXChanged();
-    m_screenY = mouseEvent.y();
-    emit screenYChanged();
     emit hideWindow();
 
     //! [DeleteFeaturesFeatureService identify feature]
@@ -137,8 +134,9 @@ void DeleteFeaturesFeatureService::connectSignals()
     {
       Feature* feat = iter.next();
       // emit signal for QML
-      m_featureType = feat->attributes()->attributeValue("typdamage").toString();
-      emit featureTypeChanged();
+      QString featureType = feat->attributes()->attributeValue("typdamage").toString();
+      m_mapView->calloutData()->setTitle("<br><b><font size=\"+2\">" + featureType + "</font></b>");
+      m_mapView->calloutData()->setLocation(feat->geometry().extent().center());
       emit featureSelected();
     }
   });
@@ -152,7 +150,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   });
 
   // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
+  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](QUuid, const QList<FeatureEditResult*>& featureEditResults)
   {
     // obtain the first item in the list
     FeatureEditResult* featureEditResult = featureEditResults.isEmpty() ? nullptr : featureEditResults.first();
@@ -164,22 +162,12 @@ void DeleteFeaturesFeatureService::connectSignals()
   });
 }
 
+CalloutData* DeleteFeaturesFeatureService::calloutData() const
+{
+  return m_mapView ? m_mapView->calloutData() : nullptr;
+}
+
 void DeleteFeaturesFeatureService::deleteSelectedFeature()
 {
   m_featureTable->deleteFeature(m_selectedFeature);
-}
-
-int DeleteFeaturesFeatureService::screenX() const
-{
-  return m_screenX;
-}
-
-int DeleteFeaturesFeatureService::screenY() const
-{
-  return m_screenY;
-}
-
-QString DeleteFeaturesFeatureService::featureType() const
-{
-  return m_featureType;
 }
