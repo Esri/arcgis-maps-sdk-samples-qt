@@ -91,7 +91,7 @@ Rectangle {
         // map callout window
         Callout {
             id: callout
-            borderWidth: 1
+            borderWidth: 1 * scaleFactor
             calloutData: parent.calloutData
             borderColor: "lightgrey"
             accessoryButtonHidden: true

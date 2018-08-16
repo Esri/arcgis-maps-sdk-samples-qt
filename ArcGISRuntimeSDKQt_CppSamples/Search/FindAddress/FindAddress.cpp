@@ -50,6 +50,7 @@ void FindAddress::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
+  emit calloutDataChanged();
 
   // create a new basemap instance
   Basemap* basemap = Basemap::imageryWithLabels(this);
@@ -108,8 +109,7 @@ void FindAddress::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // set the properties for qml
-    m_screenX = mouseEvent.x() - 110;
-    m_screenY = mouseEvent.y() - 60;
+    m_mapView->calloutData()->setLocation(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
     emit hideCallout();
 
     // call identify on the map view
@@ -125,13 +125,20 @@ void FindAddress::connectSignals()
     auto graphics = identifyResult->graphics();
     if (graphics.length() > 0)
     {
-      m_calloutText = graphics.at(0)->attributes()->attributeValue("Match_addr").toString();
-      m_calloutDetailedText = graphics.at(0)->attributes()->attributeValue("Place_addr").toString();
-      emit showCallout(m_screenX, m_screenY, m_calloutText, m_calloutDetailedText);
+      QString calloutText = graphics.at(0)->attributes()->attributeValue("Match_addr").toString();
+      QString calloutDetailedText = graphics.at(0)->attributes()->attributeValue("Place_addr").toString();
+      m_mapView->calloutData()->setTitle(calloutText);
+      m_mapView->calloutData()->setDetail(calloutDetailedText);
+      emit showCallout();
     }
 
     identifyResult->deleteLater();
   });
+}
+
+CalloutData *FindAddress::calloutData() const
+{
+  return m_mapView ? m_mapView->calloutData() : nullptr;
 }
 
 void FindAddress::geocodeAddress(const QString& address)

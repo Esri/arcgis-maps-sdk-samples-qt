@@ -19,6 +19,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 FindAddressSample {
     id: findAddressSample
@@ -26,65 +27,30 @@ FindAddressSample {
     height: 600
 
     property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
-    property double mousePointX
-    property double mousePointY
 
     // add a mapView component
     MapView {
         anchors.fill: parent
         objectName: "mapView"
-    }
 
-    onHideCallout: {
-        callout.visible = false;
+        Callout {
+            id: callout
+            borderColor: "lightgrey"
+            borderWidth: 1 * scaleFactor
+            calloutData: findAddressSample.calloutData
+            maxWidth: findAddressSample.width * 0.75
+            leaderPosition: leaderPositionEnum.Automatic
+            accessoryButtonHidden: true
+        }
     }
 
     onShowCallout: {
-        callout.x = x;
-        callout.y = y;
-        calloutBasicText.text = calloutText;
-        calloutDetails.text = calloutDetailedText;
-        callout.visible = true;
+        callout.showCallout();
     }
 
-    // map callout window
-    Rectangle {
-        id: callout
-        width: 225 * scaleFactor
-        height: 40 * scaleFactor
-        radius: 5
-        border {
-            color: "lightgrey"
-            width: .5 * scaleFactor
-        }
-        clip: true
-        visible: false
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
-        }
-
-        Column {
-            anchors {
-                fill: parent
-                margins: 5 * scaleFactor
-            }
-            spacing: 2
-
-            Text {
-                id: calloutBasicText
-                width: parent.width
-                font.pixelSize: 14 * scaleFactor
-                elide: Text.ElideRight
-            }
-            Text {
-                id: calloutDetails
-                width: parent.width
-                font.pixelSize: 10 * scaleFactor
-                elide: Text.ElideRight
-            }
-        }
+    onHideCallout: {
+        if (callout.visible)
+            callout.dismiss();
     }
 
     // search bar for geocoding
@@ -169,7 +135,8 @@ FindAddressSample {
                         anchors.fill: parent
                         onClicked: {
                             textField.text = "";
-                            callout.visible = false;
+                            if (callout.visible)
+                                callout.dismiss();
                             findAddressSample.clearGraphics();
                         }
                     }
