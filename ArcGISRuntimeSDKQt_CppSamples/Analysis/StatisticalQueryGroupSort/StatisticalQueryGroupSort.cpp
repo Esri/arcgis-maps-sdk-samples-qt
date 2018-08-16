@@ -28,6 +28,8 @@
 #include <QStringList>
 #include <QVariantList>
 #include <QList>
+#include <QScopedPointer>
+
 
 using namespace Esri::ArcGISRuntime;
 
@@ -104,17 +106,19 @@ void StatisticalQueryGroupSort::connectSignals()
 
       // get the group string
       QString sectionString;
-      for (const QString& group : record->group().keys())
+      const QVariantMap& groupsMap = record->group();
+      for (auto it = groupsMap.cbegin(); it != groupsMap.cend(); ++it)
       {
         if (sectionString.length() > 0)
           sectionString += ",";
-        sectionString += QString("\"%1\":\"%2\"").arg(group, record->group().value(group).toString());
+        sectionString += QString("\"%1\":\"%2\"").arg(it.key(), it.value().toString());
       }
 
       // obtain the statistics
-      for (const QString& stats : record->statistics().keys())
+      const QVariantMap& statsMap = record->statistics();
+      for (auto it = statsMap.cbegin(); it != statsMap.cend(); ++it)
       {
-        QString statString = QString("%1: %2").arg(stats, record->statistics().value(stats).toString());
+        QString statString = QString("%1: %2").arg(it.key(), it.value().toString());
         addResultToModel(sectionString, statString);
       }
     }

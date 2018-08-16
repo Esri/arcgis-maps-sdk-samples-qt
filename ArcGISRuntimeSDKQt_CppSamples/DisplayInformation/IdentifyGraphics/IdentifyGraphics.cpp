@@ -28,6 +28,8 @@
 #include <QMouseEvent>
 #include <QList>
 #include <QUuid>
+#include <QScopedPointer>
+
 
 using namespace Esri::ArcGISRuntime;
 

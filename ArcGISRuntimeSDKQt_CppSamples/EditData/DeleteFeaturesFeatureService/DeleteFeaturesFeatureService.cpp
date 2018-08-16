@@ -32,6 +32,8 @@
 #include <QUuid>
 #include <QMouseEvent>
 #include <QString>
+#include <QScopedPointer>
+
 
 using namespace Esri::ArcGISRuntime;
 
@@ -129,7 +131,7 @@ void DeleteFeaturesFeatureService::connectSignals()
     }
 
     GeoElement* element = identifyResult->geoElements().at(0);
-    if (nullptr == element)
+    if (element == nullptr)
     {
       return;
     }

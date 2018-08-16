@@ -26,6 +26,8 @@
 #include "GeocodeParameters.h"
 #include "Graphic.h"
 #include <QUrl>
+#include <QScopedPointer>
+
 
 using namespace Esri::ArcGISRuntime;
 

@@ -14,6 +14,8 @@
 
 #include <QDir>
 #include <QQmlEngine>
+#include <QScopedPointer>
+
 
 #if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
 #include <QCommandLineParser>

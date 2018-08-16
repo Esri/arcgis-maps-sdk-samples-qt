@@ -146,10 +146,10 @@ void Feature_Collection_Layer::createPolygonTable()
   m_featureCollection->tables()->append(polysTable);
 
   // Add features to the table
-  Point pt1(-79.497238, 8.849289, SpatialReference::wgs84());
-  Point pt2(-79.337936, 8.638903, SpatialReference::wgs84());
-  Point pt3(-79.11409, 8.895422, SpatialReference::wgs84());
-  QList<Point> points { pt1, pt2, pt3 };
+  const Point pt1(-79.497238, 8.849289, SpatialReference::wgs84());
+  const Point pt2(-79.337936, 8.638903, SpatialReference::wgs84());
+  const Point pt3(-79.11409, 8.895422, SpatialReference::wgs84());
+  const QList<Point> points { pt1, pt2, pt3 };
   addPolygonToTable("Area", "Restricted area", points, polysTable);
 }
 

@@ -31,6 +31,8 @@
 #include "IdentifyGraphicsOverlayResult.h"
 
 #include <QQmlProperty>
+#include <QScopedPointer>
+
 
 using namespace Esri::ArcGISRuntime;
 

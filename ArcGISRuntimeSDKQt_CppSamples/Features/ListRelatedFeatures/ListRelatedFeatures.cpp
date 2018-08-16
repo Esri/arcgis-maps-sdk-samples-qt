@@ -42,7 +42,7 @@ namespace
   struct FeatureQueryListResultLock
   {
     FeatureQueryListResultLock(const QList<RelatedFeatureQueryResult*>& list) : results(list) { }
-    ~FeatureQueryListResultLock() { qDeleteAll(results);  }
+    ~FeatureQueryListResultLock() { qDeleteAll(results); }
     const QList<RelatedFeatureQueryResult*>& results;
   };
 }

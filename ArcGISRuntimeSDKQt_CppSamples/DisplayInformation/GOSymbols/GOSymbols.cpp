@@ -89,10 +89,10 @@ void GOSymbols::componentComplete()
 void GOSymbols::addBuoyPoints(GraphicsOverlay* graphicsOverlay)
 {
   // create a list of points
-  QList<Point> pointsList { Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84())
-                          , Point(-2.6908416959572303, 56.06444173689877, SpatialReference::wgs84())
-                          , Point(-2.6697273884990937, 56.064250073402874, SpatialReference::wgs84())
-                          , Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84())
+  const QList<Point> pointsList { Point(-2.712642647560347, 56.062812566811544, SpatialReference::wgs84())
+                                , Point(-2.6908416959572303, 56.06444173689877, SpatialReference::wgs84())
+                                , Point(-2.6697273884990937, 56.064250073402874, SpatialReference::wgs84())
+                                , Point(-2.6395150461199726, 56.06127916736989, SpatialReference::wgs84())
                           };
 
   // create the symbology for the points

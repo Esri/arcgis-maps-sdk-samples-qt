@@ -40,7 +40,7 @@ namespace
   struct FeatureEditListResultLock
   {
     FeatureEditListResultLock(const QList<FeatureEditResult*>& list) : results(list) { }
-    ~FeatureEditListResultLock() { qDeleteAll(results);  }
+    ~FeatureEditListResultLock() { qDeleteAll(results); }
     const QList<FeatureEditResult*>& results;
   };
 }
@@ -177,20 +177,20 @@ void UpdateAttributesFeatureService::connectSignals()
 
 void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)
 {
-  // Shared connection object that we will use to disconnect the connection in the slot.
-  // We do this to create a form of fire-and-forget where the slot can only ever be invoked once.
-  QSharedPointer<QMetaObject::Connection> connection { QSharedPointer<QMetaObject::Connection>::create() };
+  // If the last connection is still hanging around we want to ensure it is disconnected.
+  disconnect(m_featureLoadStatusChangedConnection);
 
-  // connect to load status changed signal
-  QMetaObject::Connection c =
+  // connect to load status changed signal, remember the connection so we can kill it once
+  // the slot has invoked.
+  m_featureLoadStatusChangedConnection =
       connect(
           m_selectedFeature, &ArcGISFeature::loadStatusChanged,
-          this, [this, fieldVal, connection](Esri::ArcGISRuntime::LoadStatus)
+          this, [this, fieldVal](Esri::ArcGISRuntime::LoadStatus)
                 {
                   if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
                   {
                     // The conenction is invoked so we now forget all about this connection after this point.
-                    disconnect(*connection);
+                    disconnect(m_featureLoadStatusChangedConnection);
 
                     // update the select feature's attribute value
                     m_selectedFeature->attributes()->replaceAttribute("typdamage", fieldVal);
@@ -200,9 +200,6 @@ void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)
                   }
                 }
   );
-
-  // Copy out the connection data to the shared connection.
-  *connection = c;
 
   // load selecte feature
   m_selectedFeature->load();

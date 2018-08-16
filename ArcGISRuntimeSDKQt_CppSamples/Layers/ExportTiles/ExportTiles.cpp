@@ -80,10 +80,10 @@ void ExportTiles::componentComplete()
 void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2, QString dataPath)
 {
   // create an envelope from the QML rectangle corners
-  Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
-  Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
-  Envelope extent(corner1, corner2);
-  Geometry tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
+  const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
+  const Envelope extent(corner1, corner2);
+  const Geometry tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
   // connect to sync task doneLoading signal
   connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, this, [this, dataPath](QUuid, ExportTileCacheParameters parameters)

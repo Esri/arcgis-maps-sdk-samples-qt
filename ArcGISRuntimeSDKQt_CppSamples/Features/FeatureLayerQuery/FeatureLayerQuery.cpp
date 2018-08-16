@@ -33,6 +33,8 @@
 #include <QUrl>
 #include <QColor>
 #include <QList>
+#include <QScopedPointer>
+
 
 using namespace Esri::ArcGISRuntime;
 

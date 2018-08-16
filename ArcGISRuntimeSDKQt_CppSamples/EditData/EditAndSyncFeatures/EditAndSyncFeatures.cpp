@@ -182,10 +182,10 @@ SyncGeodatabaseParameters EditAndSyncFeatures::getSyncParameters()
 void EditAndSyncFeatures::generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
 {
   // create an envelope from the QML rectangle corners
-  Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
-  Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
-  Envelope extent(corner1, corner2);
-  Geometry geodatabaseExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
+  const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
+  const Envelope extent(corner1, corner2);
+  const Geometry geodatabaseExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
   // get the updated parameters
   GenerateGeodatabaseParameters params = getGenerateParameters(geodatabaseExtent);

@@ -40,7 +40,7 @@ namespace
   struct FeatureEditListResultLock
   {
     FeatureEditListResultLock(const QList<FeatureEditResult*>& list) : results(list) { }
-    ~FeatureEditListResultLock() { qDeleteAll(results);  }
+    ~FeatureEditListResultLock() { qDeleteAll(results); }
     const QList<FeatureEditResult*>& results;
   };
 }

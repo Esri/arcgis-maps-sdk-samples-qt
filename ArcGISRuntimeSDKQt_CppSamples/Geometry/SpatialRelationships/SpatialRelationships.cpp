@@ -30,6 +30,8 @@
 #include "Polygon.h"
 #include "GeometryEngine.h"
 #include <QStringList>
+#include <QScopedPointer>
+
 
 using namespace Esri::ArcGISRuntime;
 

@@ -105,11 +105,11 @@ void ExtrudeGraphics::componentComplete()
     double z = m_maxZ * randNum;
 
     // create a list of points
-    QList<Point> points { Point(point.x(), point.y(), z)
-                        , Point(point.x() + m_size, point.y(), z)
-                        , Point(point.x() + m_size, point.y() + m_size, z)
-                        , Point(point.x(), point.y() + m_size, z) 
-                        };
+    const QList<Point> points { Point(point.x(), point.y(), z)
+                              , Point(point.x() + m_size, point.y(), z)
+                              , Point(point.x() + m_size, point.y() + m_size, z)
+                              , Point(point.x(), point.y() + m_size, z) 
+                              };
 
     // create a new graphic
     Graphic* graphic = new Graphic(createPolygonFromPoints(points), this);

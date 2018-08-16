@@ -30,6 +30,8 @@
 #include <QString>
 #include <QUrl>
 #include <QMouseEvent>
+#include <QScopedPointer>
+
 
 using namespace Esri::ArcGISRuntime;
 
