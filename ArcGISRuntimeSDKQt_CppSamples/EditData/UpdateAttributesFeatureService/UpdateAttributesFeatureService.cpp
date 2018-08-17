@@ -50,9 +50,7 @@ UpdateAttributesFeatureService::UpdateAttributesFeatureService(QQuickItem* paren
 {    
 }
 
-UpdateAttributesFeatureService::~UpdateAttributesFeatureService()
-{
-}
+UpdateAttributesFeatureService::~UpdateAttributesFeatureService() = default;
 
 void UpdateAttributesFeatureService::init()
 {

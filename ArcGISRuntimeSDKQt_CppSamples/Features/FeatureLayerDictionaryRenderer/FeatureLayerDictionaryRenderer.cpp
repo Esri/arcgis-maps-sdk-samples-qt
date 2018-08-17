@@ -34,9 +34,7 @@ FeatureLayerDictionaryRenderer::FeatureLayerDictionaryRenderer(QQuickItem* paren
 { 
 }
 
-FeatureLayerDictionaryRenderer::~FeatureLayerDictionaryRenderer()
-{ 
-}
+FeatureLayerDictionaryRenderer::~FeatureLayerDictionaryRenderer() = default;
 
 void FeatureLayerDictionaryRenderer::init()
 {

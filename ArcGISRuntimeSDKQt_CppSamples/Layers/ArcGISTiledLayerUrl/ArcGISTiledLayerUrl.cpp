@@ -29,9 +29,7 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QQuickItem* parent) :
 {
 }
 
-ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
-{
-}
+ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl() = default;
 
 void ArcGISTiledLayerUrl::init()
 {

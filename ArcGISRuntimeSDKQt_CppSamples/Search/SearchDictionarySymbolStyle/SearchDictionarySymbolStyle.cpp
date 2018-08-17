@@ -28,9 +28,7 @@ SearchDictionarySymbolStyle::SearchDictionarySymbolStyle(QQuickItem* parent) :
 {
 }
 
-SearchDictionarySymbolStyle::~SearchDictionarySymbolStyle()
-{
-}
+SearchDictionarySymbolStyle::~SearchDictionarySymbolStyle() = default;
 
 void SearchDictionarySymbolStyle::init()
 {

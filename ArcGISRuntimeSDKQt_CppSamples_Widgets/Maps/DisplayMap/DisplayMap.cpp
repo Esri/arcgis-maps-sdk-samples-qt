@@ -36,6 +36,4 @@ DisplayMap::DisplayMap(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-DisplayMap::~DisplayMap()
-{
-}
+DisplayMap::~DisplayMap() = default;

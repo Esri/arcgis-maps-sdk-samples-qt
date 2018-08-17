@@ -58,9 +58,7 @@ MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
 {
 }
 
-MobileMap_SearchAndRoute::~MobileMap_SearchAndRoute()
-{
-}
+MobileMap_SearchAndRoute::~MobileMap_SearchAndRoute() = default;
 
 void MobileMap_SearchAndRoute::init()
 {

@@ -38,9 +38,7 @@ IdentifyGraphics::IdentifyGraphics(QQuickItem* parent) :
 {
 }
 
-IdentifyGraphics::~IdentifyGraphics()
-{
-}
+IdentifyGraphics::~IdentifyGraphics() = default;
 
 void IdentifyGraphics::init()
 {

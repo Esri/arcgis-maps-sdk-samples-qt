@@ -38,9 +38,7 @@ FindRoute::FindRoute(QQuickItem* parent) :
 {
 }
 
-FindRoute::~FindRoute()
-{
-}
+FindRoute::~FindRoute() = default;
 
 void FindRoute::init()
 {

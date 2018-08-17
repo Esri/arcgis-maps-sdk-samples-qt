@@ -32,9 +32,7 @@ RasterLayerFile::RasterLayerFile(QQuickItem* parent /* = nullptr */):
 {
 }
 
-RasterLayerFile::~RasterLayerFile()
-{
-}
+RasterLayerFile::~RasterLayerFile() = default;
 
 void RasterLayerFile::init()
 {

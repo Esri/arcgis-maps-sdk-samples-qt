@@ -35,9 +35,7 @@ ServiceFeatureTableManualCache::ServiceFeatureTableManualCache(QQuickItem* paren
 {
 }
 
-ServiceFeatureTableManualCache::~ServiceFeatureTableManualCache()
-{
-}
+ServiceFeatureTableManualCache::~ServiceFeatureTableManualCache() = default;
 
 void ServiceFeatureTableManualCache::init()
 {

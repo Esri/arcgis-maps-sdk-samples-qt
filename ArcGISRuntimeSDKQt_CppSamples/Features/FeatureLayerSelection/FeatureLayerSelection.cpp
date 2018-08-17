@@ -40,9 +40,7 @@ FeatureLayerSelection::FeatureLayerSelection(QQuickItem* parent) :
 {
 }
 
-FeatureLayerSelection::~FeatureLayerSelection()
-{
-}
+FeatureLayerSelection::~FeatureLayerSelection() = default;
 
 void FeatureLayerSelection::init()
 {

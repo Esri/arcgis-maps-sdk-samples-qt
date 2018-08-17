@@ -37,9 +37,7 @@ Picture_Marker_Symbol::Picture_Marker_Symbol(QQuickItem* parent) :
 {
 }
 
-Picture_Marker_Symbol::~Picture_Marker_Symbol()
-{
-}
+Picture_Marker_Symbol::~Picture_Marker_Symbol() = default;
 
 void Picture_Marker_Symbol::init()
 {

@@ -33,10 +33,7 @@ FeatureLayerFeatureService::FeatureLayerFeatureService(QQuickItem* parent) :
 {
 }
 
-FeatureLayerFeatureService::~FeatureLayerFeatureService()
-{
-}
-
+FeatureLayerFeatureService::~FeatureLayerFeatureService() = default;
 void FeatureLayerFeatureService::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

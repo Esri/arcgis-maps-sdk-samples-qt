@@ -52,6 +52,4 @@ SetMapSpatialReference::SetMapSpatialReference(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-SetMapSpatialReference::~SetMapSpatialReference()
-{
-}
+SetMapSpatialReference::~SetMapSpatialReference() = default;

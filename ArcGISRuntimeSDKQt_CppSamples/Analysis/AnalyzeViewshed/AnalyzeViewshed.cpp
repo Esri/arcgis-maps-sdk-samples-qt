@@ -43,9 +43,7 @@ AnalyzeViewshed::AnalyzeViewshed(QQuickItem* parent /* = nullptr */):
 {
 }
 
-AnalyzeViewshed::~AnalyzeViewshed()
-{
-}
+AnalyzeViewshed::~AnalyzeViewshed() = default;
 
 void AnalyzeViewshed::init()
 {

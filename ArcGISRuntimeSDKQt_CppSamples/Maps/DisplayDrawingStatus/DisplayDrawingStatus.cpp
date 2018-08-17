@@ -30,9 +30,7 @@ DisplayDrawingStatus::DisplayDrawingStatus(QQuickItem* parent):
 {
 }
 
-DisplayDrawingStatus::~DisplayDrawingStatus()
-{
-}
+DisplayDrawingStatus::~DisplayDrawingStatus() = default;
 
 void DisplayDrawingStatus::init()
 {

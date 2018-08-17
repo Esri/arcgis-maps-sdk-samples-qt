@@ -48,6 +48,4 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
-{
-}
+ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl() = default;

@@ -68,9 +68,7 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-ChangeViewpoint::~ChangeViewpoint()
-{
-}
+ChangeViewpoint::~ChangeViewpoint() = default;
 
 void ChangeViewpoint::changeToNewViewpoint(int index)
 {

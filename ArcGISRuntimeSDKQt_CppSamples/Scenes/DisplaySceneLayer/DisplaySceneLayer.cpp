@@ -32,9 +32,7 @@ DisplaySceneLayer::DisplaySceneLayer(QQuickItem* parent) :
 {
 }
 
-DisplaySceneLayer::~DisplaySceneLayer()
-{
-}
+DisplaySceneLayer::~DisplaySceneLayer() = default;
 
 void DisplaySceneLayer::init()
 {

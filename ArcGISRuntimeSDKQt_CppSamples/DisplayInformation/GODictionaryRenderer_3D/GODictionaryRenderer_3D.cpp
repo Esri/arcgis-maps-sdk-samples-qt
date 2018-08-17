@@ -42,9 +42,7 @@ GODictionaryRenderer_3D::GODictionaryRenderer_3D(QQuickItem* parent) :
   m_graphicsOverlay->setRenderingMode(GraphicsRenderingMode::Dynamic);
 }
 
-GODictionaryRenderer_3D::~GODictionaryRenderer_3D()
-{ 
-}
+GODictionaryRenderer_3D::~GODictionaryRenderer_3D() = default;
 
 void GODictionaryRenderer_3D::init()
 {

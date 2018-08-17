@@ -33,9 +33,7 @@ BuildLegend::BuildLegend(QQuickItem* parent) :
 {
 }
 
-BuildLegend::~BuildLegend()
-{
-}
+BuildLegend::~BuildLegend() = default;
 
 void BuildLegend::init()
 {

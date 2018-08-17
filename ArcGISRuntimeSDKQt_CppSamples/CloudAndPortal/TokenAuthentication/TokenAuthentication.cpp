@@ -32,9 +32,7 @@ TokenAuthentication::TokenAuthentication(QQuickItem* parent /* = nullptr */):
 {
 }
 
-TokenAuthentication::~TokenAuthentication()
-{
-}
+TokenAuthentication::~TokenAuthentication() = default;
 
 void TokenAuthentication::init()
 {

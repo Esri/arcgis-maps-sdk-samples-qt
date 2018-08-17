@@ -32,9 +32,7 @@ VectorTiledLayerUrl::VectorTiledLayerUrl(QQuickItem* parent) :
 {
 }
 
-VectorTiledLayerUrl::~VectorTiledLayerUrl()
-{
-}
+VectorTiledLayerUrl::~VectorTiledLayerUrl() = default;
 
 void VectorTiledLayerUrl::init()
 {

@@ -77,9 +77,7 @@ ManageBookmarks::ManageBookmarks(QWidget* parent) :
     createUi();
 }
 
-ManageBookmarks::~ManageBookmarks()
-{
-}
+ManageBookmarks::~ManageBookmarks() = default;
 
 void ManageBookmarks::createInitialBookmarks()
 {

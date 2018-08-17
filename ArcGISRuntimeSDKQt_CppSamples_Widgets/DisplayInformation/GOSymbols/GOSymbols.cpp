@@ -67,9 +67,7 @@ GOSymbols::GOSymbols(QWidget* parent) :
   createUi();
 }
 
-GOSymbols::~GOSymbols()
-{
-}
+GOSymbols::~GOSymbols() = default;
 
 void GOSymbols::createUi()
 {

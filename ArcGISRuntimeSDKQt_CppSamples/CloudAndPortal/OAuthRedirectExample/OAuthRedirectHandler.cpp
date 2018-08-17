@@ -60,9 +60,7 @@ OAuthRedirectHandler::OAuthRedirectHandler(const QString& urlScheme, QObject* pa
   });
 }
 
-OAuthRedirectHandler::~OAuthRedirectHandler()
-{
-}
+OAuthRedirectHandler::~OAuthRedirectHandler() = default;
 
 void OAuthRedirectHandler::handleAppMessage(const QString& msg)
 {

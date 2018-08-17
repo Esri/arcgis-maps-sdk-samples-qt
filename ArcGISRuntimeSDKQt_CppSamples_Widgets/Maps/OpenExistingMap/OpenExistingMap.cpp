@@ -74,9 +74,7 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
     createUi();
 }
 
-OpenExistingMap::~OpenExistingMap()
-{
-}
+OpenExistingMap::~OpenExistingMap() = default;
 
 void OpenExistingMap::createPortalMaps()
 {

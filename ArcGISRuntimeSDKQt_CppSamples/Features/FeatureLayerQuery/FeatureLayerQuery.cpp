@@ -43,9 +43,7 @@ FeatureLayerQuery::FeatureLayerQuery(QQuickItem* parent) :
 {
 }
 
-FeatureLayerQuery::~FeatureLayerQuery()
-{
-}
+FeatureLayerQuery::~FeatureLayerQuery() = default;
 
 void FeatureLayerQuery::init()
 {

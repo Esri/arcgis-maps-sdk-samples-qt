@@ -30,9 +30,7 @@ SetMapSpatialReference::SetMapSpatialReference(QQuickItem* parent) :
 {    
 }
 
-SetMapSpatialReference::~SetMapSpatialReference()
-{
-}
+SetMapSpatialReference::~SetMapSpatialReference() = default;
 
 void SetMapSpatialReference::init()
 {

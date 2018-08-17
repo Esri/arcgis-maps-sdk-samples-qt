@@ -33,9 +33,7 @@ ServiceFeatureTableCache::ServiceFeatureTableCache(QQuickItem* parent) :
 {
 }
 
-ServiceFeatureTableCache::~ServiceFeatureTableCache()
-{
-}
+ServiceFeatureTableCache::~ServiceFeatureTableCache() = default;
 
 void ServiceFeatureTableCache::init()
 {

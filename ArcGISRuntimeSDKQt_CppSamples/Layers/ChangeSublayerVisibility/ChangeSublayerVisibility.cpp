@@ -33,9 +33,7 @@ ChangeSublayerVisibility::ChangeSublayerVisibility(QQuickItem* parent) :
 {
 }
 
-ChangeSublayerVisibility::~ChangeSublayerVisibility()
-{
-}
+ChangeSublayerVisibility::~ChangeSublayerVisibility() = default;
 
 void ChangeSublayerVisibility::init()
 {

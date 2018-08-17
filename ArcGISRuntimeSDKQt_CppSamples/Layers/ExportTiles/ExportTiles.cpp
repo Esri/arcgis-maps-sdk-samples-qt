@@ -36,9 +36,7 @@ ExportTiles::ExportTiles(QQuickItem* parent) :
 {
 }
 
-ExportTiles::~ExportTiles()
-{
-}
+ExportTiles::~ExportTiles() = default;
 
 void ExportTiles::init()
 {

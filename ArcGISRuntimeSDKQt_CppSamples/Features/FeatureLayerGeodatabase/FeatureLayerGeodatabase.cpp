@@ -36,9 +36,7 @@ FeatureLayerGeodatabase::FeatureLayerGeodatabase(QQuickItem* parent) :
 {
 }
 
-FeatureLayerGeodatabase::~FeatureLayerGeodatabase()
-{
-}
+FeatureLayerGeodatabase::~FeatureLayerGeodatabase() = default;
 
 void FeatureLayerGeodatabase::init()
 {

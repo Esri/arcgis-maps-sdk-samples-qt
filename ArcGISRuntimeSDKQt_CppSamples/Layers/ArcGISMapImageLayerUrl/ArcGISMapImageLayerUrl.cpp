@@ -29,6 +29,8 @@ ArcGISMapImageLayerUrl::ArcGISMapImageLayerUrl(QQuickItem* parent) :
 {
 }
 
+ArcGISMapImageLayerUrl::~ArcGISMapImageLayerUrl() = default;
+
 void ArcGISMapImageLayerUrl::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

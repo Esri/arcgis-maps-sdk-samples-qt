@@ -31,9 +31,7 @@ AnalyzeHotspots::AnalyzeHotspots(QQuickItem* parent /* = nullptr */):
 {
 }
 
-AnalyzeHotspots::~AnalyzeHotspots()
-{
-}
+AnalyzeHotspots::~AnalyzeHotspots() = default;
 
 void AnalyzeHotspots::init()
 {

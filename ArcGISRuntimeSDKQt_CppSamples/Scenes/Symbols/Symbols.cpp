@@ -29,9 +29,7 @@ Symbols::Symbols(QQuickItem* parent) :
 {
 }
 
-Symbols::~Symbols()
-{
-}
+Symbols::~Symbols() = default;
 
 void Symbols::init()
 {

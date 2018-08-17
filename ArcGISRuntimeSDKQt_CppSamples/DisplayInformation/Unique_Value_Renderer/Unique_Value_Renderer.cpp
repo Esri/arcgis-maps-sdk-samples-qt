@@ -40,9 +40,7 @@ Unique_Value_Renderer::Unique_Value_Renderer(QQuickItem* parent) :
 {
 }
 
-Unique_Value_Renderer::~Unique_Value_Renderer()
-{
-}
+Unique_Value_Renderer::~Unique_Value_Renderer() = default;
 
 void Unique_Value_Renderer::init()
 {

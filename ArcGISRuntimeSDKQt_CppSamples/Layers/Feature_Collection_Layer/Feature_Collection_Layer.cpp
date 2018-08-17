@@ -44,9 +44,7 @@ Feature_Collection_Layer::Feature_Collection_Layer(QQuickItem* parent /* = nullp
 {
 }
 
-Feature_Collection_Layer::~Feature_Collection_Layer()
-{
-}
+Feature_Collection_Layer::~Feature_Collection_Layer() = default;
 
 void Feature_Collection_Layer::init()
 {

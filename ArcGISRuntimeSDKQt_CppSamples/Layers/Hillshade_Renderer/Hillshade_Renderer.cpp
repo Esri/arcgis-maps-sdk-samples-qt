@@ -33,9 +33,7 @@ Hillshade_Renderer::Hillshade_Renderer(QQuickItem* parent /* = nullptr */):
 {
 }
 
-Hillshade_Renderer::~Hillshade_Renderer()
-{
-}
+Hillshade_Renderer::~Hillshade_Renderer() = default;
 
 void Hillshade_Renderer::init()
 {

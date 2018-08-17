@@ -38,9 +38,7 @@ ExtrudeGraphics::ExtrudeGraphics(QQuickItem* parent) :
   srand(time(nullptr));
 }
 
-ExtrudeGraphics::~ExtrudeGraphics()
-{
-}
+ExtrudeGraphics::~ExtrudeGraphics() = default;
 
 void ExtrudeGraphics::init()
 {

@@ -36,9 +36,7 @@ GODictionaryRenderer::GODictionaryRenderer(QQuickItem* parent) :
 {
 }
 
-GODictionaryRenderer::~GODictionaryRenderer()
-{
-}
+GODictionaryRenderer::~GODictionaryRenderer() = default;
 
 void GODictionaryRenderer::init()
 {

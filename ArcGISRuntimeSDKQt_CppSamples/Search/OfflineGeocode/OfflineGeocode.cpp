@@ -41,9 +41,7 @@ OfflineGeocode::OfflineGeocode(QQuickItem* parent):
 {
 }
 
-OfflineGeocode::~OfflineGeocode()
-{
-}
+OfflineGeocode::~OfflineGeocode() = default;
 
 void OfflineGeocode::init()
 {

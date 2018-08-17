@@ -52,6 +52,8 @@ EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
 {
 }
 
+EditFeatureAttachments::~EditFeatureAttachments() = default;
+
 void EditFeatureAttachments::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

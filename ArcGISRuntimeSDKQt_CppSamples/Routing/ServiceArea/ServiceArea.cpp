@@ -34,9 +34,7 @@ ServiceArea::ServiceArea(QQuickItem* parent /* = nullptr */):
 {
 }
 
-ServiceArea::~ServiceArea()
-{
-}
+ServiceArea::~ServiceArea() = default;
 
 void ServiceArea::init()
 {

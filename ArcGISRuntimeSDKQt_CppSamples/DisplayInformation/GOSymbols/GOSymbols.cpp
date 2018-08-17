@@ -40,9 +40,7 @@ GOSymbols::GOSymbols(QQuickItem* parent) :
 {
 }
 
-GOSymbols::~GOSymbols()
-{
-}
+GOSymbols::~GOSymbols() = default;
 
 void GOSymbols::init()
 {

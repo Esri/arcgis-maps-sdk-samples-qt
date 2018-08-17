@@ -36,6 +36,8 @@ DistanceCompositeSymbol::DistanceCompositeSymbol(QQuickItem* parent) :
 {
 }
 
+DistanceCompositeSymbol::~DistanceCompositeSymbol() = default;
+
 void DistanceCompositeSymbol::init()
 {
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");

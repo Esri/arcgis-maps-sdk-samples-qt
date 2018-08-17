@@ -42,9 +42,7 @@ DeleteFeaturesFeatureService::DeleteFeaturesFeatureService(QQuickItem* parent) :
 {
 }
 
-DeleteFeaturesFeatureService::~DeleteFeaturesFeatureService()
-{
-}
+DeleteFeaturesFeatureService::~DeleteFeaturesFeatureService() = default;
 
 void DeleteFeaturesFeatureService::init()
 {

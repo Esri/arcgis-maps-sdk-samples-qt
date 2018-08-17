@@ -40,9 +40,7 @@ GenerateGeodatabase::GenerateGeodatabase(QQuickItem* parent) :
 {
 }
 
-GenerateGeodatabase::~GenerateGeodatabase()
-{
-}
+GenerateGeodatabase::~GenerateGeodatabase() = default;
 
 void GenerateGeodatabase::init()
 {

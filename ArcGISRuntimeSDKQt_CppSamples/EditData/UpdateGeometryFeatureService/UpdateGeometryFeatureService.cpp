@@ -50,10 +50,7 @@ UpdateGeometryFeatureService::UpdateGeometryFeatureService(QQuickItem* parent) :
 {
 }
 
-UpdateGeometryFeatureService::~UpdateGeometryFeatureService()
-{
-}
-
+UpdateGeometryFeatureService::~UpdateGeometryFeatureService() = default;
 void UpdateGeometryFeatureService::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

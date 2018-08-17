@@ -36,9 +36,7 @@ FindAddress::FindAddress(QQuickItem* parent) :
 {
 }
 
-FindAddress::~FindAddress()
-{
-}
+FindAddress::~FindAddress() = default;
 
 void FindAddress::init()
 {

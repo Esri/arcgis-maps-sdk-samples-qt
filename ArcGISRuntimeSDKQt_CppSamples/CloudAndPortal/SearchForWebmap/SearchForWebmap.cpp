@@ -33,9 +33,7 @@ SearchForWebmap::SearchForWebmap(QQuickItem* parent /* = nullptr */):
   AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
-SearchForWebmap::~SearchForWebmap()
-{
-}
+SearchForWebmap::~SearchForWebmap() = default;
 
 void SearchForWebmap::init()
 {

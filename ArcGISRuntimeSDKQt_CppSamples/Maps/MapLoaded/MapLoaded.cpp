@@ -27,9 +27,7 @@ MapLoaded::MapLoaded(QQuickItem* parent) :
 {
 }
 
-MapLoaded::~MapLoaded()
-{
-}
+MapLoaded::~MapLoaded() = default;
 
 void MapLoaded::init()
 {

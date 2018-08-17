@@ -50,9 +50,7 @@ AddFeaturesFeatureService::AddFeaturesFeatureService(QQuickItem* parent) :
 {
 }
 
-AddFeaturesFeatureService::~AddFeaturesFeatureService()
-{
-}
+AddFeaturesFeatureService::~AddFeaturesFeatureService() = default;
 
 void AddFeaturesFeatureService::init()
 {

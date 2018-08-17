@@ -60,9 +60,7 @@ Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   Q_INIT_RESOURCE(Animate3DSymbols);
 }
 
-Animate3DSymbols::~Animate3DSymbols()
-{
-}
+Animate3DSymbols::~Animate3DSymbols() = default;
 
 void Animate3DSymbols::init()
 {
@@ -348,10 +346,7 @@ MissionData::MissionData():
 {
 }
 
-MissionData::~MissionData()
-{
-
-}
+MissionData::~MissionData() = default;
 
 bool MissionData::parse(const QString& dataPath)
 {

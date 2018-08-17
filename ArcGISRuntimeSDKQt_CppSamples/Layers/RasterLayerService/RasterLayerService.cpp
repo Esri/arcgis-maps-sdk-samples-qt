@@ -32,9 +32,7 @@ RasterLayerService::RasterLayerService(QQuickItem* parent /* = nullptr */):
 {
 }
 
-RasterLayerService::~RasterLayerService()
-{
-}
+RasterLayerService::~RasterLayerService() = default;
 
 void RasterLayerService::init()
 {

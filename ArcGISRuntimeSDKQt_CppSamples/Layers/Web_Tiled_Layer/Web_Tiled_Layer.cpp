@@ -32,9 +32,7 @@ Web_Tiled_Layer::Web_Tiled_Layer(QQuickItem* parent /* = nullptr */):
 {
 }
 
-Web_Tiled_Layer::~Web_Tiled_Layer()
-{
-}
+Web_Tiled_Layer::~Web_Tiled_Layer() = default;
 
 void Web_Tiled_Layer::init()
 {
