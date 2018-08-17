@@ -125,10 +125,10 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
           if (generateJob->result()->hasErrors())
           {
             QString layerErrors = "";
-            for (Layer* layer : generateJob->result()->layerErrors().keys())
+            const QMap<Layer*, Error>& layerErrorsMap = generateJob->result()->layerErrors();
+            for (auto it = layerErrorsMap.cbegin(); it != layerErrorsMap.cend(); ++it)
             {
-              Error error = generateJob->result()->layerErrors().value(layer);
-              layerErrors += layer->name() + ": " + error.message() + "\n";
+              layerErrors += it.key()->name() + ": " + it.value().message() + "\n";
             }
             emit showLayerErrors(layerErrors);
           }

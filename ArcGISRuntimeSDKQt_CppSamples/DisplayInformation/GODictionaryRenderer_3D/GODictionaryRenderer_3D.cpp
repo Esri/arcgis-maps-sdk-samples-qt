@@ -173,7 +173,7 @@ void GODictionaryRenderer_3D::parseXmlFile()
 void GODictionaryRenderer_3D::createGraphic(QVariantMap rawAttributes)
 {
   // If _wkid was absent, use WGS 1984 (4326) by default.
-  int wkid = rawAttributes.keys().contains(FIELD_WKID) ? rawAttributes[FIELD_WKID].toInt() : 4326;
+  int wkid = rawAttributes.count(FIELD_WKID) > 0 ? rawAttributes[FIELD_WKID].toInt() : 4326;
   SpatialReference sr(wkid);
   Geometry geom;
   QStringList pointStrings = rawAttributes[FIELD_CONTROL_POINTS].toString().split(";");

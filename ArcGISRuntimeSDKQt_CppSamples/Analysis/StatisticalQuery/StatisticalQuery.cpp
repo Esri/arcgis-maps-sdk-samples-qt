@@ -77,9 +77,10 @@ void StatisticalQuery::componentComplete()
     while (iter.hasNext())
     {
       StatisticRecord* record = iter.next(&parent);
-      for (const QString& key : record->statistics().keys())
+      const QVariantMap& statsMap = record->statistics();
+      for (auto it = statsMap.cbegin(); it != statsMap.cend(); ++it)
       {
-        resultText += QString("%1: %2\n").arg(key, record->statistics().value(key).toString());
+        resultText += QString("%1: %2\n").arg(it.key(), it.value().toString());
       }
     }
 
