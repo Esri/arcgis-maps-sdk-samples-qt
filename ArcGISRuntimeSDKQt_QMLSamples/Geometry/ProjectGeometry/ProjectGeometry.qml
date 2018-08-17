@@ -98,5 +98,6 @@ Rectangle {
         accessoryButtonHidden: true
         autoAdjustWidth: true
         maxWidth: 350 * scaleFactor
+        leaderPosition: leaderPositionEnum.Automatic
     }
 }

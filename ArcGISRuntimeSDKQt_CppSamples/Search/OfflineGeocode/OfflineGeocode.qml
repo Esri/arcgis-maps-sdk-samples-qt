@@ -40,6 +40,7 @@ OfflineGeocodeSample {
 
         Callout {
             id: callout
+            leaderPosition: leaderPositionEnum.Automatic
             calloutData: offlineGeocodeSample.calloutData
             screenOffsetY: -19 * scaleFactor
             accessoryButtonHidden: true

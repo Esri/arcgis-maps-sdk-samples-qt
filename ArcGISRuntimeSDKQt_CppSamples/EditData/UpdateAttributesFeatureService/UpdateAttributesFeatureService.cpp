@@ -161,7 +161,7 @@ void UpdateAttributesFeatureService::connectSignals()
   });
 }
 
-CalloutData *UpdateAttributesFeatureService::calloutData() const
+CalloutData* UpdateAttributesFeatureService::calloutData() const
 {
  return m_mapView ? m_mapView->calloutData() : nullptr;
 }

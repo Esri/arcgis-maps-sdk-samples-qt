@@ -29,7 +29,6 @@ Rectangle {
     property real scaleFactor: System.displayScaleFactor
     property string damageType
     property var selectedFeature: null
-    property Point calloutLocation;
 
     // Create MapView that contains a Map
     MapView {
@@ -81,7 +80,6 @@ Rectangle {
 
                         selectedFeature = selectFeaturesResult.iterator.next();
                         damageType = selectedFeature.attributes.attributeValue("typdamage");
-                        calloutLocation = selectedFeature.geometry.extent.center;
 
                         // show the callout
                         callout.showCallout();
@@ -126,15 +124,16 @@ Rectangle {
 
         calloutData {
             title: "<b>" + damageType + "</b>"
-            location: calloutLocation
+            location: selectedFeature ? selectedFeature.geometry : null;
             detail: selectedFeature === null ? "" : "Number of attachments: %1".arg(selectedFeature.attachments.count)
         }
 
         Callout {
             id: callout
-            borderColor:  "lightgrey"
+            borderColor: "lightgrey"
             borderWidth: 1 * scaleFactor
             calloutData : parent.calloutData
+            leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
                 attachmentWindow.visible = true;
             }

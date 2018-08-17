@@ -25,7 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property Point  calloutLocation
+    property Point calloutLocation
     property string damageType
     property real scaleFactor: System.displayScaleFactor
 
@@ -115,14 +115,14 @@ Rectangle {
         // hide the callout after navigation
         onViewpointChanged: {
             if (callout.calloutVisible)
-                callout.dismiss()
+                callout.dismiss();
         }
 
         onMouseClicked: {
             // reset the map callout and update window
             featureLayer.clearSelection();
             if (callout.calloutVisible)
-                callout.dismiss()
+                callout.dismiss();
 
             //! [DeleteFeaturesFeatureService identify feature]
             // call identify on the feature layer
@@ -145,6 +145,7 @@ Rectangle {
 
         calloutData {
             location: calloutLocation
+            // We use the HTMl to bold, increase the pt size, and centre-align the the damageType title.
             title: "<br><b><font size=\"+2\">" + damageType + "</font></b>"
         }
 
@@ -156,6 +157,7 @@ Rectangle {
             calloutData: parent.calloutData
             borderWidth: 1 * scaleFactor
             borderColor: "lightgrey"
+            leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
                 if (callout.calloutVisible)
                     callout.dismiss();

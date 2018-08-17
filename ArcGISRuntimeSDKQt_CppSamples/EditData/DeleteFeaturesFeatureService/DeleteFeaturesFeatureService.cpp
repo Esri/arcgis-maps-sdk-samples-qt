@@ -134,8 +134,9 @@ void DeleteFeaturesFeatureService::connectSignals()
     {
       Feature* feat = iter.next();
       // emit signal for QML
-      QString featureType = feat->attributes()->attributeValue("typdamage").toString();
-      m_mapView->calloutData()->setTitle("<br><b><font size=\"+2\">" + featureType + "</font></b>");
+      const QString featureType = feat->attributes()->attributeValue("typdamage").toString();
+      // Html tags used to bold and increase pt size of callout title.
+      m_mapView->calloutData()->setTitle(QString("<br><b><font size=\"+2\">%1</font></b>").arg(featureType));
       m_mapView->calloutData()->setLocation(feat->geometry().extent().center());
       emit featureSelected();
     }

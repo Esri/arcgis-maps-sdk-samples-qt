@@ -42,6 +42,7 @@ EditFeatureAttachmentsSample {
             borderColor: "lightgrey"
             borderWidth: 1 * scaleFactor
             calloutData: editAttachmentsSample.calloutData
+            leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
                 attachmentWindow.visible = true;
             }

@@ -40,6 +40,7 @@ DeleteFeaturesFeatureServiceSample {
             borderWidth : 1 * scaleFactor
             accessoryButtonType: "Custom"
             customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/ic_menu_trash_light.png"
+            leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
                 if (callout.visible)
                     callout.dismiss();

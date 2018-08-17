@@ -133,7 +133,7 @@ void EditFeatureAttachments::connectSignals()
 
       // set selected feature and attachment model members
       m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-      QString featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
+      const QString featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
       m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
       m_mapView->calloutData()->setTitle(QString("<b>%1</b>").arg(featureType));
       emit featureSelected();
@@ -231,7 +231,7 @@ void EditFeatureAttachments::deleteAttachment(int index)
   }
 }
 
-CalloutData *EditFeatureAttachments::calloutData() const
+CalloutData* EditFeatureAttachments::calloutData() const
 {
   return m_mapView ? m_mapView->calloutData() : nullptr;
 }

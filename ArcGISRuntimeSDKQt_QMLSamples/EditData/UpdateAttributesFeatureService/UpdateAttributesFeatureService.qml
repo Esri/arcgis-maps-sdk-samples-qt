@@ -26,7 +26,6 @@ Rectangle {
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property Point calloutLocation
     property string damageType
     property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
     property var selectedFeature: null
@@ -90,7 +89,6 @@ Rectangle {
                         damageType = selectedFeature.attributes.attributeValue("typdamage");
 
                         // show the callout
-                        calloutLocation = selectedFeature.geometry.extent.center;
                         callout.showCallout();
 
                         // set the combo box's default value
@@ -131,17 +129,19 @@ Rectangle {
             }
         }
 
-
         calloutData {
+            // HTML to style the title text by centering it, increase pt size,
+            // and bolding it.
             title: "<br><b><font size=\"+2\">" + damageType + "</font></b>"
-            location: calloutLocation
+            location: selectedFeature ? selectedFeature.geometry : null
         }
 
         Callout {
             id: callout
             calloutData: parent.calloutData;
             borderColor: "lightgrey"
-            borderWidth: 1
+            borderWidth: 1 * scaleFactor
+            leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
                 updateWindow.visible = true;
             }
@@ -154,7 +154,7 @@ Rectangle {
         anchors.centerIn: parent
         width: 200 * scaleFactor
         height: 110 * scaleFactor
-        radius: 10
+        radius: 10 * scaleFactor
         visible: false
 
         GaussianBlur {
@@ -166,8 +166,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
         }
 
         Column {

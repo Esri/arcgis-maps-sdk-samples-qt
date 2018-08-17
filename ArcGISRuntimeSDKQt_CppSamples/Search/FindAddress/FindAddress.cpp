@@ -125,8 +125,9 @@ void FindAddress::connectSignals()
     auto graphics = identifyResult->graphics();
     if (graphics.length() > 0)
     {
-      QString calloutText = graphics.at(0)->attributes()->attributeValue("Match_addr").toString();
-      QString calloutDetailedText = graphics.at(0)->attributes()->attributeValue("Place_addr").toString();
+      const AttributeListModel* attributes = graphics.at(0)->attributes();
+      const QString calloutText = attributes->attributeValue("Match_addr").toString();
+      const QString calloutDetailedText = attributes->attributeValue("Place_addr").toString();
       m_mapView->calloutData()->setTitle(calloutText);
       m_mapView->calloutData()->setDetail(calloutDetailedText);
       emit showCallout();
@@ -136,7 +137,7 @@ void FindAddress::connectSignals()
   });
 }
 
-CalloutData *FindAddress::calloutData() const
+CalloutData* FindAddress::calloutData() const
 {
   return m_mapView ? m_mapView->calloutData() : nullptr;
 }

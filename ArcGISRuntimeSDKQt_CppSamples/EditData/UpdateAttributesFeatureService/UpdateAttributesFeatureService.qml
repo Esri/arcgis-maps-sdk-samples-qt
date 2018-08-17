@@ -40,6 +40,7 @@ UpdateAttributesFeatureServiceSample {
             borderWidth: 1 * scaleFactor;
             borderColor: "lightgrey"
             calloutData: updateFeaturesSample.calloutData
+            leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
                 updateWindow.visible = true;
             }
@@ -68,7 +69,7 @@ UpdateAttributesFeatureServiceSample {
         anchors.centerIn: parent
         width: 200 * scaleFactor
         height: 110 * scaleFactor
-        radius: 10
+        radius: 10 * scaleFactor
         visible: false
 
         GaussianBlur {
@@ -80,8 +81,8 @@ UpdateAttributesFeatureServiceSample {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
         }
 
         Column {
@@ -89,7 +90,7 @@ UpdateAttributesFeatureServiceSample {
                 fill: parent
                 margins: 10 * scaleFactor
             }
-            spacing: 10
+            spacing: 10 * scaleFactor
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
                 Text {
@@ -106,7 +107,7 @@ UpdateAttributesFeatureServiceSample {
 
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 10
+                spacing: 10 * scaleFactor
 
                 Button {
                     width: (updateWindow.width / 2) - (20 * scaleFactor)

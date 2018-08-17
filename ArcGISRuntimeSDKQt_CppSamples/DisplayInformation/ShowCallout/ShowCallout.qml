@@ -36,6 +36,7 @@ ShowCalloutSample {
             id: callout
             calloutData: showCalloutSample.calloutData // bind to the property that is exposed
             accessoryButtonHidden: true
+            leaderPosition: leaderPositionEnum.Automatic
         }
         //! [set callout data]
     }

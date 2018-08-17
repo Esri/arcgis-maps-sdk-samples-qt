@@ -46,6 +46,7 @@ MobileMap_SearchAndRouteSample {
                 calloutData: mobileMapSearchRoute.calloutData
                 screenOffsetY: -19 * scaleFactor
                 accessoryButtonHidden: true
+                leaderPosition: leaderPositionEnum.Automatic
             }
 
             Rectangle {
