@@ -34,7 +34,6 @@
 #include <QString>
 #include <QScopedPointer>
 
-
 using namespace Esri::ArcGISRuntime;
 
 DeleteFeaturesFeatureService::DeleteFeaturesFeatureService(QQuickItem* parent) :

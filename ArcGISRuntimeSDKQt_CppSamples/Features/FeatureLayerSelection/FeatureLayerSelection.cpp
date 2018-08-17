@@ -32,7 +32,6 @@
 #include <QMouseEvent>
 #include <QScopedPointer>
 
-
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerSelection::FeatureLayerSelection(QQuickItem* parent) :

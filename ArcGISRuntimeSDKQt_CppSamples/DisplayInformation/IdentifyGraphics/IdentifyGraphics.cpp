@@ -30,7 +30,6 @@
 #include <QUuid>
 #include <QScopedPointer>
 
-
 using namespace Esri::ArcGISRuntime;
 
 IdentifyGraphics::IdentifyGraphics(QQuickItem* parent) :

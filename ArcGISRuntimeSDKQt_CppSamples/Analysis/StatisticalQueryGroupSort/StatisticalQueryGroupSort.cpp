@@ -30,7 +30,6 @@
 #include <QList>
 #include <QScopedPointer>
 
-
 using namespace Esri::ArcGISRuntime;
 
 StatisticalQueryGroupSort::StatisticalQueryGroupSort(QQuickItem* parent /* = nullptr */):
@@ -105,14 +104,13 @@ void StatisticalQueryGroupSort::connectSignals()
       StatisticRecord* record = iter.next(result.data());
 
       // get the group string
-      QString sectionString;
+      QStringList sectionStrings;
       const QVariantMap& groupsMap = record->group();
       for (auto it = groupsMap.cbegin(); it != groupsMap.cend(); ++it)
       {
-        if (sectionString.length() > 0)
-          sectionString += ",";
-        sectionString += QString("\"%1\":\"%2\"").arg(it.key(), it.value().toString());
+        sectionStrings << QString("\"%1\":\"%2\"").arg(it.key(), it.value().toString());
       }
+      const QString sectionString = sectionStrings.join(',');
 
       // obtain the statistics
       const QVariantMap& statsMap = record->statistics();

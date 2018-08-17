@@ -28,7 +28,6 @@
 #include <QUrl>
 #include <QScopedPointer>
 
-
 using namespace Esri::ArcGISRuntime;
 
 FindAddress::FindAddress(QQuickItem* parent) :

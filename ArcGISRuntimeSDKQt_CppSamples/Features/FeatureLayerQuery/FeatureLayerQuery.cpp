@@ -35,7 +35,6 @@
 #include <QList>
 #include <QScopedPointer>
 
-
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerQuery::FeatureLayerQuery(QQuickItem* parent) :

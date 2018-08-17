@@ -33,7 +33,6 @@
 #include <QQmlProperty>
 #include <QScopedPointer>
 
-
 using namespace Esri::ArcGISRuntime;
 
 OfflineGeocode::OfflineGeocode(QQuickItem* parent):

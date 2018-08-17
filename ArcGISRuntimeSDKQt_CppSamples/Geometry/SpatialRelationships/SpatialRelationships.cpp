@@ -32,7 +32,6 @@
 #include <QStringList>
 #include <QScopedPointer>
 
-
 using namespace Esri::ArcGISRuntime;
 
 SpatialRelationships::SpatialRelationships(QQuickItem* parent /* = nullptr */):
