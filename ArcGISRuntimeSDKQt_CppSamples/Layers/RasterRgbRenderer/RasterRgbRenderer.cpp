@@ -34,9 +34,7 @@ RasterRgbRenderer::RasterRgbRenderer(QQuickItem* parent /* = nullptr */):
 {
 }
 
-RasterRgbRenderer::~RasterRgbRenderer()
-{
-}
+RasterRgbRenderer::~RasterRgbRenderer() = default;
 
 void RasterRgbRenderer::init()
 {

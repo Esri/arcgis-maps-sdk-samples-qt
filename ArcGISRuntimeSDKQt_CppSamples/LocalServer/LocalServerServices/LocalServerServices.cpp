@@ -32,9 +32,7 @@ LocalServerServices::LocalServerServices(QQuickItem* parent) :
 {
 }
 
-LocalServerServices::~LocalServerServices()
-{
-}
+LocalServerServices::~LocalServerServices() = default;
 
 void LocalServerServices::init()
 {

@@ -153,5 +153,6 @@ void IdentifyLayers::connectSignals()
 
     emit messageChanged();
     emit showMessage();
+    qDeleteAll(results);
   });
 }

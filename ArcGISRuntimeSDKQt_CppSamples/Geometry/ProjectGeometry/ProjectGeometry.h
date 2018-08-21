@@ -48,7 +48,7 @@ signals:
   void calloutDataChanged();
 
 private slots:
-  void onMouseClicked(const QMouseEvent& event);
+  void onMouseClicked(QMouseEvent& event);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

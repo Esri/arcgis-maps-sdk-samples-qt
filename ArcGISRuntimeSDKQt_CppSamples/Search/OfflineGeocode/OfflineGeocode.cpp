@@ -31,6 +31,7 @@
 #include "IdentifyGraphicsOverlayResult.h"
 
 #include <QQmlProperty>
+#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -39,9 +40,7 @@ OfflineGeocode::OfflineGeocode(QQuickItem* parent):
 {
 }
 
-OfflineGeocode::~OfflineGeocode()
-{
-}
+OfflineGeocode::~OfflineGeocode() = default;
 
 void OfflineGeocode::init()
 {
@@ -127,7 +126,7 @@ void OfflineGeocode::setSuggestionsText(const QString& searchText)
   m_suggestListModel->setSearchText(searchText);
 }
 
-void OfflineGeocode::logError(const Error& error)
+void OfflineGeocode::logError(const Error error)
 {
   setErrorMessage( QString("%1: %2").arg(error.message(), error.additionalMessage()));
 }
@@ -215,13 +214,16 @@ void OfflineGeocode::connectSignals()
   });
 
   // if clicked pin graphic, show callout. otherwise, reverse geocode
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
+    // Delete rawIdentifyResult when we leave scope.
+    QScopedPointer<IdentifyGraphicsOverlayResult> identifyResult(rawIdentifyResult);
+    
     if (!identifyResult)
       return;
 
     // if user clicked on pin, display callout
-    auto graphics = identifyResult->graphics();
+    const QList<Graphic*> graphics = identifyResult->graphics();
     if (graphics.count() > 0)
       m_calloutData->setVisible(true);
 
@@ -234,12 +236,10 @@ void OfflineGeocode::connectSignals()
       m_geocodeInProgress = true;
       emit geocodeInProgressChanged();
     }
-
-    identifyResult->deleteLater();
   });
 
   connect(m_locatorTask, &LocatorTask::errorOccurred, this, &OfflineGeocode::logError);
-  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, QList<GeocodeResult> geocodeResults)
+  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, const QList<GeocodeResult>& geocodeResults)
   {
     // dismiss busy indicator
     m_geocodeInProgress = false;

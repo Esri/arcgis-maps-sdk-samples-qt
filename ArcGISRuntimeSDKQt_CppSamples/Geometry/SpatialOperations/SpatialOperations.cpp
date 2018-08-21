@@ -33,11 +33,12 @@ SpatialOperations::SpatialOperations(QQuickItem* parent /* = nullptr */):
   m_polygon1(Geometry()),
   m_polygon2(Geometry()),
   m_inputsOverlay (new GraphicsOverlay(this)),
-  m_outputsOverlay (new GraphicsOverlay(this))
+  m_outputsOverlay (new GraphicsOverlay(this)),
+  m_geometryOperations { QStringLiteral("None"),       QStringLiteral("Union")
+                       , QStringLiteral("Difference"), QStringLiteral("Symmetric difference")
+                       , QStringLiteral("Intersection") }
 {
-  m_geometryOperations << QStringLiteral("None") << QStringLiteral("Union")
-                       << QStringLiteral("Difference") << QStringLiteral("Symmetric difference")
-                       << QStringLiteral("Intersection");
+  
 }
 
 void SpatialOperations::init()

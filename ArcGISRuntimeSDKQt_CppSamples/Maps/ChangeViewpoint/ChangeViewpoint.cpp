@@ -31,9 +31,7 @@ ChangeViewpoint::ChangeViewpoint(QQuickItem* parent) :
 {
 }
 
-ChangeViewpoint::~ChangeViewpoint()
-{
-}
+ChangeViewpoint::~ChangeViewpoint() = default;
 
 void ChangeViewpoint::init()
 {

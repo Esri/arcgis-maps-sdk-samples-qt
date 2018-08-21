@@ -61,7 +61,7 @@ void FeatureLayer_GeoPackage::componentComplete()
   GeoPackage* gpkg = new GeoPackage(dataPath + "AuroraCO.gpkg", this);
 
   // Connect to GeoPackage::doneLoading
-  connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](const Error e)
+  connect(gpkg, &GeoPackage::doneLoading, this, [this, gpkg](Error e)
   {
     if (!e.isEmpty())
       return;
@@ -75,7 +75,7 @@ void FeatureLayer_GeoPackage::componentComplete()
   });
 
   // Connect to Map::doneLoading
-  connect(m_map, &Map::doneLoading, this, [this, gpkg](const Error e)
+  connect(m_map, &Map::doneLoading, this, [this, gpkg](Error e)
   {
     if (!e.isEmpty())
       return;

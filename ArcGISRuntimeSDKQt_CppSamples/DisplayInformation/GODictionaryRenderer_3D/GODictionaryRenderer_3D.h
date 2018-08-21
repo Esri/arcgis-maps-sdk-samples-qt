@@ -20,6 +20,7 @@
 #include <QQuickItem>
 #include <QXmlStreamReader>
 
+#include "Error.h"
 #include "Envelope.h"
 #include "SpatialReference.h"
 
@@ -27,7 +28,6 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class Error;
     class GraphicsOverlay;
     class SceneQuickView;
   }
@@ -51,7 +51,7 @@ signals:
   void errorMessageChanged();
 
 private slots:
-  void logError(const Esri::ArcGISRuntime::Error& error);
+  void logError(Esri::ArcGISRuntime::Error error);
 
 private:
   static const QString FIELD_CONTROL_POINTS;

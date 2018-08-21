@@ -51,7 +51,7 @@ signals:
   void statusChanged();
 
 private:
-  Esri::ArcGISRuntime::AuthenticationChallenge* m_challenge;
+  Esri::ArcGISRuntime::AuthenticationChallenge* m_challenge = nullptr;
   OAuthRedirectHandlerStatus m_status;
 };
 

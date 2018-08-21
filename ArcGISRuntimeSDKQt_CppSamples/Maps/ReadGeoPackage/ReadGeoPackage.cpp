@@ -82,7 +82,7 @@ void ReadGeoPackage::readGeoPackage()
       const QList<GeoPackageFeatureTable*> gpkgFeatures = auroraGpkg->geoPackageFeatureTables();
 
       // Loop through both lists to get the name and layer data. The name data is only used to populate the menu.
-      for (const auto& featureTbl : gpkgFeatures)
+      for (GeoPackageFeatureTable* featureTbl : gpkgFeatures)
       {
         QVariantMap layerMap;
         FeatureLayer* layer = new FeatureLayer(featureTbl, this);
@@ -90,7 +90,7 @@ void ReadGeoPackage::readGeoPackage()
         layerMap["lyr"] = QVariant::fromValue<Layer*>(layer);
         m_layerList << layerMap;
       }
-      for (const auto& rasterItm : gpkgRasters)
+      for (GeoPackageRaster* rasterItm : gpkgRasters)
       {
         QVariantMap rasterMap;
         RasterLayer* rasterLyr = new RasterLayer(rasterItm, this);
@@ -113,8 +113,8 @@ QVariantList ReadGeoPackage::layerList() const
 // Called by the QML to toggle visibility at a certain index
 void ReadGeoPackage::addOrShowLayer(int index, bool visible)
 {
-  auto opLayers = m_map->operationalLayers();
-  auto layer = qvariant_cast<Layer*>(m_layerList[index].toMap()["lyr"]);
+  LayerListModel* opLayers = m_map->operationalLayers();
+  Layer* layer = qvariant_cast<Layer*>(m_layerList[index].toMap()["lyr"]);
   int indexOfLayer = opLayers->indexOf(layer);
   if (indexOfLayer != -1 && !visible)
   {

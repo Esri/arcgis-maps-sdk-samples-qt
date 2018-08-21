@@ -71,6 +71,7 @@ private:
   int m_screenX = 0;
   int m_screenY = 0;
   QString m_featureType;
+  QMetaObject::Connection m_featureLoadStatusChangedConnection;
 };
 
 #endif // UPDATE_ATTRIBUTES_FEATURE_SERVICE_H

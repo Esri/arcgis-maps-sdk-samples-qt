@@ -43,9 +43,7 @@ AnalyzeViewshed::AnalyzeViewshed(QQuickItem* parent /* = nullptr */):
 {
 }
 
-AnalyzeViewshed::~AnalyzeViewshed()
-{
-}
+AnalyzeViewshed::~AnalyzeViewshed() = default;
 
 void AnalyzeViewshed::init()
 {
@@ -99,7 +97,7 @@ void AnalyzeViewshed::createOverlays()
 void AnalyzeViewshed::connectSignals()
 {
   // Set up signal handler for the mouse clicked signal
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent mouse)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouse)
   {
     // The geoprocessing task is still executing, don't do anything else (i.e. respond to
     // more user taps) until the processing is complete.

@@ -49,10 +49,7 @@ DisplayGrid::DisplayGrid(QQuickItem* parent /* = nullptr */):
 {
 }
 
-DisplayGrid::~DisplayGrid()
-{
-}
-
+DisplayGrid::~DisplayGrid() = default;
 void DisplayGrid::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");

@@ -101,7 +101,7 @@ void EditAndSyncFeatures::connectSignals()
       else
       {
         // connect to feature table signal
-        auto featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(0));
+        FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(0));
         connect(featureLayer->featureTable(), &GeodatabaseFeatureTable::updateFeatureCompleted, this, [this, featureLayer](QUuid, bool success)
         {
           if (success)
@@ -128,13 +128,13 @@ void EditAndSyncFeatures::connectSignals()
       return;
 
     // clear any existing selection
-    auto featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->first());
+    FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_map->operationalLayers()->first());
     featureLayer->clearSelection();
     m_selectedFeature = nullptr;
 
     if (identifyResult->geoElements().length() > 0)
     {
-      auto geoElement = identifyResult->geoElements().at(0);
+      GeoElement* geoElement = identifyResult->geoElements().at(0);
       m_selectedFeature = static_cast<ArcGISFeature*>(geoElement);
       featureLayer->selectFeature(m_selectedFeature);
       emit updateInstruction("Tap on map to move feature");
@@ -182,17 +182,17 @@ SyncGeodatabaseParameters EditAndSyncFeatures::getSyncParameters()
 void EditAndSyncFeatures::generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
 {
   // create an envelope from the QML rectangle corners
-  auto corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
-  auto corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
-  auto extent = Envelope(corner1, corner2);
-  auto geodatabaseExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
+  const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
+  const Envelope extent(corner1, corner2);
+  const Geometry geodatabaseExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
   // get the updated parameters
-  auto params = getGenerateParameters(geodatabaseExtent);
+  GenerateGeodatabaseParameters params = getGenerateParameters(geodatabaseExtent);
 
   // execute the task and obtain the job
   QString outputGdb = QQmlProperty::read(this, "outputGdb").toString();
-  auto generateJob = m_syncTask->generateGeodatabase(params, outputGdb);
+  GenerateGeodatabaseJob* generateJob = m_syncTask->generateGeodatabase(params, outputGdb);
 
   // connect to the job's status changed signal
   if (generateJob)
@@ -248,7 +248,7 @@ void EditAndSyncFeatures::addOfflineData()
   connect(m_offlineGdb, &Geodatabase::doneLoading, this, [this](Error)
   {
     // create a feature layer from each feature table, and add to the map
-    for (const auto& featureTable : m_offlineGdb->geodatabaseFeatureTables())
+    for (GeodatabaseFeatureTable* featureTable : m_offlineGdb->geodatabaseFeatureTables())
     {
       FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
       m_map->operationalLayers()->append(featureLayer);
@@ -266,10 +266,10 @@ bool EditAndSyncFeatures::isOffline() const
 void EditAndSyncFeatures::executeSync()
 {
   // get the updated parameters
-  auto params = getSyncParameters();
+  SyncGeodatabaseParameters params = getSyncParameters();
 
   // execute the task and obtain the job
-  auto syncJob = m_syncTask->syncGeodatabase(params, m_offlineGdb);
+  SyncGeodatabaseJob* syncJob = m_syncTask->syncGeodatabase(params, m_offlineGdb);
 
   // connect to the job's status changed signal
   if (syncJob)

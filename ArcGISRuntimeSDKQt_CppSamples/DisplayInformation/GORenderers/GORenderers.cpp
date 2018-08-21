@@ -38,9 +38,7 @@ GORenderers::GORenderers(QQuickItem* parent) :
 {
 }
 
-GORenderers::~GORenderers()
-{
-}
+GORenderers::~GORenderers() = default;
 
 void GORenderers::init()
 {

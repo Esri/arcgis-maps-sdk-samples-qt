@@ -33,9 +33,7 @@ Simple_Renderer::Simple_Renderer(QQuickItem* parent) :
 {
 }
 
-Simple_Renderer::~Simple_Renderer()
-{
-}
+Simple_Renderer::~Simple_Renderer() = default;
 
 void Simple_Renderer::init()
 {

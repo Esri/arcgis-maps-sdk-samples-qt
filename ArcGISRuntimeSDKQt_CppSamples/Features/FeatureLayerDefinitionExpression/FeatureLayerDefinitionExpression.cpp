@@ -33,9 +33,7 @@ FeatureLayerDefinitionExpression::FeatureLayerDefinitionExpression(QQuickItem* p
 {
 }
 
-FeatureLayerDefinitionExpression::~FeatureLayerDefinitionExpression()
-{
-}
+FeatureLayerDefinitionExpression::~FeatureLayerDefinitionExpression() = default;
 
 void FeatureLayerDefinitionExpression::init()
 {

@@ -29,9 +29,7 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QQuickItem* parent) :
 {
 }
 
-ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
-{
-}
+ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl() = default;
 
 void ArcGISTiledLayerUrl::init()
 {
@@ -57,4 +55,3 @@ void ArcGISTiledLayerUrl::componentComplete()
   m_mapView->setMap(m_map);
   //! [display tiled layer from tiled map service]
 }
-

@@ -14,6 +14,7 @@
 
 #include <QDir>
 #include <QQmlEngine>
+#include <QScopedPointer>
 
 #if defined(Q_OS_WIN) || (defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID))
 #include <QCommandLineParser>
@@ -41,7 +42,7 @@ int main(int argc, char *argv[])
   QCommandLineParser commandLineParser;
   commandLineParser.process(app);
 
-  auto argList = commandLineParser.positionalArguments();
+  QStringList argList = commandLineParser.positionalArguments();
 
   if (app.sendMessage(argList.join(",")))
     return 0;

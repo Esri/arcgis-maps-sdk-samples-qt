@@ -32,9 +32,7 @@ Web_Tiled_Layer::Web_Tiled_Layer(QQuickItem* parent /* = nullptr */):
 {
 }
 
-Web_Tiled_Layer::~Web_Tiled_Layer()
-{
-}
+Web_Tiled_Layer::~Web_Tiled_Layer() = default;
 
 void Web_Tiled_Layer::init()
 {
@@ -51,7 +49,7 @@ void Web_Tiled_Layer::componentComplete()
 
   // Set up the tiled layer parameters
   const QString templateUrl = "http://{subDomain}.tile.stamen.com/terrain/{level}/{col}/{row}.png";
-  const QStringList subDomains = QStringList() << "a" << "b" << "c" << "d";
+  const QStringList subDomains { "a", "b", "c", "d" };
   const QString attributionText = "Map tiles by <a href=\"http://stamen.com\">Stamen Design</a>, "
                                   "under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. "
                                   "Data by <a href=\"http://openstreetmap.org\">OpenStreetMap</a>, "

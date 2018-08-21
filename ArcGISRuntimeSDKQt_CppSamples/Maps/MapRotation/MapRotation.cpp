@@ -30,9 +30,7 @@ MapRotation::MapRotation(QQuickItem* parent) :
 {
 }
 
-MapRotation::~MapRotation()
-{
-}
+MapRotation::~MapRotation() = default;
 
 void MapRotation::init()
 {

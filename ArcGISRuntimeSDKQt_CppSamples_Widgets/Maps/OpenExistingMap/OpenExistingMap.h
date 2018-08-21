@@ -44,9 +44,9 @@ private:
   void createPortalMaps();
 
 private:
-  Esri::ArcGISRuntime::MapGraphicsView* m_mapView;
-  QPushButton* m_button;
-  QInputDialog* m_inputDialog;
+  Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
+  QPushButton* m_button = nullptr;
+  QInputDialog* m_inputDialog = nullptr;
   QMap<QString, QString > m_portalIds;
 
 };

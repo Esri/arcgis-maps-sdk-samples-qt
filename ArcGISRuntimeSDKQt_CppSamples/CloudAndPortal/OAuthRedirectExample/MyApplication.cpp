@@ -43,10 +43,7 @@ MyApplication::MyApplication(const QString& id, int& argc, char** argv):
 
 }
 
-MyApplication::~MyApplication()
-{
-
-}
+MyApplication::~MyApplication() = default;
 
 bool MyApplication::event(QEvent* event)
 {

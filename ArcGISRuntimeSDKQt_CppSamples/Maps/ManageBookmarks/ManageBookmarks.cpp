@@ -31,9 +31,7 @@ ManageBookmarks::ManageBookmarks(QQuickItem* parent) :
 {
 }
 
-ManageBookmarks::~ManageBookmarks()
-{
-}
+ManageBookmarks::~ManageBookmarks() = default;
 
 void ManageBookmarks::init()
 {

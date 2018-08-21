@@ -78,12 +78,12 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::ServiceAreaTask* m_task;
+  Esri::ArcGISRuntime::ServiceAreaTask* m_task = nullptr;
   Esri::ArcGISRuntime::ServiceAreaParameters m_parameters;
   Esri::ArcGISRuntime::PolylineBuilder* m_barrierBuilder = nullptr;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_facilitiesOverlay;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_barrierOverlay;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_areasOverlay;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_facilitiesOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_barrierOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_areasOverlay = nullptr;
   bool m_busy = true;
   QString m_message;
   SampleMode m_mode = SampleMode::Facility;

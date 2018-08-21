@@ -21,7 +21,6 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class Error;
     class Map;
     class MapQuickView;
     class Geodatabase;
@@ -29,6 +28,8 @@ namespace Esri
 }
 
 #include <QQuickItem>
+
+#include "Error.h"
 
 class FeatureLayerGeodatabase : public QQuickItem
 {
@@ -47,7 +48,7 @@ signals:
   void errorMessageChanged();
 
 private slots:
-  void logError(const Esri::ArcGISRuntime::Error& error);
+  void logError(Esri::ArcGISRuntime::Error error);
 
 private:
   QString errorMessage() const;

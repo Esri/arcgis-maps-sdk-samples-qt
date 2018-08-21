@@ -27,9 +27,7 @@ OpenMapUrl::OpenMapUrl(QQuickItem* parent) :
 {
 }
 
-OpenMapUrl::~OpenMapUrl()
-{
-}
+OpenMapUrl::~OpenMapUrl() = default;
 
 void OpenMapUrl::init()
 {

@@ -47,6 +47,4 @@ BasicSceneView::BasicSceneView(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-BasicSceneView::~BasicSceneView()
-{
-}
+BasicSceneView::~BasicSceneView() = default;

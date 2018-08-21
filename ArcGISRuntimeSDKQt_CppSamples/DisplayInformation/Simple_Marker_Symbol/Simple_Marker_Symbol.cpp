@@ -33,9 +33,7 @@ Simple_Marker_Symbol::Simple_Marker_Symbol(QQuickItem* parent) :
 {
 }
 
-Simple_Marker_Symbol::~Simple_Marker_Symbol()
-{
-}
+Simple_Marker_Symbol::~Simple_Marker_Symbol() = default;
 
 void Simple_Marker_Symbol::init()
 {

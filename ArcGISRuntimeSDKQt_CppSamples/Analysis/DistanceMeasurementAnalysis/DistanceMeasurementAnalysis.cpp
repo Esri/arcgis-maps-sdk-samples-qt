@@ -98,9 +98,9 @@ void DistanceMeasurementAnalysis::componentComplete()
 void DistanceMeasurementAnalysis::connectSignals()
 {
   // connect to signal to obtain updated distances
-  connect(m_distanceAnalysis, &LocationDistanceMeasurement::measurementChanged, this, [this](Distance directDistance,
-                                                                                            Distance horizontalDistance,
-                                                                                            Distance verticalDistance)
+  connect(m_distanceAnalysis, &LocationDistanceMeasurement::measurementChanged, this, [this](const Distance& directDistance,
+                                                                                             const Distance& horizontalDistance,
+                                                                                             const Distance& verticalDistance)
   {
     const QString unitLabel = m_distanceAnalysis->unitSystem() == UnitSystem::Metric ? "m" : "ft";
     m_directDistance = QString::number(directDistance.value(), 'f', 2) + QString(" %1").arg(unitLabel);
@@ -114,14 +114,14 @@ void DistanceMeasurementAnalysis::connectSignals()
   // connect to mouse signals to update the analysis
 
   // When the mouse is pressed and held, start updating the distance analysis end point
-  connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent mouseEvent)
+  connect(m_sceneView, &SceneQuickView::mousePressedAndHeld, this, [this](QMouseEvent& mouseEvent)
   {
     m_isPressAndHold = true;
     m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
   });
 
   // When the mouse is released...
-  connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this](QMouseEvent mouseEvent)
+  connect(m_sceneView, &SceneQuickView::mouseReleased, this, [this](QMouseEvent& mouseEvent)
   {
     // Check if the mouse was released from a pan gesture
     if (m_isNavigating)
@@ -143,7 +143,7 @@ void DistanceMeasurementAnalysis::connectSignals()
   });
 
   // Update the distance analysis when the mouse moves if it is a press and hold movement
-  connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent mouseEvent)
+  connect(m_sceneView, &SceneQuickView::mouseMoved, this, [this](QMouseEvent& mouseEvent)
   {
     if (m_isPressAndHold)
       m_sceneView->screenToLocation(mouseEvent.x(), mouseEvent.y());
