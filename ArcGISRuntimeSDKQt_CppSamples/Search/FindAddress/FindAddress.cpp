@@ -26,6 +26,7 @@
 #include "GeocodeParameters.h"
 #include "Graphic.h"
 #include <QUrl>
+#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -34,9 +35,7 @@ FindAddress::FindAddress(QQuickItem* parent) :
 {
 }
 
-FindAddress::~FindAddress()
-{
-}
+FindAddress::~FindAddress() = default;
 
 void FindAddress::init()
 {
@@ -78,7 +77,7 @@ void FindAddress::componentComplete()
   m_locatorTask = new LocatorTask(QUrl("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"), this);
   //! [FindAddress create LocatorTask]
   m_geocodeParameters.setMinScore(75);
-  m_geocodeParameters.setResultAttributeNames(QStringList() << "Place_addr" << "Match_addr");
+  m_geocodeParameters.setResultAttributeNames(QStringList { "Place_addr", "Match_addr" });
 
   connectSignals();
 }
@@ -87,7 +86,7 @@ void FindAddress::connectSignals()
 {
   // connect to geocode complete signal on the LocatorTask
   //! [FindAddress geocodeCompleted handler]
-  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, QList<GeocodeResult> geocodeResults)
+  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, const QList<GeocodeResult>& geocodeResults)
   {
     if (geocodeResults.length() > 0)
     {
@@ -117,12 +116,15 @@ void FindAddress::connectSignals()
   });
 
   // connect to the identifyGraphicsOverlayCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
+    // Delete rawIdentifyResult on leaving scope.
+    QScopedPointer<IdentifyGraphicsOverlayResult> identifyResult(rawIdentifyResult);
+
     if (!identifyResult)
       return;
 
-    auto graphics = identifyResult->graphics();
+    const QList<Graphic*> graphics = identifyResult->graphics();
     if (graphics.length() > 0)
     {
       const AttributeListModel* attributes = graphics.at(0)->attributes();
@@ -132,8 +134,6 @@ void FindAddress::connectSignals()
       m_mapView->calloutData()->setDetail(calloutDetailedText);
       emit showCallout();
     }
-
-    identifyResult->deleteLater();
   });
 }
 

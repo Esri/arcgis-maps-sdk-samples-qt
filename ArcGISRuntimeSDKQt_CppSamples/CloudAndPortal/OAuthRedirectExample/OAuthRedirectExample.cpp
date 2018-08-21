@@ -33,9 +33,7 @@ OAuthRedirectExample::OAuthRedirectExample(QQuickItem* parent /* = nullptr */):
     connect(m_portal, &Portal::loadStatusChanged, this, &OAuthRedirectExample::statusChanged);
 }
 
-OAuthRedirectExample::~OAuthRedirectExample()
-{
-}
+OAuthRedirectExample::~OAuthRedirectExample() = default;
 
 //static
 QString OAuthRedirectExample::customUrlProtocol()

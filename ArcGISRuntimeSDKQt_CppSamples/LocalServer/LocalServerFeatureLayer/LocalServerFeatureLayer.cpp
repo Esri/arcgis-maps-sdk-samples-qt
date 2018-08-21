@@ -34,9 +34,7 @@ LocalServerFeatureLayer::LocalServerFeatureLayer(QQuickItem* parent) :
 {
 }
 
-LocalServerFeatureLayer::~LocalServerFeatureLayer()
-{
-}
+LocalServerFeatureLayer::~LocalServerFeatureLayer() = default;
 
 void LocalServerFeatureLayer::init()
 {

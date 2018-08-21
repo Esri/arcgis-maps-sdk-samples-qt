@@ -34,9 +34,7 @@ RasterStretchRenderer::RasterStretchRenderer(QQuickItem* parent /* = nullptr */)
 {
 }
 
-RasterStretchRenderer::~RasterStretchRenderer()
-{
-}
+RasterStretchRenderer::~RasterStretchRenderer() = default;
 
 void RasterStretchRenderer::init()
 {

@@ -36,9 +36,7 @@ DistanceCompositeSymbol::DistanceCompositeSymbol(QQuickItem* parent) :
 {
 }
 
-DistanceCompositeSymbol::~DistanceCompositeSymbol()
-{
-}
+DistanceCompositeSymbol::~DistanceCompositeSymbol() = default;
 
 void DistanceCompositeSymbol::init()
 {

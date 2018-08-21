@@ -36,14 +36,23 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+  // Convenience RAII struct that deletes all pointers in given container.
+  struct FeatureEditListResultLock
+  {
+    FeatureEditListResultLock(const QList<FeatureEditResult*>& list) : results(list) { }
+    ~FeatureEditListResultLock() { qDeleteAll(results); }
+    const QList<FeatureEditResult*>& results;
+  };
+}
+
 EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-EditFeatureAttachments::~EditFeatureAttachments()
-{
-}
+EditFeatureAttachments::~EditFeatureAttachments() = default;
 
 void EditFeatureAttachments::init()
 {
@@ -133,9 +142,13 @@ void EditFeatureAttachments::connectSignals()
 
       // set selected feature and attachment model members
       m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-      const QString featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
+      // Don't delete selected feature when parent featureQueryResult is deleted.
+      m_selectedFeature->setParent(this);
+
+      const QString featureType = m_selectedFeature->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
       m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
       m_mapView->calloutData()->setTitle(QString("<b>%1</b>").arg(featureType));
+
       emit featureSelected();
       emit attachmentModelChanged();
 
@@ -153,10 +166,13 @@ void EditFeatureAttachments::connectSignals()
   connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted,
           this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
   {
-    if (featureEditResults.length() > 0)
+    // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
+    FeatureEditListResultLock lock(featureEditResults);
+
+    if (lock.results.length() > 0)
     {
       // obtain the first item in the list
-      FeatureEditResult* featureEditResult = featureEditResults.first();
+      FeatureEditResult* featureEditResult = lock.results.first();
       // check if there were errors
       if (!featureEditResult->isCompletedWithErrors())
       {
@@ -214,6 +230,7 @@ void EditFeatureAttachments::deleteAttachment(int index)
 
   if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
   {
+    qDebug() << "Attachments size: " << m_selectedFeature->attachments()->rowCount();
     m_selectedFeature->attachments()->deleteAttachment(index);
   }
   else

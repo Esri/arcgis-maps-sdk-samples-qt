@@ -42,9 +42,7 @@ LocalServerGeoprocessing::LocalServerGeoprocessing(QQuickItem* parent) :
 }
 
 // destructor
-LocalServerGeoprocessing::~LocalServerGeoprocessing()
-{
-}
+LocalServerGeoprocessing::~LocalServerGeoprocessing() = default;
 
 void LocalServerGeoprocessing::init()
 {

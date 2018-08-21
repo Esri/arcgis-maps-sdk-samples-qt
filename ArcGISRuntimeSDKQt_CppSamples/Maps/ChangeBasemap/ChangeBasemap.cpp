@@ -27,9 +27,7 @@ ChangeBasemap::ChangeBasemap(QQuickItem* parent) :
 {
 }
 
-ChangeBasemap::~ChangeBasemap()
-{
-}
+ChangeBasemap::~ChangeBasemap() = default;
 
 void ChangeBasemap::init()
 {

@@ -33,6 +33,7 @@
 #include <QUrl>
 #include <QColor>
 #include <QList>
+#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -41,9 +42,7 @@ FeatureLayerQuery::FeatureLayerQuery(QQuickItem* parent) :
 {
 }
 
-FeatureLayerQuery::~FeatureLayerQuery()
-{
-}
+FeatureLayerQuery::~FeatureLayerQuery() = default;
 
 void FeatureLayerQuery::init()
 {
@@ -90,8 +89,10 @@ void FeatureLayerQuery::componentComplete()
 void FeatureLayerQuery::connectSignals()
 {
     // iterate over the query results once the query is done
-    connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* queryResult)
+    connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
     {
+        QScopedPointer<FeatureQueryResult> queryResult(rawQueryResult);
+
         if (queryResult && !queryResult->iterator().hasNext())
         {
             m_queryResultsCount = 0;
@@ -106,8 +107,9 @@ void FeatureLayerQuery::connectSignals()
         // iterate over the result object
         while(queryResult->iterator().hasNext())
         {
+            Feature* feature = queryResult->iterator().next(this);
             // add each feature to the list
-            features.append(queryResult->iterator().next(this));
+            features.append(feature);
         }
 
         // select the feature

@@ -90,7 +90,7 @@ Rectangle {
                 if (currentText === "TOTAL POPULATION")
                     sceneProperties.extrusionExpression = "[POP2007] / 10";
                 else
-                    sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 10000";
+                    sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 100000";
             }
         }
 

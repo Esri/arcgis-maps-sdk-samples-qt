@@ -67,6 +67,7 @@ private:
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
   QString m_featureType;
+  QMetaObject::Connection m_featureLoadStatusChangedConnection;
 };
 
 #endif // UPDATE_ATTRIBUTES_FEATURE_SERVICE_H

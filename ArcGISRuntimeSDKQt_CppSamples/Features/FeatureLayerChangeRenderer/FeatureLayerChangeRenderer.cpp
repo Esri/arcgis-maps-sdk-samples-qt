@@ -36,9 +36,7 @@ FeatureLayerChangeRenderer::FeatureLayerChangeRenderer(QQuickItem* parent) :
 {
 }
 
-FeatureLayerChangeRenderer::~FeatureLayerChangeRenderer()
-{
-}
+FeatureLayerChangeRenderer::~FeatureLayerChangeRenderer() = default;
 
 void FeatureLayerChangeRenderer::init()
 {

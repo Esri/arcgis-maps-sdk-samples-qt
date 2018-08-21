@@ -28,9 +28,7 @@ BasicSceneView::BasicSceneView(QQuickItem* parent) :
 {
 }
 
-BasicSceneView::~BasicSceneView()
-{
-}
+BasicSceneView::~BasicSceneView() = default;
 
 void BasicSceneView::init()
 {

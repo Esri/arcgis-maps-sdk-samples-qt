@@ -38,9 +38,7 @@ FindRoute::FindRoute(QQuickItem* parent) :
 {
 }
 
-FindRoute::~FindRoute()
-{
-}
+FindRoute::~FindRoute() = default;
 
 void FindRoute::init()
 {
@@ -57,7 +55,7 @@ void FindRoute::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // create a new basemap instance
-  auto basemap = Basemap::navigationVector(this);
+  Basemap* basemap = Basemap::navigationVector(this);
 
   // create a new map instance
   m_map = new Map(basemap, this);
@@ -68,8 +66,8 @@ void FindRoute::componentComplete()
 
   // create initial graphics overlays
   m_routeGraphicsOverlay = new GraphicsOverlay(this);
-  auto simpleLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("cyan"), 4, this);
-  auto simpleRenderer = new SimpleRenderer(simpleLineSymbol, this);
+  SimpleLineSymbol* simpleLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("cyan"), 4, this);
+  SimpleRenderer* simpleRenderer = new SimpleRenderer(simpleLineSymbol, this);
   m_routeGraphicsOverlay->setRenderer(simpleRenderer);
   m_stopsGraphicsOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_routeGraphicsOverlay);
@@ -94,12 +92,12 @@ void FindRoute::addStopGraphics()
   Point stop2Geometry(-13041693, 3856006, SpatialReference(3857));
 
   // create the stop graphics' symbols
-  auto stop1Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing/FindRoute/pinA.png"));
-  auto stop2Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing/FindRoute/pinB.png"));
+  PictureMarkerSymbol* stop1Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing/FindRoute/pinA.png"));
+  PictureMarkerSymbol* stop2Symbol = getPictureMarkerSymbol(QUrl("qrc:/Samples/Routing/FindRoute/pinB.png"));
 
   // create the stop graphics
-  auto stop1Graphic = new Graphic(stop1Geometry, stop1Symbol, this);
-  auto stop2Graphic = new Graphic(stop2Geometry, stop2Symbol, this);
+  Graphic* stop1Graphic = new Graphic(stop1Geometry, stop1Symbol, this);
+  Graphic* stop2Graphic = new Graphic(stop2Geometry, stop2Symbol, this);
 
   // add to the overlay
   m_stopsGraphicsOverlay->graphics()->append(stop1Graphic);
@@ -110,7 +108,7 @@ void FindRoute::addStopGraphics()
 // Helper function for creating picture marker symbols
 PictureMarkerSymbol* FindRoute::getPictureMarkerSymbol(QUrl imageUrl)
 {
-  auto pictureMarkerSymbol = new PictureMarkerSymbol(imageUrl, this);
+  PictureMarkerSymbol* pictureMarkerSymbol = new PictureMarkerSymbol(imageUrl, this);
   pictureMarkerSymbol->setWidth(32);
   pictureMarkerSymbol->setHeight(32);
   pictureMarkerSymbol->setOffsetY(16);
@@ -186,7 +184,7 @@ void FindRoute::solveRoute()
       stop1.setName("Origin");
       Stop stop2(m_stopsGraphicsOverlay->graphics()->at(1)->geometry());
       stop2.setName("Destination");
-      m_routeParameters.setStops(QList<Stop>() << stop1 << stop2);
+      m_routeParameters.setStops(QList<Stop> { stop1, stop2 });
 
       // solve the route with the parameters
       m_routeTask->solveRoute(m_routeParameters);

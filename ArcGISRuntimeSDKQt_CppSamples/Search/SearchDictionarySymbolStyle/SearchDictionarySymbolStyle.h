@@ -61,8 +61,8 @@ signals:
   void searchResultsListModelChanged();
 
 private:
-  Esri::ArcGISRuntime::DictionarySymbolStyle* m_dictionarySymbolStyle;
-  QAbstractListModel* m_searchResults;
+  Esri::ArcGISRuntime::DictionarySymbolStyle* m_dictionarySymbolStyle = nullptr;
+  QAbstractListModel* m_searchResults = nullptr;
 };
 
 #endif // SEARCHDICTIONARYSYMBOLSTYLE_H

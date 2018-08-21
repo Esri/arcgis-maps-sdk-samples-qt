@@ -91,17 +91,16 @@ void SceneLayerSelection::connectSignals()
     GeoElement* geoElement = geoElements.at(0);
 
     // cast the GeoElement to a Feature
-    Feature* feature = dynamic_cast<Feature*>(geoElement);
+    Feature* feature = static_cast<Feature*>(geoElement);
 
     // select the Feature in the SceneLayer
     if (feature)
+      feature->setParent(this);
       m_sceneLayer->selectFeature(feature);
-
-    delete result;
   });
 
   // when the scene is clicked, identify the clicked feature and select it
-  connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent mouseEvent)
+  connect(m_sceneView, &SceneQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // clear any previous selection
     m_sceneLayer->clearSelection();

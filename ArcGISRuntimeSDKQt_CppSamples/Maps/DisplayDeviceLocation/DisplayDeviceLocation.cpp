@@ -36,9 +36,7 @@ DisplayDeviceLocation::DisplayDeviceLocation(QQuickItem* parent) :
 {
 }
 
-DisplayDeviceLocation::~DisplayDeviceLocation()
-{
-}
+DisplayDeviceLocation::~DisplayDeviceLocation() = default;
 
 void DisplayDeviceLocation::init()
 {

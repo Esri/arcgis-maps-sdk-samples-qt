@@ -29,9 +29,7 @@ ArcGISMapImageLayerUrl::ArcGISMapImageLayerUrl(QQuickItem* parent) :
 {
 }
 
-ArcGISMapImageLayerUrl::~ArcGISMapImageLayerUrl()
-{
-}
+ArcGISMapImageLayerUrl::~ArcGISMapImageLayerUrl() = default;
 
 void ArcGISMapImageLayerUrl::init()
 {

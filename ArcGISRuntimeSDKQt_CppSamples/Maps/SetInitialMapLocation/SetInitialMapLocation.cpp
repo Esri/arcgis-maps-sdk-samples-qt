@@ -26,9 +26,7 @@ SetInitialMapLocation::SetInitialMapLocation(QQuickItem* parent) :
 {
 }
 
-SetInitialMapLocation::~SetInitialMapLocation()
-{
-}
+SetInitialMapLocation::~SetInitialMapLocation() = default;
 
 void SetInitialMapLocation::init()
 {

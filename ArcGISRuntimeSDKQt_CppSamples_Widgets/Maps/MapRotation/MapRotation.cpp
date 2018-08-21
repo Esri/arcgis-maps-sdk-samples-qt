@@ -59,6 +59,4 @@ MapRotation::MapRotation(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-MapRotation::~MapRotation()
-{
-}
+MapRotation::~MapRotation() = default;

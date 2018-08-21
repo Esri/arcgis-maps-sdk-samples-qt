@@ -36,9 +36,7 @@ DisplayLayerViewDrawStatus::DisplayLayerViewDrawStatus(QQuickItem* parent) :
 {
 }
 
-DisplayLayerViewDrawStatus::~DisplayLayerViewDrawStatus()
-{
-}
+DisplayLayerViewDrawStatus::~DisplayLayerViewDrawStatus() = default;
 
 void DisplayLayerViewDrawStatus::init()
 {

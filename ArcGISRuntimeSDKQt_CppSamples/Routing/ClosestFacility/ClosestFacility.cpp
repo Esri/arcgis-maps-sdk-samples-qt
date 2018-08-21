@@ -39,9 +39,7 @@ ClosestFacility::ClosestFacility(QQuickItem* parent /* = nullptr */):
 {
 }
 
-ClosestFacility::~ClosestFacility()
-{
-}
+ClosestFacility::~ClosestFacility() = default;
 
 void ClosestFacility::init()
 {

@@ -53,9 +53,9 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-  Esri::ArcGISRuntime::Graphic* m_pointGraphic;
-  Esri::ArcGISRuntime::Graphic* m_polylineGraphic;
-  Esri::ArcGISRuntime::Graphic* m_polygonGraphic;
+  Esri::ArcGISRuntime::Graphic* m_pointGraphic = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_polylineGraphic = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_polygonGraphic = nullptr;
   QString m_pointRelationships;
   QString m_polygonRelationships;
   QString m_polylineRelationships;

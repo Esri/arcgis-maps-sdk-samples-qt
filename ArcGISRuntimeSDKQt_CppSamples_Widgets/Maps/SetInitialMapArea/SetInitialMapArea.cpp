@@ -45,6 +45,4 @@ SetInitialMapArea::SetInitialMapArea(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-SetInitialMapArea::~SetInitialMapArea()
-{
-}
+SetInitialMapArea::~SetInitialMapArea() = default;

@@ -30,6 +30,7 @@
 #include <QString>
 #include <QUrl>
 #include <QMouseEvent>
+#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -38,9 +39,7 @@ FeatureLayerSelection::FeatureLayerSelection(QQuickItem* parent) :
 {
 }
 
-FeatureLayerSelection::~FeatureLayerSelection()
-{
-}
+FeatureLayerSelection::~FeatureLayerSelection() = default;
 
 void FeatureLayerSelection::init()
 {
@@ -92,8 +91,10 @@ void FeatureLayerSelection::connectSignals()
   });
 
   // once the identify is done
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
   {
+    QScopedPointer<IdentifyLayerResult> identifyResult(rawIdentifyResult);
+
     if (!identifyResult)
       return;
 
@@ -105,9 +106,12 @@ void FeatureLayerSelection::connectSignals()
     for (int i = 0; i < identifyResult->geoElements().size(); i++)
     {
       GeoElement* element = identifyResult->geoElements().at(i);
-      if (static_cast<Feature*>(element))
-        // add the element to the list
+      if (nullptr != element)
+      {
+        // add the element to the list and take ownership of it.
+        element->setParent(this);
         identifiedFeatures.append(static_cast<Feature*>(element));
+      }
     }
 
     // select the identified features

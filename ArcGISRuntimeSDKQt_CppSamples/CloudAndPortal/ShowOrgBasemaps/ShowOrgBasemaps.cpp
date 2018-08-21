@@ -31,9 +31,7 @@ ShowOrgBasemaps::ShowOrgBasemaps(QQuickItem* parent /* = nullptr */):
   AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
-ShowOrgBasemaps::~ShowOrgBasemaps()
-{
-}
+ShowOrgBasemaps::~ShowOrgBasemaps() = default;
 
 void ShowOrgBasemaps::init()
 {

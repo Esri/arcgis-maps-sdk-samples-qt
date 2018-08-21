@@ -36,9 +36,7 @@ Surface_Placement::Surface_Placement(QQuickItem* parent /* = nullptr */):
 {
 }
 
-Surface_Placement::~Surface_Placement()
-{
-}
+Surface_Placement::~Surface_Placement() = default;
 
 void Surface_Placement::init()
 {
