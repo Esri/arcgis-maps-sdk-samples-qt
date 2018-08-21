@@ -132,7 +132,7 @@ Rectangle {
         calloutData {
             // HTML to style the title text by centering it, increase pt size,
             // and bolding it.
-            title: "<br><b><font size=\"+2\">" + damageType + "</font></b>"
+            title: "<br><b><font size=\"+2\">%1</font></b>".arg(damageType)
             location: selectedFeature ? selectedFeature.geometry : null
         }
 

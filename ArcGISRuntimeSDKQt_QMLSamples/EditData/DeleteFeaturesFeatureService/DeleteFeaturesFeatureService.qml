@@ -145,8 +145,8 @@ Rectangle {
 
         calloutData {
             location: calloutLocation
-            // We use the HTMl to bold, increase the pt size, and centre-align the the damageType title.
-            title: "<br><b><font size=\"+2\">" + damageType + "</font></b>"
+            // We use the HTML to bold, increase the pt size, and center-align the the damageType title.
+            title: "<br><b><font size=\"+2\">%1</font></b>".arg(damageType)
         }
 
         // map callout window

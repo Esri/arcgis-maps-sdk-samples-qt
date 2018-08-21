@@ -123,7 +123,7 @@ Rectangle {
         }
 
         calloutData {
-            title: "<b>" + damageType + "</b>"
+            title: "<b>%1</b>".arg(damageType)
             location: selectedFeature ? selectedFeature.geometry : null;
             detail: selectedFeature === null ? "" : "Number of attachments: %1".arg(selectedFeature.attachments.count)
         }
