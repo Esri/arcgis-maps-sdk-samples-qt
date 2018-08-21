@@ -47,6 +47,7 @@ FindPlaceSample {
         // declare a Callout
         Callout {
             id: callout
+            leaderPosition: leaderPositionEnum.Automatic
             calloutData: findPlaceSample.calloutData
             accessoryButtonHidden: true
             screenOffsetY: -19 * scaleFactor

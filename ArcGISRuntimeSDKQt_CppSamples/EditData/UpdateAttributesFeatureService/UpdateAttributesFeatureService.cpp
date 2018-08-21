@@ -65,6 +65,7 @@ void UpdateAttributesFeatureService::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  emit calloutDataChanged();
 
   // create a Map by passing in the Basemap
   m_map = new Map(Basemap::streets(this), this);
@@ -93,10 +94,6 @@ void UpdateAttributesFeatureService::connectSignals()
     m_featureLayer->clearSelection();
 
     // set the properties for qml
-    m_screenX = mouseEvent.x();
-    emit screenXChanged();
-    m_screenY = mouseEvent.y();
-    emit screenYChanged();
     emit hideWindow();
 
     // call identify on the map view
@@ -143,6 +140,8 @@ void UpdateAttributesFeatureService::connectSignals()
       m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
       m_selectedFeature->setParent(this);
       m_featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
+      m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\"><b>%1</b></font>").arg(m_featureType));
+      m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
       emit featureTypeChanged();
       emit featureSelected();
     }
@@ -177,6 +176,11 @@ void UpdateAttributesFeatureService::connectSignals()
   });
 }
 
+CalloutData* UpdateAttributesFeatureService::calloutData() const
+{
+ return m_mapView ? m_mapView->calloutData() : nullptr;
+}
+
 void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)
 {
   // If the last connection is still hanging around we want to ensure it is disconnected.
@@ -205,16 +209,6 @@ void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)
 
   // load selecte feature
   m_selectedFeature->load();
-}
-
-int UpdateAttributesFeatureService::screenX() const
-{
-  return m_screenX;
-}
-
-int UpdateAttributesFeatureService::screenY() const
-{
-  return m_screenY;
 }
 
 QString UpdateAttributesFeatureService::featureType() const

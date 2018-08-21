@@ -21,6 +21,7 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class CalloutData;
     class Map;
     class MapQuickView;
     class FeatureLayer;
@@ -38,10 +39,7 @@ class EditFeatureAttachments : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(int screenX READ screenX NOTIFY screenXChanged)
-  Q_PROPERTY(int screenY READ screenY NOTIFY screenYChanged)
-  Q_PROPERTY(int attachmentCount READ attachmentCount NOTIFY attachmentCountChanged)
-  Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
   Q_PROPERTY(QAbstractListModel* attachmentModel READ attachmentModel NOTIFY attachmentModelChanged)
 
 public:
@@ -54,21 +52,15 @@ public:
   Q_INVOKABLE void deleteAttachment(int index);
 
 signals:
-  void screenXChanged();
-  void screenYChanged();
+  void calloutDataChanged();
   void featureSelected();
-  void featureTypeChanged();
   void hideWindow();
   void attachmentModelChanged();
-  void attachmentCountChanged();
 
 private:
   void connectSignals();
   QAbstractListModel* attachmentModel() const;
-  int screenX() const;
-  int screenY() const;
-  int attachmentCount() const;
-  QString featureType() const;
+  Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -76,10 +68,6 @@ private:
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
-  int m_screenX = 0;
-  int m_screenY = 0;
-  int m_attachmentCount = 0;
-  QString m_featureType;
   QString m_whereClause;
   QMetaObject::Connection m_attachmentConnection;
 };

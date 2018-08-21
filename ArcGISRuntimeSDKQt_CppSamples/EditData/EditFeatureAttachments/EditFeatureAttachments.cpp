@@ -68,6 +68,7 @@ void EditFeatureAttachments::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  emit calloutDataChanged();
 
   // create a Map by passing in the Basemap
   m_map = new Map(Basemap::streets(this), this);
@@ -96,10 +97,6 @@ void EditFeatureAttachments::connectSignals()
     m_featureLayer->clearSelection();
 
     // set the properties for qml
-    m_screenX = mouseEvent.x();
-    emit screenXChanged();
-    m_screenY = mouseEvent.y();
-    emit screenYChanged();
     emit hideWindow();
 
     // call identify on the map view
@@ -147,19 +144,20 @@ void EditFeatureAttachments::connectSignals()
       m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
       // Don't delete selected feature when parent featureQueryResult is deleted.
       m_selectedFeature->setParent(this);
-      
-      m_featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
-      
-      emit featureTypeChanged();
+
+      const QString featureType = m_selectedFeature->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
+      m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
+      m_mapView->calloutData()->setTitle(QString("<b>%1</b>").arg(featureType));
+
       emit featureSelected();
       emit attachmentModelChanged();
 
       // get the number of attachments
       connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted,
-              this, [this](QUuid, const QList<Attachment*>& /*attachments*/)
+              this, [this](QUuid, const QList<Attachment*>& attachments)
       {
-        m_attachmentCount = m_selectedFeature->attachments()->rowCount();
-        emit attachmentCountChanged();
+        m_mapView->calloutData()->setDetail(QString("Number of attachments: %1").arg(attachments.size()));
+        m_mapView->calloutData()->setVisible(true); // Resizes the calloutData after details has been set.
       });
     }
   });
@@ -191,21 +189,6 @@ void EditFeatureAttachments::connectSignals()
       }
     }
   });
-}
-
-int EditFeatureAttachments::screenX() const
-{
-  return m_screenX;
-}
-
-int EditFeatureAttachments::screenY() const
-{
-  return m_screenY;
-}
-
-QString EditFeatureAttachments::featureType() const
-{
-  return m_featureType;
 }
 
 QAbstractListModel* EditFeatureAttachments::attachmentModel() const
@@ -265,7 +248,7 @@ void EditFeatureAttachments::deleteAttachment(int index)
   }
 }
 
-int EditFeatureAttachments::attachmentCount() const
+CalloutData* EditFeatureAttachments::calloutData() const
 {
-  return m_attachmentCount;
+  return m_mapView ? m_mapView->calloutData() : nullptr;
 }

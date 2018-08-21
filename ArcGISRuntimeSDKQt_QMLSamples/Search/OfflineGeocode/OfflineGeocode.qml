@@ -98,6 +98,7 @@ Rectangle {
             calloutData: parent.calloutData
             screenOffsetY: (pictureMarker.height / 2) * -1
             accessoryButtonHidden: true
+            leaderPosition: leaderPositionEnum.Automatic
         }
 
         // dismiss suggestions and no results notification on mouse press

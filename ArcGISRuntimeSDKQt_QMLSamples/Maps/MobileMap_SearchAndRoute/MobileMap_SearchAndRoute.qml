@@ -56,6 +56,7 @@ Rectangle {
             calloutData: parent.calloutData
             screenOffsetY: -19 * scaleFactor
             accessoryButtonHidden: true
+            leaderPosition: leaderPositionEnum.Automatic
         }
 
         // runs when app is geocoding
