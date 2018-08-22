@@ -5,7 +5,7 @@ This sample demonstrates how to exaggerate a scene's terrain surface.
 ![](screenshot.png)
 
 ## How to use the sample
-Click and drag the slider at the top to change how exaggerated the terrain becomes.
+Click and drag the slider at the bottom to change the terrain's exaggeration.
 
 ## How it works
 1. Create a scene.
@@ -14,9 +14,9 @@ Click and drag the slider at the top to change how exaggerated the terrain becom
 4. Bind the surface's `elevationExaggeration` property to the slider's value.
 
 ## Relevant API
- - `Surface`
- - `Surface.elevationExaggeration`
+- `Surface`
+- `Surface.elevationExaggeration`
 
 ## Tags
-Scenes, Elevation, 3D, Exaggeration
+Scenes, 3D, elevation, exaggeration
 
