@@ -4,7 +4,7 @@ This sample demonstrates how to exaggerate a scene's terrain surface.
 ![](screenshot.png)
 
 ## How to use the sample
-Click and drag the slider at the bottom to change how exaggerated the terrain becomes.
+Click and drag the slider at the bottom to change the terrain's exaggeration.
 
 ## How it works
 1. Create a scene and add a slider (with an ID) to the UI via QML.
