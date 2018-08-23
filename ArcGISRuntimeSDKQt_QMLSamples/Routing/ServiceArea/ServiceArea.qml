@@ -179,7 +179,10 @@ Rectangle {
             busy = false;
 
             if (solveServiceAreaResult === null || solveServiceAreaResult.error)
+            {
                 message = "No service Areas calculated!";
+                return;
+            }
 
             var numFacilities = facilitiesOverlay.graphics.rowCount();
             for (var i = 0; i < numFacilities; i++) {
@@ -252,6 +255,7 @@ Rectangle {
         title: "Route Error"
         text: message
         visible: text.length > 0
+        onAccepted: { message = ""; }
     }
 
     function setupRouting() {
