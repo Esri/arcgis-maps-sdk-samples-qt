@@ -109,8 +109,9 @@ void FeatureLayerSelection::connectSignals()
       if (nullptr != element)
       {
         // add the element to the list and take ownership of it.
-        element->setParent(this);
-        identifiedFeatures.append(static_cast<Feature*>(element));
+        Feature* feature = static_cast<Feature*>(element);
+        feature->setParent(this);
+        identifiedFeatures.append(feature);
       }
     }
 
