@@ -67,9 +67,6 @@ void FeatureLayerSelection::componentComplete()
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(m_featureTable, this);
 
-  // set a selection width on the feature layer
-  m_featureLayer->setSelectionWidth(3);
-
   // add the feature layer to the map
   m_map->operationalLayers()->append(m_featureLayer);
 

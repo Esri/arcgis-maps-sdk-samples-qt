@@ -52,6 +52,7 @@ void SpatialRelationships::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setSelectionProperties(SelectionProperties(QColor("yellow")));
 
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::topographic(this), this);
@@ -61,7 +62,6 @@ void SpatialRelationships::componentComplete()
 
   // Create GraphicsOverlay
   m_graphicsOverlay = new GraphicsOverlay(this);
-  m_graphicsOverlay->setSelectionColor(QColor("yellow"));
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
   // Add Graphics
