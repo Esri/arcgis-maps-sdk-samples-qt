@@ -72,7 +72,7 @@ void ListRelatedFeatures::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-  m_mapView->setSelectionProperties(SelectionProperties(QColor("yellow")));
+  m_mapView->setSelectionProperties(SelectionProperties(QColor(Qt::yellow)));
 
   // Create a map using the URL of a web map
   m_map = new Map(QUrl("https://arcgis.com/home/item.html?id=dcc7466a91294c0ab8f7a094430ab437"), this);

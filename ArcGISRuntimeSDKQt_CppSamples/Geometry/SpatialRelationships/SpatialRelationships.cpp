@@ -52,7 +52,7 @@ void SpatialRelationships::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-  m_mapView->setSelectionProperties(SelectionProperties(QColor("yellow")));
+  m_mapView->setSelectionProperties(SelectionProperties(QColor(Qt::yellow)));
 
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::topographic(this), this);
