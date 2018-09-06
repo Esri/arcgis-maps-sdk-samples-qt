@@ -72,6 +72,7 @@ void ListRelatedFeatures::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setSelectionProperties(SelectionProperties(QColor(Qt::yellow)));
 
   // Create a map using the URL of a web map
   m_map = new Map(QUrl("https://arcgis.com/home/item.html?id=dcc7466a91294c0ab8f7a094430ab437"), this);
@@ -96,8 +97,6 @@ void ListRelatedFeatures::connectSignals()
       if (m_map->operationalLayers()->at(i)->name().contains(QString("- Alaska National Parks")))
       {
         m_alaskaNationalParks = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(i));
-        m_alaskaNationalParks->setSelectionColor(QColor("yellow"));
-        m_alaskaNationalParks->setSelectionWidth(5.0);
 
         // connect to selectFeaturesCompleted signal
         connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* result)

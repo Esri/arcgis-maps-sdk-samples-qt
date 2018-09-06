@@ -32,6 +32,10 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        SelectionProperties {
+            color: "yellow"
+        }
+
         // bind the insets to the attribute view so the attribution text shows when the view expands
         viewInsets.bottom: attributeView.height / scaleFactor
 
@@ -47,8 +51,6 @@ Rectangle {
                 map.operationalLayers.forEach(function(fl) {
                     if (fl.name.indexOf("- Alaska National Parks") !== -1) {
                         alaskaNationalParks = fl;
-                        alaskaNationalParks.selectionColor = "yellow";
-                        alaskaNationalParks.selectionWidth = 5;
                     }
                 });
             }

@@ -30,6 +30,10 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+        SelectionProperties {
+            color: "yellow"
+        }
+
         Map {
             BasemapTopographic {}
         }
@@ -37,7 +41,6 @@ Rectangle {
         // Add a GraphicsOverlay
         GraphicsOverlay {
             id: graphicsOverlay
-            selectionColor: "yellow"
 
             // Add Polygon Graphic
             Graphic {
