@@ -51,6 +51,9 @@ Rectangle {
                         if (queryStatisticsStatus !== Enums.TaskStatusCompleted)
                             return;
 
+                        if (!queryStatisticsResult)
+                            return;
+
                         // Reset the result text
                         resultsText = "";
 
@@ -66,6 +69,11 @@ Rectangle {
                         }
 
                         // Display the results
+                        msgDialog.open();
+                    }
+
+                    onErrorChanged: {
+                        resultsText = error.message;
                         msgDialog.open();
                     }
                 }

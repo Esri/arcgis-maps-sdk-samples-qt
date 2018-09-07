@@ -64,9 +64,20 @@ void StatisticalQuery::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
+  connect(m_featureTable, &ServiceFeatureTable::errorOccurred, [this](Error e)
+  {
+    if (e.isEmpty())
+      return;
+
+    emit showStatistics(e.message());
+  });
+
   // connect to queryStatisticsCompleted
   connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* rawResult)
   {
+    if (!rawResult)
+      return;
+
     // Delete rawResult when we leave local scope.
     QScopedPointer<StatisticsQueryResult> result(rawResult);
 
