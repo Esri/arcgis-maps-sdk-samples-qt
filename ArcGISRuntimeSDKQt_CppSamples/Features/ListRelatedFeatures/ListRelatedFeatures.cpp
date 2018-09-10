@@ -36,17 +36,6 @@
 
 using namespace Esri::ArcGISRuntime;
 
-namespace
-{
-  // Convenience RAII struct that deletes all pointers in given container.
-  struct FeatureQueryListResultLock
-  {
-    FeatureQueryListResultLock(const QList<RelatedFeatureQueryResult*>& list) : results(list) { }
-    ~FeatureQueryListResultLock() { qDeleteAll(results); }
-    const QList<RelatedFeatureQueryResult*>& results;
-  };
-}
-
 ListRelatedFeatures::ListRelatedFeatures(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
@@ -99,8 +88,9 @@ void ListRelatedFeatures::connectSignals()
         m_alaskaNationalParks = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(i));
 
         // connect to selectFeaturesCompleted signal
-        connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* result)
+        connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawResult)
         {
+          QPointer<FeatureQueryResult> result(rawResult);
           // iterate over features returned
           while (result->iterator().hasNext())
           {
@@ -108,12 +98,13 @@ void ListRelatedFeatures::connectSignals()
             ArcGISFeatureTable* selectedTable = static_cast<ArcGISFeatureTable*>(arcGISFeature->featureTable());
 
             // connect to queryRelatedFeaturesCompleted signal
-            connect(selectedTable, &ArcGISFeatureTable::queryRelatedFeaturesCompleted, this, [this](QUuid, QList<RelatedFeatureQueryResult*> relatedResults)
+            connect(selectedTable, &ArcGISFeatureTable::queryRelatedFeaturesCompleted, this, [this, arcGISFeature](QUuid, QList<RelatedFeatureQueryResult*> relatedResults)
             {
-              // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
-              FeatureQueryListResultLock lock(relatedResults);
+              // Delete feature on completion. We need to do this as we've
+              // re-parented it from the initial FeatureQueryResult.
+              QScopedPointer<ArcGISFeature> arcGISFeatureLock(arcGISFeature);
 
-              for (const RelatedFeatureQueryResult* relatedResult : lock.results)
+              for (const RelatedFeatureQueryResult* relatedResult : relatedResults)
               {
                 while (relatedResult->iterator().hasNext())
                 {
