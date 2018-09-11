@@ -92,11 +92,13 @@ void ListRelatedFeatures::connectSignals()
     if (!loadError.isEmpty())
       return;
 
-    for (int i = 0; i < m_map->operationalLayers()->size(); ++i)
+    bool foundLayer = false; // Found the Alaska National Parks layer.
+    for (int i = 0; i < m_map->operationalLayers()->size() || !foundLayer; ++i)
     {
       // get the Alaska National Parks layer
       if (m_map->operationalLayers()->at(i)->name().contains(QStringLiteral("- Alaska National Parks")))
       {
+        foundLayer = true;
         m_alaskaNationalParks = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(i));
         m_alaskaFeatureTable = static_cast<ArcGISFeatureTable*>(m_alaskaNationalParks->featureTable());
 
@@ -131,8 +133,10 @@ void ListRelatedFeatures::connectSignals()
         connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawResult)
         {
           QScopedPointer<FeatureQueryResult> result(rawResult);
-          // iterate over features returned
-          while (result->iterator().hasNext())
+          // The result could contain more than 1 feature, but we assume that
+          // there is only ever 1. If more are given they are ignored. We
+          // are only interested in the first (and only) feature.
+          if (result->iterator().hasNext())
           {
             ArcGISFeature* arcGISFeature = static_cast<ArcGISFeature*>(result->iterator().next());
 
