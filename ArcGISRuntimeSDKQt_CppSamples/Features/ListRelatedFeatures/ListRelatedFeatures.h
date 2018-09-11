@@ -21,9 +21,10 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class ArcGISFeatureTable;
+    class FeatureLayer;
     class Map;
     class MapQuickView;
-    class FeatureLayer;
   }
 }
 class RelatedFeatureListModel;
@@ -56,6 +57,7 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_alaskaNationalParks = nullptr;  
+  Esri::ArcGISRuntime::ArcGISFeatureTable* m_alaskaFeatureTable = nullptr;
   RelatedFeatureListModel* m_relatedFeaturesModel = nullptr;
 };
 
