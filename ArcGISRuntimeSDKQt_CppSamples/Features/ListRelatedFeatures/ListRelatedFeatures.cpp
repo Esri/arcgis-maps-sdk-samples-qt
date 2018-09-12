@@ -112,11 +112,11 @@ void ListRelatedFeatures::connectSignals()
                     while (relatedResult->iterator().hasNext())
                     {
                       // get the related feature
-                      ArcGISFeature* feature = static_cast<ArcGISFeature*>(relatedResult->iterator().next());
-                      ArcGISFeatureTable* relatedTable = static_cast<ArcGISFeatureTable*>(feature->featureTable());
-                      QString displayFieldName = relatedTable->layerInfo().displayFieldName();
-                      QString serviceLayerName = relatedTable->layerInfo().serviceLayerName();
-                      QString displayFieldValue = feature->attributes()->attributeValue(displayFieldName).toString();
+                      const ArcGISFeature* feature = static_cast<ArcGISFeature*>(relatedResult->iterator().next());
+                      const ArcGISFeatureTable* relatedTable = static_cast<ArcGISFeatureTable*>(feature->featureTable());
+                      const QString displayFieldName = relatedTable->layerInfo().displayFieldName();
+                      const QString serviceLayerName = relatedTable->layerInfo().serviceLayerName();
+                      const QString displayFieldValue = feature->attributes()->attributeValue(displayFieldName).toString();
 
                       // add the related feature to the list model
                       RelatedFeature relatedFeature = RelatedFeature(displayFieldName,
