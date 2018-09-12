@@ -48,9 +48,6 @@ Rectangle {
             FeatureLayer {
                 id: featureLayer
 
-                selectionColor: "cyan"
-                selectionWidth: 3
-
                 // declare as child of feature layer, as featureTable is the default property
                 ServiceFeatureTable {
                     id: featureTable

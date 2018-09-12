@@ -82,7 +82,6 @@ void EditFeatureAttachments::componentComplete()
 
   // create the FeatureLayer with the ServiceFeatureTable and add it to the Map
   m_featureLayer = new FeatureLayer(m_featureTable, this);
-  m_featureLayer->setSelectionWidth(3);
   m_map->operationalLayers()->append(m_featureLayer);
 
   connectSignals();

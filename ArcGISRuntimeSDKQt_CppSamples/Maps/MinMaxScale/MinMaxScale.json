@@ -4,5 +4,5 @@
         "MinMaxScale.h",
         "MinMaxScale.cpp"
     ],
-    "name" : "Min-Max Scale"
+    "name" : "Min-max scale"
 }

@@ -47,9 +47,6 @@ Rectangle {
             FeatureLayer {
                 id: featureLayer
 
-                selectionColor: "cyan"
-                selectionWidth: 3
-
                 // feature table
                 ServiceFeatureTable {
                     id: featureTable
