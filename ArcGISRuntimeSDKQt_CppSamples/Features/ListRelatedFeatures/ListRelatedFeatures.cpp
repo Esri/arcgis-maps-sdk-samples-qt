@@ -36,6 +36,17 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+  // Convenience RAII struct that deletes all pointers in given container.
+  struct FeatureQueryListResultLock
+  {
+    FeatureQueryListResultLock(const QList<RelatedFeatureQueryResult*>& list) : results(list) { }
+    ~FeatureQueryListResultLock() { qDeleteAll(results); }
+    const QList<RelatedFeatureQueryResult*>& results;
+  };
+}
+
 ListRelatedFeatures::ListRelatedFeatures(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
@@ -80,58 +91,60 @@ void ListRelatedFeatures::connectSignals()
   {
     if (!loadError.isEmpty())
       return;
-    for (int i = 0; i < m_map->operationalLayers()->size(); i++)
+
+    bool foundLayer = false; // Found the Alaska National Parks layer.
+    for (int i = 0; i < m_map->operationalLayers()->size() || !foundLayer; ++i)
     {
       // get the Alaska National Parks layer
-      if (m_map->operationalLayers()->at(i)->name().contains(QString("- Alaska National Parks")))
+      if (m_map->operationalLayers()->at(i)->name().contains(QStringLiteral("- Alaska National Parks")))
       {
+        foundLayer = true;
         m_alaskaNationalParks = static_cast<FeatureLayer*>(m_map->operationalLayers()->at(i));
+        m_alaskaFeatureTable = static_cast<ArcGISFeatureTable*>(m_alaskaNationalParks->featureTable());
+
+        // connect to queryRelatedFeaturesCompleted signal
+        connect(m_alaskaFeatureTable, &ArcGISFeatureTable::queryRelatedFeaturesCompleted,
+                this, [this](QUuid, QList<RelatedFeatureQueryResult*> rawRelatedResults)
+                {
+                  FeatureQueryListResultLock lock(rawRelatedResults);
+                  for (const RelatedFeatureQueryResult* relatedResult : lock.results)
+                  {
+                    while (relatedResult->iterator().hasNext())
+                    {
+                      // get the related feature
+                      const ArcGISFeature* feature = static_cast<ArcGISFeature*>(relatedResult->iterator().next());
+                      const ArcGISFeatureTable* relatedTable = static_cast<ArcGISFeatureTable*>(feature->featureTable());
+                      const QString displayFieldName = relatedTable->layerInfo().displayFieldName();
+                      const QString serviceLayerName = relatedTable->layerInfo().serviceLayerName();
+                      const QString displayFieldValue = feature->attributes()->attributeValue(displayFieldName).toString();
+
+                      // add the related feature to the list model
+                      RelatedFeature relatedFeature = RelatedFeature(displayFieldName,
+                                                                     displayFieldValue,
+                                                                     serviceLayerName);
+                      m_relatedFeaturesModel->addRelatedFeature(relatedFeature);
+                      emit relatedFeaturesModelChanged();
+                    }
+                  }
+                  emit showAttributeTable();
+                });
 
         // connect to selectFeaturesCompleted signal
         connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawResult)
         {
-          QPointer<FeatureQueryResult> result(rawResult);
-          // iterate over features returned
-          while (result->iterator().hasNext())
+          QScopedPointer<FeatureQueryResult> result(rawResult);
+          // The result could contain more than 1 feature, but we assume that
+          // there is only ever 1. If more are given they are ignored. We
+          // are only interested in the first (and only) feature.
+          if (result->iterator().hasNext())
           {
-            ArcGISFeature* arcGISFeature = static_cast<ArcGISFeature*>(result->iterator().next(this));
-            ArcGISFeatureTable* selectedTable = static_cast<ArcGISFeatureTable*>(arcGISFeature->featureTable());
-
-            // connect to queryRelatedFeaturesCompleted signal
-            connect(selectedTable, &ArcGISFeatureTable::queryRelatedFeaturesCompleted, this, [this, arcGISFeature](QUuid, QList<RelatedFeatureQueryResult*> relatedResults)
-            {
-              // Delete feature on completion. We need to do this as we've
-              // re-parented it from the initial FeatureQueryResult.
-              QScopedPointer<ArcGISFeature> arcGISFeatureLock(arcGISFeature);
-
-              for (const RelatedFeatureQueryResult* relatedResult : relatedResults)
-              {
-                while (relatedResult->iterator().hasNext())
-                {
-                  // get the related feature
-                  ArcGISFeature* feature = static_cast<ArcGISFeature*>(relatedResult->iterator().next());
-                  ArcGISFeatureTable* relatedTable = static_cast<ArcGISFeatureTable*>(feature->featureTable());
-                  QString displayFieldName = relatedTable->layerInfo().displayFieldName();
-                  QString serviceLayerName = relatedTable->layerInfo().serviceLayerName();
-                  QString displayFieldValue = feature->attributes()->attributeValue(displayFieldName).toString();
-
-                  // add the related feature to the list model
-                  RelatedFeature relatedFeature = RelatedFeature(displayFieldName,
-                                                                 displayFieldValue,
-                                                                 serviceLayerName);
-                  m_relatedFeaturesModel->addRelatedFeature(relatedFeature);
-                  emit relatedFeaturesModelChanged();
-                }
-              }
-
-              emit showAttributeTable();
-            });
+            ArcGISFeature* arcGISFeature = static_cast<ArcGISFeature*>(result->iterator().next());
 
             // zoom to the selected feature
             m_mapView->setViewpointGeometry(arcGISFeature->geometry().extent(), 100);
 
             // query related features
-            selectedTable->queryRelatedFeatures(arcGISFeature);
+            m_alaskaFeatureTable->queryRelatedFeatures(arcGISFeature);
           }
         });
       }
