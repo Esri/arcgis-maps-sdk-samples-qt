@@ -46,6 +46,16 @@ Rectangle {
             }
         }
 
+        // Declare a callout
+        Callout {
+            id: callout
+            calloutData: parent.calloutData
+            accessoryButtonHidden: true
+            autoAdjustWidth: true
+            maxWidth: 350 * scaleFactor
+            leaderPosition: leaderPositionEnum.Automatic
+        }
+
         // create a graphics to show the input location
         GraphicsOverlay {
 
@@ -89,15 +99,5 @@ Rectangle {
             // show the callout
             callout.showCallout();
         }
-    }
-
-    // Declare a callout
-    Callout {
-        id: callout
-        calloutData: mapView.calloutData
-        accessoryButtonHidden: true
-        autoAdjustWidth: true
-        maxWidth: 350 * scaleFactor
-        leaderPosition: leaderPositionEnum.Automatic
     }
 }

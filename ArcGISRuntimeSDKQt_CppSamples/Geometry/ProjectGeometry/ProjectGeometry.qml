@@ -33,16 +33,16 @@ ProjectGeometrySample {
         id: mapView
         anchors.fill: parent
         objectName: "mapView"
-    }
 
-    // Declare a callout
-    Callout {
-        id: callout
-        calloutData: parent.calloutData
-        accessoryButtonHidden: true
-        autoAdjustWidth: true
-        maxWidth: 350 * scaleFactor
-        leaderPosition: leaderPositionEnum.Automatic
+        // Declare a callout
+        Callout {
+            id: callout
+            calloutData: rootRectangle.calloutData
+            accessoryButtonHidden: true
+            autoAdjustWidth: true
+            maxWidth: 350 * scaleFactor
+            leaderPosition: leaderPositionEnum.Automatic
+        }
     }
 
     onCalloutDataChanged: callout.showCallout();
