@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/GenerateOfflineMap_Overrides">
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>download.png</file>
+        <file>DownloadButton.qml</file>
+        <file>GenerateWindow.qml</file>
+        <file>GenerateOfflineMap_Overrides.qml</file>
+        <file>GenerateOfflineMap_Overrides.cpp</file>
+        <file>GenerateOfflineMap_Overrides.h</file>
+        <file alias="samples.json">GenerateOfflineMap_Overrides.json</file>
+        <file>OverridesWindow.qml</file>
+    </qresource>
+</RCC>
