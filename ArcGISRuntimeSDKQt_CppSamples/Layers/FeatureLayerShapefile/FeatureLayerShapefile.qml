@@ -27,7 +27,7 @@ FeatureLayerShapefileSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shp/"
 
     // add a mapView component
