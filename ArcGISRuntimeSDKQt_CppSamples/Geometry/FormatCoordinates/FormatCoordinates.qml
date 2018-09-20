@@ -25,7 +25,7 @@ FormatCoordinatesSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property int labelWidth: 100 * scaleFactor
     property int coordinateTextWidth: 200 * scaleFactor
     property int fontPixelSize: 14 * scaleFactor

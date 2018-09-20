@@ -25,7 +25,7 @@ ShowOrgBasemapsSample {
     height: 600
     clip: true
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
     onPortalLoadedChanged: { gridFadeIn.running = true; }
 

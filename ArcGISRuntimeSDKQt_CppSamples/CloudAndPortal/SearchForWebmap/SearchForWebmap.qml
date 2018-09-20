@@ -24,7 +24,7 @@ SearchForWebmapSample {
     width: 800
     height: 600
     clip: true
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property string selItem
 
     // Create MapQuickView here, and create its Map etc. in C++ code

@@ -23,7 +23,7 @@ OAuthRedirectExample {
     id: root
     width: 800
     height: 600
-    property double scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
+    property double scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
     Column {
         anchors{
