@@ -75,7 +75,7 @@ void FeatureLayer_GeoPackage::componentComplete()
   });
 
   // Connect to Map::doneLoading
-  connect(m_map, &Map::doneLoading, this, [this, gpkg](Error e)
+  connect(m_map, &Map::doneLoading, this, [gpkg](Error e)
   {
     if (!e.isEmpty())
       return;
