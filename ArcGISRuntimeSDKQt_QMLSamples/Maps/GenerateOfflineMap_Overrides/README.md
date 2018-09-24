@@ -10,7 +10,7 @@ For applications where you just need to take all layers offline, use the standar
 - filter features to be taken offline.
 - take features with no geometry offline - for example, features whose attributes have been populated in the office, but which need a site survey for their geometry.
 
-![Image](screenshot.png)
+![](screenshot.png)
 
 ## How to use the sample
 1. When the sample starts, you may be prompted to sign into arcgis.com.
@@ -18,7 +18,7 @@ For applications where you just need to take all layers offline, use the standar
 3. Use the range slider to adjust the min/max levelIds to be taken offline for the Streets basemap.
 4. Use the spin-box to set the buffer radius for the streets basemap.
 5. Click the buttons to skip the System Valves and Service Connections layers.
-4. Use the text entry to select the maximum flow rate for the features from the Hydrant layer.
+4. Use the combo-box to select the maximum flow rate for the features from the Hydrant layer.
 5. Use the check-box to skip the geometry filter for the water pipes features.
 6. Click "Start Job"
 7. Wait for the progress bar to indicate that the task has completed.

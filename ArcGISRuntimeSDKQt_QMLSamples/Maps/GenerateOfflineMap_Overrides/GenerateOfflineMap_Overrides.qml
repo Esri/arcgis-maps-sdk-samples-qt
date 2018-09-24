@@ -27,8 +27,8 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
-    property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap__Overrides_%1.mmpk".arg(new Date().getTime().toString())
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_Overrides_%1.mmpk".arg(new Date().getTime().toString())
     property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
     property var generateJob: null
     property alias overrides: offlineMapTask.createGenerateOfflineMapParameterOverridesResult
@@ -89,7 +89,6 @@ Rectangle {
         offlineMapTask.createDefaultGenerateOfflineMapParameters(mapExtent);
     }
 
-
     // Create Offline Map Task
     OfflineMapTask {
         id: offlineMapTask
@@ -101,6 +100,8 @@ Rectangle {
             if (createDefaultGenerateOfflineMapParametersStatus !== Enums.TaskStatusCompleted)
                 return;
 
+            // Now that we have created our parameters, we can now create out overrides based upon
+            // these.
             createGenerateOfflineMapParameterOverrides(createDefaultGenerateOfflineMapParametersResult);
         }
 
@@ -237,10 +238,10 @@ Rectangle {
                 newLayerOptions.push(layerOptions[i]);
             }
         }
+
         //// Add layer options back to parameters and re-add to the dictionary.
         generateGdbParam.layerOptions =  newLayerOptions;
     }
-
 
     function removeServiceConnection() {
         removeFeatureLayer("Service Connection");

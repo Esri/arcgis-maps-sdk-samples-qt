@@ -56,7 +56,7 @@ Rectangle {
                 fill: parent
                 margins: 10 * scaleFactor
             }
-            spacing: 10
+            spacing: 10 * scaleFactor
 
             BusyIndicator {
                 anchors.horizontalCenter: parent.horizontalCenter

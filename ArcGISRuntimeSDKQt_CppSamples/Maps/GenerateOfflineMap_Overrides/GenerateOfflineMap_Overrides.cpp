@@ -1,6 +1,6 @@
-// [WriteFile Name=GenerateOfflineMap, Category=Maps]
+// [WriteFile Name=GenerateOfflineMap_Overrides, Category=Maps]
 // [Legal]
-// Copyright 2017 Esri.
+// Copyright 2018 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,20 +16,25 @@
 
 #include "GenerateOfflineMap_Overrides.h"
 
+#include "AuthenticationManager.h"
+#include "Envelope.h"
 #include "FeatureLayer.h"
+#include "GeometryEngine.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "AuthenticationManager.h"
 #include "Portal.h"
 #include "PortalItem.h"
 #include "OfflineMapTask.h"
-#include "GeometryEngine.h"
-#include "Envelope.h"
 #include "Point.h"
 
 using namespace Esri::ArcGISRuntime;
 
 const QString GenerateOfflineMap_Overrides::s_webMapId = QStringLiteral("acc027394bc84c2fb04d1ed317aac674");
+
+QString GenerateOfflineMap_Overrides::webMapId() const
+{
+  return s_webMapId;
+}
 
 GenerateOfflineMap_Overrides::GenerateOfflineMap_Overrides(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -52,7 +57,7 @@ void GenerateOfflineMap_Overrides::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Create a Portal Item for use by the Map and OfflineMapTask
-  bool loginRequired = true;
+  const bool loginRequired = true;
   Portal* portal = new Portal(loginRequired, this);
   m_portalItem = new PortalItem(portal, webMapId(), this);
 
@@ -98,7 +103,7 @@ void GenerateOfflineMap_Overrides::componentComplete()
   {
     m_parameterOverrides = parameterOverrides;
     emit overridesReadyChanged();
-    m_taskBusy = false;
+    setBusy(false);
     emit taskBusyChanged();
   });
 }
@@ -113,7 +118,7 @@ void GenerateOfflineMap_Overrides::setAreaOfInterest(double xCorner1, double yCo
 
   // generate parameters
   m_offlineMapTask->createDefaultGenerateOfflineMapParameters(mapExtent);
-  m_taskBusy = true;
+  setBusy(true);
   emit taskBusyChanged();
 }
 
@@ -170,7 +175,7 @@ void GenerateOfflineMap_Overrides::setBasemapBuffer(int bufferMeters)
   if (!dictionary.contains(keyForTiledLayer))
     return;
 
-  // Create a new geometry around the origional area of interest.
+  // Create a new geometry around the original area of interest.
   auto bufferGeom = GeometryEngine::buffer(m_parameters.areaOfInterest(), bufferMeters);
 
   // Apply the geometry to the ExportTileCacheParameters.
@@ -308,73 +313,72 @@ void GenerateOfflineMap_Overrides::takeMapOffline(const QString& dataPath)
   GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(m_parameters, dataPath, m_parameterOverrides);
 
   // check if there is a valid job
-  if (generateJob)
+  if (!generateJob)
+    return;
+
+  // connect to the job's status changed signal
+  connect(generateJob, &GenerateOfflineMapJob::jobStatusChanged, this, [this, generateJob]()
   {
-    // connect to the job's status changed signal
-    connect(generateJob, &GenerateOfflineMapJob::jobStatusChanged, this, [this, generateJob]()
-    {
-      // connect to the job's status changed signal to know once it is done
-      switch (generateJob->jobStatus()) {
-      case JobStatus::Failed:
-        emit updateStatus("Generate failed");
-        emit hideWindow(5000, false);
-        break;
-      case JobStatus::NotStarted:
-        emit updateStatus("Job not started");
-        break;
-      case JobStatus::Paused:
-        emit updateStatus("Job paused");
-        break;
-      case JobStatus::Started:
-        emit updateStatus("In progress");
-        break;
-      case JobStatus::Succeeded:
-        // show any layer errors
-        if (generateJob->result()->hasErrors())
+    // connect to the job's status changed signal to know once it is done
+    switch (generateJob->jobStatus()) {
+    case JobStatus::Failed:
+      emit updateStatus("Generate failed");
+      emit hideWindow(5000, false);
+      break;
+    case JobStatus::NotStarted:
+      emit updateStatus("Job not started");
+      break;
+    case JobStatus::Paused:
+      emit updateStatus("Job paused");
+      break;
+    case JobStatus::Started:
+      emit updateStatus("In progress");
+      break;
+    case JobStatus::Succeeded:
+      // show any layer errors
+      if (generateJob->result()->hasErrors())
+      {
+        QString layerErrors = "";
+        const QMap<Layer*, Error>& layerErrorsMap = generateJob->result()->layerErrors();
+        for (auto it = layerErrorsMap.cbegin(); it != layerErrorsMap.cend(); ++it)
         {
-          QString layerErrors = "";
-          const QMap<Layer*, Error>& layerErrorsMap = generateJob->result()->layerErrors();
-          for (auto it = layerErrorsMap.cbegin(); it != layerErrorsMap.cend(); ++it)
-          {
-            layerErrors += it.key()->name() + ": " + it.value().message() + "\n";
-          }
-          emit showLayerErrors(layerErrors);
+          layerErrors += it.key()->name() + ": " + it.value().message() + "\n";
         }
-
-        // show the map
-        emit updateStatus("Complete");
-        emit hideWindow(1500, true);
-        m_mapView->setMap(generateJob->result()->offlineMap(this));
-        break;
-      default:
-        break;
+        emit showLayerErrors(layerErrors);
       }
-    });
 
-    // connect to progress changed signal
-    connect(generateJob, &GenerateOfflineMapJob::progressChanged, this, [this, generateJob]()
-    {
-      emit updateProgress(generateJob->progress());
-    });
+      // show the map
+      emit updateStatus("Complete");
+      emit hideWindow(1500, true);
+      m_mapView->setMap(generateJob->result()->offlineMap(this));
+      break;
+    default:
+      break;
+    }
+  });
 
-    // connect to the error signal
-    connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](Error e)
-    {
-      if (e.isEmpty())
-        return;
+  // connect to progress changed signal
+  connect(generateJob, &GenerateOfflineMapJob::progressChanged, this, [this, generateJob]()
+  {
+    emit updateProgress(generateJob->progress());
+  });
 
-      qDebug() << e.message() << e.additionalMessage();
-    });
+  // connect to the error signal
+  connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](Error e)
+  {
+    if (e.isEmpty())
+      return;
 
-    // start the generate job
-    generateJob->start();
-  }
+    qDebug() << e.message() << e.additionalMessage();
+  });
+
+  // start the generate job
+  generateJob->start();
 }
 
 bool GenerateOfflineMap_Overrides::taskBusy() const
 {
   return m_taskBusy;
-
 }
 
 AuthenticationManager* GenerateOfflineMap_Overrides::authenticationManager() const
@@ -456,3 +460,13 @@ FeatureLayer* GenerateOfflineMap_Overrides::getFeatureLayerByName(const QString&
   return nullptr;
 }
 
+void GenerateOfflineMap_Overrides::setBusy(bool busy)
+{
+  m_taskBusy = busy;
+  emit taskBusyChanged();
+}
+
+bool GenerateOfflineMap_Overrides::mapLoaded() const
+{
+  return m_mapLoaded;
+}

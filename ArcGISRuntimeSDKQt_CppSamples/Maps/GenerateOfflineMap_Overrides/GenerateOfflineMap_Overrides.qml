@@ -28,7 +28,7 @@ GenerateOfflineMap_OverridesSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property string outputMapPackage: System.temporaryFolder.path + "/OfflineMap_Overrides_%1.mmpk".arg(new Date().getTime().toString())
 
     onUpdateStatus: generateWindow.statusText = status;
@@ -64,7 +64,7 @@ GenerateOfflineMap_OverridesSample {
             visible: mapLoaded
 
             onButtonClicked: {
-                setAreaOfInterest(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height), outputMapPackage);
+                setAreaOfInterest(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
             }
         }
     }
@@ -98,7 +98,6 @@ GenerateOfflineMap_OverridesSample {
         generateWindow.visible = true;
         takeMapOffline(outputMapPackage);
       }
-
     }
 
     GenerateWindow {

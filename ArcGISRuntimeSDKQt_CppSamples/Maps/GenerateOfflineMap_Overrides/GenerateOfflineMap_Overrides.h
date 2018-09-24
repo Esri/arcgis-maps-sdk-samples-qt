@@ -1,6 +1,6 @@
-// [WriteFile Name=GenerateOfflineMap, Category=Maps]
+// [WriteFile Name=GenerateOfflineMap_Overrides, Category=Maps]
 // [Legal]
-// Copyright 2017 Esri.
+// Copyright 2018 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -71,13 +71,14 @@ signals:
   void overridesReadyChanged();
 
 private:
+  static QString webMapId() const;
   bool taskBusy() const;
-  static const QString webMapId() { return s_webMapId; }
   Esri::ArcGISRuntime::AuthenticationManager* authenticationManager() const;
-  bool mapLoaded() { return m_mapLoaded; }
+  bool mapLoaded() const;
   bool overridesReady() const;
   void removeFeatureLayer(const QString& layerName);
   Esri::ArcGISRuntime::FeatureLayer* getFeatureLayerByName(const QString& layerName);
+  void setBusy(bool busy);
 
 private:
   bool m_taskBusy = false;
