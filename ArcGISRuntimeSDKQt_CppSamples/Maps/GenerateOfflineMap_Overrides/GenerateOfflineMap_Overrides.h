@@ -71,7 +71,7 @@ signals:
   void overridesReadyChanged();
 
 private:
-  static QString webMapId() const;
+  static QString webMapId();
   bool taskBusy() const;
   Esri::ArcGISRuntime::AuthenticationManager* authenticationManager() const;
   bool mapLoaded() const;
