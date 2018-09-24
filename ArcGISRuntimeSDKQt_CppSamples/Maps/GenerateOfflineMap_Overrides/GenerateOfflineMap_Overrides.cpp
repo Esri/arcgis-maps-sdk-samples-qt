@@ -98,6 +98,8 @@ void GenerateOfflineMap_Overrides::componentComplete()
   {
     m_parameterOverrides = parameterOverrides;
     emit overridesReadyChanged();
+    m_taskBusy = false;
+    emit taskBusyChanged();
   });
 }
 
@@ -111,6 +113,8 @@ void GenerateOfflineMap_Overrides::setAreaOfInterest(double xCorner1, double yCo
 
   // generate parameters
   m_offlineMapTask->createDefaultGenerateOfflineMapParameters(mapExtent);
+  m_taskBusy = true;
+  emit taskBusyChanged();
 }
 
 void GenerateOfflineMap_Overrides::setBasemapLOD(int min, int max)
@@ -365,6 +369,12 @@ void GenerateOfflineMap_Overrides::takeMapOffline(const QString& dataPath)
     // start the generate job
     generateJob->start();
   }
+}
+
+bool GenerateOfflineMap_Overrides::taskBusy() const
+{
+  return m_taskBusy;
+
 }
 
 AuthenticationManager* GenerateOfflineMap_Overrides::authenticationManager() const

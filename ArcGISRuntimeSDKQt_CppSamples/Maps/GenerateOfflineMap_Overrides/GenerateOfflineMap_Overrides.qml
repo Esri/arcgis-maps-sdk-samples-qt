@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
@@ -95,8 +95,10 @@ GenerateOfflineMap_OverridesSample {
       onHydrantWhereClauseChanged: setHydrantWhereClause(whereClause);
       onClipWaterPipesAOIChanged: setClipWaterPipesAOI(clip);
       onOverridesAccepted: {
-          takeMapOffline(outputMapPackage);
+        generateWindow.visible = true;
+        takeMapOffline(outputMapPackage);
       }
+
     }
 
     GenerateWindow {
@@ -108,6 +110,11 @@ GenerateOfflineMap_OverridesSample {
         id: msgDialog
         title: "Layer Errors"
         text: "Some layers could not be taken offline."
+    }
+
+    BusyIndicator {
+        anchors.centerIn: parent
+        running: taskBusy
     }
 
     /* Uncomment this section when running as standalone application

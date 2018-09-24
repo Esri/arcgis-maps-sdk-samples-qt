@@ -159,6 +159,7 @@ Rectangle {
                     pixelSize: 14 * scaleFactor
                 }
 
+
                 onClicked: {
                     removeSystemValvesChanged();
                     enabled = false;

@@ -42,6 +42,7 @@ class GenerateOfflineMap_Overrides: public QQuickItem
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authenticationManager READ authenticationManager CONSTANT)
   Q_PROPERTY(bool mapLoaded READ mapLoaded NOTIFY mapLoadedChanged)
   Q_PROPERTY(bool overridesReady READ overridesReady NOTIFY overridesReadyChanged)
+  Q_PROPERTY(bool taskBusy READ taskBusy NOTIFY taskBusyChanged)
 
 public:
   explicit GenerateOfflineMap_Overrides(QQuickItem* parent = nullptr);
@@ -61,6 +62,7 @@ public:
   Q_INVOKABLE void takeMapOffline(const QString& dataPath);
 
 signals:
+  void taskBusyChanged();
   void mapLoadedChanged();
   void hideWindow(int time, bool success);
   void updateStatus(const QString& status);
@@ -69,6 +71,7 @@ signals:
   void overridesReadyChanged();
 
 private:
+  bool taskBusy() const;
   static const QString webMapId() { return s_webMapId; }
   Esri::ArcGISRuntime::AuthenticationManager* authenticationManager() const;
   bool mapLoaded() { return m_mapLoaded; }
@@ -77,6 +80,7 @@ private:
   Esri::ArcGISRuntime::FeatureLayer* getFeatureLayerByName(const QString& layerName);
 
 private:
+  bool m_taskBusy = false;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
