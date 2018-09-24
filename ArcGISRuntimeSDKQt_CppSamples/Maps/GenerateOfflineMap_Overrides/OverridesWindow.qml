@@ -1,4 +1,4 @@
-// Copyright 2017 Esri.
+// Copyright 2018 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ Rectangle {
             margins: 16 * scaleFactor
         }
         text: "Layer specific overrides"
-        font{
+        font {
             bold: true
             underline: true
             pixelSize: 18 * scaleFactor
@@ -64,11 +64,11 @@ Rectangle {
             Text {
                 id: lodTitle
                 text: "Basemap Levels of Detail:"
-                anchors{
+                anchors {
                     topMargin: 16 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
                 }
-                font{
+                font {
                     pixelSize: 14 * scaleFactor
                 }
                 color: "#474747"
@@ -76,14 +76,14 @@ Rectangle {
 
             Row {
                 id: lodRange
-                anchors{
+                anchors {
                     top: lodTitle.bottom
                     topMargin: 8 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
                 }
                 Text {
                     text: "(Least detail)"
-                    font{
+                    font {
                         pixelSize: 12 * scaleFactor
                     }
                     color: "#474747"
@@ -111,7 +111,7 @@ Rectangle {
 
                 Text {
                     text: "(Most detail)"
-                    font{
+                    font {
                         pixelSize: 12 * scaleFactor
                     }
                     color: "#474747"
@@ -121,12 +121,12 @@ Rectangle {
             Text {
                 id: basemapBufferLabel
                 text: "Basemap Buffer (m):"
-                anchors{
+                anchors {
                     top: lodRange.bottom
                     topMargin: 32 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
                 }
-                font{
+                font {
                     pixelSize: 14 * scaleFactor
                 }
                 color: "#474747"
@@ -134,7 +134,7 @@ Rectangle {
 
             SpinBox {
                 id: basemapBufferSB
-                anchors{
+                anchors {
                     top: basemapBufferLabel.bottom
                     topMargin: 8 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
@@ -150,12 +150,12 @@ Rectangle {
             Button {
                 id: systemVavlesCB
                 text: "Remove System Valves"
-                anchors{
+                anchors {
                     top: basemapBufferSB.bottom
                     topMargin: 32 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
                 }
-                font{
+                font {
                     pixelSize: 14 * scaleFactor
                 }
 
@@ -168,12 +168,12 @@ Rectangle {
             Button {
                 id: serviceConnCB
                 text: "Remove Service Connection"
-                anchors{
+                anchors {
                     top: systemVavlesCB.bottom
                     topMargin: 32 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
                 }
-                font{
+                font {
                     pixelSize: 14 * scaleFactor
                 }
 
@@ -186,12 +186,12 @@ Rectangle {
             Text {
                 id: filterLabel
                 text: "Filter Hydrants:"
-                anchors{
+                anchors {
                     top: serviceConnCB.bottom
                     topMargin: 32 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
                 }
-                font{
+                font {
                     pixelSize: 14 * scaleFactor
                 }
                 color: "#474747"
@@ -203,9 +203,9 @@ Rectangle {
             }
 
             ComboBox {
-              id: filterComboBox
-              model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
-                anchors{
+                id: filterComboBox
+                model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
+                anchors {
                     top: filterLabel.bottom
                     topMargin: 8 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
@@ -214,19 +214,19 @@ Rectangle {
                 onCurrentTextChanged: {
                     // 1=1 equivelent to select all in a WHERE clause.
                     hydrantWhereClauseChanged(currentText === "No filter" ? "1=1"
-                                                                 : currentText)
+                                                                          : currentText)
                 }
             }
 
             CheckBox {
                 id: clipCB
                 text: "Clip Water Pipes to AOI"
-                anchors{
+                anchors {
                     top: filterComboBox.bottom
                     topMargin: 32 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
                 }
-                font{
+                font {
                     pixelSize: 14 * scaleFactor
                 }
 
@@ -243,7 +243,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.margins: 16 * scaleFactor
         text: "Start Job"
-        font{
+        font {
             bold: true
             pixelSize: 18 * scaleFactor
         }

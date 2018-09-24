@@ -162,7 +162,7 @@ void GenerateOfflineMap_Overrides::setBasemapBuffer(int bufferMeters)
     return;
 
   LayerListModel* layers = m_map->basemap()->baseLayers();
-  if (layers && layers->size() < 1)
+  if (layers && layers->isEmpty())
     return;
 
   OfflineMapParametersKey keyForTiledLayer(layers->at(0));

@@ -1,6 +1,6 @@
 // [WriteFile Name=GenerateOfflineMap, Category=Maps]
 // [Legal]
-// Copyright 2017 Esri.
+// Copyright 2018 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -84,26 +84,26 @@ GenerateOfflineMap_OverridesSample {
     }
 
     OverridesWindow {
-      id: overridesWindow
-      anchors.fill: parent
-      visible: overridesReady
+        id: overridesWindow
+        anchors.fill: parent
+        visible: overridesReady
 
-      onBasemapLODSelected: setBasemapLOD(min, max);
-      onBasemapBufferChanged: setBasemapBuffer(buffer);
-      onRemoveSystemValvesChanged: removeSystemValves();
-      onRemoveServiceConnectionChanged: removeServiceConnection();
-      onHydrantWhereClauseChanged: setHydrantWhereClause(whereClause);
-      onClipWaterPipesAOIChanged: setClipWaterPipesAOI(clip);
-      onOverridesAccepted: {
-        generateWindow.visible = true;
-        takeMapOffline(outputMapPackage);
-      }
+        onBasemapLODSelected: setBasemapLOD(min, max);
+        onBasemapBufferChanged: setBasemapBuffer(buffer);
+        onRemoveSystemValvesChanged: removeSystemValves();
+        onRemoveServiceConnectionChanged: removeServiceConnection();
+        onHydrantWhereClauseChanged: setHydrantWhereClause(whereClause);
+        onClipWaterPipesAOIChanged: setClipWaterPipesAOI(clip);
+        onOverridesAccepted: {
+            generateWindow.visible = true;
+            takeMapOffline(outputMapPackage);
+        }
     }
 
     GenerateWindow {
         id: generateWindow
         anchors.fill: parent
-    }        
+    }
 
     MessageDialog {
         id: msgDialog
