@@ -10,7 +10,7 @@ For applications where you just need to take all layers offline, use the standar
 - filter features to be taken offline.
 - take features with no geometry offline - for example, features whose attributes have been populated in the office, but which need a site survey for their geometry.
 
-![Image](screenshot.jpg)
+![Image](screenshot.png)
 
 ## How to use the sample
 1. When the sample starts, you may be prompted to sign into arcgis.com.
