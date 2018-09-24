@@ -1,0 +1,8 @@
+{
+    "source" :  "DisplayKml.qml",
+    "otherSourceFiles" :  [
+        "DisplayKml.h",
+        "DisplayKml.cpp"
+    ],
+    "name" : "Display KML"
+}
