@@ -1,5 +1,5 @@
 {
-    "source" :  "GenerateOfflineMap.qml",
-    "otherSourceFiles" :  ["DownloadButton.qml","GenerateWindow.qml"],
+    "source" :  "GenerateOfflineMap_Overrides.qml",
+    "otherSourceFiles" :  ["DownloadButton.qml","GenerateWindow.qml", "OverridesWindow.qml"],
     "name" : "Generate offline map"
 }

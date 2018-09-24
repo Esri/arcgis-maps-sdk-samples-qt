@@ -1,10 +1,11 @@
 {
-    "source" :  "GenerateOfflineMap.qml",
+    "source" :  "GenerateOfflineMap_Overrides.qml",
     "otherSourceFiles" :  [
-        "GenerateOfflineMap.h",
-        "GenerateOfflineMap.cpp",
+        "GenerateOfflineMap_Overrides.h",
+        "GenerateOfflineMap_Overrides.cpp",
         "DownloadButton.qml",
         "GenerateWindow.qml"
+        "OverridesWindow.qml"
     ],
     "name" : "Generate offline map"
 }
