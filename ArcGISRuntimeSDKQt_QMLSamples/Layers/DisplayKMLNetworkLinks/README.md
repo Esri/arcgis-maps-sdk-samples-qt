@@ -1,31 +1,28 @@
 # Display KML network links
 
-Display a KML file that loads content from a network resource.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+KML files can reference other KML files on the network and support automatically refreshing content. This sample demonstrates how to display a file with a network link, including displaying any network link control messages at launch.
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+The sample will load the KML file automatically. The data shown should refresh automatically every few seconds.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+In general, no special code is needed to support showing KML/KMZ files with network links. KML supports specifying a message to show the user when loading a network link. Apps can optionally listen to the `KmlDataset.NetworkLinkControlMessage` event to show any messages from KML network link controls.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* `KmlDataset(Uri)`
+* `KmlLayer(KmlDataset)`
+* `KmlNetworkLinkControlMessageEventArgs`
+* `KmlDataset.NetworkLinkControlMessage`
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
 
-## Additional information
-A standard level license is required to ...
+This map shows the current air traffic in parts of Europe with heading, altitude, and ground speed. Additionally, noise levels from ground monitoring stations are shown.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+KML, KMZ, OGC, Keyhole, Network Link, Network Link Control

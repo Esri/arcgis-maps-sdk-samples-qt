@@ -26,16 +26,23 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
-
         Scene {
             id: scene
             BasemapImagery {}
-
-            Surface {
-                ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+            ViewpointCenter {
+                Point {
+                    x: 8.150526
+                    y: 50.472421
+                    spatialReference: SpatialReference.createWgs84()
+                }
+                targetScale: 20000000
+            }
+            KmlLayer {
+                dataset:  KmlDataset {
+                 url: "https://www.arcgis.com/sharing/rest/content/items/600748d4464442288f6db8a4ba27dc95/data"
                 }
             }
+
         }
     }
 }
