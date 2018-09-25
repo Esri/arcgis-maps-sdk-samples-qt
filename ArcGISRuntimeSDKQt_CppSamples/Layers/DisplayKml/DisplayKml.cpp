@@ -35,6 +35,8 @@ DisplayKml::DisplayKml(QQuickItem* parent /* = nullptr */):
 {
 }
 
+DisplayKml::~DisplayKml() = default;
+
 void DisplayKml::init()
 {
   // Register classes for QML
