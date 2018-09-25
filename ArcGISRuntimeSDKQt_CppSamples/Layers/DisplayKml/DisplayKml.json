@@ -4,5 +4,11 @@
         "DisplayKml.h",
         "DisplayKml.cpp"
     ],
-    "name" : "Display KML"
+    "name" : "Display KML",
+    "dataItems" : [
+        {
+            "itemId" : "324e4742820e46cfbe5029ff2c32cb1f",
+            "path" : "~/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
+        }
+    ]
 }
