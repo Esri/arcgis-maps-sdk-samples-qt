@@ -33,7 +33,7 @@ Rectangle {
             Basemap {
                 // Create a WebTiledLayer with a template URL, sub domains, and copyright information
                 WebTiledLayer {
-                    templateUrl: "https://{subDomain}.tile.stamen.com/terrain/{level}/{col}/{row}.png"
+                    templateUrl: "http://{subDomain}.tile.stamen.com/terrain/{level}/{col}/{row}.png"
                     subDomains: ["a", "b", "c", "d"]
                     attribution: "Map tiles by <a href=\"https://stamen.com\">Stamen Design</a>, " +
                                  "under <a href=\"https://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. " +

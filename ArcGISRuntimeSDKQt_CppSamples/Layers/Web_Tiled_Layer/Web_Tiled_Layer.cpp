@@ -48,7 +48,7 @@ void Web_Tiled_Layer::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
 
   // Set up the tiled layer parameters
-  const QString templateUrl = "https://{subDomain}.tile.stamen.com/terrain/{level}/{col}/{row}.png";
+  const QString templateUrl = "http://{subDomain}.tile.stamen.com/terrain/{level}/{col}/{row}.png";
   const QStringList subDomains { "a", "b", "c", "d" };
   const QString attributionText = "Map tiles by <a href=\"https://stamen.com\">Stamen Design</a>, "
                                   "under <a href=\"https://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. "
