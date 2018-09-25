@@ -113,6 +113,11 @@ void DisplayKml::addLayerToScene(KmlLayer* layer)
     return;
 
   m_scene->operationalLayers()->append(layer);
+
+  if (m_viewpoint.isEmpty())
+    return;
+
+  m_sceneView->setViewpoint(m_viewpoint);
 }
 
 void DisplayKml::clearLayers()

@@ -71,6 +71,7 @@ Rectangle {
             top: parent.top
             margins: 5 * scaleFactor
         }
+        width: 100 * scaleFactor
 
         model: ["URL", "Local file", "Portal Item"]
 
