@@ -51,14 +51,14 @@ void DistanceMeasurementAnalysis::componentComplete()
   Scene* scene = new Scene(Basemap::imagery(this), this);
 
   // Add a Scene Layer
-  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
+  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
   scene->operationalLayers()->append(sceneLayer);
 
   // Create a list of elevation sources
   const QList<ElevationSource*> sources
   {
     new ArcGISTiledElevationSource(
-          QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
+          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
           this),
         new ArcGISTiledElevationSource(
           QUrl("https://tiles.arcgis.com/tiles/d3voDfTFbHOCRwVR/arcgis/rest/services/MNT_IDF/ImageServer"),

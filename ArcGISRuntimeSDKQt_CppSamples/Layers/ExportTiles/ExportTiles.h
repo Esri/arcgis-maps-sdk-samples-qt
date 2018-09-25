@@ -56,7 +56,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::ExportTileCacheTask* m_exportTileCacheTask = nullptr;
   Esri::ArcGISRuntime::ExportTileCacheParameters m_parameters;
-  QUrl m_serviceUrl = QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer");
+  QUrl m_serviceUrl = QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer");
 };
 
 #endif // EXPORT_TILES

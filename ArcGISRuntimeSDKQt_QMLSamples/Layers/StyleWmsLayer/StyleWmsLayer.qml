@@ -38,7 +38,7 @@ Rectangle {
 
             WmsLayer {
                 id: wmsLayer
-                url: "http://geoint.lmic.state.mn.us/cgi-bin/wms?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetCapabilities"
+                url: "https://geoint.lmic.state.mn.us/cgi-bin/wms?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetCapabilities"
                 layerNames: ["fsa2017"]
 
                 onLoadStatusChanged: {

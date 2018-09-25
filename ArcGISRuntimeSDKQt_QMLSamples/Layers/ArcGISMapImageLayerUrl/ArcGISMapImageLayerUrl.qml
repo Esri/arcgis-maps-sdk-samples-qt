@@ -30,7 +30,7 @@ Rectangle {
             Basemap {
                 // Nest an ArcGISMapImage Layer in the Basemap
                 ArcGISMapImageLayer {
-                    url: "http://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"
+                    url: "https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"
                 }
             }
         }

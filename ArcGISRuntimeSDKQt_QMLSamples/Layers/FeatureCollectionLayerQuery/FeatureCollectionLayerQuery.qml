@@ -38,7 +38,7 @@ Rectangle {
 
     ServiceFeatureTable {
         id: featureTable
-        url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/0"
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/0"
 
         onQueryFeaturesStatusChanged: {
             if (queryFeaturesStatus !== Enums.TaskStatusCompleted)

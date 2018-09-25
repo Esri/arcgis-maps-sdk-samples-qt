@@ -51,14 +51,14 @@ void RasterLayerService::componentComplete()
 
   // create a new tiled layer to add a basemap
   ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(
-        QUrl(QStringLiteral("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer")), this);
+        QUrl(QStringLiteral("https://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer")), this);
   m_map = new Map(new Basemap(tiledLayer, this));
   m_mapView->setMap(m_map);
 
   //! [ImageServiceRaster Create a new image service raster]
   // create an image service raster
   ImageServiceRaster* imageServiceRaster = new ImageServiceRaster(
-        QUrl(QStringLiteral("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer")), this);
+        QUrl(QStringLiteral("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer")), this);
   // zoom to the center of the raster once it's loaded
   connect(imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this, imageServiceRaster]()
   {

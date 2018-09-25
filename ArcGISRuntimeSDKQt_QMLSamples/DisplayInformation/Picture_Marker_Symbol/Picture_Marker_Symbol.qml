@@ -60,7 +60,7 @@ Rectangle {
                 }
 
                 PictureMarkerSymbol {
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0/images/e82f744ebb069bb35b234b3fea46deae"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0/images/e82f744ebb069bb35b234b3fea46deae"
                     width: 38.0
                     height: 38.0
                 }
