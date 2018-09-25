@@ -1,0 +1,8 @@
+{
+    "source" :  "DisplayKMLNetworkLinks.qml",
+    "otherSourceFiles" :  [
+        "DisplayKMLNetworkLinks.h",
+        "DisplayKMLNetworkLinks.cpp"
+    ],
+    "name" : "Display KML network links"
+}

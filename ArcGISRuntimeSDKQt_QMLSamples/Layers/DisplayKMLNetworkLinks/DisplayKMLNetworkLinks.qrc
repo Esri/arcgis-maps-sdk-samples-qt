@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/DisplayKMLNetworkLinks">
+        <file alias="sample.json">DisplayKMLNetworkLinks.json</file>        
+        <file>DisplayKMLNetworkLinks.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
