@@ -29,6 +29,7 @@ Rectangle {
         Scene {
             id: scene
             BasemapImagery {}
+            // Center the viewpoint over a specific area.
             ViewpointCenter {
                 Point {
                     x: 8.150526

@@ -46,16 +46,22 @@ void DisplayKMLNetworkLinks::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
   Scene* scene = new Scene(Basemap::imagery(this), this);
 
+  // Create a KML dataset from the given resource.
+  // The resource contains data it fetches from the network, so we
+  // connect up to any messages that can be sent by this link.
   KmlDataset* dataset = new KmlDataset(QUrl("https://www.arcgis.com/sharing/rest/content/items/600748d4464442288f6db8a4ba27dc95/data"), this);
   connect(dataset, &KmlDataset::kmlNetworkLinkMessageReceived,
           this, [this](KmlNetworkLink* /*link*/, const QString& message)
   {
+    qDebug() << message;
     emit kmlMessageRecieved(message);
   });
 
+  // Now that we have the data, we need a layer to interpret it.
   KmlLayer* fileLayer = new KmlLayer(dataset, this);
   scene->operationalLayers()->append(fileLayer);
 
+  // Take a look at continental Europe, where we'll see most of the data.
   m_sceneView->setViewpoint(Viewpoint { Point { 8.150526, 50.472421, SpatialReference::wgs84() }, 20000000 } );
   m_sceneView->setArcGISScene(scene);
 

@@ -16,6 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
+import QtQuick.Dialogs 1.2
 import Esri.Samples 1.0
 
 DisplayKMLNetworkLinksSample {
@@ -24,6 +25,18 @@ DisplayKMLNetworkLinksSample {
     width: 800
     height: 600
 
+    property string kmlMessage: ""
+
+    onKmlMessageRecieved: {
+        kmlMessage = message;
+        messageDialog.open();
+    }
+
+    MessageDialog {
+        id: messageDialog
+        title: "KML layer message"
+        text: kmlMessage
+    }
     SceneView {
         objectName: "sceneView"
         anchors.fill: parent
