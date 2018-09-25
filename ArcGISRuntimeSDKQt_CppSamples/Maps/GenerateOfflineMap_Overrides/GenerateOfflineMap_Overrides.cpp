@@ -31,7 +31,7 @@ using namespace Esri::ArcGISRuntime;
 
 const QString GenerateOfflineMap_Overrides::s_webMapId = QStringLiteral("acc027394bc84c2fb04d1ed317aac674");
 
-QString GenerateOfflineMap_Overrides::webMapId() const
+QString GenerateOfflineMap_Overrides::webMapId()
 {
   return s_webMapId;
 }
@@ -351,8 +351,6 @@ void GenerateOfflineMap_Overrides::takeMapOffline(const QString& dataPath)
       emit updateStatus("Complete");
       emit hideWindow(1500, true);
       m_mapView->setMap(generateJob->result()->offlineMap(this));
-      break;
-    default:
       break;
     }
   });
