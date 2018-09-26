@@ -74,7 +74,7 @@ Rectangle {
 
             renderer: SimpleRenderer {
                 symbol: PictureMarkerSymbol {
-                    url: "http://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"
+                    url: "https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"
                     height: 30
                     width: 30
                 }
@@ -152,7 +152,7 @@ Rectangle {
 
     ServiceAreaTask {
         id: task
-        url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea"
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea"
 
         onLoadStatusChanged: {
             if (loadStatus !== Enums.LoadStatusLoaded)

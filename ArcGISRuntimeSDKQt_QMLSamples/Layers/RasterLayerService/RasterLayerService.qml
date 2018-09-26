@@ -33,7 +33,7 @@ Rectangle {
             // create a basemap from a tiled layer and add to the map
             Basemap {
                 ArcGISTiledLayer {
-                    url: "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
+                    url: "https://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
                 }
             }
 
@@ -43,7 +43,7 @@ Rectangle {
                 // create the raster layer from an image service raster
                 ImageServiceRaster {
                     id: imageServiceRaster
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"
 
                     // zoom to the center of the raster once it's loaded
                     onLoadStatusChanged: {

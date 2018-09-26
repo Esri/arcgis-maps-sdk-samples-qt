@@ -38,7 +38,7 @@ Rectangle {
             // create FeatureLayer using a service URL
             FeatureLayer {
                 ServiceFeatureTable {
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
                 }
             }
 

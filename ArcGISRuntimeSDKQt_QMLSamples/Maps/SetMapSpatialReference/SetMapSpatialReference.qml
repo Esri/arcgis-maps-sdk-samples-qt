@@ -35,7 +35,7 @@ Rectangle {
     Basemap {
         id: basemap
         ArcGISMapImageLayer {
-            url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"
+            url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"
         }
     }
 

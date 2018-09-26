@@ -36,7 +36,7 @@ Rectangle {
             // Nest an ArcGISMapImage Layer in the Map to add it as an operational layer
             ArcGISMapImageLayer {
                 id: mapImageLayer
-                url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"
             }
 
             initialViewpoint: ViewpointCenter {

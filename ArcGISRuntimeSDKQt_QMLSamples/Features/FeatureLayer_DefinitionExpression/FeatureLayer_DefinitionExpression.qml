@@ -43,7 +43,7 @@ Rectangle {
 
                 ServiceFeatureTable {
                     id: featureTable
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"
                 }
             }
         }

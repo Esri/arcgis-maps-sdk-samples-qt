@@ -34,7 +34,7 @@ Rectangle {
 
             //! [add a scene service with ArcGISSceneLayer]
             ArcGISSceneLayer {
-                url: "http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"
+                url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"
             }
             //! [add a scene service with ArcGISSceneLayer]
 
@@ -42,7 +42,7 @@ Rectangle {
             Surface {
                 // add an arcgis tiled elevation source...elevation source is a default property of surface
                 ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
 

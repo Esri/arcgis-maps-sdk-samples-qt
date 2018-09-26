@@ -66,7 +66,7 @@ void FeatureLayerQuery::componentComplete()
     m_mapView->setMap(m_map);
 
     // create the feature table
-    m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"), this);
+    m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"), this);
     // create the feature layer using the feature table
     m_featureLayer = new FeatureLayer(m_featureTable, this);
 

@@ -45,7 +45,7 @@ Rectangle {
     // Declare the GeoprocessingTask and set the URL
     GeoprocessingTask {
         id: hotspotTask
-        url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/GPServer/911%20Calls%20Hotspot"
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/GPServer/911%20Calls%20Hotspot"
 
         onErrorChanged: {
             if (error)

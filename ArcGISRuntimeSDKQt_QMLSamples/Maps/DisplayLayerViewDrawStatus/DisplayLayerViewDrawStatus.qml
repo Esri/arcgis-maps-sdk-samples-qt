@@ -36,12 +36,12 @@ Rectangle {
 
             // create tiled layer using url
             ArcGISTiledLayer {
-                url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer"
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer"
             }
 
             // create a map image layer using a url
             ArcGISMapImageLayer {
-                url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"
                 minScale: 40000000
                 maxScale: 2000000
             }
@@ -49,7 +49,7 @@ Rectangle {
             //create a feature layer using a url
             FeatureLayer {
                 ServiceFeatureTable {
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"
                 }
             }
 

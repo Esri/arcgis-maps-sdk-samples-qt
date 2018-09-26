@@ -60,7 +60,7 @@ OpenExistingMap::OpenExistingMap(QWidget* parent) :
         if(portalId.isEmpty())
             return;
 
-        PortalItem* portalItem = new PortalItem(QUrl("http://arcgis.com/sharing/rest/content/items/" + portalId), this);
+        PortalItem* portalItem = new PortalItem(QUrl("https://arcgis.com/sharing/rest/content/items/" + portalId), this);
 
         // create a new map from the portal item
         Map* map = new Map(portalItem, this);

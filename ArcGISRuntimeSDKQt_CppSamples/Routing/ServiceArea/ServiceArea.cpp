@@ -30,7 +30,7 @@ using namespace Esri::ArcGISRuntime;
 ServiceArea::ServiceArea(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
   m_task(new ServiceAreaTask(
-           QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea"), this))
+           QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea"), this))
 {
 }
 
@@ -189,7 +189,7 @@ void ServiceArea::setupGraphics()
 {
   // create a symbol for the incidents
   PictureMarkerSymbol* facilitySymbol = new PictureMarkerSymbol(
-        QUrl(QStringLiteral("http://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png")), this);
+        QUrl(QStringLiteral("https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png")), this);
   facilitySymbol->setHeight(30);
   facilitySymbol->setWidth(30);
 
