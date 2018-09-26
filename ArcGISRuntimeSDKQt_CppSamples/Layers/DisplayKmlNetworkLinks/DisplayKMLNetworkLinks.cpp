@@ -59,8 +59,7 @@ void DisplayKMLNetworkLinks::componentComplete()
   Scene* scene = new Scene(Basemap::imagery(this), this);
 
   // Create a KML dataset from the given resource.
-  // The resource contains data it fetches from the network, so we
-  // connect up to any messages that can be sent by this link.
+  // This is a KML resource that references other KML resources over a network.
   KmlDataset* dataset = new KmlDataset(QUrl("https://www.arcgis.com/sharing/rest/content/items/600748d4464442288f6db8a4ba27dc95/data"), this);
   connect(dataset, &KmlDataset::kmlNetworkLinkMessageReceived,
           this, [this](KmlNetworkLink* /*link*/, const QString& message)

@@ -36,7 +36,7 @@ Rectangle {
         Scene {
             id: scene
             BasemapImagery {}
-            // Center the viewpoint over a specific area.
+            // Center the viewpoint over continental Europe.
             ViewpointCenter {
                 Point {
                     x: 8.150526
@@ -45,7 +45,9 @@ Rectangle {
                 }
                 targetScale: 20000000
             }
+            // The layer that will render our KML data.
             KmlLayer {
+                // This is a KML resource that references other KML resources over a network.
                 dataset:  KmlDataset {
                     url: "https://www.arcgis.com/sharing/rest/content/items/600748d4464442288f6db8a4ba27dc95/data"
 
