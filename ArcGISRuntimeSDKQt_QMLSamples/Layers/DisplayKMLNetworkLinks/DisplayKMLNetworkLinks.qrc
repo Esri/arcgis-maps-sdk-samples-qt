@@ -4,5 +4,6 @@
         <file>DisplayKMLNetworkLinks.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>GenericMessageType16.png</file>
     </qresource>
 </RCC>

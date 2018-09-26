@@ -25,7 +25,8 @@
 using namespace Esri::ArcGISRuntime;
 
 DisplayKMLNetworkLinks::DisplayKMLNetworkLinks(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_currentKmlNetworkMessage("No message recieved")
 {
 }
 
@@ -36,6 +37,17 @@ void DisplayKMLNetworkLinks::init()
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<DisplayKMLNetworkLinks>("Esri.Samples", 1, 0, "DisplayKMLNetworkLinksSample");
+}
+
+QString DisplayKMLNetworkLinks::currentKmlNetworkMessage() const
+{
+  return m_currentKmlNetworkMessage;
+}
+
+void DisplayKMLNetworkLinks::setCurrentKmlNetworkMessage(const QString& message)
+{
+  m_currentKmlNetworkMessage = message;
+  emit kmlMessageRecieved(message);
 }
 
 void DisplayKMLNetworkLinks::componentComplete()
@@ -53,8 +65,7 @@ void DisplayKMLNetworkLinks::componentComplete()
   connect(dataset, &KmlDataset::kmlNetworkLinkMessageReceived,
           this, [this](KmlNetworkLink* /*link*/, const QString& message)
   {
-    qDebug() << message;
-    emit kmlMessageRecieved(message);
+    setCurrentKmlNetworkMessage(message);
   });
 
   // Now that we have the data, we need a layer to interpret it.
@@ -64,6 +75,5 @@ void DisplayKMLNetworkLinks::componentComplete()
   // Take a look at continental Europe, where we'll see most of the data.
   m_sceneView->setViewpoint(Viewpoint { Point { 8.150526, 50.472421, SpatialReference::wgs84() }, 20000000 } );
   m_sceneView->setArcGISScene(scene);
-
-
 }
+

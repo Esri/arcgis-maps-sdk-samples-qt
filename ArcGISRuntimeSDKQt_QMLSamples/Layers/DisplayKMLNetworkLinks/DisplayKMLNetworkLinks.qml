@@ -15,10 +15,17 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
+import QtQuick.Window 2.3
 import Esri.ArcGISRuntime 100.4
 
 Rectangle {
     id: rootRectangle
+
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property string currentKmlNetworkMessage: "No message recieved.";
+
     clip: true
     width: 800
     height: 600
@@ -40,10 +47,40 @@ Rectangle {
             }
             KmlLayer {
                 dataset:  KmlDataset {
-                 url: "https://www.arcgis.com/sharing/rest/content/items/600748d4464442288f6db8a4ba27dc95/data"
+                    url: "https://www.arcgis.com/sharing/rest/content/items/600748d4464442288f6db8a4ba27dc95/data"
+
+                    onKmlNetworkLinkMessageReceived: {
+                        currentKmlNetworkMessage = message;
+                    }
                 }
             }
+        }
+    }
 
+    MessageDialog {
+        id: messageDialog
+        title: "KML layer message"
+        text: currentKmlNetworkMessage
+    }
+
+    Button {
+        width: childrenRect.width
+        height: childrenRect.height
+
+        anchors {
+            top : parent.top
+            right: parent.right
+            margins: 5 * scaleFactor
+        }
+        Image {
+            id: messageImage
+            source: "/Samples/Layers/DisplayKMLNetworkLinks/GenericMessageType16.png"
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                messageDialog.open();
+            }
         }
     }
 }

@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
+import QtQuick.Window 2.3
 import Esri.Samples 1.0
 
 DisplayKMLNetworkLinksSample {
@@ -25,20 +26,38 @@ DisplayKMLNetworkLinksSample {
     width: 800
     height: 600
 
-    property string kmlMessage: ""
-
-    onKmlMessageRecieved: {
-        kmlMessage = message;
-        messageDialog.open();
-    }
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
     MessageDialog {
         id: messageDialog
         title: "KML layer message"
-        text: kmlMessage
+        text: currentKmlNetworkMessage
     }
+
     SceneView {
         objectName: "sceneView"
         anchors.fill: parent
     }
+
+    Button {
+        width: childrenRect.width
+        height: childrenRect.height
+
+        anchors {
+            top : parent.top
+            right: parent.right
+            margins: 5 * scaleFactor
+        }
+        Image {
+            id: messageImage
+            source: "/Samples/Layers/DisplayKMLNetworkLinks/GenericMessageType16.png"
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                messageDialog.open();
+            }
+        }
+    }
+
 }

@@ -29,6 +29,7 @@ class SceneQuickView;
 
 class DisplayKMLNetworkLinks : public QQuickItem
 {
+  Q_PROPERTY(QString currentKmlNetworkMessage READ currentKmlNetworkMessage NOTIFY kmlMessageRecieved)
   Q_OBJECT
 
 public:
@@ -38,11 +39,16 @@ public:
   void componentComplete() override;
   static void init();
 
+  QString currentKmlNetworkMessage() const;
+
 signals:
   void kmlMessageRecieved(const QString& message);
 
 private:
+  void setCurrentKmlNetworkMessage(const QString& message);
+
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  QString m_currentKmlNetworkMessage;
 };
 
 #endif // DISPLAYKMLNETWORKLINKS_H
