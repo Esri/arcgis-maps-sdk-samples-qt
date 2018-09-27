@@ -1,9 +1,5 @@
 {
     "source" :  "DisplayKMLNetworkLinks.qml",
     "otherSourceFiles" :  ["MessageButton.qml"],
-    "name" : "Display KML network links",
-    "dataItems" : [{
-        "itemId" : "600748d4464442288f6db8a4ba27dc95",
-        "path" : "~/ArcGIS/Runtime/Data/kml/radar.kmz"
-    }]
+    "name" : "Display KML network links"
 }
