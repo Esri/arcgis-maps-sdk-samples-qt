@@ -16,7 +16,7 @@ In general, no special code is needed to support showing KML/KMZ files with netw
 
 ## Relevant API
 
-* `KmlDataset(Uri)`
+* `KmlDataset(Url)`
 * `KmlLayer(KmlDataset)`
 * `KmlNetworkLink`
 * `kmlNetworkLinkMessageReceived`
