@@ -42,7 +42,7 @@ Rectangle {
                 // create the raster layer from an image service raster
                 ImageServiceRaster {
                     id: imageServiceRaster
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"
 
                     // zoom to the extent of the raster once it's loaded
                     onLoadStatusChanged: {

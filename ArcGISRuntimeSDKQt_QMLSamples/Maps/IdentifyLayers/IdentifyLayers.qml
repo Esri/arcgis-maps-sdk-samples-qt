@@ -35,7 +35,7 @@ Rectangle {
 
             // add a map image layer and hide 2 of the sublayers
             ArcGISMapImageLayer {
-                url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"
                 onLoadStatusChanged: {
                     if (error) {
                         console.log("error:", error.message, error.additionalMessage)

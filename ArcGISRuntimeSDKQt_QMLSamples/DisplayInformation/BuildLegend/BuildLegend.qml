@@ -40,20 +40,20 @@ Rectangle {
             // Add a tiled layer as an operational layer
             ArcGISTiledLayer {
                 id: tiledLayer
-                url: "http://services.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer"
+                url: "https://services.arcgisonline.com/ArcGIS/rest/services/Specialty/Soil_Survey_Map/MapServer"
             }
 
             // Add a map image layer as an operational layer
             ArcGISMapImageLayer {
                 id: mapImageLayer
-                url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"
             }
 
             // Add a feature layer as an operational layer
             FeatureLayer {
                 id: featureLayer
                 featureTable: ServiceFeatureTable {
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"
                 }
             }
 

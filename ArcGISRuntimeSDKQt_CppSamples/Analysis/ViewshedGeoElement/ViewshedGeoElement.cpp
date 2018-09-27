@@ -62,12 +62,12 @@ void ViewshedGeoElement::componentComplete()
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
         new ArcGISTiledElevationSource(
-          QUrl("http://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"),
+          QUrl("https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"),
           this));
   scene->setBaseSurface(surface);
 
   // Add a SceneLayer
-  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
+  ArcGISSceneLayer* sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
   scene->operationalLayers()->append(sceneLayer);
 
   // Add an AnalysisOverlay

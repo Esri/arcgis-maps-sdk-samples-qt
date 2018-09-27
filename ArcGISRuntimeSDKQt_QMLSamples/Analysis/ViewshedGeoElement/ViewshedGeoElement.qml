@@ -42,13 +42,13 @@ Rectangle {
             // Set the Scene's Surface
             Surface {
                 ArcGISTiledElevationSource {
-                    url: "http://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"
+                    url: "https://scene.arcgis.com/arcgis/rest/services/BREST_DTM_1M/ImageServer"
                 }
             }
 
             // Add a Scene Layer
             ArcGISSceneLayer {
-                url: "http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"
+                url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"
             }
 
             onLoadStatusChanged: {

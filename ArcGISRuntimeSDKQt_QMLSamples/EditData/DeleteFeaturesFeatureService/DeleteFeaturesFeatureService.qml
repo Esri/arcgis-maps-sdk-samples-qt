@@ -57,7 +57,7 @@ Rectangle {
                 // declare as child of feature layer, as featureTable is the default property
                 ServiceFeatureTable {
                     id: featureTable
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
 
                     // make sure edits are successfully applied to the service
                     onApplyEditsStatusChanged: {

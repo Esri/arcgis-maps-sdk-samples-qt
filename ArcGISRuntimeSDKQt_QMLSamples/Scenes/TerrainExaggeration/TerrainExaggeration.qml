@@ -41,7 +41,7 @@ Rectangle {
             Surface {
                 // add an arcgis tiled elevation source...elevation source is a default property of surface
                 ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
                 // elevationExaggeration is bound to the value of the slider
                 elevationExaggeration: slider.value

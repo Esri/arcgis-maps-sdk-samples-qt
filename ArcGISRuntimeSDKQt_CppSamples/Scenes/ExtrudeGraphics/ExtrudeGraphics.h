@@ -45,7 +45,7 @@ private:
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-  QUrl m_elevationSourceUrl = QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer");
+  QUrl m_elevationSourceUrl = QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer");
   int m_maxZ = 1000;
   double m_size = 0.01;
 };

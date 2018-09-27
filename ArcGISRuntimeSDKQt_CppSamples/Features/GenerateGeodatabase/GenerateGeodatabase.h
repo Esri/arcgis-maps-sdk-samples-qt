@@ -60,7 +60,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GeodatabaseSyncTask* m_syncTask = nullptr;
   QString m_dataPath;
-  QString m_featureServiceUrl = QStringLiteral("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/");
+  QString m_featureServiceUrl = QStringLiteral("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/");
   QStringList m_serviceIds;
   Esri::ArcGISRuntime::ArcGISFeatureServiceInfo m_featureServiceInfo;
 };

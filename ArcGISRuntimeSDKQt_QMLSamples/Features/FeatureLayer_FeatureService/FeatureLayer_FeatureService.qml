@@ -36,7 +36,7 @@ Rectangle {
 
             FeatureLayer {
                 ServiceFeatureTable {
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"
                 }
             }
         }

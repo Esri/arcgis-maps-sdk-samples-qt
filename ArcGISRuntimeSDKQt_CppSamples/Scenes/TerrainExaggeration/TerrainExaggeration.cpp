@@ -46,7 +46,7 @@ void TerrainExaggeration::componentComplete()
   m_surface = new Surface(this);
   m_surface->elevationSources()->append(
         new ArcGISTiledElevationSource(
-          QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
+          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
           this));
 
   // Create the camera object at our initial viewpoint

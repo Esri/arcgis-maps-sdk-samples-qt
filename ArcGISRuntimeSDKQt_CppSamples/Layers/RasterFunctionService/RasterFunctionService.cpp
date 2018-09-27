@@ -54,7 +54,7 @@ void RasterFunctionService::componentComplete()
   m_mapView->setMap(m_map);
 
   // create an image service raster
-  m_imageServiceRaster = new ImageServiceRaster(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"), this);
+  m_imageServiceRaster = new ImageServiceRaster(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer"), this);
   // zoom to the raster's extent once it's loaded
   connect(m_imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this]()
   {

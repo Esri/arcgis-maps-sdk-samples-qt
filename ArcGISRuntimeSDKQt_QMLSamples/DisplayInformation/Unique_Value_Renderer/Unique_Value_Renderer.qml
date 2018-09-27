@@ -36,7 +36,7 @@ Rectangle {
             // create feature layer using service feature table
             FeatureLayer {
                 ServiceFeatureTable {
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"
                 }
 
                 // override the renderer of the feature layer with a new unique value renderer

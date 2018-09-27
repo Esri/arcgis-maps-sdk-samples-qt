@@ -37,7 +37,7 @@ Rectangle {
             BasemapStreets {}
 
             ArcGISMapImageLayer {
-                url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"
 
                 onLoadStatusChanged: {
                     if (loadStatus !== Enums.LoadStatusLoaded)

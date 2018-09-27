@@ -28,7 +28,7 @@ Rectangle {
     property Envelope tileCacheExtent: null
     property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
     property string statusText: ""
-    property string tiledServiceUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
+    property string tiledServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
 
     property ExportTileCacheParameters params
 

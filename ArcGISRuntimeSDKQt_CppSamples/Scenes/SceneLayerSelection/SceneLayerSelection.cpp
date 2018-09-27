@@ -54,12 +54,12 @@ void SceneLayerSelection::componentComplete()
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
         new ArcGISTiledElevationSource(
-          QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
+          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
           this));
   scene->setBaseSurface(surface);
 
   // add a scene layer
-  m_sceneLayer = new ArcGISSceneLayer(QUrl("http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
+  m_sceneLayer = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"), this);
   scene->operationalLayers()->append(m_sceneLayer);
 
   // Set an initial viewpoint

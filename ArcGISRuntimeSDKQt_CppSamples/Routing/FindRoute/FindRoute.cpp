@@ -119,7 +119,7 @@ void FindRoute::setupRouteTask()
 {
   //! [FindRoute new RouteTask]
   // create the route task pointing to an online service
-  m_routeTask = new RouteTask(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"), this);
+  m_routeTask = new RouteTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"), this);
 
   // connect to loadStatusChanged signal
   connect(m_routeTask, &RouteTask::loadStatusChanged, this, [this](LoadStatus loadStatus)

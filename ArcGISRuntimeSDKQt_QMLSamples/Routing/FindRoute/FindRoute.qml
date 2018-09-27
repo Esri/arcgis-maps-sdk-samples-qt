@@ -215,7 +215,7 @@ Rectangle {
     // Create a RouteTask pointing to an online service
     RouteTask {
         id: routeTask
-        url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"
 
         // Request default parameters once the task is loaded
         onLoadStatusChanged: {

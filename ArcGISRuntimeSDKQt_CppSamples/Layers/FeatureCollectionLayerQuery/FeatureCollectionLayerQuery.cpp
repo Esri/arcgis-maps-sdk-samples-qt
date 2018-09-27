@@ -67,7 +67,7 @@ void FeatureCollectionLayerQuery::componentComplete()
   m_mapView->setMap(m_map);
 
   //initialize service feature table to be queried
-  m_featureTable = new ServiceFeatureTable(QUrl(QStringLiteral("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/0")), this);
+  m_featureTable = new ServiceFeatureTable(QUrl(QStringLiteral("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Wildfire/FeatureServer/0")), this);
 
   //create query parameters
   QueryParameters queryParams;

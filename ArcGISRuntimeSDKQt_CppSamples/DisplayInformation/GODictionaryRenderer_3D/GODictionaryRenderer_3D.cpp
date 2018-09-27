@@ -85,7 +85,7 @@ void GODictionaryRenderer_3D::componentComplete()
   connect(surface, &Surface::errorOccurred, this, &GODictionaryRenderer_3D::logError);
   surface->elevationSources()->append(
         new ArcGISTiledElevationSource(
-          QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
+          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
           this));
   scene->setBaseSurface(surface);
   m_sceneView->setArcGISScene(scene);

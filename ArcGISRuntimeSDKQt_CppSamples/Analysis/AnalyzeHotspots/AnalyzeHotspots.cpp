@@ -53,7 +53,7 @@ void AnalyzeHotspots::componentComplete()
   m_mapView->setMap(m_map);
 
   // Create the Geoprocessing Task
-  m_hotspotTask = new GeoprocessingTask(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/GPServer/911%20Calls%20Hotspot"), this);
+  m_hotspotTask = new GeoprocessingTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/GPServer/911%20Calls%20Hotspot"), this);
 
   // Connect to the GP Task's errorOccurred signal
   connect(m_hotspotTask, &GeoprocessingTask::errorOccurred, this, [this](Error error)

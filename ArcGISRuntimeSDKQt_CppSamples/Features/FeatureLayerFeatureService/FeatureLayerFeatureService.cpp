@@ -57,7 +57,7 @@ void FeatureLayerFeatureService::componentComplete()
 
   //! [Display Feature Service]
   // create the feature table
-  m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"), this);
 
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(m_featureTable, this);
