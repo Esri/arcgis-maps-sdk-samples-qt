@@ -29,7 +29,7 @@ class SceneQuickView;
 
 class DisplayKMLNetworkLinks : public QQuickItem
 {
-  Q_PROPERTY(QString currentKmlNetworkMessage READ currentKmlNetworkMessage NOTIFY kmlMessageRecieved)
+  Q_PROPERTY(QString currentKmlNetworkMessage READ currentKmlNetworkMessage WRITE setCurrentKmlNetworkMessage NOTIFY kmlMessageRecieved)
   Q_OBJECT
 
 public:

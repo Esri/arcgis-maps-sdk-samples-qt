@@ -24,7 +24,7 @@ Rectangle {
     id: rootRectangle
 
     property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-    property string currentKmlNetworkMessage: "No message recieved.";
+    property string currentKmlNetworkMessage: "";
 
     clip: true
     width: 800
@@ -57,32 +57,26 @@ Rectangle {
                 }
             }
         }
+
+        MessageButton {
+            visible: currentKmlNetworkMessage. length > 0
+            anchors {
+                bottom: sceneView.attributionTop
+                horizontalCenter: parent.horizontalCenter
+                margins: 10 * scaleFactor
+            }
+            onClicked: {
+                messageDialog.open();
+            }
+        }
     }
 
     MessageDialog {
         id: messageDialog
         title: "KML layer message"
         text: currentKmlNetworkMessage
-    }
-
-    Button {
-        width: childrenRect.width
-        height: childrenRect.height
-
-        anchors {
-            top : parent.top
-            right: parent.right
-            margins: 5 * scaleFactor
-        }
-        Image {
-            id: messageImage
-            source: "/Samples/Layers/DisplayKMLNetworkLinks/GenericMessageType16.png"
-        }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                messageDialog.open();
-            }
+        onAccepted: {
+            currentKmlNetworkMessage = "";
         }
     }
 }

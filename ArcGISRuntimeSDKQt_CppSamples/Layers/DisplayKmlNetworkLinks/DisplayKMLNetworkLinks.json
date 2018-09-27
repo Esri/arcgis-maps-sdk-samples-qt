@@ -2,7 +2,12 @@
     "source" :  "DisplayKMLNetworkLinks.qml",
     "otherSourceFiles" :  [
         "DisplayKMLNetworkLinks.h",
-        "DisplayKMLNetworkLinks.cpp"
+        "DisplayKMLNetworkLinks.cpp",
+        "MessageButton.qml"
     ],
-    "name" : "Display KML network links"
+    "name" : "Display KML network links",
+    "dataItems" : [{
+        "itemId" : "600748d4464442288f6db8a4ba27dc95",
+        "path" : "~/ArcGIS/Runtime/Data/kml/radar.kmz"
+    }]
 }

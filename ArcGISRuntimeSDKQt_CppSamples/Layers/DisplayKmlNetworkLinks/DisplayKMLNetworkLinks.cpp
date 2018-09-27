@@ -25,8 +25,7 @@
 using namespace Esri::ArcGISRuntime;
 
 DisplayKMLNetworkLinks::DisplayKMLNetworkLinks(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
-  m_currentKmlNetworkMessage("No message recieved")
+  QQuickItem(parent)
 {
 }
 

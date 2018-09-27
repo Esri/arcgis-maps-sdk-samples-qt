@@ -12,14 +12,14 @@ The message button in the top right hand corner of the sample will show the last
 
 ## How it works
 
-In general, no special code is needed to support showing KML/KMZ files with network links. KML supports specifying a message to show the user when loading a network link. Apps can optionally listen to the `KmlDataset.NetworkLinkControlMessage` event to show any messages from KML network link controls.
+In general, no special code is needed to support showing KML/KMZ files with network links. KML supports specifying a message to show the user when loading a network link. Apps can optionally listen to the `KmlDataset::kmlNetworkLinkMessageReceived` event to show any messages from KML network link controls.
 
 ## Relevant API
 
 * `KmlDataset(Uri)`
 * `KmlLayer(KmlDataset)`
-* `KmlNetworkLinkControlMessageEventArgs`
-* `KmlDataset.NetworkLinkControlMessage`
+* `KmlNetworkLink`
+* `kmlNetworkLinkMessageReceived`
 
 ## About the data
 
