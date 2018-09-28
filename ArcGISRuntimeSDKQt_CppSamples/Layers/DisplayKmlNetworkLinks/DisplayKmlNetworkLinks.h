@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayKMLNetworkLinks, Category=Layers]
+// [WriteFile Name=DisplayKmlNetworkLinks, Category=Layers]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -27,14 +27,14 @@ class SceneQuickView;
 
 #include <QQuickItem>
 
-class DisplayKMLNetworkLinks : public QQuickItem
+class DisplayKmlNetworkLinks : public QQuickItem
 {
   Q_PROPERTY(QString currentKmlNetworkMessage READ currentKmlNetworkMessage WRITE setCurrentKmlNetworkMessage NOTIFY kmlMessageRecieved)
   Q_OBJECT
 
 public:
-  explicit DisplayKMLNetworkLinks(QQuickItem* parent = nullptr);
-  ~DisplayKMLNetworkLinks();
+  explicit DisplayKmlNetworkLinks(QQuickItem* parent = nullptr);
+  ~DisplayKmlNetworkLinks();
 
   void componentComplete() override;
   static void init();

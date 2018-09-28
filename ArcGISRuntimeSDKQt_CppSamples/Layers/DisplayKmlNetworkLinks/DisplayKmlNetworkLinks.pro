@@ -24,7 +24,7 @@ CONFIG += c++11
 QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
-TARGET = DisplayKMLNetworkLinks
+TARGET = DisplayKmlNetworkLinks
 
 ARCGIS_RUNTIME_VERSION = 100.4
 include($$PWD/arcgisruntime.pri)
@@ -32,13 +32,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    DisplayKMLNetworkLinks.h
+    DisplayKmlNetworkLinks.h
 
 SOURCES += \
     main.cpp \
-    DisplayKMLNetworkLinks.cpp
+    DisplayKmlNetworkLinks.cpp
 
-RESOURCES += DisplayKMLNetworkLinks.qrc
+RESOURCES += DisplayKmlNetworkLinks.qrc
 
 #-------------------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayKMLNetworkLinks, Category=Layers]
+// [WriteFile Name=DisplayKmlNetworkLinks, Category=Layers]
 // [Legal]
 // Copyright 2018 Esri.
 

@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayKMLNetworkLinks, Category=Layers]
+// [WriteFile Name=DisplayKmlNetworkLinks, Category=Layers]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -54,7 +54,7 @@ Item {
             id: messageImage
             width: 32 * scaleFactor
             height: 32 * scaleFactor
-            source: "qrc:/Samples/Layers/DisplayKMLNetworkLinks/iOS8_TabBar_Email90.png"
+            source: "qrc:/Samples/Layers/DisplayKmlNetworkLinks/iOS8_TabBar_Email90.png"
             anchors.margins: 5 * scaleFactor
 
             SequentialAnimation on opacity {

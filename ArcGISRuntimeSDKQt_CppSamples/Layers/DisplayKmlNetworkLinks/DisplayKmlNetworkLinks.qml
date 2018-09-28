@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayKMLNetworkLinks, Category=Layers]
+// [WriteFile Name=DisplayKmlNetworkLinks, Category=Layers]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -20,7 +20,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.3
 import Esri.Samples 1.0
 
-DisplayKMLNetworkLinksSample {
+DisplayKmlNetworkLinksSample {
     id: rootRectangle
     clip: true
     width: 800

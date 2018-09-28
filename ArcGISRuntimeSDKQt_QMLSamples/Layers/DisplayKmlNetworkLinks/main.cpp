@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("DisplayKMLNetworkLinks - QML"));
+  app.setApplicationName(QStringLiteral("DisplayKmlNetworkLinks - QML"));
 
   // Intialize application view
   QQuickView view;
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Layers/DisplayKMLNetworkLinks/DisplayKMLNetworkLinks.qml"));
+  view.setSource(QUrl("qrc:/Samples/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.qml"));
 
   view.show();
 
