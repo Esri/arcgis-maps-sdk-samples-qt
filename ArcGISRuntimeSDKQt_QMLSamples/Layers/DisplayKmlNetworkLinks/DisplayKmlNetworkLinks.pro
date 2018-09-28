@@ -26,7 +26,7 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    DisplayKMLNetworkLinks.qrc
+    DisplayKmlNetworkLinks.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

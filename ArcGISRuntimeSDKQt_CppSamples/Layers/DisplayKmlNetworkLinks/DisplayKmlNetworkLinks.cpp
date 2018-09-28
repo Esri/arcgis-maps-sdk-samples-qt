@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayKMLNetworkLinks, Category=Layers]
+// [WriteFile Name=DisplayKmlNetworkLinks, Category=Layers]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "DisplayKMLNetworkLinks.h"
+#include "DisplayKmlNetworkLinks.h"
 
 #include "ArcGISTiledElevationSource.h"
 #include "KmlDataset.h"
@@ -24,32 +24,32 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayKMLNetworkLinks::DisplayKMLNetworkLinks(QQuickItem* parent /* = nullptr */):
+DisplayKmlNetworkLinks::DisplayKmlNetworkLinks(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
 }
 
-DisplayKMLNetworkLinks::~DisplayKMLNetworkLinks() = default;
+DisplayKmlNetworkLinks::~DisplayKmlNetworkLinks() = default;
 
-void DisplayKMLNetworkLinks::init()
+void DisplayKmlNetworkLinks::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<DisplayKMLNetworkLinks>("Esri.Samples", 1, 0, "DisplayKMLNetworkLinksSample");
+  qmlRegisterType<DisplayKmlNetworkLinks>("Esri.Samples", 1, 0, "DisplayKmlNetworkLinksSample");
 }
 
-QString DisplayKMLNetworkLinks::currentKmlNetworkMessage() const
+QString DisplayKmlNetworkLinks::currentKmlNetworkMessage() const
 {
   return m_currentKmlNetworkMessage;
 }
 
-void DisplayKMLNetworkLinks::setCurrentKmlNetworkMessage(const QString& message)
+void DisplayKmlNetworkLinks::setCurrentKmlNetworkMessage(const QString& message)
 {
   m_currentKmlNetworkMessage = message;
   emit kmlMessageRecieved(message);
 }
 
-void DisplayKMLNetworkLinks::componentComplete()
+void DisplayKmlNetworkLinks::componentComplete()
 {
   QQuickItem::componentComplete();
 

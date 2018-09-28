@@ -22,7 +22,7 @@
 #include <Windows.h>
 #endif
 
-#include "DisplayKMLNetworkLinks.h"
+#include "DisplayKmlNetworkLinks.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -38,10 +38,10 @@ int main(int argc, char *argv[])
 #endif
 
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("DisplayKMLNetworkLinks - C++"));
+  app.setApplicationName(QStringLiteral("DisplayKmlNetworkLinks - C++"));
 
   // Initialize the sample
-  DisplayKMLNetworkLinks::init();
+  DisplayKmlNetworkLinks::init();
 
   // Intialize application view
   QQuickView view;
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Layers/DisplayKMLNetworkLinks/DisplayKMLNetworkLinks.qml"));
+  view.setSource(QUrl("qrc:/Samples/Layers/DisplayKmlNetworkLinks/DisplayKmlNetworkLinks.qml"));
 
   view.show();
 
