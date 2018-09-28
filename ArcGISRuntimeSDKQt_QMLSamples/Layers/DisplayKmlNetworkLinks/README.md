@@ -8,7 +8,7 @@ KML files can reference other KML files on the network and support automatically
 
 The sample will load the KML file automatically. The data shown should refresh automatically every few seconds.
 
-The message button in the top right hand corner of the sample will show the last message recieved from the KML network reource.
+The message button will show the last message received from the KML network resource.
 
 ## How it works
 
