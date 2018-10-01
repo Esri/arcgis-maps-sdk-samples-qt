@@ -50,7 +50,7 @@ ChangeViewpoint::ChangeViewpoint(QWidget* parent) :
 
     // Connect the combo box signal to slot for setting new viewpoint
     connect(m_viewpointCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this,             &changeToNewViewpoint);
+            this,             &ChangeViewpoint::changeToNewViewpoint);
 
     // Set up the UI
     QWidget* widget = new QWidget();
