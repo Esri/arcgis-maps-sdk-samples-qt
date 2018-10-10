@@ -53,7 +53,7 @@ StyleWmsLayerSample {
         spacing: 5 * scaleFactor
 
         RadioButton {
-            text: "Style 1"
+            text: "Default"
             exclusiveGroup: radioGroup
             checked: true
             onCheckedChanged: {
@@ -65,7 +65,7 @@ StyleWmsLayerSample {
         }
 
         RadioButton {
-            text: "Style 2"
+            text: "Contrast Stretch"
             exclusiveGroup: radioGroup
             onCheckedChanged: {
                 if (checked) {
