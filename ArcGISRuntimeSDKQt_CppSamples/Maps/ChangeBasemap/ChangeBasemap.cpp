@@ -52,6 +52,11 @@ void ChangeBasemap::componentComplete()
 
 void ChangeBasemap::changeBasemap(QString basemap)
 {
+  if (nullptr == m_map)
+  {
+    return;
+  }
+
   if (m_map->loadStatus() == LoadStatus::Loaded)
   {
     if (basemap == "Topographic")
