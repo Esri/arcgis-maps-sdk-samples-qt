@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 //! [Import the namespace that has QML type that was registered in Cpp]
 import Esri.Samples 1.0
