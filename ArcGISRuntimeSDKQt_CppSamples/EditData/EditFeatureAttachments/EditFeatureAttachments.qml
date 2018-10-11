@@ -16,19 +16,18 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.0 as Dialogs
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
-    width: 800
-    height: 600
+    anchors.fill: parent
 
     property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+
     property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // add a mapView component
@@ -126,10 +125,7 @@ EditFeatureAttachmentsSample {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            if (attachmentsList.currentIndex === -1)  {
-                                msgDialog.text = "Please first select an attachment to delete.";
-                                msgDialog.open();
-                            } else {
+                            if (attachmentsList.currentIndex !== -1)  {
                                 // Call invokable C++ method to add an attachment to the model
                                 editAttachmentsSample.deleteAttachment(attachmentsList.currentIndex);
                             }
@@ -204,22 +200,11 @@ EditFeatureAttachmentsSample {
     }
 
     // file dialog for selecting a file to add as an attachment
-    FileDialog {
+    Dialogs.FileDialog {
         id: fileDialog
         onAccepted: {
-            // add the attachment to the feature table
-            fileInfo.url = fileDialog.fileUrl;
             // Call invokable C++ method to add an attachment to the model
-            editAttachmentsSample.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
+            editAttachmentsSample.addAttachment(fileDialog.file, "application/octet-stream");
         }
-    }
-
-    MessageDialog {
-        id: msgDialog
-    }
-
-    // file info used for obtaining the file name
-    FileInfo {
-        id: fileInfo
     }
 }
