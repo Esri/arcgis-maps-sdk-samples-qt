@@ -32,6 +32,8 @@ class DisplayGrid : public QQuickItem
 {
   Q_OBJECT
 
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapQuickView WRITE setMapQuickView NOTIFY mapQuickViewChanged)
+
   Q_PROPERTY(QString utmGrid READ utmGrid NOTIFY utmGridChanged)
   Q_PROPERTY(QString usngGrid READ usngGrid NOTIFY usngGridChanged)
   Q_PROPERTY(QString latlonGrid READ latlonGrid NOTIFY latlonGridChanged)
@@ -84,6 +86,7 @@ signals:
   void currentLabelPositionChanged();
   void gridVisibilityChanged();
   void gridLabelVisibilityChanged();
+  void mapQuickViewChanged();
 
 private:
     static const QString utmGrid() { return s_utmGrid; }
@@ -99,6 +102,8 @@ private:
     static const QString topRightPosition() { return s_topRightPosition; }
     static const QString centerPosition() { return s_centerPosition; }
     static const QString allSidesPosition() { return s_allSidesPosition; }
+    Esri::ArcGISRuntime::MapQuickView* mapQuickView() const;
+    void setMapQuickView(Esri::ArcGISRuntime::MapQuickView* mapView);
     QString currentGridColor() const;
     void setCurrentGridColor(const QString& gridColor);
     QString currentLabelColor() const;

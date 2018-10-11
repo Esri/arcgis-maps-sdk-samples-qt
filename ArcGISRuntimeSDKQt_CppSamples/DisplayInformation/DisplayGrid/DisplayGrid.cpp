@@ -28,6 +28,8 @@
 #include "Viewpoint.h"
 #include "Point.h"
 
+#include <QQmlProperty>
+
 using namespace Esri::ArcGISRuntime;
 
 const QString DisplayGrid::s_utmGrid = QStringLiteral("UTM");
@@ -50,6 +52,7 @@ DisplayGrid::DisplayGrid(QQuickItem* parent /* = nullptr */):
 }
 
 DisplayGrid::~DisplayGrid() = default;
+
 void DisplayGrid::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
@@ -61,7 +64,6 @@ void DisplayGrid::componentComplete()
   QQuickItem::componentComplete();
 
   // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the imagery basemap
@@ -144,7 +146,7 @@ void DisplayGrid::changeLabelColor(const QString& color)
       constexpr float size = 14.0f;
       TextSymbol* textSym = new TextSymbol("text", QColor(color), size, HorizontalAlignment::Left, VerticalAlignment::Bottom, this);
       textSym->setHaloColor(QColor("white"));
-      textSym->setHaloWidth(2.0 + level);
+      textSym->setHaloWidth(2.0f + level);
       m_mapView->grid()->setTextSymbol(level, textSym);
     }
     //! [DisplayGrid Set_Grid_Labels_Cpp]
@@ -219,6 +221,18 @@ void DisplayGrid::changeLabelPosition(const QString& position)
       m_mapView->grid()->setLabelPosition(GridLabelPosition::AllSides);
     }
   }
+}
+
+MapQuickView *DisplayGrid::mapQuickView() const
+{
+  return m_mapView;
+}
+
+void DisplayGrid::setMapQuickView(MapQuickView *mapView)
+{
+  m_mapView = mapView;
+  QQmlProperty::write(this, "data", QVariant::fromValue(mapView));
+  emit mapQuickViewChanged();
 }
 
 QString DisplayGrid::currentGridColor() const
