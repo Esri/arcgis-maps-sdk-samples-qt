@@ -29,9 +29,10 @@ ChangeViewpointSample {
 
     // add a mapView component
     MapView {
+        id: mapQuickView
         anchors.fill: parent
-        objectName: "mapView"
     }
+    mapView: mapQuickView
 
     ComboBox {
         id: comboBoxViewpoint

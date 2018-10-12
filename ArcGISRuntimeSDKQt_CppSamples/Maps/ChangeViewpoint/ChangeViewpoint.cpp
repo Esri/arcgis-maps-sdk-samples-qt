@@ -43,9 +43,6 @@ void ChangeViewpoint::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
-
   // create a new basemap instance
   Basemap* basemap = Basemap::imageryWithLabels(this);
   // create a new map instance
@@ -102,6 +99,17 @@ void ChangeViewpoint::changeViewpoint(QString viewpoint)
     m_mapView->setViewpointAnimated(vpSpring, duration, AnimationCurve::EaseInOutCubic);
     //! [set viewpoint api snippet]
   }
+}
+
+MapQuickView* ChangeViewpoint::mapQuickView() const
+{
+  return m_mapView;
+}
+
+void ChangeViewpoint::setMapQuickView(MapQuickView* mapView)
+{
+  m_mapView = mapView;
+  emit mapQuickViewChanged();
 }
 
 double ChangeViewpoint::screenRatio() const
