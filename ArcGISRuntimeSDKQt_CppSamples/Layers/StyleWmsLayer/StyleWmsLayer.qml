@@ -43,6 +43,10 @@ StyleWmsLayerSample {
         opacity: 0.75
     }
 
+    ButtonGroup {
+        buttons: controlColumn.children
+    }
+
     Column {
         id: controlColumn
         anchors {
@@ -54,7 +58,6 @@ StyleWmsLayerSample {
 
         RadioButton {
             text: "Style 1"
-            exclusiveGroup: radioGroup
             checked: true
             onCheckedChanged: {
                 if (checked) {
@@ -66,17 +69,12 @@ StyleWmsLayerSample {
 
         RadioButton {
             text: "Style 2"
-            exclusiveGroup: radioGroup
             onCheckedChanged: {
                 if (checked) {
                     // set the style string on the sublayer
                     setCurrentStyle(1);
                 }
             }
-        }
-
-        ExclusiveGroup {
-            id: radioGroup
         }
     }
 }
