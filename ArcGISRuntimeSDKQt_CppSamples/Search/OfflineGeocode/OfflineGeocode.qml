@@ -20,6 +20,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.3
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
@@ -60,8 +61,8 @@ OfflineGeocodeSample {
                 left: parent.left
                 right: parent.right
             }
+            height: childrenRect.height
 
-            height: 35 * scaleFactor
             color: "#f7f8fa"
             border {
                 color: "#7B7C7D"
@@ -69,27 +70,17 @@ OfflineGeocodeSample {
             }
             radius: 2
 
-            Row {
-                anchors.centerIn: parent
+            ColumnLayout {
                 width: parent.width
-                height: parent.height
-                leftPadding: 5 * scaleFactor
+                height: childrenRect.height
 
                 // search bar for geocoding
                 TextField {
                     id: textField
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: parent.width * 0.90
-                    height: parent.height * 0.90
-                    opacity: 0.95
-                    placeholderText: "Enter an Address"
+                    Layout.fillWidth: true
+                    leftPadding: 5 * scaleFactor
 
-                    style: TextFieldStyle {
-                        background: Rectangle {
-                            color: "#f7f8fa"
-                            radius: 2
-                        }
-                    }
+                    placeholderText: "Enter an Address"
 
                     // set the SuggestListModel searchText whenever text is changed
                     onTextChanged: {
