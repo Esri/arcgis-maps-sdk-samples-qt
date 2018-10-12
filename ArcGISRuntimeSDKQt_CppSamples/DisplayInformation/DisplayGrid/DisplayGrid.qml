@@ -29,10 +29,11 @@ DisplayGridSample {
     property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property real centerWindowY: (displayGrid.height / 2) - (styleWindow.height / 2)
 
-    mapView: MapView {
+    MapView {
         id: mapQuickView
         anchors.fill: parent
     }
+    mapView: mapQuickView
 
     // Button to view the styling window
     Rectangle {

@@ -28,8 +28,6 @@
 #include "Viewpoint.h"
 #include "Point.h"
 
-#include <QQmlProperty>
-
 using namespace Esri::ArcGISRuntime;
 
 const QString DisplayGrid::s_utmGrid = QStringLiteral("UTM");
@@ -231,7 +229,6 @@ MapQuickView *DisplayGrid::mapQuickView() const
 void DisplayGrid::setMapQuickView(MapQuickView *mapView)
 {
   m_mapView = mapView;
-  QQmlProperty::write(this, "data", QVariant::fromValue(mapView));
   emit mapQuickViewChanged();
 }
 
