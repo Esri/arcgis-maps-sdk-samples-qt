@@ -6,6 +6,7 @@
         <file>RasterLayerFile.h</file>
         <file>RasterLayerFile.cpp</file>
         <file>README.md</file>
+        <file>main.qml</file>
         <file>RasterLoader.qml</file>
     </qresource>
 </RCC>
