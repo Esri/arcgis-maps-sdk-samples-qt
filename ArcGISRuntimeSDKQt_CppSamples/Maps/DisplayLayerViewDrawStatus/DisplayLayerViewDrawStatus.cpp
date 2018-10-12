@@ -44,6 +44,11 @@ void DisplayLayerViewDrawStatus::init()
   qmlRegisterType<DisplayLayerViewDrawStatus>("Esri.Samples", 1, 0, "DisplayLayerViewDrawStatusSample");
 }
 
+QAbstractListModel* DisplayLayerViewDrawStatus::statusModel()
+{
+  return &m_statuses;
+}
+
 void DisplayLayerViewDrawStatus::componentComplete()
 {
   QQuickItem::componentComplete();
@@ -66,8 +71,7 @@ void DisplayLayerViewDrawStatus::componentComplete()
   // initialize QStringList of layer names and states
   for (int i = 0; i < m_map->operationalLayers()->size(); ++i)
   {
-    m_layerNames.append(m_map->operationalLayers()->at(i)->name());
-    m_layerViewStates.append(QString("Unknown"));
+    m_statuses.addStatus(m_map->operationalLayers()->at(i)->name(), "Unknown");
   }
 
   emit namesChanged();
@@ -113,21 +117,21 @@ void DisplayLayerViewDrawStatus::connectSignals()
     }
 
     // replace layer name in QStringList
-    m_layerNames[rIndex] = layer->name();
+    m_statuses.setNameAt(rIndex, layer->name());
 
     // use insert to replace values mapped to layer name
     if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Active)
-      m_layerViewStates[rIndex] = QString("Active");
+      m_statuses.setStatusAt(rIndex, "Active");
     else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::NotVisible)
-      m_layerViewStates[rIndex] = QString("Not Visible");
+      m_statuses.setStatusAt(rIndex, "Not visible");
     else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::OutOfScale)
-      m_layerViewStates[rIndex] = QString("Out of Scale");
+      m_statuses.setStatusAt(rIndex, "Out of scale");
     else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Loading)
-      m_layerViewStates[rIndex] = QString("Loading");
+      m_statuses.setStatusAt(rIndex, "Loading");
     else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Error)
-      m_layerViewStates[rIndex] = QString("Error");
+      m_statuses.setStatusAt(rIndex, "Error");
     else
-      m_layerViewStates[rIndex] = QString("Unknown");
+      m_statuses.setStatusAt(rIndex, "Unknown");
 
     emit statusChanged();
   });
@@ -139,13 +143,4 @@ void DisplayLayerViewDrawStatus::connectSignals()
   });
 }
 
-QStringList DisplayLayerViewDrawStatus::layerViewStates() const
-{
-  return m_layerViewStates;
-}
-
-QStringList DisplayLayerViewDrawStatus::layerNames() const
-{
-  return m_layerNames;
-}
 

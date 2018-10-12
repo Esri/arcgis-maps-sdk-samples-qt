@@ -32,11 +32,13 @@ TARGET = DisplayLayerViewDrawStatus
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    DisplayLayerViewDrawStatus.h
+    DisplayLayerViewDrawStatus.h \
+    DrawStatusModel.h
 
 SOURCES += \
     main.cpp \
-    DisplayLayerViewDrawStatus.cpp
+    DisplayLayerViewDrawStatus.cpp \
+    DrawStatusModel.cpp
 
 RESOURCES += DisplayLayerViewDrawStatus.qrc
 

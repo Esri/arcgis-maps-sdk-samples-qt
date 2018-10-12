@@ -33,13 +33,13 @@ namespace Esri
 
 #include <QMetaObject>
 #include <QQuickItem>
-#include <QStringList>
+
+#include "DrawStatusModel.h"
 
 class DisplayLayerViewDrawStatus : public QQuickItem
 {
   Q_OBJECT
-  Q_PROPERTY(QStringList layerNames READ layerNames NOTIFY namesChanged)
-  Q_PROPERTY(QStringList layerViewStates READ layerViewStates NOTIFY statusChanged)
+  Q_PROPERTY(QAbstractListModel* statusModel READ statusModel CONSTANT)
 
 public:
   explicit DisplayLayerViewDrawStatus(QQuickItem* parent = nullptr);
@@ -54,20 +54,18 @@ signals:
   void mapReady();
 
 private:
-  QStringList layerViewStates() const;
-  QStringList layerNames() const;
+  QAbstractListModel* statusModel();
   void addLayers();
   void connectSignals();
 
 private:
+  DrawStatusModel m_statuses;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer = nullptr;
   Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-  QStringList m_layerNames;
-  QStringList m_layerViewStates;
 };
 
 #endif // DISPLAYLAYERVIEWDRAWSTATUS_H

@@ -33,94 +33,42 @@ DisplayLayerViewDrawStatusSample {
         objectName: "mapView"
     }
 
-    // table to display layer names and statuses
-    TableView {
-        id: tableView
+    Rectangle {
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            margins: 25 * scaleFactor
+
         }
+        border.color: "black"
+        radius: 10
         height: 150 * scaleFactor
         width: 230 * scaleFactor
-        model: layerViewModel
-        headerVisible: false
-        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-        opacity: 0.95
 
-        // set number of layers states to be displayed at once
-        rowDelegate: Row {
-            height: tableView.height / 3
-        }
-
-        // create rectangle to frame the TableView
-        style: TableViewStyle {
-            backgroundColor: "transparent"
-            frame: Rectangle {
-                border.color: "black"
-                radius: 10
-
-                // make sure mouse actions on table do not affect map behind it
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mouse.accepted = true
-                    onWheel: wheel.accepted = true
-                }
+        ListView {
+            height: childrenRect.height
+            id: listView
+            anchors {
+                fill: parent
+                margins: 25 * scaleFactor
             }
-        }
-
-        // create List Model to store Layer View States and names
-        ListModel {
-            id: layerViewModel
-        }
-
-        TableViewColumn {
-            role: "name"
-            width: tableView.width * 0.75 - tableView.anchors.margins
-            delegate: Component {
+            model: statusModel
+            opacity: 0.95
+            spacing: 10 * scaleFactor
+            delegate: Item {
+                width: parent.width
+                height: childrenRect.height
                 Text {
-                    text: styleData.value
-                    leftPadding: tableView.anchors.margins
-                    renderType: Text.NativeRendering
+                    text: name
                     horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                    font {
-                        weight: Font.Black
-                        pixelSize: tableView.height * 0.10
-                    }
+                    anchors.left: parent.left
                 }
-            }
-        }
-
-        TableViewColumn {
-            role: "status"
-            width: tableView.width * 0.25
-            delegate: Component {
                 Text {
-                    text: styleData.value
-                    renderType: Text.NativeRendering
-                    horizontalAlignment: Text.AlignRight
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: tableView.height * 0.10
+                    text: status
                     color: "steelblue"
+                    horizontalAlignment: Text.AlignRight
+                    anchors.right: parent.right
                 }
             }
-        }
-    }
-
-    // initialize ListModel to display layer names and ViewStates
-    onMapReady: {
-        for (var i = 0; i < displayLayerView.layerNames.length; i++)
-            layerViewModel.append({"name": displayLayerView.layerNames[i], "status": displayLayerView.layerViewStates[i]});
-    }
-
-    // adjust ListModel when layer view state changes in C++
-    onStatusChanged: {
-        for (var i = 0; i < displayLayerView.layerNames.length; i++) {
-            layerViewModel.setProperty(i, "name", displayLayerView.layerNames[i]);
-            layerViewModel.setProperty(i, "status", displayLayerView.layerViewStates[i]);
         }
     }
 }

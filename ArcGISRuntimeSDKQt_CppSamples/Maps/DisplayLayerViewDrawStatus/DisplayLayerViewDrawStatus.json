@@ -2,7 +2,9 @@
     "source" :  "DisplayLayerViewDrawStatus.qml",
     "otherSourceFiles" : [
         "DisplayLayerViewDrawStatus.h",
-        "DisplayLayerViewDrawStatus.cpp"
+        "DisplayLayerViewDrawStatus.cpp",
+        "DrawStatusModel.h",
+        "DrawStatusModel.cpp"
     ],
     "name" : "Display layer view draw status"
 }
