@@ -94,8 +94,10 @@ SearchDictionarySymbolStyleSample {
                         }
                         height: categoryEntry.height
                         width: height
-                        iconSource: enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_addencircled_light.png" :
+                        Image {
+                            source: parent.enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_addencircled_light.png" :
                                               "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_addencircled_dark.png"
+                        }
                         enabled: categoryEntry.text.length > 0
 
                         onClicked: {
@@ -119,8 +121,10 @@ SearchDictionarySymbolStyleSample {
                         }
                         height: categoryEntry.height
                         width: height
-                        iconSource: enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_closeclear_light.png" :
+                        Image {
+                            source: parent.enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_closeclear_light.png" :
                                               "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_closeclear_dark.png"
+                        }
                         enabled: categoryList.text.length > 0
 
                         onClicked: {
@@ -176,7 +180,9 @@ SearchDictionarySymbolStyleSample {
                           searchParamList[3].length === 0 &&
                           searchParamList[4].length === 0 ?
                               "List All" : "Search"
-                    iconSource: "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png"
+                    Image {
+                        source: "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png"
+                    }
 
                     onClicked: {
                         //start the search
@@ -194,7 +200,6 @@ SearchDictionarySymbolStyleSample {
                     text: "Clear"
                     height: seachBtn.height
                     enabled: resultView.count > 0
-                    style: seachBtn.style
                     onClicked: {
                         //Set the results visibility to false
                         resultView.visible = false;
@@ -208,8 +213,10 @@ SearchDictionarySymbolStyleSample {
                     height: seachBtn.height
                     checked: false
                     checkable: true
-                    iconSource: checked ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_collapsed_light.png" :
+                    Image {
+                        source: parent.checked ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_collapsed_light.png" :
                                           "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_expanded_light.png"
+                    }
                 }
             }
 
