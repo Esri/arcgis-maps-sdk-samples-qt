@@ -60,88 +60,97 @@ FindAddressSample {
             margins: 10 * scaleFactor
         }
 
-        Row {
+
+        Rectangle {
+            color: "#f7f8fa"
+            border {
+                color: "#7B7C7D"
+                width: 1 * scaleFactor
+            }
+            radius: 2
             width: parent.width
-            height: 35 * scaleFactor
-            spacing: 5
+            height: childrenRect.height
 
-            TextField {
-                id: textField
-                width: parent.width
-                height: parent.height
-                font.pixelSize: 14 * scaleFactor
-                placeholderText: "Type in an address"
-                style: TextFieldStyle {
-                    background: Rectangle {
-                        color: "#f7f8fa"
-                        border {
-                            color: "#7B7C7D"
-                            width: 1 * scaleFactor
+            Row {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    margins: 5 * scaleFactor
+                }
+                height: 35 * scaleFactor
+
+                spacing: 5
+
+                TextField {
+                    id: textField
+                    width: parent.width
+                    height: parent.height
+                    font.pixelSize: 14 * scaleFactor
+                    placeholderText: "Type in an address"
+
+
+                    Keys.onEnterPressed: geocodeAddress();
+                    Keys.onReturnPressed: geocodeAddress();
+
+                    function geocodeAddress() {
+                        findAddressSample.geocodeAddress(textField.text);
+                        suggestView.visible = false;
+                        Qt.inputMethod.hide();
+                    }
+
+                    Rectangle {
+                        anchors {
+                            right: parent.right
+                            top: parent.top
+                            bottom: parent.bottom
+                            margins: 5 * scaleFactor
                         }
-                        radius: 2
+
+                        width: 35 * scaleFactor
+                        color: "#f7f8fa"
+
+                        Image {
+                            anchors.centerIn: parent
+                            width: 35 * scaleFactor
+                            height: width
+                            source: "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_light_d.png"
+                            visible: textField.text.length === 0
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    textField.focus = true;
+                                    suggestView.visible = !suggestView.visible;
+                                }
+                            }
+                        }
                     }
-                }
-
-                Keys.onEnterPressed: geocodeAddress();
-                Keys.onReturnPressed: geocodeAddress();
-
-                function geocodeAddress() {
-                    findAddressSample.geocodeAddress(textField.text);
-                    suggestView.visible = false;
-                    Qt.inputMethod.hide();
-                }
-
-                Rectangle {
-                    anchors {
-                        right: parent.right
-                        top: parent.top
-                        bottom: parent.bottom
-                        margins: 5 * scaleFactor
-                    }
-
-                    width: 35 * scaleFactor
-                    color: "#f7f8fa"
 
                     Image {
-                        anchors.centerIn: parent
-                        width: 35 * scaleFactor
+                        anchors {
+                            right: parent.right
+                            top: parent.top
+                            bottom: parent.bottom
+                            margins: 5 * scaleFactor
+                        }
+                        source: "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_light_d.png"
+                        width: 27 * scaleFactor
                         height: width
-                        source: "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_light_d.png"
-                        visible: textField.text.length === 0
+                        visible: parent.text.length !== 0
 
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                textField.focus = true;
-                                suggestView.visible = !suggestView.visible;
+                                textField.text = "";
+                                if (callout.visible)
+                                    callout.dismiss();
+                                findAddressSample.clearGraphics();
                             }
                         }
                     }
                 }
-
-                Image {
-                    anchors {
-                        right: parent.right
-                        top: parent.top
-                        bottom: parent.bottom
-                        margins: 5 * scaleFactor
-                    }
-                    source: "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_light_d.png"
-                    width: 27 * scaleFactor
-                    height: width
-                    visible: parent.text.length !== 0
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            textField.text = "";
-                            if (callout.visible)
-                                callout.dismiss();
-                            findAddressSample.clearGraphics();
-                        }
-                    }
-                }
             }
+
         }
 
         // show a drop down of suggested locations
