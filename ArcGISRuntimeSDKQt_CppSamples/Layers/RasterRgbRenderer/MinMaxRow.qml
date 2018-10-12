@@ -39,7 +39,6 @@ Row {
         id: repeater
         SpinBox {
             anchors.verticalCenter: text.verticalCenter
-            width: 64 * scaleFactor
             from: 0
             to: maxRange
             value: isMin ? from : to
