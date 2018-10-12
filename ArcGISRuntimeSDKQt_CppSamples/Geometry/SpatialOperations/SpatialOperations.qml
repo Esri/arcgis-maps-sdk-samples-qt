@@ -31,9 +31,10 @@ SpatialOperationsSample {
 
     // add a mapView component
     MapView {
+        id: mapQuickView
         anchors.fill: parent
-        objectName: "mapView"
     }
+    mapView: mapQuickView
 
     // Display a ComboBox with options for each operation
     ComboBox {

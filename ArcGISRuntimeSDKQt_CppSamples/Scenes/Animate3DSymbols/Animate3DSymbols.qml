@@ -32,7 +32,7 @@ Animate3DSymbolsSample {
     property bool following: followButton.checked
 
     missionFrame: progressSlider.value
-    zoom: cameraDistance.maximumValue - cameraDistance.value
+    zoom: cameraDistance.to - cameraDistance.value
     angle: cameraAngle.value
 
     onNextFrameRequested: {
@@ -89,8 +89,8 @@ Animate3DSymbolsSample {
 
             Slider {
                 id: progressSlider
-                minimumValue: 0
-                maximumValue: missionSize
+                from: 0
+                to: missionSize
                 enabled : missionReady
                 width: Math.max(implicitWidth, 150) * scaleFactor
             }
@@ -128,8 +128,8 @@ Animate3DSymbolsSample {
             Slider {
                 id: cameraDistance
                 enabled: following && missionReady
-                minimumValue: 10.0
-                maximumValue: 5000.0
+                from: 10.0
+                to: 5000.0
                 value: 500.0
                 width: Math.max(implicitWidth, 100) * scaleFactor
             }
@@ -144,8 +144,8 @@ Animate3DSymbolsSample {
             Slider {
                 id: cameraAngle
                 enabled: following && missionReady
-                minimumValue: 0.0
-                maximumValue: 180.0
+                from: 0.0
+                to: 180.0
                 value: 45.0
                 width: Math.max(implicitWidth, 100) * scaleFactor
             }
@@ -160,8 +160,8 @@ Animate3DSymbolsSample {
             Slider {
                 id: animationSpeed
                 enabled: missionReady
-                minimumValue: 1
-                maximumValue: 100
+                from: 1
+                to: 100
                 value: 50
                 width: Math.max(implicitWidth, 100) * scaleFactor
             }
@@ -230,7 +230,7 @@ Animate3DSymbolsSample {
 
     Timer {
         id: timer
-        interval: Math.max(animationSpeed.maximumValue - animationSpeed.value,1);
+        interval: Math.max(animationSpeed.to - animationSpeed.value,1);
         running: playButton.checked;
         repeat: true
         onTriggered: animate();

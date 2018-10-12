@@ -20,7 +20,7 @@ import QtQuick.Controls 2.2
 Row {
     anchors.horizontalCenter: parent.horizontalCenter
 
-    property alias maxRange : slider.maximumValue
+    property alias maxRange : slider.to
     property alias value: slider.value
     property alias label: text.text
 
@@ -31,8 +31,8 @@ Row {
     Slider {
         id: slider
         width: 100 * scaleFactor
-        minimumValue: 0
-        maximumValue: maxRange
+        from: 0
+        to: maxRange
 
         onValueChanged: {
             if (spinBox.value !== value)
@@ -42,8 +42,8 @@ Row {
 
     SpinBox {
         id: spinBox
-        minimumValue: 0
-        maximumValue: slider.maximumValue
+        from: 0
+        to: slider.to
 
         onValueChanged: {
             if (slider.value !== value)

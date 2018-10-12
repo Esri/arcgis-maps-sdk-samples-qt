@@ -149,8 +149,8 @@ RasterRgbRendererSample {
                     anchors.verticalCenter: parent.verticalCenter
                     width: 75 * scaleFactor
                     decimals: 2
-                    minimumValue: 0
-                    maximumValue: 25
+                    from: 0
+                    to: 25
                     value: 0
                 }
             }

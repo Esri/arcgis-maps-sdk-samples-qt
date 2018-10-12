@@ -91,8 +91,8 @@ Rectangle {
                     }
                 }
                 // Slider controls degrees of rotation
-                minimumValue: 0.0
-                maximumValue: 360.0
+                from: 0.0
+                to: 360.0
                 onPressedChanged: {
                     mv.setViewpointRotation(value);
                 }

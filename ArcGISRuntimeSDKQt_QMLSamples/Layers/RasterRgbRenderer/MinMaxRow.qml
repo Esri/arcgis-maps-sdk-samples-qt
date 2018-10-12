@@ -40,9 +40,9 @@ Row {
         SpinBox {
             anchors.verticalCenter: text.verticalCenter
             width: 64 * scaleFactor
-            minimumValue: 0
-            maximumValue: maxRange
-            value: isMin ? minimumValue : maximumValue
+            from: 0
+            to: maxRange
+            value: isMin ? from : to
         }
     }
 }

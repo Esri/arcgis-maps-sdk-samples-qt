@@ -174,8 +174,8 @@ Rectangle {
 
             Slider {
                 id: progressSlider
-                minimumValue: 0
-                maximumValue: missionSize
+                from: 0
+                to: missionSize
                 enabled : missionReady
                 width: Math.max(implicitWidth, 150) * scaleFactor
             }
@@ -211,8 +211,8 @@ Rectangle {
             Slider {
                 id: cameraDistanceSlider
                 enabled: following && missionReady
-                minimumValue: followController.minCameraDistance
-                maximumValue: 5000.0
+                from: followController.minCameraDistance
+                to: 5000.0
                 value: 500.0
                 width: Math.max(implicitWidth, 100) * scaleFactor
             }
@@ -227,8 +227,8 @@ Rectangle {
             Slider {
                 id: cameraAngle
                 enabled: following && missionReady
-                minimumValue: followController.minCameraPitchOffset
-                maximumValue: followController.maxCameraPitchOffset
+                from: followController.minCameraPitchOffset
+                to: followController.maxCameraPitchOffset
                 value: 45.0
                 width: Math.max(implicitWidth, 100) * scaleFactor
             }
@@ -243,8 +243,8 @@ Rectangle {
             Slider {
                 id: animationSpeed
                 enabled: missionReady
-                minimumValue: 1
-                maximumValue: 100
+                from: 1
+                to: 100
                 value: 50
                 width: Math.max(implicitWidth, 100) * scaleFactor
             }
@@ -338,7 +338,7 @@ Rectangle {
 
     Timer {
         id: timer
-        interval: Math.max(animationSpeed.maximumValue - animationSpeed.value,1);
+        interval: Math.max(animationSpeed.to - animationSpeed.value,1);
         running: playButton.checked;
         repeat: true
         onTriggered: animate();

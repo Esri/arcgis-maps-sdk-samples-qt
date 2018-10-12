@@ -75,8 +75,8 @@ TerrainExaggerationSample {
                     }
                 }
                 // Slider controls the magnitude of exaggeration
-                minimumValue: 1
-                maximumValue: 10
+                from: 1
+                to: 10
                 onValueChanged: {
                     terrainExaggerationSample.setElevationExaggeration(slider.value)
                 }

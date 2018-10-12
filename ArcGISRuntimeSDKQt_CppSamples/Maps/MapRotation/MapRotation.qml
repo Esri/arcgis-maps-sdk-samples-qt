@@ -74,8 +74,8 @@ MapRotationSample {
                     }
                 }
                 // Slider controls degrees of rotation
-                minimumValue: 0.0
-                maximumValue: 360.0
+                from: 0.0
+                to: 360.0
                 onPressedChanged: {
                     // Call C++ invokable function to change the rotation of the map view
                     mapRotationSample.setMapViewRotation(value);

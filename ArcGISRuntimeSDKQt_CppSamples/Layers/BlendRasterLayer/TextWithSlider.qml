@@ -22,8 +22,8 @@ Row {
     property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property alias label: labelText.text
     property alias sliderValue: slider.value
-    property alias min: slider.minimumValue
-    property alias max: slider.maximumValue
+    property alias min: slider.from
+    property alias max: slider.to
 
     anchors.horizontalCenter: parent.horizontalCenter
     spacing: 16 * scaleFactor

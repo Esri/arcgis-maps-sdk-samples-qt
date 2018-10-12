@@ -196,8 +196,8 @@ Rectangle {
 
         Slider {
             id: maxSegmentLengthSlider
-            minimumValue: 100
-            maximumValue: 500
+            from: 100
+            to: 500
             width: 175 * scaleFactor
             value: 100
             onValueChanged: updateGeometry();
@@ -216,8 +216,8 @@ Rectangle {
 
         Slider {
             id: maxDeviationSlider
-            minimumValue: 1
-            maximumValue: 250
+            from: 1
+            to: 250
             width: 175 * scaleFactor
             onValueChanged: updateGeometry();
         }
