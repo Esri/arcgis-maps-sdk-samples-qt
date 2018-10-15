@@ -16,15 +16,12 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
 ChangeBasemapSample {
     id: changeBasemapSample
     width: 800
     height: 600
-
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
     // add a mapView component
     MapView {
@@ -38,9 +35,13 @@ ChangeBasemapSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 15
         }
-        width: 175 * scaleFactor
+
+        property int bestWidth : implicitWidth
+
+        width: bestWidth + indicator.width + rightPadding + leftPadding
+
         model: ["Topographic","Streets",
             "Streets (Vector)",
             "Streets - Night (Vector)",
@@ -53,9 +54,21 @@ ChangeBasemapSample {
             "Navigation (Vector)",
             "OpenStreetMap (Raster)",
             "Oceans"]
+
         onCurrentTextChanged: {
             // Call C++ invokable function to switch the basemaps
             changeBasemapSample.changeBasemap(currentText);
+        }
+
+        onModelChanged: {
+            for (var i = 0; i < comboBoxBasemap.model.length; ++i) {
+                metrics.text = comboBoxBasemap.model[i];
+                bestWidth = Math.max(bestWidth, metrics.width);
+            }
+        }
+
+        TextMetrics {
+            id: metrics
         }
     }
 }

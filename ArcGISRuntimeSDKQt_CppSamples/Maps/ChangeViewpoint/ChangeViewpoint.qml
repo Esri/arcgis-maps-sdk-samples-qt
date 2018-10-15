@@ -16,16 +16,12 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 ChangeViewpointSample {
     id: changeViewpointSample
     width: 800
     height: 600
-
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
     // add a mapView component
     MapView {
@@ -39,14 +35,37 @@ ChangeViewpointSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 15
         }
-        width: 175 * scaleFactor
-        model: ["Center","Center and scale","Geometry","Geometry and padding","Rotation","Scale 1:5,000,000","Scale 1:10,000,000","Animation"]
+
+        property int bestWidth: implicitWidth
+
+        width: bestWidth + indicator.width + rightPadding + leftPadding
+
+        model: [ "Center"
+               , "Center and scale"
+               , "Geometry"
+               , "Geometry and padding"
+               , "Rotation"
+               , "Scale 1:5,000,000"
+               , "Scale 1:10,000,000"
+               , "Animation"
+               ]
 
         onCurrentTextChanged: {
             // Call C++ invokable function to change the viewpoint
             changeViewpointSample.changeViewpoint(comboBoxViewpoint.currentText);
+        }
+
+        onModelChanged: {
+            for (var i = 0; i < comboBoxViewpoint.model.length; ++i) {
+                metrics.text = comboBoxViewpoint.model[i];
+                bestWidth = Math.max(bestWidth, metrics.width);
+            }
+        }
+
+        TextMetrics {
+            id: metrics
         }
     }
 }
