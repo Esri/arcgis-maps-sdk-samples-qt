@@ -18,6 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.2
+import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 
 DisplayLayerViewDrawStatusSample {
@@ -25,48 +26,63 @@ DisplayLayerViewDrawStatusSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
-    }
 
-    Rectangle {
-        anchors {
-            bottom: parent.bottom
-            horizontalCenter: parent.horizontalCenter
-
-        }
-        border.color: "black"
-        radius: 10
-        height: 150 * scaleFactor
-        width: 230 * scaleFactor
-
-        ListView {
-            height: childrenRect.height
-            id: listView
+        Rectangle {
             anchors {
-                fill: parent
-                margins: 25 * scaleFactor
+                bottom: mapView.attributionTop
+                horizontalCenter: parent.horizontalCenter
+                margins: 5
             }
-            model: statusModel
+            border.color: "black"
+            radius: 10
+            height: childrenRect.height
+            width: parent.width * 0.25
             opacity: 0.95
-            spacing: 10 * scaleFactor
-            delegate: Item {
-                width: parent.width
-                height: childrenRect.height
-                Text {
-                    text: name
-                    horizontalAlignment: Text.AlignLeft
-                    anchors.left: parent.left
+
+            ListView {
+                id: listView
+                anchors {
+                    left: parent.left
+                    right: parent.right
                 }
-                Text {
-                    text: status
-                    color: "steelblue"
-                    horizontalAlignment: Text.AlignRight
-                    anchors.right: parent.right
+                height: childrenRect.height
+                model: statusModel
+                delegate: Item {
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                    }
+                    height: childrenRect.height
+
+                    RowLayout {
+                        Layout.topMargin: 10
+                        Layout.bottomMargin: 10
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            margins: 10
+                        }
+                        Text {
+                            text: name
+                            horizontalAlignment: Text.AlignLeft
+                            Layout.fillWidth: true
+                            Layout.topMargin: 10
+                            Layout.bottomMargin: 10
+                        }
+                        Text {
+                            text: status
+                            color: "steelblue"
+                            horizontalAlignment: Text.AlignRight
+                            Layout.fillWidth: true
+                            Layout.topMargin: 10
+                            Layout.bottomMargin: 10
+                        }
+                    }
                 }
             }
         }

@@ -175,7 +175,6 @@ ShowOrgBasemapsSample {
             margins: 16 * scaleFactor
         }
         visible: mapView.visible
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
         text: "Back"
         opacity: hovered ? 1 : 0.5
 
@@ -195,7 +194,6 @@ ShowOrgBasemapsSample {
             top: titleLabel.bottom
         }
         text: "Anonymous"
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
 
         onClicked: {
             load(true);
@@ -213,7 +211,6 @@ ShowOrgBasemapsSample {
         }
         width: anonymousLogIn.width
         text: "Sign-in"
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
 
         onClicked: {
             load(false);

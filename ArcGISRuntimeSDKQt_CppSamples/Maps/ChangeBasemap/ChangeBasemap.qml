@@ -20,8 +20,7 @@ import Esri.Samples 1.0
 
 ChangeBasemapSample {
     id: changeBasemapSample
-    width: 800
-    height: 600
+   anchors.fill: parent
 
     // add a mapView component
     MapView {
@@ -40,7 +39,7 @@ ChangeBasemapSample {
 
         property int bestWidth : implicitWidth
 
-        width: bestWidth + indicator.width + rightPadding + leftPadding
+        width: bestWidth + indicator.width + leftPadding + rightPadding
 
         model: ["Topographic","Streets",
             "Streets (Vector)",
@@ -61,14 +60,19 @@ ChangeBasemapSample {
         }
 
         onModelChanged: {
+            var w = bestWidth
             for (var i = 0; i < comboBoxBasemap.model.length; ++i) {
                 metrics.text = comboBoxBasemap.model[i];
-                bestWidth = Math.max(bestWidth, metrics.width);
+                w = Math.max(w, metrics.width);
             }
+            bestWidth = w
         }
+
+        onWidthChanged: console.log(width)
 
         TextMetrics {
             id: metrics
+            font: comboBoxBasemap.font
         }
     }
 }

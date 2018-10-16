@@ -66,6 +66,7 @@ ChangeViewpointSample {
 
         TextMetrics {
             id: metrics
+            font: comboBoxViewpoint.font
         }
     }
 }
