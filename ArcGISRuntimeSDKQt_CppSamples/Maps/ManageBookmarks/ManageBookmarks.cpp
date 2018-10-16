@@ -124,3 +124,9 @@ void ManageBookmarks::addBookmark(QString newBookmarkName)
 {
   createBookmark(newBookmarkName, m_mapView->currentViewpoint(ViewpointType::BoundingGeometry));
 }
+
+QString ManageBookmarks::bookmarkNameForIndex(int index) const
+{
+  return m_bookmarks->data(m_bookmarks->index(index),
+                           BookmarkListModel::BookmarkNameRole).toString();
+}
