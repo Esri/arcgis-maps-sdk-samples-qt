@@ -81,6 +81,8 @@ The `master` branch contains samples for the current, most up-to-date version of
 
 - [100.0](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1529)
 - [100.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1744)
+- [100.2.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.2.1)
+- [100.3](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/2102)
 
 ## Use offline data in the samples
 Some of the samples consume offline data, including TPKs, VTPKs, mobile geodatabases, and mobile map packages, among other data formats. If the sample does consume offline data, the sample's associated readme.md will note where you can download the data (from ArcGIS Online), and where the data can be placed once downloaded. For example, it may say something like:
