@@ -95,19 +95,8 @@ LocalServerGeoprocessingSample {
                     width: parent.width
                     text: "Generate Contours"
                     height: 35 * scaleFactor
-                    style: ButtonStyle {
-                        background: Rectangle {
-                            border.color: "black"
-                            radius: 5
-                        }
-                        label: Text {
-                            text: control.text
-                            font.pixelSize: 14 * scaleFactor
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.bold: true
-                        }
-                    }
+                    font.pixelSize: 14
+                    font.bold: true
                     onClicked: {
                         generateContours(intervalText.text);
                     }
@@ -117,19 +106,8 @@ LocalServerGeoprocessingSample {
                     width: parent.width
                     text: "Clear Results"
                     height: 35 * scaleFactor
-                    style: ButtonStyle {
-                        background: Rectangle {
-                            border.color: "black"
-                            radius: 5
-                        }
-                        label: Text {
-                            text: control.text
-                            font.pixelSize: 14 * scaleFactor
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.bold: true
-                        }
-                    }
+                    font.pixelSize: 14
+                    font.bold: true
                     onClicked: {
                         clearResults();
                     }
