@@ -31,10 +31,9 @@ TARGET = Animate3DSymbols
 
 #-------------------------------------------------------------------------------
 
-HEADERS += Animate3DSymbols.h
+HEADERS += Animate3DSymbols.h MissionData.h
 
-SOURCES += main.cpp \
-    Animate3DSymbols.cpp
+SOURCES += main.cpp Animate3DSymbols.cpp MissionData.cpp
 
 RESOURCES += Animate3DSymbols.qrc
 

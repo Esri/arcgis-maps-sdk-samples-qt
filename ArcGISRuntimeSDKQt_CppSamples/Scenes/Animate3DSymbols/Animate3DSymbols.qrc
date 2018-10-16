@@ -5,6 +5,9 @@
         <file>Animate3DSymbols.qml</file>
         <file>Animate3DSymbols.h</file>
         <file>Animate3DSymbols.cpp</file>
+        <file>MissionData.h</file>
+        <file>MissionData.cpp</file>
         <file>README.md</file>
+        <file>main.qml</file>
     </qresource>
 </RCC>

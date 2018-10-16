@@ -23,13 +23,11 @@ import Esri.ArcGISExtras 1.1
 Animate3DSymbolsSample {
     id: rootRectangle
     clip: true
-
-    width: 800
-    height: 600
+    anchors.fill: parent
 
     property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D"
-    property bool following: followButton.checked
+    property bool isFollowing: followButton.checked
 
     missionFrame: progressSlider.value
     zoom: cameraDistance.to - cameraDistance.value
@@ -49,7 +47,7 @@ Animate3DSymbolsSample {
         anchors.fill: parent
     }
 
-    GroupBox {
+     GroupBox {
         id: animationGroupBox
         z: 110
         anchors {
@@ -64,7 +62,7 @@ Animate3DSymbolsSample {
             ComboBox {
                 id: missionList
                 enabled: !playButton.checked
-                model: missionsModel()
+                model: missionModel
                 textRole: "display"
                 width: 150 * scaleFactor
                 onCurrentTextChanged: {
@@ -121,13 +119,13 @@ Animate3DSymbolsSample {
             Text {
                 id: distTitle
                 text: "zoom"
-                enabled: following && missionReady
+                enabled: isFollowing && missionReady
                 color: "white"
             }
 
             Slider {
                 id: cameraDistance
-                enabled: following && missionReady
+                enabled: isFollowing && missionReady
                 from: 10.0
                 to: 5000.0
                 value: 500.0
@@ -137,13 +135,13 @@ Animate3DSymbolsSample {
             Text {
                 id: angleTitle
                 text: "angle"
-                enabled: following && missionReady
+                enabled: isFollowing && missionReady
                 color: "white"
             }
 
             Slider {
                 id: cameraAngle
-                enabled: following && missionReady
+                enabled: isFollowing && missionReady
                 from: 0.0
                 to: 180.0
                 value: 45.0
@@ -228,11 +226,11 @@ Animate3DSymbolsSample {
         }
     }
 
-    Timer {
-        id: timer
-        interval: Math.max(animationSpeed.to - animationSpeed.value,1);
-        running: playButton.checked;
-        repeat: true
-        onTriggered: animate();
-    }
+//    Timer {
+//        id: timer
+//        interval: Math.max(animationSpeed.to - animationSpeed.value,1);
+//        running: playButton.checked;
+//        repeat: true
+//        onTriggered: animate();
+//    }
 }
