@@ -60,15 +60,13 @@ ChangeBasemapSample {
         }
 
         onModelChanged: {
-            var w = bestWidth
+            var w = bestWidth;
             for (var i = 0; i < comboBoxBasemap.model.length; ++i) {
                 metrics.text = comboBoxBasemap.model[i];
                 w = Math.max(w, metrics.width);
             }
-            bestWidth = w
+            bestWidth = w;
         }
-
-        onWidthChanged: console.log(width)
 
         TextMetrics {
             id: metrics

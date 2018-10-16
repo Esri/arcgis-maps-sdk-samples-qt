@@ -41,47 +41,31 @@ DisplayLayerViewDrawStatusSample {
             border.color: "black"
             radius: 10
             height: childrenRect.height
-            width: parent.width * 0.25
+            width: childrenRect.width
             opacity: 0.95
-
-            ListView {
-                id: listView
-                anchors {
-                    left: parent.left
-                    right: parent.right
+            GridLayout
+            {
+                id: gridLayout
+                flow: GridLayout.TopToBottom
+                Connections {
+                    target: statusModel
+                    onRowsInserted: gridLayout.rows = statusModel.rowCount();
                 }
-                height: childrenRect.height
-                model: statusModel
-                delegate: Item {
-                    anchors {
-                        left: parent.left
-                        right: parent.right
+                Repeater {
+                    model: statusModel
+                    delegate: Text {
+                        text: name
+                        horizontalAlignment: Text.AlignLeft
+                        Layout.margins: 5
                     }
-                    height: childrenRect.height
-
-                    RowLayout {
-                        Layout.topMargin: 10
-                        Layout.bottomMargin: 10
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            margins: 10
-                        }
-                        Text {
-                            text: name
-                            horizontalAlignment: Text.AlignLeft
-                            Layout.fillWidth: true
-                            Layout.topMargin: 10
-                            Layout.bottomMargin: 10
-                        }
-                        Text {
-                            text: status
-                            color: "steelblue"
-                            horizontalAlignment: Text.AlignRight
-                            Layout.fillWidth: true
-                            Layout.topMargin: 10
-                            Layout.bottomMargin: 10
-                        }
+                }
+                Repeater {
+                    model: statusModel
+                    delegate: Text {
+                        text: status
+                        color: "steelblue"
+                        horizontalAlignment: Text.AlignRight
+                        Layout.margins: 5
                     }
                 }
             }
