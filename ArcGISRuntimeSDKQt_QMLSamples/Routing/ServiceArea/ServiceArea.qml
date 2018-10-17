@@ -219,7 +219,6 @@ Rectangle {
 
         ComboBox {
             id: modeComboBox
-            width: 100 * scaleFactor
             model: ["Facility", "Barrier"]
 
             onCurrentTextChanged: {
