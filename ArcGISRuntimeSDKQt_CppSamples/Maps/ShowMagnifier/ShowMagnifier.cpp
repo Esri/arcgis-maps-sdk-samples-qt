@@ -28,9 +28,7 @@ ShowMagnifier::ShowMagnifier(QQuickItem* parent) :
 {
 }
 
-ShowMagnifier::~ShowMagnifier()
-{
-}
+ShowMagnifier::~ShowMagnifier() = default;
 
 void ShowMagnifier::init()
 {

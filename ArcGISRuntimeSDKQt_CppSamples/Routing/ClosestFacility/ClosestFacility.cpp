@@ -28,10 +28,10 @@
 using namespace Esri::ArcGISRuntime;
 
 const QUrl ClosestFacility::facilityImageUrl(
-    QStringLiteral("http://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"));
+    QStringLiteral("https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"));
 
 const QUrl ClosestFacility::sanDiegoRegion(
-    QStringLiteral("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"));
+    QStringLiteral("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"));
 
 ClosestFacility::ClosestFacility(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
@@ -39,9 +39,7 @@ ClosestFacility::ClosestFacility(QQuickItem* parent /* = nullptr */):
 {
 }
 
-ClosestFacility::~ClosestFacility()
-{
-}
+ClosestFacility::~ClosestFacility() = default;
 
 void ClosestFacility::init()
 {

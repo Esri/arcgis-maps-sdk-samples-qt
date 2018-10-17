@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -44,7 +44,7 @@ Rectangle {
                 // feature table
                 ServiceFeatureTable {
                     id: featureTable
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/PoolPermits/FeatureServer/0"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/PoolPermits/FeatureServer/0"
                 }
             }
 

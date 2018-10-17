@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -74,7 +74,7 @@ Rectangle {
 
             renderer: SimpleRenderer {
                 symbol: PictureMarkerSymbol {
-                    url: "http://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"
+                    url: "https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"
                     height: 30
                     width: 30
                 }
@@ -152,7 +152,7 @@ Rectangle {
 
     ServiceAreaTask {
         id: task
-        url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea"
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea"
 
         onLoadStatusChanged: {
             if (loadStatus !== Enums.LoadStatusLoaded)
@@ -179,7 +179,10 @@ Rectangle {
             busy = false;
 
             if (solveServiceAreaResult === null || solveServiceAreaResult.error)
+            {
                 message = "No service Areas calculated!";
+                return;
+            }
 
             var numFacilities = facilitiesOverlay.graphics.rowCount();
             for (var i = 0; i < numFacilities; i++) {
@@ -252,6 +255,7 @@ Rectangle {
         title: "Route Error"
         text: message
         visible: text.length > 0
+        onAccepted: { message = ""; }
     }
 
     function setupRouting() {

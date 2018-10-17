@@ -28,9 +28,7 @@ BasicSceneView::BasicSceneView(QQuickItem* parent) :
 {
 }
 
-BasicSceneView::~BasicSceneView()
-{
-}
+BasicSceneView::~BasicSceneView() = default;
 
 void BasicSceneView::init()
 {
@@ -53,7 +51,7 @@ void BasicSceneView::componentComplete()
   m_sceneView->setArcGISScene(m_scene);
 
   //! [create a new elevation source]
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
   //! [create a new elevation source]

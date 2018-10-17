@@ -5,6 +5,7 @@
         <file>DeleteFeaturesFeatureService.qml</file>
         <file>DeleteFeaturesFeatureService.h</file>
         <file>DeleteFeaturesFeatureService.cpp</file>
+        <file>ic_menu_trash_light.png</file>
         <file>README.md</file>
     </qresource>
 </RCC>

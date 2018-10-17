@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.XmlListModel 2.0
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -39,7 +39,7 @@ Rectangle {
             BasemapImagery {}
             Surface {
                 ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
         }

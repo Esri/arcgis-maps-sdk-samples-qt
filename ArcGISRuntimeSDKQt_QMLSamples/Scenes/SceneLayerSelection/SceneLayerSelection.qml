@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 
 Rectangle {
     id: rootRectangle
@@ -34,7 +34,7 @@ Rectangle {
             // add a scene layer
             ArcGISSceneLayer {
                 id: sceneLayer
-                url: "http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"
+                url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/layers/0"
             }
 
             // set an initial viewpoint
@@ -60,7 +60,7 @@ Rectangle {
             // add an elevation surface
             Surface {
                 ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
         }

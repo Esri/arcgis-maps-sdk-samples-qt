@@ -27,9 +27,7 @@ OpenMapUrl::OpenMapUrl(QQuickItem* parent) :
 {
 }
 
-OpenMapUrl::~OpenMapUrl()
-{
-}
+OpenMapUrl::~OpenMapUrl() = default;
 
 void OpenMapUrl::init()
 {
@@ -56,7 +54,7 @@ void OpenMapUrl::openMap(const QString& itemId)
 {
   //! [Construct map from a webmap Url]
   // create a QUrl using the item id QString
-  QString organizationPortalUrl(QStringLiteral("http://arcgis.com"));
+  QString organizationPortalUrl(QStringLiteral("https://arcgis.com"));
   const QUrl webmapUrl(QString(organizationPortalUrl + "/sharing/rest/content/items/" + itemId));
   // create a new map from the webmap Url
   Map* map = new Map(webmapUrl, this);

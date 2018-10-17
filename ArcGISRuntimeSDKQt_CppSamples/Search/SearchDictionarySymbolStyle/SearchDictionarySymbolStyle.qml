@@ -28,7 +28,7 @@ SearchDictionarySymbolStyleSample {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property double fontSize: 16 * scaleFactor
     property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]

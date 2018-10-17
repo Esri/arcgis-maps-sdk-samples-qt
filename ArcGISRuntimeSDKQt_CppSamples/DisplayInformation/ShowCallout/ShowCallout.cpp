@@ -27,9 +27,7 @@ ShowCallout::ShowCallout(QQuickItem* parent):
 {
 }
 
-ShowCallout::~ShowCallout()
-{
-}
+ShowCallout::~ShowCallout() = default;
 
 void ShowCallout::init()
 {

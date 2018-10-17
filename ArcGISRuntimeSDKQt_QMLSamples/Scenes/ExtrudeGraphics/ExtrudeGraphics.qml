@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 
 Rectangle {
     width: 800
@@ -42,7 +42,7 @@ Rectangle {
             Surface {
                 // add an arcgis tiled elevation source...elevation source is a default property of surface
                 ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
         }

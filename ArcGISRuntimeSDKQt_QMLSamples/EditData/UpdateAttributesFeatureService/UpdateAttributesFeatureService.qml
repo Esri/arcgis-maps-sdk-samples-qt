@@ -17,16 +17,15 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
     width: 800
     height: 600
 
     property real scaleFactor: System.displayScaleFactor
-    property double mousePointX
-    property double mousePointY
     property string damageType
     property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
     property var selectedFeature: null
@@ -56,13 +55,10 @@ Rectangle {
             FeatureLayer {
                 id: featureLayer
 
-                selectionColor: "cyan"
-                selectionWidth: 3
-
                 // declare as child of feature layer, as featureTable is the default property
                 ServiceFeatureTable {
                     id: featureTable
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
 
                     // make sure edits are successfully applied to the service
                     onApplyEditsStatusChanged: {
@@ -78,7 +74,7 @@ Rectangle {
                             featureTable.applyEdits();
                         }
                     }
-                }                 
+                }
 
                 // signal handler for selecting features
                 onSelectFeaturesStatusChanged: {
@@ -90,9 +86,7 @@ Rectangle {
                         damageType = selectedFeature.attributes.attributeValue("typdamage");
 
                         // show the callout
-                        callout.x = mousePointX;
-                        callout.y = mousePointY;
-                        callout.visible = true;
+                        callout.showCallout();
 
                         // set the combo box's default value
                         damageComboBox.currentIndex = featAttributes.indexOf(damageType);
@@ -107,18 +101,17 @@ Rectangle {
 
         // hide the callout after navigation
         onViewpointChanged: {
-            callout.visible = false;
+            if (callout.visible)
+                callout.dismiss();
             updateWindow.visible = false;
         }
 
         onMouseClicked: {
             // reset the map callout and update window
             featureLayer.clearSelection();
-            callout.visible = false;
+            if (callout.visible)
+                callout.dismiss();
             updateWindow.visible = false;
-
-            mousePointX = mouse.x;
-            mousePointY = mouse.y - callout.height;
             mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, 10, false, 1);
         }
 
@@ -132,61 +125,22 @@ Rectangle {
                 }
             }
         }
-    }
 
-    // map callout window
-    Rectangle {
-        id: callout
-        width: row.width + (10 * scaleFactor) // add 10 for padding
-        height: 40 * scaleFactor
-        radius: 5
-        border {
-            color: "lightgrey"
-            width: .5
-        }
-        visible: false
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
+        calloutData {
+            // HTML to style the title text by centering it, increase pt size,
+            // and bolding it.
+            title: "<br><b><font size=\"+2\">%1</font></b>".arg(damageType)
+            location: selectedFeature ? selectedFeature.geometry : null
         }
 
-        Row {
-            id: row
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: parent.left
-                margins: 5 * scaleFactor
-            }
-            spacing: 10
-
-            Text {
-                text: damageType
-                font.pixelSize: 18 * scaleFactor
-            }
-
-            Rectangle {
-                radius: 100
-                width: 22 * scaleFactor
-                height: width
-                color: "transparent"
-                border.color: "blue"
-                antialiasing: true
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "i"
-                    font.pixelSize: 18 * scaleFactor
-                    color: "blue"
-                }
-
-                // create a mouse area over the (i) text to open the update window
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        updateWindow.visible = true;
-                    }
-                }
+        Callout {
+            id: callout
+            calloutData: parent.calloutData;
+            borderColor: "lightgrey"
+            borderWidth: 1 * scaleFactor
+            leaderPosition: leaderPositionEnum.Automatic
+            onAccessoryButtonClicked: {
+                updateWindow.visible = true;
             }
         }
     }
@@ -197,7 +151,7 @@ Rectangle {
         anchors.centerIn: parent
         width: 200 * scaleFactor
         height: 110 * scaleFactor
-        radius: 10
+        radius: 10 * scaleFactor
         visible: false
 
         GaussianBlur {
@@ -209,8 +163,8 @@ Rectangle {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
+            onClicked: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
         }
 
         Column {
@@ -253,7 +207,8 @@ Rectangle {
 
                     // once the update button is clicked, hide the windows, and fetch the currently selected features
                     onClicked: {
-                        callout.visible = false;
+                        if (callout.visible)
+                           callout.dismiss();
                         updateWindow.visible = false;
 
                         selectedFeature.onLoadStatusChanged.connect(doUpdateAttribute);

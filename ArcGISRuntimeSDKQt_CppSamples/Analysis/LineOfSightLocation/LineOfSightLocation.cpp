@@ -48,7 +48,7 @@ void LineOfSightLocation::componentComplete()
   Surface* surface = new Surface(this);
   surface->elevationSources()->append(
         new ArcGISTiledElevationSource(
-          QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
+          QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"),
           this));
   scene->setBaseSurface(surface);
   m_sceneView->setArcGISScene(scene);

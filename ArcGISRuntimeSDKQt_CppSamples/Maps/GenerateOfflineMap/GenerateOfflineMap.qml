@@ -17,9 +17,10 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
+import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.3
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
 
 GenerateOfflineMapSample {
     id: offlineMapSample
@@ -27,7 +28,7 @@ GenerateOfflineMapSample {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property string outputMapPackage: System.temporaryFolder.path + "/OfflineMap_%1.mmpk".arg(new Date().getTime().toString())
 
     onUpdateStatus: generateWindow.statusText = status;

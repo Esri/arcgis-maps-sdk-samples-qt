@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -35,7 +35,7 @@ Rectangle {
             Basemap {
                 // Nest an ArcGISVectorTiledLayer Layer in the Basemap
                 ArcGISVectorTiledLayer {
-                    url: "http://www.arcgis.com/home/item.html?id=7675d44bb1e4428aa2c30a9b68f97822"
+                    url: "https://www.arcgis.com/home/item.html?id=7675d44bb1e4428aa2c30a9b68f97822"
                 }
             }
             initialViewpoint: ViewpointCenter {
@@ -67,19 +67,19 @@ Rectangle {
             switch (comboBoxBasemap.currentText) {
             case "Mid-Century":
             default:
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=7675d44bb1e4428aa2c30a9b68f97822"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"https://www.arcgis.com/home/item.html?id=7675d44bb1e4428aa2c30a9b68f97822"});
                 break;
             case "Colored Pencil":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=4cf7e1fb9f254dcda9c8fbadb15cf0f8"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"https://www.arcgis.com/home/item.html?id=4cf7e1fb9f254dcda9c8fbadb15cf0f8"});
                 break;
             case "Newspaper":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=dfb04de5f3144a80bc3f9f336228d24a"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"https://www.arcgis.com/home/item.html?id=dfb04de5f3144a80bc3f9f336228d24a"});
                 break;
             case "Nova":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=75f4dfdff19e445395653121a95a85db"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"https://www.arcgis.com/home/item.html?id=75f4dfdff19e445395653121a95a85db"});
                 break;
             case "World Street Map (Night)":
-                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"http://www.arcgis.com/home/item.html?id=86f556a2d1fd468181855a35e344567f"});
+                layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"https://www.arcgis.com/home/item.html?id=86f556a2d1fd468181855a35e344567f"});
                 break;
             }
             var newBasemap = ArcGISRuntimeEnvironment.createObject("Basemap");

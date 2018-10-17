@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Window 2.3
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.3
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 ProjectGeometrySample {
     id: rootRectangle
@@ -26,22 +26,23 @@ ProjectGeometrySample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" ? 96 : 72)
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
     // add a mapView component
     MapView {
         id: mapView
         anchors.fill: parent
         objectName: "mapView"
-    }
 
-    // Declare a callout
-    Callout {
-        id: callout
-        calloutData: parent.calloutData
-        accessoryButtonHidden: true
-        autoAdjustWidth: true
-        maxWidth: 350 * scaleFactor
+        // Declare a callout
+        Callout {
+            id: callout
+            calloutData: rootRectangle.calloutData
+            accessoryButtonHidden: true
+            autoAdjustWidth: true
+            maxWidth: 350 * scaleFactor
+            leaderPosition: leaderPositionEnum.Automatic
+        }
     }
 
     onCalloutDataChanged: callout.showCallout();

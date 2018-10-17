@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 
 Rectangle {
     clip: true
@@ -60,7 +60,7 @@ Rectangle {
                 }
 
                 PictureMarkerSymbol {
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0/images/e82f744ebb069bb35b234b3fea46deae"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0/images/e82f744ebb069bb35b234b3fea46deae"
                     width: 38.0
                     height: 38.0
                 }

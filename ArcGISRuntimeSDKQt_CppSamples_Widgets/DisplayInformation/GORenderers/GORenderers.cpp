@@ -48,9 +48,7 @@ GORenderers::GORenderers(QWidget* parent) :
   createUi();
 }
 
-GORenderers::~GORenderers()
-{
-}
+GORenderers::~GORenderers() = default;
 
 void GORenderers::createUi()
 {

@@ -30,9 +30,7 @@ DisplayDrawingStatus::DisplayDrawingStatus(QQuickItem* parent):
 {
 }
 
-DisplayDrawingStatus::~DisplayDrawingStatus()
-{
-}
+DisplayDrawingStatus::~DisplayDrawingStatus() = default;
 
 void DisplayDrawingStatus::init()
 {
@@ -53,7 +51,7 @@ void DisplayDrawingStatus::componentComplete()
   m_map->setInitialViewpoint(Viewpoint(Envelope(-13639984, 4537387, -13606734, 4558866, SpatialReference::webMercator())));
 
   // create feature layer
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
   m_featureLayer = new FeatureLayer(featureTable, this);
 
   // add the layer to the map

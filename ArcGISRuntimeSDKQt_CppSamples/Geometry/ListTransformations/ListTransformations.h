@@ -57,8 +57,8 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Point m_originalPoint;
-  Esri::ArcGISRuntime::Graphic* m_originalGraphic;
-  Esri::ArcGISRuntime::Graphic* m_projectedGraphic;
+  Esri::ArcGISRuntime::Graphic* m_originalGraphic = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_projectedGraphic = nullptr;
   QList<Esri::ArcGISRuntime::DatumTransformation*> m_transformations;
   QVariantList m_transformationList;
 

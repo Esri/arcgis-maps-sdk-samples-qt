@@ -60,9 +60,7 @@ Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   Q_INIT_RESOURCE(Animate3DSymbols);
 }
 
-Animate3DSymbols::~Animate3DSymbols()
-{
-}
+Animate3DSymbols::~Animate3DSymbols() = default;
 
 void Animate3DSymbols::init()
 {
@@ -91,7 +89,7 @@ void Animate3DSymbols::componentComplete()
 
   // create a new elevation source
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-    QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+    QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   scene->baseSurface()->elevationSources()->append(elevationSource);
@@ -348,10 +346,7 @@ MissionData::MissionData():
 {
 }
 
-MissionData::~MissionData()
-{
-
-}
+MissionData::~MissionData() = default;
 
 bool MissionData::parse(const QString& dataPath)
 {

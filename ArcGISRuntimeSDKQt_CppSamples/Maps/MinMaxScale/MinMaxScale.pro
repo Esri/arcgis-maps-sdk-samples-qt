@@ -26,7 +26,7 @@ QT += opengl qml quick positioning sensors
 TEMPLATE = app
 TARGET = MinMaxScale
 
-ARCGIS_RUNTIME_VERSION = 100.3
+ARCGIS_RUNTIME_VERSION = 100.4
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

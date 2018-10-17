@@ -34,14 +34,23 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+  // Convenience RAII struct that deletes all pointers in given container.
+  struct FeatureListResultLock
+  {
+    FeatureListResultLock(const QList<FeatureEditResult*>& list) : results(list) { }
+    ~FeatureListResultLock() { qDeleteAll(results); }
+    const QList<FeatureEditResult*>& results;
+  };
+}
+
 AddFeaturesFeatureService::AddFeaturesFeatureService(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-AddFeaturesFeatureService::~AddFeaturesFeatureService()
-{
-}
+AddFeaturesFeatureService::~AddFeaturesFeatureService() = default;
 
 void AddFeaturesFeatureService::init()
 {
@@ -65,11 +74,10 @@ void AddFeaturesFeatureService::componentComplete()
   m_mapView->setMap(m_map);
 
   // create the ServiceFeatureTable
-  m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
 
   // create the FeatureLayer with the ServiceFeatureTable and add it to the Map
   m_featureLayer = new FeatureLayer(m_featureTable, this);
-  m_featureLayer->setSelectionWidth(3);
   m_map->operationalLayers()->append(m_featureLayer);
 
   connectSignals();
@@ -106,13 +114,16 @@ void AddFeaturesFeatureService::connectSignals()
   });
 
   // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
+  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](QUuid, const QList<FeatureEditResult*>& featureEditResults)
   {
-    if (featureEditResults.isEmpty())
+    // Lock is a convenience wrapper that deletes the contents of the list once we leave scope.
+    FeatureListResultLock lock(featureEditResults);
+
+    if (lock.results.isEmpty())
       return;
 
     // obtain the first item in the list
-    FeatureEditResult* featureEditResult = featureEditResults.first();
+    FeatureEditResult* featureEditResult = lock.results.first();
     // check if there were errors, and if not, log the new object ID
     if (!featureEditResult->isCompletedWithErrors())
       qDebug() << "New Object ID is:" << featureEditResult->objectId();

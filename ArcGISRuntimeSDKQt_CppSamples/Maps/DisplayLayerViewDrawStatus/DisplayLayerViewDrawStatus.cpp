@@ -36,9 +36,7 @@ DisplayLayerViewDrawStatus::DisplayLayerViewDrawStatus(QQuickItem* parent) :
 {
 }
 
-DisplayLayerViewDrawStatus::~DisplayLayerViewDrawStatus()
-{
-}
+DisplayLayerViewDrawStatus::~DisplayLayerViewDrawStatus() = default;
 
 void DisplayLayerViewDrawStatus::init()
 {
@@ -81,19 +79,19 @@ void DisplayLayerViewDrawStatus::componentComplete()
 void DisplayLayerViewDrawStatus::addLayers()
 {
   // create tiled layer using a url
-  m_tiledLayer = new ArcGISTiledLayer(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer"), this);
+  m_tiledLayer = new ArcGISTiledLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer"), this);
   // add to map
   m_map->operationalLayers()->append(m_tiledLayer);
 
   // create map image using url
-  m_imageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
+  m_imageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
   m_imageLayer->setMinScale(40000000);
   m_imageLayer->setMaxScale(2000000);
   // add to map
   m_map->operationalLayers()->append(m_imageLayer);
 
   // create feature table using url
-  m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"), this);
   // create feature layer using table
   m_featureLayer = new FeatureLayer(m_featureTable, this);
   // add feature layer to map

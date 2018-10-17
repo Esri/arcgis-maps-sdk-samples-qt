@@ -26,6 +26,7 @@
 #include "GeocodeParameters.h"
 #include "Graphic.h"
 #include <QUrl>
+#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -34,9 +35,7 @@ FindAddress::FindAddress(QQuickItem* parent) :
 {
 }
 
-FindAddress::~FindAddress()
-{
-}
+FindAddress::~FindAddress() = default;
 
 void FindAddress::init()
 {
@@ -50,6 +49,7 @@ void FindAddress::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
+  emit calloutDataChanged();
 
   // create a new basemap instance
   Basemap* basemap = Basemap::imageryWithLabels(this);
@@ -74,10 +74,10 @@ void FindAddress::componentComplete()
 
   // create locator task and parameters
   //! [FindAddress create LocatorTask]
-  m_locatorTask = new LocatorTask(QUrl("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"), this);
+  m_locatorTask = new LocatorTask(QUrl("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"), this);
   //! [FindAddress create LocatorTask]
   m_geocodeParameters.setMinScore(75);
-  m_geocodeParameters.setResultAttributeNames(QStringList() << "Place_addr" << "Match_addr");
+  m_geocodeParameters.setResultAttributeNames(QStringList { "Place_addr", "Match_addr" });
 
   connectSignals();
 }
@@ -86,7 +86,7 @@ void FindAddress::connectSignals()
 {
   // connect to geocode complete signal on the LocatorTask
   //! [FindAddress geocodeCompleted handler]
-  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, QList<GeocodeResult> geocodeResults)
+  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, const QList<GeocodeResult>& geocodeResults)
   {
     if (geocodeResults.length() > 0)
     {
@@ -108,8 +108,7 @@ void FindAddress::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // set the properties for qml
-    m_screenX = mouseEvent.x() - 110;
-    m_screenY = mouseEvent.y() - 60;
+    m_mapView->calloutData()->setLocation(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
     emit hideCallout();
 
     // call identify on the map view
@@ -117,21 +116,30 @@ void FindAddress::connectSignals()
   });
 
   // connect to the identifyGraphicsOverlayCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
+    // Delete rawIdentifyResult on leaving scope.
+    QScopedPointer<IdentifyGraphicsOverlayResult> identifyResult(rawIdentifyResult);
+
     if (!identifyResult)
       return;
 
-    auto graphics = identifyResult->graphics();
+    const QList<Graphic*> graphics = identifyResult->graphics();
     if (graphics.length() > 0)
     {
-      m_calloutText = graphics.at(0)->attributes()->attributeValue("Match_addr").toString();
-      m_calloutDetailedText = graphics.at(0)->attributes()->attributeValue("Place_addr").toString();
-      emit showCallout(m_screenX, m_screenY, m_calloutText, m_calloutDetailedText);
+      const AttributeListModel* attributes = graphics.at(0)->attributes();
+      const QString calloutText = attributes->attributeValue("Match_addr").toString();
+      const QString calloutDetailedText = attributes->attributeValue("Place_addr").toString();
+      m_mapView->calloutData()->setTitle(calloutText);
+      m_mapView->calloutData()->setDetail(calloutDetailedText);
+      emit showCallout();
     }
-
-    identifyResult->deleteLater();
   });
+}
+
+CalloutData* FindAddress::calloutData() const
+{
+  return m_mapView ? m_mapView->calloutData() : nullptr;
 }
 
 void FindAddress::geocodeAddress(const QString& address)

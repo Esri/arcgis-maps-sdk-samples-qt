@@ -16,4 +16,4 @@ Use the mousewheel or pinch gesture to zoom in and out of the map. Notice that t
  - Map.maxScale
 
 ## Tags
-Maps, 2D, scale, minScale, maxScale
+Maps, 2D, scale, minScale, maxScale, zoom

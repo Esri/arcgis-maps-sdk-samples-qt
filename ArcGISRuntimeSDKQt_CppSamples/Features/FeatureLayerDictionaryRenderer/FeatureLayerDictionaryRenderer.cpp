@@ -34,9 +34,7 @@ FeatureLayerDictionaryRenderer::FeatureLayerDictionaryRenderer(QQuickItem* paren
 { 
 }
 
-FeatureLayerDictionaryRenderer::~FeatureLayerDictionaryRenderer()
-{ 
-}
+FeatureLayerDictionaryRenderer::~FeatureLayerDictionaryRenderer() = default;
 
 void FeatureLayerDictionaryRenderer::init()
 {
@@ -90,7 +88,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
       DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle(specType, stylePath, this);
       //! [Create Dictionary Symbol Style Cpp]
 
-      for (const auto& table : m_geodatabase->geodatabaseFeatureTables())
+      for (GeodatabaseFeatureTable* table : m_geodatabase->geodatabaseFeatureTables())
       {
         //! [Apply Dictionary Renderer Feature Layer Cpp]
         // Create a layer and set the feature table

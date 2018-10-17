@@ -27,9 +27,7 @@ DisplayMap::DisplayMap(QQuickItem* parent) :
 {
 }
 
-DisplayMap::~DisplayMap()
-{
-}
+DisplayMap::~DisplayMap() = default;
 
 void DisplayMap::init()
 {

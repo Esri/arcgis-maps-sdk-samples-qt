@@ -21,7 +21,6 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "OrbitLocationCameraController.h"
 #include "Point.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleFillSymbol.h"
@@ -79,32 +78,35 @@ void FeatureLayerExtrusion::componentComplete()
           this));
   scene->setBaseSurface(surface);
   scene->operationalLayers()->append(m_featureLayer);
+
+  // set initial viewpoint
+  const double distance = 12940924;
+  const Point lookAtPoint(-99.659448, 20.513652, distance, SpatialReference::wgs84());
+  const Camera camera(lookAtPoint, 0, 15, 0);
+  const Viewpoint initialVp(lookAtPoint, distance, camera);
+  scene->setInitialViewpoint(initialVp);
+
+  // apply initial extrusion
+  totalPopulation();
+
   m_sceneView->setArcGISScene(scene);
-
-  const Point m_lookAtPoint = Point(-10974490, 4814376, 0, SpatialReference::webMercator());
-  const double distance = 20000000;
-  OrbitLocationCameraController* m_orbitController = new OrbitLocationCameraController(m_lookAtPoint, distance, this);
-
-  m_sceneView->setCameraController(m_orbitController);
 }
 
 void FeatureLayerExtrusion::popDensity()
 {
-  if (m_showTotalPopulation)
-  {
-    // divide total population by 10 to make data legible
-    RendererSceneProperties props = m_renderer->sceneProperties();
-    props.setExtrusionExpression("[POP2007] / 10");
-    m_renderer->setSceneProperties(props);
-    m_showTotalPopulation = false;
-  } 
-  else 
-  {
-    // multiply population density by 5000 to make data legible
-    RendererSceneProperties props = m_renderer->sceneProperties();
-    props.setExtrusionExpression("([POP07_SQMI] * 5000) + 10000");
-    m_renderer->setSceneProperties(props);
-    m_showTotalPopulation = true;
-  }
+  // multiply population density by 5000 to make data legible
+  RendererSceneProperties props = m_renderer->sceneProperties();
+  props.setExtrusionExpression("([POP07_SQMI] * 5000) + 100000");
+  m_renderer->setSceneProperties(props);
 }
+
+void FeatureLayerExtrusion::totalPopulation()
+{
+  // divide total population by 10 to make data legible
+  RendererSceneProperties props = m_renderer->sceneProperties();
+  props.setExtrusionExpression("[POP2007] / 10");
+  m_renderer->setSceneProperties(props);
+}
+
+
 

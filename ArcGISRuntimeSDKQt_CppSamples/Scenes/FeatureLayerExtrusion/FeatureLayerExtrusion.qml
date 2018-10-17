@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
+import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 FeatureLayerExtrusionSample {
     id: rootRectangle
@@ -25,7 +25,7 @@ FeatureLayerExtrusionSample {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
     SceneView {
         id: sceneView
@@ -33,23 +33,22 @@ FeatureLayerExtrusionSample {
         anchors.fill: parent
 
 
-        // button to populate from service
-          Button {
-              anchors {
-                  horizontalCenter: parent.horizontalCenter
-                  bottom: sceneView.attributionTop
-                  margins: 10 * scaleFactor
-              }
-              id: popButton
-              text: "TOTAL POPULATION"
-              onClicked: {
-                  if (text === "TOTAL POPULATION")
-                      text = qsTr("POPULATION DENSITY");
-                  else
-                      text = qsTr("TOTAL POPULATION");
-                  popDensity();
-              }
-          }
+        // combo box to update the extrusion
+        ComboBox {
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 10 * scaleFactor
+            }
+            width: 200 * scaleFactor
+            model: ["TOTAL POPULATION", "POPULATION DENSITY"]
 
+            onCurrentTextChanged: {
+                if (currentText === "TOTAL POPULATION")
+                    totalPopulation();
+                else
+                    popDensity();
+            }
+        }
     }
 }

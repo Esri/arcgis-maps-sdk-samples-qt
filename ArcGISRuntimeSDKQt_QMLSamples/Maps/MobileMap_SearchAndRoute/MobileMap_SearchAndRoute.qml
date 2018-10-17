@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.3
-import Esri.ArcGISRuntime.Toolkit.Controls 100.3
+import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
     clip: true
@@ -56,6 +56,7 @@ Rectangle {
             calloutData: parent.calloutData
             screenOffsetY: -19 * scaleFactor
             accessoryButtonHidden: true
+            leaderPosition: leaderPositionEnum.Automatic
         }
 
         // runs when app is geocoding

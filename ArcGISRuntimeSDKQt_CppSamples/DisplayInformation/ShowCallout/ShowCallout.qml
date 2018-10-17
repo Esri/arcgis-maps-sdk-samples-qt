@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.3
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 ShowCalloutSample {
     id: showCalloutSample
@@ -36,6 +36,7 @@ ShowCalloutSample {
             id: callout
             calloutData: showCalloutSample.calloutData // bind to the property that is exposed
             accessoryButtonHidden: true
+            leaderPosition: leaderPositionEnum.Automatic
         }
         //! [set callout data]
     }

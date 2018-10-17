@@ -15,9 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 100.3
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
     id: rootRectangle
@@ -44,6 +44,16 @@ Rectangle {
                     spatialReference: SpatialReference { wkid: 3857 }
                 }
             }
+        }
+
+        // Declare a callout
+        Callout {
+            id: callout
+            calloutData: parent.calloutData
+            accessoryButtonHidden: true
+            autoAdjustWidth: true
+            maxWidth: 350 * scaleFactor
+            leaderPosition: leaderPositionEnum.Automatic
         }
 
         // create a graphics to show the input location
@@ -89,14 +99,5 @@ Rectangle {
             // show the callout
             callout.showCallout();
         }
-    }
-
-    // Declare a callout
-    Callout {
-        id: callout
-        calloutData: mapView.calloutData
-        accessoryButtonHidden: true
-        autoAdjustWidth: true
-        maxWidth: 350 * scaleFactor
     }
 }

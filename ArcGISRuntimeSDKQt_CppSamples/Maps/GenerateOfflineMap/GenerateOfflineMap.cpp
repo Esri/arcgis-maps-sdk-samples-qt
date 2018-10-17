@@ -59,7 +59,7 @@ void GenerateOfflineMap::componentComplete()
   m_map = new Map(m_portalItem, this);
 
   // Update property once map is done loading
-  connect(m_map, &Map::doneLoading, this, [this](const Error& e)
+  connect(m_map, &Map::doneLoading, this, [this](Error e)
   {
     if (!e.isEmpty())
       return;
@@ -75,7 +75,7 @@ void GenerateOfflineMap::componentComplete()
   m_offlineMapTask = new OfflineMapTask(m_portalItem, this);
 
   // connect to the error signal
-  connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [this](Error e)
+  connect(m_offlineMapTask, &OfflineMapTask::errorOccurred, this, [](Error e)
   {
     if (e.isEmpty())
       return;
@@ -125,10 +125,10 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
           if (generateJob->result()->hasErrors())
           {
             QString layerErrors = "";
-            for (Layer* layer : generateJob->result()->layerErrors().keys())
+            const QMap<Layer*, Error>& layerErrorsMap = generateJob->result()->layerErrors();
+            for (auto it = layerErrorsMap.cbegin(); it != layerErrorsMap.cend(); ++it)
             {
-              Error error = generateJob->result()->layerErrors().value(layer);
-              layerErrors += layer->name() + ": " + error.message() + "\n";
+              layerErrors += it.key()->name() + ": " + it.value().message() + "\n";
             }
             emit showLayerErrors(layerErrors);
           }
@@ -150,7 +150,7 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
       });
 
       // connect to the error signal
-      connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [this](Error e)
+      connect(generateJob, &GenerateOfflineMapJob::errorOccurred, this, [](Error e)
       {
         if (e.isEmpty())
           return;

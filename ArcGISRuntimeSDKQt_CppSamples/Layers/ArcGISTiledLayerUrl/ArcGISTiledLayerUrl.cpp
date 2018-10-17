@@ -29,9 +29,7 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QQuickItem* parent) :
 {
 }
 
-ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
-{
-}
+ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl() = default;
 
 void ArcGISTiledLayerUrl::init()
 {
@@ -48,7 +46,7 @@ void ArcGISTiledLayerUrl::componentComplete()
 
   //! [display tiled layer from tiled map service]
   // create a new tiled layer
-  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"), this);
+  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"), this);
   // create a new basemap instance with the tiled layer
   Basemap* basemap = new Basemap(tiledLayer, this);
   // create a new map instance
@@ -57,4 +55,3 @@ void ArcGISTiledLayerUrl::componentComplete()
   m_mapView->setMap(m_map);
   //! [display tiled layer from tiled map service]
 }
-

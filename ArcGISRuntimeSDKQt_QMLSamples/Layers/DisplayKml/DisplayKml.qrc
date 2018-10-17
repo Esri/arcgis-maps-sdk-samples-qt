@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/DisplayKml">
+        <file alias="sample.json">DisplayKml.json</file>        
+        <file>DisplayKml.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

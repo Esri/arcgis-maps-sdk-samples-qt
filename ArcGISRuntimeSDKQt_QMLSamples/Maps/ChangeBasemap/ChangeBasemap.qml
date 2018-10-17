@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -67,10 +67,12 @@ Rectangle {
             case "Topographic":
                 map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapTopographic");
                 break;
+            case "Streets":
+                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreets");
+                break;
             case "Streets (Vector)":
                 map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreetsVector");
                 break;
-
             case "Streets - Night (Vector)":
                 map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreetsNightVector");
                 break;

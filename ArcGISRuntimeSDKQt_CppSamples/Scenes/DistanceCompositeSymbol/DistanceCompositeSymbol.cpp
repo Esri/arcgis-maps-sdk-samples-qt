@@ -24,6 +24,7 @@
 #include "SimpleMarkerSymbol.h"
 #include "SimpleMarkerSceneSymbol.h"
 #include "ModelSceneSymbol.h"
+#include "OrbitGeoElementCameraController.h"
 #include <QQmlProperty>
 
 using namespace Esri::ArcGISRuntime;
@@ -35,9 +36,7 @@ DistanceCompositeSymbol::DistanceCompositeSymbol(QQuickItem* parent) :
 {
 }
 
-DistanceCompositeSymbol::~DistanceCompositeSymbol()
-{
-}
+DistanceCompositeSymbol::~DistanceCompositeSymbol() = default;
 
 void DistanceCompositeSymbol::init()
 {
@@ -63,13 +62,12 @@ void DistanceCompositeSymbol::componentComplete()
   m_sceneView->setArcGISScene(m_scene);
 
   // create a new elevation source
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
   // create a camera
-  Point point(-2.708471, 56.096575, 5000, m_sceneView->spatialReference());
-  Camera camera(point, 1500, 0, 80.0, 0);
+  const Point point(-2.708471, 56.096575, 5000, m_sceneView->spatialReference());
 
   // create a new graphics overlay and add it to the sceneview
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
@@ -110,14 +108,18 @@ void DistanceCompositeSymbol::componentComplete()
 
       // create a graphic using the composite symbol
       Graphic* graphic = new Graphic(point, compositeSceneSymbol, this);
+
       // add the graphic to the graphics overlay
       graphicsOverlay->graphics()->append(graphic);
+
+      // add an orbit camera controller to lock the camera to the graphic
+      OrbitGeoElementCameraController* cameraController = new OrbitGeoElementCameraController(graphic, 200, this);
+      cameraController->setCameraPitchOffset(80);
+      cameraController->setCameraHeadingOffset(-30);
+      m_sceneView->setCameraController(cameraController);
     }
   });
 
   mms->load();
-
-  // set the viewpoint
-  m_sceneView->setViewpointCameraAndWait(camera);
 }
 

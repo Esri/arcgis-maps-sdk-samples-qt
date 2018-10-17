@@ -33,9 +33,7 @@ ChangeSublayerVisibility::ChangeSublayerVisibility(QQuickItem* parent) :
 {
 }
 
-ChangeSublayerVisibility::~ChangeSublayerVisibility()
-{
-}
+ChangeSublayerVisibility::~ChangeSublayerVisibility() = default;
 
 void ChangeSublayerVisibility::init()
 {
@@ -56,7 +54,7 @@ void ChangeSublayerVisibility::componentComplete()
   m_map->setInitialViewpoint(Viewpoint(Point(-11e6, 6e6, SpatialReference(102100)), 9e7));
 
   // add the map image layer
-  m_mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"), this);
+  m_mapImageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"), this);
   m_map->operationalLayers()->append(m_mapImageLayer);
 
   // set map on the map view

@@ -18,9 +18,10 @@ import QtQuick 2.6
 import Esri.Samples 1.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 100.3
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 OfflineGeocodeSample {
     id: offlineGeocodeSample
@@ -29,7 +30,7 @@ OfflineGeocodeSample {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property string dataPath: System.resolvedPath(System.userHomePath) + "/ArcGIS/Runtime/Data/"
 
     // add a mapView component
@@ -39,6 +40,7 @@ OfflineGeocodeSample {
 
         Callout {
             id: callout
+            leaderPosition: leaderPositionEnum.Automatic
             calloutData: offlineGeocodeSample.calloutData
             screenOffsetY: -19 * scaleFactor
             accessoryButtonHidden: true

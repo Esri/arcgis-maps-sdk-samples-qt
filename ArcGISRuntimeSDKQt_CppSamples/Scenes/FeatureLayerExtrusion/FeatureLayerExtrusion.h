@@ -41,12 +41,13 @@ class FeatureLayerExtrusion : public QQuickItem
   Q_OBJECT
 
 public:
-  Q_INVOKABLE void popDensity();
   explicit FeatureLayerExtrusion(QQuickItem* parent = nullptr);
   ~FeatureLayerExtrusion() = default;
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
+  Q_INVOKABLE void popDensity();
+  Q_INVOKABLE void totalPopulation();
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;

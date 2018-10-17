@@ -17,18 +17,19 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
     width: 800
     height: 600
+    id: root
 
     property real scaleFactor: System.displayScaleFactor
     property string calloutText
     property string calloutDetailText
-    property double mousePointX
-    property double mousePointY
+    property Point calloutLocation;
 
     // Create MapView that contains a Map with the Imagery with Labels Basemap
     MapView {
@@ -62,24 +63,40 @@ Rectangle {
                     calloutDetailText = identifyGraphicsOverlayResult.graphics[0].attributes.attributeValue("Place_addr");
 
                     // show the callout
-                    callout.x = mousePointX - (callout.width / 2);
-                    callout.y = mousePointY - (60 * scaleFactor);
-                    callout.visible = true;
+                    callout.showCallout();
                 }
             }
         }
 
         // perform identify operation on mapview
         onMouseClicked: {
-            callout.visible = false;
-            mousePointX = mouse.x;
-            mousePointY = mouse.y;
+            if (callout.visible)
+                callout.dismiss();
+            calloutLocation = mouse.mapPoint;
             mapView.identifyGraphicsOverlay(graphicsOverlay, mouse.x, mouse.y, 2, false);
         }
 
         // hide callout after navigation
         onViewpointChanged: {
-            callout.visible = false;
+            if (callout.visible)
+                callout.dismiss();
+        }
+
+        calloutData {
+           location:  calloutLocation
+           title: calloutText
+           detail: calloutDetailText
+        }
+
+        // map callout window
+        Callout {
+            id: callout
+            borderWidth: 1 * scaleFactor
+            calloutData: parent.calloutData
+            borderColor: "lightgrey"
+            accessoryButtonHidden: true
+            maxWidth: root.width * 0.75
+            leaderPosition: leaderPositionEnum.Automatic
         }
     }
 
@@ -87,7 +104,7 @@ Rectangle {
     // Create a locator task using the World Geocoding Service
     LocatorTask {
         id: locatorTask
-        url: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+        url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
 
         // handle the result once the geocode status is complete
         onGeocodeStatusChanged: {
@@ -111,46 +128,6 @@ Rectangle {
         resultAttributeNames: ["Place_addr", "Match_addr"]
     }
     //! [FindAddress create LocatorTask]
-
-    // map callout window
-    Rectangle {
-        id: callout
-        width: 225 * scaleFactor
-        height: 40 * scaleFactor
-        radius: 5
-        border {
-            color: "lightgrey"
-            width: .5 * scaleFactor
-        }
-        clip: true
-        visible: false
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
-        }
-
-        Column {
-            anchors {
-                fill: parent
-                margins: 5 * scaleFactor
-            }
-            spacing: 2
-
-            Text {
-                width: parent.width
-                text: calloutText
-                font.pixelSize: 14 * scaleFactor
-                elide: Text.ElideRight
-            }
-            Text {
-                width: parent.width
-                text: calloutDetailText
-                font.pixelSize: 10 * scaleFactor
-                elide: Text.ElideRight
-            }
-        }
-    }
 
     // search bar for geocoding
     Column {
@@ -236,7 +213,8 @@ Rectangle {
                         anchors.fill: parent
                         onClicked: {
                             textField.text = "";
-                            callout.visible = false;
+                            if (callout.visible)
+                                callout.dismiss();
                             graphicsOverlay.graphics.clear();
                         }
                     }

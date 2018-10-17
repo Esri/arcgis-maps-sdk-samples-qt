@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 
 Rectangle {
     width: 800
@@ -36,7 +36,7 @@ Rectangle {
 
             FeatureLayer {
                 ServiceFeatureTable {
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/FeatureServer/9"
                 }
             }
         }

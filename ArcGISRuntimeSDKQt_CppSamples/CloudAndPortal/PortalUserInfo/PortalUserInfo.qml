@@ -15,10 +15,10 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.3
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
 
 PortalUserInfoSample {
     id: rootRectangle
@@ -27,7 +27,7 @@ PortalUserInfoSample {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property double scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
     BusyIndicator {
         id: loadingIndicator

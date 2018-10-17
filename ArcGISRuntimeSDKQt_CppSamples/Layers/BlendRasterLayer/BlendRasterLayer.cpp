@@ -31,9 +31,7 @@ BlendRasterLayer::BlendRasterLayer(QQuickItem* parent /* = nullptr */):
 {
 }
 
-BlendRasterLayer::~BlendRasterLayer()
-{
-}
+BlendRasterLayer::~BlendRasterLayer() = default;
 
 void BlendRasterLayer::init()
 {

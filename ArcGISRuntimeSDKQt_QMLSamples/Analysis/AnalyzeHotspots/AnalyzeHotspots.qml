@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -45,7 +45,7 @@ Rectangle {
     // Declare the GeoprocessingTask and set the URL
     GeoprocessingTask {
         id: hotspotTask
-        url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/GPServer/911%20Calls%20Hotspot"
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/GPServer/911%20Calls%20Hotspot"
 
         onErrorChanged: {
             if (error)

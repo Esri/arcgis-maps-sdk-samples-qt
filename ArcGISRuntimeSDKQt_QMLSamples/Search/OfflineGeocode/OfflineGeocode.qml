@@ -19,8 +19,8 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Dialogs 1.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.3
-import Esri.ArcGISRuntime.Toolkit.Controls 100.3
+import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
     clip: true
@@ -98,6 +98,7 @@ Rectangle {
             calloutData: parent.calloutData
             screenOffsetY: (pictureMarker.height / 2) * -1
             accessoryButtonHidden: true
+            leaderPosition: leaderPositionEnum.Automatic
         }
 
         // dismiss suggestions and no results notification on mouse press

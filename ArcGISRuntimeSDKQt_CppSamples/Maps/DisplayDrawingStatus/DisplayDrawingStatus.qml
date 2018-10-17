@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
+import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 DisplayDrawingStatusSample {
     id: displayDrawingStatusSample
@@ -26,7 +26,7 @@ DisplayDrawingStatusSample {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
     // add a mapView component
     MapView {

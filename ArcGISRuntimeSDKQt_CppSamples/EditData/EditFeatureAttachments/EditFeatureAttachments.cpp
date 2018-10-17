@@ -36,14 +36,23 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+  // Convenience RAII struct that deletes all pointers in given container.
+  struct FeatureEditListResultLock
+  {
+    FeatureEditListResultLock(const QList<FeatureEditResult*>& list) : results(list) { }
+    ~FeatureEditListResultLock() { qDeleteAll(results); }
+    const QList<FeatureEditResult*>& results;
+  };
+}
+
 EditFeatureAttachments::EditFeatureAttachments(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-EditFeatureAttachments::~EditFeatureAttachments()
-{
-}
+EditFeatureAttachments::~EditFeatureAttachments() = default;
 
 void EditFeatureAttachments::init()
 {
@@ -59,6 +68,7 @@ void EditFeatureAttachments::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  emit calloutDataChanged();
 
   // create a Map by passing in the Basemap
   m_map = new Map(Basemap::streets(this), this);
@@ -68,11 +78,10 @@ void EditFeatureAttachments::componentComplete()
   m_mapView->setMap(m_map);
 
   // create the ServiceFeatureTable
-  m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
 
   // create the FeatureLayer with the ServiceFeatureTable and add it to the Map
   m_featureLayer = new FeatureLayer(m_featureTable, this);
-  m_featureLayer->setSelectionWidth(3);
   m_map->operationalLayers()->append(m_featureLayer);
 
   connectSignals();
@@ -87,10 +96,6 @@ void EditFeatureAttachments::connectSignals()
     m_featureLayer->clearSelection();
 
     // set the properties for qml
-    m_screenX = mouseEvent.x();
-    emit screenXChanged();
-    m_screenY = mouseEvent.y();
-    emit screenYChanged();
     emit hideWindow();
 
     // call identify on the map view
@@ -136,17 +141,22 @@ void EditFeatureAttachments::connectSignals()
 
       // set selected feature and attachment model members
       m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-      m_featureType = m_selectedFeature->attributes()->attributeValue("typdamage").toString();
-      emit featureTypeChanged();
+      // Don't delete selected feature when parent featureQueryResult is deleted.
+      m_selectedFeature->setParent(this);
+
+      const QString featureType = m_selectedFeature->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
+      m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
+      m_mapView->calloutData()->setTitle(QString("<b>%1</b>").arg(featureType));
+
       emit featureSelected();
       emit attachmentModelChanged();
 
       // get the number of attachments
       connect(m_selectedFeature->attachments(), &AttachmentListModel::fetchAttachmentsCompleted,
-              this, [this](QUuid, const QList<Attachment*>&)
+              this, [this](QUuid, const QList<Attachment*>& attachments)
       {
-        m_attachmentCount = m_selectedFeature->attachments()->rowCount();
-        emit attachmentCountChanged();
+        m_mapView->calloutData()->setDetail(QString("Number of attachments: %1").arg(attachments.size()));
+        m_mapView->calloutData()->setVisible(true); // Resizes the calloutData after details has been set.
       });
     }
   });
@@ -155,10 +165,13 @@ void EditFeatureAttachments::connectSignals()
   connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted,
           this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
   {
-    if (featureEditResults.length() > 0)
+    // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
+    FeatureEditListResultLock lock(featureEditResults);
+
+    if (lock.results.length() > 0)
     {
       // obtain the first item in the list
-      FeatureEditResult* featureEditResult = featureEditResults.first();
+      FeatureEditResult* featureEditResult = lock.results.first();
       // check if there were errors
       if (!featureEditResult->isCompletedWithErrors())
       {
@@ -175,21 +188,6 @@ void EditFeatureAttachments::connectSignals()
       }
     }
   });
-}
-
-int EditFeatureAttachments::screenX() const
-{
-  return m_screenX;
-}
-
-int EditFeatureAttachments::screenY() const
-{
-  return m_screenY;
-}
-
-QString EditFeatureAttachments::featureType() const
-{
-  return m_featureType;
 }
 
 QAbstractListModel* EditFeatureAttachments::attachmentModel() const
@@ -231,6 +229,7 @@ void EditFeatureAttachments::deleteAttachment(int index)
 
   if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)
   {
+    qDebug() << "Attachments size: " << m_selectedFeature->attachments()->rowCount();
     m_selectedFeature->attachments()->deleteAttachment(index);
   }
   else
@@ -248,7 +247,7 @@ void EditFeatureAttachments::deleteAttachment(int index)
   }
 }
 
-int EditFeatureAttachments::attachmentCount() const
+CalloutData* EditFeatureAttachments::calloutData() const
 {
-  return m_attachmentCount;
+  return m_mapView ? m_mapView->calloutData() : nullptr;
 }

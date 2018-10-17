@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
+import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 FormatCoordinatesSample {
     id: formatCoordinates
@@ -25,7 +25,7 @@ FormatCoordinatesSample {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property int labelWidth: 100 * scaleFactor
     property int coordinateTextWidth: 200 * scaleFactor
     property int fontPixelSize: 14 * scaleFactor
@@ -123,7 +123,7 @@ FormatCoordinatesSample {
             }
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
-            text: coordinatesInDD
+            text: coordinatesInDD.length === 0 ? "invalid point" : coordinatesInDD
             onAccepted: {
                 handleTextUpdate(strDecimalDegrees, text);
             }
@@ -137,7 +137,7 @@ FormatCoordinatesSample {
             }
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
-            text: coordinatesInDMS
+            text: coordinatesInDMS.length === 0 ? "invalid point" : coordinatesInDMS
             onAccepted: {
                 handleTextUpdate(strDegreesMinutesSeconds, text);
             }
@@ -151,7 +151,7 @@ FormatCoordinatesSample {
             }
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
-            text: coordinatesInUtm
+            text: coordinatesInUtm.length === 0 ? "invalid point" : coordinatesInUtm
             onAccepted: {
                 handleTextUpdate(strUtm, text);
             }
@@ -165,7 +165,7 @@ FormatCoordinatesSample {
             }
             width: coordinateTextWidth
             font.pixelSize: fontPixelSize
-            text: coordinatesInUsng
+            text: coordinatesInUsng.length === 0 ? "invalid point" : coordinatesInUsng
             onAccepted: {
                 handleTextUpdate(strUsng, text);
             }

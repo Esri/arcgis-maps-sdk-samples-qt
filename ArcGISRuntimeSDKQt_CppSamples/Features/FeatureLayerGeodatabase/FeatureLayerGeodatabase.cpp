@@ -36,9 +36,7 @@ FeatureLayerGeodatabase::FeatureLayerGeodatabase(QQuickItem* parent) :
 {
 }
 
-FeatureLayerGeodatabase::~FeatureLayerGeodatabase()
-{
-}
+FeatureLayerGeodatabase::~FeatureLayerGeodatabase() = default;
 
 void FeatureLayerGeodatabase::init()
 {
@@ -46,7 +44,7 @@ void FeatureLayerGeodatabase::init()
   qmlRegisterType<FeatureLayerGeodatabase>("Esri.Samples", 1, 0, "FeatureLayerGeodatabaseSample");
 }
 
-void FeatureLayerGeodatabase::logError(const Esri::ArcGISRuntime::Error& error)
+void FeatureLayerGeodatabase::logError(Esri::ArcGISRuntime::Error error)
 {
   setErrorMessage(QString("%1: %2").arg(error.message(), error.additionalMessage()));
 }
@@ -104,10 +102,10 @@ void FeatureLayerGeodatabase::componentComplete()
     {
       //! [FeatureLayer Geodatabase create feature layer]
       // access the feature table by name
-      auto featureTable = m_geodatabase->geodatabaseFeatureTable("Trailheads");
+      GeodatabaseFeatureTable* featureTable = m_geodatabase->geodatabaseFeatureTable("Trailheads");
 
       // create a feature layer from the feature table
-      auto featureLayer = new FeatureLayer(featureTable, this);
+      FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
       //! [FeatureLayer Geodatabase create feature layer]
 
       //! [FeatureLayer Geodatabase add to map]

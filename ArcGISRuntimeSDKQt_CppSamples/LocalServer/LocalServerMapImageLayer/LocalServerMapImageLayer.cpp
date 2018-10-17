@@ -33,9 +33,7 @@ LocalServerMapImageLayer::LocalServerMapImageLayer(QQuickItem* parent) :
 {
 }
 
-LocalServerMapImageLayer::~LocalServerMapImageLayer()
-{
-}
+LocalServerMapImageLayer::~LocalServerMapImageLayer() = default;
 
 void LocalServerMapImageLayer::init()
 {

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -62,7 +62,7 @@ Rectangle {
 
             SimpleRenderer {
                 PictureMarkerSymbol {
-                    url: "http://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"
+                    url: "https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png"
                     height: 30
                     width: 30
                 }
@@ -170,7 +170,7 @@ Rectangle {
 
     ClosestFacilityTask {
         id: task
-        url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"
+        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"
 
         onLoadStatusChanged: {
             if (loadStatus !== Enums.LoadStatusLoaded)

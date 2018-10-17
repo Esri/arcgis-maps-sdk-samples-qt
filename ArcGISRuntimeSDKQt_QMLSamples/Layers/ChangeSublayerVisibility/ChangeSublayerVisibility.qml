@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -36,7 +36,7 @@ Rectangle {
             // Nest an ArcGISMapImage Layer in the Map to add it as an operational layer
             ArcGISMapImageLayer {
                 id: mapImageLayer
-                url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer"
             }
 
             initialViewpoint: ViewpointCenter {

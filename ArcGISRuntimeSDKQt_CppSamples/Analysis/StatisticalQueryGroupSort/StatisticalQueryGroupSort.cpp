@@ -28,6 +28,7 @@
 #include <QStringList>
 #include <QVariantList>
 #include <QList>
+#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -80,16 +81,17 @@ void StatisticalQueryGroupSort::connectSignals()
     if (error.isEmpty())
       return;
 
+    m_resultsModel->clear();
     addResultToModel("", QString("Error. %1").arg(error.message()));
   });
 
-  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* result)
+  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* rawResult)
   {
-    if (!result)
-    {
-      addResultToModel("", "An unknown error occurred.");
-      return;
-    }
+    // Delete rawResult when we leave local scope.
+    QScopedPointer<StatisticsQueryResult> result(rawResult);
+
+    if (!result)    
+      return;    
 
     // clear previous results
     m_resultsModel->clear();
@@ -99,26 +101,25 @@ void StatisticalQueryGroupSort::connectSignals()
     while (iter.hasNext())
     {
       // get the statistic record
-      StatisticRecord* record = iter.next(result);
+      StatisticRecord* record = iter.next(result.data());
 
       // get the group string
-      QString sectionString;
-      for (auto group : record->group().keys())
+      QStringList sectionStrings;
+      const QVariantMap& groupsMap = record->group();
+      for (auto it = groupsMap.cbegin(); it != groupsMap.cend(); ++it)
       {
-        if (sectionString.length() > 0)
-          sectionString += ",";
-        sectionString += QString("\"%1\":\"%2\"").arg(group, record->group().value(group).toString());
+        sectionStrings << QString("\"%1\":\"%2\"").arg(it.key(), it.value().toString());
       }
+      const QString sectionString = sectionStrings.join(',');
 
       // obtain the statistics
-      for (auto stats : record->statistics().keys())
+      const QVariantMap& statsMap = record->statistics();
+      for (auto it = statsMap.cbegin(); it != statsMap.cend(); ++it)
       {
-        QString statString = QString("%1: %2").arg(stats, record->statistics().value(stats).toString());
+        QString statString = QString("%1: %2").arg(it.key(), it.value().toString());
         addResultToModel(sectionString, statString);
       }
     }
-
-    delete result;
   });
 }
 

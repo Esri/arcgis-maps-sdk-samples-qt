@@ -32,7 +32,7 @@ SetMapSpatialReference::SetMapSpatialReference(QWidget* parent) :
     m_map = new Map(SpatialReference(54024), this);
 
     // create the URL pointing to the map image layer
-    QUrl imageLayerUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer");
+    QUrl imageLayerUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer");
 
     // construct the ArcGISMapImageLayer using the URL
     m_imageLayer = new ArcGISMapImageLayer(imageLayerUrl, this);
@@ -52,6 +52,4 @@ SetMapSpatialReference::SetMapSpatialReference(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-SetMapSpatialReference::~SetMapSpatialReference()
-{
-}
+SetMapSpatialReference::~SetMapSpatialReference() = default;

@@ -40,9 +40,7 @@ Unique_Value_Renderer::Unique_Value_Renderer(QQuickItem* parent) :
 {
 }
 
-Unique_Value_Renderer::~Unique_Value_Renderer()
-{
-}
+Unique_Value_Renderer::~Unique_Value_Renderer() = default;
 
 void Unique_Value_Renderer::init()
 {
@@ -63,7 +61,7 @@ void Unique_Value_Renderer::componentComplete()
   m_map = new Map(basemap, this);
 
   // create featureLayer with URL
-  m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"), this);
   m_featureLayer = new FeatureLayer(m_featureTable, this);
   m_map->operationalLayers()->append(m_featureLayer);
 

@@ -30,6 +30,7 @@
 #include "Polygon.h"
 #include "GeometryEngine.h"
 #include <QStringList>
+#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -51,6 +52,7 @@ void SpatialRelationships::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
+  m_mapView->setSelectionProperties(SelectionProperties(QColor(Qt::yellow)));
 
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::topographic(this), this);
@@ -60,7 +62,6 @@ void SpatialRelationships::componentComplete()
 
   // Create GraphicsOverlay
   m_graphicsOverlay = new GraphicsOverlay(this);
-  m_graphicsOverlay->setSelectionColor(QColor("yellow"));
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
   // Add Graphics
@@ -134,14 +135,17 @@ void SpatialRelationships::addPointGraphic()
 
 void SpatialRelationships::connectSignals()
 {
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent mouseEvent)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
     // identify graphics
     m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, mouseEvent.x(), mouseEvent.y(), 1.0 /*tolerance*/, false /*returnPopupsOnly*/);
   });
 
-  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* result)
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawResult)
   {
+    // Delete rawReslt when we leave scope.
+    QScopedPointer<IdentifyGraphicsOverlayResult> result(rawResult);
+    
     const QList<Graphic*> identifiedGraphics = result->graphics();
     if (identifiedGraphics.isEmpty())
       return;
@@ -181,8 +185,6 @@ void SpatialRelationships::connectSignals()
     }
 
     emit relationshipsChanged();
-
-    delete result;
   });
 }
 

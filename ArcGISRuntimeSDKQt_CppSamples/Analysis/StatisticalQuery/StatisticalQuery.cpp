@@ -64,9 +64,23 @@ void StatisticalQuery::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  // connect to queryStatisticsCompleted
-  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* result)
+  connect(m_featureTable, &ServiceFeatureTable::errorOccurred, [this](Error e)
   {
+    if (e.isEmpty())
+      return;
+
+    emit showStatistics(e.message());
+  });
+
+  // connect to queryStatisticsCompleted
+  connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* rawResult)
+  {
+    if (!rawResult)
+      return;
+
+    // Delete rawResult when we leave local scope.
+    QScopedPointer<StatisticsQueryResult> result(rawResult);
+
     // Iterate through the results
     QObject parent;
     QString resultText;
@@ -74,9 +88,10 @@ void StatisticalQuery::componentComplete()
     while (iter.hasNext())
     {
       StatisticRecord* record = iter.next(&parent);
-      for (auto key : record->statistics().keys())
+      const QVariantMap& statsMap = record->statistics();
+      for (auto it = statsMap.cbegin(); it != statsMap.cend(); ++it)
       {
-        resultText += QString("%1: %2\n").arg(key, record->statistics().value(key).toString());
+        resultText += QString("%1: %2\n").arg(it.key(), it.value().toString());
       }
     }
 

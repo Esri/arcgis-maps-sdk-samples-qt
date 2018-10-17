@@ -30,6 +30,7 @@
 #include <QString>
 #include <QUrl>
 #include <QMouseEvent>
+#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -38,9 +39,7 @@ FeatureLayerSelection::FeatureLayerSelection(QQuickItem* parent) :
 {
 }
 
-FeatureLayerSelection::~FeatureLayerSelection()
-{
-}
+FeatureLayerSelection::~FeatureLayerSelection() = default;
 
 void FeatureLayerSelection::init()
 {
@@ -64,12 +63,9 @@ void FeatureLayerSelection::componentComplete()
   m_mapView->setMap(m_map);
 
   // create the feature table
-  m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(m_featureTable, this);
-
-  // set a selection width on the feature layer
-  m_featureLayer->setSelectionWidth(3);
 
   // add the feature layer to the map
   m_map->operationalLayers()->append(m_featureLayer);
@@ -92,8 +88,10 @@ void FeatureLayerSelection::connectSignals()
   });
 
   // once the identify is done
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
   {
+    QScopedPointer<IdentifyLayerResult> identifyResult(rawIdentifyResult);
+
     if (!identifyResult)
       return;
 
@@ -105,9 +103,13 @@ void FeatureLayerSelection::connectSignals()
     for (int i = 0; i < identifyResult->geoElements().size(); i++)
     {
       GeoElement* element = identifyResult->geoElements().at(i);
-      if (static_cast<Feature*>(element))
-        // add the element to the list
-        identifiedFeatures.append(static_cast<Feature*>(element));
+      if (nullptr != element)
+      {
+        // add the element to the list and take ownership of it.
+        Feature* feature = static_cast<Feature*>(element);
+        feature->setParent(this);
+        identifiedFeatures.append(feature);
+      }
     }
 
     // select the identified features

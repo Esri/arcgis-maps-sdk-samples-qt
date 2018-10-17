@@ -36,6 +36,4 @@ SetInitialMapLocation::SetInitialMapLocation(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-SetInitialMapLocation::~SetInitialMapLocation()
-{
-}
+SetInitialMapLocation::~SetInitialMapLocation() = default;

@@ -33,9 +33,7 @@ FeatureLayerDefinitionExpression::FeatureLayerDefinitionExpression(QQuickItem* p
 {
 }
 
-FeatureLayerDefinitionExpression::~FeatureLayerDefinitionExpression()
-{
-}
+FeatureLayerDefinitionExpression::~FeatureLayerDefinitionExpression() = default;
 
 void FeatureLayerDefinitionExpression::init()
 {
@@ -63,7 +61,7 @@ void FeatureLayerDefinitionExpression::componentComplete()
   //! [Obtain the instantiated map view in Cpp]
 
   // create the feature table
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0"), this);
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(featureTable, this);
 

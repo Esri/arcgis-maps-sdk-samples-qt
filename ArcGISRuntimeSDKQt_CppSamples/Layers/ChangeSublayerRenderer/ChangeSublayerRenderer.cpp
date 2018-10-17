@@ -50,7 +50,7 @@ void ChangeSublayerRenderer::componentComplete()
   m_map = new Map(Basemap::streets(this), this);
 
   // Add the map image layer
-  ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
+  ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
 
   // Get the sublayer
   connect(mapImageLayer, &ArcGISMapImageLayer::doneLoading, this, [this, mapImageLayer](Error e)

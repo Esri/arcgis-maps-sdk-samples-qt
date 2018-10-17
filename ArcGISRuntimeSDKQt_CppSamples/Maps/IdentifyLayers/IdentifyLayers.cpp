@@ -52,12 +52,12 @@ void IdentifyLayers::componentComplete()
   m_map = new Map(Basemap::topographic(this), this);
 
   // add a map image layer
-  QUrl mapServiceUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer");
+  QUrl mapServiceUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer");
   ArcGISMapImageLayer* imageLayer = new ArcGISMapImageLayer(mapServiceUrl, this);
   m_map->operationalLayers()->append(imageLayer);
 
   // hide 2 of the sublayers in the map image layer
-  connect(imageLayer, &ArcGISMapImageLayer::doneLoading, this, [this, imageLayer](Error e)
+  connect(imageLayer, &ArcGISMapImageLayer::doneLoading, this, [imageLayer](Error e)
   {
     if (!e.isEmpty())
     {
@@ -153,5 +153,6 @@ void IdentifyLayers::connectSignals()
 
     emit messageChanged();
     emit showMessage();
+    qDeleteAll(results);
   });
 }

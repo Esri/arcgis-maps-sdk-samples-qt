@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 
 Rectangle {
     width: 800
@@ -30,7 +30,7 @@ Rectangle {
             Basemap {
                 // Nest an ArcGISMapImage Layer in the Basemap
                 ArcGISMapImageLayer {
-                    url: "http://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"
+                    url: "https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"
                 }
             }
         }

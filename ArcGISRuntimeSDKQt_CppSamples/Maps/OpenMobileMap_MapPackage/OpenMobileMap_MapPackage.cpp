@@ -28,9 +28,7 @@ OpenMobileMap_MapPackage::OpenMobileMap_MapPackage(QQuickItem* parent) :
 {
 }
 
-OpenMobileMap_MapPackage::~OpenMobileMap_MapPackage()
-{
-}
+OpenMobileMap_MapPackage::~OpenMobileMap_MapPackage() = default;
 
 void OpenMobileMap_MapPackage::init()
 {

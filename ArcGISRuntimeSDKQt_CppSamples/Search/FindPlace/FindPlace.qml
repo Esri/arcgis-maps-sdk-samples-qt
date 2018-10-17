@@ -18,9 +18,10 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick 2.6
 import QtQuick.Controls 1.4
+import QtQuick.Window 2.2
 import QtPositioning 5.6
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 100.3
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 import Esri.Samples 1.0
 
 FindPlaceSample {
@@ -29,7 +30,7 @@ FindPlaceSample {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property bool isSearchingLocation: false
     property bool searchByExtent: false
 
@@ -46,6 +47,7 @@ FindPlaceSample {
         // declare a Callout
         Callout {
             id: callout
+            leaderPosition: leaderPositionEnum.Automatic
             calloutData: findPlaceSample.calloutData
             accessoryButtonHidden: true
             screenOffsetY: -19 * scaleFactor

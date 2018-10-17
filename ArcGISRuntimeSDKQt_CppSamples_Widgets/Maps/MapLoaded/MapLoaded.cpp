@@ -64,6 +64,4 @@ MapLoaded::MapLoaded(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-MapLoaded::~MapLoaded()
-{
-}
+MapLoaded::~MapLoaded() = default;

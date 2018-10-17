@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 
 Rectangle {
     id: rootRectangle
@@ -32,7 +32,7 @@ Rectangle {
             // Declare a PortalItem by setting Item ID.
             // PortalItem is a default property of Scene
             PortalItem {
-                itemId: "a13c3c3540144967bc933cb5e498b8e4"
+                itemId: "c6f90b19164c4283884361005faea852"
             }
         }
     }

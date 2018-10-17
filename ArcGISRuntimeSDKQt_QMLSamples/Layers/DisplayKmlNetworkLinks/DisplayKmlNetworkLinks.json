@@ -1,0 +1,5 @@
+{
+    "source" :  "DisplayKmlNetworkLinks.qml",
+    "otherSourceFiles" :  ["MessageButton.qml"],
+    "name" : "Display KML network links"
+}

@@ -41,7 +41,7 @@ void OpenScene::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
 
   // Create a PortalItem with an Item ID
-  PortalItem* item = new PortalItem(QStringLiteral("a13c3c3540144967bc933cb5e498b8e4"), this);
+  PortalItem* item = new PortalItem(QStringLiteral("c6f90b19164c4283884361005faea852"), this);
 
   // Create a scene with the Item
   Scene* scene = new Scene(item, this);

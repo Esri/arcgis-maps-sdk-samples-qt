@@ -36,9 +36,7 @@ GODictionaryRenderer::GODictionaryRenderer(QQuickItem* parent) :
 {
 }
 
-GODictionaryRenderer::~GODictionaryRenderer()
-{
-}
+GODictionaryRenderer::~GODictionaryRenderer() = default;
 
 void GODictionaryRenderer::init()
 {
@@ -161,7 +159,7 @@ void GODictionaryRenderer::parseXmlFile()
 void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
 {
   // If _wkid was absent, use WGS 1984 (4326) by default.
-  int wkid = rawAttributes.keys().contains(FIELD_WKID) ? rawAttributes[FIELD_WKID].toInt() : 4326;
+  int wkid = rawAttributes.count(FIELD_WKID) > 0 ? rawAttributes[FIELD_WKID].toInt() : 4326;
   SpatialReference sr(wkid);
   Geometry geom;
   QStringList pointStrings = rawAttributes[FIELD_CONTROL_POINTS].toString().split(";");
@@ -173,9 +171,9 @@ void GODictionaryRenderer::createGraphic(QVariantMap rawAttributes)
   }
   else {
     // It's a multipoint
-    auto builder = new MultipointBuilder(sr, this);
+    MultipointBuilder* builder = new MultipointBuilder(sr, this);
     PointCollection* collection = new PointCollection(sr, this);
-    for (const auto& pointString : pointStrings)
+    for (const QString& pointString : pointStrings)
     {
       QStringList coords = pointString.split(",");
       if (coords.length() >= 2)

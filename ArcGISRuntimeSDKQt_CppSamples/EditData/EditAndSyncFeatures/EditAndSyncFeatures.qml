@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
+import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
@@ -26,7 +27,7 @@ EditAndSyncFeaturesSample {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
     property string outputGdb: System.temporaryFolder.path + "/WildfireCpp_%1.geodatabase".arg(new Date().getTime().toString())
     property string statusText: ""

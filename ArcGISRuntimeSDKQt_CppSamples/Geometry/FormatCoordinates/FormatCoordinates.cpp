@@ -31,9 +31,7 @@ FormatCoordinates::FormatCoordinates(QQuickItem* parent) :
 {
 }
 
-FormatCoordinates::~FormatCoordinates()
-{
-}
+FormatCoordinates::~FormatCoordinates() = default;
 
 void FormatCoordinates::init()
 {

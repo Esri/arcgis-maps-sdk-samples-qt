@@ -33,7 +33,7 @@ BasicSceneView::BasicSceneView(QWidget* parent) :
     m_sceneView = new SceneGraphicsView(m_scene, this);
 
     // create an elevation source
-    ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+    ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
     m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
     // create a camera
@@ -47,6 +47,4 @@ BasicSceneView::BasicSceneView(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-BasicSceneView::~BasicSceneView()
-{
-}
+BasicSceneView::~BasicSceneView() = default;

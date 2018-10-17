@@ -63,7 +63,7 @@ private:
   Esri::ArcGISRuntime::GeodeticCurveType m_curveType = Esri::ArcGISRuntime::GeodeticCurveType::Geodesic;
 
   const QString m_headingAttr = "HEADING";
-  QTimer* m_timer;
+  QTimer* m_timer = nullptr;
 };
 
 #endif // VIEWSHEDGEOELEMENT_H

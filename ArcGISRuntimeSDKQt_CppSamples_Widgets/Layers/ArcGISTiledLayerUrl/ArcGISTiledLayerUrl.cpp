@@ -28,7 +28,7 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
   QWidget(parent)
 {
     // create the URL pointing to the tiled map service
-    QUrl tiledLayerUrl("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
+    QUrl tiledLayerUrl("https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
 
     // construct the ArcGISTiledLayer using the URL
     m_tiledLayer = new ArcGISTiledLayer(tiledLayerUrl, this);
@@ -48,6 +48,4 @@ ArcGISTiledLayerUrl::ArcGISTiledLayerUrl(QWidget* parent) :
     setLayout(vBoxLayout);
 }
 
-ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl()
-{
-}
+ArcGISTiledLayerUrl::~ArcGISTiledLayerUrl() = default;

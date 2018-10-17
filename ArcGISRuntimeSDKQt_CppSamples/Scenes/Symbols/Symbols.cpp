@@ -29,9 +29,7 @@ Symbols::Symbols(QQuickItem* parent) :
 {
 }
 
-Symbols::~Symbols()
-{
-}
+Symbols::~Symbols() = default;
 
 void Symbols::init()
 {
@@ -54,7 +52,7 @@ void Symbols::componentComplete()
   m_sceneView->setArcGISScene(m_scene);
 
   // create a new elevation source
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
@@ -79,10 +77,10 @@ void Symbols::componentComplete()
   symbolStyles.insert(SimpleMarkerSceneSymbolStyle::Tetrahedron, QColor("yellow"));
   QMapIterator<SimpleMarkerSceneSymbolStyle, QColor> i(symbolStyles);
 
-  const auto x = 44.975;
-  const auto y = 34;
-  const auto z = 500;
-  auto counter = 0;
+  constexpr double x = 44.975;
+  constexpr double y = 34.0;
+  constexpr double z = 500.0;
+  int counter = 0;
 
   // iterate over the map
   while (i.hasNext())
@@ -96,4 +94,3 @@ void Symbols::componentComplete()
     graphicsOverlay->graphics()->append(graphic);
   }
 }
-

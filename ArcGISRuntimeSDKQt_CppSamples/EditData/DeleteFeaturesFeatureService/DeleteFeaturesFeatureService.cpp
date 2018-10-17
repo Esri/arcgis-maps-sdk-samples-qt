@@ -31,6 +31,8 @@
 #include <QUrl>
 #include <QUuid>
 #include <QMouseEvent>
+#include <QString>
+#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -39,9 +41,7 @@ DeleteFeaturesFeatureService::DeleteFeaturesFeatureService(QQuickItem* parent) :
 {
 }
 
-DeleteFeaturesFeatureService::~DeleteFeaturesFeatureService()
-{
-}
+DeleteFeaturesFeatureService::~DeleteFeaturesFeatureService() = default;
 
 void DeleteFeaturesFeatureService::init()
 {
@@ -56,6 +56,7 @@ void DeleteFeaturesFeatureService::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
+  emit calloutDataChanged();
 
   // create a Map by passing in the Basemap
   m_map = new Map(Basemap::streets(this), this);
@@ -65,11 +66,10 @@ void DeleteFeaturesFeatureService::componentComplete()
   m_mapView->setMap(m_map);
 
   // create the ServiceFeatureTable
-  m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
 
   // create the FeatureLayer with the ServiceFeatureTable and add it to the Map
   m_featureLayer = new FeatureLayer(m_featureTable, this);
-  m_featureLayer->setSelectionWidth(3);
   m_map->operationalLayers()->append(m_featureLayer);
 
   connectSignals();
@@ -84,10 +84,6 @@ void DeleteFeaturesFeatureService::connectSignals()
     m_featureLayer->clearSelection();
 
     // set the properties for qml
-    m_screenX = mouseEvent.x();
-    emit screenXChanged();
-    m_screenY = mouseEvent.y();
-    emit screenYChanged();
     emit hideWindow();
 
     //! [DeleteFeaturesFeatureService identify feature]
@@ -109,36 +105,60 @@ void DeleteFeaturesFeatureService::connectSignals()
   });
 
   // connect to the identifyLayerCompleted signal on the map view
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* rawIdentifyResult)
   {
+    // Deletes rawIdentifyResult instance when we leave scope.
+    QScopedPointer<IdentifyLayerResult> identifyResult(rawIdentifyResult);
+
     if(!identifyResult)
-      return;
-    if (identifyResult->geoElements().size() > 0)
     {
-      // delete selected feature member if not nullptr
-      if (m_selectedFeature != nullptr)
-        delete m_selectedFeature;
-
-      // select the item in the result
-      QueryParameters query;
-      query.setObjectIds(QList<qint64>() << identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toLongLong());
-      m_featureLayer->selectFeatures(query, SelectionMode::New);
-
-      // set selected feature member
-      m_selectedFeature = static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0));
+      return;
     }
+
+    if (identifyResult->geoElements().isEmpty())
+    {
+      return;
+    }
+
+    // delete selected feature member if not nullptr
+    if (m_selectedFeature != nullptr)
+    {
+      delete m_selectedFeature;
+      m_selectedFeature = nullptr;
+    }
+
+    GeoElement* element = identifyResult->geoElements().at(0);
+    if (element == nullptr)
+    {
+      return;
+    }
+
+    // select the item in the result
+    QueryParameters query;
+    query.setObjectIds(QList<qint64> { element->attributes()->attributeValue(QStringLiteral("objectid")).toLongLong() });
+    m_featureLayer->selectFeatures(query, SelectionMode::New);
+
+    // set selected feature member
+    m_selectedFeature = static_cast<ArcGISFeature*>(element);
+    // Don't delete the selected feature when the IdentityResult is deleted.
+    m_selectedFeature->setParent(this);
   });
 
   // connect to the selectedFeatures signal on the feature layer
-  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+  connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawFeatureQueryResult)
   {
+    // Delete rawFeatureQueryResult pointer when we leave scope.
+    QScopedPointer<FeatureQueryResult> featureQueryResult(rawFeatureQueryResult);
+    
     FeatureIterator iter = featureQueryResult->iterator();
     if (iter.hasNext())
     {
       Feature* feat = iter.next();
       // emit signal for QML
-      m_featureType = feat->attributes()->attributeValue("typdamage").toString();
-      emit featureTypeChanged();
+      const QString featureType = feat->attributes()->attributeValue(QStringLiteral("typdamage")).toString();
+      // Html tags used to bold and increase pt size of callout title.
+      m_mapView->calloutData()->setTitle(QString("<br><b><font size=\"+2\">%1</font></b>").arg(featureType));
+      m_mapView->calloutData()->setLocation(feat->geometry().extent().center());
       emit featureSelected();
     }
   });
@@ -152,7 +172,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   });
 
   // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
+  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](QUuid, const QList<FeatureEditResult*>& featureEditResults)
   {
     // obtain the first item in the list
     FeatureEditResult* featureEditResult = featureEditResults.isEmpty() ? nullptr : featureEditResults.first();
@@ -161,25 +181,17 @@ void DeleteFeaturesFeatureService::connectSignals()
       qDebug() << "Successfully deleted Object ID:" << featureEditResult->objectId();
     else
       qDebug() << "Apply edits error.";
+
+    qDeleteAll(featureEditResults);
   });
+}
+
+CalloutData* DeleteFeaturesFeatureService::calloutData() const
+{
+  return m_mapView ? m_mapView->calloutData() : nullptr;
 }
 
 void DeleteFeaturesFeatureService::deleteSelectedFeature()
 {
   m_featureTable->deleteFeature(m_selectedFeature);
-}
-
-int DeleteFeaturesFeatureService::screenX() const
-{
-  return m_screenX;
-}
-
-int DeleteFeaturesFeatureService::screenY() const
-{
-  return m_screenY;
-}
-
-QString DeleteFeaturesFeatureService::featureType() const
-{
-  return m_featureType;
 }

@@ -21,6 +21,7 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class CalloutData;
     class Map;
     class MapQuickView;
     class FeatureLayer;
@@ -37,9 +38,7 @@ class DeleteFeaturesFeatureService : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(int screenX READ screenX NOTIFY screenXChanged)
-  Q_PROPERTY(int screenY READ screenY NOTIFY screenYChanged)
-  Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
 
 public:
   explicit DeleteFeaturesFeatureService(QQuickItem* parent = nullptr);
@@ -50,17 +49,13 @@ public:
   Q_INVOKABLE void deleteSelectedFeature();
 
 signals:
-  void screenXChanged();
-  void screenYChanged();
+  void calloutDataChanged();
   void featureSelected();
-  void featureTypeChanged();
   void hideWindow();
 
 private:
   void connectSignals();
-  int screenX() const;
-  int screenY() const;
-  QString featureType() const;
+  Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -68,9 +63,6 @@ private:
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::Feature* m_selectedFeature = nullptr;
-  int m_screenX = 0;
-  int m_screenY = 0;
-  QString m_featureType;
 };
 
 #endif // DELETE_FEATURES_FEATURE_SERVICE_H

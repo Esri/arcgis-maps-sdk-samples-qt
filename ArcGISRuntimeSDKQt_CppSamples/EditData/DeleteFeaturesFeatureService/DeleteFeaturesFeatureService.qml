@@ -16,99 +16,47 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
+import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 DeleteFeaturesFeatureServiceSample {
     id: deleteFeaturesSample
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
-    // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
+
+        // map callout window
+        Callout {
+            id: callout
+            calloutData: deleteFeaturesSample.calloutData
+            borderColor: "lightgrey"
+            borderWidth : 1 * scaleFactor
+            accessoryButtonType: "Custom"
+            customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/ic_menu_trash_light.png"
+            leaderPosition: leaderPositionEnum.Automatic
+            onAccessoryButtonClicked: {
+                if (callout.visible)
+                    callout.dismiss();
+                deleteFeaturesSample.deleteSelectedFeature();
+            }
+        }
     }
 
     onFeatureSelected: {
         // show the callout
-        callout.x = deleteFeaturesSample.screenX;
-        callout.y = deleteFeaturesSample.screenY;
-        callout.visible = true;
+        callout.showCallout();
     }
 
     onHideWindow: {
         // hide the callout
-        callout.visible = false;
-    }
-
-    // map callout window
-    Rectangle {
-        id: callout
-        width: row.width + (10 * scaleFactor) // add 10 for padding
-        height: 40 * scaleFactor
-        radius: 5
-        border {
-            color: "lightgrey"
-            width: .5
-        }
-        visible: false
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
-        }
-
-        Row {
-            id: row
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: parent.left
-                margins: 5 * scaleFactor
-            }
-            spacing: 10
-
-            Text {
-                text: deleteFeaturesSample.featureType
-                font.pixelSize: 18 * scaleFactor
-            }
-
-            Rectangle {
-                radius: 100
-                width: 22 * scaleFactor
-                height: width
-                color: "transparent"
-                antialiasing: true
-                border {
-                    width: 2
-                    color: "red"
-                }
-
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    y: -4 * scaleFactor
-
-                    text: "-"
-                    font {
-                        bold: true
-                        pixelSize: 22 * scaleFactor
-                    }
-                    color: "red"
-                }
-
-                // create a mouse area over the (-) text to delete the feature
-                MouseArea {
-                    anchors.fill: parent
-                    // once the delete button is clicked, hide the window and delete the feature
-                    onClicked: {
-                        callout.visible = false;
-                        // Call C++ invokable function to delete the selected feature
-                        deleteFeaturesSample.deleteSelectedFeature();
-                    }
-                }
-            }
-        }
+        if (callout.visible)
+            callout.dismiss();
     }
 }

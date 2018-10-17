@@ -34,15 +34,23 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+  // Convenience RAII struct that deletes all pointers in given container.
+  struct FeatureEditListResultLock
+  {
+    FeatureEditListResultLock(const QList<FeatureEditResult*>& list) : results(list) { }
+    ~FeatureEditListResultLock() { qDeleteAll(results); }
+    const QList<FeatureEditResult*>& results;
+  };
+}
+
 UpdateGeometryFeatureService::UpdateGeometryFeatureService(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-UpdateGeometryFeatureService::~UpdateGeometryFeatureService()
-{
-}
-
+UpdateGeometryFeatureService::~UpdateGeometryFeatureService() = default;
 void UpdateGeometryFeatureService::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
@@ -65,11 +73,10 @@ void UpdateGeometryFeatureService::componentComplete()
   m_mapView->setMap(m_map);
 
   // create the ServiceFeatureTable
-  m_featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
 
   // create the FeatureLayer with the ServiceFeatureTable and add it to the Map
   m_featureLayer = new FeatureLayer(m_featureTable, this);
-  m_featureLayer->setSelectionWidth(3);
   m_map->operationalLayers()->append(m_featureLayer);
 
   connectSignals();
@@ -120,11 +127,12 @@ void UpdateGeometryFeatureService::connectSignals()
       if (m_selectedFeature != nullptr)
         delete m_selectedFeature;
 
+      m_selectedFeature = static_cast<Feature*>(identifyResult->geoElements().at(0));
+      // Prevent the feature from being deleted along with the identifyResult.
+      m_selectedFeature->setParent(this);
+      
       // select the item in the result
-      m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
-
-      // set selected feature member
-      m_selectedFeature = static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0));
+      m_featureLayer->selectFeature(m_selectedFeature);
       m_featureSelected = true;
     }
   });
@@ -138,10 +146,13 @@ void UpdateGeometryFeatureService::connectSignals()
   });
 
   // connect to the applyEditsCompleted signal from the ServiceFeatureTable
-  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [this](QUuid, const QList<FeatureEditResult*>& featureEditResults)
+  connect(m_featureTable, &ServiceFeatureTable::applyEditsCompleted, this, [](QUuid, const QList<FeatureEditResult*>& featureEditResults)
   {
+    // Lock is a convenience wrapper that deletes the contents of featureEditResults when we leave scope.
+    FeatureEditListResultLock lock(featureEditResults);
+
     // obtain the first item in the list
-    FeatureEditResult* featureEditResult = featureEditResults.isEmpty() ? nullptr : featureEditResults.first();
+    FeatureEditResult* featureEditResult = lock.results.isEmpty() ? nullptr : lock.results.first();
     // check if there were errors, and if not, log the new object ID
     if (featureEditResult && !featureEditResult->isCompletedWithErrors())
       qDebug() << "Successfully updated geometry for Object ID:" << featureEditResult->objectId();

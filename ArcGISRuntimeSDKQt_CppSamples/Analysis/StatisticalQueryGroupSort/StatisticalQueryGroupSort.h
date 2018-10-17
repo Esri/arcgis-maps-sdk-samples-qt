@@ -88,7 +88,7 @@ private:
   QVariantList m_orderBys;
   QStringList m_statisticTypes;
   QStringList m_groupingFields;
-  StatisticResultListModel* m_resultsModel;
+  StatisticResultListModel* m_resultsModel = nullptr;
 };
 
 #endif // STATISTICALQUERYGROUPSORT_H

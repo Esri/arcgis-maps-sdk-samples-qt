@@ -16,6 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 1.4
+import QtQuick.Window 2.2
 import Esri.ArcGISExtras 1.1
 import Esri.Samples 1.0
 
@@ -24,7 +25,7 @@ GODictionaryRendererSample {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Create MapView here, and create its Map and GraphicsOverlay in C++ code

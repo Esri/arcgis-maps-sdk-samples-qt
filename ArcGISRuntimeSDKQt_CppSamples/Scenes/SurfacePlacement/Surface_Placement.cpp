@@ -36,9 +36,7 @@ Surface_Placement::Surface_Placement(QQuickItem* parent /* = nullptr */):
 {
 }
 
-Surface_Placement::~Surface_Placement()
-{
-}
+Surface_Placement::~Surface_Placement() = default;
 
 void Surface_Placement::init()
 {
@@ -55,7 +53,7 @@ void Surface_Placement::componentComplete()
   m_sceneView = findChild<SceneQuickView*>("sceneView");
   Scene* scene = new Scene(Basemap::imagery(this), this);
   Surface* surface = new Surface(this);
-  surface->elevationSources()->append(new ArcGISTiledElevationSource(QUrl("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
+  surface->elevationSources()->append(new ArcGISTiledElevationSource(QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this));
   scene->setBaseSurface(surface);
   //! [Create Scene API snippet]
 

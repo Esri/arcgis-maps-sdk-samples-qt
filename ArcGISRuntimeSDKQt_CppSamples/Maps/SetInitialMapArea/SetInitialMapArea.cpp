@@ -29,9 +29,7 @@ SetInitialMapArea::SetInitialMapArea(QQuickItem* parent) :
 {
 }
 
-SetInitialMapArea::~SetInitialMapArea()
-{
-}
+SetInitialMapArea::~SetInitialMapArea() = default;
 
 void SetInitialMapArea::init()
 {

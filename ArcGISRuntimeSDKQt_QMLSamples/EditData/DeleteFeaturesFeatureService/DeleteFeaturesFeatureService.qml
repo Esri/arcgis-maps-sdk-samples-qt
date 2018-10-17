@@ -17,17 +17,17 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
-    property double mousePointX
-    property double mousePointY
+    property Point calloutLocation
     property string damageType
+    property real scaleFactor: System.displayScaleFactor
 
     // Create MapView that contains a Map
     MapView {
@@ -54,13 +54,10 @@ Rectangle {
             FeatureLayer {
                 id: featureLayer
 
-                selectionColor: "cyan"
-                selectionWidth: 3
-
                 // declare as child of feature layer, as featureTable is the default property
                 ServiceFeatureTable {
                     id: featureTable
-                    url: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
 
                     // make sure edits are successfully applied to the service
                     onApplyEditsStatusChanged: {
@@ -99,11 +96,10 @@ Rectangle {
 
                         var feat  = selectFeaturesResult.iterator.next();
                         damageType = feat.attributes.attributeValue("typdamage");
+                        calloutLocation = feat.geometry.extent.center;
 
                         // show the callout
-                        callout.x = mousePointX;
-                        callout.y = mousePointY;
-                        callout.visible = true;
+                        callout.showCallout();
                     }
                 }
             }
@@ -115,16 +111,16 @@ Rectangle {
 
         // hide the callout after navigation
         onViewpointChanged: {
-            callout.visible = false;
+            if (callout.calloutVisible)
+                callout.dismiss();
         }
 
         onMouseClicked: {
             // reset the map callout and update window
             featureLayer.clearSelection();
-            callout.visible = false;
+            if (callout.calloutVisible)
+                callout.dismiss();
 
-            mousePointX = mouse.x;
-            mousePointY = mouse.y - callout.height;
             //! [DeleteFeaturesFeatureService identify feature]
             // call identify on the feature layer
             var tolerance = 10;
@@ -143,71 +139,26 @@ Rectangle {
                 }
             }
         }
-    }
 
-    // map callout window
-    Rectangle {
-        id: callout
-        width: row.width + (10 * scaleFactor) // add 10 for padding
-        height: 40 * scaleFactor
-        radius: 5
-        border {
-            color: "lightgrey"
-            width: .5
-        }
-        visible: false
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
+        calloutData {
+            location: calloutLocation
+            // We use the HTML to bold, increase the pt size, and center-align the the damageType title.
+            title: "<br><b><font size=\"+2\">%1</font></b>".arg(damageType)
         }
 
-        Row {
-            id: row
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: parent.left
-                margins: 5 * scaleFactor
-            }
-            spacing: 10
-
-            Text {
-                text: damageType
-                font.pixelSize: 18 * scaleFactor
-            }
-
-            Rectangle {
-                radius: 100
-                width: 22 * scaleFactor
-                height: width
-                color: "transparent"
-                antialiasing: true
-                border {
-                    width: 2
-                    color: "red"
-                }
-
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    y: -4 * scaleFactor
-
-                    text: "-"
-                    font {
-                        bold: true
-                        pixelSize: 22 * scaleFactor
-                    }
-                    color: "red"
-                }
-
-                // create a mouse area over the (-) text to delete the feature
-                MouseArea {
-                    anchors.fill: parent
-                    // once the delete button is clicked, hide the window and fetch the currently selected features
-                    onClicked: {
-                        callout.visible = false;
-                        featureLayer.selectedFeatures();
-                    }
-                }
+        // map callout window
+        Callout {
+            id: callout
+            accessoryButtonType: "Custom"
+            customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/ic_menu_trash_light.png"
+            calloutData: parent.calloutData
+            borderWidth: 1 * scaleFactor
+            borderColor: "lightgrey"
+            leaderPosition: leaderPositionEnum.Automatic
+            onAccessoryButtonClicked: {
+                if (callout.calloutVisible)
+                    callout.dismiss();
+                featureLayer.selectedFeatures();
             }
         }
     }

@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.3
+import Esri.ArcGISRuntime 100.4
 
 Rectangle {
     id: viewshedSample
@@ -40,7 +40,7 @@ Rectangle {
 
             Surface {
                 ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
 
