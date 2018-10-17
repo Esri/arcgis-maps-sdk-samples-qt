@@ -68,6 +68,10 @@ Rectangle {
         opacity: 0.75
     }
 
+    ButtonGroup {
+        buttons: controlColumn.children
+    }
+
     Column {
         id: controlColumn
         anchors {
@@ -79,7 +83,6 @@ Rectangle {
 
         RadioButton {
             text: "Style 1"
-            exclusiveGroup: radioGroup
             checked: true
             onCheckedChanged: {
                 if (checked) {
@@ -94,7 +97,6 @@ Rectangle {
 
         RadioButton {
             text: "Style 2"
-            exclusiveGroup: radioGroup
             onCheckedChanged: {
                 if (checked) {
                     if (!sublayer)
@@ -104,10 +106,6 @@ Rectangle {
                     sublayer.currentStyle = styles[1];
                 }
             }
-        }
-
-        ExclusiveGroup {
-            id: radioGroup
         }
     }
 }
