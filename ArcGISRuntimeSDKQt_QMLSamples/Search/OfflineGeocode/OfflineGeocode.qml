@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.4
@@ -233,7 +233,7 @@ Rectangle {
                 right: parent.right
             }
 
-            height: 35 * scaleFactor
+            height: childrenRect.height
             color: "#f7f8fa"
             border {
                 color: "#7B7C7D"
@@ -241,28 +241,17 @@ Rectangle {
             }
             radius: 2
 
-            Row {
+            RowLayout {
                 anchors.centerIn: parent
                 width: parent.width
-                height: parent.height
-                leftPadding: 5 * scaleFactor
 
                 // search bar for geocoding
                 TextField {
                     id: textField
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: parent.width * 0.90
-                    height: parent.height * 0.90
-                    opacity: 0.95
+                    leftPadding: 5
+                    Layout.fillWidth: true
+                    Layout.margins: 5
                     placeholderText: "Enter an Address"
-                    font.pixelSize: 14 * scaleFactor
-
-                    style: TextFieldStyle {
-                        background: Rectangle {
-                            color: "#f7f8fa"
-                            radius: 2
-                        }
-                    }
 
                     // when user types, make suggestions visible
                     onTextChanged: {
@@ -285,12 +274,6 @@ Rectangle {
 
                 // button to open and close suggestions
                 Rectangle {
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        right: parent.right
-                        margins: 5 * scaleFactor
-                    }
-
                     width: 35 * scaleFactor
                     color: "#f7f8fa"
                     radius: 2
