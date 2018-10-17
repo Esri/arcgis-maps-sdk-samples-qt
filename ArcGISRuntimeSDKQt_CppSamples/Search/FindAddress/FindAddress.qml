@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit.Controls 100.4
@@ -59,84 +59,67 @@ FindAddressSample {
             fill: parent
             margins: 10 * scaleFactor
         }
-
-
         Rectangle {
             color: "#f7f8fa"
             border {
                 color: "#7B7C7D"
-                width: 1 * scaleFactor
             }
             radius: 2
             width: parent.width
             height: childrenRect.height
 
-            Row {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    margins: 5 * scaleFactor
-                }
-                height: 35 * scaleFactor
-
-                spacing: 5
-
+            GridLayout {
+                width: parent.width
+                columns: 3
                 TextField {
+                    Layout.margins: 5
+                    Layout.fillWidth: true
                     id: textField
-                    width: parent.width
-                    height: parent.height
-                    font.pixelSize: 14 * scaleFactor
+                    font.pixelSize: 14
                     placeholderText: "Type in an address"
-
 
                     Keys.onEnterPressed: geocodeAddress();
                     Keys.onReturnPressed: geocodeAddress();
 
                     function geocodeAddress() {
-                        findAddressSample.geocodeAddress(textField.text);
+                        //! [FindAddress geocodeWithParameters]
+                        locatorTask.geocodeWithParameters(textField.text, geocodeParameters);
+                        //! [FindAddress geocodeWithParameters]
                         suggestView.visible = false;
                         Qt.inputMethod.hide();
                     }
+                }
 
-                    Rectangle {
-                        anchors {
-                            right: parent.right
-                            top: parent.top
-                            bottom: parent.bottom
-                            margins: 5 * scaleFactor
-                        }
-
-                        width: 35 * scaleFactor
-                        color: "#f7f8fa"
-
-                        Image {
-                            anchors.centerIn: parent
-                            width: 35 * scaleFactor
-                            height: width
-                            source: "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_light_d.png"
-                            visible: textField.text.length === 0
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    textField.focus = true;
-                                    suggestView.visible = !suggestView.visible;
-                                }
+                Rectangle {
+                    Layout.margins: 5
+                    width: height
+                    height: textField.height
+                    color: "#f7f8fa"
+                    visible: textField.length === 0
+                    enabled: visible
+                    Image {
+                        anchors.fill: parent
+                        source: "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_light_d.png"
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                textField.focus = true;
+                                suggestView.visible = !suggestView.visible;
                             }
                         }
                     }
+                }
 
+                Rectangle {
+                    Layout.margins: 5
+                    width: height
+                    color: "transparent"
+                    height: textField.height
+                    visible: textField.length !== 0
+                    enabled: visible
                     Image {
-                        anchors {
-                            right: parent.right
-                            top: parent.top
-                            bottom: parent.bottom
-                            margins: 5 * scaleFactor
-                        }
+                        anchors.fill: parent
                         source: "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_light_d.png"
-                        width: 27 * scaleFactor
-                        height: width
-                        visible: parent.text.length !== 0
 
                         MouseArea {
                             anchors.fill: parent
@@ -144,13 +127,12 @@ FindAddressSample {
                                 textField.text = "";
                                 if (callout.visible)
                                     callout.dismiss();
-                                findAddressSample.clearGraphics();
+                                clearGraphics();
                             }
                         }
                     }
                 }
             }
-
         }
 
         // show a drop down of suggested locations
