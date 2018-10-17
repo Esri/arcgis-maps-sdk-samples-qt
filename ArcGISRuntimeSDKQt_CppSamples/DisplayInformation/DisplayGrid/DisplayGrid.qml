@@ -204,6 +204,7 @@ DisplayGridSample {
                 property bool pressed: false
                 anchors.horizontalCenter: parent.horizontalCenter
                 Layout.columnSpan: 2
+                Layout.bottomMargin: 5
 
                 width: 150 * scaleFactor
                 height: 30 * scaleFactor
