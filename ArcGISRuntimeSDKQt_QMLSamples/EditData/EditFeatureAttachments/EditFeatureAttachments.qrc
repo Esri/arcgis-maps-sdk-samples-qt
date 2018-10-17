@@ -2,6 +2,7 @@
     <qresource prefix="/Samples/EditData/EditFeatureAttachments">
         <file alias="sample.json">EditFeatureAttachments.json</file>
         <file>EditFeatureAttachments.qml</file>
+        <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>

@@ -16,15 +16,14 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.0 as Dialogs
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
-    width: 800
-    height: 600
+    anchors.fill: parent
 
     property real scaleFactor: System.displayScaleFactor
     property string damageType
@@ -211,10 +210,7 @@ Rectangle {
                         }
 
                         onClicked: {
-                            if (attachmentsList.currentIndex === -1)  {
-                                msgDialog.text = "Please first select an attachment to delete.";
-                                msgDialog.open();
-                            } else {
+                            if (attachmentsList.currentIndex !== -1)  {
                                 // delete the attachment from the table
                                 if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
                                     selectedFeature.attachments.deleteAttachmentWithIndex(attachmentsList.currentIndex);
@@ -295,21 +291,21 @@ Rectangle {
 
     // file dialog for selecting a file to add as an attachment
     //! [EditFeatures add attachment from a file dialog]
-    FileDialog {
+    Dialogs.FileDialog {
         id: fileDialog
 
         function doAddAttachment(){
             if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
                 selectedFeature.onLoadStatusChanged.disconnect(doAddAttachment);
-                selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
+                selectedFeature.attachments.addAttachment(fileDialog.file, "application/octet-stream", fileInfo.fileName);
             }
         }
 
         onAccepted: {
             // add the attachment to the feature table
-            fileInfo.url = fileDialog.fileUrl;
+            fileInfo.url = fileDialog.file;
             if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
-                selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
+                selectedFeature.attachments.addAttachment(fileDialog.file, "application/octet-stream", fileInfo.fileName);
             } else {
                 selectedFeature.onLoadStatusChanged.connect(doAddAttachment);
                 selectedFeature.load();
@@ -317,10 +313,6 @@ Rectangle {
         }
     }
     //! [EditFeatures add attachment from a file dialog]
-
-    MessageDialog {
-        id: msgDialog
-    }
 
     // file info used for obtaining the file name
     FileInfo {
