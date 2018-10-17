@@ -112,7 +112,6 @@ Rectangle {
             ComboBox {
                 id: stretchTypeCombo
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 175 * scaleFactor
                 model: stretchTypes
             }
 
@@ -167,12 +166,26 @@ Rectangle {
 
                 SpinBox {
                     id: sdFactor
+                    property int decimals: 2
+                    property real realValue: value / 100
                     anchors.verticalCenter: parent.verticalCenter
-                    width: 75 * scaleFactor
-                    decimals: 2
                     from: 0
-                    to: 25
+                    to: 25 * 100
                     value: 0
+
+                    validator: DoubleValidator {
+                        bottom: Math.min(sdFactor.from, sdFactor.to)
+                        top: Math.min(sdFactor.from, sdFactor.to)
+                    }
+
+                    textFromValue: function(value, locale) {
+                        return Number(value / 100).toLocaleString(locale, 'f', sdFactor.decimals)
+                    }
+
+                    valueFromText: function(text, locale) {
+                        return Number.fromLocaleString(locale, text) * 100
+                    }
+
                 }
             }
 
@@ -203,7 +216,7 @@ Rectangle {
             rgbRenderer.stretchParameters = percentClipParams;
         }
         else if (stretchTypeCombo.currentText === stdDeviation){
-            stdDevParams.factor =  sdFactor.value;
+            stdDevParams.factor =  sdFactor.realValue;
             rgbRenderer.stretchParameters = stdDevParams;
         }
 
