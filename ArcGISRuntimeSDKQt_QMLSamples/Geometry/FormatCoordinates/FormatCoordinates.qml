@@ -93,7 +93,6 @@ Rectangle {
             right: parent.right
         }
         height: childrenRect.height
-        width: parent.width
 
         GridLayout {
             columns: 2
