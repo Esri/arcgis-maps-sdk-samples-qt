@@ -43,19 +43,19 @@ Rectangle {
         width: modelWidth + leftPadding + rightPadding + indicator.width
         textRole: "text"
         model: ListModel {
-            ListElement { text: "Topographic";                  map: "BasemapTopographic" }
-            ListElement { text: "Streets";                      map: "BasemapStreets" }
-            ListElement { text: "Streets (Vector)";             map: "BasemapStreetsVector" }
-            ListElement { text: "Streets - Night (Vector)";     map: "BasemapStreetsNightVector" }
-            ListElement { text: "Imagery (Raster)";             map: "BasemapImagery" }
+            ListElement { text: "Topographic"; map: "BasemapTopographic" }
+            ListElement { text: "Streets"; map: "BasemapStreets" }
+            ListElement { text: "Streets (Vector)"; map: "BasemapStreetsVector" }
+            ListElement { text: "Streets - Night (Vector)"; map: "BasemapStreetsNightVector" }
+            ListElement { text: "Imagery (Raster)"; map: "BasemapImagery" }
             ListElement { text: "Imagery with Labels (Raster)"; map: "BasemapImageryWithLabels" }
             ListElement { text: "Imagery with Labels (Vector)"; map: "BasemapImageryWithLabelsVector" }
-            ListElement { text: "Dark Gray Canvas (Vector)";    map: "BasemapDarkGrayCanvasVector" }
-            ListElement { text: "Light Gray Canvas (Raster)";   map: "BasemapLightGrayCanvas" }
-            ListElement { text: "Light Gray Canvas (Vector)";   map: "BasemapLightGrayCanvasVector" }
-            ListElement { text: "Navigation (Vector)";          map: "BasemapNavigationVector" }
-            ListElement { text: "OpenStreetMap (Raster)";       map: "BasemapOpenStreetMap" }
-            ListElement { text: "Oceans";                       map: "BasemapOceans" }
+            ListElement { text: "Dark Gray Canvas (Vector)"; map: "BasemapDarkGrayCanvasVector" }
+            ListElement { text: "Light Gray Canvas (Raster)"; map: "BasemapLightGrayCanvas" }
+            ListElement { text: "Light Gray Canvas (Vector)"; map: "BasemapLightGrayCanvasVector" }
+            ListElement { text: "Navigation (Vector)"; map: "BasemapNavigationVector" }
+            ListElement { text: "OpenStreetMap (Raster)"; map: "BasemapOpenStreetMap" }
+            ListElement { text: "Oceans"; map: "BasemapOceans" }
         }
 
         Component.onCompleted : {

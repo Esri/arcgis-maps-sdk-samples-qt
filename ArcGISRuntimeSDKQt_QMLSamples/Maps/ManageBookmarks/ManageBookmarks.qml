@@ -153,12 +153,11 @@ Rectangle {
         width: modelWidth + rightPadding + leftPadding + indicator.width
         model: map.bookmarks
 
-        Connections
-        {
+        Connections {
             target: bookmarks.model
             onCountChanged: {
-                var model = bookmarks.model
-                if (model !== null) {
+                var model = bookmarks.model;
+                if (model) {
                     for (var i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
                         bookmarks.modelWidth = Math.max(bookmarks.modelWidth,
@@ -169,11 +168,9 @@ Rectangle {
         }
 
         onCurrentIndexChanged: {
-            if (currentIndex >= 0)
-            {
-                var bookmark = map.bookmarks.get(currentIndex)
-                if (bookmark !== null)
-                {
+            if (currentIndex >= 0) {
+                var bookmark = map.bookmarks.get(currentIndex);
+                if (bookmark) {
                     mapView.setViewpoint(
                                 map.bookmarks.get(currentIndex).viewpoint);
                 }

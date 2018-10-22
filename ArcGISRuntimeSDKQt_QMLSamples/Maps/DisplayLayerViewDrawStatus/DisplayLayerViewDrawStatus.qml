@@ -122,8 +122,7 @@ Rectangle {
             height: childrenRect.height
             width: childrenRect.width
             opacity: 0.95
-            GridLayout
-            {
+            GridLayout {
                 id: gridLayout
                 flow: GridLayout.TopToBottom
                 rows: layerViewModel.count

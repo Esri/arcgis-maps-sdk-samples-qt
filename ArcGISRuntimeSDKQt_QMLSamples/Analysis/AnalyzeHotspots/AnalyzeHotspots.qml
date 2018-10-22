@@ -297,7 +297,7 @@ Rectangle {
                 onClicked: {
                     calendar.month += 1;
                 }
-                enabled: calendar.month < calendar.maxDate.getMonth()-1
+                enabled: calendar.month < (calendar.maxDate.getMonth() - 1)
                 Layout.column: 2
                 Layout.row: 0
             }
@@ -334,9 +334,9 @@ Rectangle {
                 delegate: Text {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    opacity: model.month !== calendar.month ? 0 : 1;
+                    opacity: model.month !== calendar.month ? 0 : 1
                     text: model.day
-                    font.bold: calendar.selectedDate.getTime() === model.date.getTime();
+                    font.bold: calendar.selectedDate.getTime() === model.date.getTime()
                 }
 
                 onClicked: {

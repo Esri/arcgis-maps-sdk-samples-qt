@@ -5,8 +5,6 @@
         <file>DisplayLayerViewDrawStatus.qml</file>
         <file>DisplayLayerViewDrawStatus.h</file>
         <file>DisplayLayerViewDrawStatus.cpp</file>
-        <file>DrawStatusModel.h</file>
-        <file>DrawStatusModel.cpp</file>
         <file>README.md</file>
     </qresource>
 </RCC>

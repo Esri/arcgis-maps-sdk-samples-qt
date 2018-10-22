@@ -24,7 +24,6 @@ import Esri.ArcGISExtras 1.1
 RasterLayerFileSample {
     id: rootRectangle
     clip: true
-    anchors.fill: parent
 
     property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"

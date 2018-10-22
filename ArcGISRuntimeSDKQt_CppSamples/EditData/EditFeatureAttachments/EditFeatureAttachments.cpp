@@ -197,7 +197,7 @@ QAbstractListModel* EditFeatureAttachments::attachmentModel() const
   return m_selectedFeature ? m_selectedFeature->attachments() : nullptr;
 }
 
-void EditFeatureAttachments::addAttachment(QUrl fileUrl, QString contentType)
+void EditFeatureAttachments::addAttachment(const QUrl& fileUrl, const QString& contentType)
 {
   if (QFile::exists(fileUrl.toLocalFile()))
   {

@@ -7,5 +7,6 @@ ApplicationWindow {
     height: 600
 
     EditFeatureAttachments {
+        anchors.fill: parent
     }
 }

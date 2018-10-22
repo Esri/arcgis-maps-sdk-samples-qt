@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Qt.labs.platform 1.0 as Dialogs
+import Qt.labs.platform 1.0
 
 Item {
     id: root
@@ -49,7 +49,7 @@ Item {
         }
     }
 
-    Dialogs.FileDialog {
+    FileDialog {
         id: fileDialog
 
         onAccepted: {

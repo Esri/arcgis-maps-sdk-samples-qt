@@ -194,6 +194,11 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   emit missionSizeChanged();
 }
 
+QAbstractListModel *Animate3DSymbols::missionsModel()
+{
+  return m_missionsModel;
+}
+
 void Animate3DSymbols::setZoom(double zoomDist)
 {
   if (m_followingController)

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Qt.labs.platform 1.0 as Dialogs
+import Qt.labs.platform 1.0
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
@@ -24,7 +24,6 @@ import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
-    anchors.fill: parent
 
     property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
@@ -200,7 +199,7 @@ EditFeatureAttachmentsSample {
     }
 
     // file dialog for selecting a file to add as an attachment
-    Dialogs.FileDialog {
+    FileDialog {
         id: fileDialog
         onAccepted: {
             // Call invokable C++ method to add an attachment to the model

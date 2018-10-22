@@ -20,7 +20,7 @@ import Esri.Samples 1.0
 
 ChangeBasemapSample {
     id: changeBasemapSample
-   anchors.fill: parent
+    anchors.fill: parent
 
     // add a mapView component
     MapView {

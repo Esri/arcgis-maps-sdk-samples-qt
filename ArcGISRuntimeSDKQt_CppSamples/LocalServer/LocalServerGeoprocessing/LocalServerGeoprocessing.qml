@@ -95,7 +95,7 @@ LocalServerGeoprocessingSample {
                     width: parent.width
                     text: "Generate Contours"
                     height: 35 * scaleFactor
-                    font.pixelSize: 14
+                    font.pixelSize: 14 * scaleFactor
                     font.bold: true
                     onClicked: {
                         generateContours(intervalText.text);
@@ -106,7 +106,7 @@ LocalServerGeoprocessingSample {
                     width: parent.width
                     text: "Clear Results"
                     height: 35 * scaleFactor
-                    font.pixelSize: 14
+                    font.pixelSize: 14 * scaleFactor
                     font.bold: true
                     onClicked: {
                         clearResults();

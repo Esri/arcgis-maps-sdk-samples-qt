@@ -23,8 +23,6 @@ import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
-    anchors.fill: parent
-
     property real scaleFactor: System.displayScaleFactor
     property string damageType
     property var selectedFeature: null

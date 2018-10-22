@@ -117,9 +117,9 @@ DisplayGridSample {
         GridLayout {
             id: grid
             anchors {
-                left: parent.left;
+                left: parent.left
                 right: parent.right
-                margins: 10 * scaleFactor;
+                margins: 10 * scaleFactor
             }
             columns: 2
             columnSpacing: 10
@@ -204,7 +204,7 @@ DisplayGridSample {
                 property bool pressed: false
                 anchors.horizontalCenter: parent.horizontalCenter
                 Layout.columnSpan: 2
-                Layout.bottomMargin: 5
+                Layout.bottomMargin: 5 * scaleFactor
 
                 width: 150 * scaleFactor
                 height: 30 * scaleFactor

@@ -1,4 +1,3 @@
-import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
@@ -8,5 +7,6 @@ ApplicationWindow {
     height: 600
 
     RasterLayerFile {
+        anchors.fill: parent
     }
 }

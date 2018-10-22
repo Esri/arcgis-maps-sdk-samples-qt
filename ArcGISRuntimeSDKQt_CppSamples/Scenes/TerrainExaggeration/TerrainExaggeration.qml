@@ -60,7 +60,7 @@ TerrainExaggerationSample {
                     from: 1
                     to: 10
                     onValueChanged: {
-                        terrainExaggerationSample.setElevationExaggeration(slider.value)
+                        terrainExaggerationSample.setElevationExaggeration(slider.value);
                     }
                 }
 

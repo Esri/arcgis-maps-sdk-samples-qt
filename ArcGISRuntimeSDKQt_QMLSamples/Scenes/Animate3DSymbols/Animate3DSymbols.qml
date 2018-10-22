@@ -338,7 +338,7 @@ Rectangle {
 
     Timer {
         id: timer
-        interval: Math.max(animationSpeed.to - animationSpeed.value,1);
+        interval: Math.max(animationSpeed.to - animationSpeed.value, 1);
         running: playButton.checked;
         repeat: true
         onTriggered: animate();

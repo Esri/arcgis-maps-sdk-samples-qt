@@ -221,12 +221,12 @@ void DisplayGrid::changeLabelPosition(const QString& position)
   }
 }
 
-MapQuickView *DisplayGrid::mapQuickView() const
+MapQuickView* DisplayGrid::mapQuickView() const
 {
   return m_mapView;
 }
 
-void DisplayGrid::setMapQuickView(MapQuickView *mapView)
+void DisplayGrid::setMapQuickView(MapQuickView* mapView)
 {
   m_mapView = mapView;
   emit mapQuickViewChanged();

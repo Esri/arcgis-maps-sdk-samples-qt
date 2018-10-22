@@ -179,11 +179,11 @@ Rectangle {
                     }
 
                     textFromValue: function(value, locale) {
-                        return Number(value / 100).toLocaleString(locale, 'f', sdFactor.decimals)
+                        return Number(value / 100).toLocaleString(locale, 'f', sdFactor.decimals);
                     }
 
                     valueFromText: function(text, locale) {
-                        return Number.fromLocaleString(locale, text) * 100
+                        return Number.fromLocaleString(locale, text) * 100;
                     }
 
                 }

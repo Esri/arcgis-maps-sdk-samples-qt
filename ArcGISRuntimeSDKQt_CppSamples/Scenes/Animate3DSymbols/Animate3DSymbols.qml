@@ -23,7 +23,6 @@ import Esri.ArcGISExtras 1.1
 Animate3DSymbolsSample {
     id: rootRectangle
     clip: true
-    anchors.fill: parent
 
     property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D"
@@ -47,7 +46,7 @@ Animate3DSymbolsSample {
         anchors.fill: parent
     }
 
-     GroupBox {
+    GroupBox {
         id: animationGroupBox
         z: 110
         anchors {
@@ -226,11 +225,11 @@ Animate3DSymbolsSample {
         }
     }
 
-//    Timer {
-//        id: timer
-//        interval: Math.max(animationSpeed.to - animationSpeed.value,1);
-//        running: playButton.checked;
-//        repeat: true
-//        onTriggered: animate();
-//    }
+    //    Timer {
+    //        id: timer
+    //        interval: Math.max(animationSpeed.to - animationSpeed.value,1);
+    //        running: playButton.checked;
+    //        repeat: true
+    //        onTriggered: animate();
+    //    }
 }

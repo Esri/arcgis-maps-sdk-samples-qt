@@ -45,7 +45,7 @@ SearchDictionarySymbolStyleSample {
 
         Column {
             visible: !hideSearch.checked
-            enabled: !hideSearch.checked
+            enabled: visible
 
             id: fieldColumn
             anchors {
@@ -87,7 +87,7 @@ SearchDictionarySymbolStyleSample {
                             Layout.fillWidth: true
                             placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
                             validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
-                            onAccepted:  addCategoryButton.mouseArea.clicked();
+                            onAccepted: addCategoryButton.mouseArea.clicked();
                         }
 
                         Rectangle {
@@ -111,7 +111,7 @@ SearchDictionarySymbolStyleSample {
                                     var tmp = searchParamList;
                                     tmp[index].push(categoryEntry.text);
 
-                                    searchParamList = tmp
+                                    searchParamList = tmp;
                                     categoryEntry.text = "";
                                 }
                             }

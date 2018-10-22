@@ -42,15 +42,14 @@ ChangeViewpointSample {
 
         width: bestWidth + indicator.width + rightPadding + leftPadding
 
-        model: [ "Center"
-               , "Center and scale"
-               , "Geometry"
-               , "Geometry and padding"
-               , "Rotation"
-               , "Scale 1:5,000,000"
-               , "Scale 1:10,000,000"
-               , "Animation"
-               ]
+        model: [ "Center",
+                 "Center and scale",
+                 "Geometry",
+                 "Geometry and padding",
+                 "Rotation",
+                 "Scale 1:5,000,000",
+                 "Scale 1:10,000,000",
+                 "Animation" ]
 
         onCurrentTextChanged: {
             // Call C++ invokable function to change the viewpoint

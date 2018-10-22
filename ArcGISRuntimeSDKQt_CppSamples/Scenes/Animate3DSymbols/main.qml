@@ -8,5 +8,6 @@ ApplicationWindow {
     height: 600
 
     Animate3DSymbols {
+        anchors.fill: parent
     }
 }

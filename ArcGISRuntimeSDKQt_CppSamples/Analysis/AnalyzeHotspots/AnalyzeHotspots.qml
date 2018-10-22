@@ -31,8 +31,8 @@ AnalyzeHotspotsSample {
 
     property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
-    property date fromThisDate : Date.fromLocaleDateString(Qt.locale(), "98/01/01", "yy/MM/dd");
-    property date toThisDate :   Date.fromLocaleDateString(Qt.locale(), "98/01/31", "yy/MM/dd")
+    property date fromThisDate : Date.fromLocaleDateString(Qt.locale(), "98/01/01", "yy/MM/dd")
+    property date toThisDate : Date.fromLocaleDateString(Qt.locale(), "98/01/31", "yy/MM/dd")
 
     // Declare the MapView
     MapView {
@@ -140,7 +140,7 @@ AnalyzeHotspotsSample {
             width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Run analysis"
-            enabled: !jobInProgress && validateDates(fromThisDate, toThisDate);
+            enabled: !jobInProgress && validateDates(fromThisDate, toThisDate)
 
             onClicked: {
                 var fromString = fromThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
@@ -221,7 +221,7 @@ AnalyzeHotspotsSample {
                 onClicked: {
                     calendar.month += 1;
                 }
-                enabled: calendar.month < calendar.maxDate.getMonth()-1
+                enabled: calendar.month < (calendar.maxDate.getMonth() - 1)
                 Layout.column: 2
                 Layout.row: 0
             }
@@ -268,9 +268,9 @@ AnalyzeHotspotsSample {
                         return;
 
                     if (calendarOverlay.toOrFromDate === "from")
-                            fromThisDate = date;
+                        fromThisDate = date;
                     else if (calendarOverlay.toOrFromDate === "to")
-                            toThisDate = date;
+                        toThisDate = date;
                     calendarOverlay.visible = false;
                 }
             }
@@ -299,8 +299,8 @@ AnalyzeHotspotsSample {
         }
 
         // check that there is at least one day in between the from and to date
-        var oneDay = 86400000;
-        if ((_toDate - _fromDate) < oneDay) {
+        var oneDayMilliseconds = 86400000;
+        if ((_toDate - _fromDate) < oneDayMilliseconds) {
             return false;
         }
 

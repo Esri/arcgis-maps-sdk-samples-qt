@@ -52,6 +52,10 @@ ManageBookmarksSample {
             Image {
                 rotation: 45
                 source: "qrc:/Samples/Maps/ManageBookmarks/add.png"
+                sourceSize: {
+                    width: 64 * scaleFactor
+                    height: 64 * scaleFactor
+                }
             }
 
             MouseArea {
@@ -81,7 +85,7 @@ ManageBookmarksSample {
 
         onModelChanged: {
             var model = bookmarkComboBox.model;
-            if (model !== null)
+            if (model)
             {
                 var w = bestWidth;
                 for (var i = 0; i < model.rowCount(); ++i) {

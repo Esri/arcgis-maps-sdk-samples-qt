@@ -50,9 +50,9 @@ void ChangeBasemap::componentComplete()
   m_mapView->setMap(m_map);
 }
 
-void ChangeBasemap::changeBasemap(QString basemap)
+void ChangeBasemap::changeBasemap(const QString& basemap)
 {
-  if (nullptr == m_map)
+  if (m_map == nullptr)
   {
     return;
   }

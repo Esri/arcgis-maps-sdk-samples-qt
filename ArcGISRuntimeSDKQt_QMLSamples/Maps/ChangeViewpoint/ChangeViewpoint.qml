@@ -73,8 +73,7 @@ Rectangle {
         }
 
         Component.onCompleted: {
-            for (var i = 0; i < model.length; ++i)
-            {
+            for (var i = 0; i < model.length; ++i) {
                 metrics.text = model[i];
                 modelWidth = Math.max(modelWidth, metrics.width)
             }
@@ -85,8 +84,7 @@ Rectangle {
             font: comboBoxViewpoint.font
         }
 
-        function changeCurrentViewpoint()
-        {
+        function changeCurrentViewpoint() {
             switch (comboBoxViewpoint.currentText) {
             case "Center":
                 ptBuilder.setXY(-117.195681, 34.056218); // Esri Headquarters

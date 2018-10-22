@@ -41,18 +41,14 @@ DisplayLayerViewDrawStatusSample {
             height: childrenRect.height
             width: childrenRect.width
             opacity: 0.95
-            GridLayout
-            {
+            GridLayout {
                 id: gridLayout
                 flow: GridLayout.TopToBottom
-                Connections {
-                    target: statusModel
-                    onRowsInserted: gridLayout.rows = statusModel.rowCount();
-                }
+                rows: statusModel.length
                 Repeater {
                     model: statusModel
                     delegate: Text {
-                        text: name
+                        text: model.modelData.name
                         horizontalAlignment: Text.AlignLeft
                         Layout.margins: 5
                     }
@@ -60,7 +56,7 @@ DisplayLayerViewDrawStatusSample {
                 Repeater {
                     model: statusModel
                     delegate: Text {
-                        text: status
+                        text: model.modelData.status
                         color: "steelblue"
                         horizontalAlignment: Text.AlignRight
                         Layout.margins: 5

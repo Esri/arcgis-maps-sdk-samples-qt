@@ -62,7 +62,7 @@ public:
 
   Q_INVOKABLE void animate();
   Q_INVOKABLE void changeMission(const QString& missionName);
-  QAbstractListModel* missionsModel() {return m_missionsModel;}
+  QAbstractListModel* missionsModel();
   Q_INVOKABLE void zoomMapIn();
   Q_INVOKABLE void zoomMapOut();
   Q_INVOKABLE void viewWidthChanged(bool sceneViewIsWider);
