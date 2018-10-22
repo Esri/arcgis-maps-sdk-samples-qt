@@ -26,7 +26,7 @@ Rectangle {
     height: 600
     color: "#E0E0E0"
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
 
     property LocatorTask currentLocatorTask: null

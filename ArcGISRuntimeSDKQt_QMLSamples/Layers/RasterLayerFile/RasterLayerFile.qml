@@ -24,7 +24,7 @@ Rectangle {
     clip: true
     anchors.fill: parent
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
     property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
     property var rasterLayer: null

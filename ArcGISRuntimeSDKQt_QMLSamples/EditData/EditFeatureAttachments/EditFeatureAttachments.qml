@@ -23,7 +23,7 @@ import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property string damageType
     property var selectedFeature: null
 

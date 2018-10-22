@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
 
     MapView {

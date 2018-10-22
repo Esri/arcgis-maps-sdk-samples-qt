@@ -26,7 +26,7 @@ FormatCoordinatesSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: 1
     property int fontPixelSize: 14 * scaleFactor
     property int textPadding: Qt.platform.os === "android" ? (10 * scaleFactor) : (4 * scaleFactor)
     property string labelSuffix: ":  "

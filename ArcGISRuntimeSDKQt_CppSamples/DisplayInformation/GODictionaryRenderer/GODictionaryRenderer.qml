@@ -25,7 +25,7 @@ GODictionaryRendererSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: 1
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Create MapView here, and create its Map and GraphicsOverlay in C++ code

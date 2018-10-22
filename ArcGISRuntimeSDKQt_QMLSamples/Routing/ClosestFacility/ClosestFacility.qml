@@ -27,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property bool busy: false
     property string message: ""
     property var facilities: []

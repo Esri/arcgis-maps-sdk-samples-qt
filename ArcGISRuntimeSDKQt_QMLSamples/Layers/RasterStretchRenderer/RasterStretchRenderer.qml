@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property double scaleFactor: 1
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property string minMax: "Min Max"
     property string percentClip: "Percent Clip"

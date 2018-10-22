@@ -26,7 +26,7 @@ Rectangle {
     height: 600
 
     property var geometryOperations: ["None", "Union", "Difference", "Symmetric difference", "Intersection"]
-    property double scaleFactor: System.displayScaleFactor
+    property double scaleFactor: 1
     property var geometry1
     property var geometry2
 

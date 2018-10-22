@@ -27,7 +27,7 @@ Rectangle {
 
     property Point calloutLocation
     property string damageType
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
 
     // Create MapView that contains a Map
     MapView {

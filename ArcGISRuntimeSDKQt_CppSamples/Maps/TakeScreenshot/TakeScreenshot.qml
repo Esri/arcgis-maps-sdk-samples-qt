@@ -26,8 +26,7 @@ TakeScreenshotSample {
     width: 800
     height: 600    
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
+    property real scaleFactor: 1
     // Declare a MapView
     MapView {
         id: mapView

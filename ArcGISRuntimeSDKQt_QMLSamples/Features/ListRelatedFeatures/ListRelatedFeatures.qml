@@ -26,7 +26,7 @@ Rectangle {
     height: 600
 
     property FeatureLayer alaskaNationalParks: null
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
 
     MapView {
         id: mapView

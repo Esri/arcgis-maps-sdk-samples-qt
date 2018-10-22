@@ -27,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
 
     property double fontSize: 16 * scaleFactor
     property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]

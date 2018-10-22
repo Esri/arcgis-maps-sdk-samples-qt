@@ -25,7 +25,7 @@ import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: 1
 
     property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 

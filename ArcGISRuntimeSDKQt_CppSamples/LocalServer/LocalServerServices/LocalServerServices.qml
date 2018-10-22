@@ -26,7 +26,7 @@ LocalServerServicesSample {
     width: 800
     height: 600
 
-    property double scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property double scaleFactor: 1
 
     Column {
         spacing: 10 * scaleFactor

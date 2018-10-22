@@ -28,8 +28,7 @@ AddItemsToPortalSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
+    property real scaleFactor: 1
     onPortalItemTitleChanged: portalItemModel.setProperty(0, "value", portalItemTitle);
     onPortalItemIdChanged: portalItemModel.setProperty(1, "value", portalItemId);
     onPortalItemTypeNameChanged: portalItemModel.setProperty(2, "value", portalItemTypeName);

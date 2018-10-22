@@ -28,7 +28,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: 1
     property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_Overrides_%1.mmpk".arg(new Date().getTime().toString())
     property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
     property var generateJob: null

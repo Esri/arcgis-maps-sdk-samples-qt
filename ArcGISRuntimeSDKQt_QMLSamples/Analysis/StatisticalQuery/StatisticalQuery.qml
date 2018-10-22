@@ -26,7 +26,7 @@ Rectangle {
     height: 600
 
     property url worldCitiesUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0"
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property alias extentOnly: extentCheckbox.checked
     property alias bigCitiesOnly: bigCitiesCheckbox.checked
     property string resultsText: ""

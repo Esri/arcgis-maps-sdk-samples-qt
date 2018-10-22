@@ -26,7 +26,7 @@ Rectangle {
     height: 600
     id: root
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property string calloutText
     property string calloutDetailText
     property Point calloutLocation;

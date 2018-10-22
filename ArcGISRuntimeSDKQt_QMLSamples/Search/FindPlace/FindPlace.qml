@@ -27,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property double scaleFactor: 1
     property bool isSearchingLocation: false
     property bool searchByExtent: false
 

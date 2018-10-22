@@ -23,7 +23,7 @@ import Esri.ArcGISRuntime 100.4
 Rectangle {
     id: rootRectangle
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: 1
     property string currentKmlNetworkMessage: "";
 
     clip: true

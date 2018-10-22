@@ -27,7 +27,7 @@ Rectangle {
     width: 800 * scaleFactor
     height: 600 * scaleFactor
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property var user: portal.portalUser
 
     BusyIndicator {

@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property double scaleFactor: 1
     //! [RasterColormapRenderer qml add raster basemap]
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
 

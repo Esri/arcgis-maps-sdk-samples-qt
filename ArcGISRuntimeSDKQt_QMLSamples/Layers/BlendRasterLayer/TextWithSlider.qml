@@ -19,7 +19,7 @@ import QtQuick.Controls 2.2
 import Esri.ArcGISExtras 1.1
 
 Row {
-    property double scaleFactor: System.displayScaleFactor
+    property double scaleFactor: 1
     property alias label: labelText.text
     property alias sliderValue: slider.value
     property alias min: slider.from

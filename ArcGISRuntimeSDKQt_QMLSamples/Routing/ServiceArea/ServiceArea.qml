@@ -27,7 +27,7 @@ Rectangle {
     width: 800
     height: 800
 
-    property double scaleFactor: System.displayScaleFactor
+    property double scaleFactor: 1
     property bool busy: false
     property string message: ""
     property var barrierBuilder: null

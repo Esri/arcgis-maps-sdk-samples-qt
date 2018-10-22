@@ -26,7 +26,7 @@ Rectangle {
     height: 600
 
     property bool zoomedOut: true
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
 
     MapView {
         id: topMapView
