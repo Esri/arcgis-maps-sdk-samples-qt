@@ -32,7 +32,7 @@ AnalyzeHotspotsSample {
     property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
     property date fromThisDate : Date.fromLocaleDateString(Qt.locale(), "98/01/01", "yy/MM/dd");
-    property date toThisDate :   Date.fromLocaleDateString(Qt.locale(), "98/01/31", "yy/MM/dd")
+    property date toThisDate : Date.fromLocaleDateString(Qt.locale(), "98/01/31", "yy/MM/dd")
 
     // Declare the MapView
     MapView {
