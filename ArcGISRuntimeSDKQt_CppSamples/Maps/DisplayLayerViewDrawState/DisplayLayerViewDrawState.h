@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef DisplayLayerViewDrawState_H
-#define DisplayLayerViewDrawState_H
+#ifndef DISPLAYLAYERVIEWDRAWSTATE_H
+#define DISPLAYLAYERVIEWDRAWSTATE_H
 
 namespace Esri
 {
@@ -70,4 +70,4 @@ private:
   QStringList m_layerViewStates;
 };
 
-#endif // DisplayLayerViewDrawState_H
+#endif // DISPLAYLAYERVIEWDRAWSTATE_H
