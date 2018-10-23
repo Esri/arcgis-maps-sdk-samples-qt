@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayLayerViewDrawStatus, Category=Maps]
+// [WriteFile Name=DisplayLayerViewDrawState, Category=Maps]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef DISPLAYLAYERVIEWDRAWSTATUS_H
-#define DISPLAYLAYERVIEWDRAWSTATUS_H
+#ifndef DisplayLayerViewDrawState_H
+#define DisplayLayerViewDrawState_H
 
 namespace Esri
 {
@@ -35,15 +35,15 @@ namespace Esri
 #include <QQuickItem>
 #include <QStringList>
 
-class DisplayLayerViewDrawStatus : public QQuickItem
+class DisplayLayerViewDrawState : public QQuickItem
 {
   Q_OBJECT
   Q_PROPERTY(QStringList layerNames READ layerNames NOTIFY namesChanged)
   Q_PROPERTY(QStringList layerViewStates READ layerViewStates NOTIFY statusChanged)
 
 public:
-  explicit DisplayLayerViewDrawStatus(QQuickItem* parent = nullptr);
-  ~DisplayLayerViewDrawStatus();
+  explicit DisplayLayerViewDrawState(QQuickItem* parent = nullptr);
+  ~DisplayLayerViewDrawState();
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
@@ -70,4 +70,4 @@ private:
   QStringList m_layerViewStates;
 };
 
-#endif // DISPLAYLAYERVIEWDRAWSTATUS_H
+#endif // DisplayLayerViewDrawState_H

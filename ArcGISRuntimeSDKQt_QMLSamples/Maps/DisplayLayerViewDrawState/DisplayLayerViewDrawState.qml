@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayLayerViewDrawStatus, Category=Maps]
+// [WriteFile Name=DisplayLayerViewDrawState, Category=Maps]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -17,20 +17,95 @@
 import QtQuick 2.6
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import QtQuick.Window 2.2
-import Esri.Samples 1.0
+import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISExtras 1.1
 
-DisplayLayerViewDrawStatusSample {
-    id: displayLayerView
+Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: System.displayScaleFactor
 
     // add a mapView component
     MapView {
         anchors.fill: parent
-        objectName: "mapView"
+
+        // add a map to the mapView
+        Map {
+            id: map
+
+            // create tiled layer using url
+            ArcGISTiledLayer {
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer"
+            }
+
+            // create a map image layer using a url
+            ArcGISMapImageLayer {
+                url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"
+                minScale: 40000000
+                maxScale: 2000000
+            }
+
+            //create a feature layer using a url
+            FeatureLayer {
+                ServiceFeatureTable {
+                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"
+                }
+            }
+
+            // create initial viewpoint
+            ViewpointCenter {
+                targetScale: 5e7
+
+                Point {
+                    x: -11e6
+                    y: 45e5
+                    spatialReference: SpatialReference {
+                        wkid: 102100
+                    }
+                }
+            }
+
+            onLoadStatusChanged: {
+                if (loadStatus === Enums.LoadStatusLoaded)
+                    for (var i = 0; i < map.operationalLayers.count; i++)
+                        layerViewModel.append({"name": map.operationalLayers.get(i).name, "status": "Unknown"});
+            }
+        }
+
+        onLayerViewStateChanged: {
+            // find index of changed layer
+            var index = getindex(layer);
+            // get Current Status
+            var status = viewStatusString(layerViewState);
+            // change name if layer loaded
+            layerViewModel.setProperty(index, "name", layer.name);
+            // update Status in ListModel
+            layerViewModel.setProperty(index, "status", status);
+        }
+
+        function viewStatusString(layerViewState) {
+            var stateFlag = layerViewState.statusFlags;
+            if (stateFlag & Enums.LayerViewStatusActive)
+                return "Active";
+            if (stateFlag & Enums.LayerViewStatusNotVisible)
+                return "Not Visible";
+            if (stateFlag & Enums.LayerViewStatusOutOfScale)
+                return "Out of scale";
+            if (stateFlag & Enums.LayerViewStatusLoading)
+                return "Loading";
+            if (stateFlag & Enums.LayerViewStatusError)
+                return "Error";
+
+            return "Unknown";
+        }
+
+        function getindex(layer) {
+            for (var i = 0; i < layerViewModel.count; i++) {
+                if (layer === map.operationalLayers.get(i))
+                    return i;
+            }
+        }
     }
 
     // table to display layer names and statuses
@@ -107,20 +182,6 @@ DisplayLayerViewDrawStatusSample {
                     color: "steelblue"
                 }
             }
-        }
-    }
-
-    // initialize ListModel to display layer names and ViewStates
-    onMapReady: {
-        for (var i = 0; i < displayLayerView.layerNames.length; i++)
-            layerViewModel.append({"name": displayLayerView.layerNames[i], "status": displayLayerView.layerViewStates[i]});
-    }
-
-    // adjust ListModel when layer view state changes in C++
-    onStatusChanged: {
-        for (var i = 0; i < displayLayerView.layerNames.length; i++) {
-            layerViewModel.setProperty(i, "name", displayLayerView.layerNames[i]);
-            layerViewModel.setProperty(i, "status", displayLayerView.layerViewStates[i]);
         }
     }
 }
