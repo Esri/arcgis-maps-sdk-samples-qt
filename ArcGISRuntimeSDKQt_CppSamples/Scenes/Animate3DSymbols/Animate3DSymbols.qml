@@ -16,20 +16,19 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
+import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
 Animate3DSymbolsSample {
     id: rootRectangle
-    clip: true
 
     property real scaleFactor: 1
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D"
-    property bool isFollowing: followButton.checked
+    property bool following: followButton.checked
 
     missionFrame: progressSlider.value
-    zoom: cameraDistance.to - cameraDistance.value
+    zoom: cameraDistance.value
     angle: cameraAngle.value
 
     onNextFrameRequested: {
@@ -38,198 +37,227 @@ Animate3DSymbolsSample {
             progressSlider.value = 0;
     }
 
-    onWidthChanged: viewWidthChanged((sceneView.width - mapView.width) > mapView.width);
+    Component.onCompleted: {
+        missionList.currentIndex = 0;
+    }
 
     SceneView {
         id: sceneView
         objectName: "sceneView"
         anchors.fill: parent
-    }
 
-    GroupBox {
-        id: animationGroupBox
-        z: 110
-        anchors {
-            top: sceneView.top
-            left: sceneView.left
-            margins: 10 * scaleFactor
-        }
-
-        Column {
-            spacing: 10
-
-            ComboBox {
-                id: missionList
-                enabled: !playButton.checked
-                model: missionModel
-                textRole: "display"
-                width: 150 * scaleFactor
-                onCurrentTextChanged: {
-                    changeMission(currentText);
-                    progressSlider.value = 0;
-                }
-            }
-
-            Button {
-                id: playButton
-                checked: false
-                checkable: true
-                enabled: missionReady
-                text: checked ? "pause" : "play"
-            }
-
-            Text {
-                id: progressTitle
-                text: "progress"
-                color: "white"
-            }
-
-            Slider {
-                id: progressSlider
-                from: 0
-                to: missionSize
-                enabled : missionReady
-                width: Math.max(implicitWidth, 150) * scaleFactor
-            }
-
-            CheckBox {
-                id: followButton
-                enabled: missionReady
-                text: "follow"
-                checked: true
-
-                onCheckedChanged: setFollowing(checked);
-            }
-        }
-    }
-
-    GroupBox {
-        id: cameraGroupBox
-        z: 110
-        anchors {
-            top: sceneView.top
-            right: sceneView.right
-            margins: 10 * scaleFactor
-        }
-
-        Column {
-            spacing: 10
-
-            Text {
-                id: distTitle
-                text: "zoom"
-                enabled: isFollowing && missionReady
-                color: "white"
-            }
-
-            Slider {
-                id: cameraDistance
-                enabled: isFollowing && missionReady
-                from: 10.0
-                to: 5000.0
-                value: 500.0
-                width: Math.max(implicitWidth, 100) * scaleFactor
-            }
-
-            Text {
-                id: angleTitle
-                text: "angle"
-                enabled: isFollowing && missionReady
-                color: "white"
-            }
-
-            Slider {
-                id: cameraAngle
-                enabled: isFollowing && missionReady
-                from: 0.0
-                to: 180.0
-                value: 45.0
-                width: Math.max(implicitWidth, 100) * scaleFactor
-            }
-
-            Text {
-                id: speedTitle
-                text: "speed"
-                enabled: missionReady
-                color: "white"
-            }
-
-            Slider {
-                id: animationSpeed
-                enabled: missionReady
-                from: 1
-                to: 100
-                value: 50
-                width: Math.max(implicitWidth, 100) * scaleFactor
-            }
-        }
-    }
-
-    Rectangle {
-        id: mapFrame
-        anchors {
-            left:sceneView.left
-            bottom: sceneView.bottom
-            margins: 10 * scaleFactor
-            bottomMargin: 25 * scaleFactor
-        }
-        width: Math.max(sceneView.width * .2, 128 * scaleFactor)
-        height: Math.max(sceneView.height * .4, 128 * scaleFactor)
-        color: "black"
-        z: 100
-        clip: true
-
-        GroupBox {
-            id: mapZoomBox
-            z: 120
+        Rectangle {
+            id: mapFrame
             anchors {
-                top: mapFrame.top
+                left:sceneView.left
+                bottom: sceneView.attributionTop
                 margins: 10 * scaleFactor
             }
-            width: mapFrame.width
+            height: parent.height * 0.25
+            width: parent.width * 0.3
+            color: "black"
+            clip: true
 
-            Row {
+            MapView {
+                id: mapView
+                objectName: "mapView"
+                anchors {
+                    fill: parent
+                    margins: 2 * scaleFactor
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: mouse.accepted
+                    onWheel: wheel.accepted
+                }
+            }
+
+            RowLayout {
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                }
                 spacing: 10
 
-                Button {
-                    id: mapZoomIn
-                    anchors.margins: 10
-                    text: "+"
-                    width: height
-                    onClicked: zoomMapIn()
+                Rectangle {
+                    Layout.margins: 5
+                    height: width
+                    width: childrenRect.width
+                    clip: true
+                    radius: 5
+
+                    opacity: 0.9
+                    Image {
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.svg"
+                        width: 24
+                        height: width
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: zoomMapIn()
+                        }
+                    }
                 }
 
-                Button {
-                    id: mapZoomOut
-                    anchors.margins: 10
-                    text: "-"
-                    width: height
-                    onClicked: zoomMapOut()
+                Rectangle {
+                    Layout.margins: 5
+                    height: width
+                    width: childrenRect.width
+                    opacity: 0.9
+                    clip: true
+                    radius: 5
+
+                    Image {
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.svg"
+                        width: 24
+                        height: width
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: zoomMapOut()
+                        }
+                    }
                 }
-            }
-        }
-
-        MapView {
-            id: mapView
-            objectName: "mapView"
-            anchors {
-                fill: mapFrame
-                margins: 2 * scaleFactor
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onPressed: mouse.accepted
-                onWheel: wheel.accepted
             }
         }
     }
 
-    //    Timer {
-    //        id: timer
-    //        interval: Math.max(animationSpeed.to - animationSpeed.value,1);
-    //        running: playButton.checked;
-    //        repeat: true
-    //        onTriggered: animate();
-    //    }
+    RowLayout {
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            margins: 10 * scaleFactor
+        }
+
+        GroupBox {
+            ColumnLayout {
+                spacing: 10
+
+                ComboBox {
+                    id: missionList
+                    enabled: !playButton.checked
+                    model: missionModel
+                    textRole: "display"
+                    property real modelWidth: 0
+                    implicitWidth: leftPadding + rightPadding + indicator.width + modelWidth
+
+                    onModelChanged: {
+                        for (var i = 0; i < missionModel.rowCount(); ++i) {
+                            var index = missionModel.index(i, 0);
+                            textMetrics.text = missionModel.data(index);
+                            modelWidth = Math.max(modelWidth, textMetrics.width);
+                        }
+                        currentIndex = -1;
+                    }
+
+                    onCurrentTextChanged: {
+                        changeMission(currentText);
+                        progressSlider.value = 0;
+                    }
+
+                    TextMetrics {
+                        id: textMetrics
+                        font: missionList.font
+                    }
+                }
+
+                Button {
+                    id: playButton
+                    checked: false
+                    checkable: true
+                    enabled: missionReady
+                    text: checked ? "pause" : "play"
+                }
+
+                Text {
+                    text: "progress"
+                    style: Text.Outline
+                    styleColor: "white"
+                    font.pointSize: 24
+                }
+
+                Slider {
+                    id: progressSlider
+                    from: 0
+                    to: missionSize
+                    enabled : missionReady
+                }
+
+                CheckBox {
+                    id: followButton
+                    enabled: missionReady
+                    text: "follow"
+                    checked: true
+                    onCheckedChanged: setFollowing(checked);
+                }
+            }
+        }
+
+        GroupBox {
+            Layout.alignment: Qt.AlignRight
+
+            ColumnLayout {
+                spacing: 5
+                layoutDirection: Qt.RightToLeft
+
+                Text {
+                    text: "zoom"
+                    enabled: following && missionReady
+                    style: Text.Outline
+                    styleColor: "white"
+                    font.pointSize: 24
+                }
+
+                Slider {
+                    id: cameraDistance
+                    enabled: following && missionReady
+                    from: 10.0
+                    to: 5000.0
+                    value: 500.0
+                }
+
+                Text {
+                    text: "angle"
+                    enabled: following && missionReady
+                    style: Text.Outline
+                    styleColor: "white"
+                    font.pointSize: 24
+                }
+
+                Slider {
+                    id: cameraAngle
+                    enabled: following && missionReady
+                    from: 0.0
+                    to: 180.0
+                    value: 45.0
+                }
+
+                Text {
+                    text: "speed"
+                    enabled: missionReady
+                    style: Text.Outline
+                    styleColor: "white"
+                    font.pointSize: 24
+
+                }
+
+                Slider {
+                    id: animationSpeed
+                    enabled: missionReady
+                    from: 1
+                    to: 100
+                    value: 50
+                }
+            }
+        }
+    }
+
+    Timer {
+        id: timer
+        interval: Math.max(animationSpeed.to - animationSpeed.value,1);
+        running: playButton.checked;
+        repeat: true
+        onTriggered: animate();
+    }
 }

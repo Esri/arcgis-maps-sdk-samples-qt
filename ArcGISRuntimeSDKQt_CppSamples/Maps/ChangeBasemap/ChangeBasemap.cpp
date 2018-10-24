@@ -52,7 +52,7 @@ void ChangeBasemap::componentComplete()
 
 void ChangeBasemap::changeBasemap(const QString& basemap)
 {
-  if (m_map == nullptr)
+  if (!m_map)
   {
     return;
   }

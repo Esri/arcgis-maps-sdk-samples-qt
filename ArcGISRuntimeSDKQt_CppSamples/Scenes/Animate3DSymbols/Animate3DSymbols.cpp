@@ -129,7 +129,7 @@ void Animate3DSymbols::componentComplete()
 
 void Animate3DSymbols::setMissionFrame(int newFrame)
 {
-  if (m_missionData == nullptr ||
+  if (!m_missionData||
      newFrame < 0 ||
      m_frame == newFrame)
     return;
@@ -140,7 +140,7 @@ void Animate3DSymbols::setMissionFrame(int newFrame)
 
 void Animate3DSymbols::animate()
 {
-  if (m_missionData == nullptr)
+  if (!m_missionData)
     return;
 
   if (missionFrame() < missionSize())
@@ -291,8 +291,8 @@ void Animate3DSymbols::setFollowing(bool following)
 
 void Animate3DSymbols::zoomMapIn()
 {
-  if (m_mapView == nullptr ||
-      m_routeGraphic == nullptr)
+  if (!m_mapView ||
+      !m_routeGraphic)
     return;
 
   // zoom the map view in, focusing on the position of the 2d graphic for the helicopter
@@ -301,8 +301,8 @@ void Animate3DSymbols::zoomMapIn()
 
 void Animate3DSymbols::zoomMapOut()
 {
-  if (m_mapView == nullptr ||
-      m_routeGraphic == nullptr)
+  if (!m_mapView ||
+      !m_routeGraphic)
     return;
 
   // zoom the map view out, focusing on the position of the 2d graphic for the helicopter
@@ -311,6 +311,11 @@ void Animate3DSymbols::zoomMapOut()
 
 void Animate3DSymbols::viewWidthChanged(bool sceneViewIsWider)
 {
+  if (!m_sceneView || !m_mapView)
+  {
+    return;
+  }
+
   // only show the attribution text on the view with the widest visible extent
   m_sceneView->setAttributionTextVisible(sceneViewIsWider);
   m_mapView->setAttributionTextVisible(!sceneViewIsWider);
@@ -318,7 +323,7 @@ void Animate3DSymbols::viewWidthChanged(bool sceneViewIsWider)
 
 bool Animate3DSymbols::missionReady() const
 {
-  if (m_missionData == nullptr)
+  if (!m_missionData)
     return false;
 
   return m_missionData->ready();
@@ -326,7 +331,7 @@ bool Animate3DSymbols::missionReady() const
 
 int Animate3DSymbols::missionSize() const
 {
-  if (m_missionData == nullptr)
+  if (!m_missionData)
     return 0;
 
   return (int)m_missionData->size();

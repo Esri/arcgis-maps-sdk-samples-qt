@@ -112,7 +112,7 @@ void SpatialOperations::setMapQuickView(MapQuickView* mapQuickView)
 
 void SpatialOperations::applyGeometryOperation(int index)
 {
-  if (m_map == nullptr || m_map->loadStatus() != LoadStatus::Loaded)
+  if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
     return;
 
   // Perform geometry calculations

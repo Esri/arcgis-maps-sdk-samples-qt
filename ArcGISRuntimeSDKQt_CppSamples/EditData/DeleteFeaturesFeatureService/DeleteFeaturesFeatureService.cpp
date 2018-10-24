@@ -128,7 +128,7 @@ void DeleteFeaturesFeatureService::connectSignals()
     }
 
     GeoElement* element = identifyResult->geoElements().at(0);
-    if (element == nullptr)
+    if (!element)
     {
       return;
     }
