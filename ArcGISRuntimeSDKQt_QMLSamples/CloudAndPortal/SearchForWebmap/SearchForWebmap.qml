@@ -320,17 +320,9 @@ Rectangle {
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
         title: "Could not load web map!"
-        visible: mapLoadError.length > 0
         property alias text : textLabel.text
-        property alias informativeText : detailsLabel.text
-        ColumnLayout {
-            Text {
-                id: textLabel
-                text: mapLoadError
-            }
-            Text {
-                id: detailsLabel
-            }
+        Text {
+            id: textLabel
         }
         onAccepted: visible = false;
     }

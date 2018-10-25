@@ -172,6 +172,7 @@ Rectangle {
             }
             Text {
                 id: detailsLabel
+                text: resultsText
             }
         }
     }
