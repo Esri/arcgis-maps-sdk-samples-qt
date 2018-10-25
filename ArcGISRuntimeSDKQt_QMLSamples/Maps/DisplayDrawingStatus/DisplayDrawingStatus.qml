@@ -103,7 +103,6 @@ Rectangle {
                     }
                     height: 20 * scaleFactor
                     horizontalAlignment: Text.AlignHCenter
-                    renderType: Text.NativeRendering
                     text: "Drawing..."
                 }
             }

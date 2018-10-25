@@ -407,7 +407,6 @@ Rectangle {
                         height: 40 * scaleFactor
                         font.pixelSize: 25 * scaleFactor
                         text: "Choose a Mobile Map Package"
-                        renderType: Text.NativeRendering
                     }
                 }
 
@@ -439,7 +438,6 @@ Rectangle {
                                 color: "white"
                                 width: 150 * scaleFactor
                                 text: modelData
-                                renderType: Text.NativeRendering
                                 elide: Text.ElideMiddle
                             }
 
@@ -535,7 +533,6 @@ Rectangle {
                         height: 40 * scaleFactor
                         font.pixelSize: 25 * scaleFactor
                         text: "Choose a Map"
-                        renderType: Text.NativeRendering
                     }
                 }
 
@@ -567,7 +564,6 @@ Rectangle {
                                 color: "white"
                                 width: 150 * scaleFactor
                                 text: name
-                                renderType: Text.NativeRendering
                                 elide: Text.ElideMiddle
                             }
 

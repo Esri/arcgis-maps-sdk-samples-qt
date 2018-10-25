@@ -202,7 +202,6 @@ MobileMap_SearchAndRouteSample {
                             height: 40 * scaleFactor
                             font.pixelSize: 25 * scaleFactor
                             text: "Choose a Mobile Map Package"
-                            renderType: Text.NativeRendering
                         }
                     }
 
@@ -229,7 +228,6 @@ MobileMap_SearchAndRouteSample {
                                     color: "white"
                                     width: 150 * scaleFactor
                                     text: modelData
-                                    renderType: Text.NativeRendering
                                     elide: Text.ElideMiddle
                                 }
 
@@ -313,7 +311,6 @@ MobileMap_SearchAndRouteSample {
                             height: 40 * scaleFactor
                             font.pixelSize: 25 * scaleFactor
                             text: "Choose a Map"
-                            renderType: Text.NativeRendering
                         }
                     }
 
@@ -339,7 +336,6 @@ MobileMap_SearchAndRouteSample {
                                     color: "white"
                                     width: 150 * scaleFactor
                                     text: modelData.name
-                                    renderType: Text.NativeRendering
                                     elide: Text.ElideMiddle
                                 }
 

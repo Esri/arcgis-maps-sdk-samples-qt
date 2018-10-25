@@ -161,7 +161,6 @@ OfflineGeocodeSample {
                             text: label
                             elide: Text.ElideRight
                             leftPadding: 5 * scaleFactor
-                            renderType: Text.NativeRendering
                             color: "black"
                         }
 
@@ -200,7 +199,6 @@ OfflineGeocodeSample {
         Text {
             anchors.centerIn: parent
             text: "No matching address"
-            renderType: Text.NativeRendering
             font.pixelSize: 18 * scaleFactor
         }
     }

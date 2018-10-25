@@ -50,7 +50,6 @@ Rectangle {
                     text: label
                     elide: Text.ElideRight
                     leftPadding: 5 * scaleFactor
-                    renderType: Text.NativeRendering
                     color: "black"
                 }
 
