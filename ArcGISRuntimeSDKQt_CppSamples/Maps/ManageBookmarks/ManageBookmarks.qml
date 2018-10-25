@@ -52,10 +52,8 @@ ManageBookmarksSample {
             Image {
                 rotation: 45
                 source: "qrc:/Samples/Maps/ManageBookmarks/add.png"
-                sourceSize: {
-                    width: 64 * scaleFactor
-                    height: 64 * scaleFactor
-                }
+                width: 32 * scaleFactor
+                height: 32 * scaleFactor
             }
 
             MouseArea {
