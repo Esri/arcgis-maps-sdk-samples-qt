@@ -231,7 +231,6 @@ Rectangle {
                 left: parent.left
                 right: parent.right
             }
-
             height: childrenRect.height
             color: "#f7f8fa"
             border {
@@ -241,8 +240,8 @@ Rectangle {
             radius: 2
 
             RowLayout {
-                anchors.centerIn: parent
                 width: parent.width
+                height: textField.height
 
                 // search bar for geocoding
                 TextField {
@@ -273,14 +272,18 @@ Rectangle {
 
                 // button to open and close suggestions
                 Rectangle {
-                    width: 35 * scaleFactor
+                    anchors {
+                        top: parent.top
+                        bottom: parent.bottom
+                        right: parent.right
+                        margins: 5
+                    }
+                    width: height
                     color: "#f7f8fa"
                     radius: 2
 
                     Image {
-                        anchors.centerIn: parent
-                        width: parent.width
-                        height: parent.width
+                        anchors.fill: parent
                         source: suggestionRect.visible ? "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_light_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_light_d.png"
 
                         MouseArea {
