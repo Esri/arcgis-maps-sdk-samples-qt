@@ -30,12 +30,13 @@
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerExtrusion::FeatureLayerExtrusion(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
-{
+  QQuickItem(parent),
   // define line and fill symbols for a simple renderer
-  m_lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("Black"), 1.0f, this);
-  m_fillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("Blue"), m_lineSymbol, this);
-  m_renderer = new SimpleRenderer(m_fillSymbol, this);
+  m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("Black"), 1.0f, this)),
+  m_fillSymbol(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("Blue"), m_lineSymbol, this)),
+  m_renderer(new SimpleRenderer(m_fillSymbol, this))
+{
+
 
   // set renderer extrusion mode to absolute to prevent clipping
   RendererSceneProperties props = m_renderer->sceneProperties();

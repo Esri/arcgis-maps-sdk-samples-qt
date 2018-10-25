@@ -4,7 +4,7 @@
         <file>Animate3DSymbols.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>minus-16-f.svg</file>
-        <file>plus-16-f.svg</file>
+        <file>minus-16-f.png</file>
+        <file>plus-16-f.png</file>
     </qresource>
 </RCC>

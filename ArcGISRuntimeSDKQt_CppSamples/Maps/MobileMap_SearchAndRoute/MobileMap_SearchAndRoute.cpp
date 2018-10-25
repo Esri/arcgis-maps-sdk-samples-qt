@@ -144,7 +144,7 @@ void MobileMap_SearchAndRoute::connectSignals()
 {
     connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
     {
-        if (m_currentLocatorTask != nullptr)
+        if (m_currentLocatorTask)
         {
             m_clickedPoint = Point(m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y()));
 
@@ -242,7 +242,7 @@ void MobileMap_SearchAndRoute::selectMap(int index)
     // set the MapView
     m_mapView->setMap(m_mobileMapPackages[m_selectedMmpkIndex]->maps().at(index));
 
-    if (m_currentLocatorTask != nullptr)
+    if (m_currentLocatorTask)
     {
         // prevent connecting same signal to multiple slots
         m_currentLocatorTask->disconnect();
@@ -270,7 +270,7 @@ void MobileMap_SearchAndRoute::selectMap(int index)
                 emit canClearChanged();
 
                 // if routing is enabled in map, set up the Stops
-                if (m_currentRouteTask != nullptr)
+                if (m_currentRouteTask)
                 {
                     // create a stop based on added graphic
                     m_stops << Stop(bluePinGraphic->geometry());

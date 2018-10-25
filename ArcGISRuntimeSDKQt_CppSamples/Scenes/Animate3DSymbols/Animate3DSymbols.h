@@ -47,7 +47,7 @@ class Animate3DSymbols : public QQuickItem
   Q_PROPERTY(bool missionReady READ missionReady NOTIFY missionReadyChanged)
   Q_PROPERTY(int missionSize READ missionSize NOTIFY missionSizeChanged)
   Q_PROPERTY(int missionFrame READ missionFrame WRITE setMissionFrame NOTIFY missionFrameChanged)
-  Q_PROPERTY(QAbstractListModel* missionModel READ missionsModel CONSTANT)
+  Q_PROPERTY(QAbstractListModel* missionsModel READ missionsModel CONSTANT)
   Q_PROPERTY(double minZoom READ minZoom NOTIFY minZoomChanged)
   Q_PROPERTY(double zoom READ zoom WRITE setZoom NOTIFY zoomChanged)
   Q_PROPERTY(double angle READ angle WRITE setAngle NOTIFY angleChanged)

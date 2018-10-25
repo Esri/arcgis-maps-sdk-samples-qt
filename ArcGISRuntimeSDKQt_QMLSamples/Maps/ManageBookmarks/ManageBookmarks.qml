@@ -80,6 +80,8 @@ Rectangle {
 
             Image {
                 rotation: 45
+                width: 32
+                height: width
                 source: "qrc:/Samples/Maps/ManageBookmarks/add.png"
             }
 

@@ -124,7 +124,7 @@ void UpdateGeometryFeatureService::connectSignals()
     if (identifyResult->geoElements().size() > 0)
     {
       // first delete if not nullptr
-      if (m_selectedFeature != nullptr)
+      if (m_selectedFeature)
         delete m_selectedFeature;
 
       m_selectedFeature = static_cast<Feature*>(identifyResult->geoElements().at(0));

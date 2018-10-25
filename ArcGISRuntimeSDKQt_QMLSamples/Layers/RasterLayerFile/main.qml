@@ -7,5 +7,6 @@ ApplicationWindow {
     height: 600
 
     RasterLayerFile {
+        anchors.fill: parent
     }
 }

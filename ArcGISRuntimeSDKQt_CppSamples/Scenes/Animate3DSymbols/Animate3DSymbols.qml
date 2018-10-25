@@ -89,7 +89,7 @@ Animate3DSymbolsSample {
 
                     opacity: 0.9
                     Image {
-                        source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.svg"
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.png"
                         width: 24
                         height: width
 
@@ -109,7 +109,7 @@ Animate3DSymbolsSample {
                     radius: 5
 
                     Image {
-                        source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.svg"
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.png"
                         width: 24
                         height: width
                         MouseArea {
@@ -137,15 +137,15 @@ Animate3DSymbolsSample {
                 ComboBox {
                     id: missionList
                     enabled: !playButton.checked
-                    model: missionModel
+                    model: missionsModel
                     textRole: "display"
                     property real modelWidth: 0
                     implicitWidth: leftPadding + rightPadding + indicator.width + modelWidth
 
                     onModelChanged: {
-                        for (var i = 0; i < missionModel.rowCount(); ++i) {
-                            var index = missionModel.index(i, 0);
-                            textMetrics.text = missionModel.data(index);
+                        for (var i = 0; i < missionsModel.rowCount(); ++i) {
+                            var index = missionsModel.index(i, 0);
+                            textMetrics.text = missionsModel.data(index);
                             modelWidth = Math.max(modelWidth, textMetrics.width);
                         }
                         currentIndex = -1;

@@ -121,7 +121,7 @@ void DeleteFeaturesFeatureService::connectSignals()
     }
 
     // delete selected feature member if not nullptr
-    if (m_selectedFeature != nullptr)
+    if (m_selectedFeature)
     {
       delete m_selectedFeature;
       m_selectedFeature = nullptr;

@@ -81,7 +81,7 @@ void ServiceArea::setBarrierMode()
 {
   m_mode = SampleMode::Barrier;
 
-  if (m_barrierBuilder != nullptr)
+  if (m_barrierBuilder)
     return;
 
   m_barrierBuilder = new PolylineBuilder(SpatialReference::webMercator(), this);

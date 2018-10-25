@@ -166,7 +166,7 @@ Rectangle {
 
                     opacity: 0.9
                     Image {
-                        source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.svg"
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.png"
                         width: 24
                         height: width
 
@@ -186,7 +186,7 @@ Rectangle {
                     radius: 5
 
                     Image {
-                        source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.svg"
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.png"
                         width: 24
                         height: width
                         MouseArea {
