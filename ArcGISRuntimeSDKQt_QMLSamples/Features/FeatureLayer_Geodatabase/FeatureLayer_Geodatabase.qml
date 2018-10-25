@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
@@ -80,9 +80,23 @@ Rectangle {
         onErrorChanged: errorMessage = error.message;
     }
 
-    MessageDialog {
+    Dialog {
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         visible: text.length > 0
-        text: errorMessage
-        informativeText: "Please consult the README.md"
+        property alias text : textLabel.text
+        property alias informativeText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: errorMessage
+            }
+            Text {
+                id: detailsLabel
+                text: "Please consult the README.md"
+            }
+        }
     }
 }

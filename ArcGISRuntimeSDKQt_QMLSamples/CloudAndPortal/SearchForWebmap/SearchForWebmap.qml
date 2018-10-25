@@ -17,7 +17,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.2
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
@@ -314,11 +313,25 @@ Rectangle {
     }
     */
 
-    MessageDialog {
+    Dialog {
         id: webMapMsg
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Could not load web map!"
-        visible: false
-
+        visible: mapLoadError.length > 0
+        property alias text : textLabel.text
+        property alias informativeText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: mapLoadError
+            }
+            Text {
+                id: detailsLabel
+            }
+        }
         onAccepted: visible = false;
     }
 }

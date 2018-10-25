@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
 import Esri.ArcGISRuntime 100.4
 
 Rectangle {
@@ -70,9 +69,17 @@ Rectangle {
         //! [identify graphics api snippet]
     }
 
-    MessageDialog {
+    Dialog {
         id: msgDialog
-        text: "Tapped on graphic"
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
+        property alias text : textLabel.text
+        Text {
+            id: textLabel
+            text: "Tapped on graphic"
+        }
     }
 
     Component.onCompleted: {

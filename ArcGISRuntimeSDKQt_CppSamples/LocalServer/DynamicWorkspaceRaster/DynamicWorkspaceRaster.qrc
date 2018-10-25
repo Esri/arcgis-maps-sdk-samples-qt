@@ -6,5 +6,6 @@
         <file>DynamicWorkspaceRaster.cpp</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>main.qml</file>
     </qresource>
 </RCC>

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -77,10 +77,23 @@ StatisticalQuerySample {
         }
     }
 
-    // Create a dialog to display the result
-    MessageDialog {
+    Dialog {
         id: msgDialog
-        text: "Query Statistics Results:"
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
+        property alias text : textLabel.text
+        property alias informativeText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: "Query Statistics Results:"
+            }
+            Text {
+                id: detailsLabel
+            }
+        }
     }
 
     onShowStatistics: {

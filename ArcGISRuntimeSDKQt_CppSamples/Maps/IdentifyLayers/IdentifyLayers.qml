@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 IdentifyLayersSample {
@@ -30,9 +30,17 @@ IdentifyLayersSample {
         objectName: "mapView"
     }
 
-    MessageDialog {
+    Dialog {
         id: msgDialog
-        text: message
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
+        property alias text : textLabel.text
+        Text {
+            id: textLabel
+            text: message
+        }
     }
 
     onShowMessage: {

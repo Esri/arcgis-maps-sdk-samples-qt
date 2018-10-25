@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.3
 import Esri.Samples 1.0
 
@@ -28,13 +27,25 @@ DisplayKmlNetworkLinksSample {
 
     property real scaleFactor: 1
 
-    MessageDialog {
+    Dialog {
         id: messageDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        width: parent.width * 0.75
+        standardButtons: Dialog.Ok
         title: "KML layer message"
-        text: currentKmlNetworkMessage
+        property alias text : textLabel.text
+        Text {
+            width: parent.width
+            id: textLabel
+            text: currentKmlNetworkMessage
+            wrapMode: Text.WordWrap
+        }
         onAccepted: {
             currentKmlNetworkMessage = ""; // Clear the message
         }
+        onRejected: onAccepted()
     }
 
     SceneView {

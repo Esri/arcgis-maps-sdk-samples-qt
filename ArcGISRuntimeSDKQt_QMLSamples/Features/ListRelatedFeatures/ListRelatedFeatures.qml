@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
@@ -213,7 +213,16 @@ Rectangle {
         id: relatedFeaturesModel
     }
 
-    MessageDialog {
+    Dialog {
         id: msgDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
+        property alias text : textLabel.text
+        Text {
+            id: textLabel
+            text: "Executing geoprocessing failed."
+        }
     }
 }

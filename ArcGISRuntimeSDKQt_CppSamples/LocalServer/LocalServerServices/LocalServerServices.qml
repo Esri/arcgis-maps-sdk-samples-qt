@@ -17,14 +17,12 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.0
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
 LocalServerServicesSample {
     id: localServerServicesSample
-    width: 800
-    height: 600
 
     property double scaleFactor: 1
 
@@ -192,7 +190,7 @@ LocalServerServicesSample {
         folder: System.userHomeFolder.url + "/ArcGIS/Runtime/Data"
         nameFilters: servicesCombo.currentIndex === 0 || servicesCombo.currentIndex === 1 ? ["Map Packages (*.mpk *.mpkx)", "All files (*)"] : ["Geoprocessing Packages (*gpk *.gpkx)", "All files (*)"]
         onAccepted: {
-            filePathText.text = fileUrl;
+            filePathText.text = file;
         }
     }
 }

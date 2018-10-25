@@ -17,7 +17,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Qt.labs.calendar 1.0
-import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
@@ -276,9 +275,23 @@ AnalyzeHotspotsSample {
         }
     }
 
-    MessageDialog {
+    Dialog {
         id: messageDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Error"
+        property alias text : textLabel.text
+        property alias detailedText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+            }
+            Text {
+                id: detailsLabel
+            }
+        }
     }
 
     // function to validate the date ranges provided
