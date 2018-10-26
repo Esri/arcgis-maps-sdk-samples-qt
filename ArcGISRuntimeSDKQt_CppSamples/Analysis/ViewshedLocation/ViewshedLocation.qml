@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -287,17 +286,27 @@ ViewshedLocationSample {
 
     ColorDialog {
         id: visibleColorDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
         onAccepted: {
-            close();
-            viewshedSample.visibleColor = color;
+            viewshedSample.visibleColor = visibleColorDialog.color;
+        }
+        onOpened: {
+            setColor(viewshedSample.visibleColor);
         }
     }
 
     ColorDialog {
         id: obstructedColorDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
         onAccepted: {
-            close();
-            viewshedSample.obstructedColor = color;
+            viewshedSample.obstructedColor = obstructedColorDialog.color;
+        }
+        onOpened: {
+            setColor(viewshedSample.obstructedColor);
         }
     }
 }
