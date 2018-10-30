@@ -68,7 +68,7 @@ OfflineGeocodeSample {
             }
             radius: 2
 
-            ColumnLayout {
+            RowLayout {
                 width: parent.width
                 height: childrenRect.height
 
@@ -100,20 +100,14 @@ OfflineGeocodeSample {
 
                 // button to close and open suggestions
                 Rectangle {
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        right: parent.right
-                        margins: 5 * scaleFactor
-                    }
-
-                    width: 35 * scaleFactor
+                    Layout.margins: 5 * scaleFactor
+                    width: height
+                    height: textField.contentHeight
                     color: "#f7f8fa"
                     radius: 2
 
                     Image {
-                        anchors.centerIn: parent
-                        width: parent.width
-                        height: parent.width
+                        anchors.fill: parent
                         source: suggestionRect.visible ? "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_light_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_light_d.png"
 
                         MouseArea {

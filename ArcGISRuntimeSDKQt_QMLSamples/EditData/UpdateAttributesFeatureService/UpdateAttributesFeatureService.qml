@@ -16,6 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
@@ -148,9 +149,9 @@ Rectangle {
     // Update Window
     Rectangle {
         id: updateWindow
+        width: childrenRect.width
+        height: childrenRect.height
         anchors.centerIn: parent
-        width: 200 * scaleFactor
-        height: 110 * scaleFactor
         radius: 10 * scaleFactor
         visible: false
 
@@ -167,61 +168,56 @@ Rectangle {
             onWheel: wheel.accepted = true;
         }
 
-        Column {
-            anchors {
-                fill: parent
-                margins: 10 * scaleFactor
-            }
-            spacing: 10
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                Text {
-                    text: "Update Attribute"
-                    font.pixelSize: 16 * scaleFactor
-                }
+        GridLayout {
+            columns: 2
+            anchors.margins: 5 * scaleFactor
+
+            Text {
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                text: "Update Attribute"
+                font.pixelSize: 16 * scaleFactor
             }
 
             ComboBox {
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                Layout.fillWidth: true
                 id: damageComboBox
-                width: updateWindow.width - (20 * scaleFactor)
                 model: featAttributes
             }
 
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 10
+            Button {
+                Layout.margins: 5
+                text: "Update"
 
-                Button {
-                    width: (updateWindow.width / 2) - (20 * scaleFactor)
-                    text: "Update"
+                function doUpdateAttribute(){
+                    if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
+                        selectedFeature.onLoadStatusChanged.disconnect(doUpdateAttribute);
 
-                    function doUpdateAttribute(){
-                        if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
-                            selectedFeature.onLoadStatusChanged.disconnect(doUpdateAttribute);
-
-                            selectedFeature.attributes.replaceAttribute("typdamage", damageComboBox.currentText);
-                            // update the feature in the feature table asynchronously
-                            featureTable.updateFeature(selectedFeature);
-                        }
-                    }
-
-                    // once the update button is clicked, hide the windows, and fetch the currently selected features
-                    onClicked: {
-                        if (callout.visible)
-                           callout.dismiss();
-                        updateWindow.visible = false;
-
-                        selectedFeature.onLoadStatusChanged.connect(doUpdateAttribute);
-                        selectedFeature.load();
+                        selectedFeature.attributes.replaceAttribute("typdamage", damageComboBox.currentText);
+                        // update the feature in the feature table asynchronously
+                        featureTable.updateFeature(selectedFeature);
                     }
                 }
 
-                Button {
-                    width: (updateWindow.width / 2) - (20 * scaleFactor)
-                    text: "Cancel"
-                    // once the cancel button is clicked, hide the window
-                    onClicked: updateWindow.visible = false;
+                // once the update button is clicked, hide the windows, and fetch the currently selected features
+                onClicked: {
+                    if (callout.visible)
+                       callout.dismiss();
+                    updateWindow.visible = false;
+
+                    selectedFeature.onLoadStatusChanged.connect(doUpdateAttribute);
+                    selectedFeature.load();
                 }
+            }
+
+            Button {
+                Layout.alignment: Qt.AlignRight
+                Layout.margins: 5
+                text: "Cancel"
+                // once the cancel button is clicked, hide the window
+                onClicked: updateWindow.visible = false;
             }
         }
     }

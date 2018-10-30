@@ -146,7 +146,11 @@ DisplayItem::DisplayItem(const QString& name, const QString& status, QObject* pa
   m_name(name),
   m_status(status)
 {
+}
 
+DisplayItem::DisplayItem(QObject* parent) :
+  QObject(parent)
+{
 }
 
 void DisplayItem::setName(const QString& name)
@@ -155,7 +159,7 @@ void DisplayItem::setName(const QString& name)
   emit nameChanged();
 }
 
-const QString& DisplayItem::name() const
+QString DisplayItem::name() const
 {
   return m_name;
 }
@@ -165,7 +169,7 @@ void DisplayItem::setStatus(const QString& status)
   m_status = status;
   emit statusChanged();
 }
-const QString& DisplayItem::status() const
+QString DisplayItem::status() const
 {
   return m_status;
 }

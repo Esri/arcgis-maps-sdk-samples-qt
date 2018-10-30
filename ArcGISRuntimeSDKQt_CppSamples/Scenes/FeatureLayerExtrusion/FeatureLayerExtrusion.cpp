@@ -36,8 +36,6 @@ FeatureLayerExtrusion::FeatureLayerExtrusion(QQuickItem* parent /* = nullptr */)
   m_fillSymbol(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("Blue"), m_lineSymbol, this)),
   m_renderer(new SimpleRenderer(m_fillSymbol, this))
 {
-
-
   // set renderer extrusion mode to absolute to prevent clipping
   RendererSceneProperties props = m_renderer->sceneProperties();
   props.setExtrusionMode(ExtrusionMode::AbsoluteHeight);

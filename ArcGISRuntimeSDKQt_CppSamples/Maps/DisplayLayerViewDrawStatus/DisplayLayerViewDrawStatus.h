@@ -70,15 +70,15 @@ class DisplayItem : public QObject
   Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
   Q_PROPERTY(QString status READ status WRITE setStatus NOTIFY statusChanged)
 public:
+  DisplayItem(QObject* parent = nullptr);
+
   DisplayItem(const QString& name, const QString& status, QObject* parent = nullptr);
 
-  using QObject::QObject;
-
   void setName(const QString& name);
-  const QString& name() const;
+  QString name() const;
 
   void setStatus(const QString& status);
-  const QString& status() const;
+  QString status() const;
 
 signals:
   void nameChanged();

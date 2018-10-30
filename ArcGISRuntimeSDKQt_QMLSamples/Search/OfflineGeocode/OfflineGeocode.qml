@@ -232,6 +232,7 @@ Rectangle {
                 right: parent.right
             }
             height: childrenRect.height
+
             color: "#f7f8fa"
             border {
                 color: "#7B7C7D"
@@ -241,14 +242,14 @@ Rectangle {
 
             RowLayout {
                 width: parent.width
-                height: textField.height
+                height: childrenRect.height
 
                 // search bar for geocoding
                 TextField {
                     id: textField
-                    leftPadding: 5
                     Layout.fillWidth: true
-                    Layout.margins: 5
+                    leftPadding: 5 * scaleFactor
+
                     placeholderText: "Enter an Address"
 
                     // when user types, make suggestions visible
@@ -272,13 +273,9 @@ Rectangle {
 
                 // button to open and close suggestions
                 Rectangle {
-                    anchors {
-                        top: parent.top
-                        bottom: parent.bottom
-                        right: parent.right
-                        margins: 5
-                    }
+                    Layout.margins: 5 * scaleFactor
                     width: height
+                    height: textField.contentHeight
                     color: "#f7f8fa"
                     radius: 2
 
