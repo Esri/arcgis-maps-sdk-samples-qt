@@ -22,8 +22,6 @@ int main(int argc, char *argv[])
   QApplication application(argc, argv);
 
   BuildLegend applicationWindow;
-  applicationWindow.setMinimumWidth(800);
-  applicationWindow.setMinimumHeight(600);
   applicationWindow.show();
 
   return application.exec();
