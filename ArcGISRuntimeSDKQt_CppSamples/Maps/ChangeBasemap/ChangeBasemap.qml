@@ -37,7 +37,7 @@ ChangeBasemapSample {
             margins: 15
         }
 
-        property int bestWidth : implicitWidth
+        property int bestWidth: implicitWidth
 
         width: bestWidth + indicator.width + leftPadding + rightPadding
 
