@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    app.setApplicationName("DisplayLayerViewDrawStatus - QML");
+    app.setApplicationName("DisplayLayerViewDrawState - QML");
 
     // initialize application view
     QQuickView view;
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(arcGISToolkitImportPath);
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Maps/DisplayLayerViewDrawStatus/DisplayLayerViewDrawStatus.qml"));
+    view.setSource(QUrl("qrc:/Samples/Maps/DisplayLayerViewDrawState/DisplayLayerViewDrawState.qml"));
 
     view.show();
 
