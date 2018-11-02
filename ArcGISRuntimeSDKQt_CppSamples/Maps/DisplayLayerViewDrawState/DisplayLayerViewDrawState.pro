@@ -27,20 +27,15 @@ ARCGIS_RUNTIME_VERSION = 100.4
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
-TARGET = DisplayLayerViewDrawStatus
+TARGET = DisplayLayerViewDrawState
 
 #-------------------------------------------------------------------------------
 
-HEADERS += \
-    DisplayLayerViewDrawStatus.h \
-    DrawStatusModel.h
+HEADERS += DisplayLayerViewDrawState.h
 
-SOURCES += \
-    main.cpp \
-    DisplayLayerViewDrawStatus.cpp \
-    DrawStatusModel.cpp
+SOURCES += main.cpp DisplayLayerViewDrawState.cpp
 
-RESOURCES += DisplayLayerViewDrawStatus.qrc
+RESOURCES += DisplayLayerViewDrawState.qrc
 
 #-------------------------------------------------------------------------------
 

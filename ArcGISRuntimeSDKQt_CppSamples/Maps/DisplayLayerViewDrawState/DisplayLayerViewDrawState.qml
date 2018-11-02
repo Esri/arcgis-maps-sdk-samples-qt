@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayLayerViewDrawStatus, Category=Maps]
+// [WriteFile Name=DisplayLayerViewDrawState, Category=Maps]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -19,7 +19,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 
-DisplayLayerViewDrawStatusSample {
+DisplayLayerViewDrawStateSample {
     id: displayLayerView
     width: 800
     height: 600

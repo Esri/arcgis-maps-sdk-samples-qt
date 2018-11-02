@@ -38,8 +38,8 @@ Rectangle {
 
             WmsLayer {
                 id: wmsLayer
-                url: "http://geoint.lmic.state.mn.us/cgi-bin/wms?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetCapabilities"
-                layerNames: ["fsa2017"]
+                url: "https://imageserver.gisdata.mn.gov/cgi-bin/mncomp?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
+                layerNames: ["mncomp"]
 
                 onLoadStatusChanged: {
                     if (loadStatus !== Enums.LoadStatusLoaded)
@@ -82,7 +82,7 @@ Rectangle {
         spacing: 5 * scaleFactor
 
         RadioButton {
-            text: "Style 1"
+            text: "Default"
             checked: true
             onCheckedChanged: {
                 if (checked) {
@@ -96,7 +96,7 @@ Rectangle {
         }
 
         RadioButton {
-            text: "Style 2"
+            text: "Contrast Stretch"
             onCheckedChanged: {
                 if (checked) {
                     if (!sublayer)

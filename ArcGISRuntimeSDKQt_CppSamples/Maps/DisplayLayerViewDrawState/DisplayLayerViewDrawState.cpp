@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayLayerViewDrawStatus, Category=Maps]
+// [WriteFile Name=DisplayLayerViewDrawState, Category=Maps]
 // [Legal]
 // Copyright 2016 Esri.
 
@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "DisplayLayerViewDrawStatus.h"
+#include "DisplayLayerViewDrawState.h"
 
 #include "ArcGISMapImageLayer.h"
 #include "ArcGISTiledLayer.h"
@@ -31,25 +31,25 @@
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayLayerViewDrawStatus::DisplayLayerViewDrawStatus(QQuickItem* parent) :
+DisplayLayerViewDrawState::DisplayLayerViewDrawState(QQuickItem* parent) :
   QQuickItem(parent)
 {
 }
 
-DisplayLayerViewDrawStatus::~DisplayLayerViewDrawStatus() = default;
+DisplayLayerViewDrawState::~DisplayLayerViewDrawState() = default;
 
-void DisplayLayerViewDrawStatus::init()
+void DisplayLayerViewDrawState::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<DisplayLayerViewDrawStatus>("Esri.Samples", 1, 0, "DisplayLayerViewDrawStatusSample");
+  qmlRegisterType<DisplayLayerViewDrawState>("Esri.Samples", 1, 0, "DisplayLayerViewDrawStateSample");
 }
 
-const QList<QObject*>& DisplayLayerViewDrawStatus::statusModel() const
+const QList<QObject*>& DisplayLayerViewDrawState::statusModel() const
 {
   return m_statuses;
 }
 
-void DisplayLayerViewDrawStatus::componentComplete()
+void DisplayLayerViewDrawState::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -83,7 +83,7 @@ void DisplayLayerViewDrawStatus::componentComplete()
 }
 
 //add layers and connect layerViewStateChanged signal
-void DisplayLayerViewDrawStatus::addLayers()
+void DisplayLayerViewDrawState::addLayers()
 {
   // create tiled layer using a url
   m_tiledLayer = new ArcGISTiledLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer"), this);
@@ -105,7 +105,7 @@ void DisplayLayerViewDrawStatus::addLayers()
   m_map->operationalLayers()->append(m_featureLayer);
 }
 
-void DisplayLayerViewDrawStatus::connectSignals()
+void DisplayLayerViewDrawState::connectSignals()
 {
   // connect layerViewStateChanged signal
   connect(m_mapView, &MapQuickView::layerViewStateChanged, this, [this](Layer* layer, LayerViewState viewState)

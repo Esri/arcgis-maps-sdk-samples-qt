@@ -57,7 +57,7 @@ StyleWmsLayerSample {
         spacing: 5 * scaleFactor
 
         RadioButton {
-            text: "Style 1"
+            text: "Default"
             checked: true
             onCheckedChanged: {
                 if (checked) {
@@ -68,7 +68,7 @@ StyleWmsLayerSample {
         }
 
         RadioButton {
-            text: "Style 2"
+            text: "Contrast Stretch"
             onCheckedChanged: {
                 if (checked) {
                     // set the style string on the sublayer

@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayLayerViewDrawStatus, Category=Maps]
+// [WriteFile Name=DisplayLayerViewDrawState, Category=Maps]
 // [Legal]
 // Copyright 2016 Esri.
 

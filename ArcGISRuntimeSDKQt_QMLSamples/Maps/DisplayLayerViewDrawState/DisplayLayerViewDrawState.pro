@@ -25,7 +25,7 @@ CONFIG += c++11
 
 SOURCES += main.cpp
 
-RESOURCES += DisplayLayerViewDrawStatus.qrc
+RESOURCES += DisplayLayerViewDrawState.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

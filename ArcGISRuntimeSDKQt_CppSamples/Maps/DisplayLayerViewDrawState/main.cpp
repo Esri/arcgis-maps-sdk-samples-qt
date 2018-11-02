@@ -22,7 +22,7 @@
 #include <Windows.h>
 #endif
 
-#include "DisplayLayerViewDrawStatus.h"
+#include "DisplayLayerViewDrawState.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -30,10 +30,10 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    app.setApplicationName("DisplayLayerViewDrawStatus - C++");
+    app.setApplicationName("DisplayLayerViewDrawState - C++");
 
     // Initialize the sample
-    DisplayLayerViewDrawStatus::init();
+    DisplayLayerViewDrawState::init();
 
     // Initialize application view
     QQuickView view;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/Maps/DisplayLayerViewDrawStatus/DisplayLayerViewDrawStatus.qml"));
+    view.setSource(QUrl("qrc:/Samples/Maps/DisplayLayerViewDrawState/DisplayLayerViewDrawState.qml"));
 
     view.show();
 

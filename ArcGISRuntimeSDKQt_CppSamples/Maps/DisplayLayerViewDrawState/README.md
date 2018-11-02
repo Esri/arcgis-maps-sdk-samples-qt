@@ -1,6 +1,6 @@
-# Display layer view draw status
+# Display layer view draw state
 
-This sample demonstrates how to get the view status of a `Layer` in a `Map`.
+This sample demonstrates how to get the view state of a `Layer` in a `Map`.
 
 ![](screenshot.png)
 
