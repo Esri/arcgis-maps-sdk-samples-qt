@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 
 Row {
     property bool isMin
@@ -39,10 +39,9 @@ Row {
         id: repeater
         SpinBox {
             anchors.verticalCenter: text.verticalCenter
-            width: 64 * scaleFactor
-            minimumValue: 0
-            maximumValue: maxRange
-            value: isMin ? minimumValue : maximumValue
+            from: 0
+            to: maxRange
+            value: isMin ? from : to
         }
     }
 }

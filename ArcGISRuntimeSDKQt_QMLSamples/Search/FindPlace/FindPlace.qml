@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtPositioning 5.6
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
@@ -27,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
+    property double scaleFactor: 1
     property bool isSearchingLocation: false
     property bool searchByExtent: false
 

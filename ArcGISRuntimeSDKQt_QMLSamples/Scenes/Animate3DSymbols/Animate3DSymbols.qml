@@ -15,7 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
@@ -26,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D"
 
     property int missionSize: currentMissionModel.count
@@ -109,6 +110,93 @@ Rectangle {
                 }
             }
         }
+
+        Rectangle {
+            id: mapFrame
+            anchors {
+                left:sceneView.left
+                bottom: sceneView.attributionTop
+                margins: 10 * scaleFactor
+            }
+            height: parent.height * 0.25
+            width: parent.width * 0.3
+            color: "black"
+            clip: true
+
+            MapView {
+                id: mapView
+                objectName: "mapView"
+                anchors {
+                    fill: parent
+                    margins: 2 * scaleFactor
+                }
+
+                Map {
+                    BasemapImagery { }
+                }
+
+                GraphicsOverlay {
+                 id: graphicsOverlay
+                 Graphic {
+                     id: graphic2d
+                     symbol: plane2DSymbol
+                 }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onPressed: mouse.accepted
+                    onWheel: wheel.accepted
+                }
+            }
+
+            RowLayout {
+                anchors {
+                    left: parent.left
+                    top: parent.top
+                }
+                spacing: 10
+
+                Rectangle {
+                    Layout.margins: 5
+                    height: width
+                    width: childrenRect.width
+                    clip: true
+                    radius: 5
+
+                    opacity: 0.9
+                    Image {
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.png"
+                        width: 24
+                        height: width
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: zoomMapIn()
+                        }
+                    }
+                }
+
+                Rectangle {
+                    Layout.margins: 5
+                    height: width
+                    width: childrenRect.width
+                    opacity: 0.9
+                    clip: true
+                    radius: 5
+
+                    Image {
+                        source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.png"
+                        width: 24
+                        height: width
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: zoomMapOut()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     GlobeCameraController {
@@ -118,7 +206,7 @@ Rectangle {
     OrbitGeoElementCameraController {
         id: followController
         targetGeoElement: graphic3d
-        cameraDistance: cameraDistanceSlider.value
+        cameraDistance: cameraDistance.value
         cameraPitchOffset: cameraAngle.value
     }
 
@@ -134,189 +222,131 @@ Rectangle {
         id: currentMissionModel
     }
 
-    GroupBox {
-        id: animationGroupBox
-        z: 110
+    RowLayout {
         anchors {
-            top: sceneView.top
-            left: sceneView.left
+            top: parent.top
+            left: parent.left
+            right: parent.right
             margins: 10 * scaleFactor
         }
-
-        Column {
-            spacing: 10
-
-            ComboBox {
-                id: missionList
-                enabled: !playButton.checked
-                model: missionsModel
-                textRole: "name"
-                width: 150 * scaleFactor
-                onCurrentTextChanged: {
-                    changeMission(currentText);
-                    progressSlider.value = 0;
-                }
-            }
-
-            Button {
-                id: playButton
-                checked: false
-                checkable: true
-                enabled: missionReady
-                text: checked ? "pause" : "play"
-            }
-
-            Text {
-                id: progressTitle
-                text: "progress"
-                color: "white"
-            }
-
-            Slider {
-                id: progressSlider
-                minimumValue: 0
-                maximumValue: missionSize
-                enabled : missionReady
-                width: Math.max(implicitWidth, 150) * scaleFactor
-            }
-
-            CheckBox {
-                id: followButton
-                enabled: missionReady
-                text: "follow"
-                checked: true
-            }
-        }
-    }
-
-    GroupBox {
-        id: cameraGroupBox
-        z: 110
-        anchors {
-            top: sceneView.top
-            right: sceneView.right
-            margins: 10 * scaleFactor
-        }
-
-        Column {
-            spacing: 10
-
-            Text {
-                id: distTitle
-                text: "zoom"
-                enabled: following && missionReady
-                color: "white"
-            }
-
-            Slider {
-                id: cameraDistanceSlider
-                enabled: following && missionReady
-                minimumValue: followController.minCameraDistance
-                maximumValue: 5000.0
-                value: 500.0
-                width: Math.max(implicitWidth, 100) * scaleFactor
-            }
-
-            Text {
-                id: angleTitle
-                text: "angle"
-                enabled: following && missionReady
-                color: "white"
-            }
-
-            Slider {
-                id: cameraAngle
-                enabled: following && missionReady
-                minimumValue: followController.minCameraPitchOffset
-                maximumValue: followController.maxCameraPitchOffset
-                value: 45.0
-                width: Math.max(implicitWidth, 100) * scaleFactor
-            }
-
-            Text {
-                id: speedTitle
-                text: "speed"
-                enabled: missionReady
-                color: "white"
-            }
-
-            Slider {
-                id: animationSpeed
-                enabled: missionReady
-                minimumValue: 1
-                maximumValue: 100
-                value: 50
-                width: Math.max(implicitWidth, 100) * scaleFactor
-            }
-        }
-    }
-
-    Rectangle {
-        id: mapFrame
-        anchors {left:sceneView.left; bottom: sceneView.bottom}
-        anchors.margins: 10 * scaleFactor
-        anchors.bottomMargin: 25 * scaleFactor
-        width: Math.max(sceneView.width * .2, 128 * scaleFactor)
-        height: Math.max(sceneView.height * .4, 128 * scaleFactor)
-        color: "black"
-        z: 100
-        clip: true
 
         GroupBox {
-            id: mapZoomBox
-            z: 120
-            anchors {
-                top: mapFrame.top
-                margins: 10 * scaleFactor
-            }
-            width: mapFrame.width
-
-            Row {
+            ColumnLayout {
                 spacing: 10
 
-                Button {
-                    id: mapZoomIn
-                    anchors.margins: 10
-                    text: "+"
-                    width: height
-                    onClicked: zoomMapIn()
+                ComboBox {
+                    id: missionList
+                    enabled: !playButton.checked
+                    model: missionsModel
+                    textRole: "name"
+                    property real modelWidth: 0
+                    implicitWidth: leftPadding + rightPadding + indicator.width + modelWidth
+
+                    onModelChanged: {
+                        for (var i = 0; i < missionsModel.count; ++i) {
+                            textMetrics.text = missionsModel.get(i).name;
+                            modelWidth = Math.max(modelWidth, textMetrics.width);
+                        }
+                        currentIndex = -1;
+                    }
+
+                    onCurrentTextChanged: {
+                        changeMission(currentText);
+                        progressSlider.value = 0;
+                    }
+
+                    TextMetrics {
+                        id: textMetrics
+                        font: missionList.font
+                    }
                 }
 
                 Button {
-                    id: mapZoomOut
-                    anchors.margins: 10
-                    text: "-"
-                    width: height
-                    onClicked: zoomMapOut()
+                    id: playButton
+                    checked: false
+                    checkable: true
+                    enabled: missionReady
+                    text: checked ? "pause" : "play"
+                }
+
+                Text {
+                    text: "progress"
+                    style: Text.Outline
+                    styleColor: "white"
+                    font.pointSize: 24
+                }
+
+                Slider {
+                    id: progressSlider
+                    from: 0
+                    to: missionSize
+                    enabled : missionReady
+                }
+
+                CheckBox {
+                    id: followButton
+                    enabled: missionReady
+                    text: "follow"
+                    checked: true
                 }
             }
         }
 
-        MapView {
-            id: mapView
-            attributionTextVisible: !sceneView.attributionTextVisible
-            anchors {
-                fill: mapFrame
-                margins: 2 * scaleFactor
-            }
+        GroupBox {
+            Layout.alignment: Qt.AlignRight
 
-            Map {
-                BasemapImagery {}
-            }
+            ColumnLayout {
+                spacing: 5
+                layoutDirection: Qt.RightToLeft
 
-            GraphicsOverlay {
-                id: graphicsOverlay
-
-                Graphic {
-                    id: graphic2d
-                    symbol: plane2DSymbol
+                Text {
+                    text: "zoom"
+                    enabled: following && missionReady
+                    style: Text.Outline
+                    styleColor: "white"
+                    font.pointSize: 24
                 }
-            }
 
-            MouseArea {
-                anchors.fill: parent
-                onPressed: mouse.accepted;
-                onWheel: wheel.accepted;
+                Slider {
+                    id: cameraDistance
+                    enabled: following && missionReady
+                    from: followController.minCameraDistance
+                    to: 5000.0
+                    value: 500.0
+                }
+
+                Text {
+                    text: "angle"
+                    enabled: following && missionReady
+                    style: Text.Outline
+                    styleColor: "white"
+                    font.pointSize: 24
+                }
+
+                Slider {
+                    id: cameraAngle
+                    enabled: following && missionReady
+                    from: 0.0
+                    to: 180.0
+                    value: 45.0
+                }
+
+                Text {
+                    text: "speed"
+                    enabled: missionReady
+                    style: Text.Outline
+                    styleColor: "white"
+                    font.pointSize: 24
+
+                }
+
+                Slider {
+                    id: animationSpeed
+                    enabled: missionReady
+                    from: 1
+                    to: 100
+                    value: 50
+                }
             }
         }
     }
@@ -338,7 +368,7 @@ Rectangle {
 
     Timer {
         id: timer
-        interval: Math.max(animationSpeed.maximumValue - animationSpeed.value,1);
+        interval: Math.max(animationSpeed.to - animationSpeed.value, 1);
         running: playButton.checked;
         repeat: true
         onTriggered: animate();

@@ -386,7 +386,7 @@ AuthenticationManager* GenerateOfflineMap_Overrides::authenticationManager() con
 
 bool GenerateOfflineMap_Overrides::overridesReady() const
 {
-  return m_parameterOverrides != nullptr;
+  return m_parameterOverrides;
 }
 
 

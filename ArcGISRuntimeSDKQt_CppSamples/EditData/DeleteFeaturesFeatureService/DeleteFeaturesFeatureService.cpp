@@ -121,14 +121,14 @@ void DeleteFeaturesFeatureService::connectSignals()
     }
 
     // delete selected feature member if not nullptr
-    if (m_selectedFeature != nullptr)
+    if (m_selectedFeature)
     {
       delete m_selectedFeature;
       m_selectedFeature = nullptr;
     }
 
     GeoElement* element = identifyResult->geoElements().at(0);
-    if (element == nullptr)
+    if (!element)
     {
       return;
     }

@@ -4,6 +4,7 @@
         <file>screenshot.png</file>
         <file>RasterLayerFile.qml</file>
         <file>RasterLoader.qml</file>
+        <file>main.qml</file>
         <file>README.md</file>
     </qresource>
 </RCC>

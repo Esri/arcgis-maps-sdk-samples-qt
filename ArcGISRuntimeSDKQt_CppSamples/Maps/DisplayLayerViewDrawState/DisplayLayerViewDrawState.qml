@@ -15,9 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Window 2.2
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 
 DisplayLayerViewDrawStateSample {
@@ -25,102 +24,45 @@ DisplayLayerViewDrawStateSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
-    }
 
-    // table to display layer names and statuses
-    TableView {
-        id: tableView
-        anchors {
-            bottom: parent.bottom
-            horizontalCenter: parent.horizontalCenter
-            margins: 25 * scaleFactor
-        }
-        height: 150 * scaleFactor
-        width: 230 * scaleFactor
-        model: layerViewModel
-        headerVisible: false
-        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-        opacity: 0.95
-
-        // set number of layers states to be displayed at once
-        rowDelegate: Row {
-            height: tableView.height / 3
-        }
-
-        // create rectangle to frame the TableView
-        style: TableViewStyle {
-            backgroundColor: "transparent"
-            frame: Rectangle {
-                border.color: "black"
-                radius: 10
-
-                // make sure mouse actions on table do not affect map behind it
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mouse.accepted = true
-                    onWheel: wheel.accepted = true
-                }
+        Rectangle {
+            anchors {
+                bottom: mapView.attributionTop
+                horizontalCenter: parent.horizontalCenter
+                margins: 5
             }
-        }
-
-        // create List Model to store Layer View States and names
-        ListModel {
-            id: layerViewModel
-        }
-
-        TableViewColumn {
-            role: "name"
-            width: tableView.width * 0.75 - tableView.anchors.margins
-            delegate: Component {
-                Text {
-                    text: styleData.value
-                    leftPadding: tableView.anchors.margins
-                    renderType: Text.NativeRendering
-                    horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                    font {
-                        weight: Font.Black
-                        pixelSize: tableView.height * 0.10
+            border.color: "black"
+            radius: 10
+            height: childrenRect.height
+            width: childrenRect.width
+            opacity: 0.95
+            GridLayout {
+                id: gridLayout
+                flow: GridLayout.TopToBottom
+                rows: statusModel.length
+                Repeater {
+                    model: statusModel
+                    delegate: Text {
+                        text: model.modelData.name
+                        horizontalAlignment: Text.AlignLeft
+                        Layout.margins: 5
+                    }
+                }
+                Repeater {
+                    model: statusModel
+                    delegate: Text {
+                        text: model.modelData.status
+                        color: "steelblue"
+                        horizontalAlignment: Text.AlignRight
+                        Layout.margins: 5
                     }
                 }
             }
-        }
-
-        TableViewColumn {
-            role: "status"
-            width: tableView.width * 0.25
-            delegate: Component {
-                Text {
-                    text: styleData.value
-                    renderType: Text.NativeRendering
-                    horizontalAlignment: Text.AlignRight
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: tableView.height * 0.10
-                    color: "steelblue"
-                }
-            }
-        }
-    }
-
-    // initialize ListModel to display layer names and ViewStates
-    onMapReady: {
-        for (var i = 0; i < displayLayerView.layerNames.length; i++)
-            layerViewModel.append({"name": displayLayerView.layerNames[i], "status": displayLayerView.layerViewStates[i]});
-    }
-
-    // adjust ListModel when layer view state changes in C++
-    onStatusChanged: {
-        for (var i = 0; i < displayLayerView.layerNames.length; i++) {
-            layerViewModel.setProperty(i, "name", displayLayerView.layerNames[i]);
-            layerViewModel.setProperty(i, "status", displayLayerView.layerViewStates[i]);
         }
     }
 }

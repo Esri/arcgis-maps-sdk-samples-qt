@@ -33,6 +33,7 @@
 #include <QUuid>
 #include <QMouseEvent>
 #include <QFile>
+#include <QFileInfo>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -59,6 +60,7 @@ void EditFeatureAttachments::init()
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<EditFeatureAttachments>("Esri.Samples", 1, 0, "EditFeatureAttachmentsSample");
   qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
+  qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
 }
 
 void EditFeatureAttachments::componentComplete()
@@ -136,7 +138,7 @@ void EditFeatureAttachments::connectSignals()
     if (featureQueryResult && featureQueryResult->iterator().hasNext())
     {
       // first delete if not nullptr
-      if (m_selectedFeature != nullptr)
+      if (m_selectedFeature)
         delete m_selectedFeature;
 
       // set selected feature and attachment model members
@@ -195,10 +197,13 @@ QAbstractListModel* EditFeatureAttachments::attachmentModel() const
   return m_selectedFeature ? m_selectedFeature->attachments() : nullptr;
 }
 
-void EditFeatureAttachments::addAttachment(QUrl fileUrl, QString contentType, QString fileName)
+void EditFeatureAttachments::addAttachment(const QUrl& fileUrl, const QString& contentType)
 {
   if (QFile::exists(fileUrl.toLocalFile()))
   {
+    const QFileInfo fileInfo(fileUrl.path());
+    const QString fileName = fileInfo.fileName();
+
     disconnect(m_attachmentConnection); // disconnect previous connection if necessary
 
     if (m_selectedFeature->loadStatus() == LoadStatus::Loaded)

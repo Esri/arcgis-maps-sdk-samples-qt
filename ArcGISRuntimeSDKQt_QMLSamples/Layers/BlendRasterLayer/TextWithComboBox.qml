@@ -15,11 +15,11 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.ArcGISExtras 1.1
 
 Row {
-    property double scaleFactor: System.displayScaleFactor
+    property double scaleFactor: 1
     property alias label: labelText.text
     property alias model: combo.model
 

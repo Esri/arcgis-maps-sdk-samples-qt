@@ -16,6 +16,7 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+#include <QQmlApplicationEngine>
 #include <QSurfaceFormat>
 
 #ifdef Q_OS_WIN
@@ -45,17 +46,14 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
   app.setApplicationName("Animate3DSymbols - C++");
 
-  Q_INIT_RESOURCE(Animate3DSymbols);
-
   // Initialize the sample
   Animate3DSymbols::init();
 
   // Initialize application view
-  QQuickView view;
-  view.setResizeMode(QQuickView::SizeRootObjectToView);
+  QQmlApplicationEngine engine;
 
   // Add the import Path
-  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
   QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
@@ -69,14 +67,12 @@ int main(int argc, char *argv[])
  #endif
 
   // Add the Runtime and Extras path
-  view.engine()->addImportPath(arcGISRuntimeImportPath);
+  engine.addImportPath(arcGISRuntimeImportPath);
   // Add the Toolkit path
-  view.engine()->addImportPath(arcGISToolkitImportPath);
+  engine.addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Scenes/Animate3DSymbols/Animate3DSymbols.qml"));
-
-  view.show();
+  engine.load(QUrl("qrc:/Samples/Scenes/Animate3DSymbols/main.qml"));
 
   return app.exec();
 }

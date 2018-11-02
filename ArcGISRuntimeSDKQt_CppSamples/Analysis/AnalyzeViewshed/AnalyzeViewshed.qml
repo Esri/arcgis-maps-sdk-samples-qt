@@ -15,8 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -26,8 +26,7 @@ AnalyzeViewshedSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
+    property real scaleFactor: 1
     MapView {
         anchors.fill: parent
         objectName: "mapView"
@@ -86,10 +85,23 @@ AnalyzeViewshedSample {
         }
     }
 
-    // Dialog to display errors
-    MessageDialog {
+    Dialog {
         id: messageDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Error"
-        text: "Executing geoprocessing failed."
+        property alias text : textLabel.text
+        property alias detailedText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: "Executing geoprocessing failed."
+            }
+            Text {
+                id: detailsLabel
+            }
+        }
     }
 }

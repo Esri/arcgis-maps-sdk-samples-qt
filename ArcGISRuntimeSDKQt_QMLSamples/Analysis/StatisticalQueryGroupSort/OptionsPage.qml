@@ -12,7 +12,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 
 Rectangle {
     id: rootOptionsPage

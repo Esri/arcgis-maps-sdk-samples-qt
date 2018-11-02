@@ -3,6 +3,7 @@
         <file alias="sample.json">EditFeatureAttachments.json</file>
         <file>screenshot.png</file>
         <file>EditFeatureAttachments.qml</file>
+        <file>main.qml</file>
         <file>EditFeatureAttachments.cpp</file>
         <file>EditFeatureAttachments.h</file>
         <file>README.md</file>

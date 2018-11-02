@@ -15,7 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
@@ -26,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_%1.mmpk".arg(new Date().getTime().toString())
     property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
 
@@ -188,10 +189,24 @@ Rectangle {
         anchors.fill: parent
     }
 
-    MessageDialog {
+    Dialog {
         id: msgDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Layer Errors"
-        text: "Some layers could not be taken offline."
+        property alias text : textLabel.text
+        property alias detailedText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: "Some layers could not be taken offline."
+            }
+            Text {
+                id: detailsLabel
+            }
+        }
     }
 
     /* Uncomment this section when running as standalone application

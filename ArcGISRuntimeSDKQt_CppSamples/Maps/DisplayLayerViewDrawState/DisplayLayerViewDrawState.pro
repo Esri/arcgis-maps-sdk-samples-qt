@@ -31,12 +31,9 @@ TARGET = DisplayLayerViewDrawState
 
 #-------------------------------------------------------------------------------
 
-HEADERS += \
-    DisplayLayerViewDrawState.h
+HEADERS += DisplayLayerViewDrawState.h
 
-SOURCES += \
-    main.cpp \
-    DisplayLayerViewDrawState.cpp
+SOURCES += main.cpp DisplayLayerViewDrawState.cpp
 
 RESOURCES += DisplayLayerViewDrawState.qrc
 

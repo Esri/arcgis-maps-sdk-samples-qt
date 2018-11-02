@@ -15,8 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 ClosestFacilitySample {
@@ -36,10 +35,17 @@ ClosestFacilitySample {
         running: busy
     }
 
-    MessageDialog {
-        id: messageDialog
+    Dialog {
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Route Error"
-        text: message
         visible: text.length > 0
+        property alias text : textLabel.text
+        Text {
+            id: textLabel
+            text: message
+        }
     }
 }

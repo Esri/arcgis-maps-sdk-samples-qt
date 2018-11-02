@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
@@ -27,7 +27,7 @@ MobileMap_SearchAndRouteSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: 1
     property string dataPath: System.userHomeFolder.path + "/ArcGIS/Runtime/Data/mmpk"
     property bool isMapOpen: false
 
@@ -202,7 +202,6 @@ MobileMap_SearchAndRouteSample {
                             height: 40 * scaleFactor
                             font.pixelSize: 25 * scaleFactor
                             text: "Choose a Mobile Map Package"
-                            renderType: Text.NativeRendering
                         }
                     }
 
@@ -229,7 +228,6 @@ MobileMap_SearchAndRouteSample {
                                     color: "white"
                                     width: 150 * scaleFactor
                                     text: modelData
-                                    renderType: Text.NativeRendering
                                     elide: Text.ElideMiddle
                                 }
 
@@ -313,7 +311,6 @@ MobileMap_SearchAndRouteSample {
                             height: 40 * scaleFactor
                             font.pixelSize: 25 * scaleFactor
                             text: "Choose a Map"
-                            renderType: Text.NativeRendering
                         }
                     }
 
@@ -339,7 +336,6 @@ MobileMap_SearchAndRouteSample {
                                     color: "white"
                                     width: 150 * scaleFactor
                                     text: modelData.name
-                                    renderType: Text.NativeRendering
                                     elide: Text.ElideMiddle
                                 }
 

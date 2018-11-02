@@ -15,8 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -27,7 +26,7 @@ ServiceAreaSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: 1
 
     // add a mapView component
     MapView {
@@ -95,7 +94,6 @@ ServiceAreaSample {
 
         ComboBox {
             id: modeComboBox
-            width: 100 * scaleFactor
             model: ["Facility", "Barrier"]
 
             onCurrentTextChanged: {
@@ -123,10 +121,17 @@ ServiceAreaSample {
         running: busy
     }
 
-    MessageDialog {
-        id: messageDialog
+    Dialog {
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Route Error"
-        text: message
         visible: text.length > 0
+        property alias text : textLabel.text
+        Text {
+            id: textLabel
+            text: message
+        }
     }
 }

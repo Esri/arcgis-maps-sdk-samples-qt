@@ -16,8 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 LocalServerGeoprocessingSample {
@@ -25,7 +24,7 @@ LocalServerGeoprocessingSample {
     width: 800
     height: 600
 
-    property double scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property double scaleFactor: 1
 
     // Create MapQuickView here, and create its Map etc. in C++ code
     MapView {
@@ -95,19 +94,8 @@ LocalServerGeoprocessingSample {
                     width: parent.width
                     text: "Generate Contours"
                     height: 35 * scaleFactor
-                    style: ButtonStyle {
-                        background: Rectangle {
-                            border.color: "black"
-                            radius: 5
-                        }
-                        label: Text {
-                            text: control.text
-                            font.pixelSize: 14 * scaleFactor
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.bold: true
-                        }
-                    }
+                    font.pixelSize: 14 * scaleFactor
+                    font.bold: true
                     onClicked: {
                         generateContours(intervalText.text);
                     }
@@ -117,19 +105,8 @@ LocalServerGeoprocessingSample {
                     width: parent.width
                     text: "Clear Results"
                     height: 35 * scaleFactor
-                    style: ButtonStyle {
-                        background: Rectangle {
-                            border.color: "black"
-                            radius: 5
-                        }
-                        label: Text {
-                            text: control.text
-                            font.pixelSize: 14 * scaleFactor
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.bold: true
-                        }
-                    }
+                    font.pixelSize: 14 * scaleFactor
+                    font.bold: true
                     onClicked: {
                         clearResults();
                     }

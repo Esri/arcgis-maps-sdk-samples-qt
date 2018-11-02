@@ -14,8 +14,8 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
 
@@ -24,7 +24,7 @@ SearchForWebmapSample {
     width: 800
     height: 600
     clip: true
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: 1
     property string selItem
 
     // Create MapQuickView here, and create its Map etc. in C++ code
@@ -197,12 +197,25 @@ SearchForWebmapSample {
     }
     */
 
-    MessageDialog {
+    Dialog {
         id: webMapMsg
-        width: root.width
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Could not load web map!"
         visible: mapLoadError.length > 0
-        text: mapLoadError
-        onAccepted: errorAccepted();
+        property alias text : textLabel.text
+        property alias informativeText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: mapLoadError
+            }
+            Text {
+                id: detailsLabel
+            }
+        }
+        onAccepted: errorAccepted()
     }
 }

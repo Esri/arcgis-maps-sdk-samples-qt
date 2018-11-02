@@ -21,7 +21,7 @@ mac {
 
 CONFIG += c++11
 
-QT += opengl qml quick positioning sensors
+QT += opengl qml quick positioning sensors widgets
 
 ARCGIS_RUNTIME_VERSION = 100.4
 include($$PWD/arcgisruntime.pri)

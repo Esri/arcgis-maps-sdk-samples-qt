@@ -33,13 +33,11 @@ namespace Esri
 
 #include <QMetaObject>
 #include <QQuickItem>
-#include <QStringList>
 
 class DisplayLayerViewDrawState : public QQuickItem
 {
   Q_OBJECT
-  Q_PROPERTY(QStringList layerNames READ layerNames NOTIFY namesChanged)
-  Q_PROPERTY(QStringList layerViewStates READ layerViewStates NOTIFY statusChanged)
+  Q_PROPERTY(const QList<QObject*>& statusModel READ statusModel NOTIFY modelChanged)
 
 public:
   explicit DisplayLayerViewDrawState(QQuickItem* parent = nullptr);
@@ -49,25 +47,46 @@ public:
   static void init();
 
 signals:
-  void statusChanged();
-  void namesChanged();
-  void mapReady();
+  void modelChanged();
 
 private:
-  QStringList layerViewStates() const;
-  QStringList layerNames() const;
+  const QList<QObject*>& statusModel() const;
   void addLayers();
   void connectSignals();
 
 private:
+  QList<QObject*> m_statuses;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer = nullptr;
   Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-  QStringList m_layerNames;
-  QStringList m_layerViewStates;
+};
+
+class DisplayItem : public QObject
+{
+  Q_OBJECT
+  Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+  Q_PROPERTY(QString status READ status WRITE setStatus NOTIFY statusChanged)
+public:
+  DisplayItem(QObject* parent = nullptr);
+
+  DisplayItem(const QString& name, const QString& status, QObject* parent = nullptr);
+
+  void setName(const QString& name);
+  QString name() const;
+
+  void setStatus(const QString& status);
+  QString status() const;
+
+signals:
+  void nameChanged();
+  void statusChanged();
+
+private:
+  QString m_name;
+  QString m_status;
 };
 
 #endif // DISPLAYLAYERVIEWDRAWSTATE_H

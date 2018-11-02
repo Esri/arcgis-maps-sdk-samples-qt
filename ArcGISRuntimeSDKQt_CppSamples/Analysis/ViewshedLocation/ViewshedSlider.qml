@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 
 Column {
     id: root
@@ -41,8 +41,8 @@ Column {
         Slider {
             anchors.verticalCenter: parent.verticalCenter
             orientation: Qt.Horizontal
-            minimumValue: minValue
-            maximumValue: maxValue
+            from: minValue
+            to: maxValue
             width: parent.width * 0.75
             value: parameterValue
 

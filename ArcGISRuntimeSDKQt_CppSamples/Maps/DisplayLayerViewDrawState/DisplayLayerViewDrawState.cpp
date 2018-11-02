@@ -44,6 +44,11 @@ void DisplayLayerViewDrawState::init()
   qmlRegisterType<DisplayLayerViewDrawState>("Esri.Samples", 1, 0, "DisplayLayerViewDrawStateSample");
 }
 
+const QList<QObject*>& DisplayLayerViewDrawState::statusModel() const
+{
+  return m_statuses;
+}
+
 void DisplayLayerViewDrawState::componentComplete()
 {
   QQuickItem::componentComplete();
@@ -66,11 +71,13 @@ void DisplayLayerViewDrawState::componentComplete()
   // initialize QStringList of layer names and states
   for (int i = 0; i < m_map->operationalLayers()->size(); ++i)
   {
-    m_layerNames.append(m_map->operationalLayers()->at(i)->name());
-    m_layerViewStates.append(QString("Unknown"));
+    DisplayItem* o = new DisplayItem(m_map->operationalLayers()->at(i)->name(),
+                                     "Unknown",
+                                     this);
+    m_statuses << o;
   }
 
-  emit namesChanged();
+  emit modelChanged();
 
   connectSignals();
 }
@@ -112,40 +119,59 @@ void DisplayLayerViewDrawState::connectSignals()
         rIndex = i;
     }
 
+    QObject* drawStatus = m_statuses[rIndex];
     // replace layer name in QStringList
-    m_layerNames[rIndex] = layer->name();
+   drawStatus->setProperty("name", layer->name());
 
     // use insert to replace values mapped to layer name
     if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Active)
-      m_layerViewStates[rIndex] = QString("Active");
+      drawStatus->setProperty("status", "Active");
     else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::NotVisible)
-      m_layerViewStates[rIndex] = QString("Not Visible");
+      drawStatus->setProperty("status", "Not visible");
     else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::OutOfScale)
-      m_layerViewStates[rIndex] = QString("Out of Scale");
+      drawStatus->setProperty("status", "Out of scale");
     else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Loading)
-      m_layerViewStates[rIndex] = QString("Loading");
+      drawStatus->setProperty("status", "Loading");
     else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Error)
-      m_layerViewStates[rIndex] = QString("Error");
+      drawStatus->setProperty("status", "Error");
     else
-      m_layerViewStates[rIndex] = QString("Unknown");
+      drawStatus->setProperty("status", "Unknown");
 
-    emit statusChanged();
-  });
-
-  connect(m_map, &Map::loadStatusChanged, this, [this](LoadStatus loadStatus)
-  {
-    if (loadStatus == LoadStatus::Loaded)
-      emit mapReady();
+    emit modelChanged();
   });
 }
 
-QStringList DisplayLayerViewDrawState::layerViewStates() const
+DisplayItem::DisplayItem(const QString& name, const QString& status, QObject* parent) :
+  QObject(parent),
+  m_name(name),
+  m_status(status)
 {
-  return m_layerViewStates;
 }
 
-QStringList DisplayLayerViewDrawState::layerNames() const
+DisplayItem::DisplayItem(QObject* parent) :
+  QObject(parent)
 {
-  return m_layerNames;
 }
+
+void DisplayItem::setName(const QString& name)
+{
+  m_name = name;
+  emit nameChanged();
+}
+
+QString DisplayItem::name() const
+{
+  return m_name;
+}
+
+void DisplayItem::setStatus(const QString& status)
+{
+  m_status = status;
+  emit statusChanged();
+}
+QString DisplayItem::status() const
+{
+  return m_status;
+}
+
 

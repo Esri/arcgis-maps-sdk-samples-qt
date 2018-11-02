@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISRuntime.Toolkit.Controls 100.4
@@ -27,7 +27,7 @@ Rectangle {
 
     property Point calloutLocation
     property string damageType
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
 
     // Create MapView that contains a Map
     MapView {

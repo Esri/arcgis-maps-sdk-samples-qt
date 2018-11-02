@@ -15,8 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.4
 
@@ -26,7 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property bool calculating: false
 
     SceneView {
@@ -345,19 +344,29 @@ Rectangle {
 
     ColorDialog {
         id: visibleColorDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
         onAccepted: {
-            close();
             visibleColorRect.color = color;
             Viewshed.setVisibleColor(color);
+        }
+        onOpened: {
+            setColor(visibleColorRect.color);
         }
     }
 
     ColorDialog {
         id: obstructedColorDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
         onAccepted: {
-            close();
             obstructedColorRect.color = color;
             Viewshed.setObstructedColor(color);
+        }
+        onOpened: {
+            setColor(obstructedColorRect.color);
         }
     }
 }

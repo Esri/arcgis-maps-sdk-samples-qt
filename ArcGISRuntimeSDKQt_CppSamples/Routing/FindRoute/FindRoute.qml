@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -24,8 +24,7 @@ FindRouteSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
+    property real scaleFactor: 1
     onSolveRouteComplete: solveButton.visible = false
 
     // Create window for displaying the route directions

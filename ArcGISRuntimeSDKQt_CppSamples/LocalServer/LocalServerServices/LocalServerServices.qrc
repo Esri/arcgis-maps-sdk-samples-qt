@@ -3,8 +3,9 @@
         <file alias="sample.json">LocalServerServices.json</file>
         <file>screenshot.png</file>
         <file>LocalServerServices.qml</file>
-		<file>LocalServerServices.h</file>
-		<file>LocalServerServices.cpp</file>
+        <file>LocalServerServices.h</file>
+        <file>LocalServerServices.cpp</file>
         <file>README.md</file>
+        <file>main.qml</file>
     </qresource>
 </RCC>

@@ -15,8 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 IdentifyGraphicsSample {
@@ -35,9 +34,14 @@ IdentifyGraphicsSample {
             msgDialog.open();
     }
 
-    MessageDialog {
+    Dialog {
         id: msgDialog
-        text: "Tapped on graphic"
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        Text {
+            text: "Tapped on graphic"
+        }
     }
 }
 

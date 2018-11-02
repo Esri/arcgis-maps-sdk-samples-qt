@@ -15,8 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
@@ -24,12 +24,15 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    // create List Model to store Layer View States and names
+    ListModel {
+        id: layerViewModel
+    }
 
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
-
         // add a map to the mapView
         Map {
             id: map
@@ -69,7 +72,8 @@ Rectangle {
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded)
                     for (var i = 0; i < map.operationalLayers.count; i++)
-                        layerViewModel.append({"name": map.operationalLayers.get(i).name, "status": "Unknown"});
+                        layerViewModel.append(
+                                    { "name": map.operationalLayers.get(i).name, "status": "Unknown" });
             }
         }
 
@@ -106,80 +110,38 @@ Rectangle {
                     return i;
             }
         }
-    }
 
-    // table to display layer names and statuses
-    TableView {
-        id: tableView
-        anchors {
-            bottom: parent.bottom
-            horizontalCenter: parent.horizontalCenter
-            margins: 25 * scaleFactor
-        }
-        height: 150 * scaleFactor
-        width: 230 * scaleFactor
-        model: layerViewModel
-        headerVisible: false
-        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-        opacity: 0.95
-
-        // set number of layers states to be displayed at once
-        rowDelegate: Row {
-            height: tableView.height / 3
-        }
-
-        // create rectangle to frame the TableView
-        style: TableViewStyle {
-            backgroundColor: "transparent"
-            frame: Rectangle {
-                border.color: "black"
-                radius: 10
-
-                // make sure mouse actions on table do not affect map behind it
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: mouse.accepted = true
-                    onWheel: wheel.accepted = true
-                }
+        Rectangle {
+            anchors {
+                bottom: mapView.attributionTop
+                horizontalCenter: parent.horizontalCenter
+                margins: 5
             }
-        }
-
-        // create List Model to store Layer View States and names
-        ListModel {
-            id: layerViewModel
-        }
-
-        TableViewColumn {
-            role: "name"
-            width: tableView.width * 0.75 - tableView.anchors.margins
-            delegate: Component {
-                Text {
-                    text: styleData.value
-                    leftPadding: tableView.anchors.margins
-                    renderType: Text.NativeRendering
-                    horizontalAlignment: Text.AlignLeft
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                    font {
-                        weight: Font.Black
-                        pixelSize: tableView.height * 0.10
+            border.color: "black"
+            radius: 10
+            height: childrenRect.height
+            width: childrenRect.width
+            opacity: 0.95
+            GridLayout {
+                id: gridLayout
+                flow: GridLayout.TopToBottom
+                rows: layerViewModel.count
+                Repeater {
+                    model: layerViewModel
+                    delegate: Text {
+                        text: name
+                        horizontalAlignment: Text.AlignLeft
+                        Layout.margins: 5
                     }
                 }
-            }
-        }
-
-        TableViewColumn {
-            role: "status"
-            width: tableView.width * 0.25
-            delegate: Component {
-                Text {
-                    text: styleData.value
-                    renderType: Text.NativeRendering
-                    horizontalAlignment: Text.AlignRight
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: tableView.height * 0.10
-                    color: "steelblue"
+                Repeater {
+                    model: layerViewModel
+                    delegate: Text {
+                        text: status
+                        color: "steelblue"
+                        horizontalAlignment: Text.AlignRight
+                        Layout.margins: 5
+                    }
                 }
             }
         }

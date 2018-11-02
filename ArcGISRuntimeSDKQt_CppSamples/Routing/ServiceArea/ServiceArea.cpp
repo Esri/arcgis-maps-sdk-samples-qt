@@ -81,7 +81,7 @@ void ServiceArea::setBarrierMode()
 {
   m_mode = SampleMode::Barrier;
 
-  if (m_barrierBuilder != nullptr)
+  if (m_barrierBuilder)
     return;
 
   m_barrierBuilder = new PolylineBuilder(SpatialReference::webMercator(), this);
@@ -95,7 +95,7 @@ void ServiceArea::solveServiceArea()
   m_parameters.clearPolylineBarriers();
 
   GraphicListModel* facilitiesGraphics = m_facilitiesOverlay->graphics();
-  if (facilitiesGraphics == nullptr || facilitiesGraphics->rowCount() == 0)
+  if (!facilitiesGraphics || facilitiesGraphics->rowCount() == 0)
   {
     setBusy(false);
     m_message = "At least 1 Facility is required.";

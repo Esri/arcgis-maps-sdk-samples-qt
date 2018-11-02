@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISRuntime.Toolkit.Controls 100.4
@@ -26,7 +26,7 @@ Rectangle {
     height: 600
     color: "#E0E0E0"
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
 
     property LocatorTask currentLocatorTask: null
@@ -407,7 +407,6 @@ Rectangle {
                         height: 40 * scaleFactor
                         font.pixelSize: 25 * scaleFactor
                         text: "Choose a Mobile Map Package"
-                        renderType: Text.NativeRendering
                     }
                 }
 
@@ -439,7 +438,6 @@ Rectangle {
                                 color: "white"
                                 width: 150 * scaleFactor
                                 text: modelData
-                                renderType: Text.NativeRendering
                                 elide: Text.ElideMiddle
                             }
 
@@ -535,7 +533,6 @@ Rectangle {
                         height: 40 * scaleFactor
                         font.pixelSize: 25 * scaleFactor
                         text: "Choose a Map"
-                        renderType: Text.NativeRendering
                     }
                 }
 
@@ -567,7 +564,6 @@ Rectangle {
                                 color: "white"
                                 width: 150 * scaleFactor
                                 text: name
-                                renderType: Text.NativeRendering
                                 elide: Text.ElideMiddle
                             }
 

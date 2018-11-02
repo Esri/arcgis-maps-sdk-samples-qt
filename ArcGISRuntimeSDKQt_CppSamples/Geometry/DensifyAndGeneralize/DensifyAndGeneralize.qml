@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.3
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 DensifyAndGeneralizeSample {
@@ -25,7 +25,7 @@ DensifyAndGeneralizeSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: 1
 
     // add a mapView component
     MapView {
@@ -65,8 +65,8 @@ DensifyAndGeneralizeSample {
 
         Slider {
             id: maxSegmentLengthSlider
-            minimumValue: 100
-            maximumValue: 500
+            from: 100
+            to: 500
             width: 175 * scaleFactor
             value: 100
             onValueChanged: updateGeometry(densifyCheckbox.checked, maxSegmentLengthSlider.value, generalizeCheckbox.checked, maxDeviationSlider.value);
@@ -85,8 +85,8 @@ DensifyAndGeneralizeSample {
 
         Slider {
             id: maxDeviationSlider
-            minimumValue: 1
-            maximumValue: 250
+            from: 1
+            to: 250
             width: 175 * scaleFactor
             onValueChanged: updateGeometry(densifyCheckbox.checked, maxSegmentLengthSlider.value, generalizeCheckbox.checked, maxDeviationSlider.value);
         }

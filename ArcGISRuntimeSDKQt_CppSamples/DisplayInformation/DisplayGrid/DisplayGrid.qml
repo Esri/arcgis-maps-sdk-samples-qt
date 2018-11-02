@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
@@ -26,13 +26,14 @@ DisplayGridSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: 1
     property real centerWindowY: (displayGrid.height / 2) - (styleWindow.height / 2)
 
     MapView {
+        id: mapQuickView
         anchors.fill: parent
-        objectName: "mapView"
     }
+    mapView: mapQuickView
 
     // Button to view the styling window
     Rectangle {
@@ -94,7 +95,8 @@ DisplayGridSample {
         anchors.horizontalCenter: parent.horizontalCenter
         y: parent.height // initially display below the page
         width: 250 * scaleFactor
-        height: 275 * scaleFactor
+        height: childrenRect.height
+
         color: "lightgray"
         radius: 4 * scaleFactor
         border {
@@ -115,31 +117,27 @@ DisplayGridSample {
         GridLayout {
             id: grid
             anchors {
-                fill: parent
+                left: parent.left
+                right: parent.right
                 margins: 10 * scaleFactor
             }
             columns: 2
             columnSpacing: 10
-            rows: 8
             rowSpacing: 10
 
             Text {
                 text: "Grid type"
-                Layout.maximumWidth: styleWindow.width * 0.35
             }
 
             ComboBox {
                 id: gridTypeComboBox
                 model: [latlonGrid, mgrsGrid, utmGrid, usngGrid]
-                Layout.minimumWidth: styleWindow.width * 0.5
-
                 onCurrentTextChanged: changeGrid(currentText)
             }
 
             Text {
                 text: "Labels visible"
                 enabled: gridVisibleSwitch.checked
-                Layout.maximumWidth: styleWindow.width * 0.35
                 color: enabled ? "black" : "gray"
             }
 
@@ -147,68 +145,55 @@ DisplayGridSample {
                 id: labelVisibleSwitch
                 checked: true
                 enabled: gridVisibleSwitch.checked
-                Layout.minimumWidth: styleWindow.width * 0.5
-                Layout.leftMargin: styleWindow.width * 0.25
                 onCheckedChanged: gridLabelVisibility = checked
             }
 
             Text {
                 text: "Grid visible"
-                Layout.maximumWidth: styleWindow.width * 0.35
             }
 
             Switch {
                 id: gridVisibleSwitch
                 checked: true
-                Layout.minimumWidth: styleWindow.width * 0.5
-                Layout.leftMargin: styleWindow.width * 0.25
                 onCheckedChanged: gridVisibility = checked
             }
 
             Text {
                 text: "Grid color"
-                Layout.maximumWidth: styleWindow.width * 0.35
             }
 
             ComboBox {
                 model: ["red", "white", "blue"]
-                Layout.minimumWidth: styleWindow.width * 0.5
                 onCurrentTextChanged: currentGridColor = currentText
             }
 
             Text {
                 text: "Label color"
-                Layout.maximumWidth: styleWindow.width * 0.35
             }
 
             ComboBox {
                 model: ["red", "black", "blue"]
-                Layout.minimumWidth: styleWindow.width * 0.5
                 onCurrentTextChanged: currentLabelColor = currentText;
             }
 
             Text {
                 text: "Label position"
-                Layout.maximumWidth: styleWindow.width * 0.38
                 color: enabled ? "black"  : "gray"
             }
 
             ComboBox {
                 model: [geographicPosition, bottomLeftPosition, bottomRightPosition, topLeftPosition, topRightPosition, centerPosition, allSidesPosition]
-                Layout.minimumWidth: styleWindow.width * 0.5
                 onCurrentTextChanged: currentLabelPosition = currentText;
             }
 
             Text {
                 text: "Label format"
-                Layout.maximumWidth: styleWindow.width * 0.35
                 enabled: gridTypeComboBox.currentText == latlonGrid
                 color: enabled ? "black"  : "gray"
             }
 
             ComboBox {
                 model: [ddFormat, dmsFormat]
-                Layout.minimumWidth: styleWindow.width * 0.5
                 enabled: gridTypeComboBox.currentText == latlonGrid
                 onCurrentTextChanged: currentLabelFormat = currentText;
             }
@@ -219,6 +204,7 @@ DisplayGridSample {
                 property bool pressed: false
                 anchors.horizontalCenter: parent.horizontalCenter
                 Layout.columnSpan: 2
+                Layout.bottomMargin: 5 * scaleFactor
 
                 width: 150 * scaleFactor
                 height: 30 * scaleFactor

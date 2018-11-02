@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
@@ -25,7 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property var sublayer: null
     property var styles
 
@@ -68,6 +68,10 @@ Rectangle {
         opacity: 0.75
     }
 
+    ButtonGroup {
+        buttons: controlColumn.children
+    }
+
     Column {
         id: controlColumn
         anchors {
@@ -79,7 +83,6 @@ Rectangle {
 
         RadioButton {
             text: "Default"
-            exclusiveGroup: radioGroup
             checked: true
             onCheckedChanged: {
                 if (checked) {
@@ -94,7 +97,6 @@ Rectangle {
 
         RadioButton {
             text: "Contrast Stretch"
-            exclusiveGroup: radioGroup
             onCheckedChanged: {
                 if (checked) {
                     if (!sublayer)
@@ -104,10 +106,6 @@ Rectangle {
                     sublayer.currentStyle = styles[1];
                 }
             }
-        }
-
-        ExclusiveGroup {
-            id: radioGroup
         }
     }
 }

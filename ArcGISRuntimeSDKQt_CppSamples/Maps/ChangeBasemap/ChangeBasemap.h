@@ -38,7 +38,7 @@ public:
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
-  Q_INVOKABLE void changeBasemap(QString basemap);
+  Q_INVOKABLE void changeBasemap(const QString& basemap);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

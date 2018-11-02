@@ -15,16 +15,13 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
 
-    property real   scaleFactor: System.displayScaleFactor
     property real   rotationValue: 0.0
     property int    scaleIndex: -1
 
@@ -63,18 +60,30 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 5
         }
 
-        width: 175 * scaleFactor
+        property int modelWidth: 0
+        width: modelWidth + leftPadding + rightPadding + indicator.width
 
         model: ["Center","Center and scale","Geometry","Geometry and padding","Rotation","Scale 1:5,000,000","Scale 1:10,000,000","Animation"]
-        onCurrentTextChanged: {
+        onCurrentIndexChanged: {
             changeCurrentViewpoint();
         }
 
-        function changeCurrentViewpoint()
-        {
+        Component.onCompleted: {
+            for (var i = 0; i < model.length; ++i) {
+                metrics.text = model[i];
+                modelWidth = Math.max(modelWidth, metrics.width)
+            }
+        }
+
+        TextMetrics {
+            id: metrics
+            font: comboBoxViewpoint.font
+        }
+
+        function changeCurrentViewpoint() {
             switch (comboBoxViewpoint.currentText) {
             case "Center":
                 ptBuilder.setXY(-117.195681, 34.056218); // Esri Headquarters

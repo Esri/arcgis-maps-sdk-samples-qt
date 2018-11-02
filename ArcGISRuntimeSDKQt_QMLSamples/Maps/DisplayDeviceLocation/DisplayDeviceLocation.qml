@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    property real scaleFactor: 1
     property string compassMode: "Compass"
     property string navigationMode: "Navigation"
     property string recenterMode: "Re-Center"

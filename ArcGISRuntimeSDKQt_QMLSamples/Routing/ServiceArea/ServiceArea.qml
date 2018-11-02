@@ -15,8 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
@@ -27,7 +26,7 @@ Rectangle {
     width: 800
     height: 800
 
-    property double scaleFactor: System.displayScaleFactor
+    property double scaleFactor: 1
     property bool busy: false
     property string message: ""
     property var barrierBuilder: null
@@ -219,7 +218,6 @@ Rectangle {
 
         ComboBox {
             id: modeComboBox
-            width: 100 * scaleFactor
             model: ["Facility", "Barrier"]
 
             onCurrentTextChanged: {
@@ -250,12 +248,18 @@ Rectangle {
         running: busy
     }
 
-    MessageDialog {
-        id: messageDialog
+    Dialog {
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Route Error"
-        text: message
         visible: text.length > 0
-        onAccepted: { message = ""; }
+        property alias text : textLabel.text
+        Text {
+            id: textLabel
+            text: message
+        }
     }
 
     function setupRouting() {

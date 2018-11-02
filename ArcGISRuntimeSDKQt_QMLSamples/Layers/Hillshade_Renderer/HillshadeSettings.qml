@@ -16,7 +16,7 @@
 
 import QtQuick 2.5
 import QtGraphicalEffects 1.0
-import QtQuick.Controls 1.2
+import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.4
 
 Rectangle {
@@ -74,8 +74,8 @@ Rectangle {
                 Slider {
                     id: altitudeSlider
                     width: 125 * scaleFactor
-                    minimumValue: 0
-                    maximumValue: 90
+                    from: 0
+                    to: 90
                 }
             }
 
@@ -90,8 +90,8 @@ Rectangle {
                 Slider {
                     id: azimuthSlider
                     width: 125 * scaleFactor
-                    minimumValue: 0
-                    maximumValue: 360
+                    from: 0
+                    to: 360
                 }
             }
 

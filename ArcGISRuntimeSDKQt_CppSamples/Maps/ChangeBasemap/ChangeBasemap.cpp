@@ -50,8 +50,13 @@ void ChangeBasemap::componentComplete()
   m_mapView->setMap(m_map);
 }
 
-void ChangeBasemap::changeBasemap(QString basemap)
+void ChangeBasemap::changeBasemap(const QString& basemap)
 {
+  if (!m_map)
+  {
+    return;
+  }
+
   if (m_map->loadStatus() == LoadStatus::Loaded)
   {
     if (basemap == "Topographic")

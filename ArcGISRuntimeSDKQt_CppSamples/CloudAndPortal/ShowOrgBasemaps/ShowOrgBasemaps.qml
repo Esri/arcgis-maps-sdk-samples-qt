@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
 
@@ -25,8 +25,7 @@ ShowOrgBasemapsSample {
     height: 600
     clip: true
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
+    property real scaleFactor: 1
     onPortalLoadedChanged: { gridFadeIn.running = true; }
 
     BusyIndicator {
@@ -175,7 +174,6 @@ ShowOrgBasemapsSample {
             margins: 16 * scaleFactor
         }
         visible: mapView.visible
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
         text: "Back"
         opacity: hovered ? 1 : 0.5
 
@@ -195,7 +193,6 @@ ShowOrgBasemapsSample {
             top: titleLabel.bottom
         }
         text: "Anonymous"
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
 
         onClicked: {
             load(true);
@@ -213,7 +210,6 @@ ShowOrgBasemapsSample {
         }
         width: anonymousLogIn.width
         text: "Sign-in"
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
 
         onClicked: {
             load(false);

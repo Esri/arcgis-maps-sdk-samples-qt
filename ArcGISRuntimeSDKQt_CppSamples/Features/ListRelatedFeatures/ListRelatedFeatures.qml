@@ -15,8 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -26,7 +25,7 @@ ListRelatedFeaturesSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    property real scaleFactor: 1
 
     onHideAttributeTable: attributeView.height = 0;
     onShowAttributeTable: attributeView.height = 200 * scaleFactor;
@@ -103,9 +102,5 @@ ListRelatedFeaturesSample {
                 }
             }
         }
-    }        
-
-    MessageDialog {
-        id: msgDialog
     }
 }

@@ -15,8 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 FeatureLayerQuerySample {
@@ -66,13 +65,16 @@ FeatureLayerQuerySample {
         }
     }
 
-    // error message dialog
-    MessageDialog {
+    Dialog {
         id: errorMsgDialog
-        visible: false
-        text: "No state named " + findText.text.toUpperCase() + " exists."
-        onAccepted: {
-            visible = false;
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
+        property alias text : textLabel.text
+        Text {
+            id: textLabel
+            text: "No state named " + findText.text.toUpperCase() + " exists."
         }
     }
 
