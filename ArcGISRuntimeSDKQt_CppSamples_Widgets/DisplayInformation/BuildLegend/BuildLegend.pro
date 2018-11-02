@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2015 Esri.
+# Copyright 2018 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,13 +21,16 @@ mac {
 
 CONFIG += c++11
 
-QT += opengl qml quick positioning sensors
+QT += core gui opengl xml network positioning sensors
+
+TEMPLATE = app
+TARGET = BuildLegend
 
 ARCGIS_RUNTIME_VERSION = 100.4
 include($$PWD/arcgisruntime.pri)
 
-TEMPLATE = app
-TARGET = BuildLegend
+win32:CONFIG += \
+    embed_manifest_exe
 
 #-------------------------------------------------------------------------------
 
@@ -38,27 +41,6 @@ SOURCES += \
     main.cpp \
     BuildLegend.cpp
 
-RESOURCES += BuildLegend.qrc
-
 #-------------------------------------------------------------------------------
 
-win32 {
-    LIBS += \
-        Ole32.lib
-}
-
-ios {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-
-    OTHER_FILES += \
-        $$PWD/Info.plist
-
-    QMAKE_INFO_PLIST = $$PWD/Info.plist
-}
-
-android {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-}
-
+FORMS += BuildLegend.ui
