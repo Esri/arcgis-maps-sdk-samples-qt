@@ -29,6 +29,9 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+
 /*
  * This is nothing more than a helper class that shadows the
  * LegendInfoSymbolUrlRole as a Qt::DecorationRole, since the
@@ -39,21 +42,24 @@ class RoleProxyModel: public QIdentityProxyModel
 public:
   using QIdentityProxyModel::QIdentityProxyModel;
 
-  QVariant data(const QModelIndex& index, int role) const override
-  {
-    if (role == Qt::DecorationRole)
-    {
-      const QUrl iconRole =
-          index.data(LegendInfoListModel::LegendInfoSymbolUrlRole).toUrl();
-      return QIcon(iconRole.toLocalFile());
-    }
-    else
-    {
-      return QIdentityProxyModel::data(index, role);
-    }
-  }
+  QVariant data(const QModelIndex& index, int role) const override;
 };
 
+QVariant RoleProxyModel::data(const QModelIndex& index, int role) const
+{
+  if (role == Qt::DecorationRole)
+  {
+    const QUrl iconRole =
+        index.data(LegendInfoListModel::LegendInfoSymbolUrlRole).toUrl();
+    return QIcon(iconRole.toLocalFile());
+  }
+  else
+  {
+    return QIdentityProxyModel::data(index, role);
+  }
+}
+
+}
 
 BuildLegend::BuildLegend(QWidget* parent /* = nullptr */):
   QWidget(parent),

@@ -46,7 +46,7 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
-  Ui::BuildLegend* m_ui;
+  Ui::BuildLegend* m_ui = nullptr;
 };
 
 #endif // BUILDLEGEND_H
