@@ -32,15 +32,7 @@ Rectangle {
         id: stackView
         anchors.fill: parent
 
-        initialItem: LayerWindow {
-            id: layerWindow
-            onCreateMapSelected: {
-                mapView.visible = true;
-                stackView.push(mapView)
-                var map = createMap(basemap, layerList);
-                mapView.map = map;
-            }
-        }        
+        initialItem: layerWindow
     }
 
     // MapView that will display the Map created from the user options
@@ -60,63 +52,76 @@ Rectangle {
                 if (portal.loadStatus !== Enums.LoadStatusLoaded)
                     portal.load();
                 else {
-                    options.visible = true;
-                    options.reset();
                     stackView.push(options);
                 }
             }
         }
     }
 
-    // Window to display options for setting title, tags, and description
-    SaveOptionsWindow {
-        id: options
-        visible: false
-
-        onCancelClicked: {
-            mapView.visible = true;
-            stackView.pop(mapView)
+    Component {
+        id: layerWindow
+        LayerWindow {
+            onCreateMapSelected: {
+                stackView.push(mapView)
+                var map = createMap(basemap, layerList);
+                mapView.map = map;
+            }
         }
+    }
 
-        onSaveMapClicked: {
-            var thumbnail = null;
-            var folder = null;
-            var forceSave = true;
-            var tagsList = tags.split(",");
-            mapView.map.saveAs(portal, title, tagsList, forceSave, folder, description, thumbnail);
+    // Window to display options for setting title, tags, and description
+    Component {
+        id: options
+        SaveOptionsWindow {
+            onCancelClicked: {
+                stackView.pop();
+            }
+
+            onSaveMapClicked: {
+                var thumbnail = null;
+                var folder = null;
+                var forceSave = true;
+                var tagsList = tags.split(",");
+                mapView.map.saveAs(portal, title, tagsList, forceSave, folder, description, thumbnail);
+            }
         }
     }
 
     // Rectangle to display completion text
-    Rectangle {
+    Component {
         id: completionRect
+        Rectangle {
+            property alias text: completeText.text
 
-        Text {
-            id: completeText
-            anchors.centerIn: parent
-            width: 200 * scaleFactor
-            wrapMode: Text.Wrap
+            Text {
+                id: completeText
+                anchors.centerIn: parent
 
-            property string webmapUrl
-
-            textFormat: Text.RichText
-            horizontalAlignment: Text.AlignHCenter
-            onLinkActivated: Qt.openUrlExternally(webmapUrl)
-        }
-
-        Button {
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                bottom: parent.bottom
-                margins: 10 * scaleFactor
+                textFormat: Text.RichText
+                horizontalAlignment: Text.AlignHCenter
+                onLinkActivated: Qt.openUrlExternally(link)
             }
-            text: "Create New Map"
-            onClicked: {
-                stackView.clear();
-                stackView.push(layerWindow)
+
+            Button {
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    bottom: parent.bottom
+                    margins: 5 * scaleFactor
+                }
+                text: "Create New Map"
+                onClicked: {
+                    // We need a local ref to the stackView and layerWindow
+                    // object as our object references will have been deleted
+                    // once "clear" cleans up this object.
+                    var sv = stackView;
+                    var lWindow = layerWindow;
+                    sv.clear();
+                    sv.push(lWindow);
+                }
             }
         }
     }
+
 
     // Create Portal object that requires sign in
     Portal {
@@ -126,7 +131,6 @@ Rectangle {
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusLoaded) {
-                options.visible = true;
                 stackView.push(options);
             }
         }
@@ -157,15 +161,15 @@ Rectangle {
 
         map.saveStatusChanged.connect(function() {
             if (map.saveStatus === Enums.TaskStatusCompleted) {
-                completeText.webmapUrl = "https://www.arcgis.com/home/item.html?id=%1".arg(map.item.itemId);
-                completeText.text = 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(completeText.webmapUrl);
-                stackView.push(completionRect);
+                var url =  "https://www.arcgis.com/home/item.html?id=%1".arg(map.item.itemId);
+                stackView.push(completionRect,
+                               { text: 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(url) });
             } else if (map.saveStatus === Enums.TaskStatusErrored) {
                 if (stackView.currentItem === completionRect)
                     return;
 
-                completeText.text = 'An error occurred while saving the map. Details: %1 %2'.arg(map.error.message).arg(map.error.additionalMessage);
-                stackView.push(completionRect);
+                stackView.push(completionRect,
+                               { text: 'An error occurred while saving the map. Details: %1 %2'.arg(map.error.message).arg(map.error.additionalMessage) });
             }
         });
 
