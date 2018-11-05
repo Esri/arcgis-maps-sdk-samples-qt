@@ -12,7 +12,8 @@
 // limitations under the License.
 
 import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.4
 import QtGraphicalEffects 1.0
 
 Rectangle {
@@ -28,80 +29,79 @@ Rectangle {
     signal createMapSelected(var basemap, var layerList)
 
     Rectangle {
-        anchors {
-            fill: layerColumn
-            margins: -15 * scaleFactor
-        }
-
         color: "#edeeef"
         radius: 5 * scaleFactor
+        width: childrenRect.width
+        height: childrenRect.height
+        anchors.centerIn: parent
         border {
             color: "#77787a"
             width: 1 * scaleFactor
         }
-    }
 
-    Column {
-        id: layerColumn
-        anchors.centerIn: parent
-        width: 200 * scaleFactor
-
-        spacing: 10 * scaleFactor
-
-        Text {
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: "Select Layers"
-            font {
-                pixelSize: 18 * scaleFactor
-                family: "helvetica"
-            }
-        }
-
-        Text {
-            text: "Select Basemap:"
-            font {
-                pixelSize: 14 * scaleFactor
-                family: "helvetica"
-            }
-        }
-
-        ComboBox {
-            id: basemapComboBox
-            width: parent.width
-            model: ["Streets", "Imagery", "Topographic", "Oceans"]
-        }
-
-        Text {
-            text: "Select Operational Layers:"
-            font {
-                pixelSize: 14 * scaleFactor
-                family: "helvetica"
-            }
-        }
-
-        Repeater {
-            id: operationalLayerRepeater
-            width: parent.width
-            model: ["WorldElevations", "Census"]
-
-            CheckBox {
-                text: modelData
-                checked: true
-            }
-        }
-
-        Button {
-            width: parent.width
-            text: "Create Map"
-            onClicked: {
-                var layerList = [];
-                for (var i = 0; i < operationalLayerRepeater.count; i++) {
-                    var currentCheckbox = operationalLayerRepeater.itemAt(i);
-                    if (currentCheckbox.checked) {
-                        layerList.push(currentCheckbox.text)
-                    }
+        ColumnLayout {
+            id: layerColumn
+            Text {
+                Layout.margins: 5
+                Layout.alignment: Qt.AlignHCenter
+                text: "Select Layers"
+                font {
+                    pixelSize: 18 * scaleFactor
+                    family: "helvetica"
                 }
-                createMapSelected(basemapComboBox.currentText, layerList);
+            }
+
+            Text {
+                Layout.margins: 5
+                text: "Select Basemap:"
+                font {
+                    pixelSize: 14 * scaleFactor
+                    family: "helvetica"
+                }
+            }
+
+            ComboBox {
+                id: basemapComboBox
+                Layout.margins: 5
+                Layout.fillWidth: true
+                model: ["Streets", "Imagery", "Topographic", "Oceans"]
+            }
+
+            Text {
+                Layout.margins: 5
+                text: "Select Operational Layers:"
+                font {
+                    pixelSize: 14 * scaleFactor
+                    family: "helvetica"
+                }
+            }
+
+            Repeater {
+                id: operationalLayerRepeater
+                Layout.margins: 5
+                Layout.fillWidth: true
+                model: ["WorldElevations", "Census"]
+
+                CheckBox {
+                    text: modelData
+                    checked: true
+                }
+            }
+
+            Button {
+                Layout.margins: 5
+                Layout.fillWidth: true
+                text: "Create Map"
+                onClicked: {
+                    var layerList = [];
+                    for (var i = 0; i < operationalLayerRepeater.count; i++) {
+                        var currentCheckbox = operationalLayerRepeater.itemAt(i);
+                        if (currentCheckbox.checked) {
+                            layerList.push(currentCheckbox.text)
+                        }
+                    }
+                    createMapSelected(basemapComboBox.currentText, layerList);
+                }
             }
         }
     }
