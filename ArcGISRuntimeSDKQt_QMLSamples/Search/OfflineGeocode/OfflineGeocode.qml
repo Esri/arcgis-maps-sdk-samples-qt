@@ -18,8 +18,8 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISRuntime.Toolkit.Controls 100.4
+import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 Rectangle {
     clip: true

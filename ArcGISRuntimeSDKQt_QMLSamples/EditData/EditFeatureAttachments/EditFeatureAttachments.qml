@@ -18,9 +18,9 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Qt.labs.platform 1.0 as Dialogs
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 100.4
+import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 Rectangle {
     property real scaleFactor: 1
