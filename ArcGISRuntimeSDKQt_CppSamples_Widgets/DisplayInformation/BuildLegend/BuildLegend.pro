@@ -26,7 +26,7 @@ QT += core gui opengl xml network positioning sensors
 TEMPLATE = app
 TARGET = BuildLegend
 
-ARCGIS_RUNTIME_VERSION = 100.4
+ARCGIS_RUNTIME_VERSION = 100.5
 include($$PWD/arcgisruntime.pri)
 
 win32:CONFIG += \
