@@ -67,8 +67,8 @@ Rectangle {
         width: modelWidth + leftPadding + rightPadding + indicator.width
 
         model: ["Center","Center and scale","Geometry","Geometry and padding","Rotation","Scale 1:5,000,000","Scale 1:10,000,000","Animation"]
-        onCurrentIndexChanged: {
-            changeCurrentViewpoint();
+        onCurrentTextChanged: {
+            changeCurrentViewpoint(currentText);
         }
 
         Component.onCompleted: {
@@ -83,8 +83,8 @@ Rectangle {
             font: comboBoxViewpoint.font
         }
 
-        function changeCurrentViewpoint() {
-            switch (comboBoxViewpoint.currentText) {
+        function changeCurrentViewpoint(text) {
+            switch (text) {
             case "Center":
                 ptBuilder.setXY(-117.195681, 34.056218); // Esri Headquarters
                 mv.setViewpointCenter(ptBuilder.geometry);
