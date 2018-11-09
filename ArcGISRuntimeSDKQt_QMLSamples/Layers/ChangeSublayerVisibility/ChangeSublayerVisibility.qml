@@ -127,8 +127,11 @@ Rectangle {
                             }
 
                             Switch {
-                                checked: sublayerVisible
-
+                                // Careful not to cause a  binding loop here
+                                // by binding checked to sublayerVisible.
+                                Component.onCompleted: {
+                                    checked = sublayerVisible;
+                                }
                                 onCheckedChanged: {
                                     sublayerVisible = checked;
                                 }
