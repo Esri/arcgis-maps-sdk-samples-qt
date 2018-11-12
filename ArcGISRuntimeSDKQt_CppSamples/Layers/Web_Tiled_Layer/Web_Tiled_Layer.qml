@@ -17,7 +17,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 Web_Tiled_LayerSample {
     id: rootRectangle

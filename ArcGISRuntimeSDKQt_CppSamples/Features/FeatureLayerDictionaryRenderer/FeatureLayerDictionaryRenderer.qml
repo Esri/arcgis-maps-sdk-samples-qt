@@ -25,7 +25,7 @@ FeatureLayerDictionaryRendererSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Create MapView here, and create its Map in C++ code
@@ -39,7 +39,7 @@ FeatureLayerDictionaryRendererSample {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            margins: 5 * scaleFactor
+            margins: 5
         }
         indeterminate: true
     }

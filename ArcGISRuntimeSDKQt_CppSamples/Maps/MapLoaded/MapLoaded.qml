@@ -24,7 +24,7 @@ MapLoadedSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -39,10 +39,10 @@ MapLoadedSample {
             right: parent.right
             bottom: parent.bottom
         }
-        height: 30 * scaleFactor
+        height: 30
         color: "lightgrey"
         border {
-            width: 0.5 * scaleFactor
+            width: 0.5
             color: "black"
         }
 
@@ -50,11 +50,11 @@ MapLoadedSample {
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
-                leftMargin: 10 * scaleFactor
+                leftMargin: 10
             }
             // Bind to the C++ property that returns the map's load status
             text: mapLoadedSample.mapLoadStatus
-            font.pixelSize: 14 * scaleFactor
+            font.pixelSize: 14
         }
     }
 }

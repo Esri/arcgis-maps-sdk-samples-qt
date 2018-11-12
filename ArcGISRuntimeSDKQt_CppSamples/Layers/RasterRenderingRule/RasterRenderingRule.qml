@@ -27,7 +27,7 @@ RasterRenderingRuleSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -38,12 +38,12 @@ RasterRenderingRuleSample {
             anchors {
                 left: parent.left
                 top: parent.top
-                margins: 5 * scaleFactor
+                margins: 5
             }
             height: childrenRect.height
             width: childrenRect.width
             color: "silver"
-            radius: 5 * scaleFactor
+            radius: 5
 
             GridLayout {
                 columns: 2
@@ -53,7 +53,7 @@ RasterRenderingRuleSample {
                     Layout.columnSpan: 2
                     Layout.alignment: Qt.AlignHCenter
                     text: "Apply a Rendering Rule"
-                    font.pixelSize: 16 * scaleFactor
+                    font.pixelSize: 16
                 }
 
                 ComboBox {

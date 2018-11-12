@@ -19,14 +19,13 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property string damageType
     property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
     property var selectedFeature: null
@@ -138,7 +137,7 @@ Rectangle {
             id: callout
             calloutData: parent.calloutData;
             borderColor: "lightgrey"
-            borderWidth: 1 * scaleFactor
+            borderWidth: 1
             leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
                 updateWindow.visible = true;
@@ -152,7 +151,7 @@ Rectangle {
         width: childrenRect.width
         height: childrenRect.height
         anchors.centerIn: parent
-        radius: 10 * scaleFactor
+        radius: 10
         visible: false
 
         GaussianBlur {
@@ -170,13 +169,13 @@ Rectangle {
 
         GridLayout {
             columns: 2
-            anchors.margins: 5 * scaleFactor
+            anchors.margins: 5
 
             Text {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 text: "Update Attribute"
-                font.pixelSize: 16 * scaleFactor
+                font.pixelSize: 16
             }
 
             ComboBox {

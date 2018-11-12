@@ -44,7 +44,6 @@ signals:
 
 private:
   QString m_dataPath;
-  double m_scaleFactor = 1.0;
   int m_loadedLayerCount = 0;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Geodatabase* m_geodatabase = nullptr;

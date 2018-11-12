@@ -20,7 +20,6 @@ import Qt.labs.calendar 1.0
 import QtGraphicalEffects 1.0
 import Esri.ArcGISRuntime 100.4
 import QtQuick.Layouts 1.3
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -28,7 +27,6 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
     property var job
     property bool jobInProgress : false
     property string statusText: ""
@@ -126,7 +124,7 @@ Rectangle {
     // Create the settings rectangle to set dates and execute the task
     Rectangle {
         anchors {
-            margins: -10 * scaleFactor
+            margins: -10
             fill: settingsColumn
         }
         color: "lightgrey"
@@ -140,19 +138,19 @@ Rectangle {
         anchors {
             right: parent.right
             top: parent.top
-            margins: 20 * scaleFactor
+            margins: 20
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Select date range for analysis"
-            font.pixelSize: 14 * scaleFactor
+            font.pixelSize: 14
         }
 
         Text {
             text: "From"
-            font.pixelSize: 12 * scaleFactor
+            font.pixelSize: 12
         }
 
         TextField {
@@ -164,10 +162,10 @@ Rectangle {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     right: parent.right
-                    margins: 5 * scaleFactor
+                    margins: 5
                 }
                 source: "qrc:/Samples/Analysis/AnalyzeHotspots/calendar.png"
-                width: 22 * scaleFactor
+                width: 22
                 height: width
 
                 MouseArea {
@@ -183,7 +181,7 @@ Rectangle {
 
         Text {
             text: "To"
-            font.pixelSize: 12 * scaleFactor
+            font.pixelSize: 12
         }
 
         TextField {
@@ -195,10 +193,10 @@ Rectangle {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     right: parent.right
-                    margins: 5 * scaleFactor
+                    margins: 5
                 }
                 source: "qrc:/Samples/Analysis/AnalyzeHotspots/calendar.png"
-                width: 22 * scaleFactor
+                width: 22
                 height: width
 
                 MouseArea {
@@ -227,19 +225,19 @@ Rectangle {
         }
 
         Row {
-            spacing: 15 * scaleFactor
+            spacing: 15
             visible: jobInProgress
 
             BusyIndicator {
                 anchors.verticalCenter: parent.verticalCenter
-                width: 24 * scaleFactor
+                width: 24
                 height: width
             }
 
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: statusText
-                font.pixelSize: 14 * scaleFactor
+                font.pixelSize: 14
             }
         }
     }

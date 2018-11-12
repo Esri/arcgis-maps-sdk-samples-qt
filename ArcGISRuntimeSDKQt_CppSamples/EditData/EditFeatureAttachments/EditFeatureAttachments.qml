@@ -25,7 +25,7 @@ import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
 
-    property real scaleFactor: 1
+    
 
     property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
@@ -38,7 +38,7 @@ EditFeatureAttachmentsSample {
         Callout {
             id: callout
             borderColor: "lightgrey"
-            borderWidth: 1 * scaleFactor
+            borderWidth: 1
             calloutData: editAttachmentsSample.calloutData
             leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
@@ -63,8 +63,8 @@ EditFeatureAttachmentsSample {
     Rectangle {
         id: attachmentWindow
         anchors.centerIn: parent
-        height: 200 * scaleFactor
-        width: 250 * scaleFactor
+        height: 200
+        width: 250
         visible: false
         radius: 10
         color: "lightgrey"
@@ -86,28 +86,28 @@ EditFeatureAttachmentsSample {
                 right: parent.right
                 top: parent.top
             }
-            height: 40 * scaleFactor
+            height: 40
             color: "transparent"
 
             Text {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     left: parent.left
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
 
-                text: "Attachments"; font {bold: true; pixelSize: 20 * scaleFactor;}
+                text: "Attachments"; font {bold: true; pixelSize: 20;}
             }
 
             Row {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     right: parent.right
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 spacing: 15
                 Text {
-                    text: "+"; font {bold: true; pixelSize: 40 * scaleFactor;} color: "green"
+                    text: "+"; font {bold: true; pixelSize: 40;} color: "green"
 
                     // open a file dialog whenever the add button is clicked
                     MouseArea {
@@ -118,7 +118,7 @@ EditFeatureAttachmentsSample {
                     }
                 }
                 Text {
-                    text: "-"; font {bold: true; pixelSize: 40 * scaleFactor;} color: "red"
+                    text: "-"; font {bold: true; pixelSize: 40;} color: "red"
 
                     // make sure an item is selected and if so, delete it from the service
                     MouseArea {
@@ -141,7 +141,7 @@ EditFeatureAttachmentsSample {
                 right: parent.right
                 top: titleText.bottom
                 bottom: parent.bottom
-                margins: 10 * scaleFactor
+                margins: 10
             }
             clip: true
             spacing: 5
@@ -149,7 +149,7 @@ EditFeatureAttachmentsSample {
             model: editAttachmentsSample.attachmentModel
             // create the delegate to specify how the view is arranged
             delegate: Item {
-                height: 45* scaleFactor
+                height: 45
                 width: parent.width
                 clip: true
 
@@ -165,7 +165,7 @@ EditFeatureAttachmentsSample {
                     wrapMode: Text.WrapAnywhere
                     maximumLineCount: 1
                     elide: Text.ElideRight
-                    font.pixelSize: 16 * scaleFactor
+                    font.pixelSize: 16
                 }
 
                 // show the attachment's URL if it is an image
@@ -175,7 +175,7 @@ EditFeatureAttachmentsSample {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
                     }
-                    width: 44 * scaleFactor
+                    width: 44
                     height: width
                     fillMode: Image.PreserveAspectFit
                     source: attachmentUrl

@@ -25,7 +25,7 @@ DeleteFeaturesFeatureServiceSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     MapView {
         id: mapView
@@ -37,7 +37,7 @@ DeleteFeaturesFeatureServiceSample {
             id: callout
             calloutData: deleteFeaturesSample.calloutData
             borderColor: "lightgrey"
-            borderWidth : 1 * scaleFactor
+            borderWidth : 1
             accessoryButtonType: "Custom"
             customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/ic_menu_trash_light.png"
             leaderPosition: leaderPositionEnum.Automatic

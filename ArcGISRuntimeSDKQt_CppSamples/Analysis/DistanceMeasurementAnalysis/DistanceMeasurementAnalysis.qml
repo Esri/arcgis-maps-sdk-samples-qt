@@ -25,7 +25,7 @@ DistanceMeasurementAnalysisSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     SceneView {
         objectName: "sceneView"
         anchors.fill: parent
@@ -34,11 +34,11 @@ DistanceMeasurementAnalysisSample {
     Rectangle {
         anchors {
             fill: resultsColumn
-            margins: -5 * scaleFactor
+            margins: -5
         }
         color: "black"
         opacity: 0.5
-        radius: 5 * scaleFactor
+        radius: 5
     }
 
     Column {
@@ -46,12 +46,12 @@ DistanceMeasurementAnalysisSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 text: "Direct Distance:"
                 color: "white"
@@ -63,7 +63,7 @@ DistanceMeasurementAnalysisSample {
             }
         }
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 text: "Vertical Distance:"
                 color: "white"
@@ -75,7 +75,7 @@ DistanceMeasurementAnalysisSample {
             }
         }
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 text: "Horizontal Distance:"
                 color: "white"
@@ -87,7 +87,7 @@ DistanceMeasurementAnalysisSample {
             }
         }
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 text: "Unit System:"
                 color: "white"

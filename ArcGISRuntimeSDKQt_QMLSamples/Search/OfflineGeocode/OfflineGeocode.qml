@@ -23,11 +23,9 @@ import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
     clip: true
-
     width: 800
     height: 600
-
-    property real scaleFactor: 1
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     property Point pinLocation: null
@@ -222,7 +220,7 @@ Rectangle {
     Column {
         anchors {
             fill: parent
-            margins: 10 * scaleFactor
+            margins: 10
         }
 
         Rectangle {
@@ -236,7 +234,7 @@ Rectangle {
             color: "#f7f8fa"
             border {
                 color: "#7B7C7D"
-                width: 1 * scaleFactor
+                width: 1
             }
             radius: 2
 
@@ -248,7 +246,7 @@ Rectangle {
                 TextField {
                     id: textField
                     Layout.fillWidth: true
-                    leftPadding: 5 * scaleFactor
+                    leftPadding: 5
 
                     placeholderText: "Enter an Address"
 
@@ -273,7 +271,7 @@ Rectangle {
 
                 // button to open and close suggestions
                 Rectangle {
-                    Layout.margins: 5 * scaleFactor
+                    Layout.margins: 5
                     width: height
                     height: textField.contentHeight
                     color: "#f7f8fa"
@@ -297,7 +295,7 @@ Rectangle {
         Rectangle {
             id: suggestionRect
             width: addressSearchRect.width
-            height: 20 * locatorTask.suggestions.count * scaleFactor
+            height: 20 * locatorTask.suggestions.count
             color: "#f7f8fa"
             opacity: 0.85
 
@@ -309,26 +307,26 @@ Rectangle {
 
                     Rectangle {
                         width: addressSearchRect.width
-                        height: 20 * scaleFactor
+                        height: 20
                         color: "#f7f8fa"
                         border.color: "darkgray"
 
                         Text {
                             anchors {
                                 verticalCenter: parent.verticalCenter
-                                leftMargin: 5 * scaleFactor
-                                rightMargin: 5 * scaleFactor
+                                leftMargin: 5
+                                rightMargin: 5
                             }
 
                             font {
                                 weight: Font.Black
-                                pixelSize: 12 * scaleFactor
+                                pixelSize: 12
                             }
 
                             width: parent.width
                             text: label
                             elide: Text.ElideRight
-                            leftPadding: 5 * scaleFactor
+                            leftPadding: 5
                             color: "black"
                         }
 
@@ -364,8 +362,8 @@ Rectangle {
     Rectangle {
         id: noResultsRect
         anchors.centerIn: parent
-        height: 50 * scaleFactor
-        width: 200 * scaleFactor
+        height: 50
+        width: 200
         color: "#f7f8fa"
         visible: false
         radius: 2
@@ -375,7 +373,7 @@ Rectangle {
         Text {
             anchors.centerIn: parent
             text: "No matching address"
-            font.pixelSize: 18 * scaleFactor
+            font.pixelSize: 18
         }
     }
 

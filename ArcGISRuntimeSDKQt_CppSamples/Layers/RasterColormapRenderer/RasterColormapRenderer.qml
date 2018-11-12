@@ -27,7 +27,7 @@ RasterColormapRendererSample {
     width: 800
     height: 800
 
-    property real scaleFactor: 1
+    
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
 
     // add a mapView component

@@ -25,7 +25,7 @@ GeodesicOperationsSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -38,12 +38,12 @@ GeodesicOperationsSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
 
         text: "%1 kilometers".arg(distanceText)
         visible: distanceText.length > 0
-        font.pixelSize: 20 * scaleFactor
+        font.pixelSize: 20
         color: "white"
     }
 }

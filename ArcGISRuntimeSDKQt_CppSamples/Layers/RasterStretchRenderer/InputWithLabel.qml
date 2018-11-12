@@ -30,7 +30,7 @@ Row {
 
     Slider {
         id: slider
-        width: 100 * scaleFactor
+        width: 100
         from: 0
         to: maxRange
 

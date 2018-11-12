@@ -17,13 +17,11 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: 1
+    
     //! [display vector tiled layer]
     // Create MapView that contains a Map
     MapView {
@@ -50,7 +48,7 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 15
         }
         property int modelWidth: 0
         width: modelWidth + leftPadding + rightPadding + indicator.width

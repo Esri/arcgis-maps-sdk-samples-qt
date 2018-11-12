@@ -17,16 +17,13 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600    
-
-    property real scaleFactor: 1
+    height: 600
 
     StackView {
         id: stackView
@@ -44,7 +41,7 @@ Rectangle {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
-                margins: 5 * scaleFactor
+                margins: 5
             }
             text: "Save map"
 
@@ -106,7 +103,7 @@ Rectangle {
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                     bottom: parent.bottom
-                    margins: 5 * scaleFactor
+                    margins: 5
                 }
                 text: "Create New Map"
                 onClicked: {

@@ -26,7 +26,7 @@ CreateAndSaveMapSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     onPortalLoaded: {
         stackView.push(options);
@@ -57,7 +57,7 @@ CreateAndSaveMapSample {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
-                margins: 5 * scaleFactor
+                margins: 5
             }
             text: "Save map"
 
@@ -110,7 +110,7 @@ CreateAndSaveMapSample {
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                     bottom: parent.bottom
-                    margins: 5 * scaleFactor
+                    margins: 5
                 }
                 text: "Create New Map"
                 onClicked: {

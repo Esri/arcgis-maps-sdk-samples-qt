@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     SceneView {
         id: sceneView
@@ -70,7 +70,7 @@ Rectangle {
         anchors {
             right: parent.right
             top: parent.top
-            margins: 5 * scaleFactor
+            margins: 5
         }
 
         property int modelWidth: 0

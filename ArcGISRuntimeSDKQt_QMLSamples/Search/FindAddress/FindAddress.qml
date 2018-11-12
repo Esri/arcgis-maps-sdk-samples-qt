@@ -18,15 +18,13 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Controls 100.4
 
 Rectangle {
+    id: root
     width: 800
     height: 600
-    id: root
-
-    property real scaleFactor: 1
+    
     property string calloutText
     property string calloutDetailText
     property Point calloutLocation;
@@ -91,7 +89,7 @@ Rectangle {
         // map callout window
         Callout {
             id: callout
-            borderWidth: 1 * scaleFactor
+            borderWidth: 1
             calloutData: parent.calloutData
             borderColor: "lightgrey"
             accessoryButtonHidden: true
@@ -133,7 +131,7 @@ Rectangle {
     Column {
         anchors {
             fill: parent
-            margins: 10 * scaleFactor
+            margins: 10
         }
 
         Rectangle {
@@ -215,7 +213,7 @@ Rectangle {
         // show a drop down of suggested locations
         ListView {
             id: suggestView
-            height: 300 * scaleFactor
+            height: 300
             width: textField.width
             visible: false
             clip: true
@@ -224,7 +222,7 @@ Rectangle {
                 Rectangle {
                     id: rect
                     width: parent.width
-                    height: 25 * scaleFactor
+                    height: 25
                     color: "#f7f8fa"
 
                     Rectangle {
@@ -232,9 +230,9 @@ Rectangle {
                             top: parent.top;
                             left: parent.left;
                             right: parent.right;
-                            topMargin: -5 * scaleFactor
-                            leftMargin: 20 * scaleFactor
-                            rightMargin: 20 * scaleFactor
+                            topMargin: -5
+                            leftMargin: 20
+                            rightMargin: 20
                         }
                         color: "darkgrey"
                         height: 1
@@ -244,10 +242,10 @@ Rectangle {
                         text: name
                         anchors {
                             fill: parent
-                            leftMargin: 5 * scaleFactor
+                            leftMargin: 5
                         }
 
-                        font.pixelSize: 14 * scaleFactor
+                        font.pixelSize: 14
                     }
 
                     MouseArea {

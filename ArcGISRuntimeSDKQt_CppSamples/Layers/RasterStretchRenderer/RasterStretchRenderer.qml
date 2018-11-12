@@ -27,7 +27,7 @@ RasterStretchRendererSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property string minMax: "Min Max"
     property string percentClip: "Percent Clip"
@@ -44,12 +44,12 @@ RasterStretchRendererSample {
     Rectangle {
         visible: editButton.visible
         anchors.centerIn: editButton
-        radius: 8 * scaleFactor
-        height: editButton.height + (16 * scaleFactor)
-        width: editButton.width + (16 * scaleFactor)
+        radius: 8
+        height: editButton.height + (16)
+        width: editButton.width + (16)
         color: "lightgrey"
         border.color: "darkgrey"
-        border.width: 2 * scaleFactor
+        border.width: 2
         opacity: 0.75
     }
 
@@ -58,7 +58,7 @@ RasterStretchRendererSample {
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            margins: 32 * scaleFactor
+            margins: 32
         }
         visible: rendererBox.width === 0
         text: "Edit Renderer"
@@ -82,10 +82,10 @@ RasterStretchRendererSample {
             anchors {
                 top: parent.top
                 bottom: parent.bottom
-                margins: 24 * scaleFactor
+                margins: 24
             }
             width: parent.width
-            spacing: 16 * scaleFactor
+            spacing: 16
 
             ComboBox {
                 id: stretchTypeCombo
@@ -108,7 +108,7 @@ RasterStretchRendererSample {
             InputWithLabel {
                 id: minMaxMin
                 visible: stretchTypeCombo.currentText === minMax
-                spacing: 8 * scaleFactor
+                spacing: 8
                 label: "min value"
                 maxRange: 255
                 value: 0
@@ -117,7 +117,7 @@ RasterStretchRendererSample {
             InputWithLabel {
                 id: minMaxMax
                 visible: stretchTypeCombo.currentText === minMax
-                spacing: 8 * scaleFactor
+                spacing: 8
                 label: "max value"
                 maxRange: 255
                 value: 255
@@ -126,7 +126,7 @@ RasterStretchRendererSample {
             InputWithLabel {
                 id: percentClipMin
                 visible: stretchTypeCombo.currentText === percentClip
-                spacing: 8 * scaleFactor
+                spacing: 8
                 label: "min value"
                 maxRange: 100
                 value: 0
@@ -135,7 +135,7 @@ RasterStretchRendererSample {
             InputWithLabel {
                 id: percentClipMax
                 visible: stretchTypeCombo.currentText === percentClip
-                spacing: 8 * scaleFactor
+                spacing: 8
                 label: "max value"
                 maxRange: 100
                 value: 100
@@ -144,7 +144,7 @@ RasterStretchRendererSample {
             InputWithLabel {
                 id: sdFactor
                 visible: stretchTypeCombo.currentText === stdDeviation
-                spacing: 8 * scaleFactor
+                spacing: 8
                 label: "factor"
                 maxRange: 25
                 value: 0

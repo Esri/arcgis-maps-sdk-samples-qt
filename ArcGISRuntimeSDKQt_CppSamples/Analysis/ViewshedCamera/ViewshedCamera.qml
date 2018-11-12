@@ -25,7 +25,7 @@ ViewshedCameraSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     SceneView {
         objectName: "sceneView"
         anchors.fill: parent
@@ -35,7 +35,7 @@ ViewshedCameraSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         text: "Calculate Viewshed"
         onClicked: calculateViewshed();

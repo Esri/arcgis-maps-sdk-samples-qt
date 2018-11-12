@@ -24,7 +24,7 @@ FeatureLayerSelectionSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     // add a mapView component
     MapView {
         id: mapView
@@ -44,10 +44,10 @@ FeatureLayerSelectionSample {
             right: parent.right
             bottom: parent.bottom
         }
-        height: 30 * scaleFactor
+        height: 30
         color: "lightgrey"
         border {
-            width: 0.5 * scaleFactor
+            width: 0.5
             color: "black"
         }
 
@@ -56,11 +56,11 @@ FeatureLayerSelectionSample {
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
-                leftMargin: 10 * scaleFactor
+                leftMargin: 10
             }
             // set the text equal to the C++ property
             text: featureLayerSelectionSample.selectedFeatureText
-            font.pixelSize: 14 * scaleFactor
+            font.pixelSize: 14
         }
     }
 }

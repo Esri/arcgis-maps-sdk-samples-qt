@@ -26,7 +26,7 @@ Rectangle {
     height: 600
     color: "#E0E0E0"
 
-    property real scaleFactor: 1
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
 
     property LocatorTask currentLocatorTask: null
@@ -54,7 +54,7 @@ Rectangle {
         Callout {
             id: callout
             calloutData: parent.calloutData
-            screenOffsetY: -19 * scaleFactor
+            screenOffsetY: -19
             accessoryButtonHidden: true
             leaderPosition: leaderPositionEnum.Automatic
         }
@@ -97,16 +97,16 @@ Rectangle {
             anchors {
                 top: parent.top
                 right: parent.right
-                margins: 10 * scaleFactor
+                margins: 10
             }
 
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             // solve route button
             Rectangle {
                 id: routeButton
                 color: "#E0E0E0"
-                height: 50 * scaleFactor
+                height: 50
                 width: height
                 border.color: "black"
                 radius: 2
@@ -116,10 +116,10 @@ Rectangle {
                 Image {
                     anchors {
                         centerIn: parent
-                        margins: 5 * scaleFactor
+                        margins: 5
                     }
                     source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
-                    height: 44 * scaleFactor
+                    height: 44
                     width: height
                 }
 
@@ -146,7 +146,7 @@ Rectangle {
             Rectangle {
                 id: clearButton
                 color: "#E0E0E0"
-                height: 50 * scaleFactor
+                height: 50
                 width: height
                 border.color: "black"
                 radius: 2
@@ -156,10 +156,10 @@ Rectangle {
                 Image {
                     anchors {
                         centerIn: parent
-                        margins: 5 * scaleFactor
+                        margins: 5
                     }
                     source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/discardSymbol.png"
-                    height: 44 * scaleFactor
+                    height: 44
                     width: height
                 }
 
@@ -180,7 +180,7 @@ Rectangle {
             }
             opacity: 0.50
             height: parent.height
-            width: 25 * scaleFactor
+            width: 25
             color: "#E0E0E0"
 
             Rectangle {
@@ -189,14 +189,14 @@ Rectangle {
                     top: parent.top
                 }
                 width: parent.width
-                height: 100 * scaleFactor
+                height: 100
                 color: "#283593"
 
                 Image {
                     anchors.centerIn: parent
                     mirror: true
                     source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
-                    height: 33 * scaleFactor
+                    height: 33
                     width: height
                 }
             }
@@ -373,12 +373,12 @@ Rectangle {
                     left: parent.left
                 }
                 width: parent.width
-                spacing: 20 * scaleFactor
+                spacing: 20
 
                 // UI navigation bar
                 Rectangle {
                     width: parent.width
-                    height: 100 * scaleFactor
+                    height: 100
                     color: "#283593"
 
                     // forward navigation button. Visible after first map is selected
@@ -386,10 +386,10 @@ Rectangle {
                         anchors {
                             verticalCenter: parent.verticalCenter
                             right: parent.right
-                            margins: 10 * scaleFactor
+                            margins: 10
                         }
                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
-                        height: 44 * scaleFactor
+                        height: 44
                         width: height
                         visible: isMapOpen
 
@@ -404,8 +404,8 @@ Rectangle {
                     Text {
                         anchors.centerIn: parent
                         color: "white"
-                        height: 40 * scaleFactor
-                        font.pixelSize: 25 * scaleFactor
+                        height: 40
+                        font.pixelSize: 25
                         text: "Choose a Mobile Map Package"
                     }
                 }
@@ -418,16 +418,16 @@ Rectangle {
                 // mobile map package ListView
                 ListView {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    height: 400 * scaleFactor
-                    width: 200 * scaleFactor
-                    spacing: 10 * scaleFactor
+                    height: 400
+                    width: 200
+                    spacing: 10
                     model: mobileMapPackages
 
                     delegate: Component {
                         Rectangle {
 
-                            width: 200 * scaleFactor
-                            height: 50 * scaleFactor
+                            width: 200
+                            height: 50
                             color: "#283593"
                             radius: 2
                             border.color: "darkgray"
@@ -436,7 +436,7 @@ Rectangle {
                                 anchors.centerIn: parent
                                 horizontalAlignment: Text.AlignHCenter
                                 color: "white"
-                                width: 150 * scaleFactor
+                                width: 150
                                 text: modelData
                                 elide: Text.ElideMiddle
                             }
@@ -479,12 +479,12 @@ Rectangle {
                     left: parent.left
                 }
                 width: parent.width
-                spacing: 20 * scaleFactor
+                spacing: 20
 
                 // UI navigation bar
                 Rectangle {
                     width: parent.width
-                    height: 100 * scaleFactor
+                    height: 100
                     color: "#283593"
 
                     // back button
@@ -492,11 +492,11 @@ Rectangle {
                         anchors {
                             verticalCenter: parent.verticalCenter
                             left: parent.left
-                            margins: 10 * scaleFactor
+                            margins: 10
                         }
                         mirror: true
                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
-                        height: 44 * scaleFactor
+                        height: 44
                         width: height
 
                         MouseArea {
@@ -512,10 +512,10 @@ Rectangle {
                         anchors {
                             verticalCenter: parent.verticalCenter
                             right: parent.right
-                            margins: 10 * scaleFactor
+                            margins: 10
                         }
                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
-                        height: 44 * scaleFactor
+                        height: 44
                         width: height
                         visible: isMapOpen
 
@@ -530,8 +530,8 @@ Rectangle {
                     Text {
                         anchors.centerIn: parent
                         color: "white"
-                        height: 40 * scaleFactor
-                        font.pixelSize: 25 * scaleFactor
+                        height: 40
+                        font.pixelSize: 25
                         text: "Choose a Map"
                     }
                 }
@@ -544,16 +544,16 @@ Rectangle {
                 // list of maps
                 ListView {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    height: 400 * scaleFactor
-                    width: 200 * scaleFactor
-                    spacing: 10 * scaleFactor
+                    height: 400
+                    width: 200
+                    spacing: 10
                     model: mapsInBundle
 
                     delegate: Component {
                         Rectangle {
 
-                            width: 200 * scaleFactor
-                            height: 50 * scaleFactor
+                            width: 200
+                            height: 50
                             color: "#283593"
                             radius: 2
                             border.color: "darkgray"
@@ -562,7 +562,7 @@ Rectangle {
                                 anchors.centerIn: parent
                                 horizontalAlignment: Text.AlignHCenter
                                 color: "white"
-                                width: 150 * scaleFactor
+                                width: 150
                                 text: name
                                 elide: Text.ElideMiddle
                             }
@@ -572,10 +572,10 @@ Rectangle {
                                 anchors {
                                     left: parent.left
                                     top: parent.top
-                                    margins: 5 * scaleFactor
+                                    margins: 5
                                 }
                                 source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pinOutlineSymbol.png"
-                                height: 20 * scaleFactor
+                                height: 20
                                 width: height
                                 visible: geocoding
                             }
@@ -585,10 +585,10 @@ Rectangle {
                                 anchors {
                                     right: parent.right
                                     top: parent.top
-                                    margins: 5 * scaleFactor
+                                    margins: 5
                                 }
                                 source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
-                                height: 20 * scaleFactor
+                                height: 20
                                 width: height
                                 visible: routing
                             }

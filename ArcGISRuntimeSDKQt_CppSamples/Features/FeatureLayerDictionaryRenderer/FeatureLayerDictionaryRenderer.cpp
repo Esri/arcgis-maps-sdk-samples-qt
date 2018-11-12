@@ -46,8 +46,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
-  m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
+  m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();  
 
   m_mapView = findChild<MapQuickView*>("mapView");
   // Create a map using the topo basemap

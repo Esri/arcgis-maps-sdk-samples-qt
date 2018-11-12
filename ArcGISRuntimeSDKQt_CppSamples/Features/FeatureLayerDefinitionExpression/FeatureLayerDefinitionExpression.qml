@@ -26,7 +26,7 @@ FeatureLayerDefinitionExpressionSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     //! [Declare map view in QML that will be accessed from Cpp]
     // add a mapView component
@@ -42,8 +42,8 @@ FeatureLayerDefinitionExpressionSample {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            margins: 5 * scaleFactor
-            bottomMargin: 25 * scaleFactor
+            margins: 5
+            bottomMargin: 25
         }
         spacing: 5
 

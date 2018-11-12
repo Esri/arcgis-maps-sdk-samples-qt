@@ -27,7 +27,7 @@ SpatialOperationsSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -42,7 +42,7 @@ SpatialOperationsSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         property int modelWidth: 0
         width: modelWidth + leftPadding + rightPadding + indicator.width

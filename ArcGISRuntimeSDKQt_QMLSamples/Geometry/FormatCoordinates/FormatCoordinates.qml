@@ -19,17 +19,15 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: 1
-    property int labelWidth: 100 * scaleFactor
-    property int coordinateTextWidth: 200 * scaleFactor
-    property int fontPixelSize: 14 * scaleFactor
-    property int textPadding: Qt.platform.os === "android" ? (10 * scaleFactor) : (4 * scaleFactor)
+    
+    property int labelWidth: 100
+    property int coordinateTextWidth: 200
+    property int fontPixelSize: 14
+    property int textPadding: Qt.platform.os === "android" ? (10) : (4)
     property string labelSuffix: ":  "
 
     property string strDecimalDegrees: qsTr("Degrees")
