@@ -62,9 +62,22 @@ Rectangle {
 
             ComboBox {
                 id: basemapComboBox
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.margins: 5
                 Layout.fillWidth: true
                 model: ["Streets", "Imagery", "Topographic", "Oceans"]
+
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics
+                    font: basemapComboBox.font
+                }
             }
 
             Text {

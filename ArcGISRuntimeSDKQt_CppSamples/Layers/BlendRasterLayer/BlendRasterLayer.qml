@@ -16,6 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
@@ -82,50 +83,98 @@ BlendRasterLayerSample {
         opacity: 0.75
         width: editingRenderer ? parent.width : 0
 
-        Column {
+        GridLayout {
             anchors {
-                top: parent.top
-                bottom: parent.bottom
+                centerIn: parent
                 margins: 24 * scaleFactor
             }
-            width: parent.width
-            spacing: 16 * scaleFactor
 
-            TextWithSlider {
-                id: altitudeCtrl
-                label: "altitde"
-                min: 0
-                max: 90
+            columns: 2
+
+            Text {
+                text: "altitude"
             }
 
-            TextWithSlider {
-                id: azimithCtrl
-                label: "azimuth"
-                min: 0
-                max: 359
+            SpinBox {
+                id: altSlider
+                from: 0
+                to: 90
+                editable: true
+                textFromValue: function(v) {
+                    return v.toFixed(0) + "\u00B0";
+                }
             }
 
-            TextWithComboBox {
-                id: slopeTypeCtrl
-                label: "slope type"
+            Text {
+                text: "azimuth"
+            }
+
+            SpinBox {
+                id: azimuthSlider
+                from: 0
+                to: 90
+                editable: true
+                textFromValue: function(v) {
+                    return v.toFixed(0) + "\u00B0";
+                }
+            }
+
+            Text {
+                text: "slope type"
+            }
+
+            ComboBox {
+                id: slopeCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.fillWidth: true
+                textRole: "name"
                 model: slopeTypeModel
+               Component.onCompleted : {
+                    for (var i = 0; i < model.count; ++i) {
+                        metrics.text = model.get(i).name;
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics
+                    font: slopeCombo.font
+                }
             }
 
-            TextWithComboBox {
-                id: colorRampCtrl
-                label: "color ramp"
+            Text {
+                text: "color ramp"
+            }
+
+            ComboBox {
+                id: colorCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.fillWidth: true
+                textRole: "name"
                 model: colorRampModel
+                Component.onCompleted : {
+                    for (var i = 0; i < model.count; ++i) {
+                        metrics2.text = model.get(i).name;
+                        modelWidth = Math.max(modelWidth, metrics2.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics2
+                    font: colorCombo.font
+                }
             }
 
             Button {
                 text: "Render"
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.columnSpan: 2
+                Layout.alignment: Qt.AlignHCenter
                 onClicked: {
                     editingRenderer = false;
-                    applyRenderSettings(altitudeCtrl.sliderValue,
-                                        azimithCtrl.sliderValue,
-                                        slopeTypeCtrl.value(),
-                                        colorRampCtrl.value());
+                    applyRenderSettings(altSlider.value,
+                                        azimuthSlider.value,
+                                        slopeTypeModel.get(slopeCombo.currentIndex).value,
+                                        colorRampModel.get(colorCombo.currentIndex).value);
                 }
             }
         }

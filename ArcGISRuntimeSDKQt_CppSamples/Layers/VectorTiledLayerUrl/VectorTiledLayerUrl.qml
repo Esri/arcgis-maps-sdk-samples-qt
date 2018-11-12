@@ -40,11 +40,23 @@ VectorTiledLayerUrlSample {
             top: parent.top
             margins: 15 * scaleFactor
         }
-        width: 175 * scaleFactor
+        property int modelWidth: 0
+        width: modelWidth + leftPadding + rightPadding + indicator.width
         model: ["Mid-Century","Colored Pencil","Newspaper","Nova","World Street Map (Night)"]
         onCurrentTextChanged: {
             // Call C++ invokable function to switch the basemaps
             vectorTiledLayerUrlSample.changeBasemap(currentText);
+        }
+
+        Component.onCompleted : {
+            for (var i = 0; i < model.length; ++i) {
+                metrics.text = model[i];
+                modelWidth = Math.max(modelWidth, metrics.width);
+            }
+        }
+        TextMetrics {
+            id: metrics
+            font: comboBoxBasemap.font
         }
     }
 }

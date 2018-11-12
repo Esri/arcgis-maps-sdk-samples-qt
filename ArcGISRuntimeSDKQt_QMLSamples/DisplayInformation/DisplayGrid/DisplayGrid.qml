@@ -230,8 +230,8 @@ Rectangle {
         id: styleWindow
         anchors.horizontalCenter: parent.horizontalCenter
         y: parent.height // initially display below the page
-        width: 250 * scaleFactor
         height: childrenRect.height
+        width: childrenRect.width
 
         color: "lightgray"
         radius: 4 * scaleFactor
@@ -252,22 +252,19 @@ Rectangle {
 
         GridLayout {
             id: grid
-            anchors {
-                left: parent.left;
-                right: parent.right
-                margins: 10 * scaleFactor;
-            }
             columns: 2
-            columnSpacing: 10
-            rows: 8
-            rowSpacing: 10
 
             Text {
+                Layout.leftMargin: 10
                 text: "Grid type"
             }
 
             ComboBox {
                 id: gridTypeComboBox
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.rightMargin: 10
+                Layout.fillWidth: true
                 model: [latlonGrid, mgrsGrid, utmGrid, usngGrid]
 
                 onCurrentTextChanged: {
@@ -294,16 +291,29 @@ Rectangle {
                     mapView.grid.visible = gridVisible;
                     mapView.grid.labelsVisible = labelVisible;
                 }
+
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metricsGridTypeComboBox.text = model[i];
+                        modelWidth = Math.max(modelWidth, metricsGridTypeComboBox.width);
+                    }
+                }
+                TextMetrics {
+                    id: metricsGridTypeComboBox
+                    font: gridTypeComboBox.font
+                }
             }
 
             Text {
                 text: "Labels visible"
+                Layout.leftMargin: 10
                 enabled: gridVisibleSwitch.checked
                 color: enabled ? "black" : "gray"
             }
 
             Switch {
                 id: labelVisibleSwitch
+                Layout.rightMargin: 10
                 checked: true
                 enabled: gridVisibleSwitch.checked
 
@@ -319,12 +329,13 @@ Rectangle {
             }
 
             Text {
+                Layout.leftMargin: 10
                 text: "Grid visible"
-                Layout.maximumWidth: styleWindow.width * 0.35
             }
 
             Switch {
                 id: gridVisibleSwitch
+                Layout.rightMargin: 10
                 checked: true
                 onCheckedChanged: {
                     if (checked) {
@@ -338,53 +349,109 @@ Rectangle {
             }
 
             Text {
+                Layout.leftMargin: 10
                 text: "Grid color"
             }
 
             ComboBox {
+                id: colorCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+
+                Layout.rightMargin: 10
+                Layout.fillWidth: true
                 model: ["red", "white", "blue"]
 
                 onCurrentTextChanged: {
                     currentGridColor = currentText;
                     changeGridColor(currentGridColor);
                 }
+
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        colorComboMetrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, colorComboMetrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: colorComboMetrics
+                    font: colorCombo.font
+                }
             }
 
             Text {
+                Layout.leftMargin: 10
                 text: "Label color"
             }
 
             ComboBox {
+                id: colorCombo2
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.rightMargin: 10
+                Layout.fillWidth: true
                 model: ["red", "black", "blue"]
 
                 onCurrentTextChanged: {
                     currentGridLabelColor = currentText;
                     changeLabelColor(currentGridLabelColor);
                 }
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        colorCombo2Metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, colorCombo2Metrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: colorCombo2Metrics
+                    font: colorCombo2.font
+                }
             }
 
             Text {
+                Layout.leftMargin: 10
                 text: "Label position"
                 color: enabled ? "black"  : "gray"
             }
 
             ComboBox {
+                id: positionCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.rightMargin: 10
+                Layout.fillWidth: true
                 model: [geographic, bottomLeft, bottomRight, topLeft, topRight, center, allSides]
 
                 onCurrentTextChanged: {
                     currentLabelPosition = currentText;
                     changeLabelPosition(currentLabelPosition);
                 }
+
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        positionComboMetrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, positionComboMetrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: positionComboMetrics
+                    font: positionCombo.font
+                }
             }
 
             Text {
+                Layout.leftMargin: 10
                 text: "Label format"
-                Layout.maximumWidth: styleWindow.width * 0.35
                 enabled: mapView.grid.gridType === Enums.GridTypeLatitudeLongitudeGrid
                 color: enabled ? "black"  : "gray"
             }
 
             ComboBox {
+                id: formatCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.rightMargin: 10
+                Layout.fillWidth: true
                 model: [dd, dms]
                 enabled: mapView.grid.gridType === Enums.GridTypeLatitudeLongitudeGrid
 
@@ -392,15 +459,25 @@ Rectangle {
                     currentLabelFormat = currentText;
                     changeLabelFormat(currentLabelFormat);
                 }
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        formatComboMetrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, formatComboMetrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: formatComboMetrics
+                    font: formatCombo.font
+                }
             }
 
             // Button to hide the styling window
             Rectangle {
                 id: hideButton
                 property bool pressed: false
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.alignment: Qt.AlignHCenter
                 Layout.columnSpan: 2
-                Layout.bottomMargin: 5
+                Layout.bottomMargin: 5 * scaleFactor
 
                 width: 150 * scaleFactor
                 height: 30 * scaleFactor
