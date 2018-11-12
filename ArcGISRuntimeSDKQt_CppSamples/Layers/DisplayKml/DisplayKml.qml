@@ -62,6 +62,7 @@ DisplayKmlSample {
                 metrics.text = model[i];
                 modelWidth = Math.max(modelWidth, metrics.width);
             }
+            currentIndexChanged();
         }
 
         TextMetrics {
