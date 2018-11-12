@@ -247,7 +247,6 @@ Rectangle {
                             textMetrics.text = missionsModel.get(i).name;
                             modelWidth = Math.max(modelWidth, textMetrics.width);
                         }
-                        currentIndex = -1;
                     }
 
                     onCurrentTextChanged: {
@@ -259,6 +258,8 @@ Rectangle {
                         id: textMetrics
                         font: missionList.font
                     }
+
+                    Component.onCompleted: missionList.currentTextChanged()
                 }
 
                 Button {

@@ -148,7 +148,6 @@ Animate3DSymbolsSample {
                             textMetrics.text = missionsModel.data(index);
                             modelWidth = Math.max(modelWidth, textMetrics.width);
                         }
-                        currentIndex = -1;
                     }
 
                     onCurrentTextChanged: {
@@ -160,6 +159,8 @@ Animate3DSymbolsSample {
                         id: textMetrics
                         font: missionList.font
                     }
+
+                    Component.onCompleted: missionList.currentTextChanged()
                 }
 
                 Button {
