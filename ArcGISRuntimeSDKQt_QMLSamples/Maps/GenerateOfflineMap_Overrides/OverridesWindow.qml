@@ -211,11 +211,22 @@ Rectangle {
                     topMargin: 8 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
                 }
-                width: filterLabel.width * 2
                 onCurrentTextChanged: {
                     // 1=1 equivelent to select all in a WHERE clause.
                     hydrantWhereClauseChanged(currentText === "No filter" ? "1=1"
                                                                  : currentText)
+                }
+                property int modelWidth: 0
+                width: modelWidth + leftPadding + rightPadding + indicator.width
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics
+                    font: filterComboBox.font
                 }
             }
 

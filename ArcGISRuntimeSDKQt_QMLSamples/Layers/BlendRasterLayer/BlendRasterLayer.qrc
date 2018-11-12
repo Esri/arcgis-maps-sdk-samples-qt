@@ -6,7 +6,5 @@
         <file>screenshot.png</file>
         <file>SlopeTypeModel.qml</file>
         <file>ColorRampModel.qml</file>
-        <file>TextWithSlider.qml</file>
-        <file>TextWithComboBox.qml</file>
     </qresource>
 </RCC>

@@ -62,12 +62,20 @@ LocalServerServicesSample {
 
             ComboBox {
                 id: servicesCombo
-                width: startServiceButton.width
                 enabled: isServerRunning
                 model: ["Map Service", "Feature Service", "Geoprocessing Service"]
 
                 onCurrentIndexChanged: {
                     filePathText.text = "";
+                }
+
+                property int modelWidth: 0
+                width: modelWidth + leftPadding + rightPadding + indicator.width
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
                 }
             }
 

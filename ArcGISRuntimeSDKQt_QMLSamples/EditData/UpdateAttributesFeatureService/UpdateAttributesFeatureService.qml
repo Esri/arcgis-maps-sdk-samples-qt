@@ -185,6 +185,19 @@ Rectangle {
                 Layout.fillWidth: true
                 id: damageComboBox
                 model: featAttributes
+
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics
+                    font: damageComboBox.font
+                }
             }
 
             Button {

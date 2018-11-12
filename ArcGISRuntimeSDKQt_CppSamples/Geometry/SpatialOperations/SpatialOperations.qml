@@ -38,13 +38,25 @@ SpatialOperationsSample {
 
     // Display a ComboBox with options for each operation
     ComboBox {
+        id: comboBox
         anchors {
             left: parent.left
             top: parent.top
             margins: 10 * scaleFactor
         }
-        width: 175 * scaleFactor
         model: geometryOperations
         onCurrentIndexChanged: applyGeometryOperation(currentIndex);
+        property int modelWidth: 0
+        width: modelWidth + leftPadding + rightPadding + indicator.width
+        Component.onCompleted : {
+            for (var i = 0; i < model.length; ++i) {
+                metrics.text = model[i];
+                modelWidth = Math.max(modelWidth, metrics.width);
+            }
+        }
+        TextMetrics {
+            id: metrics
+            font: comboBox.font
+        }
     }
 }

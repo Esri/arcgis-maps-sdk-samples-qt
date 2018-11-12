@@ -93,8 +93,22 @@ DistanceMeasurementAnalysisSample {
                 color: "white"
             }
             ComboBox {
+                id: comboBox
+                property int modelWidth: 0
+                width: modelWidth + leftPadding + rightPadding + indicator.width
                 model: ["Metric", "Imperial"]
                 onCurrentTextChanged: setUnits(currentText);
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+
+                TextMetrics {
+                    id: metrics
+                    font: comboBox.font
+                }
             }
         }
     }
