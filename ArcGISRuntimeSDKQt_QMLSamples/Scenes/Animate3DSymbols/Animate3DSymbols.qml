@@ -27,7 +27,6 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
     property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D"
 
     property int missionSize: currentMissionModel.count
@@ -116,7 +115,7 @@ Rectangle {
             anchors {
                 left:sceneView.left
                 bottom: sceneView.attributionTop
-                margins: 10 * scaleFactor
+                margins: 10
             }
             height: parent.height * 0.25
             width: parent.width * 0.3
@@ -128,7 +127,7 @@ Rectangle {
                 objectName: "mapView"
                 anchors {
                     fill: parent
-                    margins: 2 * scaleFactor
+                    margins: 2
                 }
 
                 Map {
@@ -227,7 +226,7 @@ Rectangle {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
 
         GroupBox {
@@ -274,7 +273,7 @@ Rectangle {
                     text: "progress"
                     style: Text.Outline
                     styleColor: "white"
-                    font.pointSize: 24
+                    font.pixelSize: 14
                 }
 
                 Slider {
@@ -305,7 +304,7 @@ Rectangle {
                     enabled: following && missionReady
                     style: Text.Outline
                     styleColor: "white"
-                    font.pointSize: 24
+                    font.pixelSize: 14
                 }
 
                 Slider {
@@ -321,7 +320,7 @@ Rectangle {
                     enabled: following && missionReady
                     style: Text.Outline
                     styleColor: "white"
-                    font.pointSize: 24
+                    font.pixelSize: 14
                 }
 
                 Slider {
@@ -337,7 +336,7 @@ Rectangle {
                     enabled: missionReady
                     style: Text.Outline
                     styleColor: "white"
-                    font.pointSize: 24
+                    font.pixelSize: 14
 
                 }
 
