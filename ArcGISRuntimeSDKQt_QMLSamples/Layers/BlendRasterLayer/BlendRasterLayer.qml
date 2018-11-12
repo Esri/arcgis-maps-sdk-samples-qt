@@ -16,6 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
 
@@ -29,7 +30,7 @@ Rectangle {
     property double scaleFactor: 1
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property bool editingRenderer: false
-    property bool useColorRamp: colorRampCtrl.value().length === 0
+    property bool useColorRamp: colorCombo.currentText !== "none"
 
     SlopeTypeModel {
         id: slopeTypeModel
@@ -113,44 +114,96 @@ Rectangle {
         opacity: 0.75
         width: editingRenderer ? parent.width : 0
 
-        Column {
+        GridLayout {
             anchors {
-                top: parent.top
-                bottom: parent.bottom
+                centerIn: parent
                 margins: 24 * scaleFactor
             }
-            width: parent.width
-            spacing: 16 * scaleFactor
 
-            TextWithSlider {
-                id: altitudeCtrl
-                label: "altitde"
-                min: 0
-                max: 90
+            columns: 2
+
+            Text {
+                text: "altitude"
             }
 
-            TextWithSlider {
-                id: azimithCtrl
-                label: "azimuth"
-                min: 0
-                max: 359
+            SpinBox {
+                id: altSlider
+                from: 0
+                to: 90
+                editable: true
+                textFromValue: function(v) {
+                    return v.toFixed(0) + "\u00B0";
+                }
             }
 
-            TextWithComboBox {
-                id: slopeTypeCtrl
-                label: "slope type"
+            Text {
+                text: "azimuth"
+            }
+
+            SpinBox {
+                id: azimuthSlider
+                from: 0
+                to: 90
+                editable: true
+                textFromValue: function(v) {
+                    return v.toFixed(0) + "\u00B0";
+                }
+            }
+
+
+            Text {
+                text: "slope type"
+            }
+
+            ComboBox {
+                id: slopeCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.fillWidth: true
+                textRole: "name"
                 model: slopeTypeModel
+
+                Component.onCompleted : {
+                    for (var i = 0; i < model.count; ++i) {
+                        metrics.text = model.get(i).name;
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics
+                    font: slopeCombo.font
+                }
             }
 
-            TextWithComboBox {
-                id: colorRampCtrl
-                label: "color ramp"
+
+            Text {
+                text: "color ramp"
+            }
+
+            ComboBox {
+                id: colorCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.fillWidth: true
+                textRole: "name"
                 model: colorRampModel
+
+                Component.onCompleted : {
+                    for (var i = 0; i < model.count; ++i) {
+                        metrics2.text = model.get(i).name;
+                        modelWidth = Math.max(modelWidth, metrics2.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics2
+                    font: colorCombo.font
+                }
             }
 
             Button {
                 text: "Render"
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.columnSpan: 2
+                Layout.alignment: Qt.AlignHCenter
                 onClicked: {
                     editingRenderer = false;
                     applyRendererSettings();
@@ -164,9 +217,9 @@ Rectangle {
     function applyRendererSettings() {
         var blendRenderer = ArcGISRuntimeEnvironment.createObject("BlendRenderer");
         blendRenderer.elevationRaster = elevationRaster;
-        blendRenderer.altitude = altitudeCtrl.sliderValue;
-        blendRenderer.azimuth = azimithCtrl.sliderValue;
-        blendRenderer.slopeType = slopeTypeCtrl.value();
+        blendRenderer.altitude = altSlider.value;
+        blendRenderer.azimuth = azimuthSlider.value;
+        blendRenderer.slopeType = slopeTypeModel.get(slopeCombo.currentIndex).value;
         blendRenderer.colorRamp = getColorRamp();
         blendRenderer.outputBitDepth = 8;
         blendRenderer.gammas = [];
@@ -180,17 +233,19 @@ Rectangle {
     }
 
     function applyRenderer(blendRenderer) {
-        if (colorRampCtrl.value().length === 0)
+        var val = colorRampModel.get(colorCombo.currentIndex).value;
+        if (val.length === 0)
             rasterLayer.renderer = blendRenderer;
         else
             rasterLayerColorRamp.renderer = blendRenderer;
     }
 
     function getColorRamp() {
-        if (colorRampCtrl.value().length === 0)
+        var val = colorRampModel.get(colorCombo.currentIndex).value;
+        if (val.length === 0)
             return null;
 
-        var colorRamp = ArcGISRuntimeEnvironment.createObject(colorRampCtrl.value());
+        var colorRamp = ArcGISRuntimeEnvironment.createObject(val);
         colorRamp.size = 800;
 
         return colorRamp;

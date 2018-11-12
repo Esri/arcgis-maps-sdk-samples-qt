@@ -35,12 +35,15 @@ DisplayKmlSample {
     }
 
     ComboBox {
+        id: comboBox
         anchors {
             right: parent.right
             top: parent.top
             margins: 5 * scaleFactor
         }
-        width: 100 * scaleFactor
+
+        property int modelWidth: 0
+        width: modelWidth + leftPadding + rightPadding + indicator.width
 
         model: ["URL", "Local file", "Portal Item"]
 
@@ -52,6 +55,18 @@ DisplayKmlSample {
                 createFromFile();
             else
                 createFromPortalItem();
+        }
+
+        Component.onCompleted : {
+            for (var i = 0; i < model.length; ++i) {
+                metrics.text = model[i];
+                modelWidth = Math.max(modelWidth, metrics.width);
+            }
+        }
+
+        TextMetrics {
+            id: metrics
+            font: comboBox.font
         }
     }
 }

@@ -236,11 +236,11 @@ Rectangle {
 
                 ComboBox {
                     id: missionList
+                    property real modelWidth: 0
+                    implicitWidth: leftPadding + rightPadding + indicator.width + modelWidth
                     enabled: !playButton.checked
                     model: missionsModel
                     textRole: "name"
-                    property real modelWidth: 0
-                    implicitWidth: leftPadding + rightPadding + indicator.width + modelWidth
 
                     onModelChanged: {
                         for (var i = 0; i < missionsModel.count; ++i) {

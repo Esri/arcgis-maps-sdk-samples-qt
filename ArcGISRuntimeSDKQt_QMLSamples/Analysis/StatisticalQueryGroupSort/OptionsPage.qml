@@ -125,8 +125,21 @@ Rectangle {
                         ComboBox {
                             id: fieldComboBox
                             anchors.verticalCenter: parent.verticalCenter
+                            property int modelWidth: 0
+                            width: modelWidth + leftPadding + rightPadding + indicator.width
                             model: fields
-                            width: 100 * scaleFactor
+                            onModelChanged: {
+                                if (!fields)
+                                    return;
+                                for (var i = 0; i < model.length; ++i) {
+                                    metricsFieldComboBox.text = model[i];
+                                    modelWidth = Math.max(modelWidth, metricsFieldComboBox.width);
+                                }
+                            }
+                            TextMetrics {
+                                id: metricsFieldComboBox
+                                font: fieldComboBox.font
+                            }
                         }
 
                         Text {
@@ -138,8 +151,19 @@ Rectangle {
                         ComboBox {
                             id: statisticComboBox
                             anchors.verticalCenter: parent.verticalCenter
+                            property int modelWidth: 0
+                            width: modelWidth + leftPadding + rightPadding + indicator.width
                             model: statisticTypes
-                            width: 100 * scaleFactor
+                            Component.onCompleted : {
+                                for (var i = 0; i < model.length; ++i) {
+                                    metricsStatisticComboBox.text = model[i];
+                                    modelWidth = Math.max(modelWidth, metricsStatisticComboBox.width);
+                                }
+                            }
+                            TextMetrics {
+                                id: metricsStatisticComboBox
+                                font: statisticComboBox.font
+                            }
                         }
 
                         Button {

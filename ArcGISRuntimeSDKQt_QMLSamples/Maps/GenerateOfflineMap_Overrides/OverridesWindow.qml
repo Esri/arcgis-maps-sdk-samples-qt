@@ -204,18 +204,31 @@ Rectangle {
             }
 
             ComboBox {
-              id: filterComboBox
-              model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
+                id: filterComboBox
                 anchors {
                     top: filterLabel.bottom
                     topMargin: 8 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
                 }
-                width: filterLabel.width * 2
+                property int modelWidth: 0
+                width: modelWidth + leftPadding + rightPadding + indicator.width
+                model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
+
                 onCurrentTextChanged: {
                     // 1=1 equivelent to select all in a WHERE clause.
                     hydrantWhereClauseChanged(currentText === "No filter" ? "1=1"
-                                                                 : currentText)
+                                                                          : currentText)
+                }
+
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics
+                    font: filterComboBox.font
                 }
             }
 
