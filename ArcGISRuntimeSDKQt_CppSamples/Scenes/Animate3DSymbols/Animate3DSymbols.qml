@@ -23,7 +23,6 @@ import Esri.ArcGISExtras 1.1
 Animate3DSymbolsSample {
     id: rootRectangle
 
-    property real scaleFactor: 1
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D"
     property bool following: followButton.checked
 
@@ -51,7 +50,7 @@ Animate3DSymbolsSample {
             anchors {
                 left:sceneView.left
                 bottom: sceneView.attributionTop
-                margins: 10 * scaleFactor
+                margins: 10
             }
             height: parent.height * 0.25
             width: parent.width * 0.3
@@ -63,7 +62,7 @@ Animate3DSymbolsSample {
                 objectName: "mapView"
                 anchors {
                     fill: parent
-                    margins: 2 * scaleFactor
+                    margins: 2
                 }
 
                 MouseArea {
@@ -127,7 +126,7 @@ Animate3DSymbolsSample {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
 
         GroupBox {
@@ -174,7 +173,7 @@ Animate3DSymbolsSample {
                     text: "progress"
                     style: Text.Outline
                     styleColor: "white"
-                    font.pointSize: 24
+                    font.pixelSize: 14
                 }
 
                 Slider {
@@ -206,7 +205,7 @@ Animate3DSymbolsSample {
                     enabled: following && missionReady
                     style: Text.Outline
                     styleColor: "white"
-                    font.pointSize: 24
+                    font.pixelSize: 14
                 }
 
                 Slider {
@@ -222,7 +221,7 @@ Animate3DSymbolsSample {
                     enabled: following && missionReady
                     style: Text.Outline
                     styleColor: "white"
-                    font.pointSize: 24
+                    font.pixelSize: 14
                 }
 
                 Slider {
@@ -238,7 +237,7 @@ Animate3DSymbolsSample {
                     enabled: missionReady
                     style: Text.Outline
                     styleColor: "white"
-                    font.pointSize: 24
+                    font.pixelSize: 14
 
                 }
 
