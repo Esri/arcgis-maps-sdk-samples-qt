@@ -83,6 +83,8 @@ Rectangle {
                 left: parent.left
                 margins: 10 * scaleFactor
             }
+            property int modelWidth: 0
+            width: modelWidth + leftPadding + rightPadding + indicator.width
             model: ["TOTAL POPULATION", "POPULATION DENSITY"]
 
             onCurrentTextChanged: {
@@ -92,8 +94,6 @@ Rectangle {
                     sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 100000";
             }
 
-            property int modelWidth: 0
-            width: modelWidth + leftPadding + rightPadding + indicator.width
             Component.onCompleted : {
                 for (var i = 0; i < model.length; ++i) {
                     metrics.text = model[i];

@@ -69,10 +69,12 @@ Rectangle {
             top: parent.top
             margins: 10 * scaleFactor
         }
-        model: geometryOperations
-        onCurrentIndexChanged: applyGeometryOperation(currentIndex);
         property int modelWidth: 0
         width: modelWidth + leftPadding + rightPadding + indicator.width
+        model: geometryOperations
+
+        onCurrentIndexChanged: applyGeometryOperation(currentIndex);
+
         Component.onCompleted : {
             for (var i = 0; i < model.length; ++i) {
                 metrics.text = model[i];

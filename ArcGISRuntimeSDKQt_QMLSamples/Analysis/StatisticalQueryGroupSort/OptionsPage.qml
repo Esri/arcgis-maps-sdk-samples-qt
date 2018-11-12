@@ -125,9 +125,9 @@ Rectangle {
                         ComboBox {
                             id: fieldComboBox
                             anchors.verticalCenter: parent.verticalCenter
-                            model: fields
                             property int modelWidth: 0
                             width: modelWidth + leftPadding + rightPadding + indicator.width
+                            model: fields
                             onModelChanged: {
                                 if (!fields)
                                     return;
@@ -151,9 +151,9 @@ Rectangle {
                         ComboBox {
                             id: statisticComboBox
                             anchors.verticalCenter: parent.verticalCenter
-                            model: statisticTypes
                             property int modelWidth: 0
                             width: modelWidth + leftPadding + rightPadding + indicator.width
+                            model: statisticTypes
                             Component.onCompleted : {
                                 for (var i = 0; i < model.length; ++i) {
                                     metricsStatisticComboBox.text = model[i];
@@ -162,7 +162,7 @@ Rectangle {
                             }
                             TextMetrics {
                                 id: metricsStatisticComboBox
-                                font: fieldComboBox.font
+                                font: statisticComboBox.font
                             }
                         }
 

@@ -52,12 +52,25 @@ Rectangle {
             top: parent.top
             margins: 15 * scaleFactor
         }
-        width: 175 * scaleFactor
+        property int modelWidth: 0
+        width: modelWidth + leftPadding + rightPadding + indicator.width
         model: ["Mid-Century","Colored Pencil","Newspaper","Nova", "World Street Map (Night)"]
         onCurrentTextChanged: {
             // Call this JavaScript function when the current selection changes
             if (map.loadStatus === Enums.LoadStatusLoaded)
                 changeBasemap();
+        }
+
+        Component.onCompleted : {
+            for (var i = 0; i < model.length; ++i) {
+                metrics.text = model[i];
+                modelWidth = Math.max(modelWidth, metrics.width);
+            }
+        }
+
+        TextMetrics {
+            id: metrics
+            font: comboBoxBasemap.font
         }
 
         function changeBasemap() {

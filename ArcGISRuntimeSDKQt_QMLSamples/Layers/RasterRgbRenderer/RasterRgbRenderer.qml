@@ -112,9 +112,9 @@ Rectangle {
             ComboBox {
                 id: stretchTypeCombo
                 anchors.horizontalCenter: parent.horizontalCenter
-                model: stretchTypes
                 property int modelWidth: 0
                 width: modelWidth + leftPadding + rightPadding + indicator.width
+                model: stretchTypes
                 Component.onCompleted : {
                     for (var i = 0; i < model.length; ++i) {
                         metrics.text = model[i];

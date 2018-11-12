@@ -96,6 +96,9 @@ ServiceAreaSample {
             id: modeComboBox
             model: ["Facility", "Barrier"]
 
+            property int modelWidth: 0
+            width: modelWidth + leftPadding + rightPadding + indicator.width
+
             onCurrentTextChanged: {
                 if (currentText === "Facility")
                     setFacilityMode();
@@ -103,8 +106,6 @@ ServiceAreaSample {
                     setBarrierMode();
             }
 
-            property int modelWidth: 0
-            width: modelWidth + leftPadding + rightPadding + indicator.width
             Component.onCompleted : {
                 for (var i = 0; i < model.length; ++i) {
                     metrics.text = model[i];

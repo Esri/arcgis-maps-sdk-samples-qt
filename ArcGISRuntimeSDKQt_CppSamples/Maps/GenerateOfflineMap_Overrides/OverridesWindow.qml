@@ -204,20 +204,21 @@ Rectangle {
 
             ComboBox {
                 id: filterComboBox
-                model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
                 anchors {
                     top: filterLabel.bottom
                     topMargin: 8 * scaleFactor
                     horizontalCenter: parent.horizontalCenter
                 }
+                property int modelWidth: 0
+                width: modelWidth + leftPadding + rightPadding + indicator.width
+                model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
+
                 onCurrentTextChanged: {
                     // 1=1 equivelent to select all in a WHERE clause.
                     hydrantWhereClauseChanged(currentText === "No filter" ? "1=1"
                                                                           : currentText)
                 }
 
-                property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
                 Component.onCompleted : {
                     for (var i = 0; i < model.length; ++i) {
                         metrics.text = model[i];

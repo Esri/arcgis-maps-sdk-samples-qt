@@ -42,6 +42,9 @@ FeatureLayerExtrusionSample {
                 margins: 10 * scaleFactor
             }
 
+            property int modelWidth: 0
+            width: modelWidth + leftPadding + rightPadding + indicator.width
+
             model: ["TOTAL POPULATION", "POPULATION DENSITY"]
 
             onCurrentTextChanged: {
@@ -51,8 +54,6 @@ FeatureLayerExtrusionSample {
                     popDensity();
             }
 
-            property int modelWidth: 0
-            width: modelWidth + leftPadding + rightPadding + indicator.width
             Component.onCompleted : {
                 for (var i = 0; i < model.length; ++i) {
                     metrics.text = model[i];

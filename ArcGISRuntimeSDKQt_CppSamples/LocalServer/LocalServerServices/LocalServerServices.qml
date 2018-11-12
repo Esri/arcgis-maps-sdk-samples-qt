@@ -62,6 +62,9 @@ LocalServerServicesSample {
 
             ComboBox {
                 id: servicesCombo
+                property int modelWidth: 0
+                width: modelWidth + leftPadding + rightPadding + indicator.width
+
                 enabled: isServerRunning
                 model: ["Map Service", "Feature Service", "Geoprocessing Service"]
 
@@ -69,8 +72,6 @@ LocalServerServicesSample {
                     filePathText.text = "";
                 }
 
-                property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
                 Component.onCompleted : {
                     for (var i = 0; i < model.length; ++i) {
                         metrics.text = model[i];

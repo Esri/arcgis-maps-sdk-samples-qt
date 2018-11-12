@@ -157,11 +157,12 @@ Rectangle {
 
             ComboBox {
                 id: slopeCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.fillWidth: true
                 textRole: "name"
                 model: slopeTypeModel
-                property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+
                 Component.onCompleted : {
                     for (var i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
@@ -181,11 +182,12 @@ Rectangle {
 
             ComboBox {
                 id: colorCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.fillWidth: true
                 textRole: "name"
                 model: colorRampModel
-                property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+
                 Component.onCompleted : {
                     for (var i = 0; i < model.count; ++i) {
                         metrics2.text = model.get(i).name;

@@ -132,7 +132,7 @@ Rectangle {
                             }
                             TextMetrics {
                                 id: metricsStatisticComboBox
-                                font: fieldComboBox.font
+                                font: statisticComboBox.font
                             }
                         }
 

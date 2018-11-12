@@ -125,12 +125,12 @@ BlendRasterLayerSample {
 
             ComboBox {
                 id: slopeCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.fillWidth: true
                 textRole: "name"
                 model: slopeTypeModel
-                property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
-                Component.onCompleted : {
+               Component.onCompleted : {
                     for (var i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
                         modelWidth = Math.max(modelWidth, metrics.width);
@@ -148,11 +148,11 @@ BlendRasterLayerSample {
 
             ComboBox {
                 id: colorCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.fillWidth: true
                 textRole: "name"
                 model: colorRampModel
-                property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Component.onCompleted : {
                     for (var i = 0; i < model.count; ++i) {
                         metrics2.text = model.get(i).name;

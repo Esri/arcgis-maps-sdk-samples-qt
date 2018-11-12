@@ -125,12 +125,12 @@ DisplayGridSample {
 
             ComboBox {
                 id: gridTypeComboBox
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: [latlonGrid, mgrsGrid, utmGrid, usngGrid]
                 onCurrentTextChanged: changeGrid(currentText)
-                property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Component.onCompleted : {
                     for (var i = 0; i < model.length; ++i) {
                         metricsGridTypeComboBox.text = model[i];
@@ -177,12 +177,12 @@ DisplayGridSample {
 
             ComboBox {
                 id: colorCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: ["red", "white", "blue"]
                 onCurrentTextChanged: currentGridColor = currentText
-                property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Component.onCompleted : {
                     for (var i = 0; i < model.length; ++i) {
                         colorComboMetrics.text = model[i];
@@ -202,12 +202,12 @@ DisplayGridSample {
 
             ComboBox {
                 id: colorCombo2
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: ["red", "black", "blue"]
                 onCurrentTextChanged: currentLabelColor = currentText;
-                property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Component.onCompleted : {
                     for (var i = 0; i < model.length; ++i) {
                         colorCombo2Metrics.text = model[i];
@@ -228,12 +228,12 @@ DisplayGridSample {
 
             ComboBox {
                 id: positionCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: [geographicPosition, bottomLeftPosition, bottomRightPosition, topLeftPosition, topRightPosition, centerPosition, allSidesPosition]
                 onCurrentTextChanged: currentLabelPosition = currentText;
-                property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Component.onCompleted : {
                     for (var i = 0; i < model.length; ++i) {
                         positionComboMetrics.text = model[i];
@@ -255,13 +255,13 @@ DisplayGridSample {
 
             ComboBox {
                 id: formatCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.rightMargin: 10
                 Layout.fillWidth: true
                 model: [ddFormat, dmsFormat]
                 enabled: gridTypeComboBox.currentText == latlonGrid
                 onCurrentTextChanged: currentLabelFormat = currentText;
-                property int modelWidth: 0
-                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Component.onCompleted : {
                     for (var i = 0; i < model.length; ++i) {
                         formatComboMetrics.text = model[i];

@@ -218,6 +218,8 @@ Rectangle {
 
         ComboBox {
             id: modeComboBox
+            property int modelWidth: 0
+            width: modelWidth + leftPadding + rightPadding + indicator.width
             model: ["Facility", "Barrier"]
 
             onCurrentTextChanged: {
@@ -228,8 +230,6 @@ Rectangle {
                     createBarrierBuilder();
             }
 
-            property int modelWidth: 0
-            width: modelWidth + leftPadding + rightPadding + indicator.width
             Component.onCompleted : {
                 for (var i = 0; i < model.length; ++i) {
                     metrics.text = model[i];

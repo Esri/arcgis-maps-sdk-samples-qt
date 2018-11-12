@@ -90,10 +90,9 @@ Rectangle {
 
                 ComboBox {
                     id: renderingRulesCombo
-                    model: renderingRuleNames
-
                     property int modelWidth: 0
                     Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                    model: renderingRuleNames
                     onModelChanged: {
                         for (var i = 0; i < model.length; ++i) {
                             metrics.text = model[i];

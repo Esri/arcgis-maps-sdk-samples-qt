@@ -58,11 +58,11 @@ RasterRenderingRuleSample {
 
                 ComboBox {
                     id: renderingRulesCombo
+                    property int modelWidth: 0
+                    Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                     Layout.margins: 10
                     model: renderingRuleNames
 
-                    property int modelWidth: 0
-                    Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                     onModelChanged: {
                         for (var i = 0; i < model.length; ++i) {
                             metrics.text = model[i];
