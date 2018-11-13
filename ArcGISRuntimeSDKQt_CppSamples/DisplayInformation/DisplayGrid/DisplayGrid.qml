@@ -26,7 +26,7 @@ DisplayGridSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property real centerWindowY: (displayGrid.height / 2) - (styleWindow.height / 2)
 
     MapView {
@@ -42,22 +42,22 @@ DisplayGridSample {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 23 * scaleFactor
+            bottomMargin: 23
         }
 
-        width: 150 * scaleFactor
-        height: 30 * scaleFactor
+        width: 150
+        height: 30
         color: pressed ? "#959595" : "#D6D6D6"
         radius: 8
         border {
             color: "#585858"
-            width: 1 * scaleFactor
+            width: 1
         }
 
         Text {
             anchors.centerIn: parent
             text: "Change grid style"
-            font.pixelSize: 14 * scaleFactor
+            font.pixelSize: 14
             color: "#474747"
         }
 
@@ -80,7 +80,7 @@ DisplayGridSample {
         opacity: 0.7
         visible: false
         border {
-            width: 0.5 * scaleFactor
+            width: 0.5
             color: "black"
         }
 
@@ -98,10 +98,10 @@ DisplayGridSample {
         width: childrenRect.width
 
         color: "lightgray"
-        radius: 4 * scaleFactor
+        radius: 4
         border {
             color: "black"
-            width: 1 * scaleFactor
+            width: 1
         }
 
         SequentialAnimation {
@@ -280,21 +280,21 @@ DisplayGridSample {
                 property bool pressed: false
                 Layout.alignment: Qt.AlignHCenter
                 Layout.columnSpan: 2
-                Layout.bottomMargin: 5 * scaleFactor
+                Layout.bottomMargin: 5
 
-                width: 150 * scaleFactor
-                height: 30 * scaleFactor
+                width: 150
+                height: 30
                 color: pressed ? "#959595" : "#D6D6D6"
                 radius: 8
                 border {
                     color: "#585858"
-                    width: 1 * scaleFactor
+                    width: 1
                 }
 
                 Text {
                     anchors.centerIn: parent
                     text: "Hide window"
-                    font.pixelSize: 14 * scaleFactor
+                    font.pixelSize: 14
                     color: "#474747"
                 }
 

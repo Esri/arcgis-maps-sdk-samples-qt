@@ -25,7 +25,7 @@ BufferSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -36,14 +36,14 @@ BufferSample {
     // display a control pane to change size
     Rectangle {
         anchors {
-            margins: -5 * scaleFactor
+            margins: -5
             fill: controlColumn
         }
         color: "lightgray"
-        radius: 5 * scaleFactor
+        radius: 5
         border {
             color: "darkgray"
-            width: 1 * scaleFactor
+            width: 1
         }
     }
 
@@ -52,9 +52,9 @@ BufferSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Text {
             text: "Buffer size (miles):"
@@ -68,11 +68,11 @@ BufferSample {
         }
 
         Row {
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             Rectangle {
-                radius: 100 * scaleFactor
-                width: 15 * scaleFactor
+                radius: 100
+                width: 15
                 height: width
                 color: "blue"
                 opacity: 0.5
@@ -84,11 +84,11 @@ BufferSample {
         }
 
         Row {
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             Rectangle {
-                radius: 100 * scaleFactor
-                width: 15 * scaleFactor
+                radius: 100
+                width: 15
                 height: width
                 color: "red"
                 opacity: 0.5

@@ -23,12 +23,10 @@ ListRelatedFeaturesSample {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600
-
-    property real scaleFactor: 1
+    height: 600    
 
     onHideAttributeTable: attributeView.height = 0;
-    onShowAttributeTable: attributeView.height = 200 * scaleFactor;
+    onShowAttributeTable: attributeView.height = 200;
 
     MapView {
         id: mapView
@@ -36,7 +34,7 @@ ListRelatedFeaturesSample {
         objectName: "mapView"
 
         // bind the insets to the attribute view so the attribution text shows when the view expands
-        viewInsets.bottom: attributeView.height / scaleFactor
+        viewInsets.bottom: attributeView.height
     }
 
     Rectangle {
@@ -59,12 +57,12 @@ ListRelatedFeaturesSample {
         ListView {
             anchors {
                 fill: parent
-                margins: 5 * scaleFactor
+                margins: 5
             }
 
             clip: true
             model: relatedFeaturesModel
-            spacing: 5 * scaleFactor
+            spacing: 5
 
             // Create delegate to display the attributes
             delegate: Rectangle {
@@ -75,9 +73,9 @@ ListRelatedFeaturesSample {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.margins: 10
-                                     * scaleFactor
+                                    
                     text: displayFieldValue
-                    font.pixelSize: 12 * scaleFactor
+                    font.pixelSize: 12
                 }
             }
 
@@ -96,7 +94,7 @@ ListRelatedFeaturesSample {
                         text: section
                         font {
                             bold: true
-                            pixelSize: 13 * scaleFactor
+                            pixelSize: 13
                         }
                     }
                 }

@@ -24,7 +24,7 @@ DisplayDeviceLocationSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property string currentModeText: deviceLocationSample.stopMode
     property string currentModeImage: "qrc:/Samples/Maps/DisplayDeviceLocation/Stop.png"
 
@@ -57,12 +57,12 @@ DisplayDeviceLocationSample {
         anchors {
             right: parent.right
             bottom: parent.bottom
-            margins: 10 * scaleFactor
+            margins: 10
         }
         visible: false
         width: parent.width
-        height: 300 * scaleFactor
-        spacing: 10 * scaleFactor
+        height: 300
+        spacing: 10
         model: ListModel {
             id: autoPanListModel
         }
@@ -74,7 +74,7 @@ DisplayDeviceLocationSample {
 
             Text {
                 text: name
-                font.pixelSize: 25 * scaleFactor
+                font.pixelSize: 25
                 color: "white"
                 MouseArea {
                     anchors.fill: parent
@@ -87,7 +87,7 @@ DisplayDeviceLocationSample {
 
             Image {
                 source: image
-                width: 40 * scaleFactor
+                width: 40
                 height: width
                 MouseArea {
                     anchors.fill: parent
@@ -139,14 +139,14 @@ DisplayDeviceLocationSample {
         anchors {
             right: parent.right
             bottom: parent.bottom
-            margins: 10 * scaleFactor
-            bottomMargin: 25 * scaleFactor
+            margins: 10
+            bottomMargin: 25
         }
         spacing: 10
 
         Text {
             text: currentModeText
-            font.pixelSize: 25 * scaleFactor
+            font.pixelSize: 25
             color: "white"
             MouseArea {
                 anchors.fill: parent
@@ -159,7 +159,7 @@ DisplayDeviceLocationSample {
 
         Image {
             source: currentModeImage
-            width: 40 * scaleFactor
+            width: 40
             height: width
             MouseArea {
                 anchors.fill: parent

@@ -26,7 +26,7 @@ StatisticalQuerySample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property alias extentOnly: extentCheckbox.checked
     property alias bigCitiesOnly: bigCitiesCheckbox.checked
     property string resultsText: ""
@@ -40,14 +40,14 @@ StatisticalQuerySample {
     Rectangle {
         anchors {
             fill: controlColumn
-            margins: -10 * scaleFactor
+            margins: -10
         }
         color: "#E9E9EA"
-        radius: 3 * scaleFactor
+        radius: 3
         opacity: 0.8
         border {
             color: "black"
-            width: 1 * scaleFactor
+            width: 1
         }
     }
 
@@ -56,9 +56,9 @@ StatisticalQuerySample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 15
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         CheckBox {
             id: extentCheckbox

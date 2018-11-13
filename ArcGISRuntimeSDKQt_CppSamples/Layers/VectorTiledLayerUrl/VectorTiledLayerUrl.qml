@@ -24,7 +24,7 @@ VectorTiledLayerUrlSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -38,7 +38,7 @@ VectorTiledLayerUrlSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 15
         }
         property int modelWidth: 0
         width: modelWidth + leftPadding + rightPadding + indicator.width

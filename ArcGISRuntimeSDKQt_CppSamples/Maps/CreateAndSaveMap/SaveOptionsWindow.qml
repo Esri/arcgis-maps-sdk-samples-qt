@@ -31,13 +31,13 @@ Rectangle {
 
     Rectangle {
         color: "#edeeef"
-        radius: 5 * scaleFactor
+        radius: 5
         anchors.centerIn: parent
         width: childrenRect.width
         height: childrenRect.height
         border {
             color: "#77787a"
-            width: 1 * scaleFactor
+            width: 1
         }
 
         GridLayout {
@@ -50,7 +50,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "Title*:"
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }
@@ -70,7 +70,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "Tags:"
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }
@@ -89,7 +89,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "Description:"
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }
@@ -107,7 +107,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "*Field is Required"
                 font {
-                    pixelSize: 10 * scaleFactor
+                    pixelSize: 10
                     family: "helvetica"
                 }
             }

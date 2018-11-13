@@ -26,7 +26,7 @@ AnalyzeViewshedSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     MapView {
         anchors.fill: parent
         objectName: "mapView"
@@ -42,7 +42,7 @@ AnalyzeViewshedSample {
     // Create rectangle to display the status
     Rectangle {
         anchors {
-            margins: -10 * scaleFactor
+            margins: -10
             fill: statusColumn
         }
         color: "lightgrey"
@@ -56,31 +56,31 @@ AnalyzeViewshedSample {
         anchors {
             right: parent.right
             top: parent.top
-            margins: 20 * scaleFactor
+            margins: 20
         }
 
         Text {
-            anchors.margins: 5 * scaleFactor
+            anchors.margins: 5
             visible: !viewshedInProgress
             text: "Click map to execute viewshed analysis"
-            font.pixelSize: 12 * scaleFactor
+            font.pixelSize: 12
         }
 
         Row {
-            anchors.margins: 5 * scaleFactor
+            anchors.margins: 5
             visible: viewshedInProgress
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             BusyIndicator {
                 anchors.verticalCenter: parent.verticalCenter
-                width: 22 * scaleFactor
+                width: 22
                 height: width
             }
 
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: statusText
-                font.pixelSize: 12 * scaleFactor
+                font.pixelSize: 12
             }
         }
     }

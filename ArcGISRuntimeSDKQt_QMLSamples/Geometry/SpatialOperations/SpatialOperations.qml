@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.4
 
 Rectangle {
@@ -25,8 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property var geometryOperations: ["None", "Union", "Difference", "Symmetric difference", "Intersection"]
-    property double scaleFactor: 1
+    property var geometryOperations: ["None", "Union", "Difference", "Symmetric difference", "Intersection"]    
     property var geometry1
     property var geometry2
 
@@ -67,7 +65,7 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         property int modelWidth: 0
         width: modelWidth + leftPadding + rightPadding + indicator.width

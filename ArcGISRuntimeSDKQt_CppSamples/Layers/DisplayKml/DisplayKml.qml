@@ -26,7 +26,7 @@ DisplayKmlSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/kml/"
 
     SceneView {
@@ -39,7 +39,7 @@ DisplayKmlSample {
         anchors {
             right: parent.right
             top: parent.top
-            margins: 5 * scaleFactor
+            margins: 5
         }
 
         property int modelWidth: 0

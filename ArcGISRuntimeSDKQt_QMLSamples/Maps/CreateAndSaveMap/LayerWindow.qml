@@ -30,13 +30,13 @@ Rectangle {
 
     Rectangle {
         color: "#edeeef"
-        radius: 5 * scaleFactor
+        radius: 5
         width: childrenRect.width
         height: childrenRect.height
         anchors.centerIn: parent
         border {
             color: "#77787a"
-            width: 1 * scaleFactor
+            width: 1
         }
 
         ColumnLayout {
@@ -46,7 +46,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
                 text: "Select Layers"
                 font {
-                    pixelSize: 18 * scaleFactor
+                    pixelSize: 18
                     family: "helvetica"
                 }
             }
@@ -55,7 +55,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "Select Basemap:"
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }
@@ -84,7 +84,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "Select Operational Layers:"
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }

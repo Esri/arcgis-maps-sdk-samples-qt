@@ -26,9 +26,9 @@ FormatCoordinatesSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
-    property int fontPixelSize: 14 * scaleFactor
-    property int textPadding: Qt.platform.os === "android" ? (10 * scaleFactor) : (4 * scaleFactor)
+    
+    property int fontPixelSize: 14
+    property int textPadding: Qt.platform.os === "android" ? (10) : (4)
     property string labelSuffix: ":  "
 
     MapView {

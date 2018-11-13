@@ -26,7 +26,7 @@ TokenAuthenticationSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -38,13 +38,13 @@ TokenAuthenticationSample {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
-                margins: 10 * scaleFactor
+                margins: 10
             }
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: 14 * scaleFactor
+                font.pixelSize: 14
                 text: "username/password: user1/user1"
             }
 

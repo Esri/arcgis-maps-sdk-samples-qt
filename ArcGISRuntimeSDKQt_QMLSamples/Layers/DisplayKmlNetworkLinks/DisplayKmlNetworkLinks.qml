@@ -23,7 +23,7 @@ import Esri.ArcGISRuntime 100.4
 Rectangle {
     id: rootRectangle
 
-    property real scaleFactor: 1
+    
     property string currentKmlNetworkMessage: "";
 
     clip: true
@@ -63,7 +63,7 @@ Rectangle {
             anchors {
                 bottom: sceneView.attributionTop
                 horizontalCenter: parent.horizontalCenter
-                margins: 10 * scaleFactor
+                margins: 10
             }
             onClicked: {
                 messageDialog.open();

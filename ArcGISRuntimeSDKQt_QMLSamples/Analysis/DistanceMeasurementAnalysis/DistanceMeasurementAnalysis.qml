@@ -24,8 +24,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-
-    property real scaleFactor: 1
+    
     property bool isNavigating: false
 
     SceneView {
@@ -160,11 +159,11 @@ Rectangle {
     Rectangle {
         anchors {
             fill: resultsColumn
-            margins: -5 * scaleFactor
+            margins: -5
         }
         color: "black"
         opacity: 0.5
-        radius: 5 * scaleFactor
+        radius: 5
     }
 
     Column {
@@ -172,12 +171,12 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 text: "Direct Distance:"
                 color: "white"
@@ -188,7 +187,7 @@ Rectangle {
             }
         }
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {                
                 text: "Vertical Distance:"
                 color: "white"
@@ -199,7 +198,7 @@ Rectangle {
             }
         }
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 text: "Horizontal Distance:"
                 color: "white"
@@ -210,7 +209,7 @@ Rectangle {
             }
         }
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 text: "Unit System:"
                 color: "white"

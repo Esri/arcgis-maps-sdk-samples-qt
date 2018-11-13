@@ -25,7 +25,7 @@ DisplayKmlNetworkLinksSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     Dialog {
         id: messageDialog
@@ -58,7 +58,7 @@ DisplayKmlNetworkLinksSample {
             anchors {
                 bottom: sceneView.attributionTop
                 horizontalCenter: parent.horizontalCenter
-                margins: 10 * scaleFactor
+                margins: 10
             }
             onClicked: {
                 messageDialog.open();

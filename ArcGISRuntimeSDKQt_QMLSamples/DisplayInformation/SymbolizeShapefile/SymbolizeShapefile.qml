@@ -26,7 +26,7 @@ Rectangle {
     height: 600
 
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shp/"
-    property real scaleFactor: 1
+    
 
     MapView {
         id: mapView
@@ -61,7 +61,7 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         text: "Change Renderer"
         onClicked: {

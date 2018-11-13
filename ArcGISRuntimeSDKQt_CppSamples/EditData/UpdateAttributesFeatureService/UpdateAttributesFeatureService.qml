@@ -27,7 +27,7 @@ UpdateAttributesFeatureServiceSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // add a mapView component
@@ -38,7 +38,7 @@ UpdateAttributesFeatureServiceSample {
 
         Callout {
             id: callout
-            borderWidth: 1 * scaleFactor;
+            borderWidth: 1;
             borderColor: "lightgrey"
             calloutData: updateFeaturesSample.calloutData
             leaderPosition: leaderPositionEnum.Automatic
@@ -70,7 +70,7 @@ UpdateAttributesFeatureServiceSample {
         width: childrenRect.width
         height: childrenRect.height
         anchors.centerIn: parent
-        radius: 10 * scaleFactor
+        radius: 10
         visible: false
 
         GaussianBlur {
@@ -88,13 +88,13 @@ UpdateAttributesFeatureServiceSample {
 
         GridLayout {
             columns: 2
-            anchors.margins: 5 * scaleFactor
+            anchors.margins: 5
 
             Text {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 text: "Update Attribute"
-                font.pixelSize: 16 * scaleFactor
+                font.pixelSize: 16
             }
 
             ComboBox {

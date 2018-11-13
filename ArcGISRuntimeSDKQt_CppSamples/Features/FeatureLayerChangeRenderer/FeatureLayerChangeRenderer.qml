@@ -24,7 +24,7 @@ FeatureLayerChangeRendererSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -37,8 +37,8 @@ FeatureLayerChangeRendererSample {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            margins: 5 * scaleFactor
-            bottomMargin: 25 * scaleFactor
+            margins: 5
+            bottomMargin: 25
         }
         spacing: 5
 

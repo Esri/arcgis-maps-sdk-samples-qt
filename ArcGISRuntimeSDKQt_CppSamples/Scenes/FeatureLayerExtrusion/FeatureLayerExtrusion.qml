@@ -25,7 +25,7 @@ FeatureLayerExtrusionSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     SceneView {
         id: sceneView
@@ -39,7 +39,7 @@ FeatureLayerExtrusionSample {
             anchors {
                 top: parent.top
                 left: parent.left
-                margins: 10 * scaleFactor
+                margins: 10
             }
 
             property int modelWidth: 0

@@ -23,11 +23,9 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
 
-    property double scaleFactor: 1
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property bool editingRenderer: false
     property bool useColorRamp: colorCombo.currentText !== "none"
@@ -80,12 +78,12 @@ Rectangle {
     Rectangle {
         visible: editButton.visible
         anchors.centerIn: editButton
-        radius: 8 * scaleFactor
-        height: editButton.height + (16 * scaleFactor)
-        width: editButton.width + (16 * scaleFactor)
+        radius: 8
+        height: editButton.height + (16)
+        width: editButton.width + (16)
         color: "lightgrey"
         border.color: "darkgrey"
-        border.width: 2 * scaleFactor
+        border.width: 2
         opacity: 0.75
     }
 
@@ -94,7 +92,7 @@ Rectangle {
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            margins: 32 * scaleFactor
+            margins: 32
         }
         visible: rendererBox.width === 0
         text: "Edit Renderer"
@@ -117,7 +115,7 @@ Rectangle {
         GridLayout {
             anchors {
                 centerIn: parent
-                margins: 24 * scaleFactor
+                margins: 24
             }
 
             columns: 2

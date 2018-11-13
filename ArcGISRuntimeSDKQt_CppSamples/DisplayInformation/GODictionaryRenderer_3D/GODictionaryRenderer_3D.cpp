@@ -61,7 +61,6 @@ void GODictionaryRenderer_3D::componentComplete()
 
   // QML properties
   m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
-  m_scaleFactor = QQmlProperty::read(this, "scaleFactor").toDouble();
 
   // Set up DictionaryRenderer
   if (!QFileInfo::exists(m_dataPath + "/styles/mil2525d.stylx"))

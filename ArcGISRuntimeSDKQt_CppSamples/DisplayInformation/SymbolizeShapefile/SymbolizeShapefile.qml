@@ -26,7 +26,7 @@ SymbolizeShapefileSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -41,7 +41,7 @@ SymbolizeShapefileSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         text: "Change Renderer"
         onClicked: {

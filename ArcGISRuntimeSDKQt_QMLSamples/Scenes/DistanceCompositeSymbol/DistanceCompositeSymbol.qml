@@ -22,8 +22,7 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: 1
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
 
     // Create a scene view

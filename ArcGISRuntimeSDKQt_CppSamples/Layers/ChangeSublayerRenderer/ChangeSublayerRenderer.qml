@@ -25,7 +25,7 @@ ChangeSublayerRendererSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -42,13 +42,13 @@ ChangeSublayerRendererSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 5 * scaleFactor
+            margins: 5
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Button {
             id: applyRendererButton
-            width: 200 * scaleFactor
+            width: 200
             enabled: false
             text: "Apply Renderer"
             onClicked: applyRenderer();
@@ -56,7 +56,7 @@ ChangeSublayerRendererSample {
 
         Button {
             id: resetRendererButton
-            width: 200 * scaleFactor
+            width: 200
             enabled: false
             text: "Reset"
             onClicked: resetRenderer();

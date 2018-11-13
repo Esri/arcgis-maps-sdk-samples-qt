@@ -18,7 +18,6 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     clip: true
@@ -26,7 +25,7 @@ Rectangle {
     height: 600
 
     property url worldCitiesUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0"
-    property real scaleFactor: 1
+    
     property alias extentOnly: extentCheckbox.checked
     property alias bigCitiesOnly: bigCitiesCheckbox.checked
     property string resultsText: ""
@@ -84,14 +83,14 @@ Rectangle {
     Rectangle {
         anchors {
             fill: controlColumn
-            margins: -10 * scaleFactor
+            margins: -10
         }
         color: "#E9E9EA"
-        radius: 3 * scaleFactor
+        radius: 3
         opacity: 0.8
         border {
             color: "black"
-            width: 1 * scaleFactor
+            width: 1
         }
     }
 
@@ -100,9 +99,9 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 15
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         CheckBox {
             id: extentCheckbox

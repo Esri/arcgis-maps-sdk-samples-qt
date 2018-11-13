@@ -22,11 +22,9 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
 
-    property double scaleFactor: 1
     //! [RasterColormapRenderer qml add raster basemap]
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
 

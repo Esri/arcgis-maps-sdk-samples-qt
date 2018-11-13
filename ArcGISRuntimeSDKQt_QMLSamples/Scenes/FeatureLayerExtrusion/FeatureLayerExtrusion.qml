@@ -18,15 +18,12 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600
-
-    property real scaleFactor: 1
+    height: 600    
 
     SceneView {
         id: sceneView
@@ -81,7 +78,7 @@ Rectangle {
             anchors {
                 top: parent.top
                 left: parent.left
-                margins: 10 * scaleFactor
+                margins: 10
             }
             property int modelWidth: 0
             width: modelWidth + leftPadding + rightPadding + indicator.width

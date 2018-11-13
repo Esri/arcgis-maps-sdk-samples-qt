@@ -25,7 +25,7 @@ DynamicWorkspaceShapefileSample {
     id: rootRectangle
     clip: true
 
-    property real scaleFactor: 1
+    
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shapefile"
     property var supportedFormats: ["Shapefile (*.shp)"]
 
@@ -40,7 +40,7 @@ DynamicWorkspaceShapefileSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         text: "Add Shapefile"
         onClicked: fileDialog.open();

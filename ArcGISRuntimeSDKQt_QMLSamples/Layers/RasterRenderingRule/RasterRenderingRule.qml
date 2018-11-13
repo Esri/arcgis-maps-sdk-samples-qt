@@ -23,11 +23,9 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
 
-    property double scaleFactor: 1
     property var renderingRuleNames: []
     property url imageServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer"
 
@@ -70,12 +68,12 @@ Rectangle {
             anchors {
                 left: parent.left
                 top: parent.top
-                margins: 5 * scaleFactor
+                margins: 5
             }
             height: childrenRect.height
             width: childrenRect.width
             color: "silver"
-            radius: 5 * scaleFactor
+            radius: 5
 
             GridLayout {
                 columns: 2
@@ -85,7 +83,7 @@ Rectangle {
                     Layout.columnSpan: 2
                     Layout.alignment: Qt.AlignHCenter
                     text: "Apply a Rendering Rule"
-                    font.pixelSize: 16 * scaleFactor
+                    font.pixelSize: 16
                 }
 
                 ComboBox {

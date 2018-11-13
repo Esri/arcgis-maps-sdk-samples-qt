@@ -24,7 +24,7 @@ ChangeSublayerVisibilitySample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -36,12 +36,12 @@ ChangeSublayerVisibilitySample {
     Rectangle {
         id: layerVisibilityRect
         anchors {
-            margins: 10 * scaleFactor
+            margins: 10
             left: parent.left
             top: parent.top
         }
-        height: 150 * scaleFactor
-        width: 150 * scaleFactor
+        height: 150
+        width: 150
         color: "transparent"
 
         MouseArea {
@@ -66,7 +66,7 @@ ChangeSublayerVisibilitySample {
             Column {
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 clip: true
 
@@ -76,7 +76,7 @@ ChangeSublayerVisibilitySample {
                     wrapMode: Text.WordWrap
                     clip: true
                     font {
-                        pixelSize: 14 * scaleFactor
+                        pixelSize: 14
                         bold: true
                     }
                 }
@@ -84,7 +84,7 @@ ChangeSublayerVisibilitySample {
                 // Create a list view to display the items
                 ListView {
                     id: layerVisibilityListView
-                    anchors.margins: 10 * scaleFactor
+                    anchors.margins: 10
                     width: parent.width
                     height: parent.height
                     clip: true
@@ -96,16 +96,16 @@ ChangeSublayerVisibilitySample {
                     delegate: Item {
                         id: layerVisibilityDelegate
                         width: parent.width
-                        height: 35 * scaleFactor
+                        height: 35
 
                         Row {
                             spacing: 5
                             anchors.verticalCenter: parent.verticalCenter
                             Text {
-                                width: 75 * scaleFactor
+                                width: 75
                                 text: name
                                 wrapMode: Text.WordWrap
-                                font.pixelSize: 14 * scaleFactor
+                                font.pixelSize: 14
                             }
 
                             Switch {

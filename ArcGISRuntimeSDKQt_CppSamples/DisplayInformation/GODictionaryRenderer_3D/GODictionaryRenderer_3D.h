@@ -63,7 +63,6 @@ private:
   QString errorMessage() const;
   void setErrorMessage(const QString& msg);
 
-  double m_scaleFactor = 1.0;
   QString m_dataPath;
   QXmlStreamReader m_xmlParser;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
