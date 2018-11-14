@@ -82,9 +82,7 @@ FindAddressSample {
                     Keys.onReturnPressed: geocodeAddress();
 
                     function geocodeAddress() {
-                        //! [FindAddress geocodeWithParameters]
-                        locatorTask.geocodeWithParameters(textField.text, geocodeParameters);
-                        //! [FindAddress geocodeWithParameters]
+                        findAddressSample.geocodeAddress(textField.text);
                         suggestView.visible = false;
                         Qt.inputMethod.hide();
                     }
