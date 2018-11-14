@@ -24,7 +24,7 @@ RasterLayerFileSample {
     id: rootRectangle
     clip: true
 
-    property real scaleFactor: 1
+    
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
     property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
 
@@ -37,12 +37,12 @@ RasterLayerFileSample {
     Rectangle {
         visible: addButton.visible
         anchors.centerIn: addButton
-        radius: 8 * scaleFactor
-        height: addButton.height + (16 * scaleFactor)
-        width: addButton.width + (16 * scaleFactor)
+        radius: 8
+        height: addButton.height + (16)
+        width: addButton.width + (16)
         color: "lightgrey"
         border.color: "darkgrey"
-        border.width: 2 * scaleFactor
+        border.width: 2
         opacity: 0.75
     }
 
@@ -51,7 +51,7 @@ RasterLayerFileSample {
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            margins: 32 * scaleFactor
+            margins: 32
         }
 
         text: "Add Raster"

@@ -32,13 +32,13 @@ Rectangle {
         anchors {
             top: parent.top
             horizontalCenter: parent.horizontalCenter
-            margins: 16 * scaleFactor
+            margins: 16
         }
         text: "Layer specific overrides"
         font {
             bold: true
             underline: true
-            pixelSize: 18 * scaleFactor
+            pixelSize: 18
         }
         color: "#474747"
     }
@@ -50,7 +50,7 @@ Rectangle {
             left: overridesPanel.left
             right: overridesPanel.right
             bottom: takeOfflineButton.top
-            margins: 16 * scaleFactor
+            margins: 16
         }
         clip: true
         ScrollBar.vertical.interactive: true
@@ -65,11 +65,11 @@ Rectangle {
                 id: lodTitle
                 text: "Basemap Levels of Detail:"
                 anchors {
-                    topMargin: 16 * scaleFactor
+                    topMargin: 16
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                 }
                 color: "#474747"
             }
@@ -78,13 +78,13 @@ Rectangle {
                 id: lodRange
                 anchors {
                     top: lodTitle.bottom
-                    topMargin: 8 * scaleFactor
+                    topMargin: 8
                     horizontalCenter: parent.horizontalCenter
                 }
                 Text {
                     text: "(Least detail)"
                     font {
-                        pixelSize: 12 * scaleFactor
+                        pixelSize: 12
                     }
                     color: "#474747"
                 }
@@ -112,7 +112,7 @@ Rectangle {
                 Text {
                     text: "(Most detail)"
                     font {
-                        pixelSize: 12 * scaleFactor
+                        pixelSize: 12
                     }
                     color: "#474747"
                 }
@@ -123,11 +123,11 @@ Rectangle {
                 text: "Basemap Buffer (m):"
                 anchors {
                     top: lodRange.bottom
-                    topMargin: 32 * scaleFactor
+                    topMargin: 32
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                 }
                 color: "#474747"
             }
@@ -136,14 +136,14 @@ Rectangle {
                 id: basemapBufferSB
                 anchors {
                     top: basemapBufferLabel.bottom
-                    topMargin: 8 * scaleFactor
+                    topMargin: 8
                     horizontalCenter: parent.horizontalCenter
                 }
                 from: 0
                 to: 500
                 stepSize: 50
 
-                font.pixelSize: 12 * scaleFactor
+                font.pixelSize: 12
                 onValueChanged: basemapBufferChanged(value);
             }
 
@@ -152,11 +152,11 @@ Rectangle {
                 text: "Remove System Valves"
                 anchors {
                     top: basemapBufferSB.bottom
-                    topMargin: 32 * scaleFactor
+                    topMargin: 32
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                 }
 
                 onClicked: {
@@ -170,11 +170,11 @@ Rectangle {
                 text: "Remove Service Connection"
                 anchors {
                     top: systemVavlesCB.bottom
-                    topMargin: 32 * scaleFactor
+                    topMargin: 32
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                 }
 
                 onClicked: {
@@ -188,11 +188,11 @@ Rectangle {
                 text: "Filter Hydrants:"
                 anchors {
                     top: serviceConnCB.bottom
-                    topMargin: 32 * scaleFactor
+                    topMargin: 32
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                 }
                 color: "#474747"
             }
@@ -204,17 +204,30 @@ Rectangle {
 
             ComboBox {
                 id: filterComboBox
-                model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
                 anchors {
                     top: filterLabel.bottom
-                    topMargin: 8 * scaleFactor
+                    topMargin: 8
                     horizontalCenter: parent.horizontalCenter
                 }
-                width: filterLabel.width * 2
+                property int modelWidth: 0
+                width: modelWidth + leftPadding + rightPadding + indicator.width
+                model: [ "No filter", "FLOW < 500", "FLOW < 300", "FLOW < 100" ]
+
                 onCurrentTextChanged: {
                     // 1=1 equivelent to select all in a WHERE clause.
                     hydrantWhereClauseChanged(currentText === "No filter" ? "1=1"
                                                                           : currentText)
+                }
+
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics
+                    font: filterComboBox.font
                 }
             }
 
@@ -223,11 +236,11 @@ Rectangle {
                 text: "Clip Water Pipes to AOI"
                 anchors {
                     top: filterComboBox.bottom
-                    topMargin: 32 * scaleFactor
+                    topMargin: 32
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                 }
 
                 checked: true
@@ -241,11 +254,11 @@ Rectangle {
         id: takeOfflineButton
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.margins: 16 * scaleFactor
+        anchors.margins: 16
         text: "Start Job"
         font {
             bold: true
-            pixelSize: 18 * scaleFactor
+            pixelSize: 18
         }
 
         onClicked: {

@@ -26,7 +26,7 @@ TakeScreenshotSample {
     width: 800
     height: 600    
 
-    property real scaleFactor: 1
+    
     // Declare a MapView
     MapView {
         id: mapView
@@ -37,7 +37,7 @@ TakeScreenshotSample {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
-                margins: 10 * scaleFactor
+                margins: 10
             }
             text: "Take screenshot"
             onClicked: {
@@ -76,9 +76,9 @@ TakeScreenshotSample {
                 anchors {
                     right: parent.right
                     top: parent.top
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
-                width: 28 * scaleFactor
+                width: 28
                 height: width
                 color: "lightgray"
                 radius: 50

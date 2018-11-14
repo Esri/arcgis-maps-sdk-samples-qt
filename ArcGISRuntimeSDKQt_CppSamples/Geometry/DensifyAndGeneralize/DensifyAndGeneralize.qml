@@ -25,7 +25,7 @@ DensifyAndGeneralizeSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -36,10 +36,10 @@ DensifyAndGeneralizeSample {
     Rectangle {
         anchors {
             fill: controlColumn
-            margins: -5 * scaleFactor
+            margins: -5
         }
         color: "#f9f9f9"
-        radius: 5 * scaleFactor
+        radius: 5
     }
 
     Column {
@@ -47,9 +47,9 @@ DensifyAndGeneralizeSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
 
         CheckBox {
@@ -67,7 +67,7 @@ DensifyAndGeneralizeSample {
             id: maxSegmentLengthSlider
             from: 100
             to: 500
-            width: 175 * scaleFactor
+            width: 175
             value: 100
             onValueChanged: updateGeometry(densifyCheckbox.checked, maxSegmentLengthSlider.value, generalizeCheckbox.checked, maxDeviationSlider.value);
         }
@@ -87,7 +87,7 @@ DensifyAndGeneralizeSample {
             id: maxDeviationSlider
             from: 1
             to: 250
-            width: 175 * scaleFactor
+            width: 175
             onValueChanged: updateGeometry(densifyCheckbox.checked, maxSegmentLengthSlider.value, generalizeCheckbox.checked, maxDeviationSlider.value);
         }
 

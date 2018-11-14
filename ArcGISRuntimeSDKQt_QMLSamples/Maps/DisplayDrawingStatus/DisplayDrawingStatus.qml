@@ -25,7 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // create MapView
     MapView {
@@ -77,8 +77,8 @@ Rectangle {
         // pop up to show if MapView is drawing
         Rectangle {
             anchors.centerIn: parent
-            width: 100 * scaleFactor
-            height: 100 * scaleFactor
+            width: 100
+            height: 100
             radius: 3
             opacity: 0.85
             color: "#E0E0E0"
@@ -86,12 +86,12 @@ Rectangle {
 
             Column {
                 anchors.centerIn: parent
-                topPadding: 5 * scaleFactor
-                spacing: 5 * scaleFactor
+                topPadding: 5
+                spacing: 5
 
                 BusyIndicator {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    height: 60 * scaleFactor
+                    height: 60
                     running: true
                 }
 
@@ -99,9 +99,9 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     font {
                         weight: Font.Black
-                        pixelSize: 12 * scaleFactor
+                        pixelSize: 12
                     }
-                    height: 20 * scaleFactor
+                    height: 20
                     horizontalAlignment: Text.AlignHCenter
                     text: "Drawing..."
                 }

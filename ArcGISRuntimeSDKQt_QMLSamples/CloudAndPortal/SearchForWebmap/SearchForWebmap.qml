@@ -18,7 +18,6 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 Rectangle {
@@ -28,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property var portalItem
 
     function search() {
@@ -128,19 +127,19 @@ Rectangle {
     Component {
         id: webmapDelegate
         Rectangle {
-            anchors.margins: 25 * scaleFactor
+            anchors.margins: 25
             width: webmapsList.width
-            height: 32 * scaleFactor
+            height: 32
             border.color: "white"
-            border.width: 2 * scaleFactor
+            border.width: 2
             color: "lightgrey"
-            radius: 10 * scaleFactor
+            radius: 10
 
             //! [PortalItemListModel example QML delegate]
             Text {
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 text: title
                 color: "white"
@@ -163,16 +162,16 @@ Rectangle {
 
         Rectangle {
             z: 110
-            anchors.margins: 25 * scaleFactor
+            anchors.margins: 25
             width: webmapsList.width
-            height: 24 * scaleFactor
+            height: 24
             color: "orange"
-            radius: 4 * scaleFactor
+            radius: 4
 
             Text {
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 text: webmapsList.model.count > 0 ? webmapsList.model.get(webmapsList.currentIndex).title : ""
                 font.bold: true
@@ -197,7 +196,7 @@ Rectangle {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
         border.color: "grey"
         border.width: 2
@@ -206,7 +205,7 @@ Rectangle {
         Text {
             id: resultsTitle
             anchors {
-                margins: 10 * scaleFactor
+                margins: 10
                 top: parent.top
                 left: parent.left
                 right: parent.right
@@ -222,7 +221,7 @@ Rectangle {
         ListView {
             id: webmapsList
             anchors {
-                margins: 20 * scaleFactor
+                margins: 20
                 top: resultsTitle.bottom
                 bottom: moreResultsButton.top
                 left: parent.left
@@ -238,7 +237,7 @@ Rectangle {
         Button {
             id: moreResultsButton
             anchors {
-                margins: 20 * scaleFactor
+                margins: 20
                 bottom: parent.bottom
                 horizontalCenter: resultsBox.horizontalCenter
             }
@@ -254,9 +253,9 @@ Rectangle {
         anchors {
             top: parent.top
             horizontalCenter: parent.horizontalCenter
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Text {
             id: instruction
@@ -265,7 +264,7 @@ Rectangle {
         }
 
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
 
             TextField {
                 id: keyWordField
@@ -303,7 +302,7 @@ Rectangle {
     MapView {
         id: mapView
         visible: false
-        anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10 * scaleFactor}
+        anchors {top: searchBox.bottom; bottom: parent.bottom; left: parent.left; right: parent.right; margins: 10}
     }
 
     // Uncomment this section when running as standalone application

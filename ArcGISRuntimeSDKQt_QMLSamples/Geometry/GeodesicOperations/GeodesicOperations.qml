@@ -16,15 +16,13 @@
 
 import QtQuick 2.6
 import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-
-    property real scaleFactor: 1
+    
     property string distanceText
 
     MapView {
@@ -111,12 +109,12 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
 
         text: "%1 kilometers".arg(distanceText)
         visible: distanceText.length > 0
-        font.pixelSize: 20 * scaleFactor
+        font.pixelSize: 20
         color: "white"
     }
 }

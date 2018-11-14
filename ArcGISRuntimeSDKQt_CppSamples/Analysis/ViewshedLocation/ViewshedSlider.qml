@@ -20,7 +20,7 @@ import QtQuick.Controls 2.2
 Column {
     id: root
     width: parent.width
-    spacing: 5 * scaleFactor
+    spacing: 5
 
     property string titleText
     property real parameterValue
@@ -28,15 +28,15 @@ Column {
     property real maxValue: 179
 
     Text {
-        width: 80 * scaleFactor
+        width: 80
         text: titleText
-        font.pixelSize: 14 * scaleFactor
+        font.pixelSize: 14
     }
 
     Row {
         width: parent.width
-        height: 25 * scaleFactor
-        spacing: 5 * scaleFactor
+        height: 25
+        spacing: 5
 
         Slider {
             anchors.verticalCenter: parent.verticalCenter
@@ -55,7 +55,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignRight
             text: Math.round(parameterValue)
-            font.pixelSize: 14 * scaleFactor
+            font.pixelSize: 14
         }
     }
 }

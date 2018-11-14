@@ -27,8 +27,8 @@ SearchDictionarySymbolStyleSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
-    property double fontSize: 16 * scaleFactor
+    
+    property double fontSize: 16
     property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
     property var searchParamList: [[],[],[],[],[]]
@@ -39,7 +39,7 @@ SearchDictionarySymbolStyleSample {
         id: topRectangle
         anchors {
             fill: parent
-            margins: 9 * scaleFactor
+            margins: 9
         }
 
         Column {
@@ -50,7 +50,7 @@ SearchDictionarySymbolStyleSample {
             anchors {
                 left: parent.left
                 right: parent.right
-                margins: 8 * scaleFactor
+                margins: 8
             }
 
             Repeater {
@@ -62,14 +62,14 @@ SearchDictionarySymbolStyleSample {
                     height: childrenRect.height
                     color: "lightgrey"
                     border.color: "darkgrey"
-                    radius: 2 * scaleFactor
+                    radius: 2
                     clip: true
 
                     GridLayout {
                         anchors {
                             left: parent.left
                             right: parent.right
-                            margins: 3 * scaleFactor
+                            margins: 3
                         }
                         columns: 3
                         rowSpacing: 0
@@ -151,7 +151,7 @@ SearchDictionarySymbolStyleSample {
         }
 
         Row {
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             Button {
                 id: seachBtn
@@ -161,7 +161,7 @@ SearchDictionarySymbolStyleSample {
                     anchors {
                         top: parent.top
                         bottom: parent.bottom
-                        margins: 3 * scaleFactor
+                        margins: 3
                     }
                     source: "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png"
                 }
@@ -170,7 +170,7 @@ SearchDictionarySymbolStyleSample {
                     anchors {
                         left: searchImage.right
                         verticalCenter: parent.verticalCenter
-                        margins: 3 * scaleFactor
+                        margins: 3
                     }
                     text: searchParamList[0].length === 0 &&
                           searchParamList[1].length === 0 &&
@@ -212,7 +212,7 @@ SearchDictionarySymbolStyleSample {
                         top: parent.top
                         bottom: parent.bottom
                         horizontalCenter: parent.horizontalCenter
-                        margins: 3 * scaleFactor
+                        margins: 3
                     }
                     source: parent.checked ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_collapsed_light.png" :
                                              "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_expanded_light.png"
@@ -240,9 +240,9 @@ SearchDictionarySymbolStyleSample {
                 id: resultView
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
-                spacing: 20 * scaleFactor
+                spacing: 20
 
                 clip: true
                 model: searchResultsListModel
@@ -250,10 +250,10 @@ SearchDictionarySymbolStyleSample {
                 delegate: Component {
                     Row {
                         anchors {
-                            margins: 20 * scaleFactor
+                            margins: 20
                         }
                         width: resultView.width
-                        spacing: 10 * scaleFactor
+                        spacing: 10
 
                         Image {
                             source: symbolUrl
@@ -261,7 +261,7 @@ SearchDictionarySymbolStyleSample {
 
                         Column {
                             width: parent.width
-                            spacing: 10 * scaleFactor
+                            spacing: 10
 
                             Text {
                                 id: nameText

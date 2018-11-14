@@ -27,7 +27,7 @@ RasterRgbRendererSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property string minMax: "Min Max"
     property string percentClip: "Percent Clip"
@@ -44,12 +44,12 @@ RasterRgbRendererSample {
     Rectangle {
         visible: editButton.visible
         anchors.centerIn: editButton
-        radius: 8 * scaleFactor
-        height: editButton.height + (16 * scaleFactor)
-        width: editButton.width + (16 * scaleFactor)
+        radius: 8
+        height: editButton.height + (16)
+        width: editButton.width + (16)
         color: "lightgrey"
         border.color: "darkgrey"
-        border.width: 2 * scaleFactor
+        border.width: 2
         opacity: 0.75
     }
 
@@ -58,7 +58,7 @@ RasterRgbRendererSample {
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            margins: 32 * scaleFactor
+            margins: 32
         }
         visible: rendererBox.width === 0
         text: "Edit Renderer"
@@ -83,22 +83,34 @@ RasterRgbRendererSample {
             anchors {
                 top: parent.top
                 bottom: parent.bottom
-                margins: 24 * scaleFactor
+                margins: 24
             }
             width: parent.width
-            spacing: 16 * scaleFactor
+            spacing: 16
 
             ComboBox {
                 id: stretchTypeCombo
                 anchors.horizontalCenter: parent.horizontalCenter
                 model: stretchTypes
+                property int modelWidth: 0
+                width: modelWidth + leftPadding + rightPadding + indicator.width
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics
+                    font: stretchTypeCombo.font
+                }
             }
 
             MinMaxRow {
                 id: minMaxMin
                 visible: stretchTypeCombo.currentText === minMax
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 8 * scaleFactor
+                spacing: 8
                 isMin: true
                 maxRange: 255
                 numVals: 3
@@ -108,7 +120,7 @@ RasterRgbRendererSample {
                 id: minMaxMax
                 visible: stretchTypeCombo.currentText === minMax
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 8 * scaleFactor
+                spacing: 8
                 isMin: false
                 maxRange: 255
                 numVals: 3
@@ -118,7 +130,7 @@ RasterRgbRendererSample {
                 id: percentClipMin
                 visible: stretchTypeCombo.currentText === percentClip
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 8 * scaleFactor
+                spacing: 8
                 isMin: true
                 maxRange: 100
                 numVals: 1
@@ -128,7 +140,7 @@ RasterRgbRendererSample {
                 id: percentClipMax
                 visible: stretchTypeCombo.currentText === percentClip
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 8 * scaleFactor
+                spacing: 8
                 isMin: false
                 maxRange: 100
                 numVals: 1
@@ -137,7 +149,7 @@ RasterRgbRendererSample {
             Row {
                 visible: stretchTypeCombo.currentText === stdDeviation
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 8 * scaleFactor
+                spacing: 8
                 Text {
                     text: "Factor"
                     anchors.verticalCenter: parent.verticalCenter

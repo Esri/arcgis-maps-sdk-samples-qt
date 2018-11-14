@@ -26,7 +26,7 @@ Rectangle {
     height: 600
     
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
-    property real scaleFactor: 1
+    
     MapView {
         id: mapView
         anchors.fill: parent
@@ -69,7 +69,7 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 25 * scaleFactor
+            bottomMargin: 25
         }
         text: "Edit Renderer"
         onClicked: hillshadeSettings.visible = true;

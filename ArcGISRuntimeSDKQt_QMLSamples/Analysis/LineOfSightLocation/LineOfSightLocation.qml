@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property bool calculating: false
 
     SceneView {

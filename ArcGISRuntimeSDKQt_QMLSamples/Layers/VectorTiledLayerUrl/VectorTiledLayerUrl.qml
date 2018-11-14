@@ -17,13 +17,11 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: 1
+    
     //! [display vector tiled layer]
     // Create MapView that contains a Map
     MapView {
@@ -50,14 +48,27 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 15
         }
-        width: 175 * scaleFactor
+        property int modelWidth: 0
+        width: modelWidth + leftPadding + rightPadding + indicator.width
         model: ["Mid-Century","Colored Pencil","Newspaper","Nova", "World Street Map (Night)"]
         onCurrentTextChanged: {
             // Call this JavaScript function when the current selection changes
             if (map.loadStatus === Enums.LoadStatusLoaded)
                 changeBasemap();
+        }
+
+        Component.onCompleted : {
+            for (var i = 0; i < model.length; ++i) {
+                metrics.text = model[i];
+                modelWidth = Math.max(modelWidth, metrics.width);
+            }
+        }
+
+        TextMetrics {
+            id: metrics
+            font: comboBoxBasemap.font
         }
 
         function changeBasemap() {

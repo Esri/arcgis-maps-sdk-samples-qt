@@ -18,27 +18,27 @@ Rectangle {
     property bool pressed: false
     signal buttonClicked()
 
-    width: 265 * scaleFactor
-    height: 35 * scaleFactor
+    width: 265
+    height: 35
     color: pressed ? "#959595" : "#D6D6D6"
     radius: 5
     border {
         color: "#585858"
-        width: 1 * scaleFactor
+        width: 1
     }
 
     Row {
         anchors.fill: parent
-        spacing: 5 * scaleFactor
+        spacing: 5
         Image {
-            width: 38 * scaleFactor
+            width: 38
             height: width
             source: "qrc:/Samples/Maps/GenerateOfflineMap_Overrides/download.png"
         }
         Text {
             anchors.verticalCenter: parent.verticalCenter
             text: "Generate Offline Map (Overrides)"
-            font.pixelSize: 14 * scaleFactor
+            font.pixelSize: 14
             color: "#474747"
         }
     }

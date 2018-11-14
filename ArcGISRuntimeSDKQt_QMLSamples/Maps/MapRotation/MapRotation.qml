@@ -17,13 +17,10 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
-    height: 600
-
-    property real scaleFactor: 1
+    height: 600    
 
     // Map view UI presentation at top
     MapView {
@@ -84,7 +81,7 @@ Rectangle {
                 Text {
                     anchors {
                         verticalCenter: parent.verticalCenter
-                        margins: 5 * scaleFactor
+                        margins: 5
                     }
                     horizontalAlignment: TextInput.AlignHCenter
                     font.pixelSize: 20

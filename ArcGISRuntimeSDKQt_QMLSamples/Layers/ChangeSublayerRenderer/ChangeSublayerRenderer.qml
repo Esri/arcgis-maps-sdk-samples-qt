@@ -17,15 +17,13 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-
-    property real scaleFactor: 1
+    
     property var sublayer: null
     property var originalRenderer: null
 
@@ -147,19 +145,19 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 5 * scaleFactor
+            margins: 5
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Button {
-            width: 200 * scaleFactor
+            width: 200
             text: "Apply Renderer"
             enabled: sublayer ? sublayer.loadStatus === Enums.LoadStatusLoaded : false
             onClicked: sublayer.renderer = classBreaksRenderer;
         }
 
         Button {
-            width: 200 * scaleFactor
+            width: 200
             text: "Reset"
             enabled: sublayer ? sublayer.loadStatus === Enums.LoadStatusLoaded : false
             onClicked: sublayer.renderer = originalRenderer;

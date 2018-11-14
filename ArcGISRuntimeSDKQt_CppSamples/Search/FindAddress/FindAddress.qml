@@ -26,7 +26,7 @@ FindAddressSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -36,7 +36,7 @@ FindAddressSample {
         Callout {
             id: callout
             borderColor: "lightgrey"
-            borderWidth: 1 * scaleFactor
+            borderWidth: 1
             calloutData: findAddressSample.calloutData
             maxWidth: findAddressSample.width * 0.75
             leaderPosition: leaderPositionEnum.Automatic
@@ -57,7 +57,7 @@ FindAddressSample {
     Column {
         anchors {
             fill: parent
-            margins: 10 * scaleFactor
+            margins: 10
         }
         Rectangle {
             color: "#f7f8fa"
@@ -82,9 +82,7 @@ FindAddressSample {
                     Keys.onReturnPressed: geocodeAddress();
 
                     function geocodeAddress() {
-                        //! [FindAddress geocodeWithParameters]
-                        locatorTask.geocodeWithParameters(textField.text, geocodeParameters);
-                        //! [FindAddress geocodeWithParameters]
+                        findAddressSample.geocodeAddress(textField.text);
                         suggestView.visible = false;
                         Qt.inputMethod.hide();
                     }
@@ -138,7 +136,7 @@ FindAddressSample {
         // show a drop down of suggested locations
         ListView {
             id: suggestView
-            height: 300 * scaleFactor
+            height: 300
             width: textField.width
             visible: false
             clip: true
@@ -147,7 +145,7 @@ FindAddressSample {
                 Rectangle {
                     id: rect
                     width: parent.width
-                    height: 25 * scaleFactor
+                    height: 25
                     color: "#f7f8fa"
 
                     Rectangle {
@@ -155,9 +153,9 @@ FindAddressSample {
                             top: parent.top;
                             left: parent.left;
                             right: parent.right;
-                            topMargin: -5 * scaleFactor
-                            leftMargin: 20 * scaleFactor
-                            rightMargin: 20 * scaleFactor
+                            topMargin: -5
+                            leftMargin: 20
+                            rightMargin: 20
                         }
                         color: "darkgrey"
                         height: 1
@@ -167,10 +165,10 @@ FindAddressSample {
                         text: name
                         anchors {
                             fill: parent
-                            leftMargin: 5 * scaleFactor
+                            leftMargin: 5
                         }
 
-                        font.pixelSize: 14 * scaleFactor
+                        font.pixelSize: 14
                     }
 
                     MouseArea {

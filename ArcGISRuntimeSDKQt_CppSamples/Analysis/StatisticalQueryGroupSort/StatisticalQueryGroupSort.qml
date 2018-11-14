@@ -25,7 +25,7 @@ StatisticalQueryGroupSortSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     StackView {
         id: stackView
         anchors.fill: parent

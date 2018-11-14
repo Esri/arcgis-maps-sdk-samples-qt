@@ -24,16 +24,14 @@ import Esri.ArcGISExtras 1.1
 LocalServerServicesSample {
     id: localServerServicesSample
 
-    property double scaleFactor: 1
-
     Column {
-        spacing: 10 * scaleFactor
+        spacing: 10
         anchors.fill: parent
-        anchors.margins: 15 * scaleFactor
+        anchors.margins: 15
 
         Row {
             id: topRow
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             Button {
                 id: startButton
@@ -58,29 +56,38 @@ LocalServerServicesSample {
         }
 
         Row {
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             ComboBox {
                 id: servicesCombo
-                width: startServiceButton.width
+                property int modelWidth: 0
+                width: modelWidth + leftPadding + rightPadding + indicator.width
+
                 enabled: isServerRunning
                 model: ["Map Service", "Feature Service", "Geoprocessing Service"]
 
                 onCurrentIndexChanged: {
                     filePathText.text = "";
                 }
+
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
             }
 
             TextField {
                 id: filePathText
                 placeholderText: "Browse for a file."
-                width: startServiceButton.width - (40 * scaleFactor)
+                width: startServiceButton.width - (40)
             }
 
             Button {
                 id: fileDialogButton
                 text: "..."
-                width: 30 * scaleFactor
+                width: 30
                 enabled: isServerRunning
 
                 onClicked: {
@@ -90,7 +97,7 @@ LocalServerServicesSample {
         }
 
         Row {
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             Button {
                 id: startServiceButton
@@ -120,8 +127,8 @@ LocalServerServicesSample {
 
         TextArea {
             id: serverStatusTextArea
-            width: startButton.width + servicesCombo.width + (10 * scaleFactor)
-            height: 200 * scaleFactor
+            width: startButton.width + servicesCombo.width + (10)
+            height: 200
             text: serverStatus
         }
 
@@ -131,8 +138,8 @@ LocalServerServicesSample {
 
         ListView {
             id: servicesView
-            width: startButton.width + servicesCombo.width + (10 * scaleFactor)
-            height: 200 * scaleFactor
+            width: startButton.width + servicesCombo.width + (10)
+            height: 200
             model: servicesList.length
             delegate: servicesDelegate
             property string currentValue: ""
@@ -145,7 +152,7 @@ LocalServerServicesSample {
         anchors {
             right: parent.right
             bottom: parent.bottom
-            margins: 10 * scaleFactor
+            margins: 10
         }
         text: "Open Url"
         visible: servicesView.model > 0
@@ -161,7 +168,7 @@ LocalServerServicesSample {
         Rectangle {
             id: rect
             width: parent.width
-            height: 35 * scaleFactor
+            height: 35
             color: ListView.isCurrentItem ? "lightsteelblue" : "white"
 
             Text {
@@ -170,10 +177,10 @@ LocalServerServicesSample {
                     left: parent.left
                     right: parent.right
                     verticalCenter: parent.verticalCenter
-                    leftMargin: 5 * scaleFactor
+                    leftMargin: 5
                 }
                 elide: Text.ElideLeft
-                font.pixelSize: 14 * scaleFactor
+                font.pixelSize: 14
 
                 MouseArea {
                     anchors.fill: parent

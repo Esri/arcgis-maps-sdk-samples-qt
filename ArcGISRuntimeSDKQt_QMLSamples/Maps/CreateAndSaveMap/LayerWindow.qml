@@ -13,7 +13,7 @@
 
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 
 Rectangle {
@@ -30,13 +30,13 @@ Rectangle {
 
     Rectangle {
         color: "#edeeef"
-        radius: 5 * scaleFactor
+        radius: 5
         width: childrenRect.width
         height: childrenRect.height
         anchors.centerIn: parent
         border {
             color: "#77787a"
-            width: 1 * scaleFactor
+            width: 1
         }
 
         ColumnLayout {
@@ -46,7 +46,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
                 text: "Select Layers"
                 font {
-                    pixelSize: 18 * scaleFactor
+                    pixelSize: 18
                     family: "helvetica"
                 }
             }
@@ -55,23 +55,36 @@ Rectangle {
                 Layout.margins: 5
                 text: "Select Basemap:"
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }
 
             ComboBox {
                 id: basemapComboBox
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.margins: 5
                 Layout.fillWidth: true
                 model: ["Streets", "Imagery", "Topographic", "Oceans"]
+
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics
+                    font: basemapComboBox.font
+                }
             }
 
             Text {
                 Layout.margins: 5
                 text: "Select Operational Layers:"
                 font {
-                    pixelSize: 14 * scaleFactor
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }

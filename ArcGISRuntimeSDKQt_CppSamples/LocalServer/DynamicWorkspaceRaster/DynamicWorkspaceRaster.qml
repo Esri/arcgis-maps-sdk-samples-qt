@@ -25,7 +25,6 @@ DynamicWorkspaceRasterSample {
     id: rootRectangle
     clip: true
 
-    property real scaleFactor:  1
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property var supportedFormats: ["Raster Files (*.img *.tif *.tiff *.I1, *.dt0 *.dt1 *.dt2 *.tc2 *.geotiff *.hr1 *.jpg *.jpeg *.jp2 *.ntf *.png *.i21 *.ovr)"]
 
@@ -40,7 +39,7 @@ DynamicWorkspaceRasterSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         text: "Add Raster"
         onClicked: fileDialog.open();

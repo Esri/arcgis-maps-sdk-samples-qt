@@ -25,7 +25,7 @@ ClipGeometrySample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -38,7 +38,7 @@ ClipGeometrySample {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 25 * scaleFactor
+            bottomMargin: 25
         }
         text: "Clip"
         onClicked: {

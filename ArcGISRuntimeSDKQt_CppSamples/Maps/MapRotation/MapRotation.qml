@@ -24,7 +24,7 @@ MapRotationSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -41,7 +41,7 @@ MapRotationSample {
 
             width: childrenRect.width
             height: childrenRect.height
-            radius: 10 * scaleFactor
+            radius: 10
             opacity: 0.8
 
             // sliderCombo: A slider and text for its value
@@ -68,10 +68,10 @@ MapRotationSample {
                 Text {
                     anchors {
                         verticalCenter: parent.verticalCenter
-                        margins: 5 * scaleFactor
+                        margins: 5
                     }
                     horizontalAlignment: TextInput.AlignHCenter
-                    font.pixelSize: 20 * scaleFactor
+                    font.pixelSize: 20
                     text: slider1.value.toPrecision(3);
                 }
             }

@@ -26,7 +26,7 @@ RasterFunctionFileSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
 
     // add a mapView component
@@ -44,25 +44,25 @@ RasterFunctionFileSample {
         anchors {
             right: parent.right
             bottom: parent.bottom
-            rightMargin: 20 * scaleFactor
-            bottomMargin: 40 * scaleFactor
+            rightMargin: 20
+            bottomMargin: 40
         }
 
-        width: 45 * scaleFactor
+        width: 45
         height: width
         color: pressed ? "#959595" : "#D6D6D6"
         radius: 100
         border {
             color: "#585858"
-            width: 1 * scaleFactor
+            width: 1
         }
 
         Image {
             anchors {
                 centerIn: parent
-                verticalCenterOffset: -3 * scaleFactor
+                verticalCenterOffset: -3
             }
-            width: 26 * scaleFactor
+            width: 26
             height: width
             source: "qrc:/Samples/Layers/RasterFunctionFile/color.png"
         }

@@ -17,15 +17,13 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-
-    property real scaleFactor: 1
+    
     property var sublayer: null
     property var styles
 
@@ -61,10 +59,10 @@ Rectangle {
     Rectangle {
         anchors {
             fill: controlColumn
-            margins: -5 * scaleFactor
+            margins: -5
         }
         color: "lightgray"
-        radius: 5 * scaleFactor
+        radius: 5
         opacity: 0.75
     }
 
@@ -77,9 +75,9 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         RadioButton {
             text: "Default"

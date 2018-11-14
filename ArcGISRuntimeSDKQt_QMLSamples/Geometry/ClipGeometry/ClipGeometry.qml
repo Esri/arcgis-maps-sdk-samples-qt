@@ -17,15 +17,12 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600
-
-    property real scaleFactor: 1
+    height: 600    
 
     MapView {
         id: mapView
@@ -166,7 +163,7 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 25 * scaleFactor
+            bottomMargin: 25
         }
         text: "Clip"
         onClicked: {

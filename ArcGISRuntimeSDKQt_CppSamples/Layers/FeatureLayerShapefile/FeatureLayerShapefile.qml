@@ -27,7 +27,7 @@ FeatureLayerShapefileSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shp/"
 
     // add a mapView component

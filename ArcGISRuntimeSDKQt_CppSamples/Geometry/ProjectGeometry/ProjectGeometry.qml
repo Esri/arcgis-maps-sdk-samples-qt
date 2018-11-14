@@ -26,7 +26,7 @@ ProjectGeometrySample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -40,7 +40,7 @@ ProjectGeometrySample {
             calloutData: rootRectangle.calloutData
             accessoryButtonHidden: true
             autoAdjustWidth: true
-            maxWidth: 350 * scaleFactor
+            maxWidth: 350
             leaderPosition: leaderPositionEnum.Automatic
         }
     }

@@ -21,11 +21,9 @@ import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 Rectangle {
     clip: true
-
     width: 800
     height: 600
-
-    property real scaleFactor: 1
+    
     property Point calloutLocation
     property real xCoor
     property real yCoor
@@ -78,16 +76,6 @@ Rectangle {
                 callout.accessoryButtonHidden = true;
                 callout.showCallout();
             }
-        }
-    }
-
-    // Neatline rectangle
-    Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        border {
-            width: 0.5 * scaleFactor
-            color: "black"
         }
     }
 }

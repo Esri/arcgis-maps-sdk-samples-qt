@@ -26,7 +26,7 @@ ReadGeoPackageSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -39,12 +39,12 @@ ReadGeoPackageSample {
     Rectangle {
         id: layerVisibilityRect
         anchors {
-            margins: 10 * scaleFactor
+            margins: 10
             left: parent.left
             top: parent.top
         }
-        height: 210 * scaleFactor
-        width: 225 * scaleFactor
+        height: 210
+        width: 225
         color: "transparent"
 
         MouseArea {
@@ -59,16 +59,16 @@ ReadGeoPackageSample {
             height: layerVisibilityRect.height
             color: "lightgrey"
             opacity: 0.9
-            radius: 5 * scaleFactor
+            radius: 5
             border {
                 color: "#4D4D4D"
-                width: 1 * scaleFactor
+                width: 1
             }
 
             Column {
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 clip: true
 
@@ -78,7 +78,7 @@ ReadGeoPackageSample {
                     wrapMode: Text.WordWrap
                     clip:true
                     font {
-                        pixelSize: 14 * scaleFactor
+                        pixelSize: 14
                         bold: true
                     }
                 }
@@ -86,7 +86,7 @@ ReadGeoPackageSample {
                 // Populate the menu with the layers from the GeoPackage
                 ListView {
                     id: layerVisibilityListView
-                    anchors.margins: 20 * scaleFactor
+                    anchors.margins: 20
                     width: parent.width
                     height: parent.height
                     clip: true
@@ -94,15 +94,15 @@ ReadGeoPackageSample {
                     delegate: Item {
                         id: visibilityDelegate
                         width: parent.width
-                        height: 35 * scaleFactor
+                        height: 35
                         Row {
-                            spacing: 5 * scaleFactor
+                            spacing: 5
                             anchors.verticalCenter: parent.verticalCenter
                             Text {
-                                width: 150 * scaleFactor
+                                width: 150
                                 text:  modelData.name
                                 wrapMode: Text.WordWrap
-                                font.pixelSize: 14 * scaleFactor
+                                font.pixelSize: 14
                             }
 
                             Switch {

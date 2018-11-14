@@ -26,7 +26,7 @@ FeatureLayerRenderingModeSceneSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     SceneView {
         anchors {
@@ -41,12 +41,12 @@ FeatureLayerRenderingModeSceneSample {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
-                margins: 5 * scaleFactor
+                margins: 5
             }
             color: "white"
-            radius: 5 * scaleFactor
-            width: 200 * scaleFactor
-            height: 30 * scaleFactor
+            radius: 5
+            width: 200
+            height: 30
 
             Text {
                 anchors.centerIn: parent
@@ -68,12 +68,12 @@ FeatureLayerRenderingModeSceneSample {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
-                margins: 5 * scaleFactor
+                margins: 5
             }
             color: "white"
-            radius: 5 * scaleFactor
-            width: 200 * scaleFactor
-            height: 30 * scaleFactor
+            radius: 5
+            width: 200
+            height: 30
 
             Text {
                 anchors.centerIn: parent
@@ -86,7 +86,7 @@ FeatureLayerRenderingModeSceneSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         property string startText: "Start Animation"
         property string stopText: "Stop Animation"

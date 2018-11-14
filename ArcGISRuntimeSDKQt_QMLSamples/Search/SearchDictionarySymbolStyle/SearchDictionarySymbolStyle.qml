@@ -27,9 +27,9 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
-    property double fontSize: 16 * scaleFactor
+    property double fontSize: 16
     property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
     property var searchParamList: [[],[],[],[],[]]
@@ -69,7 +69,7 @@ Rectangle {
             anchors {
                 left: parent.left
                 right: parent.right
-                margins: 8 * scaleFactor
+                margins: 8
             }
             visible: !hideSearch.checked
             enabled: visible
@@ -180,14 +180,14 @@ Rectangle {
 
             Button {
                 id: seachBtn
-                width: 100 * scaleFactor
-                height: 32 * scaleFactor
+                width: 100
+                height: 32
                 Image {
                     id: searchImage
                     anchors {
                         top: parent.top
                         bottom: parent.bottom
-                        margins: 3 * scaleFactor
+                        margins: 3
                     }
                     source: "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png"
                 }
@@ -196,7 +196,7 @@ Rectangle {
                     anchors {
                         left: searchImage.right
                         verticalCenter: parent.verticalCenter
-                        margins: 3 * scaleFactor
+                        margins: 3
                     }
                     text: searchParamList[0].length === 0 &&
                           searchParamList[1].length === 0 &&
@@ -240,7 +240,7 @@ Rectangle {
                         top: parent.top
                         bottom: parent.bottom
                         horizontalCenter: parent.horizontalCenter
-                        margins: 3 * scaleFactor
+                        margins: 3
                     }
                     source: parent.checked ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_collapsed_light.png" :
                                              "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_expanded_light.png"
@@ -269,9 +269,9 @@ Rectangle {
                 id: resultView
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
-                spacing: 20 * scaleFactor
+                spacing: 20
 
                 clip: true
                 model: dictionarySymbolStyle.searchSymbolsResult
@@ -279,10 +279,10 @@ Rectangle {
                 delegate: Component {
                     Row {
                         anchors {
-                            margins: 20 * scaleFactor
+                            margins: 20
                         }
                         width: resultView.width
-                        spacing: 10 * scaleFactor
+                        spacing: 10
 
                         Image {
                             source: symbolUrl
@@ -290,7 +290,7 @@ Rectangle {
 
                         Column {
                             width: parent.width
-                            spacing: 10 * scaleFactor
+                            spacing: 10
 
                             Text {
                                 id: nameText

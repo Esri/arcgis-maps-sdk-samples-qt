@@ -26,7 +26,7 @@ ServiceAreaSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -36,12 +36,12 @@ ServiceAreaSample {
 
         Rectangle {
             anchors.centerIn: solveRow
-            radius: 8 * scaleFactor
-            height: solveRow.height + (16 * scaleFactor)
-            width: solveRow.width + (16 * scaleFactor)
+            radius: 8
+            height: solveRow.height + (16)
+            width: solveRow.width + (16)
             color: "lightgrey"
             border.color: "darkgrey"
-            border.width: 2 * scaleFactor
+            border.width: 2
             opacity: 0.75
         }
 
@@ -50,9 +50,9 @@ ServiceAreaSample {
             anchors {
                 bottom: mapView.attributionTop
                 horizontalCenter: parent.horizontalCenter
-                margins: 15 * scaleFactor
+                margins: 15
             }
-            spacing: 8 * scaleFactor
+            spacing: 8
 
             Button {
                 id: serviceAreasButton
@@ -74,12 +74,12 @@ ServiceAreaSample {
 
     Rectangle {
         anchors.centerIn: editRow
-        radius: 8 * scaleFactor
-        height: editRow.height + (16 * scaleFactor)
-        width: editRow.width + (16 * scaleFactor)
+        radius: 8
+        height: editRow.height + (16)
+        width: editRow.width + (16)
         color: "lightgrey"
         border.color: "darkgrey"
-        border.width: 2 * scaleFactor
+        border.width: 2
         opacity: 0.75
     }
 
@@ -88,19 +88,33 @@ ServiceAreaSample {
         anchors {
             top: parent.top
             left: parent.left
-            margins: 24 * scaleFactor
+            margins: 24
         }
-        spacing: 8 * scaleFactor
+        spacing: 8
 
         ComboBox {
             id: modeComboBox
             model: ["Facility", "Barrier"]
+
+            property int modelWidth: 0
+            width: modelWidth + leftPadding + rightPadding + indicator.width
 
             onCurrentTextChanged: {
                 if (currentText === "Facility")
                     setFacilityMode();
                 else
                     setBarrierMode();
+            }
+
+            Component.onCompleted : {
+                for (var i = 0; i < model.length; ++i) {
+                    metrics.text = model[i];
+                    modelWidth = Math.max(modelWidth, metrics.width);
+                }
+            }
+            TextMetrics {
+                id: metrics
+                font: modeComboBox.font
             }
         }
 

@@ -30,7 +30,7 @@ FindPlaceSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property bool isSearchingLocation: false
     property bool searchByExtent: false
 
@@ -50,7 +50,7 @@ FindPlaceSample {
             leaderPosition: leaderPositionEnum.Automatic
             calloutData: findPlaceSample.calloutData
             accessoryButtonHidden: true
-            screenOffsetY: -19 * scaleFactor
+            screenOffsetY: -19
         }
     }
 
@@ -59,9 +59,9 @@ FindPlaceSample {
             left: parent.left
             right: parent.right
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 3 * scaleFactor
+        spacing: 3
 
         // create a text field for the POI search
         SearchBox {
@@ -113,7 +113,7 @@ FindPlaceSample {
         SuggestionView {
             id: suggestionView
             width: parent.width
-            height: 20 * suggestionView.count * scaleFactor
+            height: 20 * suggestionView.count
             onSuggestionClicked: {
                 // change the text label
                 poiTextField.focus ? poiTextField.text = label : locationTextField.text = label;
@@ -133,7 +133,7 @@ FindPlaceSample {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 23 * scaleFactor
+            bottomMargin: 23
         }
         visible: searchByExtent
         onButtonClicked: {

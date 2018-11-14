@@ -16,16 +16,13 @@
 
 import QtQuick 2.6
 import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600
-
-    property real scaleFactor: 1
+    height: 600    
 
     MapView {
         id: mapView
@@ -52,7 +49,7 @@ Rectangle {
             calloutData: parent.calloutData
             accessoryButtonHidden: true
             autoAdjustWidth: true
-            maxWidth: 350 * scaleFactor
+            maxWidth: 350
             leaderPosition: leaderPositionEnum.Automatic
         }
 

@@ -17,17 +17,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
-
-    property real scaleFactor: 1
+    
     property var porInfo: portal.portalInfo
 
     function chooseBasemap(selectedBasemap) {
@@ -113,7 +110,7 @@ Rectangle {
         anchors {
             top: mapView.top
             right: mapView.right
-            margins: 16 * scaleFactor
+            margins: 16
         }
         visible: mapView.visible
         iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
@@ -136,14 +133,14 @@ Rectangle {
             left: parent.left;
             right: parent.right
         }
-        cellWidth: 128 * scaleFactor;
-        cellHeight: 128 * scaleFactor
+        cellWidth: 128;
+        cellHeight: 128
         opacity: 0
         focus: true
         clip: true
 
         delegate: Rectangle {
-            anchors.margins: 5 * scaleFactor
+            anchors.margins: 5
             width: basemapsGrid.cellWidth
             height: width
             border {
@@ -174,7 +171,7 @@ Rectangle {
                     left: parent.left;
                     right: parent.right
                 }
-                height: 16 * scaleFactor
+                height: 16
                 z: 100
                 horizontalAlignment: Text.AlignHCenter
                 text: title
@@ -234,7 +231,7 @@ Rectangle {
     Button {
         id: anonymousLogIn
         anchors {
-            margins: 16 * scaleFactor
+            margins: 16
             horizontalCenter: parent.horizontalCenter
             top: title.bottom
         }
@@ -251,7 +248,7 @@ Rectangle {
     Button {
         id: userLogIn
         anchors {
-            margins: 16 * scaleFactor
+            margins: 16
             horizontalCenter: anonymousLogIn.horizontalCenter
             top: anonymousLogIn.bottom
         }

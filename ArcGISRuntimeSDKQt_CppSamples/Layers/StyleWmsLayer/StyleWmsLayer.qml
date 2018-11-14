@@ -25,7 +25,7 @@ StyleWmsLayerSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -36,10 +36,10 @@ StyleWmsLayerSample {
     Rectangle {
         anchors {
             fill: controlColumn
-            margins: -5 * scaleFactor
+            margins: -5
         }
         color: "lightgray"
-        radius: 5 * scaleFactor
+        radius: 5
         opacity: 0.75
     }
 
@@ -52,9 +52,9 @@ StyleWmsLayerSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         RadioButton {
             text: "Default"

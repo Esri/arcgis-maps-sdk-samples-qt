@@ -25,7 +25,7 @@ ShowOrgBasemapsSample {
     height: 600
     clip: true
 
-    property real scaleFactor: 1
+    
     onPortalLoadedChanged: { gridFadeIn.running = true; }
 
     BusyIndicator {
@@ -60,15 +60,15 @@ ShowOrgBasemapsSample {
             right: parent.right
         }
         visible: portalLoaded
-        cellWidth: 128 * scaleFactor;
-        cellHeight: 128 * scaleFactor
+        cellWidth: 128;
+        cellHeight: 128
         opacity: 0
         focus: true
         clip: true
         model: basemaps
 
         delegate: Rectangle {
-            anchors.margins: 5 * scaleFactor
+            anchors.margins: 5
             width: basemapsGrid.cellWidth
             height: width
             border {width: 2; color: index === basemapsGrid.currentIndex ? "blue" : "lightgrey"}
@@ -96,7 +96,7 @@ ShowOrgBasemapsSample {
                     left: parent.left;
                     right: parent.right
                 }
-                height: 16 * scaleFactor
+                height: 16
                 z: 100
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
@@ -171,7 +171,7 @@ ShowOrgBasemapsSample {
         anchors {
             top: mapView.top
             right: mapView.right
-            margins: 16 * scaleFactor
+            margins: 16
         }
         visible: mapView.visible
         text: "Back"
@@ -188,7 +188,7 @@ ShowOrgBasemapsSample {
     Button {
         id: anonymousLogIn
         anchors {
-            margins: 16 * scaleFactor
+            margins: 16
             horizontalCenter: parent.horizontalCenter
             top: titleLabel.bottom
         }
@@ -204,7 +204,7 @@ ShowOrgBasemapsSample {
     Button {
         id: userLogIn
         anchors {
-            margins: 16 * scaleFactor
+            margins: 16
             horizontalCenter: anonymousLogIn.horizontalCenter
             top: anonymousLogIn.bottom
         }

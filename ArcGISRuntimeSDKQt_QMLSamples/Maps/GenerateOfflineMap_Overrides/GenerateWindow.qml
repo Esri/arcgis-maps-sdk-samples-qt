@@ -41,22 +41,22 @@ Rectangle {
 
     Rectangle {
         anchors.centerIn: parent
-        width: 135 * scaleFactor
-        height: 100 * scaleFactor
+        width: 135
+        height: 100
         color: "lightgrey"
         opacity: 0.8
         radius: 5
         border {
             color: "#4D4D4D"
-            width: 1 * scaleFactor
+            width: 1
         }
 
         Column {
             anchors {
                 fill: parent
-                margins: 10 * scaleFactor
+                margins: 10
             }
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             BusyIndicator {
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -65,7 +65,7 @@ Rectangle {
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "%1: %2%".arg(statusText).arg(progressText)
-                font.pixelSize: 16 * scaleFactor
+                font.pixelSize: 16
             }
         }
     }

@@ -28,7 +28,7 @@ GenerateOfflineMap_OverridesSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property string outputMapPackage: System.temporaryFolder.path + "/OfflineMap_Overrides_%1.mmpk".arg(new Date().getTime().toString())
 
     onUpdateStatus: generateWindow.statusText = status;
@@ -59,7 +59,7 @@ GenerateOfflineMap_OverridesSample {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
-                margins: 5 * scaleFactor
+                margins: 5
             }
             visible: mapLoaded
 
@@ -73,13 +73,13 @@ GenerateOfflineMap_OverridesSample {
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
-        width: parent.width - (50 * scaleFactor)
-        height: parent.height - (125 * scaleFactor)
+        width: parent.width - (50)
+        height: parent.height - (125)
         color: "transparent"
         visible: mapLoaded
         border {
             color: "red"
-            width: 3 * scaleFactor
+            width: 3
         }
     }
 

@@ -27,7 +27,7 @@ SpatialOperationsSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
 
     // add a mapView component
     MapView {
@@ -38,13 +38,25 @@ SpatialOperationsSample {
 
     // Display a ComboBox with options for each operation
     ComboBox {
+        id: comboBox
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        width: 175 * scaleFactor
+        property int modelWidth: 0
+        width: modelWidth + leftPadding + rightPadding + indicator.width
         model: geometryOperations
         onCurrentIndexChanged: applyGeometryOperation(currentIndex);
+        Component.onCompleted : {
+            for (var i = 0; i < model.length; ++i) {
+                metrics.text = model[i];
+                modelWidth = Math.max(modelWidth, metrics.width);
+            }
+        }
+        TextMetrics {
+            id: metrics
+            font: comboBox.font
+        }
     }
 }

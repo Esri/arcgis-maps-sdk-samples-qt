@@ -29,7 +29,7 @@ OfflineGeocodeSample {
     width: 800
     height: 600
 
-    property real scaleFactor: 1
+    
     property string dataPath: System.resolvedPath(System.userHomePath) + "/ArcGIS/Runtime/Data/"
 
     // add a mapView component
@@ -41,7 +41,7 @@ OfflineGeocodeSample {
             id: callout
             leaderPosition: leaderPositionEnum.Automatic
             calloutData: offlineGeocodeSample.calloutData
-            screenOffsetY: -19 * scaleFactor
+            screenOffsetY: -19
             accessoryButtonHidden: true
         }
     }
@@ -50,7 +50,7 @@ OfflineGeocodeSample {
     Column {
         anchors {
             fill: parent
-            margins: 10 * scaleFactor
+            margins: 10
         }
 
         Rectangle {
@@ -64,7 +64,7 @@ OfflineGeocodeSample {
             color: "#f7f8fa"
             border {
                 color: "#7B7C7D"
-                width: 1 * scaleFactor
+                width: 1
             }
             radius: 2
 
@@ -76,7 +76,7 @@ OfflineGeocodeSample {
                 TextField {
                     id: textField
                     Layout.fillWidth: true
-                    leftPadding: 5 * scaleFactor
+                    leftPadding: 5
 
                     placeholderText: "Enter an Address"
 
@@ -100,7 +100,7 @@ OfflineGeocodeSample {
 
                 // button to close and open suggestions
                 Rectangle {
-                    Layout.margins: 5 * scaleFactor
+                    Layout.margins: 5
                     width: height
                     height: textField.contentHeight
                     color: "#f7f8fa"
@@ -124,7 +124,7 @@ OfflineGeocodeSample {
         Rectangle {
             id: suggestionRect
             width: addressSearchRect.width
-            height: 20 * suggestView.count * scaleFactor
+            height: 20 * suggestView.count
             color: "#f7f8fa"
             opacity: 0.85
             visible: false
@@ -137,24 +137,24 @@ OfflineGeocodeSample {
 
                     Rectangle {
                         width: addressSearchRect.width
-                        height: 20 * scaleFactor
+                        height: 20
                         color: "#f7f8fa"
                         border.color: "darkgray"
 
                         Text {
                             anchors {
                                 verticalCenter: parent.verticalCenter
-                                margins: 10 * scaleFactor
+                                margins: 10
                             }
 
                             font {
                                 weight: Font.Black
-                                pixelSize: 12 * scaleFactor
+                                pixelSize: 12
                             }
 
                             text: label
                             elide: Text.ElideRight
-                            leftPadding: 5 * scaleFactor
+                            leftPadding: 5
                             color: "black"
                         }
 
@@ -182,8 +182,8 @@ OfflineGeocodeSample {
     Rectangle {
         id: noResultsRect
         anchors.centerIn: parent
-        height: 50 * scaleFactor
-        width: 200 * scaleFactor
+        height: 50
+        width: 200
         color: "#f7f8fa"
         visible: offlineGeocodeSample.noResults
         radius: 2
@@ -193,7 +193,7 @@ OfflineGeocodeSample {
         Text {
             anchors.centerIn: parent
             text: "No matching address"
-            font.pixelSize: 18 * scaleFactor
+            font.pixelSize: 18
         }
     }
 
