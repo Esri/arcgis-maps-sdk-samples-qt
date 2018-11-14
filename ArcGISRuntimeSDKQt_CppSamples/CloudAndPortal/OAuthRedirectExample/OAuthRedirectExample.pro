@@ -4,7 +4,7 @@ QT += core gui opengl xml network positioning sensors
 QT += qml quick
 CONFIG += c++11
 
-ARCGIS_RUNTIME_VERSION = 100.4
+ARCGIS_RUNTIME_VERSION = 100.5
 include($$PWD/arcgisruntime.pri)
 
 HEADERS += OAuthRedirectExample.h \

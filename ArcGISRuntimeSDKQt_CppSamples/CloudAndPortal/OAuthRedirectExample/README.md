@@ -95,7 +95,7 @@ You may need to adjust the Qt Postlink step created by QtCreator to point to the
 E.g. Go to Build Phases/Qt PostLink and edit the script to look something like:
 
 `
-install_name_tool -change libEsriCommonQt.dylib "~/ArcGIS_SDKs/Qt100.4/sdk/macOS/x64/lib/libEsriCommonQt.dylib" Release/OAuthRedirectExample.app/Contents/MacOS/OAuthRedirectExample
+install_name_tool -change libEsriCommonQt.dylib "~/ArcGIS_SDKs/Qt100.5/sdk/macOS/x64/lib/libEsriCommonQt.dylib" Release/OAuthRedirectExample.app/Contents/MacOS/OAuthRedirectExample
 `
 
 Next go to Info/URL Types and add a new URL type with Identifier and URL Schemes set to the custom URL scheme you set up for your App.

@@ -17,7 +17,7 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 SearchForWebmapSample {
     id: root

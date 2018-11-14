@@ -20,7 +20,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 GenerateOfflineMap_OverridesSample {
     id: offlineMapOverridesSample
