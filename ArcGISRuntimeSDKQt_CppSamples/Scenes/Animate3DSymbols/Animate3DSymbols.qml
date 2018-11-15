@@ -86,29 +86,13 @@ Animate3DSymbolsSample {
                 Component.onCompleted: missionList.currentTextChanged()
             }
 
-            Slider {
+            LabelledSlider {
                 id: cameraDistance
                 Layout.alignment: Qt.AlignRight
                 from: 10.0
                 to: 5000.0
                 value: 500.0
-                handle: Rectangle {
-                    x: parent.leftPadding + parent.visualPosition * (parent.availableWidth - width)
-                    y: parent.topPadding + parent.availableHeight / 2 - height / 2
-                    height: width
-                    radius: width * 0.5
-                    width: childrenRect.width
-                    color: progressSlider.background.children[0].color
-                    Text {
-                        padding: 3
-                        font.pixelSize: 14
-                        color: "white"
-                        horizontalAlignment: Qt.AlignHCenter
-                        verticalAlignment: Qt.AlignVCenter
-                        text: "zoom"
-                        height: width
-                    }
-                }
+                text: "zoom"
             }
 
             RowLayout {
@@ -131,85 +115,36 @@ Animate3DSymbolsSample {
                 }
             }
 
-            Slider {
+            LabelledSlider {
                 id: cameraAngle
                 Layout.alignment: Qt.AlignRight
                 from: 0
                 to: 180.0
                 value: 45.0
-                handle: Rectangle {
-                    x: parent.leftPadding + parent.visualPosition * (parent.availableWidth - width)
-                    y: parent.topPadding + parent.availableHeight / 2 - height / 2
-                    height: width
-                    radius: width * 0.5
-                    width: childrenRect.width
-                    color: progressSlider.background.children[0].color
-                    Text {
-                        padding: 3
-                        font.pixelSize: 14
-                        color: "white"
-                        horizontalAlignment: Qt.AlignHCenter
-                        verticalAlignment: Qt.AlignVCenter
-                        text: "angle"
-                        height: width
-                    }
-                }
+                text: "angle"
             }
 
-            Slider {
+            LabelledSlider {
                 id: progressSlider
                 from: 0
                 to: missionSize
                 enabled : missionReady
-                handle: Rectangle {
-                    x: parent.leftPadding + parent.visualPosition * (parent.availableWidth - width)
-                    y: parent.topPadding + parent.availableHeight / 2 - height / 2
-                    height: width
-                    radius: width * 0.5
-                    width: childrenRect.width
-                    color: progressSlider.background.children[0].color
-                    Text {
-                        id: progressText
-                        color: "white"
-                        horizontalAlignment: Qt.AlignHCenter
-                        verticalAlignment: Qt.AlignVCenter
-                        text: (progressSlider.value / missionSize * 100).toLocaleString(Qt.locale(), 'f', 0) + "%"
-                        padding: 3
-                        font.pixelSize: 14
-                        width: progressMetrics.width
-                        height: width
-                        TextMetrics {
-                            id: progressMetrics
-                            font: progressText.font
-                            text: "100%"
-                        }
-                    }
+                text: (value / missionSize * 100).toLocaleString(Qt.locale(), 'f', 0) + "%"
+                handleWidth: progressMetrics.width
+                TextMetrics {
+                    id: progressMetrics
+                    font: progressSlider.font
+                    text: "100%"
                 }
             }
 
-            Slider {
+            LabelledSlider {
                 id: animationSpeed
                 Layout.alignment: Qt.AlignRight
                 from: 1
                 to: 100
                 value: 50
-                handle: Rectangle {
-                    x: parent.leftPadding + parent.visualPosition * (parent.availableWidth - width)
-                    y: parent.topPadding + parent.availableHeight / 2 - height / 2
-                    height: width
-                    radius: width * 0.5
-                    width: childrenRect.width
-                    color: progressSlider.background.children[0].color
-                    Text {
-                        padding: 3
-                        font.pixelSize: 14
-                        color: "white"
-                        horizontalAlignment: Qt.AlignHCenter
-                        verticalAlignment: Qt.AlignVCenter
-                        text: "speed"
-                        height: width
-                    }
-                }
+                text: "speed"
             }
 
             Rectangle {
