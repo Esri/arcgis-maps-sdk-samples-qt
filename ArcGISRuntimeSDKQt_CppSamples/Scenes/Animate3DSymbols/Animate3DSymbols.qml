@@ -108,7 +108,7 @@ Animate3DSymbolsSample {
                     id: followButton
                     Layout.alignment: Qt.AlignRight
                     enabled: missionReady
-                    text: checked? "stay" : "follow "
+                    text: checked? "fixed" : "follow "
                     checked: true
                     checkable: true
                     onCheckedChanged: setFollowing(checked);
@@ -121,7 +121,13 @@ Animate3DSymbolsSample {
                 from: 0
                 to: 180.0
                 value: 45.0
-                text: "angle"
+                text: value.toLocaleString(Qt.locale(), 'f', 0) + "\u00B0"
+                handleWidth: angleMetrics.width
+                TextMetrics {
+                    id: angleMetrics
+                    font: cameraAngle.font
+                    text: "180\u00B0"
+                }
             }
 
             LabelledSlider {
