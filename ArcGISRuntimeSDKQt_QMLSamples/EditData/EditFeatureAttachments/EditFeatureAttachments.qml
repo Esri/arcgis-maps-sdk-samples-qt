@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Qt.labs.platform 1.0 as Dialogs
+import Qt.labs.platform 1.0
 import QtGraphicalEffects 1.0
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.5
@@ -290,8 +290,12 @@ Rectangle {
 
     // file dialog for selecting a file to add as an attachment
     //! [EditFeatures add attachment from a file dialog]
-    Dialogs.FileDialog {
+    FileDialog {
         id: fileDialog
+        folder: {
+            var locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation)
+            return locs.length > 0 ? locs.last() : "";
+        }
 
         function doAddAttachment(){
             if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
@@ -311,6 +315,7 @@ Rectangle {
             }
         }
     }
+    //! [EditFeatures add attachment from a file dialog]
 
     // file info used for obtaining the file name
     FileInfo {

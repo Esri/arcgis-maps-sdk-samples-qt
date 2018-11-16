@@ -201,6 +201,10 @@ EditFeatureAttachmentsSample {
     // file dialog for selecting a file to add as an attachment
     FileDialog {
         id: fileDialog
+        folder: {
+            var locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation)
+            return locs.length > 0 ? locs.last() : "";
+        }
         onAccepted: {
             // Call invokable C++ method to add an attachment to the model
             editAttachmentsSample.addAttachment(fileDialog.file, "application/octet-stream");
