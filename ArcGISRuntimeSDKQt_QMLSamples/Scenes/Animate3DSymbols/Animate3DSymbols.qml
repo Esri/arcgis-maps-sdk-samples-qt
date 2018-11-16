@@ -149,7 +149,7 @@ Rectangle {
                 Component.onCompleted: missionList.currentTextChanged()
             }
 
-            LabelledSlider {
+            LabeledSlider {
                 id: cameraDistance
                 Layout.alignment: Qt.AlignRight
                 from: followController.minCameraDistance
@@ -177,7 +177,7 @@ Rectangle {
                 }
             }
 
-            LabelledSlider {
+            LabeledSlider {
                 id: cameraAngle
                 Layout.alignment: Qt.AlignRight
                 from: 0
@@ -192,7 +192,7 @@ Rectangle {
                 }
             }
 
-            LabelledSlider {
+            LabeledSlider {
                 id: progressSlider
                 from: 0
                 to: missionSize
@@ -206,7 +206,7 @@ Rectangle {
                 }
             }
 
-            LabelledSlider {
+            LabeledSlider {
                 id: animationSpeed
                 Layout.alignment: Qt.AlignRight
                 from: 1

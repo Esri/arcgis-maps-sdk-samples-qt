@@ -85,7 +85,7 @@ Animate3DSymbolsSample {
                 Component.onCompleted: missionList.currentTextChanged()
             }
 
-            LabelledSlider {
+            LabeledSlider {
                 id: cameraDistance
                 Layout.alignment: Qt.AlignRight
                 from: 10.0
@@ -114,7 +114,7 @@ Animate3DSymbolsSample {
                 }
             }
 
-            LabelledSlider {
+            LabeledSlider {
                 id: cameraAngle
                 Layout.alignment: Qt.AlignRight
                 from: 0
@@ -129,7 +129,7 @@ Animate3DSymbolsSample {
                 }
             }
 
-            LabelledSlider {
+            LabeledSlider {
                 id: progressSlider
                 from: 0
                 to: missionSize
@@ -143,7 +143,7 @@ Animate3DSymbolsSample {
                 }
             }
 
-            LabelledSlider {
+            LabeledSlider {
                 id: animationSpeed
                 Layout.alignment: Qt.AlignRight
                 from: 1

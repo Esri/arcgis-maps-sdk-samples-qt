@@ -5,7 +5,7 @@
         "Animate3DSymbols.cpp",
         "MissionData.h",
         "MissionData.cpp",
-        "LabelledSlider.qml"
+        "LabeledSlider.qml"
     ],
     "name" : "Animate 3D symbols",
     "dataItems" : [
