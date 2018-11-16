@@ -6,5 +6,6 @@
         <file>README.md</file>
         <file>minus-16-f.png</file>
         <file>plus-16-f.png</file>
+        <file>LabeledSlider.qml</file>
     </qresource>
 </RCC>

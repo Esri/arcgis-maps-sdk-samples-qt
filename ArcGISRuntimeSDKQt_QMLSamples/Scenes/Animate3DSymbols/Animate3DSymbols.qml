@@ -64,7 +64,7 @@ Rectangle {
                 ArcGISTiledElevationSource {
                     url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
-            }     
+            }
         }
 
         GraphicsOverlay {
@@ -110,87 +110,190 @@ Rectangle {
             }
         }
 
-        Rectangle {
-            id: mapFrame
+        GridLayout {
             anchors {
-                left:sceneView.left
+                left: parent.left
+                right: parent.right
+                top: parent.top
                 bottom: sceneView.attributionTop
                 margins: 10
             }
-            height: parent.height * 0.25
-            width: parent.width * 0.3
-            color: "black"
-            clip: true
 
-            MapView {
-                id: mapView
-                objectName: "mapView"
-                anchors {
-                    fill: parent
-                    margins: 2
-                }
+            columns: 2
 
-                Map {
-                    BasemapImagery { }
-                }
+            ComboBox {
+                id: missionList
+                property real modelWidth: 0
+                Layout.minimumWidth: leftPadding + rightPadding + indicator.width + modelWidth
+                enabled: !playButton.checked
+                model: missionsModel
+                textRole: "name"
 
-                GraphicsOverlay {
-                 id: graphicsOverlay
-                 Graphic {
-                     id: graphic2d
-                     symbol: plane2DSymbol
-                 }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: mouse.accepted
-                    onWheel: wheel.accepted
-                }
-            }
-
-            RowLayout {
-                anchors {
-                    left: parent.left
-                    top: parent.top
-                }
-                spacing: 10
-
-                Rectangle {
-                    Layout.margins: 5
-                    height: width
-                    width: childrenRect.width
-                    clip: true
-                    radius: 5
-
-                    opacity: 0.9
-                    Image {
-                        source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.png"
-                        width: 24
-                        height: width
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: zoomMapIn()
-                        }
+                onModelChanged: {
+                    for (var i = 0; i < missionsModel.count; ++i) {
+                        textMetrics.text = missionsModel.get(i).name;
+                        modelWidth = Math.max(modelWidth, textMetrics.width);
                     }
                 }
 
-                Rectangle {
-                    Layout.margins: 5
-                    height: width
-                    width: childrenRect.width
-                    opacity: 0.9
-                    clip: true
-                    radius: 5
+                onCurrentTextChanged: {
+                    changeMission(currentText);
+                    progressSlider.value = 0;
+                }
 
-                    Image {
-                        source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.png"
-                        width: 24
+                TextMetrics {
+                    id: textMetrics
+                    font: missionList.font
+                }
+
+                Component.onCompleted: missionList.currentTextChanged()
+            }
+
+            LabeledSlider {
+                id: cameraDistance
+                Layout.alignment: Qt.AlignRight
+                from: followController.minCameraDistance
+                to: 5000.0
+                value: 500.0
+                text: "zoom"
+            }
+
+            RowLayout {
+                Button {
+                    id: playButton
+                    checked: false
+                    checkable: true
+                    enabled: missionReady
+                    text: checked ? "pause" : "play"
+                }
+
+                Button {
+                    id: followButton
+                    Layout.alignment: Qt.AlignRight
+                    enabled: missionReady
+                    text: checked? "fixed" : "follow "
+                    checked: true
+                    checkable: true
+                }
+            }
+
+            LabeledSlider {
+                id: cameraAngle
+                Layout.alignment: Qt.AlignRight
+                from: 0
+                to: 180.0
+                value: 45.0
+                text: value.toLocaleString(Qt.locale(), 'f', 0) + "\u00B0"
+                handleWidth: angleMetrics.width
+                TextMetrics {
+                    id: angleMetrics
+                    font: cameraAngle.font
+                    text: "180\u00B0"
+                }
+            }
+
+            LabeledSlider {
+                id: progressSlider
+                from: 0
+                to: missionSize
+                enabled : missionReady
+                text: (value / missionSize * 100).toLocaleString(Qt.locale(), 'f', 0) + "%"
+                handleWidth: progressMetrics.width
+                TextMetrics {
+                    id: progressMetrics
+                    font: progressSlider.font
+                    text: "100%"
+                }
+            }
+
+            LabeledSlider {
+                id: animationSpeed
+                Layout.alignment: Qt.AlignRight
+                from: 1
+                to: 100
+                value: 50
+                text: "speed"
+            }
+
+            Rectangle {
+                id: mapFrame
+                Layout.columnSpan: 2
+                Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+                Layout.minimumHeight: parent.height * 0.25
+                Layout.minimumWidth: parent.width * 0.3
+                color: "black"
+                clip: true
+
+                MapView {
+                    id: mapView
+                    objectName: "mapView"
+                    anchors {
+                        fill: parent
+                        margins: 2
+                    }
+
+                    Map {
+                        BasemapImagery { }
+                    }
+
+                    GraphicsOverlay {
+                        id: graphicsOverlay
+                        Graphic {
+                            id: graphic2d
+                            symbol: plane2DSymbol
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: mouse.accepted
+                        onWheel: wheel.accepted
+                    }
+                }
+
+                RowLayout {
+                    anchors {
+                        left: parent.left
+                        top: parent.top
+                    }
+                    spacing: 10
+
+                    Rectangle {
+                        Layout.margins: 5
                         height: width
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: zoomMapOut()
+                        width: childrenRect.width
+                        clip: true
+                        radius: 5
+
+                        opacity: 0.9
+                        Image {
+                            source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.png"
+                            width: 24
+                            height: width
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: zoomMapIn()
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        Layout.margins: 5
+                        height: width
+                        width: childrenRect.width
+                        opacity: 0.9
+                        clip: true
+                        radius: 5
+
+                        Image {
+                            source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.png"
+                            width: 24
+                            height: width
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: zoomMapOut()
+                            }
                         }
                     }
                 }
@@ -221,135 +324,6 @@ Rectangle {
         id: currentMissionModel
     }
 
-    RowLayout {
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            margins: 10
-        }
-
-        GroupBox {
-            ColumnLayout {
-                spacing: 10
-
-                ComboBox {
-                    id: missionList
-                    property real modelWidth: 0
-                    implicitWidth: leftPadding + rightPadding + indicator.width + modelWidth
-                    enabled: !playButton.checked
-                    model: missionsModel
-                    textRole: "name"
-
-                    onModelChanged: {
-                        for (var i = 0; i < missionsModel.count; ++i) {
-                            textMetrics.text = missionsModel.get(i).name;
-                            modelWidth = Math.max(modelWidth, textMetrics.width);
-                        }
-                    }
-
-                    onCurrentTextChanged: {
-                        changeMission(currentText);
-                        progressSlider.value = 0;
-                    }
-
-                    TextMetrics {
-                        id: textMetrics
-                        font: missionList.font
-                    }
-
-                    Component.onCompleted: missionList.currentTextChanged()
-                }
-
-                Button {
-                    id: playButton
-                    checked: false
-                    checkable: true
-                    enabled: missionReady
-                    text: checked ? "pause" : "play"
-                }
-
-                Text {
-                    text: "progress"
-                    style: Text.Outline
-                    styleColor: "white"
-                    font.pixelSize: 14
-                }
-
-                Slider {
-                    id: progressSlider
-                    from: 0
-                    to: missionSize
-                    enabled : missionReady
-                }
-
-                CheckBox {
-                    id: followButton
-                    enabled: missionReady
-                    text: "follow"
-                    checked: true
-                }
-            }
-        }
-
-        GroupBox {
-            Layout.alignment: Qt.AlignRight
-
-            ColumnLayout {
-                spacing: 5
-                layoutDirection: Qt.RightToLeft
-
-                Text {
-                    text: "zoom"
-                    enabled: following && missionReady
-                    style: Text.Outline
-                    styleColor: "white"
-                    font.pixelSize: 14
-                }
-
-                Slider {
-                    id: cameraDistance
-                    enabled: following && missionReady
-                    from: followController.minCameraDistance
-                    to: 5000.0
-                    value: 500.0
-                }
-
-                Text {
-                    text: "angle"
-                    enabled: following && missionReady
-                    style: Text.Outline
-                    styleColor: "white"
-                    font.pixelSize: 14
-                }
-
-                Slider {
-                    id: cameraAngle
-                    enabled: following && missionReady
-                    from: 0.0
-                    to: 180.0
-                    value: 45.0
-                }
-
-                Text {
-                    text: "speed"
-                    enabled: missionReady
-                    style: Text.Outline
-                    styleColor: "white"
-                    font.pixelSize: 14
-
-                }
-
-                Slider {
-                    id: animationSpeed
-                    enabled: missionReady
-                    from: 1
-                    to: 100
-                    value: 50
-                }
-            }
-        }
-    }
 
     SimpleLineSymbol {
         id: routeSymbol
@@ -394,13 +368,13 @@ Rectangle {
                 continue;
 
             currentMissionModel.append({
-                "lon":dataParts[0],
-                "lat":dataParts[1],
-                "elevation":dataParts[2],
-                "heading":dataParts[3],
-                "pitch":dataParts[4],
-                "roll":dataParts[5],
-            })
+                                           "lon":dataParts[0],
+                                           "lat":dataParts[1],
+                                           "elevation":dataParts[2],
+                                           "heading":dataParts[3],
+                                           "pitch":dataParts[4],
+                                           "roll":dataParts[5],
+                                       })
         }
 
         if (missionSize === 0)
@@ -409,7 +383,7 @@ Rectangle {
         // create polyline builder and fill with points
         // for the mission polyline
         var rtBldr = ArcGISRuntimeEnvironment.createObject(
-            "PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
+                    "PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
         for (var j = 0; j < currentMissionModel.count; j++) {
             var missionData = currentMissionModel.get(j);
             rtBldr.addPointXY(missionData.lon, missionData.lat);
@@ -474,16 +448,16 @@ Rectangle {
     function nextFrameRequested() {
         progressSlider.value = progressSlider.value + 1;
         if (progressSlider.value >= missionSize)
-           progressSlider.value = 0;
+            progressSlider.value = 0;
     }
 
     function createPoint(missionData) {
         return ArcGISRuntimeEnvironment.createObject(
-            "Point", {
-                x: missionData.lon,
-                y: missionData.lat,
-                z: missionData.elevation,
-                spatialReference: SpatialReference.createWgs84()
-            });
+                    "Point", {
+                        x: missionData.lon,
+                        y: missionData.lat,
+                        z: missionData.elevation,
+                        spatialReference: SpatialReference.createWgs84()
+                    });
     }
 }

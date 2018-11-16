@@ -45,123 +45,56 @@ Animate3DSymbolsSample {
         objectName: "sceneView"
         anchors.fill: parent
 
-        Rectangle {
-            id: mapFrame
+        GridLayout {
             anchors {
-                left:sceneView.left
+                left: parent.left
+                right: parent.right
+                top: parent.top
                 bottom: sceneView.attributionTop
                 margins: 10
             }
-            height: parent.height * 0.25
-            width: parent.width * 0.3
-            color: "black"
-            clip: true
 
-            MapView {
-                id: mapView
-                objectName: "mapView"
-                anchors {
-                    fill: parent
-                    margins: 2
+            columns: 2
+
+            ComboBox {
+                id: missionList
+                enabled: !playButton.checked
+                model: missionsModel
+                textRole: "display"
+                property real modelWidth: 0
+                Layout.minimumWidth: leftPadding + rightPadding + indicator.width + modelWidth
+
+                onModelChanged: {
+                    for (var i = 0; i < missionsModel.rowCount(); ++i) {
+                        var index = missionsModel.index(i, 0);
+                        textMetrics.text = missionsModel.data(index);
+                        modelWidth = Math.max(modelWidth, textMetrics.width);
+                    }
                 }
 
-                MouseArea {
-                    anchors.fill: parent
-                    onPressed: mouse.accepted
-                    onWheel: wheel.accepted
+                onCurrentTextChanged: {
+                    changeMission(currentText);
+                    progressSlider.value = 0;
                 }
+
+                TextMetrics {
+                    id: textMetrics
+                    font: missionList.font
+                }
+
+                Component.onCompleted: missionList.currentTextChanged()
+            }
+
+            LabeledSlider {
+                id: cameraDistance
+                Layout.alignment: Qt.AlignRight
+                from: 10.0
+                to: 5000.0
+                value: 500.0
+                text: "zoom"
             }
 
             RowLayout {
-                anchors {
-                    left: parent.left
-                    top: parent.top
-                }
-                spacing: 10
-
-                Rectangle {
-                    Layout.margins: 5
-                    height: width
-                    width: childrenRect.width
-                    clip: true
-                    radius: 5
-
-                    opacity: 0.9
-                    Image {
-                        source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.png"
-                        width: 24
-                        height: width
-
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: zoomMapIn()
-                        }
-                    }
-                }
-
-                Rectangle {
-                    Layout.margins: 5
-                    height: width
-                    width: childrenRect.width
-                    opacity: 0.9
-                    clip: true
-                    radius: 5
-
-                    Image {
-                        source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.png"
-                        width: 24
-                        height: width
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: zoomMapOut()
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    RowLayout {
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            margins: 10
-        }
-
-        GroupBox {
-            ColumnLayout {
-                spacing: 10
-
-                ComboBox {
-                    id: missionList
-                    enabled: !playButton.checked
-                    model: missionsModel
-                    textRole: "display"
-                    property real modelWidth: 0
-                    implicitWidth: leftPadding + rightPadding + indicator.width + modelWidth
-
-                    onModelChanged: {
-                        for (var i = 0; i < missionsModel.rowCount(); ++i) {
-                            var index = missionsModel.index(i, 0);
-                            textMetrics.text = missionsModel.data(index);
-                            modelWidth = Math.max(modelWidth, textMetrics.width);
-                        }
-                    }
-
-                    onCurrentTextChanged: {
-                        changeMission(currentText);
-                        progressSlider.value = 0;
-                    }
-
-                    TextMetrics {
-                        id: textMetrics
-                        font: missionList.font
-                    }
-
-                    Component.onCompleted: missionList.currentTextChanged()
-                }
-
                 Button {
                     id: playButton
                     checked: false
@@ -170,84 +103,124 @@ Animate3DSymbolsSample {
                     text: checked ? "pause" : "play"
                 }
 
-                Text {
-                    text: "progress"
-                    style: Text.Outline
-                    styleColor: "white"
-                    font.pixelSize: 14
-                }
-
-                Slider {
-                    id: progressSlider
-                    from: 0
-                    to: missionSize
-                    enabled : missionReady
-                }
-
-                CheckBox {
+                Button {
                     id: followButton
+                    Layout.alignment: Qt.AlignRight
                     enabled: missionReady
-                    text: "follow"
+                    text: checked? "fixed" : "follow "
                     checked: true
+                    checkable: true
                     onCheckedChanged: setFollowing(checked);
                 }
             }
-        }
 
-        GroupBox {
-            Layout.alignment: Qt.AlignRight
+            LabeledSlider {
+                id: cameraAngle
+                Layout.alignment: Qt.AlignRight
+                from: 0
+                to: 180.0
+                value: 45.0
+                text: value.toLocaleString(Qt.locale(), 'f', 0) + "\u00B0"
+                handleWidth: angleMetrics.width
+                TextMetrics {
+                    id: angleMetrics
+                    font: cameraAngle.font
+                    text: "180\u00B0"
+                }
+            }
 
-            ColumnLayout {
-                spacing: 5
-                layoutDirection: Qt.RightToLeft
+            LabeledSlider {
+                id: progressSlider
+                from: 0
+                to: missionSize
+                enabled : missionReady
+                text: (value / missionSize * 100).toLocaleString(Qt.locale(), 'f', 0) + "%"
+                handleWidth: progressMetrics.width
+                TextMetrics {
+                    id: progressMetrics
+                    font: progressSlider.font
+                    text: "100%"
+                }
+            }
 
-                Text {
-                    text: "zoom"
-                    enabled: following && missionReady
-                    style: Text.Outline
-                    styleColor: "white"
-                    font.pixelSize: 14
+            LabeledSlider {
+                id: animationSpeed
+                Layout.alignment: Qt.AlignRight
+                from: 1
+                to: 100
+                value: 50
+                text: "speed"
+            }
+
+            Rectangle {
+                id: mapFrame
+                Layout.columnSpan: 2
+                Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+                Layout.minimumHeight: parent.height * 0.25
+                Layout.minimumWidth: parent.width * 0.3
+                color: "black"
+                clip: true
+
+                MapView {
+                    id: mapView
+                    objectName: "mapView"
+                    anchors {
+                        fill: parent
+                        margins: 2
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: mouse.accepted
+                        onWheel: wheel.accepted
+                    }
                 }
 
-                Slider {
-                    id: cameraDistance
-                    enabled: following && missionReady
-                    from: 10.0
-                    to: 5000.0
-                    value: 500.0
-                }
+                RowLayout {
+                    anchors {
+                        left: parent.left
+                        top: parent.top
+                    }
+                    spacing: 10
 
-                Text {
-                    text: "angle"
-                    enabled: following && missionReady
-                    style: Text.Outline
-                    styleColor: "white"
-                    font.pixelSize: 14
-                }
+                    Rectangle {
+                        Layout.margins: 5
+                        height: width
+                        width: childrenRect.width
+                        clip: true
+                        radius: 5
 
-                Slider {
-                    id: cameraAngle
-                    enabled: following && missionReady
-                    from: 0.0
-                    to: 180.0
-                    value: 45.0
-                }
+                        opacity: 0.9
+                        Image {
+                            source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.png"
+                            width: 24
+                            height: width
 
-                Text {
-                    text: "speed"
-                    enabled: missionReady
-                    style: Text.Outline
-                    styleColor: "white"
-                    font.pixelSize: 14
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: zoomMapIn()
+                            }
+                        }
+                    }
 
-                }
+                    Rectangle {
+                        Layout.margins: 5
+                        height: width
+                        width: childrenRect.width
+                        opacity: 0.9
+                        clip: true
+                        radius: 5
 
-                Slider {
-                    id: animationSpeed
-                    enabled: missionReady
-                    from: 1
-                    to: 100
-                    value: 50
+                        Image {
+                            source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.png"
+                            width: 24
+                            height: width
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: zoomMapOut()
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -255,7 +228,7 @@ Animate3DSymbolsSample {
 
     Timer {
         id: timer
-        interval: Math.max(animationSpeed.to - animationSpeed.value,1);
+        interval: Math.max(animationSpeed.to - animationSpeed.value, 1);
         running: playButton.checked;
         repeat: true
         onTriggered: animate();
