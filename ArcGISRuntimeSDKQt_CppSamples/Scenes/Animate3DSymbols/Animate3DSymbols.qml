@@ -17,7 +17,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import QtQuick.Shapes 1.11
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 

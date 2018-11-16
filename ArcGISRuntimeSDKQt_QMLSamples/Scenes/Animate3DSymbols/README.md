@@ -6,9 +6,9 @@ Also shows how to combine a `SceneView` and `MapView` in an MVC application with
 
 Animation Controls (Top Left Corner):
  - Select a mission -- selects a location with a route for the plane to fly
+ - Play/Pause -- toggles playing and stopping the animation
+ - Fixed/Follow -- toggles the camera's free cam mode and follow
  - Mission progress -- shows how far along the route the plane is. Slide to change keyframe in animation
- - Play -- toggles playing and stopping the animation
- - Toggle -- toggles the camera's follow mode and free cam mode
  
 Camera Controls (Top Right Corner):
  - Camare zoom -- distance between camera and plane
