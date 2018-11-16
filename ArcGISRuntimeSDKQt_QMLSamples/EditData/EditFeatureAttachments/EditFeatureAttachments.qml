@@ -18,11 +18,12 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Qt.labs.platform 1.0 as Dialogs
 import QtGraphicalEffects 1.0
+import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 Rectangle {
-    
+
     property string damageType
     property var selectedFeature: null
 
@@ -280,7 +281,8 @@ Rectangle {
 
             highlightFollowsCurrentItem: true
             highlight: Rectangle {
-                height: attachmentsList.currentItem.height
+                height: attachmentsList.currentItem != null ? attachmentsList.currentItem.height
+                                                            : 0
                 color: "lightsteelblue"
             }
         }
@@ -309,7 +311,6 @@ Rectangle {
             }
         }
     }
-    //! [EditFeatures add attachment from a file dialog]
 
     // file info used for obtaining the file name
     FileInfo {
