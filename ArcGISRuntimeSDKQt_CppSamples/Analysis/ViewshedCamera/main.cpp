@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
   fmt.setVersion(3, 2);
   QSurfaceFormat::setDefaultFormat(fmt);
 #endif
-
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
   app.setApplicationName("Viewshed Camera - C++");
   
