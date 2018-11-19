@@ -15,6 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
@@ -31,6 +32,31 @@ Rectangle {
     property string stdDeviation: "Standard Deviation"
     property var stretchTypes: [minMax, percentClip, stdDeviation]
     property bool editingRenderer: false
+    property string selectedType: stretchTypeCombo.currentText
+
+    states: [
+        State {
+            name: "orientHorizontal"
+            when: width > height
+            PropertyChanges {
+                target: layout
+                flow: GridLayout.LeftToRight
+                labelAlignment: Qt.AlignRight
+                columns: 4
+            }
+        },
+        State {
+            name: "orientVertical"
+            when: width <= height
+            PropertyChanges {
+                target: layout
+                flow: GridLayout.TopToBottom
+                labelAlignment: Qt.AlignLeft
+                rows: 4
+            }
+        }
+
+    ]
 
     MapView {
         anchors.fill: parent
@@ -97,117 +123,152 @@ Rectangle {
         opacity: 0.75
         width: editingRenderer ? parent.width : 0
         visible: width > 0
-
-        Column {
+        ComboBox {
+            id: stretchTypeCombo
             anchors {
-                top: parent.top
-                bottom: parent.bottom
+                bottom: layout.top
+                left: layout.left
+                right: layout.right
+                margins: 5
+            }
+
+            model: stretchTypes
+            property int modelWidth: 0
+            Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+            Component.onCompleted : {
+                for (var i = 0; i < model.length; ++i) {
+                    metrics.text = model[i];
+                    modelWidth = Math.max(modelWidth, metrics.width);
+                }
+            }
+            TextMetrics {
+                id: metrics
+                font: stretchTypeCombo.font
+            }
+        }
+
+        GridLayout {
+            id: layout
+            property int labelAlignment
+            anchors {
+                centerIn: parent
                 margins: 24
             }
-            width: parent.width
-            spacing: 16
 
-            ComboBox {
-                id: stretchTypeCombo
-                anchors.horizontalCenter: parent.horizontalCenter
-                property int modelWidth: 0
-                width: modelWidth + leftPadding + rightPadding + indicator.width
-                model: stretchTypes
-                Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
-                        metrics.text = model[i];
-                        modelWidth = Math.max(modelWidth, metrics.width);
-                    }
-                }
-                TextMetrics {
-                    id: metrics
-                    font: stretchTypeCombo.font
-                }
+            Text {
+                text: "Min"
+                Layout.alignment: layout.labelAlignment
+                visible: selectedType === minMax
             }
 
-            MinMaxRow {
+            Repeater {
                 id: minMaxMin
-                visible: stretchTypeCombo.currentText === minMax
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 8
-                isMin: true
-                maxRange: 255
-                numVals: 3
-            }
-
-            MinMaxRow {
-                id: minMaxMax
-                visible: stretchTypeCombo.currentText === minMax
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 8
-                isMin: false
-                maxRange: 255
-                numVals: 3
-            }
-
-            MinMaxRow {
-                id: percentClipMin
-                visible: stretchTypeCombo.currentText === percentClip
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 8
-                isMin: true
-                maxRange: 100
-                numVals: 1
-            }
-
-            MinMaxRow {
-                id: percentClipMax
-                visible: stretchTypeCombo.currentText === percentClip
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 8
-                isMin: false
-                maxRange: 100
-                numVals: 1
-            }
-
-            Row {
-                visible: stretchTypeCombo.currentText === stdDeviation
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 8
-                Text {
-                    text: "Factor"
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
+                model: 3
                 SpinBox {
-                    id: sdFactor
-                    property int decimals: 2
-                    property real realValue: value / 100
-                    anchors.verticalCenter: parent.verticalCenter
+                    editable: true
+                    visible: selectedType === minMax
                     from: 0
-                    to: 25 * 100
-                    value: 0
-
-                    validator: DoubleValidator {
-                        bottom: Math.min(sdFactor.from, sdFactor.to)
-                        top: Math.min(sdFactor.from, sdFactor.to)
-                    }
-
-                    textFromValue: function(value, locale) {
-                        return Number(value / 100).toLocaleString(locale, 'f', sdFactor.decimals);
-                    }
-
-                    valueFromText: function(text, locale) {
-                        return Number.fromLocaleString(locale, text) * 100;
-                    }
-
+                    to: 255
+                    value: from
                 }
             }
 
-            Button {
-                text: "Render"
-                anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: {
-                    editingRenderer = false;
-                    applyRendererSettings();
+            Text {
+                text: "Max"
+                Layout.alignment: layout.labelAlignment
+                visible: selectedType === minMax
+            }
+
+            Repeater {
+                id: minMaxMax
+                model: 3
+                SpinBox {
+                    editable: true
+                    visible: selectedType === minMax
+                    from: 0
+                    to: 255
+                    value: to
+                }
+            }
+
+            Text {
+                text: "Min"
+                Layout.alignment: layout.labelAlignment
+                visible: selectedType === percentClip
+            }
+
+            SpinBox {
+                id: percentClipMin
+                editable: true
+                visible: selectedType === percentClip
+                Layout.columnSpan: 3
+                from: 0
+                to: 100
+                value: from
+            }
+
+            Text {
+                text: "Max"
+                Layout.alignment: layout.labelAlignment
+                visible: selectedType === percentClip
+            }
+
+            SpinBox {
+                id: percentClipMax
+                editable: true
+                visible: selectedType === percentClip
+                Layout.columnSpan: 3
+                from: 0
+                to: 100
+                value: to
+            }
+
+            Text {
+                text: "Factor"
+                Layout.alignment: layout.labelAlignment
+                visible: selectedType === stdDeviation
+            }
+
+            SpinBox {
+                id: sdFactor
+                editable: true
+                visible: selectedType === stdDeviation
+                Layout.columnSpan: 3
+                property int decimals: 2
+                property real realValue: value / 100
+                from: 0
+                to: 25 * 100
+                value: 0
+
+                validator: DoubleValidator {
+                    bottom: Math.min(sdFactor.from, sdFactor.to)
+                    top: Math.min(sdFactor.from, sdFactor.to)
+                }
+
+                textFromValue: function(value, locale) {
+                    return Number(value / 100).toLocaleString(locale, 'f', sdFactor.decimals);
+                }
+
+                valueFromText: function(text, locale) {
+                    return Number.fromLocaleString(locale, text) * 100;
                 }
             }
         }
+
+        Button {
+            text: "Render"
+            anchors {
+                top: layout.bottom
+                left: layout.left
+                right: layout.right
+                margins: 5
+            }
+            onClicked: {
+                editingRenderer = false;
+                applyRendererSettings();
+            }
+        }
+
 
         Behavior on width { PropertyAnimation { duration: 500 } }
     }
@@ -216,13 +277,13 @@ Rectangle {
         var rgbRenderer = ArcGISRuntimeEnvironment.createObject("RGBRenderer");
 
         if (stretchTypeCombo.currentText === minMax){
-            minMaxParams.minValues = [minMaxMin.value(0), minMaxMin.value(1), minMaxMin.value(2)];
-            minMaxParams.maxValues = [minMaxMax.value(0), minMaxMax.value(1), minMaxMax.value(2)];
+            minMaxParams.minValues = [minMaxMin.itemAt(0).value, minMaxMin.itemAt(1).value, minMaxMin.itemAt(2).value];
+            minMaxParams.maxValues = [minMaxMax.itemAt(0).value, minMaxMax.itemAt(1).value, minMaxMax.itemAt(2).value];
             rgbRenderer.stretchParameters = minMaxParams;
         }
         else if (stretchTypeCombo.currentText === percentClip){
-            percentClipParams.min =  percentClipMin.value(0);
-            percentClipParams.max = 100 - percentClipMax.value(0);
+            percentClipParams.min =  percentClipMin.value;
+            percentClipParams.max = 100 - percentClipMax.value;
             rgbRenderer.stretchParameters = percentClipParams;
         }
         else if (stretchTypeCombo.currentText === stdDeviation){
