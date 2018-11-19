@@ -35,6 +35,7 @@ using namespace Esri::ArcGISRuntime;
 
 int main(int argc, char *argv[])
 {
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   MyApplication app(argc, argv);
   app.setApplicationName("OAuth Redirect Example - C++");
 

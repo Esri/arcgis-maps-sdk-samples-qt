@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
   QSurfaceFormat::setDefaultFormat(fmt);
 #endif
 
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QApplication application(argc, argv);
 
   BasicSceneView applicationWindow;
