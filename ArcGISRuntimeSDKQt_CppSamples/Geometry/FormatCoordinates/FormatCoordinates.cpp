@@ -26,8 +26,8 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FormatCoordinates::FormatCoordinates(QQuickItem* parent) :
-  QQuickItem(parent)
+FormatCoordinates::FormatCoordinates(QObject* parent) :
+  QObject(parent)
 {
 }
 
@@ -37,39 +37,6 @@ void FormatCoordinates::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<FormatCoordinates>("Esri.Samples", 1, 0, "FormatCoordinatesSample");
-}
-
-void FormatCoordinates::componentComplete()
-{
-  QQuickItem::componentComplete();
-
-  // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
-
-  // create a new basemap instance
-  Basemap* basemap = Basemap::imagery(this);
-
-  // create a new map instance
-  m_map = new Map(basemap, this);
-
-  // create a graphic
-  Point geometry(m_startLongitude, m_startLatitude, SpatialReference::wgs84());
-  SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 15.0, this);
-  Graphic* graphic = new Graphic(geometry, symbol, this);
-
-  // create a new graphics overlay instance
-  // and add insert the graphic
-  GraphicsOverlay* go = new GraphicsOverlay(this);
-  go->graphics()->append(graphic);
-
-  // set map and graphics overlay on the map view
-  m_mapView->setMap(m_map);
-  m_mapView->graphicsOverlays()->append(go);
-
-  connectSignals();
-
-  // Set initial position to Building Q
-  handleTextUpdate(strDecimalDegrees(), m_startLatLong);
 }
 
 void FormatCoordinates::connectSignals()
@@ -176,4 +143,35 @@ QString FormatCoordinates::strUsng() const
 QString FormatCoordinates::strUtm() const
 {
   return tr("Utm");
+}
+
+void FormatCoordinates::setMapView(MapQuickView* mapView)
+{
+  // find QML MapView component
+  m_mapView = mapView;
+
+  // create a new basemap instance
+  Basemap* basemap = Basemap::imagery(this);
+
+  // create a new map instance
+  m_map = new Map(basemap, this);
+
+  // create a graphic
+  Point geometry(m_startLongitude, m_startLatitude, SpatialReference::wgs84());
+  SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 15.0, this);
+  Graphic* graphic = new Graphic(geometry, symbol, this);
+
+  // create a new graphics overlay instance
+  // and add insert the graphic
+  GraphicsOverlay* go = new GraphicsOverlay(this);
+  go->graphics()->append(graphic);
+
+  // set map and graphics overlay on the map view
+  m_mapView->setMap(m_map);
+  m_mapView->graphicsOverlays()->append(go);
+
+  connectSignals();
+
+  // Set initial position to Building Q
+  handleTextUpdate(strDecimalDegrees(), m_startLatLong);
 }

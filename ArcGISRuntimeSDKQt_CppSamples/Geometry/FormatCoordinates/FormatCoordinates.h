@@ -19,22 +19,21 @@
 
 namespace Esri
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class GraphicsOverlay;
-  }
+namespace ArcGISRuntime
+{
+class Map;
+class MapQuickView;
+class GraphicsOverlay;
 }
-
-#include <QQuickItem>
+}
 
 #include "Point.h"
 
-class FormatCoordinates : public QQuickItem
+class FormatCoordinates : public QObject
 {
   Q_OBJECT
 
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView MEMBER m_mapView WRITE setMapView)
   Q_PROPERTY(QString coordinatesInDD READ coordinatesInDD NOTIFY coordinatesInDDChanged)
   Q_PROPERTY(QString coordinatesInDMS READ coordinatesInDMS NOTIFY coordinatesInDMSChanged)
   Q_PROPERTY(QString coordinatesInUsng READ coordinatesInUsng NOTIFY coordinatesInUsngChanged)
@@ -45,10 +44,9 @@ class FormatCoordinates : public QQuickItem
   Q_PROPERTY(QString strUtm READ strUtm CONSTANT)
 
 public:
-  explicit FormatCoordinates(QQuickItem* parent = nullptr);
+  explicit FormatCoordinates(QObject* parent = nullptr);
   ~FormatCoordinates();
 
-  void componentComplete() Q_DECL_OVERRIDE;
   static void init();
   Q_INVOKABLE void handleTextUpdate(QString textType, QString text);
   Q_INVOKABLE void handleLocationUpdate(Esri::ArcGISRuntime::Point point);
@@ -68,6 +66,8 @@ private:
   QString strDegreesMinutesSeconds() const;
   QString strUsng() const;
   QString strUtm() const;
+
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   void connectSignals();
   Esri::ArcGISRuntime::Point createPointFromText(QString textType, QString text);

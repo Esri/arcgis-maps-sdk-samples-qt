@@ -6,5 +6,6 @@
         <file>FormatCoordinates.qml</file>
         <file>FormatCoordinates.h</file>
         <file>FormatCoordinates.cpp</file>
+        <file>main.qml</file>
     </qresource>
 </RCC>
