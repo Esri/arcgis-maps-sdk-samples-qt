@@ -4,7 +4,6 @@
         <file>RasterRgbRenderer.qml</file>
         <file>RasterRgbRenderer.h</file>
         <file>RasterRgbRenderer.cpp</file>
-        <file>MinMaxRow.qml</file>
         <file>README.md</file>
         <file>screenshot.png</file>
     </qresource>
