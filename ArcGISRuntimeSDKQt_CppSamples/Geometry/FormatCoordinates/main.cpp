@@ -55,10 +55,7 @@ int main(int argc, char *argv[])
   // Add the import Path
   engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   // Add the Runtime and Extras path
-  // Add the Runtime and Extras path
   engine.addImportPath(arcGISRuntimeImportPath);
-  // Add the Toolkit path
-  engine.addImportPath(arcGISToolkitImportPath);
 
   // Set the source
   engine.load(QUrl("qrc:/Samples/Geometry/FormatCoordinates/main.qml"));
