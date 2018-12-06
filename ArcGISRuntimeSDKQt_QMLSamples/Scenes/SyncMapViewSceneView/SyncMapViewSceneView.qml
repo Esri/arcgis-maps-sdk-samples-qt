@@ -57,8 +57,7 @@ Rectangle {
             }
 
             onViewpointChanged: {
-                if (navigating)
-                {
+                if (navigating) {
                     mapView.setViewpointAndSeconds(currentViewpointCenter, 0);
                 }
             }
@@ -75,8 +74,7 @@ Rectangle {
             }
 
             onViewpointChanged: {
-                if (navigating)
-                {
+                if (navigating) {
                     sceneView.setViewpointAndSeconds(currentViewpointCenter, 0);
                 }
             }
