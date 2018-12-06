@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/SyncMapViewSceneView">
+        <file alias="sample.json">SyncMapViewSceneView.json</file>        
+        <file>SyncMapViewSceneView.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
