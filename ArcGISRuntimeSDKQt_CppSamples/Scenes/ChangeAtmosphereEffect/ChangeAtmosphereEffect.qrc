@@ -4,7 +4,7 @@
         <file>ChangeAtmosphereEffect.qml</file>
         <file>ChangeAtmosphereEffect.h</file>
         <file>ChangeAtmosphereEffect.cpp</file>
-		<file>main.qml</file>
+        <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>

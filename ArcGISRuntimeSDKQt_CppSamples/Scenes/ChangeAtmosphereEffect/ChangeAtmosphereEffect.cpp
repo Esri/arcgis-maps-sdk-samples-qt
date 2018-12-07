@@ -65,21 +65,20 @@ void ChangeAtmosphereEffect::setSceneView(SceneQuickView* sceneView)
   emit sceneViewChanged();
 }
 
-void ChangeAtmosphereEffect::setNoAtmosphereEffect()
+void ChangeAtmosphereEffect::setAtmosphereEffect(AtmosphereEnum atmosphereEffect)
 {
   if (m_sceneView)
-    m_sceneView->setAtmosphereEffect(AtmosphereEffect::None);
+  {
+    m_sceneView->setAtmosphereEffect(static_cast<AtmosphereEffect>(atmosphereEffect));
+    emit atmosphereEffectChanged();
+  }
 }
 
-void ChangeAtmosphereEffect::setRealisitcAtmosphereEffect()
+ChangeAtmosphereEffect::AtmosphereEnum ChangeAtmosphereEffect::atmosphereEffect() const
 {
   if (m_sceneView)
-    m_sceneView->setAtmosphereEffect(AtmosphereEffect::Realistic);
+    return static_cast<AtmosphereEnum>(m_sceneView->atmosphereEffect());
+  return static_cast<AtmosphereEnum>(AtmosphereEffect::None);
 }
 
-void ChangeAtmosphereEffect::setHorizonOnlyAtmosphereEffect()
-{
-  if (m_sceneView)
-    m_sceneView->setAtmosphereEffect(AtmosphereEffect::HorizonOnly);
-}
 

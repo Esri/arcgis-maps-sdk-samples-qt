@@ -20,6 +20,30 @@ import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 
 Item {
+    states: [
+        State {
+            when: noAtmosphereButton.checked
+            PropertyChanges {
+                target: sample
+                atmosphereEffect: ChangeAtmosphereEffectSample.None
+            }
+        },
+        State {
+            when: realisticAtmosphereButton.checked
+            PropertyChanges {
+                target: sample
+                atmosphereEffect: ChangeAtmosphereEffectSample.Realistic
+            }
+        },
+        State {
+            when: horizonAtmosphereButton.checked
+            PropertyChanges {
+                target: sample
+                atmosphereEffect: ChangeAtmosphereEffectSample.HorizonOnly
+            }
+        }
+    ]
+
     SceneView {
         id: view
         anchors.fill: parent
@@ -27,7 +51,7 @@ Item {
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     ChangeAtmosphereEffectSample {
-        id: model
+        id: sample
         sceneView: view
     }
 
@@ -44,29 +68,28 @@ Item {
         ColumnLayout {
             id: layout
             Button {
+                id: noAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "No atmosphere effect"
+                text: "None"
                 checkable: true
-                onPressed: model.setNoAtmosphereEffect()
             }
 
             Button {
+                id: realisticAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Realistic atmosphere effect"
+                text: "Realistic"
                 checkable: true
-                onPressed: model.setRealisitcAtmosphereEffect()
             }
 
-
             Button {
+                id: horizonAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Horizon only atmosphere effect"
+                text: "Horizon Only"
                 checkable: true
                 checked: true
-                onPressed: model.setHorizonOnlyAtmosphereEffect()
             }
         }
 

@@ -97,7 +97,7 @@ Rectangle {
                 id: noAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "No atmosphere effect"
+                text: "None"
                 checkable: true
             }
 
@@ -105,7 +105,7 @@ Rectangle {
                 id: realisticAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Realistic atmosphere effect"
+                text: "Realistic"
                 checkable: true
             }
 
@@ -113,7 +113,7 @@ Rectangle {
                 id: horizonAtmosphereButton
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Horizon only atmosphere effect"
+                text: "Horizon only"
                 checkable: true
                 checked: true
             }
