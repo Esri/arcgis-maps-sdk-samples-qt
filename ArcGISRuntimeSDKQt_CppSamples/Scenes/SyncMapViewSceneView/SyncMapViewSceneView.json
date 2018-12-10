@@ -4,5 +4,5 @@
         "SyncMapViewSceneView.h",
         "SyncMapViewSceneView.cpp"
     ],
-    "name" : "Sync MapView SceneView"
+    "name" : "Sync map and scene view"
 }
