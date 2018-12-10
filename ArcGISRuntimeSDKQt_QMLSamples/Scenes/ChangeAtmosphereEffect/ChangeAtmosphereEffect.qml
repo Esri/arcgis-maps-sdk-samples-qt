@@ -93,6 +93,13 @@ Rectangle {
         height: childrenRect.height
         ColumnLayout {
             id: layout
+
+            Text {
+                Layout.margins: 5
+                color: "white"
+                text: "Atmosphere effects"
+            }
+
             Button {
                 id: noAtmosphereButton
                 Layout.margins: 5
@@ -120,7 +127,7 @@ Rectangle {
         }
 
         ButtonGroup {
-            buttons: layout.children
+            buttons: [noAtmosphereButton, realisticAtmosphereButton, horizonAtmosphereButton]
         }
     }
 }
