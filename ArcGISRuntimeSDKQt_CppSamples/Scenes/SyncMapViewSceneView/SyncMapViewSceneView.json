@@ -1,0 +1,8 @@
+{
+    "source" :  "SyncMapViewSceneView.qml",
+    "otherSourceFiles" :  [
+        "SyncMapViewSceneView.h",
+        "SyncMapViewSceneView.cpp"
+    ],
+    "name" : "Sync map and scene view"
+}
