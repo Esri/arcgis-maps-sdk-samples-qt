@@ -1,6 +1,6 @@
 # Sync map and scene views
 
-This sample demonstrates how to keep the viewpoints of multiple map or scene views in sync, so that navigating one view immediately updates the others.
+This sample demonstrates how to keep the viewpoints of multiple map or scene views in sync, so that navigating one view immediately updates the other.
 
 ![](screenshot.png)
 
