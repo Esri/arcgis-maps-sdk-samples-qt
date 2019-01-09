@@ -24,9 +24,9 @@ To change the atmosphere effect:
 
 There are three atmosphere effect options:
 
+- **None** - No atmosphere effect. The sky is rendered black with a starfield consisting of randomly placed white dots.
 - **Realistic** - Atmosphere effect applied to both the sky and the surface as viewed from above.
 - **Horizon only** - Atmosphere effect applied to the sky (horizon) only. This is the default.
-- **None** - No atmosphere effect. The sky is rendered black with a starfield consisting of randomly placed white dots.
 
 ## Tags
 
