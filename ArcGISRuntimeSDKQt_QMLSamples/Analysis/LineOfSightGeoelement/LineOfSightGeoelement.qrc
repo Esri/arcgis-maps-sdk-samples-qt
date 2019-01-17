@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/LineOfSightGeoelement">
+        <file alias="sample.json">LineOfSightGeoelement.json</file>        
+        <file>LineOfSightGeoelement.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
