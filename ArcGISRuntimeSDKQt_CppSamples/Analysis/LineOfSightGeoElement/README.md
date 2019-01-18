@@ -26,7 +26,7 @@ The taxi will be highlighted when it is visible. You can change the observer hei
 ## How it works
 
 1. Instantiate an `AnalysisOverlay` and add it to the `SceneView`'s analysis overlays collection.
-1. Instantiate a `GeoElementLineOfSight`, passing in observer and target `GeoElement`s (features or graphics.) Add the line of sight to the analysis overlay's analyses collection.
+1. Instantiate a `GeoElementLineOfSight`, passing in observer and target `GeoElement`s (features or graphics). Add the line of sight to the analysis overlay's analyses collection.
 1. To get the target visibility when it changes, react to the target visibility changing on the `GeoElementLineOfSight` instance.
 
 ## Relevant API
