@@ -28,6 +28,8 @@
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 
+#include <array>
+
 #include <QStandardPaths>
 #include <QDir>
 
