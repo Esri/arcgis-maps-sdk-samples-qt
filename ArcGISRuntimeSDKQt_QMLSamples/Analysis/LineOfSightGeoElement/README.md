@@ -31,7 +31,7 @@ The taxi will be highlighted when it is visibile. You can change the observer he
 
 1. AnalysisOverlay
 1. GeoElementLineOfSight
-1. LineOfSight.TargetVisibility
+1. LineOfSight.targetVisibility
 
 ## Offline data
 
