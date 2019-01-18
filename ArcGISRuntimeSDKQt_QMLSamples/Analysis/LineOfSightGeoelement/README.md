@@ -37,7 +37,7 @@ The taxi will be highlighted when it is visibile. You can change the observer he
 
 Link | Local Location
 ---------|-------|
-|[Taxi CAD](https://www.arcgis.com/home/item.html?id=3af5cfec0fd24dac8d88aea679027cb9)|`<userhome>`/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.zip`|
+|[Taxi CAD](https://www.arcgis.com/home/item.html?id=3af5cfec0fd24dac8d88aea679027cb9)|`<userhome>/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.zip`|
 
 # Tags
 
