@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("LineOfSightGeoelement - QML"));
+  app.setApplicationName(QStringLiteral("LineOfSightGeoElement - QML"));
 
   // Intialize application view
   QQuickView view;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Analysis/LineOfSightGeoelement/LineOfSightGeoelement.qml"));
+  view.setSource(QUrl("qrc:/Samples/Analysis/LineOfSightGeoElement/LineOfSightGeoElement.qml"));
 
   view.show();
 

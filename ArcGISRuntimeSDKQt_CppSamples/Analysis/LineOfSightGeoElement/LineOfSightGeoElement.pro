@@ -24,7 +24,7 @@ CONFIG += c++11
 QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
-TARGET = LineOfSightGeoelement
+TARGET = LineOfSightGeoElement
 
 ARCGIS_RUNTIME_VERSION = 100.5
 include($$PWD/arcgisruntime.pri)
@@ -32,13 +32,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    LineOfSightGeoelement.h
+    LineOfSightGeoElement.h
 
 SOURCES += \
     main.cpp \
-    LineOfSightGeoelement.cpp
+    LineOfSightGeoElement.cpp
 
-RESOURCES += LineOfSightGeoelement.qrc
+RESOURCES += LineOfSightGeoElement.qrc
 
 #-------------------------------------------------------------------------------
 

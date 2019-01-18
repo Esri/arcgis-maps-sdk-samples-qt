@@ -26,7 +26,7 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    LineOfSightGeoelement.qrc
+    LineOfSightGeoElement.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

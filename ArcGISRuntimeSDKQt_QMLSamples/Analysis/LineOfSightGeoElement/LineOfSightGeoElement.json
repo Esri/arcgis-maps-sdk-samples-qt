@@ -1,5 +1,5 @@
 {
-    "source" :  "LineOfSightGeoelement.qml",
+    "source" :  "LineOfSightGeoElement.qml",
     "otherSourceFiles" :  [],
     "name" : "Line of sight (geoelement)",
     "dataItems" : [

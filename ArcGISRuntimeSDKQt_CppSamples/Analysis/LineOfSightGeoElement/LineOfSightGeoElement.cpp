@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightGeoelement, Category=Analysis]
+// [WriteFile Name=LineOfSightGeoElement, Category=Analysis]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "LineOfSightGeoelement.h"
+#include "LineOfSightGeoElement.h"
 
 #include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
@@ -56,7 +56,7 @@ QString dolmusPath()
 
 }
 
-LineOfSightGeoelement::LineOfSightGeoelement(QObject* parent /* = nullptr */):
+LineOfSightGeoElement::LineOfSightGeoElement(QObject* parent /* = nullptr */):
   QObject(parent),
   m_scene(new Scene(Basemap::imagery(this), this))
 {
@@ -69,19 +69,19 @@ LineOfSightGeoelement::LineOfSightGeoelement(QObject* parent /* = nullptr */):
 
   // Trigger animation of taxi every 100ms.
   m_animation.setInterval(100);
-  m_animation.callOnTimeout(this, &LineOfSightGeoelement::animate);
+  m_animation.callOnTimeout(this, &LineOfSightGeoElement::animate);
 }
 
-LineOfSightGeoelement::~LineOfSightGeoelement() = default;
+LineOfSightGeoElement::~LineOfSightGeoElement() = default;
 
-void LineOfSightGeoelement::init()
+void LineOfSightGeoElement::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<LineOfSightGeoelement>("Esri.Samples", 1, 0, "LineOfSightGeoelementSample");
+  qmlRegisterType<LineOfSightGeoElement>("Esri.Samples", 1, 0, "LineOfSightGeoElementSample");
 }
 
-double LineOfSightGeoelement::heightZ() const
+double LineOfSightGeoElement::heightZ() const
 {
   if (m_observer)
   {
@@ -93,7 +93,7 @@ double LineOfSightGeoelement::heightZ() const
     return 0.0;
   }
 }
-void LineOfSightGeoelement::setHeightZ(double z)
+void LineOfSightGeoElement::setHeightZ(double z)
 {
   if (m_observer)
   {
@@ -108,13 +108,13 @@ void LineOfSightGeoelement::setHeightZ(double z)
   emit heightZChanged();
 }
 
-SceneQuickView* LineOfSightGeoelement::sceneView() const
+SceneQuickView* LineOfSightGeoElement::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void LineOfSightGeoelement::setSceneView(SceneQuickView* sceneView)
+void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {
@@ -193,7 +193,7 @@ void LineOfSightGeoelement::setSceneView(SceneQuickView* sceneView)
   taxiSymbol->load();
 }
 
-void LineOfSightGeoelement::animate()
+void LineOfSightGeoElement::animate()
 {
   // Goal point to travel to
   Point waypoint = waypoints.at(m_waypointIndex);

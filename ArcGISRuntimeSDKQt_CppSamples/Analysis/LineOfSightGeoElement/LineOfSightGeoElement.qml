@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightGeoelement, Category=Analysis]
+// [WriteFile Name=LineOfSightGeoElement, Category=Analysis]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -41,7 +41,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
-    LineOfSightGeoelementSample {
+    LineOfSightGeoElementSample {
         id: model
         sceneView: view
     }

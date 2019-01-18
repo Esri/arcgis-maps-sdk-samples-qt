@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightGeoelement, Category=Analysis]
+// [WriteFile Name=LineOfSightGeoElement, Category=Analysis]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef LINEOFSIGHTGEOELEMENT_H
-#define LINEOFSIGHTGEOELEMENT_H
+#ifndef LineOfSightGeoElement_H
+#define LineOfSightGeoElement_H
 
 namespace Esri
 {
@@ -30,7 +30,7 @@ class Graphic;
 #include <QObject>
 #include <QTimer>
 
-class LineOfSightGeoelement : public QObject
+class LineOfSightGeoElement : public QObject
 {
     Q_OBJECT
 
@@ -38,8 +38,8 @@ class LineOfSightGeoelement : public QObject
     Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 
 public:
-    explicit LineOfSightGeoelement(QObject* parent = nullptr);
-    ~LineOfSightGeoelement();
+    explicit LineOfSightGeoElement(QObject* parent = nullptr);
+    ~LineOfSightGeoElement();
 
     static void init();
 
@@ -66,4 +66,4 @@ private:
     Esri::ArcGISRuntime::Graphic* m_observer { nullptr };
 };
 
-#endif // LINEOFSIGHTGEOELEMENT_H
+#endif // LineOfSightGeoElement_H

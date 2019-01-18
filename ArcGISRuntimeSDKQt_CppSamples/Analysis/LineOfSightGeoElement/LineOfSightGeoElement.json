@@ -1,8 +1,8 @@
 {
-    "source" :  "LineOfSightGeoelement.qml",
+    "source" :  "LineOfSightGeoElement.qml",
     "otherSourceFiles" :  [
-        "LineOfSightGeoelement.h",
-        "LineOfSightGeoelement.cpp"
+        "LineOfSightGeoElement.h",
+        "LineOfSightGeoElement.cpp"
     ],
     "name" : "Line of sight (geoelement)",
     "dataItems" : [

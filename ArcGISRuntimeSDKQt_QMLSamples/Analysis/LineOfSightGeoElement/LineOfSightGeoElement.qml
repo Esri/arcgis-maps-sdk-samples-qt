@@ -1,4 +1,4 @@
-// [WriteFile Name=LineOfSightGeoelement, Category=Analysis]
+// [WriteFile Name=LineOfSightGeoElement, Category=Analysis]
 // [Legal]
 // Copyright 2018 Esri.
 

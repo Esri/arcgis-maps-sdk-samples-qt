@@ -15,7 +15,7 @@
 #include <Windows.h>
 #endif
 
-#include "LineOfSightGeoelement.h"
+#include "LineOfSightGeoElement.h"
 
 #include <QDir>
 #include <QGuiApplication>
@@ -37,10 +37,10 @@ int main(int argc, char *argv[])
 
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("LineOfSightGeoelement - C++"));
+    app.setApplicationName(QStringLiteral("LineOfSightGeoElement - C++"));
 
     // Initialize the sample
-    LineOfSightGeoelement::init();
+    LineOfSightGeoElement::init();
 
     QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
     QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     engine.addImportPath(arcGISToolkitImportPath);
 
     // Set the source
-    engine.load(QUrl("qrc:/Samples/Analysis/LineOfSightGeoelement/main.qml"));
+    engine.load(QUrl("qrc:/Samples/Analysis/LineOfSightGeoElement/main.qml"));
 
     return app.exec();
 }
