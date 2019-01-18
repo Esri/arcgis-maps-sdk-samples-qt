@@ -1,6 +1,6 @@
 // [WriteFile Name=LineOfSightGeoElement, Category=Analysis]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -113,7 +113,7 @@ Rectangle {
             }
 
             onLoadStatusChanged: {
-                if (loadStatus == Enums.LoadStatusLoaded) {
+                if (loadStatus === Enums.LoadStatusLoaded) {
                     view.setViewpointCameraAndSeconds(camera, 0);
                 }
             }
@@ -157,7 +157,7 @@ Rectangle {
             Graphic {
                 id: taxi
                 geometry: waypoints[0]
-                selected: lineOfSight.targetVisibility == Enums.LineOfSightTargetVisibilityVisible
+                selected: lineOfSight.targetVisibility === Enums.LineOfSightTargetVisibilityVisible
                 Component.onCompleted: {
                     // Append additional attribute for orientation.
                     attributes.insertAttribute("HEADING", 0.0);
@@ -176,7 +176,7 @@ Rectangle {
         interval: 100
         running: true
         repeat: true
-        onTriggered: animate()
+        onTriggered: animate();
     }
 
     LinearUnit {

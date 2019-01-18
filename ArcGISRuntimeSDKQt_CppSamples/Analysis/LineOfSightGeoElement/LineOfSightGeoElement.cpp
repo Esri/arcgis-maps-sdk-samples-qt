@@ -1,6 +1,6 @@
 // [WriteFile Name=LineOfSightGeoElement, Category=Analysis]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,15 +18,15 @@
 
 #include "ArcGISSceneLayer.h"
 #include "ArcGISTiledElevationSource.h"
-#include "GraphicsOverlay.h"
 #include "GeoElementLineOfSight.h"
 #include "GeometryEngine.h"
+#include "GraphicsOverlay.h"
 #include "ModelSceneSymbol.h"
+#include "PointBuilder.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
-#include "PointBuilder.h"
 
 #include <QStandardPaths>
 #include <QDir>
@@ -60,12 +60,17 @@ LineOfSightGeoElement::LineOfSightGeoElement(QObject* parent /* = nullptr */):
   QObject(parent),
   m_scene(new Scene(Basemap::imagery(this), this))
 {
-  // create a new elevation source from %{ElevationOption} rest service
+  // create a new elevation source from Terrain3D rest service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
         QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
+
+  // Load up the buildings that will block the line of sight.
+  ArcGISSceneLayer* buildings = new ArcGISSceneLayer(
+        QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/New_York_LoD2_3D_Buildings/SceneServer/layers/0"));
+  m_scene->operationalLayers()->append(buildings);
 
   // Trigger animation of taxi every 100ms.
   m_animation.setInterval(100);
@@ -86,7 +91,7 @@ double LineOfSightGeoElement::heightZ() const
   if (m_observer)
   {
     const Point p = geometry_cast<Point>(m_observer->geometry());
-    return p.z();
+    return p.isValid() ? p.z() : 0.0;
   }
   else
   {
@@ -95,17 +100,17 @@ double LineOfSightGeoElement::heightZ() const
 }
 void LineOfSightGeoElement::setHeightZ(double z)
 {
-  if (m_observer)
+  if (!m_observer)
+    return;
+
+  const Point p = geometry_cast<Point>(m_observer->geometry());
+  if (p.isValid())
   {
-    const Point p = geometry_cast<Point>(m_observer->geometry());
-    if (p.isValid())
-    {
-      PointBuilder builder(p);
-      builder.setZ(z);
-      m_observer->setGeometry(builder.toGeometry());
-    }
+    PointBuilder builder(p);
+    builder.setZ(z);
+    m_observer->setGeometry(builder.toGeometry());
+    emit heightZChanged();
   }
-  emit heightZChanged();
 }
 
 SceneQuickView* LineOfSightGeoElement::sceneView() const
@@ -125,11 +130,6 @@ void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setArcGISScene(m_scene);
   emit sceneViewChanged();
 
-  // Load up the buildings that will block the line of sight.
-  ArcGISSceneLayer* buildings = new ArcGISSceneLayer(
-        QUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/New_York_LoD2_3D_Buildings/SceneServer/layers/0"));
-  m_scene->operationalLayers()->append(buildings);
-
   // Setup the graphics overlay - ensure that all z-position are relative to the height of the surface.
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
   {
@@ -148,7 +148,7 @@ void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
   }
   graphicsOverlay->setRenderer(renderer3D);
 
-  // Create our observation point as a red blob.
+  // Create our observation point as a red sphere.
   m_observer = new Graphic(observationPoint, new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 5.f), this);
   emit heightZChanged(); // We now have a point to extract the Z-height from.
   graphicsOverlay->graphics()->append(m_observer);
@@ -200,6 +200,10 @@ void LineOfSightGeoElement::animate()
 
   // Calculate azimuth between current location and goal location for taxi.
   Point location = geometry_cast<Point>(m_taxi->geometry());
+
+  if (!location.isValid())
+    return;
+
   GeodeticDistanceResult distance = GeometryEngine::distanceGeodetic(
         location, waypoint, LinearUnit::meters(), AngularUnit::degrees(), GeodeticCurveType::Geodesic);
 
