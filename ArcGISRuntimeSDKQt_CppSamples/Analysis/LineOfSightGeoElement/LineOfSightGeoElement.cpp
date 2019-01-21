@@ -112,17 +112,16 @@ SceneQuickView* LineOfSightGeoElement::sceneView() const
   return m_sceneView;
 }
 
-void LineOfSightGeoElement::setDataPath(const QString& dataPath)
+void LineOfSightGeoElement::setDataPath(QString dataPath)
 {
-  if (m_dataPath != dataPath)
-  {
-    m_dataPath = dataPath;
-    emit dataPathChanged();
-  }
+  if (m_dataPath == dataPath)
+    return;
+
+  m_dataPath = std::move(dataPath);
+  emit dataPathChanged();
 
   if (!m_dataPath.isEmpty() && m_sceneView)
     initialize();
-
 }
 
 // Set the view (created in QML)
@@ -136,7 +135,6 @@ void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
   emit sceneViewChanged();
-
 
   if (!m_dataPath.isEmpty() && m_sceneView)
     initialize();

@@ -59,7 +59,7 @@ private:
     Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
     void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
 
-    void setDataPath(const QString& dataPath);
+    void setDataPath(QString dataPath);
 
     void initialize();
 
