@@ -48,14 +48,6 @@ const std::array<Point, 4> waypoints = {{
                                           { -73.983452, 40.747091, 2, SpatialReference::wgs84() },
                                           { -73.982961, 40.747762, 2, SpatialReference::wgs84() }
                                         }};
-
-// Path of Taxi 3D CAD model.
-QString dolmusPath()
-{
-  auto homepath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).last();
-  return QDir(homepath).filePath("ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.3ds");
-}
-
 }
 
 LineOfSightGeoElement::LineOfSightGeoElement(QObject* parent /* = nullptr */):
@@ -120,6 +112,19 @@ SceneQuickView* LineOfSightGeoElement::sceneView() const
   return m_sceneView;
 }
 
+void LineOfSightGeoElement::setDataPath(const QString& dataPath)
+{
+  if (m_dataPath != dataPath)
+  {
+    m_dataPath = dataPath;
+    emit dataPathChanged();
+  }
+
+  if (!m_dataPath.isEmpty() && m_sceneView)
+    initialize();
+
+}
+
 // Set the view (created in QML)
 void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
 {
@@ -132,6 +137,13 @@ void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setArcGISScene(m_scene);
   emit sceneViewChanged();
 
+
+  if (!m_dataPath.isEmpty() && m_sceneView)
+    initialize();
+}
+
+void LineOfSightGeoElement::initialize()
+{
   // Setup the graphics overlay - ensure that all z-position are relative to the height of the surface.
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
   {
@@ -156,7 +168,8 @@ void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
   graphicsOverlay->graphics()->append(m_observer);
 
   // Get our Taxi model. We will attempt to load it and continue our setup after it has loaded.
-  ModelSceneSymbol* taxiSymbol = new ModelSceneSymbol(dolmusPath(), 1.0, this);
+  QUrl modelPath = QUrl(QDir(m_dataPath).filePath("ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.3ds")).toLocalFile();
+  ModelSceneSymbol* taxiSymbol = new ModelSceneSymbol(modelPath, 1.0, this);
   taxiSymbol->setAnchorPosition(SceneSymbolAnchorPosition::Bottom);
 
   connect(taxiSymbol, &ModelSceneSymbol::doneLoading, this,

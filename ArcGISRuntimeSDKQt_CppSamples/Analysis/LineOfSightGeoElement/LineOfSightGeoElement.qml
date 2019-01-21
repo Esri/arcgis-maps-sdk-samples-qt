@@ -17,8 +17,9 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
+import Esri.ArcGISExtras 1.1
 
-Item {    
+Item {
     SceneView {
         id: view
         anchors.fill: parent
@@ -44,5 +45,6 @@ Item {
     LineOfSightGeoElementSample {
         id: model
         sceneView: view
+        dataPath: System.userHomePath
     }
 }
