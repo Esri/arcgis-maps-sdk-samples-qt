@@ -36,6 +36,7 @@ class LineOfSightGeoElement : public QObject
 
     Q_PROPERTY(double heightZ READ heightZ WRITE setHeightZ NOTIFY heightZChanged)
     Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+    Q_PROPERTY(QString dataPath MEMBER m_dataPath WRITE setDataPath NOTIFY dataPathChanged)
 
 public:
     explicit LineOfSightGeoElement(QObject* parent = nullptr);
@@ -46,6 +47,7 @@ public:
 signals:
     void heightZChanged();
     void sceneViewChanged();
+    void dataPathChanged();
 
 private slots:
     void animate();
@@ -57,6 +59,10 @@ private:
     Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
     void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
 
+    void setDataPath(QString dataPath);
+
+    void initialize();
+
     Esri::ArcGISRuntime::Scene* m_scene = nullptr;
     Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 
@@ -64,6 +70,8 @@ private:
     std::size_t m_waypointIndex { 0 };
     Esri::ArcGISRuntime::Graphic* m_taxi { nullptr };
     Esri::ArcGISRuntime::Graphic* m_observer { nullptr };
+
+    QString m_dataPath;
 };
 
 #endif // LineOfSightGeoElement_H
