@@ -23,20 +23,34 @@ Item {
     SceneView {
         id: view
         anchors.fill: parent
-        Slider {
-            id: heightSlider
+
+        Rectangle {
             anchors {
                 margins: 5
                 left: parent.left
                 top: parent.top
                 bottom: view.attributionTop
             }
-            from: 150
-            to: 300
-            value: model.heightZ
-            orientation: Qt.Vertical
-            onMoved: {
-                model.heightZ = value;
+            color: Qt.rgba(0.7, 0.7, 0.7, 0.7);
+            radius: 10
+            width: childrenRect.width
+
+            Slider {
+                id: heightSlider
+
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    margins: 5
+                }
+                from: 150
+                to: 300
+                stepSize: 10
+                value: model.heightZ
+                orientation: Qt.Vertical
+                onMoved: {
+                    model.heightZ = value;
+                }
             }
         }
     }
