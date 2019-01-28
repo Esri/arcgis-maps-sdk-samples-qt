@@ -52,7 +52,7 @@ public:
     CurrentLocation,
     MapExtent
   };
-  Q_ENUMS(SearchMode)
+  Q_ENUM(SearchMode)
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
