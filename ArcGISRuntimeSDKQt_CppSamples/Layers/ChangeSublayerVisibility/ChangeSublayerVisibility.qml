@@ -68,7 +68,6 @@ ChangeSublayerVisibilitySample {
                     fill: parent
                     margins: 10
                 }
-                clip: true
 
                 Text {
                     width: parent.width
@@ -76,7 +75,7 @@ ChangeSublayerVisibilitySample {
                     wrapMode: Text.WordWrap
                     clip: true
                     font {
-                        pixelSize: 14
+                        pointSize: 14
                         bold: true
                     }
                 }
@@ -100,15 +99,16 @@ ChangeSublayerVisibilitySample {
 
                         Row {
                             spacing: 5
-                            anchors.verticalCenter: parent.verticalCenter
                             Text {
+                                anchors.verticalCenter: parent.verticalCenter
                                 width: 75
                                 text: name
                                 wrapMode: Text.WordWrap
-                                font.pixelSize: 14
+                                font.pointSize: 14
                             }
 
                             Switch {
+                                anchors.verticalCenter: parent.verticalCenter
                                 checked: sublayerVisible
 
                                 onCheckedChanged: {
