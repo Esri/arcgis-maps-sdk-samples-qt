@@ -76,6 +76,11 @@ LocalServerServicesSample {
                         modelWidth = Math.max(modelWidth, metrics.width);
                     }
                 }
+
+                TextMetrics {
+                    id: metrics
+                    font: servicesCombo.font
+                }
             }
 
             TextField {
