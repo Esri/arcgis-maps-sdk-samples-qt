@@ -32,7 +32,6 @@ namespace Esri
 class SearchDictionarySymbolStyle : public QQuickItem
 {
   Q_OBJECT
-  Q_ENUMS(FieldEnum)
 
   Q_PROPERTY(QAbstractListModel* searchResultsListModel READ searchResultsListModel NOTIFY searchResultsListModelChanged)
 
@@ -47,6 +46,7 @@ public:
     FieldCategories,
     FieldKeys
   };
+  Q_ENUM(FieldEnum)
 
   void componentComplete() Q_DECL_OVERRIDE;
   static void init();
