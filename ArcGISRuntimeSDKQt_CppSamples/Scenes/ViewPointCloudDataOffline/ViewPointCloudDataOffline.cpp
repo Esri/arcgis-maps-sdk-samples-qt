@@ -20,7 +20,9 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "PointCloudLayer.h"
+
 #include <QDir>
+#include <QtCore/qglobal.h>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
