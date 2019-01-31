@@ -1,0 +1,14 @@
+{
+    "source" :  "ViewPointCloudDataOffline.qml",
+    "otherSourceFiles" :  [
+        "ViewPointCloudDataOffline.h",
+        "ViewPointCloudDataOffline.cpp"
+    ],
+    "name" : "View point cloud data offline",
+    "dataItems" : [
+            {
+                "itemId" : "34da965ca51d4c68aa9b3a38edb29e00",
+                "path" : "~/ArcGIS/Runtime/Data/slpk/sandiego-north-balboa-pointcloud.slpk"
+            }
+        ]
+}
