@@ -4,7 +4,7 @@
         <file>ViewPointCloudDataOffline.qml</file>
         <file>ViewPointCloudDataOffline.h</file>
         <file>ViewPointCloudDataOffline.cpp</file>
-		<file>main.qml</file>
+        <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>
