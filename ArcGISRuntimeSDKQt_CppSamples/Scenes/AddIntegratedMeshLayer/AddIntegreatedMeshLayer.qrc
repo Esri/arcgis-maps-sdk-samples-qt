@@ -4,7 +4,7 @@
         <file>AddIntegreatedMeshLayer.qml</file>
         <file>AddIntegreatedMeshLayer.h</file>
         <file>AddIntegreatedMeshLayer.cpp</file>
-		<file>main.qml</file>
+        <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>
