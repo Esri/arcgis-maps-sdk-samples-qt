@@ -15,7 +15,7 @@
 #include <Windows.h>
 #endif
 
-#include "AddIntegreatedMeshLayer.h"
+#include "AddIntegratedMeshLayer.h"
 
 #include <QDir>
 #include <QGuiApplication>
@@ -37,10 +37,10 @@ int main(int argc, char *argv[])
 
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("AddIntegreatedMeshLayer - C++"));
+  app.setApplicationName(QStringLiteral("AddIntegratedMeshLayer - C++"));
 
   // Initialize the sample
-  AddIntegreatedMeshLayer::init();
+  AddIntegratedMeshLayer::init();
 
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
   QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
   engine.addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Scenes/AddIntegreatedMeshLayer/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Scenes/AddIntegratedMeshLayer/main.qml"));
 
   return app.exec();
 }

@@ -1,4 +1,4 @@
-// [WriteFile Name=AddIntegreatedMeshLayer, Category=Scenes]
+// [WriteFile Name=AddIntegratedMeshLayer, Category=Scenes]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef ADDINTEGREATEDMESHLAYER_H
-#define ADDINTEGREATEDMESHLAYER_H
+#ifndef ADDINTEGRATEDMESHLAYER_H
+#define ADDINTEGRATEDMESHLAYER_H
 
 namespace Esri
 {
@@ -28,15 +28,15 @@ class SceneQuickView;
 
 #include <QObject>
 
-class AddIntegreatedMeshLayer : public QObject
+class AddIntegratedMeshLayer : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 
 public:
-  explicit AddIntegreatedMeshLayer(QObject* parent = nullptr);
-  ~AddIntegreatedMeshLayer();
+  explicit AddIntegratedMeshLayer(QObject* parent = nullptr);
+  ~AddIntegratedMeshLayer();
 
   static void init();
 
@@ -51,4 +51,4 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 };
 
-#endif // ADDINTEGREATEDMESHLAYER_H
+#endif // ADDINTEGRATEDMESHLAYER_H

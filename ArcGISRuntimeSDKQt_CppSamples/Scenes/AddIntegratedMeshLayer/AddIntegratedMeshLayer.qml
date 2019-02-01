@@ -1,4 +1,4 @@
-// [WriteFile Name=AddIntegreatedMeshLayer, Category=Scenes]
+// [WriteFile Name=AddIntegratedMeshLayer, Category=Scenes]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -26,7 +26,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
-    AddIntegreatedMeshLayerSample {
+    AddIntegratedMeshLayerSample {
         id: model
         sceneView: view
     }

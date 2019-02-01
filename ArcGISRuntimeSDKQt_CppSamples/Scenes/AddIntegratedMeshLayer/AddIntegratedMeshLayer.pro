@@ -24,7 +24,7 @@ CONFIG += c++11
 QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
-TARGET = AddIntegreatedMeshLayer
+TARGET = AddIntegratedMeshLayer
 
 ARCGIS_RUNTIME_VERSION = 100.5
 include($$PWD/arcgisruntime.pri)
@@ -32,13 +32,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    AddIntegreatedMeshLayer.h
+    AddIntegratedMeshLayer.h
 
 SOURCES += \
     main.cpp \
-    AddIntegreatedMeshLayer.cpp
+    AddIntegratedMeshLayer.cpp
 
-RESOURCES += AddIntegreatedMeshLayer.qrc
+RESOURCES += AddIntegratedMeshLayer.qrc
 
 #-------------------------------------------------------------------------------
 

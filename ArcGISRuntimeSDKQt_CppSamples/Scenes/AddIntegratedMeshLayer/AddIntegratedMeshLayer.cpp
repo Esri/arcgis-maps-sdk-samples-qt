@@ -1,4 +1,4 @@
-// [WriteFile Name=AddIntegreatedMeshLayer, Category=Scenes]
+// [WriteFile Name=AddIntegratedMeshLayer, Category=Scenes]
 // [Legal]
 // Copyright 2018 Esri.
 
@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "AddIntegreatedMeshLayer.h"
+#include "AddIntegratedMeshLayer.h"
 
 #include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
@@ -23,7 +23,7 @@
 
 using namespace Esri::ArcGISRuntime;
 
-AddIntegreatedMeshLayer::AddIntegreatedMeshLayer(QObject* parent /* = nullptr */):
+AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
   QObject(parent),
   m_scene(new Scene(Basemap::imagery(this), this))
 {
@@ -49,22 +49,22 @@ AddIntegreatedMeshLayer::AddIntegreatedMeshLayer(QObject* parent /* = nullptr */
 
 }
 
-AddIntegreatedMeshLayer::~AddIntegreatedMeshLayer() = default;
+AddIntegratedMeshLayer::~AddIntegratedMeshLayer() = default;
 
-void AddIntegreatedMeshLayer::init()
+void AddIntegratedMeshLayer::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<AddIntegreatedMeshLayer>("Esri.Samples", 1, 0, "AddIntegreatedMeshLayerSample");
+  qmlRegisterType<AddIntegratedMeshLayer>("Esri.Samples", 1, 0, "AddIntegratedMeshLayerSample");
 }
 
-SceneQuickView* AddIntegreatedMeshLayer::sceneView() const
+SceneQuickView* AddIntegratedMeshLayer::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void AddIntegreatedMeshLayer::setSceneView(SceneQuickView* sceneView)
+void AddIntegratedMeshLayer::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {
