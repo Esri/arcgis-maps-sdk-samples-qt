@@ -19,7 +19,7 @@ ApplicationWindow {
     width: 800
     height: 600
 
-    AddIntegreatedMeshLayer {
+    AddIntegratedMeshLayer {
         anchors.fill: parent
     }
 }
