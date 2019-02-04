@@ -21,7 +21,7 @@
 #include "SceneQuickView.h"
 
 #include <QDir>
-#include <QDateTime>
+#include <QTemporaryDir>
 #include <QtCore/qglobal.h>
 
 #ifdef Q_OS_IOS
@@ -39,19 +39,19 @@ OpenMobileScenePackage::~OpenMobileScenePackage() = default;
 
 // helper method to get cross platform data path
 namespace {
-  QString defaultHomePath()
+  QString defaultDataPath()
   {
-    QString homePath;
+    QString dataPath;
 
   #ifdef Q_OS_ANDROID
-    homePath = "/sdcard";
+    dataPath = "/sdcard";
   #elif defined Q_OS_IOS
-    homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
   #else
-    homePath = QDir::homePath();
+    dataPath = QDir::homePath();
   #endif
 
-    return homePath;
+    return dataPath;
   }
 }
 
@@ -86,7 +86,7 @@ void OpenMobileScenePackage::setSceneView(SceneQuickView* sceneView)
 void OpenMobileScenePackage::openPackage()
 {
   // create the MSPK data path
-  const QString dataPath = defaultHomePath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/squaw_valley_raster.mspk";
 
   // connect to the Mobile Scene Package to determine if direct read is supported
   connect(MobileScenePackage::instance(), &MobileScenePackage::isDirectReadSupportedCompleted,
@@ -100,7 +100,7 @@ void OpenMobileScenePackage::openPackage()
     // otherwise, the package needs to be unpacked
     else
     {
-      m_unpackTempPath = QDir::tempPath() + QString("/MspkCpp_%1.mspk").arg(QDateTime().currentMSecsSinceEpoch());
+      m_unpackTempPath = QTemporaryDir().path();
       MobileScenePackage::unpack(dataPath, m_unpackTempPath);
     }
   });
@@ -133,6 +133,9 @@ void OpenMobileScenePackage::packageLoaded(Error e)
     qDebug() << QString("Package load error: %1 %2").arg(e.message(), e.additionalMessage());
     return;
   }
+
+  if (m_scenePackage->scenes().length() < 1)
+    return;
 
   // obtain the first scene in the list of scenes
   Scene* scene = m_scenePackage->scenes().at(0);

@@ -46,8 +46,11 @@ Rectangle {
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
+            if (mspk.scenes.length < 1)
+                return;
+
             // obtain the first scene in the list of scenes
-            let scene = mspk.scenes[0];
+            const scene = mspk.scenes[0];
 
             // set the scene on the scene view to display
             sceneView.scene = scene;
