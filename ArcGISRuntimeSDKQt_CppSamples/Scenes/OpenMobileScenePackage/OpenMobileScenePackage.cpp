@@ -86,7 +86,7 @@ void OpenMobileScenePackage::setSceneView(SceneQuickView* sceneView)
 void OpenMobileScenePackage::openPackage()
 {
   // create the MSPK data path
-  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/squaw_valley_raster.mspk";
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
 
   // connect to the Mobile Scene Package to determine if direct read is supported
   connect(MobileScenePackage::instance(), &MobileScenePackage::isDirectReadSupportedCompleted,
