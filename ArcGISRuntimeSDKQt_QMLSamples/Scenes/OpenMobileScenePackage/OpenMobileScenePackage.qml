@@ -47,7 +47,7 @@ Rectangle {
                 return;
 
             // obtain the first scene in the list of scenes
-            var scene = mspk.scenes[0];
+            let scene = mspk.scenes[0];
 
             // set the scene on the scene view to display
             sceneView.scene = scene;

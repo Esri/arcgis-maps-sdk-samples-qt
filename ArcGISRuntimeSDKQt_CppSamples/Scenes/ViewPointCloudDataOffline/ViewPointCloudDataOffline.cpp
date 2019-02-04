@@ -55,19 +55,22 @@ SceneQuickView* ViewPointCloudDataOffline::sceneView() const
   return m_sceneView;
 }
 
-QString defaultHomePath()
-{
-  QString homePath;
+// helper method to get cross platform data path
+namespace {
+  QString defaultHomePath()
+  {
+    QString homePath;
 
-#ifdef Q_OS_ANDROID
-  homePath = "/sdcard";
-#elif defined Q_OS_IOS
-  homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-#else
-  homePath = QDir::homePath();
-#endif
+  #ifdef Q_OS_ANDROID
+    homePath = "/sdcard";
+  #elif defined Q_OS_IOS
+    homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    homePath = QDir::homePath();
+  #endif
 
-  return homePath;
+    return homePath;
+  }
 }
 
 // Set the view (created in QML)

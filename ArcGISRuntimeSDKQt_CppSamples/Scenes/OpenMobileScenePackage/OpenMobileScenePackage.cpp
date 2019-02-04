@@ -31,27 +31,28 @@
 using namespace Esri::ArcGISRuntime;
 
 OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_scene(new Scene(Basemap::imagery(this), this))
+  QObject(parent)
 {  
 }
 
 OpenMobileScenePackage::~OpenMobileScenePackage() = default;
 
 // helper method to get cross platform data path
-QString defaultHomePath()
-{
-  QString homePath;
+namespace {
+  QString defaultHomePath()
+  {
+    QString homePath;
 
-#ifdef Q_OS_ANDROID
-  homePath = "/sdcard";
-#elif defined Q_OS_IOS
-  homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-#else
-  homePath = QDir::homePath();
-#endif
+  #ifdef Q_OS_ANDROID
+    homePath = "/sdcard";
+  #elif defined Q_OS_IOS
+    homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    homePath = QDir::homePath();
+  #endif
 
-  return homePath;
+    return homePath;
+  }
 }
 
 void OpenMobileScenePackage::init()
@@ -94,9 +95,7 @@ void OpenMobileScenePackage::openPackage()
     // if direct read is supported, load the package
     if (supported)
     {
-      m_scenePackage = new MobileScenePackage(dataPath, this);
-      connect(m_scenePackage, &MobileScenePackage::doneLoading, this, &OpenMobileScenePackage::packageLoaded);
-      m_scenePackage->load();
+      createScenePackage(dataPath);
     }
     // otherwise, the package needs to be unpacked
     else
@@ -113,9 +112,7 @@ void OpenMobileScenePackage::openPackage()
     // if the unpack was successful, load the unpacked package
     if (success)
     {
-      m_scenePackage = new MobileScenePackage(m_unpackTempPath, this);
-      connect(m_scenePackage, &MobileScenePackage::doneLoading, this, &OpenMobileScenePackage::packageLoaded);
-      m_scenePackage->load();
+      createScenePackage(m_unpackTempPath);
     }
     // log that the upack failed
     else
@@ -142,4 +139,12 @@ void OpenMobileScenePackage::packageLoaded(Error e)
 
   // set the scene on the scene view to display
   m_sceneView->setArcGISScene(scene);
+}
+
+// create scene package and connect to signals
+void OpenMobileScenePackage::createScenePackage(const QString& path)
+{
+  m_scenePackage = new MobileScenePackage(path, this);
+  connect(m_scenePackage, &MobileScenePackage::doneLoading, this, &OpenMobileScenePackage::packageLoaded);
+  m_scenePackage->load();
 }
