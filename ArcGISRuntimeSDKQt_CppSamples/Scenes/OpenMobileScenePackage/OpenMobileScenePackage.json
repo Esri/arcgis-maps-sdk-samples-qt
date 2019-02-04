@@ -1,0 +1,8 @@
+{
+    "source" :  "OpenMobileScenePackage.qml",
+    "otherSourceFiles" :  [
+        "OpenMobileScenePackage.h",
+        "OpenMobileScenePackage.cpp"
+    ],
+    "name" : "Open mobile scene package"
+}

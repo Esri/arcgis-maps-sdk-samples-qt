@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/OpenMobileScenePackage">
+        <file alias="sample.json">OpenMobileScenePackage.json</file>        
+        <file>OpenMobileScenePackage.qml</file>
+        <file>OpenMobileScenePackage.h</file>
+        <file>OpenMobileScenePackage.cpp</file>
+		<file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

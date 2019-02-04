@@ -52,6 +52,10 @@ Rectangle {
             // set the scene on the scene view to display
             sceneView.scene = scene;
         }
+
+        onErrorChanged: {
+            console.log("Mobile Map Package Error: %1 %2".arg(error.message).arg(error.additionalMessage));
+        }
     }
 
     // Connect to the various signals on MobileScenePackageUtility
