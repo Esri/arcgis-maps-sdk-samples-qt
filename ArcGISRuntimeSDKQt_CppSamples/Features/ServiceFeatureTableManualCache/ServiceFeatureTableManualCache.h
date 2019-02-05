@@ -36,9 +36,9 @@ class ServiceFeatureTableManualCache : public QQuickItem
 
 public:
   explicit ServiceFeatureTableManualCache(QQuickItem* parent = nullptr);
-  ~ServiceFeatureTableManualCache();
+  ~ServiceFeatureTableManualCache() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void populate();
 

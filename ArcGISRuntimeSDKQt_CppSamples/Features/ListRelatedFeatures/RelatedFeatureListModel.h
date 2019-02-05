@@ -35,17 +35,17 @@ public:
     ServiceLayerName
   };
 
-  explicit RelatedFeatureListModel(QObject* parent = 0);
-  ~RelatedFeatureListModel() = default;
+  explicit RelatedFeatureListModel(QObject* parent = nullptr);
+  ~RelatedFeatureListModel() override = default;
 
   void addRelatedFeature(RelatedFeature relatedFeature);
-  int rowCount(const QModelIndex& parent = QModelIndex()) const;
-  QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+  int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+  QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
   void clear();
   int size() const { return m_relatedFeatures.size(); }
 
 protected:
-  QHash<int, QByteArray> roleNames() const;
+  QHash<int, QByteArray> roleNames() const override;
 
 private:
   QList<RelatedFeature> m_relatedFeatures;

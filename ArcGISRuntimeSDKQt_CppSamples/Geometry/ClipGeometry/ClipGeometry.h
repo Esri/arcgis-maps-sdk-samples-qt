@@ -39,9 +39,9 @@ class ClipGeometry : public QQuickItem
 
 public:
   explicit ClipGeometry(QQuickItem* parent = nullptr);
-  ~ClipGeometry() = default;
+  ~ClipGeometry() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void clipAreas();
 

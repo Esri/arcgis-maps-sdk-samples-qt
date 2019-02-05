@@ -38,9 +38,9 @@ class DensifyAndGeneralize : public QQuickItem
 
 public:
   explicit DensifyAndGeneralize(QQuickItem* parent = nullptr);
-  ~DensifyAndGeneralize() = default;
+  ~DensifyAndGeneralize() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void updateGeometry(bool densify, double maxSegmentLength, bool generalize, double maxDeviation);
   Q_INVOKABLE void showResults(bool show);
