@@ -54,9 +54,9 @@ class PortalUserInfo : public QQuickItem
 
 public:
   explicit PortalUserInfo(QQuickItem* parent = nullptr);
-  ~PortalUserInfo();
+  ~PortalUserInfo() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:

@@ -37,9 +37,9 @@ class DistanceMeasurementAnalysis : public QQuickItem
 
 public:
   explicit DistanceMeasurementAnalysis(QQuickItem* parent = nullptr);
-  ~DistanceMeasurementAnalysis() = default;
+  ~DistanceMeasurementAnalysis() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();  
   Q_INVOKABLE void setUnits(const QString& unitName);
 

@@ -36,9 +36,9 @@ class ViewshedLocation : public QQuickItem
 
 public:
   explicit ViewshedLocation(QQuickItem* parent = nullptr);
-  ~ViewshedLocation() = default;
+  ~ViewshedLocation() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
   Q_PROPERTY(bool viewshedVisible READ isViewshedVisible WRITE setViewshedVisible NOTIFY viewshedVisibleChanged)

@@ -35,9 +35,9 @@ class Simple_Marker_Symbol : public QQuickItem
 
 public:
   explicit Simple_Marker_Symbol(QQuickItem* parent = nullptr);
-  ~Simple_Marker_Symbol();
+  ~Simple_Marker_Symbol() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

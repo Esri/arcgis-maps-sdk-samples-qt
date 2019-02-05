@@ -27,15 +27,14 @@ class MyApplication : public QtSingleApplication
 class MyApplication : public QApplication
 #endif
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
+  MyApplication(int& argc, char** argv, bool GUIenabled = true);
+  MyApplication(const QString& id, int& argc, char** argv);
+  ~MyApplication() override;
 
-    MyApplication(int& argc, char** argv, bool GUIenabled = true);
-    MyApplication(const QString& id, int& argc, char** argv);
-    ~MyApplication();
-
-    bool event(QEvent* event) override;
+  bool event(QEvent* event) override;
 };
 
 #endif // MYAPPLICATION_H

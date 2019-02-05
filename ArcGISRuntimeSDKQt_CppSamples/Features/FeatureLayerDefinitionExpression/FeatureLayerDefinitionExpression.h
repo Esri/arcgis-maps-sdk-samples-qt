@@ -37,9 +37,9 @@ class FeatureLayerDefinitionExpression : public QQuickItem
 
 public:
   explicit FeatureLayerDefinitionExpression(QQuickItem* parent = nullptr);
-  ~FeatureLayerDefinitionExpression();
+  ~FeatureLayerDefinitionExpression() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void setDefExpression(QString whereClause);
 

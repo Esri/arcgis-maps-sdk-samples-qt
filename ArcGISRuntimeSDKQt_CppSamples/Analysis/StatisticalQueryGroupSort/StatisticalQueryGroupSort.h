@@ -48,9 +48,9 @@ class StatisticalQueryGroupSort : public QQuickItem
 
 public:
   explicit StatisticalQueryGroupSort(QQuickItem* parent = nullptr);
-  ~StatisticalQueryGroupSort() = default;
+  ~StatisticalQueryGroupSort() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void queryStatistics();
   Q_INVOKABLE void addStatisticDefinition(const QString& field, const QString& statistic);

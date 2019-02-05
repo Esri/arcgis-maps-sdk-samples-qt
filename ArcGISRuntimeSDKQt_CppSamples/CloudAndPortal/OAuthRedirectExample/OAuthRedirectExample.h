@@ -16,10 +16,10 @@
 
 namespace Esri
 {
-    namespace ArcGISRuntime
-    {
-        class Portal;
-    }
+  namespace ArcGISRuntime
+  {
+    class Portal;
+  }
 }
 
 class OAuthRedirectHandler;
@@ -29,38 +29,38 @@ class OAuthRedirectHandler;
 
 class OAuthRedirectExample : public QQuickItem
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(QString  clientId READ clientId WRITE setClientId NOTIFY clientIdChanged)
-    Q_PROPERTY(QString portalLoadStatus READ portalLoadStatus NOTIFY portalLoadStatusChanged)
-    Q_PROPERTY(QString status READ status NOTIFY statusChanged)
-    Q_PROPERTY(QString portalName READ portalName NOTIFY portalLoadStatusChanged)
+  Q_PROPERTY(QString  clientId READ clientId WRITE setClientId NOTIFY clientIdChanged)
+  Q_PROPERTY(QString portalLoadStatus READ portalLoadStatus NOTIFY portalLoadStatusChanged)
+  Q_PROPERTY(QString status READ status NOTIFY statusChanged)
+  Q_PROPERTY(QString portalName READ portalName NOTIFY portalLoadStatusChanged)
 
 public:
-    OAuthRedirectExample(QQuickItem* parent = nullptr);
-    ~OAuthRedirectExample();
+  OAuthRedirectExample(QQuickItem* parent = nullptr);
+  ~OAuthRedirectExample() override;
 
-    void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
 
-    Q_INVOKABLE void loadPortal();
-    Q_INVOKABLE void setClientId(const QString& clientId);
+  Q_INVOKABLE void loadPortal();
+  Q_INVOKABLE void setClientId(const QString& clientId);
 
-    static QString customUrlProtocol();
+  static QString customUrlProtocol();
 
 signals:
-    void clientIdChanged();
-    void portalLoadStatusChanged();
-    void statusChanged();
-    void portalNameChanged();
+  void clientIdChanged();
+  void portalLoadStatusChanged();
+  void statusChanged();
+  void portalNameChanged();
 
 private:
-    QString clientId() const;
-    QString portalLoadStatus() const;
-    QString status() const;
-    QString portalName() const;
+  QString clientId() const;
+  QString portalLoadStatus() const;
+  QString status() const;
+  QString portalName() const;
 
-    Esri::ArcGISRuntime::Portal* m_portal = nullptr;
-    OAuthRedirectHandler* m_handler = nullptr;
+  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+  OAuthRedirectHandler* m_handler = nullptr;
 };
 
 #endif // OAUTHREDIRECTEXAMPLE_H

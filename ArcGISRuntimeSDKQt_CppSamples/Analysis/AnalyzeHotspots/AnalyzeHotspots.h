@@ -41,9 +41,9 @@ class AnalyzeHotspots : public QQuickItem
 
 public:
   explicit AnalyzeHotspots(QQuickItem* parent = nullptr);
-  ~AnalyzeHotspots();
+  ~AnalyzeHotspots() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
   Q_INVOKABLE void executeTaskWithDates(const QString& fromDate, const QString& toDate);
@@ -59,7 +59,7 @@ private:
   Esri::ArcGISRuntime::GeoprocessingTask* m_hotspotTask = nullptr;
   Esri::ArcGISRuntime::ArcGISMapImageLayer* m_layer = nullptr;
   bool m_jobInProgress = false;
-  QString m_jobStatus = QString("Not started.");
+  QString m_jobStatus = QStringLiteral("Not started.");
 
 private:
   bool jobInProgress() const { return m_jobInProgress; }

@@ -56,9 +56,9 @@ class DisplayGrid : public QQuickItem
 
 public:
   explicit DisplayGrid(QQuickItem* parent = nullptr);
-  ~DisplayGrid();
+  ~DisplayGrid() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void changeGrid(const QString& gridType);
   Q_INVOKABLE void changeGridColor(const QString& color);
@@ -133,8 +133,8 @@ private:
   static const QString s_topRightPosition;
   static const QString s_centerPosition;
   static const QString s_allSidesPosition;
-  QString m_currentGridColor = "red";
-  QString m_currentLabelColor = "black";
+  QString m_currentGridColor = QStringLiteral("red");
+  QString m_currentLabelColor = QStringLiteral("black");
   QString m_currentLabelFormat;
   QString m_currentLabelPosition;
   bool m_gridVisibility = true;

@@ -34,9 +34,9 @@ class FeatureLayerDictionaryRenderer : public QQuickItem
 
 public:
   explicit FeatureLayerDictionaryRenderer(QQuickItem* parent = nullptr);
-  ~FeatureLayerDictionaryRenderer();
+  ~FeatureLayerDictionaryRenderer() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:
