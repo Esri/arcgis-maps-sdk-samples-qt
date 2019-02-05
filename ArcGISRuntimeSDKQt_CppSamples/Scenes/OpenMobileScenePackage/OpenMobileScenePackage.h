@@ -42,9 +42,6 @@ public:
 
   static void init();
 
-private:
-  void openPackage();
-
 private slots:
   void packageLoaded(Esri::ArcGISRuntime::Error e);
 
@@ -55,6 +52,8 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
   void createScenePackage(const QString& path);
+  void unpackScenePackage();
+  void setSceneToView();
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;

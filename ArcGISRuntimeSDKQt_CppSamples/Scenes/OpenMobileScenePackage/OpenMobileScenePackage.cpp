@@ -30,13 +30,6 @@
 
 using namespace Esri::ArcGISRuntime;
 
-OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
-  QObject(parent)
-{  
-}
-
-OpenMobileScenePackage::~OpenMobileScenePackage() = default;
-
 // helper method to get cross platform data path
 namespace {
   QString defaultDataPath()
@@ -62,6 +55,16 @@ void OpenMobileScenePackage::init()
   qmlRegisterType<OpenMobileScenePackage>("Esri.Samples", 1, 0, "OpenMobileScenePackageSample");
 }
 
+OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
+  QObject(parent)
+{
+  // create the MSPK data path
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/test_mspk_1.mspk";
+  createScenePackage(dataPath);
+}
+
+OpenMobileScenePackage::~OpenMobileScenePackage() = default;
+
 SceneQuickView* OpenMobileScenePackage::sceneView() const
 {
   return m_sceneView;
@@ -77,33 +80,77 @@ void OpenMobileScenePackage::setSceneView(SceneQuickView* sceneView)
 
   m_sceneView = sceneView;
 
-  openPackage();
+  setSceneToView();
 
   emit sceneViewChanged();
 }
 
-// Open a mobile scene package
-void OpenMobileScenePackage::openPackage()
+// Slot for handling when the package loads
+void OpenMobileScenePackage::packageLoaded(Error e)
 {
-  // create the MSPK data path
-  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
-
-  // connect to the Mobile Scene Package to determine if direct read is supported
-  connect(MobileScenePackage::instance(), &MobileScenePackage::isDirectReadSupportedCompleted,
-          this, [this, dataPath](QUuid, bool supported)
+  if (!e.isEmpty())
   {
-    // if direct read is supported, load the package
-    if (supported)
+    // For a full list of error codes, see https://developers.arcgis.com/qt/latest/cpp/guide/platform-error-codes.htm
+    constexpr int packageExpiredCode = 26;
+    constexpr int requiresUnpackCode = 7012;
+
+    const int errorCode = e.code();
+
+    // If a mobile scene package contains a raster file it must be unpacked to a new directory before loading
+    if (errorCode == requiresUnpackCode)
     {
-      createScenePackage(dataPath);
+      unpackScenePackage();
     }
-    // otherwise, the package needs to be unpacked
+    // If a mobile scene package is authored to prevent loading after the expiration date, report to the user
+    else if (errorCode == packageExpiredCode && !m_scenePackage->expiration().isEmpty())
+    {
+      qDebug() << QString("Package Expired: %1").arg(m_scenePackage->expiration().message());
+    }
     else
     {
-      m_unpackTempPath = QTemporaryDir().path();
-      MobileScenePackage::unpack(dataPath, m_unpackTempPath);
+      qDebug() << QString("Package load error: %1 %2").arg(e.message(), e.additionalMessage());
     }
-  });
+
+    return;
+  }
+
+  if (m_scenePackage->scenes().isEmpty())
+    return;
+
+  // obtain the first scene in the list of scenes
+  m_scene = m_scenePackage->scenes().at(0);
+
+  setSceneToView();
+}
+
+// create scene package and connect to signals
+void OpenMobileScenePackage::createScenePackage(const QString& path)
+{
+  if (m_scenePackage)
+  {
+    delete m_scenePackage;
+    m_scenePackage = nullptr;
+  }
+
+  m_scenePackage = new MobileScenePackage(path, this);
+  connect(m_scenePackage, &MobileScenePackage::doneLoading, this, &OpenMobileScenePackage::packageLoaded);
+  m_scenePackage->load();
+}
+
+void OpenMobileScenePackage::unpackScenePackage()
+{
+  if (!m_scenePackage)
+  {
+    qDebug() << "Invalid scene package to unpack.";
+    return;
+  }
+
+  if (!m_unpackTempPath.isEmpty())
+  {
+    // Only perform 1 unpack operation
+    qDebug() << "Already unpacked.";
+    return;
+  }
 
   // connect to the Mobile Scene Package to know when the data is unpacked
   connect(MobileScenePackage::instance(), &MobileScenePackage::unpackCompleted,
@@ -121,33 +168,15 @@ void OpenMobileScenePackage::openPackage()
     }
   });
 
-  // Check if the MSPK can be read directly
-  MobileScenePackage::isDirectReadSupported(dataPath);
+  m_unpackTempPath = QTemporaryDir().path();
+  MobileScenePackage::unpack(m_scenePackage->path(), m_unpackTempPath);
 }
 
-// Slot for handling when the package loads
-void OpenMobileScenePackage::packageLoaded(Error e)
+void OpenMobileScenePackage::setSceneToView()
 {
-  if (!e.isEmpty())
-  {
-    qDebug() << QString("Package load error: %1 %2").arg(e.message(), e.additionalMessage());
+  if (!m_scene || !m_sceneView)
     return;
-  }
-
-  if (m_scenePackage->scenes().length() < 1)
-    return;
-
-  // obtain the first scene in the list of scenes
-  Scene* scene = m_scenePackage->scenes().at(0);
 
   // set the scene on the scene view to display
-  m_sceneView->setArcGISScene(scene);
-}
-
-// create scene package and connect to signals
-void OpenMobileScenePackage::createScenePackage(const QString& path)
-{
-  m_scenePackage = new MobileScenePackage(path, this);
-  connect(m_scenePackage, &MobileScenePackage::doneLoading, this, &OpenMobileScenePackage::packageLoaded);
-  m_scenePackage->load();
+  m_sceneView->setArcGISScene(m_scene);
 }
