@@ -47,10 +47,10 @@ class ReadGeoPackage : public QQuickItem
 
 public:
   explicit ReadGeoPackage(QQuickItem* parent = nullptr);
-  ~ReadGeoPackage() = default;
+  ~ReadGeoPackage() override = default;
 
   void readGeoPackage();
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
 
   static void init();
 

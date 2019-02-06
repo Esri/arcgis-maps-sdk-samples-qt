@@ -36,7 +36,7 @@ class AddIntegratedMeshLayer : public QObject
 
 public:
   explicit AddIntegratedMeshLayer(QObject* parent = nullptr);
-  ~AddIntegratedMeshLayer();
+  ~AddIntegratedMeshLayer() override;
 
   static void init();
 

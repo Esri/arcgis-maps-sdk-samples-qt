@@ -41,9 +41,9 @@ class DisplayLayerViewDrawState : public QQuickItem
 
 public:
   explicit DisplayLayerViewDrawState(QQuickItem* parent = nullptr);
-  ~DisplayLayerViewDrawState();
+  ~DisplayLayerViewDrawState() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:
@@ -69,10 +69,11 @@ class DisplayItem : public QObject
   Q_OBJECT
   Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
   Q_PROPERTY(QString status READ status WRITE setStatus NOTIFY statusChanged)
+
 public:
   DisplayItem(QObject* parent = nullptr);
-
   DisplayItem(const QString& name, const QString& status, QObject* parent = nullptr);
+  ~DisplayItem() override;
 
   void setName(const QString& name);
   QString name() const;

@@ -45,7 +45,7 @@ class FormatCoordinates : public QObject
 
 public:
   explicit FormatCoordinates(QObject* parent = nullptr);
-  ~FormatCoordinates();
+  ~FormatCoordinates() override;
 
   static void init();
   Q_INVOKABLE void handleTextUpdate(QString textType, QString text);

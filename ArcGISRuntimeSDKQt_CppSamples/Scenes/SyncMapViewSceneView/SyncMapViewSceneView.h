@@ -40,7 +40,7 @@ class SyncMapViewSceneView : public QObject
 
 public:
   explicit SyncMapViewSceneView(QObject* parent = nullptr);
-  ~SyncMapViewSceneView();
+  ~SyncMapViewSceneView() override;
 
   static void init();
 

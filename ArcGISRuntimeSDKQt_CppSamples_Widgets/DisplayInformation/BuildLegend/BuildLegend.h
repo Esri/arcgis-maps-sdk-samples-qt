@@ -39,7 +39,7 @@ class BuildLegend : public QWidget
 
 public:
   explicit BuildLegend(QWidget* parent = nullptr);
-  ~BuildLegend();
+  ~BuildLegend() override;
 
 private:
   void addLayers();

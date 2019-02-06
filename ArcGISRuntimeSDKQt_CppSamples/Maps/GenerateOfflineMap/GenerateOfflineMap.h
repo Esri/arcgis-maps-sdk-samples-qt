@@ -40,9 +40,9 @@ class GenerateOfflineMap : public QQuickItem
 
 public:
   explicit GenerateOfflineMap(QQuickItem* parent = nullptr);
-  ~GenerateOfflineMap() = default;
+  ~GenerateOfflineMap() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 public:

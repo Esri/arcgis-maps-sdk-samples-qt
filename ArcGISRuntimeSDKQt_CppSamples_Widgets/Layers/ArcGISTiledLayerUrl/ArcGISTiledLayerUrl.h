@@ -34,7 +34,7 @@ class ArcGISTiledLayerUrl : public QWidget
 
 public:
   explicit ArcGISTiledLayerUrl(QWidget* parent = nullptr);
-  ~ArcGISTiledLayerUrl();
+  ~ArcGISTiledLayerUrl() override;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

@@ -37,7 +37,7 @@ class SearchDictionarySymbolStyle : public QQuickItem
 
 public:
   explicit SearchDictionarySymbolStyle(QQuickItem* parent = nullptr);
-  ~SearchDictionarySymbolStyle();
+  ~SearchDictionarySymbolStyle() override;
 
   enum class FieldEnum {
     FieldNames,
@@ -48,7 +48,7 @@ public:
   };
   Q_ENUM(FieldEnum)
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void search(const QStringList& namesSearchParam, const QStringList& tagsSearchParam,
                           const QStringList& classesSearchParam,const QStringList& categoriesSearchParam,

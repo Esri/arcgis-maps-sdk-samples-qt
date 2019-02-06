@@ -37,9 +37,9 @@ class FeatureLayerRenderingModeMap : public QQuickItem
 
 public:
   explicit FeatureLayerRenderingModeMap(QQuickItem* parent = nullptr);
-  ~FeatureLayerRenderingModeMap() = default;
+  ~FeatureLayerRenderingModeMap() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
   Q_INVOKABLE void startAnimation();

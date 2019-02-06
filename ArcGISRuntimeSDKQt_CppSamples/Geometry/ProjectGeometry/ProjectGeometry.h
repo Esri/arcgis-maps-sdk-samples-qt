@@ -37,11 +37,11 @@ class ProjectGeometry : public QQuickItem
 
 public:
   explicit ProjectGeometry(QQuickItem* parent = nullptr);
-  ~ProjectGeometry() = default;
+  ~ProjectGeometry() override = default;
 
   Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData MEMBER m_calloutData NOTIFY calloutDataChanged)
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:

@@ -23,7 +23,7 @@ class MapImageProvider : public QQuickImageProvider
 
 public:
   MapImageProvider();
-  ~MapImageProvider() = default;
+  ~MapImageProvider() override = default;
 
 public:
   QImage requestImage(const QString& id, QSize* size, const QSize& requestedSize) override;

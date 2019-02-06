@@ -34,7 +34,7 @@ class ChangeViewpoint : public QWidget
 
 public:
   explicit ChangeViewpoint(QWidget* parent = nullptr);
-  ~ChangeViewpoint();
+  ~ChangeViewpoint() override;
 
 private slots:
   void changeToNewViewpoint(int);

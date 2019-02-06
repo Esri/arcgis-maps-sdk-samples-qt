@@ -55,7 +55,7 @@ class Animate3DSymbols : public QQuickItem
 
 public:
   Animate3DSymbols(QQuickItem* parent = nullptr);
-  ~Animate3DSymbols();
+  ~Animate3DSymbols() override;
 
   void componentComplete() override;
   static void init();

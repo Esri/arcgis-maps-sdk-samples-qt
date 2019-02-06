@@ -33,9 +33,9 @@ class OpenScene : public QQuickItem
 
 public:
   explicit OpenScene(QQuickItem* parent = nullptr);
-  ~OpenScene() = default;
+  ~OpenScene() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

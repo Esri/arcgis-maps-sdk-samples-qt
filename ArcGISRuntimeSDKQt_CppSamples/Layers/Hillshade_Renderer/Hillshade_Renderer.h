@@ -34,9 +34,9 @@ class Hillshade_Renderer : public QQuickItem
 
 public:
   explicit Hillshade_Renderer(QQuickItem* parent = nullptr);
-  ~Hillshade_Renderer();
+  ~Hillshade_Renderer() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void applyHillshadeRenderer(double altitude, double azimuth, int slope);
 

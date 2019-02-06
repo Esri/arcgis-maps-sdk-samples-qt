@@ -38,10 +38,10 @@ class SpatialOperations : public QQuickItem
 
 public:
   explicit SpatialOperations(QQuickItem* parent = nullptr);
-  ~SpatialOperations() = default;
+  ~SpatialOperations() override = default;
 
   static void init();
-  void componentComplete() Q_DECL_OVERRIDE;  
+  void componentComplete() override;  
   Q_INVOKABLE void applyGeometryOperation(int index);
 
 signals:

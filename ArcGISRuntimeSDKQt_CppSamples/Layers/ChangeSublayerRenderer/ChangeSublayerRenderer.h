@@ -38,9 +38,9 @@ class ChangeSublayerRenderer : public QQuickItem
 
 public:
   explicit ChangeSublayerRenderer(QQuickItem* parent = nullptr);
-  ~ChangeSublayerRenderer() = default;
+  ~ChangeSublayerRenderer() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void applyRenderer();
   Q_INVOKABLE void resetRenderer();
