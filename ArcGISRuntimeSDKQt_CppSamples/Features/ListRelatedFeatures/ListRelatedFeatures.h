@@ -39,9 +39,9 @@ class ListRelatedFeatures : public QQuickItem
 
 public:
   explicit ListRelatedFeatures(QQuickItem* parent = nullptr);
-  ~ListRelatedFeatures() = default;
+  ~ListRelatedFeatures() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:

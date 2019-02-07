@@ -36,7 +36,7 @@ class ViewPointCloudDataOffline : public QObject
 
 public:
   explicit ViewPointCloudDataOffline(QObject* parent = nullptr);
-  ~ViewPointCloudDataOffline();
+  ~ViewPointCloudDataOffline() override;
 
   static void init();
 

@@ -34,9 +34,9 @@ class ShowLabelsOnLayers : public QQuickItem
 
 public:
   explicit ShowLabelsOnLayers(QQuickItem* parent = nullptr);
-  ~ShowLabelsOnLayers() = default;
+  ~ShowLabelsOnLayers() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

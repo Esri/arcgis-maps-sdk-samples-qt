@@ -36,11 +36,11 @@ class RasterColormapRenderer : public QQuickItem
 
 public:
   explicit RasterColormapRenderer(QQuickItem* parent = nullptr);
-  ~RasterColormapRenderer();
+  ~RasterColormapRenderer() override;
 
   static void init();
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
 
 private:
   Esri::ArcGISRuntime::ColormapRenderer* createRenderer();

@@ -40,7 +40,7 @@ class LineOfSightGeoElement : public QObject
 
 public:
     explicit LineOfSightGeoElement(QObject* parent = nullptr);
-    ~LineOfSightGeoElement();
+    ~LineOfSightGeoElement() override;
 
     static void init();
 
@@ -67,9 +67,9 @@ private:
     Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 
     QTimer m_animation;
-    std::size_t m_waypointIndex { 0 };
-    Esri::ArcGISRuntime::Graphic* m_taxi { nullptr };
-    Esri::ArcGISRuntime::Graphic* m_observer { nullptr };
+    std::size_t m_waypointIndex = 0;
+    Esri::ArcGISRuntime::Graphic* m_taxi = nullptr;
+    Esri::ArcGISRuntime::Graphic* m_observer = nullptr;
 
     QString m_dataPath;
 };

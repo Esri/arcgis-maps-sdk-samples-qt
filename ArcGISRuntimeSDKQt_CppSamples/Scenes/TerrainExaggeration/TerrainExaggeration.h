@@ -34,9 +34,9 @@ class TerrainExaggeration : public QQuickItem
 
 public:
   explicit TerrainExaggeration(QQuickItem* parent = nullptr);
-  ~TerrainExaggeration() = default;
+  ~TerrainExaggeration() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void setElevationExaggeration(double factor);
 

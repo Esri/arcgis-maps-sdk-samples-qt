@@ -34,9 +34,9 @@ class TimeBasedQuery : public QQuickItem
 
 public:
   explicit TimeBasedQuery(QQuickItem* parent = nullptr);
-  ~TimeBasedQuery() = default;
+  ~TimeBasedQuery() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

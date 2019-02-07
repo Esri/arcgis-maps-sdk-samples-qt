@@ -52,9 +52,9 @@ class OfflineGeocode : public QQuickItem
 
 public:
   explicit OfflineGeocode(QQuickItem* parent = nullptr);
-  ~OfflineGeocode();
+  ~OfflineGeocode() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void geocodeWithSuggestion(int index);
   Q_INVOKABLE void geocodeWithText(const QString& address);

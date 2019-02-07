@@ -59,7 +59,7 @@ void ListTransformations::componentComplete()
     if (e.isEmpty())
       return;
 
-    emit showStatusBar(QString("Error setting projection engine directory: %1. %2").arg(e.message()).arg(e.additionalMessage()));
+    emit showStatusBar(QString("Error setting projection engine directory: %1. %2").arg(e.message(), e.additionalMessage()));
   });
 
 

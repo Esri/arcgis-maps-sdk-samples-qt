@@ -34,9 +34,9 @@ class MinMaxScale : public QQuickItem
 
 public:
   explicit MinMaxScale(QQuickItem* parent = nullptr);
-  ~MinMaxScale() = default;
+  ~MinMaxScale() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

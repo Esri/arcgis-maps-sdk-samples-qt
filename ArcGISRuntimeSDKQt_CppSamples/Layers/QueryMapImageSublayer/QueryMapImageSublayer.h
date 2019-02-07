@@ -41,9 +41,9 @@ class QueryMapImageSublayer : public QQuickItem
 
 public:
   explicit QueryMapImageSublayer(QQuickItem* parent = nullptr);
-  ~QueryMapImageSublayer() = default;
+  ~QueryMapImageSublayer() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void query(const QString& whereClause);
 

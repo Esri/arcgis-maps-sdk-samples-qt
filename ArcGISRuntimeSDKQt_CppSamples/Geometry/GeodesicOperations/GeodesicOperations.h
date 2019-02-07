@@ -39,9 +39,9 @@ class GeodesicOperations : public QQuickItem
 
 public:
   explicit GeodesicOperations(QQuickItem* parent = nullptr);
-  ~GeodesicOperations() = default;
+  ~GeodesicOperations() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:

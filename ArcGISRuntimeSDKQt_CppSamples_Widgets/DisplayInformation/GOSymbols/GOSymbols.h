@@ -35,7 +35,7 @@ class GOSymbols : public QWidget
 
 public:
   explicit GOSymbols(QWidget* parent = nullptr);
-  ~GOSymbols();
+  ~GOSymbols() override;
 
 private:
   void addBuoyPoints(Esri::ArcGISRuntime::GraphicsOverlay* graphicsOverlay);

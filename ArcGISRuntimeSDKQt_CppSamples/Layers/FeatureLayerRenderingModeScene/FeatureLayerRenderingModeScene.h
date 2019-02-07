@@ -37,9 +37,9 @@ class FeatureLayerRenderingModeScene : public QQuickItem
 
 public:
   explicit FeatureLayerRenderingModeScene(QQuickItem* parent = nullptr);
-  ~FeatureLayerRenderingModeScene() = default;
+  ~FeatureLayerRenderingModeScene() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
   Q_INVOKABLE void startAnimation();

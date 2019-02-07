@@ -37,9 +37,9 @@ class TokenAuthentication : public QQuickItem
 
 public:
   explicit TokenAuthentication(QQuickItem* parent = nullptr);
-  ~TokenAuthentication();
+  ~TokenAuthentication() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void loadSecuredLayer();
 

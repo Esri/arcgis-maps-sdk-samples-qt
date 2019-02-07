@@ -38,9 +38,9 @@ class CutGeometry : public QQuickItem
 
 public:
   explicit CutGeometry(QQuickItem* parent = nullptr);
-  ~CutGeometry() = default;
+  ~CutGeometry() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void cutPolygon();
 

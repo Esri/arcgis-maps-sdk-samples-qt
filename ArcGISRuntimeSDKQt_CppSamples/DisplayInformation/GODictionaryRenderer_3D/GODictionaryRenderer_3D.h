@@ -41,9 +41,9 @@ class GODictionaryRenderer_3D : public QQuickItem
 
 public:
   explicit GODictionaryRenderer_3D(QQuickItem* parent = nullptr);
-  ~GODictionaryRenderer_3D();
+  ~GODictionaryRenderer_3D() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:

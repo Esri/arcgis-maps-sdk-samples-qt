@@ -34,7 +34,7 @@ class SetMapSpatialReference : public QWidget
 
 public:
   explicit SetMapSpatialReference(QWidget* parent = nullptr);
-  ~SetMapSpatialReference();
+  ~SetMapSpatialReference() override;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

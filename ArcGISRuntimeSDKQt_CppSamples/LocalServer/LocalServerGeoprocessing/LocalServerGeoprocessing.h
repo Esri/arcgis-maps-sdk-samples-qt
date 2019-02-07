@@ -41,7 +41,7 @@ class LocalServerGeoprocessing : public QQuickItem
 
 public:
   explicit LocalServerGeoprocessing(QQuickItem* parent = nullptr);
-  ~LocalServerGeoprocessing();
+  ~LocalServerGeoprocessing() override;
 
   void componentComplete() override;
 
@@ -63,7 +63,7 @@ private:
   Esri::ArcGISRuntime::GeoprocessingTask* m_gpTask = nullptr;
 
   bool isReady() { return m_isReady; }
-  double m_isReady = false;
+  bool m_isReady = false;
 };
 
 #endif // LOCAL_SERVER_GEOPROCESSING_H

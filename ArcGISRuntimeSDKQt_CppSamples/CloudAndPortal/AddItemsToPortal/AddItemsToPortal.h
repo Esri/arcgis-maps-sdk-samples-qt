@@ -44,9 +44,9 @@ class AddItemsToPortal : public QQuickItem
 
 public:
   explicit AddItemsToPortal(QQuickItem* parent = nullptr);
-  ~AddItemsToPortal();
+  ~AddItemsToPortal() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
   Q_INVOKABLE void authenticatePortal();

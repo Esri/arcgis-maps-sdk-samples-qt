@@ -35,9 +35,9 @@ class OpenMapUrl : public QQuickItem
 
 public:
   explicit OpenMapUrl(QQuickItem* parent = nullptr);
-  ~OpenMapUrl();
+  ~OpenMapUrl() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void openMap(const QString& itemId);
 

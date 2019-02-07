@@ -37,7 +37,7 @@ class OpenExistingMap : public QWidget
 
 public:
   explicit OpenExistingMap(QWidget* parent = nullptr);
-  ~OpenExistingMap();
+  ~OpenExistingMap() override;
 
 private:
   void createUi();
@@ -47,7 +47,7 @@ private:
   Esri::ArcGISRuntime::MapGraphicsView* m_mapView = nullptr;
   QPushButton* m_button = nullptr;
   QInputDialog* m_inputDialog = nullptr;
-  QMap<QString, QString > m_portalIds;
+  QMap<QString, QString> m_portalIds;
 
 };
 

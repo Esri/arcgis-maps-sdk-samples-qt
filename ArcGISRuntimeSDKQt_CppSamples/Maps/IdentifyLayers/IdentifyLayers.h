@@ -35,9 +35,9 @@ class IdentifyLayers : public QQuickItem
 
 public:
   explicit IdentifyLayers(QQuickItem* parent = nullptr);
-  ~IdentifyLayers() = default;
+  ~IdentifyLayers() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   QString message() const { return m_message; }
 

@@ -35,9 +35,9 @@ class StatisticalQuery : public QQuickItem
 
 public:
   explicit StatisticalQuery(QQuickItem* parent = nullptr);
-  ~StatisticalQuery() = default;
+  ~StatisticalQuery() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
   Q_INVOKABLE void queryStatistics(bool extentOnly, bool bigCitiesOnly);

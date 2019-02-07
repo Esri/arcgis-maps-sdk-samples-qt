@@ -34,9 +34,9 @@ class WMTS_Layer : public QQuickItem
 
 public:
   explicit WMTS_Layer(QQuickItem* parent = nullptr);
-  ~WMTS_Layer() = default;
+  ~WMTS_Layer() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

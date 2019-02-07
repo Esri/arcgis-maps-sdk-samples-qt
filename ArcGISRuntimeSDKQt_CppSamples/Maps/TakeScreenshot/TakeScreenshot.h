@@ -38,9 +38,9 @@ class TakeScreenshot : public QQuickItem
 
 public:
   explicit TakeScreenshot(QQuickItem* parent = nullptr);
-  ~TakeScreenshot() = default;
+  ~TakeScreenshot() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void captureScreenshot();
 

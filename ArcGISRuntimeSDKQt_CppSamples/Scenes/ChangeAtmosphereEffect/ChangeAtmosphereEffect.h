@@ -44,7 +44,7 @@ public:
   Q_ENUM(AtmosphereEnum)
 
   explicit ChangeAtmosphereEffect(QObject* parent = nullptr);
-  ~ChangeAtmosphereEffect();
+  ~ChangeAtmosphereEffect() override;
 
   static void init();
 

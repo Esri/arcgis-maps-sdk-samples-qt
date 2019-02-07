@@ -38,7 +38,7 @@ class ManageBookmarks : public QWidget
 
 public:
   explicit ManageBookmarks(QWidget* parent = nullptr);
-  ~ManageBookmarks();
+  ~ManageBookmarks() override;
 
 private:
   void createUi();

@@ -34,9 +34,9 @@ class ArcGISTiledLayerUrl : public QQuickItem
 
 public:
   explicit ArcGISTiledLayerUrl(QQuickItem* parent = nullptr);
-  ~ArcGISTiledLayerUrl();
+  ~ArcGISTiledLayerUrl() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:
@@ -45,4 +45,3 @@ private:
 };
 
 #endif // ARCGIS_TILED_LAYER_URL_H
-

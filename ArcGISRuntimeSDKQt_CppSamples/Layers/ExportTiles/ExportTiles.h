@@ -38,9 +38,9 @@ class ExportTiles : public QQuickItem
 
 public:
   explicit ExportTiles(QQuickItem* parent = nullptr);
-  ~ExportTiles();
+  ~ExportTiles() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2, QString dataPath);
 
@@ -60,4 +60,3 @@ private:
 };
 
 #endif // EXPORT_TILES
-

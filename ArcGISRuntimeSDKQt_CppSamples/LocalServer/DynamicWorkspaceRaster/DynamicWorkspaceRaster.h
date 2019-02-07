@@ -35,9 +35,9 @@ class DynamicWorkspaceRaster : public QQuickItem
 
 public:
   explicit DynamicWorkspaceRaster(QQuickItem* parent = nullptr);
-  ~DynamicWorkspaceRaster() = default;
+  ~DynamicWorkspaceRaster() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void startLocalService(const QString& filePath, const QString& folder);
 

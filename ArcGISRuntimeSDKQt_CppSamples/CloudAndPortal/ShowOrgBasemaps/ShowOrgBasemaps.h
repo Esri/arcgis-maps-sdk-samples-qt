@@ -44,9 +44,9 @@ class ShowOrgBasemaps : public QQuickItem
 
 public:
   explicit ShowOrgBasemaps(QQuickItem* parent = nullptr);
-  ~ShowOrgBasemaps();
+  ~ShowOrgBasemaps() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
   Esri::ArcGISRuntime::AuthenticationManager* authManager() const;

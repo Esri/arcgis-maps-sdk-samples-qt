@@ -38,7 +38,7 @@ class DisplayKml : public QQuickItem
 
 public:
   explicit DisplayKml(QQuickItem* parent = nullptr);
-  ~DisplayKml();
+  ~DisplayKml() override;
 
   void componentComplete() override;
   static void init();

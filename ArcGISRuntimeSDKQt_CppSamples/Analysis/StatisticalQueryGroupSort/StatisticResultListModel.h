@@ -30,7 +30,7 @@ public:
   };
 
   explicit StatisticResultListModel(QObject* parent = nullptr);
-  ~StatisticResultListModel() = default;
+  ~StatisticResultListModel() override = default;
 
 public:
   void addStatisticResult(const QString& section, const QString& statistic);

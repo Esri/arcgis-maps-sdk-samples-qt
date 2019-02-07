@@ -153,6 +153,8 @@ DisplayItem::DisplayItem(QObject* parent) :
 {
 }
 
+DisplayItem::~DisplayItem() = default;
+
 void DisplayItem::setName(const QString& name)
 {
   m_name = name;

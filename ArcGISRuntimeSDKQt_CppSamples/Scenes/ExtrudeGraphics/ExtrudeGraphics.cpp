@@ -27,8 +27,8 @@
 #include "Polygon.h"
 #include "SimpleFillSymbol.h"
 
-#include "cmath"
-#include "time.h"
+#include <cmath>
+#include <ctime>
 
 using namespace Esri::ArcGISRuntime;
 

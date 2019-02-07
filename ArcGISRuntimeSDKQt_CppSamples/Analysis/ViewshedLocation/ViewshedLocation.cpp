@@ -300,22 +300,22 @@ double ViewshedLocation::heading() const
 void ViewshedLocation::setHeading(double heading)
 {
   if (m_locationViewshed)
-   {
-     if (m_locationViewshed->heading() == heading)
-       return;
+  {
+    if (m_locationViewshed->heading() == heading)
+      return;
 
-     m_heading = heading;
-     m_locationViewshed->setHeading(heading);
-   }
-   else
-   {
-     if (m_heading == heading)
-       return;
+    m_heading = heading;
+    m_locationViewshed->setHeading(heading);
+  }
+  else
+  {
+    if (m_heading == heading)
+      return;
 
-     m_heading = heading;
-   }
+    m_heading = heading;
+  }
 
-   emit headingChanged();
+  emit headingChanged();
 }
 
 double ViewshedLocation::pitch() const

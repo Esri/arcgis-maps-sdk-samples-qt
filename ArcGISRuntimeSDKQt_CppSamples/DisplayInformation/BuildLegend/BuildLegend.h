@@ -39,9 +39,9 @@ class BuildLegend : public QQuickItem
 
 public:
   explicit BuildLegend(QQuickItem* parent = nullptr);
-  ~BuildLegend();
+  ~BuildLegend() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:
