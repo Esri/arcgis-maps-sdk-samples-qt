@@ -100,8 +100,7 @@ void OpenMobileScenePackage::openPackage()
     // otherwise, the package needs to be unpacked
     else
     {
-      m_unpackTempPath = QTemporaryDir().path();
-      MobileScenePackage::unpack(dataPath, m_unpackTempPath);
+      MobileScenePackage::unpack(dataPath, m_unpackTempDir.path());
     }
   });
 
@@ -112,7 +111,7 @@ void OpenMobileScenePackage::openPackage()
     // if the unpack was successful, load the unpacked package
     if (success)
     {
-      createScenePackage(m_unpackTempPath);
+      createScenePackage(m_unpackTempDir.path());
     }
     // log that the upack failed
     else

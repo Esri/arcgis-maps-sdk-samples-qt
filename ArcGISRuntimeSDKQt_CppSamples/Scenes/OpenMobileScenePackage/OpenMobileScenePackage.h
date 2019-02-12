@@ -29,6 +29,7 @@ class MobileScenePackage;
 
 #include "Error.h"
 #include <QObject>
+#include <QTemporaryDir>
 
 class OpenMobileScenePackage : public QObject
 {
@@ -58,8 +59,8 @@ private:
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-  Esri::ArcGISRuntime::MobileScenePackage* m_scenePackage = nullptr;
-  QString m_unpackTempPath;
+  Esri::ArcGISRuntime::MobileScenePackage* m_scenePackage = nullptr;  
+  QTemporaryDir m_unpackTempDir;
 };
 
 #endif // OPENMOBILESCENEPACKAGE_H
