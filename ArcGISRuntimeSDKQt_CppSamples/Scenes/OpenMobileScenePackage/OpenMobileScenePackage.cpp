@@ -1,6 +1,6 @@
 // [WriteFile Name=OpenMobileScenePackage, Category=Scenes]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,13 +30,6 @@
 
 using namespace Esri::ArcGISRuntime;
 
-OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
-  QObject(parent)
-{  
-}
-
-OpenMobileScenePackage::~OpenMobileScenePackage() = default;
-
 // helper method to get cross platform data path
 namespace {
   QString defaultDataPath()
@@ -54,6 +47,64 @@ namespace {
     return dataPath;
   }
 }
+
+OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
+  QObject(parent)
+{  
+
+  // create the MSPK data path
+  // data is downloaded automatically by the sample viewer app. Instructions to download
+  // seperately are specified in the readme.
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
+
+  // connect to the Mobile Scene Package instance to determine if direct read is supported. Packages
+  // that contain raster data cannot be read directly and must be unpacked first.
+  connect(MobileScenePackage::instance(), &MobileScenePackage::isDirectReadSupportedCompleted,
+          this, [this, dataPath](QUuid, bool supported)
+  {
+    // if direct read is supported, load the package
+    if (supported)
+    {
+      createScenePackage(dataPath);
+    }
+    // otherwise, the package needs to be unpacked
+    else
+    {
+      MobileScenePackage::unpack(dataPath, m_unpackTempDir.path());
+    }
+  });
+
+  // connect to the Mobile Scene Package instance to know when the data is unpacked
+  connect(MobileScenePackage::instance(), &MobileScenePackage::unpackCompleted,
+          this, [this](QUuid, bool success)
+  {
+    // if the unpack was successful, load the unpacked package
+    if (success)
+    {
+      createScenePackage(m_unpackTempDir.path());
+    }
+    // log that the upack failed
+    else
+    {
+      qDebug() << "failed to unpack";
+    }
+  });
+
+  // connect to the Mobile Scene Package instance to know when errors occur
+  connect(MobileScenePackage::instance(), &MobileScenePackage::errorOccurred,
+          [](Error e)
+  {
+    if (e.isEmpty())
+      return;
+
+    qDebug() << QString("Error: %1 %2").arg(e.message(), e.additionalMessage());
+  });
+
+  // Check if the MSPK can be read directly
+  MobileScenePackage::isDirectReadSupported(dataPath);
+}
+
+OpenMobileScenePackage::~OpenMobileScenePackage() = default;
 
 void OpenMobileScenePackage::init()
 {
@@ -77,51 +128,11 @@ void OpenMobileScenePackage::setSceneView(SceneQuickView* sceneView)
 
   m_sceneView = sceneView;
 
-  openPackage();
+  // set the scene on the scene view to display
+  if (m_scene && m_sceneView)
+    m_sceneView->setArcGISScene(m_scene);
 
   emit sceneViewChanged();
-}
-
-// Open a mobile scene package
-void OpenMobileScenePackage::openPackage()
-{
-  // create the MSPK data path
-  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
-
-  // connect to the Mobile Scene Package to determine if direct read is supported
-  connect(MobileScenePackage::instance(), &MobileScenePackage::isDirectReadSupportedCompleted,
-          this, [this, dataPath](QUuid, bool supported)
-  {
-    // if direct read is supported, load the package
-    if (supported)
-    {
-      createScenePackage(dataPath);
-    }
-    // otherwise, the package needs to be unpacked
-    else
-    {
-      MobileScenePackage::unpack(dataPath, m_unpackTempDir.path());
-    }
-  });
-
-  // connect to the Mobile Scene Package to know when the data is unpacked
-  connect(MobileScenePackage::instance(), &MobileScenePackage::unpackCompleted,
-          this, [this](QUuid, bool success)
-  {
-    // if the unpack was successful, load the unpacked package
-    if (success)
-    {
-      createScenePackage(m_unpackTempDir.path());
-    }
-    // log that the upack failed
-    else
-    {
-      qDebug() << "failed to unpack";
-    }
-  });
-
-  // Check if the MSPK can be read directly
-  MobileScenePackage::isDirectReadSupported(dataPath);
 }
 
 // Slot for handling when the package loads
@@ -133,14 +144,16 @@ void OpenMobileScenePackage::packageLoaded(Error e)
     return;
   }
 
-  if (m_scenePackage->scenes().length() < 1)
+  if (m_scenePackage->scenes().isEmpty())
     return;
 
-  // obtain the first scene in the list of scenes
-  Scene* scene = m_scenePackage->scenes().at(0);
+  // The package contains a list of scenes that could be show in a UI for selection.
+  // For simplicity, obtain the first scene in the list of scenes
+  m_scene = m_scenePackage->scenes().at(0);
 
   // set the scene on the scene view to display
-  m_sceneView->setArcGISScene(scene);
+  if (m_scene && m_sceneView)
+    m_sceneView->setArcGISScene(m_scene);
 }
 
 // create scene package and connect to signals

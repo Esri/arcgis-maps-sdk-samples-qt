@@ -43,9 +43,6 @@ public:
 
   static void init();
 
-private:
-  void openPackage();
-
 private slots:
   void packageLoaded(Esri::ArcGISRuntime::Error e);
 
