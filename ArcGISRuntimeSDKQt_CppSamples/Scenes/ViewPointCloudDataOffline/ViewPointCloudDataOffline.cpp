@@ -55,19 +55,22 @@ SceneQuickView* ViewPointCloudDataOffline::sceneView() const
   return m_sceneView;
 }
 
-QString defaultHomePath()
-{
-  QString homePath;
+// helper method to get cross platform data path
+namespace {
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
-#ifdef Q_OS_ANDROID
-  homePath = "/sdcard";
-#elif defined Q_OS_IOS
-  homePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-#else
-  homePath = QDir::homePath();
-#endif
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
 
-  return homePath;
+    return dataPath;
+  }
 }
 
 // Set the view (created in QML)
@@ -82,7 +85,7 @@ void ViewPointCloudDataOffline::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setArcGISScene(m_scene);
 
   // create the point cloud layer
-  const QUrl pointCloudLyrUrl(defaultHomePath() + "/ArcGIS/Runtime/Data/slpk/sandiego-north-balboa-pointcloud.slpk");
+  const QUrl pointCloudLyrUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/slpk/sandiego-north-balboa-pointcloud.slpk");
   PointCloudLayer* pointCloudLyr = new PointCloudLayer(pointCloudLyrUrl, this);
 
   // zoom to layer once loaded

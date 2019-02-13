@@ -51,14 +51,14 @@ Rectangle {
                     z: 2104.901239
                     spatialReference: SpatialReference { wkid: 4326 }
                 }
-                targetScale: initPt.z
+                targetScale: 2104
 
                 Camera {
                     location: initPt
                     heading: 315.50368761552056
                     pitch: 78.09465920130114
                     roll: 0
-                    distance: initPt.z
+                    distance: 2104
                 }
             }
         }
