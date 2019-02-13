@@ -46,7 +46,7 @@ namespace {
 
     return dataPath;
   }
-}
+} // namespace
 
 OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
   QObject(parent)
