@@ -233,9 +233,9 @@ void GenerateOfflineMap_Overrides::setHydrantWhereClause(const QString& whereCla
 
   // Set the whereClause on the required layer option.
   QList<GenerateLayerOption> layerOptions = generateGdbParam.layerOptions();
-  for (auto it = layerOptions.begin(); it != layerOptions.end(); ++it)
+  for (auto& it : layerOptions)
   {
-    GenerateLayerOption& option = *it;
+      GenerateLayerOption& option = it;
     if (option.layerId() == targetLayerId)
     {
       option.setWhereClause(whereClause);
@@ -287,9 +287,9 @@ void GenerateOfflineMap_Overrides::setClipWaterPipesAOI(bool clip)
   // Set whether to use the geometry filter to clip the waterpipes.
   // If not then we get all the features.
   QList<GenerateLayerOption> layerOptions = generateGdbParam.layerOptions();
-  for (auto it = layerOptions.begin(); it != layerOptions.end(); ++it)
+  for (auto& it : layerOptions)
   {
-    GenerateLayerOption& option = *it;
+    GenerateLayerOption& option = it;
     if (option.layerId() == targetLayerId)
     {
       option.setUseGeometry(clip);
@@ -340,9 +340,9 @@ void GenerateOfflineMap_Overrides::takeMapOffline(const QString& dataPath)
       {
         QString layerErrors = "";
         const QMap<Layer*, Error>& layerErrorsMap = generateJob->result()->layerErrors();
-        for (auto it = layerErrorsMap.cbegin(); it != layerErrorsMap.cend(); ++it)
+        for (const auto& it : layerErrorsMap.toStdMap())
         {
-          layerErrors += it.key()->name() + ": " + it.value().message() + "\n";
+          layerErrors += it.first->name() + ": " + it.second.message() + "\n";
         }
         emit showLayerErrors(layerErrors);
       }

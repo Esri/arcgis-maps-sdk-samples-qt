@@ -106,17 +106,17 @@ void StatisticalQueryGroupSort::connectSignals()
       // get the group string
       QStringList sectionStrings;
       const QVariantMap& groupsMap = record->group();
-      for (auto it = groupsMap.cbegin(); it != groupsMap.cend(); ++it)
+      for (const auto& it : groupsMap.toStdMap() )
       {
-        sectionStrings << QString("\"%1\":\"%2\"").arg(it.key(), it.value().toString());
+          sectionStrings << QString("\"%1\":\"%2\"").arg(it.first, it.second.toString());
       }
       const QString sectionString = sectionStrings.join(',');
 
       // obtain the statistics
       const QVariantMap& statsMap = record->statistics();
-      for (auto it = statsMap.cbegin(); it != statsMap.cend(); ++it)
+      for (const auto& it : statsMap.toStdMap())
       {
-        QString statString = QString("%1: %2").arg(it.key(), it.value().toString());
+        QString statString = QString("%1: %2").arg(it.first, it.second.toString());
         addResultToModel(sectionString, statString);
       }
     }

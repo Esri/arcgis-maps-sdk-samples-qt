@@ -177,7 +177,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   {
     // create a polyline representing the route for the mission
     PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);
-    for(int i = 0; i < missionSize(); ++i)
+    for (int i = 0; i < missionSize(); ++i)
     {
       const MissionData::DataPoint& dp = m_missionData->dataAt(i);
       routeBldr->addPoint(dp.m_pos);
