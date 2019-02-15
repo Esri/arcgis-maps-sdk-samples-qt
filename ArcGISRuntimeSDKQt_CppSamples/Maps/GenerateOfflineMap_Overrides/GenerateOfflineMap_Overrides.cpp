@@ -235,7 +235,7 @@ void GenerateOfflineMap_Overrides::setHydrantWhereClause(const QString& whereCla
   QList<GenerateLayerOption> layerOptions = generateGdbParam.layerOptions();
   for (auto& it : layerOptions)
   {
-      GenerateLayerOption& option = it;
+    GenerateLayerOption& option = it;
     if (option.layerId() == targetLayerId)
     {
       option.setWhereClause(whereClause);
