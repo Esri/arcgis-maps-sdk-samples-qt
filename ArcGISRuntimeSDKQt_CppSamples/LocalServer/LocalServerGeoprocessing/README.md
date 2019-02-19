@@ -59,3 +59,5 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 Link | Local Location
 ---------|-------|
 |[Contour geoprocessing package](https://www.arcgis.com/home/item.html?id=da9e565a52ca41c1937cff1a01017068)| `<userhome>`/ArcGIS/Runtime/Data/gpk/Contour.gpk |
+|[Raster Hillshade TPK](https://www.arcgis.com/home/item.html?id=f7c7b4a30fb9415896ba0d1921fe014b)| `<userhome>`/ArcGIS/Runtime/Data/tpk/RasterHillshade.tpk |
+
