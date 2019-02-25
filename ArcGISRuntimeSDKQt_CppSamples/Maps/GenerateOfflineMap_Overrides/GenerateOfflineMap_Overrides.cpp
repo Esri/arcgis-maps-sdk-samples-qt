@@ -340,9 +340,9 @@ void GenerateOfflineMap_Overrides::takeMapOffline(const QString& dataPath)
       {
         QString layerErrors = "";
         const QMap<Layer*, Error>& layerErrorsMap = generateJob->result()->layerErrors();
-        for (const auto& it : layerErrorsMap.toStdMap())
+        for (auto it = layerErrorsMap.cbegin(); it != layerErrorsMap.cend(); ++it)
         {
-          layerErrors += it.first->name() + ": " + it.second.message() + "\n";
+          layerErrors += it.key()->name() + ": " + it.value().message() + "\n";
         }
         emit showLayerErrors(layerErrors);
       }
