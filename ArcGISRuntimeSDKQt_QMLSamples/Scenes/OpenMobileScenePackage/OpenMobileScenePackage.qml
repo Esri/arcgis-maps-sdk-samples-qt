@@ -57,7 +57,7 @@ Rectangle {
         }
 
         onErrorChanged: {
-            console.log("Mobile Map Package Error: %1 %2".arg(error.message).arg(error.additionalMessage));
+            console.log("Mobile Scene Package Error: %1 %2".arg(error.message).arg(error.additionalMessage));
         }
     }
 

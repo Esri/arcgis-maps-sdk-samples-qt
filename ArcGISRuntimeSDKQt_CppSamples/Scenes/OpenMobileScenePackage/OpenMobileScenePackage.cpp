@@ -16,6 +16,7 @@
 
 #include "OpenMobileScenePackage.h"
 
+#include "Error.h"
 #include "MobileScenePackage.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
@@ -136,7 +137,7 @@ void OpenMobileScenePackage::setSceneView(SceneQuickView* sceneView)
 }
 
 // Slot for handling when the package loads
-void OpenMobileScenePackage::packageLoaded(Error e)
+void OpenMobileScenePackage::packageLoaded(const Error& e)
 {
   if (!e.isEmpty())
   {

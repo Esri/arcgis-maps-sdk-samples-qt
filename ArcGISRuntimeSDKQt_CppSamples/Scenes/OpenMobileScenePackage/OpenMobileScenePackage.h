@@ -21,15 +21,17 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Error;
 class Scene;
 class SceneQuickView;
 class MobileScenePackage;
 }
 }
 
-#include "Error.h"
 #include <QObject>
 #include <QTemporaryDir>
+
+
 
 class OpenMobileScenePackage : public QObject
 {
@@ -44,7 +46,7 @@ public:
   static void init();
 
 private slots:
-  void packageLoaded(Esri::ArcGISRuntime::Error e);
+  void packageLoaded(const Esri::ArcGISRuntime::Error& e);
 
 signals:
   void sceneViewChanged();

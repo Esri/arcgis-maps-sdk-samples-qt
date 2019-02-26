@@ -21,12 +21,16 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class Map;
     class MapQuickView;
     class MobileMapPackage;
   }
 }
 
+#include "Error.h"
+
 #include <QQuickItem>
+#include <QTemporaryDir>
 
 class OpenMobileMap_MapPackage : public QQuickItem
 {
@@ -39,9 +43,16 @@ public:
   void componentComplete() override;
   static void init();
 
+private slots:
+  void packageLoaded(Esri::ArcGISRuntime::Error e);
+
 private:
+  void createMapPackage(const QString& path);
+
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage = nullptr;
+  QTemporaryDir m_unpackTempDir;
 };
 
 #endif // OPEN_MOBILE_MAP_MAP_PACKAGE_H

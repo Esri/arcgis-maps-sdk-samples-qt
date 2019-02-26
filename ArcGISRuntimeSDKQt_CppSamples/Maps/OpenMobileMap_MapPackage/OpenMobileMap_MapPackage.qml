@@ -23,8 +23,6 @@ OpenMobileMap_MapPackageSample {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
-
     // add a mapView component
     MapView {
         anchors.fill: parent
