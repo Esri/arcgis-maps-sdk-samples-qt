@@ -21,13 +21,12 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class Error;
     class Map;
     class MapQuickView;
     class MobileMapPackage;
   }
 }
-
-#include "Error.h"
 
 #include <QQuickItem>
 #include <QTemporaryDir>
@@ -44,12 +43,12 @@ public:
   static void init();
 
 private slots:
-  void packageLoaded(Esri::ArcGISRuntime::Error e);
+  void packageLoaded(const Esri::ArcGISRuntime::Error& e);
 
 private:
   void createMapPackage(const QString& path);
+  void setMapToView();
 
-  Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage = nullptr;
   QTemporaryDir m_unpackTempDir;

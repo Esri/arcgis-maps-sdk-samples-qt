@@ -17,6 +17,7 @@
 #include "OpenMobileMap_MapPackage.h"
 
 #include "Basemap.h"
+#include "Error.h"
 #include "MapQuickView.h"
 #include "MobileMapPackage.h"
 
@@ -123,7 +124,7 @@ void OpenMobileMap_MapPackage::componentComplete()
 }
 
 // Slot for handling when the package loads
-void OpenMobileMap_MapPackage::packageLoaded(Error e)
+void OpenMobileMap_MapPackage::packageLoaded(const Error& e)
 {
   if (!e.isEmpty())
   {
@@ -131,20 +132,7 @@ void OpenMobileMap_MapPackage::packageLoaded(Error e)
     return;
   }
 
-  if (m_mobileMapPackage->maps().isEmpty())
-  {
-    return;
-  }
-
-  // The package contains a list of maps that could be shown in the UI for selection.
-  // For simplicity, obtain the first map in the list of maps
-  m_map = m_mobileMapPackage->maps().at(0);
-
-  // set the map on the map view to display
-  if (m_map && m_mapView)
-  {
-    m_mapView->setMap(m_map);
-  }
+  setMapToView();
 }
 
 // create map package and connect to signals
@@ -159,7 +147,7 @@ void OpenMobileMap_MapPackage::createMapPackage(const QString& path)
     if (error.isEmpty())
     {
       // set the map view's map to the first map in the mobile map package
-      m_mapView->setMap(m_mobileMapPackage->maps().at(0));
+      setMapToView();
     }
   });
 
@@ -167,5 +155,23 @@ void OpenMobileMap_MapPackage::createMapPackage(const QString& path)
 
   //! [open mobile map package cpp snippet]
   m_mobileMapPackage->load();
+}
+
+void OpenMobileMap_MapPackage::setMapToView()
+{
+  if (!m_mobileMapPackage || !m_mapView)
+  {
+    return;
+  }
+
+  if (m_mobileMapPackage->maps().isEmpty())
+  {
+    return;
+  }
+
+  // The package contains a list of maps that could be shown in the UI for selection.
+  // For simplicity, obtain the first map in the list of maps
+  // set the map on the map view to display
+  m_mapView->setMap(m_mobileMapPackage->maps().at(0));
 }
 
