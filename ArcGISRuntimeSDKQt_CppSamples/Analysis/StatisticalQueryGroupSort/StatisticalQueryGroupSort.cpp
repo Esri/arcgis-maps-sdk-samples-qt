@@ -108,7 +108,7 @@ void StatisticalQueryGroupSort::connectSignals()
       const QVariantMap& groupsMap = record->group();
       for (auto it = groupsMap.cbegin(); it != groupsMap.cend(); ++it)
       {
-        sectionStrings << QString("\"%1\":\"%2\"").arg(it.key(), it.value().toString());
+          sectionStrings << QString("\"%1\":\"%2\"").arg(it.key(), it.value().toString());
       }
       const QString sectionString = sectionStrings.join(',');
 
@@ -116,7 +116,7 @@ void StatisticalQueryGroupSort::connectSignals()
       const QVariantMap& statsMap = record->statistics();
       for (auto it = statsMap.cbegin(); it != statsMap.cend(); ++it)
       {
-        QString statString = QString("%1: %2").arg(it.key(), it.value().toString());
+        const QString statString = QString("%1: %2").arg(it.key(), it.value().toString());
         addResultToModel(sectionString, statString);
       }
     }
