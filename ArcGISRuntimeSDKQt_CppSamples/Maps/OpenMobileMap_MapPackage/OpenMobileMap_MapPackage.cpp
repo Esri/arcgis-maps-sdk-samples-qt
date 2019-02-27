@@ -52,7 +52,7 @@ OpenMobileMap_MapPackage::OpenMobileMap_MapPackage(QQuickItem* parent) :
 {
   // create the MMPK data path
   // data is downloaded automatically by the sample viewer app. Instructions to download
-  // seperately are specified in the readme.
+  // separately are specified in the readme.
   const QString dataPath = defaultDataPath() + sampleFileYellowstone;
 
   // connect to the Mobile Map Package instance to determine if direct read is supported. Packages
@@ -123,55 +123,35 @@ void OpenMobileMap_MapPackage::componentComplete()
   MobileMapPackage::isDirectReadSupported(dataPath);
 }
 
-// Slot for handling when the package loads
-void OpenMobileMap_MapPackage::packageLoaded(const Error& e)
-{
-  if (!e.isEmpty())
-  {
-    qDebug() << QString("Package load error: %1 %2").arg(e.message(), e.additionalMessage());
-    return;
-  }
-
-  setMapToView();
-}
-
-// create map package and connect to signals
+// create map package
 void OpenMobileMap_MapPackage::createMapPackage(const QString& path)
 {
+  //! [open mobile map package cpp snippet]
   // instatiate a mobile map package
   m_mobileMapPackage = new MobileMapPackage(path, this);
 
   // wait for the mobile map package to load
   connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](Error error)
   {
-    if (error.isEmpty())
+    if (!error.isEmpty())
     {
-      // set the map view's map to the first map in the mobile map package
-      setMapToView();
+      qDebug() << QString("Package load error: %1 %2").arg(error.message(), error.additionalMessage());
+      return;
+    }
+    else
+    {
+      if (!m_mobileMapPackage || !m_mapView || m_mobileMapPackage->maps().isEmpty())
+      {
+        return;
+      }
+
+      // The package contains a list of maps that could be shown in the UI for selection.
+      // For simplicity, obtain the first map in the list of maps.
+      // set the map on the map view to display
+      m_mapView->setMap(m_mobileMapPackage->maps().at(0));
     }
   });
 
-  connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, &OpenMobileMap_MapPackage::packageLoaded);
-
-  //! [open mobile map package cpp snippet]
   m_mobileMapPackage->load();
+  //! [open mobile map package cpp snippet]
 }
-
-void OpenMobileMap_MapPackage::setMapToView()
-{
-  if (!m_mobileMapPackage || !m_mapView)
-  {
-    return;
-  }
-
-  if (m_mobileMapPackage->maps().isEmpty())
-  {
-    return;
-  }
-
-  // The package contains a list of maps that could be shown in the UI for selection.
-  // For simplicity, obtain the first map in the list of maps
-  // set the map on the map view to display
-  m_mapView->setMap(m_mobileMapPackage->maps().at(0));
-}
-

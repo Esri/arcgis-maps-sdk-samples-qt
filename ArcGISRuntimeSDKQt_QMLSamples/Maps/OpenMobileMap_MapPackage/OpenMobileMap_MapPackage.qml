@@ -58,10 +58,9 @@ Rectangle {
         }
 
         onErrorChanged: {
-            console.log("Mobile Scene Package Error: %1 %2".arg(error.message).arg(error.additionalMessage));
+            console.log("Mobile Map Package Error: %1 %2".arg(error.message).arg(error.additionalMessage));
         }
     }
-    //! [open mobile map package qml api snippet]
 
     // Connect to the various signals on MobileMapPackageUtility
     // to determine if direct read is supported and if an unpack
@@ -94,4 +93,5 @@ Rectangle {
             mmpk.load();
         }
     }
+    //! [open mobile map package qml api snippet]
 }

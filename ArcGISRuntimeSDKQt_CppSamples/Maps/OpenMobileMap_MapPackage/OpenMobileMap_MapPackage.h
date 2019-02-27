@@ -42,12 +42,8 @@ public:
   void componentComplete() override;
   static void init();
 
-private slots:
-  void packageLoaded(const Esri::ArcGISRuntime::Error& e);
-
 private:
   void createMapPackage(const QString& path);
-  void setMapToView();
 
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage = nullptr;

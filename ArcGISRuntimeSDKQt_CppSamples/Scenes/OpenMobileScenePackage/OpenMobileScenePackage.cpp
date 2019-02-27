@@ -55,7 +55,7 @@ OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
 
   // create the MSPK data path
   // data is downloaded automatically by the sample viewer app. Instructions to download
-  // seperately are specified in the readme.
+  // separately are specified in the readme.
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
 
   // connect to the Mobile Scene Package instance to determine if direct read is supported. Packages
