@@ -22,6 +22,11 @@
 #include "MobileMapPackage.h"
 
 #include <QQmlProperty>
+#include <QtGlobal>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif
 
 using namespace Esri::ArcGISRuntime;
 
