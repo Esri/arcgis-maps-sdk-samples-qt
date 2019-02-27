@@ -63,7 +63,7 @@ Rectangle {
     }
 
     // Connect to the various signals on MobileMapPackageUtility
-    // to determine if direct read is supported and if an unpack
+    // to determine if direct read is supported or if an unpack
     // is needed.
     Connections {
         target: MobileMapPackageUtility

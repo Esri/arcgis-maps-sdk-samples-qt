@@ -138,18 +138,17 @@ void OpenMobileMap_MapPackage::createMapPackage(const QString& path)
       qDebug() << QString("Package load error: %1 %2").arg(error.message(), error.additionalMessage());
       return;
     }
-    else
-    {
-      if (!m_mobileMapPackage || !m_mapView || m_mobileMapPackage->maps().isEmpty())
-      {
-        return;
-      }
 
-      // The package contains a list of maps that could be shown in the UI for selection.
-      // For simplicity, obtain the first map in the list of maps.
-      // set the map on the map view to display
-      m_mapView->setMap(m_mobileMapPackage->maps().at(0));
+    if (!m_mobileMapPackage || !m_mapView || m_mobileMapPackage->maps().isEmpty())
+    {
+      return;
     }
+
+    // The package contains a list of maps that could be shown in the UI for selection.
+    // For simplicity, obtain the first map in the list of maps.
+    // set the map on the map view to display
+    m_mapView->setMap(m_mobileMapPackage->maps().at(0));
+
   });
 
   m_mobileMapPackage->load();
