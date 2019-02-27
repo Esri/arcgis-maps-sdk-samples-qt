@@ -31,23 +31,33 @@ Item {
         sceneView: view
     }
 
+    //Background rectangle for elevation display
     Rectangle {
         anchors {
             bottom: parent.bottom
-            horizontalCenter: parent.horizontalCenter
+            left: parent.left
+            right: parent.right
             margins: 30
         }
 
-        color: Qt.rgba(1, 1, 1, 0.3);
-        width: childrenRect.width
+        color: Qt.rgba(0.2, 0.2, 0.2, 0.65);
         height: childrenRect.height
 
+        //Elevation display text
         Text {
-            id: altitudeDisplay
-            font.pointSize: 32
-            padding: 15
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+            }
             color: "white"
-            text: "Elevation : " + model.elevation
+            padding: 15
+            font.pointSize: 32
+
+            //For vertical screens, keep the text within the bounding box via scaling down.
+            scale: Math.min(1, (parent.width - padding) / contentWidth)
+
+
+            //Display elevation value in metres, round to a single decimal place.
+            text: "Elevation : " + Math.round(model.elevation * 10) / 10 + "m"
         }
     }
 }

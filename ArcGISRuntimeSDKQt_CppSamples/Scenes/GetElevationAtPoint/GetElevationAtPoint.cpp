@@ -76,7 +76,7 @@ void GetElevationAtPoint::setSceneView(SceneQuickView* sceneView)
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
 
-  //Create a camera, looking at a mountain range in Nepal.
+  //Create a camera, looking at the Himalayan mountain range.
   const double latitude = 28.4;
   const double longitude = 83.9;
   const double altitude = 10000.0;
@@ -101,7 +101,7 @@ void GetElevationAtPoint::setSceneView(SceneQuickView* sceneView)
 void GetElevationAtPoint::displayElevationOnClick(QMouseEvent& mouseEvent)
 {
   //Convert clicked screen position to position on the map surface.
-  const Point baseSurfacePos = m_sceneView->screenToBaseSurface(mouseEvent.screenPos().x(), mouseEvent.screenPos().y());
+  const Point baseSurfacePos = m_sceneView->screenToBaseSurface(mouseEvent.x(), mouseEvent.y());
 
   //Connect to callback for elevation query, which places marker and sets elevation
   connect(m_scene->baseSurface(), &Surface::locationToElevationCompleted,
