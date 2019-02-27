@@ -16,6 +16,7 @@
 
 #include "OpenMobileScenePackage.h"
 
+#include "Error.h"
 #include "MobileScenePackage.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
@@ -54,7 +55,7 @@ OpenMobileScenePackage::OpenMobileScenePackage(QObject* parent /* = nullptr */):
 
   // create the MSPK data path
   // data is downloaded automatically by the sample viewer app. Instructions to download
-  // seperately are specified in the readme.
+  // separately are specified in the readme.
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
 
   // connect to the Mobile Scene Package instance to determine if direct read is supported. Packages
@@ -136,7 +137,7 @@ void OpenMobileScenePackage::setSceneView(SceneQuickView* sceneView)
 }
 
 // Slot for handling when the package loads
-void OpenMobileScenePackage::packageLoaded(Error e)
+void OpenMobileScenePackage::packageLoaded(const Error& e)
 {
   if (!e.isEmpty())
   {
