@@ -1,31 +1,36 @@
 # Get Elevation at Point
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Get the elevation for a given point on a surface.
 
-![](screenshot.png)
+![Get elevation at point application](screenshot.png)
+
+## Use case
+
+Knowing the elevation at a given point in a landscape can aid in navigation, planning and survey in the field.
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Click anywhere on the surface to get the elevation at that point.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create a `SceneView` and `Scene` with an imagery base map.
+1. Set an `ArcGISTiledElevationSource` as the elevation source of the scene's base surface.
+1. Use the `screenToBaseSurface(screenPoint)` method on the scene view to convert the clicked screen point into a point on surface.
+1. Use the `locationToElevation(surfacePoint)` method on the base surface to asynchronously get the elevation.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+* ArcGISTiledElevationSource
+* BaseSurface
+* ElevationSourcesList
+* SceneView
 
 ## Additional information
-A standard level license is required to ...
 
-## Tags
-Routing, Network analysis, Geocode
+`locationToElevation(surfacePoint)` retrieves the most accurate available elevation value at a given point which requires it to go to the server or local raster file and load the highest level of detail of data for the target location and return the elevation value.
 
+If multiple elevation sources are present in the surface the top most visible elevation source with a valid elevation in the given location is used to determine the result.
+
+#### Tags
+MapViews, SceneViews and UI
