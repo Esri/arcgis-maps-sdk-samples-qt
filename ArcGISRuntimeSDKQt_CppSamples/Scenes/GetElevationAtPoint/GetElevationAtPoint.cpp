@@ -44,10 +44,10 @@ GetElevationAtPoint::GetElevationAtPoint(QObject* parent /* = nullptr */):
   SimpleMarkerSymbol* redCircleSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 12, this);
   m_elevationMarker->setSymbol(redCircleSymbol);
 
-  //Set the marker to be invisible initially, will be flaggd visible when user interacts with scene for the first time, to visualise clicked position
+  // Set the marker to be invisible initially, will be flaggd visible when user interacts with scene for the first time, to visualise clicked position
   m_elevationMarker->setVisible(false);
 
-  //Add the marker to the graphics overlay so it will be displayed. Graphics overlay is attached to the sceneView in ::setSceneView()
+  // Add the marker to the graphics overlay so it will be displayed. Graphics overlay is attached to the sceneView in ::setSceneView()
   m_graphicsOverlay->graphics()->append(m_elevationMarker);
 }
 
@@ -76,7 +76,7 @@ void GetElevationAtPoint::setSceneView(SceneQuickView* sceneView)
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
 
-  //Create a camera, looking at the Himalayan mountain range.
+  // Create a camera, looking at the Himalayan mountain range.
   const double latitude = 28.4;
   const double longitude = 83.9;
   const double altitude = 10000.0;
@@ -85,42 +85,50 @@ void GetElevationAtPoint::setSceneView(SceneQuickView* sceneView)
   const double roll = 0.0;
   Camera camera(latitude, longitude, altitude, heading, pitch, roll);
 
-  //Set the sceneview to use above camera, waits for load so scene is immediately displayed in appropriate place.
+  // Set the sceneview to use above camera, waits for load so scene is immediately displayed in appropriate place.
   m_sceneView->setViewpointCameraAndWait(camera);
 
-  //Append the graphics overlays to the sceneview, so we can visualise elevation on click
+  // Append the graphics overlays to the sceneview, so we can visualise elevation on click
   m_sceneView->graphicsOverlays()->append(m_graphicsOverlay);
 
-  //Hook up clicks into the 3d scene to below behaviour that displays marker & elevation value.
+  // Hook up clicks into the 3d scene to below behaviour that displays marker & elevation value.
   connect(sceneView, &SceneQuickView::mouseClicked, this, &GetElevationAtPoint::displayElevationOnClick);
 
   emit sceneViewChanged();
 }
 
-
 void GetElevationAtPoint::displayElevationOnClick(QMouseEvent& mouseEvent)
 {
-  //Convert clicked screen position to position on the map surface.
+  // Convert clicked screen position to position on the map surface.
   const Point baseSurfacePos = m_sceneView->screenToBaseSurface(mouseEvent.x(), mouseEvent.y());
 
-  //Connect to callback for elevation query, which places marker and sets elevation
+  // Connect to callback for elevation query, which places marker and sets elevation
   connect(m_scene->baseSurface(), &Surface::locationToElevationCompleted,
           this, [baseSurfacePos, this](QUuid /*taskId*/, double elevation)
   {
-    //Place the elevation marker circle at the clicked position
+    // Place the elevation marker circle at the clicked position
     m_elevationMarker->setGeometry(baseSurfacePos);
     m_elevationMarker->setVisible(true);
 
-    //Assign the elevation value. UI is bound to this value, so it updates to display new elevation.
+    // Assign the elevation value. UI is bound to this value, so it updates to display new elevation.
     m_elevation = elevation;
+
+    // Notify of property changes
     emit elevationChanged(elevation);
+    emit elevationQueryRunningChanged();
   });
 
-  //Invoke get elevation query
-  TaskWatcher locationToElevationQueryTask = m_scene->baseSurface()->locationToElevation(baseSurfacePos);
+  // Invoke get elevation query
+  m_elevationQueryTaskWatcher = m_scene->baseSurface()->locationToElevation(baseSurfacePos);
+  emit elevationQueryRunningChanged();
 }
 
 double GetElevationAtPoint::elevation() const
 {
   return m_elevation;
+}
+
+bool GetElevationAtPoint::elevationQueryRunning() const
+{
+  return !m_elevationQueryTaskWatcher.isDone();
 }

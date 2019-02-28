@@ -31,7 +31,7 @@ Item {
         sceneView: view
     }
 
-    //Background rectangle for elevation display
+    // Background rectangle for elevation display
     Rectangle {
         anchors {
             bottom: parent.bottom
@@ -43,7 +43,7 @@ Item {
         color: Qt.rgba(0.2, 0.2, 0.2, 0.65);
         height: childrenRect.height
 
-        //Elevation display text
+        // Elevation display text
         Text {
             anchors {
                 horizontalCenter: parent.horizontalCenter
@@ -52,12 +52,20 @@ Item {
             padding: 15
             font.pointSize: 32
 
-            //For vertical screens, keep the text within the bounding box via scaling down.
+            // For vertical screens, keep the text within the bounding box via scaling down.
             scale: Math.min(1, (parent.width - padding) / contentWidth)
 
-
-            //Display elevation value in metres, round to a single decimal place.
+            // Display elevation value in metres, round to a single decimal place.
             text: "Elevation : " + Math.round(model.elevation * 10) / 10 + "m"
         }
     }
+
+    // Display an indictor when the elevation query is running, since it might take a couple of seconds
+    BusyIndicator {
+        running: model.elevationQueryRunning === true
+        anchors.centerIn: parent
+        width: Math.min(parent.width, parent.height) / 6.0
+        height: width
+    }
+
 }

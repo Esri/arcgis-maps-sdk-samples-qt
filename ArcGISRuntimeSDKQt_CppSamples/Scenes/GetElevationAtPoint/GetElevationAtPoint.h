@@ -31,6 +31,7 @@ namespace Esri
 class QMouseEvent;
 
 #include <QObject>
+#include "TaskWatcher.h"
 
 class GetElevationAtPoint : public QObject
 {
@@ -38,6 +39,7 @@ class GetElevationAtPoint : public QObject
 
     Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
     Q_PROPERTY(double elevation READ elevation NOTIFY elevationChanged)
+    Q_PROPERTY(bool elevationQueryRunning READ elevationQueryRunning NOTIFY elevationQueryRunningChanged)
 
 public:
     explicit GetElevationAtPoint(QObject* parent = nullptr);
@@ -52,6 +54,7 @@ private slots:
 signals:
     void sceneViewChanged();
     void elevationChanged(double newElevation);
+    void elevationQueryRunningChanged();
 
 private:
     Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
@@ -63,8 +66,13 @@ private:
     Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
     Esri::ArcGISRuntime::Graphic* m_elevationMarker = nullptr;
 
+    //Propety exposing elevation to the QML UI.
     double elevation() const;
     double m_elevation = 0.0;
+
+    //Property exposing whethre the elevation query is running to the QML UI, so the busy indicator can be displayed
+    bool elevationQueryRunning() const;
+    Esri::ArcGISRuntime::TaskWatcher m_elevationQueryTaskWatcher;
 };
 
 #endif // GETELEVATIONATPOINT_H
