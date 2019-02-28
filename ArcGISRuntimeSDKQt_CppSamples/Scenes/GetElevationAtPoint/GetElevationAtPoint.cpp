@@ -17,11 +17,11 @@
 #include "GetElevationAtPoint.h"
 
 #include "ArcGISTiledElevationSource.h"
+#include "GraphicsOverlay.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "Surface.h"
-#include "GraphicsOverlay.h"
 #include "SimpleMarkerSymbol.h"
+#include "Surface.h"
 
 using namespace Esri::ArcGISRuntime;
 

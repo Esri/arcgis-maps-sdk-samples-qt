@@ -17,6 +17,10 @@
 #ifndef GETELEVATIONATPOINT_H
 #define GETELEVATIONATPOINT_H
 
+
+#include "TaskWatcher.h"
+#include <QObject>
+
 namespace Esri
 {
   namespace ArcGISRuntime
@@ -30,49 +34,46 @@ namespace Esri
 
 class QMouseEvent;
 
-#include <QObject>
-#include "TaskWatcher.h"
-
 class GetElevationAtPoint : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
-    Q_PROPERTY(double elevation READ elevation NOTIFY elevationChanged)
-    Q_PROPERTY(bool elevationQueryRunning READ elevationQueryRunning NOTIFY elevationQueryRunningChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(double elevation READ elevation NOTIFY elevationChanged)
+  Q_PROPERTY(bool elevationQueryRunning READ elevationQueryRunning NOTIFY elevationQueryRunningChanged)
 
 public:
-    explicit GetElevationAtPoint(QObject* parent = nullptr);
-    ~GetElevationAtPoint();
+  explicit GetElevationAtPoint(QObject* parent = nullptr);
+  ~GetElevationAtPoint();
 
-    static void init();
+  static void init();
 
 
 private slots:
-     void displayElevationOnClick(QMouseEvent& mouseEvent);
+  void displayElevationOnClick(QMouseEvent& mouseEvent);
 
 signals:
-    void sceneViewChanged();
-    void elevationChanged(double newElevation);
-    void elevationQueryRunningChanged();
+  void sceneViewChanged();
+  void elevationChanged(double newElevation);
+  void elevationQueryRunningChanged();
 
 private:
-    Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
-    void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
+  void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
 
-    Esri::ArcGISRuntime::Scene* m_scene = nullptr;
-    Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::Scene* m_scene = nullptr;
+  Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 
-    Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-    Esri::ArcGISRuntime::Graphic* m_elevationMarker = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_elevationMarker = nullptr;
 
-    //Propety exposing elevation to the QML UI.
-    double elevation() const;
-    double m_elevation = 0.0;
+  //Propety exposing elevation to the QML UI.
+  double elevation() const;
+  double m_elevation = 0.0;
 
-    //Property exposing whethre the elevation query is running to the QML UI, so the busy indicator can be displayed
-    bool elevationQueryRunning() const;
-    Esri::ArcGISRuntime::TaskWatcher m_elevationQueryTaskWatcher;
+  //Property exposing whethre the elevation query is running to the QML UI, so the busy indicator can be displayed
+  bool elevationQueryRunning() const;
+  Esri::ArcGISRuntime::TaskWatcher m_elevationQueryTaskWatcher;
 };
 
 #endif // GETELEVATIONATPOINT_H
