@@ -1,6 +1,6 @@
 // [WriteFile Name=GetElevationAtPoint, Category=Analysis]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ Item {
             // For vertical screens, keep the text within the bounding box via scaling down.
             scale: Math.min(1, (parent.width - padding) / contentWidth)
 
-            // Display elevation value in metres, round to a single decimal place.
+            // Display elevation value in meters, round to a single decimal place.
             text: "Elevation : " + Math.round(model.elevation * 10) / 10 + "m"
         }
     }

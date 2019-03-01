@@ -23,7 +23,7 @@ Click anywhere on the surface to get the elevation at that point.
 
 * ArcGISTiledElevationSource
 * BaseSurface
-* ElevationSourcesList
+* ElevationSourceListModel
 * SceneView
 
 ## Additional information

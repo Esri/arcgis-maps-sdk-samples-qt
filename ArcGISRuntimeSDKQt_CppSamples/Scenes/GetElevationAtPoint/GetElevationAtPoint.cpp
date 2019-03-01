@@ -1,6 +1,6 @@
 // [WriteFile Name=GetElevationAtPoint, Category=Analysis]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,7 +27,9 @@ using namespace Esri::ArcGISRuntime;
 
 GetElevationAtPoint::GetElevationAtPoint(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(Basemap::imagery(this), this))
+  m_scene(new Scene(Basemap::imagery(this), this)),
+  m_graphicsOverlay(new GraphicsOverlay(this)),
+  m_elevationMarker(new Graphic(Geometry(), new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 12, this), this))
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -35,14 +37,6 @@ GetElevationAtPoint::GetElevationAtPoint(QObject* parent /* = nullptr */):
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
-
-  // create a graphics overlay to display the elevation marker
-  m_graphicsOverlay = new GraphicsOverlay(this);
-
-  // create red circle graphic to mark altitude, position is set in response to input
-  m_elevationMarker = new Graphic(this);
-  SimpleMarkerSymbol* redCircleSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor("red"), 12, this);
-  m_elevationMarker->setSymbol(redCircleSymbol);
 
   // Set the marker to be invisible initially, will be flaggd visible when user interacts with scene for the first time, to visualise clicked position
   m_elevationMarker->setVisible(false);
@@ -77,12 +71,12 @@ void GetElevationAtPoint::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setArcGISScene(m_scene);
 
   // Create a camera, looking at the Himalayan mountain range.
-  const double latitude = 28.4;
-  const double longitude = 83.9;
-  const double altitude = 10000.0;
-  const double heading = 10.0;
-  const double pitch = 80.0;
-  const double roll = 0.0;
+  constexpr double latitude = 28.4;
+  constexpr double longitude = 83.9;
+  constexpr double altitude = 10000.0;
+  constexpr double heading = 10.0;
+  constexpr double pitch = 80.0;
+  constexpr double roll = 0.0;
   Camera camera(latitude, longitude, altitude, heading, pitch, roll);
 
   // Set the sceneview to use above camera, waits for load so scene is immediately displayed in appropriate place.
@@ -118,7 +112,7 @@ void GetElevationAtPoint::displayElevationOnClick(QMouseEvent& mouseEvent)
     emit elevationQueryRunningChanged();
   });
 
-  // Invoke get elevation query
+  //Invoke get elevation query
   m_elevationQueryTaskWatcher = m_scene->baseSurface()->locationToElevation(baseSurfacePos);
   emit elevationQueryRunningChanged();
 }
@@ -130,5 +124,5 @@ double GetElevationAtPoint::elevation() const
 
 bool GetElevationAtPoint::elevationQueryRunning() const
 {
-  return !m_elevationQueryTaskWatcher.isDone();
+  return !(m_elevationQueryTaskWatcher.isDone() || m_elevationQueryTaskWatcher.isCanceled());
 }

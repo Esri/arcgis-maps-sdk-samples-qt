@@ -1,6 +1,6 @@
 // [WriteFile Name=GetElevationAtPoint, Category=Analysis]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,18 +17,18 @@
 #ifndef GETELEVATIONATPOINT_H
 #define GETELEVATIONATPOINT_H
 
+#include <QObject>
 
 #include "TaskWatcher.h"
-#include <QObject>
 
 namespace Esri
 {
   namespace ArcGISRuntime
   {
+    class Graphic;
+    class GraphicsOverlay;
     class Scene;
     class SceneQuickView;
-    class GraphicsOverlay;
-    class Graphic;
   }
 }
 
@@ -48,7 +48,6 @@ public:
 
   static void init();
 
-
 private slots:
   void displayElevationOnClick(QMouseEvent& mouseEvent);
 
@@ -67,12 +66,12 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::Graphic* m_elevationMarker = nullptr;
 
-  //Propety exposing elevation to the QML UI.
+  //Property exposing elevation to the QML UI.
   double elevation() const;
-  double m_elevation = 0.0;
-
-  //Property exposing whethre the elevation query is running to the QML UI, so the busy indicator can be displayed
+  //Property exposing whether the elevation query is running to the QML UI, so the busy indicator can be displayed
   bool elevationQueryRunning() const;
+
+  double m_elevation = 0.0;
   Esri::ArcGISRuntime::TaskWatcher m_elevationQueryTaskWatcher;
 };
 
