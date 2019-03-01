@@ -44,7 +44,7 @@ Rectangle {
                 // When location has changed, set the elevation text to display new elevation, and move the elevationMarker to the queried-for position on the surface.
                 onLocationToElevationResultChanged:
                     if(locationToElevationStatus === Enums.TaskStatusCompleted) {
-                        // Display elevation value in metres, round to a single decimal place.
+                        // Display elevation value in meters, round to a single decimal place.
                         elevationDisplaytext.text = "Elevation : " + Math.round(locationToElevationResult * 10) / 10 + "m"
                         elevationMarker.geometry = lastQueriedSurfacePos;
                     }
