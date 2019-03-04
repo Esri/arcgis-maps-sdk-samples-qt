@@ -1,4 +1,4 @@
-// [WriteFile Name=GetElevationAtPoint, Category=Analysis]
+// [WriteFile Name=GetElevationAtPoint, Category=Scenes]
 // [Legal]
 // Copyright 2019 Esri.
 

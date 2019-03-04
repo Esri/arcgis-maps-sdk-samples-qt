@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/Analysis/GetElevationAtPoint">
+    <qresource prefix="/Samples/Scenes/GetElevationAtPoint">
         <file alias="sample.json">GetElevationAtPoint.json</file>
         <file>GetElevationAtPoint.qml</file>
         <file>GetElevationAtPoint.h</file>
