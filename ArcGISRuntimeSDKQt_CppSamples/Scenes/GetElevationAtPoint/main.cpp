@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     engine.addImportPath(arcGISToolkitImportPath);
 
     // Set the source
-    engine.load(QUrl("qrc:/Samples/Analysis/GetElevationAtPoint/main.qml"));
+    engine.load(QUrl("qrc:/Samples/Scenes/GetElevationAtPoint/main.qml"));
 
     return app.exec();
 }
