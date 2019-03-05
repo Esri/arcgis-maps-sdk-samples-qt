@@ -57,7 +57,7 @@ CreateTerrainSurfaceFromLocalRaster::CreateTerrainSurfaceFromLocalRaster(QObject
   const auto montereyRasterElevationPath = QStringList{defaultDataPath() + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"};
 
   //Create the elevation source from the local raster(s). RasterElevationSource can take multiple files as inputs, but in this case only takes one.
-  auto* elevationSrc = new RasterElevationSource(montereyRasterElevationPath, this);
+  auto* elevationSrc = new RasterElevationSource{montereyRasterElevationPath, this};
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSrc);
@@ -88,18 +88,17 @@ void CreateTerrainSurfaceFromLocalRaster::setSceneView(SceneQuickView* sceneView
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
 
-  // Create a camera, looking at the Monterey, California.
+  // Create a camera, looking at Monterey, California.
   constexpr double latitude = 36.51;
   constexpr double longitude = -121.80;
   constexpr double altitude = 300.0;
   constexpr double heading = 0.0;
   constexpr double pitch = 70.0;
   constexpr double roll = 0.0;
-  Camera camera(latitude, longitude, altitude, heading, pitch, roll);
+  Camera camera{latitude, longitude, altitude, heading, pitch, roll};
 
   // Set the sceneview to use above camera, waits for load so scene is immediately displayed in appropriate place.
   m_sceneView->setViewpointCameraAndWait(camera);
 
   emit sceneViewChanged();
 }
-
