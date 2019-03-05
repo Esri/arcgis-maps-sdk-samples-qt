@@ -24,6 +24,8 @@ Rectangle {
     width: 800
     height: 600
 
+    property string montereyRasterElevationPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"
+
     SceneView {
         id: sceneView
         anchors.fill: parent
@@ -35,7 +37,9 @@ Rectangle {
             Surface {
                 RasterElevationSource{
                     //RasterElevationSource takes a list of raster files. Here we provide a list cotaining just a single file.
-                    fileUrls: [System.userHomePath + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"]
+                    fileUrls: [montereyRasterElevationPath]
+                    //Hook up success/error reporting for the Elevation Source load
+                    onLoadStatusChanged: reportLoadStatus(loadStatus, loadError)
                 }
             }
         }
@@ -43,6 +47,18 @@ Rectangle {
         // Once the scene view has loaded, apply the camera.
         Component.onCompleted: {
             setViewpointCameraAndWait(camera);
+        }
+    }
+
+    function reportLoadStatus(loadStatus, loadError)
+    {
+        if(loadStatus === Enums.LoadStatusLoaded)
+        {
+            console.info("Loaded raster elevation source succesfully");
+        }
+        else if(loadStatus === Enums.LoadStatusFailedToLoad)
+        {
+            console.warn("Error loading elevation source : ", loadError.message, loadError.additionalMessage);
         }
     }
 

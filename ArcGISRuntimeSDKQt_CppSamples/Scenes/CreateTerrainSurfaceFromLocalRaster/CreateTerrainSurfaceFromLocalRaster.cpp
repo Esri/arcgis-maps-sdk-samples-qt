@@ -16,12 +16,12 @@
 
 #include "CreateTerrainSurfaceFromLocalRaster.h"
 
+#include "RasterElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "RasterElevationSource.h"
 
-#include <QUrl>
 #include <QDir>
+#include <QUrl>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
@@ -54,13 +54,39 @@ CreateTerrainSurfaceFromLocalRaster::CreateTerrainSurfaceFromLocalRaster(QObject
   // create the MontereyElevation data path
   // data is downloaded automatically by the sample viewer app. Instructions to download
   // separately are specified in the readme.
-  const auto montereyRasterElevationPath = QStringList{defaultDataPath() + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"};
+  const QString montereyRasterElevationPath = QString{defaultDataPath() + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"};
 
-  //Create the elevation source from the local raster(s). RasterElevationSource can take multiple files as inputs, but in this case only takes one.
-  auto* elevationSrc = new RasterElevationSource{montereyRasterElevationPath, this};
+  //Before attempting to add any layers, check that the file for the elevation source exists at all.
+  const bool srcElevationFileExists = QFileInfo::exists(montereyRasterElevationPath);
 
-  // add the elevation source to the scene to display elevation
-  m_scene->baseSurface()->elevationSources()->append(elevationSrc);
+  if(srcElevationFileExists)
+  {
+    //Create the elevation source from the local raster(s). RasterElevationSource can take multiple files as inputs, but in this case only takes one.
+    RasterElevationSource* elevationSrc = new RasterElevationSource{QStringList{montereyRasterElevationPath}, this};
+
+    //When the elevation source is finished loading, call the elevationSrcFinishedLoading callback, so we can tell if it loaded succesfully.
+    connect(elevationSrc, &RasterElevationSource::doneLoading, this, &CreateTerrainSurfaceFromLocalRaster::elevationSrcFinishedLoading, Qt::UniqueConnection);
+
+    // add the elevation source to the scene to display elevation
+    m_scene->baseSurface()->elevationSources()->append(elevationSrc);
+  }
+  else
+  {
+    qWarning() << "Could not find file at : " << montereyRasterElevationPath << ". Elevation source not set.";
+  }
+}
+
+void CreateTerrainSurfaceFromLocalRaster::elevationSrcFinishedLoading(Esri::ArcGISRuntime::Error loadError)
+{
+  if(loadError.isEmpty())
+  {
+    //Succesful load
+    qInfo() << "Loaded raster elevation source succesfully";
+  }
+  else {
+    //Log failure to load
+    qWarning() << "Error loading elevation source : " << loadError.message();
+  }
 }
 
 CreateTerrainSurfaceFromLocalRaster::~CreateTerrainSurfaceFromLocalRaster() = default;
