@@ -46,7 +46,3 @@ Link | Local Location
 ## Tags
 
 3D, Raster, Elevation, Surface
-
-
-
-

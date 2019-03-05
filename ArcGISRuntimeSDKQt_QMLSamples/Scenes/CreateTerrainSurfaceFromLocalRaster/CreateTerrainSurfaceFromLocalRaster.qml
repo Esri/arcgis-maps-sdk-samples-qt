@@ -34,7 +34,7 @@ Rectangle {
 
             Surface {
                 RasterElevationSource{
-                    //RasterElevationSource takes a list of raster files. Here we provide just a single file, but still using list syntax
+                    //RasterElevationSource takes a list of raster files. Here we provide a list cotaining just a single file.
                     fileUrls: [System.userHomePath + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"]
                 }
             }
