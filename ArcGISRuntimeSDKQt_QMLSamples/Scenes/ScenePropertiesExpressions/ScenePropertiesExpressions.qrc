@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/ScenePropertiesExpressions">
+        <file alias="sample.json">ScenePropertiesExpressions.json</file>        
+        <file>ScenePropertiesExpressions.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
