@@ -1,20 +1,40 @@
-# Create Terrain Surface from Local Raster
+# Create terrain surface from a local raster
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Use a terrain surface with elevation described by a raster file.
+
+The terrain surface is what the basemap, operational layers, and graphics are draped on.
 
 ![](screenshot.png)
 
-## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
-
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create a `Scene` and add it to a `SceneView`.
+2. Create a `RasterElevationSource` with a list of raster file paths.
+3. Add this source to the scene's base surface: `Scene.BaseSurface.ElevationSources.Add(rasterElevationSource)`.
+
+## Additional information
+
+Supported raster formats include:
+- ASRP/USRP
+- CIB1, 5, 10
+- DTED0, 1, 2
+- GeoTIFF
+- HFA
+- HRE
+- IMG
+- JPEG
+- JPEG 2000
+- NITF
+- PNG
+- RPF
+- SRTM1, 2
+
+The raster used in this sample is a DTED2 file.
 
 ## Relevant API
- - ClassName1
- - MethodName
+
+* RasterElevationSource
+* Surface
 
 ## Offline data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
@@ -23,9 +43,11 @@ Link | Local Location
 ---------|-------|
 |[MontereyElevationRaster.dt2 raster](https://www.arcgis.com/home/item.html?id=98092369c4ae4d549bbbd45dba993ebc)| `<userhome>`/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2 |
 
-## Additional information
-A standard level license is required to ...
 
 ## Tags
-Routing, Network analysis, Geocode
+
+3D, Raster, Elevation, Surface
+
+
+
 
