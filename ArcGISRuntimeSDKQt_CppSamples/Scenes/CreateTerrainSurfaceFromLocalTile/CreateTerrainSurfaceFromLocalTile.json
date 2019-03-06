@@ -1,0 +1,8 @@
+{
+    "source" :  "CreateTerrainSurfaceFromLocalTile.qml",
+    "otherSourceFiles" :  [
+        "CreateTerrainSurfaceFromLocalTile.h",
+        "CreateTerrainSurfaceFromLocalTile.cpp"
+    ],
+    "name" : "Create Terrain Surface from Local Tile"
+}
