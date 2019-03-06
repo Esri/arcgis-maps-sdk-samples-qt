@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Analysis/ScenePropertiesExpressions/ScenePropertiesExpressions.qml"));
+  view.setSource(QUrl("qrc:/Samples/Scenes/ScenePropertiesExpressions/ScenePropertiesExpressions.qml"));
 
   view.show();
 

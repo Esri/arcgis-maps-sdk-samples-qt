@@ -1,31 +1,20 @@
 # Scene Properties Expressions
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+This sample demonstrates how to update the orientation of a graphic using scene property rotation expressions via QSlider.
 
-![](screenshot.png)
+![](ScenePropertiesExpressions.gif)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Move the `Heading` and `Pitch` sliders to change the orientation of graphics in the graphics overlay.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+The sample creates a SimpleRenderer within a GraphicOverlay. The SimpleRenderer has expressions for `HEADING` and `PITCH`, which are set via `headingExpression: "[Heading]"`. A graphic is created and its rotation is set by `coneGraphic.attributes.insertAttribute("Heading", initialHeading);` where the attribute key is `"Heading"` and `initialHeading` is the rotation angle.
 
 ## Relevant API
- - ClassName1
- - MethodName
-
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+ * SimpleRenderer
+ * GraphicsOverlay
+ * RendererSceneProperties
 
 ## Tags
-Routing, Network analysis, Geocode
+Scenes, 3D, Expressions, Attributes, rotation, heading, pitch
 
