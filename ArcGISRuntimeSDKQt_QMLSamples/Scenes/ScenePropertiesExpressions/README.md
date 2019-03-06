@@ -1,6 +1,6 @@
 # Scene Properties Expressions
 
-This sample demonstrates how to update the orientation of a graphic using scene property rotation expressions via QSlider.
+This sample demonstrates how to update the orientation of a graphic using scene property rotation expressions.
 
 ![](ScenePropertiesExpressions.gif)
 

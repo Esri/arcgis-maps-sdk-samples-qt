@@ -45,9 +45,8 @@ ScenePropertiesExpressions::ScenePropertiesExpressions(QObject* parent /* = null
   m_graphicsOverlay = new GraphicsOverlay(this);
   m_graphicsOverlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Relative));
 
-  // Create a SimpleRenderer and set expressions on its scene properties:
-  // Renderer.getSceneProperties().setHeadingExpression("[HEADING]").
-  // Then set the renderer to the graphics overlay with GraphicsOverlay.setRenderer(renderer).
+  // Create a SimpleRenderer and set expressions on its scene properties.
+  // Then, set the renderer to the graphics overlay with GraphicsOverlay.setRenderer(renderer).
   SimpleRenderer* renderer3D = new SimpleRenderer(this);
   RendererSceneProperties renderProperties = renderer3D->sceneProperties();
   renderProperties.setHeadingExpression(QString("[%1]").arg(HEADING));
@@ -90,7 +89,7 @@ void ScenePropertiesExpressions::setSceneView(SceneQuickView* sceneView)
   const double roll = 0.0;
   const int coneDimension = 10000;
 
-  Camera camera(latitude - 1.0, // place the camera arbitrarily southern than the cone
+  Camera camera(latitude - 1.0, // place the camera arbitrarily south of the cone
                 longitude,
                 altitude * 2, // place the camera arbitrarily higher than the cone
                 heading,
@@ -99,7 +98,6 @@ void ScenePropertiesExpressions::setSceneView(SceneQuickView* sceneView)
 
   // set the viewpoint
   m_sceneView->setViewpointCameraAndWait(camera);
-
 
   // add the graphics overlay to the scene view
   m_sceneView->graphicsOverlays()->append(m_graphicsOverlay);

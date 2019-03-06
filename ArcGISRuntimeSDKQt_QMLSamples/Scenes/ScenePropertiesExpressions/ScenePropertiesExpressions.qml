@@ -30,6 +30,8 @@ Rectangle {
     property int coneDimension: 10000
     property real initialPitch: 90.0
     property real initialHeading: 180.0
+    property string headingStr: "heading"
+    property string pitchStr: "pitch"
 
     SceneView {
         id: sceneView
@@ -57,8 +59,8 @@ Rectangle {
                 id: sceneRenderer
                 RendererSceneProperties {
                     id: renderProps
-                    headingExpression: "[Heading]"
-                    pitchExpression:  "[Pitch]"
+                    headingExpression: "["+headingStr+"]"
+                    pitchExpression:  "["+pitchStr+"]"
                 }
             }
 
@@ -82,8 +84,8 @@ Rectangle {
                 }
 
                 Component.onCompleted: {
-                    coneGraphic.attributes.insertAttribute("Heading", initialHeading);
-                    coneGraphic.attributes.insertAttribute("Pitch", initialPitch);
+                    coneGraphic.attributes.insertAttribute(headingStr, initialHeading);
+                    coneGraphic.attributes.insertAttribute(pitchStr, initialPitch);
                 }
             }
         }
@@ -115,8 +117,7 @@ Rectangle {
             anchors {
                 margins: 5
             }
-            objectName: "pitch"
-            text: objectName + ": " + pitchSlider.value.toFixed(0)
+            text: pitchStr + ": " + pitchSlider.value.toFixed(0)
             font.pixelSize: 20
             verticalAlignment: Text.AlignTop
         }
@@ -135,7 +136,7 @@ Rectangle {
             }
 
             onValueChanged: {
-                coneGraphic.attributes.replaceAttribute("Pitch", value);
+                coneGraphic.attributes.replaceAttribute(pitchStr, value);
             }
         }
 
@@ -143,8 +144,7 @@ Rectangle {
             anchors {
                 margins: 5
             }
-            objectName: "heading"
-            text: objectName + ": " + headingSlider.value.toFixed(0)
+            text: headingStr + ": " + headingSlider.value.toFixed(0)
             verticalAlignment: Text.AlignTop
             font.pixelSize: 20
         }
@@ -163,7 +163,7 @@ Rectangle {
             }
 
             onValueChanged: {
-                coneGraphic.attributes.replaceAttribute("Heading", value);
+                coneGraphic.attributes.replaceAttribute(headingStr, value);
             }
         }
     }
@@ -176,7 +176,7 @@ Rectangle {
 
         Point {
             x: longitude
-            y: latitude - 1.0 // place the camera somewhat southern than the cone
+            y: latitude - 1.0 // place the camera somewhat south of the cone
             z: altitude * 2.0 // place the camera somewhat higher than the cone
             spatialReference: SpatialReference { wkid: 4326 }
         }

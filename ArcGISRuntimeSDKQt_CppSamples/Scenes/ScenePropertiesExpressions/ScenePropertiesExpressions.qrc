@@ -4,7 +4,7 @@
         <file>ScenePropertiesExpressions.qml</file>
         <file>ScenePropertiesExpressions.h</file>
         <file>ScenePropertiesExpressions.cpp</file>
-		<file>main.qml</file>
+        <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>

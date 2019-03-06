@@ -51,8 +51,7 @@ Item {
             anchors {
                 margins: 5
             }
-            objectName: "pitch"
-            text: objectName + ": " + model.pitch.toFixed(0)
+            text: "pitch : " + model.pitch.toFixed(0)
             font.pixelSize: 20
             verticalAlignment: Text.AlignTop
         }
@@ -75,8 +74,7 @@ Item {
             anchors {
                 margins: 5
             }
-            objectName: "heading"
-            text: objectName + ": " + model.heading.toFixed(0)
+            text: "heading: " + model.heading.toFixed(0)
             verticalAlignment: Text.AlignTop
             font.pixelSize: 20
         }
