@@ -2,7 +2,7 @@
 
 Get the elevation for a given point on a surface.
 
-![Get elevation at point application](screenshot.png)
+![](screenshot.png)
 
 ## Use case
 
@@ -28,7 +28,7 @@ Click anywhere on the surface to get the elevation at that point.
 
 ## Additional information
 
-`locationToElevation(surfacePoint)` retrieves the most accurate available elevation value at a given point which requires it to go to the server or local raster file and load the highest level of detail of data for the target location and return the elevation value.
+Calling `locationToElevation(surfacePoint)` retrieves the most accurate available elevation value at a given point which requires it to go to the server or local raster file and load the highest level of detail of data for the target location and return the elevation value.
 
 If multiple elevation sources are present in the surface the top most visible elevation source with a valid elevation in the given location is used to determine the result.
 
