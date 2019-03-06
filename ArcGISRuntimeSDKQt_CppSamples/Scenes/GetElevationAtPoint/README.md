@@ -2,7 +2,7 @@
 
 Get the elevation for a given point on a surface.
 
-![Get elevation at point application](screenshot.png)
+![](screenshot.png)
 
 ## Use case
 
