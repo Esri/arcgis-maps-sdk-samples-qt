@@ -14,14 +14,18 @@
 // limitations under the License.
 // [Legal]
 
+
 import QtQuick 2.6
 import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
+
+    property string montereyTpkElevationPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpk/MontereyElevation.tpk"
 
     SceneView {
         id: sceneView
@@ -32,10 +36,43 @@ Rectangle {
             BasemapImagery {}
 
             Surface {
-                ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                ArcGISTiledElevationSource{
+                    url: montereyTpkElevationPath
+                    //Hook up success/error reporting for the Elevation Source load
+                    onLoadStatusChanged: reportLoadStatus(loadStatus, loadError)
                 }
             }
         }
+
+        // Once the scene view has loaded, apply the camera.
+        Component.onCompleted: {
+            setViewpointCameraAndWait(camera);
+        }
+    }
+
+    function reportLoadStatus(loadStatus, loadError)
+    {
+        if(loadStatus === Enums.LoadStatusLoaded)
+        {
+            console.info("Loaded tiled elevation source succesfully");
+        }
+        else if(loadStatus === Enums.LoadStatusFailedToLoad)
+        {
+            console.warn("Error loading elevation source : ", loadError.message, loadError.additionalMessage);
+        }
+    }
+
+    // Create the camera to be used as the scene view's viewpoint, looking at Monterey, California..
+    Camera {
+        id: camera
+        location: Point {
+            x: -121.80 // Longitude
+            y: 36.51 // Latitude
+            z: 300.0 // Altiude
+            spatialReference: SpatialReference { wkid: 4326 }
+        }
+        heading: 10.0
+        pitch: 70.0
+        roll: 0.0
     }
 }
