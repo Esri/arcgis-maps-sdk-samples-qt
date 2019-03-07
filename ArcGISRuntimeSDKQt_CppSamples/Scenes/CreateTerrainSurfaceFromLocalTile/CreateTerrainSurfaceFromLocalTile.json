@@ -4,5 +4,11 @@
         "CreateTerrainSurfaceFromLocalTile.h",
         "CreateTerrainSurfaceFromLocalTile.cpp"
     ],
-    "name" : "Create Terrain Surface from Local Tile"
+    "name" : "Create Terrain Surface from Local Tile",
+    "dataItems" : [
+        {
+            "itemId" : "cce37043eb0440c7a5c109cf8aad5500",
+            "path" : "~/ArcGIS/Runtime/Data/tpk/MontereyElevation.tpk"
+        }
+    ]
 }

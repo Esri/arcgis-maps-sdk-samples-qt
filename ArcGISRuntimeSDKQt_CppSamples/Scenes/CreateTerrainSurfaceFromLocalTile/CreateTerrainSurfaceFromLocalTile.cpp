@@ -20,19 +20,75 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 
+#include <QDir>
+#include <QUrl>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif
+
+using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace {
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+    #ifdef Q_OS_ANDROID
+      dataPath = "/sdcard";
+    #elif defined Q_OS_IOS
+      dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    #else
+      dataPath = QDir::homePath();
+    #endif
+
+    return dataPath;
+  }
+}
+
 using namespace Esri::ArcGISRuntime;
 
 CreateTerrainSurfaceFromLocalTile::CreateTerrainSurfaceFromLocalTile(QObject* parent /* = nullptr */):
   QObject(parent),
   m_scene(new Scene(Basemap::imagery(this), this))
 {
-  // create a new elevation source from Terrain3D REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  // create the MontereyElevation data path
+  // data is downloaded automatically by the sample viewer app. Instructions to download
+  // separately are specified in the readme.
+  const QString montereyTileElevationPath = QString{defaultDataPath() + "/ArcGIS/Runtime/Data/tpk/MontereyElevation.tpk"};
 
-  // add the elevation source to the scene to display elevation
-  m_scene->baseSurface()->elevationSources()->append(elevationSource);
+  //Before attempting to add any layers, check that the file for the elevation source exists at all.
+  const bool srcElevationFileExists = QFileInfo::exists(montereyTileElevationPath);
 
+  if(srcElevationFileExists)
+  {
+    //Create the elevation source from the local raster(s). RasterElevationSource can take multiple files as inputs, but in this case only takes one.
+    ArcGISTiledElevationSource* elevationSrc = new ArcGISTiledElevationSource{montereyTileElevationPath, this};
+
+    //When the elevation source is finished loading, call the elevationSrcFinishedLoading callback, so we can tell if it loaded succesfully.
+    connect(elevationSrc, &ArcGISTiledElevationSource::doneLoading, this, &CreateTerrainSurfaceFromLocalTile::elevationSrcFinishedLoading, Qt::UniqueConnection);
+
+    // add the elevation source to the scene to display elevation
+    m_scene->baseSurface()->elevationSources()->append(elevationSrc);
+  }
+  else
+  {
+    qWarning() << "Could not find file at : " << montereyTileElevationPath << ". Elevation source not set.";
+  }
+}
+
+void CreateTerrainSurfaceFromLocalTile::elevationSrcFinishedLoading(Esri::ArcGISRuntime::Error loadError)
+{
+  if(loadError.isEmpty())
+  {
+    //Succesful load
+    qInfo() << "Loaded tile elevation source succesfully";
+  }
+  else {
+    //Log failure to load
+    qWarning() << "Error loading elevation source : " << loadError.message();
+  }
 }
 
 CreateTerrainSurfaceFromLocalTile::~CreateTerrainSurfaceFromLocalTile() = default;
@@ -59,6 +115,18 @@ void CreateTerrainSurfaceFromLocalTile::setSceneView(SceneQuickView* sceneView)
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
+
+  // Create a camera, looking at Monterey, California.
+  constexpr double latitude = 36.51;
+  constexpr double longitude = -121.80;
+  constexpr double altitude = 300.0;
+  constexpr double heading = 0.0;
+  constexpr double pitch = 70.0;
+  constexpr double roll = 0.0;
+  Camera camera{latitude, longitude, altitude, heading, pitch, roll};
+
+  // Set the sceneview to use above camera, waits for load so scene is immediately displayed in appropriate place.
+  m_sceneView->setViewpointCameraAndWait(camera);
 
   emit sceneViewChanged();
 }

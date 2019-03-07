@@ -1,31 +1,31 @@
-# Create Terrain Surface from Local Tile
+# Create terrain surface from a tile package
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Set the terrain surface with elevation described by a local tile package.
+
+The terrain surface is what the basemap, operational layers, and graphics are draped on.
 
 ![](screenshot.png)
 
-## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
-
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
 
-## Relevant API
- - ClassName1
- - MethodName
-
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+1. Create a `Scene` and add it to a `SceneView`.
+2. Create an `ArcGISTiledElevationSource`
+3. Add this source to the scene's base surface: `Scene.BaseSurface.ElevationSources.append(tileElevationSource)`
 
 ## Additional information
-A standard level license is required to ...
+
+See the [ArcGIS Pro Tile Package documentation](https://pro.arcgis.com/en/pro-app/help/sharing/overview/tile-package.htm) (since Esri.ArcGISRuntime 100.1) for information on tile packages
+## Relevant API
+
+* ArcGISTiledElevationSource
+* Surface
+
+## Offline data
+The tile package must be a LERC (limited error raster compression) encoded TPK. Details on creating these are in the [ArcGIS Pro documentation](https://pro.arcgis.com/en/pro-app/help/sharing/overview/tile-package.htm)\
+Link | Local Location
+---------|-------|
+|[MontereyElevation Tile Package](https://www.arcgis.com/home/item.html?id=cce37043eb0440c7a5c109cf8aad5500)| `<userhome>`/ArcGIS/Runtime/Data/tpk/MontereyElevation.tpk |
 
 ## Tags
-Routing, Network analysis, Geocode
 
+3D, Tile Cache, Elevation, Surface

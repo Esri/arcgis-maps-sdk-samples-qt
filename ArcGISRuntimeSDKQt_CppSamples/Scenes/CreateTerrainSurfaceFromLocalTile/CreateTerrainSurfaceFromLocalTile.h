@@ -19,12 +19,14 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Scene;
-class SceneQuickView;
+  namespace ArcGISRuntime
+  {
+    class Scene;
+    class SceneQuickView;
+  }
 }
-}
+
+#include "Error.h"
 
 #include <QObject>
 
@@ -42,6 +44,9 @@ public:
 
 signals:
   void sceneViewChanged();
+
+private slots:
+  void elevationSrcFinishedLoading(Esri::ArcGISRuntime::Error loadError);
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
