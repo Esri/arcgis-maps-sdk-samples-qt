@@ -2,7 +2,7 @@
 
 This sample demonstrates how to update the orientation of a graphic using scene property rotation expressions.
 
-![](ScenePropertiesExpressions.gif)
+![](screenshot.png)
 
 ## How to use the sample
 Move the `Heading` and `Pitch` sliders to change the orientation of graphics in the graphics overlay.
