@@ -9,8 +9,8 @@ The terrain surface is what the basemap, operational layers, and graphics are dr
 ## How it works
 
 1. Create a `Scene` and add it to a `SceneView`.
-2. Create a `RasterElevationSource` with a list of raster file paths.
-3. Add this source to the scene's base surface: `Scene.BaseSurface.ElevationSources.Add(rasterElevationSource)`.
+2. Create a `RasterElevationSource`.
+3. Set the url property of the `RasterElevationSource` to the path of a local raster elevation source, in this case a .dt2 file.
 
 ## Additional information
 
