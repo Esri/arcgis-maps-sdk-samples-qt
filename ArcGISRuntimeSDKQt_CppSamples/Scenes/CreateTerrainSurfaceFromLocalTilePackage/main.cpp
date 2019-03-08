@@ -15,7 +15,7 @@
 #include <Windows.h>
 #endif
 
-#include "CreateTerrainSurfaceFromLocalTile.h"
+#include "CreateTerrainSurfaceFromLocalTilePackage.h"
 
 #include <QDir>
 #include <QGuiApplication>
@@ -37,10 +37,10 @@ int main(int argc, char *argv[])
 
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("CreateTerrainSurfaceFromLocalTile - C++"));
+  app.setApplicationName(QStringLiteral("CreateTerrainSurfaceFromLocalTilePackage - C++"));
 
   // Initialize the sample
-  CreateTerrainSurfaceFromLocalTile::init();
+  CreateTerrainSurfaceFromLocalTilePackage::init();
 
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
   QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
   engine.addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Scenes/CreateTerrainSurfaceFromLocalTile/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Scenes/CreateTerrainSurfaceFromLocalTilePackage/main.qml"));
 
   return app.exec();
 }

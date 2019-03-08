@@ -1,4 +1,4 @@
-// [WriteFile Name=CreateTerrainSurfaceFromLocalTile, Category=Scenes]
+// [WriteFile Name=CreateTerrainSurfaceFromLocalTilePackage, Category=Scenes]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -26,7 +26,7 @@ Item {
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
-    CreateTerrainSurfaceFromLocalTileSample {
+    CreateTerrainSurfaceFromLocalTilePackageSample {
         id: model
         sceneView: view
     }

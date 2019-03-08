@@ -1,4 +1,4 @@
-// [WriteFile Name=CreateTerrainSurfaceFromLocalTile, Category=Scenes]
+// [WriteFile Name=CreateTerrainSurfaceFromLocalTilePackage, Category=Scenes]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef CREATETERRAINSURFACEFROMLOCALTILE_H
-#define CREATETERRAINSURFACEFROMLOCALTILE_H
+#ifndef CreateTerrainSurfaceFromLocalTilePackage_H
+#define CreateTerrainSurfaceFromLocalTilePackage_H
 
 namespace Esri
 {
@@ -30,15 +30,15 @@ namespace Esri
 
 #include <QObject>
 
-class CreateTerrainSurfaceFromLocalTile : public QObject
+class CreateTerrainSurfaceFromLocalTilePackage : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
 
 public:
-  explicit CreateTerrainSurfaceFromLocalTile(QObject* parent = nullptr);
-  ~CreateTerrainSurfaceFromLocalTile();
+  explicit CreateTerrainSurfaceFromLocalTilePackage(QObject* parent = nullptr);
+  ~CreateTerrainSurfaceFromLocalTilePackage();
 
   static void init();
 
@@ -56,4 +56,4 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
 };
 
-#endif // CREATETERRAINSURFACEFROMLOCALTILE_H
+#endif // CreateTerrainSurfaceFromLocalTilePackage_H

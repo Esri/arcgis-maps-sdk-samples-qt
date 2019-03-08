@@ -24,7 +24,7 @@ CONFIG += c++11
 QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
-TARGET = CreateTerrainSurfaceFromLocalTile
+TARGET = CreateTerrainSurfaceFromLocalTilePackage
 
 ARCGIS_RUNTIME_VERSION = 100.5
 include($$PWD/arcgisruntime.pri)
@@ -32,13 +32,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    CreateTerrainSurfaceFromLocalTile.h
+    CreateTerrainSurfaceFromLocalTilePackage.h
 
 SOURCES += \
     main.cpp \
-    CreateTerrainSurfaceFromLocalTile.cpp
+    CreateTerrainSurfaceFromLocalTilePackage.cpp
 
-RESOURCES += CreateTerrainSurfaceFromLocalTile.qrc
+RESOURCES += CreateTerrainSurfaceFromLocalTilePackage.qrc
 
 #-------------------------------------------------------------------------------
 

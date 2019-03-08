@@ -1,4 +1,4 @@
-// [WriteFile Name=CreateTerrainSurfaceFromLocalTile, Category=Scenes]
+// [WriteFile Name=CreateTerrainSurfaceFromLocalTilePackage, Category=Scenes]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "CreateTerrainSurfaceFromLocalTile.h"
+#include "CreateTerrainSurfaceFromLocalTilePackage.h"
 
 #include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
@@ -49,7 +49,7 @@ namespace {
 
 using namespace Esri::ArcGISRuntime;
 
-CreateTerrainSurfaceFromLocalTile::CreateTerrainSurfaceFromLocalTile(QObject* parent /* = nullptr */):
+CreateTerrainSurfaceFromLocalTilePackage::CreateTerrainSurfaceFromLocalTilePackage(QObject* parent /* = nullptr */):
   QObject(parent),
   m_scene(new Scene(Basemap::imagery(this), this))
 {
@@ -67,7 +67,7 @@ CreateTerrainSurfaceFromLocalTile::CreateTerrainSurfaceFromLocalTile(QObject* pa
     ArcGISTiledElevationSource* elevationSrc = new ArcGISTiledElevationSource{montereyTileElevationPath, this};
 
     // When the elevation source is finished loading, call the elevationSrcFinishedLoading callback, so we can tell if it loaded succesfully.
-    connect(elevationSrc, &ArcGISTiledElevationSource::doneLoading, this, &CreateTerrainSurfaceFromLocalTile::elevationSrcFinishedLoading);
+    connect(elevationSrc, &ArcGISTiledElevationSource::doneLoading, this, &CreateTerrainSurfaceFromLocalTilePackage::elevationSrcFinishedLoading);
 
     // add the elevation source to the scene to display elevation
     m_scene->baseSurface()->elevationSources()->append(elevationSrc);
@@ -78,7 +78,7 @@ CreateTerrainSurfaceFromLocalTile::CreateTerrainSurfaceFromLocalTile(QObject* pa
   }
 }
 
-void CreateTerrainSurfaceFromLocalTile::elevationSrcFinishedLoading(Esri::ArcGISRuntime::Error loadError)
+void CreateTerrainSurfaceFromLocalTilePackage::elevationSrcFinishedLoading(Esri::ArcGISRuntime::Error loadError)
 {
   if(loadError.isEmpty())
   {
@@ -91,22 +91,22 @@ void CreateTerrainSurfaceFromLocalTile::elevationSrcFinishedLoading(Esri::ArcGIS
   }
 }
 
-CreateTerrainSurfaceFromLocalTile::~CreateTerrainSurfaceFromLocalTile() = default;
+CreateTerrainSurfaceFromLocalTilePackage::~CreateTerrainSurfaceFromLocalTilePackage() = default;
 
-void CreateTerrainSurfaceFromLocalTile::init()
+void CreateTerrainSurfaceFromLocalTilePackage::init()
 {
   // Register classes for QML
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-  qmlRegisterType<CreateTerrainSurfaceFromLocalTile>("Esri.Samples", 1, 0, "CreateTerrainSurfaceFromLocalTileSample");
+  qmlRegisterType<CreateTerrainSurfaceFromLocalTilePackage>("Esri.Samples", 1, 0, "CreateTerrainSurfaceFromLocalTilePackageSample");
 }
 
-SceneQuickView* CreateTerrainSurfaceFromLocalTile::sceneView() const
+SceneQuickView* CreateTerrainSurfaceFromLocalTilePackage::sceneView() const
 {
   return m_sceneView;
 }
 
 // Set the view (created in QML)
-void CreateTerrainSurfaceFromLocalTile::setSceneView(SceneQuickView* sceneView)
+void CreateTerrainSurfaceFromLocalTilePackage::setSceneView(SceneQuickView* sceneView)
 {
   if (!sceneView || sceneView == m_sceneView)
   {
