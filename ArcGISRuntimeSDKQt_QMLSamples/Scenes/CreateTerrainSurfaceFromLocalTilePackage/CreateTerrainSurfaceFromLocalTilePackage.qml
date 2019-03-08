@@ -50,11 +50,11 @@ Rectangle {
     }
 
     function reportLoadStatus(loadStatus, loadError) {
-        if(loadStatus === Enums.LoadStatusLoaded) {
-            console.info("Loaded tiled elevation source succesfully");
+        if (loadStatus === Enums.LoadStatusLoaded) {
+            console.info("Loaded tiled elevation source succesfully")
         }
-        else if(loadStatus === Enums.LoadStatusFailedToLoad) {
-            console.warn("Error loading elevation source : ", loadError.message, loadError.additionalMessage);
+        else if (loadStatus === Enums.LoadStatusFailedToLoad) {
+            console.warn("Error loading elevation source : ", loadError.message, loadError.additionalMessage)
         }
     }
 
