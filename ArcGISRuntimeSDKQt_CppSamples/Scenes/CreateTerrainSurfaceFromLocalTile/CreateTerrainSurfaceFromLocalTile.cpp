@@ -58,16 +58,16 @@ CreateTerrainSurfaceFromLocalTile::CreateTerrainSurfaceFromLocalTile(QObject* pa
   // separately are specified in the readme.
   const QString montereyTileElevationPath = QString{defaultDataPath() + "/ArcGIS/Runtime/Data/tpk/MontereyElevation.tpk"};
 
-  //Before attempting to add any layers, check that the file for the elevation source exists at all.
+  // Before attempting to add any layers, check that the file for the elevation source exists at all.
   const bool srcElevationFileExists = QFileInfo::exists(montereyTileElevationPath);
 
   if(srcElevationFileExists)
   {
-    //Create the elevation source from the local raster(s). RasterElevationSource can take multiple files as inputs, but in this case only takes one.
+    // Create the elevation source from the local raster(s). RasterElevationSource can take multiple files as inputs, but in this case only takes one.
     ArcGISTiledElevationSource* elevationSrc = new ArcGISTiledElevationSource{montereyTileElevationPath, this};
 
-    //When the elevation source is finished loading, call the elevationSrcFinishedLoading callback, so we can tell if it loaded succesfully.
-    connect(elevationSrc, &ArcGISTiledElevationSource::doneLoading, this, &CreateTerrainSurfaceFromLocalTile::elevationSrcFinishedLoading, Qt::UniqueConnection);
+    // When the elevation source is finished loading, call the elevationSrcFinishedLoading callback, so we can tell if it loaded succesfully.
+    connect(elevationSrc, &ArcGISTiledElevationSource::doneLoading, this, &CreateTerrainSurfaceFromLocalTile::elevationSrcFinishedLoading);
 
     // add the elevation source to the scene to display elevation
     m_scene->baseSurface()->elevationSources()->append(elevationSrc);
@@ -82,11 +82,11 @@ void CreateTerrainSurfaceFromLocalTile::elevationSrcFinishedLoading(Esri::ArcGIS
 {
   if(loadError.isEmpty())
   {
-    //Succesful load
+    // Succesful load
     qInfo() << "Loaded tile elevation source succesfully";
   }
   else {
-    //Log failure to load
+    // Log failure to load
     qWarning() << "Error loading elevation source : " << loadError.message();
   }
 }

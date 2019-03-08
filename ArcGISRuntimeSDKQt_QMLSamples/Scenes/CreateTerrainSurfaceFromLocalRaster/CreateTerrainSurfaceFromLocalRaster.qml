@@ -36,9 +36,9 @@ Rectangle {
 
             Surface {
                 RasterElevationSource{
-                    //RasterElevationSource takes a list of raster files. Here we provide a list cotaining just a single file.
+                    // RasterElevationSource takes a list of raster files. Here we provide a list cotaining just a single file.
                     fileUrls: [montereyRasterElevationPath]
-                    //Hook up success/error reporting for the Elevation Source load
+                    // Hook up success/error reporting for the Elevation Source load
                     onLoadStatusChanged: reportLoadStatus(loadStatus, loadError)
                 }
             }
