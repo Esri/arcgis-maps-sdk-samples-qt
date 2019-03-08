@@ -74,7 +74,7 @@ CreateTerrainSurfaceFromLocalTile::CreateTerrainSurfaceFromLocalTile(QObject* pa
   }
   else
   {
-    qWarning() << "Could not find file at : " << montereyTileElevationPath << ". Elevation source not set.";
+    qDebug() << "Could not find file at : " << montereyTileElevationPath << ". Elevation source not set.";
   }
 }
 
@@ -83,11 +83,11 @@ void CreateTerrainSurfaceFromLocalTile::elevationSrcFinishedLoading(Esri::ArcGIS
   if(loadError.isEmpty())
   {
     // Succesful load
-    qInfo() << "Loaded tile elevation source succesfully";
+    qDebug() << "Loaded tile elevation source succesfully";
   }
   else {
     // Log failure to load
-    qWarning() << "Error loading elevation source : " << loadError.message();
+    qDebug() << "Error loading elevation source : " << loadError.message();
   }
 }
 

@@ -50,14 +50,11 @@ Rectangle {
         }
     }
 
-    function reportLoadStatus(loadStatus, loadError)
-    {
-        if(loadStatus === Enums.LoadStatusLoaded)
-        {
+    function reportLoadStatus(loadStatus, loadError){
+        if(loadStatus === Enums.LoadStatusLoaded){
             console.info("Loaded raster elevation source succesfully");
         }
-        else if(loadStatus === Enums.LoadStatusFailedToLoad)
-        {
+        else if(loadStatus === Enums.LoadStatusFailedToLoad){
             console.warn("Error loading elevation source : ", loadError.message, loadError.additionalMessage);
         }
     }

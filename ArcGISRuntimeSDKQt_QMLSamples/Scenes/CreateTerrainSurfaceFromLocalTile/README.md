@@ -9,7 +9,7 @@ The terrain surface is what the basemap, operational layers, and graphics are dr
 ## How it works
 
 1. Create a `Scene` and add it to a `SceneView`.
-2. Create an `ArcGISTiledElevationSource`
+2. Create an `ArcGISTiledElevationSource`  from a local tile package (.tpk)
 3. Set the url property of the `ArcGISTiledElevationSource` to the path of the tile elevation source.
 
 ## Additional information

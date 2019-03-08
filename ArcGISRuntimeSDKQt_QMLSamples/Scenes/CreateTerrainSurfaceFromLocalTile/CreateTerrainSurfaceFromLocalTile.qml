@@ -35,7 +35,7 @@ Rectangle {
             BasemapImagery {}
 
             Surface {
-                ArcGISTiledElevationSource{
+                ArcGISTiledElevationSource {
                     url: montereyTpkElevationPath
                     //Hook up success/error reporting for the Elevation Source load
                     onLoadStatusChanged: reportLoadStatus(loadStatus, loadError)
@@ -49,14 +49,11 @@ Rectangle {
         }
     }
 
-    function reportLoadStatus(loadStatus, loadError)
-    {
-        if(loadStatus === Enums.LoadStatusLoaded)
-        {
+    function reportLoadStatus(loadStatus, loadError) {
+        if(loadStatus === Enums.LoadStatusLoaded) {
             console.info("Loaded tiled elevation source succesfully");
         }
-        else if(loadStatus === Enums.LoadStatusFailedToLoad)
-        {
+        else if(loadStatus === Enums.LoadStatusFailedToLoad) {
             console.warn("Error loading elevation source : ", loadError.message, loadError.additionalMessage);
         }
     }
