@@ -1,4 +1,4 @@
-// [WriteFile Name=CreateTerrainSurfaceFromLocalTile, Category=Scenes]
+// [WriteFile Name=CreateTerrainSurfaceFromLocalTilePackage, Category=Scenes]
 // [Legal]
 // Copyright 2019 Esri.
 

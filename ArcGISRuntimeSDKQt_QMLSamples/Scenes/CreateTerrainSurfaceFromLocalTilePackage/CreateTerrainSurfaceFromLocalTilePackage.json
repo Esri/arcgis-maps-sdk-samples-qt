@@ -1,5 +1,5 @@
 {
-    "source" :  "CreateTerrainSurfaceFromLocalTile.qml",
+    "source" :  "CreateTerrainSurfaceFromLocalTilePackage.qml",
     "otherSourceFiles" :  [],
     "name" : "Create terrain surface from local tile package",
     "dataItems" : [

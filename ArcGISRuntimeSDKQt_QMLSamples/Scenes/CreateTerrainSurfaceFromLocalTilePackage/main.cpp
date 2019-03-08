@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("CreateTerrainSurfaceFromLocalTile - QML"));
+  app.setApplicationName(QStringLiteral("CreateTerrainSurfaceFromLocalTilePackage - QML"));
 
   // Intialize application view
   QQuickView view;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Scenes/CreateTerrainSurfaceFromLocalTile/CreateTerrainSurfaceFromLocalTile.qml"));
+  view.setSource(QUrl("qrc:/Samples/Scenes/CreateTerrainSurfaceFromLocalTilePackage/CreateTerrainSurfaceFromLocalTilePackage.qml"));
 
   view.show();
 
