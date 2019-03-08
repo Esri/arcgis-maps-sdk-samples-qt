@@ -4,7 +4,7 @@
         "CreateTerrainSurfaceFromLocalTile.h",
         "CreateTerrainSurfaceFromLocalTile.cpp"
     ],
-    "name" : "Create Terrain Surface from Local Tile",
+    "name" : "Create terrain surface from local tile",
     "dataItems" : [
         {
             "itemId" : "cce37043eb0440c7a5c109cf8aad5500",
