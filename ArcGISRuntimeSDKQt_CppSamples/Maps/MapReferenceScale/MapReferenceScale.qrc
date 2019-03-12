@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/MapReferenceScale">
+        <file alias="sample.json">MapReferenceScale.json</file>        
+        <file>MapReferenceScale.qml</file>
+        <file>MapReferenceScale.h</file>
+        <file>MapReferenceScale.cpp</file>
+		<file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
