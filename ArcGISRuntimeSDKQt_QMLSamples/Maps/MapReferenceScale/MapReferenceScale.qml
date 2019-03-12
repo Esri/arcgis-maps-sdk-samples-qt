@@ -27,37 +27,30 @@ Rectangle {
     height: 600
 
     property var referenceScales: [500000,250000,100000,50000]
+    property string webMapId: "3953413f3bd34e53a42bf70f2937a408"
+    property LayerListModel featureLayerModel
 
     MapView{
         id: mapView
         anchors.fill: parent
 
-        Portal {
-            id: agol
-        }
-
-        PortalItem {
-            id: itemFromId
-            portal: agol
-            itemId: "3953413f3bd34e53a42bf70f2937a408"
-        }
-
-        FeatureLayer {
-            id: featLay
-            ServiceFeatureTable {
-                initItem: itemFromId
-                initLayerId: "3953413f3bd34e53a42bf70f2937a408"
-            }
-        }
-
+        // Create a Map from a Portal Item
         Map {
-            id: webmapFromItem
-            item: itemFromId
+            id: map
 
-            onLoadStatusChanged: {
-                itemFromId.load()
-                    if (loadStatus !== Enums.LoadStatusLoaded)
-                        return;
+            PortalItem {
+                id: mapPortalItem
+                portal: portal
+                itemId: webMapId
+                onErrorChanged: {
+                        console.log("Error in portal item: " + error.message + "(" + error.additionalMessage + ")");
+                }
+                onLoadStatusChanged: {
+                        if (loadStatus === Enums.LoadStatusLoaded) {
+                            console.log("Item title: " + title);
+                            featureLayerModel = map.operationalLayers
+                        }
+                }
             }
         }
     }
@@ -131,9 +124,7 @@ Rectangle {
                     clip: true
 
                     onActivated: {
-                        //webmapFromItem.referenceScale = referenceScales[scales.currentIndex]
-                        //apply to selected featurelayers
-                        applyReferenceScaleToSelected()
+                        applyReferenceScaleToMap()
                     }
                 }
 
@@ -210,7 +201,7 @@ Rectangle {
                     clip: true
 
                     // Assign the model to the list model of sublayers
-                    model: webmapFromItem.operationalLayers
+                    model: map.operationalLayers
 
                     // Assign the delegate to the delegate created above
                     delegate: Item {
@@ -219,23 +210,18 @@ Rectangle {
                         height: 25
 
                         Row {
+                            id: layerRows
                             spacing: 2
 
                             CheckBox {
                                 id: featureLayerBox
                                 anchors.verticalCenter: parent.verticalCenter
                                 height: 15
-                                checked: true
                                 width: 15
                                 clip: true
+                                checked: true
                                 onCheckStateChanged: {
-                                    console.log(featureLayerText.text)
-                                    console.log(layerType)
-                                    if( featureLayerBox.checked ){
-                                        layerVisible = true
-                                    } else {
-                                        layerVisible = false
-                                    }
+                                    updateFeatureLayerScaleSymbols(name,featureLayerBox.checked)
                                 }
                             }
 
@@ -255,12 +241,23 @@ Rectangle {
         }
     }
 
-    function applyReferenceScaleToSelected() {
-
-
-        webmapFromItem.referenceScale = referenceScales[scales.currentIndex]
+    function applyReferenceScaleToMap() {
+        map.referenceScale = referenceScales[scales.currentIndex]
     }
 
+    //pass in layers name and checked status to update featurelayer.ScaleSymbols property accordingly
+    function updateFeatureLayerScaleSymbols(layerName, checkedStatus) {
+        for(var i = 0; i < featureLayerModel.count; i++){
+            var featureLayer = featureLayerModel.get(i)
+            if(layerName === featureLayer.name){
+                if(checkedStatus){
+                    featureLayer.scaleSymbols = true
+                } else {
+                    featureLayer.scaleSymbols = false
+                }
+            }
+        }
+    }
 }
 
 
