@@ -23,8 +23,8 @@ import QtQuick.Layouts 1.12
 Rectangle {
     id: rootRectangle
     clip: true
-    width: 500
-    height: 500
+    width: 800
+    height: 600
 
     property var referenceScales: [500000,250000,100000,50000]
     property string webMapId: "3953413f3bd34e53a42bf70f2937a408"
