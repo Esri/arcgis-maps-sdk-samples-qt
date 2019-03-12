@@ -23,8 +23,8 @@ import QtQuick.Layouts 1.12
 Rectangle {
     id: rootRectangle
     clip: true
-    width: 800
-    height: 600
+    width: 500
+    height: 500
 
     property var referenceScales: [500000,250000,100000,50000]
     property string webMapId: "3953413f3bd34e53a42bf70f2937a408"
@@ -48,6 +48,7 @@ Rectangle {
                 onLoadStatusChanged: {
                         if (loadStatus === Enums.LoadStatusLoaded) {
                             console.log("Item title: " + title);
+                            //load operational layers into listmodel
                             featureLayerModel = map.operationalLayers
                         }
                 }
@@ -201,7 +202,7 @@ Rectangle {
                     clip: true
 
                     // Assign the model to the list model of sublayers
-                    model: map.operationalLayers
+                    model: featureLayerModel
 
                     // Assign the delegate to the delegate created above
                     delegate: Item {
