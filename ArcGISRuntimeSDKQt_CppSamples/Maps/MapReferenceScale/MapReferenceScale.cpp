@@ -16,15 +16,36 @@
 
 #include "MapReferenceScale.h"
 
+#include "Portal.h"
+#include "PortalItem.h"
 #include "Map.h"
+#include "LayerListModel.h"
 #include "MapQuickView.h"
+
 
 using namespace Esri::ArcGISRuntime;
 
+
 MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::imagery(this), this))
+  m_map(new Map(Basemap::imagery(this), this)),
+  m_portal(new Portal(this)),
+  m_portalItem(new PortalItem(m_portal, "3953413f3bd34e53a42bf70f2937a408", this))
 {
+  m_map = new Map(m_portalItem, this);
+
+  //once map is loaded set FeatureLayer list model
+  connect(m_map, &Map::doneLoading, this, [this](Error loadError)
+  {
+    if (!loadError.isEmpty())
+        return;
+
+    m_layerInfoListModel = m_map->operationalLayers();
+    emit layerInfoListModelChanged();
+    qDebug() << m_mapView->scale();
+    m_mapScale = m_mapView->scale();
+    emit mapScaleChanged();
+  });
 
 }
 
@@ -35,6 +56,8 @@ void MapReferenceScale::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<MapReferenceScale>("Esri.Samples", 1, 0, "MapReferenceScaleSample");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
+
 }
 
 MapQuickView* MapReferenceScale::mapView() const
