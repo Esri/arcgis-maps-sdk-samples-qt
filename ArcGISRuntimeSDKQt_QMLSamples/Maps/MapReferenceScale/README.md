@@ -1,7 +1,7 @@
 # Map reference scale
 Set the map's reference scale and which feature layers should honor the reference scale.
 
-![Map Reference Scale App](map-reference-scale.png)
+![Map Reference Scale App](screenshot.png)
 
 ## Use case
 
