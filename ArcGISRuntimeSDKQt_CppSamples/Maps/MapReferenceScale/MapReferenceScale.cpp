@@ -19,6 +19,7 @@
 #include "Portal.h"
 #include "PortalItem.h"
 #include "Map.h"
+#include "Layer.h"
 #include "LayerListModel.h"
 #include "MapQuickView.h"
 
@@ -42,9 +43,9 @@ MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
 
     m_layerInfoListModel = m_map->operationalLayers();
     emit layerInfoListModelChanged();
-    qDebug() << m_mapView->scale();
-    m_mapScale = m_mapView->scale();
-    emit mapScaleChanged();
+//    qDebug() << mapView()->scale();
+//    m_mapScale = mapView()->scale();
+//    emit mapScaleChanged();
   });
 
 }
@@ -57,8 +58,28 @@ void MapReferenceScale::init()
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<MapReferenceScale>("Esri.Samples", 1, 0, "MapReferenceScaleSample");
   qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
-
 }
+
+void MapReferenceScale::changeReferenceScale(const double& scale){
+  m_map->setReferenceScale(scale);
+}
+
+void MapReferenceScale::setMapScaleToReferenceScale(const double& scale){
+  m_mapView->setViewpointScale(scale);
+}
+
+void MapReferenceScale::featureLayerScaleSymbols(const QString& layerName, const bool& checkedStatus){
+  LayerListModel* model = m_map->operationalLayers();
+  for( Layer* featureLayer : *model ) {
+    if(featureLayer->name() == layerName){
+      if(checkedStatus){
+        qDebug() << featureLayer->name() +  " + " + checkedStatus;
+       }
+    }
+  }
+}
+
+
 
 MapQuickView* MapReferenceScale::mapView() const
 {

@@ -46,6 +46,12 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void changeReferenceScale(const double& scale);
+  Q_INVOKABLE void setMapScaleToReferenceScale(const double& scale);
+  //not working and I don't know why
+  Q_INVOKABLE void featureLayerScaleSymbols(const QString& layerName, const bool& checkedStatus);
+
+
 signals:
   void mapViewChanged();
   void layerInfoListModelChanged();

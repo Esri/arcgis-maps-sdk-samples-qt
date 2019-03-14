@@ -95,6 +95,7 @@ Item {
                     Layout.fillWidth: true
                     model: ["1:500000","1:250000","1:100000","1:50000"]
                     clip: true
+                    onActivated: model.changeReferenceScale(referenceScales[scales.currentIndex])
                 }
 
                 Button {
@@ -106,6 +107,7 @@ Item {
                     }
                     Layout.fillWidth: true
                     clip: true
+                    onClicked: model.setMapScaleToReferenceScale(referenceScales[scales.currentIndex])
                 }
             }
         }
@@ -170,7 +172,6 @@ Item {
 
                     // Assign the delegate to the delegate created above
                     delegate: Item {
-                        id: layerVisibilityDelegate
                         width: parent.width
                         height: 25
 
@@ -180,16 +181,16 @@ Item {
 
                             CheckBox {
                                 id: featureLayerBox
-                                anchors.verticalCenter: parent.verticalCenter
                                 height: 15
                                 width: 15
                                 clip: true
                                 checked: true
+                                //not finding Q_INVOKABLE function and I don't know why
+                                onClicked: model.featureLayerScaleSymbols(name,featureLayerBox.checked)
                             }
 
                             Text {
                                 id: featureLayerText
-                                anchors.verticalCenter: parent.verticalCenter
                                 text: name
                                 wrapMode: Text.WordWrap
                                 font.pixelSize: 11
