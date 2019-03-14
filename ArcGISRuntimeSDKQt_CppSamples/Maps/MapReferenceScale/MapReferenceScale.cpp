@@ -44,9 +44,6 @@ MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
 
     m_layerInfoListModel = m_map->operationalLayers();
     emit layerInfoListModelChanged();
-    qDebug() << mapView()->mapScale();
-    m_mapScale = mapView()->mapScale();
-    emit mapScaleChanged();
   });
 
 }

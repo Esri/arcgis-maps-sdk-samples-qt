@@ -22,7 +22,7 @@ import QtQuick.Layouts 1.12
 Item {
 
     property var referenceScales: [500000,250000,100000,50000]
-    property real currentScale: mapReferenceScaleSampleModel.mapScale
+    property real currentScale: mapReferenceScaleSampleModel.currentMapScale()
 
     // add a mapView component
     MapView {
@@ -101,6 +101,7 @@ Item {
                     Layout.fillWidth: true
                     model: ["1:500000","1:250000","1:100000","1:50000"]
                     clip: true
+                    Component.onCompleted: mapReferenceScaleSampleModel.changeReferenceScale(referenceScales[scales.currentIndex])
                     onActivated: mapReferenceScaleSampleModel.changeReferenceScale(referenceScales[scales.currentIndex])
                 }
 
@@ -173,10 +174,10 @@ Item {
                     height: parent.height
                     clip: true
 
-                    //assign model
+                    // Assign the model to the list model of operational layers
                     model: mapReferenceScaleSampleModel.layerInfoListModel
 
-                    // Assign the delegate to the delegate created above
+                    // Assign the delegate to display text next to checkbox as a row
                     delegate: Item {
                         width: parent.width
                         height: 25
