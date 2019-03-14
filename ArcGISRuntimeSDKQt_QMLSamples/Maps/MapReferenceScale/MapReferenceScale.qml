@@ -216,19 +216,17 @@ Rectangle {
 
                             CheckBox {
                                 id: featureLayerBox
-                                anchors.verticalCenter: parent.verticalCenter
                                 height: 15
                                 width: 15
                                 clip: true
                                 checked: true
                                 onCheckStateChanged: {
-                                    updateFeatureLayerScaleSymbols(name,featureLayerBox.checked)
+                                    featureLayerScaleSymbols(name,featureLayerBox.checked)
                                 }
                             }
 
                             Text {
                                 id: featureLayerText
-                                anchors.verticalCenter: parent.verticalCenter
                                 text: name
                                 wrapMode: Text.WordWrap
                                 font.pixelSize: 11
@@ -247,7 +245,7 @@ Rectangle {
     }
 
     //pass in layers name and checked status to update featurelayer.ScaleSymbols property accordingly
-    function updateFeatureLayerScaleSymbols(layerName, checkedStatus) {
+    function featureLayerScaleSymbols(layerName, checkedStatus) {
         for(var i = 0; i < featureLayerModel.count; i++){
             var featureLayer = featureLayerModel.get(i)
             if(layerName === featureLayer.name){
