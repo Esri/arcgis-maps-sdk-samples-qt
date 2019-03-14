@@ -22,11 +22,15 @@ import QtQuick.Layouts 1.12
 Item {
 
     property var referenceScales: [500000,250000,100000,50000]
+    property real currentScale: mapReferenceScaleSampleModel.mapScale
 
     // add a mapView component
     MapView {
-        id: view
+        id: myMapView
         anchors.fill: parent
+        onMapScaleChanged: {
+            currentScale = mapReferenceScaleSampleModel.currentMapScale()
+        }
     }
 
     Rectangle {
@@ -67,8 +71,10 @@ Item {
                 }
 
                 Text {
+                    id: currentMapScaleText
                     color: "#ffffff"
-                    text: qsTr("Current Map Scale 1:" + Math.round(model.mapScale))
+                    //text: qsTr("Current Map Scale 1:" + Math.round(mapReferenceScaleSampleModel.mapScale))
+                    text: qsTr("Current Map Scale 1:" + Math.round(currentScale))
                     font {
                         weight: Font.DemiBold
                         pixelSize: 11
@@ -95,7 +101,7 @@ Item {
                     Layout.fillWidth: true
                     model: ["1:500000","1:250000","1:100000","1:50000"]
                     clip: true
-                    onActivated: model.changeReferenceScale(referenceScales[scales.currentIndex])
+                    onActivated: mapReferenceScaleSampleModel.changeReferenceScale(referenceScales[scales.currentIndex])
                 }
 
                 Button {
@@ -107,7 +113,7 @@ Item {
                     }
                     Layout.fillWidth: true
                     clip: true
-                    onClicked: model.setMapScaleToReferenceScale(referenceScales[scales.currentIndex])
+                    onClicked: mapReferenceScaleSampleModel.setMapScaleToReferenceScale(referenceScales[scales.currentIndex])
                 }
             }
         }
@@ -168,7 +174,7 @@ Item {
                     clip: true
 
                     //assign model
-                    model: model.layerInfoListModel
+                    model: mapReferenceScaleSampleModel.layerInfoListModel
 
                     // Assign the delegate to the delegate created above
                     delegate: Item {
@@ -185,8 +191,7 @@ Item {
                                 width: 15
                                 clip: true
                                 checked: true
-                                //not finding Q_INVOKABLE function and I don't know why
-                                onClicked: model.featureLayerScaleSymbols(name,featureLayerBox.checked)
+                                onCheckStateChanged: mapReferenceScaleSampleModel.featureLayerScaleSymbols(name,featureLayerBox.checked)
                             }
 
                             Text {
@@ -205,7 +210,7 @@ Item {
     }
     // Declare the C++ instance which creates the scene etc. and supply the view
     MapReferenceScaleSample {
-        id: model
-        mapView: view
+        id: mapReferenceScaleSampleModel
+        mapView: myMapView
     }
 }

@@ -50,6 +50,7 @@ public:
   Q_INVOKABLE void setMapScaleToReferenceScale(const double& scale);
   //not working and I don't know why
   Q_INVOKABLE void featureLayerScaleSymbols(const QString& layerName, const bool& checkedStatus);
+  Q_INVOKABLE double currentMapScale();
 
 
 signals:
