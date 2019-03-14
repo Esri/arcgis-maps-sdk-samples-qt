@@ -249,11 +249,7 @@ Rectangle {
         for(var i = 0; i < featureLayerModel.count; i++){
             var featureLayer = featureLayerModel.get(i)
             if(layerName === featureLayer.name){
-                if(checkedStatus){
-                    featureLayer.scaleSymbols = true
-                } else {
-                    featureLayer.scaleSymbols = false
-                }
+                featureLayer.scaleSymbols = checkedStatus
             }
         }
     }
