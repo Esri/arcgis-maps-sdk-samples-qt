@@ -40,7 +40,7 @@ Item {
             left: parent.left
             top: parent.top
         }
-        height: 180
+        height: 150
         width: 200
         color: "transparent"
 
@@ -73,8 +73,9 @@ Item {
                 Text {
                     id: currentMapScaleText
                     color: "#ffffff"
-                    //text: qsTr("Current Map Scale 1:" + Math.round(mapReferenceScaleSampleModel.mapScale))
                     text: qsTr("Current Map Scale 1:" + Math.round(currentScale))
+                    Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+                    verticalAlignment: Text.AlignBottom
                     font {
                         weight: Font.DemiBold
                         pixelSize: 11
@@ -85,6 +86,8 @@ Item {
                 Text {
                     color: "#ffffff"
                     text: qsTr("Select a new reference scale")
+                    Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+                    verticalAlignment: Text.AlignBottom
                     font {
                         weight: Font.DemiBold
                         pixelSize: 11
@@ -106,11 +109,11 @@ Item {
                 }
 
                 Button {
-                    id: button
                     text: qsTr("Set Map Scale to Reference Scale")
                     font {
                         weight: Font.DemiBold
                         pixelSize: 11
+                        capitalization: Font.MixedCase
                     }
                     Layout.fillWidth: true
                     clip: true
@@ -127,8 +130,8 @@ Item {
             right: parent.right
             top: parent.top
         }
-        height: 200
-        width: 125
+        height: 235
+        width: 145
         color: "transparent"
 
         MouseArea {
@@ -151,13 +154,15 @@ Item {
 
             ColumnLayout {
                 id: operationalLayersLayout
+                spacing: 0
                 anchors {
                     fill: parent
-                    margins: 10
+                    margins: 2
                 }
 
                 Text {
                     text: qsTr("Apply Reference Scale")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     font {
                         weight: Font.DemiBold
                         pixelSize: 11
@@ -172,7 +177,9 @@ Item {
                     anchors.margins: 10
                     width: parent.width
                     height: parent.height
+                    Layout.fillWidth: true
                     clip: true
+                    spacing: 5.5
 
                     // Assign the model to the list model of operational layers
                     model: mapReferenceScaleSampleModel.layerInfoListModel
@@ -184,12 +191,11 @@ Item {
 
                         Row {
                             id: layerRows
-                            spacing: 2
+                            spacing: 4
 
                             CheckBox {
                                 id: featureLayerBox
-                                height: 15
-                                width: 15
+                                anchors.verticalCenter: parent.verticalCenter
                                 clip: true
                                 checked: true
                                 onCheckStateChanged: mapReferenceScaleSampleModel.featureLayerScaleSymbols(name,featureLayerBox.checked)
@@ -197,6 +203,7 @@ Item {
 
                             Text {
                                 id: featureLayerText
+                                anchors.verticalCenter: parent.verticalCenter
                                 text: name
                                 wrapMode: Text.WordWrap
                                 font.pixelSize: 11
