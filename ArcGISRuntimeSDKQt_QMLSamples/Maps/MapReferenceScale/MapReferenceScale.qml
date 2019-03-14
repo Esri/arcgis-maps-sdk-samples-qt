@@ -121,12 +121,9 @@ Rectangle {
                     }
                     Layout.fillWidth: true
                     model: ["1:500000","1:250000","1:100000","1:50000"]
-
                     clip: true
-
-                    onActivated: {
-                        applyReferenceScaleToMap()
-                    }
+                    Component.onCompleted: applyReferenceScaleToMap()
+                    onActivated: applyReferenceScaleToMap()
                 }
 
                 Button {
@@ -201,10 +198,10 @@ Rectangle {
                     height: parent.height
                     clip: true
 
-                    // Assign the model to the list model of sublayers
+                    // Assign the model to the list model of operational layers
                     model: featureLayerModel
 
-                    // Assign the delegate to the delegate created above
+                    // Assign the delegate to display text next to checkbox as a row
                     delegate: Item {
                         id: layerVisibilityDelegate
                         width: parent.width
