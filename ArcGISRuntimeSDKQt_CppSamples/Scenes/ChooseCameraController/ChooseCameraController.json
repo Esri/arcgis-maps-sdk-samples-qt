@@ -1,0 +1,8 @@
+{
+    "source" :  "ChooseCameraController.qml",
+    "otherSourceFiles" :  [
+        "ChooseCameraController.h",
+        "ChooseCameraController.cpp"
+    ],
+    "name" : "Choose Camera Controller"
+}
