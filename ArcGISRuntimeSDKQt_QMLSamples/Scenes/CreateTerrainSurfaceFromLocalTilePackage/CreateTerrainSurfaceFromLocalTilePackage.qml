@@ -1,4 +1,4 @@
-// [WriteFile Name=CreateTerrainSurfaceFromLocalRaster, Category=Scenes]
+// [WriteFile Name=CreateTerrainSurfaceFromLocalTilePackage, Category=Scenes]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property string montereyRasterElevationPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"
+    property string montereyTpkElevationPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpk/MontereyElevation.tpk"
 
     SceneView {
         id: sceneView
@@ -35,10 +35,9 @@ Rectangle {
             BasemapImagery {}
 
             Surface {
-                RasterElevationSource{
-                    // RasterElevationSource takes a list of raster files. Here we provide a list cotaining just a single file.
-                    fileUrls: [montereyRasterElevationPath]
-                    // Hook up success/error reporting for the Elevation Source load
+                ArcGISTiledElevationSource {
+                    url: montereyTpkElevationPath
+                    //Hook up success/error reporting for the Elevation Source load
                     onLoadStatusChanged: reportLoadStatus(loadStatus, loadError)
                 }
             }
@@ -50,12 +49,12 @@ Rectangle {
         }
     }
 
-    function reportLoadStatus(loadStatus, loadError){
-        if(loadStatus === Enums.LoadStatusLoaded){
-            console.info("Loaded raster elevation source succesfully");
+    function reportLoadStatus(loadStatus, loadError) {
+        if (loadStatus === Enums.LoadStatusLoaded) {
+            console.info("Loaded tiled elevation source succesfully")
         }
-        else if(loadStatus === Enums.LoadStatusFailedToLoad){
-            console.warn("Error loading elevation source : ", loadError.message, loadError.additionalMessage);
+        else if (loadStatus === Enums.LoadStatusFailedToLoad) {
+            console.warn("Error loading elevation source : ", loadError.message, loadError.additionalMessage)
         }
     }
 

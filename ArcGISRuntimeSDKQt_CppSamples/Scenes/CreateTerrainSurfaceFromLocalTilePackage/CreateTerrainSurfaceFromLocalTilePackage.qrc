@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/CreateTerrainSurfaceFromLocalTilePackage">
+        <file alias="sample.json">CreateTerrainSurfaceFromLocalTilePackage.json</file>        
+        <file>CreateTerrainSurfaceFromLocalTilePackage.qml</file>
+        <file>CreateTerrainSurfaceFromLocalTilePackage.h</file>
+        <file>CreateTerrainSurfaceFromLocalTilePackage.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
