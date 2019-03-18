@@ -132,6 +132,7 @@ Rectangle {
         ColumnLayout {
 
             Text {
+                Layout.margins: 5
                 Layout.fillWidth: true
                 text: "Choose camera control"
                 clip: true
