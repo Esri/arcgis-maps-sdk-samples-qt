@@ -1,31 +1,68 @@
 # Orbit the camera around an object
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
-
+Fix the camera to point at and rotate around a target object.
 ![](screenshot.png)
 
+##Use Case
+The orbit geoelement camera controller provides control over the following camera behaviours
+ - automatically track the target
+ - stay near the target by setting a minimum and maximum distance offset
+ - restrict where you can rotate around the target
+ - automatically rotate the camera when the target's heading and pitch changes
+ - disable user interactions for rotating the camera
+ - animate camera movement over a specified duration
+ - control the vertical positioning of the target on the screen
+ - set a target offset (e.g.to orbit around the tail of the plane) instead of defaulting to orbiting the center of the object
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+he sample loads with the camera orbiting an plane model. The camera is preset with a restricted camera heading and pitch, and a limited minimum and maximum camera distance set from the plane. The position of the plane on the screen is also set just below center.
+
+Use the "Camera Heading" slider to adjust the camera heading. Select the "Allow camera distance interaction" checkbox to allow zooming in and out with the mouse/keyboard: when the checkbox is deselected the user will be unable to adjust with the camera distance.
+
+Use the "Plane Pitch" slider to adjust the plane's pitch. When not in Cockpit view, the plane's pitch will change independently to that of the camera pitch.
+
+Use the "Cockpit view" button to offset and fix the camera into the cockpit of the plane. Use the "Plane pitch" slider to control the pitch of plane: the camera will follow the pitch of the plane in this mode. In this view adjusting the camera distance is disabled. Hit the "Center view" button to exit cockpit view mode and fix the camera controller on the center of the plane.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+Instantiate an `OrbitGeoElementCameraController` with `GeoElement` and camera distance as parameters
+Use `sceneView.setCameraController(OrbitCameraController)` to set the camera to the scene view
+Set the heading, pitch and distance camera properties with:
+  `orbitCameraController.setCameraHeadingOffset(double)`
+  `orbitCameraController.setCameraPitchOffset(double)`
+  `orbitCameraController.setCameraDistance(double)`
+
+Set the minimum and maximum angle of heading and pitch, and minimum and maximum distance for the camera with:
+  `orbitCameraController.setMin` or `setMaxCameraHeadingOffset(double)`
+  `orbitCameraController.setMin` or `setMaxCameraPitchOffset(double)`
+  `orbitCameraController.setMin` or `setMaxCameraDistance(double)`
+
+Set the distance from which the camera is offset from the plane with:
+  `orbitCameraController.setTargetOffsetsAsync(x, y, z, duration)`
+  `orbitCameraController.setTargetOffsetX(double)`
+  `orbitCameraController.setTargetOffsetY(double)`
+  `orbitCameraController.setTargetOffsetZ(double)`
+
+Set the vertical screen factor to determine where the plane appears in the scene:
+  `orbitCameraController.setTargetVerticalScreenFactor(float)`
+
+Animate the camera to the cockpit using `orbitCameraController.setTargetOffsetsAsync(x, y, z, duration)`
+
+Set if the camera distance will adjust when zooming or panning using mouse or keyboard (default is true):
+  `orbitCameraController.setCameraDistanceInteractive(boolean)`
+Set if the camera will follow the pitch of the plane (default is true):
+  `orbitCameraController.setAutoPitchEnabled(boolean)`
+
 
 ## Relevant API
- - ClassName1
- - MethodName
+ - OrbitGeoElementCameraController
 
 ## Offline data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
 ---------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+|[Bristol Plane Model](https://www.arcgis.com/home/item.html?id=681d6f7694644709a7c830ec57a2d72b)| `<userhome>`/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae |
 
 ## Tags
-Routing, Network analysis, Geocode
+OrbitGeoElementCameraController, Camera, SceneView, 3D
 

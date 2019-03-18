@@ -17,16 +17,15 @@
 #include "OrbitCameraAroundObject.h"
 
 #include "ArcGISTiledElevationSource.h"
+#include "Graphic.h"
+#include "ModelSceneSymbol.h"
+#include "OrbitGeoElementCameraController.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "ModelSceneSymbol.h"
-#include "Graphic.h"
-#include "SceneQuickView.h"
-#include "OrbitGeoElementCameraController.h"
+#include "SimpleRenderer.h"
 
 #include <QDir>
-
-#include <utility>
+#include <QPointF>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -46,26 +45,6 @@ namespace
     #endif
 
     return dataPath;
-  }
-
-  //TODO: Is this 2 responsibilities? Factor it out?
-  //TODO: Load error handling
-  //Load a 3d model from the specified URL. Create a graphic, and add it to the sceneview so it's rendered.
-  //Precondition : sceneView must have graphics overlay
-  std::pair<ModelSceneSymbol*, Graphic*> load3dModelAndAddToScene(QUrl modelPath,
-                                                                  SceneQuickView& sceneView,
-                                                                  float modelScale,
-                                                                  Point initialPosition,
-                                                                  QObject* parent)
-  {
-    //SceneView must have at least one graphics overlay to add the graphic to.
-    assert(sceneView.graphicsOverlays()->size() > 0);
-
-    ModelSceneSymbol* model = new ModelSceneSymbol(modelPath, modelScale, parent);
-    model->load();
-    Graphic* graphic = new Graphic(initialPosition, model, parent);
-    sceneView.graphicsOverlays()->at(0)->graphics()->append(graphic);
-    return {model, graphic};
   }
 }
 
@@ -106,44 +85,189 @@ void OrbitCameraAroundObject::setSceneView(SceneQuickView* sceneView)
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
 
-
   // create a new graphics overlay and add it to the sceneview
   GraphicsOverlay* sceneOverlay = new GraphicsOverlay(this);
-  sceneOverlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Absolute));
+  sceneOverlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Relative));
   m_sceneView->graphicsOverlays()->append(sceneOverlay);
 
+  // create a renderer to control the plane's orientation by its attributes
+  SimpleRenderer* renderer3D = new SimpleRenderer(this);
+  {
+    //Set the renderer pitch/heading expressions, so the plane can be oriented via properties.
+    RendererSceneProperties properties = renderer3D->sceneProperties();
+    properties.setPitchExpression("[PITCH]");
+    properties.setHeadingExpression("[HEADING]");
+    renderer3D->setSceneProperties(properties);
+  }
+  sceneOverlay->setRenderer(renderer3D);
 
+  //Load a plane model.
   QUrl planeFileURl = QUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae");
-  Point runwayPos = Point{0.0, 51.4934, 1000, SpatialReference::wgs84()}; //Just over London
-  std::pair<ModelSceneSymbol*, Graphic*> plane = load3dModelAndAddToScene(planeFileURl, *m_sceneView, 2.0, runwayPos, this);
+  ModelSceneSymbol* planeModel = new ModelSceneSymbol(planeFileURl, 1.0, this);
+  planeModel->load();
+
+  //Create a graphic from the plane model, positioned atop a runway.
+  Point runwayPos = Point{6.637, 45.399, 100, SpatialReference::wgs84()};
+  m_planeGraphic = new Graphic(runwayPos, planeModel, this);
+
+  //Create the plane orientation attributes that are going to be used. Orient the heading 45 degs so the plane faces down the runway.
+  m_planeGraphic->attributes()->insertAttribute("PITCH", 0.0);
+  m_planeGraphic->attributes()->insertAttribute("HEADING", 45.0);
+
+  //Add the plane graphic to the scene.
+  m_sceneView->graphicsOverlays()->at(0)->graphics()->append(m_planeGraphic);
 
   // create the camera controller to follow the plane
-  OrbitGeoElementCameraController* orbitCam = new OrbitGeoElementCameraController(plane.second, 500, this);
+  m_orbitCam = new OrbitGeoElementCameraController(m_planeGraphic, 50, this);
 
   // restrict the camera's heading to stay behind the plane
-  orbitCam->setMinCameraHeadingOffset(-45);
-  orbitCam->setMaxCameraHeadingOffset(45);
+  // Note : Since this is exposed and hooked up as a property, the heading slider in the UI will automatically adjust its bounds, try changing these values.
+  m_orbitCam->setMinCameraHeadingOffset(-45);
+  m_orbitCam->setMaxCameraHeadingOffset(45);
+  emit cameraHeadingBoundsChanged();
 
   // restrict the camera's pitch so it doesn't go completely vertical or collide with the ground
-  orbitCam->setMinCameraPitchOffset(10);
-  orbitCam->setMaxCameraPitchOffset(100);
+  m_orbitCam->setMinCameraPitchOffset(10);
+  m_orbitCam->setMaxCameraPitchOffset(100);
 
   // restrict the camera to stay between 10 and 1000 meters from the plane
-  orbitCam->setMinCameraDistance(10);
-  orbitCam->setMaxCameraDistance(100);
+  m_orbitCam->setMinCameraDistance(10);
+  m_orbitCam->setMaxCameraDistance(100);
 
   // position the plane a third from the bottom of the screen
-  orbitCam->setTargetVerticalScreenFactor(0.33f);
-
+  m_orbitCam->setTargetVerticalScreenFactor(0.33f);
   // don't pitch the camera when the plane pitches
-  orbitCam->setAutoPitchEnabled(false);
+  m_orbitCam->setAutoPitchEnabled(false);
 
-  m_sceneView->setCameraController(orbitCam);
+  // Forward the camera heading changed signal on to the QML property signal.
+  // This allows the "camera heading" slider to react to changing the camera heading via mouse motion
+  // See "onMoved" signal handler in OrbitCameraAroundObject.qml
+  connect(m_orbitCam, &OrbitGeoElementCameraController::cameraHeadingOffsetChanged, this, &OrbitCameraAroundObject::cameraHeadingChanged);
 
-
-
-
+  //Apply our new orbiting camera to the scene view.
+  m_sceneView->setCameraController(m_orbitCam);
 
   emit sceneViewChanged();
 }
 
+void OrbitCameraAroundObject::cockpitView()
+{
+  /*
+   * Animates the camera to a cockpit view. The camera's target is offset to the cockpit (instead of the plane's
+   * center). The camera is moved onto the target position to create a swivelling camera effect. Auto pitch is
+   * enabled so the camera pitches when the plane pitches.
+   */
+
+  //No zooming in/out by default in cockpit view
+  setCamDistanceInteractionAllowed(false);
+
+  //allow the camera to get closer to the target
+  m_orbitCam->setMinCameraDistance(0);
+
+  // pitch the camera when the plane pitches
+  m_orbitCam->setAutoPitchEnabled(true);
+
+  // animate the camera target to the cockpit instead of the center of the plane
+  m_orbitCam->setTargetOffsets(0, -2, 1.1, 1);
+
+  //Camera move-to-cockpit callback.
+  connect(m_orbitCam, &OrbitGeoElementCameraController::moveCameraCompleted, this,
+          [this](QUuid, bool succeeded)
+  {
+    if(succeeded)
+    {
+      //once the camera is in the cockpit, only allow the camera's heading to change
+      m_orbitCam->setMinCameraPitchOffset(90);
+      m_orbitCam->setMaxCameraPitchOffset(90);
+    }
+  });
+
+  //Start the camera move into the cockpit
+  m_orbitCam->moveCamera(0 - m_orbitCam->cameraDistance(),
+                         0 - m_orbitCam->cameraHeadingOffset(),
+                         90 - m_orbitCam->cameraPitchOffset(), 1);
+
+}
+
+
+void OrbitCameraAroundObject::centerView()
+{
+  /*
+   * Configures the camera controller for a "follow" view. The camera targets the center of the plane with a default
+   * position directly behind and slightly above the plane. Auto pitch is disabled so the camera does not pitch when
+   * the plane pitches.
+   */
+
+  setCamDistanceInteractionAllowed(true);
+  m_orbitCam->setAutoPitchEnabled(false);
+  m_orbitCam->setTargetOffsetX(0);
+  m_orbitCam->setTargetOffsetY(0);
+  m_orbitCam->setTargetOffsetZ(0);
+  m_orbitCam->setCameraHeadingOffset(0);
+  m_orbitCam->setMinCameraPitchOffset(10);
+  m_orbitCam->setMaxCameraPitchOffset(100);
+  m_orbitCam->setCameraPitchOffset(45);
+  m_orbitCam->setMinCameraDistance(10.0);
+  m_orbitCam->setCameraDistance(50.0);
+}
+
+// QML Property methods, (see the Q_PROPERTY declarations in header file,) for allowing the model to interact with the UI
+// We need to do nullptr checks here as it's entirely possible, and even expected, that these getter properties will be called by the UI
+// before setSceneView has been called. Objects like the camera are not initialised until then, so return sensible defaults if the object is null.
+bool OrbitCameraAroundObject::camDistanceInteractionAllowed() const
+{
+  return m_orbitCam != nullptr ? m_orbitCam->isCameraDistanceInteractive() : true;
+}
+
+void OrbitCameraAroundObject::setCamDistanceInteractionAllowed(bool allowed)
+{
+  //Check the allowed flags arn't the same on set to avoid a binding loop
+  if((m_orbitCam != nullptr) && (allowed != m_orbitCam->isCameraDistanceInteractive()))
+  {
+    m_orbitCam->setCameraDistanceInteractive(allowed);
+    emit camDistanceInteractionAllowedChanged();
+  }
+}
+
+double OrbitCameraAroundObject::cameraHeading() const
+{
+  return m_orbitCam != nullptr ? m_orbitCam->cameraHeadingOffset() : 0.0;
+}
+
+void OrbitCameraAroundObject::setCameraHeading(double heading)
+{
+  if(m_orbitCam != nullptr)
+  {
+    m_orbitCam->setCameraHeadingOffset(heading);
+    emit cameraHeadingChanged();
+  }
+}
+
+float OrbitCameraAroundObject::planePitch() const
+{
+  if(!m_planeGraphic->attributes()->containsAttribute("PITCH"))
+  {
+    return 0.0;
+  }
+
+  return m_planeGraphic->attributes()->attributeValue("PITCH").toFloat();
+}
+
+void OrbitCameraAroundObject::setPlanePitch(float pitch)
+{
+  if(!m_planeGraphic->attributes()->containsAttribute("PITCH"))
+  {
+     m_planeGraphic->attributes()->insertAttribute("PITCH", pitch);
+  }
+  else
+  {
+     m_planeGraphic->attributes()->replaceAttribute("PITCH", pitch);
+  }
+  emit planePitchChanged();
+}
+
+QPointF OrbitCameraAroundObject::cameraHeadingBounds() const
+{
+  return m_orbitCam != nullptr ? QPointF{m_orbitCam->minCameraHeadingOffset(), m_orbitCam->maxCameraHeadingOffset()}
+                               : QPointF{-45.0, 45.0};
+}

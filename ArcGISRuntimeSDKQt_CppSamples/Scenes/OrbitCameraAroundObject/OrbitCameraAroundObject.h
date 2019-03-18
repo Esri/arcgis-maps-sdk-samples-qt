@@ -19,20 +19,29 @@
 
 namespace Esri
 {
-namespace ArcGISRuntime
-{
-class Scene;
-class SceneQuickView;
-}
+  namespace ArcGISRuntime
+  {
+    class Graphic;
+    class ModelSceneSymbol;
+    class OrbitGeoElementCameraController;
+    class Scene;
+    class SceneQuickView;
+  }
 }
 
 #include <QObject>
+#include <QPointF>
 
 class OrbitCameraAroundObject : public QObject
 {
   Q_OBJECT
 
+  //Property declarations for interacting with the QML UI.
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(bool allowCamDistanceInteraction READ camDistanceInteractionAllowed WRITE setCamDistanceInteractionAllowed(bool) NOTIFY camDistanceInteractionAllowedChanged)
+  Q_PROPERTY(float planePitch READ planePitch() WRITE setPlanePitch(float) NOTIFY planePitchChanged)
+  Q_PROPERTY(double cameraHeading READ cameraHeading() WRITE setCameraHeading(double) NOTIFY cameraHeadingChanged)
+  Q_PROPERTY(QPointF cameraHeadingBounds READ cameraHeadingBounds() NOTIFY cameraHeadingBoundsChanged)
 
 public:
   explicit OrbitCameraAroundObject(QObject* parent = nullptr);
@@ -40,8 +49,22 @@ public:
 
   static void init();
 
+  //Methods that can be called from the QML UI, connected to the change-view buttons in the top left of the window
+  Q_INVOKABLE void cockpitView();
+  Q_INVOKABLE void centerView();
+
+public slots:
+  //Property setter methods allowing the QML UI to set model state, for changing plane orientation with the sliders, or toggling limits on camera zooming.
+  void setCamDistanceInteractionAllowed(bool allowed);
+  void setPlanePitch(float pitch);
+  void setCameraHeading(double heading);
+
 signals:
   void sceneViewChanged();
+  void camDistanceInteractionAllowedChanged();
+  void planePitchChanged();
+  void cameraHeadingChanged();
+  void cameraHeadingBoundsChanged();
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
@@ -49,6 +72,18 @@ private:
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+
+  //The plane that is displayed on screen, pitch property controlled via UI Sliders.
+  Esri::ArcGISRuntime::Graphic* m_planeGraphic = nullptr;
+
+  //Camera that orbits the plane in the scene, controlled via mouse/touch interaction or UI sliders
+  Esri::ArcGISRuntime::OrbitGeoElementCameraController* m_orbitCam = nullptr;
+
+  //Getter property exposing whether the the orbit-camera allows distance interaction to the QML UI, as it can be toggled there.
+  bool camDistanceInteractionAllowed() const;
+  float planePitch() const;
+  double cameraHeading() const;
+  QPointF cameraHeadingBounds() const;
 };
 
 #endif // ORBITCAMERAAROUNDOBJECT_H

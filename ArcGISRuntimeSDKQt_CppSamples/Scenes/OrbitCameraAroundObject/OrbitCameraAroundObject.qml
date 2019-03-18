@@ -29,8 +29,13 @@ Item {
     OrbitCameraAroundObjectSample {
         id: model
         sceneView: view
+        planePitch: planePitchSlider.value
     }
 
+    //Color for the panels that the UI controls sit on.
+    property color uiBackgroundCol : Qt.rgba(0.2, 0.2, 0.2, 0.65)
+
+    //Camera heading slider, sits at the bottom of the screen
     Rectangle {
         anchors {
             bottom: parent.bottom
@@ -39,15 +44,29 @@ Item {
             margins: 30
         }
 
-        height: childrenRect.height //Binding Loop!
-        color: Qt.rgba(0.2, 0.2, 0.2, 0.65);
+        height: cameraHeadingSlider.height + allowCamDistanceInteractionCheckBox.height
+        color: uiBackgroundCol
 
         Slider {
             id: cameraHeadingSlider
-            value: 0
-            from: -180.0
-            to: 180.0
 
+            anchors {
+                left : parent.left
+                right : parent.right
+                bottom: parent.bottom
+            }
+
+            value: model.cameraHeading //Value bound to the model, so rotating the camera will update the slider.
+            from: model.cameraHeadingBounds.x //Similarly, setting different initial bounds changes the UI automatically. Type used is QPointF for min/max, hence the x/y
+            to: model.cameraHeadingBounds.y
+
+
+            //To avoid getting stuck in a binding loop for the value, update the value of the camera heading from the slider only in response to a moving slider.
+            onMoved:{
+                model.cameraHeading = cameraHeadingSlider.value
+            }
+
+            //Custom slider handle that displays the current value
             handle: Rectangle {
                 x: cameraHeadingSlider.leftPadding + cameraHeadingSlider.visualPosition * (cameraHeadingSlider.availableWidth - width)
                 y: cameraHeadingSlider.topPadding + cameraHeadingSlider.availableHeight / 2 - height / 2
@@ -56,33 +75,29 @@ Item {
 
                 Text {
                     id: headingValue
-                    text: "0"
-                    color: "black"
 
                     anchors{
                         horizontalCenter : parent.horizontalCenter
                         verticalCenter : parent.verticalCenter
                     }
-                }
-            }
 
-            anchors {
-                left : parent.left
-                right : parent.right
-                bottom: parent.bottom
+                    text: Math.round(cameraHeadingSlider.value);
+                    color: "black"
+                }
             }
         }
 
         Text {
             id: cameraHeadingLabel
-            text: "Camera Heading"
-            color: "white"
 
             anchors{
                 left : parent.left
                 bottom : cameraHeadingSlider.top
                 margins: 5
             }
+
+            text: "Camera Heading"
+            color: "white"
         }
 
         CheckBox
@@ -93,6 +108,9 @@ Item {
                 right : parent.right
                 verticalCenter : cameraHeadingLabel.verticalCenter
             }
+
+            checked: model.allowCamDistanceInteraction
+            onCheckedChanged: model.allowCamDistanceInteraction = checked
 
             Text {
                 text: "Allow camera distance interaction"
@@ -105,6 +123,7 @@ Item {
         }
     }
 
+    //Plane pitch slider, placed in the top-right of the screen
     Rectangle {
         anchors {
             top: parent.top
@@ -114,7 +133,7 @@ Item {
         }
 
         width: childrenRect.width
-        color: Qt.rgba(0.2, 0.2, 0.2, 0.65);
+        color: uiBackgroundCol
 
         Column
         {
@@ -122,21 +141,30 @@ Item {
             padding: 5
             Text {
                 id: planePitchLabel
-                text: "Plane Pitch"
-                color: "white"
+
                 anchors{
                     horizontalCenter: parent.horizontalCenter
                     topMargin: 10
                 }
+
+                text: "Plane Pitch"
+                color: "white"
+
             }
 
             Slider {
                 id: planePitchSlider
+
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                }
+
                 value: 0
                 from: 90
                 to: -90
                 orientation: Qt.Vertical
 
+                //Custom slider handle that displays the current value
                 handle: Rectangle {
                     x: planePitchSlider.leftPadding + planePitchSlider.availableWidth / 2 - width / 2
                     y: planePitchSlider.topPadding + planePitchSlider.visualPosition * (planePitchSlider.availableHeight - height)
@@ -146,24 +174,43 @@ Item {
 
                     Text {
                         id: pitchValue
-                        text: "0"
-                        color: "black"
 
                         anchors{
                             horizontalCenter : parent.horizontalCenter
                             verticalCenter : parent.verticalCenter
                         }
-                    }
-                }
 
-                anchors {
-                    //right : parent.right
-                   // top: parent.top
-                   // bottom: parent.bottom
-                    horizontalCenter: parent.horizontalCenter
+                        text: Math.round(planePitchSlider.value);
+                        color: "black"
+                    }
                 }
             }
         }
+    }
 
+    //View change buttons placed in the top-left of the screen.
+    Rectangle{
+        anchors {
+            left : parent.left
+            top : parent.top
+        }
+        height: childrenRect.height
+        width: childrenRect.width
+        color: uiBackgroundCol
+
+        Column
+        {
+            spacing: 10
+            padding: 10
+            Button{
+                text : "Cockpit View"
+                onClicked: model.cockpitView()
+            }
+
+            Button{
+                text: "Center View"
+                onClicked: model.centerView()
+            }
+        }
     }
 }
