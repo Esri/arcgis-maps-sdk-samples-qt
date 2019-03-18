@@ -16,6 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.12
 import Esri.Samples 1.0
 
 Item {
@@ -135,10 +136,14 @@ Item {
         width: childrenRect.width
         color: uiBackgroundCol
 
-        Column
+        ColumnLayout
         {
+            anchors{
+                top : parent.top
+                bottom : parent.bottom
+            }
             spacing: 5
-            padding: 5
+
             Text {
                 id: planePitchLabel
 
@@ -158,6 +163,8 @@ Item {
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                 }
+
+                Layout.fillHeight: true
 
                 value: 0
                 from: 90
