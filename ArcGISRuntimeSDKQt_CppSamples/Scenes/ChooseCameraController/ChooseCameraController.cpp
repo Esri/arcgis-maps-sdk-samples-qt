@@ -60,7 +60,7 @@ using namespace Esri::ArcGISRuntime;
 
 ChooseCameraController::ChooseCameraController(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_globeController(new GlobeCameraController(this)),
+  m_orbitGlobe(new GlobeCameraController(this)),
   m_orbitLocation(new OrbitLocationCameraController(Point(longitude, latitude, 0.0, SpatialReference::wgs84()), 100, this)),
   m_scene(new Scene(Basemap::imagery(this), this))
 {
@@ -90,17 +90,26 @@ ChooseCameraController::~ChooseCameraController() = default;
 
 void ChooseCameraController::setGlobeController()
 {
-  m_sceneView->setCameraController(m_globeController);
+  if(m_sceneView != nullptr)
+  {
+    m_sceneView->setCameraController(m_orbitGlobe);
+  }
 }
 
 void ChooseCameraController::setOrbitLocationController()
 {
-  m_sceneView->setCameraController(m_orbitLocation);
+  if(m_sceneView != nullptr)
+  {
+    m_sceneView->setCameraController(m_orbitLocation);
+  }
 }
 
 void ChooseCameraController::setOrbitGeoElementController()
 {
-  m_sceneView->setCameraController(m_orbitGeoElement);
+  if(m_sceneView != nullptr)
+  {
+    m_sceneView->setCameraController(m_orbitGeoElement);
+  }
 }
 
 void ChooseCameraController::init()

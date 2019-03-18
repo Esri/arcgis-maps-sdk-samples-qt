@@ -18,6 +18,7 @@ import QtQuick 2.6
 import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.1
 
 Rectangle {
     clip: true
@@ -108,83 +109,68 @@ Rectangle {
         heading: 0.0
         pitch: 0.0
         roll: 0.0
-
-        Point {
-            x: longitude
-            y: latitude
-            z: altitude
-            spatialReference: SpatialReference { wkid: 4326 }
-        }
+        location: theCrater
     }
 
     // Create a rectangle to display the GUI
     Rectangle {
-        id: layerVisibilityRect
+        width: childrenRect.width
+        height: childrenRect.height
+        color: "lightgrey"
+        opacity: 0.8
+        radius: 5
         anchors {
             margins: 10
             left: parent.left
             top: parent.top
         }
-        height: 150
-        width: 250
-        color: "transparent"
+        border {
+            color: "#4D4D4D"
+            width: 1
+        }
 
-        Rectangle {
-            anchors.fill: parent
-            width: layerVisibilityRect.width
-            height: layerVisibilityRect.height
-            color: "lightgrey"
-            opacity: .8
-            radius: 5
-            border {
-                color: "#4D4D4D"
-                width: 1
+        ColumnLayout {
+
+            Text {
+                Layout.fillWidth: true
+                text: "Choose camera control"
+                clip: true
+                font {
+                    pointSize: 14
+                    bold: true
+                }
             }
 
-            Column {
-                anchors {
-                    fill: parent
-                    margins: 10
-                }
-
-                Text {
-                    width: parent.width
-                    text: "Choose Camera Control"
-                    clip: true
-                    font {
-                        pointSize: 14
-                        bold: true
+            RadioButton {
+                id: orbitAroundAeroplane
+                Layout.fillWidth: true
+                text: "Orbit camera around plane"
+                onCheckedChanged: {
+                    if (checked) {
+                        sceneView.cameraController = orbitPlaneCtrlr;
                     }
                 }
+            }
 
-                RadioButton {
-                    id: orbitAroundAeroplane
-                    text: "Orbit Camera Around Plane"
-                    onCheckedChanged: {
-                        if (checked) {
-                            sceneView.cameraController = orbitPlaneCtrlr;
-                        }
+            RadioButton {
+                id: orbitLocation
+                Layout.fillWidth: true
+                text: "Orbit camera around crater"
+                onCheckedChanged: {
+                    if (checked) {
+                        sceneView.cameraController = orbitLocationCtrlr;
                     }
                 }
+            }
 
-                RadioButton {
-                    id: orbitLocation
-                    text: "Orbit Camera Around Crater"
-                    onCheckedChanged: {
-                        if (checked) {
-                            sceneView.cameraController = orbitLocationCtrlr;
-                        }
-                    }
-                }
-
-                RadioButton {
-                    id: orbitAroundGlobe
-                    checked: true
-                    text: "Free Pan Round the Globe"
-                    onCheckedChanged: {
-                        if (checked) {
-                            sceneView.cameraController = globeController;
-                        }
+            RadioButton {
+                id: orbitAroundGlobe
+                Layout.fillWidth: true
+                checked: true
+                text: "Free pan round the globe"
+                onCheckedChanged: {
+                    if (checked) {
+                        sceneView.cameraController = globeController;
                     }
                 }
             }

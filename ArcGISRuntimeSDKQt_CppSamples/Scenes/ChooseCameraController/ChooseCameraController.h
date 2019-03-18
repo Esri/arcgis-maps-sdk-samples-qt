@@ -17,6 +17,8 @@
 #ifndef CHOOSECAMERACONTROLLER_H
 #define CHOOSECAMERACONTROLLER_H
 
+#include <QObject>
+
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -29,8 +31,6 @@ class Scene;
 class SceneQuickView;
 }
 }
-
-#include <QObject>
 
 class ChooseCameraController : public QObject
 {
@@ -55,7 +55,7 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
 
-  Esri::ArcGISRuntime::GlobeCameraController* m_globeController = nullptr;
+  Esri::ArcGISRuntime::GlobeCameraController* m_orbitGlobe = nullptr;
   Esri::ArcGISRuntime::OrbitGeoElementCameraController* m_orbitGeoElement = nullptr;
   Esri::ArcGISRuntime::OrbitLocationCameraController* m_orbitLocation = nullptr;
 

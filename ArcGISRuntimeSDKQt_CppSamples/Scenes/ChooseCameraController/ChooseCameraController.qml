@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
+import QtQuick.Layouts 1.1
 
 Item {
 
@@ -33,72 +34,63 @@ Item {
 
     // Create a rectangle to display the GUI
     Rectangle {
-        id: layerVisibilityRect
+        width: childrenRect.width
+        height: childrenRect.height
+        color: "lightgrey"
+        opacity: 0.8
+        radius: 5
         anchors {
             margins: 10
             left: parent.left
             top: parent.top
         }
-        height: 150
-        width: 250
-        color: "transparent"
+        border {
+            color: "#4D4D4D"
+            width: 1
+        }
 
-        Rectangle {
-            anchors.fill: parent
-            width: layerVisibilityRect.width
-            height: layerVisibilityRect.height
-            color: "lightgrey"
-            opacity: .8
-            radius: 5
-            border {
-                color: "#4D4D4D"
-                width: 1
+        ColumnLayout {
+
+            Text {
+                Layout.fillWidth: true
+                text: "Choose camera control"
+                clip: true
+                font {
+                    pointSize: 14
+                    bold: true
+                }
             }
 
-            Column {
-                anchors {
-                    fill: parent
-                    margins: 10
-                }
-
-                Text {
-                    width: parent.width
-                    text: "Choose Camera Control"
-                    clip: true
-                    font {
-                        pointSize: 14
-                        bold: true
+            RadioButton {
+                Layout.fillWidth: true
+                id: orbitAroundAeroplane
+                text: "Orbit camera around plane"
+                onCheckedChanged: {
+                    if (checked) {
+                        chooseCameraControllerSample.setOrbitGeoElementController();
                     }
                 }
+            }
 
-                RadioButton {
-                    id: orbitAroundAeroplane
-                    text: "Orbit Camera Around Plane"
-                    onCheckedChanged: {
-                        if (checked) {
-                            chooseCameraControllerSample.setOrbitGeoElementController();
-                        }
+            RadioButton {
+                Layout.fillWidth: true
+                id: orbitLocation
+                text: "Orbit camera around crater"
+                onCheckedChanged: {
+                    if (checked) {
+                        chooseCameraControllerSample.setOrbitLocationController();
                     }
                 }
+            }
 
-                RadioButton {
-                    id: orbitLocation
-                    text: "Orbit Camera Around Crater"
-                    onCheckedChanged: {
-                        if (checked) {
-                            chooseCameraControllerSample.setOrbitLocationController();
-                        }
-                    }
-                }
-
-                RadioButton {
-                    id: orbitAroundGlobe
-                    checked: true
-                    text: "Free Pan Round the Globe"
-                    onCheckedChanged: {
-                        if (checked) {
-                            chooseCameraControllerSample.setGlobeController();
-                        }
+            RadioButton {
+                Layout.fillWidth: true
+                id: orbitAroundGlobe
+                checked: true
+                text: "Free pan round the globe"
+                onCheckedChanged: {
+                    if (checked) {
+                        chooseCameraControllerSample.setGlobeController();
                     }
                 }
             }
