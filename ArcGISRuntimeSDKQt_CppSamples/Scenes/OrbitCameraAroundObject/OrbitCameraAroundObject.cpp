@@ -85,6 +85,7 @@ void OrbitCameraAroundObject::setSceneView(SceneQuickView* sceneView)
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
 
+  /* Scene Rendering setup */
   // create a new graphics overlay and add it to the sceneview
   GraphicsOverlay* sceneOverlay = new GraphicsOverlay(this);
   sceneOverlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Relative));
@@ -101,6 +102,8 @@ void OrbitCameraAroundObject::setSceneView(SceneQuickView* sceneView)
   }
   sceneOverlay->setRenderer(renderer3D);
 
+
+  /* Plane model Setup */
   //Load a plane model.
   QUrl planeFileURl = QUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae");
   ModelSceneSymbol* planeModel = new ModelSceneSymbol(planeFileURl, 1.0, this);
@@ -117,6 +120,8 @@ void OrbitCameraAroundObject::setSceneView(SceneQuickView* sceneView)
   //Add the plane graphic to the scene.
   m_sceneView->graphicsOverlays()->at(0)->graphics()->append(m_planeGraphic);
 
+
+  /* Orbiting Camera setup */
   // create the camera controller to follow the plane
   m_orbitCam = new OrbitGeoElementCameraController(m_planeGraphic, 50, this);
 
@@ -170,6 +175,10 @@ void OrbitCameraAroundObject::cockpitView()
   // animate the camera target to the cockpit instead of the center of the plane
   m_orbitCam->setTargetOffsets(0, -2, 1.1, 1);
 
+  //The animation may rotate us over the set camera bounds based on the plane pitch, so unlock them.
+  m_orbitCam->setMinCameraPitchOffset(-180.0);
+  m_orbitCam->setMaxCameraPitchOffset(180.0);
+
   //Camera move-to-cockpit callback.
   connect(m_orbitCam, &OrbitGeoElementCameraController::moveCameraCompleted, this,
           [this](QUuid, bool succeeded)
@@ -183,9 +192,10 @@ void OrbitCameraAroundObject::cockpitView()
   });
 
   //Start the camera move into the cockpit
+  //If the camera is already tracking object pitch, don't want to animate the pitch any further, we're exactly where we should be.
   m_orbitCam->moveCamera(0 - m_orbitCam->cameraDistance(),
                          0 - m_orbitCam->cameraHeadingOffset(),
-                         90 - m_orbitCam->cameraPitchOffset(), 1);
+                         m_orbitCam->isAutoPitchEnabled() ? 0.0 : 90 - m_orbitCam->cameraPitchOffset() + planePitch(), 1);
 
 }
 

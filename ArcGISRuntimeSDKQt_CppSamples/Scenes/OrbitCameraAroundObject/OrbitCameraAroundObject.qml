@@ -146,12 +146,6 @@ Item {
 
             Text {
                 id: planePitchLabel
-
-                anchors{
-                    horizontalCenter: parent.horizontalCenter
-                    topMargin: 10
-                }
-
                 text: "Plane Pitch"
                 color: "white"
 
@@ -159,10 +153,6 @@ Item {
 
             Slider {
                 id: planePitchSlider
-
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
 
                 Layout.fillHeight: true
 
