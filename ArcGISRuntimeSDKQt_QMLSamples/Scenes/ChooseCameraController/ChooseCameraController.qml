@@ -29,8 +29,7 @@ Rectangle {
 
     property real longitude: -109.929589
     property real latitude: 38.43500
-    property real altitude: 10000
-    property real cameraDist: 5000
+    property real distance: 5000
 
     GlobeCameraController {
         id: globeController
@@ -40,20 +39,20 @@ Rectangle {
         id: theCrater
         x: longitude
         y: latitude
-        z: altitude
+        z: distance
         spatialReference: SpatialReference { wkid: 4326 }
     }
 
     OrbitLocationCameraController {
         id: orbitLocationCtrlr
         targetLocation: theCrater
-        cameraDistance: cameraDist
+        cameraDistance: distance
     }
 
     OrbitGeoElementCameraController{
         id: orbitPlaneCtrlr
         targetGeoElement: thePlane
-        cameraDistance: cameraDist / 2
+        cameraDistance: distance / 2
     }
 
     SceneView {
@@ -92,7 +91,7 @@ Rectangle {
                 geometry: Point {
                     x: longitude
                     y: latitude
-                    z: altitude / 4
+                    z: distance / 2
                     spatialReference: sceneView.spatialReference
                 }
             }
@@ -100,7 +99,7 @@ Rectangle {
 
         Component.onCompleted: {
             // set viewpoint to the specified camera
-            setViewpointCameraAndWait(camera);
+            sceneView.setViewpointCamera(camera);
         }
     }
 

@@ -4,7 +4,7 @@
         "ChooseCameraController.h",
         "ChooseCameraController.cpp"
     ],
-    "name" : "Choose Camera Controller",
+    "name" : "Choose camera controller",
     "dataItems" : [
         {
             "itemId" : "681d6f7694644709a7c830ec57a2d72b",

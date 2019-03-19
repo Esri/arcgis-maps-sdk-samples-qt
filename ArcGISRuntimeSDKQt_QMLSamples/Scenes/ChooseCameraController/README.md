@@ -1,4 +1,4 @@
-# Choose Camera Controller
+# Choose camera controller
 
 Control the behavior of the camera in a scene.
 

@@ -38,7 +38,7 @@ namespace
 {
   const double longitude = -109.929589;
   const double latitude = 38.43500;
-  const double altitude = 5000;
+  const double distance = 5000;
 
   QString defaultDataPath()
   {
@@ -71,19 +71,19 @@ ChooseCameraController::ChooseCameraController(QObject* parent /* = nullptr */):
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-  m_orbitLocation->setCameraDistance(5000);
+  m_orbitLocation->setCameraDistance(distance);
 
   // get the data path
   QUrl dataUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae");
   ModelSceneSymbol* planeModel = new ModelSceneSymbol(dataUrl, 10.0f, this);
 
-  Esri::ArcGISRuntime::Graphic* graphic = new Graphic(Point(longitude, latitude, altitude), planeModel, this);
+  Esri::ArcGISRuntime::Graphic* graphic = new Graphic(Point(longitude, latitude, distance / 2), planeModel, this);
 
   m_overlay = new GraphicsOverlay(this);
 
   m_overlay->setSceneProperties(LayerSceneProperties(SurfacePlacement::Relative));
   m_overlay->graphics()->append(graphic);
-  m_orbitGeoElement = new OrbitGeoElementCameraController(graphic, 1000, this);
+  m_orbitGeoElement = new OrbitGeoElementCameraController(graphic, distance / 2, this);
 }
 
 ChooseCameraController::~ChooseCameraController() = default;
@@ -133,7 +133,7 @@ void ChooseCameraController::setSceneView(SceneQuickView* sceneView)
   }
 
   m_sceneView = sceneView;
-  m_sceneView->setViewpointCamera(Camera(latitude, longitude, altitude, 180.0, 0.0, 0.0));
+  m_sceneView->setViewpointCamera(Camera(latitude, longitude, distance, 0.0, 0.0, 0.0));
   m_sceneView->setArcGISScene(m_scene);
   m_sceneView->graphicsOverlays()->append(m_overlay);
 
