@@ -54,7 +54,7 @@ Item {
             Text {
                 Layout.margins: 5
                 Layout.fillWidth: true
-                text: "Choose camera control"
+                text: "Choose camera controller"
                 clip: true
                 font {
                     pointSize: 14
