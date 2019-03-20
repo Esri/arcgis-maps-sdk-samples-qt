@@ -25,7 +25,6 @@
 #include "SimpleRenderer.h"
 
 #include <QDir>
-#include <QPointF>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -169,9 +168,6 @@ void OrbitCameraAroundObject::cockpitView()
   //allow the camera to get closer to the target
   m_orbitCam->setMinCameraDistance(0);
 
-  // pitch the camera when the plane pitches
-  m_orbitCam->setAutoPitchEnabled(true);
-
   // animate the camera target to the cockpit instead of the center of the plane
   m_orbitCam->setTargetOffsets(0, -2, 1.1, 1);
 
@@ -188,6 +184,9 @@ void OrbitCameraAroundObject::cockpitView()
       //once the camera is in the cockpit, only allow the camera's heading to change
       m_orbitCam->setMinCameraPitchOffset(90);
       m_orbitCam->setMaxCameraPitchOffset(90);
+
+      // pitch the camera when the plane pitches
+      m_orbitCam->setAutoPitchEnabled(true);
     }
   });
 
@@ -195,7 +194,7 @@ void OrbitCameraAroundObject::cockpitView()
   //If the camera is already tracking object pitch, don't want to animate the pitch any further, we're exactly where we should be.
   m_orbitCam->moveCamera(0 - m_orbitCam->cameraDistance(),
                          0 - m_orbitCam->cameraHeadingOffset(),
-                         m_orbitCam->isAutoPitchEnabled() ? 0.0 : 90 - m_orbitCam->cameraPitchOffset() + planePitch(), 1);
+                         m_orbitCam->isAutoPitchEnabled() ? 0.0 : (90 - m_orbitCam->cameraPitchOffset()) + planePitch(), 1.0);
 
 }
 

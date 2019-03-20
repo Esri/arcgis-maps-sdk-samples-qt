@@ -40,20 +40,20 @@ Item {
     Rectangle {
         anchors {
             bottom: parent.bottom
-            left : parent.left
-            right : parent.right
+            left: parent.left
+            right: parent.right
             margins: 30
         }
 
-        height: cameraHeadingSlider.height + allowCamDistanceInteractionCheckBox.height
+        height: cameraHeadingSlider.height + cameraHeadingLabel.height
         color: uiBackgroundCol
 
         Slider {
             id: cameraHeadingSlider
 
             anchors {
-                left : parent.left
-                right : parent.right
+                left: parent.left
+                right: parent.right
                 bottom: parent.bottom
             }
 
@@ -63,7 +63,7 @@ Item {
 
 
             //To avoid getting stuck in a binding loop for the value, update the value of the camera heading from the slider only in response to a moving slider.
-            onMoved:{
+            onMoved: {
                 model.cameraHeading = cameraHeadingSlider.value
             }
 
@@ -77,12 +77,12 @@ Item {
                 Text {
                     id: headingValue
 
-                    anchors{
-                        horizontalCenter : parent.horizontalCenter
-                        verticalCenter : parent.verticalCenter
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
                     }
 
-                    text: Math.round(cameraHeadingSlider.value);
+                    text: Math.round(cameraHeadingSlider.value)
                     color: "black"
                 }
             }
@@ -91,36 +91,13 @@ Item {
         Text {
             id: cameraHeadingLabel
 
-            anchors{
-                left : parent.left
-                bottom : cameraHeadingSlider.top
-                margins: 5
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: cameraHeadingSlider.top
             }
 
             text: "Camera Heading"
             color: "white"
-        }
-
-        CheckBox
-        {
-            id: allowCamDistanceInteractionCheckBox
-
-            anchors{
-                right : parent.right
-                verticalCenter : cameraHeadingLabel.verticalCenter
-            }
-
-            checked: model.allowCamDistanceInteraction
-            onCheckedChanged: model.allowCamDistanceInteraction = checked
-
-            Text {
-                text: "Allow camera distance interaction"
-                color: "white"
-                anchors{
-                    right: parent.left
-                    verticalCenter: parent.verticalCenter
-                }
-            }
         }
     }
 
@@ -128,19 +105,18 @@ Item {
     Rectangle {
         anchors {
             top: parent.top
-            bottom : parent.verticalCenter
-            right : parent.right
+            bottom: parent.verticalCenter
+            right: parent.right
             margins: 30
         }
 
         width: childrenRect.width
         color: uiBackgroundCol
 
-        ColumnLayout
-        {
-            anchors{
-                top : parent.top
-                bottom : parent.bottom
+        ColumnLayout {
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
             }
             spacing: 5
 
@@ -172,12 +148,12 @@ Item {
                     Text {
                         id: pitchValue
 
-                        anchors{
-                            horizontalCenter : parent.horizontalCenter
-                            verticalCenter : parent.verticalCenter
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
                         }
 
-                        text: Math.round(planePitchSlider.value);
+                        text: Math.round(planePitchSlider.value)
                         color: "black"
                     }
                 }
@@ -185,28 +161,49 @@ Item {
         }
     }
 
-    //View change buttons placed in the top-left of the screen.
+    //View change buttons / allow cam interaction checkbox placed in the top-left of the screen.
     Rectangle{
+
         anchors {
-            left : parent.left
-            top : parent.top
+            left: parent.left
+            top: parent.top
         }
+
         height: childrenRect.height
-        width: childrenRect.width
+        width: childrenRect.width //Add a little bit of manual padding to comfortably fit the checkbox text
         color: uiBackgroundCol
 
-        Column
-        {
+        Column {
             spacing: 10
             padding: 10
-            Button{
-                text : "Cockpit View"
+            Button {
+                text: "Cockpit View"
                 onClicked: model.cockpitView()
             }
 
-            Button{
+            Button {
                 text: "Center View"
                 onClicked: model.centerView()
+            }
+
+            Row {
+                anchors {
+                    left: parent.left
+                }
+
+                CheckBox {
+                    id: allowCamDistanceInteractionCheckBox
+                    checked: model.allowCamDistanceInteraction
+                    onCheckedChanged: model.allowCamDistanceInteraction = checked
+                }
+
+                Text {
+                    anchors {
+                        verticalCenter: allowCamDistanceInteractionCheckBox.verticalCenter
+                    }
+                    text: "Allow camera\ndistance interaction"
+                    color: "white"
+                }
             }
         }
     }

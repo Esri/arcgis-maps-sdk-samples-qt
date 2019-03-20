@@ -2,12 +2,13 @@
     "source" :  "OrbitCameraAroundObject.qml",
     "otherSourceFiles" :  [
         "OrbitCameraAroundObject.h",
-        "OrbitCameraAroundObject.cpp",
+        "OrbitCameraAroundObject.cpp"
     ],
     "name" : "Orbit the camera around an object",
     "dataItems" : [
-    {
-        "itemId" : "681d6f7694644709a7c830ec57a2d72b",
-        "path" : "~/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
-    }]
+        {
+            "itemId" : "681d6f7694644709a7c830ec57a2d72b",
+            "path" : "~/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
+        }
+    ]
 }

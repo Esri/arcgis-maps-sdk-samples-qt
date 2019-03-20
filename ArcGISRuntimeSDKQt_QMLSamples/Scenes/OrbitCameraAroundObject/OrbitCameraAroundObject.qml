@@ -14,11 +14,11 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
+import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.5
+import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.12
-import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -57,8 +57,8 @@ Rectangle {
                 id: sceneRenderer
                 RendererSceneProperties {
                     id: renderProps
-                    headingExpression : "[HEADING]"
-                    pitchExpression : "[PITCH]"
+                    headingExpression: "[HEADING]"
+                    pitchExpression: "[PITCH]"
                 }
             }
 
@@ -90,7 +90,7 @@ Rectangle {
         OrbitGeoElementCameraController {
             id: orbitCam
             targetGeoElement: planeGraphic //This camera orbits the plane graphic we loaded earlier
-            cameraDistance : 50.0
+            cameraDistance: 50.0
             minCameraHeadingOffset: -45.0
             maxCameraHeadingOffset: 45.0
             minCameraPitchOffset: 10.0
@@ -102,7 +102,7 @@ Rectangle {
             // When we move to the callback, we trigger an animation,
             // this callback handles locking the camera into its new cockpit-state when that animation is finished
             onMoveCameraStatusChanged: {
-                if(moveCameraStatus === Enums.TaskStatusCompleted){
+                if(moveCameraStatus === Enums.TaskStatusCompleted) {
                     minCameraPitchOffset = 90.0
                     maxCameraPitchOffset = 90.0
                     autoPitchEnabled = true; //This property locks the orbital camera pitch to the pitch of the target object
@@ -110,7 +110,7 @@ Rectangle {
             }
 
             // Called when the user triggers the cockpit view button (see below)
-            function moveToCockpit(){
+            function moveToCockpit() {
                 orbitCam.cameraDistanceInteractive = false
                 orbitCam.minCameraDistance = 0.0
                 orbitCam.setTargetOffsets(0.0, -2.0, 1.1, 1.0)
@@ -127,7 +127,7 @@ Rectangle {
             }
 
             // Called when the user triggers the center view button (see below.) Snaps back to a following view.
-            function moveToFollowing(){
+            function moveToFollowing() {
                 orbitCam.cameraDistanceInteractive = true
                 orbitCam.autoPitchEnabled = false
                 orbitCam.targetOffsetX = 0.0
@@ -149,26 +149,26 @@ Rectangle {
     /* Create the UI */
 
     //Color for the panels that the UI controls sit on.
-    property color uiBackgroundCol : Qt.rgba(0.2, 0.2, 0.2, 0.65)
+    property color uiBackgroundCol: Qt.rgba(0.2, 0.2, 0.2, 0.65)
 
     //Camera heading slider, sits at the bottom of the screen
     Rectangle {
         anchors {
             bottom: parent.bottom
-            left : parent.left
-            right : parent.right
+            left: parent.left
+            right: parent.right
             margins: 30
         }
 
-        height: cameraHeadingSlider.height + allowCamDistanceInteractionCheckBox.height
+        height: cameraHeadingSlider.height + cameraHeadingLabel.height
         color: uiBackgroundCol
 
         Slider {
             id: cameraHeadingSlider
 
             anchors {
-                left : parent.left
-                right : parent.right
+                left: parent.left
+                right: parent.right
                 bottom: parent.bottom
             }
 
@@ -177,7 +177,7 @@ Rectangle {
             to: orbitCam.maxCameraHeadingOffset
 
             //To avoid getting stuck in a binding loop for the value, update the value of the camera heading from the slider only in response to a moving slider.
-            onMoved:{
+            onMoved: {
                 orbitCam.cameraHeadingOffset = value
             }
 
@@ -191,12 +191,12 @@ Rectangle {
                 Text {
                     id: headingValue
 
-                    anchors{
-                        horizontalCenter : parent.horizontalCenter
-                        verticalCenter : parent.verticalCenter
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
                     }
 
-                    text: Math.round(cameraHeadingSlider.value);
+                    text: Math.round(cameraHeadingSlider.value)
                     color: "black"
                 }
             }
@@ -205,36 +205,13 @@ Rectangle {
         Text {
             id: cameraHeadingLabel
 
-            anchors{
-                left : parent.left
-                bottom : cameraHeadingSlider.top
-                margins: 5
+            anchors {
+                horizontalCenter: parent.horizontalCenter
+                bottom: cameraHeadingSlider.top
             }
 
             text: "Camera Heading"
             color: "white"
-        }
-
-        CheckBox
-        {
-            id: allowCamDistanceInteractionCheckBox
-
-            anchors{
-                right : parent.right
-                verticalCenter : cameraHeadingLabel.verticalCenter
-            }
-
-            checked: orbitCam.cameraDistanceInteractive
-            onCheckedChanged: orbitCam.cameraDistanceInteractive = checked
-
-            Text {
-                text: "Allow camera distance interaction"
-                color: "white"
-                anchors{
-                    right: parent.left
-                    verticalCenter: parent.verticalCenter
-                }
-            }
         }
     }
 
@@ -242,8 +219,8 @@ Rectangle {
     Rectangle {
         anchors {
             top: parent.top
-            bottom : parent.verticalCenter
-            right : parent.right
+            bottom: parent.verticalCenter
+            right: parent.right
             margins: 30
         }
 
@@ -252,9 +229,9 @@ Rectangle {
 
         ColumnLayout
         {
-            anchors{
-                top : parent.top
-                bottom : parent.bottom
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
             }
             spacing: 5
 
@@ -290,12 +267,12 @@ Rectangle {
                     Text {
                         id: pitchValue
 
-                        anchors{
-                            horizontalCenter : parent.horizontalCenter
-                            verticalCenter : parent.verticalCenter
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            verticalCenter: parent.verticalCenter
                         }
 
-                        text: Math.round(planePitchSlider.value);
+                        text: Math.round(planePitchSlider.value)
                         color: "black"
                     }
                 }
@@ -303,32 +280,47 @@ Rectangle {
         }
     }
 
-    //View change buttons placed in the top-left of the screen.
-    Rectangle{
+    //View change buttons / allow cam interaction checkbox placed in the top-left of the screen.
+    Rectangle {
         anchors {
-            left : parent.left
-            top : parent.top
+            left: parent.left
+            top: parent.top
         }
+
         height: childrenRect.height
-        width: childrenRect.width
+        width: childrenRect.width + 30 //Add a little bit of manual padding to comfortably fit the checkbox text
         color: uiBackgroundCol
 
-        Column
-        {
+        Column {
             spacing: 10
             padding: 10
-            Button{
-                text : "Cockpit View"
-                onClicked: {
-                    orbitCam.moveToCockpit()
-
-                }
+            Button {
+                text: "Cockpit View"
+                onClicked: orbitCam.moveToCockpit()
             }
 
-            Button{
+            Button {
                 text: "Center View"
-                onClicked: {
-                    orbitCam.moveToFollowing()
+                onClicked: orbitCam.moveToFollowing()
+            }
+
+            Row {
+                anchors {
+                    left: parent.left
+                }
+
+                CheckBox {
+                    id: allowCamDistanceInteractionCheckBox
+                    checked: orbitCam.cameraDistanceInteractive
+                    onCheckedChanged: orbitCam.cameraDistanceInteractive = checked
+                }
+
+                Text {
+                    anchors {
+                        verticalCenter: allowCamDistanceInteractionCheckBox.verticalCenter
+                    }
+                    text: "Allow camera\ndistance interaction"
+                    color: "white"
                 }
             }
         }
