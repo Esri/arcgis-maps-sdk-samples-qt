@@ -24,7 +24,6 @@ import Esri.ArcGISExtras 1.1
 
 Item {
 
-    property double scaleFactor: System.displayScaleFactor
     property var referenceScales: [500000,250000,100000,50000]
 
     // add a mapView component
@@ -39,7 +38,7 @@ Item {
     Rectangle {
         id: referenceScaleRect
         anchors {
-            margins: 10 * scaleFactor
+            margins: 10
             left: parent.left
             top: parent.top
         }
@@ -128,7 +127,7 @@ Item {
     Rectangle {
         id: operationalLayersList
         anchors {
-            margins: 10 * scaleFactor
+            margins: 10
             right: parent.right
             top: parent.top
         }

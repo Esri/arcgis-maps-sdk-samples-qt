@@ -29,7 +29,6 @@ Rectangle {
     property var referenceScales: [500000,250000,100000,50000]
     property string webMapId: "3953413f3bd34e53a42bf70f2937a408"
     property LayerListModel featureLayerModel
-    property double scaleFactor: System.displayScaleFactor
 
     MapView{
         id: mapView
@@ -59,7 +58,7 @@ Rectangle {
     Rectangle {
         id: referenceScaleRect
         anchors {
-            margins: 10 * scaleFactor
+            margins: 10
             left: parent.left
             top: parent.top
         }
@@ -143,46 +142,46 @@ Rectangle {
         }
     }
 
-//    Rectangle {
-//        id: operationalLayersList
-//        anchors {
-//            margins: 10 * scaleFactor
-//            right: parent.right
-//            top: parent.top
-//        }
-////        height: 235
-////        width: 130
-//        color: "transparent"
-//        clip: true
+    Rectangle {
+        id: operationalLayersList
+        anchors {
+            margins: 10
+            right: parent.right
+            top: parent.top
+        }
+        height: 235
+        width: 130
+        color: "transparent"
+        clip: true
 
-//        MouseArea {
-//            anchors.fill: parent
-//            onClicked: mouse.accepted = true
-//            onWheel: wheel.accepted = true
-//        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse.accepted = true
+            onWheel: wheel.accepted = true
+        }
 
 
-//        Rectangle {
-//            anchors.fill: parent
-////            width: parent.width
-////            height: parent.height
-//            color: "#000000"
-//            opacity: .75
-//            radius: 5
-//            border {
-//                color: "#4D4D4D"
-//                width: 1
-//            }
-//            clip: true
+        Rectangle {
+            anchors.fill: parent
+            width: parent.width
+            height: parent.height
+            color: "#000000"
+            opacity: .75
+            radius: 5
+            border {
+                color: "#4D4D4D"
+                width: 1
+            }
+            clip: true
 
             ColumnLayout {
                 id: operationalLayersLayout
-//                anchors {
-//                    fill: parent
-//                    margins: 2
-//                }
                 anchors {
-                    margins: 10 * scaleFactor
+                    fill: parent
+                    margins: 2
+                }
+                anchors {
+                    margins: 10
                     right: parent.right
                     top: parent.top
                 }
@@ -196,7 +195,7 @@ Rectangle {
                         weight: Font.DemiBold
                         pointSize: 9
                     }
-                    //color: "#ffffff"
+                    color: "#ffffff"
                     clip: true
                 }
 
@@ -204,8 +203,8 @@ Rectangle {
                 ListView {
                     id: layerVisibilityListView
                     anchors.margins: 10
-//                    width: parent.width
-//                    height: parent.height
+                    width: parent.width
+                    height: parent.height
                     Layout.fillWidth: true
                     clip: true
                     spacing: 5.5
@@ -215,20 +214,20 @@ Rectangle {
 
                     // Assign the delegate to display text next to checkbox as a row
                     delegate: Item {
-//                        width: parent.width
-//                        height: 25
+                        width: parent.width
+                        height: 25
 
                         CheckBox {
                             id: featureLayerBox
                             Text {
                                 id: featureLayerText
                                 text: name
-//                                anchors.horizontalCenterOffset: featureLayerBox.width + 15
-//                                anchors.horizontalCenter: parent.horizontalCenter
-//                                anchors.verticalCenter: parent.verticalCenter
-//                                wrapMode: Text.WordWrap
+                                anchors.horizontalCenterOffset: featureLayerBox.width + 15
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                anchors.verticalCenter: parent.verticalCenter
+                                wrapMode: Text.WordWrap
                                 font.pointSize: 9
-                                //color: "#ffffff"
+                                color: "#ffffff"
                                 clip: true
                             }
                             checked: true
@@ -237,8 +236,8 @@ Rectangle {
                     }
                 }
             }
-        //}
-    //}
+        }
+    }
 
     function applyReferenceScaleToMap() {
         map.referenceScale = referenceScales[scales.currentIndex]
