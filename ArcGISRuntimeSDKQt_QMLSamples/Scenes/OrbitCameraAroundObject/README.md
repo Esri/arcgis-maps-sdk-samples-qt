@@ -3,7 +3,7 @@
 Fix the camera to point at and rotate around a target object.
 ![](screenshot.png)
 
-##Use Case
+## Use Case
 The orbit geoelement camera controller provides control over the following camera behaviours
  - automatically track the target
  - stay near the target by setting a minimum and maximum distance offset
