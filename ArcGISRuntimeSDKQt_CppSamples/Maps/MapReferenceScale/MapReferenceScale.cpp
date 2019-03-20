@@ -1,6 +1,6 @@
 // [WriteFile Name=MapReferenceScale, Category=Maps]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,22 +30,21 @@ using namespace Esri::ArcGISRuntime;
 
 MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::imagery(this), this)),
   m_portal(new Portal(this)),
   m_portalItem(new PortalItem(m_portal, "3953413f3bd34e53a42bf70f2937a408", this))
 {
   m_map = new Map(m_portalItem, this);
 
-  //once map is loaded set FeatureLayer list model
+  // Once map is loaded set FeatureLayer list model
   connect(m_map, &Map::doneLoading, this, [this](Error loadError)
   {
     if (!loadError.isEmpty())
-        return;
+      return;
 
     m_layerInfoListModel = m_map->operationalLayers();
     emit layerInfoListModelChanged();
+    emit currentMapScaleChanged();
   });
-
 }
 
 MapReferenceScale::~MapReferenceScale() = default;
@@ -58,24 +57,39 @@ void MapReferenceScale::init()
   qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
-double MapReferenceScale::currentMapScale() {
+
+double MapReferenceScale::currentMapScale() const
+{
+  if(!m_mapView)
+    return 0.0;
+
   return m_mapView->mapScale();
 }
 
-void MapReferenceScale::changeReferenceScale(const double& scale){
-  m_map->setReferenceScale(scale);
+void MapReferenceScale::changeReferenceScale(double scale)
+{
+  if(m_map)
+    m_map->setReferenceScale(scale);
 }
 
-void MapReferenceScale::setMapScaleToReferenceScale(const double& scale){
-  m_mapView->setViewpointScale(scale);
+void MapReferenceScale::setMapScaleToReferenceScale(double scale)
+{
+  if(m_mapView)
+    m_mapView->setViewpointScale(scale);
 }
 
-void MapReferenceScale::featureLayerScaleSymbols(const QString& layerName, const bool& checkedStatus){
-  LayerListModel* model = m_map->operationalLayers();
-  for( Layer* layer : *model ) {
-    if(layer->name() == layerName){
-      FeatureLayer* featureLayer = static_cast<FeatureLayer*>(layer);
-      featureLayer->setScaleSymbols(checkedStatus);
+void MapReferenceScale::featureLayerScaleSymbols(const QString& layerName, bool checkedStatus)
+{
+  if(m_layerInfoListModel)
+  {
+    for(Layer* layer : *static_cast<LayerListModel*>(m_layerInfoListModel))
+    {
+      if(layer->name() == layerName)
+      {
+        FeatureLayer* featureLayer = static_cast<FeatureLayer*>(layer);
+        if(featureLayer)
+          featureLayer->setScaleSymbols(checkedStatus);
+      }
     }
   }
 }

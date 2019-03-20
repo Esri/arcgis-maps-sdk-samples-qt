@@ -1,6 +1,6 @@
 // [WriteFile Name=MapReferenceScale, Category=Maps]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@ class MapReferenceScale : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QAbstractListModel* layerInfoListModel READ layerInfoListModel NOTIFY layerInfoListModelChanged)
+  Q_PROPERTY(double currentMapScale READ currentMapScale NOTIFY currentMapScaleChanged)
 
 public:
   explicit MapReferenceScale(QObject* parent = nullptr);
@@ -45,21 +46,21 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void changeReferenceScale(const double& scale);
-  Q_INVOKABLE void setMapScaleToReferenceScale(const double& scale);
-  Q_INVOKABLE void featureLayerScaleSymbols(const QString& layerName, const bool& checkedStatus);
-  Q_INVOKABLE double currentMapScale();
-
+  Q_INVOKABLE void changeReferenceScale(double scale);
+  Q_INVOKABLE void setMapScaleToReferenceScale(double scale);
+  Q_INVOKABLE void featureLayerScaleSymbols(const QString& layerName, bool checkedStatus);
 
 signals:
   void mapViewChanged();
   void layerInfoListModelChanged();
-  void mapScaleChanged();
+  Q_INVOKABLE void currentMapScaleChanged();
+
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QAbstractListModel* layerInfoListModel() const { return m_layerInfoListModel; }
+  double currentMapScale() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

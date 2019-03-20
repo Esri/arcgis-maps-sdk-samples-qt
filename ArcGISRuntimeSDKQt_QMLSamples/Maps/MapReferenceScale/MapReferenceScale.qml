@@ -1,6 +1,6 @@
 // [WriteFile Name=MapReferenceScale, Category=Maps]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
+import QtQuick 2.12
 import Esri.ArcGISRuntime 100.5
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.12
 import Esri.ArcGISExtras 1.1
 import QtQuick.Layouts 1.12
 
@@ -29,6 +29,7 @@ Rectangle {
     property var referenceScales: [500000,250000,100000,50000]
     property string webMapId: "3953413f3bd34e53a42bf70f2937a408"
     property LayerListModel featureLayerModel
+    property double scaleFactor: System.displayScaleFactor
 
     MapView{
         id: mapView
@@ -43,13 +44,13 @@ Rectangle {
                 portal: portal
                 itemId: webMapId
                 onErrorChanged: {
-                        console.log("Error in portal item: " + error.message + "(" + error.additionalMessage + ")");
+                    console.log("Error in portal item: %1(%2)".arg(error.message).arg(error.additionalMessage));
                 }
                 onLoadStatusChanged: {
-                        if (loadStatus === Enums.LoadStatusLoaded) {
-                            //load operational layers into listmodel
-                            featureLayerModel = map.operationalLayers
-                        }
+                    if (loadStatus === Enums.LoadStatusLoaded) {
+                        //load operational layers into listmodel
+                        featureLayerModel = map.operationalLayers
+                    }
                 }
             }
         }
@@ -58,7 +59,7 @@ Rectangle {
     Rectangle {
         id: referenceScaleRect
         anchors {
-            margins: 10
+            margins: 10 * scaleFactor
             left: parent.left
             top: parent.top
         }
@@ -74,8 +75,8 @@ Rectangle {
 
         Rectangle {
             anchors.fill: parent
-            width: referenceScaleRect.width
-            height: referenceScaleRect.height
+            width: parent.width
+            height: parent.height
             color: "#000000"
             opacity: .75
             radius: 5
@@ -93,12 +94,12 @@ Rectangle {
 
                 Text {
                     color: "#ffffff"
-                    text: qsTr("Current Map Scale 1:" + Math.round(mapView.mapScale))
+                    text: "Current Map Scale 1:%1".arg(Math.round(mapView.mapScale))
                     Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
                     verticalAlignment: Text.AlignBottom
                     font {
                         weight: Font.DemiBold
-                        pixelSize: 11
+                        pointSize: 9
                     }
                     clip: true
                 }
@@ -110,7 +111,7 @@ Rectangle {
                     verticalAlignment: Text.AlignBottom
                     font {
                         weight: Font.DemiBold
-                        pixelSize: 11
+                        pointSize: 9
                     }
                     clip: true
                 }
@@ -119,7 +120,7 @@ Rectangle {
                     id: scales
                     font {
                         weight: Font.DemiBold
-                        pixelSize: 11
+                        pointSize: 9
                     }
                     Layout.fillWidth: true
                     model: ["1:500000","1:250000","1:100000","1:50000"]
@@ -132,8 +133,7 @@ Rectangle {
                     text: qsTr("Set Map Scale to Reference Scale")
                     font {
                         weight: Font.DemiBold
-                        pixelSize: 11
-                        capitalization: Font.MixedCase
+                        pointSize: 8
                     }
                     Layout.fillWidth: true
                     clip: true
@@ -143,51 +143,60 @@ Rectangle {
         }
     }
 
-    Rectangle {
-        id: operationalLayersList
-        anchors {
-            margins: 5
-            right: parent.right
-            top: parent.top
-        }
-        height: 235
-        width: 145
-        color: "transparent"
+//    Rectangle {
+//        id: operationalLayersList
+//        anchors {
+//            margins: 10 * scaleFactor
+//            right: parent.right
+//            top: parent.top
+//        }
+////        height: 235
+////        width: 130
+//        color: "transparent"
+//        clip: true
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
-        }
+//        MouseArea {
+//            anchors.fill: parent
+//            onClicked: mouse.accepted = true
+//            onWheel: wheel.accepted = true
+//        }
 
-        Rectangle {
-            anchors.fill: parent
-            width: operationalLayersList.width
-            height: operationalLayersList.height
-            color: "#000000"
-            opacity: .75
-            radius: 5
-            border {
-                color: "#4D4D4D"
-                width: 1
-            }
+
+//        Rectangle {
+//            anchors.fill: parent
+////            width: parent.width
+////            height: parent.height
+//            color: "#000000"
+//            opacity: .75
+//            radius: 5
+//            border {
+//                color: "#4D4D4D"
+//                width: 1
+//            }
+//            clip: true
 
             ColumnLayout {
                 id: operationalLayersLayout
-                spacing: 0
+//                anchors {
+//                    fill: parent
+//                    margins: 2
+//                }
                 anchors {
-                    fill: parent
-                    margins: 2
+                    margins: 10 * scaleFactor
+                    right: parent.right
+                    top: parent.top
                 }
+                spacing: 0
+                clip: true
 
                 Text {
                     text: qsTr("Apply Reference Scale")
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     font {
                         weight: Font.DemiBold
-                        pixelSize: 11
+                        pointSize: 9
                     }
-                    color: "#ffffff"
+                    //color: "#ffffff"
                     clip: true
                 }
 
@@ -195,8 +204,8 @@ Rectangle {
                 ListView {
                     id: layerVisibilityListView
                     anchors.margins: 10
-                    width: parent.width
-                    height: parent.height
+//                    width: parent.width
+//                    height: parent.height
                     Layout.fillWidth: true
                     clip: true
                     spacing: 5.5
@@ -206,36 +215,30 @@ Rectangle {
 
                     // Assign the delegate to display text next to checkbox as a row
                     delegate: Item {
-                        width: parent.width
-                        height: 25
+//                        width: parent.width
+//                        height: 25
 
-                        Row {
-                            id: layerRows
-                            spacing: 4
-
-                            CheckBox {
-                                id: featureLayerBox
-                                anchors.verticalCenter: parent.verticalCenter
-                                clip: true
-                                checked: true
-                                onCheckStateChanged: featureLayerScaleSymbols(name,featureLayerBox.checked)
-                            }
-
+                        CheckBox {
+                            id: featureLayerBox
                             Text {
                                 id: featureLayerText
-                                anchors.verticalCenter: parent.verticalCenter
                                 text: name
-                                wrapMode: Text.WordWrap
-                                font.pixelSize: 11
-                                color: "#ffffff"
+//                                anchors.horizontalCenterOffset: featureLayerBox.width + 15
+//                                anchors.horizontalCenter: parent.horizontalCenter
+//                                anchors.verticalCenter: parent.verticalCenter
+//                                wrapMode: Text.WordWrap
+                                font.pointSize: 9
+                                //color: "#ffffff"
                                 clip: true
                             }
+                            checked: true
+                            onCheckStateChanged: featureLayerScaleSymbols(name,featureLayerBox.checked)
                         }
                     }
                 }
             }
-        }
-    }
+        //}
+    //}
 
     function applyReferenceScaleToMap() {
         map.referenceScale = referenceScales[scales.currentIndex]
@@ -243,11 +246,10 @@ Rectangle {
 
     //pass in layers name and checked status to update featurelayer.ScaleSymbols property accordingly
     function featureLayerScaleSymbols(layerName, checkedStatus) {
-        for(var i = 0; i < featureLayerModel.count; i++){
-            var featureLayer = featureLayerModel.get(i)
-            if(layerName === featureLayer.name){
-                featureLayer.scaleSymbols = checkedStatus
+        featureLayerModel.forEach(function(lyr){
+            if(layerName === lyr.name){
+                lyr.scaleSymbols = checkedStatus
             }
-        }
+        })
     }
 }

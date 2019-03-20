@@ -1,6 +1,6 @@
 // [WriteFile Name=MapReferenceScale, Category=Maps]
 // [Legal]
-// Copyright 2018 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,29 +14,32 @@
 // limitations under the License.
 // [Legal]
 
-import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import Esri.Samples 1.0
 import QtQuick.Layouts 1.12
+import Esri.ArcGISExtras 1.1
+
+
 
 Item {
 
+    property double scaleFactor: System.displayScaleFactor
     property var referenceScales: [500000,250000,100000,50000]
-    property real currentScale: mapReferenceScaleSampleModel.currentMapScale()
 
     // add a mapView component
     MapView {
         id: myMapView
         anchors.fill: parent
         onMapScaleChanged: {
-            currentScale = mapReferenceScaleSampleModel.currentMapScale()
+            mapReferenceScaleSampleModel.currentMapScaleChanged();
         }
     }
 
     Rectangle {
         id: referenceScaleRect
         anchors {
-            margins: 10
+            margins: 10 * scaleFactor
             left: parent.left
             top: parent.top
         }
@@ -52,8 +55,8 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            width: referenceScaleRect.width
-            height: referenceScaleRect.height
+            width: parent.width
+            height: parent.height
             color: "#000000"
             opacity: .75
             radius: 5
@@ -64,21 +67,21 @@ Item {
 
             ColumnLayout {
                 id: referenceScaleLayout
-                spacing: 1
                 anchors {
                     fill: parent
                     margins: 5
                 }
+                spacing: 1
 
                 Text {
                     id: currentMapScaleText
                     color: "#ffffff"
-                    text: qsTr("Current Map Scale 1:" + Math.round(currentScale))
+                    text: "Current Map Scale 1:%1".arg(Math.round(mapReferenceScaleSampleModel.currentMapScale))
                     Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
                     verticalAlignment: Text.AlignBottom
                     font {
                         weight: Font.DemiBold
-                        pixelSize: 11
+                        pointSize: 9
                     }
                     clip: true
                 }
@@ -90,7 +93,7 @@ Item {
                     verticalAlignment: Text.AlignBottom
                     font {
                         weight: Font.DemiBold
-                        pixelSize: 11
+                        pointSize: 9
                     }
                     clip: true
                 }
@@ -99,7 +102,7 @@ Item {
                     id: scales
                     font {
                         weight: Font.DemiBold
-                        pixelSize: 11
+                        pointSize: 9
                     }
                     Layout.fillWidth: true
                     model: ["1:500000","1:250000","1:100000","1:50000"]
@@ -112,8 +115,7 @@ Item {
                     text: qsTr("Set Map Scale to Reference Scale")
                     font {
                         weight: Font.DemiBold
-                        pixelSize: 11
-                        capitalization: Font.MixedCase
+                        pointSize: 8
                     }
                     Layout.fillWidth: true
                     clip: true
@@ -126,12 +128,12 @@ Item {
     Rectangle {
         id: operationalLayersList
         anchors {
-            margins: 5
+            margins: 10 * scaleFactor
             right: parent.right
             top: parent.top
         }
         height: 235
-        width: 145
+        width: 130
         color: "transparent"
 
         MouseArea {
@@ -142,8 +144,8 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            width: operationalLayersList.width
-            height: operationalLayersList.height
+            width: parent.width
+            height: parent.height
             color: "#000000"
             opacity: .75
             radius: 5
@@ -154,18 +156,18 @@ Item {
 
             ColumnLayout {
                 id: operationalLayersLayout
-                spacing: 0
                 anchors {
                     fill: parent
                     margins: 2
                 }
+                spacing: 0
 
                 Text {
                     text: qsTr("Apply Reference Scale")
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     font {
                         weight: Font.DemiBold
-                        pixelSize: 11
+                        pointSize: 9
                     }
                     color: "#ffffff"
                     clip: true
@@ -186,30 +188,25 @@ Item {
 
                     // Assign the delegate to display text next to checkbox as a row
                     delegate: Item {
+                        id: element
                         width: parent.width
                         height: 25
 
-                        Row {
-                            id: layerRows
-                            spacing: 4
-
-                            CheckBox {
-                                id: featureLayerBox
-                                anchors.verticalCenter: parent.verticalCenter
-                                clip: true
-                                checked: true
-                                onCheckStateChanged: mapReferenceScaleSampleModel.featureLayerScaleSymbols(name,featureLayerBox.checked)
-                            }
-
+                        CheckBox {
+                            id: featureLayerBox
                             Text {
                                 id: featureLayerText
-                                anchors.verticalCenter: parent.verticalCenter
                                 text: name
+                                anchors.horizontalCenterOffset: featureLayerBox.width + 15
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                anchors.verticalCenter: parent.verticalCenter
                                 wrapMode: Text.WordWrap
-                                font.pixelSize: 11
+                                font.pointSize: 9
                                 color: "#ffffff"
                                 clip: true
                             }
+                            checked: true
+                            onCheckStateChanged: mapReferenceScaleSampleModel.featureLayerScaleSymbols(name,featureLayerBox.checked)
                         }
                     }
                 }
