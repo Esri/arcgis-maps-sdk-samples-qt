@@ -160,7 +160,6 @@ Rectangle {
             onWheel: wheel.accepted = true
         }
 
-
         Rectangle {
             anchors.fill: parent
             width: parent.width
@@ -179,11 +178,6 @@ Rectangle {
                 anchors {
                     fill: parent
                     margins: 2
-                }
-                anchors {
-                    margins: 10
-                    right: parent.right
-                    top: parent.top
                 }
                 spacing: 0
                 clip: true

@@ -134,6 +134,7 @@ Item {
         height: 235
         width: 130
         color: "transparent"
+        clip: true
 
         MouseArea {
             anchors.fill: parent
@@ -152,6 +153,7 @@ Item {
                 color: "#4D4D4D"
                 width: 1
             }
+            clip: true
 
             ColumnLayout {
                 id: operationalLayersLayout
@@ -160,6 +162,7 @@ Item {
                     margins: 2
                 }
                 spacing: 0
+                clip: true
 
                 Text {
                     text: qsTr("Apply Reference Scale")
@@ -187,7 +190,6 @@ Item {
 
                     // Assign the delegate to display text next to checkbox as a row
                     delegate: Item {
-                        id: element
                         width: parent.width
                         height: 25
 
