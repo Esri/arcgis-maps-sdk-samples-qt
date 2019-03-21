@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/ChooseCameraController">
+        <file alias="sample.json">ChooseCameraController.json</file>        
+        <file>ChooseCameraController.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
