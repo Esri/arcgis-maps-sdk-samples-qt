@@ -33,76 +33,91 @@ Item {
         planePitch: planePitchSlider.value
     }
 
-    //Color for the panels that the UI controls sit on.
-    property color uiBackgroundCol : Qt.rgba(0.2, 0.2, 0.2, 0.65)
-
     //Camera heading slider, sits at the bottom of the screen
-    Rectangle {
+    Slider {
+        id: cameraHeadingSlider
+
         anchors {
-            bottom: parent.bottom
             left: parent.left
             right: parent.right
-            margins: 30
+            bottom: parent.bottom
+            margins: 20
         }
 
-        height: cameraHeadingSlider.height + cameraHeadingLabel.height
-        color: uiBackgroundCol
+        value: model.cameraHeading //Value bound to the model, so rotating the camera will update the slider.
+        from: model.cameraHeadingBounds.x //Similarly, setting different initial bounds changes the UI automatically. Type used is QPointF for min/max, hence the x/y
+        to: model.cameraHeadingBounds.y
 
-        Slider {
-            id: cameraHeadingSlider
+        //To avoid getting stuck in a binding loop for the value, update the value of the camera heading from the slider only in response to a moving slider.
+        onMoved: {
+            model.cameraHeading = cameraHeadingSlider.value
+        }
 
-            anchors {
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
+        //Custom slider handle that displays the current value
+        handle: Item {
+            x: parent.leftPadding + parent.visualPosition * (parent.availableWidth - headingHandleNub.width)
+            y: parent.topPadding + parent.availableHeight / 2 - headingHandleNub.height / 2
+
+
+            Rectangle {
+                id: headingHandleNub
+                color: headingHandleRect.color
+                radius: width * 0.5
+                width: 10
+                height: width
             }
-
-            value: model.cameraHeading //Value bound to the model, so rotating the camera will update the slider.
-            from: model.cameraHeadingBounds.x //Similarly, setting different initial bounds changes the UI automatically. Type used is QPointF for min/max, hence the x/y
-            to: model.cameraHeadingBounds.y
-
-
-            //To avoid getting stuck in a binding loop for the value, update the value of the camera heading from the slider only in response to a moving slider.
-            onMoved: {
-                model.cameraHeading = cameraHeadingSlider.value
-            }
-
-            //Custom slider handle that displays the current value
-            handle: Rectangle {
-                x: cameraHeadingSlider.leftPadding + cameraHeadingSlider.visualPosition * (cameraHeadingSlider.availableWidth - width)
-                y: cameraHeadingSlider.topPadding + cameraHeadingSlider.availableHeight / 2 - height / 2
-                implicitWidth: 30
-                implicitHeight: 30
+            Rectangle {
+                id: headingHandleRect
+                height: childrenRect.height
+                width: childrenRect.width
+                radius: 3
+                x: headingHandleNub.x - width / 2 + headingHandleNub.width / 2
+                y: headingHandleNub.y - height
+                color: cameraHeadingSlider.background.children[0].color
 
                 Text {
                     id: headingValue
-
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        verticalCenter: parent.verticalCenter
-                    }
-
-                    text: Math.round(cameraHeadingSlider.value)
-                    color: "black"
+                    font.pixelSize: 14
+                    padding: 3
+                    horizontalAlignment: Qt.AlignHCenter
+                    verticalAlignment: Qt.AlignVCenter
+                    text: Math.round(cameraHeadingSlider.value) + "\u00B0"
+                    color: "white"
                 }
             }
         }
+    }
 
-        Text {
-            id: cameraHeadingLabel
+    Text {
+        id: cameraHeadingLabel
 
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                bottom: cameraHeadingSlider.top
-            }
-
-            text: "Camera Heading"
-            color: "white"
+        anchors {
+            horizontalCenter: cameraHeadingSlider.horizontalCenter
+            bottom: cameraHeadingSlider.top
+            bottomMargin: 10
         }
+
+        text: "Camera Heading"
+        color: "white"
     }
 
     //Plane pitch slider, placed in the top-right of the screen
-    Rectangle {
+    Text {
+        id: planePitchLabel
+
+        anchors {
+            horizontalCenter: planePitchSlider.horizontalCenter
+            bottom: planePitchSlider.top
+            bottomMargin: 10
+        }
+
+        text: "Plane Pitch"
+        color: "white"
+    }
+
+    Slider {
+        id: planePitchSlider
+
         anchors {
             top: parent.top
             bottom: parent.verticalCenter
@@ -110,52 +125,40 @@ Item {
             margins: 30
         }
 
-        width: childrenRect.width
-        color: uiBackgroundCol
+        value: 0
+        from: 90
+        to: -90
+        orientation: Qt.Vertical
 
-        ColumnLayout {
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
+        //Custom slider handle that displays the current value
+        handle: Item {
+            x: planePitchSlider.leftPadding + planePitchSlider.availableWidth / 2 - pitchHandleNub.width / 2
+            y: planePitchSlider.topPadding + planePitchSlider.visualPosition * (planePitchSlider.availableHeight - pitchHandleNub.height)
+
+            Rectangle {
+                id: pitchHandleNub
+                color: pitchHandleRect.color
+                radius: width * 0.5
+                width: 10
+                height: width
             }
-            spacing: 5
+            Rectangle {
+                id: pitchHandleRect
+                height: childrenRect.height
+                width: childrenRect.width
+                radius: 3
+                x: pitchHandleNub.x - width
+                y: pitchHandleNub.y - height/2 + pitchHandleNub.height/2
+                color: planePitchSlider.background.children[0].color
 
-            Text {
-                id: planePitchLabel
-                text: "Plane Pitch"
-                color: "white"
-
-            }
-
-            Slider {
-                id: planePitchSlider
-
-                Layout.fillHeight: true
-
-                value: 0
-                from: 90
-                to: -90
-                orientation: Qt.Vertical
-
-                //Custom slider handle that displays the current value
-                handle: Rectangle {
-                    x: planePitchSlider.leftPadding + planePitchSlider.availableWidth / 2 - width / 2
-                    y: planePitchSlider.topPadding + planePitchSlider.visualPosition * (planePitchSlider.availableHeight - height)
-
-                    implicitWidth: 30
-                    implicitHeight: 30
-
-                    Text {
-                        id: pitchValue
-
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            verticalCenter: parent.verticalCenter
-                        }
-
-                        text: Math.round(planePitchSlider.value)
-                        color: "black"
-                    }
+                Text {
+                    id: pitchValue
+                    font.pixelSize: 14
+                    padding: 3
+                    horizontalAlignment: Qt.AlignHCenter
+                    verticalAlignment: Qt.AlignVCenter
+                    text: Math.round(planePitchSlider.value)  + "\u00B0"
+                    color: "white"
                 }
             }
         }
@@ -170,40 +173,34 @@ Item {
         }
 
         height: childrenRect.height
-        width: childrenRect.width //Add a little bit of manual padding to comfortably fit the checkbox text
-        color: uiBackgroundCol
+        width: childrenRect.width
+        color: Qt.rgba(0.2, 0.2, 0.2, 0.65)
 
-        Column {
-            spacing: 10
-            padding: 10
+        GridLayout {
+            columns: 2
+
             Button {
+                Layout.columnSpan: 2
                 text: "Cockpit View"
                 onClicked: model.cockpitView()
             }
 
             Button {
+                Layout.columnSpan: 2
                 text: "Center View"
                 onClicked: model.centerView()
             }
 
-            Row {
-                anchors {
-                    left: parent.left
-                }
+            Text {
+                Layout.leftMargin : 10
+                text: "Allow camera\ndistance interaction"
+                color: "white"
+            }
 
-                CheckBox {
-                    id: allowCamDistanceInteractionCheckBox
-                    checked: model.allowCamDistanceInteraction
-                    onCheckedChanged: model.allowCamDistanceInteraction = checked
-                }
-
-                Text {
-                    anchors {
-                        verticalCenter: allowCamDistanceInteractionCheckBox.verticalCenter
-                    }
-                    text: "Allow camera\ndistance interaction"
-                    color: "white"
-                }
+            CheckBox {
+                id: allowCamDistanceInteractionCheckBox
+                checked: model.allowCamDistanceInteraction
+                onCheckedChanged: model.allowCamDistanceInteraction = checked
             }
         }
     }
