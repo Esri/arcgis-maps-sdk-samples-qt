@@ -103,10 +103,9 @@ void OrbitCameraAroundObject::setSceneView(SceneQuickView* sceneView)
 
 
   /* Plane model Setup */
-  //Load a plane model.
+  //Create a plane model.
   QUrl planeFileURl = QUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae");
   ModelSceneSymbol* planeModel = new ModelSceneSymbol(planeFileURl, 1.0, this);
-  planeModel->load();
 
   //Create a graphic from the plane model, positioned atop a runway.
   Point runwayPos = Point{6.637, 45.399, 100, SpatialReference::wgs84()};
@@ -179,7 +178,7 @@ void OrbitCameraAroundObject::cockpitView()
   connect(m_orbitCam, &OrbitGeoElementCameraController::moveCameraCompleted, this,
           [this](QUuid, bool succeeded)
   {
-    if(succeeded)
+    if (succeeded)
     {
       //once the camera is in the cockpit, only allow the camera's heading to change
       m_orbitCam->setMinCameraPitchOffset(90);
@@ -197,7 +196,6 @@ void OrbitCameraAroundObject::cockpitView()
                          m_orbitCam->isAutoPitchEnabled() ? 0.0 : (90 - m_orbitCam->cameraPitchOffset()) + planePitch(), 1.0);
 
 }
-
 
 void OrbitCameraAroundObject::centerView()
 {
@@ -231,7 +229,7 @@ bool OrbitCameraAroundObject::camDistanceInteractionAllowed() const
 void OrbitCameraAroundObject::setCamDistanceInteractionAllowed(bool allowed)
 {
   //Check the allowed flags arn't the same on set to avoid a binding loop
-  if((m_orbitCam != nullptr) && (allowed != m_orbitCam->isCameraDistanceInteractive()))
+  if ((m_orbitCam != nullptr) && (allowed != m_orbitCam->isCameraDistanceInteractive()))
   {
     m_orbitCam->setCameraDistanceInteractive(allowed);
     emit camDistanceInteractionAllowedChanged();
@@ -245,7 +243,7 @@ double OrbitCameraAroundObject::cameraHeading() const
 
 void OrbitCameraAroundObject::setCameraHeading(double heading)
 {
-  if(m_orbitCam != nullptr)
+  if (m_orbitCam != nullptr)
   {
     m_orbitCam->setCameraHeadingOffset(heading);
     emit cameraHeadingChanged();
