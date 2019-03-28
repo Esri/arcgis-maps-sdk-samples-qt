@@ -43,8 +43,9 @@ Rectangle {
         Map {
             id: map
             basemap: useColorRamp ?
-                         basemap :
-                         basemapColorRamp
+                         basemapColorRamp :
+                         basemap
+
         }
     }
 
