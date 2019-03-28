@@ -28,7 +28,7 @@ Rectangle {
 
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property bool editingRenderer: false
-    property bool useColorRamp: colorCombo.currentText !== "none"
+    property bool useColorRamp: colorCombo.currentText === "none"
 
     SlopeTypeModel {
         id: slopeTypeModel
