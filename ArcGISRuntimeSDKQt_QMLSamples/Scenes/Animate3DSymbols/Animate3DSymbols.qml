@@ -210,8 +210,8 @@ Rectangle {
                 id: animationSpeed
                 Layout.alignment: Qt.AlignRight
                 from: 1
-                to: 100
-                value: 50
+                to: 50
+                value: 5
                 text: "speed"
             }
 
@@ -342,7 +342,7 @@ Rectangle {
 
     Timer {
         id: timer
-        interval: Math.max(animationSpeed.to - animationSpeed.value, 1);
+        interval: 50;
         running: playButton.checked;
         repeat: true
         onTriggered: animate();
@@ -446,7 +446,7 @@ Rectangle {
     }
 
     function nextFrameRequested() {
-        progressSlider.value = progressSlider.value + 1;
+        progressSlider.value += animationSpeed.value;
         if (progressSlider.value >= missionSize)
             progressSlider.value = 0;
     }

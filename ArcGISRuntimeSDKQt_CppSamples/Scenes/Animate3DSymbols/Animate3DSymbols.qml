@@ -31,7 +31,7 @@ Animate3DSymbolsSample {
     angle: cameraAngle.value
 
     onNextFrameRequested: {
-        progressSlider.value = progressSlider.value + 1;
+        progressSlider.value = progressSlider.value + animationSpeed.value;
         if (progressSlider.value >= missionSize)
             progressSlider.value = 0;
     }
@@ -147,8 +147,8 @@ Animate3DSymbolsSample {
                 id: animationSpeed
                 Layout.alignment: Qt.AlignRight
                 from: 1
-                to: 100
-                value: 50
+                to: 50
+                value: 5
                 text: "speed"
             }
 
@@ -228,9 +228,9 @@ Animate3DSymbolsSample {
 
     Timer {
         id: timer
-        interval: Math.max(animationSpeed.to - animationSpeed.value, 1);
+        interval: 50;
         running: playButton.checked;
         repeat: true
-        onTriggered: animate();
+        onTriggered: animate(animationSpeed.value);
     }
 }
