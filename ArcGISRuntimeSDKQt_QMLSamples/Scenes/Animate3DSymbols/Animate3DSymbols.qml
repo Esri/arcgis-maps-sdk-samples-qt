@@ -211,7 +211,7 @@ Rectangle {
                 id: animationSpeed
                 Layout.alignment: Qt.AlignRight
                 from: 1
-                to: 50
+                to: 20
                 value: 5
                 stepSize: 1
                 text: "speed"
