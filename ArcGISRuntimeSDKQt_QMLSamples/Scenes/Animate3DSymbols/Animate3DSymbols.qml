@@ -199,6 +199,7 @@ Rectangle {
                 enabled : missionReady
                 text: (value / missionSize * 100).toLocaleString(Qt.locale(), 'f', 0) + "%"
                 handleWidth: progressMetrics.width
+                stepSize: 1
                 TextMetrics {
                     id: progressMetrics
                     font: progressSlider.font
@@ -212,6 +213,7 @@ Rectangle {
                 from: 1
                 to: 50
                 value: 5
+                stepSize: 1
                 text: "speed"
             }
 
@@ -446,9 +448,13 @@ Rectangle {
     }
 
     function nextFrameRequested() {
-        progressSlider.value += animationSpeed.value;
-        if (progressSlider.value >= missionSize)
-            progressSlider.value = 0;
+        var newValue = progressSlider.value + animationSpeed.value;
+        if (newValue >= missionSize) {
+            progressSlider.value = newValue % missionSize;
+        }
+        else {
+            progressSlider.value = newValue;
+        }
     }
 
     function createPoint(missionData) {
