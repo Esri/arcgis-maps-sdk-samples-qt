@@ -1,0 +1,8 @@
+{
+    "source" :  "DisplayWfsLayer.qml",
+    "otherSourceFiles" :  [
+        "DisplayWfsLayer.h",
+        "DisplayWfsLayer.cpp"
+    ],
+    "name" : "Display a WFS layer"
+}
