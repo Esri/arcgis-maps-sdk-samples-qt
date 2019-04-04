@@ -47,6 +47,7 @@ void DeleteFeaturesFeatureService::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<DeleteFeaturesFeatureService>("Esri.Samples", 1, 0, "DeleteFeaturesFeatureServiceSample");
+  qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
 }
 
 void DeleteFeaturesFeatureService::componentComplete()

@@ -56,6 +56,7 @@ void UpdateAttributesFeatureService::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<UpdateAttributesFeatureService>("Esri.Samples", 1, 0, "UpdateAttributesFeatureServiceSample");
+  qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
 }
 
 void UpdateAttributesFeatureService::componentComplete()
