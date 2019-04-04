@@ -34,9 +34,6 @@ int main(int argc, char *argv[])
     // Add the import Path
     view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.qml"));
-
     QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
     QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
 
@@ -52,6 +49,9 @@ int main(int argc, char *argv[])
     view.engine()->addImportPath(arcGISRuntimeImportPath);
     // Add the Toolkit path
     view.engine()->addImportPath(arcGISToolkitImportPath);
+
+    // Set the source
+    view.setSource(QUrl("qrc:/Samples/EditData/AddFeaturesFeatureService/AddFeaturesFeatureService.qml"));
 
     view.show();
 
