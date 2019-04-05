@@ -15,79 +15,20 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 2.5
-import Esri.ArcGISRuntime 100.5
+import QtQuick.Controls 2.2
+import Esri.Samples 1.0
 
-Rectangle {
-    id: rootRectangle
-    clip: true
-    width: 800
-    height: 600
+Item {
 
     SceneView {
-        id: sceneView
+        id: view
         anchors.fill: parent
+    }
 
-        Scene {
-            id: scene
-            BasemapImagery {}
-
-            Surface {
-                // add an arcgis tiled elevation source
-                ArcGISTiledElevationSource {
-                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
-                }
-            }
-
-            //  Layers nested as children are appended to the group layer
-            GroupLayer {
-                id: gl
-                name: "Group: Dev A"
-
-                ArcGISSceneLayer {
-                    url: "https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_Trees/SceneServer/layers/0"
-                }
-
-                ArcGISSceneLayer {
-                    url: "https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_Pathways/SceneServer/layers/0"
-                }
-
-                ArcGISSceneLayer {
-                    url: "https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_BuildingShell_Textured/SceneServer/layers/0"
-                }
-            }
-
-            // Add layers outside group layer
-            ArcGISSceneLayer {
-                url: "https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/PlannedDemo_BuildingShell/SceneServer/layers/0"
-            }
-
-            FeatureLayer {
-                ServiceFeatureTable {
-                    url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/DevelopmentProjectArea/FeatureServer/0"
-                }
-            }
-        }
-
-        Component.onCompleted: {
-            // create initial viewpoint extent
-            var env = ArcGISRuntimeEnvironment.createObject("Envelope", {
-                                                                json: {
-                                                                    "spatialReference": {
-                                                                        "wkid":4326
-                                                                    },
-                                                                    "xmax":-122.67960721754773,
-                                                                    "xmin":-122.68647066116789,
-                                                                    "ymax":45.53584958588318,
-                                                                    "ymin":45.531539857343745
-                                                                }
-                                                            });
-
-            // set viewpoint
-            sceneView.setViewpoint(ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {
-                                                                             extent: env
-                                                                         }));
-        }
+    // Declare the C++ instance which creates the scene etc. and supply the view
+    GroupLayersSample {
+        id: sampleModel
+        sceneView: view
     }
 
     // Create a window to display the layers
@@ -129,16 +70,15 @@ Rectangle {
                 clip: true
 
                 // Assign the model to the list model of layers
-                model: scene.operationalLayers
+                model: sampleModel.layerListModel
 
                 // Assign the delegate to the delegate created above
                 delegate: Item {
-                    property var type: layerType
                     height: childrenRect.height
 
                     // select the component based on the layer type
                     Loader {
-                        sourceComponent: layerType === Enums.LayerTypeGroupLayer ?
+                        sourceComponent: layerType === 22 ?
                                              groupLayerDelegate : layerDelegate
                     }
 
@@ -159,15 +99,19 @@ Rectangle {
                             }
 
                             Repeater {
-                                property var groupLyr: scene.operationalLayers.get(layerVisibilityListView.currentIndex)
-                                model: groupLyr ? groupLyr.layers : null
+                                model: sampleModel.getGroupLayerListModel(layerVisibilityListView.currentIndex)
                                 delegate: CheckBox {
                                     checked: true
                                     text: name
                                     leftPadding: indicator.width
                                     width: layerVisibilityRect.width - leftPadding
                                     ButtonGroup.group: childGroup
-                                    onCheckedChanged: layerVisible = checked
+                                    onCheckedChanged: {
+                                        console.log("checked status:", checked)
+                                        console.log("role status", layerVisible)
+                                        layerVisible = checked
+                                        console.log("role status", layerVisible)
+                                    }
                                 }
                             }
                         }

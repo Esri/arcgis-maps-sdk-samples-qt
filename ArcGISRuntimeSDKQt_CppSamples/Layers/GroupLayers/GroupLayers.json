@@ -1,0 +1,8 @@
+{
+    "source" :  "GroupLayers.qml",
+    "otherSourceFiles" :  [
+        "GroupLayers.h",
+        "GroupLayers.cpp"
+    ],
+    "name" : "Group layers"
+}
