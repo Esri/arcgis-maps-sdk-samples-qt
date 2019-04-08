@@ -107,10 +107,8 @@ Item {
                                     width: layerVisibilityRect.width - leftPadding
                                     ButtonGroup.group: childGroup
                                     onCheckedChanged: {
-                                        console.log("checked status:", checked)
-                                        console.log("role status", layerVisible)
                                         layerVisible = checked
-                                        console.log("role status", layerVisible)
+                                        console.log(name, layerVisible)
                                     }
                                 }
                             }
@@ -123,7 +121,10 @@ Item {
                         CheckBox {
                             text: name
                             checked: true
-                            onCheckedChanged: layerVisible = checked
+                            onCheckedChanged: {
+                                layerVisible = checked
+                                console.log(name, layerVisible)
+                            }
                         }
                     }
                 }

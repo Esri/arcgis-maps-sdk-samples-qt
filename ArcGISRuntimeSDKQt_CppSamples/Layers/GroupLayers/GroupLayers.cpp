@@ -43,7 +43,10 @@ GroupLayers::GroupLayers(QObject* parent /* = nullptr */):
   ArcGISSceneLayer* sceneLayer1 = new ArcGISSceneLayer(QUrl("https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_Trees/SceneServer/layers/0"), this);
   ArcGISSceneLayer* sceneLayer2 = new ArcGISSceneLayer(QUrl("https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_Pathways/SceneServer/layers/0"), this);
   ArcGISSceneLayer* sceneLayer3 = new ArcGISSceneLayer(QUrl("https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_BuildingShell_Textured/SceneServer/layers/0"), this);
-  GroupLayer* groupLayer = new GroupLayer(QList<Layer*>{sceneLayer1, sceneLayer2, sceneLayer3}, this);
+  GroupLayer* groupLayer = new GroupLayer(QList<Layer*>{}, this);
+  groupLayer->layers()->append(sceneLayer1);
+  groupLayer->layers()->append(sceneLayer2);
+  groupLayer->layers()->append(sceneLayer3);
   groupLayer->setName("Group: Dev A");
 
   // Create 2 layers outside of group layer
