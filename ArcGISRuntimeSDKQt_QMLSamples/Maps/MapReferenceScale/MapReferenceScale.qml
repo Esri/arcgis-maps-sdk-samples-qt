@@ -56,177 +56,112 @@ Rectangle {
     }
 
     Rectangle {
-        id: referenceScaleRect
         anchors {
-            margins: 10
+            margins: 5
             left: parent.left
             top: parent.top
         }
-        height: 150
-        width: 200
-        color: "transparent"
+        width: childrenRect.width
+        height: childrenRect.height
+        color: "#000000"
+        opacity: .75
+        radius: 5
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
-        }
-
-        Rectangle {
-            anchors.fill: parent
-            width: parent.width
-            height: parent.height
-            color: "#000000"
-            opacity: .75
-            radius: 5
-            border {
-                color: "#4D4D4D"
-                width: 1
+        ColumnLayout {
+            Text {
+                color: "#ffffff"
+                text: "Current Map Scale 1:%1".arg(Math.round(mapView.mapScale))
+                Layout.fillWidth: true
+                Layout.margins: 3
+                font {
+                    weight: Font.DemiBold
+                    pointSize: 10
+                }
             }
 
-            ColumnLayout {
-                id: referenceScaleLayout
-                anchors {
-                    fill: parent
-                    margins: 5
+            Text {
+                color: "#ffffff"
+                text: qsTr("Select a new reference scale")
+                Layout.fillWidth: true
+                Layout.margins: 3
+                font {
+                    weight: Font.DemiBold
+                    pointSize: 10
                 }
+            }
 
-                Text {
-                    color: "#ffffff"
-                    text: "Current Map Scale 1:%1".arg(Math.round(mapView.mapScale))
-                    Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
-                    verticalAlignment: Text.AlignBottom
-                    font {
-                        weight: Font.DemiBold
-                        pointSize: 9
-                    }
-                    clip: true
+            ComboBox {
+                id: scales
+                font {
+                    weight: Font.DemiBold
+                    pointSize: 10
                 }
+                Layout.margins: 3
+                Layout.fillWidth: true
+                model: ["1:500000","1:250000","1:100000","1:50000"]
+                Component.onCompleted: applyReferenceScaleToMap()
+                onActivated: applyReferenceScaleToMap()
+            }
 
-                Text {
-                    color: "#ffffff"
-                    text: qsTr("Select a new reference scale")
-                    Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
-                    verticalAlignment: Text.AlignBottom
-                    font {
-                        weight: Font.DemiBold
-                        pointSize: 9
-                    }
-                    clip: true
+            Button {
+                text: qsTr("Set Map Scale to Reference Scale")
+                font {
+                    weight: Font.DemiBold
+                    pointSize: 10
                 }
-
-                ComboBox {
-                    id: scales
-                    font {
-                        weight: Font.DemiBold
-                        pointSize: 9
-                    }
-                    Layout.fillWidth: true
-                    model: ["1:500000","1:250000","1:100000","1:50000"]
-                    clip: true
-                    Component.onCompleted: applyReferenceScaleToMap()
-                    onActivated: applyReferenceScaleToMap()
-                }
-
-                Button {
-                    text: qsTr("Set Map Scale to Reference Scale")
-                    font {
-                        weight: Font.DemiBold
-                        pointSize: 8
-                    }
-                    Layout.fillWidth: true
-                    clip: true
-                    onClicked: mapView.setViewpointScale(referenceScales[scales.currentIndex])
-                }
+                Layout.margins: 3
+                Layout.fillWidth: true
+                onClicked: mapView.setViewpointScale(referenceScales[scales.currentIndex])
             }
         }
     }
 
     Rectangle {
-        id: operationalLayersList
         anchors {
-            margins: 10
+            margins: 5
             right: parent.right
             top: parent.top
         }
-        height: 235
-        width: 130
-        color: "transparent"
-        clip: true
+        width: childrenRect.width
+        height: childrenRect.height
+        color: "#000000"
+        opacity: .75
+        radius: 5
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
-        }
-
-        Rectangle {
-            anchors.fill: parent
-            width: parent.width
-            height: parent.height
-            color: "#000000"
-            opacity: .75
-            radius: 5
-            border {
-                color: "#4D4D4D"
-                width: 1
+        ColumnLayout {
+            Text {
+                text: qsTr("Apply Reference Scale")
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
+                Layout.margins: 2
+                font {
+                    weight: Font.DemiBold
+                    pointSize: 10
+                }
+                color: "#ffffff"
             }
-            clip: true
 
-            ColumnLayout {
-                id: operationalLayersLayout
-                anchors {
-                    fill: parent
-                    margins: 2
-                }
-                spacing: 0
-                clip: true
+            Repeater {
+                id: featureLayerRepeater
+                // Assign the model to the list model of operational layers
+                model: featureLayerModel
+                width: childrenRect.width
+                height: childrenRect.height
 
-                Text {
-                    text: qsTr("Apply Reference Scale")
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    font {
-                        weight: Font.DemiBold
-                        pointSize: 9
+                // Assign the delegate to display text next to checkbox as a row
+                delegate: Row {
+                    CheckBox {
+                        id: featureLayerBox
+                        checked: true
+                        onCheckStateChanged: featureLayerScaleSymbols(name,featureLayerBox.checked)
                     }
-                    color: "#ffffff"
-                    clip: true
-                }
-
-                // Create a list view to display the items
-                ListView {
-                    id: layerVisibilityListView
-                    anchors.margins: 10
-                    width: parent.width
-                    height: parent.height
-                    Layout.fillWidth: true
-                    clip: true
-                    spacing: 5.5
-
-                    // Assign the model to the list model of operational layers
-                    model: featureLayerModel
-
-                    // Assign the delegate to display text next to checkbox as a row
-                    delegate: Item {
-                        width: parent.width
-                        height: 25
-
-                        CheckBox {
-                            id: featureLayerBox
-                            Text {
-                                id: featureLayerText
-                                text: name
-                                anchors.horizontalCenterOffset: featureLayerBox.width + 15
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                anchors.verticalCenter: parent.verticalCenter
-                                wrapMode: Text.WordWrap
-                                font.pointSize: 9
-                                color: "#ffffff"
-                                clip: true
-                            }
-                            checked: true
-                            onCheckStateChanged: featureLayerScaleSymbols(name,featureLayerBox.checked)
-                        }
+                    Text {
+                        id: featureLayerText
+                        text: name
+                        height: featureLayerBox.height
+                        verticalAlignment: Text.AlignVCenter
+                        font.pointSize: 10
+                        color: "#ffffff"
                     }
                 }
             }
