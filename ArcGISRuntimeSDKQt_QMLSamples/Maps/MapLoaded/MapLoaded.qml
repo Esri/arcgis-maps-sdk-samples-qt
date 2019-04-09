@@ -15,14 +15,12 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    
     property string statusText
 
     // Create MapView that contains a Map
@@ -72,10 +70,10 @@ Rectangle {
             right: parent.right
             bottom: parent.bottom
         }
-        height: 30 * scaleFactor
+        height: 30
         color: "lightgrey"
         border {
-            width: 0.5 * scaleFactor
+            width: 0.5
             color: "black"
         }
 
@@ -83,10 +81,10 @@ Rectangle {
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
-                leftMargin: 10 * scaleFactor
+                leftMargin: 10
             }
             text: "Map Load Status: %1".arg(statusText)
-            font.pixelSize: 14 * scaleFactor
+            font.pixelSize: 14
         }
     }
 }

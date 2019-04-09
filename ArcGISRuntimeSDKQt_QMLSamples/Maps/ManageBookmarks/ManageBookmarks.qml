@@ -15,16 +15,14 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
     width: 800
-    height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    height: 600    
 
     // Create MapView that contains a Map
     MapView {
@@ -43,6 +41,7 @@ Rectangle {
                     createBookmark("Strange Symbol", symbolViewpoint);
                     createBookmark("Guitar Shaped Forest", guitarViewpoint);
                     createBookmark("Grand Prismatic Spring", springViewpoint);
+                    bookmarks.currentIndex = 0;
                 }
             }
 
@@ -54,6 +53,43 @@ Rectangle {
                 bookmark.viewpoint = bookmarkViewpoint;
                 // append the bookmark to the map's BookmarkListModel
                 map.bookmarks.append(bookmark);
+            }
+        }
+
+        // Create the add button so new bookmarks can be added
+        Rectangle {
+            id: addButton
+            property bool pressed: false
+            anchors {
+                right: parent.right
+                bottom: mapView.attributionTop
+                rightMargin: 20
+                bottomMargin: 20
+            }
+            width: childrenRect.width
+            height: childrenRect.height
+            color: pressed ? "#959595" : "#D6D6D6"
+            radius: 100
+            border {
+                color: "#585858"
+                width: 1
+            }
+
+            Image {
+                rotation: 45
+                width: 32
+                height: width
+                source: "qrc:/Samples/Maps/ManageBookmarks/add.png"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onPressed: addButton.pressed = true
+                onReleased: addButton.pressed = false
+                onClicked: {
+                    // Show the add window when it is clicked
+                    addWindow.visible = true;
+                }
             }
         }
     }
@@ -109,53 +145,40 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 5
         }
-        width: 225 * scaleFactor
-        // The bookmarks property on the map returns a BookmarkListModel, which
-        // can be directly fed into views such as a combo box
+
+        property int modelWidth: 0
+        width: modelWidth + rightPadding + leftPadding + indicator.width
         model: map.bookmarks
-        onCurrentTextChanged: {
-            mapView.setViewpoint(map.bookmarks.get(bookmarks.currentIndex).viewpoint);
-        }
-    }
 
-    // Create the add button so new bookmarks can be added
-    Rectangle {
-        id: addButton
-        property bool pressed: false
-        anchors {
-            right: parent.right
-            bottom: parent.bottom
-            rightMargin: 20 * scaleFactor
-            bottomMargin: 40 * scaleFactor
-        }
-
-        width: 45 * scaleFactor
-        height: width
-        color: pressed ? "#959595" : "#D6D6D6"
-        radius: 100
-        border {
-            color: "#585858"
-            width: 1 * scaleFactor
-        }
-
-        Image {
-            anchors.centerIn: parent
-            rotation: 45
-            width: 45 * scaleFactor
-            height: width
-            source: "qrc:/Samples/Maps/ManageBookmarks/add.png"
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onPressed: addButton.pressed = true
-            onReleased: addButton.pressed = false
-            onClicked: {
-                // Show the add window when it is clicked
-                addWindow.visible = true;
+        Connections {
+            target: bookmarks.model
+            onCountChanged: {
+                var model = bookmarks.model;
+                if (model) {
+                    for (var i = 0; i < model.count; ++i) {
+                        metrics.text = model.get(i).name;
+                        bookmarks.modelWidth = Math.max(bookmarks.modelWidth,
+                                                        metrics.width);
+                    }
+                }
             }
+        }
+
+        onCurrentIndexChanged: {
+            if (currentIndex >= 0) {
+                var bookmark = map.bookmarks.get(currentIndex);
+                if (bookmark) {
+                    mapView.setViewpoint(
+                                map.bookmarks.get(currentIndex).viewpoint);
+                }
+            }
+        }
+
+        TextMetrics {
+            id: metrics
+            font: bookmarks.font
         }
     }
 
@@ -163,9 +186,10 @@ Rectangle {
     Rectangle {
         id: addWindow
         anchors.centerIn: parent
-        width: 225 * scaleFactor
-        height: 100 * scaleFactor
+        width: childrenRect.width
+        height: childrenRect.height
         visible: false
+        enabled: visible
         color: "lightgrey"
         opacity: .9
         radius: 5
@@ -179,45 +203,45 @@ Rectangle {
             onClicked: mouse.accepted = true;
         }
 
-        Column {
-            anchors.centerIn: parent
-            spacing: 5
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                Text {
-                    text: qsTr("Provide the bookmark name")
-                    font.pixelSize: 12 * scaleFactor
-                }
+        GridLayout {
+            columns: 2
+            Text {
+                text: qsTr("Provide the bookmark name")
+                font.pixelSize: 12
+                Layout.columnSpan: 2
+                Layout.margins: 5
             }
 
             TextField {
                 id: textField
-                width: 180 * scaleFactor
                 placeholderText: qsTr("ex: Grand Canyon")
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                Layout.fillWidth: true
             }
 
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 5
-                Button {
-                    width: (textField.width / 2) - (2.5 * scaleFactor)
-                    text: "Cancel"
-                    onClicked: addWindow.visible = false;
-                }
-                Button {
-                    width: (textField.width / 2) - (2.5 * scaleFactor)
-                    text: qsTr("Done")
-                    onClicked: {
-                        // Create the new bookmark by getting the current viewpoint and using the
-                        // user's input bookmark name
-                        var viewpoint = mapView.currentViewpointExtent;
-                        map.createBookmark(textField.text,viewpoint);
-                        bookmarks.currentIndex = map.bookmarks.count -1;
-                        textField.text = "";
-                        addWindow.visible = false;
-                    }
+
+            Button {
+                text: "Cancel"
+                onClicked: addWindow.visible = false;
+                Layout.margins: 5
+            }
+
+            Button {
+                text: qsTr("Done")
+                Layout.margins: 5
+                Layout.alignment: Qt.AlignRight
+                onClicked: {
+                    // Create the new bookmark by getting the current viewpoint and using the
+                    // user's input bookmark name
+                    var viewpoint = mapView.currentViewpointExtent;
+                    map.createBookmark(textField.text,viewpoint);
+                    bookmarks.currentIndex = map.bookmarks.count -1;
+                    textField.text = "";
+                    addWindow.visible = false;
                 }
             }
         }
     }
 }
+

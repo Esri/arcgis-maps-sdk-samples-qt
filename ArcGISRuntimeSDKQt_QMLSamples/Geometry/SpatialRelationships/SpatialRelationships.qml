@@ -15,16 +15,13 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    height: 600    
 
     MapView {
         id: mapView
@@ -178,14 +175,14 @@ Rectangle {
     Rectangle {
         anchors {
             fill: relationshipColumn
-            margins: -10 * scaleFactor
+            margins: -10
         }
         opacity: 0.85
-        radius: 5 * scaleFactor
+        radius: 5
         color: "#e2e2e2"
         border {
             color: "darkgray"
-            width: 1 * scaleFactor
+            width: 1
         }
     }
 
@@ -194,14 +191,14 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 15
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Text {
             text: "Relationships:"
             font {
-                pixelSize: 16 * scaleFactor
+                pixelSize: 16
                 bold: true
                 family: "helvetica"
             }

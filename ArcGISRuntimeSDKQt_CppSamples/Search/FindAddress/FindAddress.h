@@ -40,9 +40,9 @@ class FindAddress : public QQuickItem
 
 public:
   explicit FindAddress(QQuickItem* parent = nullptr);
-  ~FindAddress();
+  ~FindAddress() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void geocodeAddress(const QString& address);
   Q_INVOKABLE void clearGraphics();

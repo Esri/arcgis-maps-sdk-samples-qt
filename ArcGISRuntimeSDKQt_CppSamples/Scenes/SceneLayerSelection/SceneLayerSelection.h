@@ -34,9 +34,9 @@ class SceneLayerSelection : public QQuickItem
 
 public:
   explicit SceneLayerSelection(QQuickItem* parent = nullptr);
-  ~SceneLayerSelection() = default;
+  ~SceneLayerSelection() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

@@ -45,16 +45,16 @@ class FindPlace : public QQuickItem
 
 public:
   explicit FindPlace(QQuickItem* parent = nullptr);
-  ~FindPlace() = default;
+  ~FindPlace() override = default;
 
   enum class SearchMode
   {
     CurrentLocation,
     MapExtent
   };
-  Q_ENUMS(SearchMode)
+  Q_ENUM(SearchMode)
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void setSuggestionsText(const QString& searchText);
   Q_INVOKABLE void geocodePOIs(const QString& poi, const QString& location);
@@ -91,7 +91,7 @@ private:
   bool m_poiTextHasFocus = true;
   bool m_isSearchingLocation = false;
   QString m_poiSearchText;
-  QString m_currentLocationText = "Current Location";
+  QString m_currentLocationText = QStringLiteral("Current Location");
   QObject* m_graphicParent = nullptr;
 };
 

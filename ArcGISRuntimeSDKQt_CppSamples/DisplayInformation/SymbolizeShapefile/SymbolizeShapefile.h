@@ -35,9 +35,9 @@ class SymbolizeShapefile : public QQuickItem
 
 public:
   explicit SymbolizeShapefile(QQuickItem* parent = nullptr);
-  ~SymbolizeShapefile() = default;
+  ~SymbolizeShapefile() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void updateRenderer();
 

@@ -38,9 +38,9 @@ class RasterFunctionFile : public QQuickItem
 
 public:
   explicit RasterFunctionFile(QQuickItem* parent = nullptr);
-  ~RasterFunctionFile() = default;
+  ~RasterFunctionFile() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void applyRasterFunction();
 

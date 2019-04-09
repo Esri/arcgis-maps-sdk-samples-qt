@@ -52,9 +52,6 @@ void SpatialOperations::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
-
   m_map = new Map(Basemap::topographic(this), this);
   m_mapView->setMap(m_map);
 
@@ -102,9 +99,20 @@ void SpatialOperations::addPolygons()
   m_inputsOverlay->graphics()->append(new Graphic(m_polygon2, fillSymbol2, this));
 }
 
+MapQuickView* SpatialOperations::mapQuickView() const
+{
+  return m_mapView;
+}
+
+void SpatialOperations::setMapQuickView(MapQuickView* mapQuickView)
+{
+  m_mapView = mapQuickView;
+  emit mapQuickViewChanged();
+}
+
 void SpatialOperations::applyGeometryOperation(int index)
 {
-  if (m_map->loadStatus() != LoadStatus::Loaded)
+  if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
     return;
 
   // Perform geometry calculations

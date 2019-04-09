@@ -30,8 +30,17 @@
 using namespace Esri::ArcGISRuntime;
 
 FeatureLayerExtrusion::FeatureLayerExtrusion(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  // define line and fill symbols for a simple renderer
+  m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("Black"), 1.0f, this)),
+  m_fillSymbol(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("Blue"), m_lineSymbol, this)),
+  m_renderer(new SimpleRenderer(m_fillSymbol, this))
 {
+  // set renderer extrusion mode to absolute to prevent clipping
+  RendererSceneProperties props = m_renderer->sceneProperties();
+  props.setExtrusionMode(ExtrusionMode::AbsoluteHeight);
+  props.setExtrusionExpression("[POP2007] / 10");
+  m_renderer->setSceneProperties(props);
 }
 
 void FeatureLayerExtrusion::init()
@@ -53,17 +62,6 @@ void FeatureLayerExtrusion::componentComplete()
 
   // set the feature layer to render dynamically to allow extrusion
   m_featureLayer->setRenderingMode(FeatureRenderingMode::Dynamic);
-
-  // define line and fill symbols for a simple renderer
-  m_lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("Black"), 1.0f, this);
-  m_fillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("Blue"), m_lineSymbol, this);
-  m_renderer = new SimpleRenderer(m_fillSymbol, this);
-
-  // set renderer extrusion mode to absolute to prevent clipping
-  RendererSceneProperties props = m_renderer->sceneProperties();
-  props.setExtrusionMode(ExtrusionMode::AbsoluteHeight);
-  props.setExtrusionExpression("[POP2007] / 10");
-  m_renderer->setSceneProperties(props);
 
   // set the simple renderer to the feature layer
   m_featureLayer->setRenderer(m_renderer);

@@ -56,6 +56,7 @@ void UpdateAttributesFeatureService::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<UpdateAttributesFeatureService>("Esri.Samples", 1, 0, "UpdateAttributesFeatureServiceSample");
+  qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
 }
 
 void UpdateAttributesFeatureService::componentComplete()
@@ -132,7 +133,7 @@ void UpdateAttributesFeatureService::connectSignals()
     if (featureQueryResult && featureQueryResult->iterator().hasNext())
     {
       // first delete if not nullptr
-      if (m_selectedFeature != nullptr)
+      if (m_selectedFeature)
         delete m_selectedFeature;
 
       // set selected feature member

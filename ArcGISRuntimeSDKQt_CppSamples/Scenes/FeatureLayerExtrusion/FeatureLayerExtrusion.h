@@ -42,9 +42,9 @@ class FeatureLayerExtrusion : public QQuickItem
 
 public:
   explicit FeatureLayerExtrusion(QQuickItem* parent = nullptr);
-  ~FeatureLayerExtrusion() = default;
+  ~FeatureLayerExtrusion() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void popDensity();
   Q_INVOKABLE void totalPopulation();

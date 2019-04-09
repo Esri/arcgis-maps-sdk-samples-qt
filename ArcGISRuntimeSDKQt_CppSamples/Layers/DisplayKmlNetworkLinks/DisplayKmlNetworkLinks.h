@@ -34,7 +34,7 @@ class DisplayKmlNetworkLinks : public QQuickItem
 
 public:
   explicit DisplayKmlNetworkLinks(QQuickItem* parent = nullptr);
-  ~DisplayKmlNetworkLinks();
+  ~DisplayKmlNetworkLinks() override;
 
   void componentComplete() override;
   static void init();

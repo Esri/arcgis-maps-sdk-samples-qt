@@ -15,9 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.4
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
+import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -27,9 +27,9 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    
 
-    property double fontSize: 16 * scaleFactor
+    property double fontSize: 16
     property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
     property var searchParamList: [[],[],[],[],[]]
@@ -57,26 +57,22 @@ Rectangle {
         id: searchParams
     }
 
-    Rectangle {
+    ColumnLayout {
         id: topRectangle
         anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
+            fill: parent
+            margins: 9
         }
-
-        height: hideSearch.checked ?  searchRow.height + resultText.height + (20 * scaleFactor) :
-                                     fieldColumn.childrenRect.height + (20 * scaleFactor)
-        width: parent.width *.9
 
         Column {
             id: fieldColumn
             anchors {
-                fill: parent
-                margins: 8 * scaleFactor
+                left: parent.left
+                right: parent.right
+                margins: 8
             }
-
-            spacing: 4 * scaleFactor
+            visible: !hideSearch.checked
+            enabled: visible
 
             Repeater {
                 id: repeater
@@ -84,238 +80,253 @@ Rectangle {
 
                 Rectangle {
                     width: parent.width
-                    height: hideSearch.checked ? 0 : 72 * scaleFactor
+                    height: childrenRect.height
                     color: "lightgrey"
                     border.color: "darkgrey"
-                    radius: 4
+                    radius: 2
                     clip: true
 
-                    Text {
-                        id: categoryTitle
+                    GridLayout {
                         anchors {
-                            top: parent.top
                             left: parent.left
-                            margins: 8 * scaleFactor
-                        }
-                        height: categoryEntry.height
-                        width: 66 * scaleFactor
-                        text: repeaterModel[index]
-                        font.bold: true
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignLeft
-                        wrapMode: Text.WordWrap
-                    }
-
-                    Button {
-                        id: addCategoryButton
-                        anchors {
-                            top: parent.top
                             right: parent.right
-                            margins: 8 * scaleFactor
+                            margins: 3
                         }
-                        height: categoryEntry.height
-                        width: height
-                        iconSource: enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_addencircled_light.png" :
-                                              "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_addencircled_dark.png"
-                        enabled: categoryEntry.text.length > 0
 
-                        onClicked: {
-                            if (categoryEntry.text.length === 0)
-                                return;
+                        columns: 3
+                        rowSpacing: 0
 
-                            var tmp = searchParamList;
-                            tmp[index].push(categoryEntry.text);
-
-                            searchParamList = tmp
-                            categoryEntry.text = "";
+                        Text {
+                            text: repeaterModel[index]
+                            font.bold: true
+                            verticalAlignment: Text.AlignVCenter
+                            horizontalAlignment: Text.AlignLeft
+                            wrapMode: Text.WordWrap
                         }
-                    }
 
-                    Button {
-                        id: clearCategoryButton
-                        anchors {
-                            top: addCategoryButton.bottom
-                            right: parent.right
-                            margins: 8 * scaleFactor
+                        TextField {
+                            id: categoryEntry
+                            Layout.fillWidth: true
+                            placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
+                            validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
+                            onAccepted:  addCategoryButton.mouseArea.clicked();
                         }
-                        height: categoryEntry.height
-                        width: height
-                        iconSource: enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_closeclear_light.png" :
-                                              "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_closeclear_dark.png"
-                        enabled: categoryList.text.length > 0
 
-                        onClicked: {
-                            categoryEntry.text = "";
-                            var tmp = searchParamList;
-                            tmp[index] = [];
+                        Rectangle {
+                            id: addCategoryButton
+                            height: childrenRect.height
+                            width: height
+                            color: "transparent"
+                            Image {
+                                source: parent.enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_addencircled_light.png"
+                                                       : "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_addencircled_dark.png"
+                            }
+                            enabled: categoryEntry.text.length > 0
 
-                            searchParamList = tmp;
+                            MouseArea {
+                                id: mouseArea
+                                anchors.fill: parent
+                                onClicked: {
+
+                                    if (categoryEntry.text.length === 0)
+                                        return;
+
+                                    var tmp = searchParamList;
+                                    tmp[index].push(categoryEntry.text);
+
+                                    searchParamList = tmp
+                                    categoryEntry.text = "";
+                                }
+                            }
                         }
-                    }
-
-                    TextField {
-                        id: categoryEntry
-                        anchors {
-                            top: parent.top
-                            right: addCategoryButton.left
-                            left: categoryTitle.right
-                            margins: 8 * scaleFactor
+                        Label {
+                            id: categoryList
+                            Layout.fillWidth: true
+                            Layout.column: 1
+                            Layout.row: 1
+                            text: searchParamList[index].length > 0 ? searchParamList[index].join() : ""
                         }
-                        placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
-                        validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
-                        onAccepted:  addCategoryButton.clicked();
-                    }
 
-                    Label {
-                        id: categoryList
-                        anchors {
-                            top: categoryEntry.bottom
-                            right: parent.right
-                            left: parent.left
-                            margins: 8 * scaleFactor
+
+                        Rectangle {
+                            height: childrenRect.height
+                            width: height
+                            color: "transparent"
+                            Image {
+                                source: parent.enabled ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_closeclear_light.png" :
+                                                         "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_closeclear_dark.png"
+                            }
+                            enabled: categoryList.text.length > 0
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    categoryEntry.text = "";
+                                    var tmp = searchParamList;
+                                    tmp[index] = [];
+
+                                    searchParamList = tmp;
+                                }
+                            }
                         }
-                        height: 32 * scaleFactor
-                        text: searchParamList[index].length > 0 ? searchParamList[index].join() : ""
                     }
                 }
             }
+        }
 
-            Row {
-                id: searchRow
-                anchors {
-                    margins: 10 * scaleFactor
+
+        Row {
+            spacing: 10
+
+            Button {
+                id: seachBtn
+                width: 100
+                height: 32
+                Image {
+                    id: searchImage
+                    anchors {
+                        top: parent.top
+                        bottom: parent.bottom
+                        margins: 3
+                    }
+                    source: "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png"
                 }
-                spacing: 10 * scaleFactor
 
-                Button {
-                    id: seachBtn
-                    width: 100 * scaleFactor
-                    height: 32 * scaleFactor
+                Text {
+                    anchors {
+                        left: searchImage.right
+                        verticalCenter: parent.verticalCenter
+                        margins: 3
+                    }
                     text: searchParamList[0].length === 0 &&
                           searchParamList[1].length === 0 &&
                           searchParamList[2].length === 0 &&
                           searchParamList[3].length === 0 &&
                           searchParamList[4].length === 0 ?
                               "List All" : "Search"
-                    iconSource: "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_find_light.png"
-
-                    onClicked: {
-                        resultView.visible = false;
-
-                        searchParams.names = searchParamList[0];
-                        searchParams.tags = searchParamList[1];
-                        searchParams.symbolClasses = searchParamList[2];
-                        searchParams.categories = searchParamList[3];
-                        searchParams.keys = searchParamList[4];
-
-                        dictionarySymbolStyle.searchSymbols(searchParams);
-                    }
                 }
 
-                Button {
-                    text: "Clear"
-                    height: seachBtn.height
-                    enabled: resultView.count > 0
-                    style: seachBtn.style
-                    onClicked: {
-                        //Set the results visibility to false
-                        resultView.visible = false;
-                        //Reset the search parameters
-                        searchParamList = [[],[],[],[],[]];
-                    }
-                }
+                onClicked: {
+                    resultView.visible = false;
 
-                Button {
-                    id: hideSearch
-                    height: seachBtn.height
-                    checked: false
-                    checkable: true
-                    iconSource: checked ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_collapsed_light.png" :
-                                          "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_expanded_light.png"
+                    searchParams.names = searchParamList[0];
+                    searchParams.tags = searchParamList[1];
+                    searchParams.symbolClasses = searchParamList[2];
+                    searchParams.categories = searchParamList[3];
+                    searchParams.keys = searchParamList[4];
+
+                    dictionarySymbolStyle.searchSymbols(searchParams);
                 }
             }
 
-            Text {
-                id: resultText
-                visible: resultView.visible
-                text: "Result(s) found: " + resultView.count
-                font.pixelSize: fontSize
+            Button {
+                text: "Clear"
+                enabled: resultView.count > 0
+                onClicked: {
+                    //Set the results visibility to false
+                    resultView.visible = false;
+                    //Reset the search parameters
+                    searchParamList = [[],[],[],[],[]];
+                }
             }
-        }
-    }
 
-    Rectangle {
-        id: bottomRectangle
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            top: topRectangle.bottom
-        }
-        width: parent.width
-
-        //Listview of results returned from Dictionary
-        ListView {
-            id: resultView
-            anchors {
-                fill: parent
-                margins: 10 * scaleFactor
-            }
-            spacing: 20 * scaleFactor
-
-            clip: true
-            model: dictionarySymbolStyle.searchSymbolsResult
-
-            delegate: Component {
-                Row {
+            Button {
+                id: hideSearch
+                height: seachBtn.height
+                checked: false
+                checkable: true
+                Image {
                     anchors {
-                        margins: 20 * scaleFactor
+                        top: parent.top
+                        bottom: parent.bottom
+                        horizontalCenter: parent.horizontalCenter
+                        margins: 3
                     }
-                    width: resultView.width
-                    spacing: 10 * scaleFactor
+                    source: parent.checked ? "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_collapsed_light.png" :
+                                             "qrc:/Samples/Search/SearchDictionarySymbolStyle/ic_menu_expanded_light.png"
+                }
 
-                    Image {
-                        source: symbolUrl
-                    }
+            }
+        }
 
-                    Column {
-                        width: parent.width
-                        spacing: 10 * scaleFactor
+        Text {
+            id: resultText
+            visible: resultView.visible
+            text: "Result(s) found: " + resultView.count
+            font.pixelSize: fontSize
+        }
 
-                        Text {
-                            id: nameText
-                            text: "<b>Name:</b> " + name
-                            font.pixelSize: fontSize
+        Rectangle {
+            id: bottomRectangle
+            Layout.fillHeight: true
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+
+            //Listview of results returned from Dictionary
+            ListView {
+                id: resultView
+                anchors {
+                    fill: parent
+                    margins: 10
+                }
+                spacing: 20
+
+                clip: true
+                model: dictionarySymbolStyle.searchSymbolsResult
+
+                delegate: Component {
+                    Row {
+                        anchors {
+                            margins: 20
+                        }
+                        width: resultView.width
+                        spacing: 10
+
+                        Image {
+                            source: symbolUrl
+                        }
+
+                        Column {
                             width: parent.width
-                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        }
+                            spacing: 10
 
-                        Text {
-                            text: "<b>Tags:</b> " + tags
-                            font.pixelSize: fontSize
-                            width: nameText.width
-                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        }
+                            Text {
+                                id: nameText
+                                text: "<b>Name:</b> " + name
+                                font.pixelSize: fontSize
+                                width: parent.width
+                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                            }
 
-                        Text {
-                            text: "<b>SymbolClass:</b> " + symbolClass
-                            font.pixelSize: fontSize
-                            width: nameText.width
-                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        }
+                            Text {
+                                text: "<b>Tags:</b> " + tags
+                                font.pixelSize: fontSize
+                                width: nameText.width
+                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                            }
 
-                        Text {
-                            text: "<b>Category:</b> " + category
-                            font.pixelSize: fontSize
-                            width: nameText.width
-                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        }
+                            Text {
+                                text: "<b>SymbolClass:</b> " + symbolClass
+                                font.pixelSize: fontSize
+                                width: nameText.width
+                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                            }
 
-                        Text {
-                            text: "<b>Key:</b> " + key
-                            font.pixelSize: fontSize
-                            width: nameText.width
-                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                            Text {
+                                text: "<b>Category:</b> " + category
+                                font.pixelSize: fontSize
+                                width: nameText.width
+                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                            }
+
+                            Text {
+                                text: "<b>Key:</b> " + key
+                                font.pixelSize: fontSize
+                                width: nameText.width
+                                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                            }
                         }
                     }
                 }

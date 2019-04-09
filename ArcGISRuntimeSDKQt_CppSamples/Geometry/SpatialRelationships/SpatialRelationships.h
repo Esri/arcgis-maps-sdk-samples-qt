@@ -41,9 +41,9 @@ class SpatialRelationships : public QQuickItem
 
 public:
   explicit SpatialRelationships(QQuickItem* parent = nullptr);
-  ~SpatialRelationships() = default;
+  ~SpatialRelationships() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:

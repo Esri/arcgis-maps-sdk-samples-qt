@@ -15,8 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -25,7 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shp/"
 
     MapView {

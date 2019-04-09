@@ -35,9 +35,9 @@ class LineOfSightLocation : public QQuickItem
 
 public:
   explicit LineOfSightLocation(QQuickItem* parent = nullptr);
-  ~LineOfSightLocation() = default;
+  ~LineOfSightLocation() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

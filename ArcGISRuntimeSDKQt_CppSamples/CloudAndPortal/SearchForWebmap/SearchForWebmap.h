@@ -44,9 +44,9 @@ class SearchForWebmap : public QQuickItem
 
 public:
   explicit SearchForWebmap(QQuickItem* parent = nullptr);
-  ~SearchForWebmap();
+  ~SearchForWebmap() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
   Esri::ArcGISRuntime::AuthenticationManager* authManager() const;

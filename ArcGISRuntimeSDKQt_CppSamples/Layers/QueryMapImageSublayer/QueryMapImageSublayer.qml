@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.3
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 QueryMapImageSublayerSample {
@@ -25,7 +25,7 @@ QueryMapImageSublayerSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
@@ -36,13 +36,13 @@ QueryMapImageSublayerSample {
     Rectangle {
         anchors {
             fill: controlColumn
-            margins: -5 * scaleFactor
+            margins: -5
         }
         color: "#efefef"
-        radius: 5 * scaleFactor
+        radius: 5
         border {
             color: "darkgray"
-            width: 1 * scaleFactor
+            width: 1
         }
     }
 
@@ -51,12 +51,12 @@ QueryMapImageSublayerSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 id: fieldText
                 anchors.verticalCenter: parent.verticalCenter
@@ -66,7 +66,7 @@ QueryMapImageSublayerSample {
             TextField {
                 id: populationText
                 anchors.verticalCenter: parent.verticalCenter
-                width: 100 * scaleFactor
+                width: 100
                 text: "1100000"
                 validator: IntValidator{}
             }

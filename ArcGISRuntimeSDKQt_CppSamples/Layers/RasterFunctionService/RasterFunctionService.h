@@ -37,12 +37,12 @@ class RasterFunctionService : public QQuickItem
 
 public:
   explicit RasterFunctionService(QQuickItem* parent = nullptr);
-  ~RasterFunctionService() = default;
+  ~RasterFunctionService() override = default;
 
   static void init();
   Q_INVOKABLE void applyRasterFunction();
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
 
 private:
 

@@ -8,6 +8,6 @@
         <file>ic_menu_back_dark.png</file>
         <file>ic_menu_help_dark.png</file>
         <file>ShowOrgBasemaps.cpp</file>
-        <file>ShowOrgBasemaps.h</file>
+        <file>ShowOrgBasemaps.h</file>       
     </qresource>
 </RCC>

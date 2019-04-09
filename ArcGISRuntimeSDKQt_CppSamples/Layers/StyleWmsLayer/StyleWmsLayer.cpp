@@ -47,7 +47,7 @@ void StyleWmsLayer::componentComplete()
   m_map = new Map(Basemap::imagery(this), this);
 
   // Add a WMS Layer
-  WmsLayer* wmsLayer = new WmsLayer(QUrl("http://geoint.lmic.state.mn.us/cgi-bin/wms?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetCapabilities"), QStringList{"fsa2017"}, this);
+  WmsLayer* wmsLayer = new WmsLayer(QUrl("https://imageserver.gisdata.mn.gov/cgi-bin/mncomp?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"), QStringList{"mncomp"}, this);
   m_map->operationalLayers()->append(wmsLayer);
 
   // connect to the doneLoading signal of the WMS Layer

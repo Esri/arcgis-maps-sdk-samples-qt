@@ -15,18 +15,18 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.4
+import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 FindAddressSample {
     id: findAddressSample
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
@@ -36,7 +36,7 @@ FindAddressSample {
         Callout {
             id: callout
             borderColor: "lightgrey"
-            borderWidth: 1 * scaleFactor
+            borderWidth: 1
             calloutData: findAddressSample.calloutData
             maxWidth: findAddressSample.width * 0.75
             leaderPosition: leaderPositionEnum.Automatic
@@ -57,58 +57,47 @@ FindAddressSample {
     Column {
         anchors {
             fill: parent
-            margins: 10 * scaleFactor
+            margins: 10
         }
-
-        Row {
+        Rectangle {
+            color: "#f7f8fa"
+            border {
+                color: "#7B7C7D"
+            }
+            radius: 2
             width: parent.width
-            height: 35 * scaleFactor
-            spacing: 5
+            height: childrenRect.height
 
-            TextField {
-                id: textField
+            GridLayout {
                 width: parent.width
-                height: parent.height
-                font.pixelSize: 14 * scaleFactor
-                placeholderText: "Type in an address"
-                style: TextFieldStyle {
-                    background: Rectangle {
-                        color: "#f7f8fa"
-                        border {
-                            color: "#7B7C7D"
-                            width: 1 * scaleFactor
-                        }
-                        radius: 2
+                columns: 3
+                TextField {
+                    Layout.margins: 5
+                    Layout.fillWidth: true
+                    id: textField
+                    font.pixelSize: 14
+                    placeholderText: "Type in an address"
+
+                    Keys.onEnterPressed: geocodeAddress();
+                    Keys.onReturnPressed: geocodeAddress();
+
+                    function geocodeAddress() {
+                        findAddressSample.geocodeAddress(textField.text);
+                        suggestView.visible = false;
+                        Qt.inputMethod.hide();
                     }
-                }
-
-                Keys.onEnterPressed: geocodeAddress();
-                Keys.onReturnPressed: geocodeAddress();
-
-                function geocodeAddress() {
-                    findAddressSample.geocodeAddress(textField.text);
-                    suggestView.visible = false;
-                    Qt.inputMethod.hide();
                 }
 
                 Rectangle {
-                    anchors {
-                        right: parent.right
-                        top: parent.top
-                        bottom: parent.bottom
-                        margins: 5 * scaleFactor
-                    }
-
-                    width: 35 * scaleFactor
+                    Layout.margins: 5
+                    width: height
+                    height: textField.height
                     color: "#f7f8fa"
-
+                    visible: textField.length === 0
+                    enabled: visible
                     Image {
-                        anchors.centerIn: parent
-                        width: 35 * scaleFactor
-                        height: width
+                        anchors.fill: parent
                         source: "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_light_d.png"
-                        visible: textField.text.length === 0
-
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
@@ -119,25 +108,25 @@ FindAddressSample {
                     }
                 }
 
-                Image {
-                    anchors {
-                        right: parent.right
-                        top: parent.top
-                        bottom: parent.bottom
-                        margins: 5 * scaleFactor
-                    }
-                    source: "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_light_d.png"
-                    width: 27 * scaleFactor
-                    height: width
-                    visible: parent.text.length !== 0
-
-                    MouseArea {
+                Rectangle {
+                    Layout.margins: 5
+                    width: height
+                    color: "transparent"
+                    height: textField.height
+                    visible: textField.length !== 0
+                    enabled: visible
+                    Image {
                         anchors.fill: parent
-                        onClicked: {
-                            textField.text = "";
-                            if (callout.visible)
-                                callout.dismiss();
-                            findAddressSample.clearGraphics();
+                        source: "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_light_d.png"
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                textField.text = "";
+                                if (callout.visible)
+                                    callout.dismiss();
+                                clearGraphics();
+                            }
                         }
                     }
                 }
@@ -147,7 +136,7 @@ FindAddressSample {
         // show a drop down of suggested locations
         ListView {
             id: suggestView
-            height: 300 * scaleFactor
+            height: 300
             width: textField.width
             visible: false
             clip: true
@@ -156,7 +145,7 @@ FindAddressSample {
                 Rectangle {
                     id: rect
                     width: parent.width
-                    height: 25 * scaleFactor
+                    height: 25
                     color: "#f7f8fa"
 
                     Rectangle {
@@ -164,9 +153,9 @@ FindAddressSample {
                             top: parent.top;
                             left: parent.left;
                             right: parent.right;
-                            topMargin: -5 * scaleFactor
-                            leftMargin: 20 * scaleFactor
-                            rightMargin: 20 * scaleFactor
+                            topMargin: -5
+                            leftMargin: 20
+                            rightMargin: 20
                         }
                         color: "darkgrey"
                         height: 1
@@ -176,10 +165,10 @@ FindAddressSample {
                         text: name
                         anchors {
                             fill: parent
-                            leftMargin: 5 * scaleFactor
+                            leftMargin: 5
                         }
 
-                        font.pixelSize: 14 * scaleFactor
+                        font.pixelSize: 14
                     }
 
                     MouseArea {

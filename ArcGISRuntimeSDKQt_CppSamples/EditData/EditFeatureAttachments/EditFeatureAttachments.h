@@ -44,11 +44,11 @@ class EditFeatureAttachments : public QQuickItem
 
 public:
   explicit EditFeatureAttachments(QQuickItem* parent = nullptr);
-  ~EditFeatureAttachments();
+  ~EditFeatureAttachments() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
-  Q_INVOKABLE void addAttachment(QUrl fileUrl, QString contentType, QString fileName);
+  Q_INVOKABLE void addAttachment(const QUrl& fileUrl, const QString& contentType);
   Q_INVOKABLE void deleteAttachment(int index);
 
 signals:

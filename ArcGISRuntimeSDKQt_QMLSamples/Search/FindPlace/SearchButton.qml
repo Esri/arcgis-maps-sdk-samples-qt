@@ -20,19 +20,19 @@ Rectangle {
     property bool pressed: false
     signal buttonClicked()
 
-    width: 175 * scaleFactor
-    height: 35 * scaleFactor
+    width: 175
+    height: 35
     color: pressed ? "#959595" : "#D6D6D6"
     radius: 5
     border {
         color: "#585858"
-        width: 1 * scaleFactor
+        width: 1
     }
 
     Text {
         anchors.centerIn: parent
         text: "Redo search in this area"
-        font.pixelSize: 14 * scaleFactor
+        font.pixelSize: 14
         color: "#474747"
     }
 

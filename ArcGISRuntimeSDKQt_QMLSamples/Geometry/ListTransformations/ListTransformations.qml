@@ -15,8 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -25,7 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    
     property bool peDataSet: true
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataRuntime"
 
@@ -115,7 +115,7 @@ Rectangle {
             anchors {
                 left: parent.left
                 top: parent.top
-                margins: 10 * scaleFactor
+                margins: 10
             }
             text: "Order by suitability for map extent"
             onCheckedChanged: {
@@ -130,13 +130,13 @@ Rectangle {
                 right: parent.right
                 top: orderCheckbox.bottom
                 bottom: parent.bottom
-                margins: 10 * scaleFactor
+                margins: 10
             }
             clip: true
 
             delegate: Item {
                 id: itemDelegate
-                height: 45 * scaleFactor
+                height: 45
                 width: parent.width
                 clip: true
 
@@ -153,7 +153,7 @@ Rectangle {
                     textFormat: Text.RichText
                     wrapMode: Text.WrapAnywhere
                     maximumLineCount: 2
-                    font.pixelSize: 12 * scaleFactor
+                    font.pixelSize: 12
                 }
 
                 MouseArea {
@@ -186,7 +186,7 @@ Rectangle {
             highlightFollowsCurrentItem: true
             highlight: Rectangle {
                 color: "#d6d6d6"
-                radius: 4 * scaleFactor
+                radius: 4
             }
         }
     }
@@ -200,7 +200,7 @@ Rectangle {
             left: parent.left
             right: parent.right
         }
-        height: 45 * scaleFactor
+        height: 45
         color: "black"
         y: hidden
 
@@ -210,7 +210,7 @@ Rectangle {
                 left: parent.left
                 right: parent.right
                 verticalCenter: parent.verticalCenter
-                margins: 10 * scaleFactor
+                margins: 10
             }
             color: "white"
             wrapMode: Text.WrapAnywhere

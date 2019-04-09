@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -25,8 +25,7 @@ DistanceMeasurementAnalysisSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
+    
     SceneView {
         objectName: "sceneView"
         anchors.fill: parent
@@ -35,11 +34,11 @@ DistanceMeasurementAnalysisSample {
     Rectangle {
         anchors {
             fill: resultsColumn
-            margins: -5 * scaleFactor
+            margins: -5
         }
         color: "black"
         opacity: 0.5
-        radius: 5 * scaleFactor
+        radius: 5
     }
 
     Column {
@@ -47,12 +46,12 @@ DistanceMeasurementAnalysisSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 text: "Direct Distance:"
                 color: "white"
@@ -64,7 +63,7 @@ DistanceMeasurementAnalysisSample {
             }
         }
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 text: "Vertical Distance:"
                 color: "white"
@@ -76,7 +75,7 @@ DistanceMeasurementAnalysisSample {
             }
         }
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 text: "Horizontal Distance:"
                 color: "white"
@@ -88,14 +87,28 @@ DistanceMeasurementAnalysisSample {
             }
         }
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
             Text {
                 text: "Unit System:"
                 color: "white"
             }
             ComboBox {
+                id: comboBox
+                property int modelWidth: 0
+                width: modelWidth + leftPadding + rightPadding + indicator.width
                 model: ["Metric", "Imperial"]
                 onCurrentTextChanged: setUnits(currentText);
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+
+                TextMetrics {
+                    id: metrics
+                    font: comboBox.font
+                }
             }
         }
     }

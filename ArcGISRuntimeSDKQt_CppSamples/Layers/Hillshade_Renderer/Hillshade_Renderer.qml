@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
@@ -27,7 +27,7 @@ Hillshade_RendererSample {
     height: 600
 
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
@@ -39,7 +39,7 @@ Hillshade_RendererSample {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 25 * scaleFactor
+            bottomMargin: 25
         }
         text: "Edit Renderer"
         onClicked: hillshadeSettings.visible = true;

@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
@@ -26,7 +26,7 @@ ListTransformationsSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataRuntime"
 
     // add a mapView component
@@ -58,7 +58,7 @@ ListTransformationsSample {
             anchors {
                 left: parent.left
                 top: parent.top
-                margins: 10 * scaleFactor
+                margins: 10
             }
             text: "Order by suitability for map extent"
             onCheckedChanged: refreshTransformationList(checked);
@@ -71,14 +71,14 @@ ListTransformationsSample {
                 right: parent.right
                 top: orderCheckbox.bottom
                 bottom: parent.bottom
-                margins: 10 * scaleFactor
+                margins: 10
             }
             clip: true
             model: transformationList
 
             delegate: Item {
                 id: itemDelegate
-                height: 45 * scaleFactor
+                height: 45
                 width: parent.width
                 clip: true
 
@@ -95,7 +95,7 @@ ListTransformationsSample {
                     textFormat: Text.RichText
                     wrapMode: Text.WrapAnywhere
                     maximumLineCount: 2
-                    font.pixelSize: 12 * scaleFactor
+                    font.pixelSize: 12
                 }
 
                 MouseArea {
@@ -112,7 +112,7 @@ ListTransformationsSample {
             highlightFollowsCurrentItem: true
             highlight: Rectangle {
                 color: "#d6d6d6"
-                radius: 4 * scaleFactor
+                radius: 4
             }
         }
     }
@@ -126,7 +126,7 @@ ListTransformationsSample {
             left: parent.left
             right: parent.right
         }
-        height: 45 * scaleFactor
+        height: 45
         color: "black"
         y: hidden
 
@@ -136,7 +136,7 @@ ListTransformationsSample {
                 left: parent.left
                 right: parent.right
                 verticalCenter: parent.verticalCenter
-                margins: 10 * scaleFactor
+                margins: 10
             }
             color: "white"
             wrapMode: Text.WrapAnywhere

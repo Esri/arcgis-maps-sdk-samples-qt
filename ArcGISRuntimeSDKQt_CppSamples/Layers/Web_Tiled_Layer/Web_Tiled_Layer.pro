@@ -26,7 +26,7 @@ QT += opengl qml quick positioning sensors
 TEMPLATE = app
 TARGET = Web_Tiled_Layer
 
-ARCGIS_RUNTIME_VERSION = 100.4
+ARCGIS_RUNTIME_VERSION = 100.5
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

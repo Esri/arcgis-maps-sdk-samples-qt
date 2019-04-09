@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Maps/DisplayLayerViewDrawStatus">
-        <file alias="sample.json">DisplayLayerViewDrawStatus.json</file>
-        <file>DisplayLayerViewDrawStatus.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>

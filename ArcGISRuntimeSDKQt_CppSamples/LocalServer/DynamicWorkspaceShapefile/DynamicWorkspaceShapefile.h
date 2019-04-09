@@ -35,9 +35,9 @@ class DynamicWorkspaceShapefile : public QQuickItem
 
 public:
   explicit DynamicWorkspaceShapefile(QQuickItem* parent = nullptr);
-  ~DynamicWorkspaceShapefile() = default;
+  ~DynamicWorkspaceShapefile() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void startLocalService(const QString& filePath, const QString& folder);
 

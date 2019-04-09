@@ -16,11 +16,11 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
-import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 Rectangle {
     id: rootRectangle
@@ -28,7 +28,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
     property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_Overrides_%1.mmpk".arg(new Date().getTime().toString())
     property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
     property var generateJob: null
@@ -59,7 +59,7 @@ Rectangle {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
-                margins: 5 * scaleFactor
+                margins: 5
             }
             visible: map.loadStatus === Enums.LoadStatusLoaded
 
@@ -71,13 +71,13 @@ Rectangle {
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
-        width: parent.width - (50 * scaleFactor)
-        height: parent.height - (125 * scaleFactor)
+        width: parent.width - (50)
+        height: parent.height - (125)
         color: "transparent"
         visible: map.loadStatus === Enums.LoadStatusLoaded
         border {
             color: "red"
-            width: 3 * scaleFactor
+            width: 3
         }
     }
 
@@ -421,10 +421,24 @@ Rectangle {
         anchors.fill: parent
     }
 
-    MessageDialog {
+    Dialog {
         id: msgDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Layer Errors"
-        text: "Some layers could not be taken offline."
+        property alias text : textLabel.text
+        property alias detailedText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: "Some layers could not be taken offline."
+            }
+            Text {
+                id: detailsLabel
+            }
+        }
     }
 
     BusyIndicator {

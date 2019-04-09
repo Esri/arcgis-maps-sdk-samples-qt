@@ -47,6 +47,7 @@ void DeleteFeaturesFeatureService::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<DeleteFeaturesFeatureService>("Esri.Samples", 1, 0, "DeleteFeaturesFeatureServiceSample");
+  qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
 }
 
 void DeleteFeaturesFeatureService::componentComplete()
@@ -121,14 +122,14 @@ void DeleteFeaturesFeatureService::connectSignals()
     }
 
     // delete selected feature member if not nullptr
-    if (m_selectedFeature != nullptr)
+    if (m_selectedFeature)
     {
       delete m_selectedFeature;
       m_selectedFeature = nullptr;
     }
 
     GeoElement* element = identifyResult->geoElements().at(0);
-    if (element == nullptr)
+    if (!element)
     {
       return;
     }

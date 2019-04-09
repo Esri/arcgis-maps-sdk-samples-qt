@@ -3,7 +3,8 @@
     "otherSourceFiles" :  [
         "ViewshedLocation.h",
         "ViewshedLocation.cpp",
-        "ViewshedSlider.qml"
+        "ViewshedSlider.qml",
+        "ColorDialog.qml"
     ],
     "name" : "Viewshed (location)"
 }

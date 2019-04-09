@@ -36,9 +36,9 @@ class CreateGeometries : public QQuickItem
 
 public:
   explicit CreateGeometries(QQuickItem* parent = nullptr);
-  ~CreateGeometries() = default;
+  ~CreateGeometries() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

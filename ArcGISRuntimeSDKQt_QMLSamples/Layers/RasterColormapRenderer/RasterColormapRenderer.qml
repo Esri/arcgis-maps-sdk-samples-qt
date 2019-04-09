@@ -15,18 +15,16 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
     //! [RasterColormapRenderer qml add raster basemap]
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
 

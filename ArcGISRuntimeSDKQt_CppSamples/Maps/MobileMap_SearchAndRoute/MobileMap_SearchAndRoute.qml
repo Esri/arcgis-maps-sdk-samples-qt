@@ -15,11 +15,11 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 100.4
+import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 MobileMap_SearchAndRouteSample {
     id: mobileMapSearchRoute
@@ -27,7 +27,7 @@ MobileMap_SearchAndRouteSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
     property string dataPath: System.userHomeFolder.path + "/ArcGIS/Runtime/Data/mmpk"
     property bool isMapOpen: false
 
@@ -44,7 +44,7 @@ MobileMap_SearchAndRouteSample {
             // callout to display information
             Callout {
                 calloutData: mobileMapSearchRoute.calloutData
-                screenOffsetY: -19 * scaleFactor
+                screenOffsetY: -19
                 accessoryButtonHidden: true
                 leaderPosition: leaderPositionEnum.Automatic
             }
@@ -56,7 +56,7 @@ MobileMap_SearchAndRouteSample {
                 }
                 opacity: 0.50
                 height: parent.height
-                width: 25 * scaleFactor
+                width: 25
                 color: "#E0E0E0"
 
                 Rectangle {
@@ -65,14 +65,14 @@ MobileMap_SearchAndRouteSample {
                         top: parent.top
                     }
                     width: parent.width
-                    height: 100 * scaleFactor
+                    height: 100
                     color: "#283593"
 
                     Image {
                         anchors.centerIn: parent
                         mirror: true
                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
-                        height: 33 * scaleFactor
+                        height: 33
                         width: height
                     }
                 }
@@ -90,15 +90,15 @@ MobileMap_SearchAndRouteSample {
                 anchors {
                     top: parent.top
                     right: parent.right
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
-                spacing: 10 * scaleFactor
+                spacing: 10
 
                 // solve route button
                 Rectangle {
                     id: routeButton
                     color: "#E0E0E0"
-                    height: 50 * scaleFactor
+                    height: 50
                     width: height
                     border.color: "black"
                     radius: 2
@@ -108,10 +108,10 @@ MobileMap_SearchAndRouteSample {
                     Image {
                         anchors {
                             centerIn: parent
-                            margins: 5 * scaleFactor
+                            margins: 5
                         }
                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
-                        height: 44 * scaleFactor
+                        height: 44
                         width: height
                     }
 
@@ -127,7 +127,7 @@ MobileMap_SearchAndRouteSample {
                 Rectangle {
                     id: clearButton
                     color: "#E0E0E0"
-                    height: 50 * scaleFactor
+                    height: 50
                     width: height
                     border.color: "black"
                     radius: 2
@@ -137,10 +137,10 @@ MobileMap_SearchAndRouteSample {
                     Image {
                         anchors {
                             centerIn: parent
-                            margins: 5 * scaleFactor
+                            margins: 5
                         }
                         source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/discardSymbol.png"
-                        height: 44 * scaleFactor
+                        height: 44
                         width: height
                     }
 
@@ -168,12 +168,12 @@ MobileMap_SearchAndRouteSample {
                         left: parent.left
                     }
                     width: parent.width
-                    spacing: 20 * scaleFactor
+                    spacing: 20
 
                     // UI navigation bar
                     Rectangle {
                         width: parent.width
-                        height: 100 * scaleFactor
+                        height: 100
                         color: "#283593"
 
                         // forward navigation button. Visible after first map is selected
@@ -181,10 +181,10 @@ MobileMap_SearchAndRouteSample {
                             anchors {
                                 verticalCenter: parent.verticalCenter
                                 right: parent.right
-                                margins: 10 * scaleFactor
+                                margins: 10
                             }
                             source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
-                            height: 44 * scaleFactor
+                            height: 44
                             width: height
                             visible: isMapOpen
 
@@ -199,26 +199,25 @@ MobileMap_SearchAndRouteSample {
                         Text {
                             anchors.centerIn: parent
                             color: "white"
-                            height: 40 * scaleFactor
-                            font.pixelSize: 25 * scaleFactor
+                            height: 40
+                            font.pixelSize: 25
                             text: "Choose a Mobile Map Package"
-                            renderType: Text.NativeRendering
                         }
                     }
 
                     // mobile map package ListView
                     ListView {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        height: 400 * scaleFactor
-                        width: 200 * scaleFactor
-                        spacing: 10 * scaleFactor
+                        height: 400
+                        width: 200
+                        spacing: 10
                         model: mobileMapSearchRoute.mmpkList
 
                         delegate: Component {
                             Rectangle {
 
-                                width: 200 * scaleFactor
-                                height: 50 * scaleFactor
+                                width: 200
+                                height: 50
                                 color: "#283593"
                                 radius: 2
                                 border.color: "darkgray"
@@ -227,9 +226,8 @@ MobileMap_SearchAndRouteSample {
                                     anchors.centerIn: parent
                                     horizontalAlignment: Text.AlignHCenter
                                     color: "white"
-                                    width: 150 * scaleFactor
+                                    width: 150
                                     text: modelData
-                                    renderType: Text.NativeRendering
                                     elide: Text.ElideMiddle
                                 }
 
@@ -259,12 +257,12 @@ MobileMap_SearchAndRouteSample {
                         left: parent.left
                     }
                     width: parent.width
-                    spacing: 20 * scaleFactor
+                    spacing: 20
 
                     // UI navigation bar
                     Rectangle {
                         width: parent.width
-                        height: 100 * scaleFactor
+                        height: 100
                         color: "#283593"
 
                         // back button
@@ -272,11 +270,11 @@ MobileMap_SearchAndRouteSample {
                             anchors {
                                 verticalCenter: parent.verticalCenter
                                 left: parent.left
-                                margins: 10 * scaleFactor
+                                margins: 10
                             }
                             mirror: true
                             source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
-                            height: 44 * scaleFactor
+                            height: 44
                             width: height
 
                             MouseArea {
@@ -292,10 +290,10 @@ MobileMap_SearchAndRouteSample {
                             anchors {
                                 verticalCenter: parent.verticalCenter
                                 right: parent.right
-                                margins: 10 * scaleFactor
+                                margins: 10
                             }
                             source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/forwardIcon.png"
-                            height: 44 * scaleFactor
+                            height: 44
                             width: height
                             visible: isMapOpen
 
@@ -310,25 +308,24 @@ MobileMap_SearchAndRouteSample {
                         Text {
                             anchors.centerIn: parent
                             color: "white"
-                            height: 40 * scaleFactor
-                            font.pixelSize: 25 * scaleFactor
+                            height: 40
+                            font.pixelSize: 25
                             text: "Choose a Map"
-                            renderType: Text.NativeRendering
                         }
                     }
 
                     // list of maps
                     ListView {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        height: 400 * scaleFactor
-                        width: 200 * scaleFactor
-                        spacing: 10 * scaleFactor
+                        height: 400
+                        width: 200
+                        spacing: 10
                         model: mobileMapSearchRoute.mapList
 
                         delegate: Component {
                             Rectangle {
-                                width: 200 * scaleFactor
-                                height: 50 * scaleFactor
+                                width: 200
+                                height: 50
                                 color: "#283593"
                                 radius: 2
                                 border.color: "darkgray"
@@ -337,9 +334,8 @@ MobileMap_SearchAndRouteSample {
                                     anchors.centerIn: parent
                                     horizontalAlignment: Text.AlignHCenter
                                     color: "white"
-                                    width: 150 * scaleFactor
+                                    width: 150
                                     text: modelData.name
-                                    renderType: Text.NativeRendering
                                     elide: Text.ElideMiddle
                                 }
 
@@ -348,10 +344,10 @@ MobileMap_SearchAndRouteSample {
                                     anchors {
                                         left: parent.left
                                         top: parent.top
-                                        margins: 5 * scaleFactor
+                                        margins: 5
                                     }
                                     source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/pinOutlineSymbol.png"
-                                    height: 20 * scaleFactor
+                                    height: 20
                                     width: height
                                     visible: modelData.geocoding
                                 }
@@ -361,10 +357,10 @@ MobileMap_SearchAndRouteSample {
                                     anchors {
                                         right: parent.right
                                         top: parent.top
-                                        margins: 5 * scaleFactor
+                                        margins: 5
                                     }
                                     source: "qrc:/Samples/Maps/MobileMap_SearchAndRoute/routingSymbol.png"
-                                    height: 20 * scaleFactor
+                                    height: 20
                                     width: height
                                     visible: modelData.routing
                                 }

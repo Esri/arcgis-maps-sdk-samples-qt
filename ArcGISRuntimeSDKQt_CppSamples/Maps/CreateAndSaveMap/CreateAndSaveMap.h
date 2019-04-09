@@ -38,9 +38,9 @@ class CreateAndSaveMap : public QQuickItem
 
 public:
   explicit CreateAndSaveMap(QQuickItem* parent = nullptr);
-  ~CreateAndSaveMap() = default;
+  ~CreateAndSaveMap() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void createMap(const QString& basemap, const QStringList& operationalLayers);
   Q_INVOKABLE void loadPortal();

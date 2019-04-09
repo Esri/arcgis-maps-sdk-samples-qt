@@ -15,9 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
@@ -25,8 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property bool zoomedOut: true
-    property real scaleFactor: System.displayScaleFactor
+    property bool zoomedOut: true    
 
     SceneView {
         id: topSceneView
@@ -75,12 +73,12 @@ Rectangle {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
-                margins: 5 * scaleFactor
+                margins: 5
             }
             color: "white"
-            radius: 5 * scaleFactor
-            width: 200 * scaleFactor
-            height: 30 * scaleFactor
+            radius: 5
+            width: 200
+            height: 30
 
             Text {
                 anchors.centerIn: parent
@@ -136,12 +134,12 @@ Rectangle {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
-                margins: 5 * scaleFactor
+                margins: 5
             }
             color: "white"
-            radius: 5 * scaleFactor
-            width: 200 * scaleFactor
-            height: 30 * scaleFactor
+            radius: 5
+            width: 200
+            height: 30
 
             Text {
                 anchors.centerIn: parent
@@ -184,7 +182,7 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         property string startText: "Start Animation"
         property string stopText: "Stop Animation"

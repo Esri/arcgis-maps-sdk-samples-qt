@@ -12,7 +12,8 @@
 // limitations under the License.
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
 Rectangle {
@@ -29,103 +30,107 @@ Rectangle {
     signal cancelClicked()
 
     Rectangle {
-        anchors {
-            fill: layerColumn
-            margins: -15 * scaleFactor
-        }
-
         color: "#edeeef"
-        radius: 5 * scaleFactor
+        radius: 5
+        anchors.centerIn: parent
+        width: childrenRect.width
+        height: childrenRect.height
         border {
             color: "#77787a"
-            width: 1 * scaleFactor
-        }
-    }
-
-    Column {
-        id: layerColumn
-        anchors.centerIn: parent
-        width: 200 * scaleFactor
-
-        spacing: 10 * scaleFactor
-
-        Text {
-            id: title
-            text: "Title*:"
-            font {
-                pixelSize: 14 * scaleFactor
-                family: "helvetica"
-            }
+            width: 1
         }
 
-        TextField {
-            id: titleText
-            width: parent.width
-            placeholderText: "ex: Sample Map"
-        }
+        GridLayout {
+            id: layerColumn
+            columns: 2
 
-        Text {
-            id: tags
-            text: "Tags:"
-            font {
-                pixelSize: 14 * scaleFactor
-                family: "helvetica"
-            }
-        }
-
-        TextField {
-            id: tagsText
-            width: parent.width
-            placeholderText: "ex: map, sample, elevation"
-        }
-
-        Text {
-            id: description
-            text: "Description:"
-            font {
-                pixelSize: 14 * scaleFactor
-                family: "helvetica"
-            }
-        }
-
-        TextField {
-            id: descriptionText
-            width: parent.width
-            placeholderText: "ex: This map displays..."
-        }
-
-        Text {
-            text: "*Field is Required"
-            font {
-                pixelSize: 10 * scaleFactor
-                family: "helvetica"
-            }
-        }
-
-        Button {
-            width: parent.width
-            text: "Save"
-            onClicked: {
-                // Make sure a Title is supplied
-                if (titleText.text === "") {
-                    title.color = "red";
-                    return;
+            Text {
+                id: title
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                text: "Title*:"
+                font {
+                    pixelSize: 14
+                    family: "helvetica"
                 }
+            }
 
-                saveMapClicked(titleText.text, tagsText.text, descriptionText.text)
+            TextField {
+                id: titleText
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                Layout.fillWidth: true
+
+                placeholderText: "ex: Sample Map"
+            }
+
+            Text {
+                id: tags
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                text: "Tags:"
+                font {
+                    pixelSize: 14
+                    family: "helvetica"
+                }
+            }
+
+            TextField {
+                id: tagsText
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                Layout.fillWidth: true
+                placeholderText: "ex: map, sample, elevation"
+            }
+
+            Text {
+                id: description
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                text: "Description:"
+                font {
+                    pixelSize: 14
+                    family: "helvetica"
+                }
+            }
+
+            TextField {
+                id: descriptionText
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                Layout.fillWidth: true
+                placeholderText: "ex: This map displays..."
+            }
+
+            Text {
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                text: "*Field is Required"
+                font {
+                    pixelSize: 10
+                    family: "helvetica"
+                }
+            }
+
+            Button {
+                Layout.margins: 5
+                text: "Save"
+                onClicked: {
+                    // Make sure a Title is supplied
+                    if (titleText.text === "") {
+                        title.color = "red";
+                        return;
+                    }
+
+                    saveMapClicked(titleText.text, tagsText.text, descriptionText.text)
+                }
+            }
+
+            Button {
+                Layout.margins: 5
+                text: "Cancel"
+                onClicked: cancelClicked()
             }
         }
-
-        Button {
-            width: parent.width
-            text: "Cancel"
-            onClicked: cancelClicked()
-        }
-    }
-
-    function reset() {
-        titleText.text = "";
-        descriptionText.text = "";
-        tagsText.text = "";
     }
 }

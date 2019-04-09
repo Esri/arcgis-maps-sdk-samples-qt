@@ -1,6 +1,6 @@
 {
     "source" :  "Animate3DSymbols.qml",
-    "otherSourceFiles" :  [],
+    "otherSourceFiles" :  ["LabeledSlider.qml"],
     "name" : "Animate 3D symbols",
     "dataItems" : [
         {

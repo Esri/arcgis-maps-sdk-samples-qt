@@ -16,18 +16,15 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 PortalUserInfoSample {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
-
-    property double scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
 
     BusyIndicator {
         id: loadingIndicator
@@ -45,9 +42,9 @@ PortalUserInfoSample {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 10 * scaleFactor
+        spacing: 10
 
         Text {
             text: fullName.length > 0 ? fullName + " Profile" : ("????")
@@ -57,8 +54,8 @@ PortalUserInfoSample {
 
         Image {
             source : thumbnailUrl.toString().length > 0 ? thumbnailUrl : "qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png"
-            height: 32 * scaleFactor
-            width: 32 * scaleFactor
+            height: 32
+            width: 32
         }
     }
 
@@ -69,9 +66,9 @@ PortalUserInfoSample {
             bottom: midLine.top
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 10 * scaleFactor
+        spacing: 10
         clip: true
         model: detailNames.length
 
@@ -92,11 +89,11 @@ PortalUserInfoSample {
         id: midLine
         anchors {
             verticalCenter: parent.verticalCenter
-            margins: 8 * scaleFactor
+            margins: 8
             left: parent.left
             right: parent.right
         }
-        height: 4 * scaleFactor
+        height: 4
         visible: loaded
         color: "lightgrey"
     }
@@ -108,9 +105,9 @@ PortalUserInfoSample {
             top: midLine.bottom
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 10 * scaleFactor
+        spacing: 10
 
         Text {
             text: orgTitle
@@ -120,8 +117,8 @@ PortalUserInfoSample {
 
         Image {
             source : orgThumbnailUrl
-            height: 32 * scaleFactor
-            width: 32 * scaleFactor
+            height: 32
+            width: 32
         }
     }
 
@@ -136,9 +133,9 @@ PortalUserInfoSample {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 10 * scaleFactor
+        spacing: 10
         clip: true
         model: infoValues.length
 

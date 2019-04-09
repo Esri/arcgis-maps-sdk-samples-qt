@@ -15,9 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.4
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
@@ -25,8 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property var geometryOperations: ["None", "Union", "Difference", "Symmetric difference", "Intersection"]
-    property double scaleFactor: System.displayScaleFactor
+    property var geometryOperations: ["None", "Union", "Difference", "Symmetric difference", "Intersection"]    
     property var geometry1
     property var geometry2
 
@@ -67,11 +65,24 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        width: 175 * scaleFactor
+        property int modelWidth: 0
+        width: modelWidth + leftPadding + rightPadding + indicator.width
         model: geometryOperations
+
         onCurrentIndexChanged: applyGeometryOperation(currentIndex);
+
+        Component.onCompleted : {
+            for (var i = 0; i < model.length; ++i) {
+                metrics.text = model[i];
+                modelWidth = Math.max(modelWidth, metrics.width);
+            }
+        }
+        TextMetrics {
+            id: metrics
+            font: comboBox.font
+        }
     }
 
     SpatialReference {

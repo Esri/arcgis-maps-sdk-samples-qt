@@ -35,9 +35,9 @@ class ExtrudeGraphics : public QQuickItem
 
 public:
   explicit ExtrudeGraphics(QQuickItem* parent = nullptr);
-  ~ExtrudeGraphics();
+  ~ExtrudeGraphics() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.3
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 StyleWmsLayerSample {
@@ -25,7 +25,7 @@ StyleWmsLayerSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
@@ -36,11 +36,15 @@ StyleWmsLayerSample {
     Rectangle {
         anchors {
             fill: controlColumn
-            margins: -5 * scaleFactor
+            margins: -5
         }
         color: "lightgray"
-        radius: 5 * scaleFactor
+        radius: 5
         opacity: 0.75
+    }
+
+    ButtonGroup {
+        buttons: controlColumn.children
     }
 
     Column {
@@ -48,13 +52,12 @@ StyleWmsLayerSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         RadioButton {
-            text: "Style 1"
-            exclusiveGroup: radioGroup
+            text: "Default"
             checked: true
             onCheckedChanged: {
                 if (checked) {
@@ -65,18 +68,13 @@ StyleWmsLayerSample {
         }
 
         RadioButton {
-            text: "Style 2"
-            exclusiveGroup: radioGroup
+            text: "Contrast Stretch"
             onCheckedChanged: {
                 if (checked) {
                     // set the style string on the sublayer
                     setCurrentStyle(1);
                 }
             }
-        }
-
-        ExclusiveGroup {
-            id: radioGroup
         }
     }
 }

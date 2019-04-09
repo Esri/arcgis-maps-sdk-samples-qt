@@ -16,14 +16,14 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.3
-import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
     property string currentKmlNetworkMessage: "";
 
     clip: true
@@ -63,7 +63,7 @@ Rectangle {
             anchors {
                 bottom: sceneView.attributionTop
                 horizontalCenter: parent.horizontalCenter
-                margins: 10 * scaleFactor
+                margins: 10
             }
             onClicked: {
                 messageDialog.open();
@@ -71,12 +71,24 @@ Rectangle {
         }
     }
 
-    MessageDialog {
+    Dialog {
         id: messageDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        width: parent.width * 0.75
+        standardButtons: Dialog.Ok
         title: "KML layer message"
-        text: currentKmlNetworkMessage
-        onAccepted: {
-            currentKmlNetworkMessage = "";
+        property alias text : textLabel.text
+        Text {
+            width: parent.width
+            id: textLabel
+            text: currentKmlNetworkMessage
+            wrapMode: Text.WordWrap
         }
+        onAccepted: {
+            currentKmlNetworkMessage = ""; // Clear the message
+        }
+        onRejected: onAccepted()
     }
 }

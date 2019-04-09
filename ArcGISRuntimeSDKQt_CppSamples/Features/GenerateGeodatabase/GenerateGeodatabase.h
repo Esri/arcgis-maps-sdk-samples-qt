@@ -40,9 +40,9 @@ class GenerateGeodatabase : public QQuickItem
 
 public:
   explicit GenerateGeodatabase(QQuickItem* parent = nullptr);
-  ~GenerateGeodatabase();
+  ~GenerateGeodatabase() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2);
 

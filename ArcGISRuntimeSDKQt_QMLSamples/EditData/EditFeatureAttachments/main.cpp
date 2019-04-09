@@ -14,24 +14,25 @@
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QUrl>
-#include <QCoreApplication>
+#include <QApplication>
 #include <QDir>
 #include <QQmlEngine>
+#include <QQmlApplicationEngine>
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication app(argc, argv);
     app.setApplicationName("EditFeatureAttachments - QML");
 
     // Initialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    QQmlApplicationEngine engine;
 
     // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+    engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
     QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
     QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
@@ -45,14 +46,12 @@ int main(int argc, char *argv[])
 #endif
 
     // Add the Runtime and Extras path
-    view.engine()->addImportPath(arcGISRuntimeImportPath);
+    engine.addImportPath(arcGISRuntimeImportPath);
     // Add the Toolkit path
-    view.engine()->addImportPath(arcGISToolkitImportPath);
+   engine.addImportPath(arcGISToolkitImportPath);
 
     // Set the source
-    view.setSource(QUrl("qrc:/Samples/EditData/EditFeatureAttachments/EditFeatureAttachments.qml"));
-
-    view.show();
+    engine.load(QUrl("qrc:/Samples/EditData/EditFeatureAttachments/main.qml"));
 
     return app.exec();
 }

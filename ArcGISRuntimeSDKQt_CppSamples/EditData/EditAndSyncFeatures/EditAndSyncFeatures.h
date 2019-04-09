@@ -43,9 +43,9 @@ class EditAndSyncFeatures : public QQuickItem
 
 public:
   explicit EditAndSyncFeatures(QQuickItem* parent = nullptr);
-  ~EditAndSyncFeatures();
+  ~EditAndSyncFeatures() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void generateGeodatabaseFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2);
   Q_INVOKABLE void executeSync();

@@ -15,17 +15,16 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
-    width: 800
-    height: 600
+    anchors.fill: parent
 
-    property real scaleFactor: System.displayScaleFactor
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
     property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
     property var rasterLayer: null
@@ -60,12 +59,12 @@ Rectangle {
     Rectangle {
         visible: addButton.visible
         anchors.centerIn: addButton
-        radius: 8 * scaleFactor
-        height: addButton.height + (16 * scaleFactor)
-        width: addButton.width + (16 * scaleFactor)
+        radius: 8
+        height: addButton.height + (16)
+        width: addButton.width + (16)
         color: "lightgrey"
         border.color: "darkgrey"
-        border.width: 2 * scaleFactor
+        border.width: 2
         opacity: 0.75
     }
 
@@ -74,7 +73,7 @@ Rectangle {
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            margins: 32 * scaleFactor
+            margins: 32
         }
 
         text: "Add Raster"

@@ -34,9 +34,9 @@ class MapRotation : public QQuickItem
 
 public:
   explicit MapRotation(QQuickItem* parent = nullptr);
-  ~MapRotation();
+  ~MapRotation() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void setMapViewRotation(double degrees);
 

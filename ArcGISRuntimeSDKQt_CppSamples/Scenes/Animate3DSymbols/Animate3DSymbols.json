@@ -2,7 +2,10 @@
     "source" :  "Animate3DSymbols.qml",
     "otherSourceFiles" : [
         "Animate3DSymbols.h",
-        "Animate3DSymbols.cpp"
+        "Animate3DSymbols.cpp",
+        "MissionData.h",
+        "MissionData.cpp",
+        "LabeledSlider.qml"
     ],
     "name" : "Animate 3D symbols",
     "dataItems" : [

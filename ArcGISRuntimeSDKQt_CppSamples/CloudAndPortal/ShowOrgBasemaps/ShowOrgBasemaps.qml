@@ -16,17 +16,16 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 ShowOrgBasemapsSample {
     width: 800
     height: 600
     clip: true
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
+    
     onPortalLoadedChanged: { gridFadeIn.running = true; }
 
     BusyIndicator {
@@ -61,15 +60,15 @@ ShowOrgBasemapsSample {
             right: parent.right
         }
         visible: portalLoaded
-        cellWidth: 128 * scaleFactor;
-        cellHeight: 128 * scaleFactor
+        cellWidth: 128;
+        cellHeight: 128
         opacity: 0
         focus: true
         clip: true
         model: basemaps
 
         delegate: Rectangle {
-            anchors.margins: 5 * scaleFactor
+            anchors.margins: 5
             width: basemapsGrid.cellWidth
             height: width
             border {width: 2; color: index === basemapsGrid.currentIndex ? "blue" : "lightgrey"}
@@ -97,7 +96,7 @@ ShowOrgBasemapsSample {
                     left: parent.left;
                     right: parent.right
                 }
-                height: 16 * scaleFactor
+                height: 16
                 z: 100
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
@@ -172,11 +171,12 @@ ShowOrgBasemapsSample {
         anchors {
             top: mapView.top
             right: mapView.right
-            margins: 16 * scaleFactor
+            margins: 16
         }
         visible: mapView.visible
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
         text: "Back"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
+
         opacity: hovered ? 1 : 0.5
 
         onClicked: {
@@ -190,12 +190,12 @@ ShowOrgBasemapsSample {
     Button {
         id: anonymousLogIn
         anchors {
-            margins: 16 * scaleFactor
+            margins: 16
             horizontalCenter: parent.horizontalCenter
             top: titleLabel.bottom
         }
         text: "Anonymous"
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
 
         onClicked: {
             load(true);
@@ -207,13 +207,13 @@ ShowOrgBasemapsSample {
     Button {
         id: userLogIn
         anchors {
-            margins: 16 * scaleFactor
+            margins: 16
             horizontalCenter: anonymousLogIn.horizontalCenter
             top: anonymousLogIn.bottom
         }
         width: anonymousLogIn.width
         text: "Sign-in"
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
 
         onClicked: {
             load(false);

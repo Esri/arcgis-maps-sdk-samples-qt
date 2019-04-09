@@ -38,9 +38,9 @@ class LocalServerFeatureLayer : public QQuickItem
 
 public:
   explicit LocalServerFeatureLayer(QQuickItem* parent = nullptr);
-  ~LocalServerFeatureLayer();
+  ~LocalServerFeatureLayer() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

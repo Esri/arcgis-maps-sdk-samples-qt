@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -25,7 +25,7 @@ GeodesicOperationsSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
@@ -38,12 +38,12 @@ GeodesicOperationsSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
 
         text: "%1 kilometers".arg(distanceText)
         visible: distanceText.length > 0
-        font.pixelSize: 20 * scaleFactor
+        font.pixelSize: 20
         color: "white"
     }
 }

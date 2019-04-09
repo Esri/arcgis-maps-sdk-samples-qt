@@ -16,16 +16,13 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 LocalServerGeoprocessingSample {
     id: localServerGeoprocessingSample
     width: 800
-    height: 600
-
-    property double scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    height: 600   
 
     // Create MapQuickView here, and create its Map etc. in C++ code
     MapView {
@@ -37,21 +34,21 @@ LocalServerGeoprocessingSample {
         Rectangle {
             id: actionAreaRect
             anchors {
-                margins: 15 * scaleFactor
+                margins: 15
                 top: parent.top
                 left: parent.left
             }
-            width: parent.width * 0.3 * scaleFactor
-            height: parent.height * 0.30 * scaleFactor
+            width: parent.width * 0.3
+            height: parent.height * 0.30
             color: isReady ? "black" : "silver"
             opacity: 0.7
-            radius: 5 * scaleFactor
+            radius: 5
 
             Column {
                 id: contentColumn
-                spacing: 5 * scaleFactor
+                spacing: 5
                 anchors.fill: parent
-                anchors.margins: 5 * scaleFactor
+                anchors.margins: 5
                 visible: isReady
 
                 Text {
@@ -59,24 +56,24 @@ LocalServerGeoprocessingSample {
                     width: parent.width
                     wrapMode: Text.WordWrap
                     color: "white"
-                    font.pixelSize: 12 * scaleFactor
+                    font.pixelSize: 12
                 }
 
                 Rectangle {
                     width: parent.width
-                    height: 35 * scaleFactor
-                    radius: 5 * scaleFactor
+                    height: 35
+                    radius: 5
 
                     Text {
                         anchors {
                             left: parent.left
                             verticalCenter: parent.verticalCenter
-                            margins: 5 * scaleFactor
+                            margins: 5
                         }
-                        width: 40 * scaleFactor
+                        width: 40
                         text: qsTr("Interval: ")
                         font.bold: true
-                        font.pixelSize: 14 * scaleFactor
+                        font.pixelSize: 14
                     }
 
                     TextField {
@@ -84,7 +81,7 @@ LocalServerGeoprocessingSample {
                         anchors {
                             right: parent.right
                             verticalCenter: parent.verticalCenter
-                            margins: 5 * scaleFactor
+                            margins: 5
                         }
                         text: "200"
                         validator: DoubleValidator {bottom: 100; top: 500}
@@ -94,20 +91,9 @@ LocalServerGeoprocessingSample {
                 Button {
                     width: parent.width
                     text: "Generate Contours"
-                    height: 35 * scaleFactor
-                    style: ButtonStyle {
-                        background: Rectangle {
-                            border.color: "black"
-                            radius: 5
-                        }
-                        label: Text {
-                            text: control.text
-                            font.pixelSize: 14 * scaleFactor
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.bold: true
-                        }
-                    }
+                    height: 35
+                    font.pixelSize: 14
+                    font.bold: true
                     onClicked: {
                         generateContours(intervalText.text);
                     }
@@ -116,20 +102,9 @@ LocalServerGeoprocessingSample {
                 Button {
                     width: parent.width
                     text: "Clear Results"
-                    height: 35 * scaleFactor
-                    style: ButtonStyle {
-                        background: Rectangle {
-                            border.color: "black"
-                            radius: 5
-                        }
-                        label: Text {
-                            text: control.text
-                            font.pixelSize: 14 * scaleFactor
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.bold: true
-                        }
-                    }
+                    height: 35
+                    font.pixelSize: 14
+                    font.bold: true
                     onClicked: {
                         clearResults();
                     }
@@ -141,7 +116,7 @@ LocalServerGeoprocessingSample {
                 id: busyIndicator
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 22 * scaleFactor
+                width: 22
                 height: width
                 running: !isReady
             }

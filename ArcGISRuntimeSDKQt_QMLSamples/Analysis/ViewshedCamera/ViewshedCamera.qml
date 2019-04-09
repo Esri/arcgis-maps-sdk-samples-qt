@@ -15,9 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
@@ -25,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    
 
     SceneView {
         id: sceneView
@@ -85,7 +84,7 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         text: "Calculate Viewshed"
         onClicked: locationViewshed.updateFromCamera(sceneView.currentViewpointCamera);

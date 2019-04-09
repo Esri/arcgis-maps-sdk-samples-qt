@@ -15,9 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.3
-import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     SceneView {
         id: sceneView
@@ -66,12 +66,15 @@ Rectangle {
     }
 
     ComboBox {
+        id: comboBox
         anchors {
             right: parent.right
             top: parent.top
-            margins: 5 * scaleFactor
+            margins: 5
         }
-        width: 100 * scaleFactor
+
+        property int modelWidth: 0
+        width: modelWidth + leftPadding + rightPadding + indicator.width
 
         model: ["URL", "Local file", "Portal Item"]
 
@@ -95,6 +98,19 @@ Rectangle {
 
             // zoom to center on the United States
             sceneView.setViewpoint(viewpoint)
+        }
+
+        Component.onCompleted : {
+            for (var i = 0; i < model.length; ++i) {
+                metrics.text = model[i];
+                modelWidth = Math.max(modelWidth, metrics.width);
+            }
+            currentIndexChanged();
+        }
+
+        TextMetrics {
+            id: metrics
+            font: comboBox.font
         }
     }
 

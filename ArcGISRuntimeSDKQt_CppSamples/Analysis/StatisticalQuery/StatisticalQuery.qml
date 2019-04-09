@@ -15,8 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -26,7 +26,7 @@ StatisticalQuerySample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
     property alias extentOnly: extentCheckbox.checked
     property alias bigCitiesOnly: bigCitiesCheckbox.checked
     property string resultsText: ""
@@ -40,14 +40,14 @@ StatisticalQuerySample {
     Rectangle {
         anchors {
             fill: controlColumn
-            margins: -10 * scaleFactor
+            margins: -10
         }
         color: "#E9E9EA"
-        radius: 3 * scaleFactor
+        radius: 3
         opacity: 0.8
         border {
             color: "black"
-            width: 1 * scaleFactor
+            width: 1
         }
     }
 
@@ -56,9 +56,9 @@ StatisticalQuerySample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 15
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         CheckBox {
             id: extentCheckbox
@@ -77,10 +77,23 @@ StatisticalQuerySample {
         }
     }
 
-    // Create a dialog to display the result
-    MessageDialog {
+    Dialog {
         id: msgDialog
-        text: "Query Statistics Results:"
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
+        property alias text : textLabel.text
+        property alias informativeText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: "Query Statistics Results:"
+            }
+            Text {
+                id: detailsLabel
+            }
+        }
     }
 
     onShowStatistics: {

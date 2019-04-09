@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 
 TextField {
     width: parent.width
@@ -27,15 +27,15 @@ TextField {
         anchors {
             verticalCenter: parent.verticalCenter
             right: parent.right
-            margins: 5 * scaleFactor
+            margins: 5
         }
-        height: 22 * scaleFactor
+        height: 22
         width: height
 
         Image {
             anchors {
                 fill: parent
-                margins: 2 * scaleFactor
+                margins: 2
             }
             source: imageUrl
 

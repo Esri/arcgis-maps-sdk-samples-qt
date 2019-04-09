@@ -41,6 +41,7 @@ void FindAddress::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<FindAddress>("Esri.Samples", 1, 0, "FindAddressSample");
+  qmlRegisterUncreatableType<CalloutData>("Esri.Samples", 1, 0, "CalloutData", "CalloutData is an uncreatable type");
 }
 
 void FindAddress::componentComplete()

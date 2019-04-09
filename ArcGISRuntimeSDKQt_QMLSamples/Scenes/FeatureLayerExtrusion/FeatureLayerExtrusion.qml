@@ -16,18 +16,14 @@
 
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    height: 600    
 
     SceneView {
         id: sceneView
@@ -78,12 +74,14 @@ Rectangle {
 
         // combo box to update the extrusion
         ComboBox {
+            id: popCombo
             anchors {
                 top: parent.top
                 left: parent.left
-                margins: 10 * scaleFactor
+                margins: 10
             }
-            width: 200 * scaleFactor
+            property int modelWidth: 0
+            width: modelWidth + leftPadding + rightPadding + indicator.width
             model: ["TOTAL POPULATION", "POPULATION DENSITY"]
 
             onCurrentTextChanged: {
@@ -91,6 +89,17 @@ Rectangle {
                     sceneProperties.extrusionExpression = "[POP2007] / 10";
                 else
                     sceneProperties.extrusionExpression = "([POP07_SQMI] * 5000) + 100000";
+            }
+
+            Component.onCompleted : {
+                for (var i = 0; i < model.length; ++i) {
+                    metrics.text = model[i];
+                    modelWidth = Math.max(modelWidth, metrics.width);
+                }
+            }
+            TextMetrics {
+                id: metrics
+                font: popCombo.font
             }
         }
 

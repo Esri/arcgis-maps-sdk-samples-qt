@@ -15,24 +15,19 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Window 2.2
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
 Animate3DSymbolsSample {
     id: rootRectangle
-    clip: true
 
-    width: 800
-    height: 600
-
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D"
     property bool following: followButton.checked
 
     missionFrame: progressSlider.value
-    zoom: cameraDistance.maximumValue - cameraDistance.value
+    zoom: cameraDistance.value
     angle: cameraAngle.value
 
     onNextFrameRequested: {
@@ -41,196 +36,199 @@ Animate3DSymbolsSample {
             progressSlider.value = 0;
     }
 
-    onWidthChanged: viewWidthChanged((sceneView.width - mapView.width) > mapView.width);
+    Component.onCompleted: {
+        missionList.currentIndex = 0;
+    }
 
     SceneView {
         id: sceneView
         objectName: "sceneView"
         anchors.fill: parent
-    }
 
-    GroupBox {
-        id: animationGroupBox
-        z: 110
-        anchors {
-            top: sceneView.top
-            left: sceneView.left
-            margins: 10 * scaleFactor
-        }
+        GridLayout {
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: parent.top
+                bottom: sceneView.attributionTop
+                margins: 10
+            }
 
-        Column {
-            spacing: 10
+            columns: 2
 
             ComboBox {
                 id: missionList
                 enabled: !playButton.checked
-                model: missionsModel()
+                model: missionsModel
                 textRole: "display"
-                width: 150 * scaleFactor
+                property real modelWidth: 0
+                Layout.minimumWidth: leftPadding + rightPadding + indicator.width + modelWidth
+
+                onModelChanged: {
+                    for (var i = 0; i < missionsModel.rowCount(); ++i) {
+                        var index = missionsModel.index(i, 0);
+                        textMetrics.text = missionsModel.data(index);
+                        modelWidth = Math.max(modelWidth, textMetrics.width);
+                    }
+                }
+
                 onCurrentTextChanged: {
                     changeMission(currentText);
                     progressSlider.value = 0;
                 }
+
+                TextMetrics {
+                    id: textMetrics
+                    font: missionList.font
+                }
+
+                Component.onCompleted: missionList.currentTextChanged()
             }
 
-            Button {
-                id: playButton
-                checked: false
-                checkable: true
-                enabled: missionReady
-                text: checked ? "pause" : "play"
-            }
-
-            Text {
-                id: progressTitle
-                text: "progress"
-                color: "white"
-            }
-
-            Slider {
-                id: progressSlider
-                minimumValue: 0
-                maximumValue: missionSize
-                enabled : missionReady
-                width: Math.max(implicitWidth, 150) * scaleFactor
-            }
-
-            CheckBox {
-                id: followButton
-                enabled: missionReady
-                text: "follow"
-                checked: true
-
-                onCheckedChanged: setFollowing(checked);
-            }
-        }
-    }
-
-    GroupBox {
-        id: cameraGroupBox
-        z: 110
-        anchors {
-            top: sceneView.top
-            right: sceneView.right
-            margins: 10 * scaleFactor
-        }
-
-        Column {
-            spacing: 10
-
-            Text {
-                id: distTitle
-                text: "zoom"
-                enabled: following && missionReady
-                color: "white"
-            }
-
-            Slider {
+            LabeledSlider {
                 id: cameraDistance
-                enabled: following && missionReady
-                minimumValue: 10.0
-                maximumValue: 5000.0
+                Layout.alignment: Qt.AlignRight
+                from: 10.0
+                to: 5000.0
                 value: 500.0
-                width: Math.max(implicitWidth, 100) * scaleFactor
+                text: "zoom"
             }
 
-            Text {
-                id: angleTitle
-                text: "angle"
-                enabled: following && missionReady
-                color: "white"
+            RowLayout {
+                Button {
+                    id: playButton
+                    checked: false
+                    checkable: true
+                    enabled: missionReady
+                    text: checked ? "pause" : "play"
+                }
+
+                Button {
+                    id: followButton
+                    Layout.alignment: Qt.AlignRight
+                    enabled: missionReady
+                    text: checked? "fixed" : "follow "
+                    checked: true
+                    checkable: true
+                    onCheckedChanged: setFollowing(checked);
+                }
             }
 
-            Slider {
+            LabeledSlider {
                 id: cameraAngle
-                enabled: following && missionReady
-                minimumValue: 0.0
-                maximumValue: 180.0
+                Layout.alignment: Qt.AlignRight
+                from: 0
+                to: 180.0
                 value: 45.0
-                width: Math.max(implicitWidth, 100) * scaleFactor
+                text: value.toLocaleString(Qt.locale(), 'f', 0) + "\u00B0"
+                handleWidth: angleMetrics.width
+                TextMetrics {
+                    id: angleMetrics
+                    font: cameraAngle.font
+                    text: "180\u00B0"
+                }
             }
 
-            Text {
-                id: speedTitle
-                text: "speed"
-                enabled: missionReady
-                color: "white"
+            LabeledSlider {
+                id: progressSlider
+                from: 0
+                to: missionSize
+                enabled : missionReady
+                text: (value / missionSize * 100).toLocaleString(Qt.locale(), 'f', 0) + "%"
+                handleWidth: progressMetrics.width
+                TextMetrics {
+                    id: progressMetrics
+                    font: progressSlider.font
+                    text: "100%"
+                }
             }
 
-            Slider {
+            LabeledSlider {
                 id: animationSpeed
-                enabled: missionReady
-                minimumValue: 1
-                maximumValue: 100
+                Layout.alignment: Qt.AlignRight
+                from: 1
+                to: 100
                 value: 50
-                width: Math.max(implicitWidth, 100) * scaleFactor
+                text: "speed"
             }
-        }
-    }
 
-    Rectangle {
-        id: mapFrame
-        anchors {
-            left:sceneView.left
-            bottom: sceneView.bottom
-            margins: 10 * scaleFactor
-            bottomMargin: 25 * scaleFactor
-        }
-        width: Math.max(sceneView.width * .2, 128 * scaleFactor)
-        height: Math.max(sceneView.height * .4, 128 * scaleFactor)
-        color: "black"
-        z: 100
-        clip: true
+            Rectangle {
+                id: mapFrame
+                Layout.columnSpan: 2
+                Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+                Layout.minimumHeight: parent.height * 0.25
+                Layout.minimumWidth: parent.width * 0.3
+                color: "black"
+                clip: true
 
-        GroupBox {
-            id: mapZoomBox
-            z: 120
-            anchors {
-                top: mapFrame.top
-                margins: 10 * scaleFactor
-            }
-            width: mapFrame.width
+                MapView {
+                    id: mapView
+                    objectName: "mapView"
+                    anchors {
+                        fill: parent
+                        margins: 2
+                    }
 
-            Row {
-                spacing: 10
-
-                Button {
-                    id: mapZoomIn
-                    anchors.margins: 10
-                    text: "+"
-                    width: height
-                    onClicked: zoomMapIn()
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: mouse.accepted
+                        onWheel: wheel.accepted
+                    }
                 }
 
-                Button {
-                    id: mapZoomOut
-                    anchors.margins: 10
-                    text: "-"
-                    width: height
-                    onClicked: zoomMapOut()
+                RowLayout {
+                    anchors {
+                        left: parent.left
+                        top: parent.top
+                    }
+                    spacing: 10
+
+                    Rectangle {
+                        Layout.margins: 5
+                        height: width
+                        width: childrenRect.width
+                        clip: true
+                        radius: 5
+
+                        opacity: 0.9
+                        Image {
+                            source: "qrc:/Samples/Scenes/Animate3DSymbols/plus-16-f.png"
+                            width: 24
+                            height: width
+
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: zoomMapIn()
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        Layout.margins: 5
+                        height: width
+                        width: childrenRect.width
+                        opacity: 0.9
+                        clip: true
+                        radius: 5
+
+                        Image {
+                            source: "qrc:/Samples/Scenes/Animate3DSymbols/minus-16-f.png"
+                            width: 24
+                            height: width
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: zoomMapOut()
+                            }
+                        }
+                    }
                 }
-            }
-        }
-
-        MapView {
-            id: mapView
-            objectName: "mapView"
-            anchors {
-                fill: mapFrame
-                margins: 2 * scaleFactor
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onPressed: mouse.accepted
-                onWheel: wheel.accepted
             }
         }
     }
 
     Timer {
         id: timer
-        interval: Math.max(animationSpeed.maximumValue - animationSpeed.value,1);
+        interval: 16.0 + 84 * (animationSpeed.to - animationSpeed.value) / 100.0;
         running: playButton.checked;
         repeat: true
         onTriggered: animate();

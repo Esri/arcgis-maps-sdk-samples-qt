@@ -12,7 +12,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 
 Rectangle {
     id: rootOptionsPage
@@ -25,7 +25,7 @@ Rectangle {
     property var statisticTypes: ["Average", "Count", "Maximum", "Minimum", "Standard Deviation", "Sum", "Variance"]
     property alias statisticsModel: statisticsModel
     property alias orderByModel: orderByModel
-    property real labelTextSize: 12 * scaleFactor
+    property real labelTextSize: 12
 
     // Setup a list model with some defaults pre-set
     ListModel {
@@ -64,14 +64,14 @@ Rectangle {
             right: parent.right
         }
         color: "#005e95"
-        height: 40 * scaleFactor
+        height: 40
         clip: true
 
         Text {
             anchors.centerIn: parent
             text: "Statistics: US States"
             color: "white"
-            font.pixelSize: 28 * scaleFactor
+            font.pixelSize: 28
         }
     }
 
@@ -83,7 +83,7 @@ Rectangle {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            margins: 10 * scaleFactor
+            margins: 10
         }
         contentWidth: column.width
         contentHeight: column.height
@@ -93,28 +93,28 @@ Rectangle {
         Column {
             id: column
             width: pageWidth
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             Rectangle {
                 width: pageWidth
-                height: 225 * scaleFactor
+                height: 225
                 color: "transparent"
                 clip: true
                 border {
-                    width: 1 * scaleFactor
+                    width: 1
                     color: "black"
                 }
 
                 Column {
                     anchors {
                         fill: parent
-                        margins: 10 * scaleFactor
+                        margins: 10
                     }
-                    spacing: 5 * scaleFactor
+                    spacing: 5
 
                     Row {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        spacing: 5 * scaleFactor
+                        spacing: 5
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
@@ -125,8 +125,21 @@ Rectangle {
                         ComboBox {
                             id: fieldComboBox
                             anchors.verticalCenter: parent.verticalCenter
+                            property int modelWidth: 0
+                            width: modelWidth + leftPadding + rightPadding + indicator.width
                             model: fields
-                            width: 100 * scaleFactor
+                            onModelChanged: {
+                                if (!fields)
+                                    return;
+                                for (var i = 0; i < model.length; ++i) {
+                                    metricsFieldComboBox.text = model[i];
+                                    modelWidth = Math.max(modelWidth, metricsFieldComboBox.width);
+                                }
+                            }
+                            TextMetrics {
+                                id: metricsFieldComboBox
+                                font: fieldComboBox.font
+                            }
                         }
 
                         Text {
@@ -138,13 +151,24 @@ Rectangle {
                         ComboBox {
                             id: statisticComboBox
                             anchors.verticalCenter: parent.verticalCenter
+                            property int modelWidth: 0
+                            width: modelWidth + leftPadding + rightPadding + indicator.width
                             model: statisticTypes
-                            width: 100 * scaleFactor
+                            Component.onCompleted : {
+                                for (var i = 0; i < model.length; ++i) {
+                                    metricsStatisticComboBox.text = model[i];
+                                    modelWidth = Math.max(modelWidth, metricsStatisticComboBox.width);
+                                }
+                            }
+                            TextMetrics {
+                                id: metricsStatisticComboBox
+                                font: statisticComboBox.font
+                            }
                         }
 
                         Button {
                             text: "+"
-                            width: 30 * scaleFactor
+                            width: 30
                             height: width
                             onClicked: {
                                 for (var i = 0; i < statisticsModel.count; i++) {
@@ -161,19 +185,19 @@ Rectangle {
 
                     Rectangle {
                         width: parent.width
-                        height: 125 * scaleFactor
+                        height: 125
                         color: "transparent"
                         clip: true
                         border {
                             color: "black"
-                            width:  1 * scaleFactor
+                            width:  1
                         }
 
                         ListView {
                             id: statisticView
                             anchors {
                                 fill: parent
-                                margins: 5 * scaleFactor
+                                margins: 5
                             }
                             highlightFollowsCurrentItem: true
                             model: statisticsModel
@@ -184,11 +208,11 @@ Rectangle {
 
                             delegate: Item {
                                 width: parent.width
-                                height: 25 * scaleFactor
+                                height: 25
 
                                 Row {
                                     anchors.verticalCenter: parent.verticalCenter
-                                    spacing: 10 * scaleFactor
+                                    spacing: 10
                                     Text {
                                         text: field
                                         font.pixelSize: labelTextSize
@@ -218,13 +242,13 @@ Rectangle {
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width
-                height: 175 * scaleFactor
-                spacing: 5 * scaleFactor
+                height: 175
+                spacing: 5
 
                 Column {
                     width: parent.width * 0.45 - parent.spacing
                     height: parent.height
-                    spacing: 5 * scaleFactor
+                    spacing: 5
 
                     Text {
                         text: "Group Field(s):"
@@ -233,10 +257,10 @@ Rectangle {
 
                     Rectangle {
                         width: parent.width
-                        height: 125 * scaleFactor
+                        height: 125
                         color: "transparent"
                         border {
-                            width: 1 * scaleFactor
+                            width: 1
                             color: "black"
                         }
                         clip: true
@@ -245,7 +269,7 @@ Rectangle {
                             id: fieldView
                             anchors {
                                 fill: parent
-                                margins: 5 * scaleFactor
+                                margins: 5
                             }
                             highlight: highlightRectangle
                             highlightResizeVelocity: 1000000
@@ -254,7 +278,7 @@ Rectangle {
                             model: fields
                             delegate: Item {
                                 width: parent.width
-                                height: 25 * scaleFactor
+                                height: 25
 
                                 CheckBox {
                                     anchors.verticalCenter: parent.verticalCenter
@@ -287,11 +311,11 @@ Rectangle {
                 Column {
                     anchors.verticalCenter: parent.verticalCenter
                     width: parent.width * 0.1 - parent.spacing
-                    spacing: 5 * scaleFactor
+                    spacing: 5
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: 30 * scaleFactor
+                        width: 30
                         height: width
                         text: ">"
                         onClicked: {
@@ -312,7 +336,7 @@ Rectangle {
 
                     Button {
                         anchors.horizontalCenter: parent.horizontalCenter
-                        width: 30 * scaleFactor
+                        width: 30
                         height: width
                         text: "<"
                         onClicked: orderByModel.remove(groupingView.currentIndex, 1);
@@ -322,7 +346,7 @@ Rectangle {
                 Column {
                     width: parent.width * 0.45
                     height: parent.height
-                    spacing: 5 * scaleFactor
+                    spacing: 5
 
                     Text {
                         text: "Order by Field:"
@@ -331,10 +355,10 @@ Rectangle {
 
                     Rectangle {
                         width: parent.width
-                        height: 100 * scaleFactor
+                        height: 100
                         color: "transparent"
                         border {
-                            width: 1 * scaleFactor
+                            width: 1
                             color: "black"
                         }
                         clip: true
@@ -343,7 +367,7 @@ Rectangle {
                             id: groupingView
                             anchors {
                                 fill: parent
-                                margins: 5 * scaleFactor
+                                margins: 5
                             }
                             highlight: highlightRectangle
                             highlightResizeVelocity: 1000000
@@ -353,11 +377,11 @@ Rectangle {
                             model: orderByModel
                             delegate: Item {
                                 width: parent.width
-                                height: 25 * scaleFactor
+                                height: 25
 
                                 Row {
                                     anchors.verticalCenter: parent.verticalCenter
-                                    spacing: 10 * scaleFactor
+                                    spacing: 10
                                     Text {
                                         text: field
                                         font.pixelSize: labelTextSize
@@ -392,8 +416,8 @@ Rectangle {
 
             Button {
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: 250 * scaleFactor
-                height: 50 * scaleFactor
+                width: 250
+                height: 50
                 text: "<u><b>Get Statistics</b></u>"
                 onClicked: statisticButtonClicked()
             }

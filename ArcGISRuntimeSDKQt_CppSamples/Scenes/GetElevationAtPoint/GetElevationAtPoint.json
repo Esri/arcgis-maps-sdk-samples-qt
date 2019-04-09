@@ -1,0 +1,8 @@
+{
+    "source" :  "GetElevationAtPoint.qml",
+    "otherSourceFiles" :  [
+        "GetElevationAtPoint.h",
+        "GetElevationAtPoint.cpp"
+    ],
+    "name" : "Get elevation at point"
+}

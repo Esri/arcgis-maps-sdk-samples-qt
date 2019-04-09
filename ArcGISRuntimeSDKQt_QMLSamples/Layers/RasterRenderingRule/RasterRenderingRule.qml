@@ -15,18 +15,17 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
+import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
     property var renderingRuleNames: []
     property url imageServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer"
 
@@ -69,43 +68,47 @@ Rectangle {
             anchors {
                 left: parent.left
                 top: parent.top
-                margins: 5 * scaleFactor
+                margins: 5
             }
-            height: 100 * scaleFactor
-            width: 250 * scaleFactor
+            height: childrenRect.height
+            width: childrenRect.width
             color: "silver"
-            radius: 5 * scaleFactor
+            radius: 5
 
-            Column {
-                spacing: 10 * scaleFactor
-                anchors {
-                    fill: parent
-                    margins: 5 * scaleFactor
-                }
+            GridLayout {
+                columns: 2
 
                 Label {
+                    Layout.margins: 10
+                    Layout.columnSpan: 2
+                    Layout.alignment: Qt.AlignHCenter
                     text: "Apply a Rendering Rule"
-                    font.pixelSize: 16 * scaleFactor
+                    font.pixelSize: 16
                 }
 
-                Row {
-                    spacing: 5 * scaleFactor
-
-                    ComboBox {
-                        id: renderingRulesCombo
-                        width: 150 * scaleFactor
-                        height: 40 * scaleFactor
-                        model: renderingRuleNames
-                    }
-
-                    Button {
-                        id: applyButton
-                        text: "Apply"
-                        width: 75 * scaleFactor
-                        height: 40 * scaleFactor
-                        onClicked: {
-                            applyRenderingRule(renderingRulesCombo.currentIndex);
+                ComboBox {
+                    id: renderingRulesCombo
+                    property int modelWidth: 0
+                    Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                    model: renderingRuleNames
+                    onModelChanged: {
+                        for (var i = 0; i < model.length; ++i) {
+                            metrics.text = model[i];
+                            modelWidth = Math.max(modelWidth, metrics.width);
                         }
+                    }
+                    TextMetrics {
+                        id: metrics
+                        font: renderingRulesCombo.font
+                    }
+                }
+
+                Button {
+                    id: applyButton
+                    Layout.margins: 10
+                    text: "Apply"
+                    onClicked: {
+                        applyRenderingRule(renderingRulesCombo.currentIndex);
                     }
                 }
             }

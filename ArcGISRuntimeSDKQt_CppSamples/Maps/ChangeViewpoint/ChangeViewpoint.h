@@ -30,17 +30,24 @@ namespace Esri
 
 class ChangeViewpoint : public QQuickItem
 {
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapQuickView WRITE setMapQuickView NOTIFY mapQuickViewChanged)
   Q_OBJECT
 
 public:
   explicit ChangeViewpoint(QQuickItem* parent = nullptr);
-  ~ChangeViewpoint();
+  ~ChangeViewpoint() override = 0;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void changeViewpoint(QString viewpoint);
 
+signals:
+  void mapQuickViewChanged();
+
 private:
+  Esri::ArcGISRuntime::MapQuickView* mapQuickView() const;
+  void setMapQuickView(Esri::ArcGISRuntime::MapQuickView* mapView);
+
   double screenRatio() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;

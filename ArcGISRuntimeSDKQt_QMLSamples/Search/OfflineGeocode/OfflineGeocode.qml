@@ -15,20 +15,17 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISRuntime.Toolkit.Controls 100.4
+import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 Rectangle {
     clip: true
-
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     property Point pinLocation: null
@@ -223,7 +220,7 @@ Rectangle {
     Column {
         anchors {
             fill: parent
-            margins: 10 * scaleFactor
+            margins: 10
         }
 
         Rectangle {
@@ -232,37 +229,26 @@ Rectangle {
                 left: parent.left
                 right: parent.right
             }
+            height: childrenRect.height
 
-            height: 35 * scaleFactor
             color: "#f7f8fa"
             border {
                 color: "#7B7C7D"
-                width: 1 * scaleFactor
+                width: 1
             }
             radius: 2
 
-            Row {
-                anchors.centerIn: parent
+            RowLayout {
                 width: parent.width
-                height: parent.height
-                leftPadding: 5 * scaleFactor
+                height: childrenRect.height
 
                 // search bar for geocoding
                 TextField {
                     id: textField
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: parent.width * 0.90
-                    height: parent.height * 0.90
-                    opacity: 0.95
-                    placeholderText: "Enter an Address"
-                    font.pixelSize: 14 * scaleFactor
+                    Layout.fillWidth: true
+                    leftPadding: 5
 
-                    style: TextFieldStyle {
-                        background: Rectangle {
-                            color: "#f7f8fa"
-                            radius: 2
-                        }
-                    }
+                    placeholderText: "Enter an Address"
 
                     // when user types, make suggestions visible
                     onTextChanged: {
@@ -285,20 +271,14 @@ Rectangle {
 
                 // button to open and close suggestions
                 Rectangle {
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        right: parent.right
-                        margins: 5 * scaleFactor
-                    }
-
-                    width: 35 * scaleFactor
+                    Layout.margins: 5
+                    width: height
+                    height: textField.contentHeight
                     color: "#f7f8fa"
                     radius: 2
 
                     Image {
-                        anchors.centerIn: parent
-                        width: parent.width
-                        height: parent.width
+                        anchors.fill: parent
                         source: suggestionRect.visible ? "qrc:/Samples/Search/OfflineGeocode/ic_menu_closeclear_light_d.png" : "qrc:/Samples/Search/OfflineGeocode/ic_menu_collapsedencircled_light_d.png"
 
                         MouseArea {
@@ -315,7 +295,7 @@ Rectangle {
         Rectangle {
             id: suggestionRect
             width: addressSearchRect.width
-            height: 20 * locatorTask.suggestions.count * scaleFactor
+            height: 20 * locatorTask.suggestions.count
             color: "#f7f8fa"
             opacity: 0.85
 
@@ -327,27 +307,26 @@ Rectangle {
 
                     Rectangle {
                         width: addressSearchRect.width
-                        height: 20 * scaleFactor
+                        height: 20
                         color: "#f7f8fa"
                         border.color: "darkgray"
 
                         Text {
                             anchors {
                                 verticalCenter: parent.verticalCenter
-                                leftMargin: 5 * scaleFactor
-                                rightMargin: 5 * scaleFactor
+                                leftMargin: 5
+                                rightMargin: 5
                             }
 
                             font {
                                 weight: Font.Black
-                                pixelSize: 12 * scaleFactor
+                                pixelSize: 12
                             }
 
                             width: parent.width
                             text: label
                             elide: Text.ElideRight
-                            leftPadding: 5 * scaleFactor
-                            renderType: Text.NativeRendering
+                            leftPadding: 5
                             color: "black"
                         }
 
@@ -383,8 +362,8 @@ Rectangle {
     Rectangle {
         id: noResultsRect
         anchors.centerIn: parent
-        height: 50 * scaleFactor
-        width: 200 * scaleFactor
+        height: 50
+        width: 200
         color: "#f7f8fa"
         visible: false
         radius: 2
@@ -394,14 +373,28 @@ Rectangle {
         Text {
             anchors.centerIn: parent
             text: "No matching address"
-            renderType: Text.NativeRendering
-            font.pixelSize: 18 * scaleFactor
+            font.pixelSize: 18
         }
     }
 
-    MessageDialog {
+    Dialog {
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         visible: text.length > 0
-        text: errorMessage
-        informativeText: "Please consult the README.md"
+        title: "Error"
+        property alias text : textLabel.text
+        property alias informativeText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: errorMessage
+            }
+            Text {
+                id: detailsLabel
+                text: "please consult README.md"
+            }
+        }
     }
 }

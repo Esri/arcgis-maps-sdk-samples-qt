@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -27,23 +27,36 @@ SpatialOperationsSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
+        id: mapQuickView
         anchors.fill: parent
-        objectName: "mapView"
     }
+    mapView: mapQuickView
 
     // Display a ComboBox with options for each operation
     ComboBox {
+        id: comboBox
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        width: 175 * scaleFactor
+        property int modelWidth: 0
+        width: modelWidth + leftPadding + rightPadding + indicator.width
         model: geometryOperations
         onCurrentIndexChanged: applyGeometryOperation(currentIndex);
+        Component.onCompleted : {
+            for (var i = 0; i < model.length; ++i) {
+                metrics.text = model[i];
+                modelWidth = Math.max(modelWidth, metrics.width);
+            }
+        }
+        TextMetrics {
+            id: metrics
+            font: comboBox.font
+        }
     }
 }

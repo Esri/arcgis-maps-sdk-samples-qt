@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.3
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 ChangeSublayerRendererSample {
@@ -25,7 +25,7 @@ ChangeSublayerRendererSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
@@ -42,13 +42,13 @@ ChangeSublayerRendererSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 5 * scaleFactor
+            margins: 5
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Button {
             id: applyRendererButton
-            width: 200 * scaleFactor
+            width: 200
             enabled: false
             text: "Apply Renderer"
             onClicked: applyRenderer();
@@ -56,7 +56,7 @@ ChangeSublayerRendererSample {
 
         Button {
             id: resetRendererButton
-            width: 200 * scaleFactor
+            width: 200
             enabled: false
             text: "Reset"
             onClicked: resetRenderer();

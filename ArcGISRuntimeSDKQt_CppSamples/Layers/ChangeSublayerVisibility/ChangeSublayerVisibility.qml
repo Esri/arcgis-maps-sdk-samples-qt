@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -24,7 +24,7 @@ ChangeSublayerVisibilitySample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
@@ -36,12 +36,12 @@ ChangeSublayerVisibilitySample {
     Rectangle {
         id: layerVisibilityRect
         anchors {
-            margins: 10 * scaleFactor
+            margins: 10
             left: parent.left
             top: parent.top
         }
-        height: 150 * scaleFactor
-        width: 150 * scaleFactor
+        height: 150
+        width: 150
         color: "transparent"
 
         MouseArea {
@@ -66,9 +66,8 @@ ChangeSublayerVisibilitySample {
             Column {
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
-                clip: true
 
                 Text {
                     width: parent.width
@@ -76,7 +75,7 @@ ChangeSublayerVisibilitySample {
                     wrapMode: Text.WordWrap
                     clip: true
                     font {
-                        pixelSize: 14 * scaleFactor
+                        pointSize: 14
                         bold: true
                     }
                 }
@@ -84,7 +83,7 @@ ChangeSublayerVisibilitySample {
                 // Create a list view to display the items
                 ListView {
                     id: layerVisibilityListView
-                    anchors.margins: 10 * scaleFactor
+                    anchors.margins: 10
                     width: parent.width
                     height: parent.height
                     clip: true
@@ -96,19 +95,20 @@ ChangeSublayerVisibilitySample {
                     delegate: Item {
                         id: layerVisibilityDelegate
                         width: parent.width
-                        height: 35 * scaleFactor
+                        height: 35
 
                         Row {
                             spacing: 5
-                            anchors.verticalCenter: parent.verticalCenter
                             Text {
-                                width: 75 * scaleFactor
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: 75
                                 text: name
                                 wrapMode: Text.WordWrap
-                                font.pixelSize: 14 * scaleFactor
+                                font.pointSize: 14
                             }
 
                             Switch {
+                                anchors.verticalCenter: parent.verticalCenter
                                 checked: sublayerVisible
 
                                 onCheckedChanged: {

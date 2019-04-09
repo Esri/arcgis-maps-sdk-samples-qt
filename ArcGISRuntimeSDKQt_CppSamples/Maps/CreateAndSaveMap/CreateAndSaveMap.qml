@@ -15,10 +15,10 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 CreateAndSaveMapSample {
     id: rootRectangle
@@ -26,11 +26,9 @@ CreateAndSaveMapSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     onPortalLoaded: {
-        options.visible = true;
-        options.reset();
         stackView.push(options);
     }
 
@@ -38,40 +36,28 @@ CreateAndSaveMapSample {
         if (stackView.currentItem === completionRect)
             return;
 
-        if (success) {
-            completeText.webmapUrl = "https://www.arcgis.com/home/item.html?id=%1".arg(itemId);
-            completeText.text = 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(completeText.webmapUrl);
-        } else {
-            completeText.text = "An error occurred while saving the map. Details: %1".arg(error);
-        }
-        stackView.push(completionRect);
+        var url =  "https://www.arcgis.com/home/item.html?id=%1".arg(itemId);
+        stackView.push(completionRect,
+                       { text: success ? 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(url)
+                                       : "An error occurred while saving the map. Details: %1".arg(error)
+                       });
     }
 
     StackView {
         id: stackView
         anchors.fill: parent
-
-        initialItem: LayerWindow {
-            id: layerWindow
-            onCreateMapSelected: {
-                mapView.visible = true;
-                stackView.push(mapView)
-                createMap(basemap, layerList);
-            }
-        }
+        initialItem: layerWindow
     }
 
     // add a mapView component
     MapView {
         id: mapView
         objectName: "mapView"
-        visible: false
-
         Button {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
-                margins: 5 * scaleFactor
+                margins: 5
             }
             text: "Save map"
 
@@ -81,48 +67,61 @@ CreateAndSaveMapSample {
         }
     }
 
-    // Window to display options for setting title, tags, and description
-    SaveOptionsWindow {
-        id: options
-        visible: false
-
-        onCancelClicked: {
-            mapView.visible = true;
-            stackView.pop(mapView)
+    Component {
+        id: layerWindow
+        LayerWindow {
+            onCreateMapSelected: {
+                stackView.push(mapView);
+                createMap(basemap, layerList);
+            }
         }
+    }
 
-        onSaveMapClicked: {
-            saveMap(title, tags, description);
+    // Window to display options for setting title, tags, and description
+    Component {
+        id: options
+        SaveOptionsWindow {
+            onCancelClicked: {
+                stackView.pop();
+            }
+
+            onSaveMapClicked: {
+                saveMap(title, tags, description);
+            }
         }
     }
 
     // Rectangle to display completion text
-    Rectangle {
+    Component {
         id: completionRect
+        Rectangle {
+            property alias text: completeText.text
 
-        Text {
-            id: completeText
-            anchors.centerIn: parent
-            width: 200 * scaleFactor
-            wrapMode: Text.Wrap
+            Text {
+                id: completeText
+                anchors.centerIn: parent
 
-            property string webmapUrl
-
-            textFormat: Text.RichText
-            horizontalAlignment: Text.AlignHCenter
-            onLinkActivated: Qt.openUrlExternally(webmapUrl)
-        }
-
-        Button {
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                bottom: parent.bottom
-                margins: 10 * scaleFactor
+                textFormat: Text.RichText
+                horizontalAlignment: Text.AlignHCenter
+                onLinkActivated: Qt.openUrlExternally(link)
             }
-            text: "Create New Map"
-            onClicked: {
-                stackView.clear();
-                stackView.push(layerWindow)
+
+            Button {
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    bottom: parent.bottom
+                    margins: 5
+                }
+                text: "Create New Map"
+                onClicked: {
+                    // We need a local ref to the stackView and layerWindow
+                    // object as our object references will have been deleted
+                    // once "clear" cleans up this object.
+                    var sv = stackView;
+                    var lWindow = layerWindow;
+                    sv.clear();
+                    sv.push(lWindow);
+                }
             }
         }
     }

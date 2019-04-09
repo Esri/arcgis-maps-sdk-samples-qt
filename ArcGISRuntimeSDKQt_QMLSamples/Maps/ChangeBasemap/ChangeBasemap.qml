@@ -15,15 +15,12 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
 
     // Create MapView that contains a Map
     MapView {
@@ -40,74 +37,47 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 5
         }
-        width: 175 * scaleFactor
-        model: ["Topographic","Streets",
-            "Streets (Vector)",
-            "Streets - Night (Vector)",
-            "Imagery (Raster)",
-            "Imagery with Labels (Raster)",
-            "Imagery with Labels (Vector)",
-            "Dark Gray Canvas (Vector)",
-            "Light Gray Canvas (Raster)",
-            "Light Gray Canvas (Vector)",
-            "Navigation (Vector)",
-            "OpenStreetMap (Raster)",
-            "Oceans"]
-        onCurrentTextChanged: {
+        property int modelWidth: 0
+        width: modelWidth + leftPadding + rightPadding + indicator.width
+        textRole: "text"
+        model: ListModel {
+            ListElement { text: "Topographic"; map: "BasemapTopographic" }
+            ListElement { text: "Streets"; map: "BasemapStreets" }
+            ListElement { text: "Streets (Vector)"; map: "BasemapStreetsVector" }
+            ListElement { text: "Streets - Night (Vector)"; map: "BasemapStreetsNightVector" }
+            ListElement { text: "Imagery (Raster)"; map: "BasemapImagery" }
+            ListElement { text: "Imagery with Labels (Raster)"; map: "BasemapImageryWithLabels" }
+            ListElement { text: "Imagery with Labels (Vector)"; map: "BasemapImageryWithLabelsVector" }
+            ListElement { text: "Dark Gray Canvas (Vector)"; map: "BasemapDarkGrayCanvasVector" }
+            ListElement { text: "Light Gray Canvas (Raster)"; map: "BasemapLightGrayCanvas" }
+            ListElement { text: "Light Gray Canvas (Vector)"; map: "BasemapLightGrayCanvasVector" }
+            ListElement { text: "Navigation (Vector)"; map: "BasemapNavigationVector" }
+            ListElement { text: "OpenStreetMap (Raster)"; map: "BasemapOpenStreetMap" }
+            ListElement { text: "Oceans"; map: "BasemapOceans" }
+        }
+
+        Component.onCompleted : {
+            for (var i = 0; i < model.count; ++i) {
+                metrics.text = model.get(i).text;
+                modelWidth = Math.max(modelWidth, metrics.width);
+            }
+        }
+
+        TextMetrics {
+            id: metrics
+            font: comboBoxBasemap.font
+        }
+
+        onCurrentIndexChanged: {
             // Call this JavaScript function when the current selection changes
             if (map.loadStatus === Enums.LoadStatusLoaded)
-                changeBasemap();
+                changeBasemap(model.get(currentIndex).map);
         }
 
-        function changeBasemap() {
-            // Determine the selected basemap, create that type, and set the Map's basemap
-            switch (comboBoxBasemap.currentText) {
-            case "Topographic":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapTopographic");
-                break;
-            case "Streets":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreets");
-                break;
-            case "Streets (Vector)":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreetsVector");
-                break;
-            case "Streets - Night (Vector)":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapStreetsNightVector");
-                break;
-            case "Imagery (Raster)":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapImagery");
-                break;
-            case "Imagery with Labels (Raster)":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapImageryWithLabels");
-                break;
-            case "Imagery with Labels (Vector)":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapImageryWithLabelsVector");
-                break;
-            case "Dark Gray Canvas (Vector)":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapDarkGrayCanvasVector");
-                break;
-            case "Light Gray Canvas (Raster)":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapLightGrayCanvas");
-                break;
-            case "Light Gray Canvas (Vector)":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapLightGrayCanvasVector");
-                break;
-
-            case "Navigation (Vector)":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapNavigationVector");
-                break;
-            case "OpenStreetMap (Raster)":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapOpenStreetMap");
-                break;
-            case "Oceans":
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapOceans");
-                break;
-            default:
-                map.basemap = ArcGISRuntimeEnvironment.createObject("BasemapTopographic");
-                break;
-            }
+        function changeBasemap(type) {
+            map.basemap = ArcGISRuntimeEnvironment.createObject(type);
         }
     }
 }

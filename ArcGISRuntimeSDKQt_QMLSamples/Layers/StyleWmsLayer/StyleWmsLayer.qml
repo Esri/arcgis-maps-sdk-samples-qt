@@ -15,17 +15,15 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    
     property var sublayer: null
     property var styles
 
@@ -38,8 +36,8 @@ Rectangle {
 
             WmsLayer {
                 id: wmsLayer
-                url: "http://geoint.lmic.state.mn.us/cgi-bin/wms?VERSION=1.3.0&SERVICE=WMS&REQUEST=GetCapabilities"
-                layerNames: ["fsa2017"]
+                url: "https://imageserver.gisdata.mn.gov/cgi-bin/mncomp?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities"
+                layerNames: ["mncomp"]
 
                 onLoadStatusChanged: {
                     if (loadStatus !== Enums.LoadStatusLoaded)
@@ -61,11 +59,15 @@ Rectangle {
     Rectangle {
         anchors {
             fill: controlColumn
-            margins: -5 * scaleFactor
+            margins: -5
         }
         color: "lightgray"
-        radius: 5 * scaleFactor
+        radius: 5
         opacity: 0.75
+    }
+
+    ButtonGroup {
+        buttons: controlColumn.children
     }
 
     Column {
@@ -73,13 +75,12 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         RadioButton {
-            text: "Style 1"
-            exclusiveGroup: radioGroup
+            text: "Default"
             checked: true
             onCheckedChanged: {
                 if (checked) {
@@ -93,8 +94,7 @@ Rectangle {
         }
 
         RadioButton {
-            text: "Style 2"
-            exclusiveGroup: radioGroup
+            text: "Contrast Stretch"
             onCheckedChanged: {
                 if (checked) {
                     if (!sublayer)
@@ -104,10 +104,6 @@ Rectangle {
                     sublayer.currentStyle = styles[1];
                 }
             }
-        }
-
-        ExclusiveGroup {
-            id: radioGroup
         }
     }
 }

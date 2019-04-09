@@ -37,11 +37,11 @@ class BlendRasterLayer : public QQuickItem
 
 public:
   explicit BlendRasterLayer(QQuickItem* parent = nullptr);
-  ~BlendRasterLayer();
+  ~BlendRasterLayer() override;
 
   static void init();
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
 
   Q_INVOKABLE void applyRenderSettings(double altitude, double azimuth, int slopeType, int colorRampType);
 

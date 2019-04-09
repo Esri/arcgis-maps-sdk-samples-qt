@@ -21,12 +21,12 @@ mac {
 
 CONFIG += c++11
 
-QT += opengl qml quick positioning sensors
+QT += opengl qml quick positioning sensors widgets
 
 TEMPLATE = app
 TARGET = DynamicWorkspaceRaster
 
-ARCGIS_RUNTIME_VERSION = 100.4
+ARCGIS_RUNTIME_VERSION = 100.5
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

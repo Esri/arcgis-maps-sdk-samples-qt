@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -24,7 +24,7 @@ BuildLegendSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
@@ -36,13 +36,13 @@ BuildLegendSample {
     Rectangle {
         id: legendRect
         anchors {
-            margins: 10 * scaleFactor
+            margins: 10
             left: parent.left
             top: parent.top
         }
         property bool expanded: true
-        height: 200 * scaleFactor
-        width: 175 * scaleFactor
+        height: 200
+        width: 175
         color: "lightgrey"
         opacity: 0.95
         radius: 10
@@ -71,17 +71,17 @@ BuildLegendSample {
         Column {
             anchors {
                 fill: parent
-                margins: 10 * scaleFactor
+                margins: 10
             }
-            spacing: 2 * scaleFactor
+            spacing: 2
 
             Row {
-                spacing: 55 * scaleFactor
+                spacing: 55
 
                 Text {
                     text: qsTr("Legend")
                     font {
-                        pixelSize: 18 * scaleFactor
+                        pixelSize: 18
                         bold: true
                     }
                 }
@@ -89,17 +89,17 @@ BuildLegendSample {
                 // Legend icon to allow expanding and collapsing
                 Image {
                     source: legendRect.expanded ? "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light_d.png" : "qrc:/Samples/DisplayInformation/BuildLegend/ic_menu_legendpopover_light.png"
-                    width: 28 * scaleFactor
+                    width: 28
                     height: width
 
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
                             if (legendRect.expanded) {
-                                legendRect.height = 40 * scaleFactor;
+                                legendRect.height = 40;
                                 legendRect.expanded = false;
                             } else {
-                                legendRect.height = 200 * scaleFactor;
+                                legendRect.height = 200;
                                 legendRect.expanded = true;
                             }
                         }
@@ -110,34 +110,34 @@ BuildLegendSample {
             // Create a list view to display the legend
             ListView {
                 id: legendListView
-                anchors.margins: 10 * scaleFactor
+                anchors.margins: 10
                 model: showLegendSample.legendInfoListModel
-                width: 165 * scaleFactor
-                height: 150 * scaleFactor
+                width: 165
+                height: 150
                 clip: true
 
                 // Create delegate to display the name with an image
                 delegate: Item {
                     width: parent.width
-                    height: 35 * scaleFactor
+                    height: 35
                     clip: true
 
                     Row {
-                        spacing: 5 * scaleFactor
+                        spacing: 5
                         anchors.verticalCenter: parent.verticalCenter
 
                         Image {
                             anchors.verticalCenter: parent.verticalCenter
-                            width: 24 * scaleFactor
+                            width: 24
                             height: width
                             source: symbolUrl
                         }
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
-                            width: 125 * scaleFactor
+                            width: 125
                             text: name
                             wrapMode: Text.WordWrap
-                            font.pixelSize: 12 * scaleFactor
+                            font.pixelSize: 12
                         }
 
                     }
@@ -148,14 +148,14 @@ BuildLegendSample {
                     criteria: ViewSection.FullString
                     labelPositioning: ViewSection.CurrentLabelAtStart | ViewSection.InlineLabels
                     delegate: Rectangle {
-                        width: 180 * scaleFactor
+                        width: 180
                         height: childrenRect.height
                         color: "lightsteelblue"
 
                         Text {
                             text: section
                             font.bold: true
-                            font.pixelSize: 13 * scaleFactor
+                            font.pixelSize: 13
                         }
                     }
                 }

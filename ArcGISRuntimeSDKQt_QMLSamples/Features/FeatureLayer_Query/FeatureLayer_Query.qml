@@ -15,17 +15,12 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
 
     // Map view UI presentation at top
     MapView {
@@ -143,13 +138,16 @@ Rectangle {
             }
         }
 
-        // error message dialog
-        MessageDialog {
+        Dialog {
             id: errorMsgDialog
-            visible: false
-            text: "No state named " + findText.text.toUpperCase() + " exists."
-            onAccepted: {
-                visible = false;
+            modal: true
+            x: Math.round(parent.width - width) / 2
+            y: Math.round(parent.height - height) / 2
+            standardButtons: Dialog.Ok
+            property alias text : textLabel.text
+            Text {
+                id: textLabel
+                text: "No state named " + findText.text.toUpperCase() + " exists."
             }
         }
     }

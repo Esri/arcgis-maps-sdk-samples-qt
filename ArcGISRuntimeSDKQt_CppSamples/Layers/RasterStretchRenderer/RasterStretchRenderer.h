@@ -35,11 +35,11 @@ class RasterStretchRenderer : public QQuickItem
 
 public:
   explicit RasterStretchRenderer(QQuickItem* parent = nullptr);
-  ~RasterStretchRenderer();
+  ~RasterStretchRenderer() override;
 
   static void init();
 
-  void componentComplete() Q_DECL_OVERRIDE;  
+  void componentComplete() override;  
 
   Q_INVOKABLE void applyMinMax(double min, double max);
   Q_INVOKABLE void applyPercentClip(double min, double max);

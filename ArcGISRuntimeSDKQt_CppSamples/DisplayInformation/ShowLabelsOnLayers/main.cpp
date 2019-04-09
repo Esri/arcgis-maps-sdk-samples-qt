@@ -28,7 +28,7 @@
 
 int main(int argc, char *argv[])
 {
-
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
   app.setApplicationName("Show Labels on Layers - C++");
 

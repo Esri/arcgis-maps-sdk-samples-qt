@@ -42,12 +42,14 @@ class ManageBookmarks : public QQuickItem
 
 public:
   explicit ManageBookmarks(QQuickItem* parent = nullptr);
-  ~ManageBookmarks();
+  ~ManageBookmarks() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void goToBookmark(int bookmarkIndex);
   Q_INVOKABLE void addBookmark(QString newBookmarkName);
+
+  Q_INVOKABLE QString bookmarkNameForIndex(int index) const;
 
 signals:
   void bookmarksChanged();

@@ -15,8 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
@@ -31,9 +31,23 @@ FeatureLayerGeodatabaseSample {
         objectName: "mapView"
     }
 
-    MessageDialog {
+    Dialog {
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         visible: text.length > 0
-        text: errorMessage
-        informativeText: "Please consult the README.md"
+        property alias text : textLabel.text
+        property alias informativeText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: errorMessage
+            }
+            Text {
+                id: detailsLabel
+                text: "Please consult the README.md"
+            }
+        }
     }
 }

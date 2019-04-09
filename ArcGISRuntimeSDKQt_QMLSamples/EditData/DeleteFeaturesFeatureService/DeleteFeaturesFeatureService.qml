@@ -15,11 +15,10 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISRuntime.Toolkit.Controls 100.4
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 Rectangle {
     width: 800
@@ -27,7 +26,7 @@ Rectangle {
 
     property Point calloutLocation
     property string damageType
-    property real scaleFactor: System.displayScaleFactor
+    
 
     // Create MapView that contains a Map
     MapView {
@@ -152,7 +151,7 @@ Rectangle {
             accessoryButtonType: "Custom"
             customImageUrl: "qrc:/Samples/EditData/DeleteFeaturesFeatureService/ic_menu_trash_light.png"
             calloutData: parent.calloutData
-            borderWidth: 1 * scaleFactor
+            borderWidth: 1
             borderColor: "lightgrey"
             leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {

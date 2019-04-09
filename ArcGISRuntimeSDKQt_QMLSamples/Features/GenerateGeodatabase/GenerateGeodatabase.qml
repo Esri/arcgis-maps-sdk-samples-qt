@@ -15,17 +15,16 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
     property url outputGdb: System.temporaryFolder.url + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
     property string featureServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer"
@@ -188,12 +187,12 @@ Rectangle {
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
-        width: parent.width - (50 * scaleFactor)
-        height: parent.height - (125 * scaleFactor)
+        width: parent.width - (50)
+        height: parent.height - (125)
         color: "transparent"
         border {
             color: "red"
-            width: 3 * scaleFactor
+            width: 3
         }
     }
 
@@ -204,23 +203,23 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 23 * scaleFactor
+            bottomMargin: 23
         }
 
-        width: 200 * scaleFactor
-        height: 35 * scaleFactor
+        width: 200
+        height: 35
         color: pressed ? "#959595" : "#D6D6D6"
         radius: 8
         border {
             color: "#585858"
-            width: 1 * scaleFactor
+            width: 1
         }
 
         Row {
             anchors.fill: parent
             spacing: 5
             Image {
-                width: 38 * scaleFactor
+                width: 38
                 height: width
                 source: "qrc:/Samples/Features/GenerateGeodatabase/download.png"
             }
@@ -228,7 +227,7 @@ Rectangle {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Generate Geodatabase"
-                font.pixelSize: 14 * scaleFactor
+                font.pixelSize: 14
                 color: "#474747"
             }
         }
@@ -277,20 +276,20 @@ Rectangle {
 
         Rectangle {
             anchors.centerIn: parent
-            width: 125 * scaleFactor
-            height: 100 * scaleFactor
+            width: 125
+            height: 100
             color: "lightgrey"
             opacity: 0.8
             radius: 5
             border {
                 color: "#4D4D4D"
-                width: 1 * scaleFactor
+                width: 1
             }
 
             Column {
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 spacing: 10
 
@@ -301,7 +300,7 @@ Rectangle {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: statusText
-                    font.pixelSize: 16 * scaleFactor
+                    font.pixelSize: 16
                 }
             }
         }

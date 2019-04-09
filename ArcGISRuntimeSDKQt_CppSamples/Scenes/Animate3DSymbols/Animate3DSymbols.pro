@@ -23,7 +23,7 @@ CONFIG += c++11
 
 QT += opengl qml quick positioning sensors
 
-ARCGIS_RUNTIME_VERSION = 100.4
+ARCGIS_RUNTIME_VERSION = 100.5
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
@@ -31,10 +31,9 @@ TARGET = Animate3DSymbols
 
 #-------------------------------------------------------------------------------
 
-HEADERS += Animate3DSymbols.h
+HEADERS += Animate3DSymbols.h MissionData.h
 
-SOURCES += main.cpp \
-    Animate3DSymbols.cpp
+SOURCES += main.cpp Animate3DSymbols.cpp MissionData.cpp
 
 RESOURCES += Animate3DSymbols.qrc
 

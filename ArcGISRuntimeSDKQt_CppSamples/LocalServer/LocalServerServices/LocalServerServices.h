@@ -42,9 +42,9 @@ class LocalServerServices : public QQuickItem
 
 public:
   explicit LocalServerServices(QQuickItem* parent = nullptr);
-  ~LocalServerServices();
+  ~LocalServerServices() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void startLocalServer();
   Q_INVOKABLE void stopLocalServer();

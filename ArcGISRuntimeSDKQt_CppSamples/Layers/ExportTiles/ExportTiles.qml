@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
@@ -26,7 +26,7 @@ ExportTilesSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
     property string outputTileCache: System.temporaryFolder.path + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
     property string statusText: ""
 
@@ -51,12 +51,12 @@ ExportTilesSample {
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
-        width: parent.width - (50 * scaleFactor)
-        height: parent.height - (125 * scaleFactor)
+        width: parent.width - (50)
+        height: parent.height - (125)
         color: "transparent"
         border {
             color: "red"
-            width: 3 * scaleFactor
+            width: 3
         }
     }
 
@@ -67,30 +67,30 @@ ExportTilesSample {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 23 * scaleFactor
+            bottomMargin: 23
         }
 
-        width: 130 * scaleFactor
-        height: 35 * scaleFactor
+        width: 130
+        height: 35
         color: pressed ? "#959595" : "#D6D6D6"
         radius: 8
         border {
             color: "#585858"
-            width: 1 * scaleFactor
+            width: 1
         }
 
         Row {
             anchors.fill: parent
             spacing: 5
             Image {
-                width: 38 * scaleFactor
+                width: 38
                 height: width
                 source: "qrc:/Samples/Layers/ExportTiles/download.png"
             }
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Export tiles"
-                font.pixelSize: 14 * scaleFactor
+                font.pixelSize: 14
                 color: "#474747"
             }
         }
@@ -132,20 +132,20 @@ ExportTilesSample {
 
         Rectangle {
             anchors.centerIn: parent
-            width: 125 * scaleFactor
-            height: 100 * scaleFactor
+            width: 125
+            height: 100
             color: "lightgrey"
             opacity: 0.8
             radius: 5
             border {
                 color: "#4D4D4D"
-                width: 1 * scaleFactor
+                width: 1
             }
 
             Column {
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 spacing: 10
 
@@ -156,7 +156,7 @@ ExportTilesSample {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: statusText
-                    font.pixelSize: 16 * scaleFactor
+                    font.pixelSize: 16
                 }
             }
         }

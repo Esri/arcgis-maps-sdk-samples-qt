@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.4
+import Esri.ArcGISRuntime 100.5
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -24,6 +24,7 @@ Rectangle {
 
     //! [open mobile map package qml api snippet]
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
+    property url unpackPath: System.temporaryFolder.url + "/MmpkQml_%1.mmpk".arg(new Date().getTime().toString())
 
     // Create MapView
     MapView {
@@ -31,22 +32,65 @@ Rectangle {
         anchors.fill: parent
     }
 
+    Component.onCompleted: {
+        // check if direct read is supported before proceeding
+        MobileMapPackageUtility.isDirectReadSupported(mmpk.path);
+    }
+
     // Create a Mobile Map Package and set the path
     MobileMapPackage {
         id: mmpk
         path: dataPath + "Yellowstone.mmpk"
 
-        // load the mobile map package
-        Component.onCompleted: {
-            mmpk.load();
-        }
-
         // wait for the mobile map package to load
         onLoadStatusChanged: {
-            if (loadStatus === Enums.LoadStatusLoaded) {
-                // set the map view's map to the first map in the mobile map package
-                mapView.map = mmpk.maps[0];
+            // only proceed once the map package is loaded
+            if (loadStatus !== Enums.LoadStatusLoaded) {
+                return;
             }
+
+            if (mmpk.maps.length < 1) {
+                return;
+            }
+
+            // set the map view's map to the first map in the mobile map package
+            mapView.map = mmpk.maps[0];
+        }
+
+        onErrorChanged: {
+            console.log("Mobile Map Package Error: %1 %2".arg(error.message).arg(error.additionalMessage));
+        }
+    }
+
+    // Connect to the various signals on MobileMapPackageUtility
+    // to determine if direct read is supported or if an unpack
+    // is needed.
+    Connections {
+        target: MobileMapPackageUtility
+
+        onIsDirectReadSupportedStatusChanged: {
+            if (MobileMapPackageUtility.isDirectReadSupportedStatus !== Enums.TaskStatusCompleted) {
+                return;
+            }
+
+            // if direct read is supported, load the MobileMapPackage
+            if (MobileMapPackageUtility.isDirectReadSupportedResult) {
+                mmpk.load();
+            } else {
+                // direct read is not supported, and the data must be unpacked
+                MobileMapPackageUtility.unpack(mmpk.path, unpackPath)
+            }
+        }
+
+        onUnpackStatusChanged: {
+            if (MobileMapPackageUtility.unpackStatus !== Enums.TaskStatusCompleted)
+                return;
+
+            // set the new path to the unpacked mobile map package
+            mmpk.path = unpackPath;
+
+            // load the mobile map package
+            mmpk.load();
         }
     }
     //! [open mobile map package qml api snippet]

@@ -38,10 +38,10 @@ class RasterRenderingRule : public QQuickItem
 
 public:
   explicit RasterRenderingRule(QQuickItem* parent = nullptr);
-  ~RasterRenderingRule() = default;
+  ~RasterRenderingRule() override = default;
 
   static void init();
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   Q_INVOKABLE void applyRenderingRule(int index);
 
 signals:

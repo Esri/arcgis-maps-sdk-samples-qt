@@ -36,9 +36,9 @@ class ViewshedCamera : public QQuickItem
 
 public:
   explicit ViewshedCamera(QQuickItem* parent = nullptr);
-  ~ViewshedCamera() = default;
+  ~ViewshedCamera() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void calculateViewshed();
 

@@ -15,18 +15,15 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import Qt.labs.platform 1.0
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.4
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 100.4
+import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 Rectangle {
-    width: 800
-    height: 600
 
-    property real scaleFactor: System.displayScaleFactor
     property string damageType
     property var selectedFeature: null
 
@@ -128,7 +125,7 @@ Rectangle {
         Callout {
             id: callout
             borderColor: "lightgrey"
-            borderWidth: 1 * scaleFactor
+            borderWidth: 1
             calloutData : parent.calloutData
             leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
@@ -142,8 +139,8 @@ Rectangle {
     Rectangle {
         id: attachmentWindow
         anchors.centerIn: parent
-        height: 200 * scaleFactor
-        width: 250 * scaleFactor
+        height: 200
+        width: 250
         visible: false
         radius: 10
         color: "lightgrey"
@@ -165,28 +162,28 @@ Rectangle {
                 right: parent.right
                 top: parent.top
             }
-            height: 40 * scaleFactor
+            height: 40
             color: "transparent"
 
             Text {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     left: parent.left
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
 
-                text: "Attachments"; font {bold: true; pixelSize: 20 * scaleFactor;}
+                text: "Attachments"; font {bold: true; pixelSize: 20;}
             }
 
             Row {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     right: parent.right
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 spacing: 15
                 Text {
-                    text: "+"; font {bold: true; pixelSize: 40 * scaleFactor;} color: "green"
+                    text: "+"; font {bold: true; pixelSize: 40;} color: "green"
 
                     // open a file dialog whenever the add button is clicked
                     MouseArea {
@@ -197,7 +194,7 @@ Rectangle {
                     }
                 }
                 Text {
-                    text: "-"; font {bold: true; pixelSize: 40 * scaleFactor;} color: "red"
+                    text: "-"; font {bold: true; pixelSize: 40;} color: "red"
 
                     // make sure an item is selected and if so, delete it from the service
                     MouseArea {
@@ -211,10 +208,7 @@ Rectangle {
                         }
 
                         onClicked: {
-                            if (attachmentsList.currentIndex === -1)  {
-                                msgDialog.text = "Please first select an attachment to delete.";
-                                msgDialog.open();
-                            } else {
+                            if (attachmentsList.currentIndex !== -1)  {
                                 // delete the attachment from the table
                                 if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
                                     selectedFeature.attachments.deleteAttachmentWithIndex(attachmentsList.currentIndex);
@@ -236,7 +230,7 @@ Rectangle {
                 right: parent.right
                 top: titleText.bottom
                 bottom: parent.bottom
-                margins: 10 * scaleFactor
+                margins: 10
             }
             clip: true
             spacing: 5
@@ -244,7 +238,7 @@ Rectangle {
             model: selectedFeature === null ? null : selectedFeature.attachments
             // create the delegate to specify how the view is arranged
             delegate: Item {
-                height: 45* scaleFactor
+                height: 45
                 width: parent.width
                 clip: true
 
@@ -260,7 +254,7 @@ Rectangle {
                     wrapMode: Text.WrapAnywhere
                     maximumLineCount: 1
                     elide: Text.ElideRight
-                    font.pixelSize: 16 * scaleFactor
+                    font.pixelSize: 16
                 }
 
                 // show the attachment's URL if it is an image
@@ -270,7 +264,7 @@ Rectangle {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
                     }
-                    width: 44 * scaleFactor
+                    width: 44
                     height: width
                     fillMode: Image.PreserveAspectFit
                     source: attachmentUrl
@@ -287,7 +281,8 @@ Rectangle {
 
             highlightFollowsCurrentItem: true
             highlight: Rectangle {
-                height: attachmentsList.currentItem.height
+                height: attachmentsList.currentItem != null ? attachmentsList.currentItem.height
+                                                            : 0
                 color: "lightsteelblue"
             }
         }
@@ -297,19 +292,23 @@ Rectangle {
     //! [EditFeatures add attachment from a file dialog]
     FileDialog {
         id: fileDialog
+        folder: {
+            var locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation)
+            return locs.length > 0 ? locs.last() : "";
+        }
 
         function doAddAttachment(){
             if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
                 selectedFeature.onLoadStatusChanged.disconnect(doAddAttachment);
-                selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
+                selectedFeature.attachments.addAttachment(fileDialog.file, "application/octet-stream", fileInfo.fileName);
             }
         }
 
         onAccepted: {
             // add the attachment to the feature table
-            fileInfo.url = fileDialog.fileUrl;
+            fileInfo.url = fileDialog.file;
             if (selectedFeature.loadStatus === Enums.LoadStatusLoaded) {
-                selectedFeature.attachments.addAttachment(fileDialog.fileUrl, "application/octet-stream", fileInfo.fileName);
+                selectedFeature.attachments.addAttachment(fileDialog.file, "application/octet-stream", fileInfo.fileName);
             } else {
                 selectedFeature.onLoadStatusChanged.connect(doAddAttachment);
                 selectedFeature.load();
@@ -317,10 +316,6 @@ Rectangle {
         }
     }
     //! [EditFeatures add attachment from a file dialog]
-
-    MessageDialog {
-        id: msgDialog
-    }
 
     // file info used for obtaining the file name
     FileInfo {

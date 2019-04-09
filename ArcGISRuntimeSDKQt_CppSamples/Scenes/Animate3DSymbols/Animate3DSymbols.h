@@ -34,37 +34,35 @@ namespace Esri
   }
 }
 
-class QAbstractItemModel;
-
-#include "Point.h"
+class QAbstractListModel;
+class MissionData;
 
 #include <QQuickItem>
 #include <QString>
 
-#include <cmath>
 #include <memory>
 
 class Animate3DSymbols : public QQuickItem
 {
-  Q_OBJECT
-
   Q_PROPERTY(bool missionReady READ missionReady NOTIFY missionReadyChanged)
   Q_PROPERTY(int missionSize READ missionSize NOTIFY missionSizeChanged)
-  Q_PROPERTY(int missionFrame READ missionFrame WRITE setMissionFrame)
+  Q_PROPERTY(int missionFrame READ missionFrame WRITE setMissionFrame NOTIFY missionFrameChanged)
+  Q_PROPERTY(QAbstractListModel* missionsModel READ missionsModel CONSTANT)
   Q_PROPERTY(double minZoom READ minZoom NOTIFY minZoomChanged)
-  Q_PROPERTY(double zoom READ zoom WRITE setZoom)
-  Q_PROPERTY(double angle READ angle WRITE setAngle)
+  Q_PROPERTY(double zoom READ zoom WRITE setZoom NOTIFY zoomChanged)
+  Q_PROPERTY(double angle READ angle WRITE setAngle NOTIFY angleChanged)
+  Q_OBJECT
 
 public:
-  explicit Animate3DSymbols(QQuickItem* parent = nullptr);
-  ~Animate3DSymbols();
+  Animate3DSymbols(QQuickItem* parent = nullptr);
+  ~Animate3DSymbols() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
   Q_INVOKABLE void animate();
   Q_INVOKABLE void changeMission(const QString& missionName);
-  Q_INVOKABLE QAbstractItemModel* missionsModel() {return m_missionsModel;}
+  QAbstractListModel* missionsModel();
   Q_INVOKABLE void zoomMapIn();
   Q_INVOKABLE void zoomMapOut();
   Q_INVOKABLE void viewWidthChanged(bool sceneViewIsWider);
@@ -87,6 +85,9 @@ signals:
   void missionSizeChanged();
   void nextFrameRequested();
   void minZoomChanged();
+  void zoomChanged();
+  void angleChanged();
+  void missionFrameChanged();
 
 private:
   void createModel2d(Esri::ArcGISRuntime::GraphicsOverlay* mapOverlay);
@@ -108,45 +109,10 @@ private:
   Esri::ArcGISRuntime::GlobeCameraController* m_globeController = nullptr;
   Esri::ArcGISRuntime::OrbitGeoElementCameraController* m_followingController = nullptr;
   QString m_dataPath;
-  QAbstractItemModel* m_missionsModel = nullptr;
+  QAbstractListModel* m_missionsModel = nullptr;
   std::unique_ptr<MissionData> m_missionData;
   int m_frame = 0;
   double m_mapZoomFactor = 5.0;
-};
-
-class MissionData
-{
-public:
-
-  struct DataPoint
-  {
-    DataPoint(){}
-    DataPoint(double lon, double lat, double elevation, double heading, double pitch, double roll):
-      m_pos(Esri::ArcGISRuntime::Point(lon, lat, elevation, Esri::ArcGISRuntime::SpatialReference::wgs84())),
-      m_heading(heading),
-      m_pitch(pitch),
-      m_roll(roll){}
-
-    Esri::ArcGISRuntime::Point m_pos;
-    double m_heading = NAN;
-    double m_pitch = NAN;
-    double m_roll = NAN;
-  };
-
-  typedef std::vector<DataPoint> DataPointList;
-
-  MissionData();
-  ~MissionData();
-
-  bool parse(const QString& dataPath);
-  bool isEmpty() const {return m_data.empty();}
-  size_t size() const {return m_data.size();}
-  const DataPoint& dataAt(size_t i) const;
-  bool ready() const {return m_ready;}
-
-private:
-  DataPointList m_data;
-  bool m_ready;
 };
 
 #endif // ANIMATE3DSYMBOLS_H

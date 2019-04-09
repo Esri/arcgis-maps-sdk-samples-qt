@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
@@ -27,7 +27,7 @@ RasterColormapRendererSample {
     width: 800
     height: 800
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
 
     // add a mapView component

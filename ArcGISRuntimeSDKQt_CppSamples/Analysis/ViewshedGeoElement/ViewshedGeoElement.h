@@ -40,9 +40,9 @@ class ViewshedGeoElement : public QQuickItem
 
 public:
   explicit ViewshedGeoElement(QQuickItem* parent = nullptr);
-  ~ViewshedGeoElement() = default;
+  ~ViewshedGeoElement() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private slots:
@@ -62,7 +62,7 @@ private:
   Esri::ArcGISRuntime::AngularUnitId m_angularUnit = Esri::ArcGISRuntime::AngularUnitId::Degrees;
   Esri::ArcGISRuntime::GeodeticCurveType m_curveType = Esri::ArcGISRuntime::GeodeticCurveType::Geodesic;
 
-  const QString m_headingAttr = "HEADING";
+  const QString m_headingAttr = QStringLiteral("HEADING");
   QTimer* m_timer = nullptr;
 };
 

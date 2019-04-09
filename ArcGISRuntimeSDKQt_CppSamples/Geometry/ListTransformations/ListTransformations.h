@@ -42,9 +42,9 @@ class ListTransformations : public QQuickItem
 
 public:
   explicit ListTransformations(QQuickItem* parent = nullptr);
-  ~ListTransformations() = default;
+  ~ListTransformations() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void refreshTransformationList(bool orderBySuitability);
   Q_INVOKABLE void updateGraphicTransformation(int index);

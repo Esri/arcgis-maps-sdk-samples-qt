@@ -15,19 +15,19 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
+import QtQuick.Window 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     width: 800
     height: 600
-
-    property double scaleFactor: System.displayScaleFactor
-    property int labelWidth: 100 * scaleFactor
-    property int coordinateTextWidth: 200 * scaleFactor
-    property int fontPixelSize: 14 * scaleFactor
-    property int textPadding: Qt.platform.os === "android" ? (10 * scaleFactor) : (4 * scaleFactor)
+    
+    property int labelWidth: 100
+    property int coordinateTextWidth: 200
+    property int fontPixelSize: 14
+    property int textPadding: Qt.platform.os === "android" ? (10) : (4)
     property string labelSuffix: ":  "
 
     property string strDecimalDegrees: qsTr("Degrees")
@@ -42,7 +42,7 @@ Rectangle {
             top: parent.top
             left: parent.left
             right: parent.right
-            bottom: leftColumnRect.top
+            bottom: formatRect.top
         }
 
         Map {
@@ -84,126 +84,87 @@ Rectangle {
     }
 
     Rectangle {
-        id: leftColumnRect
-
+        id: formatRect
         anchors {
             left: parent.left
             bottom: parent.bottom
-            right: rightColRect.left
-        }
-        height: 140 * scaleFactor
-        width: labelWidth
-
-        Text {
-            id: labelDD
-            anchors {
-                top: parent.top
-                right: parent.right
-            }
-            font.pixelSize: fontPixelSize
-            padding: textPadding
-            horizontalAlignment: Text.AlignRight
-            text: strDecimalDegrees + labelSuffix
-        }
-
-        Text {
-            id: labelDMS
-            anchors {
-                top: labelDD.bottom
-                right: parent.right
-            }
-            font.pixelSize: fontPixelSize
-            padding: textPadding
-            horizontalAlignment: Text.AlignRight
-            text: strDegreesMinutesSeconds + labelSuffix
-        }
-
-        Text {
-            id: labelUtm
-            anchors {
-                top: labelDMS.bottom
-                right: parent.right
-            }
-            font.pixelSize: fontPixelSize
-            padding: textPadding
-            horizontalAlignment: Text.AlignRight
-            text: strUtm + labelSuffix
-        }
-
-        Text {
-            id: labelUsng
-            anchors {
-                top: labelUtm.bottom
-                right: parent.right
-            }
-            font.pixelSize: fontPixelSize
-            padding: textPadding
-            horizontalAlignment: Text.AlignRight
-            text: strUsng + labelSuffix
-        }
-    }
-
-    Rectangle {
-        id: rightColRect
-
-        anchors {
-            top: leftColumnRect.top
-            left: leftColumnRect.right
-            bottom: parent.bottom
             right: parent.right
         }
-        height: leftColumnRect.height
-        width: coordinateTextWidth + (10 * scaleFactor)
+        height: childrenRect.height
 
-        TextField {
-            id: textDD
-            anchors {
-                top: parent.top
-                left: parent.left
+        GridLayout {
+            columns: 2
+            width: parent.width
+            Text {
+                id: labelDD
+                font.pixelSize: fontPixelSize
+                padding: textPadding
+                horizontalAlignment: Text.AlignRight
+                text: strDecimalDegrees + labelSuffix
             }
-            width: coordinateTextWidth
-            font.pixelSize: fontPixelSize
-            onAccepted: {
-                handleTextUpdate(strDecimalDegrees, text);
-            }
-        }
 
-        TextField {
-            id: textDMS
-            anchors {
-                top: textDD.bottom
-                left: parent.left
+            TextField {
+                id: textDD
+                font.pixelSize: fontPixelSize
+                text: coordinatesInDD.length === 0 ? "invalid point" : coordinatesInDD
+                Layout.fillWidth: true
+                onAccepted: {
+                    handleTextUpdate(strDecimalDegrees, text);
+                }
             }
-            width: coordinateTextWidth
-            font.pixelSize: fontPixelSize
-            onAccepted: {
-                handleTextUpdate(strDegreesMinutesSeconds, text);
-            }
-        }
 
-        TextField {
-            id: textUtm
-            anchors {
-                top: textDMS.bottom
-                left: parent.left
+            Text {
+                id: labelDMS
+                font.pixelSize: fontPixelSize
+                padding: textPadding
+                horizontalAlignment: Text.AlignRight
+                text: strDegreesMinutesSeconds + labelSuffix
             }
-            width: coordinateTextWidth
-            font.pixelSize: fontPixelSize
-            onAccepted: {
-                handleTextUpdate(strUtm, text);
-            }
-        }
 
-        TextField {
-            id: textUsng
-            anchors {
-                top: textUtm.bottom
-                left: parent.left
+            TextField {
+                id: textDMS
+                font.pixelSize: fontPixelSize
+                text: coordinatesInDMS.length === 0 ? "invalid point" : coordinatesInDMS
+                Layout.fillWidth: true
+                onAccepted: {
+                    handleTextUpdate(strDegreesMinutesSeconds, text);
+                }
             }
-            width: coordinateTextWidth
-            font.pixelSize: fontPixelSize
-            onAccepted: {
-                handleTextUpdate(strUsng, text);
+
+            Text {
+                id: labelUtm
+                font.pixelSize: fontPixelSize
+                padding: textPadding
+                horizontalAlignment: Text.AlignRight
+                text: strUtm + labelSuffix
+            }
+
+            TextField {
+                id: textUtm
+                font.pixelSize: fontPixelSize
+                text: coordinatesInUtm.length === 0 ? "invalid point" : coordinatesInUtm
+                Layout.fillWidth: true
+                onAccepted: {
+                    handleTextUpdate(strUtm, text);
+                }
+            }
+
+            Text {
+                id: labelUsng
+                font.pixelSize: fontPixelSize
+                padding: textPadding
+                horizontalAlignment: Text.AlignRight
+                text: strUsng + labelSuffix
+            }
+
+            TextField {
+                id: textUsng
+                font.pixelSize: fontPixelSize
+                text: coordinatesInUsng.length === 0 ? "invalid point" : coordinatesInUsng
+                Layout.fillWidth: true
+                onAccepted: {
+                    handleTextUpdate(strUsng, text);
+                }
             }
         }
     }

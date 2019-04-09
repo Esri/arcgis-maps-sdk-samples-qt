@@ -15,8 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -25,82 +24,56 @@ MapRotationSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
-    }
 
-    // Slider UI presentation at bottom
-    Rectangle {
-        height: 46 * scaleFactor
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
-            bottomMargin: 20 * scaleFactor
-        }
-
-        // sliderCombo: A slider and text for its value
-        Row {
-            id: sliderCombo
+        // Slider UI presentation at bottom
+        Rectangle {
             anchors {
-                centerIn: parent
-            }
-            spacing: 5
-
-            Slider {
-                id: slider1
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                }
-                style: SliderStyle {
-                    groove: Rectangle {
-                        implicitWidth: 200 * scaleFactor
-                        implicitHeight: 8 * scaleFactor
-                        color: "gray"
-                        opacity: 0.7
-                        radius: 8 * scaleFactor
-                    }
-                    handle: Rectangle {
-                        anchors.centerIn: parent
-                        color: control.pressed ? "white" : "lightgray"
-                        border.color: "gray"
-                        border.width: 2 * scaleFactor
-                        implicitWidth: 34 * scaleFactor
-                        implicitHeight: 34 * scaleFactor
-                        radius: 12 * scaleFactor
-                    }
-                }
-                // Slider controls degrees of rotation
-                minimumValue: 0.0
-                maximumValue: 360.0
-                onPressedChanged: {
-                    // Call C++ invokable function to change the rotation of the map view
-                    mapRotationSample.setMapViewRotation(value);
-                }
+                bottom: mapView.attributionTop
+                horizontalCenter: parent.horizontalCenter
             }
 
-            TextField {
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                }
-                horizontalAlignment: TextInput.AlignHCenter
-                readOnly: true
-                style: TextFieldStyle {
-                    textColor: "white"
-                    background: Rectangle {
-                        implicitWidth: 55 * scaleFactor
-                        implicitHeight: 34 * scaleFactor
-                        border.width: 0
-                        radius: 5 * scaleFactor
-                        color: "gray"
-                        opacity: 0.7
+            width: childrenRect.width
+            height: childrenRect.height
+            radius: 10
+            opacity: 0.8
+
+            // sliderCombo: A slider and text for its value
+            Row {
+                id: sliderCombo
+                spacing: 5
+
+                Slider {
+                    id: slider1
+                    opacity: 0.7
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                    }
+                    // Slider controls degrees of rotation
+                    from: 0.0
+                    to: 360.0
+                    onPressedChanged: {
+                        // Call C++ invokable function to change the rotation
+                        // of the map view
+                        mapRotationSample.setMapViewRotation(value);
                     }
                 }
-                font.pixelSize: 20 * scaleFactor
-                text: slider1.value.toFixed(0)
+
+                Text {
+                    anchors {
+                        verticalCenter: parent.verticalCenter
+                        margins: 5
+                    }
+                    horizontalAlignment: TextInput.AlignHCenter
+                    font.pixelSize: 20
+                    text: slider1.value.toPrecision(3);
+                }
             }
         }
     }

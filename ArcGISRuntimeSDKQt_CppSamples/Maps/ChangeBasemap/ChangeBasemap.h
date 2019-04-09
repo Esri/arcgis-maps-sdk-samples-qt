@@ -34,11 +34,11 @@ class ChangeBasemap : public QQuickItem
 
 public:
   explicit ChangeBasemap(QQuickItem* parent = nullptr);
-  ~ChangeBasemap();
+  ~ChangeBasemap() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
-  Q_INVOKABLE void changeBasemap(QString basemap);
+  Q_INVOKABLE void changeBasemap(const QString& basemap);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

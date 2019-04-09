@@ -17,14 +17,12 @@
 import QtQuick 2.6
 import QtPositioning 5.3
 import QtSensors 5.3
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    
     property string compassMode: "Compass"
     property string navigationMode: "Navigation"
     property string recenterMode: "Re-Center"
@@ -76,12 +74,12 @@ Rectangle {
         anchors {
             right: parent.right
             bottom: parent.bottom
-            margins: 10 * scaleFactor
+            margins: 10
         }
         visible: false
         width: parent.width
-        height: 300 * scaleFactor
-        spacing: 10 * scaleFactor
+        height: 300
+        spacing: 10
         model: ListModel {
             id: autoPanListModel
         }
@@ -93,7 +91,7 @@ Rectangle {
 
             Text {
                 text: name
-                font.pixelSize: 25 * scaleFactor
+                font.pixelSize: 25
                 color: "white"
                 MouseArea {
                     anchors.fill: parent
@@ -106,7 +104,7 @@ Rectangle {
 
             Image {
                 source: image
-                width: 40 * scaleFactor
+                width: 40
                 height: width
                 MouseArea {
                     anchors.fill: parent
@@ -158,13 +156,13 @@ Rectangle {
         anchors {
             right: parent.right
             bottom: parent.bottom
-            margins: 25 * scaleFactor
+            margins: 25
         }
         spacing: 10
 
         Text {
             text: currentModeText
-            font.pixelSize: 25 * scaleFactor
+            font.pixelSize: 25
             color: "white"
             MouseArea {
                 anchors.fill: parent
@@ -177,7 +175,7 @@ Rectangle {
 
         Image {
             source: currentModeImage
-            width: 40 * scaleFactor
+            width: 40
             height: width
             MouseArea {
                 anchors.fill: parent

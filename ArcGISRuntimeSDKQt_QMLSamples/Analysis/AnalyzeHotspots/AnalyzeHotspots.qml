@@ -15,11 +15,11 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
+import Qt.labs.calendar 1.0
 import QtGraphicalEffects 1.0
-import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.5
+import QtQuick.Layouts 1.3
 
 Rectangle {
     id: rootRectangle
@@ -27,10 +27,12 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
     property var job
-    property bool jobInProgress
-    property string statusText: ""    
+    property bool jobInProgress : false
+    property string statusText: ""
+
+    property date fromThisDate : Date.fromLocaleDateString(Qt.locale(), "98/01/01", "yy/MM/dd");
+    property date toThisDate :   Date.fromLocaleDateString(Qt.locale(), "98/01/31", "yy/MM/dd")
 
     // Declare the MapView with a Map and Basemap
     MapView {
@@ -122,7 +124,7 @@ Rectangle {
     // Create the settings rectangle to set dates and execute the task
     Rectangle {
         anchors {
-            margins: -10 * scaleFactor
+            margins: -10
             fill: settingsColumn
         }
         color: "lightgrey"
@@ -136,40 +138,40 @@ Rectangle {
         anchors {
             right: parent.right
             top: parent.top
-            margins: 20 * scaleFactor
+            margins: 20
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Select date range for analysis"
-            font.pixelSize: 14 * scaleFactor
+            font.pixelSize: 14
         }
 
         Text {
             text: "From"
-            font.pixelSize: 12 * scaleFactor
+            font.pixelSize: 12
         }
 
         TextField {
             id: fromDate
             width: parent.width
-            text: "01/01/1998"
+            text: fromThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
 
             Image {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     right: parent.right
-                    margins: 5 * scaleFactor
+                    margins: 5
                 }
                 source: "qrc:/Samples/Analysis/AnalyzeHotspots/calendar.png"
-                width: 22 * scaleFactor
+                width: 22
                 height: width
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        calendar.selectedDate = getFormattedDateFromString(fromDate.text);
+                        calendar.selectedDate = new Date(fromThisDate);
                         calendarOverlay.toOrFromDate = "from";
                         calendarOverlay.visible = true;
                     }
@@ -179,28 +181,28 @@ Rectangle {
 
         Text {
             text: "To"
-            font.pixelSize: 12 * scaleFactor
+            font.pixelSize: 12
         }
 
         TextField {
             id: toDate
             width: parent.width
-            text: "01/31/1998"
+            text: toThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
 
             Image {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     right: parent.right
-                    margins: 5 * scaleFactor
+                    margins: 5
                 }
                 source: "qrc:/Samples/Analysis/AnalyzeHotspots/calendar.png"
-                width: 22 * scaleFactor
+                width: 22
                 height: width
 
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        calendar.selectedDate = getFormattedDateFromString(toDate.text);
+                        calendar.selectedDate = new Date(fromThisDate);
                         calendarOverlay.toOrFromDate = "to";
                         calendarOverlay.visible = true;
                     }
@@ -212,43 +214,30 @@ Rectangle {
             width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Run analysis"
-            enabled: !jobInProgress
+            enabled: !jobInProgress && validateDates(fromThisDate, toThisDate)
 
             onClicked: {
-                // convert the strings to date objects
-                var _fromDate = getFormattedDateFromString(fromDate.text);
-                var _toDate = getFormattedDateFromString(toDate.text);
-
-                // validate dates
-                var success = validateDates(_fromDate, _toDate);
-                if (!success) {
-                    messageDialog.open();
-                    return;
-                }
-
-                // format the date strings for the GP parameters
-                var fromDateString = _fromDate.yyyymmdd();
-                var toDateString = _toDate.yyyymmdd();
-
-                // set up the GP Parameters
-                hotspotParameters.addParameter(fromDateString, toDateString);
+                var fromString = fromThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
+                var toString = toThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
+                // Run the task
+                hotspotParameters.addParameter(fromString, toString);
             }
         }
 
         Row {
-            spacing: 15 * scaleFactor
+            spacing: 15
             visible: jobInProgress
 
             BusyIndicator {
                 anchors.verticalCenter: parent.verticalCenter
-                width: 24 * scaleFactor
+                width: 24
                 height: width
             }
 
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: statusText
-                font.pixelSize: 14 * scaleFactor
+                font.pixelSize: 14
             }
         }
     }
@@ -277,98 +266,133 @@ Rectangle {
             onWheel: wheel.accepted = true
         }
 
-        Calendar {
-            id: calendar
+
+        GridLayout {
+            id: calendarGrid
             anchors.centerIn: parent
-            minimumDate: new Date(1998,0,1)
-            maximumDate: new Date(1998,4,31)
-
-            onClicked: {
-                var formattedDate = selectedDate.mmddyyyy();
-
-                if (calendarOverlay.toOrFromDate === "from") {
-                    fromDate.text = formattedDate;
-                    if (!validateDates(getFormattedDateFromString(fromDate.text), getFormattedDateFromString(toDate.text)))
-                        toDate.text = new Date(selectedDate.setDate(selectedDate.getDate() + 2)).mmddyyyy();
-                } else if (calendarOverlay.toOrFromDate === "to") {
-                    toDate.text = formattedDate;
-                    if (!validateDates(getFormattedDateFromString(fromDate.text), getFormattedDateFromString(toDate.text)))
-                        fromDate.text = new Date(selectedDate.setDate(selectedDate.getDate() - 2)).mmddyyyy();
+            columns: 3
+            Button {
+                text: "<"
+                onClicked: {
+                    calendar.month -= 1;
                 }
-                calendarOverlay.visible = false;
+                enabled: calendar.month > calendar.minDate.getMonth()
+                Layout.column: 0
+                Layout.row: 0
+            }
+
+            Text {
+                text: calendar.title
+                horizontalAlignment: Text.AlignHCenter
+                Layout.column: 1
+                Layout.row: 0
+                Layout.fillWidth: true
+            }
+
+            Button {
+                text: ">"
+                onClicked: {
+                    calendar.month += 1;
+                }
+                enabled: calendar.month < (calendar.maxDate.getMonth() - 1)
+                Layout.column: 2
+                Layout.row: 0
+            }
+
+            DayOfWeekRow {
+                locale: calendar.locale
+
+                Layout.column: 1
+                Layout.row: 1
+                Layout.fillWidth: true
+            }
+
+            WeekNumberColumn {
+                month: calendar.month
+                year: calendar.year
+                locale: calendar.locale
+
+                Layout.fillHeight: true
+                Layout.column: 0
+                Layout.row: 2
+            }
+
+            MonthGrid {
+                id: calendar
+                month: Calendar.January
+                year: 1998
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                property date minDate: new Date(1998,0,1)
+                property date maxDate: new Date(1998,4,31)
+                property date selectedDate: new Date(1998,4,31)
+
+                delegate: Text {
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    opacity: model.month !== calendar.month ? 0 : 1
+                    text: model.day
+                    font.bold: calendar.selectedDate.getTime() === model.date.getTime()
+                }
+
+                onClicked: {
+                    if (date.getMonth() !== calendar.month)
+                        return;
+
+                    if (calendarOverlay.toOrFromDate === "from")
+                        fromThisDate = date;
+                    else if (calendarOverlay.toOrFromDate === "to")
+                        toThisDate = date;
+                    calendarOverlay.visible = false;
+                }
             }
         }
     }
 
-    MessageDialog {
+    Dialog {
         id: messageDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Error"
+        property alias text : textLabel.text
+        property alias detailedText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+            }
+            Text {
+                id: detailsLabel
+            }
+        }
     }
-
-    Component.onCompleted: {
-        // function to convert date to formatted string MM/DD/YYYY
-        Date.prototype.mmddyyyy = function() {
-            var mm = this.getMonth() + 1;
-            var dd = this.getDate();
-
-            return [(mm > 9 ? "" : "0") + mm,
-                    (dd > 9 ? "" : "0") + dd,
-                    this.getFullYear()
-                    ].join("/");
-        };
-
-        // function to convert date to formatted string YYYY-MM-DD
-        Date.prototype.yyyymmdd = function() {
-            var mm = this.getMonth() + 1;
-            var dd = this.getDate();
-
-            return [this.getFullYear(),
-                    (mm > 9 ? "" : "0") + mm,
-                    (dd > 9 ? "" : "0") + dd,
-                    ].join("-");
-        };
-    }
-
-    // function to get date from a string ex: 01/01/1998
-    function getFormattedDateFromString(dateString) {
-        var p = dateString.split("/");
-        return new Date(p[2], p[0]-1, p[1]);
-    }   
 
     // function to validate the date ranges provided
     function validateDates(_fromDate, _toDate) {
-        var _minDate = calendar.minimumDate;
-        var _maxDate = calendar.maximumDate;
-
-        // check if invalid dates have been provided
-        if (String(_toDate) === "Invalid Date" || String(_fromDate) === "Invalid Date") {
-            messageDialog.text = "Invalid date range.";
-            messageDialog.detailedText = "Please ensure that each date field contains valid dates."
+        // check if each date is within the period
+        if (_fromDate > calendar.maxDate || _toDate < calendar.minDate) {
             return false;
         }
 
-        // check if each date is within the period
-        if (!(_fromDate >= _minDate && _fromDate <= _maxDate) || !(_fromDate >= _minDate && _fromDate <= _maxDate)) {
-            messageDialog.text = "Invalid date range.";
-            messageDialog.detailedText = "Please specify dates between\nJan 01, 1998 and May 31, 1998."
+        if (_fromDate < calendar.minDate || _toDate > calendar.maxDate) {
             return false;
         }
 
         // check that the to date is after the from date
         if (_fromDate > _toDate) {
-            messageDialog.text = "Invalid date range.";
-            messageDialog.detailedText = "Please ensure the 'From' date precedes the 'To' date."
             return false;
         }
 
         // check that there is at least one day in between the from and to date
-        var oneDay = (24*60*60*1000) * 2;
+
+        var oneDay = 86400000;
         if ((_toDate - _fromDate) < oneDay) {
-            messageDialog.text = "Invalid date range.";
-            messageDialog.detailedText = "Please ensure there is at least day in between the 'To' and 'From' dates."
             return false;
         }
 
         return true;
     }
 }
+

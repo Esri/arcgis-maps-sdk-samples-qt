@@ -38,9 +38,9 @@ class MapLoaded : public QQuickItem
 
 public:
   explicit MapLoaded(QQuickItem* parent = nullptr);
-  ~MapLoaded();
+  ~MapLoaded() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:

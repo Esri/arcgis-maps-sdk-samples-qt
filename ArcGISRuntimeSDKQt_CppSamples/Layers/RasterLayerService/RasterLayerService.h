@@ -36,11 +36,11 @@ class RasterLayerService : public QQuickItem
 
 public:
   explicit RasterLayerService(QQuickItem* parent = nullptr);
-  ~RasterLayerService();
+  ~RasterLayerService() override;
 
   static void init();
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
 
 private:
 

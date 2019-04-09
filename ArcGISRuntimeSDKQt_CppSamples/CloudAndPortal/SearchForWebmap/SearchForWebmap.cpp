@@ -107,9 +107,7 @@ void SearchForWebmap::search(const QString keyword)
 
   PortalQueryParametersForItems query;
   query.setSearchString(QString("tags:\"%1\" AND +uploaded:[%2 TO %3]")
-                        .arg(keyword)
-                        .arg(fromDate)
-                        .arg(toDate));
+                        .arg(keyword, fromDate, toDate));
   query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
 
   m_portal->findItems(query);

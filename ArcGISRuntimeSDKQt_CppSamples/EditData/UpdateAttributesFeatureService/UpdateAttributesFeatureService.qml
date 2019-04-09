@@ -15,18 +15,19 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.4
+import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 UpdateAttributesFeatureServiceSample {
     id: updateFeaturesSample
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
     property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // add a mapView component
@@ -37,7 +38,7 @@ UpdateAttributesFeatureServiceSample {
 
         Callout {
             id: callout
-            borderWidth: 1 * scaleFactor;
+            borderWidth: 1;
             borderColor: "lightgrey"
             calloutData: updateFeaturesSample.calloutData
             leaderPosition: leaderPositionEnum.Automatic
@@ -66,10 +67,10 @@ UpdateAttributesFeatureServiceSample {
     // Update Window
     Rectangle {
         id: updateWindow
+        width: childrenRect.width
+        height: childrenRect.height
         anchors.centerIn: parent
-        width: 200 * scaleFactor
-        height: 110 * scaleFactor
-        radius: 10 * scaleFactor
+        radius: 10
         visible: false
 
         GaussianBlur {
@@ -85,48 +86,55 @@ UpdateAttributesFeatureServiceSample {
             onWheel: wheel.accepted = true;
         }
 
-        Column {
-            anchors {
-                fill: parent
-                margins: 10 * scaleFactor
-            }
-            spacing: 10 * scaleFactor
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                Text {
-                    text: "Update Attribute"
-                    font.pixelSize: 16 * scaleFactor
-                }
+        GridLayout {
+            columns: 2
+            anchors.margins: 5
+
+            Text {
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                text: "Update Attribute"
+                font.pixelSize: 16
             }
 
             ComboBox {
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                Layout.fillWidth: true
                 id: damageComboBox
-                width: updateWindow.width - (20 * scaleFactor)
                 model: featAttributes
-            }
-
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 10 * scaleFactor
-
-                Button {
-                    width: (updateWindow.width / 2) - (20 * scaleFactor)
-                    text: "Update"
-                    // once the update button is clicked, hide the windows, and fetch the currently selected features
-                    onClicked: {
-                        if (callout.visible)
-                            callout.dismiss();
-                        updateWindow.visible = false;
-                        updateFeaturesSample.updateSelectedFeature(damageComboBox.currentText)
+                Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
                     }
                 }
-
-                Button {
-                    width: (updateWindow.width / 2) - (20 * scaleFactor)
-                    text: "Cancel"
-                    // once the cancel button is clicked, hide the window
-                    onClicked: updateWindow.visible = false;
+                TextMetrics {
+                    id: metrics
+                    font: damageComboBox.font
                 }
+            }
+
+            Button {
+                Layout.margins: 5
+                text: "Update"
+                // once the update button is clicked, hide the windows, and fetch the currently selected features
+                onClicked: {
+                    if (callout.visible)
+                        callout.dismiss();
+                    updateWindow.visible = false;
+                    updateFeaturesSample.updateSelectedFeature(damageComboBox.currentText)
+                }
+            }
+
+            Button {
+                Layout.alignment: Qt.AlignRight
+                Layout.margins: 5
+                text: "Cancel"
+                // once the cancel button is clicked, hide the window
+                onClicked: updateWindow.visible = false;
             }
         }
     }

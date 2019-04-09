@@ -15,15 +15,13 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
 OpenMobileMap_MapPackageSample {
     width: 800
     height: 600
-
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
 
     // add a mapView component
     MapView {

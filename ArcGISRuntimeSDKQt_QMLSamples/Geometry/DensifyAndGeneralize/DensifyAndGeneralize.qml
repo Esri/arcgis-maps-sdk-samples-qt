@@ -15,17 +15,14 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    height: 600    
 
     MapView {
         id: mapView
@@ -167,10 +164,10 @@ Rectangle {
     Rectangle {
         anchors {
             fill: controlColumn
-            margins: -5 * scaleFactor
+            margins: -5
         }
         color: "#f9f9f9"
-        radius: 5 * scaleFactor
+        radius: 5
     }
 
     Column {
@@ -178,9 +175,9 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
 
         CheckBox {
@@ -196,9 +193,9 @@ Rectangle {
 
         Slider {
             id: maxSegmentLengthSlider
-            minimumValue: 100
-            maximumValue: 500
-            width: 175 * scaleFactor
+            from: 100
+            to: 500
+            width: 175
             value: 100
             onValueChanged: updateGeometry();
         }
@@ -216,9 +213,9 @@ Rectangle {
 
         Slider {
             id: maxDeviationSlider
-            minimumValue: 1
-            maximumValue: 250
-            width: 175 * scaleFactor
+            from: 1
+            to: 250
+            width: 175
             onValueChanged: updateGeometry();
         }
 

@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -24,8 +24,7 @@ FindRouteSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
+    
     onSolveRouteComplete: solveButton.visible = false
 
     // Create window for displaying the route directions
@@ -37,7 +36,7 @@ FindRouteSample {
             bottom: parent.bottom
         }
         visible: false
-        width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 250 * scaleFactor : 350 * scaleFactor
+        width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 250 : 350
         color: "#FBFBFB"
 
         //! [FindRoute cpp ListView directionsView]
@@ -45,13 +44,13 @@ FindRouteSample {
             id: directionsView
             anchors {
                 fill: parent
-                margins: 5 * scaleFactor
+                margins: 5
             }
             header: Component {
                 Text {
-                    height: 40 * scaleFactor
+                    height: 40
                     text: "Directions:"
-                    font.pixelSize: 22 * scaleFactor
+                    font.pixelSize: 22
                 }
             }
 
@@ -82,23 +81,23 @@ FindRouteSample {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
-                bottomMargin: 5 * scaleFactor
+                bottomMargin: 5
             }
 
-            width: 130 * scaleFactor
-            height: 30 * scaleFactor
+            width: 130
+            height: 30
             color: pressed ? "#959595" : "#D6D6D6"
             radius: 5
             border {
                 color: "#585858"
-                width: 1 * scaleFactor
+                width: 1
             }
 
             Text {
                 id: routeButtonText
                 anchors.centerIn: parent
                 text: "Solve route"
-                font.pixelSize: 14 * scaleFactor
+                font.pixelSize: 14
                 color: "#35352E"
             }
 
@@ -122,22 +121,22 @@ FindRouteSample {
             anchors {
                 right: parent.right
                 bottom: parent.bottom
-                rightMargin: 10 * scaleFactor
-                bottomMargin: 40 * scaleFactor
+                rightMargin: 10
+                bottomMargin: 40
             }
 
-            width: 45 * scaleFactor
+            width: 45
             height: width
             color: pressed ? "#959595" : "#D6D6D6"
             radius: 100
             border {
                 color: "#585858"
-                width: 1.5 * scaleFactor
+                width: 1.5
             }
 
             Image {
                 anchors.centerIn: parent
-                width: 35 * scaleFactor
+                width: 35
                 height: width
                 source: "qrc:/Samples/Routing/FindRoute/directions.png"
             }
@@ -160,7 +159,7 @@ FindRouteSample {
         Rectangle {
             id: rect
             width: parent.width
-            height: 35 * scaleFactor
+            height: 35
             color: directionWindow.color
 
             Rectangle {
@@ -168,22 +167,22 @@ FindRouteSample {
                     top: parent.top;
                     left: parent.left;
                     right: parent.right;
-                    topMargin: -8 * scaleFactor
-                    leftMargin: 20 * scaleFactor
-                    rightMargin: 20 * scaleFactor
+                    topMargin: -8
+                    leftMargin: 20
+                    rightMargin: 20
                 }
                 color: "darkgrey"
-                height: 1 * scaleFactor
+                height: 1
             }
 
             Text {
                 text: directionText
                 anchors {
                     fill: parent
-                    leftMargin: 5 * scaleFactor
+                    leftMargin: 5
                 }
                 elide: Text.ElideRight
-                font.pixelSize: 14 * scaleFactor
+                font.pixelSize: 14
             }
         }
     }

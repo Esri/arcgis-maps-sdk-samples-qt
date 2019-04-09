@@ -15,11 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 Rectangle {
     id: rootRectangle
@@ -28,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    
 
     PortalItem {
         id: itemToAdd
@@ -85,7 +83,7 @@ Rectangle {
             //! [PortalUser addPortalItemCompleted]
 
             statusBar.text = "Successfully added item.";
-            addItemButton.border.width = 2 * scaleFactor;
+            addItemButton.border.width = 2;
         }
 
 
@@ -116,7 +114,7 @@ Rectangle {
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
-            authenticationButton.border.width = 2 * scaleFactor;
+            authenticationButton.border.width = 2;
 
             // The user cannot be loaded until it has been notified of the name change
             if (myUser.username.length > 0)
@@ -135,26 +133,26 @@ Rectangle {
             id: contentCol
             anchors {
                 fill: parent
-                margins: 16 * scaleFactor
+                margins: 16
             }
-            spacing: 16 * scaleFactor
+            spacing: 16
 
             Rectangle {
                 id: authenticationButton
                 anchors.horizontalCenter: parent.horizontalCenter
-                height: 64 * scaleFactor
-                width: Math.min(256 * scaleFactor, parent.width)
+                height: 64
+                width: Math.min(256, parent.width)
                 color: enabled ? "darkblue" : "darkgrey"
                 border {
                     color: "lightgrey"
-                    width: 2 * scaleFactor
+                    width: 2
                 }
-                radius: 8 * scaleFactor
+                radius: 8
                 enabled: portal.loadStatus !== Enums.LoadStatusLoaded
 
                 Row {
                     anchors.fill: parent
-                    spacing: 16 * scaleFactor
+                    spacing: 16
 
                     Image {
                         anchors.verticalCenter: parent.verticalCenter
@@ -162,7 +160,7 @@ Rectangle {
                                     "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_account_dark.png" :
                                     "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
                         fillMode: Image.PreserveAspectFit
-                        height: 64 * scaleFactor
+                        height: 64
                         width: height
                     }
 
@@ -178,7 +176,7 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         portal.load();
-                        authenticationButton.border.width = 4 * scaleFactor;
+                        authenticationButton.border.width = 4;
                     }
                 }
             }
@@ -191,14 +189,14 @@ Rectangle {
                 color: enabled ? "darkblue" : "darkgrey"
                 border {
                     color: authenticationButton.border.color
-                    width: 2 * scaleFactor
+                    width: 2
                 }
                 radius: authenticationButton.radius
                 enabled: itemToAdd.loadStatus !== Enums.LoadStatusLoaded && portal.loadStatus === Enums.LoadStatusLoaded
 
                 Row {
                     anchors.fill: parent
-                    spacing: 16 * scaleFactor
+                    spacing: 16
 
                     Image {
                         anchors.verticalCenter: parent.verticalCenter
@@ -207,7 +205,7 @@ Rectangle {
                                     "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_addencircled_dark.png"
 
                         fillMode: Image.PreserveAspectFit
-                        height: 64 * scaleFactor
+                        height: 64
                         width: height
                     }
 
@@ -222,7 +220,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        addItemButton.border.width = 4 * scaleFactor;
+                        addItemButton.border.width = 4;
                         //! [PortalUser addItemWithUrl]
                         var localCSVFile = "qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv";
                         myUser.addPortalItemWithUrl(itemToAdd, localCSVFile, "add_item_sample.csv");
@@ -239,14 +237,14 @@ Rectangle {
                 color: enabled ? "darkblue" : "darkgrey"
                 border {
                     color: authenticationButton.border.color
-                    width: 2 * scaleFactor
+                    width: 2
                 }
                 radius: authenticationButton.radius
                 enabled: itemToAdd.loadStatus === Enums.LoadStatusLoaded
 
                 Row {
                     anchors.fill: parent
-                    spacing: 16 * scaleFactor
+                    spacing: 16
 
                     Image {
                         anchors.verticalCenter: parent.verticalCenter
@@ -255,7 +253,7 @@ Rectangle {
                                     "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
 
                         fillMode: Image.PreserveAspectFit
-                        height: 64 * scaleFactor
+                        height: 64
                         width: height
                     }
 
@@ -270,7 +268,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        deleteItemButton.border.width = 2 * scaleFactor;
+                        deleteItemButton.border.width = 2;
                         myUser.deletePortalItem(itemToAdd);
                     }
                 }
@@ -281,7 +279,7 @@ Rectangle {
                     left: parent.left
                     right: parent.right
                 }
-                height: 4 * scaleFactor
+                height: 4
                 color: "lightgrey"
             }
 
@@ -291,11 +289,11 @@ Rectangle {
                     left: parent.left
                     right: parent.right
                 }
-                height: 100 * scaleFactor
+                height: 100
                 color: "lightsteelblue"
                 border {
                     color: "darkgrey"
-                    width: 4 * scaleFactor
+                    width: 4
                 }
                 radius: 32
                 clip: true
@@ -305,7 +303,7 @@ Rectangle {
                     anchors{
                         top: parent.top
                         horizontalCenter: parent.horizontalCenter
-                        margins: 4 * scaleFactor
+                        margins: 4
                     }
                     color: "white"
                     font.bold: true
@@ -330,7 +328,7 @@ Rectangle {
                         left: parent.left
                         right: parent.right
                         bottom: parent.bottom
-                        margins: 16 * scaleFactor
+                        margins: 16
                     }
                     clip: true
                     model: portalItemModel

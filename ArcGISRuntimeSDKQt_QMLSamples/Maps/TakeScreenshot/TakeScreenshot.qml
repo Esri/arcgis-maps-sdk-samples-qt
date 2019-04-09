@@ -15,18 +15,15 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    height: 600    
 
     // Declare a MapView
     MapView {
@@ -50,7 +47,7 @@ Rectangle {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
-                margins: 10 * scaleFactor
+                margins: 10
             }
             text: "Take screenshot"
             onClicked: {
@@ -83,9 +80,9 @@ Rectangle {
                 anchors {
                     right: parent.right
                     top: parent.top
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
-                width: 28 * scaleFactor
+                width: 28
                 height: width
                 color: "lightgray"
                 radius: 50

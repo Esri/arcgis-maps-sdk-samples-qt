@@ -16,18 +16,15 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import Qt.labs.platform 1.0
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
 
 DynamicWorkspaceRasterSample {
     id: rootRectangle
     clip: true
-    width: 800
-    height: 600
 
-    property real scaleFactor:  (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property var supportedFormats: ["Raster Files (*.img *.tif *.tiff *.I1, *.dt0 *.dt1 *.dt2 *.tc2 *.geotiff *.hr1 *.jpg *.jpeg *.jp2 *.ntf *.png *.i21 *.ovr)"]
 
@@ -42,7 +39,7 @@ DynamicWorkspaceRasterSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         text: "Add Raster"
         onClicked: fileDialog.open();
@@ -52,7 +49,7 @@ DynamicWorkspaceRasterSample {
         id: fileDialog
         nameFilters: supportedFormats
         folder: dataPath
-        onAccepted: startLocalService(fileUrl, folder);
+        onAccepted: startLocalService(file, folder);
     }
 
     onLocalServerInitializationComplete: {

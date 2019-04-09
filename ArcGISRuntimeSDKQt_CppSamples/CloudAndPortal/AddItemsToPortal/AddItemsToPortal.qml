@@ -16,10 +16,9 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 AddItemsToPortalSample {
     id: rootRectangle
@@ -28,8 +27,7 @@ AddItemsToPortalSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
+    
     onPortalItemTitleChanged: portalItemModel.setProperty(0, "value", portalItemTitle);
     onPortalItemIdChanged: portalItemModel.setProperty(1, "value", portalItemId);
     onPortalItemTypeNameChanged: portalItemModel.setProperty(2, "value", portalItemTypeName);
@@ -44,26 +42,26 @@ AddItemsToPortalSample {
         Column {
             anchors {
                 fill: parent
-                margins: 16 * scaleFactor
+                margins: 16
             }
-            spacing: 16 * scaleFactor
+            spacing: 16
 
             Rectangle {
                 id: authenticationButton
                 anchors.horizontalCenter: parent.horizontalCenter
-                height: 64 * scaleFactor
-                width: Math.min(256 * scaleFactor, parent.width)
+                height: 64
+                width: Math.min(256, parent.width)
                 color: enabled ? "darkblue" : "darkgrey"
                 border{
                     color: "lightgrey"
-                    width: 2 * scaleFactor
+                    width: 2
                 }
                 radius: 8
                 enabled: !portalLoaded
 
                 Row {
                     anchors.fill: parent
-                    spacing: 16 * scaleFactor
+                    spacing: 16
 
                     Image {
                         anchors.verticalCenter: parent.verticalCenter
@@ -71,7 +69,7 @@ AddItemsToPortalSample {
                                     "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_account_dark.png" :
                                     "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
                         fillMode: Image.PreserveAspectFit
-                        height: 64 * scaleFactor
+                        height: 64
                         width: height
                     }
 
@@ -87,7 +85,7 @@ AddItemsToPortalSample {
                     anchors.fill: parent
                     onClicked: {
                         authenticatePortal();
-                        authenticationButton.border.width = 4 * scaleFactor;
+                        authenticationButton.border.width = 4;
                     }
                 }
             }
@@ -100,14 +98,14 @@ AddItemsToPortalSample {
                 color: enabled ? "darkblue" : "darkgrey"
                 border{
                     color: authenticationButton.border.color
-                    width: 2 * scaleFactor
+                    width: 2
                 }
                 radius: authenticationButton.radius
                 enabled: !portalItemLoaded && portalLoaded
 
                 Row {
                     anchors.fill: parent
-                    spacing: 16 * scaleFactor
+                    spacing: 16
 
                     Image {
                         anchors.verticalCenter: parent.verticalCenter
@@ -116,7 +114,7 @@ AddItemsToPortalSample {
                                     "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_addencircled_dark.png"
 
                         fillMode: Image.PreserveAspectFit
-                        height: 64 * scaleFactor
+                        height: 64
                         width: height
                     }
 
@@ -131,7 +129,7 @@ AddItemsToPortalSample {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        addItemButton.border.width = 4 * scaleFactor
+                        addItemButton.border.width = 4
                         addItem();
                     }
                 }
@@ -145,14 +143,14 @@ AddItemsToPortalSample {
                 color: enabled ? "darkblue" : "darkgrey"
                 border {
                     color: authenticationButton.border.color
-                    width: 2 * scaleFactor
+                    width: 2
                 }
                 radius: authenticationButton.radius
                 enabled: portalItemLoaded && !itemDeleted
 
                 Row {
                     anchors.fill: parent
-                    spacing: 16 * scaleFactor
+                    spacing: 16
 
                     Image {
                         anchors.verticalCenter: parent.verticalCenter
@@ -161,7 +159,7 @@ AddItemsToPortalSample {
                                     "qrc:/Samples/CloudAndPortal/AddItemsToPortal/ic_menu_checkedcircled_dark.png"
 
                         fillMode: Image.PreserveAspectFit
-                        height: 64 * scaleFactor
+                        height: 64
                         width: height
                     }
 
@@ -176,7 +174,7 @@ AddItemsToPortalSample {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        deleteItemButton.border.width = 2 * scaleFactor
+                        deleteItemButton.border.width = 2
                         deleteItem();
                     }
                 }
@@ -187,7 +185,7 @@ AddItemsToPortalSample {
                     left: parent.left
                     right: parent.right
                 }
-                height: 4 * scaleFactor
+                height: 4
                 color: "lightgrey"
             }
 
@@ -197,11 +195,11 @@ AddItemsToPortalSample {
                     left: parent.left
                     right: parent.right
                 }
-                height: 128 * scaleFactor
+                height: 128
                 color: "lightsteelblue"
                 border {
                     color: "darkgrey"
-                    width: 4 * scaleFactor
+                    width: 4
                 }
                 radius: 32
                 clip: true
@@ -211,7 +209,7 @@ AddItemsToPortalSample {
                     anchors{
                         top: parent.top
                         horizontalCenter: parent.horizontalCenter
-                        margins: 4 * scaleFactor
+                        margins: 4
                     }
                     color: "white"
                     font.bold: true
@@ -236,7 +234,7 @@ AddItemsToPortalSample {
                         left: parent.left
                         right: parent.right
                         bottom: parent.bottom
-                        margins: 16 * scaleFactor
+                        margins: 16
                     }
                     clip: true
                     model: portalItemModel

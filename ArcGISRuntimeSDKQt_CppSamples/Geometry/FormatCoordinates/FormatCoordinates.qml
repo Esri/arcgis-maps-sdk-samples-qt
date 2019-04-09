@@ -15,159 +15,110 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
-FormatCoordinatesSample {
-    id: formatCoordinates
+Item {
     clip: true
-    width: 800
-    height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-    property int labelWidth: 100 * scaleFactor
-    property int coordinateTextWidth: 200 * scaleFactor
-    property int fontPixelSize: 14 * scaleFactor
-    property int textPadding: Qt.platform.os === "android" ? (10 * scaleFactor) : (4 * scaleFactor)
+    property int fontPixelSize: 14
     property string labelSuffix: ":  "
 
-    MapView {
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-            bottom: leftColumnRect.top
-        }
-
-        objectName: "mapView"
+    FormatCoordinatesSample {
+        id: model
+        mapView: view
     }
 
     Rectangle {
-        id: leftColumnRect
+        anchors.fill: parent
 
-        anchors {
-            left: parent.left
-            bottom: parent.bottom
-            right: rightColRect.left
-        }
-        height: 140 * scaleFactor
-        width: labelWidth
+        GridLayout {
+            columns: 2
+            anchors.fill: parent
 
-        Text {
-            id: labelDD
-            anchors {
-                top: parent.top
-                right: parent.right
+            MapView {
+                id: view
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.columnSpan: 2
             }
-            font.pixelSize: fontPixelSize
-            padding: textPadding
-            horizontalAlignment: Text.AlignRight
-            text: strDecimalDegrees + labelSuffix
-        }
 
-        Text {
-            id: labelDMS
-            anchors {
-                top: labelDD.bottom
-                right: parent.right
+            Text {
+                id: labelDD
+                font.pixelSize: fontPixelSize
+                Layout.margins: 5
+                horizontalAlignment: Text.AlignRight
+                text: model.strDecimalDegrees + labelSuffix
             }
-            font.pixelSize: fontPixelSize
-            padding: textPadding
-            horizontalAlignment: Text.AlignRight
-            text: strDegreesMinutesSeconds + labelSuffix
-        }
 
-        Text {
-            id: labelUtm
-            anchors {
-                top: labelDMS.bottom
-                right: parent.right
+            TextField {
+                id: textDD
+                font.pixelSize: fontPixelSize
+                text: model.coordinatesInDD.length === 0 ? "invalid point" : model.coordinatesInDD
+                Layout.fillWidth: true
+                Layout.margins: 5
+                onAccepted: {
+                    model.handleTextUpdate(model.strDecimalDegrees, text);
+                }
             }
-            font.pixelSize: fontPixelSize
-            padding: textPadding
-            horizontalAlignment: Text.AlignRight
-            text: strUtm + labelSuffix
-        }
 
-        Text {
-            id: labelUsng
-            anchors {
-                top: labelUtm.bottom
-                right: parent.right
+            Text {
+                id: labelDMS
+                font.pixelSize: fontPixelSize
+                Layout.margins: 5
+                horizontalAlignment: Text.AlignRight
+                text: model.strDegreesMinutesSeconds + labelSuffix
             }
-            font.pixelSize: fontPixelSize
-            padding: textPadding
-            horizontalAlignment: Text.AlignRight
-            text: strUsng + labelSuffix
-        }
-    }
 
-    Rectangle {
-        id: rightColRect
+            TextField {
+                id: textDMS
+                font.pixelSize: fontPixelSize
+                Layout.margins: 5
+                text: model.coordinatesInDMS.length === 0 ? "invalid point" : model.coordinatesInDMS
+                Layout.fillWidth: true
+                onAccepted: {
+                    model.handleTextUpdate(model.strDegreesMinutesSeconds, text);
+                }
+            }
 
-        anchors {
-            top: leftColumnRect.top
-            left: leftColumnRect.right
-            bottom: parent.bottom
-            right: parent.right
-        }
-        height: leftColumnRect.height
-        width: coordinateTextWidth + (10 * scaleFactor)
+            Text {
+                id: labelUtm
+                font.pixelSize: fontPixelSize
+                Layout.margins: 5
+                horizontalAlignment: Text.AlignRight
+                text: model.strUtm + labelSuffix
+            }
 
-        TextField {
-            id: textDD
-            anchors {
-                top: parent.top
-                left: parent.left
+            TextField {
+                id: textUtm
+                font.pixelSize: fontPixelSize
+                text: model.coordinatesInUtm.length === 0 ? "invalid point" : model.coordinatesInUtm
+                Layout.fillWidth: true
+                Layout.margins: 5
+                onAccepted: {
+                    model.handleTextUpdate(model.strUtm, text);
+                }
             }
-            width: coordinateTextWidth
-            font.pixelSize: fontPixelSize
-            text: coordinatesInDD.length === 0 ? "invalid point" : coordinatesInDD
-            onAccepted: {
-                handleTextUpdate(strDecimalDegrees, text);
-            }
-        }
 
-        TextField {
-            id: textDMS
-            anchors {
-                top: textDD.bottom
-                left: parent.left
+            Text {
+                id: labelUsng
+                font.pixelSize: fontPixelSize
+                Layout.margins: 5
+                horizontalAlignment: Text.AlignRight
+                text: model.strUsng + labelSuffix
             }
-            width: coordinateTextWidth
-            font.pixelSize: fontPixelSize
-            text: coordinatesInDMS.length === 0 ? "invalid point" : coordinatesInDMS
-            onAccepted: {
-                handleTextUpdate(strDegreesMinutesSeconds, text);
-            }
-        }
 
-        TextField {
-            id: textUtm
-            anchors {
-                top: textDMS.bottom
-                left: parent.left
-            }
-            width: coordinateTextWidth
-            font.pixelSize: fontPixelSize
-            text: coordinatesInUtm.length === 0 ? "invalid point" : coordinatesInUtm
-            onAccepted: {
-                handleTextUpdate(strUtm, text);
-            }
-        }
-
-        TextField {
-            id: textUsng
-            anchors {
-                top: textUtm.bottom
-                left: parent.left
-            }
-            width: coordinateTextWidth
-            font.pixelSize: fontPixelSize
-            text: coordinatesInUsng.length === 0 ? "invalid point" : coordinatesInUsng
-            onAccepted: {
-                handleTextUpdate(strUsng, text);
+            TextField {
+                id: textUsng
+                font.pixelSize: fontPixelSize
+                text: model.coordinatesInUsng.length === 0 ? "invalid point" : model.coordinatesInUsng
+                Layout.fillWidth: true
+                Layout.margins: 5
+                onAccepted: {
+                    model.handleTextUpdate(model.strUsng, text);
+                }
             }
         }
     }

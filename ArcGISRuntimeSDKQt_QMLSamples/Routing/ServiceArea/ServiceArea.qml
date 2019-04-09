@@ -15,19 +15,15 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 800
 
-    property double scaleFactor: System.displayScaleFactor
     property bool busy: false
     property string message: ""
     property var barrierBuilder: null
@@ -110,12 +106,12 @@ Rectangle {
 
         Rectangle {
             anchors.centerIn: solveRow
-            radius: 8 * scaleFactor
-            height: solveRow.height + (16 * scaleFactor)
-            width: solveRow.width + (16 * scaleFactor)
+            radius: 8
+            height: solveRow.height + (16)
+            width: solveRow.width + (16)
             color: "lightgrey"
             border.color: "darkgrey"
-            border.width: 2 * scaleFactor
+            border.width: 2
             opacity: 0.75
         }
 
@@ -124,10 +120,10 @@ Rectangle {
             anchors {
                 bottom: mapView.attributionTop
                 horizontalCenter: parent.horizontalCenter
-                margins: 15 * scaleFactor
+                margins: 15
             }
 
-            spacing: 8 * scaleFactor
+            spacing: 8
 
             Button {
                 id: serviceAreasButton
@@ -199,12 +195,12 @@ Rectangle {
 
     Rectangle {
         anchors.centerIn: editRow
-        radius: 8 * scaleFactor
-        height: editRow.height + (16 * scaleFactor)
-        width: editRow.width + (16 * scaleFactor)
+        radius: 8
+        height: editRow.height + (16)
+        width: editRow.width + (16)
         color: "lightgrey"
         border.color: "darkgrey"
-        border.width: 2 * scaleFactor
+        border.width: 2
         opacity: 0.75
     }
 
@@ -213,13 +209,14 @@ Rectangle {
         anchors {
             top: parent.top
             left: parent.left
-            margins: 24 * scaleFactor
+            margins: 24
         }
-        spacing: 8 * scaleFactor
+        spacing: 8
 
         ComboBox {
             id: modeComboBox
-            width: 100 * scaleFactor
+            property int modelWidth: 0
+            width: modelWidth + leftPadding + rightPadding + indicator.width
             model: ["Facility", "Barrier"]
 
             onCurrentTextChanged: {
@@ -228,6 +225,17 @@ Rectangle {
 
                 if (barrierBuilder === null)
                     createBarrierBuilder();
+            }
+
+            Component.onCompleted : {
+                for (var i = 0; i < model.length; ++i) {
+                    metrics.text = model[i];
+                    modelWidth = Math.max(modelWidth, metrics.width);
+                }
+            }
+            TextMetrics {
+                id: metrics
+                font: modeComboBox.font
             }
         }
 
@@ -250,12 +258,18 @@ Rectangle {
         running: busy
     }
 
-    MessageDialog {
-        id: messageDialog
+    Dialog {
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Route Error"
-        text: message
         visible: text.length > 0
-        onAccepted: { message = ""; }
+        property alias text : textLabel.text
+        Text {
+            id: textLabel
+            text: message
+        }
     }
 
     function setupRouting() {

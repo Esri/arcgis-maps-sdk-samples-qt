@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/AddIntegratedMeshLayer">
+        <file alias="sample.json">AddIntegratedMeshLayer.json</file>        
+        <file>AddIntegratedMeshLayer.qml</file>
+        <file>AddIntegratedMeshLayer.h</file>
+        <file>AddIntegratedMeshLayer.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

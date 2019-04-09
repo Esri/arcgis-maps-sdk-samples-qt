@@ -15,9 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Dialogs 1.2
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
@@ -25,8 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property FeatureLayer alaskaNationalParks: null
-    property real scaleFactor: System.displayScaleFactor
+    property FeatureLayer alaskaNationalParks: null    
 
     MapView {
         id: mapView
@@ -37,7 +35,7 @@ Rectangle {
         }
 
         // bind the insets to the attribute view so the attribution text shows when the view expands
-        viewInsets.bottom: attributeView.height / scaleFactor
+        viewInsets.bottom: attributeView.height
 
         Map {
             id: map
@@ -131,7 +129,7 @@ Rectangle {
                         }
 
                         // show the attribute view
-                        attributeView.height = 200 * scaleFactor
+                        attributeView.height = 200
                     });
 
                     // zoom to the feature
@@ -164,12 +162,12 @@ Rectangle {
         ListView {
             anchors {
                 fill: parent
-                margins: 5 * scaleFactor
+                margins: 5
             }
 
             clip: true
             model: relatedFeaturesModel
-            spacing: 5 * scaleFactor
+            spacing: 5
 
             // Create delegate to display the attributes
             delegate: Rectangle {
@@ -180,9 +178,9 @@ Rectangle {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.margins: 10
-                                     * scaleFactor
+                                    
                     text: displayFieldValue
-                    font.pixelSize: 12 * scaleFactor
+                    font.pixelSize: 12
                 }
             }
 
@@ -201,7 +199,7 @@ Rectangle {
                         text: section
                         font {
                             bold: true
-                            pixelSize: 13 * scaleFactor
+                            pixelSize: 13
                         }
                     }
                 }
@@ -213,7 +211,16 @@ Rectangle {
         id: relatedFeaturesModel
     }
 
-    MessageDialog {
+    Dialog {
         id: msgDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
+        property alias text : textLabel.text
+        Text {
+            id: textLabel
+            text: "Executing geoprocessing failed."
+        }
     }
 }

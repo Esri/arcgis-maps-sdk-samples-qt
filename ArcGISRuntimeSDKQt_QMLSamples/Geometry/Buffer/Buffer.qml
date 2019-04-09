@@ -15,9 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: rootRectangle
@@ -25,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    
 
     // declare a map view
     MapView {
@@ -132,14 +131,14 @@ Rectangle {
     // display a control pane to change size
     Rectangle {
         anchors {
-            margins: -5 * scaleFactor
+            margins: -5
             fill: controlColumn
         }
         color: "lightgray"
-        radius: 5 * scaleFactor
+        radius: 5
         border {
             color: "darkgray"
-            width: 1 * scaleFactor
+            width: 1
         }
     }
 
@@ -148,9 +147,9 @@ Rectangle {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Text {
             text: "Buffer size (miles):"
@@ -163,11 +162,11 @@ Rectangle {
         }
 
         Row {
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             Rectangle {
-                radius: 100 * scaleFactor
-                width: 15 * scaleFactor
+                radius: 100
+                width: 15
                 height: width
                 color: planarBufferSymbol.color
             }
@@ -178,11 +177,11 @@ Rectangle {
         }
 
         Row {
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             Rectangle {
-                radius: 100 * scaleFactor
-                width: 15 * scaleFactor
+                radius: 100
+                width: 15
                 height: width
                 color: geodesicBufferSymbol.color
             }

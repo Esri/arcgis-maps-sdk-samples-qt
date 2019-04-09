@@ -34,9 +34,9 @@ class FeatureLayer_GeoPackage : public QQuickItem
 
 public:
   explicit FeatureLayer_GeoPackage(QQuickItem* parent = nullptr);
-  ~FeatureLayer_GeoPackage() = default;
+  ~FeatureLayer_GeoPackage() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

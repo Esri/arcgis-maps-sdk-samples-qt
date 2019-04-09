@@ -15,15 +15,12 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     width: 800
-    height: 600
-
-    property real scaleFactor: System.displayScaleFactor
+    height: 600    
 
     // Create the MapView
     MapView {
@@ -54,12 +51,12 @@ Rectangle {
     Rectangle {
         id: layerVisibilityRect
         anchors {
-            margins: 10 * scaleFactor
+            margins: 10
             left: parent.left
             top: parent.top
         }
-        height: 150 * scaleFactor
-        width: 150 * scaleFactor
+        height: 150
+        width: 150
         color: "transparent"
 
         MouseArea {
@@ -84,9 +81,8 @@ Rectangle {
             Column {
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
-                clip: true
 
                 Text {
                     width: parent.width
@@ -94,7 +90,7 @@ Rectangle {
                     wrapMode: Text.WordWrap
                     clip: true
                     font {
-                        pixelSize: 14 * scaleFactor
+                        pointSize: 14
                         bold: true
                     }
                 }
@@ -102,7 +98,7 @@ Rectangle {
                 // Create a list view to display the items
                 ListView {
                     id: layerVisibilityListView
-                    anchors.margins: 10 * scaleFactor
+                    anchors.margins: 10
                     width: parent.width
                     height: parent.height
                     clip: true
@@ -114,19 +110,20 @@ Rectangle {
                     delegate: Item {
                         id: layerVisibilityDelegate
                         width: parent.width
-                        height: 35 * scaleFactor
+                        height: 35
 
                         Row {
                             spacing: 5
-                            anchors.verticalCenter: parent.verticalCenter
                             Text {
-                                width: 75 * scaleFactor
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: 75
                                 text: name
                                 wrapMode: Text.WordWrap
-                                font.pixelSize: 14 * scaleFactor
+                                font.pointSize: 14
                             }
 
                             Switch {
+                                anchors.verticalCenter: parent.verticalCenter
                                 checked: sublayerVisible
 
                                 onCheckedChanged: {

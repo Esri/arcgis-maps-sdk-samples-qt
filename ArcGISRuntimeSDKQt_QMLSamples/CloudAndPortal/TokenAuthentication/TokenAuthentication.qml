@@ -15,10 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 Rectangle {
     id: rootRectangle
@@ -26,7 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    
 
     MapView {
         id: mapView
@@ -53,13 +52,13 @@ Rectangle {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: mapView.attributionTop
-                margins: 10 * scaleFactor
+                margins: 10
             }
-            spacing: 10 * scaleFactor
+            spacing: 10
 
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: 14 * scaleFactor
+                font.pixelSize: 14
                 text: "username/password: user1/user1"
             }
 

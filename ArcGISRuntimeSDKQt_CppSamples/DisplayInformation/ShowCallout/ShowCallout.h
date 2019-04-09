@@ -38,9 +38,9 @@ class ShowCallout : public QQuickItem
 
 public:
   explicit ShowCallout(QQuickItem* parent = nullptr);
-  ~ShowCallout();
+  ~ShowCallout() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:

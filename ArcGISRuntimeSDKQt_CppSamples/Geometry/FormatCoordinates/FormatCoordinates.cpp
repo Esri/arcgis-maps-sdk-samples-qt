@@ -26,9 +26,24 @@
 
 using namespace Esri::ArcGISRuntime;
 
-FormatCoordinates::FormatCoordinates(QQuickItem* parent) :
-  QQuickItem(parent)
+namespace
 {
+  // Initial point marker 'X' symbol appears.
+  const Point startPoint(-117.195723, 34.056195, SpatialReference::wgs84());
+}
+
+FormatCoordinates::FormatCoordinates(QObject* parent) :
+  QObject(parent),
+  m_map(new Map(Basemap::imagery(this), this)),
+  m_graphicsOverlay(new GraphicsOverlay(this))
+{
+  // create a graphic
+  SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 15.0, this);
+
+  Graphic* graphic = new Graphic(startPoint, symbol, this);
+
+  // and add insert the graphic
+  m_graphicsOverlay->graphics()->append(graphic);
 }
 
 FormatCoordinates::~FormatCoordinates() = default;
@@ -39,57 +54,11 @@ void FormatCoordinates::init()
   qmlRegisterType<FormatCoordinates>("Esri.Samples", 1, 0, "FormatCoordinatesSample");
 }
 
-void FormatCoordinates::componentComplete()
-{
-  QQuickItem::componentComplete();
-
-  // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
-
-  // create a new basemap instance
-  Basemap* basemap = Basemap::imagery(this);
-
-  // create a new map instance
-  m_map = new Map(basemap, this);
-
-  // create a graphic
-  Point geometry(m_startLongitude, m_startLatitude, SpatialReference::wgs84());
-  SimpleMarkerSymbol* symbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 15.0, this);
-  Graphic* graphic = new Graphic(geometry, symbol, this);
-
-  // create a new graphics overlay instance
-  // and add insert the graphic
-  GraphicsOverlay* go = new GraphicsOverlay(this);
-  go->graphics()->append(graphic);
-
-  // set map and graphics overlay on the map view
-  m_mapView->setMap(m_map);
-  m_mapView->graphicsOverlays()->append(go);
-
-  connectSignals();
-
-  // Set initial position to Building Q
-  handleTextUpdate(strDecimalDegrees(), m_startLatLong);
-}
-
-void FormatCoordinates::connectSignals()
-{
-  // connect to the mouse clicked signal on the MapQuickView
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
-  {
-    // get the point from the mouse point
-    Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-
-    // using the point, refresh the graphic and the text
-    handleLocationUpdate(mapPoint);
-  });
-}
-
 // handle case where the user changed one of the text fields
 void FormatCoordinates::handleTextUpdate(QString textType, QString text)
 {
   Point point = createPointFromText(textType, text);
-  handleLocationUpdate(point);
+  handleLocationUpdate(std::move(point));
 }
 
 // handle case where user clicked on the map
@@ -102,7 +71,7 @@ void FormatCoordinates::handleLocationUpdate(Point point)
   }
 }
 
-Point FormatCoordinates::createPointFromText(QString textType, QString text)
+Point FormatCoordinates::createPointFromText(const QString& textType, const QString& text) const
 {
   //! [FormatCoordinates CoordinateFormatter various text to point]
   if (strDecimalDegrees() == textType
@@ -121,21 +90,22 @@ Point FormatCoordinates::createPointFromText(QString textType, QString text)
 
 void FormatCoordinates::setTextFromPoint(Point point)
 {
-  m_coordinatesInDD = CoordinateFormatter::toLatitudeLongitude(point, LatitudeLongitudeFormat::DecimalDegrees, 6); // last parm = decimal places
-  emit coordinatesInDDChanged();
+  // last parm = decimal places
+  m_coordinatesInDD = CoordinateFormatter::toLatitudeLongitude(point, LatitudeLongitudeFormat::DecimalDegrees, 6);
 
-  m_coordinatesInDMS = CoordinateFormatter::toLatitudeLongitude(point, LatitudeLongitudeFormat::DegreesMinutesSeconds, 1); // last parm = decimal places
-  emit coordinatesInDMSChanged();
+  // last parm = decimal places
+  m_coordinatesInDMS = CoordinateFormatter::toLatitudeLongitude(point, LatitudeLongitudeFormat::DegreesMinutesSeconds, 1);
 
   //! [FormatCoordinates CoordinateFormatter point to USNG]
   int decimalPlaces = 5;
   bool addSpaces = true;
   m_coordinatesInUsng = CoordinateFormatter::toUsng(point, decimalPlaces, addSpaces);
-  emit coordinatesInUsngChanged();
   //! [FormatCoordinates CoordinateFormatter point to USNG]
 
-  m_coordinatesInUtm = CoordinateFormatter::toUtm(point, UtmConversionMode::LatitudeBandIndicators, true); // last parm = add spaces
-  emit coordinatesInUtmChanged();
+  // last parm = add spaces
+  m_coordinatesInUtm = CoordinateFormatter::toUtm(point, UtmConversionMode::LatitudeBandIndicators, true);
+
+  emit coordinatesChanged();
 }
 
 QString FormatCoordinates::coordinatesInDD() const
@@ -176,4 +146,37 @@ QString FormatCoordinates::strUsng() const
 QString FormatCoordinates::strUtm() const
 {
   return tr("Utm");
+}
+
+void FormatCoordinates::setMapView(MapQuickView* mapView)
+{
+  if (m_mapView)
+  {
+    m_mapView->setMap(nullptr); // Remove map from old mapView.
+    m_mapView->graphicsOverlays()->clear(); // Remove Graphics overlays from old mapView.
+  }
+
+  m_mapView = mapView;
+
+  if (!m_mapView)
+  {
+    return;
+  }
+
+  // set map and graphics overlay on the map view
+  m_mapView->setMap(m_map);
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
+
+  // connect to the mouse clicked signal on the MapQuickView
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+  {
+    // get the point from the mouse point
+    Point mapPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+
+    // using the point, refresh the graphic and the text
+    handleLocationUpdate(std::move(mapPoint));
+  },
+  Qt::UniqueConnection);
+
+  handleLocationUpdate(startPoint);
 }

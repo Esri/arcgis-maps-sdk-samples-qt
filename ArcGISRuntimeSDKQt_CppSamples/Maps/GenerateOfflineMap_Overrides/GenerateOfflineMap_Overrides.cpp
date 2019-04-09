@@ -233,9 +233,9 @@ void GenerateOfflineMap_Overrides::setHydrantWhereClause(const QString& whereCla
 
   // Set the whereClause on the required layer option.
   QList<GenerateLayerOption> layerOptions = generateGdbParam.layerOptions();
-  for (auto it = layerOptions.begin(); it != layerOptions.end(); ++it)
+  for (auto& it : layerOptions)
   {
-    GenerateLayerOption& option = *it;
+    GenerateLayerOption& option = it;
     if (option.layerId() == targetLayerId)
     {
       option.setWhereClause(whereClause);
@@ -287,9 +287,9 @@ void GenerateOfflineMap_Overrides::setClipWaterPipesAOI(bool clip)
   // Set whether to use the geometry filter to clip the waterpipes.
   // If not then we get all the features.
   QList<GenerateLayerOption> layerOptions = generateGdbParam.layerOptions();
-  for (auto it = layerOptions.begin(); it != layerOptions.end(); ++it)
+  for (auto& it : layerOptions)
   {
-    GenerateLayerOption& option = *it;
+    GenerateLayerOption& option = it;
     if (option.layerId() == targetLayerId)
     {
       option.setUseGeometry(clip);
@@ -386,7 +386,7 @@ AuthenticationManager* GenerateOfflineMap_Overrides::authenticationManager() con
 
 bool GenerateOfflineMap_Overrides::overridesReady() const
 {
-  return m_parameterOverrides != nullptr;
+  return m_parameterOverrides;
 }
 
 

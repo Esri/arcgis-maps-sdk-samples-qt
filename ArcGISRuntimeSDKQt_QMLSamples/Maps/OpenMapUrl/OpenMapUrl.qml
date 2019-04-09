@@ -16,15 +16,12 @@
 
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     width: 800
     height: 600
-
-    property real scaleFactor: System.displayScaleFactor
-
+    
     // Create a MapView
     MapView {
         id: mapView
@@ -48,19 +45,19 @@ Rectangle {
         id: webmapsDelegate
         Item {
             width: parent.width
-            height: 65 * scaleFactor
+            height: 65
 
             Row {
                 spacing: 10
                 Image {
                     source: imageUrl
-                    width: 100 * scaleFactor
-                    height: 65 * scaleFactor
+                    width: 100
+                    height: 65
                 }
                 Row {
                     anchors.verticalCenter: parent.verticalCenter
                     Text {
-                        width: 100 * scaleFactor
+                        width: 100
                         text: itemTitle
                         wrapMode: Text.WordWrap
                     }
@@ -111,8 +108,8 @@ Rectangle {
 
         Rectangle {
             anchors.centerIn: parent
-            width: 250 * scaleFactor
-            height: 200 * scaleFactor
+            width: 250
+            height: 200
             color: "lightgrey"
             opacity: .8
             radius: 5
@@ -126,7 +123,7 @@ Rectangle {
                 id: webmapsListView
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 // Assign the model to the list model of webmaps
                 model: webmapListModel
@@ -149,22 +146,22 @@ Rectangle {
         anchors {
             right: parent.right
             bottom: parent.bottom
-            rightMargin: 20 * scaleFactor
-            bottomMargin: 40 * scaleFactor
+            rightMargin: 20
+            bottomMargin: 40
         }
 
-        width: 45 * scaleFactor
+        width: 45
         height: width
         color: pressed ? "#959595" : "#D6D6D6"
         radius: 100
         border {
             color: "#585858"
-            width: 1 * scaleFactor
+            width: 1
         }
 
         Image {
             anchors.centerIn: parent
-            width: 35 * scaleFactor
+            width: 35
             height: width
             source: "qrc:/Samples/Maps/OpenMapUrl/SwitchMap.png"
         }

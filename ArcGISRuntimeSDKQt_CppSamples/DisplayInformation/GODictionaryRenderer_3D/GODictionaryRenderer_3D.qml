@@ -15,8 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.ArcGISExtras 1.1
 import Esri.Samples 1.0
@@ -26,7 +26,7 @@ GODictionaryRenderer_3DSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     onGraphicsLoaded: progressBar_loading.visible = false;
@@ -42,14 +42,29 @@ GODictionaryRenderer_3DSample {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            margins: 5 * scaleFactor
+            margins: 5
         }
         indeterminate: true
     }
 
-    MessageDialog {
+    Dialog {
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         visible: text.length > 0
-        text: errorMessage
-        informativeText: "Please consult the README.md"
+        property alias text : textLabel.text
+        property alias informativeText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: errorMessage
+            }
+            Text {
+                id: detailsLabel
+                text: "Please consult the README.md"
+            }
+        }
+        onAccepted: errorAccepted()
     }
 }

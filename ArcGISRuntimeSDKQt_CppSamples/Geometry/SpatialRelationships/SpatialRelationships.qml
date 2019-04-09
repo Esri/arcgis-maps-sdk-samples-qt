@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.3
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 SpatialRelationshipsSample {
@@ -25,7 +25,7 @@ SpatialRelationshipsSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
@@ -36,14 +36,14 @@ SpatialRelationshipsSample {
     Rectangle {
         anchors {
             fill: relationshipColumn
-            margins: -10 * scaleFactor
+            margins: -10
         }
         opacity: 0.85
-        radius: 5 * scaleFactor
+        radius: 5
         color: "#e2e2e2"
         border {
             color: "darkgray"
-            width: 1 * scaleFactor
+            width: 1
         }
     }
 
@@ -52,14 +52,14 @@ SpatialRelationshipsSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 15 * scaleFactor
+            margins: 15
         }
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Text {
             text: "Relationships:"
             font {
-                pixelSize: 16 * scaleFactor
+                pixelSize: 16
                 bold: true
                 family: "helvetica"
             }

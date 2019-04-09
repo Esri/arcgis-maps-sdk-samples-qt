@@ -12,7 +12,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 
 Rectangle {
     color: "#F4F4F4"
@@ -27,18 +27,18 @@ Rectangle {
         Rectangle {
             id: titleBar
             width: parent.width
-            height: 40 * scaleFactor
+            height: 40
             color: "#005e95"
             clip: true
 
             Item {
                 anchors {
                     left: parent.left
-                    margins: 10 * scaleFactor
+                    margins: 10
                     verticalCenter: parent.verticalCenter
                 }
-                height: 30 * scaleFactor
-                width: 100 * scaleFactor
+                height: 30
+                width: 100
 
                 MouseArea {
                     anchors.fill: parent
@@ -54,7 +54,7 @@ Rectangle {
                     text: "< Options"
                     color: "white"
                     font {
-                        pixelSize: 18 * scaleFactor
+                        pixelSize: 18
                         bold: true
                     }
                 }
@@ -63,11 +63,11 @@ Rectangle {
             Text {
                 anchors {
                     centerIn: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 text: "Results"
                 color: "white"
-                font.pixelSize: 28 * scaleFactor
+                font.pixelSize: 28
             }
         }
 
@@ -79,7 +79,7 @@ Rectangle {
                 id: resultView
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 model: statisticResult
                 clip: true
@@ -88,26 +88,26 @@ Rectangle {
                     property: "section"
                     delegate: Rectangle {
                         width: resultView.width
-                        height: 25 * scaleFactor
+                        height: 25
                         color: "lightsteelblue"
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             text: section
                             font.bold: true
-                            font.pixelSize: 12 * scaleFactor
+                            font.pixelSize: 12
                         }
                     }
                 }
 
                 delegate: Item {
                     width: parent.width
-                    height: 25 * scaleFactor
+                    height: 25
 
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         text: statistic
-                        font.pixelSize: 12 * scaleFactor
+                        font.pixelSize: 12
                     }
                 }
             }

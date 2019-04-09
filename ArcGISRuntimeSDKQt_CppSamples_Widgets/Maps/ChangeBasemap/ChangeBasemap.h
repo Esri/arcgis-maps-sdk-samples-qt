@@ -34,7 +34,7 @@ class ChangeBasemap : public QWidget
 
 public:
   explicit ChangeBasemap(QWidget* parent = nullptr);
-  ~ChangeBasemap();
+  ~ChangeBasemap() override;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

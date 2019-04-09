@@ -15,17 +15,15 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
 
 //! [Rectangle-mapview-map-viewpoint]
 Rectangle {
     width: 800
     height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    
 
     // Map view UI presentation at top
     MapView {
@@ -68,8 +66,8 @@ Rectangle {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            margins: 5 * scaleFactor
-            bottomMargin: 25 * scaleFactor
+            margins: 5
+            bottomMargin: 25
         }
         spacing: 5
 

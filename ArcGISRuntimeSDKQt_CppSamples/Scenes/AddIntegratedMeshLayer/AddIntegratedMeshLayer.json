@@ -1,0 +1,8 @@
+{
+    "source" :  "AddIntegratedMeshLayer.qml",
+    "otherSourceFiles" :  [
+        "AddIntegratedMeshLayer.h",
+        "AddIntegratedMeshLayer.cpp"
+    ],
+    "name" : "Add an integrated mesh layer"
+}

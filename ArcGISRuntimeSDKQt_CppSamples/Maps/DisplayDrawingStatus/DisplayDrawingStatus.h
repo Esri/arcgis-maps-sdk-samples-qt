@@ -37,9 +37,9 @@ class DisplayDrawingStatus : public QQuickItem
 
 public:
   explicit DisplayDrawingStatus(QQuickItem* parent = nullptr);
-  ~DisplayDrawingStatus();
+  ~DisplayDrawingStatus() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:

@@ -23,11 +23,11 @@ Item {
 
     Rectangle {
         anchors.fill: messageContents
-        radius: 4 * scaleFactor
+        radius: 4
 
         border {
             color: "darkgray"
-            width: 1 * scaleFactor
+            width: 1
         }
 
         MouseArea {
@@ -38,9 +38,9 @@ Item {
 
     Row {
         id: messageContents
-        leftPadding: 5 * scaleFactor
+        leftPadding: 5
         rightPadding: leftPadding
-        spacing: 5 * scaleFactor
+        spacing: 5
         anchors {
             horizontalCenter: messageButton.horizontalCenter
             bottom: messageButton.bottom
@@ -49,10 +49,10 @@ Item {
         Image {
             anchors.verticalCenter: parent.verticalCenter
             id: messageImage
-            width: 32 * scaleFactor
-            height: 32 * scaleFactor
+            width: 32
+            height: 32
             source: "qrc:/Samples/Layers/DisplayKmlNetworkLinks/iOS8_TabBar_Email90.png"
-            anchors.margins: 5 * scaleFactor
+            anchors.margins: 5
 
             SequentialAnimation on opacity {
                 running: messageContents.visible
@@ -67,13 +67,12 @@ Item {
             id: messageText
             anchors {
                 verticalCenter: messageImage.verticalCenter
-                margins: 5 * scaleFactor
+                margins: 5
             }
 
             text: "Message Received"
             color: "#2f2f2f"
-            font.pixelSize: 13 * scaleFactor
-            renderType: Text.NativeRendering
+            font.pixelSize: 13
         }
     }
 }

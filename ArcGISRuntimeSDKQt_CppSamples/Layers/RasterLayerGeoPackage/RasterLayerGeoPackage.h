@@ -34,9 +34,9 @@ class RasterLayerGeoPackage : public QQuickItem
 
 public:
   explicit RasterLayerGeoPackage(QQuickItem* parent = nullptr);
-  ~RasterLayerGeoPackage() = default;
+  ~RasterLayerGeoPackage() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

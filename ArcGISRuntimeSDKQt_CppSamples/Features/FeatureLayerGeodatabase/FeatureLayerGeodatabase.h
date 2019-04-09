@@ -39,9 +39,9 @@ class FeatureLayerGeodatabase : public QQuickItem
 
 public:
   explicit FeatureLayerGeodatabase(QQuickItem* parent = nullptr);
-  ~FeatureLayerGeodatabase();
+  ~FeatureLayerGeodatabase() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:

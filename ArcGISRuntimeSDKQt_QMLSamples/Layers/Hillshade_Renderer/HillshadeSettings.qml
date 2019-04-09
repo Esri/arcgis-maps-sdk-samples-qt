@@ -16,8 +16,9 @@
 
 import QtQuick 2.5
 import QtGraphicalEffects 1.0
-import QtQuick.Controls 1.2
-import Esri.ArcGISRuntime 100.4
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
+import Esri.ArcGISRuntime 100.5
 
 Rectangle {
     id: root
@@ -41,8 +42,8 @@ Rectangle {
 
     Rectangle {
         anchors.centerIn: parent
-        width: 225 * scaleFactor
-        height: 185 * scaleFactor
+        width: childrenRect.width
+        height: childrenRect.height
         color: "lightgrey"
         radius: 5
         border {
@@ -50,69 +51,74 @@ Rectangle {
             width: 1
         }
 
-        Column {
-            anchors {
-                fill: parent
-                margins: 10 * scaleFactor
-            }
-            spacing: 15 * scaleFactor
+        GridLayout {
+            columns: 2
 
             Text {
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.margins: 5
+                Layout.columnSpan: 2
+                Layout.alignment: Qt.AlignHCenter
                 text: "Hillshade Renderer Settings"
                 font.weight: Font.DemiBold
             }
 
-            Row {
-                spacing: 5 * scaleFactor
+            Text {
+                Layout.margins: 5
+                text: "Altitude"
+            }
 
-                Text {
-                    width: 75 * scaleFactor
-                    text: "Altitude"
+            Slider {
+
+                id: altitudeSlider
+                Layout.margins: 5
+                from: 0
+                to: 90
+            }
+
+            Text {
+                Layout.margins: 5
+                text: "Azimuth"
+            }
+
+            Slider {
+                id: azimuthSlider
+                Layout.margins: 5
+                from: 0
+                to: 360
+            }
+
+            Text {
+                Layout.margins: 5
+                text: "Slope"
+            }
+
+            ComboBox {
+                id: slopeBox
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.margins: 5
+                Layout.fillWidth: true
+                model: HillshadeSlopeTypeModel{}
+                textRole: "name"
+
+
+                Component.onCompleted : {
+                    for (var i = 0; i < model.count; ++i) {
+                        metrics.text = model.get(i).name;
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
                 }
-
-                Slider {
-                    id: altitudeSlider
-                    width: 125 * scaleFactor
-                    minimumValue: 0
-                    maximumValue: 90
+                TextMetrics {
+                    id: metrics
+                    font: slopeBox.font
                 }
             }
 
-            Row {
-                spacing: 5 * scaleFactor
-
-                Text {
-                    width: 75 * scaleFactor
-                    text: "Azimuth"
-                }
-
-                Slider {
-                    id: azimuthSlider
-                    width: 125 * scaleFactor
-                    minimumValue: 0
-                    maximumValue: 360
-                }
-            }
-
-            Row {
-                spacing: 5 * scaleFactor
-
-                Text {
-                    width: 75 * scaleFactor
-                    text: "Slope"
-                }
-
-                ComboBox {
-                    id: slopeBox
-                    width: 125 * scaleFactor
-                    model: HillshadeSlopeTypeModel{}
-                    textRole: "name"
-                }
-            }
 
             Button {
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.margins: 5
+                Layout.columnSpan: 2
+                Layout.alignment: Qt.AlignHCenter
                 text: "Apply"
                 onClicked: {
                     var altitude = altitudeSlider.value;

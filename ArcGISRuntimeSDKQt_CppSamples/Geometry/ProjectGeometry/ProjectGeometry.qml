@@ -16,9 +16,9 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.3
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.4
+import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 ProjectGeometrySample {
     id: rootRectangle
@@ -26,7 +26,7 @@ ProjectGeometrySample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     // add a mapView component
     MapView {
@@ -40,7 +40,7 @@ ProjectGeometrySample {
             calloutData: rootRectangle.calloutData
             accessoryButtonHidden: true
             autoAdjustWidth: true
-            maxWidth: 350 * scaleFactor
+            maxWidth: 350
             leaderPosition: leaderPositionEnum.Automatic
         }
     }

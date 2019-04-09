@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -25,7 +25,7 @@ FeatureLayerExtrusionSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     SceneView {
         id: sceneView
@@ -35,12 +35,16 @@ FeatureLayerExtrusionSample {
 
         // combo box to update the extrusion
         ComboBox {
+            id: popCombo
             anchors {
                 top: parent.top
                 left: parent.left
-                margins: 10 * scaleFactor
+                margins: 10
             }
-            width: 200 * scaleFactor
+
+            property int modelWidth: 0
+            width: modelWidth + leftPadding + rightPadding + indicator.width
+
             model: ["TOTAL POPULATION", "POPULATION DENSITY"]
 
             onCurrentTextChanged: {
@@ -48,6 +52,17 @@ FeatureLayerExtrusionSample {
                     totalPopulation();
                 else
                     popDensity();
+            }
+
+            Component.onCompleted : {
+                for (var i = 0; i < model.length; ++i) {
+                    metrics.text = model[i];
+                    modelWidth = Math.max(modelWidth, metrics.width);
+                }
+            }
+            TextMetrics {
+                id: metrics
+                font: popCombo.font
             }
         }
     }

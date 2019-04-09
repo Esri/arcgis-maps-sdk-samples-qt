@@ -38,11 +38,11 @@ class Buffer : public QQuickItem
 
 public:
   explicit Buffer(QQuickItem* parent = nullptr);
-  ~Buffer() = default;
+  ~Buffer() override = default;
 
   Q_PROPERTY(int bufferSize READ bufferSize WRITE setBufferSize NOTIFY bufferSizeChanged)
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void clear();
 

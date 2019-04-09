@@ -36,6 +36,8 @@
 #include "SimpleRenderer.h"
 #include "SpatialReference.h"
 
+#include "MissionData.h"
+
 #include <QDir>
 #include <QFileInfo>
 #include <QStringListModel>
@@ -57,7 +59,6 @@ Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
                                        this)),
   m_missionData(new MissionData())
 {
-  Q_INIT_RESOURCE(Animate3DSymbols);
 }
 
 Animate3DSymbols::~Animate3DSymbols() = default;
@@ -128,17 +129,18 @@ void Animate3DSymbols::componentComplete()
 
 void Animate3DSymbols::setMissionFrame(int newFrame)
 {
-  if (m_missionData == nullptr ||
+  if (!m_missionData||
      newFrame < 0 ||
      m_frame == newFrame)
     return;
 
   m_frame = newFrame;
+  emit missionFrameChanged();
 }
 
 void Animate3DSymbols::animate()
 {
-  if (m_missionData == nullptr)
+  if (!m_missionData)
     return;
 
   if (missionFrame() < missionSize())
@@ -175,7 +177,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   {
     // create a polyline representing the route for the mission
     PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);
-    for(int i = 0; i < missionSize(); ++i)
+    for (int i = 0; i < missionSize(); ++i)
     {
       const MissionData::DataPoint& dp = m_missionData->dataAt(i);
       routeBldr->addPoint(dp.m_pos);
@@ -192,16 +194,27 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   emit missionSizeChanged();
 }
 
+QAbstractListModel *Animate3DSymbols::missionsModel()
+{
+  return m_missionsModel;
+}
+
 void Animate3DSymbols::setZoom(double zoomDist)
 {
   if (m_followingController)
+  {
     m_followingController->setCameraDistance(zoomDist);
+    emit zoomChanged();
+  }
 }
 
 void Animate3DSymbols::setAngle(double angle)
 {
   if (m_followingController)
+  {
     m_followingController->setCameraPitchOffset(angle);
+    emit angleChanged();
+  }
 }
 
 void Animate3DSymbols::createModel2d(GraphicsOverlay* mapOverlay)
@@ -278,8 +291,8 @@ void Animate3DSymbols::setFollowing(bool following)
 
 void Animate3DSymbols::zoomMapIn()
 {
-  if (m_mapView == nullptr ||
-      m_routeGraphic == nullptr)
+  if (!m_mapView ||
+      !m_routeGraphic)
     return;
 
   // zoom the map view in, focusing on the position of the 2d graphic for the helicopter
@@ -288,8 +301,8 @@ void Animate3DSymbols::zoomMapIn()
 
 void Animate3DSymbols::zoomMapOut()
 {
-  if (m_mapView == nullptr ||
-      m_routeGraphic == nullptr)
+  if (!m_mapView ||
+      !m_routeGraphic)
     return;
 
   // zoom the map view out, focusing on the position of the 2d graphic for the helicopter
@@ -298,6 +311,11 @@ void Animate3DSymbols::zoomMapOut()
 
 void Animate3DSymbols::viewWidthChanged(bool sceneViewIsWider)
 {
+  if (!m_sceneView || !m_mapView)
+  {
+    return;
+  }
+
   // only show the attribution text on the view with the widest visible extent
   m_sceneView->setAttributionTextVisible(sceneViewIsWider);
   m_mapView->setAttributionTextVisible(!sceneViewIsWider);
@@ -305,7 +323,7 @@ void Animate3DSymbols::viewWidthChanged(bool sceneViewIsWider)
 
 bool Animate3DSymbols::missionReady() const
 {
-  if (m_missionData == nullptr)
+  if (!m_missionData)
     return false;
 
   return m_missionData->ready();
@@ -313,7 +331,7 @@ bool Animate3DSymbols::missionReady() const
 
 int Animate3DSymbols::missionSize() const
 {
-  if (m_missionData == nullptr)
+  if (!m_missionData)
     return 0;
 
   return (int)m_missionData->size();
@@ -339,71 +357,3 @@ double Animate3DSymbols::minZoom() const
   return m_followingController ? m_followingController->minCameraDistance() : 0;
 }
 
-// MissionData
-
-MissionData::MissionData():
-  m_ready(false)
-{
-}
-
-MissionData::~MissionData() = default;
-
-bool MissionData::parse(const QString& dataPath)
-{
-  m_data.clear();
-  m_ready = false;
-
-  QFile file(dataPath);
-  if(!file.exists())
-    return false;
-
-  if (!file.open(QIODevice::ReadOnly))
-    return false;
-
-  while (!file.atEnd())
-  {
-    QByteArray line = file.readLine();
-    QList<QByteArray> parts = line.split(',');
-    if(parts.size() < 6)
-      continue;
-
-    bool ok = false;
-    double lon = parts.at(0).toDouble(&ok);
-    if(!ok)
-      continue;
-
-    double lat = parts.at(1).toDouble(&ok);
-    if(!ok)
-      continue;
-
-    double elevation = parts.at(2).toDouble(&ok);
-    if(!ok)
-      continue;
-
-    double heading = parts.at(3).toDouble(&ok);
-    if(!ok)
-      continue;
-
-    double pitch = parts.at(4).toDouble(&ok);
-    if(!ok)
-      continue;
-
-    double roll = parts.at(5).simplified().toDouble(&ok);
-    if(!ok)
-      continue;
-
-    m_data.emplace_back((double)lon, (double)lat, (double)elevation, (double)heading, (double)pitch, (double)roll);
-  }
-
-  m_ready = m_data.size() > 0;
-  return m_ready;
-}
-
-const MissionData::DataPoint& MissionData::dataAt(size_t i) const
-{
-  if(i < m_data.size())
-    return m_data[i];
-
-  static MissionData::DataPoint dataPoint;
-  return dataPoint;
-}

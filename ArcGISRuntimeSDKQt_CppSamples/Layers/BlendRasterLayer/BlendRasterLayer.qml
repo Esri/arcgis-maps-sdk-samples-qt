@@ -15,7 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
@@ -27,7 +28,7 @@ BlendRasterLayerSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property bool editingRenderer: false
 
@@ -48,12 +49,12 @@ BlendRasterLayerSample {
     Rectangle {
         visible: editButton.visible
         anchors.centerIn: editButton
-        radius: 8 * scaleFactor
-        height: editButton.height + (16 * scaleFactor)
-        width: editButton.width + (16 * scaleFactor)
+        radius: 8
+        height: editButton.height + (16)
+        width: editButton.width + (16)
         color: "lightgrey"
         border.color: "darkgrey"
-        border.width: 2 * scaleFactor
+        border.width: 2
         opacity: 0.75
     }
 
@@ -62,7 +63,7 @@ BlendRasterLayerSample {
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            margins: 32 * scaleFactor
+            margins: 32
         }
         visible: rendererBox.width === 0
         text: "Edit Renderer"
@@ -82,50 +83,98 @@ BlendRasterLayerSample {
         opacity: 0.75
         width: editingRenderer ? parent.width : 0
 
-        Column {
+        GridLayout {
             anchors {
-                top: parent.top
-                bottom: parent.bottom
-                margins: 24 * scaleFactor
-            }
-            width: parent.width
-            spacing: 16 * scaleFactor
-
-            TextWithSlider {
-                id: altitudeCtrl
-                label: "altitde"
-                min: 0
-                max: 90
+                centerIn: parent
+                margins: 24
             }
 
-            TextWithSlider {
-                id: azimithCtrl
-                label: "azimuth"
-                min: 0
-                max: 359
+            columns: 2
+
+            Text {
+                text: "altitude"
             }
 
-            TextWithComboBox {
-                id: slopeTypeCtrl
-                label: "slope type"
+            SpinBox {
+                id: altSlider
+                from: 0
+                to: 90
+                editable: true
+                textFromValue: function(v) {
+                    return v.toFixed(0) + "\u00B0";
+                }
+            }
+
+            Text {
+                text: "azimuth"
+            }
+
+            SpinBox {
+                id: azimuthSlider
+                from: 0
+                to: 90
+                editable: true
+                textFromValue: function(v) {
+                    return v.toFixed(0) + "\u00B0";
+                }
+            }
+
+            Text {
+                text: "slope type"
+            }
+
+            ComboBox {
+                id: slopeCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.fillWidth: true
+                textRole: "name"
                 model: slopeTypeModel
+               Component.onCompleted : {
+                    for (var i = 0; i < model.count; ++i) {
+                        metrics.text = model.get(i).name;
+                        modelWidth = Math.max(modelWidth, metrics.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics
+                    font: slopeCombo.font
+                }
             }
 
-            TextWithComboBox {
-                id: colorRampCtrl
-                label: "color ramp"
+            Text {
+                text: "color ramp"
+            }
+
+            ComboBox {
+                id: colorCombo
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.fillWidth: true
+                textRole: "name"
                 model: colorRampModel
+                Component.onCompleted : {
+                    for (var i = 0; i < model.count; ++i) {
+                        metrics2.text = model.get(i).name;
+                        modelWidth = Math.max(modelWidth, metrics2.width);
+                    }
+                }
+                TextMetrics {
+                    id: metrics2
+                    font: colorCombo.font
+                }
             }
 
             Button {
                 text: "Render"
-                anchors.horizontalCenter: parent.horizontalCenter
+                Layout.columnSpan: 2
+                Layout.alignment: Qt.AlignHCenter
                 onClicked: {
                     editingRenderer = false;
-                    applyRenderSettings(altitudeCtrl.sliderValue,
-                                        azimithCtrl.sliderValue,
-                                        slopeTypeCtrl.value(),
-                                        colorRampCtrl.value());
+                    applyRenderSettings(altSlider.value,
+                                        azimuthSlider.value,
+                                        slopeTypeModel.get(slopeCombo.currentIndex).value,
+                                        colorRampModel.get(colorCombo.currentIndex).value);
                 }
             }
         }

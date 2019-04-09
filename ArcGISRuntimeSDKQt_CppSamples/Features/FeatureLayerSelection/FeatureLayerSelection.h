@@ -40,9 +40,9 @@ class FeatureLayerSelection : public QQuickItem
 
 public:
   explicit FeatureLayerSelection(QQuickItem* parent = nullptr);
-  ~FeatureLayerSelection();
+  ~FeatureLayerSelection() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 signals:
@@ -57,8 +57,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
-  QString m_selectedFeatureText = "Click or tap to select features.";
+  QString m_selectedFeatureText = QStringLiteral("Click or tap to select features.");
 };
 
 #endif // FEATURE_LAYER_SELECTION_H
-

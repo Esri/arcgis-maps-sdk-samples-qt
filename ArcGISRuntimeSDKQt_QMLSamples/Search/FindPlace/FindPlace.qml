@@ -15,11 +15,10 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtPositioning 5.6
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 100.4
+import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 Rectangle {
     id: rootRectangle
@@ -27,7 +26,6 @@ Rectangle {
     width: 800
     height: 600
 
-    property double scaleFactor: System.displayScaleFactor
     property bool isSearchingLocation: false
     property bool searchByExtent: false
 
@@ -176,9 +174,9 @@ Rectangle {
             left: parent.left
             right: parent.right
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 3 * scaleFactor
+        spacing: 3
 
         // create a text field for the POI search
         SearchBox {
@@ -220,7 +218,7 @@ Rectangle {
         SuggestionView {
             id: suggestionView
             width: parent.width
-            height: 20 * locatorTask.suggestions.count * scaleFactor
+            height: 20 * locatorTask.suggestions.count
             onSuggestionClicked: {
                 if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress) {
                     // change the text label
@@ -242,7 +240,7 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
-            bottomMargin: 23 * scaleFactor
+            bottomMargin: 23
         }
         visible: searchByExtent
         onButtonClicked: {

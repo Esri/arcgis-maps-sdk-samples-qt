@@ -16,15 +16,14 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 OAuthRedirectExample {
     id: root
     width: 800
     height: 600
-    property double scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
+    property double scaleFactor: 1
     Column {
         anchors{
             fill: parent

@@ -12,7 +12,8 @@
 // limitations under the License.
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 
 Rectangle {
@@ -28,80 +29,92 @@ Rectangle {
     signal createMapSelected(var basemap, var layerList)
 
     Rectangle {
-        anchors {
-            fill: layerColumn
-            margins: -15 * scaleFactor
-        }
-
         color: "#edeeef"
-        radius: 5 * scaleFactor
+        radius: 5
+        width: childrenRect.width
+        height: childrenRect.height
+        anchors.centerIn: parent
         border {
             color: "#77787a"
-            width: 1 * scaleFactor
+            width: 1
         }
-    }
 
-    Column {
-        id: layerColumn
-        anchors.centerIn: parent
-        width: 200 * scaleFactor
-
-        spacing: 10 * scaleFactor
-
-        Text {
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: "Select Layers"
-            font {
-                pixelSize: 18 * scaleFactor
-                family: "helvetica"
+        ColumnLayout {
+            id: layerColumn
+            Text {
+                Layout.margins: 5
+                Layout.alignment: Qt.AlignHCenter
+                text: "Select Layers"
+                font {
+                    pixelSize: 18
+                    family: "helvetica"
+                }
             }
-        }
 
-        Text {
-            text: "Select Basemap:"
-            font {
-                pixelSize: 14 * scaleFactor
-                family: "helvetica"
+            Text {
+                Layout.margins: 5
+                text: "Select Basemap:"
+                font {
+                    pixelSize: 14
+                    family: "helvetica"
+                }
             }
-        }
 
-        ComboBox {
-            id: basemapComboBox
-            width: parent.width
-            model: ["Streets", "Imagery", "Topographic", "Oceans"]
-        }
+            ComboBox {
+                id: basemapComboBox
+                property int modelWidth: 0
+                Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
+                Layout.margins: 5
+                Layout.fillWidth: true
+                model: ["Streets", "Imagery", "Topographic", "Oceans"]
 
-        Text {
-            text: "Select Operational Layers:"
-            font {
-                pixelSize: 14 * scaleFactor
-                family: "helvetica"
-            }
-        }
-
-        Repeater {
-            id: operationalLayerRepeater
-            width: parent.width
-            model: ["WorldElevations", "Census"]
-
-            CheckBox {
-                text: modelData
-                checked: true
-            }
-        }
-
-        Button {
-            width: parent.width
-            text: "Create Map"
-            onClicked: {
-                var layerList = [];
-                for (var i = 0; i < operationalLayerRepeater.count; i++) {
-                    var currentCheckbox = operationalLayerRepeater.itemAt(i);
-                    if (currentCheckbox.checked) {
-                        layerList.push(currentCheckbox.text)
+               Component.onCompleted : {
+                    for (var i = 0; i < model.length; ++i) {
+                        metrics.text = model[i];
+                        modelWidth = Math.max(modelWidth, metrics.width);
                     }
                 }
-                createMapSelected(basemapComboBox.currentText, layerList);
+                TextMetrics {
+                    id: metrics
+                    font: basemapComboBox.font
+                }
+            }
+
+            Text {
+                Layout.margins: 5
+                text: "Select Operational Layers:"
+                font {
+                    pixelSize: 14
+                    family: "helvetica"
+                }
+            }
+
+            Repeater {
+                id: operationalLayerRepeater
+                Layout.margins: 5
+                Layout.fillWidth: true
+                model: ["WorldElevations", "Census"]
+
+                CheckBox {
+                    text: modelData
+                    checked: true
+                }
+            }
+
+            Button {
+                Layout.margins: 5
+                Layout.fillWidth: true
+                text: "Create Map"
+                onClicked: {
+                    var layerList = [];
+                    for (var i = 0; i < operationalLayerRepeater.count; i++) {
+                        var currentCheckbox = operationalLayerRepeater.itemAt(i);
+                        if (currentCheckbox.checked) {
+                            layerList.push(currentCheckbox.text)
+                        }
+                    }
+                    createMapSelected(basemapComboBox.currentText, layerList);
+                }
             }
         }
     }

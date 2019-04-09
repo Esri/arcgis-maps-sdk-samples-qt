@@ -34,9 +34,9 @@ class VectorTiledLayerUrl : public QQuickItem
 
 public:
   explicit VectorTiledLayerUrl(QQuickItem* parent = nullptr);
-  ~VectorTiledLayerUrl();
+  ~VectorTiledLayerUrl() override;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void changeBasemap(const QString& basemap);
 

@@ -1,9 +1,0 @@
-{
-    "source" :  "DisplayLayerViewDrawStatus.qml",
-    "otherSourceFiles" : [
-        "DisplayLayerViewDrawStatus.h",
-        "DisplayLayerViewDrawStatus.cpp"
-    ],
-    "name" : "Display layer view draw status"
-}
-

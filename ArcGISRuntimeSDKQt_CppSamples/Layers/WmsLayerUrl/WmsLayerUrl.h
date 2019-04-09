@@ -34,9 +34,9 @@ class WmsLayerUrl : public QQuickItem
 
 public:
   explicit WmsLayerUrl(QQuickItem* parent = nullptr);
-  ~WmsLayerUrl() = default;
+  ~WmsLayerUrl() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

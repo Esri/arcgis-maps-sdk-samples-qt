@@ -64,7 +64,7 @@ void VectorTiledLayerUrl::componentComplete()
 
 void VectorTiledLayerUrl::changeBasemap(const QString& basemap)
 {
-  if (m_map->loadStatus() == LoadStatus::Loaded)
+  if (m_map && m_map->loadStatus() == LoadStatus::Loaded)
   {
     ArcGISVectorTiledLayer* vectorTiledLayer = nullptr;
     if (basemap == "Mid-Century")

@@ -1,0 +1,11 @@
+{
+    "source" :  "CreateTerrainSurfaceFromLocalRaster.qml",
+    "otherSourceFiles" :  [],
+    "name" : "Create terrain surface from local raster",
+    "dataItems" : [
+        {
+            "itemId" : "98092369c4ae4d549bbbd45dba993ebc",
+            "path" : "~/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"
+        }
+    ]
+}

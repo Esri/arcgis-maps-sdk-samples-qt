@@ -15,8 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -26,8 +25,7 @@ ViewshedLocationSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
-
+    
     SceneView {
         id: sceneView
         objectName: "sceneView"
@@ -37,18 +35,18 @@ ViewshedLocationSample {
             anchors {
                 right: parent.right
                 bottom: sceneView.attributionTop
-                margins: 10 * scaleFactor
+                margins: 10
             }
             visible: !optionPanel.visible
-            width: 45 * scaleFactor
+            width: 45
             height: width
             color: "white"
-            radius: 25 * scaleFactor
+            radius: 25
 
             Image {
                 anchors.centerIn: parent
                 source: "qrc:/Samples/Analysis/ViewshedLocation/settings.png"
-                width: 40 * scaleFactor
+                width: 40
                 height: width
             }
 
@@ -66,7 +64,7 @@ ViewshedLocationSample {
                 top: parent.top
                 bottom: sceneView.attributionTop
             }
-            width: 260 * scaleFactor
+            width: 260
             visible: false
             color: "white"
             opacity: 0.85
@@ -74,7 +72,7 @@ ViewshedLocationSample {
             Flickable {
                 anchors {
                     fill: parent
-                    margins: 5 * scaleFactor
+                    margins: 5
                 }
                 contentWidth: parent.width
                 contentHeight: parent.height
@@ -82,17 +80,17 @@ ViewshedLocationSample {
 
                 Column {
                     id: optionColumn
-                    spacing: 10 * scaleFactor
+                    spacing: 10
                     width: optionPanel.width
 
                     Item {
                         width: parent.width
-                        height: 25 * scaleFactor
+                        height: 25
 
                         Text {
                             text: "Viewshed Options"
                             anchors.horizontalCenter: parent.horizontalCenter
-                            font.pixelSize: 18 * scaleFactor
+                            font.pixelSize: 18
                             font.underline: true
 
                         }
@@ -102,14 +100,14 @@ ViewshedLocationSample {
                                 right: parent.right
                                 verticalCenter: parent.verticalCenter
                             }
-                            width: 45 * scaleFactor
+                            width: 45
                             height: width
                             color: "transparent"
 
                             Image {
                                 anchors.centerIn: parent
                                 source: "qrc:/Samples/Analysis/ViewshedLocation/close.png"
-                                width: 40 * scaleFactor
+                                width: 40
                                 height: width
                             }
 
@@ -122,19 +120,19 @@ ViewshedLocationSample {
 
                     Item {
                         width: parent.width
-                        height: 25 * scaleFactor
+                        height: 25
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
                             text: qsTr("Viewshed Visible")
-                            font.pixelSize: 14 * scaleFactor
+                            font.pixelSize: 14
                         }
 
                         Switch {
                             anchors {
                                 right: parent.right
-                                margins: 10 * scaleFactor
+                                margins: 10
                                 verticalCenter: parent.verticalCenter
                             }
                             checked: true
@@ -144,19 +142,19 @@ ViewshedLocationSample {
 
                     Item {
                         width: parent.width
-                        height: 25 * scaleFactor
+                        height: 25
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
                             text: qsTr("Frustum Outline Visible")
-                            font.pixelSize: 14 * scaleFactor
+                            font.pixelSize: 14
                         }
 
                         Switch {
                             anchors {
                                 right: parent.right
-                                margins: 10 * scaleFactor
+                                margins: 10
                                 verticalCenter: parent.verticalCenter
                             }
                             checked: false
@@ -214,29 +212,29 @@ ViewshedLocationSample {
 
                     Row {
                         width: parent.width
-                        height: 25 * scaleFactor
-                        spacing: 5 * scaleFactor
+                        height: 25
+                        spacing: 5
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
                             text: qsTr("Visible Color")
-                            font.pixelSize: 14 * scaleFactor
+                            font.pixelSize: 14
                         }
 
                         Rectangle {
                             anchors {
-                                margins: 10 * scaleFactor
+                                margins: 10
                                 verticalCenter: parent.verticalCenter
                             }
-                            width: 25 * scaleFactor
+                            width: 25
                             height: width
                             border {
                                 color: "black"
-                                width: 1 * scaleFactor
+                                width: 1
                             }
                             color: viewshedSample.visibleColor
-                            radius: 4 * scaleFactor
+                            radius: 4
 
                             MouseArea {
                                 anchors.fill: parent
@@ -249,29 +247,29 @@ ViewshedLocationSample {
 
                     Row {
                         width: parent.width
-                        height: 25 * scaleFactor
-                        spacing: 5 * scaleFactor
+                        height: 25
+                        spacing: 5
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
                             text: qsTr("Obstructed Color")
-                            font.pixelSize: 14 * scaleFactor
+                            font.pixelSize: 14
                         }
 
                         Rectangle {
                             anchors {
-                                margins: 10 * scaleFactor
+                                margins: 10
                                 verticalCenter: parent.verticalCenter
                             }
-                            width: 25 * scaleFactor
+                            width: 25
                             height: width
                             border {
                                 color: "black"
-                                width: 1 * scaleFactor
+                                width: 1
                             }
                             color: viewshedSample.obstructedColor
-                            radius: 4 * scaleFactor
+                            radius: 4
 
                             MouseArea {
                                 anchors.fill: parent
@@ -288,17 +286,27 @@ ViewshedLocationSample {
 
     ColorDialog {
         id: visibleColorDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
         onAccepted: {
-            close();
-            viewshedSample.visibleColor = color;
+            viewshedSample.visibleColor = visibleColorDialog.color;
+        }
+        onOpened: {
+            setColor(viewshedSample.visibleColor);
         }
     }
 
     ColorDialog {
         id: obstructedColorDialog
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
         onAccepted: {
-            close();
-            viewshedSample.obstructedColor = color;
+            viewshedSample.obstructedColor = obstructedColorDialog.color;
+        }
+        onOpened: {
+            setColor(viewshedSample.obstructedColor);
         }
     }
 }

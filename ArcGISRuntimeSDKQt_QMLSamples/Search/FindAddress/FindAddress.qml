@@ -15,18 +15,16 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 100.4
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
+import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime.Toolkit.Controls 100.5
 
 Rectangle {
+    id: root
     width: 800
     height: 600
-    id: root
-
-    property real scaleFactor: System.displayScaleFactor
+    
     property string calloutText
     property string calloutDetailText
     property Point calloutLocation;
@@ -83,15 +81,15 @@ Rectangle {
         }
 
         calloutData {
-           location:  calloutLocation
-           title: calloutText
-           detail: calloutDetailText
+            location:  calloutLocation
+            title: calloutText
+            detail: calloutDetailText
         }
 
         // map callout window
         Callout {
             id: callout
-            borderWidth: 1 * scaleFactor
+            borderWidth: 1
             calloutData: parent.calloutData
             borderColor: "lightgrey"
             accessoryButtonHidden: true
@@ -133,60 +131,50 @@ Rectangle {
     Column {
         anchors {
             fill: parent
-            margins: 10 * scaleFactor
+            margins: 10
         }
 
-        Row {
+        Rectangle {
+            color: "#f7f8fa"
+            border {
+                color: "#7B7C7D"
+            }
+            radius: 2
             width: parent.width
-            height: 35 * scaleFactor
-            spacing: 5
+            height: childrenRect.height
 
-            TextField {
-                id: textField
+            GridLayout {
                 width: parent.width
-                height: parent.height
-                placeholderText: "Type in an address"
-                font.pixelSize: 14 * scaleFactor
-                style: TextFieldStyle {
-                    background: Rectangle {
-                        color: "#f7f8fa"
-                        border {
-                            color: "#7B7C7D"
-                            width: 1 * scaleFactor
-                        }
-                        radius: 2
+                columns: 3
+                TextField {
+                    Layout.margins: 5
+                    Layout.fillWidth: true
+                    id: textField
+                    font.pixelSize: 14
+                    placeholderText: "Type in an address"
+
+                    Keys.onEnterPressed: geocodeAddress();
+                    Keys.onReturnPressed: geocodeAddress();
+
+                    function geocodeAddress() {
+                        //! [FindAddress geocodeWithParameters]
+                        locatorTask.geocodeWithParameters(textField.text, geocodeParameters);
+                        //! [FindAddress geocodeWithParameters]
+                        suggestView.visible = false;
+                        Qt.inputMethod.hide();
                     }
-                }
-
-                Keys.onEnterPressed: geocodeAddress();
-                Keys.onReturnPressed: geocodeAddress();
-
-                function geocodeAddress() {
-                    //! [FindAddress geocodeWithParameters]
-                    locatorTask.geocodeWithParameters(textField.text, geocodeParameters);
-                    //! [FindAddress geocodeWithParameters]
-                    suggestView.visible = false;
-                    Qt.inputMethod.hide();
                 }
 
                 Rectangle {
-                    anchors {
-                        right: parent.right
-                        top: parent.top
-                        bottom: parent.bottom
-                        margins: 5 * scaleFactor
-                    }
-
-                    width: 35 * scaleFactor
+                    Layout.margins: 5
+                    width: height
+                    height: textField.height
                     color: "#f7f8fa"
-
+                    visible: textField.length === 0
+                    enabled: visible
                     Image {
-                        anchors.centerIn: parent
-                        width: 35 * scaleFactor
-                        height: width
+                        anchors.fill: parent
                         source: "qrc:/Samples/Search/FindAddress/ic_menu_collapsedencircled_light_d.png"
-                        visible: textField.text.length === 0
-
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
@@ -197,25 +185,25 @@ Rectangle {
                     }
                 }
 
-                Image {
-                    anchors {
-                        right: parent.right
-                        top: parent.top
-                        bottom: parent.bottom
-                        margins: 5 * scaleFactor
-                    }
-                    source: "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_light_d.png"
-                    width: 27 * scaleFactor
-                    height: width
-                    visible: parent.text.length !== 0
-
-                    MouseArea {
+                Rectangle {
+                    Layout.margins: 5
+                    width: height
+                    color: "transparent"
+                    height: textField.height
+                    visible: textField.length !== 0
+                    enabled: visible
+                    Image {
                         anchors.fill: parent
-                        onClicked: {
-                            textField.text = "";
-                            if (callout.visible)
-                                callout.dismiss();
-                            graphicsOverlay.graphics.clear();
+                        source: "qrc:/Samples/Search/FindAddress/ic_menu_closeclear_light_d.png"
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                textField.text = "";
+                                if (callout.visible)
+                                    callout.dismiss();
+                                graphicsOverlay.graphics.clear();
+                            }
                         }
                     }
                 }
@@ -225,7 +213,7 @@ Rectangle {
         // show a drop down of suggested locations
         ListView {
             id: suggestView
-            height: 300 * scaleFactor
+            height: 300
             width: textField.width
             visible: false
             clip: true
@@ -234,7 +222,7 @@ Rectangle {
                 Rectangle {
                     id: rect
                     width: parent.width
-                    height: 25 * scaleFactor
+                    height: 25
                     color: "#f7f8fa"
 
                     Rectangle {
@@ -242,9 +230,9 @@ Rectangle {
                             top: parent.top;
                             left: parent.left;
                             right: parent.right;
-                            topMargin: -5 * scaleFactor
-                            leftMargin: 20 * scaleFactor
-                            rightMargin: 20 * scaleFactor
+                            topMargin: -5
+                            leftMargin: 20
+                            rightMargin: 20
                         }
                         color: "darkgrey"
                         height: 1
@@ -254,10 +242,10 @@ Rectangle {
                         text: name
                         anchors {
                             fill: parent
-                            leftMargin: 5 * scaleFactor
+                            leftMargin: 5
                         }
 
-                        font.pixelSize: 14 * scaleFactor
+                        font.pixelSize: 14
                     }
 
                     MouseArea {

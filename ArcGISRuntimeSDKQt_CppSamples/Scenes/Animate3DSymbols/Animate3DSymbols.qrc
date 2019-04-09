@@ -5,6 +5,12 @@
         <file>Animate3DSymbols.qml</file>
         <file>Animate3DSymbols.h</file>
         <file>Animate3DSymbols.cpp</file>
+        <file>MissionData.h</file>
+        <file>MissionData.cpp</file>
         <file>README.md</file>
+        <file>main.qml</file>
+        <file>minus-16-f.png</file>
+        <file>plus-16-f.png</file>
+        <file>LabeledSlider.qml</file>
     </qresource>
 </RCC>

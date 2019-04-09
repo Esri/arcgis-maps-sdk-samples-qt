@@ -1,8 +1,8 @@
 # Overview
-ArcGIS Runtime SDK 100.4 for Qt sample applications.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
+ArcGIS Runtime SDK 100.5 for Qt sample applications.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
 
 # Prerequisites
-* Qt SDK 5.9.2 or higher (Open source or commercial)
+* Qt SDK 5.12.0 or higher (Open source or commercial)
 * Qt Creator
 * For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/latest/qml/guide/arcgis-runtime-sdk-for-qt-system-requirements.htm) page.
 
@@ -83,6 +83,7 @@ The `master` branch contains samples for the current, most up-to-date version of
 - [100.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/1744)
 - [100.2.1](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.2.1)
 - [100.3](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/2102)
+- [100.4](https://github.com/Esri/arcgis-runtime-samples-qt/releases/tag/100.4.0.2207)
 
 ## Use offline data in the samples
 Some of the samples consume offline data, including TPKs, VTPKs, mobile geodatabases, and mobile map packages, among other data formats. If the sample does consume offline data, the sample's associated readme.md will note where you can download the data (from ArcGIS Online), and where the data can be placed once downloaded. For example, it may say something like:
@@ -115,7 +116,7 @@ Find a bug or want to request a new feature?  Please let us know by submitting a
 Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/esri/contributing).
 
 ## Licensing
-Copyright 2016 Esri
+Copyright 2018 Esri
 
 
 Licensed under the Apache License, Version 2.0 (the "License");

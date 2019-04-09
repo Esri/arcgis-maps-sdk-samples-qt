@@ -12,23 +12,24 @@
 // limitations under the License.
 
 #include <QSettings>
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQuickView>
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+#include <QQmlApplicationEngine>
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
 int main(int argc, char *argv[])
 {
-  QGuiApplication app(argc, argv);
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QApplication app(argc, argv);
   app.setApplicationName("RasterLayerFile - QML");
 
-  // Initialize application view
-  QQuickView view;
-  view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // Initialize application engine
+  QQmlApplicationEngine engine;
 
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
   QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
@@ -42,14 +43,12 @@ int main(int argc, char *argv[])
 #endif
 
   // Add the Runtime and Extras path
-  view.engine()->addImportPath(arcGISRuntimeImportPath);
+  engine.addImportPath(arcGISRuntimeImportPath);
   // Add the Toolkit path
-  view.engine()->addImportPath(arcGISToolkitImportPath);
+  engine.addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Layers/RasterLayerFile/RasterLayerFile.qml"));
-
-  view.show();
+  engine.load(QUrl("qrc:/Samples/Layers/RasterLayerFile/main.qml"));
 
   return app.exec();
 }

@@ -14,17 +14,17 @@
 
 import QtQuick 2.6
 import QtQuick.Window 2.2
-import QtQuick.Controls 1.4
-import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 SearchForWebmapSample {
     id: root
     width: 800
     height: 600
     clip: true
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
     property string selItem
 
     // Create MapQuickView here, and create its Map etc. in C++ code
@@ -36,7 +36,7 @@ SearchForWebmapSample {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
         visible: false
     }
@@ -45,19 +45,19 @@ SearchForWebmapSample {
         id: webmapDelegate
 
         Rectangle {
-            anchors.margins: 25 * scaleFactor
+            anchors.margins: 25
             width: webmapsList.width
-            height: 32 * scaleFactor
+            height: 32
             border.color: "white"
-            border.width: 2 * scaleFactor
+            border.width: 2
             color: index === webmapsList.currentIndex ? "orange" : "lightgrey"
-            radius: 10 * scaleFactor
+            radius: 10
 
             //! [PortalItemListModel example QML delegate]
             Text {
                 anchors {
                     fill: parent
-                    margins: 10 * scaleFactor
+                    margins: 10
                 }
                 text: title // access the title role of the model
                 color: "white"
@@ -87,7 +87,7 @@ SearchForWebmapSample {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
         visible: webmaps && !mapView.visible
         border.color: "grey"
@@ -97,7 +97,7 @@ SearchForWebmapSample {
         Text {
             id: resultsTitle
             anchors {
-                margins: 10 * scaleFactor
+                margins: 10
                 top: parent.top
                 left: parent.left
                 right: parent.right
@@ -113,7 +113,7 @@ SearchForWebmapSample {
         ListView {
             id: webmapsList
             anchors {
-                margins: 20 * scaleFactor
+                margins: 20
                 top: resultsTitle.bottom
                 bottom: moreResultsButton.top
                 left: parent.left
@@ -128,7 +128,7 @@ SearchForWebmapSample {
         Button {
             id: moreResultsButton
             anchors {
-                margins: 20 * scaleFactor
+                margins: 20
                 bottom: parent.bottom
                 horizontalCenter: resultsBox.horizontalCenter
             }
@@ -143,10 +143,10 @@ SearchForWebmapSample {
         anchors {
             top: parent.top;
             horizontalCenter: parent.horizontalCenter
-            margins: 10 * scaleFactor
+            margins: 10
         }
         visible: portalLoaded
-        spacing: 5 * scaleFactor
+        spacing: 5
 
         Text {
             id: instruction
@@ -155,7 +155,7 @@ SearchForWebmapSample {
         }
 
         Row {
-            spacing: 5 * scaleFactor
+            spacing: 5
 
             TextField {
                 id: keyWordField
@@ -197,12 +197,25 @@ SearchForWebmapSample {
     }
     */
 
-    MessageDialog {
+    Dialog {
         id: webMapMsg
-        width: root.width
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
         title: "Could not load web map!"
         visible: mapLoadError.length > 0
-        text: mapLoadError
-        onAccepted: errorAccepted();
+        property alias text : textLabel.text
+        property alias informativeText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: mapLoadError
+            }
+            Text {
+                id: detailsLabel
+            }
+        }
+        onAccepted: errorAccepted()
     }
 }

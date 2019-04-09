@@ -35,9 +35,9 @@ class StyleWmsLayer : public QQuickItem
 
 public:
   explicit StyleWmsLayer(QQuickItem* parent = nullptr);
-  ~StyleWmsLayer() = default;
+  ~StyleWmsLayer() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
   Q_INVOKABLE void setCurrentStyle(int index);
 

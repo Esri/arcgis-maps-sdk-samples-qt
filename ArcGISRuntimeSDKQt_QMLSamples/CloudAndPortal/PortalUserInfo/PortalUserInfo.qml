@@ -15,19 +15,18 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
-import Esri.ArcGISRuntime 100.4
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.4
+import QtQuick.Controls 2.2
+import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
 Rectangle {
     id: rootRectangle
     clip: true
 
-    width: 800 * scaleFactor
-    height: 600 * scaleFactor
+    width: 800
+    height: 600
 
-    property real scaleFactor: System.displayScaleFactor
+    
     property var user: portal.portalUser
 
     BusyIndicator {
@@ -46,9 +45,9 @@ Rectangle {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 10 * scaleFactor
+        spacing: 10
 
         Text {
             text: user ? user.fullName + " Profile" : ("????")
@@ -58,8 +57,8 @@ Rectangle {
 
         Image {
             source : user && user.thumbnailUrl.toString().length > 0 ? user.thumbnailUrl : "qrc:/Samples/CloudAndPortal/PortalUserInfo/placeholder_img.png"
-            height: 32 * scaleFactor
-            width: 32 * scaleFactor
+            height: 32
+            width: 32
         }
     }
 
@@ -71,9 +70,9 @@ Rectangle {
             bottom: midLine.top
             left: parent.left;
             right: parent.right;
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 10 * scaleFactor
+        spacing: 10
         clip: true
         model: detailNames.length
 
@@ -110,11 +109,11 @@ Rectangle {
         id: midLine
         anchors {
             verticalCenter: parent.verticalCenter
-            margins: 8 * scaleFactor
+            margins: 8
             left: parent.left
             right: parent.right
         }
-        height: 4 * scaleFactor
+        height: 4
         visible: portal.loadStatus === Enums.LoadStatusLoaded
         color: "lightgrey"
     }
@@ -126,9 +125,9 @@ Rectangle {
             top: midLine.bottom
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 10 * scaleFactor
+        spacing: 10
 
         Text {
             text: portal.portalInfo ? portal.portalInfo.organizationName : ""
@@ -138,8 +137,8 @@ Rectangle {
 
         Image {
             source : portal.portalInfo ? portal.portalInfo.thumbnailUrl : ""
-            height: 32 * scaleFactor
-            width: 32 * scaleFactor
+            height: 32
+            width: 32
         }
     }
 
@@ -154,9 +153,9 @@ Rectangle {
             bottom: parent.bottom
             left: parent.left
             right: parent.right
-            margins: 10 * scaleFactor
+            margins: 10
         }
-        spacing: 10 * scaleFactor
+        spacing: 10
         clip: true
         model: infoValues.length
 

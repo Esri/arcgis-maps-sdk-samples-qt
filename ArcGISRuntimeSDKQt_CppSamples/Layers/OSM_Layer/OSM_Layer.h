@@ -34,9 +34,9 @@ class OSM_Layer : public QQuickItem
 
 public:
   explicit OSM_Layer(QQuickItem* parent = nullptr);
-  ~OSM_Layer() = default;
+  ~OSM_Layer() override = default;
 
-  void componentComplete() Q_DECL_OVERRIDE;
+  void componentComplete() override;
   static void init();
 
 private:

@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
@@ -25,7 +25,7 @@ FeatureLayerRenderingModeMapSample {
     width: 800
     height: 600
 
-    property real scaleFactor: (Screen.logicalPixelDensity * 25.4) / (Qt.platform.os === "windows" || Qt.platform.os === "linux" ? 96 : 72)
+    
 
     MapView {
         anchors {
@@ -40,12 +40,12 @@ FeatureLayerRenderingModeMapSample {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
-                margins: 5 * scaleFactor
+                margins: 5
             }
             color: "white"
-            radius: 5 * scaleFactor
-            width: 200 * scaleFactor
-            height: 30 * scaleFactor
+            radius: 5
+            width: 200
+            height: 30
 
             Text {
                 anchors.centerIn: parent
@@ -67,12 +67,12 @@ FeatureLayerRenderingModeMapSample {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: parent.top
-                margins: 5 * scaleFactor
+                margins: 5
             }
             color: "white"
-            radius: 5 * scaleFactor
-            width: 200 * scaleFactor
-            height: 30 * scaleFactor
+            radius: 5
+            width: 200
+            height: 30
 
             Text {
                 anchors.centerIn: parent
@@ -85,7 +85,7 @@ FeatureLayerRenderingModeMapSample {
         anchors {
             left: parent.left
             top: parent.top
-            margins: 10 * scaleFactor
+            margins: 10
         }
         property string startText: "Start Animation"
         property string stopText: "Stop Animation"

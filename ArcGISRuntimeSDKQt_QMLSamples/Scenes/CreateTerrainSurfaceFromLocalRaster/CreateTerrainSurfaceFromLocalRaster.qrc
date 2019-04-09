@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/CreateTerrainSurfaceFromLocalRaster">
+        <file alias="sample.json">CreateTerrainSurfaceFromLocalRaster.json</file>        
+        <file>CreateTerrainSurfaceFromLocalRaster.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

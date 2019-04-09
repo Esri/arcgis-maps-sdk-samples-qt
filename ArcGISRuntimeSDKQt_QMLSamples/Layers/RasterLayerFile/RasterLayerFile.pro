@@ -16,9 +16,9 @@
 
 TEMPLATE = app
 
-QT += qml quick positioning sensors
+QT += qml quick positioning sensors widgets quickcontrols2
 
-ARCGIS_RUNTIME_VERSION = 100.4
+ARCGIS_RUNTIME_VERSION = 100.5
 include($$PWD/arcgisruntime.pri)
 
 CONFIG += c++11

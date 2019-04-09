@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.0
 
 Item {
     id: root
@@ -53,7 +53,7 @@ Item {
         id: fileDialog
 
         onAccepted: {
-            root.rasterFileChosen(fileDialog.fileUrl)
+            root.rasterFileChosen(fileDialog.file)
         }
     }
 

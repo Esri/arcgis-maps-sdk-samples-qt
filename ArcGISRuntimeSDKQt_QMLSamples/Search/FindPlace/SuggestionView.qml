@@ -30,27 +30,26 @@ Rectangle {
 
             Rectangle {
                 width: poiTextField.width
-                height: 20 * scaleFactor
+                height: 20
                 color: "#f7f8fa"
                 border.color: "darkgray"
 
                 Text {
                     anchors {
                         verticalCenter: parent.verticalCenter
-                        leftMargin: 5 * scaleFactor
-                        rightMargin: 5 * scaleFactor
+                        leftMargin: 5
+                        rightMargin: 5
                     }
 
                     font {
                         weight: Font.Black
-                        pixelSize: 12 * scaleFactor
+                        pixelSize: 12
                     }
 
                     width: parent.width
                     text: label
                     elide: Text.ElideRight
-                    leftPadding: 5 * scaleFactor
-                    renderType: Text.NativeRendering
+                    leftPadding: 5
                     color: "black"
                 }
 
