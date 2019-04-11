@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/DisplayWfsLayer">
+        <file alias="sample.json">DisplayWfsLayer.json</file>        
+        <file>DisplayWfsLayer.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
