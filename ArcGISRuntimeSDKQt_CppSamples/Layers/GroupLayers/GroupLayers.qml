@@ -107,8 +107,7 @@ Item {
                                     width: layerVisibilityRect.width - leftPadding
                                     ButtonGroup.group: childGroup
                                     onCheckedChanged: {
-                                        layerVisible = checked
-                                        console.log(name, layerVisible)
+                                        layerVisible = checked;
                                     }
                                 }
                             }
@@ -122,8 +121,7 @@ Item {
                             text: name
                             checked: true
                             onCheckedChanged: {
-                                layerVisible = checked
-                                console.log(name, layerVisible)
+                                layerVisible = checked;
                             }
                         }
                     }
