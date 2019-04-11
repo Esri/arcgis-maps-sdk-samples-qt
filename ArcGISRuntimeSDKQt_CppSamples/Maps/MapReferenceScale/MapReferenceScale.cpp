@@ -44,7 +44,13 @@ MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
     m_layerInfoListModel = m_map->operationalLayers();
     emit layerInfoListModelChanged();
     emit currentMapScaleChanged();
+
+    connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
+    {
+      emit currentMapScaleChanged();
+    });
   });
+
 }
 
 MapReferenceScale::~MapReferenceScale() = default;
@@ -66,10 +72,12 @@ double MapReferenceScale::currentMapScale() const
   return m_mapView->mapScale();
 }
 
-void MapReferenceScale::changeReferenceScale(double scale)
+void MapReferenceScale::setCurrentMapScale(double scale)
 {
-  if(m_map)
-    m_map->setReferenceScale(scale);
+  if(!m_map)
+    return;
+
+  m_map->setReferenceScale(scale);
 }
 
 void MapReferenceScale::setMapScaleToReferenceScale(double scale)

@@ -29,9 +29,6 @@ Item {
     MapView {
         id: myMapView
         anchors.fill: parent
-        onMapScaleChanged: {
-            mapReferenceScaleSampleModel.currentMapScaleChanged();
-        }
     }
 
     Rectangle {
@@ -78,8 +75,8 @@ Item {
                 Layout.margins: 3
                 Layout.fillWidth: true
                 model: ["1:500000","1:250000","1:100000","1:50000"]
-                Component.onCompleted: mapReferenceScaleSampleModel.changeReferenceScale(referenceScales[scales.currentIndex])
-                onActivated: mapReferenceScaleSampleModel.changeReferenceScale(referenceScales[scales.currentIndex])
+                Component.onCompleted: mapReferenceScaleSampleModel.currentMapScale = referenceScales[scales.currentIndex]
+                onActivated: mapReferenceScaleSampleModel.currentMapScale = referenceScales[scales.currentIndex]
             }
 
             Button {
