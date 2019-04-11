@@ -20,7 +20,7 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.5
+import Esri.ArcGISRuntime.Toolkit.Controls 100.6
 
 UpdateAttributesFeatureServiceSample {
     id: updateFeaturesSample

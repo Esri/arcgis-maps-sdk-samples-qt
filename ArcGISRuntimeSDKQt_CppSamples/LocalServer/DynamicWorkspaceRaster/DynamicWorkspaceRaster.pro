@@ -26,7 +26,7 @@ QT += opengl qml quick positioning sensors widgets
 TEMPLATE = app
 TARGET = DynamicWorkspaceRaster
 
-ARCGIS_RUNTIME_VERSION = 100.5
+ARCGIS_RUNTIME_VERSION = 100.6
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
