@@ -1,4 +1,4 @@
-// [WriteFile Name=GenerateOfflineMapBasemapByReference, Category=Maps]
+// [WriteFile Name=GenerateOfflineMapLocalBasemap, Category=Maps]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -14,8 +14,8 @@
 // limitations under the License.
 // [Legal]
 
-#ifndef GENERATEOFFLINEMAPBASEMAPBYREFERENCE_H
-#define GENERATEOFFLINEMAPBASEMAPBYREFERENCE_H
+#ifndef GENERATEOFFLINEMAPLOCALBASEMAP_H
+#define GENERATEOFFLINEMAPLOCALBASEMAP_H
 
 namespace Esri
 {
@@ -32,7 +32,7 @@ class OfflineMapTask;
 #include <QQuickItem>
 #include <QTemporaryDir>
 
-class GenerateOfflineMapBasemapByReference : public QQuickItem
+class GenerateOfflineMapLocalBasemap : public QQuickItem
 {
   Q_OBJECT
 
@@ -41,8 +41,8 @@ class GenerateOfflineMapBasemapByReference : public QQuickItem
   Q_PROPERTY(bool useLocalBasemap MEMBER m_useLocalBasemap NOTIFY useLocalBasemapChanged)
 
 public:
-  explicit GenerateOfflineMapBasemapByReference(QQuickItem* parent = nullptr);
-  ~GenerateOfflineMapBasemapByReference() override = default;
+  explicit GenerateOfflineMapLocalBasemap(QQuickItem* parent = nullptr);
+  ~GenerateOfflineMapLocalBasemap() override = default;
 
   void componentComplete() override;
   static void init();
@@ -74,4 +74,4 @@ private:
   QTemporaryDir m_tempDir;
 };
 
-#endif // GENERATEOFFLINEMAPBASEMAPBYREFERENCE_H
+#endif // GENERATEOFFLINEMAPLOCALBASEMAP_H

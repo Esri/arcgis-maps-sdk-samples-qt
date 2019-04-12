@@ -1,4 +1,4 @@
-// [WriteFile Name=GenerateOfflineMapBasemapByReference, Category=Maps]
+// [WriteFile Name=GenerateOfflineMapLocalBasemap, Category=Maps]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -21,7 +21,7 @@ import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
 
-GenerateOfflineMapBasemapByReferenceSample {
+GenerateOfflineMapLocalBasemapSample {
     id: offlineMapSample
     clip: true
     width: 800

@@ -24,7 +24,7 @@ CONFIG += c++11
 QT += opengl qml quick positioning sensors
 
 TEMPLATE = app
-TARGET = GenerateOfflineMapBasemapByReference
+TARGET = GenerateOfflineMapLocalBasemap
 
 ARCGIS_RUNTIME_VERSION = 100.5
 include($$PWD/arcgisruntime.pri)
@@ -32,13 +32,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    GenerateOfflineMapBasemapByReference.h
+    GenerateOfflineMapLocalBasemap.h
 
 SOURCES += \
     main.cpp \
-    GenerateOfflineMapBasemapByReference.cpp
+    GenerateOfflineMapLocalBasemap.cpp
 
-RESOURCES += GenerateOfflineMapBasemapByReference.qrc
+RESOURCES += GenerateOfflineMapLocalBasemap.qrc
 
 #-------------------------------------------------------------------------------
 

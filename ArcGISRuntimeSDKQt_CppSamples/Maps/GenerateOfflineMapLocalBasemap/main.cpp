@@ -21,7 +21,7 @@
 #include <Windows.h>
 #endif
 
-#include "GenerateOfflineMapBasemapByReference.h"
+#include "GenerateOfflineMapLocalBasemap.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -30,10 +30,10 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName("GenerateOfflineMapBasemapByReference - C++");
+  app.setApplicationName("GenerateOfflineMapLocalBasemap - C++");
 
   // Initialize the sample  
-  GenerateOfflineMapBasemapByReference::init();
+  GenerateOfflineMapLocalBasemap::init();
 
   // Initialize application view
   QQuickView view;
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Maps/GenerateOfflineMapBasemapByReference/GenerateOfflineMapBasemapByReference.qml"));
+  view.setSource(QUrl("qrc:/Samples/Maps/GenerateOfflineMapLocalBasemap/GenerateOfflineMapLocalBasemap.qml"));
 
   view.show();
 

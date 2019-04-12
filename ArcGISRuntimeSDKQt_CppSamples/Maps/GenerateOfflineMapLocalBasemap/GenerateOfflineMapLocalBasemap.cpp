@@ -1,4 +1,4 @@
-// [WriteFile Name=GenerateOfflineMapBasemapByReference, Category=Maps]
+// [WriteFile Name=GenerateOfflineMapLocalBasemap, Category=Maps]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "GenerateOfflineMapBasemapByReference.h"
+#include "GenerateOfflineMapLocalBasemap.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
@@ -54,22 +54,22 @@ namespace {
   }
 } // namespace
 
-const QString GenerateOfflineMapBasemapByReference::s_webMapId = QStringLiteral("acc027394bc84c2fb04d1ed317aac674");
+const QString GenerateOfflineMapLocalBasemap::s_webMapId = QStringLiteral("acc027394bc84c2fb04d1ed317aac674");
 
-GenerateOfflineMapBasemapByReference::GenerateOfflineMapBasemapByReference(QQuickItem* parent /* = nullptr */):
+GenerateOfflineMapLocalBasemap::GenerateOfflineMapLocalBasemap(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
 }
 
-void GenerateOfflineMapBasemapByReference::init()
+void GenerateOfflineMapLocalBasemap::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<GenerateOfflineMapBasemapByReference>("Esri.Samples", 1, 0, "GenerateOfflineMapBasemapByReferenceSample");
+  qmlRegisterType<GenerateOfflineMapLocalBasemap>("Esri.Samples", 1, 0, "GenerateOfflineMapLocalBasemapSample");
   qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
 }
 
-void GenerateOfflineMapBasemapByReference::componentComplete()
+void GenerateOfflineMapLocalBasemap::componentComplete()
 {
   QQuickItem::componentComplete();
 
@@ -108,7 +108,7 @@ void GenerateOfflineMapBasemapByReference::componentComplete()
   });
 }
 
-void GenerateOfflineMapBasemapByReference::generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
+void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
 {
   // create an envelope from the QML rectangle corners
   const Point& corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
@@ -204,7 +204,7 @@ void GenerateOfflineMapBasemapByReference::generateMapByExtent(double xCorner1, 
   m_offlineMapTask->createDefaultGenerateOfflineMapParameters(mapExtent);
 }
 
-AuthenticationManager* GenerateOfflineMapBasemapByReference::authenticationManager() const
+AuthenticationManager* GenerateOfflineMapLocalBasemap::authenticationManager() const
 {
   return AuthenticationManager::instance();
 }
