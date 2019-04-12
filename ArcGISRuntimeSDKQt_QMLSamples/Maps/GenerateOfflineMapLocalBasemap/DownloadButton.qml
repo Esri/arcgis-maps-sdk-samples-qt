@@ -33,7 +33,7 @@ Rectangle {
         Image {
             width: 38
             height: width
-            source: "qrc:/Samples/Maps/GenerateOfflineMapBasemapByReference/download.png"
+            source: "qrc:/Samples/Maps/GenerateOfflineMapLocalBasemap/download.png"
         }
         Text {
             anchors.verticalCenter: parent.verticalCenter

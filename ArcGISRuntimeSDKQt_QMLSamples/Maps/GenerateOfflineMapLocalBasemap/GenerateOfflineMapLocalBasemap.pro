@@ -26,7 +26,7 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    GenerateOfflineMapBasemapByReference.qrc
+    GenerateOfflineMapLocalBasemap.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

@@ -1,4 +1,4 @@
-// [WriteFile Name=GenerateOfflineMapBasemapByReference, Category=Maps]
+// [WriteFile Name=GenerateOfflineMapLocalBasemap, Category=Maps]
 // [Legal]
 // Copyright 2019 Esri.
 
