@@ -1,0 +1,11 @@
+{
+    "source" :  "GenerateOfflineMapBasemapByReference.qml",
+    "otherSourceFiles" :  [],
+    "name" : "Generate offline map (basemap by reference)",
+    "dataItems" : [
+        {
+            "itemId" : "628e8e3521cf45e9a28a12fe10c02c4d",
+            "path" : "~/ArcGIS/Runtime/Data/tpk/naperville_imagery.tpk"
+        }
+    ]
+}

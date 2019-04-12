@@ -1,0 +1,10 @@
+{
+    "source" :  "GenerateOfflineMapBasemapByReference.qml",
+    "otherSourceFiles" :  [
+        "GenerateOfflineMapBasemapByReference.h",
+        "GenerateOfflineMapBasemapByReference.cpp",
+        "DownloadButton.qml",
+        "GenerateWindow.qml"
+    ],
+    "name" : "Generate offline map (basemap by reference)"
+}
