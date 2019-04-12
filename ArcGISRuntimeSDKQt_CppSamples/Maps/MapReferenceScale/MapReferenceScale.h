@@ -52,8 +52,7 @@ public:
 signals:
   void mapViewChanged();
   void layerInfoListModelChanged();
-  Q_INVOKABLE void currentMapScaleChanged();
-
+  void currentMapScaleChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;

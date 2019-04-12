@@ -50,7 +50,6 @@ MapReferenceScale::MapReferenceScale(QObject* parent /* = nullptr */):
       emit currentMapScaleChanged();
     });
   });
-
 }
 
 MapReferenceScale::~MapReferenceScale() = default;
@@ -66,7 +65,7 @@ void MapReferenceScale::init()
 
 double MapReferenceScale::currentMapScale() const
 {
-  if(!m_mapView)
+  if (!m_mapView)
     return 0.0;
 
   return m_mapView->mapScale();
@@ -111,9 +110,7 @@ MapQuickView* MapReferenceScale::mapView() const
 void MapReferenceScale::setMapView(MapQuickView* mapView)
 {
   if (!mapView || mapView == m_mapView)
-  {
     return;
-  }
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);

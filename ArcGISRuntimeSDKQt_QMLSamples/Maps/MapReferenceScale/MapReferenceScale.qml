@@ -17,7 +17,6 @@
 import QtQuick 2.12
 import Esri.ArcGISRuntime 100.5
 import QtQuick.Controls 2.12
-import Esri.ArcGISExtras 1.1
 import QtQuick.Layouts 1.12
 
 Rectangle {
@@ -48,7 +47,7 @@ Rectangle {
                 onLoadStatusChanged: {
                     if (loadStatus === Enums.LoadStatusLoaded) {
                         //load operational layers into listmodel
-                        featureLayerModel = map.operationalLayers
+                        featureLayerModel = map.operationalLayers;
                     }
                 }
             }
@@ -99,8 +98,8 @@ Rectangle {
                 Layout.margins: 3
                 Layout.fillWidth: true
                 model: ["1:500000","1:250000","1:100000","1:50000"]
-                Component.onCompleted: applyReferenceScaleToMap()
-                onActivated: applyReferenceScaleToMap()
+                Component.onCompleted: applyReferenceScaleToMap();
+                onActivated: applyReferenceScaleToMap();
             }
 
             Button {
@@ -111,7 +110,7 @@ Rectangle {
                 }
                 Layout.margins: 3
                 Layout.fillWidth: true
-                onClicked: mapView.setViewpointScale(referenceScales[scales.currentIndex])
+                onClicked: mapView.setViewpointScale(referenceScales[scales.currentIndex]);
             }
         }
     }
@@ -153,7 +152,7 @@ Rectangle {
                     CheckBox {
                         id: featureLayerBox
                         checked: true
-                        onCheckStateChanged: featureLayerScaleSymbols(name,featureLayerBox.checked)
+                        onCheckStateChanged: featureLayerScaleSymbols(name,featureLayerBox.checked);
                     }
                     Text {
                         id: featureLayerText
@@ -169,14 +168,14 @@ Rectangle {
     }
 
     function applyReferenceScaleToMap() {
-        map.referenceScale = referenceScales[scales.currentIndex]
+        map.referenceScale = referenceScales[scales.currentIndex];
     }
 
     //pass in layers name and checked status to update featurelayer.ScaleSymbols property accordingly
     function featureLayerScaleSymbols(layerName, checkedStatus) {
         featureLayerModel.forEach(function(lyr){
             if(layerName === lyr.name){
-                lyr.scaleSymbols = checkedStatus
+                lyr.scaleSymbols = checkedStatus;
             }
         })
     }

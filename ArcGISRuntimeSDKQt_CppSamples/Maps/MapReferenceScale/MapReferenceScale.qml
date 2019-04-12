@@ -18,12 +18,8 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import Esri.Samples 1.0
 import QtQuick.Layouts 1.12
-import Esri.ArcGISExtras 1.1
-
-
 
 Item {
-
     property var referenceScales: [500000,250000,100000,50000]
 
     MapView {
@@ -75,8 +71,8 @@ Item {
                 Layout.margins: 3
                 Layout.fillWidth: true
                 model: ["1:500000","1:250000","1:100000","1:50000"]
-                Component.onCompleted: mapReferenceScaleSampleModel.currentMapScale = referenceScales[scales.currentIndex]
-                onActivated: mapReferenceScaleSampleModel.currentMapScale = referenceScales[scales.currentIndex]
+                Component.onCompleted: mapReferenceScaleSampleModel.currentMapScale = referenceScales[scales.currentIndex];
+                onActivated: mapReferenceScaleSampleModel.currentMapScale = referenceScales[scales.currentIndex];
             }
 
             Button {
@@ -87,7 +83,7 @@ Item {
                 }
                 Layout.margins: 3
                 Layout.fillWidth: true
-                onClicked: mapReferenceScaleSampleModel.setMapScaleToReferenceScale(referenceScales[scales.currentIndex])
+                onClicked: mapReferenceScaleSampleModel.setMapScaleToReferenceScale(referenceScales[scales.currentIndex]);
             }
         }
     }
@@ -129,7 +125,7 @@ Item {
                     CheckBox {
                         id: featureLayerBox
                         checked: true
-                        onCheckStateChanged: mapReferenceScaleSampleModel.featureLayerScaleSymbols(name,featureLayerBox.checked)
+                        onCheckStateChanged: mapReferenceScaleSampleModel.featureLayerScaleSymbols(name,featureLayerBox.checked);
                     }
                     Text {
                         id: featureLayerText
