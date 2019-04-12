@@ -17,7 +17,7 @@ The layers in the map will be displayed in a table of contents. Toggle the check
 ## How it works
 
 1. Create an empty `GroupLayer`.
-2. Add a child layer to the group layer's layers collection.
+2. Create a new layer and add it to the group layer's layers collection.
 3. To build the table of contents:
   - Create a ListView and bind the model the the scene's operational layer list model.
   - Create a delegate for the group layer and and another delegate for all other layers. The group layer delegate will have nested checkboxes.

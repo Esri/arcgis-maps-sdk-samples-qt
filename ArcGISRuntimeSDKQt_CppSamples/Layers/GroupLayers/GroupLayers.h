@@ -36,7 +36,7 @@ class GroupLayers : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
-  Q_PROPERTY(Esri::ArcGISRuntime::LayerListModel* layerListModel READ layerListModel NOTIFY layerListModelChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::LayerListModel* layerListModel MEMBER m_layerListModel NOTIFY layerListModelChanged)
 
 public:
   explicit GroupLayers(QObject* parent = nullptr);
@@ -54,7 +54,6 @@ public:
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
-  Esri::ArcGISRuntime::LayerListModel* layerListModel() const { return m_layerListModel; }
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;

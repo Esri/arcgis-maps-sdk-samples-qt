@@ -112,10 +112,10 @@ LayerListModel* GroupLayers::getGroupLayerListModel(int layerId)
   if (!m_scene)
     return nullptr;
 
-  auto groupLayer = static_cast<GroupLayer*>(m_scene->operationalLayers()->at(layerId));
+  GroupLayer* groupLayer = static_cast<GroupLayer*>(m_scene->operationalLayers()->at(layerId));
 
   if (groupLayer)
     return groupLayer->layers();
-  else
-    return nullptr;
+
+  return nullptr;
 }
