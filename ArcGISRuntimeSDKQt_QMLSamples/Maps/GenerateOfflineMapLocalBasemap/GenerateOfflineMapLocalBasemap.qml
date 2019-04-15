@@ -1,6 +1,6 @@
-// [WriteFile Name=GenerateOfflineMap, Category=Maps]
+// [WriteFile Name=GenerateOfflineMapLocalBasemap, Category=Maps]
 // [Legal]
-// Copyright 2017 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,9 +27,10 @@ Rectangle {
     width: 800
     height: 600
 
-    
     property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_%1.mmpk".arg(new Date().getTime().toString())
+    property url basemapDirectory: System.userHomePath + "/ArcGIS/Runtime/Data/tpk"
     property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
+    property bool useLocalBasemap: false
 
     MapView {
         id: mapView
@@ -41,11 +42,7 @@ Rectangle {
 
             PortalItem {
                 id: mapPortalItem
-
                 itemId: webMapId
-                Portal {
-                    loginRequired: true
-                }
             }
         }
 
@@ -59,7 +56,7 @@ Rectangle {
             }
             visible: map.loadStatus === Enums.LoadStatusLoaded
 
-            onButtonClicked: extentRectangle.getRectangleEnvelope();
+            onButtonClicked: dialog.open()
         }
     }
 
@@ -99,7 +96,17 @@ Rectangle {
             if (createDefaultGenerateOfflineMapParametersStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            // Take the map offline once the parameters are generated
+            var parameters = offlineMapTask.createDefaultGenerateOfflineMapParametersResult;
+
+            // update default parameters to specify use of local basemap
+            // this will prevent new tiles from being generated on the server
+            // and will reduce generation and download time/
+            if (useLocalBasemap) {
+                // set the path where 'naperville_imagery.tpk' exists
+                parameters.referenceBasemapDirectory = System.resolvedPath(basemapDirectory);
+            }
+
+            // Take the map offline
             takeMapOffline(offlineMapTask.createDefaultGenerateOfflineMapParametersResult);
         }
 
@@ -205,6 +212,50 @@ Rectangle {
             }
             Text {
                 id: detailsLabel
+            }
+        }
+    }
+
+    Dialog {
+        id: dialog
+        anchors.centerIn: parent
+        width: 200
+
+        Column {
+            spacing: 2
+            width: parent.width
+
+            Text {
+                width: parent.width
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.Wrap
+                text: "This web map references a local basemap with the name 'naperville_imagery.tpk'.\nYou can use the basemap already on disk or download the basemap again"
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Use Local Basemap"
+                onClicked: {
+                    useLocalBasemap = true;
+                    extentRectangle.getRectangleEnvelope();
+                    dialog.close();
+                }
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Download Basemap"
+                onClicked: {
+                    useLocalBasemap = false;
+                    extentRectangle.getRectangleEnvelope();
+                    dialog.close();
+                }
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: "Cancel"
+                onClicked: dialog.close()
             }
         }
     }

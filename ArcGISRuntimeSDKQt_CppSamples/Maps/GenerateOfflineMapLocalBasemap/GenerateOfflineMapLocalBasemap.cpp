@@ -1,6 +1,6 @@
-// [WriteFile Name=GenerateOfflineMap, Category=Maps]
+// [WriteFile Name=GenerateOfflineMapLocalBasemap, Category=Maps]
 // [Legal]
-// Copyright 2017 Esri.
+// Copyright 2019 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 // limitations under the License.
 // [Legal]
 
-#include "GenerateOfflineMap.h"
+#include "GenerateOfflineMapLocalBasemap.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
@@ -26,34 +26,58 @@
 #include "Envelope.h"
 #include "Point.h"
 
+#include <QDir>
+#include <QTemporaryDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
+
 using namespace Esri::ArcGISRuntime;
 
-const QString GenerateOfflineMap::s_webMapId = QStringLiteral("acc027394bc84c2fb04d1ed317aac674");
+// helper method to get cross platform data path
+namespace {
+  QString defaultDataPath()
+  {
+    QString dataPath;
 
-GenerateOfflineMap::GenerateOfflineMap(QQuickItem* parent /* = nullptr */):
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
+
+const QString GenerateOfflineMapLocalBasemap::s_webMapId = QStringLiteral("acc027394bc84c2fb04d1ed317aac674");
+
+GenerateOfflineMapLocalBasemap::GenerateOfflineMapLocalBasemap(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
 {
 }
 
-void GenerateOfflineMap::init()
+void GenerateOfflineMapLocalBasemap::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<GenerateOfflineMap>("Esri.Samples", 1, 0, "GenerateOfflineMapSample");
+  qmlRegisterType<GenerateOfflineMapLocalBasemap>("Esri.Samples", 1, 0, "GenerateOfflineMapLocalBasemapSample");
   qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
 }
 
-void GenerateOfflineMap::componentComplete()
+void GenerateOfflineMapLocalBasemap::componentComplete()
 {
   QQuickItem::componentComplete();
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
 
-  // Create a Portal Item for use by the Map and OfflineMapTask
-  bool loginRequired = true;
-  Portal* portal = new Portal(loginRequired, this);
-  m_portalItem = new PortalItem(portal, webMapId(), this);
+  // Create a Portal Item for use by the Map and OfflineMapTask  
+  m_portalItem = new PortalItem(webMapId(), this);
 
   // Create a map from the Portal Item
   m_map = new Map(m_portalItem, this);
@@ -84,20 +108,28 @@ void GenerateOfflineMap::componentComplete()
   });
 }
 
-void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2, const QString& dataPath)
+void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
 {
   // create an envelope from the QML rectangle corners
   const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
   const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
   const Envelope extent = Envelope(corner1, corner2);
   const Envelope mapExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const QString tempPath = m_tempDir.path() + "/OfflineMap.mmpk";
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/tpk";
 
   // connect to the signal for when the default parameters are generated
   connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,
-          this, [this, dataPath](QUuid, const GenerateOfflineMapParameters& params)
+          this, [this, dataPath, tempPath](QUuid, GenerateOfflineMapParameters params)
   {
+    // update default parameters to specify use of local basemap
+    // this will prevent new tiles from being generated on the server
+    // and will reduce generation and download time
+    if (m_useLocalBasemap)
+      params.setReferenceBasemapDirectory(dataPath);
+
     // Take the map offline once the parameters are generated
-    GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(params, dataPath);
+    GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(params, tempPath);
 
     // check if there is a valid job
     if (generateJob)
@@ -172,7 +204,7 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
   m_offlineMapTask->createDefaultGenerateOfflineMapParameters(mapExtent);
 }
 
-AuthenticationManager* GenerateOfflineMap::authenticationManager() const
+AuthenticationManager* GenerateOfflineMapLocalBasemap::authenticationManager() const
 {
   return AuthenticationManager::instance();
 }
