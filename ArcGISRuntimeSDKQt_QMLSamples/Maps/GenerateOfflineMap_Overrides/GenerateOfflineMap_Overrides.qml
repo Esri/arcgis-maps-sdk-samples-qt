@@ -71,8 +71,8 @@ Rectangle {
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
-        width: parent.width - (50)
-        height: parent.height - (125)
+        width: parent.width - 50
+        height: parent.height - 125
         color: "transparent"
         visible: map.loadStatus === Enums.LoadStatusLoaded
         border {

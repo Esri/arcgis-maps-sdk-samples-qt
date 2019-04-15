@@ -15,7 +15,7 @@ There are a number of use-cases where you may wish to use a basemap which is alr
 
 The author of a web map can support the use of basemaps which are already on a device by configuring the web map to specify the name of a suitable basemap file. This could be a basemap which:
 
-* Has been authored in ArcGIS Pro to make use of your organizations custom data.
+* Has been authored in ArcGIS Pro to make use of your organization's custom data.
 * Is available as a PortalItem which can be downloaded once and re-used many times.
 
 ## How to use the sample
@@ -29,7 +29,7 @@ The author of a web map can support the use of basemaps which are already on a d
 
 ## How it works
 
-The sample creates a `PortalItem` object using a web map's ID. This portal item is used to initialize an `OfflineMapTask` object. When the button is clicked, the sample requests the default parameters for the task, with the selected extent, by calling `OfflineMapTask::createDefaultGenerateOfflineMapParameters`.
+The sample creates a `PortalItem` object using a web map's ID. This portal item is used to initialize an `OfflineMapTask` object. When the button is clicked, the sample requests the default parameters for the task, with the selected extent, by calling `OfflineMapTask.createDefaultGenerateOfflineMapParameters`.
 
 If the user chooses to use the basemap on the device, the `GenerateOfflineMapParameters.referenceBasemapDirectory` is set to the absolute path of the directory which contains the .tpk file.
 

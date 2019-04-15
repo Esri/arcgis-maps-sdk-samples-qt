@@ -111,10 +111,10 @@ void GenerateOfflineMapLocalBasemap::componentComplete()
 void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
 {
   // create an envelope from the QML rectangle corners
-  const Point& corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
-  const Point& corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
-  const Envelope& extent = Envelope(corner1, corner2);
-  const Envelope& mapExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
+  const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
+  const Envelope extent = Envelope(corner1, corner2);
+  const Envelope mapExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
   const QString tempPath = m_tempDir.path() + "/OfflineMap.mmpk";
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/tpk";
 
