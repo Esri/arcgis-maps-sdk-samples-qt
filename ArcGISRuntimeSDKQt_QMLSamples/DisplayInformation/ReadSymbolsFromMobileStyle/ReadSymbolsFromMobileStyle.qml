@@ -51,6 +51,16 @@ Rectangle {
             graphic.symbol = currentSymbol;
             graphicsOverlay.graphics.append(graphic);
         }
+
+        Button {
+            anchors {
+                bottom: mapView.attributionTop
+                horizontalCenter: parent.horizontalCenter
+                bottomMargin: 10
+            }
+            text: "Clear Graphics"
+            onClicked: graphicsOverlay.graphics.clear();
+        }
     }
 
     SymbolStyle {
@@ -126,7 +136,7 @@ Rectangle {
             fill: optionGrid
             margins: -5
         }
-        color: "lightgrey"
+        color: "#efefef"
     }
 
     GridLayout {
@@ -318,5 +328,4 @@ Rectangle {
             id: symbolImage
         }
     }
-
 }
