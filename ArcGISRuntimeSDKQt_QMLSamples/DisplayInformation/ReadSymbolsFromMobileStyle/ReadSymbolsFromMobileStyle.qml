@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx"
     property var currentSymbol
     property var currentFace
     property var currentEyes
@@ -65,7 +65,7 @@ Rectangle {
 
     SymbolStyle {
         id: symbolStyle
-        styleLocation: dataPath + "/emoji-mobile.stylx"
+        styleLocation: dataPath
         Component.onCompleted: load()
 
         onLoadStatusChanged: {
@@ -119,7 +119,7 @@ Rectangle {
             // update swatch
             currentSymbol.swatchImageChanged.connect(function(){
                 symbolImage.source = currentSymbol.swatchImage;
-            })
+            });
             currentSymbol.createSwatch();
         }
     }
@@ -172,7 +172,7 @@ Rectangle {
             Component.onCompleted: {
                 // Create a SymbolStyle and only fetch the Eye symbols
                 style = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {
-                                                                  styleLocation: dataPath + "/emoji-mobile.stylx"
+                                                                  styleLocation: dataPath
                                                               },
                                                               eyeComboBox);
 
@@ -186,7 +186,8 @@ Rectangle {
                 RowLayout {
                     Image {
                         source: symbolUrl
-                        Layout.preferredWidth: 25
+                        Layout.preferredWidth: 20
+                        Layout.preferredHeight: 20
                     }
                     Label {
                         text: name
@@ -219,7 +220,7 @@ Rectangle {
             Component.onCompleted: {
                 // Create a SymbolStyle and only fetch the Eye symbols
                 style = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {
-                                                                  styleLocation: dataPath + "/emoji-mobile.stylx"
+                                                                  styleLocation: dataPath
                                                               },
                                                               eyeComboBox);
 
@@ -233,7 +234,8 @@ Rectangle {
                 RowLayout {
                     Image {
                         source: symbolUrl
-                        Layout.preferredWidth: 25
+                        Layout.preferredWidth: 20
+                        Layout.preferredHeight: 20
                     }
                     Label {
                         text: name
@@ -266,7 +268,7 @@ Rectangle {
             Component.onCompleted: {
                 // Create a SymbolStyle and only fetch the Eye symbols
                 style = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {
-                                                                  styleLocation: dataPath + "/emoji-mobile.stylx"
+                                                                  styleLocation: dataPath
                                                               },
                                                               eyeComboBox);
 
@@ -280,7 +282,8 @@ Rectangle {
                 RowLayout {
                     Image {
                         source: symbolUrl
-                        Layout.preferredWidth: 25
+                        Layout.preferredWidth: 20
+                        Layout.preferredHeight: 20
                     }
                     Label {
                         text: name
@@ -326,6 +329,11 @@ Rectangle {
 
         Image {
             id: symbolImage
+            sourceSize.width: 40
+            sourceSize.height: 40
+            fillMode: Image.PreserveAspectFit
+            width: 40
+            height: 40
         }
     }
 }
