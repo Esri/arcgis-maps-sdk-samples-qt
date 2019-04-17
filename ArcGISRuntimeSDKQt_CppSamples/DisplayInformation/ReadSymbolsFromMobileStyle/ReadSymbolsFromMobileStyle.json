@@ -1,0 +1,8 @@
+{
+    "source" :  "ReadSymbolsFromMobileStyle.qml",
+    "otherSourceFiles" :  [
+        "ReadSymbolsFromMobileStyle.h",
+        "ReadSymbolsFromMobileStyle.cpp"
+    ],
+    "name" : "Read symbols from mobile style file"
+}

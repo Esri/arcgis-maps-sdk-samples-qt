@@ -1,0 +1,198 @@
+// [WriteFile Name=ReadSymbolsFromMobileStyle, Category=DisplayInformation]
+// [Legal]
+// Copyright 2019 Esri.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+#include "ReadSymbolsFromMobileStyle.h"
+
+#include "Map.h"
+#include "MapQuickView.h"
+#include "GraphicsOverlay.h"
+#include "Graphic.h"
+#include "SymbolStyle.h"
+#include "MultilayerSymbol.h"
+#include "Point.h"
+
+#include <QDir>
+#include <QTemporaryDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
+
+using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace {
+QString defaultDataPath()
+{
+  QString dataPath;
+
+#ifdef Q_OS_ANDROID
+  dataPath = "/sdcard";
+#elif defined Q_OS_IOS
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  dataPath = QDir::homePath();
+#endif
+
+  return dataPath;
+}
+} // namespace
+
+ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = nullptr */):
+  QObject(parent),
+  m_map(new Map(Basemap::topographic(this), this))
+{
+  m_symbolStyle = new SymbolStyle(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx", this);
+
+  // Connect to the search completed signal of the style
+  connect(m_symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this](QUuid id, SymbolStyleSearchResultListModel* results)
+  {
+    const int index = m_taskIds.indexOf(id);
+    qDebug() << "done"  << results->size() << id << index;
+    m_models[index] = results;
+
+    emit symbolResultsChanged();
+  });
+
+  // Load the style
+  connect(m_symbolStyle, &SymbolStyle::doneLoading, this, [this](Error e)
+  {
+    if (!e.isEmpty())
+      return;
+
+    // search for hat symbol layers
+    SymbolStyleSearchParameters hatParams;
+    hatParams.setCategories({"Hat"});
+    TaskWatcher hatWatcher = m_symbolStyle->searchSymbols(hatParams);
+    m_taskIds.append(hatWatcher.taskId());
+
+    // search for eyes symbol layers
+    SymbolStyleSearchParameters eyeParams;
+    eyeParams.setCategories({"Eyes"});
+    TaskWatcher eyeWatcher = m_symbolStyle->searchSymbols(eyeParams);
+    m_taskIds.append(eyeWatcher.taskId());
+
+    // search for mouth symbol layers
+    SymbolStyleSearchParameters mouthParams;
+    mouthParams.setCategories({"Mouth"});
+    TaskWatcher mouthWatcher = m_symbolStyle->searchSymbols(mouthParams);
+    m_taskIds.append(mouthWatcher.taskId());
+  });
+  m_symbolStyle->load();
+
+  // Connect to fetchSymbol completed signal
+  connect(m_symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this](QUuid, Symbol* symbol)
+  {
+    qDebug() << "fetch complete";
+    if (m_currentSymbol)
+      delete m_currentSymbol;
+
+    m_currentSymbol = symbol;
+  });
+}
+
+ReadSymbolsFromMobileStyle::~ReadSymbolsFromMobileStyle() = default;
+
+void ReadSymbolsFromMobileStyle::init()
+{
+  // Register the map view for QML
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<ReadSymbolsFromMobileStyle>("Esri.Samples", 1, 0, "ReadSymbolsFromMobileStyleSample");
+  qmlRegisterUncreatableType<SymbolStyleSearchResultListModel>("Esri.Samples", 1, 0, "SymbolStyleSearchResultListModel", "SymbolStyleSearchResultListModel is uncreateable");
+}
+
+void ReadSymbolsFromMobileStyle::clearGraphics()
+{
+  if (!m_mapView)
+    return;
+
+  GraphicsOverlay* overlay = m_mapView->graphicsOverlays()->first();
+  if (!overlay)
+    return;
+
+  for (Graphic* g: *(overlay->graphics()))
+  {
+    overlay->graphics()->removeOne(g);
+    delete g;
+  };
+}
+
+void ReadSymbolsFromMobileStyle::updateSymbol(int hatIndex, int mouthIndex, int eyeIndex, QColor color, int size)
+{
+  if (!m_symbolStyle || !hatResults() || !mouthResults() || !eyeResults())
+    return;
+
+  qDebug() << "updating symbol";
+
+  // set the color and size members
+  m_currentColor = color;
+  m_symbolSize = size;
+
+  // fetch the new symbol based on keys
+  QStringList keys;
+  keys.append(mouthResults()->searchResults().at(mouthIndex).key());
+  keys.append(eyeResults()->searchResults().at(eyeIndex).key());
+  keys.append(hatResults()->searchResults().at(hatIndex).key());
+  m_symbolStyle->fetchSymbol(keys);
+}
+
+MapQuickView* ReadSymbolsFromMobileStyle::mapView() const
+{
+  return m_mapView;
+}
+
+// Set the view (created in QML)
+void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
+{
+  if (!mapView || mapView == m_mapView)
+    return;
+
+  m_mapView = mapView;
+  m_mapView->setMap(m_map);
+
+  // add a graphics overlay
+  GraphicsOverlay* overlay = new GraphicsOverlay(this);
+  m_mapView->graphicsOverlays()->append(overlay);
+
+  // connect to mouse clicked signal
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this, overlay](QMouseEvent mouseEvent)
+  {
+    if (!m_currentSymbol)
+      return;
+
+    Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    Graphic* graphic = new Graphic(clickedPoint, m_currentSymbol, this);
+    overlay->graphics()->append(graphic);
+  });
+
+  emit mapViewChanged();
+}
+
+SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::hatResults() const
+{
+  return m_models[0];
+}
+
+SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::mouthResults() const
+{
+  return m_models[1];
+}
+
+SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::eyeResults() const
+{
+  return m_models[2];
+}

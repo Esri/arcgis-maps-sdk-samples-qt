@@ -1,0 +1,269 @@
+// [WriteFile Name=ReadSymbolsFromMobileStyle, Category=DisplayInformation]
+// [Legal]
+// Copyright 2019 Esri.
+
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// [Legal]
+
+import QtQuick 2.11
+import QtQuick.Controls 2.5
+import QtQuick.Layouts 1.3
+import Esri.Samples 1.0
+
+Item {
+
+    // add a mapView component
+    MapView {
+        id: view
+        anchors.fill: parent
+
+        Button {
+            anchors {
+                bottom: view.attributionTop
+                horizontalCenter: parent.horizontalCenter
+                bottomMargin: 10
+            }
+            text: "Clear Graphics"
+            onClicked: model.clearGraphics();
+        }
+    }
+
+    // Declare the C++ instance which creates the scene etc. and supply the view
+    ReadSymbolsFromMobileStyleSample {
+        id: model
+        mapView: view
+    }
+
+//    property var currentFace
+//    property var currentEyes
+//    property var currentMouth
+//    property var currentHat
+
+//        onSearchSymbolsStatusChanged: {
+//            if (searchSymbolsStatus !== Enums.TaskStatusCompleted)
+//                return;
+
+//            // get initial list of symbols
+//            searchSymbolsResult.forEach(function(result){
+//                if (result.category === "Face") {
+//                    currentFace = result;
+//                }
+//            });
+
+//            // fetch a new symbol with the initial symbol layer keys
+//            updateSymbol();
+//        }
+
+//        onFetchSymbolStatusChanged: {
+//            if (fetchSymbolStatus !== Enums.TaskStatusCompleted)
+//                return;
+
+//            // set the current symbol
+//            currentSymbol = fetchSymbolResult;
+
+//            // set the color locked preferences per layer
+//            currentSymbol.symbolLayers.forEach(function(symbolLyr) {
+//                symbolLyr.colorLocked = true;
+//            });
+//            currentSymbol.symbolLayers.get(0).colorLocked = false;
+
+//            // update size
+//            currentSymbol.size = sizeSlider.value;
+
+//            // update color
+//            currentSymbol.color = colorComboBox.currentText;
+
+//            // update swatch
+//            currentSymbol.swatchImageChanged.connect(function(){
+//                symbolImage.source = currentSymbol.swatchImage;
+//            });
+//            currentSymbol.createSwatch();
+//        }
+//    }
+
+//    function updateSymbol() {
+//        if (!currentFace || !currentEyes || !currentMouth || !currentHat)
+//            return;
+
+//        symbolStyle.fetchSymbolWithKeyList([currentFace.key, currentEyes.key, currentMouth.key, currentHat.key]);
+//    }
+
+    Rectangle {
+        anchors {
+            fill: optionGrid
+            margins: -5
+        }
+        color: "#efefef"
+    }
+
+    GridLayout {
+        id: optionGrid
+        anchors {
+            left: parent.left
+            top: parent.top
+            margins: 10
+        }
+
+        columns: 2
+
+        Label {
+            Layout.columnSpan: 2
+            Layout.alignment: Qt.AlignCenter
+            text: "Change Options to Modify Symbol"
+            font.underline: true
+        }
+
+        Label {
+            text: "Eyes"
+        }
+
+        ComboBox {
+            id: eyeComboBox
+            model: model.eyesResults
+            textRole: "name"
+            delegate: Item {
+                height: 30
+                width: parent.width
+
+                RowLayout {
+                    Image {
+                        source: symbolUrl
+                        Layout.preferredWidth: 20
+                        Layout.preferredHeight: 20
+                    }
+                    Label {
+                        text: name
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        eyeComboBox.currentIndex = index;
+                        eyeComboBox.popup.close();
+                    }
+                }
+            }
+            onCurrentTextChanged: updateSymbol()
+        }
+
+        Label {
+            text: "Mouth"
+        }
+
+        ComboBox {
+            id: mouthComboBox
+            model: model.mouthResults
+            textRole: "name"
+            delegate: Item {
+                height: 30
+                width: parent.width
+
+                RowLayout {
+                    Image {
+                        source: symbolUrl
+                        Layout.preferredWidth: 20
+                        Layout.preferredHeight: 20
+                    }
+                    Label {
+                        text: name
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        mouthComboBox.currentIndex = index;
+                        mouthComboBox.popup.close();
+                    }
+                }
+            }
+            onCurrentTextChanged: updateSymbol()
+        }
+
+        Label {
+            text: "Hat"
+        }
+
+        ComboBox {
+            id: hatComboBox
+            model: model.hatResults
+            textRole: "name"
+            delegate: Item {
+                height: 30
+                width: parent.width
+
+                RowLayout {
+                    Image {
+                        source: symbolUrl
+                        Layout.preferredWidth: 20
+                        Layout.preferredHeight: 20
+                    }
+                    Label {
+                        text: name
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        hatComboBox.currentIndex = index;
+                        hatComboBox.popup.close();
+                    }
+                }
+            }
+            onCurrentTextChanged: updateSymbol()
+        }
+
+        Label {
+            text: "Base Color"
+        }
+
+        ComboBox {
+            id: colorComboBox
+            model: ["yellow", "green", "pink"]
+            onCurrentTextChanged: updateSymbol()
+        }
+
+        Label {
+            text: "Size"
+        }
+
+        Slider {
+            id: sizeSlider
+            Layout.preferredWidth: parent.width / 2
+            from: 1
+            to: 60
+            value: 40
+            onValueChanged: updateSymbol()
+        }
+
+        Label {
+            text: "Preview:"
+        }
+
+        Image {
+            id: symbolImage
+            sourceSize.width: 40
+            sourceSize.height: 40
+            fillMode: Image.PreserveAspectFit
+            width: 40
+            height: 40
+        }
+    }
+
+    function updateSymbol() {
+        console.log("updating symbol from qml");
+        model.updateSymbol(hatComboBox.currentIndex, mouthComboBox.currentIndex, eyeComboBox.currentIndex,
+                           colorComboBox.currentText, sizeSlider.value);
+    }
+}
