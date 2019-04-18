@@ -194,6 +194,7 @@ void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
+// Clear the graphics from the overlay and delete each object
 void ReadSymbolsFromMobileStyle::clearGraphics()
 {
   if (!m_mapView)
@@ -205,9 +206,9 @@ void ReadSymbolsFromMobileStyle::clearGraphics()
 
   for (Graphic* g: *(overlay->graphics()))
   {
-    overlay->graphics()->removeOne(g);
     delete g;
   };
+  overlay->graphics()->clear();
 }
 
 void ReadSymbolsFromMobileStyle::updateSymbol(int hatIndex, int mouthIndex, int eyeIndex, QColor color, int size)
