@@ -289,7 +289,7 @@ Rectangle {
         }
 
         height: childrenRect.height
-        width: childrenRect.width + 30 //Add a little bit of manual padding to comfortably fit the checkbox text
+        width: childrenRect.width
         color: Qt.rgba(0.2, 0.2, 0.2, 0.65)
 
         Column {
