@@ -23,8 +23,12 @@
 #include "SymbolStyle.h"
 #include "MultilayerSymbol.h"
 #include "Point.h"
+#include "MultilayerPointSymbol.h"
+
+#include "SymbolImageProvider.h"
 
 #include <QDir>
+#include <QQmlContext>
 #include <QTemporaryDir>
 #include <QtCore/qglobal.h>
 
@@ -52,7 +56,7 @@ QString defaultDataPath()
 }
 } // namespace
 
-ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = nullptr */):
+ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = nullptr */) :
   QObject(parent),
   m_map(new Map(Basemap::topographic(this), this))
 {
@@ -62,7 +66,6 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
   connect(m_symbolStyle, &SymbolStyle::searchSymbolsCompleted, this, [this](QUuid id, SymbolStyleSearchResultListModel* results)
   {
     const int index = m_taskIds.indexOf(id);
-    qDebug() << "done"  << results->size() << id << index;
     m_models[index] = results;
 
     emit symbolResultsChanged();
@@ -91,17 +94,56 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
     mouthParams.setCategories({"Mouth"});
     TaskWatcher mouthWatcher = m_symbolStyle->searchSymbols(mouthParams);
     m_taskIds.append(mouthWatcher.taskId());
+
+    // search for face symbol layers
+    SymbolStyleSearchParameters faceParams;
+    faceParams.setCategories({"Face"});
+    TaskWatcher faceWatcher = m_symbolStyle->searchSymbols(faceParams);
+    m_taskIds.append(faceWatcher.taskId());
   });
   m_symbolStyle->load();
 
   // Connect to fetchSymbol completed signal
   connect(m_symbolStyle, &SymbolStyle::fetchSymbolCompleted, this, [this](QUuid, Symbol* symbol)
   {
-    qDebug() << "fetch complete";
     if (m_currentSymbol)
       delete m_currentSymbol;
 
-    m_currentSymbol = symbol;
+    // store the resulting symbol
+    m_currentSymbol = static_cast<MultilayerPointSymbol*>(symbol);
+
+    // set the size
+    m_currentSymbol->setSize(m_symbolSize);
+
+    // set the color preferences per layer
+    for (SymbolLayer* lyr : *(m_currentSymbol->symbolLayers()))
+    {
+      lyr->setColorLocked(true);
+    }
+    m_currentSymbol->symbolLayers()->at(0)->setColorLocked(false);
+
+    // set the color
+    m_currentSymbol->setColor(m_currentColor);
+
+    // request symbol swatch
+    connect(m_currentSymbol, &MultilayerPointSymbol::createSwatchCompleted, m_currentSymbol, [this](QUuid id, QImage img)
+    {
+      if (!m_symbolImageProvider)
+        return;
+
+      // convert the QUuid into a QString
+      const QString imageId = id.toString().remove("{").remove("}");
+
+      // add the image to the provider
+      m_symbolImageProvider->addImage(imageId, img);
+
+      // update the URL with the unique id
+      m_symbolImageUrl = QString("image://%1/%2").arg(SymbolImageProvider::imageProviderId(), imageId);
+
+      // emit the signal to trigger the QML Image to update
+      emit symbolImageUrlChanged();
+    });
+    m_currentSymbol->createSwatch();
   });
 }
 
@@ -113,6 +155,43 @@ void ReadSymbolsFromMobileStyle::init()
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ReadSymbolsFromMobileStyle>("Esri.Samples", 1, 0, "ReadSymbolsFromMobileStyleSample");
   qmlRegisterUncreatableType<SymbolStyleSearchResultListModel>("Esri.Samples", 1, 0, "SymbolStyleSearchResultListModel", "SymbolStyleSearchResultListModel is uncreateable");
+}
+
+MapQuickView* ReadSymbolsFromMobileStyle::mapView() const
+{
+  return m_mapView;
+}
+
+// Set the view (created in QML)
+void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
+{
+  if (!mapView || mapView == m_mapView)
+    return;
+
+  m_mapView = mapView;
+  m_mapView->setMap(m_map);
+
+  // Get the image provider from the QML Engine
+  QQmlEngine* engine = QQmlEngine::contextForObject(this)->engine();
+  engine->addImageProvider(SymbolImageProvider::imageProviderId(), new SymbolImageProvider);
+  m_symbolImageProvider = static_cast<SymbolImageProvider*>(engine->imageProvider(SymbolImageProvider::imageProviderId()));
+
+  // add a graphics overlay
+  GraphicsOverlay* overlay = new GraphicsOverlay(this);
+  m_mapView->graphicsOverlays()->append(overlay);
+
+  // connect to mouse clicked signal
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this, overlay](QMouseEvent mouseEvent)
+  {
+    if (!m_currentSymbol)
+      return;
+
+    Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    Graphic* graphic = new Graphic(clickedPoint, m_currentSymbol, this);
+    overlay->graphics()->append(graphic);
+  });
+
+  emit mapViewChanged();
 }
 
 void ReadSymbolsFromMobileStyle::clearGraphics()
@@ -136,50 +215,17 @@ void ReadSymbolsFromMobileStyle::updateSymbol(int hatIndex, int mouthIndex, int 
   if (!m_symbolStyle || !hatResults() || !mouthResults() || !eyeResults())
     return;
 
-  qDebug() << "updating symbol";
-
   // set the color and size members
   m_currentColor = color;
   m_symbolSize = size;
 
   // fetch the new symbol based on keys
   QStringList keys;
-  keys.append(mouthResults()->searchResults().at(mouthIndex).key());
+  keys.append(faceResults()->searchResults().at(0).key());
   keys.append(eyeResults()->searchResults().at(eyeIndex).key());
+  keys.append(mouthResults()->searchResults().at(mouthIndex).key());
   keys.append(hatResults()->searchResults().at(hatIndex).key());
   m_symbolStyle->fetchSymbol(keys);
-}
-
-MapQuickView* ReadSymbolsFromMobileStyle::mapView() const
-{
-  return m_mapView;
-}
-
-// Set the view (created in QML)
-void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
-{
-  if (!mapView || mapView == m_mapView)
-    return;
-
-  m_mapView = mapView;
-  m_mapView->setMap(m_map);
-
-  // add a graphics overlay
-  GraphicsOverlay* overlay = new GraphicsOverlay(this);
-  m_mapView->graphicsOverlays()->append(overlay);
-
-  // connect to mouse clicked signal
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this, overlay](QMouseEvent mouseEvent)
-  {
-    if (!m_currentSymbol)
-      return;
-
-    Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-    Graphic* graphic = new Graphic(clickedPoint, m_currentSymbol, this);
-    overlay->graphics()->append(graphic);
-  });
-
-  emit mapViewChanged();
 }
 
 SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::hatResults() const
@@ -195,4 +241,9 @@ SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::mouthResults() con
 SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::eyeResults() const
 {
   return m_models[2];
+}
+
+SymbolStyleSearchResultListModel* ReadSymbolsFromMobileStyle::faceResults() const
+{
+  return m_models[3];
 }

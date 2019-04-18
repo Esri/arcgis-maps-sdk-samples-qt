@@ -43,60 +43,6 @@ Item {
         mapView: view
     }
 
-//    property var currentFace
-//    property var currentEyes
-//    property var currentMouth
-//    property var currentHat
-
-//        onSearchSymbolsStatusChanged: {
-//            if (searchSymbolsStatus !== Enums.TaskStatusCompleted)
-//                return;
-
-//            // get initial list of symbols
-//            searchSymbolsResult.forEach(function(result){
-//                if (result.category === "Face") {
-//                    currentFace = result;
-//                }
-//            });
-
-//            // fetch a new symbol with the initial symbol layer keys
-//            updateSymbol();
-//        }
-
-//        onFetchSymbolStatusChanged: {
-//            if (fetchSymbolStatus !== Enums.TaskStatusCompleted)
-//                return;
-
-//            // set the current symbol
-//            currentSymbol = fetchSymbolResult;
-
-//            // set the color locked preferences per layer
-//            currentSymbol.symbolLayers.forEach(function(symbolLyr) {
-//                symbolLyr.colorLocked = true;
-//            });
-//            currentSymbol.symbolLayers.get(0).colorLocked = false;
-
-//            // update size
-//            currentSymbol.size = sizeSlider.value;
-
-//            // update color
-//            currentSymbol.color = colorComboBox.currentText;
-
-//            // update swatch
-//            currentSymbol.swatchImageChanged.connect(function(){
-//                symbolImage.source = currentSymbol.swatchImage;
-//            });
-//            currentSymbol.createSwatch();
-//        }
-//    }
-
-//    function updateSymbol() {
-//        if (!currentFace || !currentEyes || !currentMouth || !currentHat)
-//            return;
-
-//        symbolStyle.fetchSymbolWithKeyList([currentFace.key, currentEyes.key, currentMouth.key, currentHat.key]);
-//    }
-
     Rectangle {
         anchors {
             fill: optionGrid
@@ -253,6 +199,7 @@ Item {
 
         Image {
             id: symbolImage
+            source: model.symbolImageUrl
             sourceSize.width: 40
             sourceSize.height: 40
             fillMode: Image.PreserveAspectFit
@@ -262,7 +209,6 @@ Item {
     }
 
     function updateSymbol() {
-        console.log("updating symbol from qml");
         model.updateSymbol(hatComboBox.currentIndex, mouthComboBox.currentIndex, eyeComboBox.currentIndex,
                            colorComboBox.currentText, sizeSlider.value);
     }

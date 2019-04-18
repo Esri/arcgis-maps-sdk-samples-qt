@@ -23,17 +23,20 @@ namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
-class Symbol;
+class MultilayerPointSymbol;
 class SymbolStyle;
 class SymbolStyleSearchResultListModel;
 }
 }
 
+class SymbolImageProvider;
 class QAbstractListModel;
 
 #include <QObject>
 #include <QUuid>
 #include <QColor>
+#include <QUrl>
+#include <QList>
 
 class ReadSymbolsFromMobileStyle : public QObject
 {
@@ -43,6 +46,7 @@ class ReadSymbolsFromMobileStyle : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* hatResults READ hatResults NOTIFY symbolResultsChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* mouthResults READ mouthResults NOTIFY symbolResultsChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* eyesResults READ eyeResults NOTIFY symbolResultsChanged)
+  Q_PROPERTY(QUrl symbolImageUrl MEMBER m_symbolImageUrl NOTIFY symbolImageUrlChanged)
 
 public:
   explicit ReadSymbolsFromMobileStyle(QObject* parent = nullptr);
@@ -56,6 +60,7 @@ public:
 signals:
   void mapViewChanged();
   void symbolResultsChanged();
+  void symbolImageUrlChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -64,15 +69,18 @@ private:
   Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* hatResults() const;
   Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* mouthResults() const;
   Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* eyeResults() const;
+  Esri::ArcGISRuntime::SymbolStyleSearchResultListModel* faceResults() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::Symbol* m_currentSymbol = nullptr;
+  Esri::ArcGISRuntime::MultilayerPointSymbol* m_currentSymbol = nullptr;
   Esri::ArcGISRuntime::SymbolStyle* m_symbolStyle = nullptr;
-  QList<Esri::ArcGISRuntime::SymbolStyleSearchResultListModel*> m_models = { nullptr, nullptr, nullptr };
+  SymbolImageProvider* m_symbolImageProvider = nullptr;
+  QList<Esri::ArcGISRuntime::SymbolStyleSearchResultListModel*> m_models = { nullptr, nullptr, nullptr, nullptr };
   QList<QUuid> m_taskIds;
   QColor m_currentColor;
   int m_symbolSize;
+  QUrl m_symbolImageUrl;
 };
 
 #endif // READSYMBOLSFROMMOBILESTYLE_H

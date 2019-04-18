@@ -32,11 +32,13 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    ReadSymbolsFromMobileStyle.h
+    ReadSymbolsFromMobileStyle.h \
+    SymbolImageProvider.h
 
 SOURCES += \
     main.cpp \
-    ReadSymbolsFromMobileStyle.cpp
+    ReadSymbolsFromMobileStyle.cpp \
+    SymbolImageProvider.cpp
 
 RESOURCES += ReadSymbolsFromMobileStyle.qrc
 
