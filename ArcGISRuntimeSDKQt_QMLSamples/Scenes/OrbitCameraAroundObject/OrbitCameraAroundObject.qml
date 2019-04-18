@@ -144,7 +144,6 @@ Rectangle {
         cameraController: orbitCam //Our new orbital camera controller should be the active SceneView controller.
     }
 
-
     /* Create the UI */
 
     //Camera heading slider, sits at the bottom of the screen
@@ -214,73 +213,6 @@ Rectangle {
         text: "Camera Heading"
         color: "white"
     }
-
-
-    /*
-    //Plane pitch slider, placed in the top-right of the screen
-    Rectangle {
-        anchors {
-            top: parent.top
-            bottom: parent.verticalCenter
-            right: parent.right
-            margins: 30
-        }
-
-        width: childrenRect.width
-        color: uiBackgroundCol
-
-        ColumnLayout
-        {
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-            }
-            spacing: 5
-
-            Text {
-                id: planePitchLabel
-                text: "Plane Pitch"
-                color: "white"
-            }
-
-            Slider {
-                id: planePitchSlider
-
-                Layout.fillHeight: true
-
-                value: 0
-                from: 90
-                to: -90
-                orientation: Qt.Vertical
-
-                onMoved: {
-                    planeGraphic.attributes.replaceAttribute("PITCH", value)
-                }
-
-                //Custom slider handle that displays the current value
-                handle: Rectangle {
-                    x: planePitchSlider.leftPadding + planePitchSlider.availableWidth / 2 - width / 2
-                    y: planePitchSlider.topPadding + planePitchSlider.visualPosition * (planePitchSlider.availableHeight - height)
-
-                    implicitWidth: 30
-                    implicitHeight: 30
-
-                    Text {
-                        id: pitchValue
-
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            verticalCenter: parent.verticalCenter
-                        }
-
-                        text: Math.round(planePitchSlider.value)
-                        color: "black"
-                    }
-                }
-            }
-        }
-    }
-    */
 
     //Plane pitch slider, placed in the top-right of the screen
     Text {

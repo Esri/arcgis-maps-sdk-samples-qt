@@ -21,7 +21,7 @@ Use the "Camera Heading" slider to adjust the camera heading. Select the "Allow 
 
 Use the "Plane Pitch" slider to adjust the plane's pitch. When not in Cockpit view, the plane's pitch will change independently to that of the camera pitch.  
 
-Use the "Cockpit view" button to offset and fix the camera into the cockpit of the plane. Use the "Plane pitch" slider to control the pitch of plane: the camera will follow the pitch of the plane in this mode. In this view adjusting the camera distance is disabled. Hit the "Center view" button to exit cockpit view mode and fix the camera controller on the center of the plane.  
+Use the "Cockpit view" button to offset and fix the camera into the cockpit of the plane. Use the "Plane pitch" slider to control the pitch of plane: the camera will follow the pitch of the plane in this mode. In this view adjusting the camera distance is disabled. Use the "Center view" button to exit cockpit view mode and fix the camera controller on the center of the plane.  
 ## How it works
 Declare an `OrbitGeoElementCameraController`
 
