@@ -204,11 +204,12 @@ void ReadSymbolsFromMobileStyle::clearGraphics()
   if (!overlay)
     return;
 
-  for (Graphic* g: *(overlay->graphics()))
+  GraphicListModel* graphics = overlay->graphics();
+  for (Graphic* g : *(graphics))
   {
+    graphics->removeOne(g);
     delete g;
-  };
-  overlay->graphics()->clear();
+  }
 }
 
 void ReadSymbolsFromMobileStyle::updateSymbol(int hatIndex, int mouthIndex, int eyeIndex, QColor color, int size)
