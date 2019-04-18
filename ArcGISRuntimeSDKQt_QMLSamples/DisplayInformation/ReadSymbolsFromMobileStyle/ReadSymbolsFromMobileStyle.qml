@@ -218,11 +218,11 @@ Rectangle {
                 updateSymbol();
             }
             Component.onCompleted: {
-                // Create a SymbolStyle and only fetch the Eye symbols
+                // Create a SymbolStyle and only fetch the Mouth symbols
                 style = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {
                                                                   styleLocation: dataPath
                                                               },
-                                                              eyeComboBox);
+                                                              mouthComboBox);
 
                 var params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: ["Mouth"]});
                 style.searchSymbols(params);
@@ -266,11 +266,11 @@ Rectangle {
                 updateSymbol();
             }
             Component.onCompleted: {
-                // Create a SymbolStyle and only fetch the Eye symbols
+                // Create a SymbolStyle and only fetch the Hat symbols
                 style = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {
                                                                   styleLocation: dataPath
                                                               },
-                                                              eyeComboBox);
+                                                              hatComboBox);
 
                 var params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: ["Hat"]});
                 style.searchSymbols(params);
