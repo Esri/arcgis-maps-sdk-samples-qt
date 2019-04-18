@@ -18,9 +18,9 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.6
 
 Rectangle {
     id: rootRectangle
@@ -71,8 +71,8 @@ Rectangle {
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
-        width: parent.width - (50)
-        height: parent.height - (125)
+        width: parent.width - 50
+        height: parent.height - 125
         color: "transparent"
         visible: map.loadStatus === Enums.LoadStatusLoaded
         border {

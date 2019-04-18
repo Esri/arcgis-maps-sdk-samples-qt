@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtPositioning 5.6
-import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISRuntime.Toolkit.Controls 100.5
+import Esri.ArcGISRuntime 100.6
+import Esri.ArcGISRuntime.Toolkit.Controls 100.6
 
 Rectangle {
     id: rootRectangle

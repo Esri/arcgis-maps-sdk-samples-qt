@@ -20,7 +20,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Esri.Samples 1.0
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.6
 
 GenerateOfflineMap_OverridesSample {
     id: offlineMapOverridesSample
@@ -73,8 +73,8 @@ GenerateOfflineMap_OverridesSample {
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
-        width: parent.width - (50)
-        height: parent.height - (125)
+        width: parent.width - 50
+        height: parent.height - 125
         color: "transparent"
         visible: mapLoaded
         border {

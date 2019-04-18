@@ -87,10 +87,10 @@ void GenerateOfflineMap::componentComplete()
 void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2, const QString& dataPath)
 {
   // create an envelope from the QML rectangle corners
-  const Point& corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
-  const Point& corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
-  const Envelope& extent = Envelope(corner1, corner2);
-  const Envelope& mapExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
+  const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
+  const Point corner2 = m_mapView->screenToLocation(xCorner2, yCorner2);
+  const Envelope extent = Envelope(corner1, corner2);
+  const Envelope mapExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
   // connect to the signal for when the default parameters are generated
   connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,

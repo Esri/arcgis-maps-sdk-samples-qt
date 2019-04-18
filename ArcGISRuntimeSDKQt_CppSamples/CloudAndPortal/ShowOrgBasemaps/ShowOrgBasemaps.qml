@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.6
 
 ShowOrgBasemapsSample {
     width: 800
@@ -175,6 +175,8 @@ ShowOrgBasemapsSample {
         }
         visible: mapView.visible
         text: "Back"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
+
         opacity: hovered ? 1 : 0.5
 
         onClicked: {
@@ -193,6 +195,7 @@ ShowOrgBasemapsSample {
             top: titleLabel.bottom
         }
         text: "Anonymous"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
 
         onClicked: {
             load(true);
@@ -210,6 +213,7 @@ ShowOrgBasemapsSample {
         }
         width: anonymousLogIn.width
         text: "Sign-in"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
 
         onClicked: {
             load(false);

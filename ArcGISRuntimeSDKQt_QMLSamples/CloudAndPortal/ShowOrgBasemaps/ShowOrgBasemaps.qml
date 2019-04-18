@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
+import Esri.ArcGISRuntime 100.6
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.6
 
 Rectangle {
     id: rootRectangle
@@ -113,7 +113,7 @@ Rectangle {
             margins: 16
         }
         visible: mapView.visible
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_back_dark.png"
         text: "Back"
         opacity: hovered ? 1 : 0.5
 
@@ -236,7 +236,7 @@ Rectangle {
             top: title.bottom
         }
         text: "Anonymous"
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_help_dark.png"
 
         onClicked: {
             portal.load();
@@ -254,7 +254,7 @@ Rectangle {
         }
         width: anonymousLogIn.width
         text: "Sign-in"
-        iconSource: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
+        icon.source: "qrc:/Samples/CloudAndPortal/ShowOrgBasemaps/ic_menu_account_dark.png"
 
         onClicked: {
             portal.credential = oAuthCredential;

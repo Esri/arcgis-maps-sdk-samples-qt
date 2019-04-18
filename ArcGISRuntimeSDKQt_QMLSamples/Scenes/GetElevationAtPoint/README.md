@@ -1,4 +1,4 @@
-# Get Elevation at Point
+# Get elevation at point
 
 Get the elevation for a given point on a surface.
 

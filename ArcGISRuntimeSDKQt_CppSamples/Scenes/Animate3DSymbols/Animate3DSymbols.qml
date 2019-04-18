@@ -228,7 +228,7 @@ Animate3DSymbolsSample {
 
     Timer {
         id: timer
-        interval: Math.max(animationSpeed.to - animationSpeed.value, 1);
+        interval: 16.0 + 84 * (animationSpeed.to - animationSpeed.value) / 100.0;
         running: playButton.checked;
         repeat: true
         onTriggered: animate();

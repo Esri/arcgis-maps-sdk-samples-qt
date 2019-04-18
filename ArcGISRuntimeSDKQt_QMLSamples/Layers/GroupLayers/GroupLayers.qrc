@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/GroupLayers">
+        <file alias="sample.json">GroupLayers.json</file>        
+        <file>GroupLayers.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

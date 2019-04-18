@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/GenerateOfflineMapLocalBasemap">
+        <file alias="sample.json">GenerateOfflineMapLocalBasemap.json</file>
+        <file>GenerateOfflineMapLocalBasemap.qml</file>
+        <file>GenerateOfflineMapLocalBasemap.h</file>
+        <file>GenerateOfflineMapLocalBasemap.cpp</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>download.png</file>
+        <file>DownloadButton.qml</file>
+        <file>GenerateWindow.qml</file>
+    </qresource>
+</RCC>

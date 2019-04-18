@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -43,8 +43,9 @@ Rectangle {
         Map {
             id: map
             basemap: useColorRamp ?
-                         basemap :
-                         basemapColorRamp
+                         basemapColorRamp :
+                         basemap
+
         }
     }
 
