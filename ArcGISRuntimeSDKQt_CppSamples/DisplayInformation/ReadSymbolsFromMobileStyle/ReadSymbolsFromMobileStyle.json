@@ -5,7 +5,7 @@
         "ReadSymbolsFromMobileStyle.cpp",
         "SymbolImageProvider.h",
         "SymbolImageProvider.cpp"
-    ]
+    ],
     "name" : "Read symbols from mobile style file",
     "dataItems" : [
         {
