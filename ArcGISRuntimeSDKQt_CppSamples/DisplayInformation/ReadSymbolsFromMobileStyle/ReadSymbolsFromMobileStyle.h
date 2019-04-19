@@ -81,6 +81,7 @@ private:
   QColor m_currentColor;
   int m_symbolSize;
   QUrl m_symbolImageUrl;
+  QObject* m_graphicParent = nullptr;
 };
 
 #endif // READSYMBOLSFROMMOBILESTYLE_H

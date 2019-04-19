@@ -28,6 +28,7 @@
 #include "SymbolImageProvider.h"
 
 #include <QDir>
+#include <QObject>
 #include <QQmlContext>
 #include <QTemporaryDir>
 #include <QtCore/qglobal.h>
@@ -60,6 +61,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
   QObject(parent),
   m_map(new Map(Basemap::topographic(this), this))
 {
+  m_graphicParent = new QObject();
   m_symbolStyle = new SymbolStyle(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx", this);
 
   // Connect to the search completed signal of the style
@@ -147,7 +149,11 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
   });
 }
 
-ReadSymbolsFromMobileStyle::~ReadSymbolsFromMobileStyle() = default;
+ReadSymbolsFromMobileStyle::~ReadSymbolsFromMobileStyle()
+{
+  if (m_graphicParent)
+    delete m_graphicParent;
+}
 
 void ReadSymbolsFromMobileStyle::init()
 {
@@ -187,7 +193,7 @@ void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
       return;
 
     const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-    Graphic* graphic = new Graphic(clickedPoint, m_currentSymbol, this);
+    Graphic* graphic = new Graphic(clickedPoint, m_currentSymbol, m_graphicParent);
     overlay->graphics()->append(graphic);
   });
 
@@ -204,12 +210,10 @@ void ReadSymbolsFromMobileStyle::clearGraphics()
   if (!overlay)
     return;
 
-  GraphicListModel* graphics = overlay->graphics();
-  for (Graphic* g : *(graphics))
-  {
-    graphics->removeOne(g);
-    delete g;
-  }
+  overlay->graphics()->clear();
+  // reset m_graphicsParent to delete all children
+  delete m_graphicParent;
+  m_graphicParent = new QObject();
 }
 
 void ReadSymbolsFromMobileStyle::updateSymbol(int hatIndex, int mouthIndex, int eyeIndex, QColor color, int size)
