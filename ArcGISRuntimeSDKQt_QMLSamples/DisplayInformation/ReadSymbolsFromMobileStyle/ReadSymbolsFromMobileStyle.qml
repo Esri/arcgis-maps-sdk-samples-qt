@@ -87,11 +87,13 @@ Rectangle {
                 return;
 
             // get initial list of symbols
-            searchSymbolsResult.forEach(function(result){
+            for (var i = 0; i < searchSymbolsResult.count; i++) {
+                var result = searchSymbolsResult.get(i);
                 if (result.category === "Face") {
                     currentFace = result;
+                    break;
                 }
-            });
+            }
 
             // fetch a new symbol with the initial symbol layer keys
             updateSymbol();
@@ -108,6 +110,7 @@ Rectangle {
             currentSymbol.symbolLayers.forEach(function(symbolLyr) {
                 symbolLyr.colorLocked = true;
             });
+
             currentSymbol.symbolLayers.get(0).colorLocked = false;
 
             // update size
@@ -120,6 +123,7 @@ Rectangle {
             currentSymbol.swatchImageChanged.connect(function(){
                 symbolImage.source = currentSymbol.swatchImage;
             });
+
             currentSymbol.createSwatch();
         }
     }
@@ -173,8 +177,7 @@ Rectangle {
                 // Create a SymbolStyle and only fetch the Eye symbols
                 style = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {
                                                                   styleLocation: dataPath
-                                                              },
-                                                              eyeComboBox);
+                                                              });
 
                 var params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: ["Eyes"]});
                 style.searchSymbols(params);
@@ -221,8 +224,7 @@ Rectangle {
                 // Create a SymbolStyle and only fetch the Mouth symbols
                 style = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {
                                                                   styleLocation: dataPath
-                                                              },
-                                                              mouthComboBox);
+                                                              });
 
                 var params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: ["Mouth"]});
                 style.searchSymbols(params);
@@ -269,8 +271,7 @@ Rectangle {
                 // Create a SymbolStyle and only fetch the Hat symbols
                 style = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {
                                                                   styleLocation: dataPath
-                                                              },
-                                                              hatComboBox);
+                                                              });
 
                 var params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: ["Hat"]});
                 style.searchSymbols(params);

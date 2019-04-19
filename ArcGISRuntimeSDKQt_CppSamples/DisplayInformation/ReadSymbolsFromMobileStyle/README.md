@@ -27,7 +27,7 @@ Multilayer symbols provide the ability to create much more complex and interesti
 ## Relevant API
 
 * MultilayerPointSymbol
-* Symbol.createSwatch
+* Symbol::createSwatch
 * SymbolLayer
 * SymbolStyle
 * SymbolStyle::searchSymbols

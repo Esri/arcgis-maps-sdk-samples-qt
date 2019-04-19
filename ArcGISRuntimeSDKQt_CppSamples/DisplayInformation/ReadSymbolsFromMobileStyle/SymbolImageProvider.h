@@ -15,7 +15,7 @@
 #define SYMBOLIMAGEPROVIDER_H
 
 #include <QQuickImageProvider>
-#include <QMap>
+#include <QHash>
 #include <QImage>
 
 class SymbolImageProvider : public QQuickImageProvider
@@ -31,7 +31,7 @@ public:
   static QString imageProviderId();
 
 private:
-  QMap<QString, QImage> m_images;
+  QHash<QString, QImage> m_images;
 };
 
 #endif // SYMBOLIMAGEPROVIDER_H

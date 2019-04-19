@@ -29,6 +29,7 @@
 
 #include <QDir>
 #include <QObject>
+#include <QScopedPointer>
 #include <QQmlContext>
 #include <QTemporaryDir>
 #include <QtCore/qglobal.h>
@@ -59,9 +60,9 @@ QString defaultDataPath()
 
 ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = nullptr */) :
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this))
+  m_map(new Map(Basemap::topographic(this), this)),
+  m_graphicParent(new QObject())
 {
-  m_graphicParent = new QObject();
   m_symbolStyle = new SymbolStyle(defaultDataPath() + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx", this);
 
   // Connect to the search completed signal of the style
@@ -103,6 +104,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
     TaskWatcher faceWatcher = m_symbolStyle->searchSymbols(faceParams);
     m_taskIds.append(faceWatcher.taskId());
   });
+
   m_symbolStyle->load();
 
   // Connect to fetchSymbol completed signal
@@ -122,6 +124,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
     {
       lyr->setColorLocked(true);
     }
+
     m_currentSymbol->symbolLayers()->at(0)->setColorLocked(false);
 
     // set the color
@@ -145,15 +148,12 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
       // emit the signal to trigger the QML Image to update
       emit symbolImageUrlChanged();
     });
+
     m_currentSymbol->createSwatch();
   });
 }
 
-ReadSymbolsFromMobileStyle::~ReadSymbolsFromMobileStyle()
-{
-  if (m_graphicParent)
-    delete m_graphicParent;
-}
+ReadSymbolsFromMobileStyle::~ReadSymbolsFromMobileStyle() = default;
 
 void ReadSymbolsFromMobileStyle::init()
 {
@@ -193,7 +193,7 @@ void ReadSymbolsFromMobileStyle::setMapView(MapQuickView* mapView)
       return;
 
     const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-    Graphic* graphic = new Graphic(clickedPoint, m_currentSymbol, m_graphicParent);
+    Graphic* graphic = new Graphic(clickedPoint, m_currentSymbol, m_graphicParent.get());
     overlay->graphics()->append(graphic);
   });
 
@@ -210,10 +210,11 @@ void ReadSymbolsFromMobileStyle::clearGraphics()
   if (!overlay)
     return;
 
+  // clear the list model
   overlay->graphics()->clear();
+
   // reset m_graphicsParent to delete all children
-  delete m_graphicParent;
-  m_graphicParent = new QObject();
+  m_graphicParent.reset(new QObject());
 }
 
 void ReadSymbolsFromMobileStyle::updateSymbol(int hatIndex, int mouthIndex, int eyeIndex, QColor color, int size)

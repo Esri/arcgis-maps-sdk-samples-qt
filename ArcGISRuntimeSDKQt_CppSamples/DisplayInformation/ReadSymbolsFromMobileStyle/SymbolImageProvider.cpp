@@ -21,7 +21,7 @@ SymbolImageProvider::SymbolImageProvider() :
 }
 
 // reimplemented function for QML to request Images from the provider
-QImage SymbolImageProvider::requestImage(const QString& id, QSize* size, const QSize &requestedSize)
+QImage SymbolImageProvider::requestImage(const QString& id, QSize* size, const QSize& requestedSize)
 {  
   Q_UNUSED(size)
   Q_UNUSED(requestedSize)
