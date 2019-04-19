@@ -39,6 +39,9 @@ Item {
             margins: -5
         }
         color: "lightgrey"
+        border.color: "#4D4D4D"
+        opacity: 0.9
+        radius: 5
     }
 
     // Create a list view to display the items
