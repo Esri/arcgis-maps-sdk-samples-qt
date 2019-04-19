@@ -1,0 +1,21 @@
+{
+    "category": "Geometry",
+    "current_slug": "sample-qt-listtransformationsbysuitability.htm",
+    "description": "Transformations (sometimes known as datum or geographic transformations) are used when projecting data from one spatial reference to another, when there is a difference in the underlying datum of the spatial references",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-listtransformationsbysuitability.htm",
+    "relevant_apis": [
+        "TransformationCatalog",
+        "DatumTransformation",
+        "GeographicTransformation",
+        "GeographicTransformationStep",
+        "GeometryEngine"
+    ],
+    "snippets": [
+        "ListTransformations.qml"
+    ],
+    "title": "List transformations by suitability"
+}

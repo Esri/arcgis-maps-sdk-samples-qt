@@ -1,0 +1,23 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-maprotation.htm",
+    "description": "This sample demonstrates how to rotate a map view",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-maprotation.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Point",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "MapRotation.h",
+        "MapRotation.cpp",
+        "MapRotation.qml"
+    ],
+    "title": "Map rotation"
+}

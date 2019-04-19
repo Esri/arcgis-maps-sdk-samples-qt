@@ -1,0 +1,15 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-distancecompositesymbol.htm",
+    "description": "This sample demonstrates how to create a graphic using a distance composite scene symbol",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-distancecompositesymbol.htm",
+    "relevant_apis": [],
+    "snippets": [
+        "DistanceCompositeSymbol.qml"
+    ],
+    "title": "Distance composite symbol"
+}

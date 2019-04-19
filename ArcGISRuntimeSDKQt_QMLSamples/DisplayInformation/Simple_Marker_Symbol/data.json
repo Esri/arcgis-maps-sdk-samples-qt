@@ -1,0 +1,25 @@
+{
+    "category": "Display Information",
+    "current_slug": "sample-qt-simplemarkersymbol.htm",
+    "description": "This sample demonstrates how to add a point graphic, symbolized by a red circle specified via a SimpleMarkerSymbol, to a GraphicsOverlay",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-simplemarkersymbol.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Graphic",
+        "GraphicsOverlay",
+        "SimpleMarkerSymbol",
+        "Viewpoint",
+        "Point",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "Simple_Marker_Symbol.qml"
+    ],
+    "title": "Simple marker symbol"
+}

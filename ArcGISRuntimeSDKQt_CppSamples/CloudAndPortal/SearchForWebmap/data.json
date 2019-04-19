@@ -1,0 +1,23 @@
+{
+    "category": "Cloud And Portal",
+    "current_slug": "sample-qt-searchforwebmapbykeyword.htm",
+    "description": "This sample demonstrates how find portal items by using a keyword, and limit the results to items of a certain type - in this case, web maps",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-searchforwebmapbykeyword.htm",
+    "relevant_apis": [
+        "Portal",
+        "PortalQueryParametersForItems",
+        "PortalQueryResultSetForItems",
+        "PortalItemListModel",
+        "PortalItem"
+    ],
+    "snippets": [
+        "SearchForWebmap.qml",
+        "SearchForWebmap.h",
+        "SearchForWebmap.cpp"
+    ],
+    "title": "Search for web map by keyword"
+}

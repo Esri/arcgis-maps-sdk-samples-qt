@@ -1,0 +1,27 @@
+{
+    "category": "Layers",
+    "current_slug": "sample-qt-querymapimagesublayer.htm",
+    "description": "This sample demonstrates how to execute an attribute and spatial query on the sublayers of an ArcGIS map image layer",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Query,",
+        "Sublayer,",
+        "MapServer,",
+        "Table"
+    ],
+    "new_slug": "sample-qt-querymapimagesublayer.htm",
+    "relevant_apis": [
+        "ServiceFeatureTable",
+        "ArcGISMapImageLayer",
+        "ArcGISMapImageLayer.loadTablesAndLayers",
+        "ArcGISMapImageSublayer",
+        "ArcGISMapImageSublayer.table",
+        "QueryParameters"
+    ],
+    "snippets": [
+        "QueryMapImageSublayer.qml"
+    ],
+    "title": "Query map image sublayer"
+}

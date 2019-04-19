@@ -1,0 +1,22 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-scenelayerselection.htm",
+    "description": "This sample demonstrates how to identify and select GeoElements in an ArcGISSceneLayer",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-scenelayerselection.htm",
+    "relevant_apis": [
+        "ArcGISSceneLayer",
+        "ArcGISSceneLayer::selectFeature",
+        "SceneView::identifyLayer",
+        "IdentifyLayerResult"
+    ],
+    "snippets": [
+        "SceneLayerSelection.qml",
+        "SceneLayerSelection.h",
+        "SceneLayerSelection.cpp"
+    ],
+    "title": "Scene layer selection"
+}

@@ -1,0 +1,24 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-displaydrawingstatus.htm",
+    "description": "This sample demonstrates how to use the DrawStatus value of the MapView to notify the user that the MapView is drawing",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-displaydrawingstatus.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "FeatureLayer",
+        "ServiceFeatureTable",
+        "Viewpoint",
+        "Envelope"
+    ],
+    "snippets": [
+        "DisplayDrawingStatus.h",
+        "DisplayDrawingStatus.qml",
+        "DisplayDrawingStatus.cpp"
+    ],
+    "title": "Display drawing status"
+}

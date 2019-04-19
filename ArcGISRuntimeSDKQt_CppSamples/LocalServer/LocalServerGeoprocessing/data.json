@@ -1,0 +1,27 @@
+{
+    "category": "Local Server",
+    "current_slug": "sample-qt-localservergeoprocessing.htm",
+    "description": "Demonstrates how to create contour lines from local raster data using a local geoprocessing package (",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-localservergeoprocessing.htm",
+    "relevant_apis": [
+        "GeoprocessingDouble",
+        "GeoprocessingJob",
+        "GeoprocessingParameter",
+        "GeoprocessingParameters",
+        "GeoprocessingTask",
+        "LocalGeoprocessingService",
+        "LocalGeoprocessingService.ServiceType",
+        "LocalServer",
+        "LocalServerStatus"
+    ],
+    "snippets": [
+        "LocalServerGeoprocessing.qml",
+        "LocalServerGeoprocessing.h",
+        "LocalServerGeoprocessing.cpp"
+    ],
+    "title": "Local Server geoprocessing"
+}

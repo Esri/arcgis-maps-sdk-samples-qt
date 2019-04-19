@@ -1,0 +1,24 @@
+{
+    "category": "Features",
+    "current_slug": "sample-qt-timebasedquery.htm",
+    "description": "This sample demonstrates how to query data using a time extent",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Time,",
+        "Time",
+        "Extent,",
+        "Query"
+    ],
+    "new_slug": "sample-qt-timebasedquery.htm",
+    "relevant_apis": [
+        "TimeExtent",
+        "QueryParameters",
+        "ServiceFeatureTable::populateFromService"
+    ],
+    "snippets": [
+        "TimeBasedQuery.qml"
+    ],
+    "title": "Time based query"
+}

@@ -1,0 +1,26 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-takescreenshot.htm",
+    "description": "This sample demonstrates how to take a screenshot of the MapView",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "screenshot,",
+        "screen",
+        "capture,",
+        "export"
+    ],
+    "new_slug": "sample-qt-takescreenshot.htm",
+    "relevant_apis": [
+        "GeoView::exportImage"
+    ],
+    "snippets": [
+        "TakeScreenshot.cpp",
+        "TakeScreenshot.h",
+        "TakeScreenshot.qml",
+        "MapImageProvider.cpp",
+        "MapImageProvider.h"
+    ],
+    "title": "Take screenshot"
+}

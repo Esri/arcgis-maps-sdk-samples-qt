@@ -1,0 +1,22 @@
+{
+    "category": "Geometry",
+    "current_slug": "sample-qt-cutgeometry.htm",
+    "description": "This sample demonstrates how to cut a geometry with a polyline using the GeometryEngine",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "geometry,",
+        "cut,",
+        "split"
+    ],
+    "new_slug": "sample-qt-cutgeometry.htm",
+    "relevant_apis": [
+        "GeometryEngine",
+        "GeometryEngine::cut"
+    ],
+    "snippets": [
+        "CutGeometry.qml"
+    ],
+    "title": "Cut geometry"
+}

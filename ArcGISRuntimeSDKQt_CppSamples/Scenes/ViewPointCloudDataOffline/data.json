@@ -1,0 +1,25 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-viewpointclouddataoffline.htm",
+    "description": "Display local 3D point cloud data",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D,",
+        "point",
+        "cloud,",
+        "lidar"
+    ],
+    "new_slug": "sample-qt-viewpointclouddataoffline.htm",
+    "relevant_apis": [
+        "PointCloudLayer"
+    ],
+    "snippets": [
+        "ViewPointCloudDataOffline.cpp",
+        "main.qml",
+        "ViewPointCloudDataOffline.qml",
+        "ViewPointCloudDataOffline.h"
+    ],
+    "title": "View point cloud data offline"
+}

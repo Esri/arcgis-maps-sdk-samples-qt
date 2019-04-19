@@ -1,0 +1,30 @@
+{
+    "category": "Edit Data",
+    "current_slug": "sample-qt-updateattributes(featureservice).htm",
+    "description": "This sample demonstrates how to edit attributes of a feature in a feature service",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-updateattributes(featureservice).htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Feature",
+        "ArcGISFeature",
+        "FeatureEditResult",
+        "FeatureQueryResult",
+        "Point"
+    ],
+    "snippets": [
+        "UpdateAttributesFeatureService.cpp",
+        "UpdateAttributesFeatureService.qml",
+        "UpdateAttributesFeatureService.h"
+    ],
+    "title": "Update attributes (feature service)"
+}

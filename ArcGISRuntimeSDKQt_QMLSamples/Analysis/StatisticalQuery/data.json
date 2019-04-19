@@ -1,0 +1,23 @@
+{
+    "category": "Analysis",
+    "current_slug": "sample-qt-statisticalquery.htm",
+    "description": "This sample demonstrates how to query a table to get aggregated statistics back for a specific field",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-statisticalquery.htm",
+    "relevant_apis": [
+        "StatisticsQueryParameters",
+        "StatisticDefinition",
+        "StatisticsQueryResult",
+        "StatisticsRecordIterator",
+        "StatisticRecord",
+        "ServiceFeatureTable",
+        "FeatureLayer"
+    ],
+    "snippets": [
+        "StatisticalQuery.qml"
+    ],
+    "title": "Statistical query"
+}

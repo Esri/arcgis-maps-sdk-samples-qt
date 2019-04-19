@@ -1,0 +1,29 @@
+{
+    "category": "Display Information",
+    "current_slug": "sample-qt-uniquevaluerenderer.htm",
+    "description": "This sample demonstrates how to use a UniqueValueRenderer to style different Features in a FeatureLayer with different Symbols",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-uniquevaluerenderer.htm",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "Basemap",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "UniqueValueRenderer",
+        "SimpleFillSymbol",
+        "SimpleLineSymbol",
+        "Viewpoint",
+        "Envelope",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "Unique_Value_Renderer.qml",
+        "Unique_Value_Renderer.h",
+        "Unique_Value_Renderer.cpp"
+    ],
+    "title": "Unique value renderer"
+}

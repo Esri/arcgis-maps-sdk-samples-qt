@@ -1,0 +1,24 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-setinitialmaparea.htm",
+    "description": "This sample demonstrates how to create a map with a predefined initial extent",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-setinitialmaparea.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "Envelope",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "SetInitialMapArea.qml",
+        "SetInitialMapArea.cpp",
+        "SetInitialMapArea.h"
+    ],
+    "title": "Set initial map area"
+}

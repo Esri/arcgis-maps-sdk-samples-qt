@@ -1,0 +1,21 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-maploaded.htm",
+    "description": "This sample demonstrates how to determine the map\u2019s load status",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-maploaded.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap"
+    ],
+    "snippets": [
+        "MapLoaded.qml",
+        "MapLoaded.cpp",
+        "MapLoaded.h"
+    ],
+    "title": "Map loaded"
+}

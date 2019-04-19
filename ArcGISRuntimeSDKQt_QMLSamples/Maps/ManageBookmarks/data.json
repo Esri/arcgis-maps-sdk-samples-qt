@@ -1,0 +1,15 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-managebookmarks.htm",
+    "description": "This sample demonstrates how to access and add bookmarks to a map",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-managebookmarks.htm",
+    "relevant_apis": [],
+    "snippets": [
+        "ManageBookmarks.qml"
+    ],
+    "title": "Manage bookmarks"
+}

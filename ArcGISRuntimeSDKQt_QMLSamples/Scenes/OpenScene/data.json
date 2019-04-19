@@ -1,0 +1,15 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-openascene(portalitem).htm",
+    "description": "This sample demonstrates how to open a scene from a Portal item",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-openascene(portalitem).htm",
+    "relevant_apis": [],
+    "snippets": [
+        "OpenScene.qml"
+    ],
+    "title": "Open a scene (portal item)"
+}

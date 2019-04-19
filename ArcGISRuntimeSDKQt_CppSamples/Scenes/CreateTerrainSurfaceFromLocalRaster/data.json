@@ -1,0 +1,26 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-createterrainsurfacefromalocalraster.htm",
+    "description": "Use a terrain surface with elevation described by a raster file",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D,",
+        "Raster,",
+        "Elevation,",
+        "Surface"
+    ],
+    "new_slug": "sample-qt-createterrainsurfacefromalocalraster.htm",
+    "relevant_apis": [
+        "RasterElevationSource",
+        "Surface"
+    ],
+    "snippets": [
+        "CreateTerrainSurfaceFromLocalRaster.cpp",
+        "main.qml",
+        "CreateTerrainSurfaceFromLocalRaster.qml",
+        "CreateTerrainSurfaceFromLocalRaster.h"
+    ],
+    "title": "Create terrain surface from a local raster"
+}

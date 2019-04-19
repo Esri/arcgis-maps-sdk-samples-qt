@@ -1,0 +1,28 @@
+{
+    "category": "Display Information",
+    "current_slug": "sample-qt-graphicsoverlay(dictionaryrenderer).htm",
+    "description": "This sample demonstrates applying a dictionary renderer to graphics to display military symbology",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-graphicsoverlay(dictionaryrenderer).htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "BasemapTopographic",
+        "GraphicsOverlay",
+        "DictionaryRenderer",
+        "DictionarySymbolStyle",
+        "SpatialReference",
+        "PointBuilder",
+        "PolygonBuilder",
+        "PolylineBuilder",
+        "Graphic",
+        "GeometryEngine"
+    ],
+    "snippets": [
+        "GODictionaryRenderer.qml"
+    ],
+    "title": "Graphics overlay (dictionary renderer)"
+}

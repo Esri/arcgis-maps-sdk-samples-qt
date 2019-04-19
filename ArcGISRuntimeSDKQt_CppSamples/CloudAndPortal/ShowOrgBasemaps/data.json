@@ -1,0 +1,24 @@
+{
+    "category": "Cloud And Portal",
+    "current_slug": "sample-qt-showorganizationbasemaps.htm",
+    "description": "This sample demonstrates how to load a Portal and then use the organization\u2019s predefined basemaps query to get all basemaps",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-showorganizationbasemaps.htm",
+    "relevant_apis": [
+        "Portal",
+        "Credential",
+        "AuthenticationManager",
+        "BasemapListModel",
+        "Map",
+        "MapView"
+    ],
+    "snippets": [
+        "ShowOrgBasemaps.h",
+        "ShowOrgBasemaps.qml",
+        "ShowOrgBasemaps.cpp"
+    ],
+    "title": "Show organization basemaps"
+}

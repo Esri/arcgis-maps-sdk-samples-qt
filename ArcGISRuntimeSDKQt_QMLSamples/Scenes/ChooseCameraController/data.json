@@ -1,0 +1,15 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-choosecameracontroller.htm",
+    "description": "Control the behavior of the camera in a scene",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-choosecameracontroller.htm",
+    "relevant_apis": [],
+    "snippets": [
+        "ChooseCameraController.qml"
+    ],
+    "title": "Choose camera controller"
+}

@@ -1,0 +1,22 @@
+{
+    "category": "Display Information",
+    "current_slug": "sample-qt-identifygraphics.htm",
+    "description": "This sample demonstrates how to identify graphics in a graphics overlay",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-identifygraphics.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "GraphicsOverlay",
+        "Graphic",
+        "SimpleFillSymbol",
+        "PolygonBuilder"
+    ],
+    "snippets": [
+        "IdentifyGraphics.qml"
+    ],
+    "title": "Identify graphics"
+}

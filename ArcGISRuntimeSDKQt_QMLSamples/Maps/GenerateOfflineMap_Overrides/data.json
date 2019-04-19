@@ -1,0 +1,18 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-generateofflinemap(overrides).htm",
+    "description": "",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-generateofflinemap(overrides).htm",
+    "relevant_apis": [],
+    "snippets": [
+        "OverridesWindow.qml",
+        "DownloadButton.qml",
+        "GenerateWindow.qml",
+        "GenerateOfflineMap_Overrides.qml"
+    ],
+    "title": "Generate Offline Map (Overrides)"
+}

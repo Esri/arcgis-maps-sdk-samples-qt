@@ -1,0 +1,25 @@
+{
+    "category": "Layers",
+    "current_slug": "sample-qt-featurecollectionlayer.htm",
+    "description": "This samples demonstrates how to create a new feature collection with several feature collection tables",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-featurecollectionlayer.htm",
+    "relevant_apis": [
+        "FeatureCollection",
+        "FeatureCollectionLayer",
+        "FeatureCollectionTable",
+        "Field",
+        "Feature",
+        "SimpleRenderer",
+        "SimpleMarkerSymbol",
+        "SimpleLineSymbol",
+        "SimpleFillSymbol"
+    ],
+    "snippets": [
+        "Feature_Collection_Layer.qml"
+    ],
+    "title": "Feature collection layer"
+}

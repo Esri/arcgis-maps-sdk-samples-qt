@@ -1,0 +1,26 @@
+{
+    "category": "Display Information",
+    "current_slug": "sample-qt-addgraphicswithrenderer.htm",
+    "description": "This sample demonstrates how to add graphics and set a renderer on graphic overlays",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-addgraphicswithrenderer.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "GraphicsOverlay",
+        "Graphic",
+        "Point",
+        "PolylineBuilder",
+        "PolygonBuilder"
+    ],
+    "snippets": [
+        "GORenderers.cpp",
+        "GORenderers.h",
+        "GORenderers.qml"
+    ],
+    "title": "Add graphics with renderer"
+}

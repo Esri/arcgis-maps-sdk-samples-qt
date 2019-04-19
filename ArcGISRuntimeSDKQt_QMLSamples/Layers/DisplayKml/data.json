@@ -1,0 +1,23 @@
+{
+    "category": "Layers",
+    "current_slug": "sample-qt-displaykml.htm",
+    "description": "Load and display KML files from various sources, including URLs, local files, and Portal items",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "KML,",
+        "KMZ,",
+        "OGC,",
+        "Keyhole"
+    ],
+    "new_slug": "sample-qt-displaykml.htm",
+    "relevant_apis": [
+        "KmlLayer",
+        "KmlDataset"
+    ],
+    "snippets": [
+        "DisplayKml.qml"
+    ],
+    "title": "Display KML"
+}

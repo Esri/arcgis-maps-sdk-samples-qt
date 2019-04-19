@@ -1,0 +1,15 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-displayamap.htm",
+    "description": "This sample demonstrates how to display a map view with a basemap",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-displayamap.htm",
+    "relevant_apis": [],
+    "snippets": [
+        "DisplayMap.qml"
+    ],
+    "title": "Display a map"
+}

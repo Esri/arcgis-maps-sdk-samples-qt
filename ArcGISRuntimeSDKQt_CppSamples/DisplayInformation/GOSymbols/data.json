@@ -1,0 +1,30 @@
+{
+    "category": "Display Information",
+    "current_slug": "sample-qt-addgraphicswithsymbols.htm",
+    "description": "This sample demonstrates how to add graphics with symbols to a graphics overlay",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-addgraphicswithsymbols.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SimpleFillSymbol",
+        "SimpleLineSymbol",
+        "SimpleMarkerSymbol",
+        "TextSymbol",
+        "Point",
+        "PolylineBuilder",
+        "PolygonBuilder",
+        "GraphicsOverlay"
+    ],
+    "snippets": [
+        "GOSymbols.cpp",
+        "GOSymbols.qml",
+        "GOSymbols.h"
+    ],
+    "title": "Add graphics with symbols"
+}

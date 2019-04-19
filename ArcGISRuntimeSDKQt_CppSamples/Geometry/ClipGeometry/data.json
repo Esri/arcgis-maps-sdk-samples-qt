@@ -1,0 +1,27 @@
+{
+    "category": "Geometry",
+    "current_slug": "sample-qt-clipgeometry.htm",
+    "description": "This sample demonstrates how to clip a geometry with an envelope using the GeometryEngine",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Geometry,",
+        "Clip,",
+        "GeometryEngine"
+    ],
+    "new_slug": "sample-qt-clipgeometry.htm",
+    "relevant_apis": [
+        "GeometryEngine::clip",
+        "GraphicsOverlay",
+        "Graphic",
+        "Geometry",
+        "Envelope"
+    ],
+    "snippets": [
+        "ClipGeometry.h",
+        "ClipGeometry.qml",
+        "ClipGeometry.cpp"
+    ],
+    "title": "Clip geometry"
+}

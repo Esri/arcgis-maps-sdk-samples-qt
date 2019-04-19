@@ -1,0 +1,21 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-displaydevicelocation.htm",
+    "description": "This sample demonstrates how you can enable Location Display to display your current position on the map, as well as switch between different types of AutoPan Modes",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-displaydevicelocation.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "LocationDisplay"
+    ],
+    "snippets": [
+        "DisplayDeviceLocation.qml",
+        "DisplayDeviceLocation.h",
+        "DisplayDeviceLocation.cpp"
+    ],
+    "title": "Display device location"
+}

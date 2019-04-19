@@ -1,0 +1,25 @@
+{
+    "category": "Analysis",
+    "current_slug": "sample-qt-statisticalquery(group&sort).htm",
+    "description": "This sample demonstrates how to query a feature table to get statistics for one or more specified fields",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-statisticalquery(group&sort).htm",
+    "relevant_apis": [
+        "ServiceFeatureTable",
+        "StatisticQueryParameters",
+        "StatisticQueryResult",
+        "StatisticIterator",
+        "StatisticRecord",
+        "StatisticDefinition",
+        "OrderBy"
+    ],
+    "snippets": [
+        "StatisticalQueryGroupSort.qml",
+        "OptionsPage.qml",
+        "ResultsPage.qml"
+    ],
+    "title": "Statistical query (group & sort)"
+}

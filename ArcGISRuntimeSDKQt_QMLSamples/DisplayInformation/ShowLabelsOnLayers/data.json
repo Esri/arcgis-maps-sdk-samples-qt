@@ -1,0 +1,20 @@
+{
+    "category": "Display Information",
+    "current_slug": "sample-qt-showlabelsonlayers.htm",
+    "description": "This sample demonstrates how to display labels on a FeatureLayer",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Labels"
+    ],
+    "new_slug": "sample-qt-showlabelsonlayers.htm",
+    "relevant_apis": [
+        "LabelDefinition",
+        "FeatureLayer"
+    ],
+    "snippets": [
+        "ShowLabelsOnLayers.qml"
+    ],
+    "title": "Show labels on layers"
+}

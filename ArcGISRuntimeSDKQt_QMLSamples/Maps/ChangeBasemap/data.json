@@ -1,0 +1,15 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-changebasemap.htm",
+    "description": "This sample demonstrates how to change a map\u2019s basemap",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-changebasemap.htm",
+    "relevant_apis": [],
+    "snippets": [
+        "ChangeBasemap.qml"
+    ],
+    "title": "Change Basemap"
+}

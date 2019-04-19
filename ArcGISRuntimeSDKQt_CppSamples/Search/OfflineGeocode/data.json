@@ -1,0 +1,31 @@
+{
+    "category": "Search",
+    "current_slug": "sample-qt-offlinegeocode.htm",
+    "description": "This sample demonstrates how to geocode and reverse geocode addresses and locations without network connectivity",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-offlinegeocode.htm",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "ArcGISTiledLayer",
+        "TileCache",
+        "Callout",
+        "LocatorTask",
+        "GeocodeResult",
+        "GeocodeParameters",
+        "ReverseGeocodeParameters",
+        "SuggestListModel",
+        "GraphicOverlay",
+        "PictureMarkerSymbol",
+        "Viewpoint"
+    ],
+    "snippets": [
+        "OfflineGeocode.cpp",
+        "OfflineGeocode.qml",
+        "OfflineGeocode.h"
+    ],
+    "title": "Offline geocode"
+}

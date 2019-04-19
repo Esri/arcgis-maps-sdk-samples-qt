@@ -1,0 +1,28 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-getelevationatpoint.htm",
+    "description": "Get the elevation for a given point on a surface",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "MapViews,",
+        "SceneViews",
+        "and",
+        "UI"
+    ],
+    "new_slug": "sample-qt-getelevationatpoint.htm",
+    "relevant_apis": [
+        "ArcGISTiledElevationSource",
+        "BaseSurface",
+        "ElevationSourceListModel",
+        "SceneView"
+    ],
+    "snippets": [
+        "GetElevationAtPoint.qml",
+        "main.qml",
+        "GetElevationAtPoint.cpp",
+        "GetElevationAtPoint.h"
+    ],
+    "title": "Get elevation at point"
+}

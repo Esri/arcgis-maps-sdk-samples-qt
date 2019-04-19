@@ -1,0 +1,33 @@
+{
+    "category": "Analysis",
+    "current_slug": "sample-qt-viewshed(geoprocessing).htm",
+    "description": "This sample demonstrates how to use GeoprocessingTask to calculate a viewshed using a geoprocessing service",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-viewshed(geoprocessing).htm",
+    "relevant_apis": [
+        "GeoprocessingTask",
+        "GeoprocessingParameters",
+        "GeoprocessingJob",
+        "GeoprocessingFeatures",
+        "GeoprocessingResult",
+        "FeatureCollectionTable",
+        "GraphicsOverlay",
+        "SimpleRenderer",
+        "Graphic",
+        "SimpleMarkerSymbol",
+        "SimpleFillSymbol",
+        "FeatureIterator",
+        "MapView",
+        "Map",
+        "Basemap"
+    ],
+    "snippets": [
+        "AnalyzeViewshed.cpp",
+        "AnalyzeViewshed.h",
+        "AnalyzeViewshed.qml"
+    ],
+    "title": "Viewshed (Geoprocessing)"
+}

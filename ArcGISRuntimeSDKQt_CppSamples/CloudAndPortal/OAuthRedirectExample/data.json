@@ -1,0 +1,23 @@
+{
+    "category": "Cloud And Portal",
+    "current_slug": "sample-qt-oauthredirectexample.htm",
+    "description": "This sample demonstrates an approach to using OAuth2 for authenticating with an ArcGIS portal",
+    "images": [],
+    "keywords": [],
+    "new_slug": "sample-qt-oauthredirectexample.htm",
+    "relevant_apis": [
+        "AuthenticationChallenge",
+        "AuthenticationManager",
+        "Portal"
+    ],
+    "snippets": [
+        "OAuthRedirectExample.qml",
+        "OAuthRedirectExample.h",
+        "MyApplication.h",
+        "OAuthRedirectHandler.cpp",
+        "OAuthRedirectHandler.h",
+        "MyApplication.cpp",
+        "OAuthRedirectExample.cpp"
+    ],
+    "title": "OAuth Redirect Example"
+}

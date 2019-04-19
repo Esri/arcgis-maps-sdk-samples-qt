@@ -1,0 +1,15 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-createterrainsurfacefromalocaltilepackage.htm",
+    "description": "Set the terrain surface with elevation described by a local tile package",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-createterrainsurfacefromalocaltilepackage.htm",
+    "relevant_apis": [],
+    "snippets": [
+        "CreateTerrainSurfaceFromLocalTilePackage.qml"
+    ],
+    "title": "Create terrain surface from a local tile package"
+}

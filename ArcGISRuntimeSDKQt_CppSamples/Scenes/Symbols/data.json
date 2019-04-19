@@ -1,0 +1,22 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-scenesymbols.htm",
+    "description": "This sample demonstrates how to create symbols with different 3D shapes",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-scenesymbols.htm",
+    "relevant_apis": [
+        "SceneView",
+        "Graphic",
+        "GraphicsOverlay",
+        "SimpleMarkerSceneSymbol"
+    ],
+    "snippets": [
+        "Symbols.qml",
+        "Symbols.h",
+        "Symbols.cpp"
+    ],
+    "title": "Scene symbols"
+}

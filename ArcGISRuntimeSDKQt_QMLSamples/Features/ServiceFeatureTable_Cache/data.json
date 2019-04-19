@@ -1,0 +1,22 @@
+{
+    "category": "Features",
+    "current_slug": "sample-qt-servicefeaturetable(cache).htm",
+    "description": "This sample demonstrates how to use a feature table with the FeatureRequestModeOnInteractionCache feature request mode",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-servicefeaturetable(cache).htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Enums"
+    ],
+    "snippets": [
+        "ServiceFeatureTable_Cache.qml"
+    ],
+    "title": "Service feature table (cache)"
+}

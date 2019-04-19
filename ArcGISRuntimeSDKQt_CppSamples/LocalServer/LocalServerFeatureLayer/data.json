@@ -1,0 +1,22 @@
+{
+    "category": "Local Server",
+    "current_slug": "sample-qt-localserverfeaturelayer.htm",
+    "description": "Demonstrates how to start the Local Server and local feature service, create a feature layer from the local feature service, and add it to a map",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-localserverfeaturelayer.htm",
+    "relevant_apis": [
+        "Feature Layer",
+        "LocalFeatureService",
+        "LocalServer",
+        "LocalServerStatus"
+    ],
+    "snippets": [
+        "LocalServerFeatureLayer.h",
+        "LocalServerFeatureLayer.cpp",
+        "LocalServerFeatureLayer.qml"
+    ],
+    "title": "Local Server feature layer"
+}

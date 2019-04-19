@@ -1,0 +1,26 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-changeatmosphereeffect.htm",
+    "description": "Changes the appearance of the atmosphere in a scene",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D,",
+        "AtmosphereEffect,",
+        "Scene"
+    ],
+    "new_slug": "sample-qt-changeatmosphereeffect.htm",
+    "relevant_apis": [
+        "Scene",
+        "AtmosphereEffect",
+        "SceneQuickView"
+    ],
+    "snippets": [
+        "ChangeAtmosphereEffect.qml",
+        "main.qml",
+        "ChangeAtmosphereEffect.h",
+        "ChangeAtmosphereEffect.cpp"
+    ],
+    "title": "Change atmosphere effect"
+}

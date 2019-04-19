@@ -1,0 +1,23 @@
+{
+    "category": "Layers",
+    "current_slug": "sample-qt-rgbrenderer.htm",
+    "description": "This sample demonstrates how to use rgb renderer on a raster layer",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-rgbrenderer.htm",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "Raster",
+        "RasterLayer",
+        "RGBRenderer"
+    ],
+    "snippets": [
+        "RasterRgbRenderer.qml",
+        "RasterRgbRenderer.h",
+        "RasterRgbRenderer.cpp"
+    ],
+    "title": "RGB renderer"
+}

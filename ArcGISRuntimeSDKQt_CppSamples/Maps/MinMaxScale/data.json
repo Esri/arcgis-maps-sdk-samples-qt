@@ -1,0 +1,27 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-min-maxscale.htm",
+    "description": "This sample demonstrates how to set the minimum and maximum scale of a map",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Maps,",
+        "2D,",
+        "scale,",
+        "setMinScale,",
+        "setMaxScale,",
+        "zoom"
+    ],
+    "new_slug": "sample-qt-min-maxscale.htm",
+    "relevant_apis": [
+        "Map::setMinScale",
+        "Map::setMaxScale"
+    ],
+    "snippets": [
+        "MinMaxScale.qml",
+        "MinMaxScale.h",
+        "MinMaxScale.cpp"
+    ],
+    "title": "Min-Max Scale"
+}

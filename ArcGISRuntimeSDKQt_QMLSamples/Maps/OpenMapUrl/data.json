@@ -1,0 +1,15 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-openmap(url).htm",
+    "description": "This sample demonstrates how to open an existing map from a URL",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-openmap(url).htm",
+    "relevant_apis": [],
+    "snippets": [
+        "OpenMapUrl.qml"
+    ],
+    "title": "Open Map (URL)"
+}

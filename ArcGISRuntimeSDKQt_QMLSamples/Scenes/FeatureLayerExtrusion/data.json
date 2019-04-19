@@ -1,0 +1,15 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-featurelayerextrusion.htm",
+    "description": "This sample demonstrates how to apply extrusion to a renderer on a feature layer",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-featurelayerextrusion.htm",
+    "relevant_apis": [],
+    "snippets": [
+        "FeatureLayerExtrusion.qml"
+    ],
+    "title": "Feature Layer Extrusion"
+}

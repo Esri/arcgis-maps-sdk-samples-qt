@@ -1,0 +1,30 @@
+{
+    "category": "Geometry",
+    "current_slug": "sample-qt-spatialrelationships.htm",
+    "description": "This sample demonstrates how to determine the spatial relationships between two geometries",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Geometry",
+        "Engine,",
+        "Spatial",
+        "Analysis,",
+        "Spatial",
+        "Relationships"
+    ],
+    "new_slug": "sample-qt-spatialrelationships.htm",
+    "relevant_apis": [
+        "GeometryEngine.intersects",
+        "GeometryEngine.touches",
+        "GeometryEngine.disjoint",
+        "GeometryEngine.crosses",
+        "GeometryEngine.within",
+        "GeometryEngine.overlaps",
+        "GeometryEngine.contains"
+    ],
+    "snippets": [
+        "SpatialRelationships.qml"
+    ],
+    "title": "Spatial relationships"
+}

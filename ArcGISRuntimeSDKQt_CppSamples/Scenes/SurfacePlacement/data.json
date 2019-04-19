@@ -1,0 +1,27 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-surfaceplacement.htm",
+    "description": "This sample demonstrates how to control the surface placement of a 3D graphic",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-surfaceplacement.htm",
+    "relevant_apis": [
+        "SceneView",
+        "Scene",
+        "Viewpoint",
+        "Camera",
+        "Graphic",
+        "GraphicsOverlay",
+        "SimpleMarkerSymbol",
+        "TextSymbol",
+        "Point"
+    ],
+    "snippets": [
+        "Surface_Placement.qml",
+        "Surface_Placement.h",
+        "Surface_Placement.cpp"
+    ],
+    "title": "Surface placement"
+}

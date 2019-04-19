@@ -1,0 +1,15 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-showmagnifier.htm",
+    "description": "This sample demonstrates how you can tap and hold on a map to get the magnifier",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-showmagnifier.htm",
+    "relevant_apis": [],
+    "snippets": [
+        "ShowMagnifier.qml"
+    ],
+    "title": "Show magnifier"
+}

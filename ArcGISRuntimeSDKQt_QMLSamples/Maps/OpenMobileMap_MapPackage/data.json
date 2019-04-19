@@ -1,0 +1,15 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-openmobilemap(mappackage).htm",
+    "description": "This sample demonstrates how to open and display a map from a Mobile Map Package",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-openmobilemap(mappackage).htm",
+    "relevant_apis": [],
+    "snippets": [
+        "OpenMobileMap_MapPackage.qml"
+    ],
+    "title": "Open mobile map (map package)"
+}

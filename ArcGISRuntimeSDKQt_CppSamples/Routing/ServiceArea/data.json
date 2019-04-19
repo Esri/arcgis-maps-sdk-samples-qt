@@ -1,0 +1,28 @@
+{
+    "category": "Routing",
+    "current_slug": "sample-qt-servicearea.htm",
+    "description": "Demonstrates how to find services areas around a point using the ServiceAreaTask",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-servicearea.htm",
+    "relevant_apis": [
+        "Map",
+        "GraphicsOverlay",
+        "MapView",
+        "PolylineBarrier",
+        "ServiceAreaFacility",
+        "ServiceAreaParameters",
+        "ServiceAreaPolygon",
+        "ServiceAreaResult",
+        "ServiceAreaTask",
+        "PolylineBuilder"
+    ],
+    "snippets": [
+        "ServiceArea.h",
+        "ServiceArea.cpp",
+        "ServiceArea.qml"
+    ],
+    "title": "Service area"
+}

@@ -1,0 +1,23 @@
+{
+    "category": "Features",
+    "current_slug": "sample-qt-featurelayer(featureservice).htm",
+    "description": "This sample demonstrates how to consume an Esri feature service by using a FeatureLayer and a ServiceFeatureTable",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-featurelayer(featureservice).htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "ServiceFeatureTable",
+        "FeatureLayer"
+    ],
+    "snippets": [
+        "FeatureLayerFeatureService.qml",
+        "FeatureLayerFeatureService.cpp",
+        "FeatureLayerFeatureService.h"
+    ],
+    "title": "Feature layer (feature service)"
+}

@@ -1,0 +1,23 @@
+{
+    "category": "Geometry",
+    "current_slug": "sample-qt-buffer.htm",
+    "description": "This sample demonstrates how to use GeometryEngine",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Analysis,",
+        "Buffer,",
+        "GeometryEngine"
+    ],
+    "new_slug": "sample-qt-buffer.htm",
+    "relevant_apis": [
+        "GeometryEngine.buffer",
+        "GeometryEngine.bufferGeodetic",
+        "GraphicsOverlay"
+    ],
+    "snippets": [
+        "Buffer.qml"
+    ],
+    "title": "Buffer"
+}

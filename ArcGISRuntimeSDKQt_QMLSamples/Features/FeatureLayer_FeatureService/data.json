@@ -1,0 +1,21 @@
+{
+    "category": "Features",
+    "current_slug": "sample-qt-featurelayer(featureservice).htm",
+    "description": "This sample demonstrates how to add a feature layer using a feature service to the map",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-featurelayer(featureservice).htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "ServiceFeatureTable",
+        "FeatureLayer"
+    ],
+    "snippets": [
+        "FeatureLayer_FeatureService.qml"
+    ],
+    "title": "Feature layer (feature service)"
+}

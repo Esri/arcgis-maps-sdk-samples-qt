@@ -1,0 +1,26 @@
+{
+    "category": "Features",
+    "current_slug": "sample-qt-featurelayerquery.htm",
+    "description": "This sample demonstrates how to query a feature layer using a feature table",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-featurelayerquery.htm",
+    "relevant_apis": [
+        "MapQuickView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Viewpoint"
+    ],
+    "snippets": [
+        "FeatureLayerQuery.h",
+        "FeatureLayerQuery.cpp",
+        "FeatureLayerQuery.qml"
+    ],
+    "title": "Feature layer query"
+}

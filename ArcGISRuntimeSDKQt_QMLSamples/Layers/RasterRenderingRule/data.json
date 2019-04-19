@@ -1,0 +1,21 @@
+{
+    "category": "Layers",
+    "current_slug": "sample-qt-rasterrenderingrule.htm",
+    "description": "This sample demonstrates how to create an ImageServiceRaster, fetch the RenderingRules from the service info, and use a RenderingRule to create an ImageServiceRaster and add it to a raster layer",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-rasterrenderingrule.htm",
+    "relevant_apis": [
+        "Map",
+        "ImageServiceRaster",
+        "RenderingRuleInfo",
+        "RenderingRule",
+        "RasterLayer"
+    ],
+    "snippets": [
+        "RasterRenderingRule.qml"
+    ],
+    "title": "Raster rendering rule"
+}

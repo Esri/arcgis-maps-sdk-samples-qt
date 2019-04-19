@@ -1,0 +1,15 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-mobilemap(searchandroute).htm",
+    "description": "This sample demonstrates how to geocode and route using data in a map package",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-mobilemap(searchandroute).htm",
+    "relevant_apis": [],
+    "snippets": [
+        "MobileMap_SearchAndRoute.qml"
+    ],
+    "title": "Mobile map (search and route)"
+}

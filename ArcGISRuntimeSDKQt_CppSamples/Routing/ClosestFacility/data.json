@@ -1,0 +1,23 @@
+{
+    "category": "Routing",
+    "current_slug": "sample-qt-closestfacility.htm",
+    "description": "This sample demonstrates how to solve a Closest Facility Task to find the closest route between a facility (hospital) and an incident (black cross)",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-closestfacility.htm",
+    "relevant_apis": [
+        "ClosestFacilityTask",
+        "ClosestFacilityParameters",
+        "ClosestFacilityResult",
+        "Facility",
+        "Incident"
+    ],
+    "snippets": [
+        "ClosestFacility.h",
+        "ClosestFacility.qml",
+        "ClosestFacility.cpp"
+    ],
+    "title": "Closest facility"
+}

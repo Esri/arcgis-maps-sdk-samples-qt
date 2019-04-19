@@ -1,0 +1,32 @@
+{
+    "category": "Geometry",
+    "current_slug": "sample-qt-creategeometries.htm",
+    "description": "Geometries are the underlying component to nearly any operation in Geographic Information Systems",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Geometry,",
+        "Point,",
+        "Line,",
+        "Polygon,",
+        "Vector"
+    ],
+    "new_slug": "sample-qt-creategeometries.htm",
+    "relevant_apis": [
+        "Point",
+        "Multipoint",
+        "Polyline",
+        "Polygon",
+        "Envelope",
+        "PolygonBuilder",
+        "PolylineBuilder",
+        "MultipointBuilder"
+    ],
+    "snippets": [
+        "CreateGeometries.cpp",
+        "CreateGeometries.h",
+        "CreateGeometries.qml"
+    ],
+    "title": "Create geometries"
+}

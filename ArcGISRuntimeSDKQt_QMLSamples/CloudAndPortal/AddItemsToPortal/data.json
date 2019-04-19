@@ -1,0 +1,20 @@
+{
+    "category": "Cloud And Portal",
+    "current_slug": "sample-qt-additemstoportal.htm",
+    "description": "This sample demonstrates how to add and delete items (in this case a local ",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-additemstoportal.htm",
+    "relevant_apis": [
+        "AuthenticationView",
+        "Portal",
+        "PortalItem",
+        "PortalUser"
+    ],
+    "snippets": [
+        "AddItemsToPortal.qml"
+    ],
+    "title": "Add items to portal"
+}

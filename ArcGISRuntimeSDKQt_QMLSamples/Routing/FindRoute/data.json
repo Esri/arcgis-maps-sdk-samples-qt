@@ -1,0 +1,30 @@
+{
+    "category": "Routing",
+    "current_slug": "sample-qt-findaroute.htm",
+    "description": "This sample demonstrates how to get a route between two locations",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-findaroute.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "GraphicsOverlay",
+        "Graphic",
+        "Point",
+        "PictureMarkerSymbol",
+        "SimpleLineSymbol",
+        "SimpleRenderer",
+        "RouteTask",
+        "RouteParameters",
+        "Stop",
+        "RouteResult",
+        "DirectionManeuverListModel"
+    ],
+    "snippets": [
+        "FindRoute.qml"
+    ],
+    "title": "Find a route"
+}

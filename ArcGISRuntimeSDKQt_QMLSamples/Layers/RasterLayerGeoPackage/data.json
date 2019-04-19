@@ -1,0 +1,20 @@
+{
+    "category": "Layers",
+    "current_slug": "sample-qt-rasterlayer(geopackage).htm",
+    "description": "This sample demonstrates how to open a GeoPackage, obtain a raster from the package, and display the table as a RasterLayer",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-rasterlayer(geopackage).htm",
+    "relevant_apis": [
+        "GeoPackage",
+        "GeoPackageRaster",
+        "RasterLayer",
+        "Map"
+    ],
+    "snippets": [
+        "RasterLayerGeoPackage.qml"
+    ],
+    "title": "Raster layer (GeoPackage)"
+}

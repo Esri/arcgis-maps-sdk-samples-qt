@@ -1,0 +1,17 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-generateofflinemap.htm",
+    "description": "This sample demonstrates how to take a web map offline",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-generateofflinemap.htm",
+    "relevant_apis": [],
+    "snippets": [
+        "GenerateOfflineMap.qml",
+        "DownloadButton.qml",
+        "GenerateWindow.qml"
+    ],
+    "title": "Generate offline map"
+}

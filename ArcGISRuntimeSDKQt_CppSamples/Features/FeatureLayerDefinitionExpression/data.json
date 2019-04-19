@@ -1,0 +1,26 @@
+{
+    "category": "Features",
+    "current_slug": "sample-qt-featurelayerdefinitionexpression.htm",
+    "description": "This sample demonstrates how to limit the features to display on the map using a definition expression",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-featurelayerdefinitionexpression.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Point"
+    ],
+    "snippets": [
+        "FeatureLayerDefinitionExpression.qml",
+        "FeatureLayerDefinitionExpression.cpp",
+        "FeatureLayerDefinitionExpression.h"
+    ],
+    "title": "Feature layer definition expression"
+}

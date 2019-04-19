@@ -1,0 +1,27 @@
+{
+    "category": "Local Server",
+    "current_slug": "sample-qt-dynamicworkspaceshapefile.htm",
+    "description": "This sample demonstrates how to dynamically add a shapefile to a map using the Local Server",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-dynamicworkspaceshapefile.htm",
+    "relevant_apis": [
+        "LocalServer",
+        "DynamicWorkspace",
+        "LocalMapService",
+        "TableSublayerSource",
+        "ShapefileWorkspace",
+        "ArcGISMapImageSublayer",
+        "ArcGISMapImageLayer",
+        "Map"
+    ],
+    "snippets": [
+        "DynamicWorkspaceShapefile.h",
+        "DynamicWorkspaceShapefile.qml",
+        "main.qml",
+        "DynamicWorkspaceShapefile.cpp"
+    ],
+    "title": "Dynamic workspace shapefile"
+}

@@ -1,0 +1,22 @@
+{
+    "category": "Cloud And Portal",
+    "current_slug": "sample-qt-tokenauthentication.htm",
+    "description": "This sample demonstrates how to access a map service that is secured with ArcGIS token-based authentication",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-tokenauthentication.htm",
+    "relevant_apis": [
+        "AuthenticationManager",
+        "AuthenticationChallenge",
+        "AuthenticationView",
+        "Map",
+        "MapView",
+        "ArcGISMapImageLayer"
+    ],
+    "snippets": [
+        "TokenAuthentication.qml"
+    ],
+    "title": "Token authentication"
+}

@@ -1,0 +1,22 @@
+{
+    "category": "Cloud And Portal",
+    "current_slug": "sample-qt-portaluserinfo.htm",
+    "description": "This sample demonstrates how to retrieve a user\u2019s details via a Portal",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-portaluserinfo.htm",
+    "relevant_apis": [
+        "Portal",
+        "Credential",
+        "PortalUser",
+        "PortalInfo",
+        "AuthenticationView",
+        "AuthenticationManager"
+    ],
+    "snippets": [
+        "PortalUserInfo.qml"
+    ],
+    "title": "Portal user info"
+}

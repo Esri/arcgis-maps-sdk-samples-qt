@@ -1,0 +1,15 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-extrudegraphics.htm",
+    "description": "This sample demonstrates how to render graphics extruded in the Z direction",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-extrudegraphics.htm",
+    "relevant_apis": [],
+    "snippets": [
+        "ExtrudeGraphics.qml"
+    ],
+    "title": "Extrude graphics"
+}

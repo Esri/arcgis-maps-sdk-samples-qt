@@ -1,0 +1,23 @@
+{
+    "category": "Display Information",
+    "current_slug": "sample-qt-showcallout.htm",
+    "description": "This sample demonstrates how to show location coordinates on a Map using a Callout",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-showcallout.htm",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "Callout",
+        "Viewpoint",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "ShowCallout.h",
+        "ShowCallout.qml",
+        "ShowCallout.cpp"
+    ],
+    "title": "Show callout"
+}

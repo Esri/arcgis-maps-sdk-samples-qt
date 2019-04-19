@@ -1,0 +1,22 @@
+{
+    "category": "Maps",
+    "current_slug": "sample-qt-setmapspatialreference.htm",
+    "description": "This sample demonstrates how to set the initial spatial reference of a map so that all layers that support reprojection are projected into the map\u2019s spatial reference",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [],
+    "new_slug": "sample-qt-setmapspatialreference.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "SetMapSpatialReference.qml",
+        "SetMapSpatialReference.h",
+        "SetMapSpatialReference.cpp"
+    ],
+    "title": "Set map spatial reference"
+}

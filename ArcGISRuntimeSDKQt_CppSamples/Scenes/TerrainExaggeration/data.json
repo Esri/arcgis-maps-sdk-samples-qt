@@ -1,0 +1,25 @@
+{
+    "category": "Scenes",
+    "current_slug": "sample-qt-terrainexaggeration.htm",
+    "description": "This sample demonstrates how to exaggerate a scene\u2019s terrain surface",
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Scenes,",
+        "3D,",
+        "elevation,",
+        "exaggeration"
+    ],
+    "new_slug": "sample-qt-terrainexaggeration.htm",
+    "relevant_apis": [
+        "Surface",
+        "Surface::setElevationExaggeration"
+    ],
+    "snippets": [
+        "TerrainExaggeration.h",
+        "TerrainExaggeration.cpp",
+        "TerrainExaggeration.qml"
+    ],
+    "title": "Terrain Exaggeration"
+}
