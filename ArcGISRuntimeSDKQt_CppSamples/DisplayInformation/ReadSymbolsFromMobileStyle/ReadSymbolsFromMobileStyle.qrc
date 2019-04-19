@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Samples/DisplayInformation/ReadSymbolsFromMobileStyle">
+        <file alias="sample.json">ReadSymbolsFromMobileStyle.json</file>
+        <file>ReadSymbolsFromMobileStyle.qml</file>
+        <file>ReadSymbolsFromMobileStyle.h</file>
+        <file>ReadSymbolsFromMobileStyle.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>SymbolImageProvider.cpp</file>
+        <file>SymbolImageProvider.h</file>
+        <file>SymbolComboBox.qml</file>
+    </qresource>
+</RCC>
