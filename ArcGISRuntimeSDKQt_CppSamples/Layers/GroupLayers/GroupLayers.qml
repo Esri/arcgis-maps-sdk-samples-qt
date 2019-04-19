@@ -35,97 +35,79 @@ Item {
     Rectangle {
         id: layerVisibilityRect
         anchors {
-            margins: 5
+            fill: layerVisibilityListView
+            margins: -5
+        }
+        color: "lightgrey"
+    }
+
+    // Create a list view to display the items
+    ListView {
+        id: layerVisibilityListView
+        anchors {
             left: parent.left
             top: parent.top
+            margins: 10
         }
-        height: 250
         width: 250
-        color: "transparent"
+        height: childrenRect.height
+        clip: true
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
-        }
+        // Assign the model to the list model of layers
+        model: sampleModel.layerListModel
 
-        Rectangle {
-            anchors.fill: parent
-            width: layerVisibilityRect.width
-            height: layerVisibilityRect.height
-            color: "lightgrey"
-            opacity: .9
-            radius: 5
-            border {
-                color: "#4D4D4D"
-                width: 1
+        // Assign the delegate to the delegate created above
+        delegate: Item {
+            height: childrenRect.height
+
+            // select the component based on the layer type
+            // GroupLayer is LayerType int value of 22. See API doc for more details:
+            // https://developers.arcgis.com/qt/latest/cpp/api-reference/esri-arcgisruntime-layertype.html
+            Loader {
+                sourceComponent: layerType === 22 ?
+                                     groupLayerDelegate : layerDelegate
             }
 
-            // Create a list view to display the items
-            ListView {
-                id: layerVisibilityListView
-                anchors.margins: 10
-                width: parent.width
-                height: parent.height
-                clip: true
-
-                // Assign the model to the list model of layers
-                model: sampleModel.layerListModel
-
-                // Assign the delegate to the delegate created above
-                delegate: Item {
-                    height: childrenRect.height
-
-                    // select the component based on the layer type
-                    // GroupLayer is LayerType int value of 22. See API doc for more details:
-                    // https://developers.arcgis.com/qt/latest/cpp/api-reference/esri-arcgisruntime-layertype.html
-                    Loader {
-                        sourceComponent: layerType === 22 ?
-                                             groupLayerDelegate : layerDelegate
+            // Delegate for GroupLayers - Contains secondary repeater for sublayers
+            Component {
+                id: groupLayerDelegate
+                Column {
+                    ButtonGroup {
+                        id: childGroup
+                        exclusive: false
+                        checkState: parentBox.checkState
                     }
 
-                    // Delegate for GroupLayers - Contains secondary repeater for sublayers
-                    Component {
-                        id: groupLayerDelegate
-                        Column {
-                            ButtonGroup {
-                                id: childGroup
-                                exclusive: false
-                                checkState: parentBox.checkState
-                            }
-
-                            CheckBox {
-                                id: parentBox
-                                text: name
-                                checkState: childGroup.checkState
-                            }
-
-                            Repeater {
-                                model: sampleModel.getGroupLayerListModel(layerVisibilityListView.currentIndex)
-                                delegate: CheckBox {
-                                    checked: true
-                                    text: name
-                                    leftPadding: indicator.width
-                                    width: layerVisibilityRect.width - leftPadding
-                                    ButtonGroup.group: childGroup
-                                    onCheckedChanged: {
-                                        layerVisible = checked;
-                                    }
-                                }
-                            }
-                        }
+                    CheckBox {
+                        id: parentBox
+                        text: name
+                        checkState: childGroup.checkState
                     }
 
-                    // Delegate for all other layers - standard Checkbox
-                    Component {
-                        id: layerDelegate
-                        CheckBox {
-                            text: name
+                    Repeater {
+                        model: sampleModel.getGroupLayerListModel(layerVisibilityListView.currentIndex)
+                        delegate: CheckBox {
                             checked: true
+                            text: name
+                            leftPadding: indicator.width
+                            width: layerVisibilityRect.width - leftPadding
+                            ButtonGroup.group: childGroup
                             onCheckedChanged: {
                                 layerVisible = checked;
                             }
                         }
+                    }
+                }
+            }
+
+            // Delegate for all other layers - standard Checkbox
+            Component {
+                id: layerDelegate
+                CheckBox {
+                    text: name
+                    checked: true
+                    onCheckedChanged: {
+                        layerVisible = checked;
                     }
                 }
             }
