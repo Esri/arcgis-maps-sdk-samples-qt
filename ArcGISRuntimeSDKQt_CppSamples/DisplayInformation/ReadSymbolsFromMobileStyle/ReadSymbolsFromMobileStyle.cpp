@@ -29,7 +29,6 @@
 
 #include <QDir>
 #include <QObject>
-#include <QScopedPointer>
 #include <QQmlContext>
 #include <QTemporaryDir>
 #include <QtCore/qglobal.h>
