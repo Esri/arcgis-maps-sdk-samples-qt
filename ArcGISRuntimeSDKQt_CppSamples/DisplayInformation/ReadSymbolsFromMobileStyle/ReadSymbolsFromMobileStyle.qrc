@@ -9,5 +9,6 @@
         <file>README.md</file>
         <file>SymbolImageProvider.cpp</file>
         <file>SymbolImageProvider.h</file>
+        <file>SymbolComboBox.qml</file>
     </qresource>
 </RCC>

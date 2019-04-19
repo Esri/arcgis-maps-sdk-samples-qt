@@ -4,7 +4,8 @@
         "ReadSymbolsFromMobileStyle.h",
         "ReadSymbolsFromMobileStyle.cpp",
         "SymbolImageProvider.h",
-        "SymbolImageProvider.cpp"
+        "SymbolImageProvider.cpp",
+        "SymbolComboBox.qml"
     ],
     "name" : "Read symbols from mobile style file",
     "dataItems" : [

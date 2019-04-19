@@ -72,33 +72,9 @@ Item {
             text: "Eyes"
         }
 
-        ComboBox {
+        SymbolComboBox {
             id: eyeComboBox
             model: model.eyesResults
-            textRole: "name"
-            delegate: Item {
-                height: 30
-                width: parent.width
-
-                RowLayout {
-                    Image {
-                        source: symbolUrl
-                        Layout.preferredWidth: 20
-                        Layout.preferredHeight: 20
-                    }
-                    Label {
-                        text: name
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        eyeComboBox.currentIndex = index;
-                        eyeComboBox.popup.close();
-                    }
-                }
-            }
             onCurrentTextChanged: updateSymbol()
         }
 
@@ -106,33 +82,9 @@ Item {
             text: "Mouth"
         }
 
-        ComboBox {
+        SymbolComboBox {
             id: mouthComboBox
             model: model.mouthResults
-            textRole: "name"
-            delegate: Item {
-                height: 30
-                width: parent.width
-
-                RowLayout {
-                    Image {
-                        source: symbolUrl
-                        Layout.preferredWidth: 20
-                        Layout.preferredHeight: 20
-                    }
-                    Label {
-                        text: name
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        mouthComboBox.currentIndex = index;
-                        mouthComboBox.popup.close();
-                    }
-                }
-            }
             onCurrentTextChanged: updateSymbol()
         }
 
@@ -140,33 +92,9 @@ Item {
             text: "Hat"
         }
 
-        ComboBox {
+        SymbolComboBox {
             id: hatComboBox
             model: model.hatResults
-            textRole: "name"
-            delegate: Item {
-                height: 30
-                width: parent.width
-
-                RowLayout {
-                    Image {
-                        source: symbolUrl
-                        Layout.preferredWidth: 20
-                        Layout.preferredHeight: 20
-                    }
-                    Label {
-                        text: name
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        hatComboBox.currentIndex = index;
-                        hatComboBox.popup.close();
-                    }
-                }
-            }
             onCurrentTextChanged: updateSymbol()
         }
 

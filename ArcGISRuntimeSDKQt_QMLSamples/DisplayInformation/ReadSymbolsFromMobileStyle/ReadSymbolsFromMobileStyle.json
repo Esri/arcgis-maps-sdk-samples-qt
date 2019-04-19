@@ -1,6 +1,6 @@
 {
     "source" :  "ReadSymbolsFromMobileStyle.qml",
-    "otherSourceFiles" :  [],
+    "otherSourceFiles" :  ["SymbolComboBox.qml"],
     "name" : "Read symbols from mobile style file",
     "dataItems" : [
         {

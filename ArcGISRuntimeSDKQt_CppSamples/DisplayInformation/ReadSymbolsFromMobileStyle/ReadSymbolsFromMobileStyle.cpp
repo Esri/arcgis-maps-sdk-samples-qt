@@ -86,17 +86,17 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
     TaskWatcher hatWatcher = m_symbolStyle->searchSymbols(hatParams);
     m_taskIds.append(hatWatcher.taskId());
 
-    // search for eyes symbol layers
-    SymbolStyleSearchParameters eyeParams;
-    eyeParams.setCategories({"Eyes"});
-    TaskWatcher eyeWatcher = m_symbolStyle->searchSymbols(eyeParams);
-    m_taskIds.append(eyeWatcher.taskId());
-
     // search for mouth symbol layers
     SymbolStyleSearchParameters mouthParams;
     mouthParams.setCategories({"Mouth"});
     TaskWatcher mouthWatcher = m_symbolStyle->searchSymbols(mouthParams);
     m_taskIds.append(mouthWatcher.taskId());
+
+    // search for eyes symbol layers
+    SymbolStyleSearchParameters eyeParams;
+    eyeParams.setCategories({"Eyes"});
+    TaskWatcher eyeWatcher = m_symbolStyle->searchSymbols(eyeParams);
+    m_taskIds.append(eyeWatcher.taskId());
 
     // search for face symbol layers
     SymbolStyleSearchParameters faceParams;

@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx"
+    property url styleDataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx"
     property var currentSymbol
     property var currentFace
     property var currentEyes
@@ -65,7 +65,7 @@ Rectangle {
 
     SymbolStyle {
         id: symbolStyle
-        styleLocation: dataPath
+        styleLocation: styleDataPath
         Component.onCompleted: load()
 
         onLoadStatusChanged: {
@@ -132,6 +132,7 @@ Rectangle {
         if (!currentFace || !currentEyes || !currentMouth || !currentHat)
             return;
 
+        // fetch the multilayer symbol composed of these 4 symbol layers
         symbolStyle.fetchSymbolWithKeyList([currentFace.key, currentEyes.key, currentMouth.key, currentHat.key]);
     }
 
@@ -164,46 +165,12 @@ Rectangle {
             text: "Eyes"
         }
 
-        ComboBox {
-            id: eyeComboBox
-            property var style
-            model: style ? style.searchSymbolsResult : []
-            textRole: "name"
-            onCurrentTextChanged: {
-                currentEyes = style.searchSymbolsResult.get(currentIndex);
+        SymbolComboBox {
+            dataPath: styleDataPath
+            filterKeyword: "Eyes"
+            onSelectionCompleted: {
+                currentEyes = currentItem;
                 updateSymbol();
-            }
-            Component.onCompleted: {
-                // Create a SymbolStyle and only fetch the Eye symbols
-                style = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {
-                                                                  styleLocation: dataPath
-                                                              });
-
-                var params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: ["Eyes"]});
-                style.searchSymbols(params);
-            }
-            delegate: Item {
-                height: 30
-                width: parent.width
-
-                RowLayout {
-                    Image {
-                        source: symbolUrl
-                        Layout.preferredWidth: 20
-                        Layout.preferredHeight: 20
-                    }
-                    Label {
-                        text: name
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        eyeComboBox.currentIndex = index;
-                        eyeComboBox.popup.close();
-                    }
-                }
             }
         }
 
@@ -211,46 +178,12 @@ Rectangle {
             text: "Mouth"
         }
 
-        ComboBox {
-            id: mouthComboBox
-            property var style
-            model: style ? style.searchSymbolsResult : []
-            textRole: "name"
-            onCurrentTextChanged: {
-                currentMouth = style.searchSymbolsResult.get(currentIndex);
+        SymbolComboBox {
+            dataPath: styleDataPath
+            filterKeyword: "Mouth"
+            onSelectionCompleted: {
+                currentMouth = currentItem;
                 updateSymbol();
-            }
-            Component.onCompleted: {
-                // Create a SymbolStyle and only fetch the Mouth symbols
-                style = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {
-                                                                  styleLocation: dataPath
-                                                              });
-
-                var params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: ["Mouth"]});
-                style.searchSymbols(params);
-            }
-            delegate: Item {
-                height: 30
-                width: parent.width
-
-                RowLayout {
-                    Image {
-                        source: symbolUrl
-                        Layout.preferredWidth: 20
-                        Layout.preferredHeight: 20
-                    }
-                    Label {
-                        text: name
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        mouthComboBox.currentIndex = index;
-                        mouthComboBox.popup.close();
-                    }
-                }
             }
         }
 
@@ -258,46 +191,12 @@ Rectangle {
             text: "Hat"
         }
 
-        ComboBox {
-            id: hatComboBox
-            property var style
-            model: style ? style.searchSymbolsResult : []
-            textRole: "name"
-            onCurrentTextChanged: {
-                currentHat = style.searchSymbolsResult.get(currentIndex);
+        SymbolComboBox {
+            dataPath: styleDataPath
+            filterKeyword: "Hat"
+            onSelectionCompleted: {
+                currentHat = currentItem;
                 updateSymbol();
-            }
-            Component.onCompleted: {
-                // Create a SymbolStyle and only fetch the Hat symbols
-                style = ArcGISRuntimeEnvironment.createObject("SymbolStyle", {
-                                                                  styleLocation: dataPath
-                                                              });
-
-                var params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: ["Hat"]});
-                style.searchSymbols(params);
-            }
-            delegate: Item {
-                height: 30
-                width: parent.width
-
-                RowLayout {
-                    Image {
-                        source: symbolUrl
-                        Layout.preferredWidth: 20
-                        Layout.preferredHeight: 20
-                    }
-                    Label {
-                        text: name
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        hatComboBox.currentIndex = index;
-                        hatComboBox.popup.close();
-                    }
-                }
             }
         }
 
