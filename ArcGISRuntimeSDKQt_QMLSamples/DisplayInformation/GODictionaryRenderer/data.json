@@ -1,12 +1,12 @@
 {
     "category": "Display Information",
-    "current_slug": "sample-qt-graphicsoverlay(dictionaryrenderer).htm",
+    "current_slug": "sample-qt-graphicsoverlaydictionaryrenderer.htm",
     "description": "This sample demonstrates applying a dictionary renderer to graphics to display military symbology",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-graphicsoverlay(dictionaryrenderer).htm",
+    "new_slug": "sample-qt-graphicsoverlaydictionaryrenderer.htm",
     "relevant_apis": [
         "MapView",
         "Map",

@@ -1,12 +1,12 @@
 {
     "category": "Layers",
-    "current_slug": "sample-qt-arcgistiledlayer(url).htm",
+    "current_slug": "sample-qt-arcgistiledlayerurl.htm",
     "description": "This sample demonstrates how to display a tiled map service",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-arcgistiledlayer(url).htm",
+    "new_slug": "sample-qt-arcgistiledlayerurl.htm",
     "relevant_apis": [
         "MapView",
         "Map",

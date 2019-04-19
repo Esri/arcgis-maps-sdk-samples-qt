@@ -1,12 +1,12 @@
 {
     "category": "Layers",
-    "current_slug": "sample-qt-rasterfunction(service).htm",
+    "current_slug": "sample-qt-rasterfunctionservice.htm",
     "description": "This sample demonstrates how to create an ImageServiceRaster and apply a RasterFunction to it",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-rasterfunction(service).htm",
+    "new_slug": "sample-qt-rasterfunctionservice.htm",
     "relevant_apis": [
         "Map",
         "MapQuickView",

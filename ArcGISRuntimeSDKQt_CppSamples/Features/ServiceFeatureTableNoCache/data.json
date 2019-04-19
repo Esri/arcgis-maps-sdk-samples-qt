@@ -1,12 +1,12 @@
 {
     "category": "Features",
-    "current_slug": "sample-qt-servicefeaturetable(nocache).htm",
+    "current_slug": "sample-qt-servicefeaturetablenocache.htm",
     "description": "This sample demonstrates how to use a feature table in on interaction no cache mode",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-servicefeaturetable(nocache).htm",
+    "new_slug": "sample-qt-servicefeaturetablenocache.htm",
     "relevant_apis": [
         "MapView",
         "Map",

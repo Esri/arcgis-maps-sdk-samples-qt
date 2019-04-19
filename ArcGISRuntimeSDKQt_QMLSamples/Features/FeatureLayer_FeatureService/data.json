@@ -1,12 +1,12 @@
 {
     "category": "Features",
-    "current_slug": "sample-qt-featurelayer(featureservice).htm",
+    "current_slug": "sample-qt-featurelayerfeatureservice.htm",
     "description": "This sample demonstrates how to add a feature layer using a feature service to the map",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-featurelayer(featureservice).htm",
+    "new_slug": "sample-qt-featurelayerfeatureservice.htm",
     "relevant_apis": [
         "MapView",
         "Map",

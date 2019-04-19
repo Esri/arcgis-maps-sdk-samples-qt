@@ -1,12 +1,12 @@
 {
     "category": "Features",
-    "current_slug": "sample-qt-servicefeaturetable(cache).htm",
+    "current_slug": "sample-qt-servicefeaturetablecache.htm",
     "description": "This sample demonstrates how to use a feature table with the OnInteractionCache feature request mode",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-servicefeaturetable(cache).htm",
+    "new_slug": "sample-qt-servicefeaturetablecache.htm",
     "relevant_apis": [
         "MapView",
         "Map",

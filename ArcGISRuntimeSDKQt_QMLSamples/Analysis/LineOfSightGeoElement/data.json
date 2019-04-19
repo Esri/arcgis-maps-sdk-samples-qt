@@ -1,6 +1,6 @@
 {
     "category": "Analysis",
-    "current_slug": "sample-qt-lineofsight(geoelement).htm",
+    "current_slug": "sample-qt-lineofsightgeoelement.htm",
     "description": "Show a line of sight between two moving objects",
     "images": [
         "screenshot.png"
@@ -12,7 +12,7 @@
         "sight,",
         "visibility"
     ],
-    "new_slug": "sample-qt-lineofsight(geoelement).htm",
+    "new_slug": "sample-qt-lineofsightgeoelement.htm",
     "relevant_apis": [
         "AnalysisOverlay",
         "GeoElementLineOfSight",

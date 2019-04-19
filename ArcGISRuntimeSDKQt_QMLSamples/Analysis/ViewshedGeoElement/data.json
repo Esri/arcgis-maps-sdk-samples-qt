@@ -1,12 +1,12 @@
 {
     "category": "Analysis",
-    "current_slug": "sample-qt-viewshed(geoelement).htm",
+    "current_slug": "sample-qt-viewshedgeoelement.htm",
     "description": "This sample demonstrates how to calculate a Viewshed from a GeoElement",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-viewshed(geoelement).htm",
+    "new_slug": "sample-qt-viewshedgeoelement.htm",
     "relevant_apis": [
         "GeoElementViewshed",
         "AnalysisOverlay",

@@ -1,12 +1,12 @@
 {
     "category": "Layers",
-    "current_slug": "sample-qt-vectortiledlayer(url).htm",
+    "current_slug": "sample-qt-vectortiledlayerurl.htm",
     "description": "This sample demonstrates how to use a vector tiled layer from an ArcGIS Online service as a basemap",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-vectortiledlayer(url).htm",
+    "new_slug": "sample-qt-vectortiledlayerurl.htm",
     "relevant_apis": [
         "MapView",
         "Map",

@@ -1,12 +1,12 @@
 {
     "category": "Layers",
-    "current_slug": "sample-qt-wmslayer(url).htm",
+    "current_slug": "sample-qt-wmslayerurl.htm",
     "description": "This sample demonstrates how to display a WMS Layer from an online URL",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-wmslayer(url).htm",
+    "new_slug": "sample-qt-wmslayerurl.htm",
     "relevant_apis": [
         "WmsLayer",
         "Map",

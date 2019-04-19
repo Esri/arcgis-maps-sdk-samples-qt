@@ -1,12 +1,12 @@
 {
     "category": "Edit Data",
-    "current_slug": "sample-qt-deletefeatures(featureservice).htm",
+    "current_slug": "sample-qt-deletefeaturesfeatureservice.htm",
     "description": "This sample demonstrates how to delete a feature from a feature service",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-deletefeatures(featureservice).htm",
+    "new_slug": "sample-qt-deletefeaturesfeatureservice.htm",
     "relevant_apis": [
         "MapView",
         "Map",

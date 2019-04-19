@@ -1,12 +1,12 @@
 {
     "category": "Analysis",
-    "current_slug": "sample-qt-statisticalquery(group&sort).htm",
+    "current_slug": "sample-qt-statisticalquerygroupsort.htm",
     "description": "This sample demonstrates how to query a feature table to get statistics for one or more specified fields",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-statisticalquery(group&sort).htm",
+    "new_slug": "sample-qt-statisticalquerygroupsort.htm",
     "relevant_apis": [
         "ServiceFeatureTable",
         "StatisticQueryParameters",

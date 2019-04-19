@@ -1,12 +1,12 @@
 {
     "category": "Layers",
-    "current_slug": "sample-qt-featurelayer(shapefile).htm",
+    "current_slug": "sample-qt-featurelayershapefile.htm",
     "description": "This sample demonstrates how to open a shapefile stored on the device and display it as a feature layer with default symbology",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-featurelayer(shapefile).htm",
+    "new_slug": "sample-qt-featurelayershapefile.htm",
     "relevant_apis": [
         "ShapefileFeatureTable",
         "FeatureLayer"

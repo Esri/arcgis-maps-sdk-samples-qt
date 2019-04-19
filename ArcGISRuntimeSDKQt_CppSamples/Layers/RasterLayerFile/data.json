@@ -1,12 +1,12 @@
 {
     "category": "Layers",
-    "current_slug": "sample-qt-rasterlayer(file).htm",
+    "current_slug": "sample-qt-rasterlayerfile.htm",
     "description": "Demonstrates how to create and use a raster layer made from a local raster file",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-rasterlayer(file).htm",
+    "new_slug": "sample-qt-rasterlayerfile.htm",
     "relevant_apis": [
         "Raster",
         "RasterLayer",

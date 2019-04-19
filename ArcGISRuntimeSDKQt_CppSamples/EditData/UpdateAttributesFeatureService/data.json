@@ -1,12 +1,12 @@
 {
     "category": "Edit Data",
-    "current_slug": "sample-qt-updateattributes(featureservice).htm",
+    "current_slug": "sample-qt-updateattributesfeatureservice.htm",
     "description": "This sample demonstrates how to edit attributes of a feature in a feature service",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-updateattributes(featureservice).htm",
+    "new_slug": "sample-qt-updateattributesfeatureservice.htm",
     "relevant_apis": [
         "MapView",
         "Map",

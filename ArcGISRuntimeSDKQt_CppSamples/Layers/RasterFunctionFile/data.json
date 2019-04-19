@@ -1,12 +1,12 @@
 {
     "category": "Layers",
-    "current_slug": "sample-qt-rasterfunction(file).htm",
+    "current_slug": "sample-qt-rasterfunctionfile.htm",
     "description": "This sample demonstrates how to apply a RasterFunction to a local Raster file and display the output with a RasterLayer",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-rasterfunction(file).htm",
+    "new_slug": "sample-qt-rasterfunctionfile.htm",
     "relevant_apis": [
         "RasterFunction",
         "RasterLayer",

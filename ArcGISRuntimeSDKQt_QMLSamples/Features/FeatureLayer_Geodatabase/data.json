@@ -1,12 +1,12 @@
 {
     "category": "Features",
-    "current_slug": "sample-qt-featurelayer(geodatabase).htm",
+    "current_slug": "sample-qt-featurelayergeodatabase.htm",
     "description": "This sample demonstrates how to consume an Esri mobile geodatabase by using a FeatureLayer and a GeodatabaseFeatureTable",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-featurelayer(geodatabase).htm",
+    "new_slug": "sample-qt-featurelayergeodatabase.htm",
     "relevant_apis": [
         "MapView",
         "Map",

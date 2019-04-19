@@ -1,6 +1,6 @@
 {
     "category": "Scenes",
-    "current_slug": "sample-qt-openascene(portalitem).htm",
+    "current_slug": "sample-qt-openasceneportalitem.htm",
     "description": "This sample demonstrates how to open a scene from a Portal item",
     "images": [
         "screenshot.png"
@@ -11,7 +11,7 @@
         "Scene,",
         "Portal"
     ],
-    "new_slug": "sample-qt-openascene(portalitem).htm",
+    "new_slug": "sample-qt-openasceneportalitem.htm",
     "relevant_apis": [
         "Scene",
         "PortalItem"

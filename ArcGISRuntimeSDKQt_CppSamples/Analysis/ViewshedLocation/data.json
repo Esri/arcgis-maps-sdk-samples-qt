@@ -1,12 +1,12 @@
 {
     "category": "Analysis",
-    "current_slug": "sample-qt-viewshed(location).htm",
+    "current_slug": "sample-qt-viewshedlocation.htm",
     "description": "This sample demonstrates how to calculate a viewshed from a Point location",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-viewshed(location).htm",
+    "new_slug": "sample-qt-viewshedlocation.htm",
     "relevant_apis": [
         "LocationViewshed",
         "AnalysisOverlay",

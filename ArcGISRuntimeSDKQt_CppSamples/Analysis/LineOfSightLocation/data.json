@@ -1,12 +1,12 @@
 {
     "category": "Analysis",
-    "current_slug": "sample-qt-lineofsight(location).htm",
+    "current_slug": "sample-qt-lineofsightlocation.htm",
     "description": "This sample demonstrates how to perform a line of sight analysis between two points in a SceneView",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-lineofsight(location).htm",
+    "new_slug": "sample-qt-lineofsightlocation.htm",
     "relevant_apis": [
         "AnalysisOverlay",
         "LocationLineOfSight",

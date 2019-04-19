@@ -1,12 +1,12 @@
 {
     "category": "Layers",
-    "current_slug": "sample-qt-featurecollectionlayer(query).htm",
+    "current_slug": "sample-qt-featurecollectionlayerquery.htm",
     "description": "This samples demonstrates how to create a feature collection layer to show a query result from a service feature table",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-featurecollectionlayer(query).htm",
+    "new_slug": "sample-qt-featurecollectionlayerquery.htm",
     "relevant_apis": [
         "FeatureCollection",
         "FeatureCollectionLayer",

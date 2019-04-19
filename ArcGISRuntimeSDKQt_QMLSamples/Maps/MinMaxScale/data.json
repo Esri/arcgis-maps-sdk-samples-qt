@@ -1,12 +1,12 @@
 {
     "category": "Maps",
-    "current_slug": "sample-qt-min-maxscale.htm",
+    "current_slug": "sample-qt-minmaxscale.htm",
     "description": "This sample demonstrates how to set the minimum and maximum scale of a map",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-min-maxscale.htm",
+    "new_slug": "sample-qt-minmaxscale.htm",
     "relevant_apis": [],
     "snippets": [
         "MinMaxScale.qml"

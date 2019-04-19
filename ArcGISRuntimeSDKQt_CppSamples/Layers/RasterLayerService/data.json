@@ -1,12 +1,12 @@
 {
     "category": "Layers",
-    "current_slug": "sample-qt-rasterlayer(service).htm",
+    "current_slug": "sample-qt-rasterlayerservice.htm",
     "description": "This sample demonstrates how to create an ImageServiceRaster and add it to a raster layer",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-rasterlayer(service).htm",
+    "new_slug": "sample-qt-rasterlayerservice.htm",
     "relevant_apis": [
         "Map",
         "MapQuickView",

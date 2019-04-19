@@ -1,12 +1,12 @@
 {
     "category": "Layers",
-    "current_slug": "sample-qt-arcgismapimagelayer(url).htm",
+    "current_slug": "sample-qt-arcgismapimagelayerurl.htm",
     "description": "This sample demonstrates how to display a map image layer",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-arcgismapimagelayer(url).htm",
+    "new_slug": "sample-qt-arcgismapimagelayerurl.htm",
     "relevant_apis": [
         "MapView",
         "Map",

@@ -1,12 +1,12 @@
 {
     "category": "Analysis",
-    "current_slug": "sample-qt-viewshed(camera).htm",
+    "current_slug": "sample-qt-viewshedcamera.htm",
     "description": "This sample demonstrates how to calculate a Viewshed from a SceneView\u2019s current Camera Viewpoint",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-viewshed(camera).htm",
+    "new_slug": "sample-qt-viewshedcamera.htm",
     "relevant_apis": [
         "LocationViewshed",
         "AnalysisOverlay",

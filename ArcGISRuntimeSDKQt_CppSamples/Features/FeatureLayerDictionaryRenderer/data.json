@@ -1,12 +1,12 @@
 {
     "category": "Features",
-    "current_slug": "sample-qt-featurelayer(dictionaryrenderer).htm",
+    "current_slug": "sample-qt-featurelayerdictionaryrenderer.htm",
     "description": "This sample demonstrates how to display a FeatureLayer with military symbology, using ArcGIS Runtime\u2019s DictionaryRenderer",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-featurelayer(dictionaryrenderer).htm",
+    "new_slug": "sample-qt-featurelayerdictionaryrenderer.htm",
     "relevant_apis": [
         "MapView",
         "Map",

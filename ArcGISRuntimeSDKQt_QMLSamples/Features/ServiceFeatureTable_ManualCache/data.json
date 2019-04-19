@@ -1,12 +1,12 @@
 {
     "category": "Features",
-    "current_slug": "sample-qt-servicefeaturetable(manualcache).htm",
+    "current_slug": "sample-qt-servicefeaturetablemanualcache.htm",
     "description": "This sample demonstrates how to use a feature service in manual cache mode",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-servicefeaturetable(manualcache).htm",
+    "new_slug": "sample-qt-servicefeaturetablemanualcache.htm",
     "relevant_apis": [
         "MapView",
         "Map",

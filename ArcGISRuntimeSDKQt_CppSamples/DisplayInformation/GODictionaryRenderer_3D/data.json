@@ -1,12 +1,12 @@
 {
     "category": "Display Information",
-    "current_slug": "sample-qt-graphicsoverlay(dictionaryrenderer)3d.htm",
+    "current_slug": "sample-qt-graphicsoverlaydictionaryrenderer3d.htm",
     "description": "This sample demonstrates applying a dictionary renderer to a graphics overlay in a 3D scene to display military symbology",
     "images": [
         "screenshot.png"
     ],
     "keywords": [],
-    "new_slug": "sample-qt-graphicsoverlay(dictionaryrenderer)3d.htm",
+    "new_slug": "sample-qt-graphicsoverlaydictionaryrenderer3d.htm",
     "relevant_apis": [
         "ArcGISTiledElevationSource",
         "Basemap",
