@@ -94,94 +94,79 @@ Rectangle {
     Rectangle {
         id: layerVisibilityRect
         anchors {
-            margins: 5
+            fill: layerVisibilityListView
+            margins: -5
+        }
+        color: "lightgrey"
+        border.color: "#4D4D4D"
+        opacity: 0.9
+        radius: 5
+    }
+
+    // Create a list view to display the items
+    ListView {
+        id: layerVisibilityListView
+        anchors {
             left: parent.left
             top: parent.top
+            margins: 10
         }
-        height: 250
         width: 250
-        color: "transparent"
+        height: childrenRect.height
+        clip: true
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
-        }
+        // Assign the model to the list model of layers
+        model: scene.operationalLayers
 
-        Rectangle {
-            anchors.fill: parent
-            width: layerVisibilityRect.width
-            height: layerVisibilityRect.height
-            color: "lightgrey"
-            opacity: .9
-            radius: 5
-            border {
-                color: "#4D4D4D"
-                width: 1
+        // Assign the delegate to the delegate created above
+        delegate: Item {
+            property var type: layerType
+            height: childrenRect.height
+
+            // select the component based on the layer type
+            Loader {
+                sourceComponent: layerType === Enums.LayerTypeGroupLayer ?
+                                     groupLayerDelegate : layerDelegate
             }
 
-            // Create a list view to display the items
-            ListView {
-                id: layerVisibilityListView
-                anchors.margins: 10
-                width: parent.width
-                height: parent.height
-                clip: true
-
-                // Assign the model to the list model of layers
-                model: scene.operationalLayers
-
-                // Assign the delegate to the delegate created above
-                delegate: Item {
-                    property var type: layerType
-                    height: childrenRect.height
-
-                    // select the component based on the layer type
-                    Loader {
-                        sourceComponent: layerType === Enums.LayerTypeGroupLayer ?
-                                             groupLayerDelegate : layerDelegate
+            // Delegate for GroupLayers - Contains secondary repeater for sublayers
+            Component {
+                id: groupLayerDelegate
+                Column {
+                    ButtonGroup {
+                        id: childGroup
+                        exclusive: false
+                        checkState: parentBox.checkState
                     }
 
-                    // Delegate for GroupLayers - Contains secondary repeater for sublayers
-                    Component {
-                        id: groupLayerDelegate
-                        Column {
-                            ButtonGroup {
-                                id: childGroup
-                                exclusive: false
-                                checkState: parentBox.checkState
-                            }
-
-                            CheckBox {
-                                id: parentBox
-                                text: name
-                                checkState: childGroup.checkState
-                            }
-
-                            Repeater {
-                                property var groupLyr: scene.operationalLayers.get(layerVisibilityListView.currentIndex)
-                                model: groupLyr ? groupLyr.layers : null
-                                delegate: CheckBox {
-                                    checked: true
-                                    text: name
-                                    leftPadding: indicator.width
-                                    width: layerVisibilityRect.width - leftPadding
-                                    ButtonGroup.group: childGroup
-                                    onCheckedChanged: layerVisible = checked
-                                }
-                            }
-                        }
+                    CheckBox {
+                        id: parentBox
+                        text: name
+                        checkState: childGroup.checkState
                     }
 
-                    // Delegate for all other layers - standard Checkbox
-                    Component {
-                        id: layerDelegate
-                        CheckBox {
-                            text: name
+                    Repeater {
+                        property var groupLyr: scene.operationalLayers.get(layerVisibilityListView.currentIndex)
+                        model: groupLyr ? groupLyr.layers : null
+                        delegate: CheckBox {
                             checked: true
+                            text: name
+                            leftPadding: indicator.width
+                            width: layerVisibilityRect.width - leftPadding
+                            ButtonGroup.group: childGroup
                             onCheckedChanged: layerVisible = checked
                         }
                     }
+                }
+            }
+
+            // Delegate for all other layers - standard Checkbox
+            Component {
+                id: layerDelegate
+                CheckBox {
+                    text: name
+                    checked: true
+                    onCheckedChanged: layerVisible = checked
                 }
             }
         }
