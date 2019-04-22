@@ -115,6 +115,10 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
     // store the resulting symbol
     m_currentSymbol = static_cast<MultilayerPointSymbol*>(symbol);
 
+    // ensure cast was successful
+    if (!m_currentSymbol)
+      return;
+
     // set the size
     m_currentSymbol->setSize(m_symbolSize);
 
