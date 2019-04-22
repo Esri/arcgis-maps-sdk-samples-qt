@@ -79,8 +79,8 @@ private:
   SymbolImageProvider* m_symbolImageProvider = nullptr;
   QList<Esri::ArcGISRuntime::SymbolStyleSearchResultListModel*> m_models = { nullptr, nullptr, nullptr, nullptr };
   QList<QUuid> m_taskIds;
-  QColor m_currentColor;
-  int m_symbolSize;
+  QColor m_currentColor = QColor("yellow");
+  int m_symbolSize = 40;
   QUrl m_symbolImageUrl;
   QScopedPointer<QObject> m_graphicParent;
 };
