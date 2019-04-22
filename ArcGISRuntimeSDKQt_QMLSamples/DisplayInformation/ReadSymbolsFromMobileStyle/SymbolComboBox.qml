@@ -43,17 +43,21 @@ ComboBox {
         style.searchSymbols(params);
     }
     delegate: Item {
+        id: cboDelegate
         height: 30
         width: parent.width
 
         RowLayout {
             Image {
+                id: img
                 source: symbolUrl
                 Layout.preferredWidth: 20
                 Layout.preferredHeight: 20
             }
             Label {
                 text: name
+                Layout.preferredWidth: cboDelegate.width - img.width
+                elide: Text.ElideRight
             }
         }
 
