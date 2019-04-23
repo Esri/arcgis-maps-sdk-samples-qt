@@ -1,0 +1,5 @@
+{
+    "source" :  "LoadWfsXmlQuery.qml",
+    "otherSourceFiles" :  [],
+    "name" : "Load WFS with XML query"
+}

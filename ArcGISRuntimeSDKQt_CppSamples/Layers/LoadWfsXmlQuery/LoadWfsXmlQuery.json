@@ -1,0 +1,8 @@
+{
+    "source" :  "LoadWfsXmlQuery.qml",
+    "otherSourceFiles" :  [
+        "LoadWfsXmlQuery.h",
+        "LoadWfsXmlQuery.cpp"
+    ],
+    "name" : "Load WFS from XML query"
+}
