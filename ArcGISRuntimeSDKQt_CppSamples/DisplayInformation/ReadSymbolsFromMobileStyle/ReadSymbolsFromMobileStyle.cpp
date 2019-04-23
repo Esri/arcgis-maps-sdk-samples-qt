@@ -71,7 +71,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
     m_models[index] = results;
 
     emit symbolResultsChanged();
-    updateSymbol();
+    updateSymbol(0, 0, 0, Qt::yellow, 40);
   });
 
   // Load the style
