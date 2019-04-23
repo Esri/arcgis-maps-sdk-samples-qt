@@ -56,7 +56,7 @@ public:
   static void init();
 
   Q_INVOKABLE void clearGraphics();
-  Q_INVOKABLE void updateSymbol(int hatIndex, int mouthIndex, int eyeIndex, QColor color, int size);
+  Q_INVOKABLE void updateSymbol(int hatIndex = 0, int mouthIndex = 0, int eyeIndex = 0, QColor color = QColor(Qt::yellow), int size = 40);
 
 signals:
   void mapViewChanged();

@@ -71,6 +71,7 @@ ReadSymbolsFromMobileStyle::ReadSymbolsFromMobileStyle(QObject* parent /* = null
     m_models[index] = results;
 
     emit symbolResultsChanged();
+    updateSymbol();
   });
 
   // Load the style
@@ -222,7 +223,7 @@ void ReadSymbolsFromMobileStyle::clearGraphics()
 
 void ReadSymbolsFromMobileStyle::updateSymbol(int hatIndex, int mouthIndex, int eyeIndex, QColor color, int size)
 {
-  if (!m_symbolStyle || !hatResults() || !mouthResults() || !eyeResults())
+  if (!m_symbolStyle || !hatResults() || !mouthResults() || !eyeResults() || !faceResults())
     return;
 
   // set the color and size members
