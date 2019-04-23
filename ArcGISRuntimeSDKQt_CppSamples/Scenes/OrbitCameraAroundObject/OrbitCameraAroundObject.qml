@@ -165,8 +165,7 @@ Item {
     }
 
     //View change buttons / allow cam interaction checkbox placed in the top-left of the screen.
-    Rectangle{
-
+    Rectangle {
         anchors {
             left: parent.left
             top: parent.top
@@ -176,31 +175,46 @@ Item {
         width: childrenRect.width
         color: Qt.rgba(0.2, 0.2, 0.2, 0.65)
 
-        GridLayout {
-            columns: 2
-
+        Column {
+            spacing: 10
+            padding: 10
             Button {
-                Layout.columnSpan: 2
                 text: "Cockpit View"
-                onClicked: model.cockpitView()
+                onClicked: {
+                    model.cockpitView();
+                    allowCamDistanceInteractionCheckBox.enabled = false;
+                    allowCamDistanceInteractionCheckBoxText.color = "gray";
+                }
             }
 
             Button {
-                Layout.columnSpan: 2
                 text: "Center View"
-                onClicked: model.centerView()
+                onClicked: {
+                    model.centerView();
+                    allowCamDistanceInteractionCheckBox.enabled = true;
+                    allowCamDistanceInteractionCheckBoxText.color = "white";
+                }
             }
 
-            Text {
-                Layout.leftMargin : 10
-                text: "Allow camera\ndistance interaction"
-                color: "white"
-            }
+            Row {
+                anchors {
+                    left: parent.left
+                }
 
-            CheckBox {
-                id: allowCamDistanceInteractionCheckBox
-                checked: model.allowCamDistanceInteraction
-                onCheckedChanged: model.allowCamDistanceInteraction = checked
+                CheckBox {
+                    id: allowCamDistanceInteractionCheckBox
+                    checked: model.allowCamDistanceInteraction
+                    onCheckedChanged: model.allowCamDistanceInteraction = checked
+                }
+
+                Text {
+                    id: allowCamDistanceInteractionCheckBoxText
+                    anchors {
+                        verticalCenter: allowCamDistanceInteractionCheckBox.verticalCenter
+                    }
+                    text: "Allow camera\ndistance interaction"
+                    color: "white"
+                }
             }
         }
     }

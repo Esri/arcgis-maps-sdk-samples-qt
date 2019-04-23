@@ -110,40 +110,39 @@ Rectangle {
 
             // Called when the user triggers the cockpit view button (see below)
             function moveToCockpit() {
-                orbitCam.cameraDistanceInteractive = false
-                orbitCam.minCameraDistance = 0.0
-                orbitCam.setTargetOffsets(0.0, -2.0, 1.1, 1.0)
+                orbitCam.cameraDistanceInteractive = false;
+                orbitCam.minCameraDistance = 0.0;
+                orbitCam.setTargetOffsets(0.0, -2.0, 1.1, 1.0);
 
                 //The animation may rotate us over the set camera bounds based on the plane pitch, so unlock them.
-                orbitCam.minCameraPitchOffset = -180.0
-                orbitCam.maxCameraPitchOffset = 180.0
+                orbitCam.minCameraPitchOffset = -180.0;
+                orbitCam.maxCameraPitchOffset = 180.0;
 
                 //Trigger the move-into-cockpit animation.
                 //If the camera is already tracking object pitch, don't want to animate the pitch any further, we're exactly where we should be.
                 orbitCam.moveCamera(0.0 - orbitCam.cameraDistance,
                                     0.0 - orbitCam.cameraHeadingOffset,
-                                    orbitCam.autoPitchEnabled ? 0.0 : (90.0 - orbitCam.cameraPitchOffset) + planeGraphic.attributes.attributeValue("PITCH"), 1.0)
+                                    orbitCam.autoPitchEnabled ? 0.0 : (90.0 - orbitCam.cameraPitchOffset) + planeGraphic.attributes.attributeValue("PITCH"), 1.0);
             }
 
             // Called when the user triggers the center view button (see below.) Snaps back to a following view.
             function moveToFollowing() {
-                orbitCam.cameraDistanceInteractive = true
-                orbitCam.autoPitchEnabled = false
-                orbitCam.targetOffsetX = 0.0
-                orbitCam.targetOffsetY = 0.0
-                orbitCam.targetOffsetZ = 0.0
-                orbitCam.cameraHeadingOffset = 0.0
-                orbitCam.minCameraPitchOffset = 10.0
-                orbitCam.maxCameraPitchOffset = 100.0
-                orbitCam.cameraPitchOffset = 45.0
-                orbitCam.minCameraDistance = 10.0
-                orbitCam.cameraDistance = 50.0
+                orbitCam.cameraDistanceInteractive = true;
+                orbitCam.autoPitchEnabled = false;
+                orbitCam.targetOffsetX = 0.0;
+                orbitCam.targetOffsetY = 0.0;
+                orbitCam.targetOffsetZ = 0.0;
+                orbitCam.cameraHeadingOffset = 0.0;
+                orbitCam.minCameraPitchOffset = 10.0;
+                orbitCam.maxCameraPitchOffset = 100.0;
+                orbitCam.cameraPitchOffset = 45.0;
+                orbitCam.minCameraDistance = 10.0;
+                orbitCam.cameraDistance = 50.0;
             }
         }
 
         cameraController: orbitCam //Our new orbital camera controller should be the active SceneView controller.
     }
-
 
     /* Create the UI */
 
@@ -214,73 +213,6 @@ Rectangle {
         text: "Camera Heading"
         color: "white"
     }
-
-
-    /*
-    //Plane pitch slider, placed in the top-right of the screen
-    Rectangle {
-        anchors {
-            top: parent.top
-            bottom: parent.verticalCenter
-            right: parent.right
-            margins: 30
-        }
-
-        width: childrenRect.width
-        color: uiBackgroundCol
-
-        ColumnLayout
-        {
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-            }
-            spacing: 5
-
-            Text {
-                id: planePitchLabel
-                text: "Plane Pitch"
-                color: "white"
-            }
-
-            Slider {
-                id: planePitchSlider
-
-                Layout.fillHeight: true
-
-                value: 0
-                from: 90
-                to: -90
-                orientation: Qt.Vertical
-
-                onMoved: {
-                    planeGraphic.attributes.replaceAttribute("PITCH", value)
-                }
-
-                //Custom slider handle that displays the current value
-                handle: Rectangle {
-                    x: planePitchSlider.leftPadding + planePitchSlider.availableWidth / 2 - width / 2
-                    y: planePitchSlider.topPadding + planePitchSlider.visualPosition * (planePitchSlider.availableHeight - height)
-
-                    implicitWidth: 30
-                    implicitHeight: 30
-
-                    Text {
-                        id: pitchValue
-
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            verticalCenter: parent.verticalCenter
-                        }
-
-                        text: Math.round(planePitchSlider.value)
-                        color: "black"
-                    }
-                }
-            }
-        }
-    }
-    */
 
     //Plane pitch slider, placed in the top-right of the screen
     Text {
@@ -357,7 +289,7 @@ Rectangle {
         }
 
         height: childrenRect.height
-        width: childrenRect.width + 30 //Add a little bit of manual padding to comfortably fit the checkbox text
+        width: childrenRect.width
         color: Qt.rgba(0.2, 0.2, 0.2, 0.65)
 
         Column {
@@ -365,12 +297,20 @@ Rectangle {
             padding: 10
             Button {
                 text: "Cockpit View"
-                onClicked: orbitCam.moveToCockpit()
+                onClicked: {
+                    orbitCam.moveToCockpit();
+                    allowCamDistanceInteractionCheckBox.enabled = false;
+                    allowCamDistanceInteractionCheckBoxText.color = "gray"; //Gray out the text as well so the widget looks disabled
+                }
             }
 
             Button {
                 text: "Center View"
-                onClicked: orbitCam.moveToFollowing()
+                onClicked: {
+                    orbitCam.moveToFollowing();
+                    allowCamDistanceInteractionCheckBox.enabled = true;
+                    allowCamDistanceInteractionCheckBoxText.color = "white";
+                }
             }
 
             Row {
@@ -385,6 +325,7 @@ Rectangle {
                 }
 
                 Text {
+                    id: allowCamDistanceInteractionCheckBoxText
                     anchors {
                         verticalCenter: allowCamDistanceInteractionCheckBox.verticalCenter
                     }
