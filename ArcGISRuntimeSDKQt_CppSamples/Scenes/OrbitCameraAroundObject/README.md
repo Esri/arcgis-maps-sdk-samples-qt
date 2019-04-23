@@ -3,8 +3,8 @@
 Fix the camera to point at and rotate around a target object.
 ![](screenshot.png)
 
-## Use Case
-The orbit geoelement camera controller provides control over the following camera behaviours
+## Use case
+The orbit geoelement camera controller provides control over the following camera behaviors
  - automatically track the target
  - stay near the target by setting a minimum and maximum distance offset
  - restrict where you can rotate around the target
@@ -19,7 +19,7 @@ The sample loads with the camera orbiting an plane model. The camera is preset w
 
 Use the "Camera Heading" slider to adjust the camera heading. Select the "Allow camera distance interaction" checkbox to allow zooming in and out with the mouse/keyboard: when the checkbox is deselected the user will be unable to adjust with the camera distance.  
 
-Use the "Plane Pitch" slider to adjust the plane's pitch. When not in Cockpit view, the plane's pitch will change independently to that of the camera pitch.  
+Use the "Plane Pitch" slider to adjust the plane's pitch. When in Center view, the plane's pitch will change independently to that of the camera pitch.  
 
 Use the "Cockpit view" button to offset and fix the camera into the cockpit of the plane. Use the "Plane pitch" slider to control the pitch of plane: the camera will follow the pitch of the plane in this mode. In this view adjusting the camera distance is disabled. Use the "Center view" button to exit cockpit view mode and fix the camera controller on the center of the plane.  
 ## How it works

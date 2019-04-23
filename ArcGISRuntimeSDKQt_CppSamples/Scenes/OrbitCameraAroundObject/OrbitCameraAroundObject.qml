@@ -180,12 +180,20 @@ Item {
             padding: 10
             Button {
                 text: "Cockpit View"
-                onClicked: model.cockpitView()
+                onClicked: {
+                    model.cockpitView();
+                    allowCamDistanceInteractionCheckBox.enabled = false;
+                    allowCamDistanceInteractionCheckBoxText.color = "gray";
+                }
             }
 
             Button {
                 text: "Center View"
-                onClicked: model.centerView()
+                onClicked: {
+                    model.centerView();
+                    allowCamDistanceInteractionCheckBox.enabled = true;
+                    allowCamDistanceInteractionCheckBoxText.color = "white";
+                }
             }
 
             Row {
@@ -200,6 +208,7 @@ Item {
                 }
 
                 Text {
+                    id: allowCamDistanceInteractionCheckBoxText
                     anchors {
                         verticalCenter: allowCamDistanceInteractionCheckBox.verticalCenter
                     }
