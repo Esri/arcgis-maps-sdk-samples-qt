@@ -4,5 +4,5 @@
         "LineOfSightLocation.h",
         "LineOfSightLocation.cpp"
     ],
-    "name" : "Line of Sight (location)"
+    "name" : "Line of sight (location)"
 }
