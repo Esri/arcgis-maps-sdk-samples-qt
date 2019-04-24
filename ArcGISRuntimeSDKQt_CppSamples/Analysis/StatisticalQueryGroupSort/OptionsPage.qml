@@ -43,7 +43,7 @@ Rectangle {
             anchors.centerIn: parent
             text: "Statistics: US States"
             color: "white"
-            font.pixelSize: 28
+            font.pointSize: 28
         }
     }
 
@@ -91,7 +91,7 @@ Rectangle {
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             text: "Field"
-                            font.pixelSize: labelTextSize
+                            font.pointSize: labelTextSize
                         }
 
                         ComboBox {
@@ -115,7 +115,7 @@ Rectangle {
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             text: "Type"
-                            font.pixelSize: labelTextSize
+                            font.pointSize: labelTextSize
                         }
 
                         ComboBox {
@@ -176,11 +176,11 @@ Rectangle {
                                     spacing: 10
                                     Text {
                                         text: modelData.field
-                                        font.pixelSize: labelTextSize
+                                        font.pointSize: labelTextSize
                                     }
                                     Text {
                                         text: "(%1)".arg(modelData.statistic)
-                                        font.pixelSize: labelTextSize
+                                        font.pointSize: labelTextSize
                                     }
                                 }
 
@@ -213,7 +213,7 @@ Rectangle {
 
                     Text {
                         text: "Group Field(s):"
-                        font.pixelSize: labelTextSize
+                        font.pointSize: labelTextSize
                     }
 
                     Rectangle {
@@ -296,7 +296,7 @@ Rectangle {
 
                     Text {
                         text: "Order by Field:"
-                        font.pixelSize: labelTextSize
+                        font.pointSize: labelTextSize
                     }
 
                     Rectangle {
@@ -330,11 +330,11 @@ Rectangle {
                                     spacing: 10
                                     Text {
                                         text: modelData.field
-                                        font.pixelSize: labelTextSize
+                                        font.pointSize: labelTextSize
                                     }
                                     Text {
                                         text: "(%1)".arg(modelData.order)
-                                        font.pixelSize: labelTextSize
+                                        font.pointSize: labelTextSize
                                     }
                                 }
 

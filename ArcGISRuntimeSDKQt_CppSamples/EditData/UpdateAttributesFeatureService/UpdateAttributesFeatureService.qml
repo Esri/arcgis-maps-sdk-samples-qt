@@ -94,7 +94,7 @@ UpdateAttributesFeatureServiceSample {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 text: "Update Attribute"
-                font.pixelSize: 16
+                font.pointSize: 16
             }
 
             ComboBox {

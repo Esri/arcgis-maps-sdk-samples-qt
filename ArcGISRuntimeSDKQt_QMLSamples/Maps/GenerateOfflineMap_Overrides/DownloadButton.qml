@@ -38,7 +38,7 @@ Rectangle {
         Text {
             anchors.verticalCenter: parent.verticalCenter
             text: "Generate Offline Map (Overrides)"
-            font.pixelSize: 14
+            font.pointSize: 14
             color: "#474747"
         }
     }

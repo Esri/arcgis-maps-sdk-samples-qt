@@ -84,7 +84,7 @@ Rectangle {
                 leftMargin: 10
             }
             text: "Map Load Status: %1".arg(statusText)
-            font.pixelSize: 14
+            font.pointSize: 14
         }
     }
 }

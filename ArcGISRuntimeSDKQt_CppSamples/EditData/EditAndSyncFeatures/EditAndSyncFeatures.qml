@@ -103,7 +103,7 @@ EditAndSyncFeaturesSample {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: isOffline ? "Sync Geodatabase" : "Generate Geodatabase"
-                font.pixelSize: 14
+                font.pointSize: 14
                 color: "#474747"
             }
         }
@@ -141,7 +141,7 @@ EditAndSyncFeaturesSample {
         Text {
             anchors.centerIn: parent
             text: instructionText
-            font.pixelSize: 16
+            font.pointSize: 16
             color: "white"
         }
     }
@@ -195,7 +195,7 @@ EditAndSyncFeaturesSample {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: statusText
-                    font.pixelSize: 16
+                    font.pointSize: 16
                 }
             }
         }

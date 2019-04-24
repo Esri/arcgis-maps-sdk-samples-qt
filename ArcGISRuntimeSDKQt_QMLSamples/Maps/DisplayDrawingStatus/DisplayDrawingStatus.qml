@@ -85,8 +85,10 @@ Rectangle {
             border.color: "black"
 
             Column {
-                anchors.centerIn: parent
-                topPadding: 5
+                anchors {
+                    centerIn: parent
+                    topMargin: 5
+                }
                 spacing: 5
 
                 BusyIndicator {
@@ -99,7 +101,7 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     font {
                         weight: Font.Black
-                        pixelSize: 12
+                        pointSize: 12
                     }
                     height: 20
                     horizontalAlignment: Text.AlignHCenter

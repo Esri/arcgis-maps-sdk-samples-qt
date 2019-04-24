@@ -51,7 +51,7 @@ Rectangle {
                 Text {
                     height: 40
                     text: "Directions:"
-                    font.pixelSize: 22
+                    font.pointSize: 22
                 }
             }
 
@@ -134,7 +134,7 @@ Rectangle {
                 id: routeButtonText
                 anchors.centerIn: parent
                 text: "Solve route"
-                font.pixelSize: 14
+                font.pointSize: 14
                 color: "#35352E"
             }
 
@@ -275,7 +275,7 @@ Rectangle {
                     leftMargin: 5
                 }
                 elide: Text.ElideRight
-                font.pixelSize: 14
+                font.pointSize: 14
             }
         }
     }
