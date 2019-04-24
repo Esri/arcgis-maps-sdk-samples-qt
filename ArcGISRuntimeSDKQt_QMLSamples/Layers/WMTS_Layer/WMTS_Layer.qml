@@ -23,7 +23,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property url wmtsServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS"
+    readonly property url wmtsServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS"
     property WmtsService service;
 
     MapView {

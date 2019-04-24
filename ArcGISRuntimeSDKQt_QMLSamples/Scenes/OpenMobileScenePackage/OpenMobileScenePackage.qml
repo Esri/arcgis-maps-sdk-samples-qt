@@ -24,8 +24,8 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mspk"
-    property url unpackPath: System.temporaryFolder.url + "/MspkQml_%1.mspk".arg(new Date().getTime().toString())
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mspk"
+    readonly property url unpackPath: System.temporaryFolder.url + "/MspkQml_%1.mspk".arg(new Date().getTime().toString())
 
     SceneView {
         id: sceneView

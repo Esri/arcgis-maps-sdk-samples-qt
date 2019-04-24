@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property string montereyRasterElevationPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"
+    readonly property string montereyRasterElevationPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"
 
     SceneView {
         id: sceneView

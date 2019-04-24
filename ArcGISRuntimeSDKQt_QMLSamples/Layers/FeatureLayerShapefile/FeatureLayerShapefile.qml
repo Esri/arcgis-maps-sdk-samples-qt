@@ -24,9 +24,8 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-
     
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shp/"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shp/"
 
     MapView {
         id: mapView

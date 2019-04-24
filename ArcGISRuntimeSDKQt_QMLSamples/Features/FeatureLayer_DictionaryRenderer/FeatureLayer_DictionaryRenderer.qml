@@ -23,7 +23,7 @@ Rectangle {
     width: 800
     height: 600
     
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Create MapView that contains a Map with the Topographic Basemap
     MapView {

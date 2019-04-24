@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property url styleDataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx"
+    readonly property url styleDataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx"
     property var currentSymbol
     property var currentFace
     property var currentEyes

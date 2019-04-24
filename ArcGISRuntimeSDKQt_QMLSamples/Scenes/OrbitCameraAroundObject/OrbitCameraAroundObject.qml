@@ -27,8 +27,7 @@ Rectangle {
     height: 600
 
     /* Define the Scene. Load a plane model from disk, place it above a runway, and create an orbiting camera around it */
-
-    property string planeModelPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
+    readonly property string planeModelPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
 
     SceneView {
         id: view

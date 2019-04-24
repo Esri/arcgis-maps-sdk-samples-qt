@@ -24,16 +24,15 @@ Rectangle {
     width: 800
     height: 600
     
-    property int labelWidth: 100
-    property int coordinateTextWidth: 200
-    property int fontPixelSize: 14
-    property int textPadding: Qt.platform.os === "android" ? (10) : (4)
+    readonly property int labelWidth: 100
+    readonly property int coordinateTextWidth: 200
+    readonly property int fontPixelSize: 14
+    readonly property int textPadding: Qt.platform.os === "android" ? 10 : 4
+    readonly property string strDecimalDegrees: qsTr("Degrees")
+    readonly property string strDegreesMinutesSeconds: qsTr("DMS")
+    readonly property string strUsng: qsTr("USNG")
+    readonly property string strUtm: qsTr("UTM")
     property string labelSuffix: ":  "
-
-    property string strDecimalDegrees: qsTr("Degrees")
-    property string strDegreesMinutesSeconds: qsTr("DMS")
-    property string strUsng: qsTr("USNG")
-    property string strUtm: qsTr("UTM")
 
     MapView {
         id: mapView

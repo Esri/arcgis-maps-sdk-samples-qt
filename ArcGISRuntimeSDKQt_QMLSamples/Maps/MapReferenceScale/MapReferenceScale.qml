@@ -25,8 +25,8 @@ Rectangle {
     width: 800
     height: 600
 
-    property var referenceScales: [500000,250000,100000,50000]
-    property string webMapId: "3953413f3bd34e53a42bf70f2937a408"
+    readonly property var referenceScales: [500000, 250000, 100000, 50000]
+    readonly property string webMapId: "3953413f3bd34e53a42bf70f2937a408"
     property LayerListModel featureLayerModel
 
     MapView{
