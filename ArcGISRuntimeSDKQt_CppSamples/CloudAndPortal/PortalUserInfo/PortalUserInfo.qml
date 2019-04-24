@@ -92,7 +92,7 @@ PortalUserInfoSample {
         anchors {
             verticalCenter: parent.verticalCenter
             margins: 8
-            left: parent.left            
+            left: parent.left
             right: parent.right
         }
         height: 4
