@@ -23,7 +23,7 @@ import Esri.Samples 1.0
 Item {
     clip: true
 
-    property int fontPixelSize: 14
+    readonly property int fontPixelSize: 14
     property string labelSuffix: ":  "
 
     FormatCoordinatesSample {
