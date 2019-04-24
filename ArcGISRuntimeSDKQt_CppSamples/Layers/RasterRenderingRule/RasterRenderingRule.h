@@ -34,7 +34,7 @@ namespace Esri
 class RasterRenderingRule : public QQuickItem
 {
   Q_OBJECT
-  Q_PROPERTY(QStringList renderingRuleNames READ renderingRuleNames NOTIFY renderingRuleNamesChanged)
+  Q_PROPERTY(QStringList renderingRuleNames MEMBER m_renderingRuleNames NOTIFY renderingRuleNamesChanged)
 
 public:
   explicit RasterRenderingRule(QQuickItem* parent = nullptr);
@@ -46,9 +46,6 @@ public:
 
 signals:
   void renderingRuleNamesChanged();
-
-private:
-  QStringList renderingRuleNames() const { return m_renderingRuleNames; }
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

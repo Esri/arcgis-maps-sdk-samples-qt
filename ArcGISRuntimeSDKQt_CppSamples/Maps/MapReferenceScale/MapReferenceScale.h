@@ -37,7 +37,7 @@ class MapReferenceScale : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QAbstractListModel* layerInfoListModel READ layerInfoListModel NOTIFY layerInfoListModelChanged)
+  Q_PROPERTY(QAbstractListModel* layerInfoListModel MEMBER m_layerInfoListModel NOTIFY layerInfoListModelChanged)
   Q_PROPERTY(double currentMapScale READ currentMapScale WRITE setCurrentMapScale NOTIFY currentMapScaleChanged)
 
 public:
@@ -57,7 +57,6 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  QAbstractListModel* layerInfoListModel() const { return m_layerInfoListModel; }
   void setCurrentMapScale(double scale);
   double currentMapScale() const;
 
