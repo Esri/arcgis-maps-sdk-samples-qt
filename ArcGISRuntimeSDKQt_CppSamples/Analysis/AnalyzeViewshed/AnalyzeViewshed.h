@@ -36,7 +36,7 @@ class AnalyzeViewshed : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(bool viewshedInProgress READ viewshedInProgress NOTIFY viewshedInProgressChanged)
+  Q_PROPERTY(bool viewshedInProgress MEMBER m_viewshedInProgress NOTIFY viewshedInProgressChanged)
   Q_PROPERTY(QString statusText READ jobStatus NOTIFY jobStatusChanged)
 
 public:
@@ -67,7 +67,6 @@ private:
   void createOverlays();
   void calculateViewshed();
   void processResults(Esri::ArcGISRuntime::GeoprocessingResult* results);
-  bool viewshedInProgress() const { return m_viewshedInProgress; }
   QString jobStatus() const { return m_jobStatus; }
 };
 

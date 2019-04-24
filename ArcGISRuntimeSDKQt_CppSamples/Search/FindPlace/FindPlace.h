@@ -39,8 +39,8 @@ namespace Esri
 class FindPlace : public QQuickItem
 {
   Q_OBJECT
-  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
-  Q_PROPERTY(QAbstractListModel* suggestions READ suggestions NOTIFY suggestionsChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData MEMBER m_calloutData NOTIFY calloutDataChanged)
+  Q_PROPERTY(QAbstractListModel* suggestions MEMBER m_suggestListModel NOTIFY suggestionsChanged)
   Q_PROPERTY(bool poiTextHasFocus READ poiTextHasFocus WRITE setPoiTextHasFocus NOTIFY poiTextHasFocusChanged)
 
 public:
@@ -75,8 +75,6 @@ private:
   void addGraphicsOverlay();
   void createLocator();
   void connectSignals();
-  Esri::ArcGISRuntime::CalloutData* calloutData() const { return m_calloutData; }
-  QAbstractListModel* suggestions() const { return m_suggestListModel; }
   bool poiTextHasFocus() const { return m_poiTextHasFocus; }
   void setPoiTextHasFocus(bool hasFocus);
   Esri::ArcGISRuntime::GeocodeParameters createParameters();

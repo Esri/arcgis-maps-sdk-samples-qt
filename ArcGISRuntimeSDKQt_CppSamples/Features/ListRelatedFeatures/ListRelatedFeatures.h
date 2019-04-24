@@ -35,7 +35,7 @@ class ListRelatedFeatures : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(RelatedFeatureListModel* relatedFeaturesModel READ relatedFeaturesModel NOTIFY relatedFeaturesModelChanged)
+  Q_PROPERTY(RelatedFeatureListModel* relatedFeaturesModel MEMBER m_relatedFeaturesModel NOTIFY relatedFeaturesModelChanged)
 
 public:
   explicit ListRelatedFeatures(QQuickItem* parent = nullptr);
@@ -51,7 +51,6 @@ signals:
 
 private:
   void connectSignals();
-  RelatedFeatureListModel* relatedFeaturesModel() const { return m_relatedFeaturesModel; }
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

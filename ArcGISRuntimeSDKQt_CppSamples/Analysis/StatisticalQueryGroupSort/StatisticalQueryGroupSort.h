@@ -39,11 +39,11 @@ class StatisticalQueryGroupSort : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(QStringList fields READ fields NOTIFY fieldsChanged)
-  Q_PROPERTY(QVariantList statisticDefinitions READ statisticDefinitions NOTIFY statisticDefinitionsChanged)
-  Q_PROPERTY(QVariantList orderBys READ orderBys NOTIFY orderBysChanged)
-  Q_PROPERTY(QStringList statisticTypes READ statisticTypes NOTIFY statisticTypesChanged)
-  Q_PROPERTY(QStringList groupingFields READ groupingFields NOTIFY groupingFieldsChanged)
+  Q_PROPERTY(QStringList fields MEMBER m_fields NOTIFY fieldsChanged)
+  Q_PROPERTY(QVariantList statisticDefinitions MEMBER m_statisticDefinitions NOTIFY statisticDefinitionsChanged)
+  Q_PROPERTY(QVariantList orderBys MEMBER m_orderBys NOTIFY orderBysChanged)
+  Q_PROPERTY(QStringList statisticTypes MEMBER m_statisticTypes NOTIFY statisticTypesChanged)
+  Q_PROPERTY(QStringList groupingFields MEMBER m_groupingFields NOTIFY groupingFieldsChanged)
   Q_PROPERTY(QAbstractListModel* resultsModel READ resultsModel NOTIFY resultsModelChanged)
 
 public:
@@ -71,12 +71,7 @@ signals:
   void resultsModelChanged();
 
 private:
-  QStringList fields() const { return m_fields; }
-  QVariantList statisticDefinitions() const { return m_statisticDefinitions; }
-  QVariantList orderBys() const { return m_orderBys; }
   QAbstractListModel* resultsModel() const;
-  QStringList statisticTypes() const { return m_statisticTypes; }
-  QStringList groupingFields() const { return m_groupingFields; }
   void connectSignals();
   Esri::ArcGISRuntime::StatisticType statisticStringToEnum(const QString& statistic) const;
   Esri::ArcGISRuntime::SortOrder orderStringToEnum(const QString& order) const;

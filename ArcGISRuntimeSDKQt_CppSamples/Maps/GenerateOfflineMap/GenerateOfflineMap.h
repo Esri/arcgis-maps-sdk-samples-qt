@@ -36,7 +36,7 @@ class GenerateOfflineMap : public QQuickItem
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authenticationManager READ authenticationManager CONSTANT)
-  Q_PROPERTY(bool mapLoaded READ mapLoaded NOTIFY mapLoadedChanged)
+  Q_PROPERTY(bool mapLoaded MEMBER m_mapLoaded NOTIFY mapLoadedChanged)
 
 public:
   explicit GenerateOfflineMap(QQuickItem* parent = nullptr);
@@ -58,7 +58,6 @@ signals:
 private:
   static const QString webMapId() { return s_webMapId; }
   Esri::ArcGISRuntime::AuthenticationManager* authenticationManager() const;
-  bool mapLoaded() { return m_mapLoaded; }
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
