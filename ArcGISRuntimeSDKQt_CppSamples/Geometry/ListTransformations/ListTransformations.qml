@@ -176,7 +176,7 @@ ListTransformationsSample {
         }
     }
 
-    onShowStatusBar: {        
+    onShowStatusBar: {
         statusText.text = message;
 
         if (statusBar.isExpanded)
