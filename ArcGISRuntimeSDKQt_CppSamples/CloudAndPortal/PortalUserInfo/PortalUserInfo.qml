@@ -26,14 +26,16 @@ PortalUserInfoSample {
     width: 800
     height: 600
 
+    readonly property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]
+    readonly property var detailValue: ["fullName", "username", "email", "bio", "access"]
+    readonly property var infoLabels: ["Description", "Can Find External Content", "Can Share Items Externally"]
+    readonly property var infoValues: ["orgDescription", "canSearchPublic", "canSharePublic"]
+
     BusyIndicator {
         id: loadingIndicator
         anchors.centerIn: parent
         running: !loaded
     }
-
-    property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]
-    property var detailValue: ["fullName", "username", "email", "bio", "access"]
 
     Column {
         id: userDetailsColumn
@@ -122,8 +124,6 @@ PortalUserInfoSample {
         }
     }
 
-    property var infoLabels: ["Description", "Can Find External Content", "Can Share Items Externally"]
-    property var infoValues: ["orgDescription", "canSearchPublic", "canSharePublic"]
 
     ListView {
         id: infoList

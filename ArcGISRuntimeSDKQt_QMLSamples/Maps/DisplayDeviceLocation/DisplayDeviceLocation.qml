@@ -23,12 +23,12 @@ Rectangle {
     width: 800
     height: 600
     
-    property string compassMode: "Compass"
-    property string navigationMode: "Navigation"
-    property string recenterMode: "Re-Center"
-    property string onMode: "On"
-    property string stopMode: "Stop"
-    property string closeMode: "Close"
+    readonly property string compassMode: "Compass"
+    readonly property string navigationMode: "Navigation"
+    readonly property string recenterMode: "Re-Center"
+    readonly property string onMode: "On"
+    readonly property string stopMode: "Stop"
+    readonly property string closeMode: "Close"
     property string currentModeText: stopMode
     property string currentModeImage: "qrc:/Samples/Maps/DisplayDeviceLocation/Stop.png"
 

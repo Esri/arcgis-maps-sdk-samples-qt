@@ -24,10 +24,8 @@ import Esri.ArcGISRuntime.Toolkit.Controls 100.6
 
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
-
     
-
-    property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
+    readonly property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // add a mapView component
     MapView {

@@ -23,9 +23,8 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     width: 800
     height: 600
-
     
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     /**
      * Create SceneView that contains a Scene with the Imagery Basemap, as well as a GraphicsOverlay

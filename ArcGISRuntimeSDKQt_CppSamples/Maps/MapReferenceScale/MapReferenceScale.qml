@@ -20,7 +20,7 @@ import Esri.Samples 1.0
 import QtQuick.Layouts 1.12
 
 Item {
-    property var referenceScales: [500000,250000,100000,50000]
+    readonly property var referenceScales: [500000, 250000, 100000, 50000]
 
     MapView {
         id: myMapView

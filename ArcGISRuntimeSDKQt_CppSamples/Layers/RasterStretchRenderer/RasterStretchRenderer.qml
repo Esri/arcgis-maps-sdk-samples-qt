@@ -23,16 +23,14 @@ import Esri.ArcGISExtras 1.1
 RasterStretchRendererSample {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
-
     
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
-    property string minMax: "Min Max"
-    property string percentClip: "Percent Clip"
-    property string stdDeviation: "Standard Deviation"
-    property var stretchTypes: [minMax, percentClip, stdDeviation]
+    readonly property string minMax: "Min Max"
+    readonly property string percentClip: "Percent Clip"
+    readonly property string stdDeviation: "Standard Deviation"
+    readonly property var stretchTypes: [minMax, percentClip, stdDeviation]
     property bool editingRenderer: false
 
     // add a mapView component

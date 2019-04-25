@@ -27,7 +27,7 @@ Rectangle {
     height: 600
 
     property var renderingRuleNames: []
-    property url imageServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer"
+    readonly property url imageServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer"
 
     MapView {
         anchors.fill: parent

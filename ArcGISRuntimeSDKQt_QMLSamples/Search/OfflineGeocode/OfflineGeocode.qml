@@ -26,8 +26,7 @@ Rectangle {
     width: 800
     height: 600
     
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
-
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
     property Point pinLocation: null
     property Point clickedPoint: null
     property bool isReverseGeocode: false

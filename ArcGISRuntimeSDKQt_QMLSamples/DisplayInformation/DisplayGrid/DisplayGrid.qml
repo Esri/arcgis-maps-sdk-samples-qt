@@ -25,21 +25,20 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-
     
-    property string utmGrid: "UTM"
-    property string usngGrid: "USNG"
-    property string latlonGrid: "LatLon"
-    property string mgrsGrid: "MGRS"
-    property string dd: "Decimal degrees"
-    property string dms: "Degrees minutes seconds"
-    property string geographic: "Geographic"
-    property string bottomLeft: "Bottom left"
-    property string bottomRight: "Bottom right"
-    property string topLeft: "Top left"
-    property string topRight: "Top right"
-    property string center: "Center"
-    property string allSides: "All sides"
+    readonly property string utmGrid: "UTM"
+    readonly property string usngGrid: "USNG"
+    readonly property string latlonGrid: "LatLon"
+    readonly property string mgrsGrid: "MGRS"
+    readonly property string dd: "Decimal degrees"
+    readonly property string dms: "Degrees minutes seconds"
+    readonly property string geographic: "Geographic"
+    readonly property string bottomLeft: "Bottom left"
+    readonly property string bottomRight: "Bottom right"
+    readonly property string topLeft: "Top left"
+    readonly property string topRight: "Top right"
+    readonly property string center: "Center"
+    readonly property string allSides: "All sides"
     property string currentLabelPosition: geographic
     property real centerWindowY: (rootRectangle.height / 2) - (styleWindow.height / 2)
     property color currentGridColor: "red"

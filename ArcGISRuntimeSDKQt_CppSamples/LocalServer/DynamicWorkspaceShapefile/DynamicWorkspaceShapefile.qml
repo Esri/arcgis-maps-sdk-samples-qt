@@ -24,10 +24,9 @@ import Esri.ArcGISExtras 1.1
 DynamicWorkspaceShapefileSample {
     id: rootRectangle
     clip: true
-
     
     property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shapefile"
-    property var supportedFormats: ["Shapefile (*.shp)"]
+    readonly property var supportedFormats: ["Shapefile (*.shp)"]
 
     // add a mapView component
     MapView {
