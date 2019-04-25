@@ -17,7 +17,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
 EditAndSyncFeaturesSample {

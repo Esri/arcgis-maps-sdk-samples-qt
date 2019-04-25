@@ -16,8 +16,6 @@
 
 #include "FeatureLayerDictionaryRenderer.h"
 
-#include <QQmlProperty>
-
 #include "DictionaryRenderer.h"
 #include "FeatureLayer.h"
 #include "Geodatabase.h"

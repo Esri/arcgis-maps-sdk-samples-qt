@@ -16,8 +16,6 @@
 
 #include "GODictionaryRenderer.h"
 
-#include <QQmlProperty>
-
 #include "DictionaryRenderer.h"
 #include "GraphicListModel.h"
 #include "Map.h"

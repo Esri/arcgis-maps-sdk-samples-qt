@@ -25,7 +25,6 @@
 #include "RenderingRule.h"
 #include "RenderingRuleInfo.h"
 
-#include <QQmlProperty>
 #include <QJsonObject>
 #include <QJsonDocument>
 

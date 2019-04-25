@@ -26,13 +26,12 @@
 #include "SimpleMarkerSceneSymbol.h"
 #include "SimpleRenderer.h"
 
-#include <QQmlProperty>
+#include <QDir>
+#include <QtCore/qglobal.h>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
-#else
-#include <QDir>
-#endif
+#endif // Q_OS_IOS
 
 namespace
 {

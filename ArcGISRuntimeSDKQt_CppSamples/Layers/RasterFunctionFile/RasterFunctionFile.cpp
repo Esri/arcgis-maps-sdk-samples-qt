@@ -70,7 +70,7 @@ void RasterFunctionFile::componentComplete()
   QQuickItem::componentComplete();
 
   // get data path
-  m_dataPath = QUrl(QQmlProperty::read(this, "dataPath").toString()).toLocalFile();
+  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster/";
   m_rasterPath = m_dataPath + "Shasta_Elevation.tif";
 
   // find QML MapView component
