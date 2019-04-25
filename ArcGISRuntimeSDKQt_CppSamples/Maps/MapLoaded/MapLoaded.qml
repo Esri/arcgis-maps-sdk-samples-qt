@@ -54,7 +54,7 @@ MapLoadedSample {
             }
             // Bind to the C++ property that returns the map's load status
             text: mapLoadedSample.mapLoadStatus
-            font.pixelSize: 14
+            font.pointSize: 14
         }
     }
 }

@@ -91,7 +91,7 @@ Rectangle {
 
             Text {
                 text: name
-                font.pixelSize: 25
+                font.pointSize: 25
                 color: "white"
                 MouseArea {
                     anchors.fill: parent
@@ -162,7 +162,7 @@ Rectangle {
 
         Text {
             text: currentModeText
-            font.pixelSize: 25
+            font.pointSize: 25
             color: "white"
             MouseArea {
                 anchors.fill: parent

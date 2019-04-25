@@ -185,7 +185,7 @@ LocalServerServicesSample {
                     leftMargin: 5
                 }
                 elide: Text.ElideLeft
-                font.pixelSize: 14
+                font.pointSize: 14
 
                 MouseArea {
                     anchors.fill: parent

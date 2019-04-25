@@ -25,7 +25,7 @@ Rectangle {
   clip: true
   width: 800
   height: 600
-  
+
   property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/gpkg/"
 
   MapView {
@@ -98,7 +98,7 @@ Rectangle {
           wrapMode: Text.WordWrap
           clip:true
           font {
-            pixelSize: 14
+            pointSize: 14
             bold: true
           }
         }
@@ -159,7 +159,7 @@ Rectangle {
                 width: 150
                 text: name
                 wrapMode: Text.WordWrap
-                font.pixelSize: 14
+                font.pointSize: 14
               }
 
               Switch {

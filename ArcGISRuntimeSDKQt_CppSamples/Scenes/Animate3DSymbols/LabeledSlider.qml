@@ -5,7 +5,7 @@ Slider {
     id: slider
     property alias text: handleText.text
     property alias handleWidth: handleText.width
-    font.pixelSize: 14
+    font.pointSize: 14
     handle: Item {
         x: parent.leftPadding + parent.visualPosition * (parent.availableWidth - handleNub.width)
         y: parent.topPadding + parent.availableHeight / 2 - handleNub.height / 2

@@ -118,7 +118,7 @@ Rectangle {
                 margins: 5
             }
             text: pitchStr + ": " + pitchSlider.value.toFixed(0)
-            font.pixelSize: 20
+            font.pointSize: 20
             verticalAlignment: Text.AlignTop
         }
 
@@ -146,7 +146,7 @@ Rectangle {
             }
             text: headingStr + ": " + headingSlider.value.toFixed(0)
             verticalAlignment: Text.AlignTop
-            font.pixelSize: 20
+            font.pointSize: 20
         }
 
         Slider{

@@ -52,7 +52,7 @@ Item {
                 margins: 5
             }
             text: "pitch : " + model.pitch.toFixed(0)
-            font.pixelSize: 20
+            font.pointSize: 20
             verticalAlignment: Text.AlignTop
         }
 
@@ -76,7 +76,7 @@ Item {
             }
             text: "heading: " + model.heading.toFixed(0)
             verticalAlignment: Text.AlignTop
-            font.pixelSize: 20
+            font.pointSize: 20
         }
 
         Slider{

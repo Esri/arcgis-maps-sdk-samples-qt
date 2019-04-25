@@ -59,7 +59,7 @@ SpatialRelationshipsSample {
         Text {
             text: "Relationships:"
             font {
-                pixelSize: 16
+                pointSize: 16
                 bold: true
                 family: "helvetica"
             }
