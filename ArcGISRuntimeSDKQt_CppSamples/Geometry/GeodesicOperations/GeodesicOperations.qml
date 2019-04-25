@@ -43,7 +43,7 @@ GeodesicOperationsSample {
 
         text: "%1 kilometers".arg(distanceText)
         visible: distanceText.length > 0
-        font.pixelSize: 20
+        font.pointSize: 20
         color: "white"
     }
 }

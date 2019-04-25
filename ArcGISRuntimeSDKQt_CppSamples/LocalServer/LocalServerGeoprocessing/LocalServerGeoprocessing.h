@@ -37,7 +37,7 @@ class LocalServerGeoprocessing : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(bool isReady READ isReady NOTIFY isReadyChanged)
+  Q_PROPERTY(bool isReady MEMBER m_isReady NOTIFY isReadyChanged)
 
 public:
   explicit LocalServerGeoprocessing(QQuickItem* parent = nullptr);
@@ -61,8 +61,6 @@ private:
   Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
   Esri::ArcGISRuntime::LocalGeoprocessingService* m_localGPService = nullptr;
   Esri::ArcGISRuntime::GeoprocessingTask* m_gpTask = nullptr;
-
-  bool isReady() { return m_isReady; }
   bool m_isReady = false;
 };
 

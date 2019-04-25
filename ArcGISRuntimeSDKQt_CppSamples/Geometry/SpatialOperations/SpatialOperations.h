@@ -34,7 +34,7 @@ class SpatialOperations : public QQuickItem
 {
   Q_OBJECT
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapQuickView WRITE setMapQuickView NOTIFY mapQuickViewChanged)
-  Q_PROPERTY(QStringList geometryOperations READ geometryOperations CONSTANT)
+  Q_PROPERTY(QStringList geometryOperations MEMBER m_geometryOperations CONSTANT)
 
 public:
   explicit SpatialOperations(QQuickItem* parent = nullptr);
@@ -50,7 +50,6 @@ signals:
 private:
   void addPolygons();
   void addOutput(const Esri::ArcGISRuntime::Geometry& geometry);
-  QStringList geometryOperations() const { return m_geometryOperations; }
 
   Esri::ArcGISRuntime::MapQuickView* mapQuickView() const;
   void setMapQuickView(Esri::ArcGISRuntime::MapQuickView* mapQuickView);

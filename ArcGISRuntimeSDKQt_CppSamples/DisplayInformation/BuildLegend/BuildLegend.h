@@ -35,7 +35,7 @@ class BuildLegend : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(QAbstractListModel* legendInfoListModel READ legendInfoListModel NOTIFY legendInfoListModelChanged)
+  Q_PROPERTY(QAbstractListModel* legendInfoListModel MEMBER m_legendInfoListModel NOTIFY legendInfoListModelChanged)
 
 public:
   explicit BuildLegend(QQuickItem* parent = nullptr);
@@ -48,7 +48,6 @@ signals:
   void legendInfoListModelChanged();
 
 private:
-  QAbstractListModel* legendInfoListModel() const { return m_legendInfoListModel; }
   void addLayers();
 
 private:

@@ -324,7 +324,7 @@ Rectangle {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: isOffline ? "Sync Geodatabase" : "Generate Geodatabase"
-                font.pixelSize: 14
+                font.pointSize: 14
                 color: "#474747"
             }
         }
@@ -369,7 +369,7 @@ Rectangle {
         Text {
             anchors.centerIn: parent
             text: instructionText
-            font.pixelSize: 16
+            font.pointSize: 16
             color: "white"
         }
     }
@@ -423,7 +423,7 @@ Rectangle {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: statusText
-                    font.pixelSize: 16
+                    font.pointSize: 16
                 }
             }
         }

@@ -63,7 +63,7 @@ AnalyzeViewshedSample {
             anchors.margins: 5
             visible: !viewshedInProgress
             text: "Click map to execute viewshed analysis"
-            font.pixelSize: 12
+            font.pointSize: 12
         }
 
         Row {
@@ -80,7 +80,7 @@ AnalyzeViewshedSample {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: statusText
-                font.pixelSize: 12
+                font.pointSize: 12
             }
         }
     }

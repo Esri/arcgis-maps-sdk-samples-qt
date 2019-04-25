@@ -189,7 +189,7 @@ Rectangle {
 
                 Text {
                     id: headingValue
-                    font.pixelSize: 14
+                    font.pointSize: 14
                     padding: 3
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter
@@ -269,7 +269,7 @@ Rectangle {
 
                 Text {
                     id: pitchValue
-                    font.pixelSize: 14
+                    font.pointSize: 14
                     padding: 3
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter

@@ -72,7 +72,7 @@ Item {
 
             text: "Message Received"
             color: "#2f2f2f"
-            font.pixelSize: 13
+            font.pointSize: 13
         }
     }
 }

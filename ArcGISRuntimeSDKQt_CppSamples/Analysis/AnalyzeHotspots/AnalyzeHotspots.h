@@ -36,8 +36,8 @@ class AnalyzeHotspots : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(bool jobInProgress READ jobInProgress NOTIFY jobInProgressChanged)
-  Q_PROPERTY(QString statusText READ jobStatus NOTIFY jobStatusChanged)
+  Q_PROPERTY(bool jobInProgress MEMBER m_jobInProgress NOTIFY jobInProgressChanged)
+  Q_PROPERTY(QString statusText MEMBER m_jobStatus NOTIFY jobStatusChanged)
 
 public:
   explicit AnalyzeHotspots(QQuickItem* parent = nullptr);
@@ -62,8 +62,6 @@ private:
   QString m_jobStatus = QStringLiteral("Not started.");
 
 private:
-  bool jobInProgress() const { return m_jobInProgress; }
-  QString jobStatus() const { return m_jobStatus; }
   Esri::ArcGISRuntime::GeoprocessingParameters createParameters(const QString& fromDate, const QString& toDate);
   void processResults(Esri::ArcGISRuntime::GeoprocessingResult* result);
 };

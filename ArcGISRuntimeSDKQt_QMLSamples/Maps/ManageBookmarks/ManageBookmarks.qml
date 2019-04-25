@@ -207,7 +207,7 @@ Rectangle {
             columns: 2
             Text {
                 text: qsTr("Provide the bookmark name")
-                font.pixelSize: 12
+                font.pointSize: 12
                 Layout.columnSpan: 2
                 Layout.margins: 5
             }

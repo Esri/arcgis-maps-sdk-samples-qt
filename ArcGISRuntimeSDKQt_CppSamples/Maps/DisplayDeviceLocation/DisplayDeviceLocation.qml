@@ -73,7 +73,7 @@ DisplayDeviceLocationSample {
 
             Text {
                 text: name
-                font.pixelSize: 25
+                font.pointSize: 25
                 color: "white"
                 MouseArea {
                     anchors.fill: parent
@@ -145,7 +145,7 @@ DisplayDeviceLocationSample {
 
         Text {
             text: currentModeText
-            font.pixelSize: 25
+            font.pointSize: 25
             color: "white"
             MouseArea {
                 anchors.fill: parent

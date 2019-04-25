@@ -223,7 +223,7 @@ SearchDictionarySymbolStyleSample {
             id: resultText
             visible: resultView.visible
             text: "Result(s) found: " + resultView.count
-            font.pixelSize: fontSize
+            font.pointSize: fontSize
         }
 
         Rectangle {
@@ -265,35 +265,35 @@ SearchDictionarySymbolStyleSample {
                             Text {
                                 id: nameText
                                 text: "<b>Name:</b> " + name
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: parent.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>Tags:</b> " + tags
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>SymbolClass:</b> " + symbolClass
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>Category:</b> " + category
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>Key:</b> " + key
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
