@@ -24,10 +24,34 @@
 #include "Point.h"
 #include "Viewpoint.h"
 
-#include <QQmlProperty>
 #include <QUrl>
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 FeatureLayer_GeoPackage::FeatureLayer_GeoPackage(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -57,7 +81,7 @@ void FeatureLayer_GeoPackage::componentComplete()
   m_map->setInitialViewpoint(vp);
 
   // Create the GeoPackage
-  const QString dataPath = QQmlProperty::read(m_mapView, "dataPath").toUrl().toLocalFile();
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/gpkg/";
   GeoPackage* gpkg = new GeoPackage(dataPath + "AuroraCO.gpkg", this);
 
   // Connect to GeoPackage::doneLoading
@@ -83,7 +107,6 @@ void FeatureLayer_GeoPackage::componentComplete()
     // load the GeoPackage
     gpkg->load();
   });
-
 
   // Set map to map view
   m_mapView->setMap(m_map);

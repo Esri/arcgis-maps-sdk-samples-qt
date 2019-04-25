@@ -22,9 +22,33 @@
 #include "Raster.h"
 #include "RasterLayer.h"
 
-#include <QQmlProperty>
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+QString defaultDataPath()
+{
+  QString dataPath;
+
+#ifdef Q_OS_ANDROID
+  dataPath = "/sdcard";
+#elif defined Q_OS_IOS
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  dataPath = QDir::homePath();
+#endif
+
+  return dataPath;
+}
+} // namespace
 
 RasterColormapRenderer::RasterColormapRenderer(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -48,7 +72,7 @@ void RasterColormapRenderer::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create the raster and raster layer
-  m_dataPath = QUrl(QQmlProperty::read(this, "dataPath").toString()).toLocalFile();
+  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster";
 
   //! [RasterColormapRenderer cpp add raster basemap]
   Raster* raster = new Raster(m_dataPath + "/ShastaBW.tif", this);

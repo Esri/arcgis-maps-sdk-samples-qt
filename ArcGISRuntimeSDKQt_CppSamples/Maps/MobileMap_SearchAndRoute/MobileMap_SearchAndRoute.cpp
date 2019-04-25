@@ -34,11 +34,34 @@
 #include "ReverseGeocodeParameters.h"
 
 #include <QDir>
-#include <QQmlProperty>
 #include <QFileInfoList>
 #include <QFile>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 MobileMap_SearchAndRoute::MobileMap_SearchAndRoute(QQuickItem* parent):
     QQuickItem(parent),
@@ -75,7 +98,7 @@ void MobileMap_SearchAndRoute::componentComplete()
     m_mapView = findChild<MapQuickView*>("mapView");
     m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-    m_dataPath = QQmlProperty::read(this, "dataPath").toString();
+    m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mmpk";
     m_fileInfoList = QDir(m_dataPath).entryInfoList();
 
     // initialize Callout

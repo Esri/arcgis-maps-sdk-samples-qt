@@ -25,9 +25,33 @@
 #include "StretchRenderer.h"
 #include "StandardDeviationStretchParameters.h"
 
-#include <QQmlProperty>
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 RasterStretchRenderer::RasterStretchRenderer(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -52,7 +76,7 @@ void RasterStretchRenderer::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create the raster and raster layer
-  m_dataPath = QUrl(QQmlProperty::read(this, "dataPath").toString()).toLocalFile();
+  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster";
   Raster* raster = new Raster(m_dataPath + "/Shasta.tif", this);
   m_rasterLayer = new RasterLayer(raster, this);
 

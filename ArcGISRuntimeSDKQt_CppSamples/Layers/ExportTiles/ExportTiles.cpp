@@ -16,8 +16,6 @@
 
 #include "ExportTiles.h"
 
-#include <QUrl>
-
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Basemap.h"
@@ -28,6 +26,8 @@
 #include "GeometryEngine.h"
 #include "SpatialReference.h"
 #include "TileCache.h"
+
+#include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -79,7 +79,7 @@ void ExportTiles::componentComplete()
   m_exportTileCacheTask->load();
 }
 
-void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2, QString dataPath)
+void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
 {
   // create an envelope from the QML rectangle corners
   const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
@@ -88,13 +88,13 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
   const Geometry tileCacheExtent = GeometryEngine::project(extent, SpatialReference::webMercator());
 
   // connect to sync task doneLoading signal
-  connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, this, [this, dataPath](QUuid, ExportTileCacheParameters parameters)
+  connect(m_exportTileCacheTask, &ExportTileCacheTask::defaultExportTileCacheParametersCompleted, this, [this](QUuid, ExportTileCacheParameters parameters)
   {
     m_parameters = parameters;
 
     //! [ExportTiles start job]
     // execute the task and obtain the job
-    ExportTileCacheJob* exportJob = m_exportTileCacheTask->exportTileCache(m_parameters, dataPath);
+    ExportTileCacheJob* exportJob = m_exportTileCacheTask->exportTileCache(m_parameters, m_tempPath.path() + "/offlinemap.tpk");
 
     // check if there is a valid job
     if (exportJob)
@@ -137,9 +137,9 @@ void ExportTiles::exportTileCacheFromCorners(double xCorner1, double yCorner1, d
       emit hideWindow(5000, false);
     }
   });
+
   // generate parameters
   m_exportTileCacheTask->createDefaultExportTileCacheParameters(tileCacheExtent, m_mapView->mapScale(), m_exportTileCacheTask->mapServiceInfo().maxScale());
-
 }
 
 // display the tile cache once the task is complete

@@ -16,19 +16,14 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 RasterStretchRendererSample {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
-
-    
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
+        
     property string minMax: "Min Max"
     property string percentClip: "Percent Clip"
     property string stdDeviation: "Standard Deviation"

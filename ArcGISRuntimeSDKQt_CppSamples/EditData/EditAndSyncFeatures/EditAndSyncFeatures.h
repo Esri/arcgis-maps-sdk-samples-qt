@@ -31,9 +31,11 @@ namespace Esri
 
 #include "GenerateGeodatabaseParameters.h"
 #include "SyncGeodatabaseParameters.h"
+
 #include <QQuickItem>
 #include <QString>
 #include <QUrl>
+#include <QTemporaryDir>
 
 class EditAndSyncFeatures : public QQuickItem
 {
@@ -74,6 +76,7 @@ private:
   qint64 m_featureLayerId = 0;
   QString m_featureServiceUrl = QStringLiteral("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/");
   bool m_isOffline = false;
+  QTemporaryDir m_temporaryDir;
 };
 
 #endif // EDITANDSYNCFEATURES_H

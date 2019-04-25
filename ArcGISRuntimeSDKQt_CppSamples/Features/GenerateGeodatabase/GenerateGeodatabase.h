@@ -33,6 +33,7 @@ namespace Esri
 #include "ArcGISFeatureServiceInfo.h"
 #include <QQuickItem>
 #include <QStringList>
+#include <QTemporaryDir>
 
 class GenerateGeodatabase : public QQuickItem
 {
@@ -63,6 +64,7 @@ private:
   QString m_featureServiceUrl = QStringLiteral("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer/");
   QStringList m_serviceIds;
   Esri::ArcGISRuntime::ArcGISFeatureServiceInfo m_featureServiceInfo;
+  QTemporaryDir m_tempPath;
 };
 
 #endif // GENERATE_GEODATABASE_H

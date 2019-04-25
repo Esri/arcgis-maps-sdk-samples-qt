@@ -17,7 +17,6 @@
 #include "GODictionaryRenderer_3D.h"
 
 #include <QFileInfo>
-#include <QQmlProperty>
 
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
@@ -29,7 +28,33 @@
 #include "Surface.h"
 #include "DictionarySymbolStyle.h"
 
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
+
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 const QString GODictionaryRenderer_3D::FIELD_CONTROL_POINTS = "_control_points";
 const QString GODictionaryRenderer_3D::FIELD_WKID = "_wkid";
@@ -59,8 +84,8 @@ void GODictionaryRenderer_3D::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  // QML properties
-  m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
+  // store data path properties
+  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data";
 
   // Set up DictionaryRenderer
   if (!QFileInfo::exists(m_dataPath + "/styles/mil2525d.stylx"))

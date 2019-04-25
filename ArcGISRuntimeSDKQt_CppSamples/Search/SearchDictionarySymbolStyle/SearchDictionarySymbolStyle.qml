@@ -18,22 +18,17 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 SearchDictionarySymbolStyleSample {
     id: searchDictionarySymbolStyleSample
     width: 800
     height: 600
-
     
     property double fontSize: 16
     property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
-    property var searchParamList: [[],[],[],[],[]]
-
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
+    property var searchParamList: [[],[],[],[],[]]    
 
     ColumnLayout {
         id: topRectangle

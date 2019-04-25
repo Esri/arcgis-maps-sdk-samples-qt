@@ -24,10 +24,34 @@
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 
-#include <QQmlProperty>
 #include <QUrl>
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 SymbolizeShapefile::SymbolizeShapefile(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -57,8 +81,8 @@ void SymbolizeShapefile::componentComplete()
   m_map->setInitialViewpoint(vp);
 
   // Create the ShapefileFeatureTable
-  const QString dataPath = QQmlProperty::read(m_mapView, "dataPath").toUrl().toLocalFile();
-  ShapefileFeatureTable* shp = new ShapefileFeatureTable(dataPath + "Subdivisions.shp", this);
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/shp";
+  ShapefileFeatureTable* shp = new ShapefileFeatureTable(dataPath + "/Subdivisions.shp", this);
 
   // Create the FeatureLayer
   m_featureLayer = new FeatureLayer(shp, this);

@@ -27,7 +27,33 @@
 #include "MapQuickView.h"
 #include "DictionarySymbolStyle.h"
 
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
+
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 FeatureLayerDictionaryRenderer::FeatureLayerDictionaryRenderer(QQuickItem* parent) :
   QQuickItem(parent)
@@ -46,7 +72,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();  
+  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data";
 
   m_mapView = findChild<MapQuickView*>("mapView");
   // Create a map using the topo basemap

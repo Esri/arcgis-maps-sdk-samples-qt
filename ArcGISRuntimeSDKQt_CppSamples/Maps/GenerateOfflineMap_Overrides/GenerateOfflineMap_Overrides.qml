@@ -17,19 +17,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.6
 
 GenerateOfflineMap_OverridesSample {
     id: offlineMapOverridesSample
     clip: true
     width: 800
-    height: 600
-
-    
-    property string outputMapPackage: System.temporaryFolder.path + "/OfflineMap_Overrides_%1.mmpk".arg(new Date().getTime().toString())
+    height: 600    
 
     onUpdateStatus: generateWindow.statusText = status;
     onUpdateProgress: generateWindow.progressText = progress;
@@ -96,7 +91,7 @@ GenerateOfflineMap_OverridesSample {
         onClipWaterPipesAOIChanged: setClipWaterPipesAOI(clip);
         onOverridesAccepted: {
             generateWindow.visible = true;
-            takeMapOffline(outputMapPackage);
+            takeMapOffline();
         }
     }
 

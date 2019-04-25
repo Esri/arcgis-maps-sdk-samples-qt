@@ -22,10 +22,34 @@
 #include "RasterLayer.h"
 #include "Basemap.h"
 
-#include <QQmlProperty>
 #include <QUrl>
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 RasterLayerFile::RasterLayerFile(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -44,7 +68,7 @@ void RasterLayerFile::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  QString dataPath = QQmlProperty::read(this, "dataPath").toString();
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster/";
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
@@ -58,9 +82,12 @@ void RasterLayerFile::componentComplete()
   createAndAddRasterLayer(dataPath + "Shasta.tif");
 }
 
-void RasterLayerFile::createAndAddRasterLayer(QUrl rasterUrl)
+void RasterLayerFile::createAndAddRasterLayer(QString dataPath)
 {
-  QString dataPath = rasterUrl.toLocalFile();
+  // correct data path if contains file:/ prefix
+  if (dataPath.contains("file:/"))
+    dataPath = QString(QUrl(dataPath).toLocalFile());
+
   //! [RasterLayerFile cpp new raster layer]
   Raster* raster = new Raster(dataPath, this);
   RasterLayer* rasterLayer = new RasterLayer(raster, this);

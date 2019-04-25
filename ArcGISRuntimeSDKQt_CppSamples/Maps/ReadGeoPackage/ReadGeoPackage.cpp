@@ -27,9 +27,32 @@
 #include "GeoPackageFeatureTable.h"
 
 #include <QDir>
-#include <QQmlProperty>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 ReadGeoPackage::ReadGeoPackage(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -49,7 +72,7 @@ void ReadGeoPackage::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-  m_dataPath = QQmlProperty::read(m_mapView, "dataPath").toUrl().toLocalFile();
+  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data";
 
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::topographic(this), this);
@@ -69,7 +92,7 @@ void ReadGeoPackage::componentComplete()
 void ReadGeoPackage::readGeoPackage()
 {
   // Load the GeoPackage at the beginning
-  GeoPackage* auroraGpkg = new GeoPackage(m_dataPath + "gpkg/AuroraCO.gpkg", this);
+  GeoPackage* auroraGpkg = new GeoPackage(m_dataPath + "/gpkg/AuroraCO.gpkg", this);
   m_layerList.clear();
 
   // Make sure there are no errors in loading the GeoPackage before interacting with it
