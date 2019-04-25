@@ -123,7 +123,7 @@ Rectangle {
                 leftMargin: 10
             }
             text: displayText
-            font.pixelSize: 14
+            font.pointSize: 14
         }
     }
 }

@@ -73,7 +73,7 @@ ReadGeoPackageSample {
                     wrapMode: Text.WordWrap
                     clip:true
                     font {
-                        pixelSize: 14
+                        pointSize: 14
                         bold: true
                     }
                 }
@@ -97,7 +97,7 @@ ReadGeoPackageSample {
                                 width: 150
                                 text:  modelData.name
                                 wrapMode: Text.WordWrap
-                                font.pixelSize: 14
+                                font.pointSize: 14
                             }
 
                             Switch {

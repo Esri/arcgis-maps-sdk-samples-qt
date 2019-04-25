@@ -24,14 +24,14 @@ Rectangle {
     width: 800
     height: 600
 
-    property real longitude: -118.71
-    property real latitude: 32.09
-    property real altitude: 100000.0
-    property int coneDimension: 10000
-    property real initialPitch: 90.0
-    property real initialHeading: 180.0
-    property string headingStr: "heading"
-    property string pitchStr: "pitch"
+    readonly property real longitude: -118.71
+    readonly property real latitude: 32.09
+    readonly property real altitude: 100000.0
+    readonly property int coneDimension: 10000
+    readonly property real initialPitch: 90.0
+    readonly property real initialHeading: 180.0
+    readonly property string headingStr: "heading"
+    readonly property string pitchStr: "pitch"
 
     SceneView {
         id: sceneView
@@ -118,7 +118,7 @@ Rectangle {
                 margins: 5
             }
             text: pitchStr + ": " + pitchSlider.value.toFixed(0)
-            font.pixelSize: 20
+            font.pointSize: 20
             verticalAlignment: Text.AlignTop
         }
 
@@ -146,7 +146,7 @@ Rectangle {
             }
             text: headingStr + ": " + headingSlider.value.toFixed(0)
             verticalAlignment: Text.AlignTop
-            font.pixelSize: 20
+            font.pointSize: 20
         }
 
         Slider{

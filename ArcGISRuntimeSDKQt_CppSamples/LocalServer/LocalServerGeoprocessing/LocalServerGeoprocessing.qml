@@ -55,7 +55,7 @@ LocalServerGeoprocessingSample {
                     width: parent.width
                     wrapMode: Text.WordWrap
                     color: "white"
-                    font.pixelSize: 12
+                    font.pointSize: 12
                 }
 
                 Rectangle {
@@ -72,7 +72,7 @@ LocalServerGeoprocessingSample {
                         width: 40
                         text: qsTr("Interval: ")
                         font.bold: true
-                        font.pixelSize: 14
+                        font.pointSize: 14
                     }
 
                     TextField {
@@ -91,7 +91,7 @@ LocalServerGeoprocessingSample {
                     width: parent.width
                     text: "Generate Contours"
                     height: 35
-                    font.pixelSize: 14
+                    font.pointSize: 14
                     font.bold: true
                     onClicked: {
                         generateContours(intervalText.text);
@@ -102,7 +102,7 @@ LocalServerGeoprocessingSample {
                     width: parent.width
                     text: "Clear Results"
                     height: 35
-                    font.pixelSize: 14
+                    font.pointSize: 14
                     font.bold: true
                     onClicked: {
                         clearResults();

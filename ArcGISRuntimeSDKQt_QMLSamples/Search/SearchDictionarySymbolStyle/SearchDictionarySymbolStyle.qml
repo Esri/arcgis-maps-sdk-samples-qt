@@ -23,18 +23,14 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
-    height: 600
+    height: 600    
 
-    
-
-    property double fontSize: 16
-    property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
-    property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
+    readonly property double fontSize: 16
+    readonly property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
+    readonly property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
     property var searchParamList: [[],[],[],[],[]]
-
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
 
     DictionarySymbolStyle {
         id: dictionarySymbolStyle
@@ -253,7 +249,7 @@ Rectangle {
             id: resultText
             visible: resultView.visible
             text: "Result(s) found: " + resultView.count
-            font.pixelSize: fontSize
+            font.pointSize: fontSize
         }
 
         Rectangle {
@@ -295,35 +291,35 @@ Rectangle {
                             Text {
                                 id: nameText
                                 text: "<b>Name:</b> " + name
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: parent.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>Tags:</b> " + tags
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>SymbolClass:</b> " + symbolClass
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>Category:</b> " + category
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>Key:</b> " + key
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }

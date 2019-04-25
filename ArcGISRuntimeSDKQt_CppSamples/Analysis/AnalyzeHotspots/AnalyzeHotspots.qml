@@ -67,12 +67,12 @@ AnalyzeHotspotsSample {
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Select date range for analysis"
-            font.pixelSize: 14
+            font.pointSize: 14
         }
 
         Text {
             text: "From"
-            font.pixelSize: 12
+            font.pointSize: 12
         }
 
         TextField {
@@ -103,7 +103,7 @@ AnalyzeHotspotsSample {
 
         Text {
             text: "To"
-            font.pixelSize: 12
+            font.pointSize: 12
         }
 
         TextField {
@@ -159,7 +159,7 @@ AnalyzeHotspotsSample {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: statusText
-                font.pixelSize: 14
+                font.pointSize: 14
             }
         }
     }

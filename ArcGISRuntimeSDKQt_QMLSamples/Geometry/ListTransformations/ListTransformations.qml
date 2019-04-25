@@ -24,10 +24,9 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-
     
     property bool peDataSet: true
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataRuntime"
+    readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataRuntime"
 
     Component.onCompleted: TransformationCatalog.projectionEngineDirectory = dataPath
 
@@ -153,7 +152,7 @@ Rectangle {
                     textFormat: Text.RichText
                     wrapMode: Text.WrapAnywhere
                     maximumLineCount: 2
-                    font.pixelSize: 12
+                    font.pointSize: 12
                 }
 
                 MouseArea {

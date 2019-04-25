@@ -58,7 +58,7 @@ FeatureLayerSelectionSample {
             }
             // set the text equal to the C++ property
             text: featureLayerSelectionSample.selectedFeatureText
-            font.pixelSize: 14
+            font.pointSize: 14
         }
     }
 }

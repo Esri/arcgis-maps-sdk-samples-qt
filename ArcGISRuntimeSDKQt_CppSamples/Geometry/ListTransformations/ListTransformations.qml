@@ -90,7 +90,7 @@ ListTransformationsSample {
                     textFormat: Text.RichText
                     wrapMode: Text.WrapAnywhere
                     maximumLineCount: 2
-                    font.pixelSize: 12
+                    font.pointSize: 12
                 }
 
                 MouseArea {

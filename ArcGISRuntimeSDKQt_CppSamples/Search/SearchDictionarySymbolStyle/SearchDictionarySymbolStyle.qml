@@ -25,10 +25,10 @@ SearchDictionarySymbolStyleSample {
     width: 800
     height: 600
     
-    property double fontSize: 16
-    property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
-    property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
-    property var searchParamList: [[],[],[],[],[]]    
+    readonly property double fontSize: 16
+    readonly property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
+    readonly property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
+    property var searchParamList: [[],[],[],[],[]]
 
     ColumnLayout {
         id: topRectangle
@@ -219,7 +219,7 @@ SearchDictionarySymbolStyleSample {
             id: resultText
             visible: resultView.visible
             text: "Result(s) found: " + resultView.count
-            font.pixelSize: fontSize
+            font.pointSize: fontSize
         }
 
         Rectangle {
@@ -261,35 +261,35 @@ SearchDictionarySymbolStyleSample {
                             Text {
                                 id: nameText
                                 text: "<b>Name:</b> " + name
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: parent.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>Tags:</b> " + tags
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>SymbolClass:</b> " + symbolClass
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>Category:</b> " + category
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }
 
                             Text {
                                 text: "<b>Key:</b> " + key
-                                font.pixelSize: fontSize
+                                font.pointSize: fontSize
                                 width: nameText.width
                                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             }

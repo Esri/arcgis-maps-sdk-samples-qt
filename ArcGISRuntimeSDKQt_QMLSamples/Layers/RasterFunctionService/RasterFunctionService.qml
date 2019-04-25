@@ -22,12 +22,10 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
-
     
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
+    readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
 
     MapView {
         anchors.fill: parent

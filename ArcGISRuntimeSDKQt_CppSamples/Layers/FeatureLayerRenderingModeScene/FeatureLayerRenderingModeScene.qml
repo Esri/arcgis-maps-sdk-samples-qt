@@ -84,8 +84,8 @@ FeatureLayerRenderingModeSceneSample {
             top: parent.top
             margins: 10
         }
-        property string startText: "Start Animation"
-        property string stopText: "Stop Animation"
+        readonly property string startText: "Start Animation"
+        readonly property string stopText: "Stop Animation"
         text: startText
         onClicked: {
             if (text === startText) {

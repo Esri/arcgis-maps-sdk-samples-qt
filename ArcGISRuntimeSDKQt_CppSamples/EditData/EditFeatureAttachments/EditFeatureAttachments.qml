@@ -22,9 +22,9 @@ import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit.Controls 100.6
 
 EditFeatureAttachmentsSample {
-    id: editAttachmentsSample    
-
-    property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
+    id: editAttachmentsSample
+    
+    readonly property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // add a mapView component
     MapView {
@@ -93,7 +93,11 @@ EditFeatureAttachmentsSample {
                     margins: 10
                 }
 
-                text: "Attachments"; font {bold: true; pixelSize: 20;}
+                text: "Attachments"
+                font {
+                    bold: true
+                    pointSize: 20
+                }
             }
 
             Row {
@@ -104,7 +108,12 @@ EditFeatureAttachmentsSample {
                 }
                 spacing: 15
                 Text {
-                    text: "+"; font {bold: true; pixelSize: 40;} color: "green"
+                    text: "+"
+                    font {
+                        bold: true
+                        pointSize: 40
+                    }
+                    color: "green"
 
                     // open a file dialog whenever the add button is clicked
                     MouseArea {
@@ -115,7 +124,12 @@ EditFeatureAttachmentsSample {
                     }
                 }
                 Text {
-                    text: "-"; font {bold: true; pixelSize: 40;} color: "red"
+                    text: "-"
+                    font {
+                        bold: true
+                        pointSize: 40
+                    }
+                    color: "red"
 
                     // make sure an item is selected and if so, delete it from the service
                     MouseArea {
@@ -162,7 +176,7 @@ EditFeatureAttachmentsSample {
                     wrapMode: Text.WrapAnywhere
                     maximumLineCount: 1
                     elide: Text.ElideRight
-                    font.pixelSize: 16
+                    font.pointSize: 16
                 }
 
                 // show the attachment's URL if it is an image

@@ -78,7 +78,7 @@ BuildLegendSample {
                 Text {
                     text: qsTr("Legend")
                     font {
-                        pixelSize: 18
+                        pointSize: 18
                         bold: true
                     }
                 }
@@ -134,7 +134,7 @@ BuildLegendSample {
                             width: 125
                             text: name
                             wrapMode: Text.WordWrap
-                            font.pixelSize: 12
+                            font.pointSize: 12
                         }
 
                     }
@@ -152,7 +152,7 @@ BuildLegendSample {
                         Text {
                             text: section
                             font.bold: true
-                            font.pixelSize: 13
+                            font.pointSize: 13
                         }
                     }
                 }

@@ -23,9 +23,8 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     width: 800
     height: 600
-
     
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
     property string errorMessage: ""
 
     // Map view UI presentation at top

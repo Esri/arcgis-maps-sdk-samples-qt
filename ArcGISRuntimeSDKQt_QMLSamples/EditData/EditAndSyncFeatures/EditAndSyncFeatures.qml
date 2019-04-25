@@ -23,11 +23,10 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     width: 800
     height: 600
-
     
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
-    property url outputGdb: System.temporaryFolder.url + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
-    property string featureServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
+    readonly property url outputGdb: System.temporaryFolder.url + "/WildfireQml_%1.geodatabase".arg(new Date().getTime().toString())
+    readonly property string featureServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer"
     property Envelope generateExtent: null
     property string statusText: ""
     property string featureLayerId: "0"
@@ -325,7 +324,7 @@ Rectangle {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: isOffline ? "Sync Geodatabase" : "Generate Geodatabase"
-                font.pixelSize: 14
+                font.pointSize: 14
                 color: "#474747"
             }
         }
@@ -370,7 +369,7 @@ Rectangle {
         Text {
             anchors.centerIn: parent
             text: instructionText
-            font.pixelSize: 16
+            font.pointSize: 16
             color: "white"
         }
     }
@@ -424,7 +423,7 @@ Rectangle {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: statusText
-                    font.pixelSize: 16
+                    font.pointSize: 16
                 }
             }
         }

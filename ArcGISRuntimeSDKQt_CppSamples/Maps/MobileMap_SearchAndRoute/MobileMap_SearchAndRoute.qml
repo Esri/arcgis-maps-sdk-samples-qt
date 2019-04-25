@@ -196,7 +196,7 @@ MobileMap_SearchAndRouteSample {
                             anchors.centerIn: parent
                             color: "white"
                             height: 40
-                            font.pixelSize: 25
+                            font.pointSize: 25
                             text: "Choose a Mobile Map Package"
                         }
                     }
@@ -305,7 +305,7 @@ MobileMap_SearchAndRouteSample {
                             anchors.centerIn: parent
                             color: "white"
                             height: 40
-                            font.pixelSize: 25
+                            font.pointSize: 25
                             text: "Choose a Map"
                         }
                     }

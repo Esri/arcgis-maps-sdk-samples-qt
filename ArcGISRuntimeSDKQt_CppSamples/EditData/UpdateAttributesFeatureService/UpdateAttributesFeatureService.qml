@@ -26,7 +26,7 @@ UpdateAttributesFeatureServiceSample {
     width: 800
     height: 600
     
-    property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
+    readonly property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // add a mapView component
     MapView {
@@ -92,7 +92,7 @@ UpdateAttributesFeatureServiceSample {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 text: "Update Attribute"
-                font.pixelSize: 16
+                font.pointSize: 16
             }
 
             ComboBox {

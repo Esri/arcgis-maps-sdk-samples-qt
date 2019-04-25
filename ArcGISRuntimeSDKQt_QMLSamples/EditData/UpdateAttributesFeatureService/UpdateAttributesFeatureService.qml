@@ -24,10 +24,9 @@ import Esri.ArcGISRuntime.Toolkit.Controls 100.6
 Rectangle {
     width: 800
     height: 600
-
     
+    readonly property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
     property string damageType
-    property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
     property var selectedFeature: null
 
     // Create MapView that contains a Map
@@ -175,7 +174,7 @@ Rectangle {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 text: "Update Attribute"
-                font.pixelSize: 16
+                font.pointSize: 16
             }
 
             ComboBox {

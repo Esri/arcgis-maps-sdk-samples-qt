@@ -23,13 +23,11 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     width: 800
     height: 600
-
     
+    readonly property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
+    readonly property string tiledServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
     property Envelope tileCacheExtent: null
-    property url outputTileCache: System.temporaryFolder.url + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
     property string statusText: ""
-    property string tiledServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer"
-
     property ExportTileCacheParameters params
 
     // Create MapView that contains a Map
@@ -197,7 +195,7 @@ Rectangle {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Export tiles"
-                font.pixelSize: 14
+                font.pointSize: 14
                 color: "#474747"
             }
         }
@@ -270,7 +268,7 @@ Rectangle {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: statusText
-                    font.pixelSize: 16
+                    font.pointSize: 16
                 }
             }
         }

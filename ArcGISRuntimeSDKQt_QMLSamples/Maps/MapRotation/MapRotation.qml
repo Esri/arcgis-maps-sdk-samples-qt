@@ -84,7 +84,7 @@ Rectangle {
                         margins: 5
                     }
                     horizontalAlignment: TextInput.AlignHCenter
-                    font.pixelSize: 20
+                    font.pointSize: 20
                     text: slider1.value.toPrecision(3);
                 }
             }

@@ -26,8 +26,7 @@ Rectangle {
     width: 800
     height: 600
     
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
-
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
     property Point pinLocation: null
     property Point clickedPoint: null
     property bool isReverseGeocode: false
@@ -320,13 +319,12 @@ Rectangle {
 
                             font {
                                 weight: Font.Black
-                                pixelSize: 12
+                                pointSize: 12
                             }
 
                             width: parent.width
                             text: label
                             elide: Text.ElideRight
-                            leftPadding: 5
                             color: "black"
                         }
 
@@ -373,7 +371,7 @@ Rectangle {
         Text {
             anchors.centerIn: parent
             text: "No matching address"
-            font.pixelSize: 18
+            font.pointSize: 18
         }
     }
 

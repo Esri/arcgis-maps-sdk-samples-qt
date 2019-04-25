@@ -27,7 +27,7 @@ Rectangle {
     height: 600
 
     property var renderingRuleNames: []
-    property url imageServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer"
+    readonly property url imageServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/CharlotteLAS/ImageServer"
 
     MapView {
         anchors.fill: parent
@@ -83,7 +83,7 @@ Rectangle {
                     Layout.columnSpan: 2
                     Layout.alignment: Qt.AlignHCenter
                     text: "Apply a Rendering Rule"
-                    font.pixelSize: 16
+                    font.pointSize: 16
                 }
 
                 ComboBox {

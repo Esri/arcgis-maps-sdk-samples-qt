@@ -74,7 +74,7 @@ ListRelatedFeaturesSample {
                     anchors.margins: 10
                                     
                     text: displayFieldValue
-                    font.pixelSize: 12
+                    font.pointSize: 12
                 }
             }
 
@@ -93,7 +93,7 @@ ListRelatedFeaturesSample {
                         text: section
                         font {
                             bold: true
-                            pixelSize: 13
+                            pointSize: 13
                         }
                     }
                 }

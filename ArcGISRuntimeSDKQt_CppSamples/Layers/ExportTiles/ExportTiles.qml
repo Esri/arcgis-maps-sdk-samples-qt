@@ -86,7 +86,7 @@ ExportTilesSample {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Export tiles"
-                font.pixelSize: 14
+                font.pointSize: 14
                 color: "#474747"
             }
         }
@@ -152,7 +152,7 @@ ExportTilesSample {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: statusText
-                    font.pixelSize: 16
+                    font.pointSize: 16
                 }
             }
         }

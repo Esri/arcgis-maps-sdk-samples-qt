@@ -22,9 +22,9 @@ Rectangle {
     width: 800
     height: 600
 
-    property double pointX: 44.975
-    property double pointY: 34
-    property double pointZ: 500
+    readonly property double pointX: 44.975
+    readonly property double pointY: 34
+    readonly property double pointZ: 500
 
     // Create a scene view
     SceneView {

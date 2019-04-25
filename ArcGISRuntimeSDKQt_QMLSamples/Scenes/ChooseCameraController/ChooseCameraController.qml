@@ -25,11 +25,10 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D"
-
-    property real longitude: -109.929589
-    property real latitude: 38.43500
-    property real distance: 5000
+    readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D"
+    readonly property real longitude: -109.929589
+    readonly property real latitude: 38.43500
+    readonly property real distance: 5000
 
     GlobeCameraController {
         id: globeController

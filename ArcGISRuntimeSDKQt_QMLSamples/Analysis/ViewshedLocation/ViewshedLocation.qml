@@ -24,7 +24,6 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-
     
     property bool calculating: false
 
@@ -145,7 +144,7 @@ Rectangle {
                         Text {
                             text: "Viewshed Options"
                             anchors.horizontalCenter: parent.horizontalCenter
-                            font.pixelSize: 18
+                            font.pointSize: 18
                             font.underline: true
 
                         }
@@ -182,7 +181,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
                             text: qsTr("Viewshed Visible")
-                            font.pixelSize: 14
+                            font.pointSize: 14
                         }
 
                         Switch {
@@ -204,7 +203,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.75
                             text: qsTr("Frustum Outline Visible")
-                            font.pixelSize: 14
+                            font.pointSize: 14
                         }
 
                         Switch {
@@ -275,7 +274,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.85
                             text: qsTr("Visible Color")
-                            font.pixelSize: 14
+                            font.pointSize: 14
                         }
 
                         Rectangle {
@@ -311,7 +310,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             width: parent.width * 0.85
                             text: qsTr("Obstructed Color")
-                            font.pixelSize: 14
+                            font.pointSize: 14
                         }
 
                         Rectangle {
