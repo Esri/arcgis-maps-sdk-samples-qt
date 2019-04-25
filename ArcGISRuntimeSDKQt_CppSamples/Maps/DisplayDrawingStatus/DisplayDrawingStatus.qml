@@ -62,7 +62,6 @@ DisplayDrawingStatusSample {
                     centerIn: parent
                     topMargin: 5
                 }
-
                 spacing: 5
 
                 BusyIndicator {
