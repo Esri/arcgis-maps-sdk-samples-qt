@@ -18,7 +18,6 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Qt.labs.platform 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 LocalServerServicesSample {
     id: localServerServicesSample
@@ -198,7 +197,7 @@ LocalServerServicesSample {
     FileDialog {
         id: fileDialog
         title: "Please choose a file"
-        folder: System.userHomeFolder.url + "/ArcGIS/Runtime/Data"
+        folder: dataPath
         nameFilters: servicesCombo.currentIndex === 0 || servicesCombo.currentIndex === 1 ? ["Map Packages (*.mpk *.mpkx)", "All files (*)"] : ["Geoprocessing Packages (*gpk *.gpkx)", "All files (*)"]
         onAccepted: {
             filePathText.text = file;

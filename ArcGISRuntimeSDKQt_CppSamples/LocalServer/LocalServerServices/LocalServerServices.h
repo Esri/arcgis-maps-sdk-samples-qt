@@ -35,10 +35,11 @@ class LocalServerServices : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(QStringList servicesList READ servicesList NOTIFY servicesChanged)
-  Q_PROPERTY(QString serverStatus READ serverStatus NOTIFY serverStatusChanged)
-  Q_PROPERTY(bool isServerRunning READ isServerRunning NOTIFY isServerRunningChanged)
-  Q_PROPERTY(bool isServiceRunning READ isServiceRunning NOTIFY isServiceRunningChanged)
+  Q_PROPERTY(QStringList servicesList MEMBER m_services NOTIFY servicesChanged)
+  Q_PROPERTY(QString serverStatus MEMBER m_serverStatus NOTIFY serverStatusChanged)
+  Q_PROPERTY(bool isServerRunning MEMBER m_isServerRunning NOTIFY isServerRunningChanged)
+  Q_PROPERTY(bool isServiceRunning MEMBER m_isServiceRunning NOTIFY isServiceRunningChanged)
+  Q_PROPERTY(QString dataPath MEMBER m_dataPath NOTIFY dataPathChanged)
 
 public:
   explicit LocalServerServices(QQuickItem* parent = nullptr);
@@ -57,13 +58,10 @@ signals:
   void serverStatusChanged();
   void isServerRunningChanged();
   void isServiceRunningChanged();
+  void dataPathChanged();
 
 private:
   void connectSignals();
-  QStringList servicesList() const { return m_services; }
-  QString serverStatus() const { return m_serverStatus; }
-  bool isServerRunning() const { return m_isServerRunning; }
-  bool isServiceRunning() const { return m_isServiceRunning; }
   bool isAnyServiceRunning();
   void updateStatus(Esri::ArcGISRuntime::LocalService* service, const QString& serviceName);
   void getCurrentServices();
@@ -74,6 +72,7 @@ private:
   Esri::ArcGISRuntime::LocalGeoprocessingService* m_localGPService = nullptr;
   QStringList m_services;
   QString m_serverStatus;
+  QString m_dataPath;
   bool m_isServerRunning = false;
   bool m_isServiceRunning = false;
   QHash<QUrl, Esri::ArcGISRuntime::LocalService*> m_servicesHash;

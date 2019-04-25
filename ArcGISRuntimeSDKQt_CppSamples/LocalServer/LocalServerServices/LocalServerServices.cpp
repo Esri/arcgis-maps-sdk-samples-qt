@@ -30,6 +30,8 @@ using namespace Esri::ArcGISRuntime;
 LocalServerServices::LocalServerServices(QQuickItem* parent) :
   QQuickItem(parent)
 {
+  m_dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data";
+  emit dataPathChanged();
 }
 
 LocalServerServices::~LocalServerServices() = default;
