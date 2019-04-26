@@ -55,7 +55,8 @@ namespace
 } // namespace
 
 ReadGeoPackage::ReadGeoPackage(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data")
 {
 }
 
@@ -72,7 +73,6 @@ void ReadGeoPackage::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data";
 
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::topographic(this), this);

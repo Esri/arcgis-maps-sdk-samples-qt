@@ -177,7 +177,7 @@ void LineOfSightGeoElement::initialize()
   graphicsOverlay->graphics()->append(m_observer);
 
   // Get our Taxi model. We will attempt to load it and continue our setup after it has loaded.
-  QUrl modelPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.3ds";
+  const QUrl modelPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.3ds";
   ModelSceneSymbol* taxiSymbol = new ModelSceneSymbol(modelPath, 1.0, this);
   taxiSymbol->setAnchorPosition(SceneSymbolAnchorPosition::Bottom);
 

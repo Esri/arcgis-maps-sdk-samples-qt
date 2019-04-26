@@ -28,10 +28,10 @@
 #include "GeographicTransformationStep.h"
 #include "GeographicTransformation.h"
 
-#include <QUrl>
-#include <QVariantMap>
 #include <QDir>
 #include <QtCore/qglobal.h>
+#include <QUrl>
+#include <QVariantMap>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>

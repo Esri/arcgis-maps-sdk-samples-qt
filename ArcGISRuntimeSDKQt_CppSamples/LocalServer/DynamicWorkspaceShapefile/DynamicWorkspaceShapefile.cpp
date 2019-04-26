@@ -30,16 +30,16 @@
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
 
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <QDir>
 
 using namespace Esri::ArcGISRuntime;
 
 DynamicWorkspaceShapefile::DynamicWorkspaceShapefile(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(QDir::homePath() + "/ArcGIS/Runtime/Data/shapefile")
 {
-  m_dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/shapefile";
   emit dataPathChanged();
 }
 

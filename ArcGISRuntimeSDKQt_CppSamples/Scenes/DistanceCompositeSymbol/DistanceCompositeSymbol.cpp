@@ -26,8 +26,8 @@
 #include "ModelSceneSymbol.h"
 #include "OrbitGeoElementCameraController.h"
 
-#include <QDir>
 #include <QtCore/qglobal.h>
+#include <QDir>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>

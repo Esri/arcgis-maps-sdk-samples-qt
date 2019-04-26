@@ -54,7 +54,8 @@ namespace
 } // namespace
 
 FeatureLayerDictionaryRenderer::FeatureLayerDictionaryRenderer(QQuickItem* parent) :
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data")
 { 
 }
 
@@ -68,9 +69,7 @@ void FeatureLayerDictionaryRenderer::init()
 
 void FeatureLayerDictionaryRenderer::componentComplete()
 {
-  QQuickItem::componentComplete();
-
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data";
+  QQuickItem::componentComplete();  
 
   m_mapView = findChild<MapQuickView*>("mapView");
   // Create a map using the topo basemap

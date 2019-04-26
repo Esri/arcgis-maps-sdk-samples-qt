@@ -62,7 +62,8 @@ namespace
 } // namespace
 
 EditAndSyncFeatures::EditAndSyncFeatures(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/")
 {
 }
 
@@ -87,7 +88,6 @@ void EditAndSyncFeatures::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using a local tile package
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/";
   TileCache* tileCache = new TileCache(m_dataPath + "tpk/SanFrancisco.tpk", this);
   ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);
   Basemap* basemap = new Basemap(tiledLayer, this);

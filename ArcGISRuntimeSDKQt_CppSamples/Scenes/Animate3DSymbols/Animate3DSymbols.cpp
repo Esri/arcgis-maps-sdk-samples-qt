@@ -78,6 +78,7 @@ const QString Animate3DSymbols::ANGLE = QStringLiteral("angle");
 
 Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/3D"),
   m_missionsModel(new QStringListModel({QStringLiteral("Grand Canyon"),
                                         QStringLiteral("Hawaii"),
                                         QStringLiteral("Pyrenees"),
@@ -99,9 +100,6 @@ void Animate3DSymbols::init()
 void Animate3DSymbols::componentComplete()
 {
   QQuickItem::componentComplete();
-
-  // get the data path
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D";
 
   // find QML SceneView component
   m_sceneView = findChild<SceneQuickView*>("sceneView");

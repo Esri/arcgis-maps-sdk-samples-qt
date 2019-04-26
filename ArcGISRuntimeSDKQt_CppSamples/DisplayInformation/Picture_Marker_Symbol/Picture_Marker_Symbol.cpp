@@ -57,7 +57,8 @@ namespace
 } // namespace
 
 Picture_Marker_Symbol::Picture_Marker_Symbol(QQuickItem* parent) :
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data")
 {
 }
 
@@ -76,8 +77,6 @@ void Picture_Marker_Symbol::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
-
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data";
 
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::topographic(this), this);

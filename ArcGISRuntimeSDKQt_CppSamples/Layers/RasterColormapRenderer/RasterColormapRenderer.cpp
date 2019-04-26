@@ -51,7 +51,8 @@ QString defaultDataPath()
 } // namespace
 
 RasterColormapRenderer::RasterColormapRenderer(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/raster")
 {
 }
 
@@ -71,10 +72,8 @@ void RasterColormapRenderer::componentComplete()
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
-  // Create the raster and raster layer
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster";
-
   //! [RasterColormapRenderer cpp add raster basemap]
+  // Create the raster and raster layer
   Raster* raster = new Raster(m_dataPath + "/ShastaBW.tif", this);
   m_rasterLayer = new RasterLayer(raster, this);
 

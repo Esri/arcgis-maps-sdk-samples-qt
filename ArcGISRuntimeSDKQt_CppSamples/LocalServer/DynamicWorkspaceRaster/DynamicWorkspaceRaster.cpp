@@ -26,17 +26,17 @@
 #include "ArcGISMapImageSublayer.h"
 #include "ArcGISMapImageLayer.h"
 
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <QDir>
 
 using namespace Esri::ArcGISRuntime;
 
 
 DynamicWorkspaceRaster::DynamicWorkspaceRaster(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(QDir::homePath() + "/ArcGIS/Runtime/Data/raster")
 {
-  m_dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/raster";
   emit dataPathChanged();
 }
 

@@ -34,8 +34,8 @@ namespace Esri
 
 #include <QQuickItem>
 #include <QString>
-#include <QUrl>
 #include <QTemporaryDir>
+#include <QUrl>
 
 class EditAndSyncFeatures : public QQuickItem
 {

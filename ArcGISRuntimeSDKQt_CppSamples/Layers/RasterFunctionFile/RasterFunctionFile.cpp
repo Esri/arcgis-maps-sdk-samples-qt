@@ -24,8 +24,8 @@
 #include "RasterFunction.h"
 #include "Envelope.h"
 
-#include <QFileInfo>
 #include <QDir>
+#include <QFileInfo>
 #include <QtCore/qglobal.h>
 
 #ifdef Q_OS_IOS
@@ -54,7 +54,8 @@ QString defaultDataPath()
 } // namespace
 
 RasterFunctionFile::RasterFunctionFile(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/raster/")
 {
 }
 
@@ -70,7 +71,6 @@ void RasterFunctionFile::componentComplete()
   QQuickItem::componentComplete();
 
   // get data path
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster/";
   m_rasterPath = m_dataPath + "Shasta_Elevation.tif";
 
   // find QML MapView component

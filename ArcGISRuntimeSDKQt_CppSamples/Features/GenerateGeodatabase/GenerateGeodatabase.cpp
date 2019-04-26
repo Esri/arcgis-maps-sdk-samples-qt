@@ -31,9 +31,9 @@
 #include "GenerateLayerOption.h"
 #include "GeodatabaseFeatureTable.h"
 
-#include <QUrl>
 #include <QDir>
 #include <QtCore/qglobal.h>
+#include <QUrl>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
@@ -61,7 +61,8 @@ namespace
 } // namespace
 
 GenerateGeodatabase::GenerateGeodatabase(QQuickItem* parent) :
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/")
 {
 }
 
@@ -82,7 +83,6 @@ void GenerateGeodatabase::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   //! [Create a map using a local tile package]
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/";
   TileCache* tileCache = new TileCache(m_dataPath + "tpk/SanFrancisco.tpk", this);
   ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);
   Basemap* basemap = new Basemap(tiledLayer, this);

@@ -56,7 +56,8 @@ const QString GODictionaryRenderer::FIELD_CONTROL_POINTS = QStringLiteral("_cont
 const QString GODictionaryRenderer::FIELD_WKID = QStringLiteral("_wkid");
 
 GODictionaryRenderer::GODictionaryRenderer(QQuickItem* parent) :
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data")
 {
 }
 
@@ -75,10 +76,7 @@ bool GODictionaryRenderer::graphicsLoaded() const
 
 void GODictionaryRenderer::componentComplete()
 {
-  QQuickItem::componentComplete();
-
-  // store data path
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data";
+  QQuickItem::componentComplete();    
 
   //! [Apply Dictionary Renderer Graphics Overlay Cpp]
   // Create graphics overlay

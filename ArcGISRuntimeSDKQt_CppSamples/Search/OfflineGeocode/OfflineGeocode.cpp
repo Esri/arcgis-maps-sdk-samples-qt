@@ -62,7 +62,8 @@ namespace
 using namespace Esri::ArcGISRuntime;
 
 OfflineGeocode::OfflineGeocode(QQuickItem* parent):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/")
 {
 }
 
@@ -83,8 +84,6 @@ void OfflineGeocode::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
-
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/";
 
   // create a tiled layer using a local .tpk file
   TileCache* tileCache = new TileCache(m_dataPath + "tpk/streetmap_SD.tpk", this);

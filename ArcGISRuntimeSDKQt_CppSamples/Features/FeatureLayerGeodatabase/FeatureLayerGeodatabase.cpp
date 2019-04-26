@@ -27,9 +27,9 @@
 #include "Point.h"
 #include "Viewpoint.h"
 
-#include <QUrl>
 #include <QDir>
 #include <QtCore/qglobal.h>
+#include <QUrl>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
@@ -57,7 +57,8 @@ namespace
 } // namespace
 
 FeatureLayerGeodatabase::FeatureLayerGeodatabase(QQuickItem* parent) :
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/")
 {
 }
 
@@ -93,9 +94,6 @@ void FeatureLayerGeodatabase::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
-
-  // get the data path
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/";
 
   //! [FeatureLayer Geodatabase add basemap]
   // Create a map using a local vector tile package

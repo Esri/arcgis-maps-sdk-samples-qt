@@ -51,7 +51,8 @@ namespace
 } // namespace
 
 BlendRasterLayer::BlendRasterLayer(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/raster")
 {
 }
 
@@ -73,8 +74,6 @@ void BlendRasterLayer::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create the raster and raster layer
-  m_dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster";
-
   Raster* raster = new Raster(m_dataPath + "/Shasta.tif", this);
   m_rasterLayer = new RasterLayer(raster, this);
 
