@@ -92,11 +92,10 @@ EditFeatureAttachmentsSample {
                     left: parent.left
                     margins: 10
                 }
-
                 text: "Attachments"
-				font {
-				    bold: true
-					pixelSize: 20
+                font {
+                    bold: true
+                    pixelSize: 20
                 }
             }
 
