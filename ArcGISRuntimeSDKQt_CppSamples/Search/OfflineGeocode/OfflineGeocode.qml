@@ -143,11 +143,12 @@ OfflineGeocodeSample {
 
                             font {
                                 weight: Font.Black
-                                pointSize: 12
+                                pixelSize: 12
                             }
 
                             text: label
                             elide: Text.ElideRight
+                            leftPadding: 5
                             color: "black"
                         }
 
@@ -186,7 +187,7 @@ OfflineGeocodeSample {
         Text {
             anchors.centerIn: parent
             text: "No matching address"
-            font.pointSize: 18
+            font.pixelSize: 18
         }
     }
 

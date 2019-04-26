@@ -226,7 +226,7 @@ Rectangle {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Generate Geodatabase"
-                font.pointSize: 14
+                font.pixelSize: 14
                 color: "#474747"
             }
         }
@@ -299,7 +299,7 @@ Rectangle {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: statusText
-                    font.pointSize: 16
+                    font.pixelSize: 16
                 }
             }
         }

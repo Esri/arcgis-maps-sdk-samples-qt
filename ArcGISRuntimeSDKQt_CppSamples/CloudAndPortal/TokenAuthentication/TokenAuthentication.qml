@@ -41,7 +41,7 @@ TokenAuthenticationSample {
 
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
-                font.pointSize: 14
+                font.pixelSize: 14
                 text: "username/password: user1/user1"
             }
 

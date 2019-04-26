@@ -26,7 +26,7 @@ Rectangle {
     
     readonly property int labelWidth: 100
     readonly property int coordinateTextWidth: 200
-    readonly property int fontPointSize: 14
+    readonly property int fontPixelSize: 14
     readonly property int textPadding: Qt.platform.os === "android" ? 10 : 4
     readonly property string strDecimalDegrees: qsTr("Degrees")
     readonly property string strDegreesMinutesSeconds: qsTr("DMS")
@@ -96,7 +96,7 @@ Rectangle {
             width: parent.width
             Text {
                 id: labelDD
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 padding: textPadding
                 horizontalAlignment: Text.AlignRight
                 text: strDecimalDegrees + labelSuffix
@@ -104,7 +104,7 @@ Rectangle {
 
             TextField {
                 id: textDD
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 text: coordinatesInDD.length === 0 ? "invalid point" : coordinatesInDD
                 Layout.fillWidth: true
                 onAccepted: {
@@ -114,7 +114,7 @@ Rectangle {
 
             Text {
                 id: labelDMS
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 padding: textPadding
                 horizontalAlignment: Text.AlignRight
                 text: strDegreesMinutesSeconds + labelSuffix
@@ -122,7 +122,7 @@ Rectangle {
 
             TextField {
                 id: textDMS
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 text: coordinatesInDMS.length === 0 ? "invalid point" : coordinatesInDMS
                 Layout.fillWidth: true
                 onAccepted: {
@@ -132,7 +132,7 @@ Rectangle {
 
             Text {
                 id: labelUtm
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 padding: textPadding
                 horizontalAlignment: Text.AlignRight
                 text: strUtm + labelSuffix
@@ -140,7 +140,7 @@ Rectangle {
 
             TextField {
                 id: textUtm
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 text: coordinatesInUtm.length === 0 ? "invalid point" : coordinatesInUtm
                 Layout.fillWidth: true
                 onAccepted: {
@@ -150,7 +150,7 @@ Rectangle {
 
             Text {
                 id: labelUsng
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 padding: textPadding
                 horizontalAlignment: Text.AlignRight
                 text: strUsng + labelSuffix
@@ -158,7 +158,7 @@ Rectangle {
 
             TextField {
                 id: textUsng
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 text: coordinatesInUsng.length === 0 ? "invalid point" : coordinatesInUsng
                 Layout.fillWidth: true
                 onAccepted: {

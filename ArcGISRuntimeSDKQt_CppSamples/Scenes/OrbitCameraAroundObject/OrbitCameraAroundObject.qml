@@ -77,7 +77,7 @@ Item {
 
                 Text {
                     id: headingValue
-                    font.pointSize: 14
+                    font.pixelSize: 14
                     padding: 3
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter
@@ -153,7 +153,7 @@ Item {
 
                 Text {
                     id: pitchValue
-                    font.pointSize: 14
+                    font.pixelSize: 14
                     padding: 3
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter

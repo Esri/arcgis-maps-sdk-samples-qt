@@ -44,12 +44,13 @@ Rectangle {
 
                     font {
                         weight: Font.Black
-                        pointSize: 12
+                        pixelSize: 12
                     }
 
                     width: parent.width
                     text: label
                     elide: Text.ElideRight
+                    leftPadding: 5
                     color: "black"
                 }
 

@@ -220,7 +220,7 @@ Rectangle {
             anchors.margins: 5
             visible: !viewshedInProgress
             text: "Click map to execute viewshed analysis"
-            font.pointSize: 12
+            font.pixelSize: 12
         }
 
         Row {
@@ -237,7 +237,7 @@ Rectangle {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: statusText
-                font.pointSize: 12
+                font.pixelSize: 12
             }
         }
     }

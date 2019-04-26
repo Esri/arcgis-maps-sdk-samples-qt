@@ -38,7 +38,7 @@ Rectangle {
         font {
             bold: true
             underline: true
-            pointSize: 18
+            pixelSize: 18
         }
         color: "#474747"
     }
@@ -69,7 +69,7 @@ Rectangle {
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pointSize: 14
+                    pixelSize: 14
                 }
                 color: "#474747"
             }
@@ -84,7 +84,7 @@ Rectangle {
                 Text {
                     text: "(Least detail)"
                     font {
-                        pointSize: 12
+                        pixelSize: 12
                     }
                     color: "#474747"
                 }
@@ -112,7 +112,7 @@ Rectangle {
                 Text {
                     text: "(Most detail)"
                     font {
-                        pointSize: 12
+                        pixelSize: 12
                     }
                     color: "#474747"
                 }
@@ -127,7 +127,7 @@ Rectangle {
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pointSize: 14
+                    pixelSize: 14
                 }
                 color: "#474747"
             }
@@ -143,7 +143,7 @@ Rectangle {
                 to: 500
                 stepSize: 50
 
-                font.pointSize: 12
+                font.pixelSize: 12
                 onValueChanged: basemapBufferChanged(value);
             }
 
@@ -156,8 +156,9 @@ Rectangle {
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pointSize: 14
+                    pixelSize: 14
                 }
+
 
                 onClicked: {
                     removeSystemValvesChanged();
@@ -174,7 +175,7 @@ Rectangle {
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pointSize: 14
+                    pixelSize: 14
                 }
 
                 onClicked: {
@@ -192,7 +193,7 @@ Rectangle {
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pointSize: 14
+                    pixelSize: 14
                 }
                 color: "#474747"
             }
@@ -240,7 +241,7 @@ Rectangle {
                     horizontalCenter: parent.horizontalCenter
                 }
                 font {
-                    pointSize: 14
+                    pixelSize: 14
                 }
 
                 checked: true
@@ -258,7 +259,7 @@ Rectangle {
         text: "Start Job"
         font {
             bold: true
-            pointSize: 18
+            pixelSize: 18
         }
 
         onClicked: {

@@ -319,12 +319,13 @@ Rectangle {
 
                             font {
                                 weight: Font.Black
-                                pointSize: 12
+                                pixelSize: 12
                             }
 
                             width: parent.width
                             text: label
                             elide: Text.ElideRight
+                            leftPadding: 5
                             color: "black"
                         }
 
@@ -371,7 +372,7 @@ Rectangle {
         Text {
             anchors.centerIn: parent
             text: "No matching address"
-            font.pointSize: 18
+            font.pixelSize: 18
         }
     }
 

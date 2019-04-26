@@ -65,7 +65,7 @@ Rectangle {
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: "%1: %2%".arg(statusText).arg(progressText)
-                font.pointSize: 16
+                font.pixelSize: 16
             }
         }
     }

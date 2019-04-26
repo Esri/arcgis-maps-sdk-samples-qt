@@ -30,7 +30,7 @@ Column {
     Text {
         width: 80
         text: titleText
-        font.pointSize: 14
+        font.pixelSize: 14
     }
 
     Row {
@@ -55,7 +55,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignRight
             text: Math.round(parameterValue)
-            font.pointSize: 14
+            font.pixelSize: 14
         }
     }
 }

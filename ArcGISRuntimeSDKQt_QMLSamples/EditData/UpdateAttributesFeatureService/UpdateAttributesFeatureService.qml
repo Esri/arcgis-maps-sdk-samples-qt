@@ -174,7 +174,7 @@ Rectangle {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 text: "Update Attribute"
-                font.pointSize: 16
+                font.pixelSize: 16
             }
 
             ComboBox {

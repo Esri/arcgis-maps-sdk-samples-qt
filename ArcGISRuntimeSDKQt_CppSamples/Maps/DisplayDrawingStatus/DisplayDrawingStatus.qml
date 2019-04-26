@@ -73,7 +73,7 @@ DisplayDrawingStatusSample {
                     anchors.horizontalCenter: parent.horizontalCenter
                     font {
                         weight: Font.Black
-                        pointSize: 12
+                        pixelSize: 12
                     }
                     height: 20
                     horizontalAlignment: Text.AlignHCenter

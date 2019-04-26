@@ -54,7 +54,7 @@ Rectangle {
                     text: "< Options"
                     color: "white"
                     font {
-                        pointSize: 18
+                        pixelSize: 18
                         bold: true
                     }
                 }
@@ -67,7 +67,7 @@ Rectangle {
                 }
                 text: "Results"
                 color: "white"
-                font.pointSize: 28
+                font.pixelSize: 28
             }
         }
 
@@ -95,7 +95,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             text: section
                             font.bold: true
-                            font.pointSize: 12
+                            font.pixelSize: 12
                         }
                     }
                 }
@@ -107,7 +107,7 @@ Rectangle {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         text: statistic
-                        font.pointSize: 12
+                        font.pixelSize: 12
                     }
                 }
             }
