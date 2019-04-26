@@ -92,11 +92,10 @@ EditFeatureAttachmentsSample {
                     left: parent.left
                     margins: 10
                 }
-
                 text: "Attachments"
                 font {
                     bold: true
-                    pointSize: 20
+                    pixelSize: 20
                 }
             }
 
@@ -111,7 +110,7 @@ EditFeatureAttachmentsSample {
                     text: "+"
                     font {
                         bold: true
-                        pointSize: 40
+                        pixelSize: 40
                     }
                     color: "green"
 
@@ -127,7 +126,7 @@ EditFeatureAttachmentsSample {
                     text: "-"
                     font {
                         bold: true
-                        pointSize: 40
+                        pixelSize: 40
                     }
                     color: "red"
 
@@ -176,7 +175,7 @@ EditFeatureAttachmentsSample {
                     wrapMode: Text.WrapAnywhere
                     maximumLineCount: 1
                     elide: Text.ElideRight
-                    font.pointSize: 16
+                    font.pixelSize: 16
                 }
 
                 // show the attachment's URL if it is an image

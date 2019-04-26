@@ -49,7 +49,7 @@ RasterRenderingRuleSample {
                     Layout.columnSpan: 2
                     Layout.alignment: Qt.AlignHCenter
                     text: "Apply a Rendering Rule"
-                    font.pointSize: 16
+                    font.pixelSize: 16
                 }
 
                 ComboBox {

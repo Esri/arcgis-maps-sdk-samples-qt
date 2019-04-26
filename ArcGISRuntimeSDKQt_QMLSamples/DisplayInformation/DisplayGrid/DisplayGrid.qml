@@ -192,7 +192,7 @@ Rectangle {
         Text {
             anchors.centerIn: parent
             text: "Change grid style"
-            font.pointSize: 14
+            font.pixelSize: 14
             color: "#474747"
         }
 
@@ -490,7 +490,7 @@ Rectangle {
                 Text {
                     anchors.centerIn: parent
                     text: "Hide window"
-                    font.pointSize: 14
+                    font.pixelSize: 14
                     color: "#474747"
                 }
 

@@ -97,7 +97,7 @@ Rectangle {
           wrapMode: Text.WordWrap
           clip:true
           font {
-            pointSize: 14
+            pixelSize: 14
             bold: true
           }
         }
@@ -158,7 +158,7 @@ Rectangle {
                 width: 150
                 text: name
                 wrapMode: Text.WordWrap
-                font.pointSize: 14
+                font.pixelSize: 14
               }
 
               Switch {

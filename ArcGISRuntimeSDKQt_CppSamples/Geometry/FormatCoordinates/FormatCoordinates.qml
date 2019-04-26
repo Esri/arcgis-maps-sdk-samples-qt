@@ -22,7 +22,7 @@ import Esri.Samples 1.0
 Item {
     clip: true
 
-    readonly property int fontPointSize: 14
+    readonly property int fontPixelSize: 14
     property string labelSuffix: ":  "
 
     FormatCoordinatesSample {
@@ -46,7 +46,7 @@ Item {
 
             Text {
                 id: labelDD
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 Layout.margins: 5
                 horizontalAlignment: Text.AlignRight
                 text: model.strDecimalDegrees + labelSuffix
@@ -54,7 +54,7 @@ Item {
 
             TextField {
                 id: textDD
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 text: model.coordinatesInDD.length === 0 ? "invalid point" : model.coordinatesInDD
                 Layout.fillWidth: true
                 Layout.margins: 5
@@ -65,7 +65,7 @@ Item {
 
             Text {
                 id: labelDMS
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 Layout.margins: 5
                 horizontalAlignment: Text.AlignRight
                 text: model.strDegreesMinutesSeconds + labelSuffix
@@ -73,7 +73,7 @@ Item {
 
             TextField {
                 id: textDMS
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 Layout.margins: 5
                 text: model.coordinatesInDMS.length === 0 ? "invalid point" : model.coordinatesInDMS
                 Layout.fillWidth: true
@@ -84,7 +84,7 @@ Item {
 
             Text {
                 id: labelUtm
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 Layout.margins: 5
                 horizontalAlignment: Text.AlignRight
                 text: model.strUtm + labelSuffix
@@ -92,7 +92,7 @@ Item {
 
             TextField {
                 id: textUtm
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 text: model.coordinatesInUtm.length === 0 ? "invalid point" : model.coordinatesInUtm
                 Layout.fillWidth: true
                 Layout.margins: 5
@@ -103,7 +103,7 @@ Item {
 
             Text {
                 id: labelUsng
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 Layout.margins: 5
                 horizontalAlignment: Text.AlignRight
                 text: model.strUsng + labelSuffix
@@ -111,7 +111,7 @@ Item {
 
             TextField {
                 id: textUsng
-                font.pointSize: fontPointSize
+                font.pixelSize: fontPixelSize
                 text: model.coordinatesInUsng.length === 0 ? "invalid point" : model.coordinatesInUsng
                 Layout.fillWidth: true
                 Layout.margins: 5

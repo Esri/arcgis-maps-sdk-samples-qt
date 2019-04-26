@@ -198,7 +198,7 @@ Rectangle {
         Text {
             text: "Relationships:"
             font {
-                pointSize: 16
+                pixelSize: 16
                 bold: true
                 family: "helvetica"
             }

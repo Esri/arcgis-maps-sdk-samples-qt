@@ -46,7 +46,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
                 text: "Select Layers"
                 font {
-                    pointSize: 18
+                    pixelSize: 18
                     family: "helvetica"
                 }
             }
@@ -55,7 +55,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "Select Basemap:"
                 font {
-                    pointSize: 14
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }
@@ -84,7 +84,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "Select Operational Layers:"
                 font {
-                    pointSize: 14
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }

@@ -50,7 +50,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "Title*:"
                 font {
-                    pointSize: 14
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }
@@ -70,7 +70,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "Tags:"
                 font {
-                    pointSize: 14
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }
@@ -89,7 +89,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "Description:"
                 font {
-                    pointSize: 14
+                    pixelSize: 14
                     family: "helvetica"
                 }
             }
@@ -107,7 +107,7 @@ Rectangle {
                 Layout.margins: 5
                 text: "*Field is Required"
                 font {
-                    pointSize: 10
+                    pixelSize: 10
                     family: "helvetica"
                 }
             }

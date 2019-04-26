@@ -72,7 +72,7 @@ FindAddressSample {
                     Layout.margins: 5
                     Layout.fillWidth: true
                     id: textField
-                    font.pointSize: 14
+                    font.pixelSize: 14
                     placeholderText: "Type in an address"
 
                     Keys.onEnterPressed: geocodeAddress();
@@ -165,7 +165,7 @@ FindAddressSample {
                             leftMargin: 5
                         }
 
-                        font.pointSize: 14
+                        font.pixelSize: 14
                     }
 
                     MouseArea {

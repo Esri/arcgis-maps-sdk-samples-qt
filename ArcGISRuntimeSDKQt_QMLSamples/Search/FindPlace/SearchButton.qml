@@ -32,7 +32,7 @@ Rectangle {
     Text {
         anchors.centerIn: parent
         text: "Redo search in this area"
-        font.pointSize: 14
+        font.pixelSize: 14
         color: "#474747"
     }
 
