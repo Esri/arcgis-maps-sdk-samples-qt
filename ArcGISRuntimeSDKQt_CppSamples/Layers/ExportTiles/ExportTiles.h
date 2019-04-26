@@ -17,6 +17,7 @@
 #ifndef EXPORT_TILES
 #define EXPORT_TILES
 
+// C++ API headers
 #include "ExportTileCacheParameters.h"
 
 namespace Esri

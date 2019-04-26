@@ -17,6 +17,7 @@
 #ifndef CHOOSECAMERACONTROLLER_H
 #define CHOOSECAMERACONTROLLER_H
 
+// Qt headers
 #include <QObject>
 
 namespace Esri
