@@ -93,7 +93,11 @@ EditFeatureAttachmentsSample {
                     margins: 10
                 }
 
-                text: "Attachments"; font {bold: true; pixelSize: 20;}
+                text: "Attachments"
+				font {
+				    bold: true
+					pixelSize: 20
+                }
             }
 
             Row {
@@ -104,7 +108,12 @@ EditFeatureAttachmentsSample {
                 }
                 spacing: 15
                 Text {
-                    text: "+"; font {bold: true; pixelSize: 40;} color: "green"
+                    text: "+"
+                    font {
+                        bold: true
+                        pixelSize: 40
+                    }
+                    color: "green"
 
                     // open a file dialog whenever the add button is clicked
                     MouseArea {
@@ -115,7 +124,12 @@ EditFeatureAttachmentsSample {
                     }
                 }
                 Text {
-                    text: "-"; font {bold: true; pixelSize: 40;} color: "red"
+                    text: "-"
+                    font {
+                        bold: true
+                        pixelSize: 40
+                    }
+                    color: "red"
 
                     // make sure an item is selected and if so, delete it from the service
                     MouseArea {
