@@ -17,6 +17,7 @@
 #ifndef RELATEDFEATURE_H
 #define RELATEDFEATURE_H
 
+// Qt headers
 #include <QString>
 
 class RelatedFeature

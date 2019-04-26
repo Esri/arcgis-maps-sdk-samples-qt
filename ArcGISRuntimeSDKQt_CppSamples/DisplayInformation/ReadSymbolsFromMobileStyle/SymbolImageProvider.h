@@ -14,9 +14,10 @@
 #ifndef SYMBOLIMAGEPROVIDER_H
 #define SYMBOLIMAGEPROVIDER_H
 
-#include <QQuickImageProvider>
+// Qt headers
 #include <QHash>
 #include <QImage>
+#include <QQuickImageProvider>
 
 class SymbolImageProvider : public QQuickImageProvider
 {

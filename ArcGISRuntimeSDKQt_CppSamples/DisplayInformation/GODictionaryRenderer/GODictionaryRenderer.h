@@ -17,10 +17,12 @@
 #ifndef GraphicsOverlayDictionaryRenderer_H
 #define GraphicsOverlayDictionaryRenderer_H
 
+// C++ API headers
+#include "Envelope.h"
+
+// Qt headers
 #include <QQuickItem>
 #include <QXmlStreamReader>
-
-#include "Envelope.h"
 
 namespace Esri
 {

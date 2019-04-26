@@ -17,6 +17,7 @@
 #ifndef GENERATEOFFLINEMAP_OVERRIDES_H
 #define GENERATEOFFLINEMAP_OVERRIDES_H
 
+// C++ API headers
 #include "AuthenticationManager.h"
 #include "GenerateOfflineMapParameters.h"
 

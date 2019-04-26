@@ -17,9 +17,11 @@
 #ifndef GETELEVATIONATPOINT_H
 #define GETELEVATIONATPOINT_H
 
-#include <QObject>
-
+// C++ API headers
 #include "TaskWatcher.h"
+
+// Qt headers
+#include <QObject>
 
 namespace Esri
 {

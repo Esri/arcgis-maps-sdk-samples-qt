@@ -16,7 +16,10 @@
 #ifndef MISSIONDATA_H
 #define MISSIONDATA_H
 
+// C++ API headers
 #include "Point.h"
+
+// STL headers
 #include <cmath>
 
 class MissionData

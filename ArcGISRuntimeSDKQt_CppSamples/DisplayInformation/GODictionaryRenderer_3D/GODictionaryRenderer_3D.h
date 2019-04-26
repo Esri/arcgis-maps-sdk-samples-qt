@@ -17,12 +17,14 @@
 #ifndef GraphicsOverlayDictionaryRenderer_3D_H
 #define GraphicsOverlayDictionaryRenderer_3D_H
 
+// C++ API headers
+#include "Envelope.h"
+#include "Error.h"
+#include "SpatialReference.h"
+
+// Qt headers
 #include <QQuickItem>
 #include <QXmlStreamReader>
-
-#include "Error.h"
-#include "Envelope.h"
-#include "SpatialReference.h"
 
 namespace Esri
 {
