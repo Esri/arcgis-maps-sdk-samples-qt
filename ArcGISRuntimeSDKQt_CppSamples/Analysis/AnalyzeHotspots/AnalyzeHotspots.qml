@@ -17,7 +17,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Qt.labs.calendar 1.0
-import QtQuick.Window 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
@@ -27,7 +26,6 @@ AnalyzeHotspotsSample {
     clip: true
     width: 800
     height: 600
-
     
     property date fromThisDate : Date.fromLocaleDateString(Qt.locale(), "98/01/01", "yy/MM/dd")
     property date toThisDate : Date.fromLocaleDateString(Qt.locale(), "98/01/31", "yy/MM/dd")

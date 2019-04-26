@@ -17,17 +17,13 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 ExportTilesSample {
     id: exportTilesSample
     width: 800
     height: 600
-
-    
-    property string outputTileCache: System.temporaryFolder.path + "/TileCacheQml_%1.tpk".arg(new Date().getTime().toString())
+        
     property string statusText: ""
 
     // add a mapView component
@@ -51,8 +47,8 @@ ExportTilesSample {
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
-        width: parent.width - (50)
-        height: parent.height - (125)
+        width: parent.width - 50
+        height: parent.height - 125
         color: "transparent"
         border {
             color: "red"
@@ -101,7 +97,7 @@ ExportTilesSample {
             onReleased: downloadButton.pressed = false
             onClicked: {
                 // call the C++ invokable function to export tile cache from the input screen coordinates
-                exportTilesSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height), outputTileCache);
+                exportTilesSample.exportTileCacheFromCorners(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
                 exportWindow.visible = true;
             }
         }

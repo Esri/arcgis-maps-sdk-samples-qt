@@ -17,17 +17,12 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import QtQuick.Window 2.2
-import Esri.ArcGISExtras 1.1
 import Esri.Samples 1.0
 
 GODictionaryRenderer_3DSample {
     id: graphicsOverlayDictionaryRenderer_3DSample
     width: 800
     height: 600
-
-    
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     onGraphicsLoaded: progressBar_loading.visible = false;
 

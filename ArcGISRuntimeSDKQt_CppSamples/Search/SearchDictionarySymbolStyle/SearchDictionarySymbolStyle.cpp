@@ -17,14 +17,38 @@
 #include "SearchDictionarySymbolStyle.h"
 #include "DictionarySymbolStyle.h"
 
-#include <QQmlProperty>
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
+
+using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 using namespace Esri::ArcGISRuntime;
 
 SearchDictionarySymbolStyle::SearchDictionarySymbolStyle(QQuickItem* parent) :
-  QQuickItem(parent),
-  m_dictionarySymbolStyle(nullptr),
-  m_searchResults(nullptr)
+  QQuickItem(parent)
 {
 }
 
@@ -41,7 +65,7 @@ void SearchDictionarySymbolStyle::componentComplete()
   QQuickItem::componentComplete();
 
   //Get the data path
-  QString datapath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
+  QString datapath = defaultDataPath() + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx";
 
   //Create the dictionary from datapath
   m_dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", datapath, this);

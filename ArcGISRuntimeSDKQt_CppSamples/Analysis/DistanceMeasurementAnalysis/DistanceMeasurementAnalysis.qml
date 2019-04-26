@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
 DistanceMeasurementAnalysisSample {
@@ -24,7 +23,6 @@ DistanceMeasurementAnalysisSample {
     clip: true
     width: 800
     height: 600
-
     
     SceneView {
         objectName: "sceneView"

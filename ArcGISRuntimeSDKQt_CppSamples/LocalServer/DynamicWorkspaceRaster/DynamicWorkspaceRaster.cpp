@@ -25,15 +25,19 @@
 #include "RasterSublayerSource.h"
 #include "ArcGISMapImageSublayer.h"
 #include "ArcGISMapImageLayer.h"
+
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <QDir>
 
 using namespace Esri::ArcGISRuntime;
 
+
 DynamicWorkspaceRaster::DynamicWorkspaceRaster(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(QDir::homePath() + "/ArcGIS/Runtime/Data/raster")
 {
+  emit dataPathChanged();
 }
 
 void DynamicWorkspaceRaster::init()
@@ -60,7 +64,10 @@ void DynamicWorkspaceRaster::componentComplete()
   if (LocalServer::instance()->isInstallValid())
   {
     if (LocalServer::instance()->status() == LocalServerStatus::Started)
+    {
+      startLocalService(m_dataPath + "/usa_raster.tif");
       emit localServerInitializationComplete(true);
+    }
     else
     {
       connect(LocalServer::instance(), &LocalServer::statusChanged, this, [this]()
@@ -68,7 +75,10 @@ void DynamicWorkspaceRaster::componentComplete()
         if (LocalServer::instance()->status() == LocalServerStatus::Failed)
           emit localServerInitializationComplete(false);
         else if (LocalServer::instance()->status() == LocalServerStatus::Started)
+        {
+          startLocalService(m_dataPath + "/usa_raster.tif");
           emit localServerInitializationComplete(true);
+        }
       });
       LocalServer::start();
     }
@@ -76,14 +86,15 @@ void DynamicWorkspaceRaster::componentComplete()
 }
 
 // Start a service based on a file and folder path
-void DynamicWorkspaceRaster::startLocalService(const QString& filePath, const QString& folder)
+void DynamicWorkspaceRaster::startLocalService(const QString& filePath)
 {
   if (!LocalServer::instance()->isInstallValid())
     return;
+
   // Setup file and folder variables
   QFile f(filePath);
   QFileInfo fileInfo(f.fileName());
-  QString workspacePath = QUrl(folder).toLocalFile();
+  QString workspacePath = m_dataPath;
 
   // create a service from the blank MPK
   QString mapPackagePath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpk/mpk_blank.mpk";

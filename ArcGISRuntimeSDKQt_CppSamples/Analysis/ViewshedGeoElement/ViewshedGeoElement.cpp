@@ -29,14 +29,38 @@
 #include "GeometryEngine.h"
 #include "OrbitGeoElementCameraController.h"
 
-#include <QQmlProperty>
 #include <QTimer>
 #include <QString>
 #include <QUrl>
 #include <QVariant>
 #include <QList>
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 ViewshedGeoElement::ViewshedGeoElement(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -141,11 +165,10 @@ void ViewshedGeoElement::createGraphic()
   const double y = 48.38823243446344;
   const double z = 0;
   const Point tankPoint(x, y, z, SpatialReference(4326));
-  const QString dataPath = QQmlProperty::read(this, "dataPath").toString();
   const float scale = 10;
 
   // Create the Graphic Symbol
-  ModelSceneSymbol* sceneSymbol = new ModelSceneSymbol(QUrl(dataPath + "/bradley_low_3ds/bradle.3ds"), scale, this);
+  ModelSceneSymbol* sceneSymbol = new ModelSceneSymbol(QUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/3D/bradley_low_3ds/bradle.3ds"), scale, this);
   sceneSymbol->setAnchorPosition(SceneSymbolAnchorPosition::Bottom);
   sceneSymbol->setHeading(90.0f);
 

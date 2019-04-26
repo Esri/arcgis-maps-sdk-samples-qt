@@ -16,8 +16,6 @@
 
 #include "GODictionaryRenderer.h"
 
-#include <QQmlProperty>
-
 #include "DictionaryRenderer.h"
 #include "GraphicListModel.h"
 #include "Map.h"
@@ -26,13 +24,40 @@
 #include "MultipointBuilder.h"
 #include "DictionarySymbolStyle.h"
 
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
+
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 const QString GODictionaryRenderer::FIELD_CONTROL_POINTS = QStringLiteral("_control_points");
 const QString GODictionaryRenderer::FIELD_WKID = QStringLiteral("_wkid");
 
 GODictionaryRenderer::GODictionaryRenderer(QQuickItem* parent) :
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data")
 {
 }
 
@@ -51,10 +76,7 @@ bool GODictionaryRenderer::graphicsLoaded() const
 
 void GODictionaryRenderer::componentComplete()
 {
-  QQuickItem::componentComplete();
-
-  // QML properties
-  m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
+  QQuickItem::componentComplete();    
 
   //! [Apply Dictionary Renderer Graphics Overlay Cpp]
   // Create graphics overlay

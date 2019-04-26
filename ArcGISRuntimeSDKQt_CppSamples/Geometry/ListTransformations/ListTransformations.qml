@@ -16,18 +16,13 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 ListTransformationsSample {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-
-    
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataRuntime"
 
     // add a mapView component
     MapView {
@@ -140,7 +135,6 @@ ListTransformationsSample {
             }
             color: "white"
             wrapMode: Text.WrapAnywhere
-            text: "Projection engine directory set %1".arg(dataPath)
         }
 
         Timer {
@@ -183,8 +177,8 @@ ListTransformationsSample {
     }
 
     onShowStatusBar: {
-        if (message.length > 0)
-            statusText.text = message;
+        statusText.text = message;
+
         if (statusBar.isExpanded)
             timer.restart();
         else

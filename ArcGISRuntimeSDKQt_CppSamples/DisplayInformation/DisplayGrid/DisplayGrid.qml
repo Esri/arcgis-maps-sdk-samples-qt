@@ -17,7 +17,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
 DisplayGridSample {
@@ -25,7 +24,6 @@ DisplayGridSample {
     clip: true
     width: 800
     height: 600
-
     
     property real centerWindowY: (displayGrid.height / 2) - (styleWindow.height / 2)
 

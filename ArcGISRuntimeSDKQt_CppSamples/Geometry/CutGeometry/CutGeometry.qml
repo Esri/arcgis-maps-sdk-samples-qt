@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
 CutGeometrySample {
@@ -24,9 +23,7 @@ CutGeometrySample {
     clip: true
     width: 800
     height: 600
-
     
-
     // add a mapView component
     MapView {
         anchors.fill: parent

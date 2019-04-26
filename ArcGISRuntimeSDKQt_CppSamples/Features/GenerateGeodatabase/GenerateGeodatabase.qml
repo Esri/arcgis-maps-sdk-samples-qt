@@ -17,19 +17,14 @@
 import QtQuick 2.3
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 GenerateGeodatabaseSample {
     id: generateSample
     width: 800
     height: 600
-
     
-    property string statusText: ""
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
-    property string outputGdb: System.temporaryFolder.path + "/WildfireCpp_%1.geodatabase".arg(new Date().getTime().toString())
+    property string statusText: ""    
 
     // add a mapView component
     MapView {
@@ -52,8 +47,8 @@ GenerateGeodatabaseSample {
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
-        width: parent.width - (50)
-        height: parent.height - (125)
+        width: parent.width - 50
+        height: parent.height - 125
         color: "transparent"
         border {
             color: "red"
@@ -171,17 +166,6 @@ GenerateGeodatabaseSample {
         function hideWindow(time) {
             hideWindowTimer.interval = time;
             hideWindowTimer.restart();
-        }
-    }
-
-    FileFolder {
-        path: dataPath
-
-        // create the data path if it does not yet exist
-        Component.onCompleted: {
-            if (!exists) {
-                makePath(dataPath);
-            }
         }
     }
 }

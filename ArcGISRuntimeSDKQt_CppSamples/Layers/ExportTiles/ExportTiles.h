@@ -31,6 +31,7 @@ namespace Esri
 }
 
 #include <QQuickItem>
+#include <QTemporaryDir>
 
 class ExportTiles : public QQuickItem
 {
@@ -42,7 +43,7 @@ public:
 
   void componentComplete() override;
   static void init();
-  Q_INVOKABLE void exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2, QString dataPath);
+  Q_INVOKABLE void exportTileCacheFromCorners(double xCorner1, double yCorner1, double xCorner2, double yCorner2);
 
 signals:
   void updateStatus(QString status);
@@ -57,6 +58,7 @@ private:
   Esri::ArcGISRuntime::ExportTileCacheTask* m_exportTileCacheTask = nullptr;
   Esri::ArcGISRuntime::ExportTileCacheParameters m_parameters;
   QUrl m_serviceUrl = QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer");
+  QTemporaryDir m_tempPath;
 };
 
 #endif // EXPORT_TILES

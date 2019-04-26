@@ -30,6 +30,7 @@ class OfflineMapTask;
 }
 
 #include <QQuickItem>
+#include <QTemporaryDir>
 
 class GenerateOfflineMap : public QQuickItem
 {
@@ -46,7 +47,7 @@ public:
   static void init();
 
 public:
-  Q_INVOKABLE void generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2, const QString& dataPath);
+  Q_INVOKABLE void generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2);
 
 signals:
   void mapLoadedChanged();
@@ -66,6 +67,7 @@ private:
   Esri::ArcGISRuntime::OfflineMapTask* m_offlineMapTask = nullptr;
   static const QString s_webMapId;  
   bool m_mapLoaded = false;
+  QTemporaryDir m_tempPath;
 };
 
 #endif // GENERATEOFFLINEMAP_H

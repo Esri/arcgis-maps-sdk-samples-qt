@@ -84,7 +84,7 @@ void GenerateOfflineMap::componentComplete()
   });
 }
 
-void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2, const QString& dataPath)
+void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2)
 {
   // create an envelope from the QML rectangle corners
   const Point corner1 = m_mapView->screenToLocation(xCorner1, yCorner1);
@@ -94,10 +94,10 @@ void GenerateOfflineMap::generateMapByExtent(double xCorner1, double yCorner1, d
 
   // connect to the signal for when the default parameters are generated
   connect(m_offlineMapTask, &OfflineMapTask::createDefaultGenerateOfflineMapParametersCompleted,
-          this, [this, dataPath](QUuid, const GenerateOfflineMapParameters& params)
+          this, [this](QUuid, const GenerateOfflineMapParameters& params)
   {
     // Take the map offline once the parameters are generated
-    GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(params, dataPath);
+    GenerateOfflineMapJob* generateJob = m_offlineMapTask->generateOfflineMap(params, m_tempPath.path() + "/offlinemap.mmpk");
 
     // check if there is a valid job
     if (generateJob)

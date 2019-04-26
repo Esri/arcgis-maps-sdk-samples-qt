@@ -26,9 +26,33 @@
 #include "KmlDataset.h"
 #include "PortalItem.h"
 
-#include <QQmlProperty>
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 DisplayKml::DisplayKml(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -85,7 +109,7 @@ void DisplayKml::createFromFile()
   clearLayers();
 
   // Create the Dataset from a local file
-  const QString dataPath = QQmlProperty::read(this, "dataPath").toString();
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/kml/";
   m_kmlDataset = new KmlDataset(QUrl(dataPath + "US_State_Capitals.kml"), this);
 
   // Create the Layer

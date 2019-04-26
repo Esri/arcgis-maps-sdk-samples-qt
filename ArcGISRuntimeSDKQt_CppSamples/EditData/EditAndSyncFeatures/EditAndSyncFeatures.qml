@@ -17,19 +17,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 EditAndSyncFeaturesSample {
     id: editAndSyncSample
     clip: true
     width: 800
     height: 600
-
     
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
-    property string outputGdb: System.temporaryFolder.path + "/WildfireCpp_%1.geodatabase".arg(new Date().getTime().toString())
     property string statusText: ""
     property string instructionText: ""
     property alias isOffline: editAndSyncSample.isOffline
@@ -213,17 +208,6 @@ EditAndSyncFeaturesSample {
         function hideWindow(time) {
             hideWindowTimer.interval = time;
             hideWindowTimer.restart();
-        }
-    }
-
-    FileFolder {
-        url: dataPath
-
-        // create the data path if it does not yet exist
-        Component.onCompleted: {
-            if (!exists) {
-                makePath(dataPath);
-            }
         }
     }
 }

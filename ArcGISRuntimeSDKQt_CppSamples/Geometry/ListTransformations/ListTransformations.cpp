@@ -28,11 +28,35 @@
 #include "GeographicTransformationStep.h"
 #include "GeographicTransformation.h"
 
+#include <QDir>
+#include <QtCore/qglobal.h>
 #include <QUrl>
-#include <QQmlProperty>
 #include <QVariantMap>
 
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
+
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 ListTransformations::ListTransformations(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent)
@@ -51,7 +75,7 @@ void ListTransformations::componentComplete()
   QQuickItem::componentComplete();   
 
   // get data path
-  const QUrl dataPath = QUrl(QQmlProperty::read(this, "dataPath").toString()).toLocalFile();
+  const QUrl dataPath = QUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/PEDataRuntime");
 
   // connect to TransformationCatalog error signal
   connect(TransformationCatalog::instance(), &TransformationCatalog::errorOccurred, this, [this](Error e)
@@ -61,7 +85,6 @@ void ListTransformations::componentComplete()
 
     emit showStatusBar(QString("Error setting projection engine directory: %1. %2").arg(e.message(), e.additionalMessage()));
   });
-
 
   // Create a geometry located in the Greenwich observatory courtyard in London, UK, the location of the
   // Greenwich prime meridian. This will be projected using the selected transformation.
@@ -84,7 +107,7 @@ void ListTransformations::componentComplete()
     // Set the TransformationCatalog path
     TransformationCatalog::setProjectionEngineDirectory(dataPath.toString());
     if (TransformationCatalog::projectionEngineDirectory().length() > 0)
-      showStatusBar();
+      emit showStatusBar(QString("Projection engine directory set: %1").arg(TransformationCatalog::instance()->projectionEngineDirectory()));
 
     // get the initial list of transformations
     refreshTransformationList(true);

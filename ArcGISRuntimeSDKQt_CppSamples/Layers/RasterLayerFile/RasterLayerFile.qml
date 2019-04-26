@@ -16,15 +16,12 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 RasterLayerFileSample {
     id: rootRectangle
     clip: true
     
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/"
     readonly property var supportedFormats: ["img","I12","dt0","dt1","dt2","tc2","geotiff","tif", "tiff", "hr1","jpg","jpeg","jp2","ntf","png","i21","ovr"]
 
     // add a mapView component
@@ -59,8 +56,7 @@ RasterLayerFileSample {
 
     RasterLoader {
         id: loader
-        anchors.fill: rootRectangle
-        folder: dataPath
+        anchors.fill: rootRectangle        
         supportedExtensions: supportedFormats
 
         onRasterFileChosen: createAndAddRasterLayer(url);
