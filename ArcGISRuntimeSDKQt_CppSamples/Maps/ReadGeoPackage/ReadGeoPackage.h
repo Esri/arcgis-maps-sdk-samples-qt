@@ -23,49 +23,31 @@ namespace Esri
   {
     class Map;
     class MapQuickView;
-    class listModel;
-    class listView;
     class GeoPackage;
-    class Layer;
-    class RasterLayer;
-    class FeatureTable;
-    class FeatureLayer;
-    class GeoPackageRaster;
-    class GeoPackageFeatureTable;
   }
 }
 
 #include <QQuickItem>
 #include <Viewpoint.h>
-#include <QVariantMap>
-#include <QVariantList>
 
 class ReadGeoPackage : public QQuickItem
 {
-  Q_OBJECT
-  Q_PROPERTY(QVariantList layerList READ layerList NOTIFY layerListChanged)
+  Q_OBJECT  
 
 public:
   explicit ReadGeoPackage(QQuickItem* parent = nullptr);
   ~ReadGeoPackage() override = default;
 
-  void readGeoPackage();
   void componentComplete() override;
-
   static void init();
 
-  Q_INVOKABLE void addOrShowLayer(int index, bool onOff);
-
-signals:
-  void layerListChanged();
+private:
+  void readGeoPackage();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::GeoPackage* auroraGpkg = nullptr;
-
-  QVariantList m_layerList;
-  QVariantList layerList() const;
+  Esri::ArcGISRuntime::GeoPackage* auroraGpkg = nullptr;  
   QString m_dataPath;
 };
 

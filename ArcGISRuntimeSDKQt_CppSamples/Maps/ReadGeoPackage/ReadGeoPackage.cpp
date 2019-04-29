@@ -93,63 +93,28 @@ void ReadGeoPackage::readGeoPackage()
 {
   // Load the GeoPackage at the beginning
   GeoPackage* auroraGpkg = new GeoPackage(m_dataPath + "/gpkg/AuroraCO.gpkg", this);
-  m_layerList.clear();
 
   // Make sure there are no errors in loading the GeoPackage before interacting with it
   connect(auroraGpkg, &GeoPackage::doneLoading, this, [auroraGpkg, this](Error error)
   {
     if (error.isEmpty())
-    {
-      // Create two QLists for the different types of layer data within the GeoPackage (these are combined into m_layerList later on)
-      const QList<GeoPackageRaster*> gpkgRasters = auroraGpkg->geoPackageRasters();
-      const QList<GeoPackageFeatureTable*> gpkgFeatures = auroraGpkg->geoPackageFeatureTables();
-
-      // Loop through both lists to get the name and layer data. The name data is only used to populate the menu.
-      for (GeoPackageFeatureTable* featureTbl : gpkgFeatures)
+    {      
+      // For each raster, create a raster layer and add the layer to the map
+      for (GeoPackageRaster* rasterItm : auroraGpkg->geoPackageRasters())
       {
-        QVariantMap layerMap;
-        FeatureLayer* layer = new FeatureLayer(featureTbl, this);
-        layerMap["name"] = layer->name();
-        layerMap["lyr"] = QVariant::fromValue<Layer*>(layer);
-        m_layerList << layerMap;
-      }
-      for (GeoPackageRaster* rasterItm : gpkgRasters)
-      {
-        QVariantMap rasterMap;
         RasterLayer* rasterLyr = new RasterLayer(rasterItm, this);
-        rasterMap["name"] = rasterLyr->raster()->path().mid(55, 25);
-        rasterMap["lyr"] = QVariant::fromValue<Layer*>(rasterLyr);
-        m_layerList << rasterMap;
+        rasterLyr->setOpacity(0.55f);
+        m_map->operationalLayers()->append(rasterLyr);
       }
-      emit layerListChanged();
+
+      // For each feature table, create a feature layer and add the layer to the map
+      for (GeoPackageFeatureTable* featureTbl : auroraGpkg->geoPackageFeatureTables())
+      {
+        FeatureLayer* layer = new FeatureLayer(featureTbl, this);
+        m_map->operationalLayers()->append(layer);
+      }
     }
   });
+
   auroraGpkg->load();
 }
-
-// Getter for the menu names data
-QVariantList ReadGeoPackage::layerList() const
-{
-  return m_layerList;
-}
-
-// Called by the QML to toggle visibility at a certain index
-void ReadGeoPackage::addOrShowLayer(int index, bool visible)
-{
-  LayerListModel* opLayers = m_map->operationalLayers();
-  Layer* layer = qvariant_cast<Layer*>(m_layerList[index].toMap()["lyr"]);
-  int indexOfLayer = opLayers->indexOf(layer);
-  if (indexOfLayer != -1 && !visible)
-  {
-    opLayers->at(indexOfLayer)->setVisible(false);
-  }
-  else
-  {
-    if (!opLayers->contains(layer))
-    {
-      opLayers->insert(index, layer);
-    }
-    layer->setVisible(true);
-  }
-}
-

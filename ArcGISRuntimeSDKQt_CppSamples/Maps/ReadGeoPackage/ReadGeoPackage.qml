@@ -15,7 +15,6 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 ReadGeoPackageSample {
@@ -28,88 +27,6 @@ ReadGeoPackageSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"        
-    }
-
-    // Create the layer selection menu
-    Rectangle {
-        id: layerVisibilityRect
-        anchors {
-            margins: 10
-            left: parent.left
-            top: parent.top
-        }
-        height: 210
-        width: 225
-        color: "transparent"
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: mouse.accepted = true
-            onWheel: wheel.accepted = true
-        }
-
-        Rectangle {
-            anchors.fill: parent
-            width: layerVisibilityRect.width
-            height: layerVisibilityRect.height
-            color: "lightgrey"
-            opacity: 0.9
-            radius: 5
-            border {
-                color: "#4D4D4D"
-                width: 1
-            }
-
-            Column {
-                anchors {
-                    fill: parent
-                    margins: 10
-                }
-                clip: true
-
-                Text {
-                    width: parent.width
-                    text: "GeoPackage Layers"
-                    wrapMode: Text.WordWrap
-                    clip:true
-                    font {
-                        pixelSize: 14
-                        bold: true
-                    }
-                }
-
-                // Populate the menu with the layers from the GeoPackage
-                ListView {
-                    id: layerVisibilityListView
-                    anchors.margins: 20
-                    width: parent.width
-                    height: parent.height
-                    clip: true
-                    model: root.layerList
-                    delegate: Item {
-                        id: visibilityDelegate
-                        width: parent.width
-                        height: 35
-                        Row {
-                            spacing: 5
-                            anchors.verticalCenter: parent.verticalCenter
-                            Text {
-                                width: 150
-                                text:  modelData.name
-                                wrapMode: Text.WordWrap
-                                font.pixelSize: 14
-                            }
-
-                            Switch {
-                                onCheckedChanged: {
-                                    root.addOrShowLayer(index, checked);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 
