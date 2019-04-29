@@ -95,6 +95,7 @@ void Animate3DSymbols::init()
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<Animate3DSymbols>("Esri.Samples", 1, 0, "Animate3DSymbolsSample");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
 void Animate3DSymbols::componentComplete()
@@ -197,7 +198,7 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
   m_missionData->parse(m_dataPath + "/Missions/" + formattedname.remove(" ") + ".csv");
 
   // if the mission was loaded successfully, move to the start position
-  if (missionReady())
+  if (missionReady() && m_routeGraphic)
   {
     // create a polyline representing the route for the mission
     PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);
