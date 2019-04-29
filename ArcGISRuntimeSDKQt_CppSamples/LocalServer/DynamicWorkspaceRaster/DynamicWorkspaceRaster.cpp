@@ -29,6 +29,7 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QTemporaryDir>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -78,6 +79,10 @@ void DynamicWorkspaceRaster::componentComplete()
         {
           startLocalService(m_dataPath + "/usa_raster.tif");
           emit localServerInitializationComplete(true);
+
+          // set temp path
+          QTemporaryDir tempDir;
+          LocalServer::instance()->setTempDataPath(tempDir.path());
         }
       });
       LocalServer::start();

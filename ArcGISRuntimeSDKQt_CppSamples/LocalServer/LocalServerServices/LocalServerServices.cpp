@@ -24,6 +24,7 @@
 
 #include <QDesktopServices>
 #include <QDir>
+#include <QTemporaryDir>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -77,6 +78,10 @@ void LocalServerServices::connectSignals()
       }
       case LocalServerStatus::Started:
       {
+        // set temp path
+        QTemporaryDir tempDir;
+        LocalServer::instance()->setTempDataPath(tempDir.path());
+
         m_serverStatus.append("Server Status: STARTED\n");
         m_isServerRunning = true;
         emit isServerRunningChanged();
