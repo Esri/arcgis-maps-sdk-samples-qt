@@ -169,7 +169,16 @@ Rectangle {
         }
     }
 
+    Rectangle {
+        anchors {
+            fill: searchColumn
+            margins: -5
+        }
+        color: "white"
+    }
+
     Column {
+        id: searchColumn
         anchors {
             left: parent.left
             right: parent.right
