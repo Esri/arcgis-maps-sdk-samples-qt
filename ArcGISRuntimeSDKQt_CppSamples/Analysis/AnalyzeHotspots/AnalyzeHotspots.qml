@@ -230,20 +230,12 @@ AnalyzeHotspotsSample {
                 Layout.fillWidth: true
             }
 
-            WeekNumberColumn {
-                month: calendar.month
-                year: calendar.year
-                locale: calendar.locale
-
-                Layout.fillHeight: true
-                Layout.column: 0
-                Layout.row: 2
-            }
-
             MonthGrid {
                 id: calendar
                 month: Calendar.January
                 year: 1998
+                Layout.row: 2
+                Layout.column: 1
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
