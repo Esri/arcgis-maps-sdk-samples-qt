@@ -133,16 +133,11 @@ Rectangle {
             Component {
                 id: groupLayerDelegate
                 Column {
-                    ButtonGroup {
-                        id: childGroup
-                        exclusive: false
-                        checkState: parentBox.checkState
-                    }
-
                     CheckBox {
                         id: parentBox
                         text: name
-                        checkState: childGroup.checkState
+                        checked: true
+                        onCheckedChanged: layerVisible = checked
                     }
 
                     Repeater {
@@ -153,7 +148,6 @@ Rectangle {
                             text: name
                             leftPadding: indicator.width
                             width: layerVisibilityRect.width - leftPadding
-                            ButtonGroup.group: childGroup
                             onCheckedChanged: layerVisible = checked
                         }
                     }
