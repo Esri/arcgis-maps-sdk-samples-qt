@@ -130,9 +130,7 @@ void FindAddress::connectSignals()
     {
       const AttributeListModel* attributes = graphics.at(0)->attributes();
       const QString calloutText = attributes->attributeValue("Match_addr").toString();
-      const QString calloutDetailedText = attributes->attributeValue("Place_addr").toString();
       m_mapView->calloutData()->setTitle(calloutText);
-      m_mapView->calloutData()->setDetail(calloutDetailedText);
       emit showCallout();
     }
   });
