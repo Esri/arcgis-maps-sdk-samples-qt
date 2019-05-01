@@ -1,0 +1,37 @@
+{
+    "category": "@@TODO: Display Information",
+    "description": "@@TODO: This sample demonstrates how to create PictureMarkerSymbols from the different types of image resources",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "Point",
+        "GraphicsOverlay",
+        "Graphic",
+        "PictureMarkerSymbol",
+        "Viewpoint",
+        "SpatialReference"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-picturemarkersymbol.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Point",
+        "GraphicsOverlay",
+        "Graphic",
+        "PictureMarkerSymbol",
+        "Viewpoint",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "Picture_Marker_Symbol.qml",
+        "Picture_Marker_Symbol.h",
+        "Picture_Marker_Symbol.cpp"
+    ],
+    "title": "@@TODO: Picture marker symbol"
+}

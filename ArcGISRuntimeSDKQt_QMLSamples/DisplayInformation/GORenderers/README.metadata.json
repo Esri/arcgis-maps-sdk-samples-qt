@@ -1,0 +1,35 @@
+{
+    "category": "@@TODO: Display Information",
+    "description": "@@TODO: This sample demonstrates how to add graphics and set renderer on graphic overlays",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "BasemapTopographic",
+        "GraphicsOverlay",
+        "Graphic",
+        "Point",
+        "PolylineBuilder",
+        "PolygonBuilder"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-addgraphicswithrenderer.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "BasemapTopographic",
+        "GraphicsOverlay",
+        "Graphic",
+        "Point",
+        "PolylineBuilder",
+        "PolygonBuilder"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "GORenderers.qml"
+    ],
+    "title": "@@TODO: Add graphics with renderer"
+}

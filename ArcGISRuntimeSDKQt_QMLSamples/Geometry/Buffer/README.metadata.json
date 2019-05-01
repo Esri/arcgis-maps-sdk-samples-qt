@@ -1,0 +1,24 @@
+{
+    "category": "@@TODO: Geometry",
+    "description": "@@TODO: This sample demonstrates how to use GeometryEngine",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Analysis",
+        " Buffer",
+        " GeometryEngine"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-buffer.htm",
+    "relevant_apis": [
+        "GeometryEngine.buffer",
+        "GeometryEngine.bufferGeodetic",
+        "GraphicsOverlay"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "Buffer.qml"
+    ],
+    "title": "@@TODO: Buffer"
+}

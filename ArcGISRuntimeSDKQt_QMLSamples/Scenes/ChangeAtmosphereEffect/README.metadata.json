@@ -1,0 +1,24 @@
+{
+    "category": "@@TODO: Scenes",
+    "description": "@@TODO: Changes the appearance of the atmosphere in a scene",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        " AtmosphereEffect",
+        " Scene"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-changeatmosphereeffect.htm",
+    "relevant_apis": [
+        "Scene",
+        "AtmosphereEffect",
+        "SceneView"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "ChangeAtmosphereEffect.qml"
+    ],
+    "title": "@@TODO: Change atmosphere effect"
+}

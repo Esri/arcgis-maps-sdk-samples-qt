@@ -1,0 +1,25 @@
+{
+    "category": "@@TODO: Geometry",
+    "description": "@@TODO: Coordinates can be written as text that is formatted in different ways",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "CoordinateFormatter",
+        "Point",
+        "Graphic"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-formatcoordinates.htm",
+    "relevant_apis": [
+        "CoordinateFormatter",
+        "Point",
+        "Graphic"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "FormatCoordinates.qml"
+    ],
+    "title": "@@TODO: Format coordinates"
+}

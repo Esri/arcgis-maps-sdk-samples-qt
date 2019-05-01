@@ -1,0 +1,35 @@
+{
+    "category": "@@TODO: Display Information",
+    "description": "@@TODO: This sample demonstrates how to identify graphics in a graphics overlay",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "GraphicsOverlay",
+        "Graphic",
+        "SimpleFillSymbol",
+        "SimpleRenderer",
+        "PolygonBuilder"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-identifygraphics.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "GraphicsOverlay",
+        "Graphic",
+        "SimpleFillSymbol",
+        "SimpleRenderer",
+        "PolygonBuilder"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "IdentifyGraphics.h",
+        "IdentifyGraphics.qml",
+        "IdentifyGraphics.cpp"
+    ],
+    "title": "@@TODO: Identify graphics"
+}

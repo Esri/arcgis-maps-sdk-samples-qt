@@ -1,0 +1,26 @@
+{
+    "category": "@@TODO: Layers",
+    "description": "@@TODO: This sample demonstrates how to dynamically change the style of a sublayer in a WMS layer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "WMS Style",
+        " Change Style"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-stylewmslayer.htm",
+    "relevant_apis": [
+        "WmsLayer",
+        "WmsSublayer",
+        "WmsLayerInfo",
+        "WmsSublayer::currentStyle"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "StyleWmsLayer.qml",
+        "StyleWmsLayer.cpp",
+        "StyleWmsLayer.h"
+    ],
+    "title": "@@TODO: Style WMS layer"
+}

@@ -1,0 +1,29 @@
+{
+    "category": "@@TODO: Analysis",
+    "description": "@@TODO: This sample demonstrates how to perform a line of sight analysis between two points in a SceneView",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "AnalysisOverlay",
+        "LocationLineOfSight",
+        "SceneView",
+        "Surface",
+        "ArcGISTiledElevationSource"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-lineofsightlocation.htm",
+    "relevant_apis": [
+        "AnalysisOverlay",
+        "LocationLineOfSight",
+        "SceneView",
+        "Surface",
+        "ArcGISTiledElevationSource"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "LineOfSightLocation.qml"
+    ],
+    "title": "@@TODO: Line of Sight (location)"
+}

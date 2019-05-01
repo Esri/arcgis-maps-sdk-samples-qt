@@ -1,0 +1,29 @@
+{
+    "category": "@@TODO: Features",
+    "description": "@@TODO: This sample demonstrates how to open a GeoPackage, obtain a feature table from the package, and display the table as a FeatureLayer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "GeoPackage",
+        "GeoPackageFeatureTable",
+        "FeatureLayer",
+        "Map"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurelayergeopackage.htm",
+    "relevant_apis": [
+        "GeoPackage",
+        "GeoPackageFeatureTable",
+        "FeatureLayer",
+        "Map"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "FeatureLayer_GeoPackage.cpp",
+        "FeatureLayer_GeoPackage.qml",
+        "FeatureLayer_GeoPackage.h"
+    ],
+    "title": "@@TODO: Feature layer (GeoPackage)"
+}

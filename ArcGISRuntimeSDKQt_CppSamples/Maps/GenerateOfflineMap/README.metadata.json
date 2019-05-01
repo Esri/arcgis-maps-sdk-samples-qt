@@ -1,0 +1,47 @@
+{
+    "category": "@@TODO: Maps",
+    "description": "@@TODO: This sample demonstrates how to take a web map offline",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "Map",
+        "OfflineMapTask",
+        "GenerateOfflineMapParameters",
+        "GenerateOfflineMapJob",
+        "GenerateOfflineMapResult",
+        "MapView",
+        "EnveloperBuilder",
+        "AuthenticationView",
+        "AuthenticationManager",
+        "PortalItem",
+        "Portal",
+        "GeometryEngine"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-generateofflinemap.htm",
+    "relevant_apis": [
+        "Map",
+        "OfflineMapTask",
+        "GenerateOfflineMapParameters",
+        "GenerateOfflineMapJob",
+        "GenerateOfflineMapResult",
+        "MapView",
+        "EnveloperBuilder",
+        "AuthenticationView",
+        "AuthenticationManager",
+        "PortalItem",
+        "Portal",
+        "GeometryEngine"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "GenerateOfflineMap.qml",
+        "GenerateOfflineMap.h",
+        "DownloadButton.qml",
+        "GenerateWindow.qml",
+        "GenerateOfflineMap.cpp"
+    ],
+    "title": "@@TODO: Generate offline map"
+}

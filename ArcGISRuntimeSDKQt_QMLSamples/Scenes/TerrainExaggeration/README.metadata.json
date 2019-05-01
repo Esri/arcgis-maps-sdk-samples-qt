@@ -1,0 +1,24 @@
+{
+    "category": "@@TODO: Scenes",
+    "description": "@@TODO: This sample demonstrates how to exaggerate a scene\u2019s terrain surface",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Scenes",
+        " 3D",
+        " elevation",
+        " exaggeration"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-terrainexaggeration.htm",
+    "relevant_apis": [
+        "Surface",
+        "Surface.elevationExaggeration"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "TerrainExaggeration.qml"
+    ],
+    "title": "@@TODO: Terrain Exaggeration"
+}

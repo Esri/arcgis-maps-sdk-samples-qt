@@ -1,0 +1,22 @@
+{
+    "category": "@@TODO: Maps",
+    "description": "@@TODO: This sample demonstrates how to take a screenshot of the MapView",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "screenshot",
+        " screen capture",
+        " export"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-takescreenshot.htm",
+    "relevant_apis": [
+        "GeoView::exportImage"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "TakeScreenshot.qml"
+    ],
+    "title": "@@TODO: Take screenshot"
+}

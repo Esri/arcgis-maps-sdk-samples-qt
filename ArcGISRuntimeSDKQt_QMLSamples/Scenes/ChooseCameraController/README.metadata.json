@@ -1,0 +1,28 @@
+{
+    "category": "@@TODO: Scenes",
+    "description": "@@TODO: Control the behavior of the camera in a scene",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "camera controller",
+        " Camera",
+        " SceneView",
+        " 3D"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-choosecameracontroller.htm",
+    "relevant_apis": [
+        "Scene",
+        "Camera",
+        "GlobeCameraController",
+        "OrbitGeoElementCameraController",
+        "OrbitLocationCameraController",
+        "SceneView"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "ChooseCameraController.qml"
+    ],
+    "title": "@@TODO: Choose camera controller"
+}

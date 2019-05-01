@@ -1,0 +1,29 @@
+{
+    "category": "@@TODO: Cloud And Portal",
+    "description": "@@TODO: This sample demonstrates how to add and delete items (in this case a local ",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "AuthenticationView",
+        "Portal",
+        "PortalItem",
+        "PortalUser"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-additemstoportal.htm",
+    "relevant_apis": [
+        "AuthenticationView",
+        "Portal",
+        "PortalItem",
+        "PortalUser"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "AddItemsToPortal.cpp",
+        "AddItemsToPortal.h",
+        "AddItemsToPortal.qml"
+    ],
+    "title": "@@TODO: Add items to portal"
+}

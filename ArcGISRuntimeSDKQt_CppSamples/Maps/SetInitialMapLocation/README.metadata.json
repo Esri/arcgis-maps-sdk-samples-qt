@@ -1,0 +1,25 @@
+{
+    "category": "@@TODO: Maps",
+    "description": "@@TODO: This sample demonstrates how to create a map with a basemap, centered at a specific location and scale",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-setinitialmaplocation.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "SetInitialMapLocation.qml",
+        "SetInitialMapLocation.cpp",
+        "SetInitialMapLocation.h"
+    ],
+    "title": "@@TODO: Set initial map location"
+}

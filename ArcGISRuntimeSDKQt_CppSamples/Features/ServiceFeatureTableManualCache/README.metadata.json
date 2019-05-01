@@ -1,0 +1,33 @@
+{
+    "category": "@@TODO: Features",
+    "description": "@@TODO: This sample demonstrates how to use a feature service in manual cache mode",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "Basemap",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "QueryParameters"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-servicefeaturetablemanualcache.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "QueryParameters"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "ServiceFeatureTableManualCache.cpp",
+        "ServiceFeatureTableManualCache.qml",
+        "ServiceFeatureTableManualCache.h"
+    ],
+    "title": "@@TODO: Service feature table (manual cache)"
+}

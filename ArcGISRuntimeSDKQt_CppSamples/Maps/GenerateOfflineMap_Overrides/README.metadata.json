@@ -1,0 +1,31 @@
+{
+    "category": "@@TODO: Maps",
+    "description": "@@TODO: ",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Offline"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-generateofflinemapoverrides.htm",
+    "relevant_apis": [
+        "OfflineMapTask",
+        "GenerateGeodatabaseParameters",
+        "GenerateOfflineMapParameters",
+        "GenerateOfflineMapParameterOverrides",
+        "GenerateOfflineMapJob",
+        "GenerateOfflineMapResult",
+        "ExportTileCacheParameters"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "OverridesWindow.qml",
+        "GenerateOfflineMap_Overrides.cpp",
+        "DownloadButton.qml",
+        "GenerateWindow.qml",
+        "GenerateOfflineMap_Overrides.h",
+        "GenerateOfflineMap_Overrides.qml"
+    ],
+    "title": "@@TODO: Generate Offline Map (Overrides)"
+}

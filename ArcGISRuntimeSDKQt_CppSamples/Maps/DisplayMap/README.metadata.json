@@ -1,0 +1,27 @@
+{
+    "category": "@@TODO: Maps",
+    "description": "@@TODO: This sample demonstrates how to display a map view with a basemap",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "Basemap"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-displayamap.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "DisplayMap.cpp",
+        "DisplayMap.qml",
+        "DisplayMap.h"
+    ],
+    "title": "@@TODO: Display a map"
+}

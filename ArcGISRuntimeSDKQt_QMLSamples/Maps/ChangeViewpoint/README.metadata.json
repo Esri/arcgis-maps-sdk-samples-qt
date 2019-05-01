@@ -1,0 +1,25 @@
+{
+    "category": "@@TODO: Maps",
+    "description": "@@TODO: This sample demonstrates how to change the viewpoint of a map",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "Map",
+        "ViewpointExtent",
+        "EnvelopeBuilder"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-changeviewpoint.htm",
+    "relevant_apis": [
+        "Map",
+        "ViewpointExtent",
+        "EnvelopeBuilder"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "ChangeViewpoint.qml"
+    ],
+    "title": "@@TODO: Change Viewpoint"
+}

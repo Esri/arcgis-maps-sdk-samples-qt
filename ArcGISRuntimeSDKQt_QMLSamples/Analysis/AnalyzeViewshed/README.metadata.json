@@ -1,0 +1,49 @@
+{
+    "category": "@@TODO: Analysis",
+    "description": "@@TODO: This sample demonstrates how to use GeoprocessingTask to calculate a viewshed using a geoprocessing service",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "GeoprocessingTask",
+        "GeoprocessingParameters",
+        "GeoprocessingJob",
+        "GeoprocessingFeatures",
+        "GeoprocessingResult",
+        "FeatureCollectionTable",
+        "GraphicsOverlay",
+        "SimpleRenderer",
+        "Graphic",
+        "SimpleMarkerSymbol",
+        "SimpleFillSymbol",
+        "FeatureIterator",
+        "MapView",
+        "Map",
+        "Basemap"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-viewshedgeoprocessing.htm",
+    "relevant_apis": [
+        "GeoprocessingTask",
+        "GeoprocessingParameters",
+        "GeoprocessingJob",
+        "GeoprocessingFeatures",
+        "GeoprocessingResult",
+        "FeatureCollectionTable",
+        "GraphicsOverlay",
+        "SimpleRenderer",
+        "Graphic",
+        "SimpleMarkerSymbol",
+        "SimpleFillSymbol",
+        "FeatureIterator",
+        "MapView",
+        "Map",
+        "Basemap"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "AnalyzeViewshed.qml"
+    ],
+    "title": "@@TODO: Viewshed (Geoprocessing)"
+}

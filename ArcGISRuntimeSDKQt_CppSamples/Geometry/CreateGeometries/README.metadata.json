@@ -1,0 +1,33 @@
+{
+    "category": "@@TODO: Geometry",
+    "description": "@@TODO: Geometries are the underlying component to nearly any operation in Geographic Information Systems",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Geometry",
+        " Point",
+        " Line",
+        " Polygon",
+        " Vector"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-creategeometries.htm",
+    "relevant_apis": [
+        "Point",
+        "Multipoint",
+        "Polyline",
+        "Polygon",
+        "Envelope",
+        "PolygonBuilder",
+        "PolylineBuilder",
+        "MultipointBuilder"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "CreateGeometries.cpp",
+        "CreateGeometries.h",
+        "CreateGeometries.qml"
+    ],
+    "title": "@@TODO: Create geometries"
+}

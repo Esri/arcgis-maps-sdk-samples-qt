@@ -1,0 +1,33 @@
+{
+    "category": "@@TODO: Layers",
+    "description": "@@TODO: This samples demonstrates how to create a feature collection layer to show a query result from a service feature table",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "FeatureCollection",
+        "FeatureCollectionLayer",
+        "FeatureCollectionTable",
+        "Map",
+        "MapQuickView",
+        "ServiceFeatureTable"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurecollectionlayerquery.htm",
+    "relevant_apis": [
+        "FeatureCollection",
+        "FeatureCollectionLayer",
+        "FeatureCollectionTable",
+        "Map",
+        "MapQuickView",
+        "ServiceFeatureTable"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "FeatureCollectionLayerQuery.qml",
+        "FeatureCollectionLayerQuery.cpp",
+        "FeatureCollectionLayerQuery.h"
+    ],
+    "title": "@@TODO: Feature collection layer (query)"
+}

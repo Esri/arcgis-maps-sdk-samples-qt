@@ -1,0 +1,43 @@
+{
+    "category": "@@TODO: Edit Data",
+    "description": "@@TODO: This sample demonstrates how to edit attributes of a feature in a feature service",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Feature",
+        "ArcGISFeature",
+        "FeatureEditResult",
+        "FeatureQueryResult",
+        "Point"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-updateattributesfeatureservice.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Feature",
+        "ArcGISFeature",
+        "FeatureEditResult",
+        "FeatureQueryResult",
+        "Point"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "UpdateAttributesFeatureService.qml"
+    ],
+    "title": "@@TODO: Update attributes (feature service)"
+}

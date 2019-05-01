@@ -1,0 +1,33 @@
+{
+    "category": "@@TODO: Maps",
+    "description": "@@TODO: This sample demonstrates how to identify features on a map across the different layers in the map",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "IdentifyLayerResult",
+        "ArcGISMapImageLayer",
+        "ArcGISMapImageSublayer",
+        "ServiceFeatureTable",
+        "FeatureLayer"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-identifylayers.htm",
+    "relevant_apis": [
+        "MapView",
+        "IdentifyLayerResult",
+        "ArcGISMapImageLayer",
+        "ArcGISMapImageSublayer",
+        "ServiceFeatureTable",
+        "FeatureLayer"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "IdentifyLayers.cpp",
+        "IdentifyLayers.h",
+        "IdentifyLayers.qml"
+    ],
+    "title": "@@TODO: Identify layers"
+}

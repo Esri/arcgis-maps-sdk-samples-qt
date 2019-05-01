@@ -1,0 +1,29 @@
+{
+    "category": "@@TODO: Layers",
+    "description": "@@TODO: This sample demonstrates how to open a GeoPackage, obtain a raster from the package, and display the table as a RasterLayer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "GeoPackage",
+        "GeoPackageRaster",
+        "RasterLayer",
+        "Map"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-rasterlayergeopackage.htm",
+    "relevant_apis": [
+        "GeoPackage",
+        "GeoPackageRaster",
+        "RasterLayer",
+        "Map"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "RasterLayerGeoPackage.qml",
+        "RasterLayerGeoPackage.cpp",
+        "RasterLayerGeoPackage.h"
+    ],
+    "title": "@@TODO: Raster layer (GeoPackage)"
+}

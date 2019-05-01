@@ -1,0 +1,37 @@
+{
+    "category": "@@TODO: Edit Data",
+    "description": "@@TODO: This sample demonstrates how to add features to a feature service",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Feature",
+        "FeatureEditResult"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-addfeaturesfeatureservice.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Feature",
+        "FeatureEditResult"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "AddFeaturesFeatureService.qml"
+    ],
+    "title": "@@TODO: Add features (feature service)"
+}

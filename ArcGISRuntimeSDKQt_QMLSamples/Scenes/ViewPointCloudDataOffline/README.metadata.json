@@ -1,0 +1,22 @@
+{
+    "category": "@@TODO: Scenes",
+    "description": "@@TODO: Display local 3D point cloud data",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        " point cloud",
+        " lidar"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-viewpointclouddataoffline.htm",
+    "relevant_apis": [
+        "PointCloudLayer"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "ViewPointCloudDataOffline.qml"
+    ],
+    "title": "@@TODO: View point cloud data offline"
+}

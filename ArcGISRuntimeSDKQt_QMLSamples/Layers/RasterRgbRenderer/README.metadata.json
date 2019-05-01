@@ -1,0 +1,35 @@
+{
+    "category": "@@TODO: Layers",
+    "description": "@@TODO: This sample demonstrates how to use rgb renderer on a raster layer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "Map",
+        "MapView",
+        "MinMaxStretchParameters",
+        "PercentClipStretchParameters",
+        "Raster",
+        "RasterLayer",
+        "RGBRenderer",
+        "StandardDeviationStretchParameters"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-rgbrenderer.htm",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "MinMaxStretchParameters",
+        "PercentClipStretchParameters",
+        "Raster",
+        "RasterLayer",
+        "RGBRenderer",
+        "StandardDeviationStretchParameters"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "RasterRgbRenderer.qml"
+    ],
+    "title": "@@TODO: RGB renderer"
+}

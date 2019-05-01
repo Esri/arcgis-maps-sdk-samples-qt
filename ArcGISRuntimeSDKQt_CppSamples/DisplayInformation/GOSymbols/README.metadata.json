@@ -1,0 +1,45 @@
+{
+    "category": "@@TODO: Display Information",
+    "description": "@@TODO: This sample demonstrates how to add graphics with symbols to a graphics overlay",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SimpleFillSymbol",
+        "SimpleLineSymbol",
+        "SimpleMarkerSymbol",
+        "TextSymbol",
+        "Point",
+        "PolylineBuilder",
+        "PolygonBuilder",
+        "GraphicsOverlay"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-addgraphicswithsymbols.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SimpleFillSymbol",
+        "SimpleLineSymbol",
+        "SimpleMarkerSymbol",
+        "TextSymbol",
+        "Point",
+        "PolylineBuilder",
+        "PolygonBuilder",
+        "GraphicsOverlay"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "GOSymbols.cpp",
+        "GOSymbols.qml",
+        "GOSymbols.h"
+    ],
+    "title": "@@TODO: Add graphics with symbols"
+}

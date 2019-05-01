@@ -1,0 +1,31 @@
+{
+    "category": "@@TODO: Layers",
+    "description": "@@TODO: This sample demonstrates how to create an ImageServiceRaster and apply a RasterFunction to it",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "Map",
+        "MapQuickView",
+        "ImageServiceRaster",
+        "RasterFunction",
+        "RasterFunctionArguments",
+        "RasterLayer"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-rasterfunctionservice.htm",
+    "relevant_apis": [
+        "Map",
+        "MapQuickView",
+        "ImageServiceRaster",
+        "RasterFunction",
+        "RasterFunctionArguments",
+        "RasterLayer"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "RasterFunctionService.qml"
+    ],
+    "title": "@@TODO: Raster function (service)"
+}

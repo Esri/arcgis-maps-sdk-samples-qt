@@ -1,0 +1,31 @@
+{
+    "category": "@@TODO: Maps",
+    "description": "@@TODO: This sample demonstrates how to create a map with a predefined initial extent",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "Basemap",
+        "ViewpointExtent",
+        "Envelope",
+        "SpatialReference"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-setinitialmaparea.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "ViewpointExtent",
+        "Envelope",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "SetInitialMapArea.qml"
+    ],
+    "title": "@@TODO: Set initial map area"
+}

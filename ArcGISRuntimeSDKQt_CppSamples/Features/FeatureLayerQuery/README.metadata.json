@@ -1,0 +1,37 @@
+{
+    "category": "@@TODO: Features",
+    "description": "@@TODO: This sample demonstrates how to query a feature layer using a feature table",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapQuickView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Viewpoint"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurelayerquery.htm",
+    "relevant_apis": [
+        "MapQuickView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Viewpoint"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "FeatureLayerQuery.h",
+        "FeatureLayerQuery.cpp",
+        "FeatureLayerQuery.qml"
+    ],
+    "title": "@@TODO: Feature layer query"
+}

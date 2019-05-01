@@ -1,0 +1,26 @@
+{
+    "category": "@@TODO: Layers",
+    "description": "@@TODO: Load and display KML files from various sources, including URLs, local files, and Portal items",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "KML",
+        " KMZ",
+        " OGC",
+        " Keyhole"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-displaykml.htm",
+    "relevant_apis": [
+        "KmlLayer",
+        "KmlDataset"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "DisplayKml.h",
+        "DisplayKml.qml",
+        "DisplayKml.cpp"
+    ],
+    "title": "@@TODO: Display KML"
+}

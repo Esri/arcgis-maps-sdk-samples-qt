@@ -1,0 +1,25 @@
+{
+    "category": "@@TODO: Maps",
+    "description": "@@TODO: This sample demonstrates how to open and display a map from a Mobile Map Package",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "MobileMapPackage"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-openmobilemapmappackage.htm",
+    "relevant_apis": [
+        "MapView",
+        "MobileMapPackage"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "OpenMobileMap_MapPackage.qml",
+        "OpenMobileMap_MapPackage.cpp",
+        "OpenMobileMap_MapPackage.h"
+    ],
+    "title": "@@TODO: Open mobile map (map package)"
+}

@@ -1,0 +1,31 @@
+{
+    "category": "@@TODO: Layers",
+    "description": "@@TODO: This sample demonstrates how you can hide or show sublayers of a map image layer by using the ArcGISSublayerListModel",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "Basemap",
+        "ArcGISMapImageLayer",
+        "ArcGISSublayerListModel"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-changesublayervisibility.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "ArcGISMapImageLayer",
+        "ArcGISSublayerListModel"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "ChangeSublayerVisibility.h",
+        "ChangeSublayerVisibility.cpp",
+        "ChangeSublayerVisibility.qml"
+    ],
+    "title": "@@TODO: Change sublayer visibility"
+}

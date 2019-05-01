@@ -1,0 +1,41 @@
+{
+    "category": "@@TODO: Features",
+    "description": "@@TODO: This sample demonstrates how to take a feature service offline by generating a geodatabase",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "Map",
+        "MapView",
+        "ArcGISTiledLayer",
+        "TileCache",
+        "FeatureLayer",
+        "ServiceFeatureTable",
+        "GeodatabaseFeatureTable",
+        "GeodatabaseSyncTask",
+        "GenerateGeodatabaseParameters",
+        "GenerateLayerOption",
+        "GenerateGeodatabaseJob"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-generategeodatabase.htm",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "ArcGISTiledLayer",
+        "TileCache",
+        "FeatureLayer",
+        "ServiceFeatureTable",
+        "GeodatabaseFeatureTable",
+        "GeodatabaseSyncTask",
+        "GenerateGeodatabaseParameters",
+        "GenerateLayerOption",
+        "GenerateGeodatabaseJob"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "GenerateGeodatabase.qml"
+    ],
+    "title": "@@TODO: Generate geodatabase"
+}

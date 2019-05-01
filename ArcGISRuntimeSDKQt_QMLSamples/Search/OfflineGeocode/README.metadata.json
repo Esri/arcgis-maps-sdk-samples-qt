@@ -1,0 +1,45 @@
+{
+    "category": "@@TODO: Search",
+    "description": "@@TODO: This sample demonstrates how to geocode and reverse geocode addresses and locations without network connectivity",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "Map",
+        "MapView",
+        "ArcGISTiledLayer",
+        "TileCache",
+        "GraphicsOverlay",
+        "PictureMarkerSymbol",
+        "Callout",
+        "LocatorTask",
+        "GeocodeParameters",
+        "ReverseGeocodeParameters",
+        "GeocodeResult",
+        "SuggestListModel",
+        "Viewpoint"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-offlinegeocode.htm",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "ArcGISTiledLayer",
+        "TileCache",
+        "GraphicsOverlay",
+        "PictureMarkerSymbol",
+        "Callout",
+        "LocatorTask",
+        "GeocodeParameters",
+        "ReverseGeocodeParameters",
+        "GeocodeResult",
+        "SuggestListModel",
+        "Viewpoint"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "OfflineGeocode.qml"
+    ],
+    "title": "@@TODO: Offline geocode"
+}

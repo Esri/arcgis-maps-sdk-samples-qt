@@ -1,0 +1,27 @@
+{
+    "category": "@@TODO: Layers",
+    "description": "@@TODO: This sample demonstrates how to create an ArcGISMapImageLayer from a URL",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "Basemap",
+        "ArcGISMapImageLayer"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-arcgismapimagelayerurl.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "ArcGISMapImageLayer"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "ArcGISMapImageLayerUrl.qml"
+    ],
+    "title": "@@TODO: ArcGIS map image layer (URL)"
+}

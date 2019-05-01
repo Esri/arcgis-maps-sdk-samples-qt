@@ -1,0 +1,25 @@
+{
+    "category": "@@TODO: Geometry",
+    "description": "@@TODO: This sample demonstrates how to perform geodesic operations on geometries using the GeometryEngine",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "GeometryEngine",
+        " densify",
+        " distance",
+        " geodetic",
+        " geodesic"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-geodesicoperations.htm",
+    "relevant_apis": [
+        "GeometryEngine::densifyGeodetic",
+        "GeometryEngine::lengthGeodetic"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "GeodesicOperations.qml"
+    ],
+    "title": "@@TODO: Geodesic operations"
+}

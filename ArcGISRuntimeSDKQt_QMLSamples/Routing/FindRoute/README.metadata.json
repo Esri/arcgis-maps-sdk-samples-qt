@@ -1,0 +1,47 @@
+{
+    "category": "@@TODO: Routing",
+    "description": "@@TODO: This sample demonstrates how to get a route between two locations",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "Basemap",
+        "GraphicsOverlay",
+        "Graphic",
+        "Point",
+        "PictureMarkerSymbol",
+        "SimpleLineSymbol",
+        "SimpleRenderer",
+        "RouteTask",
+        "RouteParameters",
+        "Stop",
+        "RouteResult",
+        "DirectionManeuverListModel"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-findaroute.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "GraphicsOverlay",
+        "Graphic",
+        "Point",
+        "PictureMarkerSymbol",
+        "SimpleLineSymbol",
+        "SimpleRenderer",
+        "RouteTask",
+        "RouteParameters",
+        "Stop",
+        "RouteResult",
+        "DirectionManeuverListModel"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "FindRoute.qml"
+    ],
+    "title": "@@TODO: Find a route"
+}

@@ -1,0 +1,27 @@
+{
+    "category": "@@TODO: Scenes",
+    "description": "@@TODO: Opens and displays a scene from a Mobile Scene Package (",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Offline",
+        " Scene",
+        " MobileScenePackage"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-openmobilescenepackage.htm",
+    "relevant_apis": [
+        "MobileScenePackage",
+        "Scene",
+        "SceneView"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "OpenMobileScenePackage.cpp",
+        "OpenMobileScenePackage.h",
+        "main.qml",
+        "OpenMobileScenePackage.qml"
+    ],
+    "title": "@@TODO: Open mobile scene package"
+}

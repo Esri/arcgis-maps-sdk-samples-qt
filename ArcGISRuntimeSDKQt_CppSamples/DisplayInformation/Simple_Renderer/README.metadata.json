@@ -1,0 +1,39 @@
+{
+    "category": "@@TODO: Display Information",
+    "description": "@@TODO: This sample demonstrates how to create a SimpleRenderer and add it to a GraphicsOverlay",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "MapView",
+        "Map",
+        "GraphicsOverlay",
+        "Graphic",
+        "SimpleMarkerSymbol",
+        "SimpleRenderer",
+        "Point",
+        "Viewpoint",
+        "SpatialReference"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-simplerenderer.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "GraphicsOverlay",
+        "Graphic",
+        "SimpleMarkerSymbol",
+        "SimpleRenderer",
+        "Point",
+        "Viewpoint",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "Simple_Renderer.qml",
+        "Simple_Renderer.cpp",
+        "Simple_Renderer.h"
+    ],
+    "title": "@@TODO: Simple renderer"
+}

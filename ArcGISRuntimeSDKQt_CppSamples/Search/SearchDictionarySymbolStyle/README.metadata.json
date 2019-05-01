@@ -1,0 +1,25 @@
+{
+    "category": "@@TODO: Search",
+    "description": "@@TODO: This sample demonstrates how to search a DictionarySymbolStyle and return the results in a ListView",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "DictionarySymbolStyle",
+        "SymbolStyleSearchParameters"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-searchdictionarysymbolstyle.htm",
+    "relevant_apis": [
+        "DictionarySymbolStyle",
+        "SymbolStyleSearchParameters"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "SearchDictionarySymbolStyle.h",
+        "SearchDictionarySymbolStyle.cpp",
+        "SearchDictionarySymbolStyle.qml"
+    ],
+    "title": "@@TODO: Search dictionary symbol style"
+}

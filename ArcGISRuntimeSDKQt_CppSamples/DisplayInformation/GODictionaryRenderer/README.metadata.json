@@ -1,0 +1,53 @@
+{
+    "category": "@@TODO: Display Information",
+    "description": "@@TODO: This sample demonstrates applying a dictionary renderer to graphics, in order to display military symbology without the need for a feature table",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "Basemap",
+        "DictionaryRenderer",
+        "Envelope",
+        "Geometry",
+        "GeometryEngine",
+        "Graphic",
+        "GraphicListModel",
+        "GraphicsOverlay",
+        "Map",
+        "MapQuickView",
+        "MultipartBuilder",
+        "Point",
+        "PolygonBuilder",
+        "PolylineBuilder",
+        "SpatialReference",
+        "DictionarySymbolStyle"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-graphicsoverlaydictionaryrenderer.htm",
+    "relevant_apis": [
+        "Basemap",
+        "DictionaryRenderer",
+        "Envelope",
+        "Geometry",
+        "GeometryEngine",
+        "Graphic",
+        "GraphicListModel",
+        "GraphicsOverlay",
+        "Map",
+        "MapQuickView",
+        "MultipartBuilder",
+        "Point",
+        "PolygonBuilder",
+        "PolylineBuilder",
+        "SpatialReference",
+        "DictionarySymbolStyle"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "GODictionaryRenderer.qml",
+        "GODictionaryRenderer.cpp",
+        "GODictionaryRenderer.h"
+    ],
+    "title": "@@TODO: Graphics overlay (dictionary renderer)"
+}

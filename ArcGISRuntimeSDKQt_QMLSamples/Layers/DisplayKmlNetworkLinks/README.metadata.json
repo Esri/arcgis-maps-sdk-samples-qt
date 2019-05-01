@@ -1,0 +1,29 @@
+{
+    "category": "@@TODO: Layers",
+    "description": "@@TODO: KML files can reference other KML files on the network and support automatically refreshing content",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "KML",
+        " KMZ",
+        " OGC",
+        " Keyhole",
+        " Network Link",
+        " Network Link Control"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-displaykmlnetworklinks.htm",
+    "relevant_apis": [
+        "KmlDataset(Url)",
+        "KmlLayer(KmlDataset)",
+        "KmlNetworkLink",
+        "kmlNetworkLinkMessageReceived"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "MessageButton.qml",
+        "DisplayKmlNetworkLinks.qml"
+    ],
+    "title": "@@TODO: Display KML network links"
+}

@@ -1,0 +1,33 @@
+{
+    "category": "@@TODO: Scenes",
+    "description": "@@TODO: This sample demonstrates how to display a scene service with a scene layer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "SceneView",
+        "Scene",
+        "Basemap",
+        "Surface",
+        "ArcGISSceneLayer",
+        "Camera"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-displayascenelayer.htm",
+    "relevant_apis": [
+        "SceneView",
+        "Scene",
+        "Basemap",
+        "Surface",
+        "ArcGISSceneLayer",
+        "Camera"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "DisplaySceneLayer.cpp",
+        "DisplaySceneLayer.h",
+        "DisplaySceneLayer.qml"
+    ],
+    "title": "@@TODO: Display a scene layer"
+}

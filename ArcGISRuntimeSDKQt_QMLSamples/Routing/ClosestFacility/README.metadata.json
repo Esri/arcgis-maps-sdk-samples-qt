@@ -1,0 +1,29 @@
+{
+    "category": "@@TODO: Routing",
+    "description": "@@TODO: This sample demonstrates how to solve a Closest Facility Task to find the closest route between a facility (hospital) and an incident (black cross)",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "ClosestFacilityTask",
+        "ClosestFacilityParameters",
+        "ClosestFacilityResult",
+        "Facility",
+        "Incident"
+    ],
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-closestfacility.htm",
+    "relevant_apis": [
+        "ClosestFacilityTask",
+        "ClosestFacilityParameters",
+        "ClosestFacilityResult",
+        "Facility",
+        "Incident"
+    ],
+    "snippets": [
+        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
+        "ClosestFacility.qml"
+    ],
+    "title": "@@TODO: Closest facility"
+}
