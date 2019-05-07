@@ -12,7 +12,7 @@
         "LocalServer",
         "LocalServerStatus"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-localserverfeaturelayer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-localserverfeaturelayer.htm",
     "relevant_apis": [
         "Feature Layer",
         "LocalFeatureService",

@@ -14,7 +14,7 @@
         "SimpleFillSymbol",
         "PolygonBuilder"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-identifygraphics.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-identifygraphics.htm",
     "relevant_apis": [
         "MapView",
         "Map",

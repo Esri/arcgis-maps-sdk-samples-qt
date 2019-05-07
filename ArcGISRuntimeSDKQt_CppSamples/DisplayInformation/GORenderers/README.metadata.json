@@ -16,7 +16,7 @@
         "PolylineBuilder",
         "PolygonBuilder"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-addgraphicswithrenderer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-addgraphicswithrenderer.htm",
     "relevant_apis": [
         "MapView",
         "Map",

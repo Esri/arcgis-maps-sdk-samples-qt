@@ -8,9 +8,10 @@
     "keywords": [
         "3D",
         " integrated mesh",
-        " layers"
+        " layers",
+        "IntegratedMeshLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-addanintegratedmeshlayer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-addanintegratedmeshlayer.htm",
     "relevant_apis": [
         "IntegratedMeshLayer"
     ],

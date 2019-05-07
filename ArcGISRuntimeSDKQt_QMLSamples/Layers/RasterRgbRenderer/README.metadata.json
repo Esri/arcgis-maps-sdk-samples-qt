@@ -16,7 +16,7 @@
         "RGBRenderer",
         "StandardDeviationStretchParameters"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-rgbrenderer.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-rgbrenderer.htm",
     "relevant_apis": [
         "Map",
         "MapView",

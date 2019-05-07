@@ -11,9 +11,11 @@
         " scale",
         " minScale",
         " maxScale",
-        " zoom"
+        " zoom",
+        "Map.minScale",
+        "Map.maxScale"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-minmaxscale.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-minmaxscale.htm",
     "relevant_apis": [
         "Map.minScale",
         "Map.maxScale"

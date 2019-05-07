@@ -24,7 +24,7 @@
         "SpatialReference",
         "DictionarySymbolStyle"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-graphicsoverlaydictionaryrenderer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-graphicsoverlaydictionaryrenderer.htm",
     "relevant_apis": [
         "Basemap",
         "DictionaryRenderer",

@@ -14,7 +14,7 @@
         "Raster",
         "RasterLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-colormaprenderer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-colormaprenderer.htm",
     "relevant_apis": [
         "Map",
         "Basemap",

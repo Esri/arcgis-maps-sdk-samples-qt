@@ -22,7 +22,7 @@
         "GenerateLayerOption",
         "SyncLayerOption"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-editandsyncfeatures.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-editandsyncfeatures.htm",
     "relevant_apis": [
         "MapView",
         "Map",

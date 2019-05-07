@@ -8,9 +8,14 @@
     "keywords": [
         "Geometry",
         " Clip",
-        " GeometryEngine"
+        " GeometryEngine",
+        "GeometryEngine::clip",
+        "GraphicsOverlay",
+        "Graphic",
+        "Geometry",
+        "Envelope"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-clipgeometry.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-clipgeometry.htm",
     "relevant_apis": [
         "GeometryEngine::clip",
         "GraphicsOverlay",

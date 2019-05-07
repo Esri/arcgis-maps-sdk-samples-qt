@@ -11,7 +11,7 @@
         "Map",
         "LocationDisplay"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-displaydevicelocation.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-displaydevicelocation.htm",
     "relevant_apis": [
         "MapView",
         "Map",

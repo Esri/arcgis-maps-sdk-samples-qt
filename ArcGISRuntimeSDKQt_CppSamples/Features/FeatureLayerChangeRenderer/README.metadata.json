@@ -18,7 +18,7 @@
         "SimpleLineSymbol",
         "SimpleRenderer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurelayerchangerenderer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayerchangerenderer.htm",
     "relevant_apis": [
         "MapView",
         "Map",

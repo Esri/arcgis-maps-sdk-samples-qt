@@ -13,7 +13,7 @@
         "ServiceFeatureTable",
         "FeatureLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-featurelayerfeatureservice.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-featurelayerfeatureservice.htm",
     "relevant_apis": [
         "MapView",
         "Map",

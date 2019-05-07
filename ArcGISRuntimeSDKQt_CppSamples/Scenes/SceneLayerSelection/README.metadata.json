@@ -12,7 +12,7 @@
         "SceneView::identifyLayer",
         "IdentifyLayerResult"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-scenelayerselection.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-scenelayerselection.htm",
     "relevant_apis": [
         "ArcGISSceneLayer",
         "ArcGISSceneLayer::selectFeature",

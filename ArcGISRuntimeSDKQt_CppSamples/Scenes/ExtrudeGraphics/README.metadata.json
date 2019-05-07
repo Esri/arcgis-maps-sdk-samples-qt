@@ -13,7 +13,7 @@
         "Renderer",
         "Renderer->SceneProperties"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-extrudegraphics.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-extrudegraphics.htm",
     "relevant_apis": [
         "ArcGISScene",
         "Graphic",

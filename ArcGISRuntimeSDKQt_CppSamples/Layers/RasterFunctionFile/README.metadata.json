@@ -12,7 +12,7 @@
         "Raster",
         "Map"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-rasterfunctionfile.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-rasterfunctionfile.htm",
     "relevant_apis": [
         "RasterFunction",
         "RasterLayer",

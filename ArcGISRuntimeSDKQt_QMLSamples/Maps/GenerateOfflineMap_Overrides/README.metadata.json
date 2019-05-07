@@ -6,9 +6,16 @@
         "screenshot.png"
     ],
     "keywords": [
-        "Offline"
+        "Offline",
+        "OfflineMapTask",
+        "GenerateGeodatabaseParameters",
+        "GenerateOfflineMapParameters",
+        "GenerateOfflineMapParameterOverrides",
+        "GenerateOfflineMapJob",
+        "GenerateOfflineMapResult",
+        "ExportTileCacheParameters"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-generateofflinemapoverrides.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-generateofflinemapoverrides.htm",
     "relevant_apis": [
         "OfflineMapTask",
         "GenerateGeodatabaseParameters",

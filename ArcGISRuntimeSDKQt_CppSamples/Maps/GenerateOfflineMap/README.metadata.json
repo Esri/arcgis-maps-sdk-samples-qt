@@ -20,7 +20,7 @@
         "Portal",
         "GeometryEngine"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-generateofflinemap.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-generateofflinemap.htm",
     "relevant_apis": [
         "Map",
         "OfflineMapTask",

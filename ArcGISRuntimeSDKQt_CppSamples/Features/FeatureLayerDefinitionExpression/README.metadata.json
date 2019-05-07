@@ -16,7 +16,7 @@
         "FeatureLayer",
         "Point"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurelayerdefinitionexpression.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayerdefinitionexpression.htm",
     "relevant_apis": [
         "MapView",
         "Map",

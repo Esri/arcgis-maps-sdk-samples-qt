@@ -12,7 +12,7 @@
         "LocalServer",
         "LocalServerStatus"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-localservermapimagelayer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-localservermapimagelayer.htm",
     "relevant_apis": [
         "ArcGISMapImageLayer",
         "LocalMapService",

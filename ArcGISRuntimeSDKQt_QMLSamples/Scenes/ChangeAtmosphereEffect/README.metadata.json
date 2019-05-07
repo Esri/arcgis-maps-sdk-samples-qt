@@ -8,9 +8,12 @@
     "keywords": [
         "3D",
         " AtmosphereEffect",
-        " Scene"
+        " Scene",
+        "Scene",
+        "AtmosphereEffect",
+        "SceneView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-changeatmosphereeffect.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-changeatmosphereeffect.htm",
     "relevant_apis": [
         "Scene",
         "AtmosphereEffect",

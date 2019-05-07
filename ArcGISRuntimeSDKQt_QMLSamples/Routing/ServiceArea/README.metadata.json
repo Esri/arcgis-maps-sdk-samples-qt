@@ -18,7 +18,7 @@
         "ServiceAreaTask",
         "PolylineBuilder"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-servicearea.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-servicearea.htm",
     "relevant_apis": [
         "Map",
         "GraphicsOverlay",

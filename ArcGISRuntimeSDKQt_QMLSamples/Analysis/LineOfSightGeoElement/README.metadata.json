@@ -8,9 +8,12 @@
     "keywords": [
         "Analysis",
         " line of sight",
-        " visibility"
+        " visibility",
+        "AnalysisOverlay",
+        "GeoElementLineOfSight",
+        "LineOfSight.targetVisibility"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-lineofsightgeoelement.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-lineofsightgeoelement.htm",
     "relevant_apis": [
         "AnalysisOverlay",
         "GeoElementLineOfSight",

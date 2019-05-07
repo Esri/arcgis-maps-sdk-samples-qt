@@ -19,7 +19,7 @@
         "FeatureEditResult",
         "FeatureQueryResult"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-deletefeaturesfeatureservice.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-deletefeaturesfeatureservice.htm",
     "relevant_apis": [
         "MapView",
         "Map",

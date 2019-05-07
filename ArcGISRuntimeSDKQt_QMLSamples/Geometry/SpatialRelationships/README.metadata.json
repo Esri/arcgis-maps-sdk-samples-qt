@@ -8,9 +8,16 @@
     "keywords": [
         "Geometry Engine",
         " Spatial Analysis",
-        " Spatial Relationships"
+        " Spatial Relationships",
+        "GeometryEngine.intersects",
+        "GeometryEngine.touches",
+        "GeometryEngine.disjoint",
+        "GeometryEngine.crosses",
+        "GeometryEngine.within",
+        "GeometryEngine.overlaps",
+        "GeometryEngine.contains"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-spatialrelationships.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-spatialrelationships.htm",
     "relevant_apis": [
         "GeometryEngine.intersects",
         "GeometryEngine.touches",

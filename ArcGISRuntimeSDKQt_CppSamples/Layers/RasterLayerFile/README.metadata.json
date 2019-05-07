@@ -13,7 +13,7 @@
         "Map",
         "MapQuickView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-rasterlayerfile.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-rasterlayerfile.htm",
     "relevant_apis": [
         "Raster",
         "RasterLayer",

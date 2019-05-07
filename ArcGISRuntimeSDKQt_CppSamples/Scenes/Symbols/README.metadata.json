@@ -12,7 +12,7 @@
         "GraphicsOverlay",
         "SimpleMarkerSceneSymbol"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-scenesymbols.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-scenesymbols.htm",
     "relevant_apis": [
         "SceneView",
         "Graphic",

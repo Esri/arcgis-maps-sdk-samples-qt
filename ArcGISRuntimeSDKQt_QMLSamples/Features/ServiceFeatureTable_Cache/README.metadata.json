@@ -14,7 +14,7 @@
         "FeatureLayer",
         "Enums"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-servicefeaturetablecache.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-servicefeaturetablecache.htm",
     "relevant_apis": [
         "MapView",
         "Map",

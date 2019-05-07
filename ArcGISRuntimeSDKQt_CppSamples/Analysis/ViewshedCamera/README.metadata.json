@@ -17,7 +17,7 @@
         "ArcGISTiledElevationSource",
         "Camera"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-viewshedcamera.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-viewshedcamera.htm",
     "relevant_apis": [
         "LocationViewshed",
         "AnalysisOverlay",

@@ -15,7 +15,7 @@
         "ExportTileCacheJob",
         "ExportTiledCacheParameters"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-exporttiles.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-exporttiles.htm",
     "relevant_apis": [
         "Map",
         "MapView",

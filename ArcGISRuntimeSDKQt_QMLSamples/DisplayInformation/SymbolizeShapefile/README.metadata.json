@@ -14,7 +14,7 @@
         "SimpleLineSymbol",
         "Map"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-symbolizeashapefile.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-symbolizeashapefile.htm",
     "relevant_apis": [
         "ShapefileFeatureTable",
         "FeatureLayer",

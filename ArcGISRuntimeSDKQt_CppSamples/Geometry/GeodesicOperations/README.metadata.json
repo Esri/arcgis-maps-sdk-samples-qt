@@ -10,9 +10,11 @@
         " densify",
         " distance",
         " geodetic",
-        " geodesic"
+        " geodesic",
+        "GeometryEngine::densifyGeodetic",
+        "GeometryEngine::lengthGeodetic"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-geodesicoperations.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-geodesicoperations.htm",
     "relevant_apis": [
         "GeometryEngine::densifyGeodetic",
         "GeometryEngine::lengthGeodetic"

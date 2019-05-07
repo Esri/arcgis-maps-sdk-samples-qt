@@ -6,9 +6,11 @@
         "screenshot.png"
     ],
     "keywords": [
-        "Labels"
+        "Labels",
+        "LabelDefinition",
+        "FeatureLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-showlabelsonlayers.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-showlabelsonlayers.htm",
     "relevant_apis": [
         "LabelDefinition",
         "FeatureLayer"

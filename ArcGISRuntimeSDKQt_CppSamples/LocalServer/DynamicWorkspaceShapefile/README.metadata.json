@@ -16,7 +16,7 @@
         "ArcGISMapImageLayer",
         "Map"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-dynamicworkspaceshapefile.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-dynamicworkspaceshapefile.htm",
     "relevant_apis": [
         "LocalServer",
         "DynamicWorkspace",

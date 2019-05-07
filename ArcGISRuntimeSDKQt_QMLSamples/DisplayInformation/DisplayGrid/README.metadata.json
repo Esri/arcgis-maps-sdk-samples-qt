@@ -21,7 +21,7 @@
         "TextSymbol",
         "SimpleLineSymbol"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-displayagrid.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-displayagrid.htm",
     "relevant_apis": [
         "Map",
         "MapView",

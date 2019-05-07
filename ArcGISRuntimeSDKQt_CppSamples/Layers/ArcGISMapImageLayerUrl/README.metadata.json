@@ -12,7 +12,7 @@
         "Basemap",
         "ArcGISMapImageLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-arcgismapimagelayerurl.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-arcgismapimagelayerurl.htm",
     "relevant_apis": [
         "MapView",
         "Map",

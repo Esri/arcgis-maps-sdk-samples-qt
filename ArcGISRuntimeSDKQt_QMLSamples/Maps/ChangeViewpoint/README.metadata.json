@@ -11,7 +11,7 @@
         "ViewpointExtent",
         "EnvelopeBuilder"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-changeviewpoint.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-changeviewpoint.htm",
     "relevant_apis": [
         "Map",
         "ViewpointExtent",

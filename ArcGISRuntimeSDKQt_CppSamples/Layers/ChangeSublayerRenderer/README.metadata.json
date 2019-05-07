@@ -8,9 +8,13 @@
     "keywords": [
         "Sublayer renderer",
         " renderer",
-        " dynamic layer"
+        " dynamic layer",
+        "ArcGISMapImageSublayer",
+        "ClassBreaksRenderer",
+        "ClassBreak",
+        "ArcGISMapImageSublayer::renderer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-changesublayerrenderer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-changesublayerrenderer.htm",
     "relevant_apis": [
         "ArcGISMapImageSublayer",
         "ClassBreaksRenderer",

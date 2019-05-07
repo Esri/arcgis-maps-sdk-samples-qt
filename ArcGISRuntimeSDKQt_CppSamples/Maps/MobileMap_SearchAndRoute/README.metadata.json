@@ -25,7 +25,7 @@
         "SimpleRenderer",
         "Callout"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-mobilemapsearchandroute.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-mobilemapsearchandroute.htm",
     "relevant_apis": [
         "Map",
         "MapView",

@@ -11,7 +11,7 @@
         "Point",
         "Graphic"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-formatcoordinates.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-formatcoordinates.htm",
     "relevant_apis": [
         "CoordinateFormatter",
         "Point",

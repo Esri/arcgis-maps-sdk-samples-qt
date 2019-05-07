@@ -14,7 +14,7 @@
         "RasterFunctionArguments",
         "RasterLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-rasterfunctionservice.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-rasterfunctionservice.htm",
     "relevant_apis": [
         "Map",
         "MapQuickView",

@@ -23,7 +23,7 @@
         "MapView",
         "Map"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-findaplace.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-findaplace.htm",
     "relevant_apis": [
         "LocatorTask",
         "GeocodeParameters",

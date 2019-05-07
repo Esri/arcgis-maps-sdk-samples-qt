@@ -12,7 +12,7 @@
         "RasterLayer",
         "Map"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-rasterlayergeopackage.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-rasterlayergeopackage.htm",
     "relevant_apis": [
         "GeoPackage",
         "GeoPackageRaster",

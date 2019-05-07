@@ -14,7 +14,7 @@
         "ArcGISSceneLayer",
         "Camera"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-displayascenelayer.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-displayascenelayer.htm",
     "relevant_apis": [
         "SceneView",
         "Scene",

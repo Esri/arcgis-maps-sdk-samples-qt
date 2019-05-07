@@ -23,7 +23,7 @@
         "Map",
         "Basemap"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-viewshedgeoprocessing.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-viewshedgeoprocessing.htm",
     "relevant_apis": [
         "GeoprocessingTask",
         "GeoprocessingParameters",

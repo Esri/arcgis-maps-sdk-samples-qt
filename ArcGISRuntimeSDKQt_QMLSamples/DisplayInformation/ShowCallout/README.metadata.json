@@ -13,7 +13,7 @@
         "Viewpoint",
         "SpatialReference"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-showcallout.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-showcallout.htm",
     "relevant_apis": [
         "Map",
         "MapView",

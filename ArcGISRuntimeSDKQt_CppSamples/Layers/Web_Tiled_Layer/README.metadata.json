@@ -12,7 +12,7 @@
         "Map",
         "MapView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-webtiledlayer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-webtiledlayer.htm",
     "relevant_apis": [
         "WebTiledLayer",
         "Basemap",

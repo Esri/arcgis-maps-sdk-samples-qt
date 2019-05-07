@@ -9,9 +9,14 @@
         "maps",
         " scenes",
         " viewpoints",
-        " synchronization"
+        " synchronization",
+        "GeoView",
+        "GeoView::viewpointChanged",
+        "GeoView::isNavigating",
+        "GeoView::currentViewpoint",
+        "GeoView::setViewpoint"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-syncmapandsceneviews.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-syncmapandsceneviews.htm",
     "relevant_apis": [
         "GeoView",
         "GeoView::viewpointChanged",

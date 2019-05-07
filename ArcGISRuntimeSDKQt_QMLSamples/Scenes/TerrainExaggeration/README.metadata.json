@@ -9,9 +9,11 @@
         "Scenes",
         " 3D",
         " elevation",
-        " exaggeration"
+        " exaggeration",
+        "Surface",
+        "Surface.elevationExaggeration"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-terrainexaggeration.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-terrainexaggeration.htm",
     "relevant_apis": [
         "Surface",
         "Surface.elevationExaggeration"

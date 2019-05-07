@@ -10,7 +10,7 @@
         "ShapefileFeatureTable",
         "FeatureLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurelayershapefile.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayershapefile.htm",
     "relevant_apis": [
         "ShapefileFeatureTable",
         "FeatureLayer"

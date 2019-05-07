@@ -13,7 +13,7 @@
         "PortalItemListModel",
         "PortalItem"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-searchforwebmapbykeyword.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-searchforwebmapbykeyword.htm",
     "relevant_apis": [
         "Portal",
         "PortalQueryParametersForItems",

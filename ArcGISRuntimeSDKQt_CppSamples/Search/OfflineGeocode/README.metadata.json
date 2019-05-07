@@ -21,7 +21,7 @@
         "PictureMarkerSymbol",
         "Viewpoint"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-offlinegeocode.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-offlinegeocode.htm",
     "relevant_apis": [
         "Map",
         "MapView",

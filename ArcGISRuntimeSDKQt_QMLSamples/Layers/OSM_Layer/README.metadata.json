@@ -12,7 +12,7 @@
         "Map",
         "MapView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-openstreetmaplayer.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-openstreetmaplayer.htm",
     "relevant_apis": [
         "OpenStreetMapLayer",
         "BasemapOpenStreetMap",

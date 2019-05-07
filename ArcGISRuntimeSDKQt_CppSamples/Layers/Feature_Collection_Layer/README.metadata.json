@@ -17,7 +17,7 @@
         "SimpleLineSymbol",
         "SimpleFillSymbol"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurecollectionlayer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurecollectionlayer.htm",
     "relevant_apis": [
         "FeatureCollection",
         "FeatureCollectionLayer",

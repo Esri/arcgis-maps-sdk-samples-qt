@@ -11,9 +11,11 @@
         " scale",
         " setMinScale",
         " setMaxScale",
-        " zoom"
+        " zoom",
+        "Map::setMinScale",
+        "Map::setMaxScale"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-minmaxscale.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-minmaxscale.htm",
     "relevant_apis": [
         "Map::setMinScale",
         "Map::setMaxScale"

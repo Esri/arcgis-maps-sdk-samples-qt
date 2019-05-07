@@ -18,7 +18,7 @@
         "SimpleRenderer",
         "OrbitGeoElementCameraController."
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-viewshedgeoelement.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-viewshedgeoelement.htm",
     "relevant_apis": [
         "GeoElementViewshed",
         "AnalysisOverlay",

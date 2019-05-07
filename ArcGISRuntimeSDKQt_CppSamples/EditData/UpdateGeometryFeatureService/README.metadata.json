@@ -19,7 +19,7 @@
         "FeatureEditResult",
         "FeatureQueryResult"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-updategeometryfeatureservice.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-updategeometryfeatureservice.htm",
     "relevant_apis": [
         "MapView",
         "Map",

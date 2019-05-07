@@ -16,7 +16,7 @@
         "FeatureLayer",
         "GeometryEngine"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurelayerdictionaryrenderer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayerdictionaryrenderer.htm",
     "relevant_apis": [
         "MapView",
         "Map",

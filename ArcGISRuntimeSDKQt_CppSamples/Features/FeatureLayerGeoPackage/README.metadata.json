@@ -12,7 +12,7 @@
         "FeatureLayer",
         "Map"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurelayergeopackage.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayergeopackage.htm",
     "relevant_apis": [
         "GeoPackage",
         "GeoPackageFeatureTable",

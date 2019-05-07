@@ -14,7 +14,7 @@
         "FeatureLayer",
         "QueryParameters"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-servicefeaturetablemanualcache.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-servicefeaturetablemanualcache.htm",
     "relevant_apis": [
         "MapView",
         "Map",

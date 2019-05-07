@@ -14,7 +14,7 @@
         "Map",
         "Viewpoint"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-featurelayerrenderingmodemap.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-featurelayerrenderingmodemap.htm",
     "relevant_apis": [
         "FeatureLayer",
         "LoadSettings",

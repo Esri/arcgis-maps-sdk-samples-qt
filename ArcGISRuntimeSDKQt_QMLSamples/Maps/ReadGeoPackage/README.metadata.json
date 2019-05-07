@@ -7,9 +7,10 @@
     ],
     "keywords": [
         "GeoPackage",
-        " Maps"
+        " Maps",
+        "GeoPackage"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-readgeopackage.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-readgeopackage.htm",
     "relevant_apis": [
         "GeoPackage"
     ],

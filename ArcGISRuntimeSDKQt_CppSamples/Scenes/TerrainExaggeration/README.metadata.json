@@ -9,9 +9,11 @@
         "Scenes",
         " 3D",
         " elevation",
-        " exaggeration"
+        " exaggeration",
+        "Surface",
+        "Surface::setElevationExaggeration"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-terrainexaggeration.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-terrainexaggeration.htm",
     "relevant_apis": [
         "Surface",
         "Surface::setElevationExaggeration"

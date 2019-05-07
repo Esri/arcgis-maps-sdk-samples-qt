@@ -8,9 +8,11 @@
     "keywords": [
         "Scenes",
         " Web Scene",
-        " Portal"
+        " Portal",
+        "Scene",
+        "PortalItem"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-openasceneportalitem.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-openasceneportalitem.htm",
     "relevant_apis": [
         "Scene",
         "PortalItem"

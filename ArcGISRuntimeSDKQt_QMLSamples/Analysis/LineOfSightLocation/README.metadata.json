@@ -13,7 +13,7 @@
         "Surface",
         "ArcGISTiledElevationSource"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-lineofsightlocation.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-lineofsightlocation.htm",
     "relevant_apis": [
         "AnalysisOverlay",
         "LocationLineOfSight",

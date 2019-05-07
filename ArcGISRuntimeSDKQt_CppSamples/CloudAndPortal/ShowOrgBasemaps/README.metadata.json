@@ -14,7 +14,7 @@
         "Map",
         "MapView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-showorganizationbasemaps.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-showorganizationbasemaps.htm",
     "relevant_apis": [
         "Portal",
         "Credential",

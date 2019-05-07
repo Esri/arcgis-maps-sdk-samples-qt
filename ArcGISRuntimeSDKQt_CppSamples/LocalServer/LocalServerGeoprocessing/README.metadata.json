@@ -17,7 +17,7 @@
         "LocalServer",
         "LocalServerStatus"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-localservergeoprocessing.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-localservergeoprocessing.htm",
     "relevant_apis": [
         "GeoprocessingDouble",
         "GeoprocessingJob",
