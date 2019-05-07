@@ -8,9 +8,11 @@
     "keywords": [
         "geometry",
         " cut",
-        " split"
+        " split",
+        "GeometryEngine",
+        "GeometryEngine::cut"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-cutgeometry.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-cutgeometry.htm",
     "relevant_apis": [
         "GeometryEngine",
         "GeometryEngine::cut"

@@ -9,9 +9,15 @@
         "Query",
         " Sublayer",
         " MapServer",
-        " Table"
+        " Table",
+        "ServiceFeatureTable",
+        "ArcGISMapImageLayer",
+        "ArcGISMapImageLayer::loadTablesAndLayers",
+        "ArcGISMapImageSublayer",
+        "ArcGISMapImageSublayer::table",
+        "QueryParameters"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-querymapimagesublayer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-querymapimagesublayer.htm",
     "relevant_apis": [
         "ServiceFeatureTable",
         "ArcGISMapImageLayer",

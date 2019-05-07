@@ -8,8 +8,7 @@
     "keywords": [
         "Analysis",
         "3D",
-        "AnalysisOverlay",
-        "LocationDistanceMeasurement"
+        "measurement"
     ],
     "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-distancemeasurementanalysis.htm",
     "relevant_apis": [

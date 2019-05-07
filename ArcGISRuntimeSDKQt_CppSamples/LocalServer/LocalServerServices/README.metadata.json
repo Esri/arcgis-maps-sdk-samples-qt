@@ -14,7 +14,7 @@
         "LocalServerStatus",
         "LocalService"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-localserverservices.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-localserverservices.htm",
     "relevant_apis": [
         "LocalFeatureService",
         "LocalGeoprocessingService",

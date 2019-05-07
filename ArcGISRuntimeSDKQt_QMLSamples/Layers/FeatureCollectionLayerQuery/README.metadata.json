@@ -14,7 +14,7 @@
         "MapQuickView",
         "ServiceFeatureTable"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-featurecollectionlayerquery.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-featurecollectionlayerquery.htm",
     "relevant_apis": [
         "FeatureCollection",
         "FeatureCollectionLayer",

@@ -14,7 +14,7 @@
         "MapView",
         "Map"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-findaddress.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-findaddress.htm",
     "relevant_apis": [
         "LocatorTask",
         "GeocodeParameters",

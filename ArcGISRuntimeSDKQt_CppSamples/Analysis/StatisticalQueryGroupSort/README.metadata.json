@@ -15,7 +15,7 @@
         "StatisticDefinition",
         "OrderBy"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-statisticalquerygroupsort.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-statisticalquerygroupsort.htm",
     "relevant_apis": [
         "ServiceFeatureTable",
         "StatisticQueryParameters",

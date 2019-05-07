@@ -8,9 +8,12 @@
     "keywords": [
         "3D",
         " AtmosphereEffect",
-        " Scene"
+        " Scene",
+        "Scene",
+        "AtmosphereEffect",
+        "SceneQuickView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-changeatmosphereeffect.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-changeatmosphereeffect.htm",
     "relevant_apis": [
         "Scene",
         "AtmosphereEffect",

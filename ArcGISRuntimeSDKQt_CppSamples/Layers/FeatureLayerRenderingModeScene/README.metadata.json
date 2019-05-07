@@ -14,7 +14,7 @@
         "Scene",
         "Camera"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurelayerrenderingmodescene.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayerrenderingmodescene.htm",
     "relevant_apis": [
         "FeatureLayer",
         "LoadSettings",

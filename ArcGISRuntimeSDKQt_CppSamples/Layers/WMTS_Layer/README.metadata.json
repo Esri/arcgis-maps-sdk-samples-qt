@@ -15,7 +15,7 @@
         "Map",
         "MapView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-wmtslayer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-wmtslayer.htm",
     "relevant_apis": [
         "WmtsLayer",
         "WmtsLayerInfo",

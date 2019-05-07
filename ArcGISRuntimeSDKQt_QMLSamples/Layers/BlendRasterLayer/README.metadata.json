@@ -13,7 +13,7 @@
         "RasterLayer",
         "BlendRenderer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-blendrasterlayer.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-blendrasterlayer.htm",
     "relevant_apis": [
         "Map",
         "MapQuickView",

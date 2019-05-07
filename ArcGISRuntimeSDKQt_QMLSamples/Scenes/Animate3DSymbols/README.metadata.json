@@ -24,7 +24,7 @@
         "SceneView",
         "Viewpoint"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-animate3dsymbols.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-animate3dsymbols.htm",
     "relevant_apis": [
         "Map",
         "Scene",

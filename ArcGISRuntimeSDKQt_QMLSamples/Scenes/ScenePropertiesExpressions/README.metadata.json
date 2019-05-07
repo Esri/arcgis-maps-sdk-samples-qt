@@ -12,9 +12,12 @@
         " Attributes",
         " rotation",
         " heading",
-        " pitch"
+        " pitch",
+        "SimpleRenderer",
+        "GraphicsOverlay",
+        "RendererSceneProperties"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-scenepropertiesexpressions.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-scenepropertiesexpressions.htm",
     "relevant_apis": [
         "SimpleRenderer",
         "GraphicsOverlay",

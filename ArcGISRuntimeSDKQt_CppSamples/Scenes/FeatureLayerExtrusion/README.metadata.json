@@ -12,7 +12,7 @@
         "Renderer",
         "SceneProperties"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurelayerextrusion.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayerextrusion.htm",
     "relevant_apis": [
         "FeatureLayer",
         "ExtrusionMode",

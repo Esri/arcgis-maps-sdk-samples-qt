@@ -9,9 +9,11 @@
         "KML",
         " KMZ",
         " OGC",
-        " Keyhole"
+        " Keyhole",
+        "KmlLayer",
+        "KmlDataset"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-displaykml.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-displaykml.htm",
     "relevant_apis": [
         "KmlLayer",
         "KmlDataset"

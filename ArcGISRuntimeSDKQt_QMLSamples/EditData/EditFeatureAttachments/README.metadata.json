@@ -20,7 +20,7 @@
         "FeatureQueryResult",
         "AttachmentListModel"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-editfeatureattachments.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-editfeatureattachments.htm",
     "relevant_apis": [
         "MapView",
         "Map",

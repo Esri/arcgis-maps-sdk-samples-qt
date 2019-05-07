@@ -21,7 +21,7 @@
         "SuggestListModel",
         "Viewpoint"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-offlinegeocode.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-offlinegeocode.htm",
     "relevant_apis": [
         "Map",
         "MapView",

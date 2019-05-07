@@ -8,9 +8,12 @@
     "keywords": [
         "Time",
         " Time Extent",
-        " Query"
+        " Query",
+        "TimeExtent",
+        "QueryParameters",
+        "ServiceFeatureTable::populateFromService"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-timebasedquery.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-timebasedquery.htm",
     "relevant_apis": [
         "TimeExtent",
         "QueryParameters",

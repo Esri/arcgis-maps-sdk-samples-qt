@@ -8,9 +8,10 @@
     "keywords": [
         "screenshot",
         " screen capture",
-        " export"
+        " export",
+        "GeoView::exportImage"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-takescreenshot.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-takescreenshot.htm",
     "relevant_apis": [
         "GeoView::exportImage"
     ],

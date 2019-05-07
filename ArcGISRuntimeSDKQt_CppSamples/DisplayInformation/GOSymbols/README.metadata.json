@@ -20,7 +20,7 @@
         "PolygonBuilder",
         "GraphicsOverlay"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-addgraphicswithsymbols.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-addgraphicswithsymbols.htm",
     "relevant_apis": [
         "MapView",
         "Map",

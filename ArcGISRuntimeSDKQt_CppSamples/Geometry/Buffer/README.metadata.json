@@ -8,9 +8,12 @@
     "keywords": [
         "Analysis",
         " Buffer",
-        " GeometryEngine"
+        " GeometryEngine",
+        "GeometryEngine::buffer",
+        "GeometryEngine::bufferGeodetic",
+        "GraphicsOverlay"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-buffer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-buffer.htm",
     "relevant_apis": [
         "GeometryEngine::buffer",
         "GeometryEngine::bufferGeodetic",

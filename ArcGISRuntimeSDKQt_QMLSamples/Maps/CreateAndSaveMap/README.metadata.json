@@ -9,9 +9,12 @@
         "Author Map",
         " Save Map",
         " Web Map",
-        " Create Map"
+        " Create Map",
+        "Map",
+        "Portal",
+        "Map::saveAs()"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-createandsavemap.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-createandsavemap.htm",
     "relevant_apis": [
         "Map",
         "Portal",

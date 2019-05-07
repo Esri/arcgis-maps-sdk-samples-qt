@@ -8,9 +8,10 @@
     "keywords": [
         "3D",
         " point cloud",
-        " lidar"
+        " lidar",
+        "PointCloudLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-viewpointclouddataoffline.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-viewpointclouddataoffline.htm",
     "relevant_apis": [
         "PointCloudLayer"
     ],

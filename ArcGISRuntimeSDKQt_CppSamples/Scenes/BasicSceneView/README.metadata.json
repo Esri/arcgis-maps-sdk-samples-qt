@@ -12,7 +12,7 @@
         "Basemap",
         "Surface"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-displayascene.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-displayascene.htm",
     "relevant_apis": [
         "SceneView",
         "Scene",

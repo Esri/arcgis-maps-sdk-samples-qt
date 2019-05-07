@@ -9,9 +9,15 @@
         "camera controller",
         " Camera",
         " SceneView",
-        " 3D"
+        " 3D",
+        "ArcGISScene",
+        "Camera",
+        "GlobeCameraController",
+        "OrbitGeoElementCameraController",
+        "OrbitLocationCameraController",
+        "SceneView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-choosecameracontroller.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-choosecameracontroller.htm",
     "relevant_apis": [
         "ArcGISScene",
         "Camera",

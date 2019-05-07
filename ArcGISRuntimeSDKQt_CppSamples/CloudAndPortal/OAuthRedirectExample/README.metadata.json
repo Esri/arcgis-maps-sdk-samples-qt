@@ -9,7 +9,7 @@
         "AuthenticationManager",
         "Portal"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-oauthredirectexample.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-oauthredirectexample.htm",
     "relevant_apis": [
         "AuthenticationChallenge",
         "AuthenticationManager",

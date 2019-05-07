@@ -11,9 +11,13 @@
         " OGC",
         " Keyhole",
         " Network Link",
-        " Network Link Control"
+        " Network Link Control",
+        "KmlDataset(Url)",
+        "KmlLayer(KmlDataset)",
+        "KmlNetworkLink",
+        "kmlNetworkLinkMessageReceived"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-displaykmlnetworklinks.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-displaykmlnetworklinks.htm",
     "relevant_apis": [
         "KmlDataset(Url)",
         "KmlLayer(KmlDataset)",

@@ -12,7 +12,7 @@
         "PortalItem",
         "PortalUser"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-additemstoportal.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-additemstoportal.htm",
     "relevant_apis": [
         "AuthenticationView",
         "Portal",

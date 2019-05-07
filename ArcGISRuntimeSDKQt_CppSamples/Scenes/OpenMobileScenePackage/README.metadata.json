@@ -8,9 +8,12 @@
     "keywords": [
         "Offline",
         " Scene",
-        " MobileScenePackage"
+        " MobileScenePackage",
+        "MobileScenePackage",
+        "Scene",
+        "SceneView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-openmobilescenepackage.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-openmobilescenepackage.htm",
     "relevant_apis": [
         "MobileScenePackage",
         "Scene",

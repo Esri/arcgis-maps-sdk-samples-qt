@@ -17,7 +17,7 @@
         "TextSymbol",
         "Point"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-surfaceplacement.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-surfaceplacement.htm",
     "relevant_apis": [
         "SceneView",
         "Scene",

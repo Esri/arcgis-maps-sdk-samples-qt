@@ -20,7 +20,7 @@
         "FeatureQueryResult",
         "Point"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-updateattributesfeatureservice.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-updateattributesfeatureservice.htm",
     "relevant_apis": [
         "MapView",
         "Map",

@@ -12,7 +12,7 @@
         "Basemap",
         "ArcGISVectorTiledLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-vectortiledlayerurl.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-vectortiledlayerurl.htm",
     "relevant_apis": [
         "MapView",
         "Map",

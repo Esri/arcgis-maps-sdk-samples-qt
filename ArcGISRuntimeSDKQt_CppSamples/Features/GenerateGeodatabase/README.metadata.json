@@ -19,7 +19,7 @@
         "GenerateLayerOption",
         "GenerateGeodatabaseJob"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-generategeodatabase.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-generategeodatabase.htm",
     "relevant_apis": [
         "Map",
         "MapView",

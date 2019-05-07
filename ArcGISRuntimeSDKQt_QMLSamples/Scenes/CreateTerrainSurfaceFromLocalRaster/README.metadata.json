@@ -9,9 +9,11 @@
         "3D",
         " Raster",
         " Elevation",
-        " Surface"
+        " Surface",
+        "RasterElevationSource",
+        "Surface"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-createterrainsurfacefromalocalraster.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-createterrainsurfacefromalocalraster.htm",
     "relevant_apis": [
         "RasterElevationSource",
         "Surface"

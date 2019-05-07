@@ -11,7 +11,7 @@
         "Map",
         "MapView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-wmslayerurl.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-wmslayerurl.htm",
     "relevant_apis": [
         "WmsLayer",
         "Map",

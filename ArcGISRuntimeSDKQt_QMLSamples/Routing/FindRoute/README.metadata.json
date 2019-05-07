@@ -22,7 +22,7 @@
         "RouteResult",
         "DirectionManeuverListModel"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-findaroute.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-findaroute.htm",
     "relevant_apis": [
         "MapView",
         "Map",

@@ -8,9 +8,14 @@
     "keywords": [
         "Densify",
         " Generalize",
-        " Geometry"
+        " Geometry",
+        "GeometryEngine::densify",
+        "GeometryEngine::generalize",
+        "PointCollection",
+        "Multipoint",
+        "Polyline"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-densifyandgeneralize.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-densifyandgeneralize.htm",
     "relevant_apis": [
         "GeometryEngine::densify",
         "GeometryEngine::generalize",

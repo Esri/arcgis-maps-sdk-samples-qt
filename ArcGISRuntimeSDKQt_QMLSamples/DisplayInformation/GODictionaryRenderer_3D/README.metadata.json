@@ -18,7 +18,7 @@
         "Graphic",
         "GeometryEngine"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-graphicsoverlaydictionaryrenderer3d.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-graphicsoverlaydictionaryrenderer3d.htm",
     "relevant_apis": [
         "SceneView",
         "Scene",

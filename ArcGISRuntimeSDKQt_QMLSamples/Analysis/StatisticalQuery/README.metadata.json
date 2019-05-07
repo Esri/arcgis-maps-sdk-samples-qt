@@ -15,7 +15,7 @@
         "ServiceFeatureTable",
         "FeatureLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-statisticalquery.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-statisticalquery.htm",
     "relevant_apis": [
         "StatisticsQueryParameters",
         "StatisticDefinition",

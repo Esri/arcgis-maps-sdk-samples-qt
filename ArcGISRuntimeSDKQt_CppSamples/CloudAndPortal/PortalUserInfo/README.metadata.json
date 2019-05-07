@@ -14,7 +14,7 @@
         "AuthenticationView",
         "AuthenticationManager"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-portaluserinfo.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-portaluserinfo.htm",
     "relevant_apis": [
         "Portal",
         "Credential",

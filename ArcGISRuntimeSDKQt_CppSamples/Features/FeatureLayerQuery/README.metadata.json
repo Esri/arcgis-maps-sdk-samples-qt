@@ -16,7 +16,7 @@
         "FeatureLayer",
         "Viewpoint"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-featurelayerquery.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayerquery.htm",
     "relevant_apis": [
         "MapQuickView",
         "Map",

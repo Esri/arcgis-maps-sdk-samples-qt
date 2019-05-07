@@ -13,7 +13,7 @@
         "Facility",
         "Incident"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-closestfacility.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-closestfacility.htm",
     "relevant_apis": [
         "ClosestFacilityTask",
         "ClosestFacilityParameters",

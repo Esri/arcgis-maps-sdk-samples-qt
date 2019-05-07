@@ -13,7 +13,7 @@
         "RenderingRule",
         "RasterLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-rasterrenderingrule.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-rasterrenderingrule.htm",
     "relevant_apis": [
         "Map",
         "ImageServiceRaster",

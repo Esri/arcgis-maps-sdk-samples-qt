@@ -13,7 +13,7 @@
         "RasterLayer",
         "StretchRenderer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-stretchrenderer.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-stretchrenderer.htm",
     "relevant_apis": [
         "Map",
         "MapView",

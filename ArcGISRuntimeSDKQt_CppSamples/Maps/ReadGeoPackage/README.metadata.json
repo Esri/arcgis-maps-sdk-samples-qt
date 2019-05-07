@@ -7,9 +7,10 @@
     ],
     "keywords": [
         "GeoPackage",
-        " Maps"
+        " Maps",
+        "Esri::ArcGISRuntime::GeoPackage"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-readgeopackage.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-readgeopackage.htm",
     "relevant_apis": [
         "Esri::ArcGISRuntime::GeoPackage"
     ],

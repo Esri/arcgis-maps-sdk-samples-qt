@@ -10,9 +10,17 @@
         " Point",
         " Line",
         " Polygon",
-        " Vector"
+        " Vector",
+        "Point",
+        "Multipoint",
+        "Polyline",
+        "Polygon",
+        "Envelope",
+        "PolygonBuilder",
+        "PolylineBuilder",
+        "MultipointBuilder"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-creategeometries.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-creategeometries.htm",
     "relevant_apis": [
         "Point",
         "Multipoint",

@@ -9,9 +9,12 @@
         "Project",
         " Spatial Reference",
         " Projection",
-        " Coordinate System"
+        " Coordinate System",
+        "GeometryEngine",
+        "Point",
+        "SpatialReference"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-project.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-project.htm",
     "relevant_apis": [
         "GeometryEngine",
         "Point",

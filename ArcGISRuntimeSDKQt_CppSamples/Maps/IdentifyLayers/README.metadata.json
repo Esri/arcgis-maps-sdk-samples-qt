@@ -14,7 +14,7 @@
         "ServiceFeatureTable",
         "FeatureLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-identifylayers.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-identifylayers.htm",
     "relevant_apis": [
         "MapView",
         "IdentifyLayerResult",

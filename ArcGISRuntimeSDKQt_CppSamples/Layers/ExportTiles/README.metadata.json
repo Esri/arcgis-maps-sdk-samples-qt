@@ -15,7 +15,7 @@
         "ExportTileCacheJob",
         "ExportTiledCacheParameters"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-exporttiles.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-exporttiles.htm",
     "relevant_apis": [
         "Map",
         "MapView",

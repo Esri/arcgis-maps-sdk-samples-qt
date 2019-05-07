@@ -7,9 +7,13 @@
     ],
     "keywords": [
         "MapViews",
-        " SceneViews and UI"
+        " SceneViews and UI",
+        "ArcGISTiledElevationSource",
+        "BaseSurface",
+        "ElevationSourceListModel",
+        "SceneView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-getelevationatpoint.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-getelevationatpoint.htm",
     "relevant_apis": [
         "ArcGISTiledElevationSource",
         "BaseSurface",

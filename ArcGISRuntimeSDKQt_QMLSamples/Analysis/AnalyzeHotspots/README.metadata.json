@@ -15,7 +15,7 @@
         "ArcGISMapImageLayer",
         "Map"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-analyzehotspots.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-analyzehotspots.htm",
     "relevant_apis": [
         "GeoprocessingTask",
         "GeoprocessingJob",

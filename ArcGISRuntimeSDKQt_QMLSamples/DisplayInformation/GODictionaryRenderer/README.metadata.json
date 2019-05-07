@@ -20,7 +20,7 @@
         "Graphic",
         "GeometryEngine"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-graphicsoverlaydictionaryrenderer.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-graphicsoverlaydictionaryrenderer.htm",
     "relevant_apis": [
         "MapView",
         "Map",

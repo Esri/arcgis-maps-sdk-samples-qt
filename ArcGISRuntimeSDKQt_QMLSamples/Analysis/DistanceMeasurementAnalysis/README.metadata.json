@@ -7,9 +7,11 @@
     ],
     "keywords": [
         "Analysis",
-        " 3D"
+        " 3D",
+        "AnalysisOverlay",
+        "LocationDistanceMeasurement"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-distancemeasurementanalysis.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-distancemeasurementanalysis.htm",
     "relevant_apis": [
         "AnalysisOverlay",
         "LocationDistanceMeasurement"

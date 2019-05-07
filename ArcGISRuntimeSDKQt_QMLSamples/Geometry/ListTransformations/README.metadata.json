@@ -13,7 +13,7 @@
         "GeographicTransformationStep",
         "GeometryEngine"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-listtransformationsbysuitability.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-listtransformationsbysuitability.htm",
     "relevant_apis": [
         "TransformationCatalog",
         "DatumTransformation",

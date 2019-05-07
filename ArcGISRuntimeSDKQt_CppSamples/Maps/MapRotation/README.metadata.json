@@ -13,7 +13,7 @@
         "Point",
         "SpatialReference"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-maprotation.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-maprotation.htm",
     "relevant_apis": [
         "MapView",
         "Map",

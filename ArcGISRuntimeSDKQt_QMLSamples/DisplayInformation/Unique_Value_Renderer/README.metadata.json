@@ -20,7 +20,7 @@
         "Envelope",
         "SpatialReference"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-qt-uniquevaluerenderer.htm",
+    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-uniquevaluerenderer.htm",
     "relevant_apis": [
         "Map",
         "MapView",

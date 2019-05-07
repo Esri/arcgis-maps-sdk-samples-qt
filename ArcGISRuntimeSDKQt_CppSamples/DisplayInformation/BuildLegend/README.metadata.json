@@ -17,7 +17,7 @@
         "LegendInfo",
         "LegendInfoListModel"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-buildalegend.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-buildalegend.htm",
     "relevant_apis": [
         "MapView",
         "Map",

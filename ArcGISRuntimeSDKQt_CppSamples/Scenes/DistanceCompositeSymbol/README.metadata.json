@@ -20,7 +20,7 @@
         "SceneView",
         "SimpleMarkerSceneSymbol"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-distancecompositesymbol.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-distancecompositesymbol.htm",
     "relevant_apis": [
         "Scene",
         "ArcGISTiledElevationSource",

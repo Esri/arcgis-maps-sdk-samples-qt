@@ -9,9 +9,18 @@
         "Geometry Engine",
         " Spatial Operations",
         " Geometry",
-        " Analysis"
+        " Analysis",
+        "GeometryEngine",
+        "GeometryEngine::union",
+        "GeometryEngine::difference",
+        "GeometryEngine::symmetricDifference",
+        "GeometryEngine::intersection",
+        "Geometry",
+        "Graphic",
+        "GraphicsOverlay",
+        "PolygonBuilder"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-spatialoperations.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-spatialoperations.htm",
     "relevant_apis": [
         "GeometryEngine",
         "GeometryEngine::union",
