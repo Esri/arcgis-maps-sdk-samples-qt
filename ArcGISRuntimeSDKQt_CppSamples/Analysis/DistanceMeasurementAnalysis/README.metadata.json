@@ -1,24 +1,25 @@
 {
-    "category": "@@TODO: Analysis",
-    "description": "@@TODO: This sample demonstrates measuring 3D distances between two points in a scene",
+    "category": "Analysis",
+    "description": "This sample demonstrates measuring 3D distances between two points in a scene",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "Analysis",
-        " 3D"
+        "3D",
+        "AnalysisOverlay",
+        "LocationDistanceMeasurement"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-distancemeasurementanalysis.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-distancemeasurementanalysis.htm",
     "relevant_apis": [
         "AnalysisOverlay",
         "LocationDistanceMeasurement"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "DistanceMeasurementAnalysis.qml",
         "DistanceMeasurementAnalysis.cpp",
         "DistanceMeasurementAnalysis.h"
     ],
-    "title": "@@TODO: Distance measurement analysis"
+    "title": "Distance measurement analysis"
 }

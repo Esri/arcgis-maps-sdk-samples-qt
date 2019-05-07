@@ -6,14 +6,13 @@
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "AnalysisOverlay",
+                    "AnalysisOverlay",
         "LocationLineOfSight",
         "SceneView",
         "Surface",
         "ArcGISTiledElevationSource"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-lineofsightlocation.htm",
+    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-lineofsightlocation.htm",
     "relevant_apis": [
         "AnalysisOverlay",
         "LocationLineOfSight",

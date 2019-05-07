@@ -1,6 +1,6 @@
 {
-    "category": "@@TODO: Analysis",
-    "description": "@@TODO: Show a line of sight between two moving objects",
+    "category": "Analysis",
+    "description": "Show a line of sight between two moving objects",
     "ignore": false,
     "images": [
         "screenshot.png"
@@ -10,18 +10,16 @@
         " line of sight",
         " visibility"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-qt-lineofsightgeoelement.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-lineofsightgeoelement.htm",
     "relevant_apis": [
         "AnalysisOverlay",
         "GeoElementLineOfSight",
         "LineOfSight::targetVisibility"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "LineOfSightGeoElement.cpp",
         "LineOfSightGeoElement.h",
-        "main.qml",
         "LineOfSightGeoElement.qml"
     ],
-    "title": "@@TODO: Line of sight (geoelement)"
+    "title": "Line of sight (geoelement)"
 }
