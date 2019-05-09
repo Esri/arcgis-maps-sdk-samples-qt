@@ -1,12 +1,12 @@
 {
-    "category": "@@TODO: Analysis",
-    "description": "@@TODO: This sample demonstrates how to calculate a Viewshed from a GeoElement",
+    "category": "Analysis",
+    "description": "This sample demonstrates how to calculate a Viewshed from a GeoElement",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "viewshed",
         "GeoElementViewshed",
         "AnalysisOverlay",
         "ArcGISSceneLayer",
@@ -18,7 +18,7 @@
         "SimpleRenderer",
         "OrbitGeoElementCameraController."
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-viewshedgeoelement.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-viewshedgeoelement.htm",
     "relevant_apis": [
         "GeoElementViewshed",
         "AnalysisOverlay",
@@ -32,10 +32,9 @@
         "OrbitGeoElementCameraController."
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ViewshedGeoElement.cpp",
         "ViewshedGeoElement.h",
         "ViewshedGeoElement.qml"
     ],
-    "title": "@@TODO: Viewshed (GeoElement)"
+    "title": "Viewshed (geoelement)"
 }

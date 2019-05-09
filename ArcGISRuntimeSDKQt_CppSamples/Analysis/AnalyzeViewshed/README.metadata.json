@@ -6,6 +6,9 @@
         "screenshot.png"
     ],
     "keywords": [
+        "geoprocessing",
+        "viewshed",
+        "visibility",
         "GeoprocessingTask",
         "GeoprocessingParameters",
         "GeoprocessingJob",
@@ -45,5 +48,5 @@
         "AnalyzeViewshed.h",
         "AnalyzeViewshed.qml"
     ],
-    "title": "Viewshed (Geoprocessing)"
+    "title": "Viewshed (geoprocessing)"
 }

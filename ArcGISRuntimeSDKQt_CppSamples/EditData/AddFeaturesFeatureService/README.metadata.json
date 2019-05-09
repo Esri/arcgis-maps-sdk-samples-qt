@@ -1,12 +1,15 @@
 {
-    "category": "@@TODO: Edit Data",
-    "description": "@@TODO: This sample demonstrates how to add features to a feature service",
+    "category": "Edit data",
+    "description": "This sample demonstrates how to add features to a feature service",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "create feature",
+        "feature table",
+        "edit feature",
+        "feature service",
         "MapView",
         "Map",
         "Basemap",
@@ -17,7 +20,7 @@
         "Feature",
         "FeatureEditResult"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-addfeaturesfeatureservice.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-addfeaturesfeatureservice.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -30,10 +33,9 @@
         "FeatureEditResult"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "AddFeaturesFeatureService.qml",
         "AddFeaturesFeatureService.h",
         "AddFeaturesFeatureService.cpp"
     ],
-    "title": "@@TODO: Add features (feature service)"
+    "title": "Add features (feature service)"
 }

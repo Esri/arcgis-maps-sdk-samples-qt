@@ -1,12 +1,12 @@
 {
-    "category": "@@TODO: Display Information",
-    "description": "@@TODO: This sample demonstrates how to build a legend for all the operational layers in the map",
+    "category": "Display information",
+    "description": "This sample demonstrates how to build a legend for all the operational layers in the map",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "legend",
         "MapView",
         "Map",
         "Basemap",
@@ -17,7 +17,7 @@
         "LegendInfo",
         "LegendInfoListModel"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-buildalegend.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-buildlegend.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -30,10 +30,9 @@
         "LegendInfoListModel"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "BuildLegend.qml",
         "BuildLegend.cpp",
         "BuildLegend.h"
     ],
-    "title": "@@TODO: Build a legend"
+    "title": "Build a legend"
 }

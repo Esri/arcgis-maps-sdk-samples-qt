@@ -1,12 +1,11 @@
 {
-    "category": "@@TODO: Display Information",
-    "description": "@@TODO: This sample demonstrates how to add graphics and set a renderer on graphic overlays",
+    "category": "Display information",
+    "description": "This sample demonstrates how to add graphics and set a renderer on graphic overlays",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "MapView",
         "Map",
         "Basemap",
@@ -16,7 +15,7 @@
         "PolylineBuilder",
         "PolygonBuilder"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-addgraphicswithrenderer.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-gorenderers.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -28,10 +27,9 @@
         "PolygonBuilder"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "GORenderers.cpp",
         "GORenderers.h",
         "GORenderers.qml"
     ],
-    "title": "@@TODO: Add graphics with renderer"
+    "title": "Add graphics with renderer"
 }

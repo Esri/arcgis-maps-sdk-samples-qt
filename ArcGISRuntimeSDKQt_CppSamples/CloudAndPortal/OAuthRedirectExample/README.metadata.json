@@ -1,22 +1,26 @@
 {
-    "category": "@@TODO: Cloud And Portal",
-    "description": "@@TODO: This sample demonstrates an approach to using OAuth2 for authenticating with an ArcGIS portal",
+    "category": "Cloud and portal",
+    "description": "This sample demonstrates an approach to using OAuth2 for authenticating with an ArcGIS portal",
     "ignore": false,
     "images": [],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "authentication",
+        "login",
+        "security",
+        "password",
+        "authorization",
+        "credential",
         "AuthenticationChallenge",
         "AuthenticationManager",
         "Portal"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-oauthredirectexample.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-oauthredirectexample.htm",
     "relevant_apis": [
         "AuthenticationChallenge",
         "AuthenticationManager",
         "Portal"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "OAuthRedirectExample.qml",
         "OAuthRedirectExample.h",
         "MyApplication.h",
@@ -25,5 +29,5 @@
         "MyApplication.cpp",
         "OAuthRedirectExample.cpp"
     ],
-    "title": "@@TODO: OAuth Redirect Example"
+    "title": "OAuth redirect example"
 }

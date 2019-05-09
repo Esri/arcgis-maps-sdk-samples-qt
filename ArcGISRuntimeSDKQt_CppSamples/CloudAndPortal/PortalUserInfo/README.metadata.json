@@ -1,12 +1,13 @@
 {
-    "category": "@@TODO: Cloud And Portal",
-    "description": "@@TODO: This sample demonstrates how to retrieve a user\u2019s details via a Portal",
+    "category": "Cloud and portal",
+    "description": "This sample demonstrates how to retrieve a user's details via a Portal",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "portal user",
+        "user details",
         "Portal",
         "Credential",
         "PortalUser",
@@ -14,7 +15,7 @@
         "AuthenticationView",
         "AuthenticationManager"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-portaluserinfo.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-portaluserinfo.htm",
     "relevant_apis": [
         "Portal",
         "Credential",
@@ -24,10 +25,9 @@
         "AuthenticationManager"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "PortalUserInfo.h",
         "PortalUserInfo.cpp",
         "PortalUserInfo.qml"
     ],
-    "title": "@@TODO: Portal user info"
+    "title": "Portal user info"
 }

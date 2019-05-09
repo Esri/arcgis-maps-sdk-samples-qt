@@ -12,8 +12,7 @@
     "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-lineofsightgeoelement.htm",
     "relevant_apis": [
         "AnalysisOverlay",
-        "GeoElementLineOfSight",
-        "LineOfSight::targetVisibility"
+        "GeoElementLineOfSight"
     ],
     "snippets": [
         "LineOfSightGeoElement.cpp",

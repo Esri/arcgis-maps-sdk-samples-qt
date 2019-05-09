@@ -1,12 +1,11 @@
 {
-    "category": "@@TODO: Edit Data",
-    "description": "@@TODO: The sample demonstrates how to update geometry of a feature in a feature service",
+    "category": "Edit data",
+    "description": "The sample demonstrates how to update geometry of a feature in a feature service",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "MapView",
         "Map",
         "Basemap",
@@ -19,7 +18,7 @@
         "FeatureEditResult",
         "FeatureQueryResult"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-updategeometryfeatureservice.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-updategeometryfeatureservice.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -34,10 +33,9 @@
         "FeatureQueryResult"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "UpdateGeometryFeatureService.h",
         "UpdateGeometryFeatureService.qml",
         "UpdateGeometryFeatureService.cpp"
     ],
-    "title": "@@TODO: Update geometry (feature service)"
+    "title": "Update geometry (feature service)"
 }

@@ -1,12 +1,14 @@
 {
-    "category": "@@TODO: Edit Data",
-    "description": "@@TODO: This sample demonstrates how to edit attributes of a feature in a feature service",
+    "category": "Edit data",
+    "description": "This sample demonstrates how to edit attributes of a feature in a feature service",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "edit feature attributes",
+        "attributes",
+        "edit features",
         "MapView",
         "Map",
         "Basemap",
@@ -20,7 +22,7 @@
         "FeatureQueryResult",
         "Point"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-updateattributesfeatureservice.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-updateattributesfeatureservice.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -36,10 +38,9 @@
         "Point"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "UpdateAttributesFeatureService.cpp",
         "UpdateAttributesFeatureService.qml",
         "UpdateAttributesFeatureService.h"
     ],
-    "title": "@@TODO: Update attributes (feature service)"
+    "title": "Update attributes (feature service)"
 }

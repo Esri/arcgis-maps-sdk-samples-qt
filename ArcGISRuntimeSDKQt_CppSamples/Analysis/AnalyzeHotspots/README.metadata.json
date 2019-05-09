@@ -6,6 +6,8 @@
         "screenshot.png"
     ],
     "keywords": [
+        "geoprocessing",
+        "hotspot analysis",
         "GeoprocessingTask",
         "GeoprocessingJob",
         "GeoprocessingParameters",
