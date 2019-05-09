@@ -1,12 +1,11 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: This sample demonstrates the differences between static and dynamic rendering mode for a FeatureLayer in a 3D Scene",
+    "category": "Layers",
+    "description": "This sample demonstrates the differences between static and dynamic rendering mode for a FeatureLayer in a 3D Scene",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "FeatureLayer",
         "LoadSettings",
         "ServiceFeatureTable",
@@ -14,7 +13,7 @@
         "Scene",
         "Camera"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayerrenderingmodescene.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-featurelayerrenderingmodescene.htm",
     "relevant_apis": [
         "FeatureLayer",
         "LoadSettings",
@@ -24,10 +23,9 @@
         "Camera"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "FeatureLayerRenderingModeScene.qml",
         "FeatureLayerRenderingModeScene.h",
         "FeatureLayerRenderingModeScene.cpp"
     ],
-    "title": "@@TODO: Feature layer rendering mode (scene)"
+    "title": "Feature layer rendering mode (scene)"
 }

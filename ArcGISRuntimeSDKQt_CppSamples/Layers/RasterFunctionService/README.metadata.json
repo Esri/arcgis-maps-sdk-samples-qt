@@ -1,12 +1,11 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: This sample demonstrates how to create an ImageServiceRaster and apply a RasterFunction to it",
+    "category": "Layers",
+    "description": "This sample demonstrates how to create an ImageServiceRaster and apply a RasterFunction to it",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "Map",
         "MapQuickView",
         "ImageServiceRaster",
@@ -14,7 +13,7 @@
         "RasterFunctionArguments",
         "RasterLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-rasterfunctionservice.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-rasterfunctionservice.htm",
     "relevant_apis": [
         "Map",
         "MapQuickView",
@@ -24,7 +23,6 @@
         "RasterLayer"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "RasterFunctionService.h",
         "RasterFunctionService.cpp",
         "RasterFunctionService.qml"

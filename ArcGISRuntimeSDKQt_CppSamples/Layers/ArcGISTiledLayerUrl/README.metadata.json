@@ -1,18 +1,17 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: This sample demonstrates how to display a tiled map service",
+    "category": "Layers",
+    "description": "This sample demonstrates how to display a tiled map service",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "MapView",
         "Map",
         "Basemap",
         "ArcGISTiledLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-arcgistiledlayerurl.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-arcgistiledlayerurl.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -20,10 +19,9 @@
         "ArcGISTiledLayer"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ArcGISTiledLayerUrl.qml",
         "ArcGISTiledLayerUrl.h",
         "ArcGISTiledLayerUrl.cpp"
     ],
-    "title": "@@TODO: ArcGIS tiled layer (URL)"
+    "title": "ArcGIS tiled layer (URL)"
 }

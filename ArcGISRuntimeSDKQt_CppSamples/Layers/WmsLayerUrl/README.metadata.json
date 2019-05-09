@@ -1,12 +1,11 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: This sample demonstrates how to display a WMS Layer from an online URL",
+    "category": "Layers",
+    "description": "This sample demonstrates how to display a WMS Layer from an online URL",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "WmsLayer",
         "Map",
         "MapView"
@@ -18,10 +17,9 @@
         "MapView"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "WmsLayerUrl.cpp",
         "WmsLayerUrl.h",
         "WmsLayerUrl.qml"
     ],
-    "title": "@@TODO: WMS layer (URL)"
+    "title": "WMS layer (URL)"
 }

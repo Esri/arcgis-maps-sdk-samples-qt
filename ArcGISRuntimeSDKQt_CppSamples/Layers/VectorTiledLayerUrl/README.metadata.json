@@ -1,18 +1,15 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: This sample demonstrates how to use a vector tiled layer from an ArcGIS Online service as a basemap",
+    "category": "Layers",
+    "description": "This sample demonstrates how to use a vector tiled layer from an ArcGIS Online service as a basemap",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "MapView",
-        "Map",
-        "Basemap",
-        "ArcGISVectorTiledLayer"
+        "vector tiled layer",
+        "vector tile layer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-vectortiledlayerurl.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-vectortiledlayerurl.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -20,10 +17,9 @@
         "ArcGISVectorTiledLayer"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "VectorTiledLayerUrl.qml",
         "VectorTiledLayerUrl.cpp",
         "VectorTiledLayerUrl.h"
     ],
-    "title": "@@TODO: Vector tiled layer (URL)"
+    "title": "Vector tiled layer (URL)"
 }

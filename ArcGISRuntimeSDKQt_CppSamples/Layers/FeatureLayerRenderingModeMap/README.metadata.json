@@ -1,12 +1,11 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: This sample demonstrates the differences between static and dynamic rendering mode for a FeatureLayer in a Map",
+    "category": "Layers",
+    "description": "This sample demonstrates the differences between static and dynamic rendering mode for a FeatureLayer in a Map",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "FeatureLayer",
         "LoadSettings",
         "ServiceFeatureTable",
@@ -14,7 +13,7 @@
         "Map",
         "Viewpoint"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayerrenderingmodemap.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-featurelayerrenderingmodemap.htm",
     "relevant_apis": [
         "FeatureLayer",
         "LoadSettings",
@@ -24,10 +23,9 @@
         "Viewpoint"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "FeatureLayerRenderingModeMap.h",
         "FeatureLayerRenderingModeMap.cpp",
         "FeatureLayerRenderingModeMap.qml"
     ],
-    "title": "@@TODO: Feature layer rendering mode (map)"
+    "title": "Feature layer rendering mode (map)"
 }

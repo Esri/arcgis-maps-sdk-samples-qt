@@ -1,18 +1,14 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: This sample demonstrates how to display a map image layer",
+    "category": "Layers",
+    "description": "This sample demonstrates how to display a map image layer",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "MapView",
-        "Map",
-        "Basemap",
-        "ArcGISMapImageLayer"
+        "map image layer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-arcgismapimagelayerurl.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-arcgismapimagelayerurl.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -20,10 +16,9 @@
         "ArcGISMapImageLayer"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ArcGISMapImageLayerUrl.qml",
         "ArcGISMapImageLayerUrl.h",
         "ArcGISMapImageLayerUrl.cpp"
     ],
-    "title": "@@TODO: ArcGIS map image layer (URL)"
+    "title": "ArcGIS map image layer (URL)"
 }
