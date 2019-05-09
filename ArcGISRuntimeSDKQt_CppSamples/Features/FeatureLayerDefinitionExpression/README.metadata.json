@@ -1,12 +1,12 @@
 {
-    "category": "@@TODO: Features",
-    "description": "@@TODO: This sample demonstrates how to limit the features to display on the map using a definition expression",
+    "category": "Features",
+    "description": "This sample demonstrates how to limit the features to display on the map using a definition expression",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "definition expression",
         "MapView",
         "Map",
         "Basemap",
@@ -16,7 +16,7 @@
         "FeatureLayer",
         "Point"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayerdefinitionexpression.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-featurelayerdefinitionexpression.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -28,10 +28,9 @@
         "Point"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "FeatureLayerDefinitionExpression.qml",
         "FeatureLayerDefinitionExpression.cpp",
         "FeatureLayerDefinitionExpression.h"
     ],
-    "title": "@@TODO: Feature layer definition expression"
+    "title": "Feature layer definition expression"
 }

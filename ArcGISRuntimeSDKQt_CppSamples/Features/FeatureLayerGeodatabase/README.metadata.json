@@ -1,19 +1,19 @@
 {
-    "category": "@@TODO: Features",
-    "description": "@@TODO: This sample demonstrates how to consume an Esri mobile geodatabase by using a FeatureLayer and a GeodatabaseFeatureTable",
+    "category": "Features",
+    "description": "This sample demonstrates how to consume an Esri mobile geodatabase by using a FeatureLayer and a GeodatabaseFeatureTable",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "mobile geodatabase",
         "MapView",
         "Map",
         "Basemap",
         "GeodatabaseFeatureTable",
         "FeatureLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-featurelayergeodatabase.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-featurelayergeodatabase.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -22,10 +22,9 @@
         "FeatureLayer"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "FeatureLayerGeodatabase.qml",
         "FeatureLayerGeodatabase.cpp",
         "FeatureLayerGeodatabase.h"
     ],
-    "title": "@@TODO: Feature layer (geodatabase)"
+    "title": "Feature layer (geodatabase)"
 }

@@ -1,19 +1,18 @@
 {
-    "category": "@@TODO: Features",
-    "description": "@@TODO: This sample demonstrates how to use a feature table in on interaction no cache mode",
+    "category": "Features",
+    "description": "This sample demonstrates how to use a feature table in on interaction no cache mode",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "MapView",
         "Map",
         "Basemap",
         "ServiceFeatureTable",
         "FeatureLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-servicefeaturetablenocache.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-servicefeaturetable-nocache.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -22,10 +21,9 @@
         "FeatureLayer"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ServiceFeatureTableNoCache.cpp",
         "ServiceFeatureTableNoCache.qml",
         "ServiceFeatureTableNoCache.h"
     ],
-    "title": "@@TODO: Service feature table (no cache)"
+    "title": "Service feature table (no cache)"
 }
