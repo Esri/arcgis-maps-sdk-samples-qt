@@ -1,16 +1,12 @@
 {
-    "category": "@@TODO: Geometry",
-    "description": "@@TODO: Geometries are the underlying component to nearly any operation in Geographic Information Systems",
+    "category": "Geometry",
+    "description": "This sample demonstrates how to build the various Geometry objects that are supported in ArcGIS Runtime",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "Geometry",
-        " Point",
-        " Line",
-        " Polygon",
-        " Vector",
+        "create geometry",
         "Point",
         "Multipoint",
         "Polyline",
@@ -20,7 +16,7 @@
         "PolylineBuilder",
         "MultipointBuilder"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-creategeometries.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-creategeometries.htm",
     "relevant_apis": [
         "Point",
         "Multipoint",
@@ -32,10 +28,9 @@
         "MultipointBuilder"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "CreateGeometries.cpp",
         "CreateGeometries.h",
         "CreateGeometries.qml"
     ],
-    "title": "@@TODO: Create geometries"
+    "title": "Create geometries"
 }
