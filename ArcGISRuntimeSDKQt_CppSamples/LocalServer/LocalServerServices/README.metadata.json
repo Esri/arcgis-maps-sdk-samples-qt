@@ -1,12 +1,11 @@
 {
-    "category": "@@TODO: Local Server",
-    "description": "@@TODO: Demonstrates how to start and stop the Local Server and start and stop a local map, feature, and geoprocessing service running on the Local Server",
+    "category": "Local Server",
+    "description": "Demonstrates how to start and stop the Local Server and start and stop a local map, feature, and geoprocessing service running on the Local Server",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "LocalFeatureService",
         "LocalGeoprocessingService",
         "LocalMapService",
@@ -14,7 +13,7 @@
         "LocalServerStatus",
         "LocalService"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-localserverservices.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-localserverservices.htm",
     "relevant_apis": [
         "LocalFeatureService",
         "LocalGeoprocessingService",
@@ -24,11 +23,10 @@
         "LocalService"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "LocalServerServices.qml",
         "main.qml",
         "LocalServerServices.cpp",
         "LocalServerServices.h"
     ],
-    "title": "@@TODO: Local server services"
+    "title": "Local server services"
 }

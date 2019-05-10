@@ -1,13 +1,15 @@
 {
-    "category": "@@TODO: Local Server",
-    "description": "@@TODO: This sample demonstrates how to dynamically add a local raster file to a map using the Local Server",
+    "category": "Local Server",
+    "description": "This sample demonstrates how to dynamically add a local raster file to a map using the Local Server",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "LocalServer",
+      "Offline",
+      "Disconnected",
+      "LocalServer",
+      "Image",
         "DynamicWorkspace",
         "LocalMapService",
         "RasterWorkspace",
@@ -16,7 +18,7 @@
         "ArcGISMapImageLayer",
         "Map"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-dynamicworkspaceraster.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-dynamicworkspaceraster.htm",
     "relevant_apis": [
         "LocalServer",
         "DynamicWorkspace",
@@ -27,12 +29,11 @@
         "ArcGISMapImageLayer",
         "Map"
     ],
-    "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
-        "DynamicWorkspaceRaster.h",
-        "DynamicWorkspaceRaster.qml",
-        "main.qml",
-        "DynamicWorkspaceRaster.cpp"
-    ],
-    "title": "@@TODO: Dynamic workspace raster"
+  "snippets": [
+    "DynamicWorkspaceRaster.h",
+    "DynamicWorkspaceRaster.qml",
+    "DynamicWorkspaceRaster.cpp",
+    "main.qml"
+  ],
+    "title": "Dynamic workspace raster"
 }
