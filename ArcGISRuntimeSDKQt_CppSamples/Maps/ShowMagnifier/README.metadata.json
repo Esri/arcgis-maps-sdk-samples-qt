@@ -1,27 +1,25 @@
 {
-    "category": "@@TODO: Maps",
-    "description": "@@TODO: This sample demonstrates how you can tap and hold on a map to get the magnifier",
+    "category": "Maps",
+    "description": "This sample demonstrates how you can tap and hold on a map to get the magnifier",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "MapView",
-        "Map",
-        "Basemap"
+      "Magnify",
+      "Display",
+      "Zoom"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-showmagnifier.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-showmagnifier.htm",
     "relevant_apis": [
         "MapView",
         "Map",
         "Basemap"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ShowMagnifier.cpp",
         "ShowMagnifier.h",
         "ShowMagnifier.qml"
     ],
-    "title": "@@TODO: Show magnifier"
+    "title": "Show magnifier"
 }
