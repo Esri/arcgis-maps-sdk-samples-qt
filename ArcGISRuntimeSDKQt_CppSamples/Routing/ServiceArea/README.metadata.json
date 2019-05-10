@@ -1,24 +1,22 @@
 {
-    "category": "@@TODO: Routing",
-    "description": "@@TODO: Demonstrates how to find services areas around a point using the ServiceAreaTask",
+    "category": "Routing",
+    "description": "Demonstrates how to find services areas around a point using the ServiceAreaTask",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "Map",
-        "GraphicsOverlay",
-        "MapView",
+      "Network Analysis",
+      "Service Area",
+      "Closest Facility",
         "PolylineBarrier",
         "ServiceAreaFacility",
         "ServiceAreaParameters",
         "ServiceAreaPolygon",
         "ServiceAreaResult",
-        "ServiceAreaTask",
-        "PolylineBuilder"
+        "ServiceAreaTask"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-servicearea.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-servicearea.htm",
     "relevant_apis": [
         "Map",
         "GraphicsOverlay",
@@ -32,10 +30,9 @@
         "PolylineBuilder"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ServiceArea.h",
         "ServiceArea.cpp",
         "ServiceArea.qml"
     ],
-    "title": "@@TODO: Service area"
+    "title": "Service area"
 }

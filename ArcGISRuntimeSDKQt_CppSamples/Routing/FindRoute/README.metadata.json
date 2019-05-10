@@ -1,28 +1,22 @@
 {
-    "category": "@@TODO: Routing",
-    "description": "@@TODO: This sample demonstrates how to get a route between two locations",
+    "category": "Routing",
+    "description": "This sample demonstrates how to get a route between two locations",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "MapView",
-        "Map",
-        "Basemap",
-        "GraphicsOverlay",
-        "Graphic",
-        "Point",
-        "PictureMarkerSymbol",
-        "SimpleLineSymbol",
-        "SimpleRenderer",
+      "Network Analysis",
+      "Navigation",
+      "Travel",
+      "Directions",
         "RouteTask",
         "RouteParameters",
         "Stop",
         "RouteResult",
         "DirectionManeuverListModel"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-findroute.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-findroute.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -40,10 +34,9 @@
         "DirectionManeuverListModel"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "FindRoute.qml",
         "FindRoute.h",
         "FindRoute.cpp"
     ],
-    "title": "@@TODO: Find route"
+    "title": "Find route"
 }
