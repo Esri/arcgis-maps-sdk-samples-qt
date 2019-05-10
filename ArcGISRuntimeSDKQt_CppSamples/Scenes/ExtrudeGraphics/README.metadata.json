@@ -1,19 +1,14 @@
 {
-    "category": "@@TODO: Scenes",
-    "description": "@@TODO: This sample demonstrates how to render graphics extruded in the Z direction",
+    "category": "Scenes",
+    "description": "This sample demonstrates how to render graphics extruded in the Z direction",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "ArcGISScene",
-        "Graphic",
-        "GraphicsOverlay",
-        "Renderer",
-        "Renderer->SceneProperties"
+        ""
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-extrudegraphics.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-extrudegraphics.htm",
     "relevant_apis": [
         "ArcGISScene",
         "Graphic",
@@ -22,10 +17,9 @@
         "Renderer->SceneProperties"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ExtrudeGraphics.qml",
         "ExtrudeGraphics.cpp",
         "ExtrudeGraphics.h"
     ],
-    "title": "@@TODO: Extrude graphics"
+    "title": "Extrude graphics"
 }

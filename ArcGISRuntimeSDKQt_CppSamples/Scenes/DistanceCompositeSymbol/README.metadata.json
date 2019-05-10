@@ -1,26 +1,14 @@
 {
-    "category": "@@TODO: Scenes",
-    "description": "@@TODO: This sample demonstrates how to create a graphic using a distance composite scene symbol",
+    "category": "Scenes",
+    "description": "This sample demonstrates how to create a graphic using a distance composite scene symbol",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "Scene",
-        "ArcGISTiledElevationSource",
-        "Camera",
-        "DistanceCompositeSceneSymbol",
-        "DistanceCompositeSceneSymbol.Range",
-        "Graphic",
-        "GraphicsOverlay",
-        "ModelSceneSymbol",
-        "Range",
-        "RangeCollection",
-        "SceneView",
-        "SimpleMarkerSceneSymbol"
+        "distance"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-distancecompositesymbol.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-distancecompositesymbolurl.htm",
     "relevant_apis": [
         "Scene",
         "ArcGISTiledElevationSource",
@@ -36,10 +24,9 @@
         "SimpleMarkerSceneSymbol"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "DistanceCompositeSymbol.qml",
         "DistanceCompositeSymbol.cpp",
         "DistanceCompositeSymbol.h"
     ],
-    "title": "@@TODO: Distance composite symbol"
+    "title": "Distance composite symbol"
 }

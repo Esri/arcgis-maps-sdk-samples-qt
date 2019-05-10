@@ -1,26 +1,24 @@
 {
-    "category": "@@TODO: Scenes",
-    "description": "@@TODO: View an integrated mesh layer from a scene service",
+    "category": "Scenes",
+    "description": "View an integrated mesh layer from a scene service",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "3D",
-        " integrated mesh",
-        " layers",
-        "IntegratedMeshLayer"
+        "integrated mesh",
+        "layer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-addanintegratedmeshlayer.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-addintegratedmeshlayer.htm",
     "relevant_apis": [
         "IntegratedMeshLayer"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "AddIntegratedMeshLayer.cpp",
         "AddIntegratedMeshLayer.h",
         "main.qml",
         "AddIntegratedMeshLayer.qml"
     ],
-    "title": "@@TODO: Add an integrated mesh layer"
+    "title": "Add an integrated mesh layer"
 }
