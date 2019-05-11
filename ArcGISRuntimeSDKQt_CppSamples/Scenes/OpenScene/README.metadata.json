@@ -1,27 +1,25 @@
 {
-    "category": "@@TODO: Scenes",
-    "description": "@@TODO: This sample demonstrates how to open a scene from a Portal item",
+    "category": "Scenes",
+    "description": "This sample demonstrates how to open a scene from a Portal item",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "Scenes",
-        " Web Scene",
-        " Portal",
-        "Scene",
-        "PortalItem"
+        "3D",
+        "web scene",
+        "portal",
+        "portal item"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-openasceneportalitem.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-openscene.htm",
     "relevant_apis": [
         "Scene",
         "PortalItem"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "OpenScene.qml",
         "OpenScene.cpp",
         "OpenScene.h"
     ],
-    "title": "@@TODO: Open a scene (portal item)"
+    "title": "Open a scene (portal item)"
 }

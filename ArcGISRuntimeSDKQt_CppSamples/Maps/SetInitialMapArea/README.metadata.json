@@ -1,20 +1,19 @@
 {
-    "category": "@@TODO: Maps",
-    "description": "@@TODO: This sample demonstrates how to create a map with a predefined initial extent",
+    "category": "Maps",
+    "description": "This sample demonstrates how to create a map with a predefined initial extent",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "MapView",
-        "Map",
+        "Viewpoint",
+        "Area of Interest",
         "Basemap",
         "Viewpoint",
         "Envelope",
         "SpatialReference"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-setinitialmaparea.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-setinitialmaparea.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -24,10 +23,9 @@
         "SpatialReference"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "SetInitialMapArea.qml",
         "SetInitialMapArea.cpp",
         "SetInitialMapArea.h"
     ],
-    "title": "@@TODO: Set initial map area"
+    "title": "Set initial map area"
 }

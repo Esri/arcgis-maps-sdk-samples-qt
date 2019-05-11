@@ -1,18 +1,17 @@
 {
-    "category": "@@TODO: Scenes",
-    "description": "@@TODO: This sample demonstrates how to display a scene with an elevation surface",
+    "category": "Scenes",
+    "description": "This sample demonstrates how to display a scene with an elevation surface",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "SceneView",
         "Scene",
         "Basemap",
         "Surface"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-displayascene.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-basicsceneviewurl.htm",
     "relevant_apis": [
         "SceneView",
         "Scene",
@@ -20,10 +19,9 @@
         "Surface"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "BasicSceneView.h",
         "BasicSceneView.qml",
         "BasicSceneView.cpp"
     ],
-    "title": "@@TODO: Display a scene"
+    "title": "Display a scene"
 }

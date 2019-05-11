@@ -1,30 +1,16 @@
 {
-    "category": "@@TODO: Scenes",
-    "description": "@@TODO: Demonstrates how to animate a graphic\u2019s position and rotation and follow it using a OrbitGeoElementCameraController",
+    "category": "Scenes",
+    "description": "Demonstrates how to animate a graphic's position and rotation and follow it using a OrbitGeoElementCameraController",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "Map",
-        "Scene",
-        "Camera",
-        "GlobeCameraController",
-        "Graphic",
-        "GraphicsOverlay",
-        "SurfacePlacement",
-        "MapView",
-        "ModelSceneSymbol",
-        "OrbitGeoElementCameraController",
-        "Point",
-        "Polyline",
-        "Renderer",
-        "SceneProperties",
-        "SceneView",
-        "Viewpoint"
+        "animation",
+        "camera controller",
+        "model scene symbol"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-animate3dsymbols.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-animate3dsymbols.htm",
     "relevant_apis": [
         "Map",
         "Scene",
@@ -44,7 +30,6 @@
         "Viewpoint"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "MissionData.h",
         "Animate3DSymbols.cpp",
         "Animate3DSymbols.h",
@@ -53,5 +38,5 @@
         "LabeledSlider.qml",
         "MissionData.cpp"
     ],
-    "title": "@@TODO: Animate 3D symbols"
+    "title": "Animate 3D symbols"
 }

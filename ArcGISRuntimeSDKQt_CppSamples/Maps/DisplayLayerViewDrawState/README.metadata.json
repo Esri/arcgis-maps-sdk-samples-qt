@@ -1,12 +1,13 @@
 {
-    "category": "@@TODO: Maps",
-    "description": "@@TODO: This sample demonstrates how to get the view state of a Layer in a Map",
+    "category": "Maps",
+    "description": "This sample demonstrates how to get the view state of a Layer in a Map",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+      "Status",
+      "Load",
         "MapView",
         "Map",
         "Basemap",
@@ -18,7 +19,7 @@
         "Viewpoint",
         "SpatialReference"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-displaylayerviewdrawstate.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-displaylayerviewdrawstate.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -32,10 +33,9 @@
         "SpatialReference"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "DisplayLayerViewDrawState.qml",
         "DisplayLayerViewDrawState.cpp",
         "DisplayLayerViewDrawState.h"
     ],
-    "title": "@@TODO: Display layer view draw state"
+    "title": "Display layer view draw state"
 }

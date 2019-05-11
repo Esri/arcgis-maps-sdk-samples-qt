@@ -1,18 +1,18 @@
 {
-    "category": "@@TODO: Local Server",
-    "description": "@@TODO: Demonstrates how to start the Local Server and Local Map Service, create an ArcGIS Map Image Layer from the Local Map Service, and add it to a map",
+    "category": "Local Server",
+    "description": "Demonstrates how to start the Local Server and Local Map Service, create an ArcGIS Map Image Layer from the Local Map Service, and add it to a map",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "Offline",
         "ArcGISMapImageLayer",
         "LocalMapService",
         "LocalServer",
         "LocalServerStatus"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-localservermapimagelayer.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-localservermapimagelayer.htm",
     "relevant_apis": [
         "ArcGISMapImageLayer",
         "LocalMapService",
@@ -20,10 +20,9 @@
         "LocalServerStatus"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "LocalServerMapImageLayer.qml",
         "LocalServerMapImageLayer.cpp",
         "LocalServerMapImageLayer.h"
     ],
-    "title": "@@TODO: Local Server map image layer"
+    "title": "Local Server map image layer"
 }

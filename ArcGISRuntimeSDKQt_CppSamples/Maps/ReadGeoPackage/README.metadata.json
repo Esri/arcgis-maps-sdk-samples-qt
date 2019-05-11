@@ -1,24 +1,25 @@
 {
-    "category": "@@TODO: Maps",
-    "description": "@@TODO: This sample demonstrates how to read rasters and feature tables from GeoPackages to show them as layers in a map",
+    "category": "Maps",
+    "description": "This sample demonstrates how to read rasters and feature tables from GeoPackages to show them as layers in a map",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "GeoPackage",
-        " Maps",
+      "Offline",
+      "OGC",
+      "GeoPackage",
+        "Map",
         "Esri::ArcGISRuntime::GeoPackage"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-readgeopackage.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-readgeopackage.htm",
     "relevant_apis": [
         "Esri::ArcGISRuntime::GeoPackage"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ReadGeoPackage.h",
         "ReadGeoPackage.cpp",
         "ReadGeoPackage.qml"
     ],
-    "title": "@@TODO: Read GeoPackage"
+    "title": "Read GeoPackage"
 }

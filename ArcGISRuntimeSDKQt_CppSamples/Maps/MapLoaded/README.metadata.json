@@ -1,27 +1,26 @@
 {
-    "category": "@@TODO: Maps",
-    "description": "@@TODO: This sample demonstrates how to determine the map\u2019s load status",
+    "category": "Maps",
+    "description": "This sample demonstrates how to determine the map's load status",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "State",
         "MapView",
         "Map",
         "Basemap"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-maploaded.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-maploaded.htm",
     "relevant_apis": [
         "MapView",
         "Map",
         "Basemap"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "MapLoaded.qml",
         "MapLoaded.cpp",
         "MapLoaded.h"
     ],
-    "title": "@@TODO: Map loaded"
+    "title": "Map loaded"
 }
