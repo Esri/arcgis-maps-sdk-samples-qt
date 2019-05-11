@@ -1,12 +1,12 @@
 {
-    "category": "@@TODO: Analysis",
-    "description": "@@TODO: This sample demonstrates how to calculate a viewshed from a Point location",
+    "category": "Analysis",
+    "description": "This sample demonstrates how to calculate a viewshed from a Point location",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "location",
         "LocationViewshed",
         "AnalysisOverlay",
         "Analysis",
@@ -17,7 +17,7 @@
         "ArcGISTiledElevationSource",
         "Camera"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-viewshedlocation.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-viewshedlocation.htm",
     "relevant_apis": [
         "LocationViewshed",
         "AnalysisOverlay",
@@ -30,10 +30,9 @@
         "Camera"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ViewshedLocation.qml",
         "ViewshedSlider.qml",
         "ColorDialog.qml"
     ],
-    "title": "@@TODO: Viewshed (location)"
+    "title": "Viewshed (location)"
 }

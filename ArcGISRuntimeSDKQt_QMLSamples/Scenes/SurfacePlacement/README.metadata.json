@@ -1,12 +1,12 @@
 {
-    "category": "@@TODO: Scenes",
-    "description": "@@TODO: This sample demonstrates how to control the surface placement of a 3D graphic",
+    "category": "Scenes",
+    "description": "This sample demonstrates how to control the surface placement of a 3D graphic",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "vertical placement",
         "SceneView",
         "Scene",
         "Viewpoint",
@@ -17,7 +17,7 @@
         "TextSymbol",
         "Point"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-surfaceplacement.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-surfaceplacement.htm",
     "relevant_apis": [
         "SceneView",
         "Scene",
@@ -30,8 +30,7 @@
         "Point"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "Surface_Placement.qml"
     ],
-    "title": "@@TODO: Surface placement"
+    "title": "Surface placement"
 }

@@ -1,12 +1,15 @@
 {
-    "category": "@@TODO: Search",
-    "description": "@@TODO: This sample demonstrates how to geocode an address and show it on the map view",
+    "category": "Search",
+    "description": "This sample demonstrates how to geocode an address and show it on the map view",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "search for address",
+        "find address",
+        "geocode",
+        "find location",
         "LocatorTask",
         "GeocodeParameters",
         "GeocodeResult",
@@ -14,7 +17,7 @@
         "MapView",
         "Map"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-findaddress.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-findaddress.htm",
     "relevant_apis": [
         "LocatorTask",
         "GeocodeParameters",
@@ -24,8 +27,7 @@
         "Map"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "FindAddress.qml"
     ],
-    "title": "@@TODO: Find address"
+    "title": "Find address"
 }

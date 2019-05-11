@@ -1,12 +1,12 @@
 {
-    "category": "@@TODO: Features",
-    "description": "@@TODO: This sample demonstrates how to take a feature service offline by generating a geodatabase",
+    "category": "Features",
+    "description": "This sample demonstrates how to take a feature service offline by generating a geodatabase",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "mobile geodatabase",
         "Map",
         "MapView",
         "ArcGISTiledLayer",
@@ -19,7 +19,7 @@
         "GenerateLayerOption",
         "GenerateGeodatabaseJob"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-generategeodatabase.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-generategeodatabase.htm",
     "relevant_apis": [
         "Map",
         "MapView",
@@ -34,8 +34,7 @@
         "GenerateGeodatabaseJob"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "GenerateGeodatabase.qml"
     ],
-    "title": "@@TODO: Generate geodatabase"
+    "title": "Generate geodatabase"
 }

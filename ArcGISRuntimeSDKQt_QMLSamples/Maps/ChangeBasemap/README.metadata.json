@@ -1,25 +1,23 @@
 {
-    "category": "@@TODO: Maps",
-    "description": "@@TODO: This sample demonstrates how to change a map\u2019s basemap",
+    "category": "Maps",
+    "description": "This sample demonstrates how to change a map's basemap",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "MapView",
         "Map",
         "Basemap"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-changebasemap.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-changebasemap.htm",
     "relevant_apis": [
         "MapView",
         "Map",
         "Basemap"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ChangeBasemap.qml"
     ],
-    "title": "@@TODO: Change Basemap"
+    "title": "Change basemap"
 }

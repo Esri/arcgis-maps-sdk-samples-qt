@@ -1,12 +1,12 @@
 {
-    "category": "@@TODO: Features",
-    "description": "@@TODO: This sample demonstrates how to select features in a feature layer",
+    "category": "Features",
+    "description": "This sample demonstrates how to select features in a feature layer",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "feature selection",
         "MapView",
         "Map",
         "BasemapStreets",
@@ -18,7 +18,7 @@
         "Envelope",
         "GeoElement"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-featurelayerselection.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-featurelayerselection.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -32,8 +32,7 @@
         "GeoElement"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "FeatureLayer_Selection.qml"
     ],
-    "title": "@@TODO: Feature layer selection"
+    "title": "Feature layer selection"
 }

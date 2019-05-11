@@ -1,14 +1,13 @@
 {
-    "category": "@@TODO: Maps",
-    "description": "@@TODO: This sample demonstrates how to geocode and route using data in a map package",
+    "category": "Maps",
+    "description": "This sample demonstrates how to geocode and route using data in a map package",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
-        "Map",
-        "MapView",
+        "navigate",
+        "offline",
         "MobileMapPackage",
         "RouteTask",
         "RouteParameters",
@@ -25,7 +24,7 @@
         "SimpleRenderer",
         "Callout"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-mobilemapsearchandroute.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-mobilemap-searchandroute.htm",
     "relevant_apis": [
         "Map",
         "MapView",
@@ -46,8 +45,7 @@
         "Callout"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "MobileMap_SearchAndRoute.qml"
     ],
-    "title": "@@TODO: Mobile map (search and route)"
+    "title": "Mobile map (search and route)"
 }

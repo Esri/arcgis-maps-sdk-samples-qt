@@ -1,19 +1,18 @@
 {
-    "category": "@@TODO: Display Information",
-    "description": "@@TODO: This sample demonstrates how to show location coordinates on a Map using a Callout",
+    "category": "Display information",
+    "description": "This sample demonstrates how to show location coordinates on a Map using a Callout",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "Map",
         "MapView",
         "Callout",
         "Viewpoint",
         "SpatialReference"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-showcallout.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-showcallout.htm",
     "relevant_apis": [
         "Map",
         "MapView",
@@ -22,8 +21,7 @@
         "SpatialReference"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ShowCallout.qml"
     ],
-    "title": "@@TODO: Show callout"
+    "title": "Show callout"
 }

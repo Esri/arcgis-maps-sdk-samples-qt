@@ -1,30 +1,27 @@
 {
-    "category": "@@TODO: Maps",
-    "description": "@@TODO: This sample demonstrates how to author a Map in ArcGIS Runtime and save it to ArcGIS Online as a web map",
+    "category": "Maps",
+    "description": "This sample demonstrates how to author a Map in ArcGIS Runtime and save it to ArcGIS Online as a web map",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "Author Map",
-        " Save Map",
-        " Web Map",
-        " Create Map",
+        "web map",
+        "create map",
         "Map",
         "Portal",
         "Map::saveAs()"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-createandsavemap.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-createandsavemap.htm",
     "relevant_apis": [
         "Map",
         "Portal",
         "Map::saveAs()"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "SaveOptionsWindow.qml",
         "CreateAndSaveMap.qml",
         "LayerWindow.qml"
     ],
-    "title": "@@TODO: Create and save map"
+    "title": "Create and save map"
 }

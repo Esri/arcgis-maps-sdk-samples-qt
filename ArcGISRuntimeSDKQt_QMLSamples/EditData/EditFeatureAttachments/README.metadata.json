@@ -1,12 +1,14 @@
 {
-    "category": "@@TODO: Edit Data",
-    "description": "@@TODO: The sample demonstrates how to add, delete, and fetch attachments for a specific feature in a feature service",
+    "category": "Edit data",
+    "description": "The sample demonstrates how to add, delete, and fetch attachments for a specific feature in a feature service",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "edit feature attachments",
+        "attachments",
+        "edit features",
         "MapView",
         "Map",
         "Basemap",
@@ -20,7 +22,7 @@
         "FeatureQueryResult",
         "AttachmentListModel"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-editfeatureattachments.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-editfeatureattachments.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -36,9 +38,8 @@
         "AttachmentListModel"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "main.qml",
         "EditFeatureAttachments.qml"
     ],
-    "title": "@@TODO: Edit feature attachments"
+    "title": "Edit feature attachments"
 }

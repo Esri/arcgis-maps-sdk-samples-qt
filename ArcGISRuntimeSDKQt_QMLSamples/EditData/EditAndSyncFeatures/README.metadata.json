@@ -1,12 +1,13 @@
 {
-    "category": "@@TODO: Edit Data",
-    "description": "@@TODO: This sample demonstrates how to generate an offline mobile geodatabase from a feature service, edit the feature\u2019s geometry while disconnected, and synchronize the local edits back to a feature service",
+    "category": "Edit data",
+    "description": "This sample demonstrates how to generate an offline mobile geodatabase from a feature service, edit the feature's geometry while disconnected, and synchronize the local edits back to a feature service",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "sync edits",
+        "generate mobile geodatabase",
         "MapView",
         "Map",
         "Basemap",
@@ -22,7 +23,7 @@
         "GenerateLayerOption",
         "SyncLayerOption"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-editandsyncfeatures.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-editandsyncfeatures.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -40,8 +41,7 @@
         "SyncLayerOption"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "EditAndSyncFeatures.qml"
     ],
-    "title": "@@TODO: Edit and sync features"
+    "title": "Edit and sync features"
 }

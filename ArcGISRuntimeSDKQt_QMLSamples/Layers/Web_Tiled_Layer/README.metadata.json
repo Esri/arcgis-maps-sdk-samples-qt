@@ -1,18 +1,18 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: This sample demonstrates how to display map tiles from an online resource using the WebTiledLayer",
+    "category": "Layers",
+    "description": "This sample demonstrates how to display map tiles from an online resource using the WebTiledLayer",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "web tiled layer",
         "WebTiledLayer",
         "Basemap",
         "Map",
         "MapView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-webtiledlayer.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-web-tiled-layer.htm",
     "relevant_apis": [
         "WebTiledLayer",
         "Basemap",
@@ -20,8 +20,7 @@
         "MapView"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "Web_Tiled_Layer.qml"
     ],
-    "title": "@@TODO: Web tiled layer"
+    "title": "Web tiled layer"
 }

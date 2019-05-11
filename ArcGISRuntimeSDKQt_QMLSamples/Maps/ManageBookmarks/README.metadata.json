@@ -1,12 +1,13 @@
 {
-    "category": "@@TODO: Maps",
-    "description": "@@TODO: This sample demonstrates how to access and add bookmarks to a map",
+    "category": "Maps",
+    "description": "This sample demonstrates how to access and add bookmarks to a map",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "area of interest",
+        "extent",
         "MapView",
         "Map",
         "Basemap",
@@ -16,7 +17,7 @@
         "Envelope",
         "SpatialReference"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-managebookmarks.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-managebookmarks.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -28,8 +29,7 @@
         "SpatialReference"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ManageBookmarks.qml"
     ],
-    "title": "@@TODO: Manage bookmarks"
+    "title": "Manage bookmarks"
 }

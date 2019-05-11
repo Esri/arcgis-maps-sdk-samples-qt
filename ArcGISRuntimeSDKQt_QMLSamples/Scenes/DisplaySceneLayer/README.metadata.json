@@ -1,12 +1,11 @@
 {
-    "category": "@@TODO: Scenes",
-    "description": "@@TODO: This sample demonstrates how to display a scene service with a scene layer",
+    "category": "Scenes",
+    "description": "This sample demonstrates how to display a scene service with a scene layer",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "SceneView",
         "Scene",
         "Basemap",
@@ -14,7 +13,7 @@
         "ArcGISSceneLayer",
         "Camera"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-displayascenelayer.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-displayscenelayer.htm",
     "relevant_apis": [
         "SceneView",
         "Scene",
@@ -24,8 +23,7 @@
         "Camera"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "DisplaySceneLayer.qml"
     ],
-    "title": "@@TODO: Display a scene layer"
+    "title": "Display a scene layer"
 }

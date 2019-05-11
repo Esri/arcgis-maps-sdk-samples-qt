@@ -1,23 +1,23 @@
 {
-    "category": "@@TODO: Maps",
-    "description": "@@TODO: This sample demonstrates how to open and display a map from a Mobile Map Package",
+    "category": "Maps",
+    "description": "This sample demonstrates how to open and display a map from a Mobile Map Package",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "offline",
+        "disconnected",
         "MapView",
         "MobileMapPackage"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-openmobilemapmappackage.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-openmobilemap-mappackage.htm",
     "relevant_apis": [
         "MapView",
         "MobileMapPackage"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "OpenMobileMap_MapPackage.qml"
     ],
-    "title": "@@TODO: Open mobile map (map package)"
+    "title": "Open mobile map (map package)"
 }

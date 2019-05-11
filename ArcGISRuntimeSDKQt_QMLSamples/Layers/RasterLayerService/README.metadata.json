@@ -1,18 +1,17 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: This sample demonstrates how to create an ImageServiceRaster and add it to a raster layer",
+    "category": "Layers",
+    "description": "This sample demonstrates how to create an ImageServiceRaster and add it to a raster layer",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "Map",
         "MapQuickView",
         "ImageServiceRaster",
         "RasterLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-rasterlayerservice.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-rasterlayerservice.htm",
     "relevant_apis": [
         "Map",
         "MapQuickView",
@@ -20,8 +19,7 @@
         "RasterLayer"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "RasterLayerService.qml"
     ],
-    "title": "@@TODO: Raster layer (service)"
+    "title": "Raster layer (service)"
 }

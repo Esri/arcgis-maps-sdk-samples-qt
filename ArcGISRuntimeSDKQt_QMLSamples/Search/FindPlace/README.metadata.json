@@ -1,12 +1,13 @@
 {
-    "category": "@@TODO: Search",
-    "description": "@@TODO: This sample demonstrates how to use geocode functionality to search for points of interest around a location or within an extent",
+    "category": "Search",
+    "description": "This sample demonstrates how to use geocode functionality to search for points of interest around a location or within an extent",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "point of interest",
+        "find location",
         "LocatorTask",
         "GeocodeParameters",
         "GeocodeResult",
@@ -19,11 +20,9 @@
         "SimpleRenderer",
         "PictureMarkerSymbol",
         "LocationDisplay",
-        "IdentifyGraphicsOverlayResult",
-        "MapView",
-        "Map"
+        "IdentifyGraphicsOverlayResult"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-findaplace.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-findplace.htm",
     "relevant_apis": [
         "LocatorTask",
         "GeocodeParameters",
@@ -42,11 +41,10 @@
         "Map"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "SearchBox.qml",
         "SuggestionView.qml",
         "FindPlace.qml",
         "SearchButton.qml"
     ],
-    "title": "@@TODO: Find a place"
+    "title": "Find a place"
 }

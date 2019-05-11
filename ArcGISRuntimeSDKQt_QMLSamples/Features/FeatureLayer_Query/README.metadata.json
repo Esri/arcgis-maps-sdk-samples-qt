@@ -1,12 +1,11 @@
 {
-    "category": "@@TODO: Features",
-    "description": "@@TODO: This sample demonstrates how to query a feature layer using a feature table",
+    "category": "Features",
+    "description": "This sample demonstrates how to query a feature layer using a feature table",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "MapView",
         "Map",
         "Basemap",
@@ -16,7 +15,7 @@
         "FeatureLayer",
         "Viewpoint"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-featurelayerquery.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-featurelayerquery.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -28,8 +27,7 @@
         "Viewpoint"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "FeatureLayer_Query.qml"
     ],
-    "title": "@@TODO: Feature layer query"
+    "title": "Feature layer query"
 }

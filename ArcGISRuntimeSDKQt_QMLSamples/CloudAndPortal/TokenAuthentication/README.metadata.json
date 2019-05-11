@@ -1,12 +1,14 @@
 {
-    "category": "@@TODO: Cloud And Portal",
-    "description": "@@TODO: This sample demonstrates how to access a map service that is secured with ArcGIS token-based authentication",
+    "category": "Cloud and portal",
+    "description": "This sample demonstrates how to access a map service that is secured with ArcGIS token-based authentication",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "authentication",
+        "token",
+        "map service",
         "AuthenticationManager",
         "AuthenticationChallenge",
         "AuthenticationView",
@@ -14,7 +16,7 @@
         "MapView",
         "ArcGISMapImageLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-tokenauthentication.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-tokenauthentication.htm",
     "relevant_apis": [
         "AuthenticationManager",
         "AuthenticationChallenge",
@@ -24,8 +26,7 @@
         "ArcGISMapImageLayer"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "TokenAuthentication.qml"
     ],
-    "title": "@@TODO: Token authentication"
+    "title": "Token authentication"
 }

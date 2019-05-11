@@ -1,23 +1,23 @@
 {
-    "category": "@@TODO: Search",
-    "description": "@@TODO: This sample demonstrates how to search a DictionarySymbolStyle and return the results in a ListView",
+    "category": "Search",
+    "description": "This sample demonstrates how to search a DictionarySymbolStyle and return the results in a ListView",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "military symbology",
+        "symbol dictionary",
         "DictionarySymbolStyle",
         "SymbolStyleSearchParameters"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-searchdictionarysymbolstyle.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-searchdictionarysymbolstyle.htm",
     "relevant_apis": [
         "DictionarySymbolStyle",
         "SymbolStyleSearchParameters"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "SearchDictionarySymbolStyle.qml"
     ],
-    "title": "@@TODO: Search dictionary symbol style"
+    "title": "Search dictionary symbol style"
 }

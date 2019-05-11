@@ -1,33 +1,32 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: KML files can reference other KML files on the network and support automatically refreshing content",
+    "category": "Layers",
+    "description": "This sample demonstrates how to display a file with a network link, including displaying any network link control messages at launch",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "KML",
-        " KMZ",
-        " OGC",
-        " Keyhole",
-        " Network Link",
-        " Network Link Control",
+        "KMZ",
+        "OGC",
+        "Keyhole",
+        "Network Link",
+        "Network Link Control",
         "KmlDataset(Url)",
         "KmlLayer(KmlDataset)",
         "KmlNetworkLink",
         "kmlNetworkLinkMessageReceived"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-displaykmlnetworklinks.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-displaykmlnetworklinks.htm",
     "relevant_apis": [
         "KmlDataset(Url)",
         "KmlLayer(KmlDataset)",
         "KmlNetworkLink",
-        "kmlNetworkLinkMessageReceived"
+        "KmlNetworkLinkMessageReceived"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "MessageButton.qml",
         "DisplayKmlNetworkLinks.qml"
     ],
-    "title": "@@TODO: Display KML network links"
+    "title": "Display KML network links"
 }

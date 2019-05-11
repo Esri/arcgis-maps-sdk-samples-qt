@@ -1,19 +1,20 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: This sample demonstrates how to use blend renderer on a raster layer",
+    "category": "Layers",
+    "description": "This sample demonstrates how to use blend renderer on a raster layer",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "blend renderers",
+        "hillshade",
         "Map",
         "MapQuickView",
         "Raster",
         "RasterLayer",
         "BlendRenderer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-blendrasterlayer.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-blendrasterlayer.htm",
     "relevant_apis": [
         "Map",
         "MapQuickView",
@@ -22,10 +23,9 @@
         "BlendRenderer"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ColorRampModel.qml",
         "SlopeTypeModel.qml",
         "BlendRasterLayer.qml"
     ],
-    "title": "@@TODO: Blend raster layer"
+    "title": "Blend raster layer"
 }

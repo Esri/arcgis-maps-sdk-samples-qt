@@ -1,12 +1,13 @@
 {
-    "category": "@@TODO: Layers",
-    "description": "@@TODO: This sample demonstrates how to export tiles from a map service for offline use",
+    "category": "Layers",
+    "description": "This sample demonstrates how to export tiles from a map service for offline use",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "map tiles",
+        "credate tile caches",
         "Map",
         "MapView",
         "ArcGISTiledLayer",
@@ -15,7 +16,7 @@
         "ExportTileCacheJob",
         "ExportTiledCacheParameters"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-exporttiles.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-exporttiles.htm",
     "relevant_apis": [
         "Map",
         "MapView",
@@ -26,8 +27,7 @@
         "ExportTiledCacheParameters"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "ExportTiles.qml"
     ],
-    "title": "@@TODO: Export tiles"
+    "title": "Export tiles"
 }

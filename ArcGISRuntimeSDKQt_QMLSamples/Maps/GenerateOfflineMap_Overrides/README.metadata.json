@@ -1,12 +1,12 @@
 {
-    "category": "@@TODO: Maps",
-    "description": "@@TODO: ",
+    "category": "Maps",
+    "description": "You can use the OfflineMapTask to take a webmap offline, and overrides allow you to adjust the settings used for taking each layer in the map offline",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "Offline",
+        "offline",
         "OfflineMapTask",
         "GenerateGeodatabaseParameters",
         "GenerateOfflineMapParameters",
@@ -15,7 +15,7 @@
         "GenerateOfflineMapResult",
         "ExportTileCacheParameters"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-generateofflinemapoverrides.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-generateofflinemapoverrides.htm",
     "relevant_apis": [
         "OfflineMapTask",
         "GenerateGeodatabaseParameters",
@@ -26,11 +26,10 @@
         "ExportTileCacheParameters"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "OverridesWindow.qml",
         "DownloadButton.qml",
         "GenerateWindow.qml",
         "GenerateOfflineMap_Overrides.qml"
     ],
-    "title": "@@TODO: Generate Offline Map (Overrides)"
+    "title": "Generate offline map (overrides)"
 }

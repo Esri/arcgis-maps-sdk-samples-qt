@@ -1,12 +1,12 @@
 {
-    "category": "@@TODO: Display Information",
-    "description": "@@TODO: This sample demonstrates how to create PictureMarkerSymbols from the different types of image resources",
+    "category": "Display information",
+    "description": "This sample demonstrates how to create PictureMarkerSymbols from the different types of image resources",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "",
         "MapView",
         "Map",
         "Basemap",
@@ -17,7 +17,7 @@
         "PictureMarkerSymbol",
         "SpatialReference"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-picturemarkersymbol.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-picturemarkersymbol.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -30,8 +30,7 @@
         "SpatialReference"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "Picture_Marker_Symbol.qml"
     ],
-    "title": "@@TODO: Picture marker symbol"
+    "title": "Picture marker symbol"
 }

@@ -1,21 +1,21 @@
 {
-    "category": "@@TODO: Geometry",
-    "description": "@@TODO: This sample demonstrates how to densify (add additional vertices) or generalize (reduce vertices) a polyline geometry",
+    "category": "Geometry",
+    "description": "This sample demonstrates how to densify (add additional vertices) or generalize (reduce vertices) a polyline geometry",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "Densify",
-        " Generalize",
-        " Geometry",
+        "densify",
+        "generalize",
+        "geometry",
         "GeometryEngine.densify",
         "GeometryEngine.generalize",
         "PointCollection",
         "Multipoint",
         "Polyline"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-densifyandgeneralize.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-densifyandgeneralize.htm",
     "relevant_apis": [
         "GeometryEngine.densify",
         "GeometryEngine.generalize",
@@ -24,8 +24,7 @@
         "Polyline"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "DensifyAndGeneralize.qml"
     ],
-    "title": "@@TODO: Densify and generalize"
+    "title": "Densify and generalize"
 }

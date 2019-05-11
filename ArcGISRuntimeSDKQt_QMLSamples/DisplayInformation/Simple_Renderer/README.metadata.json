@@ -1,12 +1,11 @@
 {
-    "category": "@@TODO: Display Information",
-    "description": "@@TODO: This sample demonstrates how to create a SimpleRenderer and add it to a GraphicsOverlay",
+    "category": "Display Information",
+    "description": "This sample demonstrates how to create a SimpleRenderer and add it to a GraphicsOverlay",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
         "MapView",
         "Map",
         "Envelope",
@@ -18,7 +17,7 @@
         "Point",
         "SpatialReference"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-simplerenderer.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-simplerenderer.htm",
     "relevant_apis": [
         "MapView",
         "Map",
@@ -32,8 +31,7 @@
         "SpatialReference"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "Simple_Renderer.qml"
     ],
-    "title": "@@TODO: Simple renderer"
+    "title": "Simple renderer"
 }

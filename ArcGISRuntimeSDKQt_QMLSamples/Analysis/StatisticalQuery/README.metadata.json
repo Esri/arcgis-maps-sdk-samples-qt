@@ -1,12 +1,13 @@
 {
-    "category": "@@TODO: Analysis",
-    "description": "@@TODO: This sample demonstrates how to query a table to get aggregated statistics back for a specific field",
+    "category": "Analysis",
+    "description": "This sample demonstrates how to query a table to get aggregated statistics back for a specific field",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "@@TODO: *** PLEASE ADD ADDITIONAL KEYWORDS ***",
+        "query",
+        "statistics",
         "StatisticsQueryParameters",
         "StatisticDefinition",
         "StatisticsQueryResult",
@@ -15,7 +16,7 @@
         "ServiceFeatureTable",
         "FeatureLayer"
     ],
-    "redirect_from": "@@TODO: /qt/latest/qml/sample-code/sample-qt-statisticalquery.htm",
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-statisticalquery.htm",
     "relevant_apis": [
         "StatisticsQueryParameters",
         "StatisticDefinition",
@@ -26,8 +27,7 @@
         "FeatureLayer"
     ],
     "snippets": [
-        "@@TODO: *** PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "StatisticalQuery.qml"
     ],
-    "title": "@@TODO: Statistical query"
+    "title": "Statistical query"
 }
