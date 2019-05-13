@@ -1,6 +1,6 @@
 {
     "category": "Cloud and portal",
-    "description": "This sample demonstrates how find portal items by using a keyword, and limit the results to items of a certain type - in this case, web maps",
+    "description": "This sample demonstrates how to find portal items by using a keyword, and limit the results to items of a certain type - in this case, web maps",
     "ignore": false,
     "images": [
         "screenshot.png"

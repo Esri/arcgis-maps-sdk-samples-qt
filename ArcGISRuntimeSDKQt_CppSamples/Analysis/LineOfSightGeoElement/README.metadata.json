@@ -7,7 +7,9 @@
     ],
     "keywords": [
         "line of sight",
-        "visibility"
+        "visibility",
+        "AnalysisOverlay",
+        "GeoElementLineOfSight"
     ],
     "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-lineofsightgeoelement.htm",
     "relevant_apis": [

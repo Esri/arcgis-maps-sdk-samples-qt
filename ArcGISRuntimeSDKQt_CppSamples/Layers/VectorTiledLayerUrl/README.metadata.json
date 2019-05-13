@@ -9,7 +9,7 @@
         "vector tiled layer",
         "vector tile layer"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-vectortiledlayerurl.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-vectortilelayerurl.htm",
     "relevant_apis": [
         "MapView",
         "Map",

@@ -6,8 +6,12 @@
         "screenshot.png"
     ],
     "keywords": [
-        "bland renderers",
-        "hillshade"
+        "blend renderers",
+        "hillshade",
+        "MapQuickView",
+        "Raster",
+        "RasterLayer",
+        "BlendRenderer"
     ],
     "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-blendrasterlayer.htm",
     "relevant_apis": [
