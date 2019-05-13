@@ -6,9 +6,9 @@
         "screenshot.png"
     ],
     "keywords": [
-        "Time",
-        " Time Extent",
-        " Query",
+        "time",
+        "time extent",
+        "query",
         "TimeExtent",
         "QueryParameters",
         "ServiceFeatureTable::populateFromService"

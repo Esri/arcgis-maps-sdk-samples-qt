@@ -10,7 +10,7 @@
         "Map",
         "MapView"
     ],
-    "redirect_from": "@@TODO: /qt/latest/cpp/sample-code/sample-qt-wmslayerurl.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-wmslayerurl.htm",
     "relevant_apis": [
         "WmsLayer",
         "Map",

@@ -6,7 +6,13 @@
         "screenshot.png"
     ],
     "keywords": [
-        ""
+        "extrusion",
+        "z direction",
+        "ArcGISScene",
+        "Graphic",
+        "GraphicsOverlay",
+        "Renderer",
+        "Renderer->SceneProperties"
     ],
     "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-extrudegraphics.htm",
     "relevant_apis": [
