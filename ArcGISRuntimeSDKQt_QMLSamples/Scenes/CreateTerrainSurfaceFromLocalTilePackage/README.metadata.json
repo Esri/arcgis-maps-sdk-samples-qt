@@ -8,7 +8,7 @@
     "keywords": [
         "3D",
         "tile cache",
-        "elevation surface",
+        "elevation surface"
     ],
     "redirect_from": "/qt/latest/qml/sample-code/sample-qt-createterrainsurfacefromlocaltilepackage.htm",
     "relevant_apis": [

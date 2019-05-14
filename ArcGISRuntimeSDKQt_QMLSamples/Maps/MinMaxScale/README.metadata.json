@@ -12,7 +12,7 @@
         "scale",
         "setminScale",
         "setmaxScale",
-        "zoom",
+        "zoom"
     ],
     "redirect_from": "/qt/latest/qml/sample-code/sample-qt-minmaxscale.htm",
     "relevant_apis": [
