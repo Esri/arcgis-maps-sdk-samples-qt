@@ -19,17 +19,14 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "Portal.h"
-#include "PortalItem.h"
 
 using namespace Esri::ArcGISRuntime;
 
 ViewContentBeneathTerrainSurface::ViewContentBeneathTerrainSurface(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_portal(new Portal(this)),
-  m_portalItem(new PortalItem(m_portal, "91a4fafd747a47c7bab7797066cb9272", this))
+  QObject(parent)
 {
-  m_scene = new Scene(m_portalItem, this);
+  const auto url = QUrl("https://www.arcgis.com/home/item.html?id=91a4fafd747a47c7bab7797066cb9272");
+  m_scene = new Scene(url, this);
 
   connect(m_scene, &Scene::doneLoading, this, [this](Error loadError)
   {

@@ -29,10 +29,8 @@ Rectangle {
 
         Scene {
             id: scene
+            initUrl: "https://www.arcgis.com/home/item.html?id=91a4fafd747a47c7bab7797066cb9272"
 
-            PortalItem {
-                itemId: "91a4fafd747a47c7bab7797066cb9272"
-            }
             onLoadStatusChanged: {
                 if (loadStatus !== Enums.LoadStatusLoaded)
                     return;

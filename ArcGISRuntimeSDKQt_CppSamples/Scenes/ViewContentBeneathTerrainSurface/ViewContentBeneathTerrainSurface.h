@@ -23,8 +23,6 @@ namespace ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
-class Portal;
-class PortalItem;
 }
 }
 
@@ -51,8 +49,6 @@ private:
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
-  Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
 };
 
 #endif // VIEWCONTENTBENEATHTERRAINSURFACE_H
