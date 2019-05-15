@@ -19,7 +19,6 @@
 #include "ArcGISTiledElevationSource.h"
 #include "Scene.h"
 #include "SceneQuickView.h"
-#include "SceneView.h"
 
 using namespace Esri::ArcGISRuntime;
 
