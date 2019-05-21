@@ -72,15 +72,6 @@ Rectangle {
                         addResultsAsGraphics(citiesTable.queryFeaturesResult, citySymbol);
                     });
 
-                    // connect to state sublayer query signal
-                    statesTable.queryFeaturesStatusChanged.connect(function() {
-                        if (statesTable.queryFeaturesStatus !== Enums.TaskStatusCompleted)
-                            return;
-
-                        // add the results as graphics
-                        addResultsAsGraphics(statesTable.queryFeaturesResult, stateFillSymbol);
-                    });
-
                     // connect to county sublayer query signal
                     countiesTable.queryFeaturesStatusChanged.connect(function() {
                         if (countiesTable.queryFeaturesStatus !== Enums.TaskStatusCompleted)
@@ -88,6 +79,15 @@ Rectangle {
 
                         // add the results as graphics
                         addResultsAsGraphics(countiesTable.queryFeaturesResult, countyFillSymbol);
+                    });
+
+                    // connect to state sublayer query signal
+                    statesTable.queryFeaturesStatusChanged.connect(function() {
+                        if (statesTable.queryFeaturesStatus !== Enums.TaskStatusCompleted)
+                            return;
+
+                        // add the results as graphics
+                        addResultsAsGraphics(statesTable.queryFeaturesResult, stateFillSymbol);
                     });
                 }
             }
@@ -182,8 +182,8 @@ Rectangle {
 
                 // query the feature tables
                 citiesTable.queryFeatures(queryParams);
-                statesTable.queryFeatures(queryParams);
                 countiesTable.queryFeatures(queryParams);
+                statesTable.queryFeatures(queryParams);
             }
         }
     }
