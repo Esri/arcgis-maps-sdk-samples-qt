@@ -33,7 +33,6 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <QTemporaryDir>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -83,9 +82,15 @@ void DynamicWorkspaceShapefile::componentComplete()
           emit localServerInitializationComplete(true);
           startLocalService(m_dataPath + "/mjrroads.shp");
 
-          // set temp path
-          QTemporaryDir tempDir;
-          LocalServer::instance()->setTempDataPath(tempDir.path());
+          // create temp path
+          const QString tempPath = QDir::homePath() + "/EsriQtTemp";
+
+          // create the directory
+          if (!QDir(tempPath).exists())
+            QDir().mkdir(tempPath);
+
+          // set the temp data path for the local server
+          LocalServer::instance()->setTempDataPath(tempPath);
         }
       });
       LocalServer::start();

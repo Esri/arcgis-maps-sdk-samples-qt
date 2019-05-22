@@ -32,7 +32,6 @@
 #include "ArcGISMapImageLayer.h"
 
 #include <QDir>
-#include <QTemporaryDir>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -100,9 +99,15 @@ void LocalServerGeoprocessing::connectSignals()
   {
     if (LocalServer::status() == LocalServerStatus::Started)
     {
-      // set temp path
-      QTemporaryDir tempDir;
-      LocalServer::instance()->setTempDataPath(tempDir.path());
+      // create temp path
+      const QString tempPath = QDir::homePath() + "/EsriQtTemp";
+
+      // create the directory
+      if (!QDir(tempPath).exists())
+        QDir().mkdir(tempPath);
+
+      // set the temp data path for the local server
+      LocalServer::instance()->setTempDataPath(tempPath);
 
       // start the service
       m_localGPService->start();
