@@ -77,16 +77,6 @@ void DynamicWorkspaceRaster::componentComplete()
         {
           startLocalService(m_dataPath + "/usa_raster.tif");
           emit localServerInitializationComplete(true);
-
-          // create temp path
-          const QString tempPath = QDir::homePath() + "/EsriQtTemp";
-
-          // create the directory
-          if (!QDir(tempPath).exists())
-            QDir().mkdir(tempPath);
-
-          // set the temp data path for the local server
-          LocalServer::instance()->setTempDataPath(tempPath);
         }
       });
       LocalServer::start();

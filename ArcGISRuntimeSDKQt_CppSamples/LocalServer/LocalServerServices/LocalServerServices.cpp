@@ -24,6 +24,7 @@
 
 #include <QDesktopServices>
 #include <QDir>
+#include <QTemporaryDir>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -78,14 +79,13 @@ void LocalServerServices::connectSignals()
       case LocalServerStatus::Started:
       {
         // create temp path
-        const QString tempPath = QDir::homePath() + "/EsriQtTemp";
+        const QString tempPath = LocalServerServices::shortestTempPath() + "/EsriQtTemp";
 
         // create the directory
-        if (!QDir(tempPath).exists())
-          QDir().mkdir(tempPath);
+        const QTemporaryDir tempDir(tempPath);
 
         // set the temp data path for the local server
-        LocalServer::instance()->setTempDataPath(tempPath);
+        LocalServer::instance()->setTempDataPath(tempDir.path());
 
         m_serverStatus.append("Server Status: STARTED\n");
         m_isServerRunning = true;
@@ -291,4 +291,17 @@ void LocalServerServices::updateStatus(LocalService* service, const QString& ser
       break;
   }
   emit serverStatusChanged();
+}
+
+QString LocalServerServices::shortestTempPath()
+{
+  // get tmp and home paths
+  const QString tmpPath = QDir::tempPath();
+  const QString homePath = QDir::homePath();
+
+  // return whichever is shorter, temp or home path
+  if (homePath.length() > tmpPath.length())
+    return tmpPath;
+  else
+    return homePath;
 }

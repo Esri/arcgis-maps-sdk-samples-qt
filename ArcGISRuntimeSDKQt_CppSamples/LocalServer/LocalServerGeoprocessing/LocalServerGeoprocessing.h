@@ -54,6 +54,7 @@ signals:
 
 private:
   void connectSignals();
+  static QString shortestTempPath();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

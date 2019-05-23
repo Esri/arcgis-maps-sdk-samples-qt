@@ -65,6 +65,7 @@ private:
   bool isAnyServiceRunning();
   void updateStatus(Esri::ArcGISRuntime::LocalService* service, const QString& serviceName);
   void getCurrentServices();
+  static QString shortestTempPath();
 
 private:
   Esri::ArcGISRuntime::LocalMapService* m_localMapService = nullptr;
