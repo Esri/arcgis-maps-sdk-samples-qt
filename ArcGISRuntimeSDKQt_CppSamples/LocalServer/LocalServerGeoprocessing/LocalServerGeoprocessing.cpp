@@ -40,7 +40,7 @@ using namespace Esri::ArcGISRuntime;
 LocalServerGeoprocessing::LocalServerGeoprocessing(QQuickItem* parent) :
   QQuickItem(parent)
 {
-  // create temp path
+  // create temp/data path
   const QString tempPath = LocalServerGeoprocessing::shortestTempPath() + "/EsriQtTemp";
 
   // create the directory
