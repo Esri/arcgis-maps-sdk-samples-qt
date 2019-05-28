@@ -31,6 +31,7 @@
 #include "GeoprocessingDouble.h"
 #include "ArcGISMapImageLayer.h"
 
+#include <memory>
 #include <QDir>
 #include <QTemporaryDir>
 

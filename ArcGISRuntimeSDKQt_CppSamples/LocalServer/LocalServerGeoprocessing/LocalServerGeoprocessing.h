@@ -30,9 +30,10 @@ class GeoprocessingTask;
 }
 }
 
+class QTemporaryDir;
+
 #include <QQuickItem>
 #include <QStringListModel>
-#include <QTemporaryDir>
 
 class LocalServerGeoprocessing : public QQuickItem
 {

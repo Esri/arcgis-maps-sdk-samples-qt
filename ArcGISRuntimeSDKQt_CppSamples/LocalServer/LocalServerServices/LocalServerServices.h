@@ -29,8 +29,9 @@ namespace Esri
   }
 }
 
+class QTemporaryDir;
+
 #include <QQuickItem>
-#include <QTemporaryDir>
 
 class LocalServerServices : public QQuickItem
 {
