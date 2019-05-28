@@ -1,0 +1,8 @@
+{
+    "source" :  "BrowseWfsLayers.qml",
+    "otherSourceFiles" :  [
+        "BrowseWfsLayers.h",
+        "BrowseWfsLayers.cpp"
+    ],
+    "name" : "Browse WFS layers"
+}
