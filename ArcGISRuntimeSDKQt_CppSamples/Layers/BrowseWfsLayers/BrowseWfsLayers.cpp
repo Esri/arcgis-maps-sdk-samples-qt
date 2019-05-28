@@ -52,8 +52,8 @@ BrowseWfsLayers::BrowseWfsLayers(QObject* parent /* = nullptr */):
   m_wfsService->load();
 
   // set initial viewpoint
-  Envelope env(-122.341581, 47.613758, -122.332662, 47.617207, SpatialReference::wgs84());
-  m_map->setInitialViewpoint(Viewpoint(env));
+//  Envelope env(-122.341581, 47.613758, -122.332662, 47.617207, SpatialReference::wgs84());
+//  m_map->setInitialViewpoint(Viewpoint(env));
 
 }
 
@@ -93,6 +93,10 @@ void BrowseWfsLayers::setMapView(MapQuickView* mapView)
 
 void BrowseWfsLayers::createWfsFeatureTable(int index, bool swap)
 {
+  // clear previous layer
+  m_map->operationalLayers()->clear();
+  // set viewpoint to extent of selected layer
+  m_mapView->setViewpointGeometry(m_wfsLayersInfoList[index].extent());
   // create WFS Feature Table from selected layer
   m_wfsFeatureTable = new WfsFeatureTable(m_wfsLayersInfoList[index], this);
 
@@ -166,7 +170,6 @@ void BrowseWfsLayers::addFeatureLayerToMap()
   // apply renderer to layer
   featureLayer->setRenderer(sr);
 
-  m_map->operationalLayers()->clear();
   // add the layer to the map
   m_map->operationalLayers()->append(featureLayer);
 }

@@ -37,17 +37,6 @@ Rectangle {
         Map {
             BasemapTopographic {}
 
-            // Set initial viewpoint on the map
-            ViewpointExtent {
-                Envelope {
-                    id: initialExtent
-                    xMin: -122.341581
-                    yMin: 47.613758
-                    xMax: -122.332662
-                    yMax: 47.617207
-                    spatialReference: SpatialReference { wkid: 4326 }
-                }
-            }
             onComponentCompleted: createWfsService();
         }
 
@@ -76,7 +65,6 @@ Rectangle {
                     CheckBox {
                         id: axisOrderBox
                         checked: false
-                        onCheckStateChanged: createWfsFeatureTable();
                     }
                     Text {
                         text: qsTr("Swap Coordinate Order")
@@ -93,7 +81,14 @@ Rectangle {
                     Layout.fillWidth: true
                     Layout.margins: 3
                     Layout.alignment: Qt.AlignHCenter
-                    onCurrentIndexChanged: createWfsFeatureTable();
+                }
+
+                Button {
+                    id: loadSelectedLayerBtn
+                    text: qsTr("Load Selected Layer")
+                    Layout.fillWidth: true
+                    Layout.margins: 3
+                    onClicked: createWfsFeatureTable();
                 }
             }
         }
@@ -107,7 +102,6 @@ Rectangle {
     }
 
     function createWfsService() {
-
         // create WFS Service
         var service = ArcGISRuntimeEnvironment.createObject("WfsService", {url: serviceUrl});
 
@@ -118,16 +112,19 @@ Rectangle {
 
                 //once loaded populate myWfsListModel with titles from the service to display in a comboBox
                 for(var i in wfsLayersInfoList){
-                    var data = {'title': wfsLayersInfoList[i].title};
+                    var data = {title: wfsLayersInfoList[i].title};
                     myWfsListModel.append(data);
                 }
-                createWfsFeatureTable();
             }
         });
         service.load();
     }
 
     function createWfsFeatureTable() {
+        // clear previous layer
+        mapView.map.operationalLayers.clear();
+        // set viewpoint to extent of selected layer
+        mapView.setViewpointGeometry(wfsLayersInfoList[layersComboBox.currentIndex].extent)
         // create WFS Feature Table from selected layer
         wfsFeatureTable = ArcGISRuntimeEnvironment.createObject("WfsFeatureTable", {layerInfo: wfsLayersInfoList[layersComboBox.currentIndex]});
 
@@ -205,7 +202,6 @@ Rectangle {
                                                                   featureTable: wfsFeatureTable,
                                                                   renderer: simpleRenderer
                                                               });
-        mapView.map.operationalLayers.clear();
         // add the layer to the map
         mapView.map.operationalLayers.append(featureLayer);
     }

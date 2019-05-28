@@ -53,7 +53,6 @@ Item {
                 CheckBox {
                     id: axisOrderBox
                     checked: false
-                    onCheckStateChanged: browseWfsLayersSampleModel.createWfsFeatureTable(layersComboBox.currentIndex, axisOrderBox.checked);
                 }
                 Text {
                     text: qsTr("Swap Coordinate Order")
@@ -69,7 +68,14 @@ Item {
                 Layout.fillWidth: true
                 Layout.margins: 3
                 Layout.alignment: Qt.AlignHCenter
-                onCurrentIndexChanged: browseWfsLayersSampleModel.createWfsFeatureTable(layersComboBox.currentIndex, axisOrderBox.checked);
+            }
+
+            Button {
+                id: loadSelectedLayerBtn
+                text: qsTr("Load Selected Layer")
+                Layout.fillWidth: true
+                Layout.margins: 3
+                onClicked: browseWfsLayersSampleModel.createWfsFeatureTable(layersComboBox.currentIndex, axisOrderBox.checked);
             }
         }
     }
