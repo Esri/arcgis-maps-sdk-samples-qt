@@ -40,6 +40,15 @@ using namespace Esri::ArcGISRuntime;
 LocalServerGeoprocessing::LocalServerGeoprocessing(QQuickItem* parent) :
   QQuickItem(parent)
 {
+  // create temp path
+  const QString tempPath = LocalServerGeoprocessing::shortestTempPath() + "/EsriQtTemp";
+
+  // create the directory
+  m_tempDir = std::unique_ptr<QTemporaryDir>(new QTemporaryDir(tempPath));
+
+  // set the temp & app data path for the local server
+  LocalServer::instance()->setTempDataPath(m_tempDir->path());
+  LocalServer::instance()->setAppDataPath(m_tempDir->path());
 }
 
 // destructor
@@ -100,15 +109,6 @@ void LocalServerGeoprocessing::connectSignals()
   {
     if (LocalServer::status() == LocalServerStatus::Started)
     {
-      // create temp path
-      const QString tempPath = LocalServerGeoprocessing::shortestTempPath() + "/EsriQtTemp";
-
-      // create the directory
-      const QTemporaryDir tempDir(tempPath);
-
-      // set the temp data path for the local server
-      LocalServer::instance()->setTempDataPath(tempDir.path());
-
       // start the service
       m_localGPService->start();
       m_isReady = false;

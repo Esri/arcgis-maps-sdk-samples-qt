@@ -30,6 +30,7 @@ namespace Esri
 }
 
 #include <QQuickItem>
+#include <QTemporaryDir>
 
 class LocalServerServices : public QQuickItem
 {
@@ -77,6 +78,7 @@ private:
   bool m_isServerRunning = false;
   bool m_isServiceRunning = false;
   QHash<QUrl, Esri::ArcGISRuntime::LocalService*> m_servicesHash;
+  std::unique_ptr<QTemporaryDir> m_tempDir;
 };
 
 #endif // LOCAL_SERVER_SERVICES_H

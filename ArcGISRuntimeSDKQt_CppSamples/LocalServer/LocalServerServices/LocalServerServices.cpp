@@ -32,6 +32,16 @@ LocalServerServices::LocalServerServices(QQuickItem* parent) :
   QQuickItem(parent),
   m_dataPath(QDir::homePath() + "/ArcGIS/Runtime/Data")
 {
+  // create temp/data path
+  const QString tempPath = LocalServerServices::shortestTempPath() + "/EsriQtSample";
+
+  // create the directory
+  m_tempDir = std::unique_ptr<QTemporaryDir>(new QTemporaryDir(tempPath));
+
+  // set the temp & app data path for the local server
+  LocalServer::instance()->setTempDataPath(m_tempDir->path());
+  LocalServer::instance()->setAppDataPath(m_tempDir->path());
+
   emit dataPathChanged();
 }
 
@@ -78,15 +88,6 @@ void LocalServerServices::connectSignals()
       }
       case LocalServerStatus::Started:
       {
-        // create temp path
-        const QString tempPath = LocalServerServices::shortestTempPath() + "/EsriQtTemp";
-
-        // create the directory
-        const QTemporaryDir tempDir(tempPath);
-
-        // set the temp data path for the local server
-        LocalServer::instance()->setTempDataPath(tempDir.path());
-
         m_serverStatus.append("Server Status: STARTED\n");
         m_isServerRunning = true;
         emit isServerRunningChanged();

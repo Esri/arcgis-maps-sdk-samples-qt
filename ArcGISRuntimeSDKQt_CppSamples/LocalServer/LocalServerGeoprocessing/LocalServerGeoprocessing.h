@@ -32,6 +32,7 @@ class GeoprocessingTask;
 
 #include <QQuickItem>
 #include <QStringListModel>
+#include <QTemporaryDir>
 
 class LocalServerGeoprocessing : public QQuickItem
 {
@@ -63,6 +64,7 @@ private:
   Esri::ArcGISRuntime::LocalGeoprocessingService* m_localGPService = nullptr;
   Esri::ArcGISRuntime::GeoprocessingTask* m_gpTask = nullptr;
   bool m_isReady = false;
+  std::unique_ptr<QTemporaryDir> m_tempDir;
 };
 
 #endif // LOCAL_SERVER_GEOPROCESSING_H
