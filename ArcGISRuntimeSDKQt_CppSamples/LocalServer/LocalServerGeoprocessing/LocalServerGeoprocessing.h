@@ -30,6 +30,9 @@ class GeoprocessingTask;
 }
 }
 
+class QTemporaryDir;
+
+#include <memory>
 #include <QQuickItem>
 #include <QStringListModel>
 
@@ -54,6 +57,7 @@ signals:
 
 private:
   void connectSignals();
+  static QString shortestTempPath();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -62,6 +66,7 @@ private:
   Esri::ArcGISRuntime::LocalGeoprocessingService* m_localGPService = nullptr;
   Esri::ArcGISRuntime::GeoprocessingTask* m_gpTask = nullptr;
   bool m_isReady = false;
+  std::unique_ptr<QTemporaryDir> m_tempDir;
 };
 
 #endif // LOCAL_SERVER_GEOPROCESSING_H

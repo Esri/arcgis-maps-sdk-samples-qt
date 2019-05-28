@@ -29,6 +29,9 @@ namespace Esri
   }
 }
 
+class QTemporaryDir;
+
+#include <memory>
 #include <QQuickItem>
 
 class LocalServerServices : public QQuickItem
@@ -65,6 +68,7 @@ private:
   bool isAnyServiceRunning();
   void updateStatus(Esri::ArcGISRuntime::LocalService* service, const QString& serviceName);
   void getCurrentServices();
+  static QString shortestTempPath();
 
 private:
   Esri::ArcGISRuntime::LocalMapService* m_localMapService = nullptr;
@@ -76,6 +80,7 @@ private:
   bool m_isServerRunning = false;
   bool m_isServiceRunning = false;
   QHash<QUrl, Esri::ArcGISRuntime::LocalService*> m_servicesHash;
+  std::unique_ptr<QTemporaryDir> m_tempDir;
 };
 
 #endif // LOCAL_SERVER_SERVICES_H

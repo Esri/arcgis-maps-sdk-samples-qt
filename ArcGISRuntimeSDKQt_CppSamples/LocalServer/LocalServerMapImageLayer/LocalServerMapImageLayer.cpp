@@ -25,7 +25,6 @@
 #include "Viewpoint.h"
 
 #include <QDir>
-#include <QTemporaryDir>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -78,10 +77,6 @@ void LocalServerMapImageLayer::connectSignals()
   {
     if (LocalServer::status() == LocalServerStatus::Started)
     {
-      // set temp path
-      QTemporaryDir tempDir;
-      LocalServer::instance()->setTempDataPath(tempDir.path());
-
       // start the service
       m_localMapService->start();
     }
