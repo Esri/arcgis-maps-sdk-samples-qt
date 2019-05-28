@@ -22,7 +22,6 @@
 #include "LocalFeatureService.h"
 #include "LocalGeoprocessingService.h"
 
-#include <memory>
 #include <QDesktopServices>
 #include <QDir>
 #include <QTemporaryDir>

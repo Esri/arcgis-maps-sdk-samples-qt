@@ -32,6 +32,7 @@ class GeoprocessingTask;
 
 class QTemporaryDir;
 
+#include <memory>
 #include <QQuickItem>
 #include <QStringListModel>
 

@@ -31,6 +31,7 @@ namespace Esri
 
 class QTemporaryDir;
 
+#include <memory>
 #include <QQuickItem>
 
 class LocalServerServices : public QQuickItem
