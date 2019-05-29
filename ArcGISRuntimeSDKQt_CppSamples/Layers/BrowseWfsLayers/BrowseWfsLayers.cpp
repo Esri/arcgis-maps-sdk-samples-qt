@@ -48,13 +48,7 @@ BrowseWfsLayers::BrowseWfsLayers(QObject* parent /* = nullptr */):
 
       emit layerInfoTitleListChanged();
   });
-
   m_wfsService->load();
-
-  // set initial viewpoint
-//  Envelope env(-122.341581, 47.613758, -122.332662, 47.617207, SpatialReference::wgs84());
-//  m_map->setInitialViewpoint(Viewpoint(env));
-
 }
 
 BrowseWfsLayers::~BrowseWfsLayers() = default;
