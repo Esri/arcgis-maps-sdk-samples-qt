@@ -80,7 +80,7 @@ Rectangle {
             fill: layerListColumn
             margins: -3
         }
-        color: "darkgray"
+        color: "#F5F5F5"
     }
 
     Column {
@@ -93,8 +93,8 @@ Rectangle {
         spacing: 2
 
         Label {
-            text: "Layer's in map"
-            color: "white"
+            text: "Layers in map"
+            visible: layersList.count > 0
             font {
                 pixelSize: 14
                 bold: true
@@ -108,6 +108,7 @@ Rectangle {
             width: 200
             interactive: true
             clip: true
+            visible: count > 0
             spacing: 5
             model: drawOrderModel
             delegate: Component {
@@ -118,14 +119,13 @@ Rectangle {
 
                     Label {
                         text: name
-                        color: "white"
                         Layout.leftMargin: 5
                     }
 
                     Image {
                         Layout.alignment: Qt.AlignRight
-                        Layout.preferredHeight: 30
-                        Layout.preferredWidth: 30
+                        Layout.preferredHeight: 25
+                        Layout.preferredWidth: 25
                         source: "qrc:/Samples/Layers/ManageOperationalLayers/menu.png"
 
                         MouseArea {
@@ -197,7 +197,7 @@ Rectangle {
 
         Label {
             text: "Deleted layers"
-            color: "white"
+            visible: deletedLayersList.count > 0
             font {
                 pixelSize: 14
                 bold: true
@@ -208,6 +208,7 @@ Rectangle {
         ListView {
             id: deletedLayersList
             height: contentHeight
+            visible: deletedLayersList.count > 0
             width: 200
             interactive: true
             clip: true
@@ -222,14 +223,13 @@ Rectangle {
 
                     Label {
                         text: modelData.name
-                        color: "white"
                         Layout.leftMargin: 5
                     }
 
                     Image {
                         Layout.alignment: Qt.AlignRight
-                        Layout.preferredHeight: 30
-                        Layout.preferredWidth: 30
+                        Layout.preferredHeight: 25
+                        Layout.preferredWidth: 25
                         source: "qrc:/Samples/Layers/ManageOperationalLayers/menu.png"
 
                         MouseArea {
