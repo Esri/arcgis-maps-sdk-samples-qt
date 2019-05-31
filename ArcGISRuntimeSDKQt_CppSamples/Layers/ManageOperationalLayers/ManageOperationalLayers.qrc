@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/ManageOperationalLayers">
+        <file alias="sample.json">ManageOperationalLayers.json</file>
+        <file>ManageOperationalLayers.qml</file>
+        <file>ManageOperationalLayers.h</file>
+        <file>ManageOperationalLayers.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>menu.png</file>
+        <file>DrawOrderLayerListModel.cpp</file>
+        <file>DrawOrderLayerListModel.h</file>
+    </qresource>
+</RCC>
