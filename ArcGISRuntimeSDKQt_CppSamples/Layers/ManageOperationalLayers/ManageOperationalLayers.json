@@ -1,0 +1,10 @@
+{
+    "source" :  "ManageOperationalLayers.qml",
+    "otherSourceFiles" :  [
+        "ManageOperationalLayers.h",
+        "ManageOperationalLayers.cpp",
+        "DrawOrderLayerListModel.h",
+        "DrawOrderLayerListModel.cpp"
+    ],
+    "name" : "Manage operational layers"
+}
