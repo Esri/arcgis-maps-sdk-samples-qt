@@ -36,5 +36,5 @@ int DrawOrderLayerListModel::mappedIndex(int index) const
 
 bool DrawOrderLayerListModel::lessThan(const QModelIndex& sourceLeft, const QModelIndex& sourceRight) const
 {
-  return sourceLeft.row() > sourceRight.row();
+  return sourceLeft.row() >= sourceRight.row();
 }

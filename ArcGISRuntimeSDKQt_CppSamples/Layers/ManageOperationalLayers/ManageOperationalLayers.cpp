@@ -73,15 +73,12 @@ void ManageOperationalLayers::setMapView(MapQuickView* mapView)
 
 QAbstractItemModel* ManageOperationalLayers::layerListModel() const
 {
-  if (!m_drawOrderListModel)
-    return nullptr;
-
   return m_drawOrderListModel;
 }
 
 void ManageOperationalLayers::moveLayerUp(int index)
 {
-  if (!m_drawOrderListModel || !m_map->operationalLayers())
+  if (!m_drawOrderListModel || !m_map)
     return;
 
   // get the index and move the layer up
@@ -91,7 +88,7 @@ void ManageOperationalLayers::moveLayerUp(int index)
 
 void ManageOperationalLayers::moveLayerDown(int index)
 {
-  if (!m_drawOrderListModel || !m_map->operationalLayers())
+  if (!m_drawOrderListModel || !m_map)
     return;
 
   // get the index and move the layer down
@@ -101,7 +98,7 @@ void ManageOperationalLayers::moveLayerDown(int index)
 
 void ManageOperationalLayers::removeLayer(int index)
 {
-  if (!m_drawOrderListModel || !m_map->operationalLayers())
+  if (!m_drawOrderListModel || !m_map)
     return;
 
   // get the index
@@ -119,7 +116,7 @@ void ManageOperationalLayers::removeLayer(int index)
 
 void ManageOperationalLayers::addLayer(int index)
 {
-  if (!m_drawOrderListModel || !m_map->operationalLayers())
+  if (!m_drawOrderListModel || !m_map)
     return;
 
   // get the layer from the deleted list
