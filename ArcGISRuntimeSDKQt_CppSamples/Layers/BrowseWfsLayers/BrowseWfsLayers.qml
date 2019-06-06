@@ -20,11 +20,19 @@ import QtQuick.Layouts 1.12
 import Esri.Samples 1.0
 
 Item {
+    readonly property bool swapAxis: true
 
     // add a mapView component
     MapView {
         id: view
         anchors.fill: parent
+    }
+
+    BusyIndicator {
+        id: loadingIndicator
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        running: browseWfsLayersSampleModel.isLoading;
     }
 
     Rectangle {
@@ -47,20 +55,6 @@ Item {
                 color: "#ffffff"
             }
 
-            Row {
-                Layout.margins: 3
-                CheckBox {
-                    id: axisOrderBox
-                    checked: false
-                }
-                Text {
-                    text: qsTr("Swap Coordinate Order")
-                    height: axisOrderBox.height
-                    verticalAlignment: Text.AlignVCenter
-                    color: "#ffffff"
-                }
-            }
-
             ComboBox {
                 id: layersComboBox
                 model: browseWfsLayersSampleModel.layerInfoTitleListModel
@@ -74,7 +68,17 @@ Item {
                 text: qsTr("Load Selected Layer")
                 Layout.fillWidth: true
                 Layout.margins: 3
-                onClicked: browseWfsLayersSampleModel.createWfsFeatureTable(layersComboBox.currentIndex, axisOrderBox.checked);
+                onClicked: browseWfsLayersSampleModel.createWfsFeatureTable(layersComboBox.currentIndex, !swapAxis);
+            }
+
+            Button {
+                id: swapAxisOrder
+                text: qsTr("Swap Coordinate Order")
+                Layout.margins: 3
+                Layout.fillWidth: true
+                onClicked:{
+                    browseWfsLayersSampleModel.createWfsFeatureTable(layersComboBox.currentIndex, swapAxis);
+                }
             }
         }
     }

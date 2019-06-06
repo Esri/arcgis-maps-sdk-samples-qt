@@ -74,23 +74,23 @@ void BrowseWfsLayers::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
-  {
-    if (m_mapView->isNavigating())
-      return;
-
-    populateWfsFeatureTable();
-  });
-
   emit mapViewChanged();
 }
 
 void BrowseWfsLayers::createWfsFeatureTable(int index, bool swap)
 {
+  // if swapAxisOrder button is selected swap the axis otherwise reset to default(OgcAxisOrder::NoSwap or false)
+  if (swap)
+    m_swapAxis = !m_swapAxis;
+  else
+    m_swapAxis = false;
+
+  // enable busy indicator
+  m_loadingIndicator = true;
+  emit isLoadingChanged();
+
   // clear previous layer
   m_map->operationalLayers()->clear();
-  // set viewpoint to extent of selected layer
-  m_mapView->setViewpointGeometry(m_wfsLayersInfoList[index].extent());
   // create WFS Feature Table from selected layer
   m_wfsFeatureTable = new WfsFeatureTable(m_wfsLayersInfoList[index], this);
 
@@ -99,7 +99,7 @@ void BrowseWfsLayers::createWfsFeatureTable(int index, bool swap)
   // won't request features automatically.
   m_wfsFeatureTable->setFeatureRequestMode(FeatureRequestMode::ManualCache);
 
-  if (swap)
+  if (m_swapAxis)
     m_wfsFeatureTable->setAxisOrder(OgcAxisOrder::Swap);
   else
     m_wfsFeatureTable->setAxisOrder(OgcAxisOrder::NoSwap);
@@ -111,7 +111,6 @@ void BrowseWfsLayers::createWfsFeatureTable(int index, bool swap)
       return;
 
     populateWfsFeatureTable();
-    addFeatureLayerToMap();
   });
   m_wfsFeatureTable->load();
 }
@@ -129,6 +128,11 @@ void BrowseWfsLayers::populateWfsFeatureTable()
   // query the service
   constexpr bool clearCache = false;
   const QStringList outFields {"*"};
+  connect(m_wfsFeatureTable, &WfsFeatureTable::populateFromServiceCompleted, this, [this]()
+  {
+      addFeatureLayerToMap();
+      m_mapView->setViewpointGeometry(m_wfsFeatureTable->extent());
+  });
   m_wfsFeatureTable->populateFromService(params, clearCache, outFields);
 }
 
@@ -163,4 +167,7 @@ void BrowseWfsLayers::addFeatureLayerToMap()
 
   // add the layer to the map
   m_map->operationalLayers()->append(featureLayer);
+  // disable busy indicator
+  m_loadingIndicator = false;
+  emit isLoadingChanged();
 }

@@ -29,6 +29,7 @@ Rectangle {
     property ListModel myWfsListModel: ListModel{}
     property var wfsLayersInfoList: []
     property var wfsFeatureTable
+    property bool swapAxis: false
 
     MapView {
         id: mapView
@@ -38,6 +39,13 @@ Rectangle {
             BasemapTopographic {}
 
             onComponentCompleted: createWfsService();
+        }
+
+        BusyIndicator {
+            id: loadingIndicator
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            running: false;
         }
 
         Rectangle {
@@ -60,20 +68,6 @@ Rectangle {
                     Layout.alignment: Qt.AlignHCenter
                 }
 
-                Row {
-                    Layout.margins: 3
-                    CheckBox {
-                        id: axisOrderBox
-                        checked: false
-                    }
-                    Text {
-                        text: qsTr("Swap Coordinate Order")
-                        height: axisOrderBox.height
-                        verticalAlignment: Text.AlignVCenter
-                        color: "#ffffff"
-                    }
-                }
-
                 ComboBox {
                     id: layersComboBox
                     model: myWfsListModel
@@ -88,16 +82,23 @@ Rectangle {
                     text: qsTr("Load Selected Layer")
                     Layout.fillWidth: true
                     Layout.margins: 3
-                    onClicked: createWfsFeatureTable();
+                    onClicked: {
+                        swapAxis = false;
+                        createWfsFeatureTable();
+                    }
+                }
+
+                Button {
+                    id: swapAxisOrder
+                    text: qsTr("Swap Coordinate Order")
+                    Layout.margins: 3
+                    Layout.fillWidth: true
+                    onClicked:{
+                        swapAxis = !swapAxis;
+                        createWfsFeatureTable();
+                    }
                 }
             }
-        }
-
-        onNavigatingChanged: {
-            if (navigating)
-                return;
-
-            populateWfsFeatureTable();
         }
     }
 
@@ -121,10 +122,10 @@ Rectangle {
     }
 
     function createWfsFeatureTable() {
+        // enable busy indicator
+        loadingIndicator.running = true;
         // clear previous layer
         mapView.map.operationalLayers.clear();
-        // set viewpoint to extent of selected layer
-        mapView.setViewpointGeometry(wfsLayersInfoList[layersComboBox.currentIndex].extent)
         // create WFS Feature Table from selected layer
         wfsFeatureTable = ArcGISRuntimeEnvironment.createObject("WfsFeatureTable", {layerInfo: wfsLayersInfoList[layersComboBox.currentIndex]});
 
@@ -133,7 +134,7 @@ Rectangle {
         // won't request features automatically.
         wfsFeatureTable.featureRequestMode = Enums.FeatureRequestModeManualCache;
 
-        if(axisOrderBox.checkState === Qt.Checked) {
+        if (swapAxis) {
             wfsFeatureTable.axisOrder = Enums.OgcAxisOrderSwap;
         } else {
             wfsFeatureTable.axisOrder = Enums.OgcAxisOrderNoSwap;
@@ -145,7 +146,6 @@ Rectangle {
                 return;
 
             populateWfsFeatureTable();
-            addFeatureLayerToMap();
         });
         wfsFeatureTable.load();
     }
@@ -156,6 +156,16 @@ Rectangle {
                                                                geometry: mapView.visibleArea.extent,
                                                                spatialRelationship: Enums.SpatialRelationshipIntersects
                                                            });
+
+        wfsFeatureTable.populateFromServiceStatusChanged.connect(function() {
+            if(wfsFeatureTable.populateFromServiceStatus !== Enums.TaskStatusCompleted)
+                return;
+
+            addFeatureLayerToMap();
+
+            // set viewpoint to extent of selected layer
+            mapView.setViewpointGeometry(wfsFeatureTable.extent);
+        });
         // Populate features based on query
         wfsFeatureTable.populateFromService(params, false, ["*"]);
     }
@@ -189,10 +199,9 @@ Rectangle {
                                                                  });
             break;
         case Enums.GeometryTypeUnknown:
-            return;
         case Enums.GeometryTypeEnvelope:
-            return;
         case Enums.GeometryTypeEnvelope:
+            console.debug("Error! No Renderer defined for this GeometryType");
             return;
         }
 
@@ -204,5 +213,7 @@ Rectangle {
                                                               });
         // add the layer to the map
         mapView.map.operationalLayers.append(featureLayer);
+        // disable busy indicator
+        loadingIndicator.running = false;
     }
 }

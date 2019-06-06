@@ -40,6 +40,7 @@ class BrowseWfsLayers : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QStringList layerInfoTitleListModel MEMBER m_layerInfoTitleList NOTIFY layerInfoTitleListChanged)
+  Q_PROPERTY(bool isLoading MEMBER m_loadingIndicator NOTIFY isLoadingChanged)
 
 public:
   explicit BrowseWfsLayers(QObject* parent = nullptr);
@@ -52,6 +53,7 @@ public:
 signals:
   void mapViewChanged();
   void layerInfoTitleListChanged();
+  void isLoadingChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -65,6 +67,8 @@ private:
   Esri::ArcGISRuntime::WfsFeatureTable* m_wfsFeatureTable = nullptr;
   QList<Esri::ArcGISRuntime::WfsLayerInfo> m_wfsLayersInfoList;
   QStringList m_layerInfoTitleList;
+  bool m_loadingIndicator = false;
+  bool m_swapAxis = false;
 
 
 };
