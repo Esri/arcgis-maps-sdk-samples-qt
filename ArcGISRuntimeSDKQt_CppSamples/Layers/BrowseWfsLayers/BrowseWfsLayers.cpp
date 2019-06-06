@@ -43,7 +43,7 @@ BrowseWfsLayers::BrowseWfsLayers(QObject* parent /* = nullptr */):
       return;
 
       m_wfsLayersInfoList = m_wfsService->serviceInfo().layerInfos();
-      for(auto i : m_wfsLayersInfoList)
+      for (const WfsLayerInfo& i : m_wfsLayersInfoList)
         m_layerInfoTitleList.append(i.title());
 
       emit layerInfoTitleListChanged();
@@ -99,14 +99,14 @@ void BrowseWfsLayers::createWfsFeatureTable(int index, bool swap)
   // won't request features automatically.
   m_wfsFeatureTable->setFeatureRequestMode(FeatureRequestMode::ManualCache);
 
-  if(swap == true)
+  if (swap)
     m_wfsFeatureTable->setAxisOrder(OgcAxisOrder::Swap);
   else
     m_wfsFeatureTable->setAxisOrder(OgcAxisOrder::NoSwap);
 
   // once WFS Feature Table is loaded, populate the table and add the layer to the map
-  connect(m_wfsFeatureTable, &WfsFeatureTable::doneLoading, this, [this](Error e){
-
+  connect(m_wfsFeatureTable, &WfsFeatureTable::doneLoading, this, [this](Error e)
+  {
     if(!e.isEmpty())
       return;
 
@@ -128,7 +128,7 @@ void BrowseWfsLayers::populateWfsFeatureTable()
 
   // query the service
   constexpr bool clearCache = false;
-  const QStringList outFields = {"*"};
+  const QStringList outFields {"*"};
   m_wfsFeatureTable->populateFromService(params, clearCache, outFields);
 }
 
@@ -136,9 +136,9 @@ void BrowseWfsLayers::addFeatureLayerToMap()
 {
   // create feature layer from the feature table
   FeatureLayer* featureLayer = new FeatureLayer(m_wfsFeatureTable, this);
-  SimpleRenderer* sr;
-  SimpleMarkerSymbol* sms;
-  SimpleLineSymbol* sls;
+  SimpleRenderer* sr = nullptr;
+  SimpleMarkerSymbol* sms = nullptr;
+  SimpleLineSymbol* sls = nullptr;
 
   // appropriate symbology for each corresponding geometry type
   switch (m_wfsFeatureTable->geometryType()) {
@@ -154,11 +154,8 @@ void BrowseWfsLayers::addFeatureLayerToMap()
     sls = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("red"), 3.0f, this);
     sr = new SimpleRenderer(sls, this);
     break;
-  case GeometryType::Unknown:
-    return;
-  case GeometryType::Multipoint:
-    return;
-  case GeometryType::Envelope:
+  default:
+    qDebug() << "Error! No Renderer defined for this GeometryType";
     return;
   }
   // apply renderer to layer
