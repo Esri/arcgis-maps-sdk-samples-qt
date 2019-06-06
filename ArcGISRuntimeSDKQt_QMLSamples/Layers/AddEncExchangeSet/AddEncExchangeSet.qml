@@ -24,10 +24,14 @@ Rectangle {
     width: 800
     height: 600
 
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     Component.onCompleted: {
-        //EncEnvironmentSettings.sencDataPath
+        // set resource path
+        EncEnvironmentSettings.resourcePath = dataPath + "/ENC/hydrography";
+
+        // load the EncExchangeSet
+        encExchangeSet.load();
     }
 
     MapView {
@@ -39,15 +43,23 @@ Rectangle {
             BasemapOceans {}
 
             EncExchangeSet {
+                id: encExchangeSet
                 paths: [dataPath + "/ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031"]
-
-                // load the EncExchangeSet
-                Component.onCompleted: load();
 
                 // connect to the load status changed signal
                 onLoadStatusChanged: {
-                    if (loadStatus !== Enums.LoadStatusLoaded)
+                    if (loadStatus === Enums.LoadStatusLoading) {
+                        console.log("loading...");
                         return;
+                    }
+
+                    if (loadStatus === Enums.LoadStatusFailedToLoad) {
+                        console.log("fail to load");
+                        console.log(error.message, error.additionalMessage)
+                        return;
+                    }
+
+                    console.log("loaded");
 
                     // create full extent variable
                     var fullExtent;
