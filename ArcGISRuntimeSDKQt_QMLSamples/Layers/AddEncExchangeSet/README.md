@@ -1,31 +1,37 @@
 # Add ENC exchange set
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Display nautical charts per the ENC specification.
 
 ![](screenshot.png)
 
-## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+## Use case
+
+The [ENC specification]( https://www.iho.int/iho_pubs/standard/S-57Ed3.1/20ApB1.pdf) describes how hydrographic data should be displayed digitally.
+
+An ENC exchange set is a catalog of data files which can be loaded as cells. The cells contain information on how symbols should be displayed in relation to one another, so as to represent information such as depth and obstacles accurately.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Specify the path to a local CATALOG.031 file to create an `EncExchangeSet`.
+2. After loading the exchange set, get the `EncDataset` objects in the exchange set.
+3. Create an `EncCell` for each dataset. Then create an `EncLayer` for each cell.
+4. Add the ENC layer to a map's operational layers collection to display it.
 
 ## Relevant API
- - ClassName1
- - MethodName
+
+* EncCell
+* EncDataset
+* EncExchangeSet
+* EncLayer
+
+## Tags
+
+Data, ENC, maritime, nautical chart, layers, hydrographic
 
 ## Offline data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
 ---------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
-
-## Tags
-Routing, Network analysis, Geocode
-
+|[Exchange Set](https://www.arcgis.com/home/item.html?id=9d2987a825c646468b3ce7512fb76e2d)| `<userhome>`/ArcGIS/Runtime/Data/ENC/ExchangeSetwithoutUpdates |
+|[Hydrography](https://www.arcgis.com/home/item.html?id=af74ccbb69c846ef97085e4bebd3e76a)| `<userhome>`/ArcGIS/Runtime/Data/ENC/hydrography |

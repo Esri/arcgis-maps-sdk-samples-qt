@@ -46,10 +46,11 @@ Rectangle {
                 id: encExchangeSet
                 paths: [dataPath + "/ENC/ExchangeSetwithoutUpdates/ENC_ROOT/CATALOG.031"]
 
+                property var layers: []
+
                 // connect to the load status changed signal
                 onLoadStatusChanged: {
                     if (loadStatus === Enums.LoadStatusLoading) {
-                        console.log("loading...");
                         return;
                     }
 
@@ -58,8 +59,6 @@ Rectangle {
                         console.log(error.message, error.additionalMessage)
                         return;
                     }
-
-                    console.log("loaded");
 
                     // create full extent variable
                     var fullExtent;
@@ -71,16 +70,18 @@ Rectangle {
                         // create an EncCell from each dataset
                         var encCell = ArcGISRuntimeEnvironment.createObject("EncCell", {
                                                                                 dataset: datasets[i]
-                                                                            });
+                                                                            }, map);
 
                         // create an EncLayer from each cell
                         var encLayer = ArcGISRuntimeEnvironment.createObject("EncLayer", {
                                                                                  cell: encCell
-                                                                             });
+                                                                             }, map);
+                        layers.push(encLayer);
 
                         encLayer.loadStatusChanged.connect(function() {
-                            if (encLayer.loadStatus === Enums.LoadStatusLoaded)
+                            if (encLayer.loadStatus === Enums.LoadStatusLoaded) {
                                 count++;
+                            }
 
                             if (count === datasets.length) {
                                 for (var index = 0; index < map.operationalLayers.count; index++) {
