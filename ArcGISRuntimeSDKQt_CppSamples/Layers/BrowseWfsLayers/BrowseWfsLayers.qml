@@ -1,4 +1,4 @@
-// [WriteFile Name=BrowseWfsLayers, Category=Geometry]
+// [WriteFile Name=BrowseWfsLayers, Category=Layers]
 // [Legal]
 // Copyright 2019 Esri.
 
