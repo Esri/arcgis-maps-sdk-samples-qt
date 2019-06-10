@@ -36,7 +36,6 @@
         "FeatureQueryResult"
     ],
     "snippets": [
-        "PLEASE VERIFY THE INCLUSION OF THESE SNIPPETS ***",
         "DeleteFeaturesFeatureService.qml"
     ],
     "title": "Delete features (feature service)"
