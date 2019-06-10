@@ -24,10 +24,10 @@ namespace ArcGISRuntime
 class Map;
 class MapQuickView;
 class EncExchangeSet;
+class Geometry;
 }
 }
 
-#include "Geometry.h"
 #include <QObject>
 
 class AddEncExchangeSet : public QObject

@@ -25,7 +25,7 @@ Rectangle {
     height: 600
 
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
-    property var count: 0
+    property var loadedEncLayerCount: 0
 
     Component.onCompleted: {
         // set resource path
@@ -77,11 +77,11 @@ Rectangle {
                         // connect to loadStatusChanged for each layer
                         encLayer.loadStatusChanged.connect(function() {
                             if (encLayer.loadStatus === Enums.LoadStatusLoaded) {
-                                count++;
+                                loadedEncLayerCount++;
                             }
 
                             // loop through the layers and zoom to the combined full extent
-                            if (count === datasets.length) {
+                            if (loadedEncLayerCount === datasets.length) {
                                 var fullExtents = [];
                                 map.operationalLayers.forEach(function(layer) {
                                     fullExtents.push(layer.fullExtent);
