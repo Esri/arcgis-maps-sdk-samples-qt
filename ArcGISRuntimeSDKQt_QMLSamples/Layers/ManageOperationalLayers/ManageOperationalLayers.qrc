@@ -5,5 +5,7 @@
         <file>screenshot.png</file>
         <file>README.md</file>
         <file>menu.png</file>
+        <file>DrawOrderLayerListModel.cpp</file>
+        <file>DrawOrderLayerListModel.h</file>
     </qresource>
 </RCC>
