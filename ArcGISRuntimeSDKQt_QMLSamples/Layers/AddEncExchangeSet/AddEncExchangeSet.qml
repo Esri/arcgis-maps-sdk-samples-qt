@@ -25,6 +25,7 @@ Rectangle {
     height: 600
 
     property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    property var count: 0
 
     Component.onCompleted: {
         // set resource path
@@ -50,19 +51,14 @@ Rectangle {
 
                 // connect to the load status changed signal
                 onLoadStatusChanged: {
-                    if (loadStatus === Enums.LoadStatusLoading) {
-                        return;
-                    }
-
                     if (loadStatus === Enums.LoadStatusFailedToLoad) {
-                        console.log("fail to load");
-                        console.log(error.message, error.additionalMessage)
+                        console.log("fail to load", error.message, error.additionalMessage);
                         return;
                     }
 
-                    // create full extent variable
-                    var fullExtent;
-                    var count = 0;
+                    if (loadStatus !== Enums.LoadStatusLoaded) {
+                        return;
+                    }
 
                     // loop through the datasets
                     for (var i = 0; i < datasets.length; i++) {
@@ -78,20 +74,20 @@ Rectangle {
                                                                              }, map);
                         layers.push(encLayer);
 
+                        // connect to loadStatusChanged for each layer
                         encLayer.loadStatusChanged.connect(function() {
                             if (encLayer.loadStatus === Enums.LoadStatusLoaded) {
                                 count++;
                             }
 
+                            // loop through the layers and zoom to the combined full extent
                             if (count === datasets.length) {
-                                for (var index = 0; index < map.operationalLayers.count; index++) {
-                                    var lyr = map.operationalLayers.get(index);
-                                    if (index === 0)
-                                        fullExtent = lyr.fullExtent;
-
-                                    fullExtent = GeometryEngine.combineExtents(fullExtent, lyr.fullExtent);
-                                    mapView.setViewpointGeometry(fullExtent)
-                                }
+                                var fullExtents = [];
+                                map.operationalLayers.forEach(function(layer) {
+                                    fullExtents.push(layer.fullExtent);
+                                });
+                                var fullExtentOfLayers = GeometryEngine.combineExtentsOfGeometries(fullExtents);
+                                mapView.setViewpointGeometry(fullExtentOfLayers)
                             }
                         });
 
