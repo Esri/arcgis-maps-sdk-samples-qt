@@ -1,0 +1,30 @@
+{
+    "category": "Layers",
+    "description": "Demonstrates how to use a colormap renderer on raster layer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "colormap renderer",
+        "Map",
+        "Basemap",
+        "ColormapRenderer",
+        "MapView",
+        "Raster",
+        "RasterLayer"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-rastercolormaprenderer.htm",
+    "relevant_apis": [
+        "Map",
+        "Basemap",
+        "ColormapRenderer",
+        "MapView",
+        "Raster",
+        "RasterLayer"
+    ],
+    "snippets": [
+        "RasterColormapRenderer.qml"
+    ],
+    "title": "Colormap renderer"
+}

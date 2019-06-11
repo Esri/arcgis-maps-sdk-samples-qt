@@ -1,0 +1,37 @@
+{
+    "category": "Maps",
+    "description": "This sample demonstrates how to get the view status of a Layer in a Map",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "status",
+        "load",
+        "MapView",
+        "Map",
+        "ArcGISTiledLayer",
+        "ArcGISMapImageLayer",
+        "FeatureLayer",
+        "ServiceFeatureTable",
+        "ViewpointCenter",
+        "Point",
+        "SpatialReference"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-displaylayerviewdrawstate.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "ArcGISTiledLayer",
+        "ArcGISMapImageLayer",
+        "FeatureLayer",
+        "ServiceFeatureTable",
+        "ViewpointCenter",
+        "Point",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "DisplayLayerViewDrawState.qml"
+    ],
+    "title": "Display layer view draw state"
+}

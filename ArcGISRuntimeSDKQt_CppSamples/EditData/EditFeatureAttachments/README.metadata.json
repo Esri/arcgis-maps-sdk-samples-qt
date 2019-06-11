@@ -1,0 +1,47 @@
+{
+    "category": "Edit data",
+    "description": "The sample demonstrates how to add, delete, and fetch attachments for a specific feature in a feature service",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "edit feature attachments",
+        "attachments",
+        "edit features",
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Feature",
+        "ArcGISFeature",
+        "FeatureEditResult",
+        "FeatureQueryResult",
+        "AttachmentListModel"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-editfeatureattachments.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Feature",
+        "ArcGISFeature",
+        "FeatureEditResult",
+        "FeatureQueryResult",
+        "AttachmentListModel"
+    ],
+    "snippets": [
+        "EditFeatureAttachments.cpp",
+        "main.qml",
+        "EditFeatureAttachments.h",
+        "EditFeatureAttachments.qml"
+    ],
+    "title": "Edit feature attachments"
+}

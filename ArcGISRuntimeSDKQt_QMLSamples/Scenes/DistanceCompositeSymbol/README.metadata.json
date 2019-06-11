@@ -1,0 +1,42 @@
+{
+    "category": "Scenes",
+    "description": "This sample demonstrates how to create a graphic using a distance composite scene symbol",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "distance",
+        "Scene",
+        "ArcGISTiledElevationSource",
+        "Camera",
+        "DistanceCompositeSceneSymbol",
+        "DistanceCompositeSceneSymbol.Range",
+        "Graphic",
+        "GraphicsOverlay",
+        "ModelSceneSymbol",
+        "Range",
+        "RangeCollection",
+        "SceneView",
+        "SimpleMarkerSceneSymbol"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-distancecompositesymbolurl.htm",
+    "relevant_apis": [
+        "Scene",
+        "ArcGISTiledElevationSource",
+        "Camera",
+        "DistanceCompositeSceneSymbol",
+        "DistanceCompositeSceneSymbol.Range",
+        "Graphic",
+        "GraphicsOverlay",
+        "ModelSceneSymbol",
+        "Range",
+        "RangeCollection",
+        "SceneView",
+        "SimpleMarkerSceneSymbol"
+    ],
+    "snippets": [
+        "DistanceCompositeSymbol.qml"
+    ],
+    "title": "Distance composite symbol"
+}

@@ -1,0 +1,27 @@
+{
+    "category": "Scenes",
+    "description": "Opens and displays a scene from a Mobile Scene Package (specifically, basemaps and features) used to display an offline 3D scene.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "offline",
+        "3D",
+        "mobile scene package",
+        "mspk"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-openmobilescenepackage.htm",
+    "relevant_apis": [
+        "MobileScenePackage",
+        "Scene",
+        "SceneView"
+    ],
+    "snippets": [
+        "OpenMobileScenePackage.cpp",
+        "OpenMobileScenePackage.h",
+        "main.qml",
+        "OpenMobileScenePackage.qml"
+    ],
+    "title": "Open mobile scene package"
+}

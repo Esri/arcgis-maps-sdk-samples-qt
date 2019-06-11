@@ -1,0 +1,33 @@
+{
+    "category": "Display information",
+    "description": "This sample demonstrates how to override the default renderer of a shapefile when displaying with a FeatureLayer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "shapefile",
+        "shape file",
+        "ShapefileFeatureTable",
+        "FeatureLayer",
+        "SimpleRenderer",
+        "SimpleFillSymbol",
+        "SimpleLineSymbol",
+        "Map"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-symbolizeshapefile.htm",
+    "relevant_apis": [
+        "ShapefileFeatureTable",
+        "FeatureLayer",
+        "SimpleRenderer",
+        "SimpleFillSymbol",
+        "SimpleLineSymbol",
+        "Map"
+    ],
+    "snippets": [
+        "SymbolizeShapefile.cpp",
+        "SymbolizeShapefile.qml",
+        "SymbolizeShapefile.h"
+    ],
+    "title": "Symbolize a shapefile"
+}

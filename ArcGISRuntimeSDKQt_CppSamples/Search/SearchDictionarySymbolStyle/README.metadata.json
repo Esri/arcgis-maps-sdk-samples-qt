@@ -1,0 +1,23 @@
+{
+    "category": "Search",
+    "description": "This sample demonstrates how to search a DictionarySymbolStyle and return the results in a ListView",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "military symbology",
+        "symbol dictionary"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-searchdictionarysymbolstyle.htm",
+    "relevant_apis": [
+        "DictionarySymbolStyle",
+        "SymbolStyleSearchParameters"
+    ],
+    "snippets": [
+        "SearchDictionarySymbolStyle.h",
+        "SearchDictionarySymbolStyle.cpp",
+        "SearchDictionarySymbolStyle.qml"
+    ],
+    "title": "Search dictionary symbol style"
+}

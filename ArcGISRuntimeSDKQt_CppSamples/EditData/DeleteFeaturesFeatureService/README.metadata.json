@@ -1,0 +1,44 @@
+{
+    "category": "Edit data",
+    "description": "This sample demonstrates how to delete a feature from a feature service",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "delete feature",
+        "feature editing",
+        "feature service",
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Feature",
+        "ArcGISFeature",
+        "FeatureEditResult",
+        "FeatureQueryResult"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-deletefeaturesfeatureservice.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Feature",
+        "ArcGISFeature",
+        "FeatureEditResult",
+        "FeatureQueryResult"
+    ],
+    "snippets": [
+        "DeleteFeaturesFeatureService.cpp",
+        "DeleteFeaturesFeatureService.h",
+        "DeleteFeaturesFeatureService.qml"
+    ],
+    "title": "Delete features (feature service)"
+}

@@ -1,0 +1,25 @@
+{
+    "category": "Scenes",
+    "description": "This sample demonstrates how to update the orientation of a graphic using scene property rotation expressions",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        "rotation expressions"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-scenepropertiesexpressions.htm",
+    "relevant_apis": [
+        "SimpleRenderer",
+        "GraphicsOverlay",
+        "RendererSceneProperties"
+    ],
+    "snippets": [
+        "ScenePropertiesExpressions.cpp",
+        "ScenePropertiesExpressions.h",
+        "main.qml",
+        "ScenePropertiesExpressions.qml"
+    ],
+    "title": "Scene properties expressions"
+}

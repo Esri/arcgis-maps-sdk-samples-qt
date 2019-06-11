@@ -1,0 +1,24 @@
+{
+    "category": "Layers",
+    "description": "This sample demonstrates how to display map tiles from an online resource using the WebTiledLayer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "web tiled layer"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-web-tiled-layer.htm",
+    "relevant_apis": [
+        "WebTiledLayer",
+        "Basemap",
+        "Map",
+        "MapView"
+    ],
+    "snippets": [
+        "Web_Tiled_Layer.cpp",
+        "Web_Tiled_Layer.qml",
+        "Web_Tiled_Layer.h"
+    ],
+    "title": "Web tiled layer"
+}

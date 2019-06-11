@@ -1,0 +1,39 @@
+{
+  "category": "Local Server",
+  "description": "Demonstrates how to create contour lines from local raster data using a local geoprocessing package (.gpk) and the contour geoprocessing tool",
+  "ignore": false,
+  "images": [
+    "screenshot.png"
+  ],
+  "keywords": [
+    "Offline",
+    "Analysis",
+    "GeoprocessingDouble",
+    "GeoprocessingJob",
+    "GeoprocessingParameter",
+    "GeoprocessingParameters",
+    "GeoprocessingTask",
+    "LocalGeoprocessingService",
+    "LocalGeoprocessingService.ServiceType",
+    "LocalServer",
+    "LocalServerStatus"
+  ],
+  "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-localservergeoprocessing.htm",
+  "relevant_apis": [
+    "GeoprocessingDouble",
+    "GeoprocessingJob",
+    "GeoprocessingParameter",
+    "GeoprocessingParameters",
+    "GeoprocessingTask",
+    "LocalGeoprocessingService",
+    "LocalGeoprocessingService.ServiceType",
+    "LocalServer",
+    "LocalServerStatus"
+  ],
+  "snippets": [
+    "LocalServerGeoprocessing.qml",
+    "LocalServerGeoprocessing.h",
+    "LocalServerGeoprocessing.cpp"
+  ],
+  "title": "Local Server geoprocessing"
+}

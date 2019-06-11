@@ -8,7 +8,7 @@ Demonstrates how to start the Local Server and local feature service, create a f
 
 ## How to use the sample
 
-The Local Server and local feature fervice will automatically be started and, once running, a feature layer is created and added to the map.
+The Local Server and local feature service will automatically be started and, once running, a feature layer is created and added to the map.
 
 ## How it works
 

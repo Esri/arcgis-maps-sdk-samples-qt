@@ -1,0 +1,28 @@
+{
+    "category": "Geometry",
+    "description": "This sample demonstrates how to project a point from one spatial reference to another",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "project geometry",
+        "spatial reference",
+        "projection",
+        "coordinate system",
+        "geometry engine",
+        "GeometryEngine",
+        "Point",
+        "SpatialReference"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-projectgeometry.htm",
+    "relevant_apis": [
+        "GeometryEngine",
+        "Point",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "ProjectGeometry.qml"
+    ],
+    "title": "Project"
+}

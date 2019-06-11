@@ -1,0 +1,26 @@
+{
+    "category": "Scenes",
+    "description": "This sample demonstrates how to create symbols with different 3D shapes",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "create 3D shapes",
+        "SceneView",
+        "Graphic",
+        "GraphicsOverlay",
+        "SimpleMarkerSceneSymbol"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-scenesymbols.htm",
+    "relevant_apis": [
+        "SceneView",
+        "Graphic",
+        "GraphicsOverlay",
+        "SimpleMarkerSceneSymbol"
+    ],
+    "snippets": [
+        "Symbols.qml"
+    ],
+    "title": "Scene symbols"
+}

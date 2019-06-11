@@ -1,0 +1,27 @@
+{
+    "category": "Layers",
+    "description": "This sample demonstrates how to create an ImageServiceRaster and add it to a raster layer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Map",
+        "MapQuickView",
+        "ImageServiceRaster",
+        "RasterLayer"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-rasterlayerservice.htm",
+    "relevant_apis": [
+        "Map",
+        "MapQuickView",
+        "ImageServiceRaster",
+        "RasterLayer"
+    ],
+    "snippets": [
+        "RasterLayerService.cpp",
+        "RasterLayerService.h",
+        "RasterLayerService.qml"
+    ],
+    "title": "Raster layer (service)"
+}

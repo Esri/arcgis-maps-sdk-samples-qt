@@ -1,0 +1,27 @@
+{
+    "category": "Layers",
+    "description": "This sample demonstrates how to add the OpenStreetMap layer to a map as a Basemap",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "OSM",
+        "OpenStreetMap",
+        "OpenStreetMapLayer",
+        "BasemapOpenStreetMap",
+        "Map",
+        "MapView"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-osm-layer.htm",
+    "relevant_apis": [
+        "OpenStreetMapLayer",
+        "BasemapOpenStreetMap",
+        "Map",
+        "MapView"
+    ],
+    "snippets": [
+        "OSM_Layer.qml"
+    ],
+    "title": "OpenStreetMap layer"
+}

@@ -1,0 +1,40 @@
+{
+    "category": "Geometry",
+    "description": "This sample demonstrates how to perform spatial operations on geometries using the GeometryEngine",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "geometry engine",
+        "geometric union",
+        "geometric difference",
+        "geometric symmetric difference",
+        "geometric intersection",
+        "GeometryEngine",
+        "GeometryEngine::union",
+        "GeometryEngine::difference",
+        "GeometryEngine::symmetricDifference",
+        "GeometryEngine::intersection",
+        "Geometry",
+        "Graphic",
+        "GraphicsOverlay",
+        "PolygonBuilder"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-spatialoperations.htm",
+    "relevant_apis": [
+        "GeometryEngine",
+        "GeometryEngine::union",
+        "GeometryEngine::difference",
+        "GeometryEngine::symmetricDifference",
+        "GeometryEngine::intersection",
+        "Geometry",
+        "Graphic",
+        "GraphicsOverlay",
+        "PolygonBuilder"
+    ],
+    "snippets": [
+        "SpatialOperations.qml"
+    ],
+    "title": "Spatial operations"
+}
