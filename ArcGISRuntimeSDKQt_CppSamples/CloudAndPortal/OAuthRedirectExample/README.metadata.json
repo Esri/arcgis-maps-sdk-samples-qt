@@ -1,7 +1,7 @@
 {
     "category": "Cloud and portal",
     "description": "This sample demonstrates an approach to using OAuth2 for authenticating with an ArcGIS portal",
-    "ignore": false,
+    "ignore": true,
     "images": [],
     "keywords": [
         "authentication",
