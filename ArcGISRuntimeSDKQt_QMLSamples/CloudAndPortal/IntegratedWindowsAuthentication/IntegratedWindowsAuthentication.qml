@@ -27,6 +27,7 @@ Rectangle {
     height: 600
 
     readonly property url arcgis_url: "http://www.arcgis.com"
+    property var portalItem
 
     MapView {
         id: mapView
@@ -48,19 +49,40 @@ Rectangle {
             if (loadStatus !== Enums.LoadStatusLoaded) {
                 return;
             }
+        }
 
 
+    }
+
+    Component {
+        id: webmapDelegate
+        Rectangle {
+            height: childrenRect.height
+            width: childrenRect.width
+            color: "#00000000"
+            Text {
+                id: outputString
+                text: title
+                color: "white"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: webmapsList.currentIndex = index;
+                onDoubleClicked: loadSelectedWebmap(webmapsList.model.get(index));
+            }
         }
     }
 
     Rectangle {
+        id: portalLayoutRect
         anchors {
             margins: 5
             horizontalCenter: parent.horizontalCenter
             top: parent.top
         }
         width: childrenRect.width
-        height: childrenRect.height
+        height: childrenRect.height * 2.2
         color: "#000000"
         opacity: .75
         radius: 5
@@ -93,32 +115,13 @@ Rectangle {
 
             //use listview or repeater if it doesn't work
             ListView {
+                id: webmapsList
                 width: childrenRect.width
                 height: childrenRect.height
                 Layout.margins: 3
-                id: webmapsList
-                model: test
-                delegate: Text {
-                    id: outputString
-                    text: name
-                    color: "white"
-                }
+                model: null
+                delegate: webmapDelegate
             }
-        }
-
-    }
-
-    ListModel {
-        id: test
-
-        ListElement {
-            name: "Apple"
-        }
-        ListElement {
-            name: "Orange"
-        }
-        ListElement {
-            name: "Banana"
         }
     }
 
@@ -137,16 +140,61 @@ Rectangle {
         var pubPortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
         pubPortal.loadStatusChanged.connect(function() {
             if (pubPortal.loadStatus === Enums.LoadStatusFailedToLoad)
-                pubPortal.retryLQoad();
+                pubPortal.retryLoad();
 
             if (pubPortal.loadStatus === Enums.LoadStatusLoaded){
                 indicator.running = false;
+                pubPortal.findItems(webmapQuery);
                 return;
+            }
+
+        });
+
+        pubPortal.findItemsStatusChanged.connect(function() {
+
+            if ( pubPortal.findItemsStatus === Enums.TaskStatusCompleted ) {
+                console.log("signal exists");
+                webmapsList.model = pubPortal.findItemsResult.itemResults;
             }
 
         });
         pubPortal.load();
         indicator.running = true;
+    }
+
+    function loadSelectedWebmap(selectedWebmap) {
+        portalItem = selectedWebmap;
+
+        portalItem.loadStatusChanged.connect(createMap);
+        portalItem.loadErrorChanged.connect( function() {
+            webMapMsg.text = portalItem.loadError.message;
+            webMapMsg.visible = true;
+        });
+
+        portalItem.load();
+    }
+
+    function createMap() {
+        if (portalItem.loadStatus !== Enums.LoadStatusLoaded)
+            return;
+
+        mapView.map = ArcGISRuntimeEnvironment.createObject("Map", {"item": portalItem});
+
+        mapView.map.loadStatusChanged.connect(assignWebmap);
+        mapView.map.loadErrorChanged.connect( function() {
+            webMapMsg.text = mapView.map.loadError.message;
+            webMapMsg.visible = true;
+        });
+
+        mapView.map.load();
+    }
+
+    function assignWebmap() {
+        if (mapView.map.loadStatus !== Enums.LoadStatusLoaded)
+            return;
+
+        //webmapsList.visible = false;
+        mapView.visible = true;
     }
 
 
@@ -157,4 +205,18 @@ Rectangle {
     }
 
     //! [PortalUserInfo create portal]
+
+    Dialog {
+        id: webMapMsg
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
+        title: "Could not load web map!"
+        property alias text : textLabel.text
+        Text {
+            id: textLabel
+        }
+        onAccepted: visible = false;
+    }
 }
