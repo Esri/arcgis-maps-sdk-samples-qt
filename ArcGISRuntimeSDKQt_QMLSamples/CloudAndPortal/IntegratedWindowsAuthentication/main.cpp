@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
   app.setApplicationName(QStringLiteral("IntegratedWindowsAuthentication - QML"));
 
 #ifdef QT_WEBVIEW_WEBENGINE_BACKEND
-QtWebEngine::initialize();
+  QtWebEngine::initialize();
 #endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Intialize application view

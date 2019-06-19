@@ -63,6 +63,7 @@ Rectangle {
             Text {
                 id: outputString
                 text: title
+                horizontalAlignment: Text.AlignHCenter
                 color: "white"
             }
 
@@ -70,6 +71,31 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: webmapsList.currentIndex = index;
                 onDoubleClicked: loadSelectedWebmap(webmapsList.model.get(index));
+            }
+        }
+    }
+
+    Component {
+        id: highlightDelegate
+
+        Rectangle {
+            z: 110
+            width: webmapsList.width
+            color: "orange"
+            radius: 4
+
+            Text {
+                anchors {
+                    fill: parent
+                    margins: 10
+                }
+                //not needed?
+                //text: webmapsList.model.count > 0 ? webmapsList.model.get(webmapsList.currentIndex).title : ""
+                font.bold: true
+                elide: Text.ElideRight
+                wrapMode: Text.Wrap
+                color: "white"
+                horizontalAlignment: Text.AlignHCenter
             }
         }
     }
@@ -92,7 +118,8 @@ Rectangle {
                 id: securePortalUrl
                 Layout.fillWidth: true
                 Layout.margins: 3
-                text: qsTr("Enter portal url")
+//                text: qsTr("Enter portal url")
+                text: qsTr("https://portaliwads.ags.esri.com/gis/")
             }
 
             Row {
@@ -109,7 +136,10 @@ Rectangle {
                 Button {
                     id: searchSecure
                     text: qsTr("Search Secure")
-                    //onClicked: //do something
+                    onClicked: {
+                        console.log(securePortalUrl.text)
+                        searchPortal(securePortalUrl.text)
+                    }
                 }
             }
 
@@ -118,9 +148,12 @@ Rectangle {
                 id: webmapsList
                 width: childrenRect.width
                 height: childrenRect.height
+                cacheBuffer: 318
                 Layout.margins: 3
-                model: null
                 delegate: webmapDelegate
+                highlightFollowsCurrentItem: true
+                highlight: highlightDelegate
+                model: null
             }
         }
     }
@@ -139,11 +172,13 @@ Rectangle {
     function searchPortal (portalUrl) {
         var pubPortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
         pubPortal.loadStatusChanged.connect(function() {
-            if (pubPortal.loadStatus === Enums.LoadStatusFailedToLoad)
-                pubPortal.retryLoad();
+            if (pubPortal.loadStatus === Enums.LoadStatusFailedToLoad) {
+                console.log("Failed to load - try again")
+                indicator.running = false;
+                return;
+            }
 
             if (pubPortal.loadStatus === Enums.LoadStatusLoaded){
-                indicator.running = false;
                 pubPortal.findItems(webmapQuery);
                 return;
             }
@@ -153,6 +188,7 @@ Rectangle {
         pubPortal.findItemsStatusChanged.connect(function() {
 
             if ( pubPortal.findItemsStatus === Enums.TaskStatusCompleted ) {
+                indicator.running = false;
                 console.log("signal exists");
                 webmapsList.model = pubPortal.findItemsResult.itemResults;
             }
@@ -200,7 +236,6 @@ Rectangle {
 
     // Uncomment this section when running as standalone application
     AuthenticationView {
-        id: authView
         authenticationManager: AuthenticationManager
     }
 
