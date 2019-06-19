@@ -108,7 +108,7 @@ Rectangle {
             top: parent.top
         }
         width: childrenRect.width
-        height: childrenRect.height * 2.2
+        height: childrenRect.height
         color: "#000000"
         opacity: .75
         radius: 5
@@ -131,14 +131,16 @@ Rectangle {
                     text: qsTr("Search Public")
                     onClicked: {
                         searchPortal(arcgis_url);
+                        loadSelectedWebmapBtn.visible = true;
                     }
                 }
                 Button {
                     id: searchSecure
                     text: qsTr("Search Secure")
                     onClicked: {
-                        console.log(securePortalUrl.text)
-                        searchPortal(securePortalUrl.text)
+                        console.log(securePortalUrl.text);
+                        searchPortal(securePortalUrl.text);
+                        loadSelectedWebmapBtn.visible = true;
                     }
                 }
             }
@@ -146,14 +148,22 @@ Rectangle {
             //use listview or repeater if it doesn't work
             ListView {
                 id: webmapsList
-                width: childrenRect.width
-                height: childrenRect.height
+                height: 150
                 cacheBuffer: 318
                 Layout.margins: 3
                 delegate: webmapDelegate
                 highlightFollowsCurrentItem: true
                 highlight: highlightDelegate
                 model: null
+            }
+
+            Button {
+                id: loadSelectedWebmapBtn
+                text: qsTr("Load Web Map")
+                Layout.fillWidth: true
+                Layout.margins: 3
+                visible: false
+                //onClicked: //doubleclick is not accepted on an item already double clicked
             }
         }
     }
