@@ -1,0 +1,45 @@
+{
+    "category": "Display information",
+    "description": "Open a mobile style (.stylx) and read its contents.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "MultilayerPointSymbol",
+        "Symbol::createSwatch",
+        "SymbolLayer",
+        "SymbolStyle",
+        "SymbolStyle::searchSymbols",
+        "SymbolStyle::fetchSymbol",
+        "SymbolStyleSearchResultListModel",
+        "SymbolStyleSearchResult",
+        "SymbolStyleSearchParameters",
+        "advanced",
+        "symbology",
+        "multilayer",
+        "mobile style",
+        "stylx"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "MultilayerPointSymbol",
+        "Symbol::createSwatch",
+        "SymbolLayer",
+        "SymbolStyle",
+        "SymbolStyle::searchSymbols",
+        "SymbolStyle::fetchSymbol",
+        "SymbolStyleSearchResultListModel",
+        "SymbolStyleSearchResult",
+        "SymbolStyleSearchParameters"
+    ],
+    "snippets": [
+        "ReadSymbolsFromMobileStyle.qml",
+        "ReadSymbolsFromMobileStyle.h",
+        "ReadSymbolsFromMobileStyle.cpp",
+        "SymbolComboBox.qml",
+        "SymbolImageProvider.h",
+        "SymbolImageProvider.cpp"
+    ],
+    "title": "Read symbols from a mobile style"
+}

@@ -1,0 +1,22 @@
+{
+    "category": "Scenes",
+    "description": "Fix the camera to point at and rotate around a target object.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "OrbitGeoElementCameraController",
+        "Camera",
+        "SceneView",
+        "3D"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "OrbitGeoElementCameraController"
+    ],
+    "snippets": [
+        "OrbitCameraAroundObject.qml"
+    ],
+    "title": "Orbit the camera around an object"
+}

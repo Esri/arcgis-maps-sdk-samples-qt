@@ -1,0 +1,29 @@
+{
+    "category": "Layers",
+    "description": "Add, remove, and reorder operational layers in a map.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "ArcGISMap",
+        "ArcGISMapImageLayer",
+        "LayerListModel",
+        "LayerListModel.append",
+        "LayerListModel.move",
+        "LayerListModel.remove"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "ArcGISMap",
+        "ArcGISMapImageLayer",
+        "LayerListModel",
+        "LayerListModel.append",
+        "LayerListModel.move",
+        "LayerListModel.remove"
+    ],
+    "snippets": [
+        "ManageOperationalLayers.qml"
+    ],
+    "title": "Manage operational layers"
+}
