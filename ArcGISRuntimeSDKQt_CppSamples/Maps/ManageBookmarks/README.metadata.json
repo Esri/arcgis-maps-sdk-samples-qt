@@ -1,0 +1,35 @@
+{
+    "category": "Maps",
+    "description": "This sample demonstrates how to access and add bookmarks to a map",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+      "Area of Interest",
+      "Extent",
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "Bookmark",
+        "Envelope",
+        "SpatialReference"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-managebookmarks.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "Bookmark",
+        "Envelope",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "ManageBookmarks.cpp",
+        "ManageBookmarks.h",
+        "ManageBookmarks.qml"
+    ],
+    "title": "Manage bookmarks"
+}

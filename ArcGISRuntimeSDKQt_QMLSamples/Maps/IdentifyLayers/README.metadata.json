@@ -1,0 +1,32 @@
+{
+    "category": "Maps",
+    "description": "This sample demonstrates how to identify features on a map across the different layers in the map",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "find",
+        "search",
+        "attribute",
+        "MapView",
+        "IdentifyLayerResult",
+        "ArcGISMapImageLayer",
+        "ArcGISMapImageSublayer",
+        "ServiceFeatureTable",
+        "FeatureLayer"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-identifylayers.htm",
+    "relevant_apis": [
+        "MapView",
+        "IdentifyLayerResult",
+        "ArcGISMapImageLayer",
+        "ArcGISMapImageSublayer",
+        "ServiceFeatureTable",
+        "FeatureLayer"
+    ],
+    "snippets": [
+        "IdentifyLayers.qml"
+    ],
+    "title": "Identify layers"
+}

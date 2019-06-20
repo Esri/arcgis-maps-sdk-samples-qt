@@ -1,0 +1,38 @@
+{
+    "category": "Analysis",
+    "description": "This sample demonstrates how to calculate a Viewshed from a GeoElement",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "viewshed",
+        "GeoElementViewshed",
+        "AnalysisOverlay",
+        "ArcGISSceneLayer",
+        "GraphicsOverlay",
+        "LayerSceneProperties",
+        "GeometryEngine",
+        "ModelSceneSymbol",
+        "GeodeticDistanceResult",
+        "SimpleRenderer",
+        "OrbitGeoElementCameraController."
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-viewshedgeoelement.htm",
+    "relevant_apis": [
+        "GeoElementViewshed",
+        "AnalysisOverlay",
+        "ArcGISSceneLayer",
+        "GraphicsOverlay",
+        "LayerSceneProperties",
+        "GeometryEngine",
+        "ModelSceneSymbol",
+        "GeodeticDistanceResult",
+        "SimpleRenderer",
+        "OrbitGeoElementCameraController."
+    ],
+    "snippets": [
+        "ViewshedGeoElement.qml"
+    ],
+    "title": "Viewshed (geoelement)"
+}

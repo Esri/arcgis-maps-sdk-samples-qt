@@ -1,0 +1,27 @@
+{
+    "category": "Maps",
+    "description": "This sample demonstrates how to change the viewpoint of a map",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+      "Area of Interest",
+        "Extent",
+      "Viewpoint",
+        "Map",
+        "Envelope"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-changeviewpoint.htm",
+    "relevant_apis": [
+        "Viewpoint",
+        "Map",
+        "Envelope"
+    ],
+    "snippets": [
+        "ChangeViewpoint.cpp",
+        "ChangeViewpoint.qml",
+        "ChangeViewpoint.h"
+    ],
+    "title": "Change viewpoint"
+}

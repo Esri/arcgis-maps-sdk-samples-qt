@@ -1,0 +1,25 @@
+{
+    "category": "Maps",
+    "description": "This sample demonstrates how to open and display a map from a Mobile Map Package",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+      "Offline",
+      "Disconnected",
+        "MapView",
+        "MobileMapPackage"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-openmobilemap-mappackage.htm",
+    "relevant_apis": [
+        "MapView",
+        "MobileMapPackage"
+    ],
+    "snippets": [
+        "OpenMobileMap_MapPackage.qml",
+        "OpenMobileMap_MapPackage.cpp",
+        "OpenMobileMap_MapPackage.h"
+    ],
+    "title": "Open mobile map (map package)"
+}

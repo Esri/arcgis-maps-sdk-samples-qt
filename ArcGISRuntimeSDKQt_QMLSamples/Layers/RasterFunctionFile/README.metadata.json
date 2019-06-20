@@ -1,0 +1,25 @@
+{
+    "category": "Layers",
+    "description": "This sample demonstrates how to apply a RasterFunction to a local Raster file and display the output with a RasterLayer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "RasterFunction",
+        "RasterLayer",
+        "Raster",
+        "Map"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-rasterfunctionfile.htm",
+    "relevant_apis": [
+        "RasterFunction",
+        "RasterLayer",
+        "Raster",
+        "Map"
+    ],
+    "snippets": [
+        "RasterFunctionFile.qml"
+    ],
+    "title": "Raster function (file)"
+}

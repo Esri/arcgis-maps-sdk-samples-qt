@@ -1,0 +1,33 @@
+{
+    "category": "Cloud and portal",
+    "description": "This sample demonstrates how to retrieve a user's details via a Portal",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "portal user",
+        "user details",
+        "Portal",
+        "Credential",
+        "PortalUser",
+        "PortalInfo",
+        "AuthenticationView",
+        "AuthenticationManager"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-portaluserinfo.htm",
+    "relevant_apis": [
+        "Portal",
+        "Credential",
+        "PortalUser",
+        "PortalInfo",
+        "AuthenticationView",
+        "AuthenticationManager"
+    ],
+    "snippets": [
+        "PortalUserInfo.h",
+        "PortalUserInfo.cpp",
+        "PortalUserInfo.qml"
+    ],
+    "title": "Portal user info"
+}

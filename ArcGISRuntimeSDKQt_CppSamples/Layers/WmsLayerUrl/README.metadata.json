@@ -1,0 +1,25 @@
+{
+    "category": "Layers",
+    "description": "This sample demonstrates how to display a WMS Layer from an online URL",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "WmsLayer",
+        "Map",
+        "MapView"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-wmslayerurl.htm",
+    "relevant_apis": [
+        "WmsLayer",
+        "Map",
+        "MapView"
+    ],
+    "snippets": [
+        "WmsLayerUrl.cpp",
+        "WmsLayerUrl.h",
+        "WmsLayerUrl.qml"
+    ],
+    "title": "WMS layer (URL)"
+}

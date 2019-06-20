@@ -1,0 +1,35 @@
+{
+    "category": "Analysis",
+    "description": "This sample demonstrates how to calculate a Viewshed from a SceneView's current Camera Viewpoint",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "LocationViewshed",
+        "AnalysisOverlay",
+        "Analysis",
+        "Viewshed",
+        "Scene",
+        "SceneView",
+        "Surface",
+        "ArcGISTiledElevationSource",
+        "Camera"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-viewshedcamera.htm",
+    "relevant_apis": [
+        "LocationViewshed",
+        "AnalysisOverlay",
+        "Analysis",
+        "Viewshed",
+        "Scene",
+        "SceneView",
+        "Surface",
+        "ArcGISTiledElevationSource",
+        "Camera"
+    ],
+    "snippets": [
+        "ViewshedCamera.qml"
+    ],
+    "title": "Viewshed (camera)"
+}

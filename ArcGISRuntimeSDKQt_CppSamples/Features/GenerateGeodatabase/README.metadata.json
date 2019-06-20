@@ -1,0 +1,42 @@
+{
+    "category": "Features",
+    "description": "This sample demonstrates how to take a feature service offline by generating a geodatabase",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "mobile geodatabase",
+        "Map",
+        "MapView",
+        "ArcGISTiledLayer",
+        "TileCache",
+        "FeatureLayer",
+        "ServiceFeatureTable",
+        "GeodatabaseFeatureTable",
+        "GeodatabaseSyncTask",
+        "GenerateGeodatabaseParameters",
+        "GenerateLayerOption",
+        "GenerateGeodatabaseJob"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-generategeodatabase.htm",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "ArcGISTiledLayer",
+        "TileCache",
+        "FeatureLayer",
+        "ServiceFeatureTable",
+        "GeodatabaseFeatureTable",
+        "GeodatabaseSyncTask",
+        "GenerateGeodatabaseParameters",
+        "GenerateLayerOption",
+        "GenerateGeodatabaseJob"
+    ],
+    "snippets": [
+        "GenerateGeodatabase.qml",
+        "GenerateGeodatabase.cpp",
+        "GenerateGeodatabase.h"
+    ],
+    "title": "Generate geodatabase"
+}

@@ -1,0 +1,23 @@
+{
+    "category": "Geometry",
+    "description": "Coordinates can be written as text that is formatted in different ways",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "CoordinateFormatter",
+        "Point",
+        "Graphic"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-formatcoordinates.htm",
+    "relevant_apis": [
+        "CoordinateFormatter",
+        "Point",
+        "Graphic"
+    ],
+    "snippets": [
+        "FormatCoordinates.qml"
+    ],
+    "title": "Format coordinates"
+}

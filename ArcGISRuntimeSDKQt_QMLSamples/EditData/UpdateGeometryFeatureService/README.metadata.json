@@ -1,0 +1,39 @@
+{
+    "category": "Edit data",
+    "description": "The sample demonstrates how to update geometry of a feature in a feature service",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Feature",
+        "ArcGISFeature",
+        "FeatureEditResult",
+        "FeatureQueryResult"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-updategeometryfeatureservice.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Feature",
+        "ArcGISFeature",
+        "FeatureEditResult",
+        "FeatureQueryResult"
+    ],
+    "snippets": [
+        "UpdateGeometryFeatureService.qml"
+    ],
+    "title": "Update geometry (feature service)"
+}

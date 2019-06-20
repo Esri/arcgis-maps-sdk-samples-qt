@@ -1,0 +1,38 @@
+{
+    "category": "Display information",
+    "description": "This sample demonstrates how to build a legend for all the operational layers in the map",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "legend",
+        "3D",
+        "integrated mesh",
+        "MapView",
+        "Map",
+        "Basemap",
+        "ArcGISMapImageLayer",
+        "ArcGISSublayerListModel",
+        "ArcGISTiledLayer",
+        "FeatureLayer",
+        "ServiceFeatureTable",
+        "LegendInfo"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-buildlegend.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "ArcGISMapImageLayer",
+        "ArcGISSublayerListModel",
+        "ArcGISTiledLayer",
+        "FeatureLayer",
+        "ServiceFeatureTable",
+        "LegendInfo"
+    ],
+    "snippets": [
+        "BuildLegend.qml"
+    ],
+    "title": "Build a legend"
+}

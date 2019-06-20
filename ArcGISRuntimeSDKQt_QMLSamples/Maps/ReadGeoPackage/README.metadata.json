@@ -1,0 +1,22 @@
+{
+    "category": "Maps",
+    "description": "This sample demonstrates how to read rasters and feature tables from GeoPackages to show them as layers in a map",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "offline",
+        "OGC",
+        "GeoPackage",
+        "Map"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-readgeopackage.htm",
+    "relevant_apis": [
+        "GeoPackage"
+    ],
+    "snippets": [
+        "ReadGeoPackage.qml"
+    ],
+    "title": "Read GeoPackage"
+}

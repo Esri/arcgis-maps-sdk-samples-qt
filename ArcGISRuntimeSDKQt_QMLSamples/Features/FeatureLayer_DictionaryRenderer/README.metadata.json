@@ -1,0 +1,33 @@
+{
+    "category": "Features",
+    "description": "This sample demonstrates how to display a FeatureLayer with military symbology, using ArcGIS Runtime's DictionaryRenderer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "MapView",
+        "Map",
+        "BasemapTopographic",
+        "DictionarySymbolStyle",
+        "DictionaryRenderer",
+        "Geodatabase",
+        "FeatureLayer",
+        "GeometryEngine"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-featurelayerdictionaryrenderer.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "BasemapTopographic",
+        "DictionarySymbolStyle",
+        "DictionaryRenderer",
+        "Geodatabase",
+        "FeatureLayer",
+        "GeometryEngine"
+    ],
+    "snippets": [
+        "FeatureLayer_DictionaryRenderer.qml"
+    ],
+    "title": "Feature layer (dictionary renderer)"
+}

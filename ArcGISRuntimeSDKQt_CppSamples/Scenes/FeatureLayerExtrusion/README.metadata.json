@@ -1,0 +1,26 @@
+{
+    "category": "Scenes",
+    "description": "This sample demonstrates how to apply extrusion to a renderer on a feature layer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "vertically extrude", 
+        "renderer",
+        "3D"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-featurelayerextrusion.htm",
+    "relevant_apis": [
+        "FeatureLayer",
+        "ExtrusionMode",
+        "Renderer",
+        "SceneProperties"
+    ],
+    "snippets": [
+        "FeatureLayerExtrusion.qml",
+        "FeatureLayerExtrusion.h",
+        "FeatureLayerExtrusion.cpp"
+    ],
+    "title": "Feature layer extrusion"
+}

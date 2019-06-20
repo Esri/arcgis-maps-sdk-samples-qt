@@ -1,0 +1,37 @@
+{
+    "category": "Features",
+    "description": "This sample demonstrates how to override and reset a feature layer renderer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Envelope",
+        "SimpleLineSymbol",
+        "SimpleRenderer"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-featurelayer-changerenderer.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "Viewpoint",
+        "SpatialReference",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "Envelope",
+        "SimpleLineSymbol",
+        "SimpleRenderer"
+    ],
+    "snippets": [
+        "FeatureLayer_ChangeRenderer.qml"
+    ],
+    "title": "Feature layer change renderer"
+}

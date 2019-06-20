@@ -1,0 +1,30 @@
+{
+    "category": "Layers",
+    "description": "This sample demonstrates how to display a file with a network link, including displaying any network link control messages at launch",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "KML",
+        "KMZ",
+        "OGC",
+        "Keyhole",
+        "Network Link",
+        "Network Link Control"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-displaykmlnetworklinks.htm",
+    "relevant_apis": [
+        "KmlDataset(Url)",
+        "KmlLayer(KmlDataset)",
+        "KmlNetworkLink",
+        "KmlNetworkLinkMessageReceived"
+    ],
+    "snippets": [
+        "DisplayKmlNetworkLinks.cpp",
+        "DisplayKmlNetworkLinks.qml",
+        "DisplayKmlNetworkLinks.h",
+        "MessageButton.qml"
+    ],
+    "title": "Display KML network links"
+}

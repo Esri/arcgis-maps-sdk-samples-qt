@@ -1,0 +1,24 @@
+{
+    "category": "Layers",
+    "description": "This sample demonstrates how to open a shapefile stored on the device and display it as a feature layer with default symbology",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "shapefile",
+        "shape file",
+        "feature layer"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-featurelayershapefile.htm",
+    "relevant_apis": [
+        "ShapefileFeatureTable",
+        "FeatureLayer"
+    ],
+    "snippets": [
+        "FeatureLayerShapefile.qml",
+        "FeatureLayerShapefile.h",
+        "FeatureLayerShapefile.cpp"
+    ],
+    "title": "Feature layer (shapefile)"
+}

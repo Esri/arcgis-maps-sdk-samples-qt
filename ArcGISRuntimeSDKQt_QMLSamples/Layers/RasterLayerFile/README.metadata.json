@@ -1,0 +1,29 @@
+{
+    "category": "Layers",
+    "description": "Demonstrates how to create and use a raster layer made from a local raster file",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Raster",
+        "RasterLayer",
+        "Basemap",
+        "Map",
+        "MapView"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-rasterlayerfile.htm",
+    "relevant_apis": [
+        "Raster",
+        "RasterLayer",
+        "Basemap",
+        "Map",
+        "MapView"
+    ],
+    "snippets": [
+        "RasterLoader.qml",
+        "main.qml",
+        "RasterLayerFile.qml"
+    ],
+    "title": "Raster layer (file)"
+}

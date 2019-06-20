@@ -1,0 +1,31 @@
+{
+    "category": "Analysis",
+    "description": "This sample demonstrates how to perform a line of sight analysis between two points in a SceneView",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "line of sight",
+        "visibility",
+        "AnalysisOverlay",
+        "LocationLineOfSight",
+        "SceneView",
+        "Surface",
+        "ArcGISTiledElevationSource"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-lineofsightlocation.htm",
+    "relevant_apis": [
+        "AnalysisOverlay",
+        "LocationLineOfSight",
+        "SceneView",
+        "Surface",
+        "ArcGISTiledElevationSource"
+    ],
+    "snippets": [
+        "LineOfSightLocation.cpp",
+        "LineOfSightLocation.h",
+        "LineOfSightLocation.qml"
+    ],
+    "title": "Line of sight (location)"
+}

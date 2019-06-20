@@ -1,0 +1,27 @@
+{
+    "category": "Geometry",
+    "description": "This sample demonstrates how to use GeometryEngine.buffer to create polygons from a map location and linear distance (radius)",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "analysis",
+        "buffer",
+        "geometry engine",
+        "GeometryEngine",
+        "GeometryEngine.buffer",
+        "GeometryEngine.bufferGeodetic",
+        "GraphicsOverlay"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-buffer.htm",
+    "relevant_apis": [
+        "GeometryEngine.buffer",
+        "GeometryEngine.bufferGeodetic",
+        "GraphicsOverlay"
+    ],
+    "snippets": [
+        "Buffer.qml"
+    ],
+    "title": "Buffer"
+}

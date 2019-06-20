@@ -1,0 +1,35 @@
+{
+    "category": "Geometry",
+    "description": "This sample demonstrates how to build the various Geometry objects that are supported in ArcGIS Runtime",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "create geometry",
+        "line",
+        "Point",
+        "Multipoint",
+        "Polyline",
+        "Polygon",
+        "Envelope",
+        "PolygonBuilder",
+        "PolylineBuilder",
+        "MultipointBuilder"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-creategeometries.htm",
+    "relevant_apis": [
+        "Point",
+        "Multipoint",
+        "Polyline",
+        "Polygon",
+        "Envelope",
+        "PolygonBuilder",
+        "PolylineBuilder",
+        "MultipointBuilder"
+    ],
+    "snippets": [
+        "CreateGeometries.qml"
+    ],
+    "title": "Create geometries"
+}
