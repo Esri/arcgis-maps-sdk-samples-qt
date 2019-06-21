@@ -113,7 +113,7 @@ Rectangle {
 
                 //once loaded populate myWfsListModel with titles from the service to display in a comboBox
                 for(var i in wfsLayersInfoList){
-                    var data = {title: wfsLayersInfoList[i].title};
+                    var data = {"title": wfsLayersInfoList[i].title};
                     myWfsListModel.append(data);
                 }
             }
