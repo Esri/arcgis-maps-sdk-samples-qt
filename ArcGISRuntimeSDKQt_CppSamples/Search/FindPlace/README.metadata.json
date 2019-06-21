@@ -1,0 +1,39 @@
+{
+    "category": "Search",
+    "description": "This sample demonstrates how to use geocode functionality to search for points of interest around a location or within an extent",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "point of interest",
+        "find location"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-findplace.htm",
+    "relevant_apis": [
+        "LocatorTask",
+        "GeocodeParameters",
+        "GeocodeResult",
+        "SuggestListModel",
+        "SuggestParameters",
+        "Callout",
+        "GeometryEngine",
+        "GraphicsOverlay",
+        "Graphic",
+        "SimpleRenderer",
+        "PictureMarkerSymbol",
+        "LocationDisplay",
+        "IdentifyGraphicsOverlayResult",
+        "MapView",
+        "Map"
+    ],
+    "snippets": [
+        "FindPlace.cpp",
+        "FindPlace.h",
+        "FindPlace.qml",
+        "SearchBox.qml",
+        "SuggestionView.qml",
+        "SearchButton.qml"
+    ],
+    "title": "Find a place"
+}

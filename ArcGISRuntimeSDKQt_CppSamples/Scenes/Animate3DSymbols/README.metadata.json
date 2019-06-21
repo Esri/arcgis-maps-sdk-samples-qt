@@ -1,0 +1,42 @@
+{
+    "category": "Scenes",
+    "description": "Demonstrates how to animate a graphic's position and rotation and follow it using a OrbitGeoElementCameraController",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "animation",
+        "camera controller",
+        "model scene symbol"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-animate3dsymbols.htm",
+    "relevant_apis": [
+        "Map",
+        "Scene",
+        "Camera",
+        "GlobeCameraController",
+        "Graphic",
+        "GraphicsOverlay",
+        "SurfacePlacement",
+        "MapView",
+        "ModelSceneSymbol",
+        "OrbitGeoElementCameraController",
+        "Point",
+        "Polyline",
+        "Renderer",
+        "SceneProperties",
+        "SceneView",
+        "Viewpoint"
+    ],
+    "snippets": [
+        "MissionData.h",
+        "Animate3DSymbols.cpp",
+        "Animate3DSymbols.h",
+        "main.qml",
+        "Animate3DSymbols.qml",
+        "LabeledSlider.qml",
+        "MissionData.cpp"
+    ],
+    "title": "Animate 3D symbols"
+}

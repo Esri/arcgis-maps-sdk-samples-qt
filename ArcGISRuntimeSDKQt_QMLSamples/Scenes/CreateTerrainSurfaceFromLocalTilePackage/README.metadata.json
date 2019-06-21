@@ -1,0 +1,22 @@
+{
+    "category": "Scenes",
+    "description": "Set the terrain surface with elevation described by a local tile package",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        "tile cache",
+        "elevation surface"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-createterrainsurfacefromlocaltilepackage.htm",
+    "relevant_apis": [
+        "ArcGISTiledElevationSource",
+        "Surface"
+    ],
+    "snippets": [
+        "CreateTerrainSurfaceFromLocalTilePackage.qml"
+    ],
+    "title": "Create terrain surface from a local tile package"
+}

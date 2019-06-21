@@ -1,0 +1,25 @@
+{
+    "category": "Scenes",
+    "description": "This sample demonstrates how to display a scene with an elevation surface",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "SceneView",
+        "Scene",
+        "Basemap",
+        "Surface"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-basicsceneviewurl.htm",
+    "relevant_apis": [
+        "SceneView",
+        "Scene",
+        "Basemap",
+        "Surface"
+    ],
+    "snippets": [
+        "BasicSceneView.qml"
+    ],
+    "title": "Display a scene"
+}

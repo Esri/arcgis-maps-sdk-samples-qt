@@ -1,0 +1,39 @@
+{
+    "category": "Display information",
+    "description": "This sample demonstrates applying a dictionary renderer to a graphics overlay in a 3D scene to display military symbology",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "dictionary renderer",
+        "military symbology",
+        "SceneView",
+        "Scene",
+        "BasemapImagery",
+        "GraphicsOverlay",
+        "DictionaryRenderer",
+        "DictionarySymbolStyle",
+        "SpatialReference",
+        "PointBuilder",
+        "Graphic",
+        "GeometryEngine"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-godictionaryrenderer-3d.htm",
+    "relevant_apis": [
+        "SceneView",
+        "Scene",
+        "BasemapImagery",
+        "GraphicsOverlay",
+        "DictionaryRenderer",
+        "DictionarySymbolStyle",
+        "SpatialReference",
+        "PointBuilder",
+        "Graphic",
+        "GeometryEngine"
+    ],
+    "snippets": [
+        "GODictionaryRenderer_3D.qml"
+    ],
+    "title": "Graphics overlay (dictionary renderer) 3D"
+}

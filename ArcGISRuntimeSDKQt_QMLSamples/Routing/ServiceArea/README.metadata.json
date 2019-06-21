@@ -1,0 +1,37 @@
+{
+    "category": "Routing",
+    "description": "Demonstrates how to find services areas around a point using the ServiceAreaTask",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "network analysis",
+        "service area",
+        "closest facility",
+        "PolylineBarrier",
+        "ServiceAreaFacility",
+        "ServiceAreaParameters",
+        "ServiceAreaPolygon",
+        "ServiceAreaResult",
+        "ServiceAreaTask",
+        "PolylineBuilder"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-servicearea.htm",
+    "relevant_apis": [
+        "Map",
+        "GraphicsOverlay",
+        "MapView",
+        "PolylineBarrier",
+        "ServiceAreaFacility",
+        "ServiceAreaParameters",
+        "ServiceAreaPolygon",
+        "ServiceAreaResult",
+        "ServiceAreaTask",
+        "PolylineBuilder"
+    ],
+    "snippets": [
+        "ServiceArea.qml"
+    ],
+    "title": "Service area"
+}

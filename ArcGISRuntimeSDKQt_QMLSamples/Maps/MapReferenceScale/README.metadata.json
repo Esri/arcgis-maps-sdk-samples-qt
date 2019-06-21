@@ -1,0 +1,22 @@
+{
+    "category": "Maps",
+    "description": "Set the map's reference scale and which feature layers should honor the reference scale.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "FeatureLayer",
+        "Map",
+        "Maps & Scenes"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "FeatureLayer",
+        "Map"        
+    ],
+    "snippets": [
+        "MapReferenceScale.qml"
+    ],
+    "title": "Map reference scale"
+}

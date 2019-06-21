@@ -1,0 +1,31 @@
+{
+    "category": "Layers",
+    "description": "Display nautical charts per the ENC specification.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "EncCell",
+        "EncDataset",
+        "EncExchangeSet",
+        "EncLayer",
+        "Data",
+        "ENC",
+        "maritime",
+        "nautical chart",
+        "layers",
+        "hydrographic"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "EncCell",
+        "EncDataset",
+        "EncExchangeSet",
+        "EncLayer"
+    ],
+    "snippets": [
+        "AddEncExchangeSet.qml"
+    ],
+    "title": "Add ENC exchange set"
+}

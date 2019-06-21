@@ -1,0 +1,25 @@
+{
+    "category": "Scenes",
+    "description": "See through terrain in a scene and move the camera underground.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Surface",
+        "Surface.navigationConstraint",
+        "3D",
+        "subsurface",
+        "underground",
+        "utilities"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "Surface",
+        "Surface.navigationConstraint"
+    ],
+    "snippets": [
+        "ViewContentBeneathTerrainSurface.qml"
+    ],
+    "title": "View content beneath terrain surface"
+}

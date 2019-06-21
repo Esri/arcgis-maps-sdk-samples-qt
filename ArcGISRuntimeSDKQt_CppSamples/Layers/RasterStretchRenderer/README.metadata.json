@@ -1,0 +1,26 @@
+{
+    "category": "Layers",
+    "description": "This sample demonstrates how to use stretch renderer on a raster layer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "stretch renderer"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-rasterstretchrenderer.htm",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "Raster",
+        "RasterLayer",
+        "StretchRenderer"
+    ],
+    "snippets": [
+        "RasterStretchRenderer.h",
+        "RasterStretchRenderer.cpp",
+        "RasterStretchRenderer.qml",
+        "InputWithLabel.qml"
+    ],
+    "title": "Stretch renderer"
+}

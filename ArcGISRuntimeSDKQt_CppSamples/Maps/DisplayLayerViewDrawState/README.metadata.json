@@ -1,0 +1,41 @@
+{
+    "category": "Maps",
+    "description": "This sample demonstrates how to get the view state of a Layer in a Map",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+      "Status",
+      "Load",
+        "MapView",
+        "Map",
+        "Basemap",
+        "ArcGISMapImageLayer",
+        "ArcGISTiledLayer",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "LayerViewState",
+        "Viewpoint",
+        "SpatialReference"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-displaylayerviewdrawstate.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "ArcGISMapImageLayer",
+        "ArcGISTiledLayer",
+        "ServiceFeatureTable",
+        "FeatureLayer",
+        "LayerViewState",
+        "Viewpoint",
+        "SpatialReference"
+    ],
+    "snippets": [
+        "DisplayLayerViewDrawState.qml",
+        "DisplayLayerViewDrawState.cpp",
+        "DisplayLayerViewDrawState.h"
+    ],
+    "title": "Display layer view draw state"
+}

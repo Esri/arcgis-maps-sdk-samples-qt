@@ -1,0 +1,39 @@
+{
+    "category": "Analysis",
+    "description": "This sample demonstrates how to query a feature table to get statistics for one or more specified fields",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "statistics",
+        "sort results",
+        "ServiceFeatureTable",
+        "StatisticQueryParameters",
+        "StatisticQueryResult",
+        "StatisticIterator",
+        "StatisticRecord",
+        "StatisticDefinition",
+        "OrderBy"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-statisticalquerygroupsort.htm",
+    "relevant_apis": [
+        "ServiceFeatureTable",
+        "StatisticQueryParameters",
+        "StatisticQueryResult",
+        "StatisticIterator",
+        "StatisticRecord",
+        "StatisticDefinition",
+        "OrderBy"
+    ],
+    "snippets": [
+        "StatisticResultListModel.h",
+        "StatisticalQueryGroupSort.qml",
+        "StatisticResultListModel.cpp",
+        "OptionsPage.qml",
+        "StatisticalQueryGroupSort.cpp",
+        "StatisticalQueryGroupSort.h",
+        "ResultsPage.qml"
+    ],
+    "title": "Statistical query (group and sort)"
+}

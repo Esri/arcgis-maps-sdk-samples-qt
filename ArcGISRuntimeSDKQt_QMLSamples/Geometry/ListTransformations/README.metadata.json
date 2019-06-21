@@ -1,0 +1,30 @@
+{
+    "category": "Geometry",
+    "description": "This sample demonstrates how to use the TransformationCatalog to get a list of available DatumTransformations that can be used to project a Geometry between two different SpatialReferences, and how to use one of the transformations to perform the GeometryEngine.project operation",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "geographic transformation",
+        "datum transformation",
+        "geometry engine",
+        "TransformationCatalog",
+        "DatumTransformation",
+        "GeographicTransformation",
+        "GeographicTransformationStep",
+        "GeometryEngine"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-listtransformations.htm",
+    "relevant_apis": [
+        "TransformationCatalog",
+        "DatumTransformation",
+        "GeographicTransformation",
+        "GeographicTransformationStep",
+        "GeometryEngine"
+    ],
+    "snippets": [
+        "ListTransformations.qml"
+    ],
+    "title": "List transformations by suitability"
+}

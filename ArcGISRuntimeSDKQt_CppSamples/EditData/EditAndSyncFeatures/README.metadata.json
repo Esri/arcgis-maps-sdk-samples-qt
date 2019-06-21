@@ -1,0 +1,49 @@
+{
+    "category": "Edit data",
+    "description": "This sample demonstrates how to generate an offline mobile geodatabase from a feature service, edit the feature's geometry while disconnected, and synchronize the local edits back to a feature service",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "sync edits",
+        "generate mobile geodatabase",
+        "MapView",
+        "Map",
+        "Basemap",
+        "ArcGISTiledLayer",
+        "TileCache",
+        "FeatureLayer",
+        "FeatureTable",
+        "GeodatabaseSyncTask",
+        "GenerateGeodatabaseJob",
+        "GenerateGeodatabaseParameters",
+        "SyncGeodatabaseJob",
+        "SyncGeodatabaseParameters",
+        "GenerateLayerOption",
+        "SyncLayerOption"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-editandsyncfeatures.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap",
+        "ArcGISTiledLayer",
+        "TileCache",
+        "FeatureLayer",
+        "FeatureTable",
+        "GeodatabaseSyncTask",
+        "GenerateGeodatabaseJob",
+        "GenerateGeodatabaseParameters",
+        "SyncGeodatabaseJob",
+        "SyncGeodatabaseParameters",
+        "GenerateLayerOption",
+        "SyncLayerOption"
+    ],
+    "snippets": [
+        "EditAndSyncFeatures.qml",
+        "EditAndSyncFeatures.h",
+        "EditAndSyncFeatures.cpp"
+    ],
+    "title": "Edit and sync features"
+}

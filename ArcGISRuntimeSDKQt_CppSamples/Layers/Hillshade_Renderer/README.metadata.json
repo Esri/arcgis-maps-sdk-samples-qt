@@ -1,0 +1,30 @@
+{
+    "category": "Layers",
+    "description": "This sample shows how to apply a HillshadeRenderer to a RasterLayer",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "hillshade",
+        "shaded relief",
+        "lighting angle"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-hillshade-renderer.htm",
+    "relevant_apis": [
+        "HillshadeRenderer",
+        "RasterLayer",
+        "Raster",
+        "Basemap",
+        "Map",
+        "MapView"
+    ],
+    "snippets": [
+        "HillshadeSettings.qml",
+        "HillshadeSlopeTypeModel.qml",
+        "Hillshade_Renderer.cpp",
+        "Hillshade_Renderer.h",
+        "Hillshade_Renderer.qml"
+    ],
+    "title": "Hillshade renderer"
+}

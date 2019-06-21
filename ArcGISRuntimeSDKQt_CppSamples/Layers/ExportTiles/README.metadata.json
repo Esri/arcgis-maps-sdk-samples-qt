@@ -1,0 +1,28 @@
+{
+    "category": "Layers",
+    "description": "This sample demonstrates how to export tiles from a map service for offline use",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "map tiles", 
+        "create tile cache"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-exporttiles.htm",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "ArcGISTiledLayer",
+        "TileCache",
+        "ExportTileCacheTask",
+        "ExportTileCacheJob",
+        "ExportTiledCacheParameters"
+    ],
+    "snippets": [
+        "ExportTiles.qml",
+        "ExportTiles.h",
+        "ExportTiles.cpp"
+    ],
+    "title": "Export tiles"
+}

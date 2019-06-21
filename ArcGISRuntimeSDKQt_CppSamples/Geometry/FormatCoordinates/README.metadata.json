@@ -1,0 +1,30 @@
+{
+    "category": "Geometry",
+    "description": "Coordinates can be written as text that is formatted in different ways",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "CoordinateFormatter",
+        "Point",
+        "Graphic"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-formatcoordinates.htm",
+    "relevant_apis": [
+        "coordinates",
+        "decimal degrees",
+        "degrees minutes seconds",
+        "MGRS",
+        "USNG",
+        "UTM",
+        "CoordinateFormatter"
+    ],
+    "snippets": [
+        "FormatCoordinates.qml",
+        "main.qml",
+        "FormatCoordinates.cpp",
+        "FormatCoordinates.h"
+    ],
+    "title": "Format coordinates"
+}

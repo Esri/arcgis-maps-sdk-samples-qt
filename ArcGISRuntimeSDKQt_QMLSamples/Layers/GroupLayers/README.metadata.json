@@ -1,0 +1,22 @@
+{
+    "category": "Layers",
+    "description": "Group a collection of layers together and toggle their visibility as a group.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "GroupLayer",
+        "Layers",
+        "group layer",
+        "LayerListModel"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "GroupLayer"
+    ],
+    "snippets": [
+        "GroupLayers.qml"
+    ],
+    "title": "Group layers"
+}

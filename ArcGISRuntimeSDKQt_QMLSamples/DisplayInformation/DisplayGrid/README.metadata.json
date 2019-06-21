@@ -1,0 +1,43 @@
+{
+    "category": "Display information",
+    "description": "This sample demonstrates how to display grids such as MGRS, Lat/Lon, USNG, and UTM on a map",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Map",
+        "MapView",
+        "ArcGISGrid",
+        "LatitudeLongitudeGrid",
+        "MGRSGrid",
+        "UTMGrid",
+        "USNGGrid",
+        "MGRSGrid",
+        "LatitudeLongitudeGrid",
+        "USNGGrid",
+        "UTMGrid",
+        "TextSymbol",
+        "SimpleLineSymbol"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-displaygrid.htm",
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "ArcGISGrid",
+        "LatitudeLongitudeGrid",
+        "MGRSGrid",
+        "UTMGrid",
+        "USNGGrid",
+        "MGRSGrid",
+        "LatitudeLongitudeGrid",
+        "USNGGrid",
+        "UTMGrid",
+        "TextSymbol",
+        "SimpleLineSymbol"
+    ],
+    "snippets": [
+        "DisplayGrid.qml"
+    ],
+    "title": "Display a grid"
+}

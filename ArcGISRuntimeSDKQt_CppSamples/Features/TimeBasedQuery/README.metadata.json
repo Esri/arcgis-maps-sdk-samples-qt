@@ -1,0 +1,28 @@
+{
+    "category": "Features",
+    "description": "This sample demonstrates how to query data using a time extent",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "time",
+        "time extent",
+        "query",
+        "TimeExtent",
+        "QueryParameters",
+        "ServiceFeatureTable::populateFromService"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-timebasedquery.htm",
+    "relevant_apis": [
+        "TimeExtent",
+        "QueryParameters",
+        "ServiceFeatureTable::populateFromService"
+    ],
+    "snippets": [
+        "TimeBasedQuery.cpp",
+        "TimeBasedQuery.h",
+        "TimeBasedQuery.qml"
+    ],
+    "title": "Time based query"
+}

@@ -1,0 +1,26 @@
+{
+    "category": "Maps",
+    "description": "This sample demonstrates how to determine the map's load status",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "State",
+        "MapView",
+        "Map",
+        "Basemap"
+    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-maploaded.htm",
+    "relevant_apis": [
+        "MapView",
+        "Map",
+        "Basemap"
+    ],
+    "snippets": [
+        "MapLoaded.qml",
+        "MapLoaded.cpp",
+        "MapLoaded.h"
+    ],
+    "title": "Map loaded"
+}

@@ -1,0 +1,27 @@
+{
+    "category": "Scenes",
+    "description": "This sample demonstrates how to render graphics extruded in the Z direction",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "ArcGISScene",
+        "Graphic",
+        "GraphicsOverlay",
+        "Renderer",
+        "Renderer->SceneProperties"
+    ],
+    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-extrudegraphics.htm",
+    "relevant_apis": [
+        "ArcGISScene",
+        "Graphic",
+        "GraphicsOverlay",
+        "Renderer",
+        "Renderer->SceneProperties"
+    ],
+    "snippets": [
+        "ExtrudeGraphics.qml"
+    ],
+    "title": "Extrude graphics"
+}
