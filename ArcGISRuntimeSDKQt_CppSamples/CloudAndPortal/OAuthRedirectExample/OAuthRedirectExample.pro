@@ -1,7 +1,8 @@
 TEMPLATE = app
 
-QT += core gui opengl xml network positioning sensors
-QT += qml quick
+# additional modules are pulled in via arcgisruntime.pri
+QT += opengl qml quick
+
 CONFIG += c++11
 
 ARCGIS_RUNTIME_VERSION = 100.6

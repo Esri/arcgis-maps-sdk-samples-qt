@@ -21,7 +21,8 @@ mac {
 
 CONFIG += c++11
 
-QT += opengl qml quick positioning sensors
+# additional modules are pulled in via arcgisruntime.pri
+QT += opengl qml quick
 
 TEMPLATE = app
 TARGET = SpatialOperations
