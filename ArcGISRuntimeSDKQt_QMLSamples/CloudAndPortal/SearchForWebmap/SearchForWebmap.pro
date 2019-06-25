@@ -17,7 +17,7 @@
 TEMPLATE = app
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += gui opengl qml quick
+QT += opengl qml quick
 
 ARCGIS_RUNTIME_VERSION = 100.6
 include($$PWD/arcgisruntime.pri)

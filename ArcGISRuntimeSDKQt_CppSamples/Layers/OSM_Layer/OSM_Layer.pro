@@ -22,7 +22,7 @@ mac {
 CONFIG += c++11
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += gui opengl qml quick
+QT += opengl qml quick
 
 TEMPLATE = app
 TARGET = OSM_Layer

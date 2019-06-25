@@ -1,7 +1,7 @@
 TEMPLATE = app
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += gui opengl qml quick
+QT += opengl qml quick
 
 CONFIG += c++11
 

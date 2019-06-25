@@ -20,7 +20,7 @@ mac {
 CONFIG += c++11
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += gui opengl widgets
+QT += opengl widgets
 
 ARCGIS_RUNTIME_VERSION = 100.6
 include($$PWD/arcgisruntime.pri)
