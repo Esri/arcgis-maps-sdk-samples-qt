@@ -50,7 +50,7 @@ public:
   static void init();
 
   Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
-  Q_INVOKABLE void searchPortal(QString url);
+  Q_INVOKABLE void searchPortal(QString url, bool forceLogin);
   Q_INVOKABLE void loadSelectedWebmap(int index);
 
 signals:

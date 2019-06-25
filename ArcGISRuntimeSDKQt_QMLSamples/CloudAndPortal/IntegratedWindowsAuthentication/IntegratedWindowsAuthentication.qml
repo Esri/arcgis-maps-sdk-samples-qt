@@ -58,11 +58,11 @@ Rectangle {
                 id: securePortalUrl
                 Layout.fillWidth: true
                 Layout.margins: 3
-//                text: qsTr("Enter portal url")
-                text: qsTr("https://portaliwads.ags.esri.com/gis/")
+                placeholderText: qsTr("Enter portal url secured by IWA")
             }
 
             Row {
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 CheckBox {
                     id: forceLoginBox
                     checked: false
@@ -85,7 +85,7 @@ Rectangle {
                     id: searchPublic
                     text: qsTr("Search Public")
                     onClicked: {
-                        searchPortal(arcgis_url, forceLoginBox.checked);
+                        searchPortal(arcgis_url, false);
                     }
                 }
                 Button {
@@ -132,7 +132,18 @@ Rectangle {
     }
 
     function searchPortal (portalUrl, forceLogin) {
-        var pubPortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl, loginRequired: forceLogin});
+        if(!portalUrl) {
+            webMapMsg.text = "Portal URL is empty. Please enter a portal URL"
+            webMapMsg.visible = true;
+            return;
+        }
+
+        var pubPortal;
+        if(forceLogin) {
+            pubPortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl, loginRequired: forceLogin});
+        } else {
+            pubPortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
+        }
 
         pubPortal.loadStatusChanged.connect(function() {
             if (pubPortal.loadStatus === Enums.LoadStatusFailedToLoad) {

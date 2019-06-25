@@ -48,8 +48,23 @@ Item {
                 id: securePortalUrl
                 Layout.fillWidth: true
                 Layout.margins: 3
-//                text: qsTr("Enter portal url")
-                text: qsTr("https://portaliwads.ags.esri.com/gis/")
+                placeholderText: qsTr("Enter portal url secured by IWA")
+            }
+
+            Row {
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                CheckBox {
+                    id: forceLoginBox
+                    checked: false
+                }
+                Text {
+                    id: forceLoginText
+                    text: qsTr("Force login")
+                    height: forceLoginBox.height
+                    verticalAlignment: Text.AlignVCenter
+                    font.pointSize: 10
+                    color: "#ffffff"
+                }
             }
 
             Row {
@@ -60,14 +75,14 @@ Item {
                     id: searchPublic
                     text: qsTr("Search Public")
                     onClicked: {
-                        integratedWindowsAuthenticationSampleModel.searchPortal(arcgis_url);
+                        integratedWindowsAuthenticationSampleModel.searchPortal(arcgis_url, false);
                     }
                 }
                 Button {
                     id: searchSecure
                     text: qsTr("Search Secure")
                     onClicked: {
-                        integratedWindowsAuthenticationSampleModel.searchPortal(securePortalUrl.text);
+                        integratedWindowsAuthenticationSampleModel.searchPortal(securePortalUrl.text, forceLoginBox.checked);
                     }
                 }
             }
@@ -87,7 +102,7 @@ Item {
                 Layout.margins: 3
                 visible: true
                 onClicked: {
-                    if(webmapsList.currentIndex >= 0) {
+                    if (webmapsList.currentIndex >= 0) {
                         integratedWindowsAuthenticationSampleModel.loadSelectedWebmap(webmapsList.currentIndex);
                     }
 

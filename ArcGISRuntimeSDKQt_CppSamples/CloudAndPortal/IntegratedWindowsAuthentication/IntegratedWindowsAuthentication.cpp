@@ -59,11 +59,20 @@ void IntegratedWindowsAuthentication::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void IntegratedWindowsAuthentication::searchPortal(QString url)
+void IntegratedWindowsAuthentication::searchPortal(QString url, bool forceLogin)
 {
   m_loadingIndicator = true;
   emit isLoadingChanged();
-  m_portal = new Portal(url, this);
+
+  if(forceLogin)
+  {
+    m_portal = new Portal(url, forceLogin, this);
+  }
+  else
+  {
+    m_portal = new Portal(url, this);
+  }
+
   connect(m_portal, &Portal::doneLoading, this, [this](Esri::ArcGISRuntime::Error loadError)
   {
     if(!loadError.isEmpty())
