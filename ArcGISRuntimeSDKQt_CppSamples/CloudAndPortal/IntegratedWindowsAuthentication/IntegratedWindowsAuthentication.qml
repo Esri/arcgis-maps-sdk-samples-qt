@@ -61,9 +61,6 @@ Item {
                     text: qsTr("Search Public")
                     onClicked: {
                         integratedWindowsAuthenticationSampleModel.searchPortal(arcgis_url);
-//                        searchPortal(arcgis_url);
-//                        webmapsList.visible = true;
-//                        loadSelectedWebmapBtn.visible = true;
                     }
                 }
                 Button {
@@ -71,10 +68,6 @@ Item {
                     text: qsTr("Search Secure")
                     onClicked: {
                         integratedWindowsAuthenticationSampleModel.searchPortal(securePortalUrl.text);
-//                        console.log(securePortalUrl.text);
-//                        searchPortal(securePortalUrl.text);
-//                        webmapsList.visible = true;
-//                        loadSelectedWebmapBtn.visible = true;
                     }
                 }
             }
@@ -84,7 +77,7 @@ Item {
                 Layout.margins: 3
                 Layout.fillWidth: true
                 model: integratedWindowsAuthenticationSampleModel.webmapListModel
-//                visible: true;
+                visible: true
             }
 
             Button {
@@ -92,9 +85,12 @@ Item {
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
                 Layout.margins: 3
-                visible: false
+                visible: true
                 onClicked: {
-//                    loadSelectedWebmap(portalItemListModel.get(webmapsList.currentIndex));
+                    if(webmapsList.currentIndex >= 0) {
+                        integratedWindowsAuthenticationSampleModel.loadSelectedWebmap(webmapsList.currentIndex);
+                    }
+
                 }
             }
         }
@@ -103,8 +99,7 @@ Item {
     BusyIndicator {
         id: indicator
         anchors.centerIn: parent
-        running: false
-//        running: publicPortal.loadStatus == Enums.LoadStatusLoading
+        running: integratedWindowsAuthenticationSampleModel.isLoading
     }
 
     // Uncomment this section when running as standalone application
@@ -113,6 +108,28 @@ Item {
     }
 
     //! [PortalUserInfo create portal]
+
+    Dialog {
+        id: webMapMsg
+        modal: true
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        standardButtons: Dialog.Ok
+        title: "Could not load web map!"
+        visible: integratedWindowsAuthenticationSampleModel.mapLoadError.length > 0
+        property alias text : textLabel.text
+        property alias informativeText : detailsLabel.text
+        ColumnLayout {
+            Text {
+                id: textLabel
+                text: integratedWindowsAuthenticationSampleModel.mapLoadError
+            }
+            Text {
+                id: detailsLabel
+            }
+        }
+        onAccepted: errorAccepted()
+    }
 
 
     // Declare the C++ instance which creates the scene etc. and supply the view

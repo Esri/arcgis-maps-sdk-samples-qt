@@ -22,6 +22,7 @@
 #include "Portal.h"
 #include "PortalItem.h"
 #include "PortalQueryResultSetForItems.h"
+#include "PortalItemListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -29,7 +30,6 @@ IntegratedWindowsAuthentication::IntegratedWindowsAuthentication(QObject* parent
   QObject(parent),
   m_map(new Map(Basemap::imagery(this), this))
 {
-  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
 IntegratedWindowsAuthentication::~IntegratedWindowsAuthentication() = default;
@@ -61,6 +61,8 @@ void IntegratedWindowsAuthentication::setMapView(MapQuickView* mapView)
 
 void IntegratedWindowsAuthentication::searchPortal(QString url)
 {
+  m_loadingIndicator = true;
+  emit isLoadingChanged();
   m_portal = new Portal(url, this);
   connect(m_portal, &Portal::doneLoading, this, [this](Esri::ArcGISRuntime::Error loadError)
   {
@@ -71,17 +73,18 @@ void IntegratedWindowsAuthentication::searchPortal(QString url)
     PortalQueryParametersForItems query;
     query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
     m_portal->findItems(query);
-
   });
 
   connect(m_portal, &Portal::findItemsCompleted, this, [this](PortalQueryResultSetForItems* results)
   {
-    PortalItemListModel* temp = results->itemResults();
+    m_webmaps = results->itemResults();
     m_webmapList.clear();
-    for(PortalItem * pI : *temp) {
+    for(PortalItem * pI : *m_webmaps) {
       m_webmapList.append(pI->title());
     }
     emit webmapListModelChanged();
+    m_loadingIndicator = false;
+    emit isLoadingChanged();
   });
 
   connect( m_portal, &Portal::loadStatusChanged, this, [this]()
@@ -90,6 +93,60 @@ void IntegratedWindowsAuthentication::searchPortal(QString url)
       qDebug() << "failed to load";
   });
   m_portal->load();
+}
+
+void IntegratedWindowsAuthentication::loadSelectedWebmap(int index)
+{
+  if (!m_webmaps)
+    return;
+
+  PortalItem* selectedItem = m_webmaps->at(index);
+  if (!selectedItem)
+    return;
+
+  if (m_selectedItem)
+    m_selectedItem->disconnect();
+
+  m_selectedItem = selectedItem;
+  m_loadingIndicator = true;
+  emit isLoadingChanged();
+
+  connect(m_selectedItem, &PortalItem::doneLoading, this, [this]
+  {
+    if (!m_selectedItem || m_selectedItem->loadStatus() != LoadStatus::Loaded)
+      return;
+
+    if (m_map)
+    {
+      delete m_map;
+      m_map = nullptr;
+    }
+
+    m_mapLoadeError.clear();
+    emit mapLoadErrorChanged();
+
+    m_map = new Map(m_selectedItem, this);
+
+    connect(m_map, &Map::errorOccurred, this, [this]()
+    {
+      m_mapLoadeError = m_map->loadError().message();
+      emit mapLoadErrorChanged();
+    });
+
+    connect(m_map, &Map::loadStatusChanged, this, [this]()
+    {
+      if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
+        return;
+
+      m_mapView->setMap(m_map);
+      m_mapView->setVisible(true);
+      m_loadingIndicator = false;
+      emit isLoadingChanged();
+    });
+
+    m_map->load();
+  });
+  m_selectedItem->load();
 }
 
 AuthenticationManager *IntegratedWindowsAuthentication::authManager() const

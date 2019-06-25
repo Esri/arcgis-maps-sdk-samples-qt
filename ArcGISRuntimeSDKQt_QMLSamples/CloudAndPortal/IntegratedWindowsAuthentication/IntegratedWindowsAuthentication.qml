@@ -40,76 +40,10 @@ Rectangle {
         }
     }
 
-    Portal {
-        id: publicPortal
-
-        onLoadStatusChanged: {
-            console.log("loading public");
-            if (loadStatus === Enums.LoadStatusFailedToLoad)
-                retryLoad();
-
-            if (loadStatus !== Enums.LoadStatusLoaded) {
-                return;
-            }
-        }
-
-
-    }
-
-//    Component {
-//        id: webmapDelegate
-//        Rectangle {
-//            id: tempItem
-//            height: childrenRect.height
-//            width: portalLayoutRect.width
-//            color: "#00000000"
-//            Text {
-//                id: outputString
-//                text: title
-//                horizontalAlignment: Text.AlignHCenter
-//                color: "white"
-//            }
-
-//            MouseArea {
-//                anchors.fill: parent
-//                onClicked: webmapsList.currentIndex = index;
-//                onDoubleClicked: loadSelectedWebmap(webmapsList.model.get(index));
-//            }
-//        }
-//    }
-
-//    Component {
-//        id: highlightDelegate
-
-//        Rectangle {
-//            z: 110
-////            width: webmapsList.width
-//            width: parent.width
-
-//            color: "orange"
-//            radius: 4
-
-////            Text {
-////                anchors {
-////                    fill: parent
-////                    margins: 10
-////                }
-////                //not needed?
-////                //text: webmapsList.model.count > 0 ? webmapsList.model.get(webmapsList.currentIndex).title : ""
-////                font.bold: true
-////                elide: Text.ElideRight
-////                wrapMode: Text.Wrap
-////                color: "white"
-////                horizontalAlignment: Text.AlignHCenter
-////            }
-//        }
-//    }
-
     Rectangle {
         id: portalLayoutRect
         anchors {
             margins: 5
-//            horizontalCenter: parent.horizontalCenter
             left: parent.left
             top: parent.top
         }
@@ -129,6 +63,21 @@ Rectangle {
             }
 
             Row {
+                CheckBox {
+                    id: forceLoginBox
+                    checked: false
+                }
+                Text {
+                    id: forceLoginText
+                    text: qsTr("Force login")
+                    height: forceLoginBox.height
+                    verticalAlignment: Text.AlignVCenter
+                    font.pointSize: 10
+                    color: "#ffffff"
+                }
+            }
+
+            Row {
                 Layout.fillWidth: true
                 Layout.margins: 3
                 spacing: 4
@@ -136,19 +85,14 @@ Rectangle {
                     id: searchPublic
                     text: qsTr("Search Public")
                     onClicked: {
-                        searchPortal(arcgis_url);
-//                        webmapsList.visible = true;
-//                        loadSelectedWebmapBtn.visible = true;
+                        searchPortal(arcgis_url, forceLoginBox.checked);
                     }
                 }
                 Button {
                     id: searchSecure
                     text: qsTr("Search Secure")
                     onClicked: {
-//                        console.log(securePortalUrl.text);
-                        searchPortal(securePortalUrl.text);
-//                        webmapsList.visible = true;
-//                        loadSelectedWebmapBtn.visible = true;
+                        searchPortal(securePortalUrl.text, forceLoginBox.checked);
                     }
                 }
             }
@@ -158,53 +102,18 @@ Rectangle {
                 Layout.margins: 3
                 Layout.fillWidth: true
                 model: null
-                visible: false
             }
-
-
-
-
-
-
-
-
-// switching to combobox
-//            ListView {
-//                id: webmapsList
-//                height: 155
-//                Layout.margins: 3
-////                delegate: webmapDelegate
-//                delegate: Rectangle {
-//                    id: tempItem
-//                    height: childrenRect.height
-//                    width: portalLayoutRect.width
-//                    color: "#00000000"
-//                    Text {
-//                        id: outputString
-//                        text: title
-//                        horizontalAlignment: Text.AlignHCenter
-//                        color: "white"
-//                    }
-
-//                    MouseArea {
-//                        anchors.fill: parent
-//                        onClicked: webmapsList.currentIndex = index;
-//                        onDoubleClicked: loadSelectedWebmap(webmapsList.model.get(index));
-//                    }
-//                }
-//                highlightFollowsCurrentItem: true
-//                highlight: highlightDelegate
-//                model: null
-//            }
 
             Button {
                 id: loadSelectedWebmapBtn
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
                 Layout.margins: 3
-                visible: false
                 onClicked: {
-                    loadSelectedWebmap(portalItemListModel.get(webmapsList.currentIndex));
+                    if(webmapsList.currentIndex >= 0){
+                        indicator.running = true;
+                        loadSelectedWebmap(portalItemListModel.get(webmapsList.currentIndex));
+                    }
                 }
             }
         }
@@ -213,7 +122,7 @@ Rectangle {
     BusyIndicator {
         id: indicator
         anchors.centerIn: parent
-        running: publicPortal.loadStatus == Enums.LoadStatusLoading
+        running: false
     }
 
     PortalQueryParametersForItems {
@@ -222,8 +131,9 @@ Rectangle {
         // check to see if you can limit results
     }
 
-    function searchPortal (portalUrl) {
-        var pubPortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
+    function searchPortal (portalUrl, forceLogin) {
+        var pubPortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl, loginRequired: forceLogin});
+
         pubPortal.loadStatusChanged.connect(function() {
             if (pubPortal.loadStatus === Enums.LoadStatusFailedToLoad) {
                 webMapMsg.text = pubPortal.loadError.message;
@@ -254,9 +164,6 @@ Rectangle {
                     webMapMsg.visible = true;
                 }
                 webmapsList.model = listModelForComboBox;
-
-                webmapsList.visible = true;
-                loadSelectedWebmapBtn.visible = true;
             }
 
         });
@@ -297,8 +204,8 @@ Rectangle {
         if (mapView.map.loadStatus !== Enums.LoadStatusLoaded)
             return;
 
-        //webmapsList.visible = false;
         mapView.visible = true;
+        indicator.running = false;
     }
 
 
