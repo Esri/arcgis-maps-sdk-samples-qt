@@ -21,7 +21,8 @@ mac {
 
 CONFIG += c++11
 
-QT += core gui opengl xml network positioning sensors
+# additional modules are pulled in via arcgisruntime.pri
+QT += gui opengl widgets
 
 TEMPLATE = app
 TARGET = BuildLegend
