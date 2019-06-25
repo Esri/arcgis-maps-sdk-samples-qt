@@ -29,6 +29,11 @@ TARGET = IntegratedWindowsAuthentication
 ARCGIS_RUNTIME_VERSION = 100.6
 include($$PWD/arcgisruntime.pri)
 
+qtHaveModule(webengine) {
+  QT += webengine
+  DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
+}
+
 #-------------------------------------------------------------------------------
 
 HEADERS += \

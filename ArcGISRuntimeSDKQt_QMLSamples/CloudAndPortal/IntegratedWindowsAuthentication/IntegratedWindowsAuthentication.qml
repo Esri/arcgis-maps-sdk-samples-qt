@@ -28,6 +28,8 @@ Rectangle {
 
     readonly property url arcgis_url: "http://www.arcgis.com"
     property var portalItem
+    property var portalItemListModel
+    property var listModelForComboBox : []
 
     MapView {
         id: mapView
@@ -54,57 +56,61 @@ Rectangle {
 
     }
 
-    Component {
-        id: webmapDelegate
-        Rectangle {
-            height: childrenRect.height
-            width: childrenRect.width
-            color: "#00000000"
-            Text {
-                id: outputString
-                text: title
-                horizontalAlignment: Text.AlignHCenter
-                color: "white"
-            }
+//    Component {
+//        id: webmapDelegate
+//        Rectangle {
+//            id: tempItem
+//            height: childrenRect.height
+//            width: portalLayoutRect.width
+//            color: "#00000000"
+//            Text {
+//                id: outputString
+//                text: title
+//                horizontalAlignment: Text.AlignHCenter
+//                color: "white"
+//            }
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: webmapsList.currentIndex = index;
-                onDoubleClicked: loadSelectedWebmap(webmapsList.model.get(index));
-            }
-        }
-    }
+//            MouseArea {
+//                anchors.fill: parent
+//                onClicked: webmapsList.currentIndex = index;
+//                onDoubleClicked: loadSelectedWebmap(webmapsList.model.get(index));
+//            }
+//        }
+//    }
 
-    Component {
-        id: highlightDelegate
+//    Component {
+//        id: highlightDelegate
 
-        Rectangle {
-            z: 110
-            width: webmapsList.width
-            color: "orange"
-            radius: 4
+//        Rectangle {
+//            z: 110
+////            width: webmapsList.width
+//            width: parent.width
 
-            Text {
-                anchors {
-                    fill: parent
-                    margins: 10
-                }
-                //not needed?
-                //text: webmapsList.model.count > 0 ? webmapsList.model.get(webmapsList.currentIndex).title : ""
-                font.bold: true
-                elide: Text.ElideRight
-                wrapMode: Text.Wrap
-                color: "white"
-                horizontalAlignment: Text.AlignHCenter
-            }
-        }
-    }
+//            color: "orange"
+//            radius: 4
+
+////            Text {
+////                anchors {
+////                    fill: parent
+////                    margins: 10
+////                }
+////                //not needed?
+////                //text: webmapsList.model.count > 0 ? webmapsList.model.get(webmapsList.currentIndex).title : ""
+////                font.bold: true
+////                elide: Text.ElideRight
+////                wrapMode: Text.Wrap
+////                color: "white"
+////                horizontalAlignment: Text.AlignHCenter
+////            }
+//        }
+//    }
 
     Rectangle {
         id: portalLayoutRect
         anchors {
             margins: 5
-            horizontalCenter: parent.horizontalCenter
+//            horizontalCenter: parent.horizontalCenter
+            left: parent.left
             top: parent.top
         }
         width: childrenRect.width
@@ -131,31 +137,65 @@ Rectangle {
                     text: qsTr("Search Public")
                     onClicked: {
                         searchPortal(arcgis_url);
-                        loadSelectedWebmapBtn.visible = true;
+//                        webmapsList.visible = true;
+//                        loadSelectedWebmapBtn.visible = true;
                     }
                 }
                 Button {
                     id: searchSecure
                     text: qsTr("Search Secure")
                     onClicked: {
-                        console.log(securePortalUrl.text);
+//                        console.log(securePortalUrl.text);
                         searchPortal(securePortalUrl.text);
-                        loadSelectedWebmapBtn.visible = true;
+//                        webmapsList.visible = true;
+//                        loadSelectedWebmapBtn.visible = true;
                     }
                 }
             }
 
-            //use listview or repeater if it doesn't work
-            ListView {
-                id: webmapsList
-                height: 150
-                cacheBuffer: 318
+            ComboBox {
+                id:webmapsList
                 Layout.margins: 3
-                delegate: webmapDelegate
-                highlightFollowsCurrentItem: true
-                highlight: highlightDelegate
+                Layout.fillWidth: true
                 model: null
+                visible: false
             }
+
+
+
+
+
+
+
+
+// switching to combobox
+//            ListView {
+//                id: webmapsList
+//                height: 155
+//                Layout.margins: 3
+////                delegate: webmapDelegate
+//                delegate: Rectangle {
+//                    id: tempItem
+//                    height: childrenRect.height
+//                    width: portalLayoutRect.width
+//                    color: "#00000000"
+//                    Text {
+//                        id: outputString
+//                        text: title
+//                        horizontalAlignment: Text.AlignHCenter
+//                        color: "white"
+//                    }
+
+//                    MouseArea {
+//                        anchors.fill: parent
+//                        onClicked: webmapsList.currentIndex = index;
+//                        onDoubleClicked: loadSelectedWebmap(webmapsList.model.get(index));
+//                    }
+//                }
+//                highlightFollowsCurrentItem: true
+//                highlight: highlightDelegate
+//                model: null
+//            }
 
             Button {
                 id: loadSelectedWebmapBtn
@@ -163,7 +203,9 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.margins: 3
                 visible: false
-                //onClicked: //doubleclick is not accepted on an item already double clicked
+                onClicked: {
+                    loadSelectedWebmap(portalItemListModel.get(webmapsList.currentIndex));
+                }
             }
         }
     }
@@ -177,13 +219,15 @@ Rectangle {
     PortalQueryParametersForItems {
         id: webmapQuery
         types: [ Enums.PortalItemTypeWebMap ]
+        // check to see if you can limit results
     }
 
     function searchPortal (portalUrl) {
         var pubPortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
         pubPortal.loadStatusChanged.connect(function() {
             if (pubPortal.loadStatus === Enums.LoadStatusFailedToLoad) {
-                console.log("Failed to load - try again")
+                webMapMsg.text = pubPortal.loadError.message;
+                webMapMsg.visible = true;
                 indicator.running = false;
                 return;
             }
@@ -199,8 +243,20 @@ Rectangle {
 
             if ( pubPortal.findItemsStatus === Enums.TaskStatusCompleted ) {
                 indicator.running = false;
-                console.log("signal exists");
-                webmapsList.model = pubPortal.findItemsResult.itemResults;
+                portalItemListModel = pubPortal.findItemsResult.itemResults;
+                var index = 0
+                var error = portalItemListModel.forEach(function(prtlItem){
+                    listModelForComboBox[index] = prtlItem.title;
+                    index++;
+                });
+                if (error) {
+                    webMapMsg.text = error.message;
+                    webMapMsg.visible = true;
+                }
+                webmapsList.model = listModelForComboBox;
+
+                webmapsList.visible = true;
+                loadSelectedWebmapBtn.visible = true;
             }
 
         });
@@ -216,8 +272,10 @@ Rectangle {
             webMapMsg.text = portalItem.loadError.message;
             webMapMsg.visible = true;
         });
-
         portalItem.load();
+        if (portalItem.loadStatus === Enums.LoadStatusLoaded){
+            createMap();
+        }
     }
 
     function createMap() {
@@ -257,7 +315,7 @@ Rectangle {
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
-        title: "Could not load web map!"
+        title: qsTr("Could not load web map!")
         property alias text : textLabel.text
         Text {
             id: textLabel

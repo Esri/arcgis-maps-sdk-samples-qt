@@ -20,6 +20,10 @@
 #include <QDir>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlEngine>
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+#include <QtWebEngine>
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -29,6 +33,10 @@ int main(int argc, char *argv[])
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("IntegratedWindowsAuthentication - C++"));
+
+#ifdef QT_WEBVIEW_WEBENGINE_BACKEND
+  QtWebEngine::initialize();
+#endif // QT_WEBVIEW_WEBENGINE_BACKEND
 
   // Initialize the sample
   IntegratedWindowsAuthentication::init();

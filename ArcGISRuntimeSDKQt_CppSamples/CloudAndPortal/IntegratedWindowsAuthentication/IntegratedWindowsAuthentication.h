@@ -21,8 +21,12 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class AuthenticationManager;
 class Map;
 class MapQuickView;
+class Portal;
+class PortalItem;
+class PortalQueryResultSetForItems;
 }
 }
 
@@ -32,7 +36,9 @@ class IntegratedWindowsAuthentication : public QObject
 {
   Q_OBJECT
 
+  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QStringList webmapListModel MEMBER m_webmapList NOTIFY webmapListModelChanged)
 
 public:
   explicit IntegratedWindowsAuthentication(QObject* parent = nullptr);
@@ -40,8 +46,13 @@ public:
 
   static void init();
 
+  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
+  Q_INVOKABLE void searchPortal(QString url);
+
 signals:
   void mapViewChanged();
+  void authManagerChanged();
+  void webmapListModelChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -49,6 +60,10 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
+  Esri::ArcGISRuntime::PortalQueryResultSetForItems* m_webmapResults = nullptr;
+  QStringList m_webmapList;
+  //const QString arcgis_url = "http://www.arcgis.com";
 };
 
 #endif // INTEGRATEDWINDOWSAUTHENTICATION_H

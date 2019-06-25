@@ -18,6 +18,10 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
+#include "AuthenticationManager.h"
+#include "Portal.h"
+#include "PortalItem.h"
+#include "PortalQueryResultSetForItems.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -25,7 +29,7 @@ IntegratedWindowsAuthentication::IntegratedWindowsAuthentication(QObject* parent
   QObject(parent),
   m_map(new Map(Basemap::imagery(this), this))
 {
-
+  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
 IntegratedWindowsAuthentication::~IntegratedWindowsAuthentication() = default;
@@ -33,6 +37,7 @@ IntegratedWindowsAuthentication::~IntegratedWindowsAuthentication() = default;
 void IntegratedWindowsAuthentication::init()
 {
   // Register the map view for QML
+  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<IntegratedWindowsAuthentication>("Esri.Samples", 1, 0, "IntegratedWindowsAuthenticationSample");
 }
@@ -52,4 +57,42 @@ void IntegratedWindowsAuthentication::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   emit mapViewChanged();
+}
+
+void IntegratedWindowsAuthentication::searchPortal(QString url)
+{
+  m_portal = new Portal(url, this);
+  connect(m_portal, &Portal::doneLoading, this, [this](Esri::ArcGISRuntime::Error loadError)
+  {
+    if(!loadError.isEmpty())
+    {
+      qDebug() << loadError.message();
+    }
+    PortalQueryParametersForItems query;
+    query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
+    m_portal->findItems(query);
+
+  });
+
+  connect(m_portal, &Portal::findItemsCompleted, this, [this](PortalQueryResultSetForItems* results)
+  {
+    PortalItemListModel* temp = results->itemResults();
+    m_webmapList.clear();
+    for(PortalItem * pI : *temp) {
+      m_webmapList.append(pI->title());
+    }
+    emit webmapListModelChanged();
+  });
+
+  connect( m_portal, &Portal::loadStatusChanged, this, [this]()
+  {
+    if(m_portal->loadStatus() == LoadStatus::FailedToLoad)
+      qDebug() << "failed to load";
+  });
+  m_portal->load();
+}
+
+AuthenticationManager *IntegratedWindowsAuthentication::authManager() const
+{
+  return AuthenticationManager::instance();
 }
