@@ -92,7 +92,13 @@ Rectangle {
                     id: searchSecure
                     text: qsTr("Search Secure")
                     onClicked: {
-                        searchPortal(securePortalUrl.text, forceLoginBox.checked);
+                        if (securePortalUrl.text) {
+                            searchPortal(securePortalUrl.text, forceLoginBox.checked);
+                        } else {
+                            webMapMsg.text = "Portal URL is empty. Please enter a portal URL"
+                            webMapMsg.visible = true;
+                            return;
+                        }
                     }
                 }
             }
@@ -132,11 +138,6 @@ Rectangle {
     }
 
     function searchPortal (portalUrl, forceLogin) {
-        if(!portalUrl) {
-            webMapMsg.text = "Portal URL is empty. Please enter a portal URL"
-            webMapMsg.visible = true;
-            return;
-        }
 
         var pubPortal;
         if(forceLogin) {

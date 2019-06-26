@@ -40,7 +40,7 @@ class IntegratedWindowsAuthentication : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QStringList webmapListModel MEMBER m_webmapList NOTIFY webmapListModelChanged)
-  Q_PROPERTY(QString mapLoadError MEMBER m_mapLoadeError NOTIFY mapLoadErrorChanged)
+  Q_PROPERTY(QString mapLoadError MEMBER m_mapLoadError NOTIFY mapLoadErrorChanged)
   Q_PROPERTY(bool isLoading MEMBER m_loadingIndicator NOTIFY isLoadingChanged)
 
 public:
@@ -52,6 +52,7 @@ public:
   Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
   Q_INVOKABLE void searchPortal(QString url, bool forceLogin);
   Q_INVOKABLE void loadSelectedWebmap(int index);
+  Q_INVOKABLE void errorAccepted();
 
 signals:
   void mapViewChanged();
@@ -71,7 +72,7 @@ private:
   Esri::ArcGISRuntime::PortalItemListModel* m_webmaps = nullptr;
   Esri::ArcGISRuntime::PortalItem* m_selectedItem = nullptr;
   QStringList m_webmapList;
-  QString m_mapLoadeError;
+  QString m_mapLoadError;
   bool m_loadingIndicator = false;
   //const QString arcgis_url = "http://www.arcgis.com";
 };

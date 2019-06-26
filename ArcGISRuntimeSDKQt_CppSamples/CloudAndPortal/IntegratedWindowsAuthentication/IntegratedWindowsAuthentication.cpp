@@ -77,7 +77,11 @@ void IntegratedWindowsAuthentication::searchPortal(QString url, bool forceLogin)
   {
     if(!loadError.isEmpty())
     {
-      qDebug() << loadError.message();
+      m_mapLoadError = loadError.message();
+      m_loadingIndicator = false;
+      emit isLoadingChanged();
+      emit mapLoadErrorChanged();
+      return;
     }
     PortalQueryParametersForItems query;
     query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
@@ -96,11 +100,6 @@ void IntegratedWindowsAuthentication::searchPortal(QString url, bool forceLogin)
     emit isLoadingChanged();
   });
 
-  connect( m_portal, &Portal::loadStatusChanged, this, [this]()
-  {
-    if(m_portal->loadStatus() == LoadStatus::FailedToLoad)
-      qDebug() << "failed to load";
-  });
   m_portal->load();
 }
 
@@ -131,14 +130,14 @@ void IntegratedWindowsAuthentication::loadSelectedWebmap(int index)
       m_map = nullptr;
     }
 
-    m_mapLoadeError.clear();
+    m_mapLoadError.clear();
     emit mapLoadErrorChanged();
 
     m_map = new Map(m_selectedItem, this);
 
     connect(m_map, &Map::errorOccurred, this, [this]()
     {
-      m_mapLoadeError = m_map->loadError().message();
+      m_mapLoadError = m_map->loadError().message();
       emit mapLoadErrorChanged();
     });
 
@@ -156,6 +155,12 @@ void IntegratedWindowsAuthentication::loadSelectedWebmap(int index)
     m_map->load();
   });
   m_selectedItem->load();
+}
+
+void IntegratedWindowsAuthentication::errorAccepted()
+{
+  m_mapLoadError.clear();
+  emit mapLoadErrorChanged();
 }
 
 AuthenticationManager *IntegratedWindowsAuthentication::authManager() const

@@ -82,7 +82,13 @@ Item {
                     id: searchSecure
                     text: qsTr("Search Secure")
                     onClicked: {
-                        integratedWindowsAuthenticationSampleModel.searchPortal(securePortalUrl.text, forceLoginBox.checked);
+                        if (securePortalUrl.text) {
+                            integratedWindowsAuthenticationSampleModel.searchPortal(securePortalUrl.text, forceLoginBox.checked);
+                        } else {
+                            webMapMsg.text = "Portal URL is empty. Please enter a portal URL"
+                            webMapMsg.visible = true;
+                            return;
+                        }
                     }
                 }
             }
@@ -143,7 +149,7 @@ Item {
                 id: detailsLabel
             }
         }
-        onAccepted: errorAccepted()
+        onAccepted: integratedWindowsAuthenticationSampleModel.errorAccepted();
     }
 
 
