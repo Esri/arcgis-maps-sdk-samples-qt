@@ -88,8 +88,8 @@ Rectangle {
             //! [model scene symbol]
             ModelSceneSymbol {
                 id: mms
-                url: dataPath + "3D/SkyCrane/SkyCrane.lwo"
-                scale: 0.01
+                url: dataPath + "3D/Bristol/Collada/Bristol.dae"
+                scale: 5.0
                 heading: 180
             }
             //! [model scene symbol]
