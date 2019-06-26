@@ -1,31 +1,36 @@
 # Integrated windows authentication
 
 Uses Windows credentials to access services hosted on a portal secured with Integrated Windows Authentication (IWA).
-This sample demonstrates ...       
-This is **why** you would do it this way ...
 
 ![](screenshot.png)
 
+## Use case
+
+IWA, which is built into Microsoft Internet Information Server (IIS), works well for intranet applications, but isn't always practical for internet apps.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Enter the URL to your IWA-secured portal. Click either the "Search Public" (which will search for portals on www.arcgis.com) or "Search Secure" (which will search your IWA-secured portal), for web maps stored on the portal. You will be prompted for a user name, password, and domain (some platforms will use the current Windows login). If you authenticate successfully, portal item results will display in the list. Select a web map item to display it in the map view.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. The `AuthenticationManager` object is configured with a challenge handler that will prompt for a Windows login (username, password, and domain) if a secure resource is encountered.
+2. When a search for portal items is performed against an IWA-secured portal, the challenge handler creates an `ArcGISNetworkCredential` object from the information entered by the user.
+3. If the user authenticates, the search returns a list of web maps (`ArcGISPortalItem`) and the user can select one to display as a `Map`.
+4. On some platforms, the current Windows account is used by default and a login prompt will not be shown if it can authenticate successfully.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* `AuthenticationManager`
+* `ArcGISPortal`
+* `ArcGISNetworkCredential`
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
 
-## Additional information
-A standard level license is required to ...
+This sample searches for web map portal items on a secure portal. To successfully run the sample, you need:
+ - Access to a portal secured with Integrated Windows Authentication that contains one or more web map items.
+ - A login that grants you access to the portal.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+Authentication, Security, Windows, Portal
