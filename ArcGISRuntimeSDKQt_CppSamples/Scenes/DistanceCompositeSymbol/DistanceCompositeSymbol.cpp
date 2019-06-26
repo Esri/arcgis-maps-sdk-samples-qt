@@ -72,7 +72,7 @@ void DistanceCompositeSymbol::componentComplete()
   QQuickItem::componentComplete();
 
   // get the data path
-  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/SkyCrane/SkyCrane.lwo";
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae";
 
   // find QML SceneView component
   m_sceneView = findChild<SceneQuickView*>("sceneView");
@@ -98,7 +98,7 @@ void DistanceCompositeSymbol::componentComplete()
   m_sceneView->graphicsOverlays()->append(graphicsOverlay);
 
   //! [create model scene symbol]
-  constexpr float scale = 0.01f;
+  constexpr float scale = 5.0f;
   ModelSceneSymbol* mms = new ModelSceneSymbol(QUrl(dataPath), scale, this);
   mms->setHeading(180);
   //! [create model scene symbol]

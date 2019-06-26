@@ -34,4 +34,4 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 
 Link | Local Location
 ---------|-------|
-|[Model Marker Symbol Data](https://www.arcgis.com/home/item.html?id=810a20c8be914170948d4c2d2146b4c5)| `<userhome>`/ArcGIS/Runtime/Data/3D/SkyCrane/SkyCrane.lwo |
+|[Model Marker Symbol Data](https://www.arcgis.com/home/item.html?id=681d6f7694644709a7c830ec57a2d72b)| `<userhome>`/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae |
