@@ -28,7 +28,7 @@ using namespace Esri::ArcGISRuntime;
 
 IntegratedWindowsAuthentication::IntegratedWindowsAuthentication(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::imagery(this), this))
+  m_map(new Map(Basemap::topographic(this), this))
 {
 }
 
@@ -122,7 +122,7 @@ void IntegratedWindowsAuthentication::loadSelectedWebmap(int index)
   m_loadingIndicator = true;
   emit isLoadingChanged();
 
-  connect(m_selectedItem, &PortalItem::doneLoading, this, [this]
+  connect(m_selectedItem, &PortalItem::doneLoading, this, [this]()
   {
     if (!m_selectedItem || m_selectedItem->loadStatus() != LoadStatus::Loaded)
       return;

@@ -71,7 +71,6 @@ Rectangle {
                     checked: false
                 }
                 Text {
-                    id: forceLoginText
                     text: qsTr("Force login")
                     height: forceLoginBox.height
                     verticalAlignment: Text.AlignVCenter
@@ -85,14 +84,12 @@ Rectangle {
                 spacing: 3
 
                 Button {
-                    id: searchPublic
                     text: qsTr("Search Public")
                     onClicked: {
                         searchPortal(arcgis_url, false);
                     }
                 }
                 Button {
-                    id: searchSecure
                     text: qsTr("Search Secure")
                     onClicked: {
                         if (securePortalUrl.text) {
@@ -114,12 +111,11 @@ Rectangle {
             }
 
             Button {
-                id: loadSelectedWebmapBtn
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
                 Layout.margins: 2
                 onClicked: {
-                    if(webmapsList.currentIndex >= 0){
+                    if (webmapsList.currentIndex >= 0) {
                         indicator.running = true;
                         loadSelectedWebmap(portalItemListModel.get(webmapsList.currentIndex));
                     }
@@ -141,47 +137,47 @@ Rectangle {
 
     function searchPortal (portalUrl, forceLogin) {
 
-        var pubPortal;
-        if(forceLogin) {
-            pubPortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl, loginRequired: forceLogin});
+        var portal;
+        if (forceLogin) {
+            portal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl, loginRequired: forceLogin});
         } else {
-            pubPortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
+            portal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
         }
 
-        pubPortal.loadStatusChanged.connect(function() {
-            if (pubPortal.loadStatus === Enums.LoadStatusFailedToLoad) {
-                webMapMsg.text = pubPortal.loadError.message;
+        portal.loadStatusChanged.connect(function() {
+            if (portal.loadStatus === Enums.LoadStatusFailedToLoad) {
+                webMapMsg.text = portal.loadError.message;
                 webMapMsg.visible = true;
                 indicator.running = false;
                 return;
             }
 
-            if (pubPortal.loadStatus === Enums.LoadStatusLoaded){
-                pubPortal.findItems(webmapQuery);
+            if (portal.loadStatus === Enums.LoadStatusLoaded){
+                portal.findItems(webmapQuery);
                 return;
             }
 
         });
 
-        pubPortal.findItemsStatusChanged.connect(function() {
-
-            if ( pubPortal.findItemsStatus === Enums.TaskStatusCompleted ) {
+        portal.findItemsStatusChanged.connect(function() {
+            if ( portal.findItemsStatus === Enums.TaskStatusCompleted ) {
                 indicator.running = false;
-                portalItemListModel = pubPortal.findItemsResult.itemResults;
+                portalItemListModel = portal.findItemsResult.itemResults;
                 var index = 0
-                var error = portalItemListModel.forEach(function(prtlItem){
+                var error = portalItemListModel.forEach(function(prtlItem) {
                     listModelForComboBox[index] = prtlItem.title;
                     index++;
                 });
+
                 if (error) {
                     webMapMsg.text = error.message;
                     webMapMsg.visible = true;
                 }
                 webmapsList.model = listModelForComboBox;
             }
-
         });
-        pubPortal.load();
+
+        portal.load();
         indicator.running = true;
     }
 
@@ -193,6 +189,7 @@ Rectangle {
             webMapMsg.text = portalItem.loadError.message;
             webMapMsg.visible = true;
         });
+
         portalItem.load();
         if (portalItem.loadStatus === Enums.LoadStatusLoaded){
             createMap();

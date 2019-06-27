@@ -23,14 +23,12 @@ import Esri.ArcGISRuntime.Toolkit.Dialogs 100.6
 Item {
     readonly property url arcgis_url: "http://www.arcgis.com"
 
-    // add a mapView component
     MapView {
         id: view
         anchors.fill: parent
     }
 
     Rectangle {
-        id: portalLayoutRect
         anchors {
             margins: 5
             left: parent.left
@@ -39,7 +37,7 @@ Item {
         width: childrenRect.width
         height: childrenRect.height
         color: "#000000"
-        opacity: .75
+        opacity: .70
         radius: 5
 
         ColumnLayout {
@@ -74,14 +72,12 @@ Item {
                 spacing: 3
 
                 Button {
-                    id: searchPublic
                     text: qsTr("Search Public")
                     onClicked: {
                         integratedWindowsAuthenticationSampleModel.searchPortal(arcgis_url, false);
                     }
                 }
                 Button {
-                    id: searchSecure
                     text: qsTr("Search Secure")
                     onClicked: {
                         if (securePortalUrl.text) {
@@ -104,7 +100,6 @@ Item {
             }
 
             Button {
-                id: loadSelectedWebmapBtn
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
                 Layout.margins: 2
@@ -113,7 +108,6 @@ Item {
                     if (webmapsList.currentIndex >= 0) {
                         integratedWindowsAuthenticationSampleModel.loadSelectedWebmap(webmapsList.currentIndex);
                     }
-
                 }
             }
         }
