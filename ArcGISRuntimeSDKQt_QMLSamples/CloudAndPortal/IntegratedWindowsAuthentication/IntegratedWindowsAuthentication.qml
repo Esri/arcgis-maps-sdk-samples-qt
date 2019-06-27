@@ -50,15 +50,18 @@ Rectangle {
         width: childrenRect.width
         height: childrenRect.height
         color: "#000000"
-        opacity: .75
+        opacity: .70
         radius: 5
 
         ColumnLayout {
             TextField {
                 id: securePortalUrl
                 Layout.fillWidth: true
-                Layout.margins: 3
+                Layout.margins: 2
                 placeholderText: qsTr("Enter portal url secured by IWA")
+                background: Rectangle {
+                    color: "white"
+                }
             }
 
             Row {
@@ -72,15 +75,15 @@ Rectangle {
                     text: qsTr("Force login")
                     height: forceLoginBox.height
                     verticalAlignment: Text.AlignVCenter
-                    font.pointSize: 10
                     color: "#ffffff"
                 }
             }
 
             Row {
-                Layout.fillWidth: true
-                Layout.margins: 3
-                spacing: 4
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.margins: 2
+                spacing: 3
+
                 Button {
                     id: searchPublic
                     text: qsTr("Search Public")
@@ -105,7 +108,7 @@ Rectangle {
 
             ComboBox {
                 id:webmapsList
-                Layout.margins: 3
+                Layout.margins: 2
                 Layout.fillWidth: true
                 model: null
             }
@@ -114,7 +117,7 @@ Rectangle {
                 id: loadSelectedWebmapBtn
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
-                Layout.margins: 3
+                Layout.margins: 2
                 onClicked: {
                     if(webmapsList.currentIndex >= 0){
                         indicator.running = true;
@@ -134,7 +137,6 @@ Rectangle {
     PortalQueryParametersForItems {
         id: webmapQuery
         types: [ Enums.PortalItemTypeWebMap ]
-        // check to see if you can limit results
     }
 
     function searchPortal (portalUrl, forceLogin) {
@@ -220,13 +222,11 @@ Rectangle {
         indicator.running = false;
     }
 
-
     // Uncomment this section when running as standalone application
+    /*
     AuthenticationView {
         authenticationManager: AuthenticationManager
-    }
-
-    //! [PortalUserInfo create portal]
+    }*/
 
     Dialog {
         id: webMapMsg

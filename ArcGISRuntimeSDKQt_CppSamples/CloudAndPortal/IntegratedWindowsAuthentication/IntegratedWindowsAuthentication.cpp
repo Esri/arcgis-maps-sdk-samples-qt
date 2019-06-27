@@ -64,7 +64,7 @@ void IntegratedWindowsAuthentication::searchPortal(QString url, bool forceLogin)
   m_loadingIndicator = true;
   emit isLoadingChanged();
 
-  if(forceLogin)
+  if (forceLogin)
   {
     m_portal = new Portal(url, forceLogin, this);
   }
@@ -75,7 +75,7 @@ void IntegratedWindowsAuthentication::searchPortal(QString url, bool forceLogin)
 
   connect(m_portal, &Portal::doneLoading, this, [this](Esri::ArcGISRuntime::Error loadError)
   {
-    if(!loadError.isEmpty())
+    if (!loadError.isEmpty())
     {
       m_mapLoadError = loadError.message();
       m_loadingIndicator = false;
@@ -83,6 +83,7 @@ void IntegratedWindowsAuthentication::searchPortal(QString url, bool forceLogin)
       emit mapLoadErrorChanged();
       return;
     }
+
     PortalQueryParametersForItems query;
     query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
     m_portal->findItems(query);
@@ -92,9 +93,11 @@ void IntegratedWindowsAuthentication::searchPortal(QString url, bool forceLogin)
   {
     m_webmaps = results->itemResults();
     m_webmapList.clear();
-    for(PortalItem * pI : *m_webmaps) {
+    for (PortalItem * pI : *m_webmaps)
+    {
       m_webmapList.append(pI->title());
     }
+
     emit webmapListModelChanged();
     m_loadingIndicator = false;
     emit isLoadingChanged();
@@ -154,6 +157,7 @@ void IntegratedWindowsAuthentication::loadSelectedWebmap(int index)
 
     m_map->load();
   });
+
   m_selectedItem->load();
 }
 

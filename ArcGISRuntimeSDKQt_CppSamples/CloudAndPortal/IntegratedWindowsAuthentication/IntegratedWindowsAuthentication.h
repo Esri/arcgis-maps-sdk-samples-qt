@@ -74,7 +74,6 @@ private:
   QStringList m_webmapList;
   QString m_mapLoadError;
   bool m_loadingIndicator = false;
-  //const QString arcgis_url = "http://www.arcgis.com";
 };
 
 #endif // INTEGRATEDWINDOWSAUTHENTICATION_H

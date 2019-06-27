@@ -21,7 +21,6 @@ import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.6
 
 Item {
-
     readonly property url arcgis_url: "http://www.arcgis.com"
 
     // add a mapView component
@@ -47,8 +46,11 @@ Item {
             TextField {
                 id: securePortalUrl
                 Layout.fillWidth: true
-                Layout.margins: 3
+                Layout.margins: 2
                 placeholderText: qsTr("Enter portal url secured by IWA")
+                background: Rectangle {
+                    color: "white"
+                }
             }
 
             Row {
@@ -62,15 +64,15 @@ Item {
                     text: qsTr("Force login")
                     height: forceLoginBox.height
                     verticalAlignment: Text.AlignVCenter
-                    font.pointSize: 10
                     color: "#ffffff"
                 }
             }
 
             Row {
-                Layout.fillWidth: true
-                Layout.margins: 3
-                spacing: 4
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.margins: 2
+                spacing: 3
+
                 Button {
                     id: searchPublic
                     text: qsTr("Search Public")
@@ -94,8 +96,8 @@ Item {
             }
 
             ComboBox {
-                id:webmapsList
-                Layout.margins: 3
+                id: webmapsList
+                Layout.margins: 2
                 Layout.fillWidth: true
                 model: integratedWindowsAuthenticationSampleModel.webmapListModel
                 visible: true
@@ -105,7 +107,7 @@ Item {
                 id: loadSelectedWebmapBtn
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
-                Layout.margins: 3
+                Layout.margins: 2
                 visible: true
                 onClicked: {
                     if (webmapsList.currentIndex >= 0) {
@@ -124,11 +126,10 @@ Item {
     }
 
     // Uncomment this section when running as standalone application
+    /*
     AuthenticationView {
         authenticationManager: integratedWindowsAuthenticationSampleModel.authManager
-    }
-
-    //! [PortalUserInfo create portal]
+    }*/
 
     Dialog {
         id: webMapMsg
