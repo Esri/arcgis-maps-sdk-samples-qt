@@ -147,7 +147,6 @@ Item {
         onAccepted: integratedWindowsAuthenticationSampleModel.errorAccepted();
     }
 
-
     // Declare the C++ instance which creates the scene etc. and supply the view
     IntegratedWindowsAuthenticationSample {
         id: integratedWindowsAuthenticationSampleModel

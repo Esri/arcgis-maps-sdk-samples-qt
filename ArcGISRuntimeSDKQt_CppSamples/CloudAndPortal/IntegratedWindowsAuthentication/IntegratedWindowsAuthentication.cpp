@@ -64,14 +64,7 @@ void IntegratedWindowsAuthentication::searchPortal(QString url, bool forceLogin)
   m_loadingIndicator = true;
   emit isLoadingChanged();
 
-  if (forceLogin)
-  {
-    m_portal = new Portal(url, forceLogin, this);
-  }
-  else
-  {
-    m_portal = new Portal(url, this);
-  }
+  m_portal = new Portal(url, forceLogin, this);
 
   connect(m_portal, &Portal::doneLoading, this, [this](Esri::ArcGISRuntime::Error loadError)
   {
@@ -91,6 +84,9 @@ void IntegratedWindowsAuthentication::searchPortal(QString url, bool forceLogin)
 
   connect(m_portal, &Portal::findItemsCompleted, this, [this](PortalQueryResultSetForItems* results)
   {
+    if(!results)
+      return;
+
     m_webmaps = results->itemResults();
     m_webmapList.clear();
     for (PortalItem * pI : *m_webmaps)
