@@ -21,7 +21,6 @@ import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.6
 
 Item {
-    readonly property url arcgis_url: "http://www.arcgis.com"
 
     MapView {
         id: view
@@ -47,22 +46,9 @@ Item {
                 Layout.margins: 2
                 placeholderText: qsTr("Enter portal url secured by IWA")
                 background: Rectangle {
+                    implicitWidth: parent.width
+                    implicitHeight: parent.height
                     color: "white"
-                }
-            }
-
-            Row {
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                CheckBox {
-                    id: forceLoginBox
-                    checked: false
-                }
-                Text {
-                    id: forceLoginText
-                    text: qsTr("Force login")
-                    height: forceLoginBox.height
-                    verticalAlignment: Text.AlignVCenter
-                    color: "#ffffff"
                 }
             }
 
@@ -74,14 +60,14 @@ Item {
                 Button {
                     text: qsTr("Search Public")
                     onClicked: {
-                        integratedWindowsAuthenticationSampleModel.searchPortal(arcgis_url, false);
+                        integratedWindowsAuthenticationSampleModel.searchPublicPortal();
                     }
                 }
                 Button {
                     text: qsTr("Search Secure")
                     onClicked: {
                         if (securePortalUrl.text) {
-                            integratedWindowsAuthenticationSampleModel.searchPortal(securePortalUrl.text, forceLoginBox.checked);
+                            integratedWindowsAuthenticationSampleModel.searchIwaSecurePortal(securePortalUrl.text);
                         } else {
                             webMapMsg.text = "Portal URL is empty. Please enter a portal URL"
                             webMapMsg.visible = true;
@@ -95,6 +81,7 @@ Item {
                 id: webmapsList
                 Layout.margins: 2
                 Layout.fillWidth: true
+                textRole: qsTr("title")
                 model: integratedWindowsAuthenticationSampleModel.webmapListModel
                 visible: true
             }
@@ -105,7 +92,7 @@ Item {
                 Layout.margins: 2
                 visible: true
                 onClicked: {
-                    if (webmapsList.currentIndex >= 0) {
+                    if (webmapsList.model) {
                         integratedWindowsAuthenticationSampleModel.loadSelectedWebmap(webmapsList.currentIndex);
                     }
                 }
@@ -120,21 +107,21 @@ Item {
     }
 
     // Uncomment this section when running as standalone application
-    /*
+
     AuthenticationView {
         authenticationManager: integratedWindowsAuthenticationSampleModel.authManager
-    }*/
+    }
 
     Dialog {
         id: webMapMsg
+        property alias text : textLabel.text
+        property alias informativeText : detailsLabel.text
         modal: true
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
         title: "Could not load web map!"
         visible: integratedWindowsAuthenticationSampleModel.mapLoadError.length > 0
-        property alias text : textLabel.text
-        property alias informativeText : detailsLabel.text
         ColumnLayout {
             Text {
                 id: textLabel

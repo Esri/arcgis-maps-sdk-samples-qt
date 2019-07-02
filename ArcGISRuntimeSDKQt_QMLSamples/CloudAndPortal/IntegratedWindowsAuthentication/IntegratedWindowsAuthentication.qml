@@ -26,10 +26,9 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url arcgis_url: "http://www.arcgis.com"
+    readonly property url arcgis_url: "https://www.arcgis.com"
     property var portalItem
-    property var portalItemListModel
-    property var listModelForComboBox : []
+    property var iwaSecurePortal
 
     MapView {
         id: mapView
@@ -38,6 +37,33 @@ Rectangle {
         Map {
             BasemapTopographic {}
         }
+    }
+
+    Portal {
+        id: publicPortal
+        url: arcgis_url
+        onLoadStatusChanged: {
+            if (loadStatus === Enums.LoadStatusFailedToLoad) {
+                webMapMsg.text = loadError.message;
+                webMapMsg.visible = true;
+                indicator.running = false;
+                return;
+            }
+
+            if (loadStatus === Enums.LoadStatusLoaded){
+                findItems(webmapQuery);
+                return;
+            }
+        }
+
+        onFindItemsStatusChanged: {
+            if ( findItemsStatus === Enums.TaskStatusCompleted ) {
+                indicator.running = false;
+                webmapsList.textRole = "title";
+                webmapsList.model = findItemsResult.itemResults;
+            }
+        }
+
     }
 
     Rectangle {
@@ -60,25 +86,14 @@ Rectangle {
                 Layout.margins: 2
                 placeholderText: qsTr("Enter portal url secured by IWA")
                 background: Rectangle {
+                    implicitWidth: parent.width
+                    implicitHeight: parent.height
                     color: "white"
                 }
             }
 
             Row {
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                CheckBox {
-                    id: forceLoginBox
-                    checked: false
-                }
-                Text {
-                    text: qsTr("Force login")
-                    height: forceLoginBox.height
-                    verticalAlignment: Text.AlignVCenter
-                    color: "#ffffff"
-                }
-            }
-
-            Row {
+                id: myRow
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.margins: 2
                 spacing: 3
@@ -86,14 +101,18 @@ Rectangle {
                 Button {
                     text: qsTr("Search Public")
                     onClicked: {
-                        searchPortal(arcgis_url, false);
+//                        searchPortal(arcgis_url, false);
+                        if (publicPortal.loadStatus !== Enums.LoadStatusLoaded) {
+                            indicator.running = true;
+                            publicPortal.load();
+                        }
                     }
                 }
                 Button {
                     text: qsTr("Search Secure")
                     onClicked: {
                         if (securePortalUrl.text) {
-                            searchPortal(securePortalUrl.text, forceLoginBox.checked);
+                            searchPortal(securePortalUrl.text);
                         } else {
                             webMapMsg.text = "Portal URL is empty. Please enter a portal URL"
                             webMapMsg.visible = true;
@@ -104,10 +123,9 @@ Rectangle {
             }
 
             ComboBox {
-                id:webmapsList
+                id: webmapsList
                 Layout.margins: 2
                 Layout.fillWidth: true
-                model: null
             }
 
             Button {
@@ -115,9 +133,8 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.margins: 2
                 onClicked: {
-                    if (webmapsList.currentIndex >= 0) {
-                        indicator.running = true;
-                        loadSelectedWebmap(portalItemListModel.get(webmapsList.currentIndex));
+                    if (webmapsList.model) {
+                        loadSelectedWebmap(webmapsList.model.get(webmapsList.currentIndex));
                     }
                 }
             }
@@ -135,104 +152,68 @@ Rectangle {
         types: [ Enums.PortalItemTypeWebMap ]
     }
 
-    function searchPortal (portalUrl, forceLogin) {
+    function searchPortal (portalUrl) {
 
-        var portal;
-        if (forceLogin) {
-            portal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl, loginRequired: forceLogin});
-        } else {
-            portal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
+        if (!iwaSecurePortal) {
+            iwaSecurePortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
+        } else if (iwaSecurePortal && (iwaSecurePortal.loadStatus === Enums.LoadStatusFailedToLoad)) {
+            iwaSecurePortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
+        } else if (iwaSecurePortal && (iwaSecurePortal.loadStatus === Enums.LoadStatusLoaded)) {
+            if (iwaSecurePortal.url != portalUrl) {
+                iwaSecurePortal = ArcGISRuntimeEnvironment.createObject("Portal", {url: portalUrl});
+            } else {
+                indicator.running = true;
+                iwaSecurePortal.findItems(webmapQuery);
+                return;
+            }
         }
 
-        portal.loadStatusChanged.connect(function() {
-            if (portal.loadStatus === Enums.LoadStatusFailedToLoad) {
-                webMapMsg.text = portal.loadError.message;
+        iwaSecurePortal.loadStatusChanged.connect(function() {
+            if (iwaSecurePortal.loadStatus === Enums.LoadStatusFailedToLoad) {
+                webMapMsg.text = iwaSecurePortal.loadError.message;
+                webmapsList.model = null;
                 webMapMsg.visible = true;
                 indicator.running = false;
                 return;
             }
 
-            if (portal.loadStatus === Enums.LoadStatusLoaded){
-                portal.findItems(webmapQuery);
+            if (iwaSecurePortal.loadStatus === Enums.LoadStatusLoaded){
+                iwaSecurePortal.findItems(webmapQuery);
                 return;
             }
 
         });
 
-        portal.findItemsStatusChanged.connect(function() {
-            if ( portal.findItemsStatus === Enums.TaskStatusCompleted ) {
+        iwaSecurePortal.findItemsStatusChanged.connect(function() {
+            if ( iwaSecurePortal.findItemsStatus === Enums.TaskStatusCompleted ) {
                 indicator.running = false;
-                portalItemListModel = portal.findItemsResult.itemResults;
-                var index = 0
-                var error = portalItemListModel.forEach(function(prtlItem) {
-                    listModelForComboBox[index] = prtlItem.title;
-                    index++;
-                });
-
-                if (error) {
-                    webMapMsg.text = error.message;
-                    webMapMsg.visible = true;
-                }
-                webmapsList.model = listModelForComboBox;
+                webmapsList.textRole = "title";
+                webmapsList.model = iwaSecurePortal.findItemsResult.itemResults;
             }
         });
 
-        portal.load();
+        iwaSecurePortal.load();
         indicator.running = true;
     }
 
     function loadSelectedWebmap(selectedWebmap) {
-        portalItem = selectedWebmap;
-
-        portalItem.loadStatusChanged.connect(createMap);
-        portalItem.loadErrorChanged.connect( function() {
-            webMapMsg.text = portalItem.loadError.message;
-            webMapMsg.visible = true;
-        });
-
-        portalItem.load();
-        if (portalItem.loadStatus === Enums.LoadStatusLoaded){
-            createMap();
-        }
-    }
-
-    function createMap() {
-        if (portalItem.loadStatus !== Enums.LoadStatusLoaded)
-            return;
-
-        mapView.map = ArcGISRuntimeEnvironment.createObject("Map", {"item": portalItem});
-
-        mapView.map.loadStatusChanged.connect(assignWebmap);
-        mapView.map.loadErrorChanged.connect( function() {
-            webMapMsg.text = mapView.map.loadError.message;
-            webMapMsg.visible = true;
-        });
-
-        mapView.map.load();
-    }
-
-    function assignWebmap() {
-        if (mapView.map.loadStatus !== Enums.LoadStatusLoaded)
-            return;
-
-        mapView.visible = true;
-        indicator.running = false;
+        mapView.map = ArcGISRuntimeEnvironment.createObject("Map", {"item": selectedWebmap});
     }
 
     // Uncomment this section when running as standalone application
-    /*
+
     AuthenticationView {
         authenticationManager: AuthenticationManager
-    }*/
+    }
 
     Dialog {
         id: webMapMsg
+        property alias text : textLabel.text
         modal: true
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
         standardButtons: Dialog.Ok
         title: qsTr("Could not load web map!")
-        property alias text : textLabel.text
         Text {
             id: textLabel
         }

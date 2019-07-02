@@ -28,10 +28,12 @@ class Portal;
 class PortalItem;
 class PortalQueryResultSetForItems;
 class PortalItemListModel;
+class PortalQueryParametersForItems;
 }
 }
 
 #include <QObject>
+#include <QAbstractListModel>
 
 class IntegratedWindowsAuthentication : public QObject
 {
@@ -39,7 +41,7 @@ class IntegratedWindowsAuthentication : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QStringList webmapListModel MEMBER m_webmapList NOTIFY webmapListModelChanged)
+  Q_PROPERTY(QAbstractListModel* webmapListModel READ webmapListModel NOTIFY webmapListModelChanged)
   Q_PROPERTY(QString mapLoadError MEMBER m_mapLoadError NOTIFY mapLoadErrorChanged)
   Q_PROPERTY(bool isLoading MEMBER m_loadingIndicator NOTIFY isLoadingChanged)
 
@@ -50,9 +52,11 @@ public:
   static void init();
 
   Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
-  Q_INVOKABLE void searchPortal(QString url, bool forceLogin);
+  Q_INVOKABLE void searchPublicPortal();
+  Q_INVOKABLE void searchIwaSecurePortal(const QString& url);
   Q_INVOKABLE void loadSelectedWebmap(int index);
   Q_INVOKABLE void errorAccepted();
+  QAbstractListModel* webmapListModel() const;
 
 signals:
   void mapViewChanged();
@@ -71,8 +75,11 @@ private:
   Esri::ArcGISRuntime::PortalQueryResultSetForItems* m_webmapResults = nullptr;
   Esri::ArcGISRuntime::PortalItemListModel* m_webmaps = nullptr;
   Esri::ArcGISRuntime::PortalItem* m_selectedItem = nullptr;
-  QStringList m_webmapList;
+  Esri::ArcGISRuntime::Portal* m_publicPortal = nullptr;
+  Esri::ArcGISRuntime::Portal* m_iwaSecurePortal = nullptr;
+  Esri::ArcGISRuntime::PortalQueryParametersForItems* query = nullptr;
   QString m_mapLoadError;
+  const QString arcgis_url = "https://www.arcgis.com";
   bool m_loadingIndicator = false;
 };
 

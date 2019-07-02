@@ -28,15 +28,17 @@ using namespace Esri::ArcGISRuntime;
 
 IntegratedWindowsAuthentication::IntegratedWindowsAuthentication(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this))
+  m_map(new Map(Basemap::topographic(this), this)),
+  query(new PortalQueryParametersForItems())
 {
+  query->setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
 }
 
 IntegratedWindowsAuthentication::~IntegratedWindowsAuthentication() = default;
 
 void IntegratedWindowsAuthentication::init()
 {
-  // Register the map view for QML
+  // Register C++ classes as QML types
   qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<IntegratedWindowsAuthentication>("Esri.Samples", 1, 0, "IntegratedWindowsAuthenticationSample");
@@ -59,14 +61,21 @@ void IntegratedWindowsAuthentication::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void IntegratedWindowsAuthentication::searchPortal(QString url, bool forceLogin)
+void IntegratedWindowsAuthentication::searchPublicPortal()
 {
-  m_loadingIndicator = true;
-  emit isLoadingChanged();
+  if (!m_publicPortal)
+  {
+    m_publicPortal = new Portal(arcgis_url, this);
+  }
+  else
+  {
+    m_loadingIndicator = true;
+    emit isLoadingChanged();
+    m_publicPortal->findItems(*query);
+    return;
+  }
 
-  m_portal = new Portal(url, forceLogin, this);
-
-  connect(m_portal, &Portal::doneLoading, this, [this](Esri::ArcGISRuntime::Error loadError)
+  connect(m_publicPortal, &Portal::doneLoading, this, [this](Error loadError)
   {
     if (!loadError.isEmpty())
     {
@@ -77,29 +86,97 @@ void IntegratedWindowsAuthentication::searchPortal(QString url, bool forceLogin)
       return;
     }
 
-    PortalQueryParametersForItems query;
-    query.setTypes(QList<PortalItemType>() << PortalItemType::WebMap);
-    m_portal->findItems(query);
+    m_publicPortal->findItems(*query);
   });
 
-  connect(m_portal, &Portal::findItemsCompleted, this, [this](PortalQueryResultSetForItems* results)
+  connect(m_publicPortal, &Portal::findItemsCompleted, this, [this](PortalQueryResultSetForItems* result)
   {
-    if(!results)
+    if(!result)
       return;
 
-    m_webmaps = results->itemResults();
-    m_webmapList.clear();
-    for (PortalItem * pI : *m_webmaps)
+    if(m_webmaps)
     {
-      m_webmapList.append(pI->title());
+      m_webmaps = nullptr;
     }
 
-    emit webmapListModelChanged();
-    m_loadingIndicator = false;
-    emit isLoadingChanged();
+    m_webmaps = result->itemResults();
+
+     emit webmapListModelChanged();
+     m_loadingIndicator = false;
+     emit isLoadingChanged();
   });
 
-  m_portal->load();
+  m_loadingIndicator = true;
+  emit isLoadingChanged();
+
+  m_publicPortal->load();
+}
+
+void IntegratedWindowsAuthentication::searchIwaSecurePortal(const QString& url)
+{
+  if (!m_iwaSecurePortal)
+  {
+    m_iwaSecurePortal = new Portal(url, this);
+  }
+  else if (m_iwaSecurePortal && (m_iwaSecurePortal->loadStatus() == LoadStatus::FailedToLoad))
+  {
+    m_iwaSecurePortal = nullptr;
+    m_iwaSecurePortal = new Portal(url, this);
+  }
+  else if (m_iwaSecurePortal && (m_iwaSecurePortal->loadStatus() == LoadStatus::Loaded))
+  {
+    if (m_iwaSecurePortal->url() != url)
+    {
+      m_iwaSecurePortal = nullptr;
+      m_iwaSecurePortal = new Portal(url, this);
+    }
+    else
+    {
+      m_loadingIndicator = true;
+      emit isLoadingChanged();
+      m_iwaSecurePortal->findItems(*query);
+      return;
+    }
+  }
+
+  connect(m_iwaSecurePortal, &Portal::doneLoading, this, [this](Error loadError)
+  {
+    if (!loadError.isEmpty())
+    {
+      m_mapLoadError = loadError.message();
+      m_loadingIndicator = false;
+
+      if(m_webmaps)
+        m_webmaps = nullptr;
+
+      emit webmapListModelChanged();
+      emit isLoadingChanged();
+      emit mapLoadErrorChanged();
+      return;
+    }
+
+    m_iwaSecurePortal->findItems(*query);
+  });
+
+  connect(m_iwaSecurePortal, &Portal::findItemsCompleted, this, [this](PortalQueryResultSetForItems* result)
+  {
+    if(!result)
+      return;
+
+    if(m_webmaps)
+      m_webmaps = nullptr;
+
+    m_webmaps = result->itemResults();
+
+     emit webmapListModelChanged();
+     m_loadingIndicator = false;
+     emit isLoadingChanged();
+  });
+
+  m_loadingIndicator = true;
+  emit isLoadingChanged();
+
+  m_iwaSecurePortal->load();
 }
 
 void IntegratedWindowsAuthentication::loadSelectedWebmap(int index)
@@ -107,54 +184,12 @@ void IntegratedWindowsAuthentication::loadSelectedWebmap(int index)
   if (!m_webmaps)
     return;
 
-  PortalItem* selectedItem = m_webmaps->at(index);
-  if (!selectedItem)
-    return;
+  if (m_map)
+    delete m_map;
 
-  if (m_selectedItem)
-    m_selectedItem->disconnect();
+  m_map = new Map(m_webmaps->at(index), this);
 
-  m_selectedItem = selectedItem;
-  m_loadingIndicator = true;
-  emit isLoadingChanged();
-
-  connect(m_selectedItem, &PortalItem::doneLoading, this, [this]()
-  {
-    if (!m_selectedItem || m_selectedItem->loadStatus() != LoadStatus::Loaded)
-      return;
-
-    if (m_map)
-    {
-      delete m_map;
-      m_map = nullptr;
-    }
-
-    m_mapLoadError.clear();
-    emit mapLoadErrorChanged();
-
-    m_map = new Map(m_selectedItem, this);
-
-    connect(m_map, &Map::errorOccurred, this, [this]()
-    {
-      m_mapLoadError = m_map->loadError().message();
-      emit mapLoadErrorChanged();
-    });
-
-    connect(m_map, &Map::loadStatusChanged, this, [this]()
-    {
-      if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
-        return;
-
-      m_mapView->setMap(m_map);
-      m_mapView->setVisible(true);
-      m_loadingIndicator = false;
-      emit isLoadingChanged();
-    });
-
-    m_map->load();
-  });
-
-  m_selectedItem->load();
+  m_mapView->setMap(m_map);
 }
 
 void IntegratedWindowsAuthentication::errorAccepted()
@@ -163,7 +198,12 @@ void IntegratedWindowsAuthentication::errorAccepted()
   emit mapLoadErrorChanged();
 }
 
-AuthenticationManager *IntegratedWindowsAuthentication::authManager() const
+QAbstractListModel* IntegratedWindowsAuthentication::webmapListModel() const
+{
+  return m_webmaps;
+}
+
+AuthenticationManager* IntegratedWindowsAuthentication::authManager() const
 {
   return AuthenticationManager::instance();
 }
