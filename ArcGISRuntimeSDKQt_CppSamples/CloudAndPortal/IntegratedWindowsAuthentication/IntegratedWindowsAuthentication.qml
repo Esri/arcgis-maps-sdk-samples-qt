@@ -90,12 +90,8 @@ Item {
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
                 Layout.margins: 2
-                visible: true
-                onClicked: {
-                    if (webmapsList.model) {
-                        integratedWindowsAuthenticationSampleModel.loadSelectedWebmap(webmapsList.currentIndex);
-                    }
-                }
+                enabled: webmapsList.model ? true : false
+                onClicked: integratedWindowsAuthenticationSampleModel.loadSelectedWebmap(webmapsList.currentIndex);
             }
         }
     }
@@ -107,10 +103,10 @@ Item {
     }
 
     // Uncomment this section when running as standalone application
-
+    /*
     AuthenticationView {
         authenticationManager: integratedWindowsAuthenticationSampleModel.authManager
-    }
+    }*/
 
     Dialog {
         id: webMapMsg

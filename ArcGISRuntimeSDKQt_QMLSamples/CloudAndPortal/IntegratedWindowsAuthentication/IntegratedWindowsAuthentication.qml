@@ -101,10 +101,11 @@ Rectangle {
                 Button {
                     text: qsTr("Search Public")
                     onClicked: {
-//                        searchPortal(arcgis_url, false);
                         if (publicPortal.loadStatus !== Enums.LoadStatusLoaded) {
                             indicator.running = true;
                             publicPortal.load();
+                        } else {
+                            publicPortal.findItems(webmapQuery);
                         }
                     }
                 }
@@ -132,11 +133,8 @@ Rectangle {
                 text: qsTr("Load Web Map")
                 Layout.fillWidth: true
                 Layout.margins: 2
-                onClicked: {
-                    if (webmapsList.model) {
-                        loadSelectedWebmap(webmapsList.model.get(webmapsList.currentIndex));
-                    }
-                }
+                enabled: webmapsList.model ? true : false
+                onClicked: loadSelectedWebmap(webmapsList.model.get(webmapsList.currentIndex));
             }
         }
     }
@@ -201,10 +199,10 @@ Rectangle {
     }
 
     // Uncomment this section when running as standalone application
-
+    /*
     AuthenticationView {
         authenticationManager: AuthenticationManager
-    }
+    }*/
 
     Dialog {
         id: webMapMsg
