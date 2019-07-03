@@ -1,16 +1,20 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Cloud and portal",
+    "description": "Uses Windows credentials to access services hosted on a portal secured with Integrated Windows Authentication (IWA).",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "authentication",
+        "security",
+        "windows"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "AuthenticationManager",
+        "Portal",
+        "UserCredential"
     ],
     "snippets": [
         "IntegratedWindowsAuthentication.qml"

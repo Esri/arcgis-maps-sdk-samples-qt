@@ -32,4 +32,4 @@ This sample searches for web map portal items on a secure portal. To successfull
 
 ## Tags
 
-Authentication, Portal, Security, Windows
+authentication, security, windows
