@@ -29,6 +29,8 @@ class PortalItem;
 class PortalQueryResultSetForItems;
 class PortalItemListModel;
 class PortalQueryParametersForItems;
+class PortalQueryResultSetForItems;
+class Error;
 }
 }
 
@@ -65,13 +67,17 @@ signals:
   void mapLoadErrorChanged();
   void isLoadingChanged();
 
+private slots:
+  void securePortalDoneLoading(const Esri::ArcGISRuntime::Error& loadError);
+  void publicPortalDoneLoading(const Esri::ArcGISRuntime::Error& loadError);
+  void searchItemsCompleted(const Esri::ArcGISRuntime::PortalQueryResultSetForItems* result);
+
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::Portal* m_portal = nullptr;
   Esri::ArcGISRuntime::PortalQueryResultSetForItems* m_webmapResults = nullptr;
   Esri::ArcGISRuntime::PortalItemListModel* m_webmaps = nullptr;
   Esri::ArcGISRuntime::PortalItem* m_selectedItem = nullptr;
