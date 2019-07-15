@@ -29,7 +29,7 @@ IWA, which is built into Microsoft Internet Information Server (IIS), works well
 
 * AuthenticationManager
 * Portal
-* UserCredential    
+* UserCredential
 
 ## About the data
 
