@@ -43,35 +43,18 @@ Rectangle {
                 ServiceFeatureTable {
                     id: facilitiesFeatureTable
                     url: "https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/ArcGIS/rest/services/San_Diego_Facilities/FeatureServer/0"
-
-//                    onQueryFeaturesStatusChanged: {
-//                        console.log(queryFeaturesStatus)
-//                        if ( queryFeaturesStatus !== Enums.TaskStatusCompleted)
-//                            return;
-
-//                        var facilitiesFeatureIterator = queryFeaturesResult.iterator;
-//                        facilitiesFeatureIterator.reset();
-//                        while (facilitiesFeatureIterator.hasNext) {
-//                            var facilityFeature = facilitiesFeatureIterator.next();
-//                            var facility = ArcGISRuntimeEnvironment.createObject("Facility", {geometry: facilityFeature.geometry});
-//                            facilities.push(facility)
-//                        }
-//                    }
                 }
                 renderer: SimpleRenderer {
                     symbol: facilitySymbol
                 }
                 onLoadStatusChanged: {
                     if (loadStatus === Enums.LoadStatusLoaded) {
-//                        facilitiesFeatureTable.queryFeatures(params);
                         if (incidentsLayer.loadStatus === Enums.LoadStatusLoaded) {
                             if (mySetViewpointTaskId)
                                 return;
                             // maybe use padding or maybe remove
                             mySetViewpointTaskId = mapView.setViewpointGeometryAndPadding(GeometryEngine.unionOf(fullExtent,incidentsLayer.fullExtent), 20);
                             task.load();
-//                            solveButton.enabled = true;
-//                            busy = false;
                             // don't like this // chekcing task makes me feel better
                         }
                     }
@@ -83,43 +66,18 @@ Rectangle {
                 ServiceFeatureTable {
                     id: incidentsFeatureTable
                     url: "https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/ArcGIS/rest/services/San_Diego_Incidents/FeatureServer/0"
-
-//                    onQueryFeaturesStatusChanged: {
-//                        console.log(queryFeaturesStatus)
-//                        if ( queryFeaturesStatus !== Enums.TaskStatusCompleted)
-//                            return;
-
-//                        var count = 1
-//                        var incidentsFeatureIterator = queryFeaturesResult.iterator;
-//                        incidentsFeatureIterator.reset();
-//                        while (incidentsFeatureIterator.hasNext) {
-//                            var incidentFeature = incidentsFeatureIterator.next();
-//                            var incidnet = ArcGISRuntimeEnvironment.createObject("Incident", {geometry: incidentFeature.geometry});
-//                            incidents.push(incidnet)
-//                            console.log(incidnet.name + "count :"+ count++);
-//                        }
-
-//                        // finished off with adding incidents and facilites to array to run against task like closest facility
-
-////                        incidents.forEach(function(inc) {
-////                            console.log(inc.name);
-////                        });
-//                    }
                 }
                 renderer: SimpleRenderer {
                     symbol: incidentSymbol
                 }
                 onLoadStatusChanged: {
                     if (loadStatus === Enums.LoadStatusLoaded) {
-//                        incidentsFeatureTable.queryFeatures(params);
                         if (facilitiesLayer.loadStatus === Enums.LoadStatusLoaded) {
                             if (mySetViewpointTaskId)
                                 return;
                             // maybe use padding or maybe remove
                             mySetViewpointTaskId = mapView.setViewpointGeometryAndPadding(GeometryEngine.unionOf(fullExtent,facilitiesLayer.fullExtent), 20);
                             task.load();
-//                            solveButton.enabled = true;
-//                            busy = false;
                             // don't like this // chekcing task makes me feel better
                         }
                     }
@@ -155,7 +113,6 @@ Rectangle {
                         busy = true;
                         solveButton.enabled = false;
                         task.solveClosestFacility(facilityParams);
-                        //need to define
                     }
                 }
 
@@ -163,8 +120,11 @@ Rectangle {
                     id: resetButton
                     text: qsTr("Reset")
                     Layout.margins: 2
+                    enabled: false
                     onClicked: {
-                        //need to define
+                        resultsOverlay.graphics.clear();
+                        solveButton.enabled = true;
+                        enabled = false;
                     }
                 }
             }
@@ -218,8 +178,6 @@ Rectangle {
             if (solveClosestFacilityStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            busy = false;
-
             for (var incidentIndex = 0; incidentIndex < incidentsFeatureTable.numberOfFeaturesAsInt; incidentIndex++) {
 
                 var closestFacilityIndex = solveClosestFacilityResult.rankedFacilityIndexes(incidentIndex)[0];
@@ -230,11 +188,11 @@ Rectangle {
                 resultsOverlay.graphics.append(routeGraphic);
             }
 
+            busy = false;
+            resetButton.enabled = true;
 
         }
-
         onErrorChanged: console.log(error.message);
-
     }
 
     QueryParameters {
@@ -245,9 +203,5 @@ Rectangle {
     BusyIndicator {
         anchors.centerIn: parent
         running: busy
-    }
-
-    function setupRouting() {
-
     }
 }
