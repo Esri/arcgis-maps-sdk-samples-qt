@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Routing/FindClosestFacilityToMultipleIncidentsService">
+        <file alias="sample.json">FindClosestFacilityToMultipleIncidentsService.json</file>        
+        <file>FindClosestFacilityToMultipleIncidentsService.qml</file>
+        <file>FindClosestFacilityToMultipleIncidentsService.h</file>
+        <file>FindClosestFacilityToMultipleIncidentsService.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
