@@ -27,9 +27,9 @@ Rectangle {
 
     property bool busy: false
     property var mySetViewpointTaskId
-    property var facilities: []
-    property var incidents: []
     property var facilityParams: null
+    signal bothDoneLoading(var facilityLoadStatus, var incidentLoadStatus)
+    property bool layersLoaded : (facilitiesLayer.loadStatus === Enums.LoadStatusLoaded) && (incidentsLayer.loadStatus === Enums.LoadStatusLoaded)
 
     MapView {
         id: mapView
@@ -38,59 +38,46 @@ Rectangle {
         Map {
             BasemapStreetsWithReliefVector {}
 
+            // declare feature layer for facilities
             FeatureLayer {
                 id: facilitiesLayer
+                // declare feature table to load the facilities table
                 ServiceFeatureTable {
                     id: facilitiesFeatureTable
                     url: "https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/ArcGIS/rest/services/San_Diego_Facilities/FeatureServer/0"
                 }
+                // apply the facilities symbol as a renderer for this feature layer
                 renderer: SimpleRenderer {
                     symbol: facilitySymbol
                 }
-                onLoadStatusChanged: {
-                    if (loadStatus === Enums.LoadStatusLoaded) {
-                        if (incidentsLayer.loadStatus === Enums.LoadStatusLoaded) {
-                            if (mySetViewpointTaskId)
-                                return;
-                            // maybe use padding or maybe remove
-                            mySetViewpointTaskId = mapView.setViewpointGeometryAndPadding(GeometryEngine.unionOf(fullExtent,incidentsLayer.fullExtent), 20);
-                            task.load();
-                            // don't like this // chekcing task makes me feel better
-                        }
-                    }
-                }
+                // set viewpoint geometry
+                onLoadStatusChanged: setViewpointGeometry();
             }
 
+            // declare feature layer for incidents
             FeatureLayer {
                 id: incidentsLayer
+                // declare feature table to load the incidents table
                 ServiceFeatureTable {
                     id: incidentsFeatureTable
                     url: "https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/ArcGIS/rest/services/San_Diego_Incidents/FeatureServer/0"
                 }
+                // appy the incidents symbol as a renderer for this feature layer
                 renderer: SimpleRenderer {
                     symbol: incidentSymbol
                 }
-                onLoadStatusChanged: {
-                    if (loadStatus === Enums.LoadStatusLoaded) {
-                        if (facilitiesLayer.loadStatus === Enums.LoadStatusLoaded) {
-                            if (mySetViewpointTaskId)
-                                return;
-                            // maybe use padding or maybe remove
-                            mySetViewpointTaskId = mapView.setViewpointGeometryAndPadding(GeometryEngine.unionOf(fullExtent,facilitiesLayer.fullExtent), 20);
-                            task.load();
-                            // don't like this // chekcing task makes me feel better
-                        }
-                    }
-                }
+                // set viewpoint geometry
+                onLoadStatusChanged: setViewpointGeometry();
             }
-
-            onComponentCompleted: busy = true;
+            Component.onCompleted: busy = true;
         }
 
+        // declare graphics overlay for the route graphics
         GraphicsOverlay {
             id: resultsOverlay
         }
 
+        // background for buttons
         Rectangle {
             anchors {
                 margins: 5
@@ -103,15 +90,27 @@ Rectangle {
             opacity: .70
             radius: 5
 
+            // catch mouse signals from propagating to parent
+            MouseArea {
+                anchors.fill: parent
+                onClicked: mouse.accepted = true
+                onWheel: wheel.accepted = true
+            }
+
+            // column layout for solve and reset buttons
             ColumnLayout {
                 Button {
                     id: solveButton
                     text: qsTr("Solve Routes")
                     Layout.margins: 2
+                    Layout.fillWidth: true
                     enabled: false
                     onClicked: {
+                        // enable busy indicator
                         busy = true;
+                        // disable solve button
                         solveButton.enabled = false;
+                        // execute solve closest facility task
                         task.solveClosestFacility(facilityParams);
                     }
                 }
@@ -120,17 +119,22 @@ Rectangle {
                     id: resetButton
                     text: qsTr("Reset")
                     Layout.margins: 2
+                    Layout.fillWidth: true
                     enabled: false
                     onClicked: {
+                        // clear graphics overlay
                         resultsOverlay.graphics.clear();
+                        // enable solve button
                         solveButton.enabled = true;
-                        enabled = false;
+                        // disable reset button
+                        resetButton.enabled = false;
                     }
                 }
             }
         }
     }
 
+    // declare picture marker symbol for the facilities feature layer
     PictureMarkerSymbol {
         id: facilitySymbol
         url: "https://static.arcgis.com/images/Symbols/SafetyHealth/FireStation.png"
@@ -138,6 +142,7 @@ Rectangle {
         width: 30
     }
 
+    // declare picture marker symbol for the incidents feature layer
     PictureMarkerSymbol {
         id: incidentSymbol
         url: "https://static.arcgis.com/images/Symbols/SafetyHealth/esriCrimeMarker_56_Gradient.png"
@@ -145,6 +150,7 @@ Rectangle {
         width: 30
     }
 
+    // declare simple line symbol for the route graphics
     SimpleLineSymbol {
         id: routeSymbol
         style: Enums.SimpleLineSymbolStyleSolid
@@ -152,10 +158,12 @@ Rectangle {
         width: 2.0
     }
 
+    // declare closest facility task
     ClosestFacilityTask {
         id: task
         url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"
 
+        // once loaded created default parameters
         onLoadStatusChanged: {
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
@@ -167,10 +175,15 @@ Rectangle {
             if (createDefaultParametersStatus !== Enums.TaskStatusCompleted)
                 return;
 
+            // disable busy indicator
             busy = false;
+            // enable solve button
             solveButton.enabled = true;
+            // set facilityParams to closest facilities parmeters
             facilityParams = createDefaultParametersResult;
+            // set the facilities parameter with the facilitites feature table
             facilityParams.setFacilitiesWithFeatureTable(facilitiesFeatureTable, params);
+            // set the incidents parameter with the incidents feature table
             facilityParams.setIncidentsWithFeatureTable(incidentsFeatureTable, params);
         }
 
@@ -178,19 +191,22 @@ Rectangle {
             if (solveClosestFacilityStatus !== Enums.TaskStatusCompleted)
                 return;
 
+            // loop through all incidnets
             for (var incidentIndex = 0; incidentIndex < incidentsFeatureTable.numberOfFeaturesAsInt; incidentIndex++) {
-
+                // get the index of the facility closest to the incident
                 var closestFacilityIndex = solveClosestFacilityResult.rankedFacilityIndexes(incidentIndex)[0];
+                // get the route between the incident and the facility
                 var route = solveClosestFacilityResult.route(closestFacilityIndex, incidentIndex)
-
-                var routeGraphic = ArcGISRuntimeEnvironment.createObject(
-                    "Graphic", { geometry: route.routeGeometry, symbol: routeSymbol});
+                // create a graphic from the routes geometry using the route symbol
+                var routeGraphic = ArcGISRuntimeEnvironment.createObject
+                        ("Graphic", { geometry: route.routeGeometry, symbol: routeSymbol});
+                // append graphic to graphics overlay
                 resultsOverlay.graphics.append(routeGraphic);
             }
-
+            // disable busy indicator
             busy = false;
+            // enable reset button
             resetButton.enabled = true;
-
         }
         onErrorChanged: console.log(error.message);
     }
@@ -203,5 +219,20 @@ Rectangle {
     BusyIndicator {
         anchors.centerIn: parent
         running: busy
+    }
+
+    function setViewpointGeometry() {
+        // return if either or both layers are not loaded
+        if ((facilitiesLayer.loadStatus !== Enums.LoadStatusLoaded) || (incidentsLayer.loadStatus !== Enums.LoadStatusLoaded))
+            return;
+
+        // return if set viewpoint has been executed already
+        if (mySetViewpointTaskId)
+            return;
+
+        // set viewpoint geometry from the combined extents of both feature layers
+        mySetViewpointTaskId = mapView.setViewpointGeometryAndPadding(GeometryEngine.unionOf(facilitiesLayer.fullExtent, incidentsLayer.fullExtent), 20);
+        // load the closest facility task
+        task.load();
     }
 }
