@@ -20,8 +20,7 @@ import Esri.Samples 1.0
 
 Item {
 
-    // add a mapView component
-    MapView {
+    SceneView {
         id: view
         anchors.fill: parent
     }
@@ -29,6 +28,6 @@ Item {
     // Declare the C++ instance which creates the scene etc. and supply the view
     PlayAKmlTourSample {
         id: model
-        mapView: view
+        sceneView: view
     }
 }

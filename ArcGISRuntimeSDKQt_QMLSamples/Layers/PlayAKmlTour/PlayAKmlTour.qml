@@ -15,6 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Esri.ArcGISRuntime 100.6
 
 Rectangle {
@@ -23,12 +25,61 @@ Rectangle {
     width: 800
     height: 600
 
-    MapView {
-        id: mapView
+    SceneView {
+        id: sceneView
         anchors.fill: parent
 
-        Map {
-            BasemapTopographic {}
+        Scene {
+            id: scene
+            BasemapImagery {}
+
+            Surface {
+                ArcGISTiledElevationSource {
+                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                }
+            }
+        }
+
+        Rectangle {
+            id: buttonBackground
+            anchors {
+                left: parent.left
+                top: parent.top
+                margins: 3
+            }
+            width: childrenRect.width
+            height: childrenRect.height
+            color: "#000000"
+            opacity: .75
+            radius: 5
+
+            RowLayout {
+                spacing: 0
+                Button {
+                    id: playButton
+                    text: qsTr("Play")
+                    Layout.margins: 2
+                    visible: !pauseButton.visible
+                    enabled: false
+                }
+
+                Button {
+                    id: pauseButton
+                    text: qsTr("Pause")
+                    Layout.margins: 2
+                    visible: !playButton.visible
+                    enabled: false
+                }
+
+                Button {
+                    id: resetButton
+                    text: qsTr("Reset")
+                    Layout.margins: 2
+//                    enabled: false
+                    onClicked: playButton.visible ? playButton.visible = false : playButton.visible = true
+                }
+            }
+
         }
     }
 }

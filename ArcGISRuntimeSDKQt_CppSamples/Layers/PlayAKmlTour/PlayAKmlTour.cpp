@@ -16,15 +16,22 @@
 
 #include "PlayAKmlTour.h"
 
-#include "Map.h"
-#include "MapQuickView.h"
+#include "ArcGISTiledElevationSource.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
 
 using namespace Esri::ArcGISRuntime;
 
 PlayAKmlTour::PlayAKmlTour(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::imagery(this), this))
+  m_scene(new Scene(Basemap::imagery(this), this))
 {
+  // create a new elevation source from Terrain3D REST service
+  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
+        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+
+  // add the elevation source to the scene to display elevation
+  m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
 }
 
@@ -32,24 +39,25 @@ PlayAKmlTour::~PlayAKmlTour() = default;
 
 void PlayAKmlTour::init()
 {
-  // Register the map view for QML
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  // Register classes for QML
+  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<PlayAKmlTour>("Esri.Samples", 1, 0, "PlayAKmlTourSample");
 }
 
-MapQuickView* PlayAKmlTour::mapView() const
+SceneQuickView* PlayAKmlTour::sceneView() const
 {
-  return m_mapView;
+  return m_sceneView;
 }
 
 // Set the view (created in QML)
-void PlayAKmlTour::setMapView(MapQuickView* mapView)
+void PlayAKmlTour::setSceneView(SceneQuickView* sceneView)
 {
-  if (!mapView || mapView == m_mapView)
+  if (!sceneView || sceneView == m_sceneView)
     return;
 
-  m_mapView = mapView;
-  m_mapView->setMap(m_map);
+  m_sceneView = sceneView;
+  m_sceneView->setArcGISScene(m_scene);
 
-  emit mapViewChanged();
+  emit sceneViewChanged();
 }
+
