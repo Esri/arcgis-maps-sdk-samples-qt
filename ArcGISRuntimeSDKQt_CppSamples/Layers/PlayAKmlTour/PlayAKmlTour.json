@@ -1,0 +1,8 @@
+{
+    "source" :  "PlayAKmlTour.qml",
+    "otherSourceFiles" :  [
+        "PlayAKmlTour.h",
+        "PlayAKmlTour.cpp"
+    ],
+    "name" : "Play a KML Tour"
+}

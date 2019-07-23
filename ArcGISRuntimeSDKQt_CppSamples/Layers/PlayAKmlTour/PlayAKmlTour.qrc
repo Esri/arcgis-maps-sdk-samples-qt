@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/PlayAKmlTour">
+        <file alias="sample.json">PlayAKmlTour.json</file>        
+        <file>PlayAKmlTour.qml</file>
+        <file>PlayAKmlTour.h</file>
+        <file>PlayAKmlTour.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
