@@ -192,13 +192,13 @@ Rectangle {
                 return;
 
             // loop through all incidnets
-            for (var incidentIndex = 0; incidentIndex < incidentsFeatureTable.numberOfFeaturesAsInt; incidentIndex++) {
+            for (let incidentIndex = 0; incidentIndex < incidentsFeatureTable.numberOfFeaturesAsInt; incidentIndex++) {
                 // get the index of the facility closest to the incident
-                var closestFacilityIndex = solveClosestFacilityResult.rankedFacilityIndexes(incidentIndex)[0];
+                let closestFacilityIndex = solveClosestFacilityResult.rankedFacilityIndexes(incidentIndex)[0];
                 // get the route between the incident and the facility
-                var route = solveClosestFacilityResult.route(closestFacilityIndex, incidentIndex)
+                let route = solveClosestFacilityResult.route(closestFacilityIndex, incidentIndex)
                 // create a graphic from the routes geometry using the route symbol
-                var routeGraphic = ArcGISRuntimeEnvironment.createObject
+                let routeGraphic = ArcGISRuntimeEnvironment.createObject
                         ("Graphic", { geometry: route.routeGeometry, symbol: routeSymbol});
                 // append graphic to graphics overlay
                 resultsOverlay.graphics.append(routeGraphic);

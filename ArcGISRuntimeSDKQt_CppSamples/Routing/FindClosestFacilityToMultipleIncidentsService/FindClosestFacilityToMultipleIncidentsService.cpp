@@ -36,7 +36,7 @@ using namespace Esri::ArcGISRuntime;
 
 FindClosestFacilityToMultipleIncidentsService::FindClosestFacilityToMultipleIncidentsService(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::streetsWithReliefVector() , this)),
+  m_map(new Map(Basemap::streetsWithReliefVector(this), this)),
   m_task(new ClosestFacilityTask(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ClosestFacility"), this)),
   m_resultsOverlay(new GraphicsOverlay(this))
 {
@@ -58,7 +58,6 @@ FindClosestFacilityToMultipleIncidentsService::FindClosestFacilityToMultipleInci
     }
     setupRouting();
   });
-
   // load closest facility task
   m_task->load();
 }
@@ -128,14 +127,12 @@ void FindClosestFacilityToMultipleIncidentsService::createFeatureLayers()
   // load both service feature tables
   m_facilitiesFeatureTable->load();
   m_incidentsFeatureTable->load();
-
 }
 
 void FindClosestFacilityToMultipleIncidentsService::setupRouting()
 {
   // connect to createDefaultParametersCompleted signal of the closest facility task
-  connect(m_task, &ClosestFacilityTask::createDefaultParametersCompleted, this, [this]
-          (QUuid, Esri::ArcGISRuntime::ClosestFacilityParameters defaultParameters)
+  connect(m_task, &ClosestFacilityTask::createDefaultParametersCompleted, this, [this](QUuid, const ClosestFacilityParameters& defaultParameters)
   {
     // create query parameters to query features from feature table
     QueryParameters params;
@@ -149,28 +146,27 @@ void FindClosestFacilityToMultipleIncidentsService::setupRouting()
     // disable busy indicator
     m_busy = false;
     // enable solve button
-    m_solveButton = true;
+    m_solveButtonEnabled = true;
     emit busyChanged();
     emit solveButtonChanged();
   });
 
   // connect to solveClosestFacilityCompleted signal of the closest facility task
-  connect(m_task, &ClosestFacilityTask::solveClosestFacilityCompleted, this, [this]
-          (QUuid, ClosestFacilityResult closestFacilityResult)
+  connect(m_task, &ClosestFacilityTask::solveClosestFacilityCompleted, this, [this](QUuid, const ClosestFacilityResult& closestFacilityResult)
   {
-    if(closestFacilityResult.isEmpty())
+    if (closestFacilityResult.isEmpty())
     {
       qDebug() << "Empty result";
       return;
     }
 
     // loop through all incidents
-    for(int incidentIndex = 0; incidentIndex < m_incidentsFeatureTable->numberOfFeatures(); incidentIndex++)
+    for (int incidentIndex = 0; incidentIndex < m_incidentsFeatureTable->numberOfFeatures(); incidentIndex++)
     {
       // get the index of the facility closest to the incident
-      int closestFacilityIndex = closestFacilityResult.rankedFacilityIndexes(incidentIndex).first();
+      const int closestFacilityIndex = closestFacilityResult.rankedFacilityIndexes(incidentIndex).first();
       // get the route between the incident and the facility
-      ClosestFacilityRoute route = closestFacilityResult.route(closestFacilityIndex,incidentIndex);
+      const ClosestFacilityRoute route = closestFacilityResult.route(closestFacilityIndex, incidentIndex);
       // create a graphic from the routes geometry using the route symbol
       Graphic* m_routeGraphic = new Graphic(route.routeGeometry(), m_routeSymbol, this);
       // append the graphic to the graphics overlay
@@ -180,7 +176,7 @@ void FindClosestFacilityToMultipleIncidentsService::setupRouting()
     // append the graphics overlay to the mapview
     m_mapView->graphicsOverlays()->append(m_resultsOverlay);
     // enable the reset button
-    m_resetButton = true;
+    m_resetButtonEnabled = true;
     emit resetButtonChanged();
     // disable the busy indicator
     m_busy = false;
@@ -204,7 +200,7 @@ void FindClosestFacilityToMultipleIncidentsService::setViewpointGeometry(const E
     return;
 
   // return if set viewpoint task watcher has been created
-  if (setViewpointTaskWatcher)
+  if (setViewpointTaskWatcher.isValid())
     return;
 
   // append both feature layers to the map
@@ -212,7 +208,7 @@ void FindClosestFacilityToMultipleIncidentsService::setViewpointGeometry(const E
   m_mapView->map()->operationalLayers()->append(m_incidentsFeatureLayer);
 
   // set viewpoint geometry to the combined extents of the facilities and incidents feature layers
-  setViewpointTaskWatcher = new TaskWatcher(m_mapView->setViewpointGeometry(GeometryEngine::unionOf(m_facilitiesFeatureLayer->fullExtent(), m_incidentsFeatureLayer->fullExtent()), 20));
+  setViewpointTaskWatcher = m_mapView->setViewpointGeometry(GeometryEngine::unionOf(m_facilitiesFeatureLayer->fullExtent(), m_incidentsFeatureLayer->fullExtent()), 20);
 }
 
 void FindClosestFacilityToMultipleIncidentsService::solveRoute()
@@ -220,7 +216,7 @@ void FindClosestFacilityToMultipleIncidentsService::solveRoute()
   // enable the busy indicator
   m_busy = true;
   // disable the solve button
-  m_solveButton = false;
+  m_solveButtonEnabled = false;
   emit busyChanged();
   emit solveButtonChanged();
 
@@ -233,9 +229,9 @@ void FindClosestFacilityToMultipleIncidentsService::resetGO()
   // clear the graphics overlay
   m_mapView->graphicsOverlays()->clear();
   // disable the reset button
-  m_resetButton = false;
+  m_resetButtonEnabled = false;
   // enable the solve button
-  m_solveButton = true;
+  m_solveButtonEnabled = true;
   emit solveButtonChanged();
   emit resetButtonChanged();
 }

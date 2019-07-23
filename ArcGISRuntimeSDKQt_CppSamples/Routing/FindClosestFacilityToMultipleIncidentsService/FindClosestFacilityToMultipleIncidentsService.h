@@ -32,12 +32,12 @@ class Facility;
 class Incident;
 class PictureMarkerSymbol;
 class SimpleLineSymbol;
-class TaskWatcher;
 class QueryParameters;
 }
 }
 
 #include "ClosestFacilityParameters.h"
+#include "TaskWatcher.h"
 #include <QObject>
 
 class FindClosestFacilityToMultipleIncidentsService : public QObject
@@ -46,8 +46,8 @@ class FindClosestFacilityToMultipleIncidentsService : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
-  Q_PROPERTY(bool solveButton MEMBER m_solveButton NOTIFY solveButtonChanged)
-  Q_PROPERTY(bool resetButton MEMBER m_resetButton NOTIFY resetButtonChanged)
+  Q_PROPERTY(bool solveButton MEMBER m_solveButtonEnabled NOTIFY solveButtonChanged)
+  Q_PROPERTY(bool resetButton MEMBER m_resetButtonEnabled NOTIFY resetButtonChanged)
 
 public:
   explicit FindClosestFacilityToMultipleIncidentsService(QObject* parent = nullptr);
@@ -84,12 +84,12 @@ private:
   Esri::ArcGISRuntime::SimpleLineSymbol* m_routeSymbol = nullptr;
   Esri::ArcGISRuntime::ClosestFacilityTask* m_task = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_resultsOverlay = nullptr;
-  Esri::ArcGISRuntime::TaskWatcher* setViewpointTaskWatcher = nullptr;
+  Esri::ArcGISRuntime::TaskWatcher setViewpointTaskWatcher;
   Esri::ArcGISRuntime::ClosestFacilityParameters m_facilityParams;
 
   bool m_busy = false;
-  bool m_solveButton = false;
-  bool m_resetButton = false;
+  bool m_solveButtonEnabled = false;
+  bool m_resetButtonEnabled = false;
 };
 
 #endif // FINDCLOSESTFACILITYTOMULTIPLEINCIDENTSSERVICE_H
