@@ -1,16 +1,26 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Routing",
+    "description": "Find routes from several locations to the respective closest facility.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "incident",
+        "network analysis",
+        "route",
+        "search"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "ClosestFacilityParameters",
+        "ClosestFacilityResult",
+        "ClosestFacilityRoute",
+        "ClosestFacilityTask",
+        "Facility",
+        "Graphic",
+        "GraphicsOverlay",
+        "Incident"
     ],
     "snippets": [
         "FindClosestFacilityToMultipleIncidentsService.qml"
