@@ -107,7 +107,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
       //! [Create Dictionary Symbol Style Cpp]
       const QString specType = QStringLiteral("mil2525d");
       const QString stylePath = m_dataPath + "/styles/mil2525d.stylx";
-      DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle(specType, stylePath, this);
+      DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(stylePath, this);
       //! [Create Dictionary Symbol Style Cpp]
 
       for (GeodatabaseFeatureTable* table : m_geodatabase->geodatabaseFeatureTables())

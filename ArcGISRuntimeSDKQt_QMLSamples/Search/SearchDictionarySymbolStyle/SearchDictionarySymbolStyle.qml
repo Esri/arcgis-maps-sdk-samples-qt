@@ -24,30 +24,14 @@ Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600    
+    height: 600
 
     readonly property double fontSize: 16
     readonly property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     readonly property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
     property var searchParamList: [[],[],[],[],[]]
-
-    DictionarySymbolStyle {
-        id: dictionarySymbolStyle
-        specificationType: "mil2525d"
-        styleLocation: dataPath
-
-        //Search completed
-        onSearchSymbolsStatusChanged:{
-            if (searchSymbolsStatus !== Enums.TaskStatusCompleted)
-                return;
-
-            resultView.visible = true;
-
-            //Update the number of results retuned
-            resultText.text = "Result(s) found: " + searchSymbolsResult.count
-        }
-    }
+    property DictionarySymbolStyle dictionarySymbolStyle: null
 
     SymbolStyleSearchParameters {
         id: searchParams
@@ -328,5 +312,18 @@ Rectangle {
                 }
             }
         }
+    }
+
+    Component.onCompleted: {
+        dictionarySymbolStyle = DictionarySymbolStyle.createFromFile(dataPath);
+        dictionarySymbolStyle.searchSymbolsStatusChanged.connect(function(){
+            if (dictionarySymbolStyle.searchSymbolsStatus !== Enums.TaskStatusCompleted)
+                return;
+
+            resultView.visible = true;
+
+            //Update the number of results retuned
+            resultText.text = "Result(s) found: " + dictionarySymbolStyle.searchSymbolsResult.count
+        });
     }
 }
