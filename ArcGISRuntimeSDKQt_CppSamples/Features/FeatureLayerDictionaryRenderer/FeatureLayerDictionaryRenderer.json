@@ -7,7 +7,7 @@
     "name" : "Feature layer (dictionary renderer)",
     "dataItems" : [
         {
-            "itemId" : "5de1ff8d2aa243558ba057fa922beb84",
+            "itemId" : "c78b149a1d52414682c86a5feeb13d30",
             "path" : "~/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
         },
         {
