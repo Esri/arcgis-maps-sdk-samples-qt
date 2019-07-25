@@ -69,7 +69,7 @@ Rectangle {
                                 "DictionaryRenderer",
                                 { dictionarySymbolStyle:
                                     //! [Create Dictionary Symbol Style QML]
-                                    DictionarySymbolStyle.createFromFile(dataPath + "/styles/mil2525d.stylx") });
+                                    DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx") });
                                     //! [Create Dictionary Symbol Style QML]
                     layer.renderer = renderer;
                     //! [Apply Dictionary Renderer Feature Layer QML]

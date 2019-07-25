@@ -4,8 +4,8 @@
     "name" : "Graphics overlay (dictionary renderer) 3D",
     "dataItems" : [
         {
-            "itemId" : "e34835bf5ec5430da7cf16bb8c0b075c",
-            "path" : "~/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
+            "itemId" : "5de1ff8d2aa243558ba057fa922beb84",
+            "path" : "~/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
         },
         {
             "itemId" : "3db12175479147ea9c89ebaaf3b89996",

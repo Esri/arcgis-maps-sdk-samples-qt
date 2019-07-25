@@ -84,7 +84,7 @@ void GODictionaryRenderer::componentComplete()
 
   // Create dictionary renderer and apply to the graphics overlay
   const QString specType = QStringLiteral("mil2525d");
-  const QString styleLocation = m_dataPath + "/styles/mil2525d.stylx";
+  const QString styleLocation = m_dataPath + "/styles/arcade_style/mil2525d.stylx";
   DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(styleLocation, this);
   DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
   m_graphicsOverlay->setRenderer(renderer);

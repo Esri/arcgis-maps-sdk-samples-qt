@@ -47,7 +47,7 @@ Rectangle {
             renderingMode: Enums.GraphicsRenderingModeDynamic
 
             DictionaryRenderer {
-                dictionarySymbolStyle: DictionarySymbolStyle.createFromFile(dataPath + "/styles/mil2525d.stylx")
+                dictionarySymbolStyle: DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
             }
         }
     }

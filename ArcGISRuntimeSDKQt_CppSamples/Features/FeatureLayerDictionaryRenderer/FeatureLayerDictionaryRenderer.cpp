@@ -106,7 +106,7 @@ void FeatureLayerDictionaryRenderer::componentComplete()
 
       //! [Create Dictionary Symbol Style Cpp]
       const QString specType = QStringLiteral("mil2525d");
-      const QString stylePath = m_dataPath + "/styles/mil2525d.stylx";
+      const QString stylePath = m_dataPath + "/styles/arcade_style/mil2525d.stylx";
       DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(stylePath, this);
       //! [Create Dictionary Symbol Style Cpp]
 
