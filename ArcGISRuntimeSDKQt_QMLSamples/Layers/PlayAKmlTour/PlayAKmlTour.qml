@@ -18,12 +18,15 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Esri.ArcGISRuntime 100.6
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
+
+    readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/kml"
 
     SceneView {
         id: sceneView
@@ -37,6 +40,55 @@ Rectangle {
                 ArcGISTiledElevationSource {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
+            }
+
+            KmlLayer {
+                id: kmlLayer
+               dataset: KmlDataset {
+                   id: kmlDataset
+                   url: dataPath + "/Esri_tour.kmz"
+
+                   onLoadStatusChanged: {
+                       console.log("load status before: " + loadStatus);
+                       if (loadStatus !== Enums.LoadStatusLoaded)
+                           return;
+
+                       console.log("load status after: " + loadStatus);
+
+
+                       var kmlTour = findFirstKMLTour(kmlDataset.rootNodes)
+                       kmlTour.tourStatusChanged.connect(function() {
+                           switch(kmlTour.tourStatus) {
+                           case Enums.KmlTourStatusCompleted:
+                           case Enums.KmlTourStatusInitialized:
+                               playButton.enabled = true;
+                               pauseButton.enabled = false;
+                               break;
+                           case Enums.KmlTourStatusPaused:
+                               playButton.enabled = true;
+                               pauseButton.enabled = false;
+                               resetButton.enabled = true;
+                               break;
+                           case Enums.KmlTourStatusPlaying:
+                               playButton.enabled = false;
+                               pauseButton.enabled = true;
+                               resetButton.enabled = true;
+                               break;
+                           }
+                       });
+
+                       kmlTourController.tour = kmlTour;
+
+                       if (kmlTour !== null) {
+                           playButton.enabled = true;
+                       }
+
+                   }
+                }
+            }
+
+            KmlTourController {
+                id: kmlTourController
             }
         }
 
@@ -59,27 +111,57 @@ Rectangle {
                     id: playButton
                     text: qsTr("Play")
                     Layout.margins: 2
-                    visible: !pauseButton.visible
                     enabled: false
+                    onClicked: kmlTourController.play();
                 }
 
                 Button {
                     id: pauseButton
                     text: qsTr("Pause")
                     Layout.margins: 2
-                    visible: !playButton.visible
                     enabled: false
+                    onClicked: kmlTourController.pause();
                 }
 
                 Button {
                     id: resetButton
                     text: qsTr("Reset")
                     Layout.margins: 2
-//                    enabled: false
-                    onClicked: playButton.visible ? playButton.visible = false : playButton.visible = true
+                    enabled: false
+                    onClicked: kmlTourController.reset();
                 }
             }
-
         }
+    }
+
+    function findFirstKMLTour(nodes) {
+        console.log("length: " + nodes.length);
+        for (var i = 0; i < nodes.length; i++) {
+            let node = nodes[i];
+            console.log("name: " + node.name);
+            console.log("node type: " + node.kmlNodeType);
+            console.log("o type: " + node.objectType);
+            if (node.kmlNodeType === Enums.KmlNodeTypeKmlTour)
+                return node;
+            else if (node instanceof KmlContainer)
+                return findFirstKMLTour(node.childNodes);
+//                return findFirstKMLTourFromListModel(node.childNodesListModel);
+        }
+        return null;
+    }
+
+    function findFirstKMLTourFromListModel(nodes) {
+
+        nodes.forEach(function(node) {
+            console.log("name: " + node.name);
+            console.log("node type: " + node.kmlNodeType);
+            console.log(node.childNodes.length);
+            console.log("o type: " + node.objectType);
+            if (node.kmlNodeType === Enums.KmlNodeTypeKmlTour)
+                return node;
+            else if( node.kmlNodeType !== Enums.KmlNodeTypeKmlTour)
+                return findFirstKMLTourFromListModel(node.childrenNodesListModel);
+        });
+        return null;
     }
 }
