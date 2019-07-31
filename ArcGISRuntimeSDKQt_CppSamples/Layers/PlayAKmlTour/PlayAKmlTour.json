@@ -4,5 +4,11 @@
         "PlayAKmlTour.h",
         "PlayAKmlTour.cpp"
     ],
-    "name" : "Play A KML Tour"
+    "name" : "Play A KML Tour",
+    "dataItems" : [
+        {
+            "itemId" : "f10b1d37fdd645c9bc9b189fb546307c",
+            "path" : "~/ArcGIS/Runtime/Data/kml/Esri_tour.kmz"
+        }
+    ]
 }

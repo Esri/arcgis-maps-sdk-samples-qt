@@ -23,16 +23,26 @@ namespace ArcGISRuntime
 {
 class Scene;
 class SceneQuickView;
+class KmlTour;
+class KmlTourController;
+class KmlLayer;
+class KmlDataset;
+class KmlNode;
+class KmlNodeListModel;
 }
 }
 
 #include <QObject>
+#include <KmlTourController.h>
 
 class PlayAKmlTour : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
+  Q_PROPERTY(bool playButtonEnabled MEMBER m_playButtonEnabled NOTIFY playButtonEnabledChanged())
+  Q_PROPERTY(bool pauseButtonEnabled MEMBER m_pauseButtonEnabled NOTIFY pauseButtonEnabledChanged())
+  Q_PROPERTY(bool resetButtonEnabled MEMBER m_resetButtonEnabled NOTIFY resetButtonEnabledChanged())
 
 public:
   explicit PlayAKmlTour(QObject* parent = nullptr);
@@ -40,15 +50,38 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void playKmlTour();
+  Q_INVOKABLE void pauseKmlTour();
+  Q_INVOKABLE void resetKmlTour();
+
 signals:
   void sceneViewChanged();
+  void playButtonEnabledChanged();
+  void pauseButtonEnabledChanged();
+  void resetButtonEnabledChanged();
+
+private slots:
+//  void updateButtonStatus(const Esri::ArcGISRuntime::KmlTourStatus& tourStatus);
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
+  Esri::ArcGISRuntime::KmlTour* findFirstKMLTour(const QList<Esri::ArcGISRuntime::KmlNode*>& nodes);
+  Esri::ArcGISRuntime::KmlTour* findFirstKMLTourFromListModel(const Esri::ArcGISRuntime::KmlNodeListModel& nodes);
+
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+  Esri::ArcGISRuntime::KmlTour* m_kmlTour = nullptr;
+  Esri::ArcGISRuntime::KmlTourController m_kmlTourController;
+  Esri::ArcGISRuntime::KmlLayer* m_kmlLayer = nullptr;
+  Esri::ArcGISRuntime::KmlDataset* m_kmlDataset = nullptr;
+
+  QString m_dataPath;
+  bool m_playButtonEnabled = false;
+  bool m_pauseButtonEnabled = false;
+  bool m_resetButtonEnabled = false;
+
 };
 
 #endif // PLAYAKMLTOUR_H
