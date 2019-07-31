@@ -1,4 +1,4 @@
-# Play a KML Tour
+# Play a KML tour
 
 Play tours in KML files.
 

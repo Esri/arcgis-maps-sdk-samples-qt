@@ -46,7 +46,7 @@ Rectangle {
                dataset: KmlDataset {
                    id: kmlDataset
                    url: dataPath + "/kml/Esri_tour.kmz"
-                }
+               }
                onLoadStatusChanged: {
                    if (loadStatus !== Enums.LoadStatusLoaded)
                        return;

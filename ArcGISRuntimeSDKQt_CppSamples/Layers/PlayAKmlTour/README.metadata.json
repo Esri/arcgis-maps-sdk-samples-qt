@@ -18,18 +18,18 @@
     "redirect_from": "",
     "relevant_apis": [        
         "KmlTourController",
-        "KmlTourController.tour",
-        "KmlTourController.play()",
-        "KmlTourController.pause()",
-        "KmlTourController.reset()",
+        "KmlTourController::tour",
+        "KmlTourController::play()",
+        "KmlTourController::pause()",
+        "KmlTourController::reset()",
         "KmlTour",
-        "KmlTour.tourStatus",
-        "KmlTour.tourStatusChanged"
+        "KmlTour::tourStatus",
+        "KmlTour::tourStatusChanged"
     ],
     "snippets": [
         "PlayAKmlTour.cpp",
         "PlayAKmlTour.h",
         "PlayAKmlTour.qml"
     ],
-    "title": "Play A KML Tour"
+    "title": "Play A KML tour"
 }

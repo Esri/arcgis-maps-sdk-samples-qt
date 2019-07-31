@@ -1,7 +1,7 @@
 {
     "source" :  "PlayAKmlTour.qml",
     "otherSourceFiles" :  [],
-    "name" : "Play a KML Tour",
+    "name" : "Play a KML tour",
     "dataItems" : [
         {
             "itemId" : "f10b1d37fdd645c9bc9b189fb546307c",

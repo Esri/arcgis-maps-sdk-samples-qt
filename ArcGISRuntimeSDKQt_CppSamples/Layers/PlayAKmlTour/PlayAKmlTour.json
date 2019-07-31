@@ -4,7 +4,7 @@
         "PlayAKmlTour.h",
         "PlayAKmlTour.cpp"
     ],
-    "name" : "Play A KML Tour",
+    "name" : "Play A KML tour",
     "dataItems" : [
         {
             "itemId" : "f10b1d37fdd645c9bc9b189fb546307c",
