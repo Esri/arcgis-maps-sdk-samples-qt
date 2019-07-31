@@ -174,14 +174,12 @@ KmlTour* PlayAKmlTour::findFirstKMLTour(const QList<KmlNode*>& nodes)
     if (node->kmlNodeType() == KmlNodeType::KmlTour)
       return dynamic_cast<KmlTour*>(node);
     else if ((node->kmlNodeType() == KmlNodeType::KmlDocument) || (node->kmlNodeType() == KmlNodeType::KmlFolder))
-      return findFirstKMLTour(dynamic_cast<KmlContainer*>(node)->childNodes());
-//      return findFirstKMLTourFromListModel(dynamic_cast<KmlContainer*>(node)->childNodesListModel());
+//      return findFirstKMLTour(dynamic_cast<KmlContainer*>(node)->childNodes());
+      return findFirstKMLTourFromListModel(*dynamic_cast<KmlContainer*>(node)->childNodesListModel());
   }
   return nullptr;
 }
 
-
-// not working yet
 KmlTour* PlayAKmlTour::findFirstKMLTourFromListModel(const KmlNodeListModel& nodes)
 {
   for (KmlNode* node : nodes)
@@ -191,8 +189,7 @@ KmlTour* PlayAKmlTour::findFirstKMLTourFromListModel(const KmlNodeListModel& nod
     if (node->kmlNodeType() == KmlNodeType::KmlTour)
       return dynamic_cast<KmlTour*>(node);
     else if ((node->kmlNodeType() == KmlNodeType::KmlDocument) || (node->kmlNodeType() == KmlNodeType::KmlFolder))
-//      return findFirstKMLTourFromListModel(dynamic_cast<KmlContainer*>(node)->childNodesListModel());
-      return nullptr;
+      return findFirstKMLTourFromListModel(*dynamic_cast<KmlContainer*>(node)->childNodesListModel());
   }
   return nullptr;
 }
