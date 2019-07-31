@@ -36,7 +36,7 @@ Read more about how to set up the sample's offline data [here](http://links.esri
 
 Link | Local Location
 ---------|-------|
-|[Esri tour KMZ](https://arcgisruntime.maps.arcgis.com/home/item.html?id=f10b1d37fdd645c9bc9b189fb546307c)| `<userhome>`/ArcGIS/Samples/KML/Esri_tour.kmz|
+|[Esri tour KMZ](https://arcgisruntime.maps.arcgis.com/home/item.html?id=f10b1d37fdd645c9bc9b189fb546307c)| `<userhome>`/ArcGIS/Samples/kml/Esri_tour.kmz|
 
 ## About the data
 
