@@ -43,46 +43,43 @@ Rectangle {
             }
 
             KmlLayer {
-                id: kmlLayer
                dataset: KmlDataset {
                    id: kmlDataset
                    url: dataPath + "/kml/Esri_tour.kmz"
-
-                   onLoadStatusChanged: {
-                       console.log("load status before: " + loadStatus);
-                       if (loadStatus !== Enums.LoadStatusLoaded)
-                           return;
-
-                       console.log("load status after: " + loadStatus);
-
-
-                       var kmlTour = findFirstKMLTour(kmlDataset.rootNodes)
-
-                       if (kmlTour !== null) {
-                           kmlTour.tourStatusChanged.connect(function() {
-                               switch(kmlTour.tourStatus) {
-                               case Enums.KmlTourStatusCompleted:
-                               case Enums.KmlTourStatusInitialized:
-                                   playButton.enabled = true;
-                                   pauseButton.enabled = false;
-                                   break;
-                               case Enums.KmlTourStatusPaused:
-                                   playButton.enabled = true;
-                                   pauseButton.enabled = false;
-                                   resetButton.enabled = true;
-                                   break;
-                               case Enums.KmlTourStatusPlaying:
-                                   playButton.enabled = false;
-                                   pauseButton.enabled = true;
-                                   resetButton.enabled = true;
-                                   break;
-                               }
-                           });
-
-                           kmlTourController.tour = kmlTour;
-                       }
-                   }
                 }
+               onLoadStatusChanged: {
+                   if (loadStatus !== Enums.LoadStatusLoaded)
+                       return;
+
+                   var kmlTour = findFirstKMLTour(kmlDataset.rootNodes)
+
+                   if (kmlTour !== null) {
+                       kmlTour.tourStatusChanged.connect(function() {
+                           switch(kmlTour.tourStatus) {
+                           case Enums.KmlTourStatusCompleted:
+                           case Enums.KmlTourStatusInitialized:
+                               playButton.enabled = true;
+                               pauseButton.enabled = false;
+                               resetButton.enabled = true;
+                               break;
+                           case Enums.KmlTourStatusPaused:
+                               playButton.enabled = true;
+                               pauseButton.enabled = false;
+                               resetButton.enabled = true;
+                               break;
+                           case Enums.KmlTourStatusPlaying:
+                               playButton.enabled = false;
+                               pauseButton.enabled = true;
+                               resetButton.enabled = true;
+                               break;
+                           case Enums.KmlTourStatusInitializing:
+                           case Enums.KmlTourStatusNotInitialized:
+                               break;
+                           }
+                       });
+                       kmlTourController.tour = kmlTour;
+                   }
+               }
             }
 
             KmlTourController {
@@ -102,6 +99,13 @@ Rectangle {
             color: "#000000"
             opacity: .75
             radius: 5
+
+            // catch mouse signals from propagating to parent
+            MouseArea {
+                anchors.fill: parent
+                onClicked: mouse.accepted = true
+                onWheel: wheel.accepted = true
+            }
 
             RowLayout {
                 spacing: 0
@@ -133,33 +137,24 @@ Rectangle {
     }
 
     function findFirstKMLTour(nodes) {
-        console.log("length: " + nodes.length);
         for (var i = 0; i < nodes.length; i++) {
             let node = nodes[i];
-            console.log("name: " + node.name);
-            console.log("node type: " + node.kmlNodeType);
-            console.log("o type: " + node.objectType);
             if (node.kmlNodeType === Enums.KmlNodeTypeKmlTour)
                 return node;
             else if ((node.kmlNodeType === Enums.KmlNodeTypeKmlFolder) || (node.kmlNodeType === Enums.KmlNodeTypeKmlDocument))
-                return findFirstKMLTour(node.childNodes);
-//                return findFirstKMLTourFromListModel(node.childNodesListModel);
+                return findFirstKMLTourFromListModel(node.childNodesListModel);
         }
         return null;
     }
 
     function findFirstKMLTourFromListModel(nodes) {
-
-        nodes.forEach(function(node) {
-            console.log("name: " + node.name);
-            console.log("node type: " + node.kmlNodeType);
-            console.log(node.childNodes.length);
-            console.log("o type: " + node.objectType);
+        for (var i = 0; i < nodes.count; ++i) {
+            const node = nodes.get(i);
             if (node.kmlNodeType === Enums.KmlNodeTypeKmlTour)
                 return node;
             else if ((node.kmlNodeType === Enums.KmlNodeTypeKmlFolder) || (node.kmlNodeType === Enums.KmlNodeTypeKmlDocument))
-                return findFirstKMLTourFromListModel(node.childrenNodesListModel);
-        });
+                return findFirstKMLTourFromListModel(node.childNodesListModel);
+        }
         return null;
     }
 }

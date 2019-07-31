@@ -39,6 +39,13 @@ Item {
         opacity: .75
         radius: 5
 
+        // catch mouse signals from propagating to parent
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse.accepted = true
+            onWheel: wheel.accepted = true
+        }
+
         RowLayout {
             spacing: 0
             Button {

@@ -20,9 +20,8 @@
 #include "Scene.h"
 #include "SceneQuickView.h"
 #include "KmlTour.h"
-#include "KmlDataset.h"
+#include "KmlTourController.h"
 #include "KmlLayer.h"
-#include "KmlNode.h"
 #include "KmlContainer.h"
 #include "KmlNodeListModel.h"
 
@@ -75,10 +74,10 @@ PlayAKmlTour::PlayAKmlTour(QObject* parent /* = nullptr */):
     m_scene->operationalLayers()->append(m_kmlLayer);
 
     m_kmlTour = findFirstKMLTour(m_kmlDataset->rootNodes());
+    m_kmlTourController = new KmlTourController(this);
 
     if (m_kmlTour)
     {
-
       connect(m_kmlTour, &KmlTour::tourStatusChanged, this, [this](KmlTourStatus tourStatus)
       {
         switch (tourStatus) {
@@ -86,7 +85,6 @@ PlayAKmlTour::PlayAKmlTour(QObject* parent /* = nullptr */):
           case KmlTourStatus::Initialized:
             m_playButtonEnabled = true;
             m_pauseButtonEnabled = false;
-            m_resetButtonEnabled = false;
             break;
           case KmlTourStatus::Playing:
             m_playButtonEnabled = false;
@@ -98,26 +96,21 @@ PlayAKmlTour::PlayAKmlTour(QObject* parent /* = nullptr */):
             m_pauseButtonEnabled = false;
             m_resetButtonEnabled = true;
             break;
+          case KmlTourStatus::Initializing:
+          case KmlTourStatus::NotInitialized:
+            break;
         }
 
         emit playButtonEnabledChanged();
         emit pauseButtonEnabledChanged();
         emit resetButtonEnabledChanged();
-
       });
-      m_kmlTourController.setTour(m_kmlTour);
-      m_playButtonEnabled = true;
-      m_pauseButtonEnabled = true;
-      m_resetButtonEnabled = true;
-      emit playButtonEnabledChanged();
-      emit pauseButtonEnabledChanged();
-      emit resetButtonEnabledChanged();
+
+      m_kmlTourController->setTour(m_kmlTour);
     }
-
   });
+
   m_kmlLayer->load();
-
-
 }
 
 PlayAKmlTour::~PlayAKmlTour() = default;
@@ -148,33 +141,24 @@ void PlayAKmlTour::setSceneView(SceneQuickView* sceneView)
 
 void PlayAKmlTour::playKmlTour()
 {
-  m_kmlTourController.play();
+  m_kmlTourController->play();
 }
 void PlayAKmlTour::pauseKmlTour()
 {
-  m_kmlTourController.pause();
+  m_kmlTourController->pause();
 }
 void PlayAKmlTour::resetKmlTour()
 {
-  m_kmlTourController.reset();
+  m_kmlTourController->reset();
 }
-
-//void PlayAKmlTour::updateButtonStatus(const KmlTourStatus& tourStatus)
-//{
-//  if(tourStatus == 2)
-//    qDebug() << "it works";
-//}
 
 KmlTour* PlayAKmlTour::findFirstKMLTour(const QList<KmlNode*>& nodes)
 {
   for (KmlNode* node : nodes)
   {
-    qDebug() << node->name();
-    qDebug() << nodes.length();
     if (node->kmlNodeType() == KmlNodeType::KmlTour)
       return dynamic_cast<KmlTour*>(node);
     else if ((node->kmlNodeType() == KmlNodeType::KmlDocument) || (node->kmlNodeType() == KmlNodeType::KmlFolder))
-//      return findFirstKMLTour(dynamic_cast<KmlContainer*>(node)->childNodes());
       return findFirstKMLTourFromListModel(*dynamic_cast<KmlContainer*>(node)->childNodesListModel());
   }
   return nullptr;
@@ -184,8 +168,6 @@ KmlTour* PlayAKmlTour::findFirstKMLTourFromListModel(const KmlNodeListModel& nod
 {
   for (KmlNode* node : nodes)
   {
-    qDebug() << "list model func: " << node->name();
-    qDebug() << "list model func: " << nodes.size();
     if (node->kmlNodeType() == KmlNodeType::KmlTour)
       return dynamic_cast<KmlTour*>(node);
     else if ((node->kmlNodeType() == KmlNodeType::KmlDocument) || (node->kmlNodeType() == KmlNodeType::KmlFolder))

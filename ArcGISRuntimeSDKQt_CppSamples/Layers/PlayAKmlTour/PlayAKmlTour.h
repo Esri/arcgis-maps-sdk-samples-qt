@@ -33,7 +33,6 @@ class KmlNodeListModel;
 }
 
 #include <QObject>
-#include <KmlTourController.h>
 
 class PlayAKmlTour : public QObject
 {
@@ -60,9 +59,6 @@ signals:
   void pauseButtonEnabledChanged();
   void resetButtonEnabledChanged();
 
-private slots:
-//  void updateButtonStatus(const Esri::ArcGISRuntime::KmlTourStatus& tourStatus);
-
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
@@ -73,7 +69,7 @@ private:
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::KmlTour* m_kmlTour = nullptr;
-  Esri::ArcGISRuntime::KmlTourController m_kmlTourController;
+  Esri::ArcGISRuntime::KmlTourController* m_kmlTourController = nullptr;
   Esri::ArcGISRuntime::KmlLayer* m_kmlLayer = nullptr;
   Esri::ArcGISRuntime::KmlDataset* m_kmlDataset = nullptr;
 

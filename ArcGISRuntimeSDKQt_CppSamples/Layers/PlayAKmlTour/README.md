@@ -1,31 +1,51 @@
 # Play a KML Tour
 
 Play tours in KML files.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
 
 ![](screenshot.png)
 
+## Use case
+
+KML, the file format used by Google Earth, supports creating tours, which can control the viewpoint of the scene, hide and show content, and play audio. Tours allow you to easily share tours of geographic locations, which can be augmented with rich multimedia. Runtime allows you to consume these tours using a simple API.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+The sample will load the KMZ file automatically. When a tour is found, the _Play_ button will be enabled. Use _Play_ and _Pause_ to control the tour. When you're ready to show the tour, use the reset button to return the tour to the unplayed state.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Load the KML dataset and add it to a layer.
+2. Create the KML tour controller. Wire up the buttons to the `play()`, `pause()`, and `reset()` methods.
+3. Use a method to explore the tree of KML content and find the first KML tour. Once a tour is found, provide it to the KML tour controller.
+4. Enable the buttons to allow the user to play, pause, and reset the tour.
 
 ## Relevant API
- - ClassName1
- - MethodName
+
+* KmlTourController
+* KmlTourController.tour
+* KmlTourController.play()
+* KmlTourController.pause()
+* KmlTourController.reset()
+* KmlTour
+* KmlTour.tourStatus
+* KmlTour.tourStatusChanged
 
 ## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
 
 Link | Local Location
 ---------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+|[Esri tour KMZ](https://arcgisruntime.maps.arcgis.com/home/item.html?id=f10b1d37fdd645c9bc9b189fb546307c)| `<userhome>`/ArcGIS/Samples/KML/Esri_tour.kmz|
+
+## About the data
+
+This sample uses a custom tour created by a member of the ArcGIS Runtime SDK samples team. When you play the tour, you'll see a narrated journey through some of Esri's offices.
 
 ## Additional information
-A standard level license is required to ...
+
+See [Google's documentation](https://developers.google.com/kml/documentation/touring) for information about authoring KML tours.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+animation, interactive, kml, narration, play, pause, story, tour
