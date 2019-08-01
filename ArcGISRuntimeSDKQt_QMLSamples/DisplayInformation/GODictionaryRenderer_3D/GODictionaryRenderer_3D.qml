@@ -83,7 +83,7 @@ Rectangle {
 
         onStatusChanged: {
             if (status === XmlListModel.Ready) {
-                let bbox;
+                let bbox = null;
                 for (var i = 0; i < count; i++) {
                     let element = get(i);
                     let wkid = element._wkid;
@@ -94,7 +94,7 @@ Rectangle {
                     let pointStrings = element._control_points.split(";");
                     let sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
 
-                    let geom;
+                    let geom = null;
                     if (pointStrings.length === 1) {
                         // It's a point
                         var pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {
