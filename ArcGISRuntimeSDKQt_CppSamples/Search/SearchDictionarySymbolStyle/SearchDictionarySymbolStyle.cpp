@@ -65,10 +65,10 @@ void SearchDictionarySymbolStyle::componentComplete()
   QQuickItem::componentComplete();
 
   //Get the data path
-  QString datapath = defaultDataPath() + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx";
+  QString datapath = defaultDataPath() + "/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx";
 
-  //Create the dictionary from datapath
-  m_dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", datapath, this);
+  //Create the dictionary from datapath (added since 100.6)
+  m_dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(datapath, this);
 
   //Connect to the search completed signal of the dictionary
   connect(m_dictionarySymbolStyle, &DictionarySymbolStyle::searchSymbolsCompleted, this, [this](QUuid, SymbolStyleSearchResultListModel* results)

@@ -24,28 +24,26 @@ Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 600    
+    height: 600
 
     readonly property double fontSize: 16
     readonly property var repeaterModel: ["Names", "Tags", "Symbol Classes", "Categories", "Keys"]
     readonly property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/mil2525d.stylx"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
     property var searchParamList: [[],[],[],[],[]]
+    property DictionarySymbolStyle dictionarySymbolStyle: DictionarySymbolStyle.createFromFile(dataPath);
 
-    DictionarySymbolStyle {
-        id: dictionarySymbolStyle
-        specificationType: "mil2525d"
-        styleLocation: dataPath
+    Connections {
+        target: dictionarySymbolStyle
 
-        //Search completed
-        onSearchSymbolsStatusChanged:{
-            if (searchSymbolsStatus !== Enums.TaskStatusCompleted)
+        onSearchSymbolsStatusChanged: {
+            if (dictionarySymbolStyle.searchSymbolsStatus !== Enums.TaskStatusCompleted)
                 return;
 
             resultView.visible = true;
 
             //Update the number of results retuned
-            resultText.text = "Result(s) found: " + searchSymbolsResult.count
+            resultText.text = "Result(s) found: " + dictionarySymbolStyle.searchSymbolsResult.count
         }
     }
 

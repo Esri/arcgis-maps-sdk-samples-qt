@@ -47,14 +47,6 @@ Rectangle {
         indeterminate: true
     }
 
-    //! [Create Dictionary Symbol Style QML]
-    DictionarySymbolStyle {
-        id: dictionarySymbolStyle
-        specificationType: "mil2525d"
-        styleLocation: dataPath + "/styles/mil2525d.stylx"
-    }
-    //! [Create Dictionary Symbol Style QML]
-
     Geodatabase {
         property var gdbLayers: []
 
@@ -75,7 +67,11 @@ Rectangle {
                     // Create a dictionary renderer and apply to the layer
                     var renderer = ArcGISRuntimeEnvironment.createObject(
                                 "DictionaryRenderer",
-                                { dictionarySymbolStyle: dictionarySymbolStyle });
+                                { dictionarySymbolStyle:
+                                    //! [Create Dictionary Symbol Style QML]
+                                    DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
+                                    //! [Create Dictionary Symbol Style QML]
+                                });
                     layer.renderer = renderer;
                     //! [Apply Dictionary Renderer Feature Layer QML]
 

@@ -86,10 +86,10 @@ void GODictionaryRenderer_3D::componentComplete()
   QQuickItem::componentComplete();
 
   // Set up DictionaryRenderer
-  if (!QFileInfo::exists(m_dataPath + "/styles/mil2525d.stylx"))
+  if (!QFileInfo::exists(m_dataPath + "/styles/arcade_style/mil2525d.stylx"))
     setErrorMessage("mil2525d.stylx not found");
 
-  DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+  DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(m_dataPath + "/styles/arcade_style/mil2525d.stylx", this);
   connect(dictionarySymbolStyle, &DictionarySymbolStyle::errorOccurred, this, &GODictionaryRenderer_3D::logError);
 
   DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);

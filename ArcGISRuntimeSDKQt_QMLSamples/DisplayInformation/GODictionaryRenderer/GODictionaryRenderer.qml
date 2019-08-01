@@ -49,10 +49,8 @@ Rectangle {
             id: graphicsOverlay
 
             DictionaryRenderer {
-                DictionarySymbolStyle {
-                    specificationType: "mil2525d"
-                    styleLocation: dataPath + "/styles/mil2525d.stylx"
-                }
+                id: dictionaryRenderer
+                dictionarySymbolStyle: DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
             }
         }
         //! [Apply Dictionary Renderer Graphics Overlay QML]
