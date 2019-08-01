@@ -141,6 +141,12 @@ void SearchForWebmap::loadSelectedWebmap(int index)
    // create map from portal item
    m_map = new Map(m_webmaps->at(index), this);
 
+   connect(m_map,&Map::errorOccurred, this, [this]()
+   {
+     m_mapLoadeError = m_map->loadError().message();
+     emit mapLoadErrorChanged();
+   });
+
    // set map on mapview
    m_mapView->setMap(m_map);
    m_mapView->setVisible(true);
