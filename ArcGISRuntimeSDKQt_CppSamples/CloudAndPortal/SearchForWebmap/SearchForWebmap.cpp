@@ -133,51 +133,23 @@ void SearchForWebmap::searchNext()
 void SearchForWebmap::loadSelectedWebmap(int index)
 {
   if (!m_webmaps)
-    return;
+     return;
 
-  PortalItem* selectedItem = m_webmaps->at(index);
-  if (!selectedItem)
-    return;
+   if (m_map)
+     delete m_map;
 
-  if (m_selectedItem)
-    m_selectedItem->disconnect();
+   // create map from portal item
+   m_map = new Map(m_webmaps->at(index), this);
 
-  m_selectedItem = selectedItem;
+   connect(m_map,&Map::errorOccurred, this, [this]()
+   {
+     m_mapLoadeError = m_map->loadError().message();
+     emit mapLoadErrorChanged();
+   });
 
-  connect(m_selectedItem, &PortalItem::loadStatusChanged, this, [this]
-  {
-    if (!m_selectedItem || m_selectedItem->loadStatus() != LoadStatus::Loaded)
-      return;
-
-    if (m_map)
-    {
-      delete m_map;
-      m_map = nullptr;
-    }
-
-    m_mapLoadeError.clear();
-    emit mapLoadErrorChanged();
-
-    m_map = new Map(m_selectedItem, this);
-
-    connect(m_map, &Map::errorOccurred, this, [this]()
-    {
-      m_mapLoadeError = m_map->loadError().message();
-      emit mapLoadErrorChanged();
-    });
-
-    connect(m_map, &Map::loadStatusChanged, this, [this]()
-    {
-      if (!m_map || m_map->loadStatus() != LoadStatus::Loaded)
-        return;
-
-      m_mapView->setMap(m_map);
-      m_mapView->setVisible(true);
-    });
-
-    m_map->load();
-  });
-  m_selectedItem->load();
+   // set map on mapview
+   m_mapView->setMap(m_map);
+   m_mapView->setVisible(true);
 }
 
 void SearchForWebmap::errorAccepted()
