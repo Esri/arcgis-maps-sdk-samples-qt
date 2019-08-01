@@ -83,17 +83,18 @@ Rectangle {
 
         onStatusChanged: {
             if (status === XmlListModel.Ready) {
-                var bbox;
+                let bbox;
                 for (var i = 0; i < count; i++) {
-                    var element = get(i);
-                    var wkid = element._wkid;
+                    let element = get(i);
+                    let wkid = element._wkid;
                     if (!wkid) {
                         // If _wkid was absent, use WGS 1984 (4326) by default.
                         wkid = 4326;
                     }
-                    var pointStrings = element._control_points.split(";");
-                    var sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
-                    var geom;
+                    let pointStrings = element._control_points.split(";");
+                    let sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
+
+                    let geom;
                     if (pointStrings.length === 1) {
                         // It's a point
                         var pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {
@@ -102,47 +103,47 @@ Rectangle {
                         var coords = pointStrings[0].split(",");
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
+                    }
 
-                        if (geom) {
-                            /**
+                    if (geom) {
+                        /**
                          * Get rid of _control_points and _wkid. They are not needed in the graphic's
                          * attributes.
                          */
-                            element._control_points = undefined;
-                            element._wkid = undefined;
+                        element._control_points = undefined;
+                        element._wkid = undefined;
 
-                            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                                    geometry: geom
-                                                                                });
-                            graphic.attributes.attributesJson = element;
-                            graphicsOverlay.graphics.append(graphic);
+                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                                geometry: geom
+                                                                            });
+                        graphic.attributes.attributesJson = element;
+                        graphicsOverlay.graphics.append(graphic);
 
-                            if (bbox) {
-                                bbox = GeometryEngine.unionOf(bbox, geom);
-                            } else {
-                                bbox = geom;
-                            }
+                        if (bbox) {
+                            bbox = GeometryEngine.unionOf(bbox, geom);
+                        } else {
+                            bbox = geom;
                         }
                     }
+                }
 
-                    // Zoom to graphics
-                    if (bbox) {
-                        bbox = GeometryEngine.project(bbox.extent, scene.spatialReference);
+                // Zoom to graphics
+                if (bbox) {
+                    bbox = GeometryEngine.project(bbox.extent, scene.spatialReference);
 
-                        /**
+                    /**
                      * Create a camera directly above the center of the features, and then rotate that
                      * camera around the center to tip it.
                      */
-                        var camera = ArcGISRuntimeEnvironment.createObject("Camera", {
-                                                                               location: bbox.extent.center,
-                                                                               heading: 0,
-                                                                               pitch: 0,
-                                                                               roll: 0,
-                                                                               distance: 15000
-                                                                           });
-                        camera = camera.rotateAround(bbox.extent.center, 0, 70, 0);
-                        sceneView.setViewpointCameraAndWait(camera);
-                    }
+                    var camera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                                                                           location: bbox.extent.center,
+                                                                           heading: 0,
+                                                                           pitch: 0,
+                                                                           roll: 0,
+                                                                           distance: 15000
+                                                                       });
+                    camera = camera.rotateAround(bbox.extent.center, 0, 70, 0);
+                    sceneView.setViewpointCameraAndWait(camera);
                 }
                 progressBar_loading.visible = false;
             }
