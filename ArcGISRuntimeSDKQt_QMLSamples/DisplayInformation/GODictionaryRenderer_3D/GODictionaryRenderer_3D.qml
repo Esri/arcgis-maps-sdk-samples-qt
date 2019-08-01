@@ -114,7 +114,6 @@ Rectangle {
                             var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
                                                                                     geometry: geom
                                                                                 });
-                            //                        console.log(JSON.stringify(element));
                             graphic.attributes.attributesJson = element;
                             graphicsOverlay.graphics.append(graphic);
 
@@ -124,7 +123,6 @@ Rectangle {
                                 bbox = geom;
                             }
                         }
-
                     }
 
                     // Zoom to graphics
