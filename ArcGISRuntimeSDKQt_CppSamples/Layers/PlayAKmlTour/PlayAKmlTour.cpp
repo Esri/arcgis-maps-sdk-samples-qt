@@ -90,6 +90,7 @@ PlayAKmlTour::PlayAKmlTour(QObject* parent /* = nullptr */):
           case KmlTourStatus::Initialized:
             m_playButtonEnabled = true;
             m_pauseButtonEnabled = false;
+            m_resetButtonEnabled = true;
             break;
           case KmlTourStatus::Playing:
             m_playButtonEnabled = false;
