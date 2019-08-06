@@ -70,7 +70,7 @@ Rectangle {
     // Use XmlListModel to parse the XML messages file.
     XmlListModel {
         id: xmlParser
-        source: dataPath + "/xml/Mil2525DMessages.xml"
+        source: dataPath + "/xml/arcade_style/Mil2525DMessages.xml"
         query: "/messages/message"
 
         // These are the fields we need for MIL-STD-2525D symbology.

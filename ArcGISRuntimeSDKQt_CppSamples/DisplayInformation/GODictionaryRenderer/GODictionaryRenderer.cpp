@@ -113,7 +113,7 @@ void GODictionaryRenderer::parseXmlFile()
   QVariantMap elementValues;
   QString currentElementName;
 
-  QFile xmlFile(m_dataPath + "/xml/Mil2525DMessages.xml");
+  QFile xmlFile(m_dataPath + "/xml/arcade_style/Mil2525DMessages.xml");
   // Open the file for reading
   if (xmlFile.isOpen())
   {
