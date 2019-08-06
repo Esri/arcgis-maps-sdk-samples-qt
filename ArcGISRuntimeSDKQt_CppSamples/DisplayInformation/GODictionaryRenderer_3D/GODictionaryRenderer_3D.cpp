@@ -126,10 +126,10 @@ void GODictionaryRenderer_3D::parseXmlFile()
   QVariantMap elementValues;
   QString currentElementName;
 
-  if (!QFileInfo::exists(m_dataPath + "/xml/Mil2525DMessages.xml"))
+  if (!QFileInfo::exists(m_dataPath + "/xml/arcade_style/Mil2525DMessages.xml"))
     setErrorMessage("xml/Mil2525DMessages.xml file is missing");
 
-  QFile xmlFile(m_dataPath + "/xml/Mil2525DMessages.xml");
+  QFile xmlFile(m_dataPath + "/xml/arcade_style/Mil2525DMessages.xml");
   // Open the file for reading
   if (xmlFile.isOpen())
   {

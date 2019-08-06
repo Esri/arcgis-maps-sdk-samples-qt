@@ -11,8 +11,8 @@
             "path" : "~/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
         },
         {
-            "itemId" : "3db12175479147ea9c89ebaaf3b89996",
-            "path" : "~/ArcGIS/Runtime/Data/xml/Mil2525DMessages.xml"
+            "itemId" : "1e4ea99af4b440c092e7959cf3957bfa",
+            "path" : "~/ArcGIS/Runtime/Data/xml/arcade_style/Mil2525DMessages.xml"
         }
     ]
 }
