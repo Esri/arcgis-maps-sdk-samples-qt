@@ -1,0 +1,8 @@
+{
+    "source" :  "ControlAnnotationSublayerVisibility.qml",
+    "otherSourceFiles" :  [
+        "ControlAnnotationSublayerVisibility.h",
+        "ControlAnnotationSublayerVisibility.cpp"
+    ],
+    "name" : "Control annotation sublayer visibility"
+}
