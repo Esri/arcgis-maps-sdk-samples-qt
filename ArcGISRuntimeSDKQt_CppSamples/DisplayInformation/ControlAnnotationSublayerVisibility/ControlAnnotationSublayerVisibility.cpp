@@ -97,9 +97,7 @@ ControlAnnotationSublayerVisibility::ControlAnnotationSublayerVisibility(QObject
           [](Error error)
   {
     if (error.isEmpty())
-    {
       return;
-    }
 
     qDebug() << QString("Error: %1 %2").arg(error.message(), error.additionalMessage());
   });
@@ -163,9 +161,7 @@ void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
     }
 
     if (!m_mobileMapPackage || !m_mapView || m_mobileMapPackage->maps().isEmpty())
-    {
       return;
-    }
 
     // The package contains a list of maps that could be shown in the UI for selection.
     // For simplicity, obtain the first map in the list of maps.
