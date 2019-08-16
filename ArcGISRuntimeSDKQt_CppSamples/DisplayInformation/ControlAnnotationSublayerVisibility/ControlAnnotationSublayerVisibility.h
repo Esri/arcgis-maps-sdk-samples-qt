@@ -35,48 +35,48 @@ class Layer;
 
 class ControlAnnotationSublayerVisibility : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-    Q_PROPERTY(QString openLayerText MEMBER m_openLayerText NOTIFY openLayerTextChanged)
-    Q_PROPERTY(QString closedLayerText MEMBER m_closedLayerText NOTIFY closedLayerTextChanged)
-    Q_PROPERTY(double mapScale MEMBER m_mapScale NOTIFY mapScaleChanged())
-    Q_PROPERTY(bool visibleAtCurrentExtent MEMBER m_visibleAtCurrentExtent NOTIFY visibleAtCurrentExtentChanged())
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QString openLayerText MEMBER m_openLayerText NOTIFY openLayerTextChanged)
+  Q_PROPERTY(QString closedLayerText MEMBER m_closedLayerText NOTIFY closedLayerTextChanged)
+  Q_PROPERTY(double mapScale MEMBER m_mapScale NOTIFY mapScaleChanged())
+  Q_PROPERTY(bool visibleAtCurrentExtent MEMBER m_visibleAtCurrentExtent NOTIFY visibleAtCurrentExtentChanged())
 
 public:
-    explicit ControlAnnotationSublayerVisibility(QObject* parent = nullptr);
-    ~ControlAnnotationSublayerVisibility();
+  explicit ControlAnnotationSublayerVisibility(QObject* parent = nullptr);
+  ~ControlAnnotationSublayerVisibility();
 
-    static void init();
+  static void init();
 
-    Q_INVOKABLE void openLayerVisible();
-    Q_INVOKABLE void closedLayerVisible();
+  Q_INVOKABLE void openLayerVisible();
+  Q_INVOKABLE void closedLayerVisible();
 
 signals:
-    void mapViewChanged();
-    void openLayerTextChanged();
-    void closedLayerTextChanged();
-    void mapScaleChanged();
-    void visibleAtCurrentExtentChanged();
+  void mapViewChanged();
+  void openLayerTextChanged();
+  void closedLayerTextChanged();
+  void mapScaleChanged();
+  void visibleAtCurrentExtentChanged();
 
 private:
-    Esri::ArcGISRuntime::MapQuickView* mapView() const;
-    void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-    void createMapPackage(const QString& path);
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void createMapPackage(const QString& path);
 
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-    Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage = nullptr;
-    Esri::ArcGISRuntime::AnnotationSublayer* m_annotationSubLayerOpen = nullptr;
-    Esri::ArcGISRuntime::AnnotationSublayer* m_annotationSubLayerClosed = nullptr;
-    Esri::ArcGISRuntime::LayerListModel* m_layerListModel = nullptr;
-    Esri::ArcGISRuntime::Layer* m_annoLayer = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage = nullptr;
+  Esri::ArcGISRuntime::AnnotationSublayer* m_annotationSubLayerOpen = nullptr;
+  Esri::ArcGISRuntime::AnnotationSublayer* m_annotationSubLayerClosed = nullptr;
+  Esri::ArcGISRuntime::LayerListModel* m_layerListModel = nullptr;
+  Esri::ArcGISRuntime::Layer* m_annoLayer = nullptr;
 
-    QTemporaryDir m_unpackTempDir;
-    QString m_openLayerText;
-    QString m_closedLayerText;
-    bool m_visibleAtCurrentExtent;
-    double m_mapScale = 0.0;
+  QTemporaryDir m_unpackTempDir;
+  QString m_openLayerText;
+  QString m_closedLayerText;
+  bool m_visibleAtCurrentExtent;
+  double m_mapScale = 0.0;
 };
 
 #endif // CONTROLANNOTATIONSUBLAYERVISIBILITY_H

@@ -34,116 +34,116 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-  QString defaultDataPath()
-  {
-    QString dataPath;
+QString defaultDataPath()
+{
+  QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
-    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
-    dataPath = QDir::homePath();
-  #endif
+#ifdef Q_OS_ANDROID
+  dataPath = "/sdcard";
+#elif defined Q_OS_IOS
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  dataPath = QDir::homePath();
+#endif
 
-    return dataPath;
-  }
+  return dataPath;
+}
 } // namespace
 
 // sample MMPK location
 const QString sampleFileAnno {"/ArcGIS/Runtime/Data/mmpk/GasDeviceAnno.mmpk"};
 
 ControlAnnotationSublayerVisibility::ControlAnnotationSublayerVisibility(QObject* parent /* = nullptr */):
-    QObject(parent),
-    m_map(new Map(Basemap::imagery(this), this))
+  QObject(parent),
+  m_map(new Map(Basemap::imagery(this), this))
 {
-    const QString dataPath = defaultDataPath() + sampleFileAnno;
+  const QString dataPath = defaultDataPath() + sampleFileAnno;
 
-    // connect to the Mobile Map Package instance to determine if direct read is supported. Packages
-    // that contain raster data cannot be read directly and must be unpacked first.
-    connect(MobileMapPackage::instance(), &MobileMapPackage::isDirectReadSupportedCompleted,
-            this, [this, dataPath](QUuid, bool supported)
+  // connect to the Mobile Map Package instance to determine if direct read is supported. Packages
+  // that contain raster data cannot be read directly and must be unpacked first.
+  connect(MobileMapPackage::instance(), &MobileMapPackage::isDirectReadSupportedCompleted,
+          this, [this, dataPath](QUuid, bool supported)
+  {
+    // if direct read is supported, load the package
+    if (supported)
     {
-      // if direct read is supported, load the package
-      if (supported)
-      {
-        createMapPackage(dataPath);
-      }
-      // otherwise, the package needs to be unpacked
-      else
-      {
-        MobileMapPackage::unpack(dataPath, m_unpackTempDir.path());
-      }
-    });
-
-    // connect to the Mobile Map Package instance to know when the data is unpacked
-    connect(MobileMapPackage::instance(), &MobileMapPackage::unpackCompleted,
-            this, [this](QUuid, bool success)
+      createMapPackage(dataPath);
+    }
+    // otherwise, the package needs to be unpacked
+    else
     {
-      // if the unpack was successful, load the unpacked package
-      if (success)
-      {
-        createMapPackage(m_unpackTempDir.path());
-      }
-      // log that the upack failed
-      else
-      {
-        qDebug() << "failed to unpack";
-      }
-    });
+      MobileMapPackage::unpack(dataPath, m_unpackTempDir.path());
+    }
+  });
 
-    // connect to the Mobile Map Package instance to know when errors occur
-    connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
-            [](Error error)
+  // connect to the Mobile Map Package instance to know when the data is unpacked
+  connect(MobileMapPackage::instance(), &MobileMapPackage::unpackCompleted,
+          this, [this](QUuid, bool success)
+  {
+    // if the unpack was successful, load the unpacked package
+    if (success)
     {
-      if (error.isEmpty())
-      {
-        return;
-      }
+      createMapPackage(m_unpackTempDir.path());
+    }
+    // log that the upack failed
+    else
+    {
+      qDebug() << "failed to unpack";
+    }
+  });
 
-      qDebug() << QString("Error: %1 %2").arg(error.message(), error.additionalMessage());
-    });
+  // connect to the Mobile Map Package instance to know when errors occur
+  connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
+          [](Error error)
+  {
+    if (error.isEmpty())
+    {
+      return;
+    }
 
-    // Check if the MMPK can be read directly
-    MobileMapPackage::isDirectReadSupported(dataPath);
+    qDebug() << QString("Error: %1 %2").arg(error.message(), error.additionalMessage());
+  });
+
+  // Check if the MMPK can be read directly
+  MobileMapPackage::isDirectReadSupported(dataPath);
 }
 
 ControlAnnotationSublayerVisibility::~ControlAnnotationSublayerVisibility() = default;
 
 void ControlAnnotationSublayerVisibility::init()
 {
-    // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<ControlAnnotationSublayerVisibility>("Esri.Samples", 1, 0, "ControlAnnotationSublayerVisibilitySample");
+  // Register the map view for QML
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<ControlAnnotationSublayerVisibility>("Esri.Samples", 1, 0, "ControlAnnotationSublayerVisibilitySample");
 }
 
 MapQuickView* ControlAnnotationSublayerVisibility::mapView() const
 {
-    return m_mapView;
+  return m_mapView;
 }
 
 // Set the view (created in QML)
 void ControlAnnotationSublayerVisibility::setMapView(MapQuickView* mapView)
 {
-    if (!mapView || mapView == m_mapView)
-        return;
+  if (!mapView || mapView == m_mapView)
+    return;
 
-    m_mapView = mapView;
-    m_mapView->setMap(m_map);
+  m_mapView = mapView;
+  m_mapView->setMap(m_map);
 
-    connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
-    {
-       m_mapScale = m_mapView->mapScale();
-       emit mapScaleChanged();
+  connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
+  {
+    m_mapScale = m_mapView->mapScale();
+    emit mapScaleChanged();
 
-       if(!m_annotationSubLayerOpen)
-           return;
+    if(!m_annotationSubLayerOpen)
+      return;
 
-       m_visibleAtCurrentExtent = m_annotationSubLayerOpen->isVisibleAtScale(m_mapScale);
-       visibleAtCurrentExtentChanged();
-    });
+    m_visibleAtCurrentExtent = m_annotationSubLayerOpen->isVisibleAtScale(m_mapScale);
+    visibleAtCurrentExtentChanged();
+  });
 
-    emit mapViewChanged();
+  emit mapViewChanged();
 }
 
 // create map package
@@ -175,31 +175,27 @@ void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
     m_layerListModel = mapView()->map()->operationalLayers();
     for (Layer* layer : *m_layerListModel)
     {
-        if (layer->layerType() == LayerType::AnnotationLayer)
+      if (layer->layerType() == LayerType::AnnotationLayer)
+      {
+        m_annoLayer = layer;
+        connect(m_annoLayer, &Layer::doneLoading, this, [this](Error error)
         {
-            m_annoLayer = layer;
-            connect(m_annoLayer, &Layer::doneLoading, this, [this](Error error)
-            {
-                if (!error.isEmpty())
-                {
-                  qDebug() << QString("Package load error: %1 %2").arg(error.message(), error.additionalMessage());
-                  return;
-                }
+          if (!error.isEmpty())
+          {
+            qDebug() << QString("Package load error: %1 %2").arg(error.message(), error.additionalMessage());
+            return;
+          }
 
-                m_annotationSubLayerClosed = dynamic_cast<AnnotationSublayer*>(m_annoLayer->subLayerContents()[0]);
-                m_annotationSubLayerOpen = dynamic_cast<AnnotationSublayer*>(m_annoLayer->subLayerContents()[1]);
-                m_closedLayerText = m_annotationSubLayerClosed->name();
-                m_openLayerText = m_annotationSubLayerOpen->name() + " (1:" + QString::number(m_annotationSubLayerOpen->maxScale()) + " - 1:" + QString::number(m_annotationSubLayerOpen->minScale()) + ")";
-                qDebug() << "MinScale: " << m_annotationSubLayerOpen->minScale();
-                qDebug() << "MaxScale: " << m_annotationSubLayerOpen->maxScale();
-                emit openLayerTextChanged();
-                emit closedLayerTextChanged();
-
-            });
-            layer->load();
-        }
+          m_annotationSubLayerClosed = dynamic_cast<AnnotationSublayer*>(m_annoLayer->subLayerContents()[0]);
+          m_annotationSubLayerOpen = dynamic_cast<AnnotationSublayer*>(m_annoLayer->subLayerContents()[1]);
+          m_closedLayerText = m_annotationSubLayerClosed->name();
+          m_openLayerText = QString("%1 (1:%2 - 1:%3)").arg(m_annotationSubLayerOpen->name()).arg(m_annotationSubLayerOpen->maxScale()).arg(m_annotationSubLayerOpen->minScale());
+          emit openLayerTextChanged();
+          emit closedLayerTextChanged();
+        });
+        layer->load();
+      }
     }
-
   });
 
   m_mobileMapPackage->load();
@@ -208,16 +204,16 @@ void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
 
 void ControlAnnotationSublayerVisibility::openLayerVisible()
 {
-    if(!m_map || !m_mapView || !m_annotationSubLayerOpen)
-        return;
+  if(!m_annotationSubLayerOpen)
+    return;
 
-    m_annotationSubLayerOpen->setVisible(!m_annotationSubLayerOpen->isVisible());
+  m_annotationSubLayerOpen->setVisible(!m_annotationSubLayerOpen->isVisible());
 }
 
 void ControlAnnotationSublayerVisibility::closedLayerVisible()
 {
-    if(!m_map || !m_mapView || !m_annotationSubLayerClosed)
-        return;
+  if(!m_annotationSubLayerClosed)
+    return;
 
-    m_annotationSubLayerClosed->setVisible(!m_annotationSubLayerClosed->isVisible());
+  m_annotationSubLayerClosed->setVisible(!m_annotationSubLayerClosed->isVisible());
 }

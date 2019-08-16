@@ -54,7 +54,6 @@ Rectangle {
             ColumnLayout {
                 spacing: 0
                 Row {
-                    //maybe padding?
                     CheckBox {
                         id: openBox
                         checked: true
@@ -73,7 +72,6 @@ Rectangle {
                 }
 
                 Row {
-                    //maybe padding?
                     CheckBox {
                         id: closedBox
                         checked: true
@@ -111,7 +109,7 @@ Rectangle {
 
         onMapScaleChanged: {
             if (openLayer) {
-                if(openLayer.isVisibleAtScale(mapView.mapScale)) {
+                if (openLayer.isVisibleAtScale(mapView.mapScale)) {
                     scale.color = "black";
                 } else {
                     scale.color = "grey";
@@ -143,21 +141,18 @@ Rectangle {
             // set the map view's map to the first map in the mobile map package
             mapView.map = mmpk.maps[0];
             let layers = mapView.map.operationalLayers;
-            layers.forEach(function(layer){
+            layers.forEach(function(layer) {
                 if (layer.layerType === Enums.LayerTypeAnnotationLayer) {
                     layer.loadStatusChanged.connect(function() {
                         if (layer.loadStatus !== Enums.LoadStatusLoaded)
                             return;
 
-                        console.log(layer.loadStatus);
-
                         closedLayer = layer.subLayerContents[0];
                         openLayer = layer.subLayerContents[1];
-//                        var buildingString =  "%1 (1:%2 - 1:%3)".arg(openLayer.name).arg(openLayer.maxScale).arg(openLayer.minScale);
-                        openBoxText.text = "%1 (1:%2 - 1:%3)".arg(openLayer.name).arg(openLayer.maxScale).arg(openLayer.minScale); //buildingString;
                         closedBoxText.text = closedLayer.name;
+                        openBoxText.text = "%1 (1:%2 - 1:%3)".arg(openLayer.name).arg(openLayer.maxScale).arg(openLayer.minScale);
                     });
-//                    layer.load()
+                    layer.load()
                 }
             });
         }

@@ -4,7 +4,7 @@
         "ControlAnnotationSublayerVisibility.h",
         "ControlAnnotationSublayerVisibility.cpp"
     ],
-    "name" : "Control annotation sublayer visibility"
+    "name" : "Control annotation sublayer visibility",
     "dataItems" : [
         {
             "itemId" : "b87307dcfb26411eb2e92e1627cb615b",

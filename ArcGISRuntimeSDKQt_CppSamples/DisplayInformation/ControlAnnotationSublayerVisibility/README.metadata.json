@@ -1,16 +1,22 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "DisplayInformation",
+    "description": "Use annotation sublayers to gain finer control of annotation layer subtypes.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "annotation", 
+        "scale", 
+        "text", 
+        "utilities", 
+        "visualization"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "AnnotationLayer",
+        "AnnotationSublayer",
+        "LayerContent"
     ],
     "snippets": [
         "ControlAnnotationSublayerVisibility.cpp",

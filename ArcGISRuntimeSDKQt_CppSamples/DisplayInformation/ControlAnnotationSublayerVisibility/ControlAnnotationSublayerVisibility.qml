@@ -20,7 +20,6 @@ import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 Item {
-
     // add a mapView component
     MapView {
         id: view
@@ -42,7 +41,6 @@ Item {
             ColumnLayout {
                 spacing: 0
                 Row {
-                    //maybe padding?
                     CheckBox {
                         id: openBox
                         checked: true
@@ -58,7 +56,6 @@ Item {
                 }
 
                 Row {
-                    //maybe padding?
                     CheckBox {
                         id: closedBox
                         checked: true
@@ -86,14 +83,11 @@ Item {
             Text {
                 id: scale
                 text: "Current map scale: 1:%1".arg(Math.round(controlAnnotationSublayerVisibilityModel.mapScale))
-//                text: "place holder"
                 color: controlAnnotationSublayerVisibilityModel.visibleAtCurrentExtent ? "black" : "grey"
                 padding: 2
             }
         }
     }
-
-
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     ControlAnnotationSublayerVisibilitySample {
