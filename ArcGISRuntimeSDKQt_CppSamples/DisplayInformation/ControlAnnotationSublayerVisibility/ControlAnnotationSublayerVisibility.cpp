@@ -18,14 +18,94 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
+#include "MobileMapPackage.h"
+#include "AnnotationLayer.h"
+#include "AnnotationSublayer.h"
+
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
+
+// sample MMPK location
+const QString sampleFileAnno {"/ArcGIS/Runtime/Data/mmpk/GasDeviceAnno.mmpk"};
 
 ControlAnnotationSublayerVisibility::ControlAnnotationSublayerVisibility(QObject* parent /* = nullptr */):
     QObject(parent),
     m_map(new Map(Basemap::imagery(this), this))
 {
+    const QString dataPath = defaultDataPath() + sampleFileAnno;
 
+    // connect to the Mobile Map Package instance to determine if direct read is supported. Packages
+    // that contain raster data cannot be read directly and must be unpacked first.
+    connect(MobileMapPackage::instance(), &MobileMapPackage::isDirectReadSupportedCompleted,
+            this, [this, dataPath](QUuid, bool supported)
+    {
+      // if direct read is supported, load the package
+      if (supported)
+      {
+        createMapPackage(dataPath);
+      }
+      // otherwise, the package needs to be unpacked
+      else
+      {
+        MobileMapPackage::unpack(dataPath, m_unpackTempDir.path());
+      }
+    });
+
+    // connect to the Mobile Map Package instance to know when the data is unpacked
+    connect(MobileMapPackage::instance(), &MobileMapPackage::unpackCompleted,
+            this, [this](QUuid, bool success)
+    {
+      // if the unpack was successful, load the unpacked package
+      if (success)
+      {
+        createMapPackage(m_unpackTempDir.path());
+      }
+      // log that the upack failed
+      else
+      {
+        qDebug() << "failed to unpack";
+      }
+    });
+
+    // connect to the Mobile Map Package instance to know when errors occur
+    connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
+            [](Error error)
+    {
+      if (error.isEmpty())
+      {
+        return;
+      }
+
+      qDebug() << QString("Error: %1 %2").arg(error.message(), error.additionalMessage());
+    });
+
+    // Check if the MMPK can be read directly
+    MobileMapPackage::isDirectReadSupported(dataPath);
 }
 
 ControlAnnotationSublayerVisibility::~ControlAnnotationSublayerVisibility() = default;
@@ -51,5 +131,93 @@ void ControlAnnotationSublayerVisibility::setMapView(MapQuickView* mapView)
     m_mapView = mapView;
     m_mapView->setMap(m_map);
 
+    connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
+    {
+       m_mapScale = m_mapView->mapScale();
+       emit mapScaleChanged();
+
+       if(!m_annotationSubLayerOpen)
+           return;
+
+       m_visibleAtCurrentExtent = m_annotationSubLayerOpen->isVisibleAtScale(m_mapScale);
+       visibleAtCurrentExtentChanged();
+    });
+
     emit mapViewChanged();
+}
+
+// create map package
+void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
+{
+  //! [open mobile map package cpp snippet]
+  // instatiate a mobile map package
+  m_mobileMapPackage = new MobileMapPackage(path, this);
+
+  // wait for the mobile map package to load
+  connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](Error error)
+  {
+    if (!error.isEmpty())
+    {
+      qDebug() << QString("Package load error: %1 %2").arg(error.message(), error.additionalMessage());
+      return;
+    }
+
+    if (!m_mobileMapPackage || !m_mapView || m_mobileMapPackage->maps().isEmpty())
+    {
+      return;
+    }
+
+    // The package contains a list of maps that could be shown in the UI for selection.
+    // For simplicity, obtain the first map in the list of maps.
+    // set the map on the map view to display
+    m_mapView->setMap(m_mobileMapPackage->maps().at(0));
+
+    m_layerListModel = mapView()->map()->operationalLayers();
+    for (Layer* layer : *m_layerListModel)
+    {
+        if (layer->layerType() == LayerType::AnnotationLayer)
+        {
+            m_annoLayer = layer;
+            connect(m_annoLayer, &Layer::doneLoading, this, [this](Error error)
+            {
+                if (!error.isEmpty())
+                {
+                  qDebug() << QString("Package load error: %1 %2").arg(error.message(), error.additionalMessage());
+                  return;
+                }
+
+                m_annotationSubLayerClosed = dynamic_cast<AnnotationSublayer*>(m_annoLayer->subLayerContents()[0]);
+                m_annotationSubLayerOpen = dynamic_cast<AnnotationSublayer*>(m_annoLayer->subLayerContents()[1]);
+                m_closedLayerText = m_annotationSubLayerClosed->name();
+                m_openLayerText = m_annotationSubLayerOpen->name() + " (1:" + QString::number(m_annotationSubLayerOpen->maxScale()) + " - 1:" + QString::number(m_annotationSubLayerOpen->minScale()) + ")";
+                qDebug() << "MinScale: " << m_annotationSubLayerOpen->minScale();
+                qDebug() << "MaxScale: " << m_annotationSubLayerOpen->maxScale();
+                emit openLayerTextChanged();
+                emit closedLayerTextChanged();
+
+            });
+            layer->load();
+        }
+    }
+
+  });
+
+  m_mobileMapPackage->load();
+  //! [open mobile map package cpp snippet]
+}
+
+void ControlAnnotationSublayerVisibility::openLayerVisible()
+{
+    if(!m_map || !m_mapView || !m_annotationSubLayerOpen)
+        return;
+
+    m_annotationSubLayerOpen->setVisible(!m_annotationSubLayerOpen->isVisible());
+}
+
+void ControlAnnotationSublayerVisibility::closedLayerVisible()
+{
+    if(!m_map || !m_mapView || !m_annotationSubLayerClosed)
+        return;
+
+    m_annotationSubLayerClosed->setVisible(!m_annotationSubLayerClosed->isVisible());
 }

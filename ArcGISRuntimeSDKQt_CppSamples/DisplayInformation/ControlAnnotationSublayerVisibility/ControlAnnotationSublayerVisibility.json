@@ -5,4 +5,10 @@
         "ControlAnnotationSublayerVisibility.cpp"
     ],
     "name" : "Control annotation sublayer visibility"
+    "dataItems" : [
+        {
+            "itemId" : "b87307dcfb26411eb2e92e1627cb615b",
+            "path" : "~/ArcGIS/Runtime/Data/mmpk/GasDeviceAnno.mmpk"
+        }
+    ]
 }

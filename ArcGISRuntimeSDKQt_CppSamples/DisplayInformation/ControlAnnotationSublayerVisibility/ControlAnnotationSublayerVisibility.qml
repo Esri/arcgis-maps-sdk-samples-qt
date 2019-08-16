@@ -15,6 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
@@ -24,11 +25,79 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        Rectangle {
+            id: checkBoxBackground
+            anchors {
+                left: parent.left
+                top: parent.top
+                margins: 2
+            }
+            width: childrenRect.width
+            height: childrenRect.height
+            color: "white"
+            opacity: .75
+            radius: 5
+
+            ColumnLayout {
+                spacing: 0
+                Row {
+                    //maybe padding?
+                    CheckBox {
+                        id: openBox
+                        checked: true
+                        onCheckStateChanged: controlAnnotationSublayerVisibilityModel.openLayerVisible();
+                    }
+
+                    Text {
+                        id: openBoxText
+                        text: controlAnnotationSublayerVisibilityModel.openLayerText
+                        anchors.verticalCenter: openBox.verticalCenter
+                        color: scale.color
+                    }
+                }
+
+                Row {
+                    //maybe padding?
+                    CheckBox {
+                        id: closedBox
+                        checked: true
+                        onCheckStateChanged: controlAnnotationSublayerVisibilityModel.closedLayerVisible();
+                    }
+
+                    Text {
+                        id: closedBoxText
+                        text: controlAnnotationSublayerVisibilityModel.closedLayerText
+                        anchors.verticalCenter: closedBox.verticalCenter
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            id: currentScale
+            anchors {
+                bottom: view.attributionTop
+                horizontalCenter: parent.horizontalCenter
+            }
+            width: childrenRect.width
+            height: childrenRect.height
+
+            Text {
+                id: scale
+                text: "Current map scale: 1:%1".arg(Math.round(controlAnnotationSublayerVisibilityModel.mapScale))
+//                text: "place holder"
+                color: controlAnnotationSublayerVisibilityModel.visibleAtCurrentExtent ? "black" : "grey"
+                padding: 2
+            }
+        }
     }
+
+
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     ControlAnnotationSublayerVisibilitySample {
-        id: model
+        id: controlAnnotationSublayerVisibilityModel
         mapView: view
     }
 }
