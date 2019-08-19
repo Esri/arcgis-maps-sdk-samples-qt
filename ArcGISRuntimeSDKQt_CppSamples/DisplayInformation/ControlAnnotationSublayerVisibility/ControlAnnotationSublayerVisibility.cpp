@@ -134,7 +134,7 @@ void ControlAnnotationSublayerVisibility::setMapView(MapQuickView* mapView)
     m_mapScale = m_mapView->mapScale();
     emit mapScaleChanged();
 
-    if(!m_annotationSubLayerOpen)
+    if (!m_annotationSubLayerOpen)
       return;
 
     m_visibleAtCurrentExtent = m_annotationSubLayerOpen->isVisibleAtScale(m_mapScale);
@@ -200,7 +200,7 @@ void ControlAnnotationSublayerVisibility::createMapPackage(const QString& path)
 
 void ControlAnnotationSublayerVisibility::openLayerVisible()
 {
-  if(!m_annotationSubLayerOpen)
+  if (!m_annotationSubLayerOpen)
     return;
 
   m_annotationSubLayerOpen->setVisible(!m_annotationSubLayerOpen->isVisible());
@@ -208,7 +208,7 @@ void ControlAnnotationSublayerVisibility::openLayerVisible()
 
 void ControlAnnotationSublayerVisibility::closedLayerVisible()
 {
-  if(!m_annotationSubLayerClosed)
+  if (!m_annotationSubLayerClosed)
     return;
 
   m_annotationSubLayerClosed->setVisible(!m_annotationSubLayerClosed->isVisible());
