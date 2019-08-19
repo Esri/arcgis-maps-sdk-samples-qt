@@ -34,10 +34,6 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
-        Map {
-            BasemapTopographic {}
-        }
-
         Rectangle {
             id: checkBoxBackground
             anchors {

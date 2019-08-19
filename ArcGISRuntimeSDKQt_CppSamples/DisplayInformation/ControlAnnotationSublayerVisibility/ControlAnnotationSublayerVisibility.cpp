@@ -54,8 +54,7 @@ QString defaultDataPath()
 const QString sampleFileAnno {"/ArcGIS/Runtime/Data/mmpk/GasDeviceAnno.mmpk"};
 
 ControlAnnotationSublayerVisibility::ControlAnnotationSublayerVisibility(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_map(new Map(Basemap::imagery(this), this))
+  QObject(parent)
 {
   const QString dataPath = defaultDataPath() + sampleFileAnno;
 
