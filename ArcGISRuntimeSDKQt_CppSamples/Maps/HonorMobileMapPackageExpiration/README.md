@@ -18,7 +18,7 @@ Load the app. The author of the MMPK used in this sample chose to set the MMPK's
 
 1. Create a `MobileMapPackage` passing in the path to the mobile map package's location on the device.
 2. Load the mobile map package.
-3. Present `Expiration` information to the user with the `Expiration.message` and `Expiration.dateTime` properties, which are set by the map author.
+3. Present `Expiration` information to the user with the `Expiration::message()` and `Expiration::dateTime()` getters, which are set by the map author.
 
 ## Relevant API
 

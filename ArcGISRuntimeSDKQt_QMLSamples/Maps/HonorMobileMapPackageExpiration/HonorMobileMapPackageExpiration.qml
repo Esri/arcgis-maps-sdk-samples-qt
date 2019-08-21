@@ -26,6 +26,7 @@ Rectangle {
     property url unpackPath: System.temporaryFolder.url + "/MmpkQml_%1.mmpk".arg(new Date().getTime().toString())
     property string expirationDate
     property string expirationTime
+    property string expirationMessage
 
     // Create MapView
     MapView {
@@ -56,8 +57,10 @@ Rectangle {
 
             // check if the package is expired
             if (expiration.expired) {
-                expirationDate = expiration.dateTime.toLocaleDateString();
-                expirationTime = expiration.dateTime.toTimeString();
+                const dateTime = expiration.dateTime;
+                expirationDate = dateTime.toISOString().split("T")[0];
+                expirationTime = dateTime.toISOString().split("T")[1].substring(0,8)
+                expirationMessage = expiration.message;
             }
 
             // set the map view's map to the first map in the mobile map package
@@ -119,7 +122,7 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.WordWrap
             color: "white"
-            text: "This map is expired. Contact the map publisher for an updated map.\nExpired on %1 at %2".arg(expirationDate).arg(expirationTime)
+            text: "%1\nExpired on %2 at %3 UTC".arg(expirationMessage).arg(expirationDate).arg(expirationTime)
         }
     }
 }
