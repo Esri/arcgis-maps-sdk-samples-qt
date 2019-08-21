@@ -61,6 +61,10 @@ Rectangle {
                 expirationDate = dateTime.toISOString().split("T")[0];
                 expirationTime = dateTime.toISOString().split("T")[1].substring(0,8)
                 expirationMessage = expiration.message;
+
+                // return if access after expiration is not allowed
+                if (expiration.type === Enums.ExpirationTypePreventExpiredAccess)
+                    return;
             }
 
             // set the map view's map to the first map in the mobile map package
