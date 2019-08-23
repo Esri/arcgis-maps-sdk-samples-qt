@@ -1,0 +1,8 @@
+{
+    "source" :  "HonorMobileMapPackageExpiration.qml",
+    "otherSourceFiles" :  [
+        "HonorMobileMapPackageExpiration.h",
+        "HonorMobileMapPackageExpiration.cpp"
+    ],
+    "name" : "Honor mobile map package expiration date"
+}
