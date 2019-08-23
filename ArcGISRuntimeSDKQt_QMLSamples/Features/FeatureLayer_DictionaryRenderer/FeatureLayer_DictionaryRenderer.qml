@@ -16,14 +16,14 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
     
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Create MapView that contains a Map with the Topographic Basemap
     MapView {
@@ -47,14 +47,6 @@ Rectangle {
         indeterminate: true
     }
 
-    //! [Create Dictionary Symbol Style QML]
-    DictionarySymbolStyle {
-        id: dictionarySymbolStyle
-        specificationType: "mil2525d"
-        styleLocation: dataPath + "/styles/mil2525d.stylx"
-    }
-    //! [Create Dictionary Symbol Style QML]
-
     Geodatabase {
         property var gdbLayers: []
 
@@ -75,7 +67,11 @@ Rectangle {
                     // Create a dictionary renderer and apply to the layer
                     var renderer = ArcGISRuntimeEnvironment.createObject(
                                 "DictionaryRenderer",
-                                { dictionarySymbolStyle: dictionarySymbolStyle });
+                                { dictionarySymbolStyle:
+                                    //! [Create Dictionary Symbol Style QML]
+                                    DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
+                                    //! [Create Dictionary Symbol Style QML]
+                                });
                     layer.renderer = renderer;
                     //! [Apply Dictionary Renderer Feature Layer QML]
 

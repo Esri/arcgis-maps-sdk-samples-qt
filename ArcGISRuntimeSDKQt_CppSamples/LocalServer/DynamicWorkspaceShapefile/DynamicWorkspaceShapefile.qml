@@ -15,19 +15,15 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 import Qt.labs.platform 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 DynamicWorkspaceShapefileSample {
     id: rootRectangle
     clip: true
-
     
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/shapefile"
-    property var supportedFormats: ["Shapefile (*.shp)"]
+    readonly property var supportedFormats: ["Shapefile (*.shp)"]
 
     // add a mapView component
     MapView {
@@ -50,7 +46,7 @@ DynamicWorkspaceShapefileSample {
         id: fileDialog
         nameFilters: supportedFormats
         folder: dataPath
-        onAccepted: startLocalService(file, folder);
+        onAccepted: startLocalService(file);
     }
 
     onLocalServerInitializationComplete: {
@@ -59,6 +55,5 @@ DynamicWorkspaceShapefileSample {
             addDataButton.enabled = false;
             return;
         }
-        startLocalService(dataPath + "/mjrroads.shp", dataPath);
     }
 }

@@ -18,7 +18,6 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 FeatureLayerGeodatabaseSample {
     width: 800
@@ -26,7 +25,6 @@ FeatureLayerGeodatabaseSample {
 
     // add a mapView component
     MapView {
-        property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/"
         anchors.fill: parent
         objectName: "mapView"
     }

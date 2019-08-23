@@ -31,7 +31,7 @@ class MapQuickView;
 class IdentifyLayers : public QQuickItem
 {
   Q_OBJECT
-  Q_PROPERTY(QString message READ message NOTIFY messageChanged)
+  Q_PROPERTY(QString message MEMBER m_message NOTIFY messageChanged)
 
 public:
   explicit IdentifyLayers(QQuickItem* parent = nullptr);
@@ -39,7 +39,6 @@ public:
 
   void componentComplete() override;
   static void init();
-  QString message() const { return m_message; }
 
 signals:
   void messageChanged();

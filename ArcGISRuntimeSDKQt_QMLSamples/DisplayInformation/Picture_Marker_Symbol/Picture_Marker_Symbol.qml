@@ -16,14 +16,14 @@
 
 import QtQuick 2.6
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 
 Rectangle {
     clip: true
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     ViewpointExtent {
         id: startingVP

@@ -17,15 +17,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.XmlListModel 2.0
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
-
     
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
     property bool graphicsLoaded: false
 
     Map {
@@ -50,10 +49,8 @@ Rectangle {
             id: graphicsOverlay
 
             DictionaryRenderer {
-                DictionarySymbolStyle {
-                    specificationType: "mil2525d"
-                    styleLocation: dataPath + "/styles/mil2525d.stylx"
-                }
+                id: dictionaryRenderer
+                dictionarySymbolStyle: DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
             }
         }
         //! [Apply Dictionary Renderer Graphics Overlay QML]
@@ -73,7 +70,7 @@ Rectangle {
     // Use XmlListModel to parse the XML messages file.
     XmlListModel {
         id: xmlParser
-        source: dataPath + "/xml/Mil2525DMessages.xml"
+        source: dataPath + "/xml/arcade_style/Mil2525DMessages.xml"
         query: "/messages/message"
 
         // These are the fields we need for MIL-STD-2525D symbology.

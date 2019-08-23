@@ -15,18 +15,15 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Window 2.2
 import QtQuick.Controls 2.2
 import Qt.labs.platform 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 DynamicWorkspaceRasterSample {
     id: rootRectangle
     clip: true
 
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
-    property var supportedFormats: ["Raster Files (*.img *.tif *.tiff *.I1, *.dt0 *.dt1 *.dt2 *.tc2 *.geotiff *.hr1 *.jpg *.jpeg *.jp2 *.ntf *.png *.i21 *.ovr)"]
+    readonly property var supportedFormats: ["Raster Files (*.img *.tif *.tiff *.I1, *.dt0 *.dt1 *.dt2 *.tc2 *.geotiff *.hr1 *.jpg *.jpeg *.jp2 *.ntf *.png *.i21 *.ovr)"]
 
     // add a mapView component
     MapView {
@@ -49,7 +46,7 @@ DynamicWorkspaceRasterSample {
         id: fileDialog
         nameFilters: supportedFormats
         folder: dataPath
-        onAccepted: startLocalService(file, folder);
+        onAccepted: startLocalService(file);
     }
 
     onLocalServerInitializationComplete: {
@@ -58,6 +55,5 @@ DynamicWorkspaceRasterSample {
             addDataButton.enabled = false;
             return;
         }
-        startLocalService(dataPath + "/usa_raster.tif", dataPath);
     }
 }

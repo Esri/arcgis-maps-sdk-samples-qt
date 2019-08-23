@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
+    readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
     property bool editingRenderer: false
     property bool useColorRamp: colorCombo.currentText !== "none"
 

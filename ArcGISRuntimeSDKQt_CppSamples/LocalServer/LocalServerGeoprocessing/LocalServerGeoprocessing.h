@@ -30,6 +30,9 @@ class GeoprocessingTask;
 }
 }
 
+class QTemporaryDir;
+
+#include <memory>
 #include <QQuickItem>
 #include <QStringListModel>
 
@@ -37,7 +40,7 @@ class LocalServerGeoprocessing : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(bool isReady READ isReady NOTIFY isReadyChanged)
+  Q_PROPERTY(bool isReady MEMBER m_isReady NOTIFY isReadyChanged)
 
 public:
   explicit LocalServerGeoprocessing(QQuickItem* parent = nullptr);
@@ -54,6 +57,7 @@ signals:
 
 private:
   void connectSignals();
+  static QString shortestTempPath();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -61,9 +65,8 @@ private:
   Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
   Esri::ArcGISRuntime::LocalGeoprocessingService* m_localGPService = nullptr;
   Esri::ArcGISRuntime::GeoprocessingTask* m_gpTask = nullptr;
-
-  bool isReady() { return m_isReady; }
   bool m_isReady = false;
+  std::unique_ptr<QTemporaryDir> m_tempDir;
 };
 
 #endif // LOCAL_SERVER_GEOPROCESSING_H

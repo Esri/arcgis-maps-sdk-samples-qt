@@ -1,0 +1,35 @@
+{
+    "category": "Layers",
+    "description": "Play tours in KML files.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "animation",
+        "interactive",
+        "kml",
+        "narration",
+        "play",
+        "pause",
+        "story",
+        "tour"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [        
+        "KmlTourController",
+        "KmlTourController::tour",
+        "KmlTourController::play()",
+        "KmlTourController::pause()",
+        "KmlTourController::reset()",
+        "KmlTour",
+        "KmlTour::tourStatus",
+        "KmlTour::tourStatusChanged"
+    ],
+    "snippets": [
+        "PlayAKmlTour.cpp",
+        "PlayAKmlTour.h",
+        "PlayAKmlTour.qml"
+    ],
+    "title": "Play A KML tour"
+}

@@ -1,7 +1,7 @@
 {
     "source" :  "FeatureLayerShapefile.qml",
     "otherSourceFiles" :  [],
-    "name" : "Feature Layer (Shapefile)",
+    "name" : "Feature Layer (shapefile)",
     "dataItems" : [
         {
             "itemId" : "d98b3e5293834c5f852f13c569930caa",

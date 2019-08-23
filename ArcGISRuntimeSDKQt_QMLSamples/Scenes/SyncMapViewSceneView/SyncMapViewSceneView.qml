@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Layouts 1.2
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 
 Rectangle {
     id: rootRectangle

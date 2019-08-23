@@ -17,6 +17,7 @@
 #ifndef GENERATEOFFLINEMAP_OVERRIDES_H
 #define GENERATEOFFLINEMAP_OVERRIDES_H
 
+// C++ API headers
 #include "AuthenticationManager.h"
 #include "GenerateOfflineMapParameters.h"
 
@@ -34,6 +35,7 @@ class PortalItem;
 }
 
 #include <QQuickItem>
+#include <QTemporaryDir>
 
 class GenerateOfflineMap_Overrides: public QQuickItem
 {
@@ -59,7 +61,7 @@ public:
   Q_INVOKABLE void removeServiceConnection();
   Q_INVOKABLE void setHydrantWhereClause(const QString& whereClause);
   Q_INVOKABLE void setClipWaterPipesAOI(bool clip);
-  Q_INVOKABLE void takeMapOffline(const QString& dataPath);
+  Q_INVOKABLE void takeMapOffline();
 
 signals:
   void taskBusyChanged();
@@ -90,6 +92,7 @@ private:
   Esri::ArcGISRuntime::GenerateOfflineMapParameterOverrides* m_parameterOverrides = nullptr;
   static const QString s_webMapId;
   bool m_mapLoaded = false;
+  QTemporaryDir m_tempPath;
 };
 
 #endif // GENERATEOFFLINEMAP_OVERRIDES_H

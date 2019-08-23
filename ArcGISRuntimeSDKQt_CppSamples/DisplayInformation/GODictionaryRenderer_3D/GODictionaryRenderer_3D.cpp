@@ -17,7 +17,6 @@
 #include "GODictionaryRenderer_3D.h"
 
 #include <QFileInfo>
-#include <QQmlProperty>
 
 #include "ArcGISTiledElevationSource.h"
 #include "Camera.h"
@@ -29,13 +28,40 @@
 #include "Surface.h"
 #include "DictionarySymbolStyle.h"
 
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
+
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 const QString GODictionaryRenderer_3D::FIELD_CONTROL_POINTS = "_control_points";
 const QString GODictionaryRenderer_3D::FIELD_WKID = "_wkid";
 
 GODictionaryRenderer_3D::GODictionaryRenderer_3D(QQuickItem* parent) :
   QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data"),
   m_graphicsOverlay(new GraphicsOverlay(this))
 {
   connect(m_graphicsOverlay, &GraphicsOverlay::errorOccurred, this, &GODictionaryRenderer_3D::logError);
@@ -59,14 +85,11 @@ void GODictionaryRenderer_3D::componentComplete()
 {
   QQuickItem::componentComplete();
 
-  // QML properties
-  m_dataPath = QQmlProperty::read(this, "dataPath").toUrl().toLocalFile();
-
   // Set up DictionaryRenderer
-  if (!QFileInfo::exists(m_dataPath + "/styles/mil2525d.stylx"))
+  if (!QFileInfo::exists(m_dataPath + "/styles/arcade_style/mil2525d.stylx"))
     setErrorMessage("mil2525d.stylx not found");
 
-  DictionarySymbolStyle* dictionarySymbolStyle = new DictionarySymbolStyle("mil2525d", m_dataPath + "/styles/mil2525d.stylx", this);
+  DictionarySymbolStyle* dictionarySymbolStyle = DictionarySymbolStyle::createFromFile(m_dataPath + "/styles/arcade_style/mil2525d.stylx", this);
   connect(dictionarySymbolStyle, &DictionarySymbolStyle::errorOccurred, this, &GODictionaryRenderer_3D::logError);
 
   DictionaryRenderer* renderer = new DictionaryRenderer(dictionarySymbolStyle, this);
@@ -103,10 +126,10 @@ void GODictionaryRenderer_3D::parseXmlFile()
   QVariantMap elementValues;
   QString currentElementName;
 
-  if (!QFileInfo::exists(m_dataPath + "/xml/Mil2525DMessages.xml"))
+  if (!QFileInfo::exists(m_dataPath + "/xml/arcade_style/Mil2525DMessages.xml"))
     setErrorMessage("xml/Mil2525DMessages.xml file is missing");
 
-  QFile xmlFile(m_dataPath + "/xml/Mil2525DMessages.xml");
+  QFile xmlFile(m_dataPath + "/xml/arcade_style/Mil2525DMessages.xml");
   // Open the file for reading
   if (xmlFile.isOpen())
   {

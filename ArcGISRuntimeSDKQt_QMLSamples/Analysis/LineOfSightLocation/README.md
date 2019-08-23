@@ -1,4 +1,4 @@
-# Line of Sight (location)
+# Line of sight (location)
 
 This sample demonstrates how to perform a line of sight analysis between two points in a SceneView.
 

@@ -17,17 +17,16 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 
 Rectangle {
     clip: true
     width: 800
     height: 600
 
-    property url worldCitiesUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0"
-    
-    property alias extentOnly: extentCheckbox.checked
-    property alias bigCitiesOnly: bigCitiesCheckbox.checked
+    readonly property url worldCitiesUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer/0"
+    readonly property alias extentOnly: extentCheckbox.checked
+    readonly property alias bigCitiesOnly: bigCitiesCheckbox.checked
     property string resultsText: ""
 
     MapView {

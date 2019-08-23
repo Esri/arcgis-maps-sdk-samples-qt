@@ -25,14 +25,37 @@
 #include "SimpleMarkerSceneSymbol.h"
 #include "ModelSceneSymbol.h"
 #include "OrbitGeoElementCameraController.h"
-#include <QQmlProperty>
+
+#include <QtCore/qglobal.h>
+#include <QDir>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
+
 DistanceCompositeSymbol::DistanceCompositeSymbol(QQuickItem* parent) :
-  QQuickItem(parent),
-  m_scene(nullptr),
-  m_sceneView(nullptr)
+  QQuickItem(parent)
 {
 }
 
@@ -49,7 +72,7 @@ void DistanceCompositeSymbol::componentComplete()
   QQuickItem::componentComplete();
 
   // get the data path
-  QString dataPath = QQmlProperty::read(this, "dataPath").toString();
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae";
 
   // find QML SceneView component
   m_sceneView = findChild<SceneQuickView*>("sceneView");
@@ -75,7 +98,7 @@ void DistanceCompositeSymbol::componentComplete()
   m_sceneView->graphicsOverlays()->append(graphicsOverlay);
 
   //! [create model scene symbol]
-  constexpr float scale = 0.01f;
+  constexpr float scale = 5.0f;
   ModelSceneSymbol* mms = new ModelSceneSymbol(QUrl(dataPath), scale, this);
   mms->setHeading(180);
   //! [create model scene symbol]

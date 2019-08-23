@@ -1,0 +1,31 @@
+{
+    "category": "Routing",
+    "description": "Find routes from several locations to the respective closest facility.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "incident",
+        "network analysis",
+        "route",
+        "search"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "ClosestFacilityParameters",
+        "ClosestFacilityResult",
+        "ClosestFacilityRoute",
+        "ClosestFacilityTask",
+        "Facility",
+        "Graphic",
+        "GraphicsOverlay",
+        "Incident"
+    ],
+    "snippets": [
+        "FindClosestFacilityToMultipleIncidentsService.cpp",
+        "FindClosestFacilityToMultipleIncidentsService.h",
+        "FindClosestFacilityToMultipleIncidentsService.qml"
+    ],
+    "title": "Find closest facility to multiple incidents (service)"
+}

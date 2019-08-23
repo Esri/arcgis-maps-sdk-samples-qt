@@ -16,9 +16,10 @@
 
 TEMPLATE = app
 
-QT += qml quick sensors positioning
+# additional modules are pulled in via arcgisruntime.pri
+QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 100.5
+ARCGIS_RUNTIME_VERSION = 100.6
 include($$PWD/arcgisruntime.pri)
 
 CONFIG += c++11

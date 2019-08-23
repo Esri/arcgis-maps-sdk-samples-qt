@@ -23,8 +23,6 @@
 #include "ArcGISTiledLayer.h"
 #include "ImageServiceRaster.h"
 
-#include <QQmlProperty>
-
 using namespace Esri::ArcGISRuntime;
 
 RasterLayerService::RasterLayerService(QQuickItem* parent /* = nullptr */):

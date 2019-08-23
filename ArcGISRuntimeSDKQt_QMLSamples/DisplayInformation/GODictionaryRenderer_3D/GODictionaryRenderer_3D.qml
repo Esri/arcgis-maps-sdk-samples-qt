@@ -17,15 +17,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.XmlListModel 2.0
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
-
     
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     /**
      * Create SceneView that contains a Scene with the Imagery Basemap, as well as a GraphicsOverlay
@@ -48,10 +47,7 @@ Rectangle {
             renderingMode: Enums.GraphicsRenderingModeDynamic
 
             DictionaryRenderer {
-                DictionarySymbolStyle {
-                    specificationType: "mil2525d"
-                    styleLocation: dataPath + "/styles/mil2525d.stylx"
-                }
+                dictionarySymbolStyle: DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
             }
         }
     }
@@ -69,7 +65,7 @@ Rectangle {
     // Use XmlListModel to parse the XML messages file.
     XmlListModel {
         id: xmlParser
-        source: dataPath + "/xml/Mil2525DMessages.xml"
+        source: dataPath + "/xml/arcade_style/Mil2525DMessages.xml"
         query: "/messages/message"
 
         // These are the fields we need for MIL-STD-2525D symbology.
@@ -87,26 +83,28 @@ Rectangle {
 
         onStatusChanged: {
             if (status === XmlListModel.Ready) {
-                var bbox;
+                let bbox = null;
                 for (var i = 0; i < count; i++) {
-                    var element = get(i);
-                    var wkid = element._wkid;
+                    let element = get(i);
+                    let wkid = element._wkid;
                     if (!wkid) {
                         // If _wkid was absent, use WGS 1984 (4326) by default.
                         wkid = 4326;
                     }
-                    var pointStrings = element._control_points.split(";");
-                    var sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
-                    var geom;
+                    let pointStrings = element._control_points.split(";");
+                    let sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
+
+                    let geom = null;
                     if (pointStrings.length === 1) {
                         // It's a point
                         var pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {
-                            spatialReference: sr
-                        });
+                                                                                     spatialReference: sr
+                                                                                 });
                         var coords = pointStrings[0].split(",");
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
                     }
+
                     if (geom) {
                         /**
                          * Get rid of _control_points and _wkid. They are not needed in the graphic's
@@ -116,8 +114,8 @@ Rectangle {
                         element._wkid = undefined;
 
                         var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                            geometry: geom
-                        });
+                                                                                geometry: geom
+                                                                            });
                         graphic.attributes.attributesJson = element;
                         graphicsOverlay.graphics.append(graphic);
 
@@ -138,12 +136,12 @@ Rectangle {
                      * camera around the center to tip it.
                      */
                     var camera = ArcGISRuntimeEnvironment.createObject("Camera", {
-                        location: bbox.extent.center,
-                        heading: 0,
-                        pitch: 0,
-                        roll: 0,
-                        distance: 15000
-                    });
+                                                                           location: bbox.extent.center,
+                                                                           heading: 0,
+                                                                           pitch: 0,
+                                                                           roll: 0,
+                                                                           distance: 15000
+                                                                       });
                     camera = camera.rotateAround(bbox.extent.center, 0, 70, 0);
                     sceneView.setViewpointCameraAndWait(camera);
                 }

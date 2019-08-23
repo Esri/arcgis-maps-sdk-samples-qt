@@ -56,7 +56,8 @@ SceneQuickView* ViewPointCloudDataOffline::sceneView() const
 }
 
 // helper method to get cross platform data path
-namespace {
+namespace
+{
   QString defaultDataPath()
   {
     QString dataPath;

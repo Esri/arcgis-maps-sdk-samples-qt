@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/slpk/"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/slpk/"
 
     SceneView {
         id: sceneView

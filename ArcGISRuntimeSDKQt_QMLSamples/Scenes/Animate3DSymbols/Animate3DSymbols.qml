@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -27,16 +27,14 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D"
-
+    readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D"
+    readonly property string headingAtt: "heading";
+    readonly property string pitchAtt: "pitch";
+    readonly property string rollAtt: "roll";
+    readonly property string attrFormat: "[%1]"
     property int missionSize: currentMissionModel.count
     property bool missionReady: missionSize > 0
     property alias following: followButton.checked
-
-    property string headingAtt: "heading";
-    property string pitchAtt: "pitch";
-    property string rollAtt: "roll";
-    property string attrFormat: "[%1]"
 
     property Graphic routeGraphic
 
@@ -183,13 +181,7 @@ Rectangle {
                 from: 0
                 to: 180.0
                 value: 45.0
-                text: value.toLocaleString(Qt.locale(), 'f', 0) + "\u00B0"
-                handleWidth: angleMetrics.width
-                TextMetrics {
-                    id: angleMetrics
-                    font: cameraAngle.font
-                    text: "180\u00B0"
-                }
+                text: "angle"
             }
 
             LabeledSlider {

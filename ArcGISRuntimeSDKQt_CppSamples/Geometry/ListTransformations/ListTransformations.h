@@ -38,7 +38,7 @@ class ListTransformations : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(QVariantList transformationList READ transformationList NOTIFY transformationListChanged)
+  Q_PROPERTY(QVariantList transformationList MEMBER m_transformationList NOTIFY transformationListChanged)
 
 public:
   explicit ListTransformations(QQuickItem* parent = nullptr);
@@ -63,7 +63,6 @@ private:
   QVariantList m_transformationList;
 
   void addGraphics();
-  QVariantList transformationList() const { return m_transformationList; }
 };
 
 #endif // LISTTRANSFORMATIONS_H

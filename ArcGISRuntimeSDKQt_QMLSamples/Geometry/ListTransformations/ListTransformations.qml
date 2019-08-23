@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -24,10 +24,9 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-
     
     property bool peDataSet: true
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataRuntime"
+    readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/PEDataRuntime"
 
     Component.onCompleted: TransformationCatalog.projectionEngineDirectory = dataPath
 

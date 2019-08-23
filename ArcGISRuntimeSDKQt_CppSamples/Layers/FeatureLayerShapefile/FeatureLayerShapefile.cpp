@@ -22,62 +22,82 @@
 #include "ShapefileFeatureTable.h"
 #include "FeatureLayer.h"
 
-#include <QQmlProperty>
+#include <QDir>
+#include <QtCore/qglobal.h>
 
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
+// helper method to get cross platform data path
+namespace
+{
+QString defaultDataPath()
+{
+  QString dataPath;
+
+#ifdef Q_OS_ANDROID
+  dataPath = "/sdcard";
+#elif defined Q_OS_IOS
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  dataPath = QDir::homePath();
+#endif
+
+  return dataPath;
+}
+} // namespace
+
 FeatureLayerShapefile::FeatureLayerShapefile(QQuickItem* parent /* = nullptr */):
-    QQuickItem(parent)
+  QQuickItem(parent)
 {
 }
 
 void FeatureLayerShapefile::init()
 {
-    // Register the map view for QML
-    qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-    qmlRegisterType<FeatureLayerShapefile>("Esri.Samples", 1, 0, "FeatureLayerShapefileSample");
+  // Register the map view for QML
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<FeatureLayerShapefile>("Esri.Samples", 1, 0, "FeatureLayerShapefileSample");
 }
 
 void FeatureLayerShapefile::componentComplete()
 {
-    QQuickItem::componentComplete();
+  QQuickItem::componentComplete();
 
-    QString dataPath = QQmlProperty::read(this, "dataPath").toString();
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/shp/";
 
-    // find QML MapView component
-    m_mapView = findChild<MapQuickView*>("mapView");
+  // find QML MapView component
+  m_mapView = findChild<MapQuickView*>("mapView");
 
-    // Create a map using the topographic basemap
-     m_map = new Map(Basemap::streetsVector(this), this);
+  // Create a map using the streets basemap
+  m_map = new Map(Basemap::streetsVector(this), this);
 
-    // Set map to map view
-    m_mapView->setMap(m_map);
+  // Set map to map view
+  m_mapView->setMap(m_map);
 
-    // Create and add the shapefile to the map
-    createAndAddShapefileLayer(dataPath + "Public_Art.shp");
+  // Create and add the shapefile to the map
+  createAndAddShapefileLayer(dataPath + "Public_Art.shp");
 }
-void FeatureLayerShapefile::createAndAddShapefileLayer(const QUrl& file)
+void FeatureLayerShapefile::createAndAddShapefileLayer(const QString& dataPath)
 {
+  // Create the ShapefileFeatureTable
+  ShapefileFeatureTable* featureTable = new ShapefileFeatureTable(dataPath, this);
 
-    QString dataPath = file.toLocalFile();
+  // Create the feature layer from the ShapefileFeatureTable
+  FeatureLayer* layer = new FeatureLayer(featureTable, this);
 
-    // Create the ShapefileFeatureTable
-    ShapefileFeatureTable* featureTable = new ShapefileFeatureTable(dataPath, this);
+  connect(layer, &FeatureLayer::doneLoading, this, [this, layer](Error loadError)
+  {
+    if (!loadError.isEmpty())
+      return;
 
-    // Create the feature layer from the ShapefileFeatureTable
-    FeatureLayer* layer = new FeatureLayer(featureTable, this);
+    // If the layer was loaded successfully, set the map extent to the full extent of the layer
+    m_mapView->setViewpointCenter(layer->fullExtent().center(), 80000);
+  });
 
-    connect(layer, &FeatureLayer::doneLoading, this, [this, layer](Error loadError)
-    {
-        if (!loadError.isEmpty())
-          return;
-
-        // If the layer was loaded successfully, set the map extent to the full extent of the layer
-        m_mapView->setViewpointCenter(layer->fullExtent().center(), 80000);
-    });
-
-    // Add the shapefile layer to the map
-    m_map->operationalLayers()->clear();
-    m_map->operationalLayers()->append(layer);
+  // Add the shapefile layer to the map
+  m_map->operationalLayers()->clear();
+  m_map->operationalLayers()->append(layer);
 }

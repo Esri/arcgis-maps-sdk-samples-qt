@@ -15,9 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 RasterLayerGeoPackageSample {
     id: rootRectangle
@@ -29,7 +27,5 @@ RasterLayerGeoPackageSample {
     MapView {
         anchors.fill: parent
         objectName: "mapView"
-
-        property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/gpkg/"
     }
 }

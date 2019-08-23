@@ -39,7 +39,7 @@ public:
   void componentComplete() override;
   static void init();
 
-  Q_INVOKABLE void createAndAddRasterLayer(QUrl rasterUrl);
+  Q_INVOKABLE void createAndAddRasterLayer(QString dataPath);
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

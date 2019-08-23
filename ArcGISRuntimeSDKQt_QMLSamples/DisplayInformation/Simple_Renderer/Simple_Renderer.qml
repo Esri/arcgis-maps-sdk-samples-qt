@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 
 Rectangle {
     clip: true

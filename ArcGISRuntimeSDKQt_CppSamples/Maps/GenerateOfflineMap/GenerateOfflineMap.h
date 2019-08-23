@@ -30,13 +30,14 @@ class OfflineMapTask;
 }
 
 #include <QQuickItem>
+#include <QTemporaryDir>
 
 class GenerateOfflineMap : public QQuickItem
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authenticationManager READ authenticationManager CONSTANT)
-  Q_PROPERTY(bool mapLoaded READ mapLoaded NOTIFY mapLoadedChanged)
+  Q_PROPERTY(bool mapLoaded MEMBER m_mapLoaded NOTIFY mapLoadedChanged)
 
 public:
   explicit GenerateOfflineMap(QQuickItem* parent = nullptr);
@@ -46,7 +47,7 @@ public:
   static void init();
 
 public:
-  Q_INVOKABLE void generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2, const QString& dataPath);
+  Q_INVOKABLE void generateMapByExtent(double xCorner1, double yCorner1, double xCorner2, double yCorner2);
 
 signals:
   void mapLoadedChanged();
@@ -58,7 +59,6 @@ signals:
 private:
   static const QString webMapId() { return s_webMapId; }
   Esri::ArcGISRuntime::AuthenticationManager* authenticationManager() const;
-  bool mapLoaded() { return m_mapLoaded; }
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -67,6 +67,7 @@ private:
   Esri::ArcGISRuntime::OfflineMapTask* m_offlineMapTask = nullptr;
   static const QString s_webMapId;  
   bool m_mapLoaded = false;
+  QTemporaryDir m_tempPath;
 };
 
 #endif // GENERATEOFFLINEMAP_H

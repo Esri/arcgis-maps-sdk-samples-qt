@@ -14,9 +14,10 @@
 #ifndef MAPIMAGEPROVIDER_H
 #define MAPIMAGEPROVIDER_H
 
-#include <QQuickImageProvider>
-#include <QMap>
+// Qt headers
 #include <QImage>
+#include <QMap>
+#include <QQuickImageProvider>
 
 class MapImageProvider : public QQuickImageProvider
 {

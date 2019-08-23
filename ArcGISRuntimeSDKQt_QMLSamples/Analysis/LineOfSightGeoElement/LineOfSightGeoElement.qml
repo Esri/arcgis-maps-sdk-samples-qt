@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
 import Qt.labs.platform 1.0
 
@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.3ds";
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.3ds";
     property int waypointIndex: 0
 
     // Mutable point of where observer is going to be.

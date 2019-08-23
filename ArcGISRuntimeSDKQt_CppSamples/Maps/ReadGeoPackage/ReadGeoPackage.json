@@ -4,7 +4,7 @@
         "ReadGeoPackage.h",
         "ReadGeoPackage.cpp"
     ],
-    "name" : "Read GeoPackage",
+    "name" : "Read a GeoPackage",
     "dataItems" : [
         {
             "itemId" : "68ec42517cdd439e81b036210483e8e7",

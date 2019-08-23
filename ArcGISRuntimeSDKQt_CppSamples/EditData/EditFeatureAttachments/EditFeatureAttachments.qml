@@ -18,16 +18,13 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Qt.labs.platform 1.0
 import QtGraphicalEffects 1.0
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.5
+import Esri.ArcGISRuntime.Toolkit.Controls 100.6
 
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
-
     
-
-    property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
+    readonly property var featAttributes: ["Destroyed", "Major", "Minor", "Affected", "Inaccessible"]
 
     // add a mapView component
     MapView {
@@ -95,8 +92,11 @@ EditFeatureAttachmentsSample {
                     left: parent.left
                     margins: 10
                 }
-
-                text: "Attachments"; font {bold: true; pixelSize: 20;}
+                text: "Attachments"
+                font {
+                    bold: true
+                    pixelSize: 20
+                }
             }
 
             Row {
@@ -107,7 +107,12 @@ EditFeatureAttachmentsSample {
                 }
                 spacing: 15
                 Text {
-                    text: "+"; font {bold: true; pixelSize: 40;} color: "green"
+                    text: "+"
+                    font {
+                        bold: true
+                        pixelSize: 40
+                    }
+                    color: "green"
 
                     // open a file dialog whenever the add button is clicked
                     MouseArea {
@@ -118,7 +123,12 @@ EditFeatureAttachmentsSample {
                     }
                 }
                 Text {
-                    text: "-"; font {bold: true; pixelSize: 40;} color: "red"
+                    text: "-"
+                    font {
+                        bold: true
+                        pixelSize: 40
+                    }
+                    color: "red"
 
                     // make sure an item is selected and if so, delete it from the service
                     MouseArea {

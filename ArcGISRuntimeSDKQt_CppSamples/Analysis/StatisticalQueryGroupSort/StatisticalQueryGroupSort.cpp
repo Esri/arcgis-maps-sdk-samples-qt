@@ -141,7 +141,7 @@ void StatisticalQueryGroupSort::queryStatistics()
   params.setStatisticDefinitions(statisticDefinitionList);
 
   // set the grouping fields
-  params.setGroupByFieldNames(groupingFields());
+  params.setGroupByFieldNames(m_groupingFields);
 
   // add the order by objects
   QList<OrderBy> orderByList;

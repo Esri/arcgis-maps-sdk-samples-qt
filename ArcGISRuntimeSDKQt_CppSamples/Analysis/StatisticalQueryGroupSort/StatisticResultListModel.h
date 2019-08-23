@@ -13,6 +13,7 @@
 #ifndef STATISTICRESULTISTMODEL_H
 #define STATISTICRESULTISTMODEL_H
 
+// Qt headers
 #include <QAbstractListModel>
 #include <QByteArray>
 #include <QHash>

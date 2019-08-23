@@ -29,15 +29,18 @@
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
+
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <QDir>
 
 using namespace Esri::ArcGISRuntime;
 
 DynamicWorkspaceShapefile::DynamicWorkspaceShapefile(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(QDir::homePath() + "/ArcGIS/Runtime/Data/shapefile")
 {
+  emit dataPathChanged();
 }
 
 void DynamicWorkspaceShapefile::init()
@@ -64,7 +67,10 @@ void DynamicWorkspaceShapefile::componentComplete()
   if (LocalServer::instance()->isInstallValid())
   {
     if (LocalServer::instance()->status() == LocalServerStatus::Started)
+    {
       emit localServerInitializationComplete(true);
+      startLocalService(m_dataPath + "/mjrroads.shp");
+    }
     else
     {
       connect(LocalServer::instance(), &LocalServer::statusChanged, this, [this]()
@@ -72,7 +78,10 @@ void DynamicWorkspaceShapefile::componentComplete()
         if (LocalServer::instance()->status() == LocalServerStatus::Failed)
           emit localServerInitializationComplete(false);
         else if (LocalServer::instance()->status() == LocalServerStatus::Started)
+        {
           emit localServerInitializationComplete(true);
+          startLocalService(m_dataPath + "/mjrroads.shp");
+        }
       });
       LocalServer::start();
     }
@@ -80,7 +89,7 @@ void DynamicWorkspaceShapefile::componentComplete()
 }
 
 // Start a service based on a file and folder path
-void DynamicWorkspaceShapefile::startLocalService(const QString& filePath, const QString& folder)
+void DynamicWorkspaceShapefile::startLocalService(const QString& filePath)
 {
   if (!LocalServer::instance()->isInstallValid())
     return;
@@ -88,7 +97,7 @@ void DynamicWorkspaceShapefile::startLocalService(const QString& filePath, const
   // Setup file and folder variables
   QFile f(filePath);
   QFileInfo fileInfo(f.fileName());
-  QString workspacePath = QUrl(folder).toLocalFile();
+  QString workspacePath = m_dataPath;
 
   // create a service from the blank MPK
   QString mapPackagePath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpk/mpk_blank.mpk";
@@ -99,7 +108,7 @@ void DynamicWorkspaceShapefile::startLocalService(const QString& filePath, const
 
   // Create a shapefile workspace
   ShapefileWorkspace* shapefileWorkspace = new ShapefileWorkspace("shp_wkspc", workspacePath, m_localMapService);
-  TableSublayerSource * source = new TableSublayerSource(shapefileWorkspace->id(), fileInfo.fileName(), m_localMapService);
+  TableSublayerSource* source = new TableSublayerSource(shapefileWorkspace->id(), fileInfo.fileName(), m_localMapService);
 
   // Add the dynamic workspace to the local map service
   // This must be added before the service is started

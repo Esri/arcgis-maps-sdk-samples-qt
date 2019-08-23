@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -24,12 +24,12 @@ Rectangle {
     width: 800
     height: 600
 
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property string headingAttr: "HEADING"
+    readonly property var linearUnit: Enums.LinearUnitIdMeters
+    readonly property var angularUnit: Enums.AngularUnitIdDegrees
+    readonly property var geodeticCurveType: Enums.GeodeticCurveTypeGeodesic
     property Point waypoint: null
-    property string headingAttr: "HEADING"
-    property var linearUnit: Enums.LinearUnitIdMeters
-    property var angularUnit: Enums.AngularUnitIdDegrees
-    property var geodeticCurveType: Enums.GeodeticCurveTypeGeodesic
 
     SceneView {
         id: sceneView

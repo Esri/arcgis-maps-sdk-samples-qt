@@ -18,12 +18,10 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 Animate3DSymbolsSample {
     id: rootRectangle
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D"
     property bool following: followButton.checked
 
     missionFrame: progressSlider.value
@@ -120,13 +118,7 @@ Animate3DSymbolsSample {
                 from: 0
                 to: 180.0
                 value: 45.0
-                text: value.toLocaleString(Qt.locale(), 'f', 0) + "\u00B0"
-                handleWidth: angleMetrics.width
-                TextMetrics {
-                    id: angleMetrics
-                    font: cameraAngle.font
-                    text: "180\u00B0"
-                }
+                text: "angle"
             }
 
             LabeledSlider {

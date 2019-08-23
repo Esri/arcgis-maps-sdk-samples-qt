@@ -17,7 +17,6 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
 StatisticalQuerySample {
@@ -25,7 +24,6 @@ StatisticalQuerySample {
     clip: true
     width: 800
     height: 600
-
     
     property alias extentOnly: extentCheckbox.checked
     property alias bigCitiesOnly: bigCitiesCheckbox.checked

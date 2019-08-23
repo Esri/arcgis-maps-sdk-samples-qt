@@ -1,0 +1,34 @@
+{
+    "category": "Layers",
+    "description": "Display a layer from a WFS service, requesting only features for the current extent.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "WfsFeatureTable",
+        "WfsFeatureTable::populateFromService",
+        "FeatureLayer",
+        "OGC",
+        "WFS",
+        "feature",
+        "web",
+        "service",
+        "layers",
+        "browse",
+        "catalog",
+        "interaction cache"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "WfsFeatureTable",
+        "WfsFeatureTable::populateFromService",
+        "FeatureLayer"
+    ],
+    "snippets": [
+        "DisplayWfsLayer.cpp",
+        "DisplayWfsLayer.h",
+        "DisplayWfsLayer.qml"
+    ],
+    "title": "Display a WFS layer"
+}

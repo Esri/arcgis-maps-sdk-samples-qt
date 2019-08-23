@@ -16,15 +16,12 @@
 
 import QtQuick 2.6
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 ViewshedGeoElementSample {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/3D"
 
     SceneView {
         objectName: "sceneView"

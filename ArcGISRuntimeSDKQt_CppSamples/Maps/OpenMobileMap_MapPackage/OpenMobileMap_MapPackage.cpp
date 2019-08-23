@@ -21,17 +21,18 @@
 #include "MapQuickView.h"
 #include "MobileMapPackage.h"
 
-#include <QQmlProperty>
-#include <QtGlobal>
+#include <QDir>
+#include <QtCore/qglobal.h>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
-#endif
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
 
 // helper method to get cross platform data path
-namespace {
+namespace
+{
 QString defaultDataPath()
 {
   QString dataPath;

@@ -17,28 +17,24 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.5
-import Esri.ArcGISRuntime.Toolkit.Controls 100.5
+import Esri.ArcGISRuntime 100.6
+import Esri.ArcGISRuntime.Toolkit.Controls 100.6
 
 Rectangle {
     clip: true
     width: 800
     height: 600
     color: "#E0E0E0"
-
     
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
-
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
     property LocatorTask currentLocatorTask: null
     property RouteTask currentRouteTask: null
     property Point clickedPoint: null
-
     property var currentRouteParams
     property int mapPackageLoadIndex
     property int selectedMmpkIndex
     property int selectedMapInBundleIndex
     property bool isMapOpen
-
     property var mobileMapList: []
     property var mobilePathsList: []
     property var routeStops: []

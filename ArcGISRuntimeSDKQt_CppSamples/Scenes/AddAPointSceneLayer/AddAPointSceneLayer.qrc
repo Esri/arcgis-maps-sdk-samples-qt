@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/AddAPointSceneLayer">
+        <file alias="sample.json">AddAPointSceneLayer.json</file>        
+        <file>AddAPointSceneLayer.qml</file>
+        <file>AddAPointSceneLayer.h</file>
+        <file>AddAPointSceneLayer.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

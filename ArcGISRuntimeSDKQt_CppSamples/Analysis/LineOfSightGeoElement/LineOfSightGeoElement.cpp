@@ -30,10 +30,33 @@
 
 #include <array>
 
-#include <QStandardPaths>
 #include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
 
 using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 namespace
 {
@@ -112,18 +135,6 @@ SceneQuickView* LineOfSightGeoElement::sceneView() const
   return m_sceneView;
 }
 
-void LineOfSightGeoElement::setDataPath(QString dataPath)
-{
-  if (m_dataPath == dataPath)
-    return;
-
-  m_dataPath = std::move(dataPath);
-  emit dataPathChanged();
-
-  if (!m_dataPath.isEmpty() && m_sceneView)
-    initialize();
-}
-
 // Set the view (created in QML)
 void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
 {
@@ -136,7 +147,7 @@ void LineOfSightGeoElement::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setArcGISScene(m_scene);
   emit sceneViewChanged();
 
-  if (!m_dataPath.isEmpty() && m_sceneView)
+  if (!defaultDataPath().isEmpty() && m_sceneView)
     initialize();
 }
 
@@ -166,7 +177,7 @@ void LineOfSightGeoElement::initialize()
   graphicsOverlay->graphics()->append(m_observer);
 
   // Get our Taxi model. We will attempt to load it and continue our setup after it has loaded.
-  QUrl modelPath = QUrl(QDir(m_dataPath).filePath("ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.3ds")).toLocalFile();
+  const QUrl modelPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.3ds";
   ModelSceneSymbol* taxiSymbol = new ModelSceneSymbol(modelPath, 1.0, this);
   taxiSymbol->setAnchorPosition(SceneSymbolAnchorPosition::Bottom);
 

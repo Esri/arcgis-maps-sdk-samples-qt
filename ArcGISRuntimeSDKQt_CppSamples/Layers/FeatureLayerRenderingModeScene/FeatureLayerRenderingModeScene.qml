@@ -16,18 +16,14 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 FeatureLayerRenderingModeSceneSample {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-
     
-
     SceneView {
         anchors {
             left: parent.left
@@ -88,8 +84,8 @@ FeatureLayerRenderingModeSceneSample {
             top: parent.top
             margins: 10
         }
-        property string startText: "Start Animation"
-        property string stopText: "Stop Animation"
+        readonly property string startText: "Start Animation"
+        readonly property string stopText: "Stop Animation"
         text: startText
         onClicked: {
             if (text === startText) {

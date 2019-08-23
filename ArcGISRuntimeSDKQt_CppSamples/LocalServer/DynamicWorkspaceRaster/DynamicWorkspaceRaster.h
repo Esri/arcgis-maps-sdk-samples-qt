@@ -32,6 +32,7 @@ namespace Esri
 class DynamicWorkspaceRaster : public QQuickItem
 {
   Q_OBJECT
+  Q_PROPERTY(QString dataPath MEMBER m_dataPath NOTIFY dataPathChanged)
 
 public:
   explicit DynamicWorkspaceRaster(QQuickItem* parent = nullptr);
@@ -39,15 +40,17 @@ public:
 
   void componentComplete() override;
   static void init();
-  Q_INVOKABLE void startLocalService(const QString& filePath, const QString& folder);
+  Q_INVOKABLE void startLocalService(const QString& filePath);
 
 signals:
   void localServerInitializationComplete(bool success);
+  void dataPathChanged();
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::LocalMapService* m_localMapService = nullptr;
+  QString m_dataPath;
 };
 
 #endif // DYNAMICWORKSPACERASTER_H

@@ -41,7 +41,33 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QStringListModel>
-#include <QQmlProperty>
+#include <QDir>
+#include <QtCore/qglobal.h>
+
+#ifdef Q_OS_IOS
+#include <QStandardPaths>
+#endif // Q_OS_IOS
+
+using namespace Esri::ArcGISRuntime;
+
+// helper method to get cross platform data path
+namespace
+{
+  QString defaultDataPath()
+  {
+    QString dataPath;
+
+  #ifdef Q_OS_ANDROID
+    dataPath = "/sdcard";
+  #elif defined Q_OS_IOS
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  #else
+    dataPath = QDir::homePath();
+  #endif
+
+    return dataPath;
+  }
+} // namespace
 
 using namespace Esri::ArcGISRuntime;
 
@@ -52,6 +78,7 @@ const QString Animate3DSymbols::ANGLE = QStringLiteral("angle");
 
 Animate3DSymbols::Animate3DSymbols(QQuickItem* parent /* = nullptr */):
   QQuickItem(parent),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/3D"),
   m_missionsModel(new QStringListModel({QStringLiteral("Grand Canyon"),
                                         QStringLiteral("Hawaii"),
                                         QStringLiteral("Pyrenees"),
@@ -68,14 +95,12 @@ void Animate3DSymbols::init()
   qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<Animate3DSymbols>("Esri.Samples", 1, 0, "Animate3DSymbolsSample");
+  qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
 }
 
 void Animate3DSymbols::componentComplete()
 {
   QQuickItem::componentComplete();
-
-  // get the data path
-  m_dataPath = QQmlProperty::read(this, "dataPath").toString();
 
   // find QML SceneView component
   m_sceneView = findChild<SceneQuickView*>("sceneView");
@@ -170,10 +195,10 @@ void Animate3DSymbols::changeMission(const QString &missionNameStr)
 
   // read the mission data from the samples .csv files
   QString formattedname = missionNameStr;
-  m_missionData->parse(QUrl(m_dataPath).toLocalFile() + "/Missions/" + formattedname.remove(" ") + ".csv");
+  m_missionData->parse(m_dataPath + "/Missions/" + formattedname.remove(" ") + ".csv");
 
   // if the mission was loaded successfully, move to the start position
-  if (missionReady())
+  if (missionReady() && m_routeGraphic)
   {
     // create a polyline representing the route for the mission
     PolylineBuilder* routeBldr = new PolylineBuilder(SpatialReference::wgs84(), this);

@@ -18,14 +18,14 @@ Rectangle {
     id: rootOptionsPage
     color: "#F4F4F4"
 
-    property real pageWidth: rootOptionsPage.width - flickable.anchors.margins * 2
-    signal statisticButtonClicked()
+    readonly property real pageWidth: rootOptionsPage.width - flickable.anchors.margins * 2
+    readonly property real labelTextSize: 12
+    readonly property var statisticTypes: ["Average", "Count", "Maximum", "Minimum", "Standard Deviation", "Sum", "Variance"]
     property var fields: null
     property var groupingFields: []
-    property var statisticTypes: ["Average", "Count", "Maximum", "Minimum", "Standard Deviation", "Sum", "Variance"]
     property alias statisticsModel: statisticsModel
     property alias orderByModel: orderByModel
-    property real labelTextSize: 12
+    signal statisticButtonClicked()
 
     // Setup a list model with some defaults pre-set
     ListModel {

@@ -77,6 +77,7 @@ void LocalServerMapImageLayer::connectSignals()
   {
     if (LocalServer::status() == LocalServerStatus::Started)
     {
+      // start the service
       m_localMapService->start();
     }
   });

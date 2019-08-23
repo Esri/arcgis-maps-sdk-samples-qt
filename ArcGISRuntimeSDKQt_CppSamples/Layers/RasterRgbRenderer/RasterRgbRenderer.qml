@@ -17,22 +17,18 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 RasterRgbRendererSample {
     id: rootRectangle
     clip: true
-
     width: 800
     height: 600
-    
-    property string dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster"
-    property string minMax: "Min Max"
-    property string percentClip: "Percent Clip"
-    property string stdDeviation: "Standard Deviation"
-    property var stretchTypes: [minMax, percentClip, stdDeviation]
+
+    readonly property string minMax: "Min Max"
+    readonly property string percentClip: "Percent Clip"
+    readonly property string stdDeviation: "Standard Deviation"
+    readonly property var stretchTypes: [minMax, percentClip, stdDeviation]
     property bool editingRenderer: false
     property string selectedType: stretchTypeCombo.currentText
 
@@ -57,7 +53,6 @@ RasterRgbRendererSample {
                 rows: 4
             }
         }
-
     ]
 
     // add a mapView component

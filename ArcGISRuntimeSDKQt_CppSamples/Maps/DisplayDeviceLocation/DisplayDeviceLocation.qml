@@ -16,14 +16,12 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
 DisplayDeviceLocationSample {
     id: deviceLocationSample
     width: 800
     height: 600
-
     
     property string currentModeText: deviceLocationSample.stopMode
     property string currentModeImage: "qrc:/Samples/Maps/DisplayDeviceLocation/Stop.png"

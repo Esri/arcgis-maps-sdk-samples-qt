@@ -16,17 +16,14 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.5
+import Esri.ArcGISRuntime.Toolkit.Controls 100.6
 
 DeleteFeaturesFeatureServiceSample {
     id: deleteFeaturesSample
     width: 800
     height: 600
-
     
-
     MapView {
         id: mapView
         anchors.fill: parent

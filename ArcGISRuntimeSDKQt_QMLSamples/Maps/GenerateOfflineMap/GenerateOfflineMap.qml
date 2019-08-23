@@ -17,19 +17,18 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.6
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-
     
-    property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_%1.mmpk".arg(new Date().getTime().toString())
-    property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
+    readonly property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_%1.mmpk".arg(new Date().getTime().toString())
+    readonly property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
 
     MapView {
         id: mapView
@@ -67,8 +66,8 @@ Rectangle {
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
-        width: parent.width - (50)
-        height: parent.height - (125)
+        width: parent.width - 50
+        height: parent.height - 125
         color: "transparent"
         visible: map.loadStatus === Enums.LoadStatusLoaded
         border {

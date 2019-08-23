@@ -1,0 +1,8 @@
+{
+    "source" :  "AddAPointSceneLayer.qml",
+    "otherSourceFiles" :  [
+        "AddAPointSceneLayer.h",
+        "AddAPointSceneLayer.cpp"
+    ],
+    "name" : "Add a point scene layer"
+}

@@ -22,14 +22,27 @@
 #include "LocalFeatureService.h"
 #include "LocalGeoprocessingService.h"
 
-#include <QDir>
 #include <QDesktopServices>
+#include <QDir>
+#include <QTemporaryDir>
 
 using namespace Esri::ArcGISRuntime;
 
 LocalServerServices::LocalServerServices(QQuickItem* parent) :
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_dataPath(QDir::homePath() + "/ArcGIS/Runtime/Data")
 {
+  // create temp/data path
+  const QString tempPath = LocalServerServices::shortestTempPath() + "/EsriQtSample";
+
+  // create the directory
+  m_tempDir = std::unique_ptr<QTemporaryDir>(new QTemporaryDir(tempPath));
+
+  // set the temp & app data path for the local server
+  LocalServer::instance()->setTempDataPath(m_tempDir->path());
+  LocalServer::instance()->setAppDataPath(m_tempDir->path());
+
+  emit dataPathChanged();
 }
 
 LocalServerServices::~LocalServerServices() = default;
@@ -279,4 +292,17 @@ void LocalServerServices::updateStatus(LocalService* service, const QString& ser
       break;
   }
   emit serverStatusChanged();
+}
+
+QString LocalServerServices::shortestTempPath()
+{
+  // get tmp and home paths
+  const QString tmpPath = QDir::tempPath();
+  const QString homePath = QDir::homePath();
+
+  // return whichever is shorter, temp or home path
+  if (homePath.length() > tmpPath.length())
+    return tmpPath;
+  else
+    return homePath;
 }

@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 
 Rectangle {
     id: rootRectangle
@@ -23,7 +23,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property url wmtsServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS"
+    readonly property url wmtsServiceUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS"
     property WmtsService service;
 
     MapView {

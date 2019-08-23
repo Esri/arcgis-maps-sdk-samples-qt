@@ -16,22 +16,18 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
 
 ServiceFeatureTableManualCacheSample {
     id: manualCacheSample
     width: 800
-    height: 600
-
-    
+    height: 600    
 
     // add a mapView component
     MapView {
         anchors.fill: parent
         objectName: "mapView"
     }
-
 
     Row {
         anchors {

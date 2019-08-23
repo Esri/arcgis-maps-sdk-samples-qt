@@ -17,19 +17,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import QtQuick.Window 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.5
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.6
 
 GenerateOfflineMapSample {
     id: offlineMapSample
     clip: true
     width: 800
     height: 600
-
-    
-    property string outputMapPackage: System.temporaryFolder.path + "/OfflineMap_%1.mmpk".arg(new Date().getTime().toString())
 
     onUpdateStatus: generateWindow.statusText = status;
     onUpdateProgress: generateWindow.progressText = progress;
@@ -64,7 +59,7 @@ GenerateOfflineMapSample {
             visible: mapLoaded
 
             onButtonClicked: {
-                generateMapByExtent(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height), outputMapPackage);
+                generateMapByExtent(extentRectangle.x, extentRectangle.y, (extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
                 generateWindow.visible = true;
             }
         }
@@ -74,8 +69,8 @@ GenerateOfflineMapSample {
     Rectangle {
         id: extentRectangle
         anchors.centerIn: parent
-        width: parent.width - (50)
-        height: parent.height - (125)
+        width: parent.width - 50
+        height: parent.height - 125
         color: "transparent"
         visible: mapLoaded
         border {

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.5
+import Esri.ArcGISRuntime 100.6
 
 Rectangle {
     id: rootRectangle
@@ -179,13 +179,13 @@ Rectangle {
     }
 
     Button {
+        readonly property string stopText: "Stop Animation"
+        readonly property string startText: "Start Animation"
         anchors {
             left: parent.left
             top: parent.top
             margins: 10
         }
-        property string startText: "Start Animation"
-        property string stopText: "Stop Animation"
         text: startText
         onClicked: {
             if (text === startText) {
