@@ -149,17 +149,20 @@ void HonorMobileMapPackageExpiration::createMapPackage(const QString& path)
 
     // Access Expiration Info
     Expiration expiration = m_mobileMapPackage->expiration();
-    if (expiration.isExpired())
+    if (!expiration.isEmpty())
     {
-      const QString message = expiration.message();
-      const QString date = expiration.dateTime().toString(Qt::ISODate).split("T")[0];
-      const QString time = expiration.dateTime().time().toString();
-      m_expirationString = QString("%1\nExpired on %2 at %3 UTC").arg(message, date, time);
-      emit expirationStringChanged();
+      if (expiration.isExpired())
+      {
+        const QString message = expiration.message();
+        const QString date = expiration.dateTime().toString(Qt::ISODate).split("T")[0];
+        const QString time = expiration.dateTime().time().toString();
+        m_expirationString = QString("%1\nExpired on %2 at %3 UTC").arg(message, date, time);
+        emit expirationStringChanged();
 
-      // return if access after expiration is not allowed
-      if (expiration.type() == ExpirationType::PreventExpiredAccess)
-        return;
+        // return if access after expiration is not allowed
+        if (expiration.type() == ExpirationType::PreventExpiredAccess)
+          return;
+      }
     }
 
     // set the map view's map to the first map in the mobile map package
