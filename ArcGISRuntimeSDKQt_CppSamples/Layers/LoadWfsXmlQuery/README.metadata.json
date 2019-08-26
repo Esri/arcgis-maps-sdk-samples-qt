@@ -7,7 +7,7 @@
     ],
     "keywords": [
         "FeatureLayer",
-        "WfsFeatureTable"
+        "WfsFeatureTable",
         "WfsFeatureTable::populateFromService",
         "OGC",
         "WFS",
@@ -20,7 +20,7 @@
     "redirect_from": "",
     "relevant_apis": [
         "FeatureLayer",
-        "WfsFeatureTable"
+        "WfsFeatureTable",
         "WfsFeatureTable::populateFromService"
     ],
     "snippets": [
