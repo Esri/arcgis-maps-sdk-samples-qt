@@ -27,7 +27,7 @@ QT += opengl widgets
 TEMPLATE = app
 TARGET = BuildLegend
 
-ARCGIS_RUNTIME_VERSION = 100.6
+ARCGIS_RUNTIME_VERSION = 100.7
 include($$PWD/arcgisruntime.pri)
 
 win32:CONFIG += \
