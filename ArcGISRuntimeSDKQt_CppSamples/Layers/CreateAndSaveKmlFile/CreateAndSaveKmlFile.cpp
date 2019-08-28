@@ -88,8 +88,8 @@ Geometry CreateAndSaveKmlFile::createPolyline() const
   PolylineBuilder polylineBuilder(spatialRef);
 
   polylineBuilder.addPoint(-119.992, 41.989);
-  polylineBuilder.addPoint(-110.994, 38.994);
-  polylineBuilder.addPoint(-114.620, 32.0);
+  polylineBuilder.addPoint(-119.994, 38.994);
+  polylineBuilder.addPoint(-114.620, 35.0);
 
   return polylineBuilder.toGeometry();
 }

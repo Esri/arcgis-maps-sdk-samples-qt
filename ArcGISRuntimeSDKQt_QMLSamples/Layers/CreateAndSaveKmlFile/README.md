@@ -1,31 +1,33 @@
 # Create and save KML file
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Construct a KML document and save it as a KMZ file.
 
 ![](screenshot.png)
 
+## Use case
+
+If you need to create and save data on the fly, you can use KML to create points, lines, and polygons and then serializing them as KML nodes in a KML Document. Once complete, you can share the KML data with others that are using a KML reading application, such as ArcGIS Earth.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Application opens to a view of the Southwestern United States. Click on the "Save KMZ file" button to save the active KML document as a .kmz file on your system.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create a `Point`, `Polyline`, and `Polygon`.
+2. Create a `Graphic` for each and add it to the `GraphicsOverlay`
+3. Create a `KmlGeometry` object using the `Geometry` from the point, line, and polygon.
+4. Create a `KmlPlacemark` for each kml geometry.
+5. Add all three kml placemarks to the `KmlDocument`.
+6. Save the kml document to a file using the `saveAs` function.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+* KmlDocument
+* KmlGeometry
+* KmlNode::saveAs
+* KmlPlacemark
 
 ## Tags
-Routing, Network analysis, Geocode
 
+Keyhole, KML, KMZ, OGC

@@ -1,16 +1,22 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Layers",
+    "description": "Construct a KML document and save it as a KMZ file.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "Keyhole",
+        "KML",
+        "KMZ",
+        "OGC"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "KmlDocument",
+        "KmlGeometry",
+        "KmlNode::saveAs",
+        "KmlPlacemark"
     ],
     "snippets": [
         "CreateAndSaveKmlFile.cpp",

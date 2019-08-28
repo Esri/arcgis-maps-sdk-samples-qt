@@ -165,8 +165,8 @@ Rectangle {
 
     function createPolyline() {
         polylineBuilder.addPointXY(-119.992, 41.989);
-        polylineBuilder.addPointXY(-110.994, 38.994);
-        polylineBuilder.addPointXY(-114.620, 32.0);
+        polylineBuilder.addPointXY(-119.994, 38.994);
+        polylineBuilder.addPointXY(-114.620, 35.0);
         polylineGraphic.geometry = polylineBuilder.geometry;
         polylineGraphic.symbol = polylineSymbol;
         graphicsOverlay.graphics.append(polylineGraphic);
