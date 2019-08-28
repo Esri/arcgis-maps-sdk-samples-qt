@@ -18,24 +18,14 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Graphic.h"
-#include "GraphicsOverlay.h"
-#include "Geometry.h"
-#include "Point.h"
-#include "Polygon.h"
-#include "Polyline.h"
 #include "PolygonBuilder.h"
 #include "PolylineBuilder.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
 #include "KmlDocument.h"
-#include "KmlGeometry.h"
 #include "KmlPlacemark.h"
-#include "GeometryEngine.h"
 #include "KmlNodeListModel.h"
-#include "KmlGeometryListModel.h"
-#include "KmlNode.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -155,10 +145,8 @@ void CreateAndSaveKmlFile::addGraphics()
 void CreateAndSaveKmlFile::addToKmlDocument(const Esri::ArcGISRuntime::Geometry &geometry)
 {
   const KmlGeometry* kmlGeometry = new KmlGeometry(geometry, KmlAltitudeMode::ClampToGround);
-  KmlPlacemark* kmlPlacemark = new KmlPlacemark(*kmlGeometry);
-  m_kmlDocument->childNodesListModel()->append(kmlPlacemark);
+  m_kmlDocument->childNodesListModel()->append(new KmlPlacemark(*kmlGeometry));
   delete kmlGeometry;
-  delete kmlPlacemark;
 }
 
 void CreateAndSaveKmlFile::saveKml(QUrl url)

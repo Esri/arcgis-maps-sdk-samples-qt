@@ -43,8 +43,6 @@ Rectangle {
                 top: parent.top
                 margins: 3
             }
-
-            id: saveBtn
             text: qsTr("Save kmz file")
 
             onClicked: {
@@ -134,13 +132,13 @@ Rectangle {
 
     FileDialog {
         id: fileDialog
-        title: qsTr("Save file dialog")
         defaultSuffix: "kmz"
         selectExisting: false
         onAccepted: {
             kmlDocument.saveAs(fileUrl);
             visible: false;
         }
+
         onRejected: {
             visible: false;
         }
@@ -162,14 +160,7 @@ Rectangle {
         polygonGraphic.symbol = polygonSymbol;
         graphicsOverlay.graphics.append(polygonGraphic);
 
-        let kmlPolygon = ArcGISRuntimeEnvironment.createObject("KmlGeometry", {
-                                                                geometry: polygonBuilder.geometry,
-                                                                altitudeMode: Enums.KmlAltitudeModeClampToGround
-                                                            });
-
-        let kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
-        kmlPlacemark.geometriesListModel.append(kmlPolygon);
-        kmlDocument.childNodesListModel.append(kmlPlacemark);
+        addToKmlDocument(polygonBuilder.geometry);
     }
 
     function createPolyline() {
@@ -180,14 +171,7 @@ Rectangle {
         polylineGraphic.symbol = polylineSymbol;
         graphicsOverlay.graphics.append(polylineGraphic);
 
-        let kmlPolyLine = ArcGISRuntimeEnvironment.createObject("KmlGeometry", {
-                                                                geometry: polylineBuilder.geometry,
-                                                                altitudeMode: Enums.KmlAltitudeModeClampToGround
-                                                            });
-
-        let kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
-        kmlPlacemark.geometriesListModel.append(kmlPolyLine);
-        kmlDocument.childNodesListModel.append(kmlPlacemark);
+        addToKmlDocument(polylineBuilder.geometry);
     }
 
     function createPoint() {
@@ -195,14 +179,16 @@ Rectangle {
         pointGraphic.symbol = pointSymbol;
         graphicsOverlay.graphics.append(pointGraphic);
 
-        let  kmlPoint = ArcGISRuntimeEnvironment.createObject("KmlGeometry", {
-                                                                geometry: point,
-                                                                altitudeMode: Enums.KmlAltitudeModeClampToGround
-                                                            });
-
-        let kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
-        kmlPlacemark.geometriesListModel.append(kmlPoint);
-        kmlDocument.childNodesListModel.append(kmlPlacemark);
+        addToKmlDocument(point);
     }
 
+    function addToKmlDocument(geometry) {
+        let kmlGeometry = ArcGISRuntimeEnvironment.createObject("KmlGeometry", {
+                                                                geometry: geometry,
+                                                                altitudeMode: Enums.KmlAltitudeModeClampToGround
+                                                            });
+        let kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
+        kmlPlacemark.geometriesListModel.append(kmlGeometry);
+        kmlDocument.childNodesListModel.append(kmlPlacemark);
+    }
 }

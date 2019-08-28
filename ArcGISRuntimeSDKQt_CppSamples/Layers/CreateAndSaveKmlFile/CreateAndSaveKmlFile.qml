@@ -34,7 +34,6 @@ Item {
     }
 
     Button {
-        id: saveBtn
         anchors{
             left: parent.left
             top: parent.top
@@ -54,7 +53,6 @@ Item {
 
     FileDialog {
         id: fileDialog
-        title: qsTr("Save file dialog")
         defaultSuffix: "kmz"
         selectExisting: false
         onAccepted: {
