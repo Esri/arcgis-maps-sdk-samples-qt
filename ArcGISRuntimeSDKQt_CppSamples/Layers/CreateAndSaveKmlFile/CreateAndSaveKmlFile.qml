@@ -16,6 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
+import QtQuick.Dialogs 1.2
 import Esri.Samples 1.0
 
 Item {
@@ -30,5 +31,38 @@ Item {
     CreateAndSaveKmlFileSample {
         id: model
         mapView: view
+    }
+
+    Button {
+        id: saveBtn
+        anchors{
+            left: parent.left
+            top: parent.top
+            margins: 3
+        }
+        text: qsTr("Save kmz file")
+
+        onClicked: {
+            fileDialog.visible = true;
+        }
+    }
+
+    BusyIndicator {
+        anchors.centerIn: parent
+        visible: model.busy
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: qsTr("Save file dialog")
+        defaultSuffix: "kmz"
+        selectExisting: false
+        onAccepted: {
+            visible: false;
+            model.saveKml(fileUrl);
+        }
+        onRejected: {
+            visible: false;
+        }
     }
 }

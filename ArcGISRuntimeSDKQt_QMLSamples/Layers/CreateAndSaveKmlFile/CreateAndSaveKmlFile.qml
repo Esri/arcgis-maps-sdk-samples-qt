@@ -27,6 +27,7 @@ Rectangle {
     height: 600
 
     property bool styling: false
+    property var kmlLayer
 
     MapView {
         id: mapView
@@ -46,7 +47,9 @@ Rectangle {
             id: saveBtn
             text: qsTr("Save kmz file")
 
-            onClicked: fileDialog.visible = true;
+            onClicked: {
+                fileDialog.visible = true;
+            }
         }
 
         GraphicsOverlay {
@@ -54,31 +57,15 @@ Rectangle {
         }
     }
 
-    KmlPlacemark {
-        id: kmlPlacemark
-    }
-
-    KmlGeometry {
-        id: kmlGeometry
-        altitudeMode: Enums.KmlAltitudeModeClampToGround
-        Point {
-            id: point
-            x: -117.195800
-            y: 34.056295
-            spatialReference: SpatialReference.createWgs84();
-        }
-    }
-
-
     KmlDocument {
         id: kmlDocument
         name: qsTr("KML Sample Document")
         onSaveStatusChanged: {
-            console.log(saveStatus);
+            if (saveStatus === Enums.TaskStatusErrored) {
+                console.log("Error: %1 - %2".arg(error.message).arg(error.additionalMessage))
+            }
         }
     }
-
-
 
     Graphic {
         id: polygonGraphic
@@ -100,7 +87,7 @@ Rectangle {
 
     SimpleLineSymbol {
         id: polylineSymbol
-        style: Enums.SimpleLineSymbolStyleDashDotDot
+        style: Enums.SimpleLineSymbolStyleSolid
         color: "blue"
         width: 5
         antiAlias: true
@@ -123,12 +110,12 @@ Rectangle {
         spatialReference: SpatialReference.createWgs84();
     }
 
-//    Point {
-//        id: point
-//        x: -117.195800
-//        y: 34.056295
-//        spatialReference: SpatialReference.createWgs84();
-//    }
+    Point {
+        id: point
+        x: -117.195800
+        y: 34.056295
+        spatialReference: SpatialReference.createWgs84();
+    }
 
     Envelope {
         id: myViewpoint
@@ -139,26 +126,32 @@ Rectangle {
         spatialReference: SpatialReference.createWgs84();
     }
 
-    Component.onCompleted: {
-        createPolygon();
-        createPolyline();
-        createPoint();
-        mapView.setViewpointGeometryAndPadding(myViewpoint, 10);
+    BusyIndicator {
+        id: busy
+        anchors.centerIn: parent
+        visible: kmlDocument.saveStatus === Enums.TaskStatusInProgress
     }
 
     FileDialog {
         id: fileDialog
         title: qsTr("Save file dialog")
-        selectFolder: true
+        defaultSuffix: "kmz"
+        selectExisting: false
         onAccepted: {
-            console.log(folder);
-            console.log(kmlDocument.childNodesListModel.count);
-            kmlDocument.saveAs(folder + "/temp.kmz");
+            console.log(fileUrl);
+            kmlDocument.saveAs(fileUrl);
             visible: false;
         }
         onRejected: {
             visible: false;
         }
+    }
+
+    Component.onCompleted: {
+        createPolygon();
+        createPolyline();
+        createPoint();
+        mapView.setViewpointGeometryAndPadding(myViewpoint, 10);
     }
 
     function createPolygon() {
@@ -169,15 +162,33 @@ Rectangle {
         polygonGraphic.geometry = polygonBuilder.geometry;
         polygonGraphic.symbol = polygonSymbol;
         graphicsOverlay.graphics.append(polygonGraphic);
+
+        let kmlPolygon = ArcGISRuntimeEnvironment.createObject("KmlGeometry", {
+                                                                geometry: polygonBuilder.geometry,
+                                                                altitudeMode: Enums.KmlAltitudeModeClampToGround
+                                                            });
+
+        let kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
+        kmlPlacemark.geometriesListModel.append(kmlPolygon);
+        kmlDocument.childNodesListModel.append(kmlPlacemark);
     }
 
     function createPolyline() {
         polylineBuilder.addPointXY(-119.992, 41.989);
-        polylineBuilder.addPointXY(-119.994, 38.994);
-        polylineBuilder.addPointXY(-114.620, 35.0);
+        polylineBuilder.addPointXY(-110.994, 38.994);
+        polylineBuilder.addPointXY(-114.620, 32.0);
         polylineGraphic.geometry = polylineBuilder.geometry;
         polylineGraphic.symbol = polylineSymbol;
         graphicsOverlay.graphics.append(polylineGraphic);
+
+        let kmlPolyLine = ArcGISRuntimeEnvironment.createObject("KmlGeometry", {
+                                                                geometry: polylineBuilder.geometry,
+                                                                altitudeMode: Enums.KmlAltitudeModeClampToGround
+                                                            });
+
+        let kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
+        kmlPlacemark.geometriesListModel.append(kmlPolyLine);
+        kmlDocument.childNodesListModel.append(kmlPlacemark);
     }
 
     function createPoint() {
@@ -185,23 +196,14 @@ Rectangle {
         pointGraphic.symbol = pointSymbol;
         graphicsOverlay.graphics.append(pointGraphic);
 
-//        kmlGeometry.geometry = point;
-//        kmlGeometry.altitudeMode = Enums.KmlAltitudeModeClampToGround;
-
-        var myPoint = ArcGISRuntimeEnvironment.createObject("KmlGeometry", {
+        let  kmlPoint = ArcGISRuntimeEnvironment.createObject("KmlGeometry", {
                                                                 geometry: point,
                                                                 altitudeMode: Enums.KmlAltitudeModeClampToGround
                                                             });
 
-
-
-        kmlPlacemark.geometriesListModel.append(kmlGeometry);
-//        myPoint);
-//        placemark.geometriesListModel.append(kmlGeometry);
-//        kmlDocument.childNodesListModel.append(kmlPlacemark);
+        let kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
+        kmlPlacemark.geometriesListModel.append(kmlPoint);
         kmlDocument.childNodesListModel.append(kmlPlacemark);
-//        kmlDocument.childNodesListModel.append(placemark);
-        console.log("%1 :%2 :%3 :%4".arg(kmlDocument.childNodesListModel.count).arg(kmlGeometry.type).arg(myPoint.type).arg(kmlPlacemark.geometriesListModel.count));
     }
 
 }

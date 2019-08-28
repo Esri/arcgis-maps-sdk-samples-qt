@@ -23,16 +23,23 @@ namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
+class KmlDocument;
+class GraphicsOverlay;
+class Point;
+class Polyline;
+class Polygon;
 }
 }
 
 #include <QObject>
+#include "Geometry.h"
 
 class CreateAndSaveKmlFile : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
 
 public:
   explicit CreateAndSaveKmlFile(QObject* parent = nullptr);
@@ -40,8 +47,11 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void saveKml(QString url);
+
 signals:
   void mapViewChanged();
+  void busyChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -49,6 +59,22 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::KmlDocument* m_kmlDocument = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::Point* m_point = nullptr;
+  Esri::ArcGISRuntime::Polyline* m_polyline = nullptr;
+  Esri::ArcGISRuntime::Polygon* m_polygon = nullptr;
+
+
+  bool m_busy = false;
+
+  Esri::ArcGISRuntime::Geometry createPoint() const;
+  Esri::ArcGISRuntime::Geometry createPolyline() const;
+  Esri::ArcGISRuntime::Geometry createPolygon() const;
+  Esri::ArcGISRuntime::Geometry createEnvelope() const;
+
+  void addGraphics();
+
 };
 
 #endif // CREATEANDSAVEKMLFILE_H
