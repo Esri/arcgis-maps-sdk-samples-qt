@@ -1,4 +1,4 @@
-// [WriteFile Name=CreateAndSaveKmlFile, Category=Geometry]
+// [WriteFile Name=CreateAndSaveKmlFile, Category=Layers]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -138,7 +138,6 @@ Rectangle {
         defaultSuffix: "kmz"
         selectExisting: false
         onAccepted: {
-            console.log(fileUrl);
             kmlDocument.saveAs(fileUrl);
             visible: false;
         }

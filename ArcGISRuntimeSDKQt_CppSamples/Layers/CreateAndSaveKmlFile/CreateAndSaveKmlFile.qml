@@ -1,4 +1,4 @@
-// [WriteFile Name=CreateAndSaveKmlFile, Category=Geometry]
+// [WriteFile Name=CreateAndSaveKmlFile, Category=Layers]
 // [Legal]
 // Copyright 2019 Esri.
 

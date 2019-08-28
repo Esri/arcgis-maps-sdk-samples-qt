@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
   engine.addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Geometry/CreateAndSaveKmlFile/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Layers/CreateAndSaveKmlFile/main.qml"));
 
   return app.exec();
 }

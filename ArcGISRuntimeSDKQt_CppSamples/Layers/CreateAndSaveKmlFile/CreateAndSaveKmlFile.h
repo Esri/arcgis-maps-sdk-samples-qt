@@ -1,4 +1,4 @@
-// [WriteFile Name=CreateAndSaveKmlFile, Category=Geometry]
+// [WriteFile Name=CreateAndSaveKmlFile, Category=Layers]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -32,6 +32,7 @@ class Polygon;
 }
 
 #include <QObject>
+#include <QUrl>
 #include "Geometry.h"
 
 class CreateAndSaveKmlFile : public QObject
@@ -47,7 +48,7 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void saveKml(QString url);
+  Q_INVOKABLE void saveKml(QUrl url);
 
 signals:
   void mapViewChanged();
@@ -65,7 +66,6 @@ private:
   Esri::ArcGISRuntime::Polyline* m_polyline = nullptr;
   Esri::ArcGISRuntime::Polygon* m_polygon = nullptr;
 
-
   bool m_busy = false;
 
   Esri::ArcGISRuntime::Geometry createPoint() const;
@@ -74,6 +74,7 @@ private:
   Esri::ArcGISRuntime::Geometry createEnvelope() const;
 
   void addGraphics();
+  void addToKmlDocument(const Esri::ArcGISRuntime::Geometry &geometry);
 
 };
 

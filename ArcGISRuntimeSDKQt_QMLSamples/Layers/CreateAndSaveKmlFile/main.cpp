@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Geometry/CreateAndSaveKmlFile/CreateAndSaveKmlFile.qml"));
+  view.setSource(QUrl("qrc:/Samples/Layers/CreateAndSaveKmlFile/CreateAndSaveKmlFile.qml"));
 
   view.show();
 
