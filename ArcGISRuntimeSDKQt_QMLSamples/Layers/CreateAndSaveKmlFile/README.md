@@ -25,7 +25,7 @@ Application opens to a view of the Southwestern United States. Click on the "Sav
 
 * KmlDocument
 * KmlGeometry
-* KmlNode::saveAs
+* KmlNode.saveAs
 * KmlPlacemark
 
 ## Tags
