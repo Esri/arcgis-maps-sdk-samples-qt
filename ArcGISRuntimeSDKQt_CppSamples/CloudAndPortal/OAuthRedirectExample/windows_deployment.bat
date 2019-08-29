@@ -6,7 +6,7 @@ SET "QT_KIT=C:\Qt\5.12.0\msvc2017_64"
 SET "DIR=%~dp0"
 SET "BUILD_TYPE=release"
 SET "BUILD_DIR=%DIR%..\build-OAuthRedirectExample-Desktop_Qt_5_12_0_MSVC2017_64bit-Release\%BUILD_TYPE%"
-SET "ARCGIS_SDK_DIR=C:\Program Files (x86)\ArcGIS SDKs\Qt100.6\sdk\windows\%ARCH%\bin\%BUILD_TYPE%"
+SET "ARCGIS_SDK_DIR=C:\Program Files (x86)\ArcGIS SDKs\Qt100.7\sdk\windows\%ARCH%\bin\%BUILD_TYPE%"
 
 call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Auxiliary\Build\vcvarsall.bat" %VC_ARCH%
 call %QT_KIT%\bin\windeployqt.exe %BUILD_DIR%\OAuthRedirectExample.exe --qmldir %DIR% -sensors -positioning
