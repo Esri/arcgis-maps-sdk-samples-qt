@@ -16,18 +16,15 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.0
 import Esri.ArcGISRuntime 100.6
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-
-    property bool styling: false
-    property var kmlLayer
 
     MapView {
         id: mapView
@@ -46,82 +43,55 @@ Rectangle {
             text: qsTr("Save kmz file")
 
             onClicked: {
-                fileDialog.visible = true;
-            }
-        }
-
-        GraphicsOverlay {
-            id: graphicsOverlay
-        }
-    }
-
-    KmlDocument {
-        id: kmlDocument
-        name: qsTr("KML Sample Document")
-        onSaveStatusChanged: {
-            if (saveStatus === Enums.TaskStatusErrored) {
-                console.log("Error: %1 - %2".arg(error.message).arg(error.additionalMessage))
+                dialog.open();
             }
         }
     }
 
-    Graphic {
-        id: polygonGraphic
+
+
+    KmlDataset {
+        id: kmlDataset
+        KmlDocument {
+            id: kmlDocument
+            name: qsTr("KML Sample Document")
+            onSaveStatusChanged: {
+                if (saveStatus === Enums.TaskStatusErrored) {
+                    console.log(`Error: ${error.message} - ${error.additionalMessage}`);
+                }
+            }
+        }
     }
 
-    Graphic {
-        id: polylineGraphic
-    }
-
-    Graphic {
-        id: pointGraphic
-    }
-
-    SimpleFillSymbol {
-        id: polygonSymbol
-        style: Enums.SimpleFillSymbolStyleSolid
-        color: "red"
-    }
-
-    SimpleLineSymbol {
-        id: polylineSymbol
-        style: Enums.SimpleLineSymbolStyleSolid
-        color: "blue"
-        width: 5
-        antiAlias: true
-    }
-
-    SimpleMarkerSymbol {
-        id: pointSymbol
-        style: Enums.SimpleMarkerSymbolStyleDiamond
-        color: "green"
-        size: 10
+    KmlLayer {
+        id: kmlLayer
+        dataset: kmlDataset
     }
 
     PolygonBuilder {
         id: polygonBuilder
-        spatialReference: SpatialReference.createWgs84();
+        spatialReference: SpatialReference { wkid: 4326 }
     }
 
     PolylineBuilder {
         id: polylineBuilder
-        spatialReference: SpatialReference.createWgs84();
+        spatialReference: SpatialReference { wkid: 4326 }
     }
 
     Point {
         id: point
         x: -117.195800
         y: 34.056295
-        spatialReference: SpatialReference.createWgs84();
+        spatialReference: SpatialReference { wkid: 4326 }
     }
 
     Envelope {
         id: myViewpoint
-        xMin: -123.0
+        xMin: -130.0
         yMin: 33.5
         xMax: -101.0
-        yMax: 42.0
-        spatialReference: SpatialReference.createWgs84();
+        yMax: 38.0
+        spatialReference: SpatialReference { wkid: 4326 }
     }
 
     BusyIndicator {
@@ -130,24 +100,29 @@ Rectangle {
         visible: kmlDocument.saveStatus === Enums.TaskStatusInProgress
     }
 
-    FileDialog {
-        id: fileDialog
-        defaultSuffix: "kmz"
-        selectExisting: false
-        onAccepted: {
-            kmlDocument.saveAs(fileUrl);
-            visible: false;
-        }
+//    FileDialog {
+//        id: fileDialog
+//        defaultSuffix: "kmz"
+////        selectExisting: false
+//        onAccepted: {
+//            kmlDocument.saveAs(fileUrl);
+//            close();
+//        }
 
-        onRejected: {
-            visible: false;
-        }
+//        onRejected: {
+//            close();
+//        }
+//    }
+
+    FileDialog {
+        id: dialog
     }
 
     Component.onCompleted: {
         createPolygon();
         createPolyline();
-        createPoint();
+        addToKmlDocument(point);
+        addKmlLayer();
         mapView.setViewpointGeometryAndPadding(myViewpoint, 10);
     }
 
@@ -156,30 +131,18 @@ Rectangle {
         polygonBuilder.addPointXY(-102.047, 40.998);
         polygonBuilder.addPointXY(-102.037, 36.989);
         polygonBuilder.addPointXY(-109.048, 36.998);
-        polygonGraphic.geometry = polygonBuilder.geometry;
-        polygonGraphic.symbol = polygonSymbol;
-        graphicsOverlay.graphics.append(polygonGraphic);
-
         addToKmlDocument(polygonBuilder.geometry);
     }
 
     function createPolyline() {
-        polylineBuilder.addPointXY(-119.992, 41.989);
-        polylineBuilder.addPointXY(-119.994, 38.994);
-        polylineBuilder.addPointXY(-114.620, 35.0);
-        polylineGraphic.geometry = polylineBuilder.geometry;
-        polylineGraphic.symbol = polylineSymbol;
-        graphicsOverlay.graphics.append(polylineGraphic);
+        polylineBuilder.addPointXY(-124.992, 41.989);
+        polylineBuilder.addPointXY(-124.994, 38.994);
+        polylineBuilder.addPointXY(-120.620, 35.0);
+//        polylineGraphic.geometry = polylineBuilder.geometry;
+//        polylineGraphic.symbol = polylineSymbol;
+//        graphicsOverlay.graphics.append(polylineGraphic);
 
         addToKmlDocument(polylineBuilder.geometry);
-    }
-
-    function createPoint() {
-        pointGraphic.geometry = point;
-        pointGraphic.symbol = pointSymbol;
-        graphicsOverlay.graphics.append(pointGraphic);
-
-        addToKmlDocument(point);
     }
 
     function addToKmlDocument(geometry) {
@@ -190,5 +153,9 @@ Rectangle {
         let kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
         kmlPlacemark.geometriesListModel.append(kmlGeometry);
         kmlDocument.childNodesListModel.append(kmlPlacemark);
+    }
+
+    function addKmlLayer() {
+        mapView.map.operationalLayers.append(kmlLayer);
     }
 }

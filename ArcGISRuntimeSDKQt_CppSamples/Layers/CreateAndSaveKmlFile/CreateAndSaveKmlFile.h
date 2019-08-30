@@ -25,15 +25,15 @@ class Map;
 class MapQuickView;
 class KmlDocument;
 class GraphicsOverlay;
-class Point;
-class Polyline;
-class Polygon;
 }
 }
 
 #include <QObject>
 #include <QUrl>
 #include "Geometry.h"
+#include "Point.h"
+#include "Polyline.h"
+#include "Polygon.h"
 
 class CreateAndSaveKmlFile : public QObject
 {
@@ -48,7 +48,7 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void saveKml(QUrl url);
+  Q_INVOKABLE void saveKml(const QUrl& url);
 
 signals:
   void mapViewChanged();
@@ -62,9 +62,9 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::KmlDocument* m_kmlDocument = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
-  Esri::ArcGISRuntime::Point* m_point = nullptr;
-  Esri::ArcGISRuntime::Polyline* m_polyline = nullptr;
-  Esri::ArcGISRuntime::Polygon* m_polygon = nullptr;
+  Esri::ArcGISRuntime::Point m_point;
+  Esri::ArcGISRuntime::Polyline m_polyline;
+  Esri::ArcGISRuntime::Polygon m_polygon;
 
   bool m_busy = false;
 
@@ -74,8 +74,7 @@ private:
   Esri::ArcGISRuntime::Geometry createEnvelope() const;
 
   void addGraphics();
-  void addToKmlDocument(const Esri::ArcGISRuntime::Geometry &geometry);
-
+  void addToKmlDocument(const Esri::ArcGISRuntime::Geometry& geometry);
 };
 
 #endif // CREATEANDSAVEKMLFILE_H

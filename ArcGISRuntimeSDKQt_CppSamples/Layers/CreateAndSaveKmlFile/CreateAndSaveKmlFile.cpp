@@ -32,19 +32,20 @@ using namespace Esri::ArcGISRuntime;
 CreateAndSaveKmlFile::CreateAndSaveKmlFile(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::topographic(this), this)),
-  m_kmlDocument( new KmlDocument(this)),
-  m_graphicsOverlay(new GraphicsOverlay(this))
-
+  m_kmlDocument(new KmlDocument(this)),
+  m_graphicsOverlay(new GraphicsOverlay(this)),
+  m_point(createPoint()),
+  m_polyline(createPolyline()),
+  m_polygon(createPolygon())
 {
   connect(m_map, &Map::doneLoading, this, [this](Error e)
   {
-    if(!e.isEmpty())
+    if (!e.isEmpty())
       return;
 
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
     addGraphics();
   });
-
 }
 
 CreateAndSaveKmlFile::~CreateAndSaveKmlFile() = default;
@@ -127,29 +128,25 @@ void CreateAndSaveKmlFile::addGraphics()
 
   SimpleFillSymbol* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), this);
 
-  m_point = new Point(createPoint());
-  m_graphicsOverlay->graphics()->append(new Graphic(*m_point, simpleMarkerSymbol, this));
-  addToKmlDocument(*m_point);
+  m_graphicsOverlay->graphics()->append(new Graphic(m_point, simpleMarkerSymbol, this));
+  addToKmlDocument(m_point);
 
-  m_polyline = new Polyline(createPolyline());
-  m_graphicsOverlay->graphics()->append(new Graphic(*m_polyline, simpleLineSymbol, this));
-  addToKmlDocument(*m_polyline);
+  m_graphicsOverlay->graphics()->append(new Graphic(m_polyline, simpleLineSymbol, this));
+  addToKmlDocument(m_polyline);
 
-  m_polygon = new Polygon(createPolygon());
-  m_graphicsOverlay->graphics()->append(new Graphic(*m_polygon, simpleFillSymbol, this));
-  addToKmlDocument(*m_polygon);
+  m_graphicsOverlay->graphics()->append(new Graphic(m_polygon, simpleFillSymbol, this));
+  addToKmlDocument(m_polygon);
 
   m_mapView->setViewpointGeometry(createEnvelope(), 10);
 }
 
-void CreateAndSaveKmlFile::addToKmlDocument(const Esri::ArcGISRuntime::Geometry &geometry)
+void CreateAndSaveKmlFile::addToKmlDocument(const Esri::ArcGISRuntime::Geometry& geometry)
 {
-  const KmlGeometry* kmlGeometry = new KmlGeometry(geometry, KmlAltitudeMode::ClampToGround);
-  m_kmlDocument->childNodesListModel()->append(new KmlPlacemark(*kmlGeometry));
-  delete kmlGeometry;
+  const KmlGeometry kmlGeometry = KmlGeometry(geometry, KmlAltitudeMode::ClampToGround);
+  m_kmlDocument->childNodesListModel()->append(new KmlPlacemark(kmlGeometry, this));
 }
 
-void CreateAndSaveKmlFile::saveKml(QUrl url)
+void CreateAndSaveKmlFile::saveKml(const QUrl& url)
 {
   m_busy = true;
   emit busyChanged();
