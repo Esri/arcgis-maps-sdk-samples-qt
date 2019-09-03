@@ -31,7 +31,7 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            BasemapDarkGrayCanvasVector {}
         }
 
         Button {
@@ -47,8 +47,6 @@ Rectangle {
             }
         }
     }
-
-
 
     KmlDataset {
         id: kmlDataset
@@ -87,10 +85,10 @@ Rectangle {
 
     Envelope {
         id: myViewpoint
-        xMin: -130.0
+        xMin: -123.0
         yMin: 33.5
         xMax: -101.0
-        yMax: 38.0
+        yMax: 42.0
         spatialReference: SpatialReference { wkid: 4326 }
     }
 
@@ -135,13 +133,9 @@ Rectangle {
     }
 
     function createPolyline() {
-        polylineBuilder.addPointXY(-124.992, 41.989);
-        polylineBuilder.addPointXY(-124.994, 38.994);
-        polylineBuilder.addPointXY(-120.620, 35.0);
-//        polylineGraphic.geometry = polylineBuilder.geometry;
-//        polylineGraphic.symbol = polylineSymbol;
-//        graphicsOverlay.graphics.append(polylineGraphic);
-
+        polylineBuilder.addPointXY(-119.992, 41.989);
+        polylineBuilder.addPointXY(-119.994, 38.994);
+        polylineBuilder.addPointXY(-114.620, 35.0);
         addToKmlDocument(polylineBuilder.geometry);
     }
 

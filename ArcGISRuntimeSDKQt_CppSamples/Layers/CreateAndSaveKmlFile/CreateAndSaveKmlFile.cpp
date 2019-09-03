@@ -26,14 +26,15 @@
 #include "KmlDocument.h"
 #include "KmlPlacemark.h"
 #include "KmlNodeListModel.h"
+#include "KmlDataset.h"
+#include "KmlLayer.h"
 
 using namespace Esri::ArcGISRuntime;
 
 CreateAndSaveKmlFile::CreateAndSaveKmlFile(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::topographic(this), this)),
+  m_map(new Map(Basemap::darkGrayCanvasVector(this), this)),
   m_kmlDocument(new KmlDocument(this)),
-  m_graphicsOverlay(new GraphicsOverlay(this)),
   m_point(createPoint()),
   m_polyline(createPolyline()),
   m_polygon(createPolygon())
@@ -43,7 +44,8 @@ CreateAndSaveKmlFile::CreateAndSaveKmlFile(QObject* parent /* = nullptr */):
     if (!e.isEmpty())
       return;
 
-    m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
+    m_kmlDataset = new KmlDataset(m_kmlDocument, this);
+    m_kmlLayer = new KmlLayer(m_kmlDataset, this);
     addGraphics();
   });
 }
@@ -122,21 +124,11 @@ Geometry CreateAndSaveKmlFile::createEnvelope() const
 
 void CreateAndSaveKmlFile::addGraphics()
 {
-  SimpleMarkerSymbol* simpleMarkerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor("green"), 10.0f, this);
-
-  SimpleLineSymbol* simpleLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("blue"), 5.0f, this);
-
-  SimpleFillSymbol* simpleFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor("red"), this);
-
-  m_graphicsOverlay->graphics()->append(new Graphic(m_point, simpleMarkerSymbol, this));
   addToKmlDocument(m_point);
-
-  m_graphicsOverlay->graphics()->append(new Graphic(m_polyline, simpleLineSymbol, this));
   addToKmlDocument(m_polyline);
-
-  m_graphicsOverlay->graphics()->append(new Graphic(m_polygon, simpleFillSymbol, this));
   addToKmlDocument(m_polygon);
 
+  m_mapView->map()->operationalLayers()->append(m_kmlLayer);
   m_mapView->setViewpointGeometry(createEnvelope(), 10);
 }
 
@@ -155,5 +147,6 @@ void CreateAndSaveKmlFile::saveKml(const QUrl& url)
     m_busy = false;
     emit busyChanged();
   });
+  // Write the KML document to the chosen path.
   m_kmlDocument->saveAs(url.toLocalFile());
 }

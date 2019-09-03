@@ -24,7 +24,8 @@ namespace ArcGISRuntime
 class Map;
 class MapQuickView;
 class KmlDocument;
-class GraphicsOverlay;
+class KmlDataset;
+class KmlLayer;
 }
 }
 
@@ -61,7 +62,8 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::KmlDocument* m_kmlDocument = nullptr;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::KmlDataset* m_kmlDataset = nullptr;
+  Esri::ArcGISRuntime::KmlLayer* m_kmlLayer = nullptr;
   Esri::ArcGISRuntime::Point m_point;
   Esri::ArcGISRuntime::Polyline m_polyline;
   Esri::ArcGISRuntime::Polygon m_polygon;
