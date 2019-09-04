@@ -4,5 +4,6 @@
         <file>CreateAndSaveKmlFile.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>main.qml</file>
     </qresource>
 </RCC>

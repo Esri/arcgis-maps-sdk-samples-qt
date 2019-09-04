@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.0
 import Esri.Samples 1.0
 
 Item {
@@ -54,7 +54,7 @@ Item {
     FileDialog {
         id: fileDialog
         defaultSuffix: "kmz"
-        selectExisting: false
+        fileMode: FileDialog.SaveFile
         onAccepted: {
             visible: false;
             model.saveKml(fileUrl);

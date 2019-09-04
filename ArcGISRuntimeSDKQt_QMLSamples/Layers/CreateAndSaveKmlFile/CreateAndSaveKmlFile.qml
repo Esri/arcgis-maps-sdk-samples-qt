@@ -43,7 +43,7 @@ Rectangle {
             text: qsTr("Save kmz file")
 
             onClicked: {
-                dialog.open();
+                fileDialog.open();
             }
         }
     }
@@ -98,22 +98,19 @@ Rectangle {
         visible: kmlDocument.saveStatus === Enums.TaskStatusInProgress
     }
 
-//    FileDialog {
-//        id: fileDialog
-//        defaultSuffix: "kmz"
-////        selectExisting: false
-//        onAccepted: {
-//            kmlDocument.saveAs(fileUrl);
-//            close();
-//        }
-
-//        onRejected: {
-//            close();
-//        }
-//    }
-
     FileDialog {
-        id: dialog
+        id: fileDialog
+        defaultSuffix: "kmz"
+        fileMode: FileDialog.SaveFile
+        onAccepted: {
+            // Write the KML document to the chosen path.
+            kmlDocument.saveAs(currentFile);
+            close();
+        }
+
+        onRejected: {
+            close();
+        }
     }
 
     Component.onCompleted: {
