@@ -57,7 +57,7 @@ Item {
         fileMode: FileDialog.SaveFile
         onAccepted: {
             visible: false;
-            model.saveKml(fileUrl);
+            model.saveKml(currentFile);
         }
         onRejected: {
             visible: false;
