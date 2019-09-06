@@ -148,6 +148,14 @@ void CreateAndSaveKmlFile::saveKml(const QUrl& url)
     emit kmlSaveCompleted();
     emit busyChanged();
   });
+
+  connect(m_kmlDocument, &KmlDocument::errorOccurred, this, [](Error e)
+  {
+    if (!e.isEmpty())
+    {
+      qDebug() << QString("Error: %1 - %2").arg(e.message(), e.additionalMessage());
+    }
+  });
   // Write the KML document to the chosen path.
   m_kmlDocument->saveAs(url.toLocalFile());
 }
