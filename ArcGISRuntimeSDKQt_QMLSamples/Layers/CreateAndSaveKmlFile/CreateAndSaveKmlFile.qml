@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.12
-import Qt.labs.platform 1.0
+import Qt.labs.platform 1.1 as Dialogs
 import Esri.ArcGISRuntime 100.6
 import Esri.ArcGISExtras 1.1
 
@@ -56,6 +56,10 @@ Rectangle {
             onSaveStatusChanged: {
                 if (saveStatus === Enums.TaskStatusErrored) {
                     console.log(`Error: ${error.message} - ${error.additionalMessage}`);
+                }
+
+                if (saveStatus === Enums.TaskStatusCompleted) {
+                    saveCompleteDialog.open();
                 }
             }
         }
@@ -98,10 +102,11 @@ Rectangle {
         visible: kmlDocument.saveStatus === Enums.TaskStatusInProgress
     }
 
-    FileDialog {
+    Dialogs.FileDialog {
         id: fileDialog
         defaultSuffix: "kmz"
-        fileMode: FileDialog.SaveFile
+        fileMode: Dialogs.FileDialog.SaveFile
+        nameFilters: ["Kml files (*.kmz *.kml)"]
         onAccepted: {
             // Write the KML document to the chosen path.
             kmlDocument.saveAs(currentFile);
@@ -110,6 +115,18 @@ Rectangle {
 
         onRejected: {
             close();
+        }
+    }
+
+    Dialog {
+        id: saveCompleteDialog
+        anchors.centerIn: parent
+        modal: true
+        standardButtons: Dialog.Ok
+        Text {
+            id:textLabel
+            anchors.centerIn: parent
+            text: qsTr("Item saved.")
         }
     }
 

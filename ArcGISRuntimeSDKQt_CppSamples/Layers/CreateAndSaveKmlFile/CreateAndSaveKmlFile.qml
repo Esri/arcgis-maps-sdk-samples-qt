@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Qt.labs.platform 1.0
+import Qt.labs.platform 1.1 as Dialogs
 import Esri.Samples 1.0
 
 Item {
@@ -31,6 +31,8 @@ Item {
     CreateAndSaveKmlFileSample {
         id: model
         mapView: view
+
+        onKmlSaveCompleted: saveCompleteDialog.open();
     }
 
     Button {
@@ -51,16 +53,29 @@ Item {
         visible: model.busy
     }
 
-    FileDialog {
+    Dialogs.FileDialog {
         id: fileDialog
         defaultSuffix: "kmz"
-        fileMode: FileDialog.SaveFile
+        fileMode: Dialogs.FileDialog.SaveFile
+        nameFilters: ["Kml files (*.kmz *.kml)"]
         onAccepted: {
             visible: false;
             model.saveKml(currentFile);
         }
         onRejected: {
             visible: false;
+        }
+    }
+
+    Dialog {
+        id: saveCompleteDialog
+        anchors.centerIn: parent
+        modal: true
+        standardButtons: Dialog.Ok
+        Text {
+            id:textLabel
+            anchors.centerIn: parent
+            text: qsTr("Item saved.")
         }
     }
 }

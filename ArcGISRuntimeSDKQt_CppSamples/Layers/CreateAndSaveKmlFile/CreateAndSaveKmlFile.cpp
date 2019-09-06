@@ -145,6 +145,7 @@ void CreateAndSaveKmlFile::saveKml(const QUrl& url)
   connect(m_kmlDocument, &KmlDocument::saveAsCompleted, this, [this]()
   {
     m_busy = false;
+    emit kmlSaveCompleted();
     emit busyChanged();
   });
   // Write the KML document to the chosen path.
