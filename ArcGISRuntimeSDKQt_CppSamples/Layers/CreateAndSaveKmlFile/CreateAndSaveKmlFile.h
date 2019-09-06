@@ -54,6 +54,7 @@ public:
 signals:
   void mapViewChanged();
   void busyChanged();
+  void kmlSaveCompleted();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
