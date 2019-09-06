@@ -57,8 +57,7 @@ Rectangle {
                 if (saveStatus === Enums.TaskStatusErrored) {
                     console.log(`Error: ${error.message} - ${error.additionalMessage}`);
                 }
-
-                if (saveStatus === Enums.TaskStatusCompleted) {
+                else if (saveStatus === Enums.TaskStatusCompleted) {
                     saveCompleteDialog.open();
                 }
             }
