@@ -19,7 +19,7 @@ mac {
 
 #-------------------------------------------------------------------------------
 
-CONFIG += c++11
+CONFIG += c++14
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl widgets
