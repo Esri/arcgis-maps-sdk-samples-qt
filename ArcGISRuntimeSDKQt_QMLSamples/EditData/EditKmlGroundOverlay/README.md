@@ -36,4 +36,4 @@ The [image](https://libapps.s3.amazonaws.com/accounts/55937/images/1944.jpg) is 
 
 ## Tags
 
-imagery, Keyhole, KML, KMZ, OGC
+imagery, keyhole, KML, KMZ, OGC
