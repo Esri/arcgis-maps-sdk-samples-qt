@@ -65,19 +65,26 @@ Rectangle {
                         return;
 
                     const camera = ArcGISRuntimeEnvironment.createObject("Camera", {
-                                                                             location: env,
+                                                                             location: env.center,
                                                                              distance: 1250,
                                                                              heading: 45,
                                                                              pitch: 60,
                                                                              roll: 0
                                                                          });
+
                     sceneView.setViewpointCamera(camera);
                 }
             }
         }
     }
 
+    Rectangle {
+        anchors.fill: slider
+        radius: 5
+    }
+
     Slider {
+        id: slider
         anchors {
             left: parent.left
             top: parent.top
