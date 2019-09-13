@@ -31,7 +31,13 @@ Item {
         sceneView: view
     }
 
+    Rectangle {
+        anchors.fill: slider
+        radius: 5
+    }
+
     Slider {
+        id: slider
         anchors {
             left: parent.left
             top: parent.top
