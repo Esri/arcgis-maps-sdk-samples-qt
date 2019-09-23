@@ -1,16 +1,25 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Maps",
+    "description": "Apply scheduled updates to a downloaded preplanned map area.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "offline", 
+        "preplanned",
+        "pre-planned", 
+        "synchronize",
+        "update"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "MobileMapPackage",
+        "OfflineMapSyncJob",
+        "OfflineMapSyncParameters",
+        "OfflineMapSyncResult",
+        "OfflineMapSyncTask",
+        "OfflineMapUpdatesInfo"
     ],
     "snippets": [
         "ScheduledMapUpdates.qml"

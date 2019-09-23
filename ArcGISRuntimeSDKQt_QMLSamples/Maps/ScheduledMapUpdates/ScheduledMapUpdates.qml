@@ -29,7 +29,8 @@ Rectangle {
     property string origMmpkPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/canyonlands.zip"
     property string destMmpkPath: tempDataPath + "/canyonlands.zip"
 
-    // create a temporary copy of the local offline map files, so that updating does not overwrite them permanently
+    // create a temporary copy of the local offline map files,
+    // so that updating does not overwrite them permanently
     Component.onCompleted: {
         // copy the zip
         fileFolder.makePath(tempDataPath)
@@ -72,15 +73,15 @@ Rectangle {
     OfflineMapSyncTask {
         id: offlineMapSyncTask
 
-        property var syncJob;
+        property var syncJob
 
         onCheckForUpdatesStatusChanged: {
             if (checkForUpdatesStatus === Enums.TaskStatusInProgress) {
-                console.log("in progress...");
+                console.log("Check for updates in progress...");
             } else if (checkForUpdatesStatus === Enums.TaskStatusErrored) {
                 console.log("Check for updates error:", error.message, error.additionalMessage);
             } else if (checkForUpdatesStatus === Enums.TaskStatusCompleted) {
-                console.log("compelete");
+                console.log("Check for updates complete");
 
                 // if updates are available, enable the download button & set detail text
                 if (checkForUpdatesResult.downloadAvailability === Enums.OfflineUpdateAvailabilityAvailable) {
@@ -105,13 +106,13 @@ Rectangle {
 
         onCreateDefaultOfflineMapSyncParametersStatusChanged: {
             if (createDefaultOfflineMapSyncParametersStatus === Enums.TaskStatusInProgress) {
-                console.log("in progress...");
+                console.log("Create Parameters in progress...");
             } else if (createDefaultOfflineMapSyncParametersStatus === Enums.TaskStatusErrored) {
-                console.log("error:", error.message, error.additionalMessage);
+                console.log("Create Parameters error:", error.message, error.additionalMessage);
             } else if (createDefaultOfflineMapSyncParametersStatus === Enums.TaskStatusCompleted) {
-                console.log("complete");
+                console.log("Create Parameters complete");
 
-                // get the parameters
+                // get the parameters result
                 const params = createDefaultOfflineMapSyncParametersResult;
 
                 // set the parameters to download all updates for the mobile map packages
@@ -127,14 +128,18 @@ Rectangle {
                 syncJob.jobStatusChanged.connect(()=>{
                                                      if (syncJob.jobStatus === Enums.JobStatusSucceeded) {
                                                          const mapResult = syncJob.result;
+
                                                          if (mapResult.mobileMapPackageReopenRequired) {
-                                                             console.log("close and reopen required");
+                                                             // close and reopen the MMPK if required
                                                              mmpk.close();
                                                              mmpk.load();
                                                          } else {
                                                              console.log("not required");
                                                          }
                                                          busyIndicator.visible = false;
+
+                                                         // re-check if updates are available
+                                                         offlineMapSyncTask.checkForUpdates();
                                                      } else if (syncJob.jobStatus === Enums.JobStatusFailed) {
                                                          console.log("sync job failed");
                                                          busyIndicator.visible = false;
@@ -189,9 +194,8 @@ Rectangle {
         path: destMmpkPath
 
         onExtractCompleted: {
-            // load the mmpk
+            // load the mmpk once the zip archive is copied
             mmpk.path = System.resolvedPathUrl(tempDataPath + "/canyonlands");
-            console.log(tempDataPath + "/canyonlands");
             mmpk.load();
         }
     }
@@ -200,17 +204,8 @@ Rectangle {
         id: fileFolder
     }
 
-    // this doesn't work...
-    Component.onDestruction: {
-        mapView.map = null;
-        mmpk.close();
-        fileFolder.removePath(tempDataPath)
-    }
-
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        //visible: false
-
     }
 }
