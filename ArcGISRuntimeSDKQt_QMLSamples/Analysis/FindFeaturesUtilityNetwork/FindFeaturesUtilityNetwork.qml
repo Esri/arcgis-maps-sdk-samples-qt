@@ -265,20 +265,20 @@ Rectangle {
             myTraceResult = traceResult.get(0);
             var resultElements = myTraceResult.elements;
             console.log(resultElements.length);
-            var x = {};
-            for (let j = 0; j < resultElements.length; j++) {
-                console.log(resultElements[j].networkSource.name);
-                if (resultElements[j].networkSource.name === "Electric Distribution Device") {
-                    elementDevices.push(resultElements[j]);
+//            var x = {};
+//            for (let j = 0; j < resultElements.length; j++) {
+//                console.log(resultElements[j].networkSource.name);
+//                if (resultElements[j].networkSource.name === "Electric Distribution Device") {
+//                    elementDevices.push(resultElements[j]);
 
-                } else if (resultElements[j].networkSource.name === "Electric Distribution Line") {
-                    elementLines.push(resultElements[j]);
+//                } else if (resultElements[j].networkSource.name === "Electric Distribution Line") {
+//                    elementLines.push(resultElements[j]);
 
-                } else if (resultElements[j].networkSource.name === "Electric Distribution Junction") {
-                    elementJunctions.push(resultElements[j]);
+//                } else if (resultElements[j].networkSource.name === "Electric Distribution Junction") {
+//                    elementJunctions.push(resultElements[j]);
 
-                }
-            }
+//                }
+//            }
 
 //            x["Electric Distribution Device"] = elementDevices;
 //            x["Electric Distribution Line"] = elementLines;
