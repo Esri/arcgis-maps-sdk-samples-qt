@@ -52,10 +52,16 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
 
   m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100"), this);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
+  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
+  {
+    busy = false;
+    emit busyChanged();
+  });
 
   m_lineFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/115"), this);
   m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
   m_lineLayer->setRenderer(new SimpleRenderer(m_lineSymbol, this));
+
 
   m_map->operationalLayers()->append(m_lineLayer);
   m_map->operationalLayers()->append(m_deviceLayer);
@@ -74,10 +80,12 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
     m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, this);
     connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](QUuid)
     {
-      qDebug() << "trace completed";
-
       if (m_utilityNetwork->traceResult()->isEmpty())
+      {
+        busy = false;
+        emit busyChanged();
         return;
+      }
 
       UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
       const QList<UtilityElement*> elements = static_cast<UtilityElementTraceResult*>(result)->elements(this);
@@ -86,73 +94,39 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
       QList<UtilityElement*> devices;
       QList<UtilityElement*> junctions;
       QList<UtilityElement*> lines;
+      QueryParameters deviceParams;
+      QueryParameters lineParams;
+      QList<qint64> deviceObjIds;
+      QList<qint64> lineObjIds;
 
-      qDebug() << elements.size();
+
       for(UtilityElement* item : elements)
       {
-        if (item->networkSource()->name() == "Electric Distribution Junction")
+        if (item->networkSource()->name() == "Electric Distribution Device")
         {
-          junctions.append(item);
-        }
-        else if (item->networkSource()->name() == "Electric Distribution Device")
-        {
+          deviceObjIds.append(item->objectId());
           devices.append(item);
         }
         else if (item->networkSource()->name() == "Electric Distribution Line")
         {
+          lineObjIds.append(item->objectId());
           lines.append(item);
         }
-        else
-        {
-          qDebug() << "ERORR";
-        }
       }
 
-      m_utilityNetwork->featuresForElements(junctions);
-      m_utilityNetwork->featuresForElements(devices);
-      m_utilityNetwork->featuresForElements(lines);
+      deviceParams.setObjectIds(deviceObjIds);
+      lineParams.setObjectIds(lineObjIds);
 
-      // now convert the UtilityElement to Features for selection
-//      m_utilityNetwork->featuresForElements(elements);
 
+      m_deviceLayer->selectFeatures(deviceParams, SelectionMode::Add);
+      m_lineLayer->selectFeatures(lineParams, SelectionMode::Add);
     });
 
-    connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, [this](QUuid)
-    {
-
-
-      if(m_utilityNetwork->featuresForElementsResult()->isEmpty())
-        return;
-
-//      ArcGISFeatureListModel* featuresModel = m_utilityNetwork->featuresForElementsResult();
-//      const QList<Feature*> allFeatures = featuresModel->features(this);
-//      qDebug() << allFeatures.count();
-//      m_deviceLayer->selectFeatures(allFeatures);
-//      m_lineLayer->selectFeatures(allFeatures);
-
-      // breaking it down by table name makes no difference currently
-      ArcGISFeatureListModel* featuresModel = m_utilityNetwork->featuresForElementsResult();
-      const QList<Feature*> allFeatures = featuresModel->features(this);
-      if (allFeatures[0]->featureTable()->tableName() == m_lineLayer->featureTable()->tableName())
-      {
-        m_lineLayer->selectFeatures(allFeatures);
-      }
-      else if (allFeatures[0]->featureTable()->tableName() == m_deviceLayer->featureTable()->tableName())
-      {
-        qDebug()<<allFeatures.size();
-        m_deviceLayer->selectFeatures(allFeatures);
-      }
-
-
-    });
     m_utilityNetwork->load();
     m_traceParams = new UtilityTraceParameters(UtilityTraceType::Connected, {}, this);
 
-
     connectSignals();
   });
-
-
 }
 
 void FindFeaturesUtilityNetwork::connectSignals()
@@ -180,7 +154,6 @@ void FindFeaturesUtilityNetwork::connectSignals()
     UtilityElement* element;
 
     UtilityNetworkSource* networkSource = m_utilityNetwork->definition()->networkSource(m_feature->featureTable()->tableName());
-    networkSource->featureTable()->load();
 
     if (networkSource->sourceType() == UtilityNetworkSourceType::Junction)
     {
@@ -209,8 +182,9 @@ void FindFeaturesUtilityNetwork::connectSignals()
         }
       }
 
+      if (!assetType)
+        return;
 
-//      QList<UtilityTerminal*> terminals = assetType->terminalConfiguration()->terminals();
       m_terminals = assetType->terminalConfiguration()->terminals();
 
       if ( m_terminals.size() > 1)
@@ -223,6 +197,10 @@ void FindFeaturesUtilityNetwork::connectSignals()
       {
         element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, m_terminals[0]);
       }
+      else
+      {
+        return;
+      }
 
     }
     else if (networkSource->sourceType() == UtilityNetworkSourceType::Edge)
@@ -234,6 +212,10 @@ void FindFeaturesUtilityNetwork::connectSignals()
         Polyline line = GeometryEngine::removeZ(m_feature->geometry());
         element->setFractionAlongEdge(GeometryEngine::fractionAlong(line, m_clickPoint, -1));
       }
+    }
+    else
+    {
+      return;
     }
 
     updateTraceParams(element);
@@ -276,7 +258,6 @@ void FindFeaturesUtilityNetwork::multiTerminalIndex(const int &index)
   UtilityElement* element;
   element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, m_terminals[index]);
 
-  qDebug() << "hoorah";
   updateTraceParams(element);
 
 }
@@ -302,6 +283,8 @@ void FindFeaturesUtilityNetwork::updateTraceParams(UtilityElement* element)
 
 void FindFeaturesUtilityNetwork::trace()
 {
+  busy = true;
+  emit busyChanged();
   m_utilityNetwork->trace(m_traceParams);
 }
 

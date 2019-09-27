@@ -35,14 +35,16 @@ Rectangle {
     property UtilityTerminal terminal
     property ArcGISFeature feature
     property Point clickPoint
-    property list<Feature> junctions;
-    property list<Feature> devices;
-    property list<UtilityElement> elementLines;
-    property list<UtilityElement> elementJunctions;
-    property list<UtilityElement> elementDevices;
+    property list<Feature> junctions
+    property list<Feature> devices
+    property list<UtilityElement> elementLines
+    property list<UtilityElement> elementJunctions
+    property list<UtilityElement> elementDevices
+    property var deviceObjIds: []
+    property var lineObjIds: []
 
 
-    property UtilityTraceResult myTraceResult
+    property UtilityElementTraceResult myTraceResult
 
     property FeatureLayer selectionLayer: null
 
@@ -67,9 +69,7 @@ Rectangle {
             FeatureLayer {
                 id: lineLayer
 
-                // feature table
                 ServiceFeatureTable {
-                    id: lineLayerFeatureTable
                     url: featureLayerUrl + "/115"
                 }
 
@@ -77,47 +77,31 @@ Rectangle {
                     symbol: featureLineSymbol
                 }
 
-                onSelectedFeaturesStatusChanged: {
-                    if( (selectedFeaturesStatus !== Enums.TaskStatusCompleted) && (electricDevicelayer.selectFeaturesStatus !== Enums.TaskStatusCompleted))
+                onSelectFeaturesStatusChanged: {
+                    if( (selectedFeaturesStatus !== Enums.TaskStatusCompleted) && (deviceLayer.selectFeaturesStatus !== Enums.TaskStatusCompleted))
                         return;
                     busy.visible = false;
-                }
-
-                //remove later
-                onLoadStatusChanged: {
-                    if(loadStatus !== Enums.LoadStatusLoaded)
-                        return
-                    console.log("service feature table load status: " + loadStatus);
                 }
             }
 
             FeatureLayer {
-                id: electricDevicelayer
+                id: deviceLayer
 
                 // feature table
                 ServiceFeatureTable {
-                    id: featureTable
                     url: featureLayerUrl + "/100"
                 }
 
-                onSelectedFeaturesStatusChanged: {
+                onSelectFeaturesStatusChanged: {
                     if( (selectedFeaturesStatus !== Enums.TaskStatusCompleted) && (lineLayer.selectFeaturesStatus !== Enums.TaskStatusCompleted))
                         return;
                     busy.visible = false;
-                }
-
-                //remove later
-                onLoadStatusChanged: {
-                    if(loadStatus !== Enums.LoadStatusLoaded)
-                        return
-                    console.log("service feature table load status: " + loadStatus);
                 }
             }
         }
 
         GraphicsOverlay {
             id: unGraphicsOverlay
-
         }
 
         onMouseClicked: {
@@ -132,26 +116,19 @@ Rectangle {
         onIdentifyLayersStatusChanged : {
             if (identifyLayersStatus !== Enums.TaskStatusCompleted)
                 return;
-            console.log("Oy");
 
             var results = mapView.identifyLayersResults;
-            console.log(results.length);
             // make sure there are results do later
             var result = results[0];
             if ( !result )
                 return;
-//            var geoElements = result.geoElements;
             feature = result.geoElements[0];
 
             var isAddingStart = startingLocBtn.checked;
 
             utilityNetworkSource = utilityNetwork.definition.networkSource(feature.featureTable.tableName);
-            console.log("table name: " + feature.featureTable.tableName);
-            // work around for features for elements result (doesn't work 100%)
-            utilityNetworkSource.featureTable.load();
 
             if (utilityNetworkSource.sourceType === Enums.UtilityNetworkSourceTypeJunction) {
-                console.log("Junc");
                 var assetGroupFieldName = feature.featureTable.subtypeField;
                 var assetGroupCode = feature.attributes.attributeValue(assetGroupFieldName);
 
@@ -176,23 +153,17 @@ Rectangle {
 
                 if (terminals.length > 1) {
                     multiTerminal.visible = true;
-                    console.log("id1: %1 - id2: %2".arg(terminals[0].terminalId).arg(terminals[1].terminalId));
-                    console.log(terminals.length);
                 } else if (terminals.length === 1) {
                     element = utilityNetwork.createElementWithArcGISFeature(feature, terminals[0]);
-                    console.log(element.globalId);
                 }
 
             } else if (utilityNetworkSource.sourceType === Enums.UtilityNetworkSourceTypeEdge) {
-                console.log("Edge");
 
                 element = utilityNetwork.createElementWithArcGISFeature(feature);
 
                 if (feature.geometry.geometryType === Enums.GeometryTypePolyline) {
                     var line = GeometryEngine.removeZ(feature.geometry);
-                    console.log(clickPoint.x);
                     element.fractionAlongEdge = GeometryEngine.fractionAlong(line, clickPoint, -1);
-                    console.log("fraction along edge: %1".arg(element.fractionAlongEdge))
                 }
             }
 
@@ -202,12 +173,10 @@ Rectangle {
             if ( startingLocBtn.checked ) {
                 startingLocations.push(element);
                 params.startingLocations = startingLocations;
-                console.log("startingLocations params length: " + params.startingLocations.length);
 
             } else {
                 barriers.push(element);
                 params.barriers = barriers;
-                console.log("barriers params length: " + params.barriers.length);
             }
 
             var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
@@ -215,7 +184,6 @@ Rectangle {
                                                                     symbol: startingLocBtn.checked ? startingPointSymbol : barrierPointSymbol
                                                                 });
             unGraphicsOverlay.graphics.append(graphic);
-            console.log(unGraphicsOverlay.graphics.count);
         }
 
     }
@@ -246,96 +214,33 @@ Rectangle {
         url: featureLayerUrl
         initMap: mapView.map
 
-        onLoadStatusChanged: {
-            console.log("Load status changed: %1".arg(loadStatus));
-
-
-        }
-
         onTraceStatusChanged: {
             if (traceStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            if (traceResult.count === 0)
+            if (traceResult.count === 0) {
+                busy.visible = false;
                 return;
-
-            console.log("completed trace");
+            }
 
 
             myTraceResult = traceResult.get(0);
             var resultElements = myTraceResult.elements;
-            console.log(resultElements.length);
-//            var x = {};
-//            for (let j = 0; j < resultElements.length; j++) {
-//                console.log(resultElements[j].networkSource.name);
-//                if (resultElements[j].networkSource.name === "Electric Distribution Device") {
-//                    elementDevices.push(resultElements[j]);
+            for (let i = 0; i < resultElements.length; i++) {
+                if (resultElements[i].networkSource.name === "Electric Distribution Device") {
+                    deviceObjIds.push(resultElements[i].objectId);
+                } else if (resultElements[i].networkSource.name === "Electric Distribution Line") {
+                    lineObjIds.push(resultElements[i].objectId);
+                }
+            }
 
-//                } else if (resultElements[j].networkSource.name === "Electric Distribution Line") {
-//                    elementLines.push(resultElements[j]);
+            let deviceParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+            let lineParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+            deviceParams.objectIds = deviceObjIds;
+            lineParams.objectIds = lineObjIds;
 
-//                } else if (resultElements[j].networkSource.name === "Electric Distribution Junction") {
-//                    elementJunctions.push(resultElements[j]);
-
-//                }
-//            }
-
-//            x["Electric Distribution Device"] = elementDevices;
-//            x["Electric Distribution Line"] = elementLines;
-//            x["Electric Distribution Junction"] = elementJunctions;
-
-
-//            console.log(x["Electric Distribution Device"][0].networkSource.name);
-
-
-
-
-//            featuresForElements(elementLines);
-//            featuresForElements(elementJunctions);
-//            featuresForElements(elementDevices);
-            featuresForElements(resultElements);
-        }
-
-        onFeaturesForElementsStatusChanged: {
-            if (featuresForElementsStatus !== Enums.TaskStatusCompleted)
-                return;
-
-            if (featuresForElementsResult.count < 1)
-                return;
-
-            console.log("features for elements result: " + featuresForElementsResult.count)
-
-            console.log("length: " + featuresForElementsResult.features.length);
-
-            console.log(lineLayer.featureTable.displayName);
-            console.log(electricDevicelayer.featureTable.displayName);
-
-//            for (var i = 0; i < featuresForElementsResult.features.length; i++) {
-//                console.log(featuresForElementsResult.features[i].featureTable.tableName);
-////                if(featuresForElementsResult.features[i].featureTable.tableName === lineLayer.featureTable.tableName) {
-////                    layerLines.push(featuresForElementsResult.features[i]);
-////                } else if (featuresForElementsResult.features[i].featureTable.tableName === electricDevicelayer.featureTable.tableName) {
-////                    layerDevices.push(featuresForElementsResult.features[i]);
-////                }
-
-//                if (featuresForElementsResult.features[i].featureTable.tableName === lineLayer.featureTable.tableName) {
-//                    layerLines.push(featuresForElementsResult.features[i]);
-//                } else if (featuresForElementsResult.features[i].featureTable.tableName === electricDevicelayer.featureTable.tableName) {
-//                    layerDevices.push(featuresForElementsResult.features[i]);
-//                }
-//            }
-//            console.log(i);
-
-            //simpler than above for breaking them down by table name
-
-//            if (featuresForElementsResult.features[0].featureTable.tableName === lineLayer.featureTable.tableName) {
-//                lineLayer.selectFeatures(featuresForElementsResult.features);
-//            } else if (featuresForElementsResult.features[0].featureTable.tableName === electricDevicelayer.featureTable.tableName) {
-//                electricDevicelayer.selectFeatures(featuresForElementsResult.features);
-//            }
-
-            lineLayer.selectFeatures(featuresForElementsResult.features);
-            electricDevicelayer.selectFeatures(featuresForElementsResult.features);
+            deviceLayer.selectFeaturesWithQuery(deviceParams, Enums.SelectionModeAdd);
+            lineLayer.selectFeaturesWithQuery(lineParams, Enums.SelectionModeAdd);
         }
 
         onComponentCompleted: load();
@@ -366,10 +271,8 @@ Rectangle {
         }
 
         onAccepted: {
-            console.log("accepted :%1".arg(terminalSelection.currentIndex));
             terminal = terminals[terminalSelection.currentIndex];
             element = utilityNetwork.createElementWithArcGISFeature(feature, terminal);
-            console.log(element.objectId);
         }
 
     }

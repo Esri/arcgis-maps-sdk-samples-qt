@@ -50,6 +50,7 @@ class FindFeaturesUtilityNetwork : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool terminalDialogVisisble MEMBER terminalDialogVisisble NOTIFY terminalDialogVisisbleChanged)
   Q_PROPERTY(bool startingLocationsEnabled MEMBER startingLocationsEnabled NOTIFY startingLocationsChanged)
+  Q_PROPERTY(bool busy MEMBER busy NOTIFY busyChanged)
 
 public:
   explicit FindFeaturesUtilityNetwork(QObject* parent = nullptr);
@@ -65,6 +66,7 @@ signals:
   void mapViewChanged();
   void terminalDialogVisisbleChanged();
   void startingLocationsChanged();
+  void busyChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -90,6 +92,7 @@ private:
   bool terminalDialogVisisble = false;
   bool startingLocationsEnabled = true;
   int terminalsIndex = 0;
+  bool busy = false;
   Esri::ArcGISRuntime::ArcGISFeature* m_feature = nullptr;
   QList<Esri::ArcGISRuntime::UtilityTerminal*> m_terminals;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_startingLocations;

@@ -53,20 +53,13 @@ Item {
             }
         }
 
-        onAccepted: {
-//            console.log("accepted :%1".arg(terminalSelection.currentIndex));
-//            terminal = terminals[terminalSelection.currentIndex];
-//            element = utilityNetwork.createElementWithArcGISFeature(feature, terminal);
-//            console.log(element.objectId);
-            model.multiTerminalIndex(terminalSelection.currentIndex);
-        }
-
+        onAccepted: model.multiTerminalIndex(terminalSelection.currentIndex);
     }
 
     BusyIndicator {
         id: busy
         anchors.centerIn: parent
-        visible: false
+        visible: model.busy
     }
 
     Rectangle {
@@ -86,7 +79,6 @@ Item {
             columns: 2
             rows: 2
             flow: GridLayout.LeftToRight
-//        ColumnLayout {
             RadioButton {
                 id: startingLocBtn
                 checked: true
