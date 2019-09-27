@@ -1,4 +1,4 @@
-// [WriteFile Name=ScheduledMapUpdates, Category=Maps]
+// [WriteFile Name=ApplyScheduledMapUpdates, Category=Maps]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -29,6 +29,7 @@ Rectangle {
     property string origMmpkPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/canyonlands.zip"
     property string destMmpkPath: tempDataPath + "/canyonlands.zip"
 
+    // For the purposes of demonstrating the sample,
     // create a temporary copy of the local offline map files,
     // so that updating does not overwrite them permanently
     Component.onCompleted: {

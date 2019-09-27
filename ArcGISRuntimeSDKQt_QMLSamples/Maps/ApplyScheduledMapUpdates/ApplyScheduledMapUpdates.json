@@ -1,5 +1,5 @@
 {
-    "source" :  "ScheduledMapUpdates.qml",    
+    "source" :  "ApplyScheduledMapUpdates.qml",    
     "name" : "Apply scheduled updates to preplanned map areas",
     "dataItems" : [
         {

@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("ScheduledMapUpdates - QML"));
+  app.setApplicationName(QStringLiteral("ApplyScheduledMapUpdates - QML"));
 
   // Intialize application view
   QQuickView view;
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Maps/ScheduledMapUpdates/ScheduledMapUpdates.qml"));
+  view.setSource(QUrl("qrc:/Samples/Maps/ApplyScheduledMapUpdates/ApplyScheduledMapUpdates.qml"));
 
   view.show();
 

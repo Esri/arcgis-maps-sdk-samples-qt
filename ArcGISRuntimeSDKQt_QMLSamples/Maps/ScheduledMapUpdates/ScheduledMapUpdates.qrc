@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Maps/ScheduledMapUpdates">
-        <file alias="sample.json">ScheduledMapUpdates.json</file>        
-        <file>ScheduledMapUpdates.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>
