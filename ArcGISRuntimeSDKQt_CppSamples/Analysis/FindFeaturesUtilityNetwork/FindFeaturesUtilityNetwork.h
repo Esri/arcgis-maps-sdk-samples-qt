@@ -46,6 +46,8 @@ class FindFeaturesUtilityNetwork : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool terminalDialogVisisble MEMBER terminalDialogVisisble NOTIFY terminalDialogVisisbleChanged)
+  Q_PROPERTY(bool traceCompletedVisible MEMBER traceCompletedVisible NOTIFY traceCompletedVisibleChanged)
+  Q_PROPERTY(bool traceResultEmpty MEMBER traceResultEmpty NOTIFY traceResultEmptyChanged)
   Q_PROPERTY(bool startingLocationsEnabled MEMBER startingLocationsEnabled NOTIFY startingLocationsChanged)
   Q_PROPERTY(bool busy MEMBER busy NOTIFY busyChanged)
 
@@ -62,6 +64,8 @@ public:
 signals:
   void mapViewChanged();
   void terminalDialogVisisbleChanged();
+  void traceCompletedVisibleChanged();
+  void traceResultEmptyChanged();
   void startingLocationsChanged();
   void busyChanged();
 
@@ -87,6 +91,8 @@ private:
 
   const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
   bool terminalDialogVisisble = false;
+  bool traceCompletedVisible = false;
+  bool traceResultEmpty = false;
   bool startingLocationsEnabled = true;
   bool busy = false;
   Esri::ArcGISRuntime::Point m_clickPoint;

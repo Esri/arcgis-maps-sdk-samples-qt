@@ -36,6 +36,7 @@ Rectangle {
     property Point clickPoint
     property var deviceObjIds: []
     property var lineObjIds: []
+    property bool traceResultEmpty: false
 
 
     property UtilityElementTraceResult myTraceResult
@@ -213,10 +214,14 @@ Rectangle {
                 return;
 
             if (traceResult.count === 0) {
+                traceResultEmpty = true;
                 busy.visible = false;
+                traceCompletedDialog.open();
                 return;
             }
 
+            traceResultEmpty = false;
+            traceCompletedDialog.open();
 
             myTraceResult = traceResult.get(0);
             var resultElements = myTraceResult.elements;
@@ -271,6 +276,20 @@ Rectangle {
 
     }
 
+    Dialog {
+        id: traceCompletedDialog
+        modal: true
+        standardButtons: Dialog.Ok
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+
+        Text {
+            text: traceResultEmpty ? qsTr("Trace completed with no results.") : qsTr("Trace completed.")
+            anchors.centerIn: parent
+        }
+
+    }
+
     BusyIndicator {
         id: busy
         anchors.centerIn: parent
@@ -294,16 +313,15 @@ Rectangle {
             columns: 2
             rows: 2
             flow: GridLayout.LeftToRight
-//        ColumnLayout {
             RadioButton {
                 id: startingLocBtn
                 checked: true
-                text: qsTr("Add starting locations")
+                text: qsTr("Add starting location(s)")
             }
 
             RadioButton {
                 id: barriersBtn
-                text: qsTr("Add barriers")
+                text: qsTr("Add barrier(s)")
             }
 
             Button {
@@ -315,6 +333,8 @@ Rectangle {
                     barriers = null;
                     params.startingLocations = null;
                     startingLocations = null;
+                    deviceObjIds = [];
+                    lineObjIds = [];
                     mapView.graphicsOverlays.get(0).graphics.clear();
                     mapView.map.operationalLayers.forEach(function(element){
                         element.clearSelection();

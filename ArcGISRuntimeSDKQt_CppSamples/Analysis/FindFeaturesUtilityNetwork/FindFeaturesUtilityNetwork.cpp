@@ -76,12 +76,20 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
     m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, this);
     connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](QUuid)
     {
+      traceCompletedVisible = true;
+      emit traceCompletedVisibleChanged();
+
       if (m_utilityNetwork->traceResult()->isEmpty())
       {
         busy = false;
+        traceResultEmpty = true;
+        emit traceResultEmptyChanged();
         emit busyChanged();
         return;
       }
+
+      traceResultEmpty = false;
+      emit traceResultEmptyChanged();
 
       UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
       const QList<UtilityElement*> elements = static_cast<UtilityElementTraceResult*>(result)->elements(this);
@@ -94,7 +102,6 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
       QueryParameters lineParams;
       QList<qint64> deviceObjIds;
       QList<qint64> lineObjIds;
-
 
       for(UtilityElement* item : elements)
       {
@@ -112,7 +119,6 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
 
       deviceParams.setObjectIds(deviceObjIds);
       lineParams.setObjectIds(lineObjIds);
-
 
       m_deviceLayer->selectFeatures(deviceParams, SelectionMode::Add);
       m_lineLayer->selectFeatures(lineParams, SelectionMode::Add);

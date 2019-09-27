@@ -56,6 +56,20 @@ Item {
         onAccepted: model.multiTerminalIndex(terminalSelection.currentIndex);
     }
 
+    Dialog {
+        id: traceCompletedDialog
+        modal: true
+        standardButtons: Dialog.Ok
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) / 2
+        visible: model.traceCompletedVisible
+
+        Text {
+            text: model.traceResultEmpty ? qsTr("Trace complete with no results.") : qsTr("Trace completed.")
+            anchors.centerIn: parent
+        }
+    }
+
     BusyIndicator {
         id: busy
         anchors.centerIn: parent
@@ -82,13 +96,13 @@ Item {
             RadioButton {
                 id: startingLocBtn
                 checked: true
-                text: qsTr("Add starting locations")
+                text: qsTr("Add starting location(s)")
                 onToggled: model.startingLocationsEnabled = checked;
             }
 
             RadioButton {
                 id: barriersBtn
-                text: qsTr("Add barriers")
+                text: qsTr("Add barrier(s)")
                 onToggled: model.startingLocationsEnabled = !checked;
             }
 

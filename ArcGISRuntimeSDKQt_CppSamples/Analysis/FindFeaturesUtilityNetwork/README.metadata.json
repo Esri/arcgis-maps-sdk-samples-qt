@@ -1,16 +1,26 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Analysis",
+    "description": "Find all features connected to a set of starting points in a utility network.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "connected trace",
+        "network analysis",
+        "utility network"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "UtilityNetworks::UtilityNetwork",
+        "UtilityNetworks::UtilityTraceParameters",
+        "UtilityNetworks::UtilityTraceResult",
+        "UtilityNetworks::UtilityElementTraceResult",
+        "UtilityNetworks::UtilityNetworkDefinition",
+        "UtilityNetworks::UtilityNetworkSource",
+        "UtilityNetworks::UtilityAssetType",
+        "UtilityNetworks::UtilityTerminal",
+        "GeometryEngine::FractionAlong"
     ],
     "snippets": [
         "FindFeaturesUtilityNetwork.cpp",
