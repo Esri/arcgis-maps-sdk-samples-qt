@@ -32,17 +32,11 @@ Rectangle {
     property list<UtilityTerminal> barriers
     property list<UtilityTerminal> terminals
     property UtilityTerminal terminal
-    property ArcGISFeature feature
+    property ArcGISFeature identifiedFeature
     property Point clickPoint
     property var deviceObjIds: []
     property var lineObjIds: []
-    property bool traceResultEmpty: false
-
-
     property UtilityElementTraceResult myTraceResult
-
-    property FeatureLayer selectionLayer: null
-
 
     MapView {
         id: mapView
@@ -61,6 +55,7 @@ Rectangle {
                 }
             }
 
+            // Add the layer with electric distribution lines.
             FeatureLayer {
                 id: lineLayer
 
@@ -72,26 +67,18 @@ Rectangle {
                     symbol: featureLineSymbol
                 }
 
-                onSelectFeaturesStatusChanged: {
-                    if( (selectedFeaturesStatus !== Enums.TaskStatusCompleted) && (deviceLayer.selectFeaturesStatus !== Enums.TaskStatusCompleted))
-                        return;
-                    busy.visible = false;
-                }
+                onSelectFeaturesStatusChanged: checkSelectionStatus();
             }
 
+            // Add the layer with electric devices.
             FeatureLayer {
                 id: deviceLayer
 
-                // feature table
                 ServiceFeatureTable {
                     url: featureLayerUrl + "/100"
                 }
 
-                onSelectFeaturesStatusChanged: {
-                    if( (selectedFeaturesStatus !== Enums.TaskStatusCompleted) && (lineLayer.selectFeaturesStatus !== Enums.TaskStatusCompleted))
-                        return;
-                    busy.visible = false;
-                }
+                onSelectFeaturesStatusChanged: checkSelectionStatus();
             }
         }
 
@@ -100,10 +87,10 @@ Rectangle {
         }
 
         onMouseClicked: {
-            var screenX = mouse.x;
-            var screenY = mouse.y;
-            var tolerance = 10;
-            var returnPopups = false;
+            let screenX = mouse.x;
+            let screenY = mouse.y;
+            let tolerance = 10;
+            let returnPopups = false;
             clickPoint = mouse.mapPoint;
             mapView.identifyLayers(screenX, screenY, tolerance, returnPopups);
         }
@@ -112,22 +99,22 @@ Rectangle {
             if (identifyLayersStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            var results = mapView.identifyLayersResults;
-            // make sure there are results do later
-            var result = results[0];
-            if ( !result )
+            let results = mapView.identifyLayersResults;
+            let result = results[0];
+            if ( !result ) {
+                dialogText.text = qsTr("Could not identify location.")
+                traceCompletedDialog.open();
                 return;
-            feature = result.geoElements[0];
+            }
 
-            var isAddingStart = startingLocBtn.checked;
-
-            utilityNetworkSource = utilityNetwork.definition.networkSource(feature.featureTable.tableName);
+            identifiedFeature = result.geoElements[0];
+            utilityNetworkSource = utilityNetwork.definition.networkSource(identifiedFeature.featureTable.tableName);
 
             if (utilityNetworkSource.sourceType === Enums.UtilityNetworkSourceTypeJunction) {
-                var assetGroupFieldName = feature.featureTable.subtypeField;
-                var assetGroupCode = feature.attributes.attributeValue(assetGroupFieldName);
+                let assetGroupFieldName = identifiedFeature.featureTable.subtypeField;
+                let assetGroupCode = identifiedFeature.attributes.attributeValue(assetGroupFieldName);
 
-                var assetGroup;
+                let assetGroup;
                 for (let i = 0; i < utilityNetworkSource.assetGroups.length; i++) {
                     if (utilityNetworkSource.assetGroups[i].code === assetGroupCode) {
                         assetGroup = utilityNetworkSource.assetGroups[i];
@@ -135,9 +122,9 @@ Rectangle {
                     }
                 }
 
-                var assetTypeCode = feature.attributes.attributeValue("assettype");
+                let assetTypeCode = identifiedFeature.attributes.attributeValue("assettype");
 
-                var assetType;
+                let assetType;
                 for (let j = 0; j < assetGroup.assetTypes.length; j++) {
                     if (assetGroup.assetTypes[j].code === assetTypeCode) {
                         assetType = assetGroup.assetTypes[j];
@@ -148,39 +135,24 @@ Rectangle {
 
                 if (terminals.length > 1) {
                     multiTerminal.visible = true;
+                    return;
                 } else if (terminals.length === 1) {
-                    element = utilityNetwork.createElementWithArcGISFeature(feature, terminals[0]);
+                    element = utilityNetwork.createElementWithArcGISFeature(identifiedFeature, terminals[0]);
                 }
 
             } else if (utilityNetworkSource.sourceType === Enums.UtilityNetworkSourceTypeEdge) {
 
-                element = utilityNetwork.createElementWithArcGISFeature(feature);
+                element = utilityNetwork.createElementWithArcGISFeature(identifiedFeature);
 
-                if (feature.geometry.geometryType === Enums.GeometryTypePolyline) {
-                    var line = GeometryEngine.removeZ(feature.geometry);
+                // Compute how far tapped location is along the edge feature.
+                if (identifiedFeature.geometry.geometryType === Enums.GeometryTypePolyline) {
+                    let line = GeometryEngine.removeZ(identifiedFeature.geometry);
+                    // Set how far the element is along the edge.
                     element.fractionAlongEdge = GeometryEngine.fractionAlong(line, clickPoint, -1);
                 }
             }
-
-            if ( !element )
-                return;
-
-            if ( startingLocBtn.checked ) {
-                startingLocations.push(element);
-                params.startingLocations = startingLocations;
-
-            } else {
-                barriers.push(element);
-                params.barriers = barriers;
-            }
-
-            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                    geometry: clickPoint,
-                                                                    symbol: startingLocBtn.checked ? startingPointSymbol : barrierPointSymbol
-                                                                });
-            unGraphicsOverlay.graphics.append(graphic);
+            addToParamAndGraphic();
         }
-
     }
 
     SimpleLineSymbol {
@@ -193,7 +165,7 @@ Rectangle {
     SimpleMarkerSymbol {
         id: startingPointSymbol
         style: Enums.SimpleMarkerSymbolStyleCross
-        color: "green"
+        color: "Green"
         size: 20
     }
 
@@ -214,17 +186,17 @@ Rectangle {
                 return;
 
             if (traceResult.count === 0) {
-                traceResultEmpty = true;
                 busy.visible = false;
+                dialogText.text = qsTr("Trace completed with no results.");
                 traceCompletedDialog.open();
                 return;
             }
 
-            traceResultEmpty = false;
+            dialogText.text = qsTr("Trace completed.");
             traceCompletedDialog.open();
 
             myTraceResult = traceResult.get(0);
-            var resultElements = myTraceResult.elements;
+            let resultElements = myTraceResult.elements;
             for (let i = 0; i < resultElements.length; i++) {
                 if (resultElements[i].networkSource.name === "Electric Distribution Device") {
                     deviceObjIds.push(resultElements[i].objectId);
@@ -271,9 +243,9 @@ Rectangle {
 
         onAccepted: {
             terminal = terminals[terminalSelection.currentIndex];
-            element = utilityNetwork.createElementWithArcGISFeature(feature, terminal);
+            element = utilityNetwork.createElementWithArcGISFeature(identifiedFeature, terminal);
+            addToParamAndGraphic();
         }
-
     }
 
     Dialog {
@@ -284,10 +256,9 @@ Rectangle {
         y: Math.round(parent.height - height) / 2
 
         Text {
-            text: traceResultEmpty ? qsTr("Trace completed with no results.") : qsTr("Trace completed.")
+            id: dialogText
             anchors.centerIn: parent
         }
-
     }
 
     BusyIndicator {
@@ -336,8 +307,8 @@ Rectangle {
                     deviceObjIds = [];
                     lineObjIds = [];
                     mapView.graphicsOverlays.get(0).graphics.clear();
-                    mapView.map.operationalLayers.forEach(function(element){
-                        element.clearSelection();
+                    mapView.map.operationalLayers.forEach(function(layer){
+                        layer.clearSelection();
                     });
                 }
             }
@@ -348,9 +319,33 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 onClicked: {
                     busy.visible = true;
+                    // Perform a connected trace on the utility network
                     utilityNetwork.trace(params);
                 }
             }
         }
+    }
+
+    function addToParamAndGraphic() {
+        if (startingLocBtn.checked) {
+            startingLocations.push(element);
+            params.startingLocations = startingLocations;
+
+        } else {
+            barriers.push(element);
+            params.barriers = barriers;
+        }
+
+        let graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                geometry: clickPoint,
+                                                                symbol: startingLocBtn.checked ? startingPointSymbol : barrierPointSymbol
+                                                            });
+        unGraphicsOverlay.graphics.append(graphic);
+    }
+
+    function checkSelectionStatus() {
+        if (!(lineLayer.selectFeaturesStatus && deviceLayer.selectFeaturesStatus))
+            return;
+        busy.visible = false;
     }
 }
