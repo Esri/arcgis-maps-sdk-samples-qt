@@ -25,9 +25,9 @@ Rectangle {
     width: 800
     height: 600
 
-    property string tempDataPath: System.temporaryFolder.path + "/" + new Date().getTime()
-    property string origMmpkPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/canyonlands.zip"
-    property string destMmpkPath: tempDataPath + "/canyonlands.zip"
+    readonly property string tempDataPath: System.temporaryFolder.path + "/" + new Date().getTime()
+    readonly property string origMmpkPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/canyonlands/canyonlands.zip"
+    readonly property string destMmpkPath: tempDataPath + "/canyonlands.zip"
 
     // For the purposes of demonstrating the sample,
     // create a temporary copy of the local offline map files,
@@ -45,9 +45,7 @@ Rectangle {
         id: mmpk
 
         onLoadStatusChanged: {
-            if (loadStatus === Enums.LoadStatusLoaded) {
-                console.log("loaded");
-
+            if (loadStatus === Enums.LoadStatusLoaded) {                
                 // get map from mmpk
                 const map = mmpk.maps[0];
 

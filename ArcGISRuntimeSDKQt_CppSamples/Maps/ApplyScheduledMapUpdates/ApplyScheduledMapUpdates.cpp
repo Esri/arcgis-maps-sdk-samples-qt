@@ -56,6 +56,7 @@ QString defaultDataPath()
 // sample MMPK location
 const QString sampleMmpk { "canyonlands" };
 
+// helper to copy directory from source to destination
 bool copyDir(const QString &srcPath, const QString &dstPath)
 {
   const QDir parentDstDir(QFileInfo(dstPath).path());
@@ -92,7 +93,13 @@ ApplyScheduledMapUpdates::ApplyScheduledMapUpdates(QObject* parent /* = nullptr 
   copyDir(defaultDataPath() + "/" + sampleMmpk, m_TempDir.path() + "/" + sampleMmpk);
 }
 
-ApplyScheduledMapUpdates::~ApplyScheduledMapUpdates() = default;
+ApplyScheduledMapUpdates::~ApplyScheduledMapUpdates()
+{
+  if (m_mobileMapPackage)
+  {
+    m_mobileMapPackage->close();
+  }
+}
 
 void ApplyScheduledMapUpdates::init()
 {
@@ -153,6 +160,7 @@ void ApplyScheduledMapUpdates::setMapView(MapQuickView* mapView)
 
 void ApplyScheduledMapUpdates::connectSyncSignals()
 {
+  // connect to checkForUpdatesCompleted signal and update the UI accordingly
   connect(m_offlineSyncTask, &OfflineMapSyncTask::checkForUpdatesCompleted, [this](QUuid, OfflineMapUpdatesInfo* info)
   {
     if (info->downloadAvailability() == OfflineUpdateAvailability::Available)
@@ -167,6 +175,7 @@ void ApplyScheduledMapUpdates::connectSyncSignals()
     delete info;
   });
 
+  // connect to createDefaultOfflineMapSyncParametersCompleted signal
   connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, [this](QUuid, OfflineMapSyncParameters parameters)
   {
     // set the parameters to download all updates for the mobile map packages
