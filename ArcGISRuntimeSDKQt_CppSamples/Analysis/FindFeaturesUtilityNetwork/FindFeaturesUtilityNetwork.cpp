@@ -21,7 +21,6 @@
 #include "ServiceFeatureTable.h"
 #include "FeatureLayer.h"
 #include "SimpleMarkerSymbol.h"
-#include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
 #include "UtilityElement.h"
 #include "UtilityElementTraceResult.h"
@@ -33,12 +32,9 @@
 #include "UtilityTraceResultListModel.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
-#include "UtilityTerminal.h"
 #include "UtilityTerminalConfiguration.h"
 #include "ArcGISFeatureListModel.h"
 #include "GeometryEngine.h"
-#include "GeoElement.h"
-//#include "Viewpoint.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -159,7 +155,7 @@ void FindFeaturesUtilityNetwork::connectSignals()
     {
       QString assetGroupFieldName = dynamic_cast<ArcGISFeatureTable*>(m_feature->featureTable())->subtypeField();
       int assetGroupCode = m_feature->attributes()->attributeValue(assetGroupFieldName).toInt();
-      UtilityAssetGroup* assetGroup;
+      UtilityAssetGroup* assetGroup = nullptr;
 
       for (UtilityAssetGroup* group : networkSource->assetGroups())
       {
@@ -172,7 +168,7 @@ void FindFeaturesUtilityNetwork::connectSignals()
 
       int assetTypeCode = m_feature->attributes()->attributeValue("assettype").toInt();
 
-      UtilityAssetType* assetType;
+      UtilityAssetType* assetType = nullptr;
       for (UtilityAssetType* type : assetGroup->assetTypes())
       {
         if (type->code() == assetTypeCode)
@@ -181,9 +177,6 @@ void FindFeaturesUtilityNetwork::connectSignals()
           break;
         }
       }
-
-      if (!assetType)
-        return;
 
       m_terminals = assetType->terminalConfiguration()->terminals();
 

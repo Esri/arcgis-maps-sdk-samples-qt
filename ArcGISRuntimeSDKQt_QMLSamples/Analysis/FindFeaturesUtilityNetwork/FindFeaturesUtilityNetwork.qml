@@ -31,15 +31,9 @@ Rectangle {
     property list<UtilityTerminal> startingLocations
     property list<UtilityTerminal> barriers
     property list<UtilityTerminal> terminals
-    property list<UtilityElement> elementGroup
     property UtilityTerminal terminal
     property ArcGISFeature feature
     property Point clickPoint
-    property list<Feature> junctions
-    property list<Feature> devices
-    property list<UtilityElement> elementLines
-    property list<UtilityElement> elementJunctions
-    property list<UtilityElement> elementDevices
     property var deviceObjIds: []
     property var lineObjIds: []
 

@@ -24,17 +24,14 @@ namespace ArcGISRuntime
 class Map;
 class MapQuickView;
 class UtilityNetwork;
-class UtilityNetworkSource; //value type
-class UtilityElement; //value type
-class UtilityTerminal; //value type
+class UtilityElement;
+class UtilityTerminal;
+class UtilityTraceParameters;
 class FeatureLayer;
 class ServiceFeatureTable;
 class SimpleMarkerSymbol;
 class SimpleLineSymbol;
 class GraphicsOverlay;
-class Point; //valuetype
-class ArcGISFeature; //value type
-class UtilityTraceParameters;
 }
 }
 
@@ -86,17 +83,16 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
+  Esri::ArcGISRuntime::ArcGISFeature* m_feature = nullptr;
 
   const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
-  Esri::ArcGISRuntime::Point m_clickPoint;
   bool terminalDialogVisisble = false;
   bool startingLocationsEnabled = true;
-  int terminalsIndex = 0;
   bool busy = false;
-  Esri::ArcGISRuntime::ArcGISFeature* m_feature = nullptr;
-  QList<Esri::ArcGISRuntime::UtilityTerminal*> m_terminals;
+  Esri::ArcGISRuntime::Point m_clickPoint;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_startingLocations;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_barriers;
+  QList<Esri::ArcGISRuntime::UtilityTerminal*> m_terminals;
 
 };
 
