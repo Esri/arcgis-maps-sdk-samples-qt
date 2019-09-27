@@ -32,13 +32,13 @@ class ServiceFeatureTable;
 class SimpleMarkerSymbol;
 class SimpleLineSymbol;
 class GraphicsOverlay;
+class ArcGISFeature;
 }
 }
 
 #include <QObject>
 #include <QUrl>
 #include "Point.h"
-#include "ArcGISFeature.h"
 
 class FindFeaturesUtilityNetwork : public QObject
 {
@@ -46,8 +46,8 @@ class FindFeaturesUtilityNetwork : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool terminalDialogVisisble MEMBER terminalDialogVisisble NOTIFY terminalDialogVisisbleChanged)
-  Q_PROPERTY(bool traceCompletedVisible MEMBER traceCompletedVisible NOTIFY traceCompletedVisibleChanged)
-  Q_PROPERTY(bool traceResultEmpty MEMBER traceResultEmpty NOTIFY traceResultEmptyChanged)
+  Q_PROPERTY(bool dialogVisible MEMBER dialogVisible NOTIFY dialogVisibleChanged)
+  Q_PROPERTY(QString dialogText MEMBER dialogText NOTIFY dialogTextChanged)
   Q_PROPERTY(bool startingLocationsEnabled MEMBER startingLocationsEnabled NOTIFY startingLocationsChanged)
   Q_PROPERTY(bool busy MEMBER busy NOTIFY busyChanged)
 
@@ -64,8 +64,8 @@ public:
 signals:
   void mapViewChanged();
   void terminalDialogVisisbleChanged();
-  void traceCompletedVisibleChanged();
-  void traceResultEmptyChanged();
+  void dialogVisibleChanged();
+  void dialogTextChanged();
   void startingLocationsChanged();
   void busyChanged();
 
@@ -91,10 +91,10 @@ private:
 
   const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
   bool terminalDialogVisisble = false;
-  bool traceCompletedVisible = false;
-  bool traceResultEmpty = false;
+  bool dialogVisible = false;
   bool startingLocationsEnabled = true;
   bool busy = false;
+  QString dialogText;
   Esri::ArcGISRuntime::Point m_clickPoint;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_startingLocations;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_barriers;

@@ -44,7 +44,8 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
 {
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference(3857))));
   m_lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("DarkCyan"), 3, this);
-
+  m_startingSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor("green"), 20, this);
+  m_barrierSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor("red"), 20, this);
 
   m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100"), this);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
@@ -58,62 +59,57 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
   m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
   m_lineLayer->setRenderer(new SimpleRenderer(m_lineSymbol, this));
 
-
+  // Add electric distribution lines and electric devices layers
   m_map->operationalLayers()->append(m_lineLayer);
   m_map->operationalLayers()->append(m_deviceLayer);
 
   connect(m_map, &Map::doneLoading, this, [this](Error e)
   {
-    if(!e.isEmpty())
+    if (!e.isEmpty())
+    {
+      dialogText = QString(e.message() + " - " + e.additionalMessage());
+      emit dialogVisibleChanged();
       return;
+    }
 
     m_graphicsOverlay = new GraphicsOverlay(this);
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-    m_startingSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor("green"), 20, this);
-    m_barrierSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor("red"), 20, this);
-
     m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, this);
     connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](QUuid)
     {
-      traceCompletedVisible = true;
-      emit traceCompletedVisibleChanged();
+      dialogVisible = true;
+      emit dialogVisibleChanged();
 
       if (m_utilityNetwork->traceResult()->isEmpty())
       {
         busy = false;
-        traceResultEmpty = true;
-        emit traceResultEmptyChanged();
+        dialogText = QString("Trace complete with no results.");
+        emit dialogTextChanged();
         emit busyChanged();
         return;
       }
 
-      traceResultEmpty = false;
-      emit traceResultEmptyChanged();
+      dialogText = QString("Trace completed.");
+      emit dialogTextChanged();
 
       UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
       const QList<UtilityElement*> elements = static_cast<UtilityElementTraceResult*>(result)->elements(this);
 
-      // breaking the utility elements down by sources make no difference with selection of features
-      QList<UtilityElement*> devices;
-      QList<UtilityElement*> junctions;
-      QList<UtilityElement*> lines;
       QueryParameters deviceParams;
       QueryParameters lineParams;
       QList<qint64> deviceObjIds;
       QList<qint64> lineObjIds;
 
-      for(UtilityElement* item : elements)
+      for (UtilityElement* item : elements)
       {
         if (item->networkSource()->name() == "Electric Distribution Device")
         {
           deviceObjIds.append(item->objectId());
-          devices.append(item);
         }
         else if (item->networkSource()->name() == "Electric Distribution Line")
         {
           lineObjIds.append(item->objectId());
-          lines.append(item);
         }
       }
 
@@ -133,10 +129,10 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
 
 void FindFeaturesUtilityNetwork::connectSignals()
 {
-      // identify layers on mouse click
+  // identify layers on mouse click
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
-    if(m_map->loadStatus() != LoadStatus::Loaded)
+    if (m_map->loadStatus() != LoadStatus::Loaded)
       return;
 
     const double tolerance = 10.0;
@@ -149,33 +145,38 @@ void FindFeaturesUtilityNetwork::connectSignals()
   connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](QUuid, const QList<IdentifyLayerResult*>& results)
   {
     if (results.isEmpty())
+    {
+      dialogText = QString("Could not identify location.");
+      emit dialogTextChanged();
+      dialogVisible = true;
+      emit dialogVisibleChanged();
       return;
+    }
 
-    IdentifyLayerResult* result = results[0];
+    const IdentifyLayerResult* result = results[0];
     m_feature = dynamic_cast<ArcGISFeature*>(result->geoElements()[0]);
     UtilityElement* element;
-
-    UtilityNetworkSource* networkSource = m_utilityNetwork->definition()->networkSource(m_feature->featureTable()->tableName());
+    const UtilityNetworkSource* networkSource = m_utilityNetwork->definition()->networkSource(m_feature->featureTable()->tableName());
 
     if (networkSource->sourceType() == UtilityNetworkSourceType::Junction)
     {
-      QString assetGroupFieldName = dynamic_cast<ArcGISFeatureTable*>(m_feature->featureTable())->subtypeField();
-      int assetGroupCode = m_feature->attributes()->attributeValue(assetGroupFieldName).toInt();
-      UtilityAssetGroup* assetGroup = nullptr;
+      const QString assetGroupFieldName = dynamic_cast<ArcGISFeatureTable*>(m_feature->featureTable())->subtypeField();
+      const int assetGroupCode = m_feature->attributes()->attributeValue(assetGroupFieldName).toInt();
+      const UtilityAssetGroup* assetGroup = nullptr;
 
-      for (UtilityAssetGroup* group : networkSource->assetGroups())
+      for (const UtilityAssetGroup* group : networkSource->assetGroups())
       {
-        if ( group->code() == assetGroupCode )
+        if (group->code() == assetGroupCode)
         {
           assetGroup = group;
           break;
         }
       }
 
-      int assetTypeCode = m_feature->attributes()->attributeValue("assettype").toInt();
+      const int assetTypeCode = m_feature->attributes()->attributeValue("assettype").toInt();
 
-      UtilityAssetType* assetType = nullptr;
-      for (UtilityAssetType* type : assetGroup->assetTypes())
+      const UtilityAssetType* assetType = nullptr;
+      for (const UtilityAssetType* type : assetGroup->assetTypes())
       {
         if (type->code() == assetTypeCode)
         {
@@ -186,13 +187,13 @@ void FindFeaturesUtilityNetwork::connectSignals()
 
       m_terminals = assetType->terminalConfiguration()->terminals();
 
-      if ( m_terminals.size() > 1)
+      if (m_terminals.size() > 1)
       {
         terminalDialogVisisble = true;
         emit terminalDialogVisisbleChanged();
         return;
       }
-      else if ( m_terminals.size() == 1 )
+      else if (m_terminals.size() == 1)
       {
         element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, m_terminals[0]);
       }
@@ -206,9 +207,11 @@ void FindFeaturesUtilityNetwork::connectSignals()
     {
       element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, nullptr ,this);
 
+      // Compute how far tapped location is along the edge feature.
       if (m_feature->geometry().geometryType() == GeometryType::Polyline)
       {
-        Polyline line = GeometryEngine::removeZ(m_feature->geometry());
+        const Polyline line = GeometryEngine::removeZ(m_feature->geometry());
+        // Set how far the element is along the edge.
         element->setFractionAlongEdge(GeometryEngine::fractionAlong(line, m_clickPoint, -1));
       }
     }
@@ -249,16 +252,14 @@ void FindFeaturesUtilityNetwork::setMapView(MapQuickView* mapView)
 
 void FindFeaturesUtilityNetwork::multiTerminalIndex(const int &index)
 {
-  if (m_terminals.size() < 2)
+  if (m_terminals.isEmpty())
     return;
   if (!m_feature)
     return;
 
   UtilityElement* element;
   element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, m_terminals[index]);
-
   updateTraceParams(element);
-
 }
 
 void FindFeaturesUtilityNetwork::updateTraceParams(UtilityElement* element)
@@ -277,13 +278,13 @@ void FindFeaturesUtilityNetwork::updateTraceParams(UtilityElement* element)
     Graphic* traceLocation = new Graphic(m_clickPoint, m_barrierSymbol, this);
     m_graphicsOverlay->graphics()->append(traceLocation);
   }
-
 }
 
 void FindFeaturesUtilityNetwork::trace()
 {
   busy = true;
   emit busyChanged();
+  // Perform a connected trace on the utility network
   m_utilityNetwork->trace(m_traceParams);
 }
 
@@ -295,7 +296,7 @@ void FindFeaturesUtilityNetwork::reset()
   m_traceParams->setBarriers(m_barriers);
   m_graphicsOverlay->graphics()->clear();
 
-  for(Layer* layer : *m_map->operationalLayers())
+  for (Layer* layer : *m_map->operationalLayers())
   {
     FeatureLayer* featureLayer = static_cast<FeatureLayer*>(layer);
     featureLayer->clearSelection();

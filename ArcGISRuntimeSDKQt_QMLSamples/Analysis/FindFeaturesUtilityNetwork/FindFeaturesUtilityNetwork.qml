@@ -224,7 +224,7 @@ Rectangle {
     Dialog {
         id: multiTerminal
         modal: true
-        standardButtons: Dialog.Ok
+        standardButtons: Dialog.Ok | Dialog.Cancel
         x: Math.round(parent.width - width) / 2
         y: Math.round(parent.height - height) / 2
 
@@ -279,6 +279,13 @@ Rectangle {
         color: "lightgrey"
         opacity: 0.8
         radius: 5
+
+        // catch mouse signals from propagating to parent
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse.accepted = true
+            onWheel: wheel.accepted = true
+        }
 
         GridLayout {
             columns: 2
