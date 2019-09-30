@@ -36,8 +36,8 @@ Item {
     Dialog {
         modal: true
         standardButtons: Dialog.Ok | Dialog.Cancel
-        x: Math.round(parent.width - width) / 2
-        y: Math.round(parent.height - height) / 2
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
         visible: model.terminalDialogVisisble
 
         ColumnLayout {
@@ -59,8 +59,8 @@ Item {
     Dialog {
         modal: true
         standardButtons: Dialog.Ok
-        x: Math.round(parent.width - width) / 2
-        y: Math.round(parent.height - height) / 2
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
         visible: model.dialogVisible
 
         Text {

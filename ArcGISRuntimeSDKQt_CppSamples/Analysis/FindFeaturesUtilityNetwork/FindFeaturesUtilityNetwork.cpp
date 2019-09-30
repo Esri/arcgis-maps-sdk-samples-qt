@@ -40,12 +40,14 @@ using namespace Esri::ArcGISRuntime;
 
 FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::streetsNightVector(this), this))
+  m_map(new Map(Basemap::streetsNightVector(this), this)),
+  m_startingSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor("green"), 20, this)),
+  m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor("red"), 20, this)),
+  m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("DarkCyan"), 3, this)),
+  m_graphicParent(new QObject())
+
 {
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference(3857))));
-  m_lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("DarkCyan"), 3, this);
-  m_startingSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor("green"), 20, this);
-  m_barrierSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor("red"), 20, this);
 
   m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100"), this);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
@@ -94,6 +96,10 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
       emit dialogTextChanged();
 
       UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
+
+      if (!result)
+        return;
+
       const QList<UtilityElement*> elements = static_cast<UtilityElementTraceResult*>(result)->elements(this);
 
       QueryParameters deviceParams;
@@ -135,8 +141,8 @@ void FindFeaturesUtilityNetwork::connectSignals()
     if (m_map->loadStatus() != LoadStatus::Loaded)
       return;
 
-    const double tolerance = 10.0;
-    const bool returnPopups = false;
+    constexpr double tolerance = 10.0;
+    constexpr bool returnPopups = false;
     m_clickPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
     m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), tolerance, returnPopups);
   });
@@ -155,16 +161,16 @@ void FindFeaturesUtilityNetwork::connectSignals()
 
     const IdentifyLayerResult* result = results[0];
     m_feature = dynamic_cast<ArcGISFeature*>(result->geoElements()[0]);
-    UtilityElement* element;
+    UtilityElement* element = nullptr;
     const UtilityNetworkSource* networkSource = m_utilityNetwork->definition()->networkSource(m_feature->featureTable()->tableName());
 
     if (networkSource->sourceType() == UtilityNetworkSourceType::Junction)
     {
       const QString assetGroupFieldName = dynamic_cast<ArcGISFeatureTable*>(m_feature->featureTable())->subtypeField();
       const int assetGroupCode = m_feature->attributes()->attributeValue(assetGroupFieldName).toInt();
-      const UtilityAssetGroup* assetGroup = nullptr;
+      UtilityAssetGroup* assetGroup = nullptr;
 
-      for (const UtilityAssetGroup* group : networkSource->assetGroups())
+      for (UtilityAssetGroup* group : networkSource->assetGroups())
       {
         if (group->code() == assetGroupCode)
         {
@@ -175,8 +181,8 @@ void FindFeaturesUtilityNetwork::connectSignals()
 
       const int assetTypeCode = m_feature->attributes()->attributeValue("assettype").toInt();
 
-      const UtilityAssetType* assetType = nullptr;
-      for (const UtilityAssetType* type : assetGroup->assetTypes())
+      UtilityAssetType* assetType = nullptr;
+      for (UtilityAssetType* type : assetGroup->assetTypes())
       {
         if (type->code() == assetTypeCode)
         {
@@ -254,11 +260,11 @@ void FindFeaturesUtilityNetwork::multiTerminalIndex(const int &index)
 {
   if (m_terminals.isEmpty())
     return;
+
   if (!m_feature)
     return;
 
-  UtilityElement* element;
-  element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, m_terminals[index]);
+  UtilityElement* element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, m_terminals[index]);
   updateTraceParams(element);
 }
 
@@ -268,14 +274,14 @@ void FindFeaturesUtilityNetwork::updateTraceParams(UtilityElement* element)
   {
     m_startingLocations.append(element);
     m_traceParams->setStartingLocations(m_startingLocations);
-    Graphic* traceLocation = new Graphic(m_clickPoint, m_startingSymbol, this);
+    Graphic* traceLocation = new Graphic(m_clickPoint, m_startingSymbol, m_graphicParent.get());
     m_graphicsOverlay->graphics()->append(traceLocation);
   }
   else
   {
     m_barriers.append(element);
     m_traceParams->setBarriers(m_barriers);
-    Graphic* traceLocation = new Graphic(m_clickPoint, m_barrierSymbol, this);
+    Graphic* traceLocation = new Graphic(m_clickPoint, m_barrierSymbol, m_graphicParent.get());
     m_graphicsOverlay->graphics()->append(traceLocation);
   }
 }
@@ -295,10 +301,14 @@ void FindFeaturesUtilityNetwork::reset()
   m_barriers.clear();
   m_traceParams->setBarriers(m_barriers);
   m_graphicsOverlay->graphics()->clear();
+  m_graphicParent.reset(new QObject());
 
   for (Layer* layer : *m_map->operationalLayers())
   {
     FeatureLayer* featureLayer = static_cast<FeatureLayer*>(layer);
+    if (!featureLayer)
+      return;
+
     featureLayer->clearSelection();
   }
 }

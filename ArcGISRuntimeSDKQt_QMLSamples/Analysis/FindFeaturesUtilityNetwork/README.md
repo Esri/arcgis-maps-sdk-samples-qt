@@ -29,15 +29,15 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 
 ## Relevant API
 
-* UtilityNetworks.UtilityNetwork
-* UtilityNetworks.UtilityTraceParameters
-* UtilityNetworks.UtilityTraceResult
-* UtilityNetworks.UtilityElementTraceResult
-* UtilityNetworks.UtilityNetworkDefinition
-* UtilityNetworks.UtilityNetworkSource
-* UtilityNetworks.UtilityAssetType
-* UtilityNetworks.UtilityTerminal
-* GeometryEngine.FractionAlong
+* UtilityNetwork
+* UtilityTraceParameters
+* UtilityTraceResult
+* UtilityElementTraceResult
+* UtilityNetworkDefinition
+* UtilityNetworkSource
+* UtilityAssetType
+* UtilityTerminal
+* GeometryEngine.fractionAlong
 
 ## About the data
 

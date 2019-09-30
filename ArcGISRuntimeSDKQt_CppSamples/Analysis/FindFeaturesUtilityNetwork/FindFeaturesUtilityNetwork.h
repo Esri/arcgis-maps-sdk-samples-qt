@@ -99,6 +99,7 @@ private:
   QList<Esri::ArcGISRuntime::UtilityElement*> m_startingLocations;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_barriers;
   QList<Esri::ArcGISRuntime::UtilityTerminal*> m_terminals;
+  QScopedPointer<QObject> m_graphicParent;
 
 };
 
