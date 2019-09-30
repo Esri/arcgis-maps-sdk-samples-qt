@@ -68,15 +68,22 @@ bool copyDir(const QString &srcPath, const QString &dstPath)
   {
     const QString srcItemPath = srcPath + "/" + info.fileName();
     const QString dstItemPath = dstPath + "/" + info.fileName();
-    if (info.isDir()) {
-      if (!copyDir(srcItemPath, dstItemPath)) {
+    if (info.isDir())
+    {
+      if (!copyDir(srcItemPath, dstItemPath))
+      {
         return false;
       }
-    } else if (info.isFile()) {
-      if (!QFile::copy(srcItemPath, dstItemPath)) {
+    }
+    else if (info.isFile())
+    {
+      if (!QFile::copy(srcItemPath, dstItemPath))
+      {
         return false;
       }
-    } else {
+    }
+    else
+    {
       qDebug() << "Unhandled item" << info.filePath() << "in copyDir";
     }
   }
@@ -91,6 +98,13 @@ ApplyScheduledMapUpdates::ApplyScheduledMapUpdates(QObject* parent /* = nullptr 
   // create a temporary copy of the local offline map files,
   // so that updating does not overwrite them permanently
   copyDir(defaultDataPath() + "/" + sampleMmpk, m_TempDir.path() + "/" + sampleMmpk);
+
+  // create MMPK
+  m_mobileMapPackage = new MobileMapPackage(m_TempDir.path() + "/" + sampleMmpk, this);
+
+  // load mmpk
+  connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, &ApplyScheduledMapUpdates::onMmpkDoneLoading);
+  m_mobileMapPackage->load();
 }
 
 ApplyScheduledMapUpdates::~ApplyScheduledMapUpdates()
@@ -121,6 +135,38 @@ MapQuickView* ApplyScheduledMapUpdates::mapView() const
   return m_mapView;
 }
 
+void ApplyScheduledMapUpdates::setMapToMapView()
+{
+  if (!m_map || !m_mapView)
+    return;
+
+  m_mapView->setMap(m_map);
+}
+
+void ApplyScheduledMapUpdates::onMmpkDoneLoading(Error e)
+{
+  // check if successful
+  if (!e.isEmpty())
+    return;
+
+  // make sure there are valid maps
+  if (m_mobileMapPackage->maps().isEmpty())
+    return;
+
+  // set the map on the map view
+  m_map = m_mobileMapPackage->maps().at(0);
+  setMapToMapView();
+
+  // setup sync task
+  m_offlineSyncTask = new OfflineMapSyncTask(m_map, this);
+
+  // connect sync task signals
+  connectSyncSignals();
+
+  // check for updates
+  m_offlineSyncTask->checkForUpdates();
+}
+
 // Set the view (created in QML)
 void ApplyScheduledMapUpdates::setMapView(MapQuickView* mapView)
 {
@@ -129,31 +175,7 @@ void ApplyScheduledMapUpdates::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
 
-  // create MMPK
-  qDebug() << m_TempDir.path() + "/" + sampleMmpk;
-  m_mobileMapPackage = new MobileMapPackage(m_TempDir.path() + "/" + sampleMmpk, this);
-
-  // load MMPK
-  connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, [this](Error e)
-  {
-    if (!e.isEmpty())
-      return;
-
-    // set the map on the map view
-    m_map = m_mobileMapPackage->maps().at(0);
-    m_mapView->setMap(m_map);
-
-    // setup sync task
-    m_offlineSyncTask = new OfflineMapSyncTask(m_map, this);
-
-    // connect sync task signals
-    connectSyncSignals();
-
-    // check for updates
-    m_offlineSyncTask->checkForUpdates();
-  });
-
-  m_mobileMapPackage->load();
+  setMapToMapView();
 
   emit mapViewChanged();
 }
@@ -179,10 +201,7 @@ void ApplyScheduledMapUpdates::connectSyncSignals()
   connect(m_offlineSyncTask, &OfflineMapSyncTask::createDefaultOfflineMapSyncParametersCompleted, [this](QUuid, OfflineMapSyncParameters parameters)
   {
     // set the parameters to download all updates for the mobile map packages
-    parameters.setPreplannedScheduledUpdatesOption(PreplannedScheduledUpdatesOption::DownloadAllUpdates);
-
-    // set the map package to rollback to the old state should the sync job fail
-    parameters.setRollbackOnFailure(true);
+    parameters.setPreplannedScheduledUpdatesOption(PreplannedScheduledUpdatesOption::DownloadAllUpdates);  
 
     // delete and disconnect previous jobs
     if (m_syncJob)
@@ -195,19 +214,23 @@ void ApplyScheduledMapUpdates::connectSyncSignals()
     m_syncJob = m_offlineSyncTask->syncOfflineMap(parameters);
 
     // connect to know when job is complete
-    m_syncJobConnection = connect(m_syncJob, &OfflineMapSyncJob::jobStatusChanged, [this]()
+    m_syncJobConnection = connect(m_syncJob, &OfflineMapSyncJob::jobDone, [this]()
     {
-      if (m_syncJob->jobStatus() == JobStatus::Succeeded)
+      if (m_syncJob->result()->isMobileMapPackageReopenRequired())
       {
-        if (m_syncJob->result()->isMobileMapPackageReopenRequired())
-        {
-          m_mobileMapPackage->close();
-          m_mobileMapPackage->load();
-        }
+        // close mmpk out
+        m_mobileMapPackage->close();
+        delete m_mobileMapPackage;
+        disconnect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, &ApplyScheduledMapUpdates::onMmpkDoneLoading);
 
-        // re-check if updates are available
-        m_offlineSyncTask->checkForUpdates();
+        // load mmpk again with new instance
+        m_mobileMapPackage = new MobileMapPackage(m_TempDir.path() + "/" + sampleMmpk, this);
+        connect(m_mobileMapPackage, &MobileMapPackage::doneLoading, this, &ApplyScheduledMapUpdates::onMmpkDoneLoading);
+        m_mobileMapPackage->load();
       }
+
+      // re-check if updates are available
+      m_offlineSyncTask->checkForUpdates();
     });
 
     // start the job

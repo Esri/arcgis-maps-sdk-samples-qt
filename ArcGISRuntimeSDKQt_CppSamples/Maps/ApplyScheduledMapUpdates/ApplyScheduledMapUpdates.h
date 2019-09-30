@@ -29,6 +29,7 @@ class OfflineMapSyncJob;
 }
 }
 
+#include "Error.h"
 #include <QObject>
 #include <QTemporaryDir>
 
@@ -53,6 +54,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void connectSyncSignals();
+  void setMapToMapView();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -61,6 +63,9 @@ private:
   Esri::ArcGISRuntime::OfflineMapSyncJob* m_syncJob = nullptr;
   QMetaObject::Connection m_syncJobConnection;
   QTemporaryDir m_TempDir;
+
+private slots:
+  void onMmpkDoneLoading(Esri::ArcGISRuntime::Error e);
 };
 
 #endif // APPLYSCHEDULEDMAPUPDATES_H

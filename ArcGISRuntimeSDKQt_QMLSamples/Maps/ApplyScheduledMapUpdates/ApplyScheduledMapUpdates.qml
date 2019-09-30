@@ -28,6 +28,7 @@ Rectangle {
     readonly property string tempDataPath: System.temporaryFolder.path + "/" + new Date().getTime()
     readonly property string origMmpkPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/canyonlands/canyonlands.zip"
     readonly property string destMmpkPath: tempDataPath + "/canyonlands.zip"
+    property MobileMapPackage mmpk
 
     // For the purposes of demonstrating the sample,
     // create a temporary copy of the local offline map files,
@@ -41,27 +42,33 @@ Rectangle {
         zipArchive.extractAll(tempDataPath + "/canyonlands")
     }
 
-    MobileMapPackage {
-        id: mmpk
+    function createMmpk() {
+        mmpk = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", {
+                                                         path: tempDataPath + "/canyonlands"
+                                                     });
+        mmpk.loadStatusChanged.connect(()=>{
+                                           if (mmpk.loadStatus === Enums.LoadStatusLoaded) {
+                                               // check size of maps
+                                               if (mmpk.maps.length === 0)
+                                                   return;
 
-        onLoadStatusChanged: {
-            if (loadStatus === Enums.LoadStatusLoaded) {                
-                // get map from mmpk
-                const map = mmpk.maps[0];
+                                               // get map from mmpk
+                                               const map = mmpk.maps[0];
 
-                // set on the mapview for display
-                mapView.map = map;
+                                               // set on the mapview for display
+                                               mapView.map = map;
 
-                // hook up to offline map task
-                offlineMapSyncTask.map = map;
+                                               // hook up to offline map task
+                                               offlineMapSyncTask.map = map;
 
-                // check for updates
-                offlineMapSyncTask.checkForUpdates();
+                                               // check for updates
+                                               offlineMapSyncTask.checkForUpdates();
+                                           } else if (mmpk.loadStatus === Enums.LoadStatusFailedToLoad) {
+                                               console.log("failed to load", mmpk.error.message, mmpk.error.additionalMessage);
+                                           }
+                                       });
 
-            } else if (loadStatus === Enums.LoadStatusFailedToLoad) {
-                console.log("failed to load", error.message, error.additionalMessage);
-            }
-        }
+        mmpk.load();
     }
 
     MapView {
@@ -117,9 +124,6 @@ Rectangle {
                 // set the parameters to download all updates for the mobile map packages
                 params.preplannedScheduledUpdatesOption = Enums.PreplannedScheduledUpdatesOptionDownloadAllUpdates;
 
-                // set the map package to rollback to the old state should the sync job fail
-                params.rollbackOnFailure = true;
-
                 // create the job
                 syncJob = offlineMapSyncTask.syncOfflineMap(createDefaultOfflineMapSyncParametersResult);
 
@@ -131,7 +135,7 @@ Rectangle {
                                                          if (mapResult.mobileMapPackageReopenRequired) {
                                                              // close and reopen the MMPK if required
                                                              mmpk.close();
-                                                             mmpk.load();
+                                                             createMmpk();
                                                          } else {
                                                              console.log("not required");
                                                          }
@@ -193,9 +197,8 @@ Rectangle {
         path: destMmpkPath
 
         onExtractCompleted: {
-            // load the mmpk once the zip archive is copied
-            mmpk.path = System.resolvedPathUrl(tempDataPath + "/canyonlands");
-            mmpk.load();
+            // create the mmpk once the zip archive is copied
+            createMmpk();
         }
     }
 
