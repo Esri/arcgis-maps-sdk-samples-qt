@@ -26,17 +26,17 @@ Rectangle {
     height: 600
 
     readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
-    property UtilityElement element
-    property UtilityNetworkSource utilityNetworkSource
-    property list<UtilityTerminal> startingLocations
-    property list<UtilityTerminal> barriers
-    property list<UtilityTerminal> terminals
+    property var element
+    property var utilityNetworkSource
+    property var startingLocations: []
+    property var barriers: []
+    property var terminals: []
     property var terminal
-    property ArcGISFeature identifiedFeature
+    property var identifiedFeature
     property Point clickPoint
     property var deviceObjIds: []
     property var lineObjIds: []
-    property UtilityElementTraceResult myTraceResult
+    property var myTraceResult
 
     MapView {
         id: mapView
@@ -308,9 +308,9 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 onClicked: {
                     params.barriers = null;
-                    barriers = null;
+                    barriers = [];
                     params.startingLocations = null;
-                    startingLocations = null;
+                    startingLocations = [];
                     deviceObjIds = [];
                     lineObjIds = [];
                     mapView.graphicsOverlays.get(0).graphics.clear();
