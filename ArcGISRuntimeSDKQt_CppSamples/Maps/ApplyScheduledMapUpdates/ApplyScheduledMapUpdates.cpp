@@ -158,6 +158,9 @@ void ApplyScheduledMapUpdates::onMmpkDoneLoading(Error e)
   setMapToMapView();
 
   // setup sync task
+  if (m_offlineSyncTask)
+    delete m_offlineSyncTask;
+
   m_offlineSyncTask = new OfflineMapSyncTask(m_map, this);
 
   // connect sync task signals
