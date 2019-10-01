@@ -1,0 +1,30 @@
+{
+    "category": "Maps",
+    "description": "Apply scheduled updates to a downloaded preplanned map area.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "offline", 
+        "preplanned",
+        "pre-planned", 
+        "synchronize",
+        "update"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "MobileMapPackage",
+        "OfflineMapSyncJob",
+        "OfflineMapSyncParameters",
+        "OfflineMapSyncResult",
+        "OfflineMapSyncTask",
+        "OfflineMapUpdatesInfo"
+    ],
+    "snippets": [
+        "ApplyScheduledMapUpdates.h",
+        "ApplyScheduledMapUpdates.cpp",
+        "ApplyScheduledMapUpdates.qml"
+    ],
+    "title": "Apply scheduled updates to preplanned map areas"
+}
