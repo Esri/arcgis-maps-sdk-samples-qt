@@ -49,7 +49,7 @@ class FindFeaturesUtilityNetwork : public QObject
   Q_PROPERTY(bool dialogVisible MEMBER dialogVisible NOTIFY dialogVisibleChanged)
   Q_PROPERTY(QString dialogText MEMBER dialogText NOTIFY dialogTextChanged)
   Q_PROPERTY(bool startingLocationsEnabled MEMBER startingLocationsEnabled NOTIFY startingLocationsChanged)
-  Q_PROPERTY(bool busy MEMBER busy NOTIFY busyChanged)
+  Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
 
 public:
   explicit FindFeaturesUtilityNetwork(QObject* parent = nullptr);
@@ -57,7 +57,7 @@ public:
 
   static void init();
 
-  Q_INVOKABLE void multiTerminalIndex(const int& index);
+  Q_INVOKABLE void multiTerminalIndex(int index);
   Q_INVOKABLE void trace();
   Q_INVOKABLE void reset();
 
@@ -93,7 +93,7 @@ private:
   bool terminalDialogVisisble = false;
   bool dialogVisible = false;
   bool startingLocationsEnabled = true;
-  bool busy = false;
+  bool m_busy = false;
   QString dialogText;
   Esri::ArcGISRuntime::Point m_clickPoint;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_startingLocations;

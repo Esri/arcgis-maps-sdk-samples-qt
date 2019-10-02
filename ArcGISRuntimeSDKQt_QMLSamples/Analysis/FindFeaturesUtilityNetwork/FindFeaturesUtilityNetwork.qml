@@ -101,7 +101,7 @@ Rectangle {
 
             const results = mapView.identifyLayersResults;
             const result = results[0];
-            if ( !result ) {
+            if (!result) {
                 dialogText.text = qsTr("Could not identify location.")
                 traceCompletedDialog.open();
                 return;
@@ -125,9 +125,9 @@ Rectangle {
                 const assetTypeCode = identifiedFeature.attributes.attributeValue("assettype");
 
                 let assetType;
-                for (let j = 0; j < assetGroup.assetTypes.length; j++) {
-                    if (assetGroup.assetTypes[j].code === assetTypeCode) {
-                        assetType = assetGroup.assetTypes[j];
+                for (let i = 0; i < assetGroup.assetTypes.length; i++) {
+                    if (assetGroup.assetTypes[i].code === assetTypeCode) {
+                        assetType = assetGroup.assetTypes[i];
                         break;
                     }
                 }

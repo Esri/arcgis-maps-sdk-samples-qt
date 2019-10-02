@@ -41,19 +41,19 @@ using namespace Esri::ArcGISRuntime;
 FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::streetsNightVector(this), this)),
-  m_startingSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor("green"), 20, this)),
-  m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor("red"), 20, this)),
-  m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor("DarkCyan"), 3, this)),
+  m_startingSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor(Qt::green), 20, this)),
+  m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 20, this)),
+  m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
   m_graphicParent(new QObject())
 
 {
-  m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference(3857))));
+  m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
 
   m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100"), this);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
   connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
   {
-    busy = false;
+    m_busy = false;
     emit busyChanged();
   });
 
@@ -85,7 +85,7 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
 
       if (m_utilityNetwork->traceResult()->isEmpty())
       {
-        busy = false;
+        m_busy = false;
         dialogText = QString("Trace complete with no results.");
         emit dialogTextChanged();
         emit busyChanged();
@@ -96,9 +96,6 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
       emit dialogTextChanged();
 
       UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
-
-      if (!result)
-        return;
 
       const QList<UtilityElement*> elements = static_cast<UtilityElementTraceResult*>(result)->elements(this);
 
@@ -160,13 +157,13 @@ void FindFeaturesUtilityNetwork::connectSignals()
     }
 
     const IdentifyLayerResult* result = results[0];
-    m_feature = dynamic_cast<ArcGISFeature*>(result->geoElements()[0]);
+    m_feature = static_cast<ArcGISFeature*>(result->geoElements()[0]);
     UtilityElement* element = nullptr;
     const UtilityNetworkSource* networkSource = m_utilityNetwork->definition()->networkSource(m_feature->featureTable()->tableName());
 
     if (networkSource->sourceType() == UtilityNetworkSourceType::Junction)
     {
-      const QString assetGroupFieldName = dynamic_cast<ArcGISFeatureTable*>(m_feature->featureTable())->subtypeField();
+      const QString assetGroupFieldName = static_cast<ArcGISFeatureTable*>(m_feature->featureTable())->subtypeField();
       const int assetGroupCode = m_feature->attributes()->attributeValue(assetGroupFieldName).toInt();
       UtilityAssetGroup* assetGroup = nullptr;
 
@@ -191,6 +188,9 @@ void FindFeaturesUtilityNetwork::connectSignals()
         }
       }
 
+      if (!assetType)
+        return;
+
       m_terminals = assetType->terminalConfiguration()->terminals();
 
       if (m_terminals.size() > 1)
@@ -211,7 +211,7 @@ void FindFeaturesUtilityNetwork::connectSignals()
     }
     else if (networkSource->sourceType() == UtilityNetworkSourceType::Edge)
     {
-      element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, nullptr ,this);
+      element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, nullptr, this);
 
       // Compute how far tapped location is along the edge feature.
       if (m_feature->geometry().geometryType() == GeometryType::Polyline)
@@ -256,7 +256,7 @@ void FindFeaturesUtilityNetwork::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void FindFeaturesUtilityNetwork::multiTerminalIndex(const int &index)
+void FindFeaturesUtilityNetwork::multiTerminalIndex(int index)
 {
   if (m_terminals.isEmpty())
     return;
@@ -288,7 +288,7 @@ void FindFeaturesUtilityNetwork::updateTraceParams(UtilityElement* element)
 
 void FindFeaturesUtilityNetwork::trace()
 {
-  busy = true;
+  m_busy = true;
   emit busyChanged();
   // Perform a connected trace on the utility network
   m_utilityNetwork->trace(m_traceParams);
@@ -305,7 +305,7 @@ void FindFeaturesUtilityNetwork::reset()
 
   for (Layer* layer : *m_map->operationalLayers())
   {
-    FeatureLayer* featureLayer = static_cast<FeatureLayer*>(layer);
+    FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
     if (!featureLayer)
       return;
 
