@@ -6,13 +6,13 @@ Apply scheduled updates to a downloaded preplanned map area.
 
 ## Use case
 
-With scheduled updates, the author can update the features within the preplanned areas on the service once, and multiple end-users can request these updates to bring their local copies up to date with the most recent state. Importantly, any number of end-users can download the same set of cached updates which means that this workflow is extremely scalable for large operations where you need to minimize load on the server.
+With scheduled updates, the author can update the features within the preplanned areas on the service once, and multiple end-users can request these updates to bring their local copies up to date with the most recent state. Importantly, any number of end-users can download the same set of cached updates, which means that this workflow is extremely scalable for large operations where you need to minimize load on the server.
 
 This workflow can be used by survey workers operating in remote areas where network connectivity is not available. The workers could download mobile map packages to their individual devices and perform their work normally. Once they regain internet connectivity, the mobile map packages can be updated to show any new features that have been added to the online service.
 
 ## How to use the sample
 
-Start the app. It will display an offline map, check for available updates, and show update availability and size. Select 'Apply Updates' to apply the updates to the local offline map and show the results.
+Start the app. It will display an offline map, check for available updates, and show update availability and size. Select 'Apply Scheduled Updates' to apply the updates to the local offline map and show the results.
 
 ## How it works
 

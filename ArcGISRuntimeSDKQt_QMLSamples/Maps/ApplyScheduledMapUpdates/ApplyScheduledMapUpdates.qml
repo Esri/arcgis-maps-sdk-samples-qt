@@ -43,8 +43,9 @@ Rectangle {
     }
 
     function createMmpk() {
+        console.log(tempDataPath + "/canyonlands")
         mmpk = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", {
-                                                         path: tempDataPath + "/canyonlands"
+                                                         path: System.resolvedPathUrl(tempDataPath + "/canyonlands")
                                                      });
         mmpk.loadStatusChanged.connect(()=>{
                                            if (mmpk.loadStatus === Enums.LoadStatusLoaded) {
