@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/FindFeaturesUtilityNetwork">
+        <file alias="sample.json">FindFeaturesUtilityNetwork.json</file>        
+        <file>FindFeaturesUtilityNetwork.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
