@@ -33,11 +33,13 @@ class SimpleMarkerSymbol;
 class SimpleLineSymbol;
 class GraphicsOverlay;
 class ArcGISFeature;
+class IdentifyLayerResult;
 }
 }
 
 #include <QObject>
 #include <QUrl>
+#include <QUuid>
 #include "Point.h"
 
 class FindFeaturesUtilityNetwork : public QObject
@@ -68,6 +70,10 @@ signals:
   void dialogTextChanged();
   void startingLocationsChanged();
   void busyChanged();
+
+private slots:
+  void selectFeatures();
+  void selectUtilityElement(QUuid, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
