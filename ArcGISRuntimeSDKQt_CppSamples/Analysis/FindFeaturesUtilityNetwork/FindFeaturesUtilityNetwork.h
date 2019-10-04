@@ -47,10 +47,10 @@ class FindFeaturesUtilityNetwork : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(bool terminalDialogVisisble MEMBER terminalDialogVisisble NOTIFY terminalDialogVisisbleChanged)
-  Q_PROPERTY(bool dialogVisible MEMBER dialogVisible NOTIFY dialogVisibleChanged)
-  Q_PROPERTY(QString dialogText MEMBER dialogText NOTIFY dialogTextChanged)
-  Q_PROPERTY(bool startingLocationsEnabled MEMBER startingLocationsEnabled NOTIFY startingLocationsChanged)
+  Q_PROPERTY(bool terminalDialogVisisble MEMBER m_terminalDialogVisisble NOTIFY terminalDialogVisisbleChanged)
+  Q_PROPERTY(bool dialogVisible MEMBER m_dialogVisible NOTIFY dialogVisibleChanged)
+  Q_PROPERTY(QString dialogText MEMBER m_dialogText NOTIFY dialogTextChanged)
+  Q_PROPERTY(bool startingLocationsEnabled MEMBER m_startingLocationsEnabled NOTIFY startingLocationsChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
 
 public:
@@ -72,8 +72,8 @@ signals:
   void busyChanged();
 
 private slots:
-  void selectFeatures();
-  void selectUtilityElement(QUuid, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
+  void onTraceComplete();
+  void onIdentifyLayersCompleted(QUuid, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -96,11 +96,11 @@ private:
   Esri::ArcGISRuntime::ArcGISFeature* m_feature = nullptr;
 
   const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
-  bool terminalDialogVisisble = false;
-  bool dialogVisible = false;
-  bool startingLocationsEnabled = true;
+  bool m_terminalDialogVisisble = false;
+  bool m_dialogVisible = false;
+  bool m_startingLocationsEnabled = true;
   bool m_busy = false;
-  QString dialogText;
+  QString m_dialogText;
   Esri::ArcGISRuntime::Point m_clickPoint;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_startingLocations;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_barriers;

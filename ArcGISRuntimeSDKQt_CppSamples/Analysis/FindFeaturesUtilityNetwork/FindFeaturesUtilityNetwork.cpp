@@ -51,7 +51,7 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
 
   m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100"), this);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
-  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
+  connect(m_deviceLayer, &FeatureLayer::m_Completed, this, [this](QUuid)
   {
     m_busy = false;
     emit busyChanged();
@@ -69,7 +69,7 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
   {
     if (!e.isEmpty())
     {
-      dialogText = QString(e.message() + " - " + e.additionalMessage());
+      m_dialogText = QString(e.message() + " - " + e.additionalMessage());
       emit dialogVisibleChanged();
       return;
     }
@@ -81,7 +81,7 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
     m_traceParams = new UtilityTraceParameters(UtilityTraceType::Connected, {}, this);
 
     // select the features returned from the trace
-    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &FindFeaturesUtilityNetwork::selectFeatures);
+    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &FindFeaturesUtilityNetwork::onTraceComplete);
 
     connect(m_utilityNetwork, &UtilityNetwork::doneLoading, [this](Error e)
     {
@@ -90,7 +90,7 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
 
       if (!e.isEmpty())
       {
-        dialogText = QString(e.message() + " - " + e.additionalMessage());
+        m_dialogText = QString(e.message() + " - " + e.additionalMessage());
         emit dialogVisibleChanged();
         return;
       }
@@ -119,7 +119,7 @@ void FindFeaturesUtilityNetwork::connectSignals()
   });
 
   // handle the identify results
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &FindFeaturesUtilityNetwork::selectUtilityElement);
+  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &FindFeaturesUtilityNetwork::onIdentifyLayersCompleted);
 }
 
 FindFeaturesUtilityNetwork::~FindFeaturesUtilityNetwork() = default;
@@ -162,7 +162,7 @@ void FindFeaturesUtilityNetwork::multiTerminalIndex(int index)
 
 void FindFeaturesUtilityNetwork::updateTraceParams(UtilityElement* element)
 {
-  if (startingLocationsEnabled)
+  if (m_startingLocationsEnabled)
   {
     m_startingLocations.append(element);
     m_traceParams->setStartingLocations(m_startingLocations);
@@ -205,13 +205,13 @@ void FindFeaturesUtilityNetwork::reset()
   }
 }
 
-void FindFeaturesUtilityNetwork::selectUtilityElement(QUuid, const QList<IdentifyLayerResult*>& results)
+void FindFeaturesUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& results)
 {
   if (results.isEmpty())
   {
-    dialogText = QString("Could not identify location.");
+    m_dialogText = QString("Could not identify location.");
     emit dialogTextChanged();
-    dialogVisible = true;
+    m_dialogVisible = true;
     emit dialogVisibleChanged();
     return;
   }
@@ -255,7 +255,7 @@ void FindFeaturesUtilityNetwork::selectUtilityElement(QUuid, const QList<Identif
 
     if (m_terminals.size() > 1)
     {
-      terminalDialogVisisble = true;
+      m_terminalDialogVisisble = true;
       emit terminalDialogVisisbleChanged();
       return;
     }
@@ -289,22 +289,21 @@ void FindFeaturesUtilityNetwork::selectUtilityElement(QUuid, const QList<Identif
   updateTraceParams(element);
 }
 
-
-void FindFeaturesUtilityNetwork::selectFeatures()
+void FindFeaturesUtilityNetwork::onTraceComplete()
 {
-  dialogVisible = true;
+  m_dialogVisible = true;
   emit dialogVisibleChanged();
 
   if (m_utilityNetwork->traceResult()->isEmpty())
   {
     m_busy = false;
-    dialogText = QString("Trace complete with no results.");
+    m_dialogText = QString("Trace complete with no results.");
     emit dialogTextChanged();
     emit busyChanged();
     return;
   }
 
-  dialogText = QString("Trace completed.");
+  m_dialogText = QString("Trace completed.");
   emit dialogTextChanged();
 
   UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
