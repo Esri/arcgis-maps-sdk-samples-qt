@@ -72,7 +72,7 @@ signals:
   void busyChanged();
 
 private slots:
-  void onTraceComplete();
+  void onTraceCompleted();
   void onIdentifyLayersCompleted(QUuid, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
 
 private:

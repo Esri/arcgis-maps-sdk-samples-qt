@@ -51,7 +51,7 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
 
   m_deviceFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100"), this);
   m_deviceLayer = new FeatureLayer(m_deviceFeatureTable, this);
-  connect(m_deviceLayer, &FeatureLayer::m_Completed, this, [this](QUuid)
+  connect(m_deviceLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid)
   {
     m_busy = false;
     emit busyChanged();
@@ -81,7 +81,7 @@ FindFeaturesUtilityNetwork::FindFeaturesUtilityNetwork(QObject* parent /* = null
     m_traceParams = new UtilityTraceParameters(UtilityTraceType::Connected, {}, this);
 
     // select the features returned from the trace
-    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &FindFeaturesUtilityNetwork::onTraceComplete);
+    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &FindFeaturesUtilityNetwork::onTraceCompleted);
 
     connect(m_utilityNetwork, &UtilityNetwork::doneLoading, [this](Error e)
     {
@@ -289,7 +289,7 @@ void FindFeaturesUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<Id
   updateTraceParams(element);
 }
 
-void FindFeaturesUtilityNetwork::onTraceComplete()
+void FindFeaturesUtilityNetwork::onTraceCompleted()
 {
   m_dialogVisible = true;
   emit dialogVisibleChanged();
