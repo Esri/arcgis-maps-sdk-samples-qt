@@ -25,12 +25,77 @@ Rectangle {
     width: 800
     height: 600
 
+    property var preplannedMapAreaList: null
+
     MapView {
         id: mapView
         anchors.fill: parent
 
         Map {
-            BasemapTopographic {}
+            id: onlineMap
+            item: portalItem
+        }
+
+        Portal {
+            id: portal
+            url: "https://www.arcgis.com"
+        }
+
+        PortalItem {
+            id: portalItem
+            portal: portal
+            itemId: "acc027394bc84c2fb04d1ed317aac674"
+
+            onLoadStatusChanged: {
+                if (loadStatus !== Enums.LoadStatusLoaded)
+                    return;
+
+                offlineMapTask.load();
+            }
+        }
+
+        GraphicsOverlay {
+            id: graphicsOverlay
+            renderer: SimpleRenderer {
+                symbol: SimpleLineSymbol {
+                    style: Enums.SimpleLineSymbolStyleSolid
+                    color: "red"
+                    width: 5
+                }
+            }
+        }
+
+        OfflineMapTask {
+            id: offlineMapTask
+            onlineMap: onlineMap
+
+            onErrorChanged: console.log(error.message, error.additionalMessage);
+
+            onLoadStatusChanged: {
+                if (loadStatus !== Enums.LoadStatusLoaded)
+                    return;
+
+                offlineMapTask.preplannedMapAreas();
+            }
+
+            onPreplannedMapAreasStatusChanged: {
+                if( preplannedMapAreasStatus !== Enums.TaskStatusCompleted)
+                    return;
+
+//                preplannedMapAreaList = offlineMapTask.preplannedMapAreaList;
+//                preplannedlist.model = offlineMapTask.preplannedMapAreaList;
+                preplannedCombo.model = offlineMapTask.preplannedMapAreaList;
+
+//                console.log(preplannedlist.count);
+            }
+        }
+
+
+
+
+
+        Component.onCompleted: {
+            portalItem.load();
         }
     }
 
@@ -55,7 +120,73 @@ Rectangle {
         }
 
         ColumnLayout {
+            Text {
+                id: name
+                text: qsTr("Preplanned Map Areas:")
+                color: "white"
+                Layout.alignment: Qt.AlignLeft
 
+            }
+
+            Repeater {
+                id: preplannedlist
+                model: null
+                delegate: Row {
+                    Rectangle {
+                        width: buttonBackground.width
+                        height: childrenRect.height
+                        color: "yellow"
+                        // catch mouse signals from propagating to parent
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: console.log(myItem.text)
+                            onWheel: wheel.accepted = true
+                        }
+                        Text {
+                            id: myItem
+                            text: itemTitle
+                            color: "white"
+                        }
+                    }
+                }
+            }
+
+            ListView {
+
+            }
+
+            ComboBox {
+                id: preplannedCombo
+                model: null
+                textRole: "itemTitle"
+            }
+
+            Button {
+                text: qsTr("Download")
+                onClicked: {
+
+
+
+//                    console.log("width %1 - height %2".arg(preplannedlist.width).arg(preplannedlist.height));
+                }
+            }
+            Text {
+                id: name1
+                text: qsTr("Downloads (deleted on exit):")
+                color: "white"
+                Layout.alignment: Qt.AlignLeft
+            }
+
+            Repeater {
+                id: appliedmaps
+                model: null
+                delegate: Row {
+                    Text {
+                        text: itemTitle
+                        color: "white"
+                    }
+                }
+            }
         }
     }
 }
