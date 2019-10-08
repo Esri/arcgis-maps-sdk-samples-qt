@@ -1,5 +1,5 @@
 {
     "source" :  "FindFeaturesUtilityNetwork.qml",
     "otherSourceFiles" :  [],
-    "name" : "Find connected features in a utility network"
+    "name" : "Find connected features in utility networks"
 }
