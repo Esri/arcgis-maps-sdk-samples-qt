@@ -1,6 +1,9 @@
 {
     "source" :  "CustomDictionaryStyle.qml",
-    "otherSourceFiles" :  [],
+    "otherSourceFiles" :  [
+        "CustomDictionaryStyle.h",
+        "CustomDictionaryStyle.cpp"
+    ],
     "name" : "Custom dictionary style",
     "dataItems" : [
         {
