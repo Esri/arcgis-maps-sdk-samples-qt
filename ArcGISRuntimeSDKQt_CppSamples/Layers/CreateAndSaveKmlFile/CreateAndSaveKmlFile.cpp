@@ -28,6 +28,11 @@
 #include "KmlNodeListModel.h"
 #include "KmlDataset.h"
 #include "KmlLayer.h"
+#include "KmlLineStyle.h"
+#include "KmlIcon.h"
+#include "KmlIconStyle.h"
+#include "KmlPolygonStyle.h"
+#include "KmlStyle.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -37,8 +42,14 @@ CreateAndSaveKmlFile::CreateAndSaveKmlFile(QObject* parent /* = nullptr */):
   m_kmlDocument(new KmlDocument(this)),
   m_point(createPoint()),
   m_polyline(createPolyline()),
-  m_polygon(createPolygon())
+  m_polygon(createPolygon()),
+  m_pointStyle(createPointStyle()),
+  m_lineStyle(createLineStyle()),
+  m_polygonStyle(createPolygonStyle())
 {
+  // set initial viewpoint
+  m_map->setInitialViewpoint(Viewpoint(createEnvelope()));
+
   connect(m_map, &Map::doneLoading, this, [this](Error e)
   {
     if (!e.isEmpty())
@@ -122,20 +133,58 @@ Geometry CreateAndSaveKmlFile::createEnvelope() const
   return Envelope(xMin, yMin, xMax, yMax, spatialRef);
 }
 
-void CreateAndSaveKmlFile::addGraphics()
+KmlStyle* CreateAndSaveKmlFile::createPointStyle()
 {
-  addToKmlDocument(m_point);
-  addToKmlDocument(m_polyline);
-  addToKmlDocument(m_polygon);
+  // Create Icon Style
+  KmlIcon* icon = new KmlIcon(QUrl("https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png"), this);
+  KmlIconStyle* iconStyle = new KmlIconStyle(icon, 1.0, this);
 
-  m_mapView->map()->operationalLayers()->append(m_kmlLayer);
-  m_mapView->setViewpointGeometry(createEnvelope(), 10);
+  // Create KmlStyle
+  KmlStyle* kmlStyle = new KmlStyle(this);
+  kmlStyle->setIconStyle(iconStyle);
+
+  return kmlStyle;
 }
 
-void CreateAndSaveKmlFile::addToKmlDocument(const Esri::ArcGISRuntime::Geometry& geometry)
+KmlStyle* CreateAndSaveKmlFile::createLineStyle()
+{
+  // Create Line Style
+  KmlLineStyle* lineStyle = new KmlLineStyle(QColor(Qt::red), 2, this);
+
+  // Create KmlStyle
+  KmlStyle* kmlStyle = new KmlStyle(this);
+  kmlStyle->setLineStyle(lineStyle);
+
+  return kmlStyle;
+}
+
+KmlStyle* CreateAndSaveKmlFile::createPolygonStyle()
+{
+  // Create Polygon Style
+  KmlPolygonStyle* polygonStyle = new KmlPolygonStyle(QColor(Qt::yellow), this);
+
+  // Create KmlStyle
+  KmlStyle* kmlStyle = new KmlStyle(this);
+  kmlStyle->setPolygonStyle(polygonStyle);
+
+  return kmlStyle;
+}
+
+void CreateAndSaveKmlFile::addGraphics()
+{
+  addToKmlDocument(m_point, m_pointStyle);
+  addToKmlDocument(m_polyline, m_lineStyle);
+  addToKmlDocument(m_polygon, m_polygonStyle);
+
+  m_mapView->map()->operationalLayers()->append(m_kmlLayer);
+}
+
+void CreateAndSaveKmlFile::addToKmlDocument(const Geometry& geometry, KmlStyle* kmlStyle)
 {
   const KmlGeometry kmlGeometry = KmlGeometry(geometry, KmlAltitudeMode::ClampToGround);
-  m_kmlDocument->childNodesListModel()->append(new KmlPlacemark(kmlGeometry, this));
+  KmlPlacemark* placemark = new KmlPlacemark(kmlGeometry, this);
+  placemark->setStyle(kmlStyle);
+  m_kmlDocument->childNodesListModel()->append(placemark);
 }
 
 void CreateAndSaveKmlFile::saveKml(const QUrl& url)
