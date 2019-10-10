@@ -26,6 +26,7 @@ class MapQuickView;
 class KmlDocument;
 class KmlDataset;
 class KmlLayer;
+class KmlStyle;
 }
 }
 
@@ -68,6 +69,9 @@ private:
   Esri::ArcGISRuntime::Point m_point;
   Esri::ArcGISRuntime::Polyline m_polyline;
   Esri::ArcGISRuntime::Polygon m_polygon;
+  Esri::ArcGISRuntime::KmlStyle* m_kmlStyleWithPointStyle = nullptr;
+  Esri::ArcGISRuntime::KmlStyle* m_kmlStyleWithLineStyle = nullptr;
+  Esri::ArcGISRuntime::KmlStyle* m_kmlStyleWithPolygonStyle = nullptr;
 
   bool m_busy = false;
 
@@ -75,9 +79,12 @@ private:
   Esri::ArcGISRuntime::Geometry createPolyline() const;
   Esri::ArcGISRuntime::Geometry createPolygon() const;
   Esri::ArcGISRuntime::Geometry createEnvelope() const;
+  Esri::ArcGISRuntime::KmlStyle* createKmlStyleWithPointStyle();
+  Esri::ArcGISRuntime::KmlStyle* createKmlStyleWithLineStyle();
+  Esri::ArcGISRuntime::KmlStyle* createKmlStyleWithPolygonStyle();
 
   void addGraphics();
-  void addToKmlDocument(const Esri::ArcGISRuntime::Geometry& geometry);
+  void addToKmlDocument(const Esri::ArcGISRuntime::Geometry& geometry, Esri::ArcGISRuntime::KmlStyle* kmlStyle);
 };
 
 #endif // CREATEANDSAVEKMLFILE_H

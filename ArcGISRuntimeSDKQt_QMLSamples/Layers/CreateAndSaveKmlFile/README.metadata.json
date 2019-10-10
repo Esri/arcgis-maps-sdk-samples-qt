@@ -16,7 +16,12 @@
         "KmlDocument",
         "KmlGeometry",
         "KmlNode.saveAs",
-        "KmlPlacemark"
+        "KmlPlacemark",
+        "KmlStyle",
+        "KmlIconStyle",
+        "KmlLineStyle",
+        "KmlPolygonStyle",
+        "KmlIcon"
     ],
     "snippets": [
         "CreateAndSaveKmlFile.qml"
