@@ -43,9 +43,9 @@ CreateAndSaveKmlFile::CreateAndSaveKmlFile(QObject* parent /* = nullptr */):
   m_point(createPoint()),
   m_polyline(createPolyline()),
   m_polygon(createPolygon()),
-  m_pointStyle(createPointStyle()),
-  m_lineStyle(createLineStyle()),
-  m_polygonStyle(createPolygonStyle())
+  m_kmlStyleWithPointStyle(createKmlStyleWithPointStyle()),
+  m_kmlStyleWithLineStyle(createKmlStyleWithLineStyle()),
+  m_kmlStyleWithPolygonStyle(createKmlStyleWithPolygonStyle())
 {
   // set initial viewpoint
   m_map->setInitialViewpoint(Viewpoint(createEnvelope()));
@@ -133,7 +133,7 @@ Geometry CreateAndSaveKmlFile::createEnvelope() const
   return Envelope(xMin, yMin, xMax, yMax, spatialRef);
 }
 
-KmlStyle* CreateAndSaveKmlFile::createPointStyle()
+KmlStyle* CreateAndSaveKmlFile::createKmlStyleWithPointStyle()
 {
   // Create Icon Style
   KmlIcon* icon = new KmlIcon(QUrl("https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png"), this);
@@ -146,7 +146,7 @@ KmlStyle* CreateAndSaveKmlFile::createPointStyle()
   return kmlStyle;
 }
 
-KmlStyle* CreateAndSaveKmlFile::createLineStyle()
+KmlStyle* CreateAndSaveKmlFile::createKmlStyleWithLineStyle()
 {
   // Create Line Style
   KmlLineStyle* lineStyle = new KmlLineStyle(QColor(Qt::red), 2, this);
@@ -158,7 +158,7 @@ KmlStyle* CreateAndSaveKmlFile::createLineStyle()
   return kmlStyle;
 }
 
-KmlStyle* CreateAndSaveKmlFile::createPolygonStyle()
+KmlStyle* CreateAndSaveKmlFile::createKmlStyleWithPolygonStyle()
 {
   // Create Polygon Style
   KmlPolygonStyle* polygonStyle = new KmlPolygonStyle(QColor(Qt::yellow), this);
@@ -172,9 +172,9 @@ KmlStyle* CreateAndSaveKmlFile::createPolygonStyle()
 
 void CreateAndSaveKmlFile::addGraphics()
 {
-  addToKmlDocument(m_point, m_pointStyle);
-  addToKmlDocument(m_polyline, m_lineStyle);
-  addToKmlDocument(m_polygon, m_polygonStyle);
+  addToKmlDocument(m_point, m_kmlStyleWithPointStyle);
+  addToKmlDocument(m_polyline, m_kmlStyleWithLineStyle);
+  addToKmlDocument(m_polygon, m_kmlStyleWithPolygonStyle);
 
   m_mapView->map()->operationalLayers()->append(m_kmlLayer);
 }

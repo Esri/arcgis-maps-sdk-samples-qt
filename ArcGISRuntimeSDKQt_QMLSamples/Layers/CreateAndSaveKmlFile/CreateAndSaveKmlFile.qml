@@ -132,7 +132,7 @@ Rectangle {
     }
 
     KmlStyle {
-        id: pointStyle
+        id: kmlStyleWithPointStyle
         KmlIconStyle {
             icon: KmlIcon {
                 url: "https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png"
@@ -142,7 +142,7 @@ Rectangle {
     }
 
     KmlStyle {
-        id: lineStyle
+        id: kmlStyleWithLineStyle
         KmlLineStyle {
             color: "red"
             width: 2
@@ -150,7 +150,7 @@ Rectangle {
     }
 
     KmlStyle {
-        id: polygonStyle
+        id: kmlStyleWithPolygonStyle
         KmlPolygonStyle {
             color: "yellow"
         }
@@ -163,7 +163,7 @@ Rectangle {
     }
 
     function createPoint() {
-        addToKmlDocument(point, pointStyle);
+        addToKmlDocument(point, kmlStyleWithPointStyle);
     }
 
     function createPolygon() {
@@ -171,14 +171,14 @@ Rectangle {
         polygonBuilder.addPointXY(-102.047, 40.998);
         polygonBuilder.addPointXY(-102.037, 36.989);
         polygonBuilder.addPointXY(-109.048, 36.998);
-        addToKmlDocument(polygonBuilder.geometry, polygonStyle);
+        addToKmlDocument(polygonBuilder.geometry, kmlStyleWithPolygonStyle);
     }
 
     function createPolyline() {
         polylineBuilder.addPointXY(-119.992, 41.989);
         polylineBuilder.addPointXY(-119.994, 38.994);
         polylineBuilder.addPointXY(-114.620, 35.0);
-        addToKmlDocument(polylineBuilder.geometry, lineStyle);
+        addToKmlDocument(polylineBuilder.geometry, kmlStyleWithLineStyle);
     }
 
     function addToKmlDocument(geometry, kmlStyle) {
