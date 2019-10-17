@@ -134,7 +134,7 @@ Rectangle {
     KmlStyle {
         id: kmlStyleWithPointStyle
         KmlIconStyle {
-            icon: KmlIcon {
+            KmlIcon {
                 url: "https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png"
             }
             scale: 1
