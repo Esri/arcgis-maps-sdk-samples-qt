@@ -42,29 +42,31 @@ Rectangle {
             //  Layers nested as children are appended to the group layer
             GroupLayer {
                 id: gl
-                name: "Group: Dev A"
+                name: "Buildings group"
 
                 ArcGISSceneLayer {
-                    url: "https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_Trees/SceneServer/layers/0"
+                    url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer"
                 }
 
                 ArcGISSceneLayer {
-                    url: "https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_Pathways/SceneServer/layers/0"
-                }
-
-                ArcGISSceneLayer {
-                    url: "https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_BuildingShell_Textured/SceneServer/layers/0"
+                    url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevB_BuildingShells/SceneServer"
                 }
             }
 
             // Add layers outside group layer
             ArcGISSceneLayer {
-                url: "https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/PlannedDemo_BuildingShell/SceneServer/layers/0"
+                url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_Trees/SceneServer"
             }
 
             FeatureLayer {
                 ServiceFeatureTable {
                     url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/DevelopmentProjectArea/FeatureServer/0"
+                }
+            }
+
+            FeatureLayer {
+                ServiceFeatureTable {
+                    url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_Pathways/FeatureServer/1"
                 }
             }
         }
