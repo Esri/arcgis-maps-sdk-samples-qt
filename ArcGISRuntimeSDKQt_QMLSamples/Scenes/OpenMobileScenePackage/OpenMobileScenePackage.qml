@@ -33,8 +33,7 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        // check if direct read is supported before proceeding
-        MobileScenePackageUtility.isDirectReadSupported(mspk.path);
+        mspk.load();
     }
 
     MobileScenePackage {
@@ -58,37 +57,6 @@ Rectangle {
 
         onErrorChanged: {
             console.log("Mobile Scene Package Error: %1 %2".arg(error.message).arg(error.additionalMessage));
-        }
-    }
-
-    // Connect to the various signals on MobileScenePackageUtility
-    // to determine if direct read is supported and if an unpack
-    // is needed.
-    Connections {
-        target: MobileScenePackageUtility
-
-        onIsDirectReadSupportedStatusChanged: {
-            if (MobileScenePackageUtility.isDirectReadSupportedStatus !== Enums.TaskStatusCompleted)
-                return;
-
-            // if direct read is supported, load the MobileScenePackage
-            if (MobileScenePackageUtility.isDirectReadSupportedResult) {
-                mspk.load();
-            } else {
-                // direct read is not supported, and the data must be unpacked
-                MobileScenePackageUtility.unpack(mspk.path, unpackPath)
-            }
-        }
-
-        onUnpackStatusChanged: {
-            if (MobileScenePackageUtility.unpackStatus !== Enums.TaskStatusCompleted)
-                return;
-
-            // set the new path to the unpacked mobile scene package
-            mspk.path = unpackPath;
-
-            // load the mspk
-            mspk.load();
         }
     }
 }
