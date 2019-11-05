@@ -8,7 +8,7 @@ Opens and displays a scene from a Mobile Scene Package (.mspk).
 An .mspk file is an archive containing the data (specifically, basemaps and features), used to display an offline 3D scene.
 
 ## How it works
-1. Create a `MobileScenePackage` using the path to the local `.mspk` file or the unpacked directory.
+1. Create a `MobileScenePackage` using the path to the local `.mspk` file.
 2. Call `MobileScenePackage.load` and check for any errors.
 3. When the `MobileScenePackage` is loaded, obtain the first `Scene` from the `MobileScenePackage.scenes` list.
 4. Create a `SceneView` and set the scene on the view for display.
