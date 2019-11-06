@@ -53,39 +53,6 @@ HonorMobileMapPackageExpiration::HonorMobileMapPackageExpiration(QObject* parent
   QObject(parent),
   m_dataPath(defaultDataPath() + sampleMmpk)
 {
-  // connect to the Mobile Map Package instance to determine if direct read is supported. Packages
-  // that contain raster data cannot be read directly and must be unpacked first.
-  connect(MobileMapPackage::instance(), &MobileMapPackage::isDirectReadSupportedCompleted,
-          this, [this](QUuid, bool supported)
-  {
-    // if direct read is supported, load the package
-    if (supported)
-    {
-      createMapPackage(m_dataPath);
-    }
-    // otherwise, the package needs to be unpacked
-    else
-    {
-      MobileMapPackage::unpack(m_dataPath, m_unpackTempDir.path());
-    }
-  });
-
-  // connect to the Mobile Map Package instance to know when the data is unpacked
-  connect(MobileMapPackage::instance(), &MobileMapPackage::unpackCompleted,
-          this, [this](QUuid, bool success)
-  {
-    // if the unpack was successful, load the unpacked package
-    if (success)
-    {
-      createMapPackage(m_unpackTempDir.path());
-    }
-    // log that the upack failed
-    else
-    {
-      qDebug() << "failed to unpack";
-    }
-  });
-
   // connect to the Mobile Map Package instance to know when errors occur
   connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
           [](Error e)
@@ -124,8 +91,7 @@ void HonorMobileMapPackageExpiration::setMapView(MapQuickView* mapView)
 
   emit mapViewChanged();
 
-  // Check if the MMPK can be read directly
-  MobileMapPackage::isDirectReadSupported(m_dataPath);
+  createMapPackage(m_dataPath);
 }
 
 void HonorMobileMapPackageExpiration::createMapPackage(const QString& path)

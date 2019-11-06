@@ -31,7 +31,6 @@ class Layer;
 }
 
 #include <QObject>
-#include <QTemporaryDir>
 
 class ControlAnnotationSublayerVisibility : public QObject
 {
@@ -72,7 +71,6 @@ private:
   Esri::ArcGISRuntime::LayerListModel* m_layerListModel = nullptr;
   Esri::ArcGISRuntime::Layer* m_annoLayer = nullptr;
 
-  QTemporaryDir m_unpackTempDir;
   QString m_openLayerText;
   QString m_closedLayerText;
   bool m_visibleAtCurrentExtent;

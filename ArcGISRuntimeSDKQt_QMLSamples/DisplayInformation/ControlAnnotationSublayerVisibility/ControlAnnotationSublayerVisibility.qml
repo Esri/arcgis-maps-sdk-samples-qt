@@ -115,8 +115,7 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        // check if direct read is supported before proceeding
-        MobileMapPackageUtility.isDirectReadSupported(mmpk.path);
+        mmpk.load();
     }
 
     MobileMapPackage {
@@ -155,38 +154,6 @@ Rectangle {
 
         onErrorChanged: {
             console.log("Mobile Map Package Error: %1 %2".arg(error.message).arg(error.additionalMessage));
-        }
-    }
-
-    // Connect to the various signals on MobileMapPackageUtility
-    // to determine if direct read is supported or if an unpack
-    // is needed.
-    Connections {
-        target: MobileMapPackageUtility
-
-        onIsDirectReadSupportedStatusChanged: {
-            if (MobileMapPackageUtility.isDirectReadSupportedStatus !== Enums.TaskStatusCompleted) {
-                return;
-            }
-
-            // if direct read is supported, load the MobileMapPackage
-            if (MobileMapPackageUtility.isDirectReadSupportedResult) {
-                mmpk.load();
-            } else {
-                // direct read is not supported, and the data must be unpacked
-                MobileMapPackageUtility.unpack(mmpk.path, unpackPath)
-            }
-        }
-
-        onUnpackStatusChanged: {
-            if (MobileMapPackageUtility.unpackStatus !== Enums.TaskStatusCompleted)
-                return;
-
-            // set the new path to the unpacked mobile map package
-            mmpk.path = unpackPath;
-
-            // load the mobile map package
-            mmpk.load();
         }
     }
 }

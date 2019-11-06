@@ -27,7 +27,6 @@ class MobileMapPackage;
 }
 
 #include <QObject>
-#include <QTemporaryDir>
 
 class HonorMobileMapPackageExpiration : public QObject
 {
@@ -54,7 +53,6 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;      
   Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage = nullptr;
 
-  QTemporaryDir m_unpackTempDir;
   QString m_dataPath;
   QString m_expirationString;
 };

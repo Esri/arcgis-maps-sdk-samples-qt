@@ -58,39 +58,6 @@ ControlAnnotationSublayerVisibility::ControlAnnotationSublayerVisibility(QObject
 {
   const QString dataPath = defaultDataPath() + sampleFileAnno;
 
-  // connect to the Mobile Map Package instance to determine if direct read is supported. Packages
-  // that contain raster data cannot be read directly and must be unpacked first.
-  connect(MobileMapPackage::instance(), &MobileMapPackage::isDirectReadSupportedCompleted,
-          this, [this, dataPath](QUuid, bool supported)
-  {
-    // if direct read is supported, load the package
-    if (supported)
-    {
-      createMapPackage(dataPath);
-    }
-    // otherwise, the package needs to be unpacked
-    else
-    {
-      MobileMapPackage::unpack(dataPath, m_unpackTempDir.path());
-    }
-  });
-
-  // connect to the Mobile Map Package instance to know when the data is unpacked
-  connect(MobileMapPackage::instance(), &MobileMapPackage::unpackCompleted,
-          this, [this](QUuid, bool success)
-  {
-    // if the unpack was successful, load the unpacked package
-    if (success)
-    {
-      createMapPackage(m_unpackTempDir.path());
-    }
-    // log that the upack failed
-    else
-    {
-      qDebug() << "failed to unpack";
-    }
-  });
-
   // connect to the Mobile Map Package instance to know when errors occur
   connect(MobileMapPackage::instance(), &MobileMapPackage::errorOccurred,
           [](Error error)
@@ -101,8 +68,8 @@ ControlAnnotationSublayerVisibility::ControlAnnotationSublayerVisibility(QObject
     qDebug() << QString("Error: %1 %2").arg(error.message(), error.additionalMessage());
   });
 
-  // Check if the MMPK can be read directly
-  MobileMapPackage::isDirectReadSupported(dataPath);
+  // Load the MMPK
+  createMapPackage(dataPath);
 }
 
 ControlAnnotationSublayerVisibility::~ControlAnnotationSublayerVisibility() = default;
