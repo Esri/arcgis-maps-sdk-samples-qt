@@ -25,7 +25,6 @@ Rectangle {
     height: 600
 
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mspk"
-    readonly property url unpackPath: System.temporaryFolder.url + "/MspkQml_%1.mspk".arg(new Date().getTime().toString())
 
     SceneView {
         id: sceneView

@@ -24,7 +24,6 @@ Rectangle {
 
     //! [open mobile map package qml api snippet]
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
-    readonly property url unpackPath: System.temporaryFolder.url + "/MmpkQml_%1.mmpk".arg(new Date().getTime().toString())
 
     // Create MapView
     MapView {

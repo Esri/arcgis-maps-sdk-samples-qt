@@ -22,8 +22,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"
-    property url unpackPath: System.temporaryFolder.url + "/MmpkQml_%1.mmpk".arg(new Date().getTime().toString())
+    property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/mmpk/"    
     property string expirationDate
     property string expirationTime
     property string expirationMessage
