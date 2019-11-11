@@ -18,6 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Esri.ArcGISRuntime 100.7
+import Esri.ArcGISExtras 1.1
 
 Rectangle {
     id: rootRectangle
@@ -25,7 +26,13 @@ Rectangle {
     width: 800
     height: 600
 
+    readonly property url outputMapPackage: System.temporaryFolder.url
     property var preplannedMapAreaList: null
+    property var preplannedArea: null
+    property var path: null
+    property var mapExists: false
+    property var loadedLayersCount: null
+//    property var fileExists: false
 
     MapView {
         id: mapView
@@ -86,13 +93,69 @@ Rectangle {
 //                preplannedlist.model = offlineMapTask.preplannedMapAreaList;
                 preplannedCombo.model = offlineMapTask.preplannedMapAreaList;
 
-//                console.log(preplannedlist.count);
+//                offlineMapTask.preplannedMapAreaList.get(0).loadStatusChanged.connect(function (){
+//                });
+                //needs to be loaded before we can use it to check for the file. Need to rethink logic.
+
+                for (let i = 0; i < offlineMapTask.preplannedMapAreaList.count; i++) {
+//                    offlineMapTask.preplannedMapAreaList.get(i).loadStatusChanged.connect(checkAllLayersLoaded(offlineMapTask.preplannedMapAreaList.get(i)));
+                    offlineMapTask.preplannedMapAreaList.get(i).load();
+//                    offlineMapTask.preplannedMapAreaList.get(i).contentItems;
+                }
+
+            }
+
+            onCreateDefaultDownloadPreplannedOfflineMapParametersStatusChanged: {
+                if (createDefaultDownloadPreplannedOfflineMapParametersStatus !== Enums.TaskStatusCompleted)
+                    return;
+
+                createDefaultDownloadPreplannedOfflineMapParametersResult.updateMode = Enums.PreplannedUpdateModeNoUpdates;
+                let result = createDefaultDownloadPreplannedOfflineMapParametersResult;
+                path = outputMapPackage + "/11" + result.preplannedMapArea.portalItem.title + ".mmpk";
+                console.log(path);
+
+
+                fileFolder.url = path;
+//                console.log(fileFolder.path);
+
+                if( fileFolder.exists) {
+//                    console.log("exists");
+                    var mmpk = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", { path: path });
+                    mmpk.loadStatusChanged.connect(function () {
+                        if( loadStatus !== Enums.LoadStatusLoaded )
+                            return;
+                        // loaded twice? first time not ready
+//                        console.log(loadStatus);
+
+                        if (mmpk.maps.length < 1)
+                            return;
+                        console.log("length - " + mmpk.maps.length);
+                        mapView.map = mmpk.maps[0];
+                    });
+                    mmpk.load();
+                    return;
+                }
+
+                var job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
+
+                job.jobStatusChanged.connect(function () {
+                    if( job.jobStatus !== Enums.JobStatusSucceeded)
+                        return;
+
+                    console.log("job status: %1 - Succeeded".arg(job.jobStatus));
+
+                    mapView.map = job.result.offlineMap;
+
+                });
+
+                job.progressChanged.connect(function () {
+                   console.log(job.progress);
+                });
+
+                job.start();
+                console.log("job started");
             }
         }
-
-
-
-
 
         Component.onCompleted: {
             portalItem.load();
@@ -159,15 +222,39 @@ Rectangle {
                 id: preplannedCombo
                 model: null
                 textRole: "itemTitle"
+
+                onActivated: {
+                    if (offlineMapTask.preplannedMapAreaList.count <= 0)
+                        return;
+
+                    if (offlineMapTask.preplannedMapAreaList.get(currentIndex).loadStatus !== Enums.LoadStatusLoaded)
+                        return;
+
+                    path = outputMapPackage + "/11" + offlineMapTask.preplannedMapAreaList.get(currentIndex).portalItem.title + ".mmpk";
+                    fileFolder.url = path;
+
+                    if (fileFolder.exists) {
+                        mapExists = true;
+                    } else {
+                        mapExists = false;
+                    }
+                }
+
+                onModelChanged: {
+                    if( model )
+                        console.log(model.itemTitle);
+                }
             }
 
             Button {
-                text: qsTr("Download")
+                id: downloadOrView
+//                text: qsTr("Download preplanned area")
+//                text: fileFolder.exists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
+                text: mapExists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
                 onClicked: {
+                    preplannedArea = offlineMapTask.preplannedMapAreaList.get(preplannedCombo.currentIndex);
+                    offlineMapTask.createDefaultDownloadPreplannedOfflineMapParameters(preplannedArea);
 
-
-
-//                    console.log("width %1 - height %2".arg(preplannedlist.width).arg(preplannedlist.height));
                 }
             }
             Text {
@@ -189,4 +276,23 @@ Rectangle {
             }
         }
     }
+
+    FileFolder {
+        id: fileFolder
+    }
+
+    function checkAllLayersLoaded(loadingLayer) {
+
+        if (loadingLayer.loadStatus != Enums.LoadStatusLoaded)
+            return;
+
+        loadedLayersCount++;
+
+        if(loadedLayersCount != offlineMapTask.preplannedMapAreaList.count)
+            return;
+
+        mapExists = true;
+
+    }
+
 }

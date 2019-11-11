@@ -18,6 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Esri.Samples 1.0
+import Esri.ArcGISExtras 1.1
 
 Item {
 
@@ -32,6 +33,31 @@ Item {
         id: model
         mapView: view
     }
+
+//    Rectangle {
+//        id: buttonBackground
+//        anchors {
+//            left: parent.left
+//            top: parent.top
+//            margins: 3
+//        }
+//        width: childrenRect.width
+//        height: childrenRect.height
+//        color: "#000000"
+//        opacity: .8
+//        radius: 5
+
+//        // catch mouse signals from propagating to parent
+//        MouseArea {
+//            anchors.fill: parent
+//            onClicked: mouse.accepted = true
+//            onWheel: wheel.accepted = true
+//        }
+
+//        ColumnLayout {
+
+//        }
+//    }
 
     Rectangle {
         id: buttonBackground
@@ -54,7 +80,93 @@ Item {
         }
 
         ColumnLayout {
+            Text {
+                id: name
+                text: qsTr("Preplanned Map Areas:")
+                color: "white"
+                Layout.alignment: Qt.AlignLeft
 
+            }
+
+            Repeater {
+                id: preplannedlist
+                model: null
+                delegate: Row {
+                    Rectangle {
+                        width: buttonBackground.width
+                        height: childrenRect.height
+                        color: "yellow"
+                        // catch mouse signals from propagating to parent
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: console.log(myItem.text)
+                            onWheel: wheel.accepted = true
+                        }
+                        Text {
+                            id: myItem
+                            text: itemTitle
+                            color: "white"
+                        }
+                    }
+                }
+            }
+
+            ListView {
+
+            }
+
+            ComboBox {
+                id: preplannedCombo
+                model: null
+                textRole: "itemTitle"
+
+                onActivated: {
+//                    if (offlineMapTask.preplannedMapAreaList.count <= 0)
+//                        return;
+
+//                    if (offlineMapTask.preplannedMapAreaList.get(currentIndex).loadStatus !== Enums.LoadStatusLoaded)
+//                        return;
+
+//                    path = outputMapPackage + "/11" + offlineMapTask.preplannedMapAreaList.get(currentIndex).portalItem.title + ".mmpk";
+//                    fileFolder.url = path;
+
+//                    if (fileFolder.exists) {
+//                        mapExists = true;
+//                    } else {
+//                        mapExists = false;
+//                    }
+                }
+            }
+
+            Button {
+                id: downloadOrView
+//                text: mapExists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
+                onClicked: {
+
+
+                }
+            }
+//            Text {
+//                id: name1
+//                text: qsTr("Downloads (deleted on exit):")
+//                color: "white"
+//                Layout.alignment: Qt.AlignLeft
+//            }
+
+            Repeater {
+                id: appliedmaps
+                model: null
+                delegate: Row {
+                    Text {
+                        text: itemTitle
+                        color: "white"
+                    }
+                }
+            }
         }
+    }
+
+    FileFolder {
+        id: fileFolder
     }
 }

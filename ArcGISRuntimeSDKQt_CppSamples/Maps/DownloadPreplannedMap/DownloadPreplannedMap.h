@@ -23,6 +23,10 @@ namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
+class GraphicsOverlay;
+class PortalItem;
+class OfflineMapTask;
+class PreplannedMapArea;
 }
 }
 
@@ -49,6 +53,9 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::OfflineMapTask* m_offlineMapTask = nullptr;
+  Esri::ArcGISRuntime::OfflineMapTask* m_portalItem = nullptr;
 };
 
 #endif // DOWNLOADPREPLANNEDMAP_H
