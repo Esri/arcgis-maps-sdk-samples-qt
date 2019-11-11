@@ -31,8 +31,6 @@ Rectangle {
     property var preplannedArea: null
     property var path: null
     property var mapExists: false
-    property var loadedLayersCount: null
-//    property var fileExists: false
 
     MapView {
         id: mapView

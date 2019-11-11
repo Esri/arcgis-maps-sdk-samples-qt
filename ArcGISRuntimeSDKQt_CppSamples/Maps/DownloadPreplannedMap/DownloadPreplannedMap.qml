@@ -117,7 +117,7 @@ Item {
 
             ComboBox {
                 id: preplannedCombo
-                model: null
+                model: model.preplannedModel
                 textRole: "itemTitle"
 
                 onActivated: {

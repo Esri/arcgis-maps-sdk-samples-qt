@@ -31,12 +31,15 @@ class PreplannedMapArea;
 }
 
 #include <QObject>
+#include <QTemporaryDir>
+#include <QAbstractListModel>
 
 class DownloadPreplannedMap : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QAbstractListModel* preplannedModel MEMBER m_preplannedList NOTIFY preplannedListChanged)
 
 public:
   explicit DownloadPreplannedMap(QObject* parent = nullptr);
@@ -46,6 +49,7 @@ public:
 
 signals:
   void mapViewChanged();
+  void preplannedListChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -55,7 +59,10 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::OfflineMapTask* m_offlineMapTask = nullptr;
-  Esri::ArcGISRuntime::OfflineMapTask* m_portalItem = nullptr;
+  Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
+  QAbstractListModel* m_preplannedList = nullptr;
+  bool mapExists = false;
+  QTemporaryDir m_tempPath;
 };
 
 #endif // DOWNLOADPREPLANNEDMAP_H

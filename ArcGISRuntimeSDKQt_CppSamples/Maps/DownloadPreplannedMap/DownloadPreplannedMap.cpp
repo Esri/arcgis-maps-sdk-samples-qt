@@ -18,13 +18,32 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
+#include "OfflineMapTask.h"
+#include "PreplannedMapArea.h"
+#include "PreplannedMapAreaListModel.h"
 
 using namespace Esri::ArcGISRuntime;
 
 DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::imagery(this), this))
+  m_portalItem(new PortalItem("acc027394bc84c2fb04d1ed317aac674", this))
 {
+  connect(m_portalItem, &PortalItem::doneLoading, this, [this] ()
+  {
+    m_offlineMapTask = new OfflineMapTask(m_map, this);
+
+    connect(m_offlineMapTask, &OfflineMapTask::doneLoading, this, [this] ()
+    {
+      connect(m_offlineMapTask, &OfflineMapTask::preplannedMapAreasCompleted, this, [this] ()
+      {
+        m_preplannedList = m_offlineMapTask->preplannedMapAreaList();
+        emit preplannedListChanged();
+      });
+     m_offlineMapTask->preplannedMapAreas();
+    });
+    m_offlineMapTask->load();
+  });
+  m_map = new Map(m_portalItem, this);
 
 }
 
