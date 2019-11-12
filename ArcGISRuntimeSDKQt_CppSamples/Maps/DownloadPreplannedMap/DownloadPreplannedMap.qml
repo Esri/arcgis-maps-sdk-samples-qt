@@ -135,15 +135,17 @@ Item {
 //                    } else {
 //                        mapExists = false;
 //                    }
+
+                    model.checkIfMapExists(preplannedCombo.currentIndex);
                 }
             }
 
             Button {
                 id: downloadOrView
-//                text: mapExists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
+                text: model.mapExists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
+//                text: "Download Preplanned Area"
                 onClicked: {
-
-
+                    model.downloadMapArea(preplannedCombo.currentIndex);
                 }
             }
 //            Text {
@@ -168,5 +170,10 @@ Item {
 
     FileFolder {
         id: fileFolder
+    }
+
+    BusyIndicator {
+        anchors.centerIn: parent
+        visible: model.busy
     }
 }

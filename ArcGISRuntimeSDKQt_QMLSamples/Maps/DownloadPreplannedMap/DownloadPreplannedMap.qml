@@ -31,6 +31,7 @@ Rectangle {
     property var preplannedArea: null
     property var path: null
     property var mapExists: false
+    property var downloadedMaps : []
 
     MapView {
         id: mapView
@@ -97,6 +98,14 @@ Rectangle {
 
                 for (let i = 0; i < offlineMapTask.preplannedMapAreaList.count; i++) {
 //                    offlineMapTask.preplannedMapAreaList.get(i).loadStatusChanged.connect(checkAllLayersLoaded(offlineMapTask.preplannedMapAreaList.get(i)));
+                    offlineMapTask.preplannedMapAreaList.get(i).loadStatusChanged.connect(function () {
+                        if(offlineMapTask.preplannedMapAreaList.get(i).loadStatus !== Enums.LoadStatusLoaded)
+                            return;
+
+                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: offlineMapTask.preplannedMapAreaList.get(i).areaOfInterest });
+
+                        graphicsOverlay.graphics.append(graphic);
+                    });
                     offlineMapTask.preplannedMapAreaList.get(i).load();
 //                    offlineMapTask.preplannedMapAreaList.get(i).contentItems;
                 }
@@ -144,6 +153,7 @@ Rectangle {
 
                     mapView.map = job.result.offlineMap;
 
+                    downloadedMaps.append(job.result.offlineMap.item.title);
                 });
 
                 job.progressChanged.connect(function () {
@@ -233,9 +243,12 @@ Rectangle {
 
                     if (fileFolder.exists) {
                         mapExists = true;
+                        downloadedMaps.append(offlineMapTask.preplannedMapAreaList.get(currentIndex).portalItem.title);
                     } else {
                         mapExists = false;
                     }
+
+                    mapView.setViewpointGeometry(offlineMapTask.preplannedMapAreaList.get(currentIndex).areaOfInterest);
                 }
 
                 onModelChanged: {
@@ -255,11 +268,41 @@ Rectangle {
 
                 }
             }
-            Text {
-                id: name1
-                text: qsTr("Downloads (deleted on exit):")
-                color: "white"
-                Layout.alignment: Qt.AlignLeft
+
+            ComboBox {
+                id: downloadedMapsCombo
+                model: downloadedMaps
+//                textRole: "itemTitle"
+
+                onActivated: {
+                    for(let i = 0; i < downloadedMaps.length; i++) {
+                        console.log(downloadedMaps[i]);
+                    }
+                }
+
+//                onActivated: {
+//                    if (offlineMapTask.preplannedMapAreaList.count <= 0)
+//                        return;
+
+//                    if (offlineMapTask.preplannedMapAreaList.get(currentIndex).loadStatus !== Enums.LoadStatusLoaded)
+//                        return;
+
+//                    path = outputMapPackage + "/11" + offlineMapTask.preplannedMapAreaList.get(currentIndex).portalItem.title + ".mmpk";
+//                    fileFolder.url = path;
+
+//                    if (fileFolder.exists) {
+//                        mapExists = true;
+//                    } else {
+//                        mapExists = false;
+//                    }
+
+//                    mapView.setViewpointGeometry(offlineMapTask.preplannedMapAreaList.get(currentIndex).areaOfInterest);
+//                }
+
+//                onModelChanged: {
+//                    if( model )
+//                        console.log(model.itemTitle);
+//                }
             }
 
             Repeater {
@@ -279,9 +322,14 @@ Rectangle {
         id: fileFolder
     }
 
+    BusyIndicator {
+        id: busy
+        visible: false;
+    }
+
     function checkAllLayersLoaded(loadingLayer) {
 
-        if (loadingLayer.loadStatus != Enums.LoadStatusLoaded)
+        if (loadingLayer.loadStatus !== Enums.LoadStatusLoaded)
             return;
 
         loadedLayersCount++;
