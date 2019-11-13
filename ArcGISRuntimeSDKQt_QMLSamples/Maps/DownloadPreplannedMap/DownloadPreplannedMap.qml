@@ -31,7 +31,7 @@ Rectangle {
     property var preplannedArea: null
     property var path: null
     property var mapExists: false
-    property var downloadedMaps : []
+    property var viewingOnlineMaps: true
 
     MapView {
         id: mapView
@@ -56,6 +56,7 @@ Rectangle {
                 if (loadStatus !== Enums.LoadStatusLoaded)
                     return;
 
+                busy.visible = true;
                 offlineMapTask.load();
             }
         }
@@ -85,31 +86,26 @@ Rectangle {
             }
 
             onPreplannedMapAreasStatusChanged: {
-                if( preplannedMapAreasStatus !== Enums.TaskStatusCompleted)
+                if (preplannedMapAreasStatus !== Enums.TaskStatusCompleted)
                     return;
 
-//                preplannedMapAreaList = offlineMapTask.preplannedMapAreaList;
-//                preplannedlist.model = offlineMapTask.preplannedMapAreaList;
                 preplannedCombo.model = offlineMapTask.preplannedMapAreaList;
-
-//                offlineMapTask.preplannedMapAreaList.get(0).loadStatusChanged.connect(function (){
-//                });
-                //needs to be loaded before we can use it to check for the file. Need to rethink logic.
+                busy.visible = false;
 
                 for (let i = 0; i < offlineMapTask.preplannedMapAreaList.count; i++) {
-//                    offlineMapTask.preplannedMapAreaList.get(i).loadStatusChanged.connect(checkAllLayersLoaded(offlineMapTask.preplannedMapAreaList.get(i)));
                     offlineMapTask.preplannedMapAreaList.get(i).loadStatusChanged.connect(function () {
-                        if(offlineMapTask.preplannedMapAreaList.get(i).loadStatus !== Enums.LoadStatusLoaded)
+                        if (offlineMapTask.preplannedMapAreaList.get(i).loadStatus !== Enums.LoadStatusLoaded)
                             return;
+
+                        if (i === 0)
+                            checkIfFileExists(i);
 
                         var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: offlineMapTask.preplannedMapAreaList.get(i).areaOfInterest });
 
                         graphicsOverlay.graphics.append(graphic);
                     });
                     offlineMapTask.preplannedMapAreaList.get(i).load();
-//                    offlineMapTask.preplannedMapAreaList.get(i).contentItems;
                 }
-
             }
 
             onCreateDefaultDownloadPreplannedOfflineMapParametersStatusChanged: {
@@ -118,26 +114,21 @@ Rectangle {
 
                 createDefaultDownloadPreplannedOfflineMapParametersResult.updateMode = Enums.PreplannedUpdateModeNoUpdates;
                 let result = createDefaultDownloadPreplannedOfflineMapParametersResult;
-                path = outputMapPackage + "/11" + result.preplannedMapArea.portalItem.title + ".mmpk";
-                console.log(path);
-
+                path = outputMapPackage + "/" + result.preplannedMapArea.portalItem.title + ".mmpk";
 
                 fileFolder.url = path;
-//                console.log(fileFolder.path);
 
-                if( fileFolder.exists) {
-//                    console.log("exists");
+                if (fileFolder.exists) {
                     var mmpk = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", { path: path });
                     mmpk.loadStatusChanged.connect(function () {
-                        if( loadStatus !== Enums.LoadStatusLoaded )
+                        if (loadStatus !== Enums.LoadStatusLoaded )
                             return;
-                        // loaded twice? first time not ready
-//                        console.log(loadStatus);
 
                         if (mmpk.maps.length < 1)
                             return;
-                        console.log("length - " + mmpk.maps.length);
+
                         mapView.map = mmpk.maps[0];
+                        busy.visible = false;
                     });
                     mmpk.load();
                     return;
@@ -146,22 +137,15 @@ Rectangle {
                 var job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
 
                 job.jobStatusChanged.connect(function () {
-                    if( job.jobStatus !== Enums.JobStatusSucceeded)
+                    if (job.jobStatus !== Enums.JobStatusSucceeded)
                         return;
 
-                    console.log("job status: %1 - Succeeded".arg(job.jobStatus));
-
                     mapView.map = job.result.offlineMap;
-
-                    downloadedMaps.append(job.result.offlineMap.item.title);
-                });
-
-                job.progressChanged.connect(function () {
-                   console.log(job.progress);
+                    mapExists = true;
+                    busy.visible = false;
                 });
 
                 job.start();
-                console.log("job started");
             }
         }
 
@@ -191,43 +175,33 @@ Rectangle {
         }
 
         ColumnLayout {
-            Text {
-                id: name
-                text: qsTr("Preplanned Map Areas:")
-                color: "white"
-                Layout.alignment: Qt.AlignLeft
-
-            }
-
-            Repeater {
-                id: preplannedlist
-                model: null
-                delegate: Row {
-                    Rectangle {
-                        width: buttonBackground.width
-                        height: childrenRect.height
-                        color: "yellow"
-                        // catch mouse signals from propagating to parent
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: console.log(myItem.text)
-                            onWheel: wheel.accepted = true
-                        }
-                        Text {
-                            id: myItem
-                            text: itemTitle
-                            color: "white"
-                        }
-                    }
+            Button {
+                id: onlineMapButton
+                Layout.fillWidth: true
+                Layout.margins: 2
+                Layout.alignment: Qt.AlignHCenter
+                text: qsTr("Show Online Map")
+                onClicked: {
+                    mapView.map = onlineMap;
+                    graphicsOverlay.visible = true;
+                    viewingOnlineMaps = true;
+                    mapView.setViewpointGeometry(offlineMapTask.preplannedMapAreaList.get(preplannedCombo.currentIndex).areaOfInterest);
+                    checkIfFileExists(preplannedCombo.currentIndex);
                 }
             }
 
-            ListView {
+            Text {
+                id: name
+                text: qsTr("Available Preplanned Areas:")
+                color: "white"
+                Layout.alignment: Qt.AlignHCenter
 
             }
 
             ComboBox {
                 id: preplannedCombo
+                Layout.fillWidth: true
+                Layout.margins: 2
                 model: null
                 textRole: "itemTitle"
 
@@ -238,81 +212,24 @@ Rectangle {
                     if (offlineMapTask.preplannedMapAreaList.get(currentIndex).loadStatus !== Enums.LoadStatusLoaded)
                         return;
 
-                    path = outputMapPackage + "/11" + offlineMapTask.preplannedMapAreaList.get(currentIndex).portalItem.title + ".mmpk";
-                    fileFolder.url = path;
+                    checkIfFileExists(currentIndex);
 
-                    if (fileFolder.exists) {
-                        mapExists = true;
-                        downloadedMaps.append(offlineMapTask.preplannedMapAreaList.get(currentIndex).portalItem.title);
-                    } else {
-                        mapExists = false;
-                    }
-
-                    mapView.setViewpointGeometry(offlineMapTask.preplannedMapAreaList.get(currentIndex).areaOfInterest);
-                }
-
-                onModelChanged: {
-                    if( model )
-                        console.log(model.itemTitle);
+                    if (viewingOnlineMaps)
+                        mapView.setViewpointGeometry(offlineMapTask.preplannedMapAreaList.get(currentIndex).areaOfInterest);
                 }
             }
 
             Button {
                 id: downloadOrView
-//                text: qsTr("Download preplanned area")
-//                text: fileFolder.exists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
-                text: mapExists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
+                Layout.fillWidth: true
+                Layout.margins: 2
+                text: mapExists ? qsTr("View Preplanned area") : qsTr("Download Preplanned Area")
                 onClicked: {
                     preplannedArea = offlineMapTask.preplannedMapAreaList.get(preplannedCombo.currentIndex);
                     offlineMapTask.createDefaultDownloadPreplannedOfflineMapParameters(preplannedArea);
-
-                }
-            }
-
-            ComboBox {
-                id: downloadedMapsCombo
-                model: downloadedMaps
-//                textRole: "itemTitle"
-
-                onActivated: {
-                    for(let i = 0; i < downloadedMaps.length; i++) {
-                        console.log(downloadedMaps[i]);
-                    }
-                }
-
-//                onActivated: {
-//                    if (offlineMapTask.preplannedMapAreaList.count <= 0)
-//                        return;
-
-//                    if (offlineMapTask.preplannedMapAreaList.get(currentIndex).loadStatus !== Enums.LoadStatusLoaded)
-//                        return;
-
-//                    path = outputMapPackage + "/11" + offlineMapTask.preplannedMapAreaList.get(currentIndex).portalItem.title + ".mmpk";
-//                    fileFolder.url = path;
-
-//                    if (fileFolder.exists) {
-//                        mapExists = true;
-//                    } else {
-//                        mapExists = false;
-//                    }
-
-//                    mapView.setViewpointGeometry(offlineMapTask.preplannedMapAreaList.get(currentIndex).areaOfInterest);
-//                }
-
-//                onModelChanged: {
-//                    if( model )
-//                        console.log(model.itemTitle);
-//                }
-            }
-
-            Repeater {
-                id: appliedmaps
-                model: null
-                delegate: Row {
-                    Text {
-                        text: itemTitle
-                        color: "white"
-                    }
+                    graphicsOverlay.visible = false;
+                    viewingOnlineMaps = false;
+                    busy.visible = true;
                 }
             }
         }
@@ -324,21 +241,14 @@ Rectangle {
 
     BusyIndicator {
         id: busy
+        anchors.centerIn: parent
         visible: false;
     }
 
-    function checkAllLayersLoaded(loadingLayer) {
-
-        if (loadingLayer.loadStatus !== Enums.LoadStatusLoaded)
-            return;
-
-        loadedLayersCount++;
-
-        if(loadedLayersCount != offlineMapTask.preplannedMapAreaList.count)
-            return;
-
-        mapExists = true;
-
+    function checkIfFileExists(index) {
+        path = outputMapPackage + "/" + offlineMapTask.preplannedMapAreaList.get(index).portalItem.title + ".mmpk";
+        fileFolder.url = path;
+        mapExists = fileFolder.exists;
+        return;
     }
-
 }
