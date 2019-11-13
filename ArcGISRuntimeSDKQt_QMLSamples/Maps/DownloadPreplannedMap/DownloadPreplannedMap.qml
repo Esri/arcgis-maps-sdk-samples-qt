@@ -26,7 +26,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url outputMapPackage: System.temporaryFolder.url
+    readonly property url outputMapPackage: System.temporaryFolder.url + "/ArcGIS"
     property var preplannedMapAreaList: null
     property var preplannedArea: null
     property var path: null
@@ -83,6 +83,11 @@ Rectangle {
                     return;
 
                 offlineMapTask.preplannedMapAreas();
+                path = outputMapPackage;
+                fileFolder.url = path;
+                let worked = fileFolder.makeFolder();
+                if (!worked)
+                    console.log("Make Folder Failed");
             }
 
             onPreplannedMapAreasStatusChanged: {
@@ -114,8 +119,8 @@ Rectangle {
 
                 createDefaultDownloadPreplannedOfflineMapParametersResult.updateMode = Enums.PreplannedUpdateModeNoUpdates;
                 let result = createDefaultDownloadPreplannedOfflineMapParametersResult;
-                path = outputMapPackage + "/" + result.preplannedMapArea.portalItem.title + ".mmpk";
 
+                path = outputMapPackage +"/" + result.preplannedMapArea.portalItem.title + ".mmpk";
                 fileFolder.url = path;
 
                 if (fileFolder.exists) {
@@ -137,8 +142,13 @@ Rectangle {
                 var job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
 
                 job.jobStatusChanged.connect(function () {
-                    if (job.jobStatus !== Enums.JobStatusSucceeded)
+                    if (job.jobStatus === Enums.JobStatusFailed) {
+                        console.log(job.error.message + " - " + job.error.additionalMessage)
+                        busy = false;
                         return;
+                    } else if (job.jobStatus !== Enums.JobStatusSucceeded) {
+                        return;
+                    }
 
                     mapView.map = job.result.offlineMap;
                     mapExists = true;
@@ -181,7 +191,9 @@ Rectangle {
                 Layout.margins: 2
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Show Online Map")
+                enabled: !busy.visible & !viewingOnlineMaps
                 onClicked: {
+
                     mapView.map = onlineMap;
                     graphicsOverlay.visible = true;
                     viewingOnlineMaps = true;
@@ -194,13 +206,14 @@ Rectangle {
                 text: qsTr("Available Preplanned Areas:")
                 color: "white"
                 Layout.alignment: Qt.AlignHCenter
-
+                Layout.margins: 2
             }
 
             ComboBox {
                 id: preplannedCombo
                 Layout.fillWidth: true
                 Layout.margins: 2
+                enabled: !busy.visible
                 model: null
                 textRole: "itemTitle"
 
@@ -222,6 +235,7 @@ Rectangle {
                 id: downloadOrView
                 Layout.fillWidth: true
                 Layout.margins: 2
+                enabled: !busy.visible
                 text: mapExists ? qsTr("View Preplanned area") : qsTr("Download Preplanned Area")
                 onClicked: {
                     preplannedArea = offlineMapTask.preplannedMapAreaList.get(preplannedCombo.currentIndex);
@@ -230,6 +244,17 @@ Rectangle {
                     viewingOnlineMaps = false;
                     busy.visible = true;
                 }
+
+                onWidthChanged: {
+
+                }
+            }
+
+            Text {
+                text: qsTr("Download(s) deleted on exit")
+                color: "white"
+                Layout.alignment: Qt.AlignHCenter
+                Layout.margins: 2
             }
         }
     }
@@ -250,4 +275,11 @@ Rectangle {
         mapExists = fileFolder.exists;
         return;
     }
+
+    Component.onDestruction: {
+        fileFolder.url = outputMapPackage;
+        fileFolder.cdUp();
+        fileFolder.removeFolder("ArcGIS", true);
+    }
+
 }

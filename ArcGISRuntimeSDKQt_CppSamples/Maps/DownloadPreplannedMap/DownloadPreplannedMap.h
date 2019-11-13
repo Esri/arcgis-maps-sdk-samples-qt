@@ -29,6 +29,7 @@ class OfflineMapTask;
 class PreplannedMapArea;
 class DownloadPreplannedOfflineMapJob;
 class MobileMapPackage;
+class SimpleLineSymbol;
 }
 }
 
@@ -45,6 +46,7 @@ class DownloadPreplannedMap : public QObject
   Q_PROPERTY(QAbstractListModel* preplannedModel MEMBER m_preplannedList NOTIFY preplannedListChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
   Q_PROPERTY(bool mapExists MEMBER m_mapExists NOTIFY mapExistsChanged)
+  Q_PROPERTY(bool viewingOnlineMaps MEMBER m_viewingOnlineMaps NOTIFY viewingOnlineMapsChanged())
 
 public:
   explicit DownloadPreplannedMap(QObject* parent = nullptr);
@@ -53,13 +55,18 @@ public:
   static void init();
   Q_INVOKABLE void downloadMapArea(const int index);
   Q_INVOKABLE void checkIfMapExists(const int index);
-  Q_INVOKABLE void showOnlineMap();
+  Q_INVOKABLE void showOnlineMap(const int index);
 
 signals:
   void mapViewChanged();
   void preplannedListChanged();
   void busyChanged();
   void mapExistsChanged();
+  void viewingOnlineMapsChanged();
+
+private slots:
+  void onDownloadPreplannedMapJobCompleted();
+  void loadPreplannedMapAreas();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -72,10 +79,13 @@ private:
   Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
   Esri::ArcGISRuntime::DownloadPreplannedOfflineMapJob* m_preplannedMapJob = nullptr;
   Esri::ArcGISRuntime::MobileMapPackage* m_mmpk = nullptr;
+  Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
   QAbstractListModel* m_preplannedList = nullptr;
   Esri::ArcGISRuntime::DownloadPreplannedOfflineMapParameters m_params;
+  QScopedPointer<QObject> m_graphicParent;
   bool m_busy = false;
   bool m_mapExists = false;
+  bool m_viewingOnlineMaps = true;
   QTemporaryDir m_tempPath;
 };
 

@@ -34,31 +34,6 @@ Item {
         mapView: view
     }
 
-//    Rectangle {
-//        id: buttonBackground
-//        anchors {
-//            left: parent.left
-//            top: parent.top
-//            margins: 3
-//        }
-//        width: childrenRect.width
-//        height: childrenRect.height
-//        color: "#000000"
-//        opacity: .8
-//        radius: 5
-
-//        // catch mouse signals from propagating to parent
-//        MouseArea {
-//            anchors.fill: parent
-//            onClicked: mouse.accepted = true
-//            onWheel: wheel.accepted = true
-//        }
-
-//        ColumnLayout {
-
-//        }
-//    }
-
     Rectangle {
         id: buttonBackground
         anchors {
@@ -84,8 +59,9 @@ Item {
                 Layout.fillWidth: true
                 Layout.margins: 2
                 Layout.alignment: Qt.AlignHCenter
+                enabled: !busy.visible & !model.viewingOnlineMaps
                 text: qsTr("Show Online Map")
-                onClicked: model.showOnlineMap();
+                onClicked: model.showOnlineMap(preplannedCombo.currentIndex);
             }
 
             Text {
@@ -99,6 +75,7 @@ Item {
                 id: preplannedCombo
                 Layout.fillWidth: true
                 Layout.margins: 2
+                enabled: !busy.visible
                 model: model.preplannedModel
                 textRole: "itemTitle"
                 onActivated: model.checkIfMapExists(preplannedCombo.currentIndex);
@@ -108,8 +85,16 @@ Item {
                 id: downloadOrView
                 Layout.fillWidth: true
                 Layout.margins: 2
+                enabled: !busy.visible
                 text: model.mapExists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
                 onClicked: model.downloadMapArea(preplannedCombo.currentIndex);
+            }
+
+            Text {
+                text: qsTr("Download(s) deleted on exit")
+                color: "white"
+                Layout.alignment: Qt.AlignHCenter
+                Layout.margins: 2
             }
         }
     }
@@ -119,6 +104,7 @@ Item {
     }
 
     BusyIndicator {
+        id: busy
         anchors.centerIn: parent
         visible: model.busy
     }
