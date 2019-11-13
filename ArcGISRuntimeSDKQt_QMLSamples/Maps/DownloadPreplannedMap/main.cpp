@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Layers/DownloadPreplannedMap/DownloadPreplannedMap.qml"));
+  view.setSource(QUrl("qrc:/Samples/Maps/DownloadPreplannedMap/DownloadPreplannedMap.qml"));
 
   view.show();
 

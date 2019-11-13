@@ -1,4 +1,4 @@
-// [WriteFile Name=DownloadPreplannedMap, Category=Layers]
+// [WriteFile Name=DownloadPreplannedMap, Category=Maps]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -281,5 +281,4 @@ Rectangle {
         fileFolder.cdUp();
         fileFolder.removeFolder("ArcGIS", true);
     }
-
 }
