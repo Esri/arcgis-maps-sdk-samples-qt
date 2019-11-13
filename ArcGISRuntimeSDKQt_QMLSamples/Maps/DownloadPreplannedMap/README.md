@@ -18,14 +18,14 @@ Select a map area from the Preplanned Map Areas list. Click the Download button 
 
 ## How it works
 
-1. Open the online `ArcGISMap` from a `PortalItem` and display it.
+1. Open the online `Map` from a `PortalItem` and display it.
 2. Create an `OfflineMapTask` using the portal item.
 3. Get the `PreplannedMapArea`s from the task, and then load them.
 4. To download a selected map area, create the default `DownloadPreplannedOfflineMapParameters` from the task using the selected preplanned map area.
 5. Set the update mode of the preplanned map area.
 6. Use the parameters and a download path to create a `DownloadPreplannedOfflineMapJob` from the task.
 7. Start the job. Once it has completed, get the  `DownloadPreplannedOfflineMapResult`.
-8. Get the `ArcGISMap` from the result and display it in the `MapView`.
+8. Get the map from the result and display it in the `MapView`.
 
 ## Relevant API
 

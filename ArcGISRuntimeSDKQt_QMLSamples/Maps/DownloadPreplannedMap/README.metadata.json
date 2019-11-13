@@ -1,16 +1,23 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Maps",
+    "description": "Take a map offline using a preplanned map area.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "map area",
+        "offline",
+        "preplanned",
+        "pre-planned"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "DownloadPreplannedOfflineMapJob",
+        "DownloadPreplannedOfflineMapParameters",
+        "DownloadPreplannedOfflineMapResult",
+        "OfflineMapTask",
+        "PreplannedMapArea"
     ],
     "snippets": [
         "DownloadPreplannedMap.qml"
