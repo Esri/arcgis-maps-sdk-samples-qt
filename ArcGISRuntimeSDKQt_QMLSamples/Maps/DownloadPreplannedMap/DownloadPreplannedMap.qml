@@ -191,7 +191,6 @@ Rectangle {
             }
 
             Text {
-                id: name
                 text: qsTr("Available Preplanned Areas:")
                 color: "white"
                 Layout.alignment: Qt.AlignHCenter

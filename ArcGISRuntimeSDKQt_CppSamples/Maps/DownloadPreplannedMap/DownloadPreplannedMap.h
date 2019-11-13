@@ -53,6 +53,7 @@ public:
   static void init();
   Q_INVOKABLE void downloadMapArea(const int index);
   Q_INVOKABLE void checkIfMapExists(const int index);
+  Q_INVOKABLE void showOnlineMap();
 
 signals:
   void mapViewChanged();

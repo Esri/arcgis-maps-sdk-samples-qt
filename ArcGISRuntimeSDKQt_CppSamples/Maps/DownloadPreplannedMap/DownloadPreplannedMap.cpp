@@ -34,6 +34,8 @@ DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
   m_busy = true;
   emit busyChanged();
 
+
+
   connect(m_portalItem, &PortalItem::doneLoading, this, [this] ()
   {
     m_offlineMapTask = new OfflineMapTask(m_map, this);
@@ -158,6 +160,8 @@ void DownloadPreplannedMap::downloadMapArea(int index)
      m_offlineMapTask->disconnect();
      m_busy = false;
      emit busyChanged();
+     m_mapExists = true;
+     emit mapExistsChanged();
    });
 
    m_preplannedMapJob->start();
@@ -199,4 +203,9 @@ void DownloadPreplannedMap::checkIfMapExists(const int index)
     m_mapExists = false;
     emit mapExistsChanged();
   }
+}
+
+void DownloadPreplannedMap::showOnlineMap()
+{
+  m_map = new Map(m_portalItem, this);
 }

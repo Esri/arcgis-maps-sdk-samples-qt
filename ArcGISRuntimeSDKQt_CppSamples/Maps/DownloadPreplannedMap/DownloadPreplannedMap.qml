@@ -80,90 +80,36 @@ Item {
         }
 
         ColumnLayout {
+            Button {
+                Layout.fillWidth: true
+                Layout.margins: 2
+                Layout.alignment: Qt.AlignHCenter
+                text: qsTr("Show Online Map")
+                onClicked: model.showOnlineMap();
+            }
+
             Text {
-                id: name
-                text: qsTr("Preplanned Map Areas:")
+                text: qsTr("Available Preplanned Areas:")
                 color: "white"
-                Layout.alignment: Qt.AlignLeft
-
-            }
-
-            Repeater {
-                id: preplannedlist
-                model: null
-                delegate: Row {
-                    Rectangle {
-                        width: buttonBackground.width
-                        height: childrenRect.height
-                        color: "yellow"
-                        // catch mouse signals from propagating to parent
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: console.log(myItem.text)
-                            onWheel: wheel.accepted = true
-                        }
-                        Text {
-                            id: myItem
-                            text: itemTitle
-                            color: "white"
-                        }
-                    }
-                }
-            }
-
-            ListView {
+                Layout.alignment: Qt.AlignHCenter
 
             }
 
             ComboBox {
                 id: preplannedCombo
+                Layout.fillWidth: true
+                Layout.margins: 2
                 model: model.preplannedModel
                 textRole: "itemTitle"
-
-                onActivated: {
-//                    if (offlineMapTask.preplannedMapAreaList.count <= 0)
-//                        return;
-
-//                    if (offlineMapTask.preplannedMapAreaList.get(currentIndex).loadStatus !== Enums.LoadStatusLoaded)
-//                        return;
-
-//                    path = outputMapPackage + "/11" + offlineMapTask.preplannedMapAreaList.get(currentIndex).portalItem.title + ".mmpk";
-//                    fileFolder.url = path;
-
-//                    if (fileFolder.exists) {
-//                        mapExists = true;
-//                    } else {
-//                        mapExists = false;
-//                    }
-
-                    model.checkIfMapExists(preplannedCombo.currentIndex);
-                }
+                onActivated: model.checkIfMapExists(preplannedCombo.currentIndex);
             }
 
             Button {
                 id: downloadOrView
+                Layout.fillWidth: true
+                Layout.margins: 2
                 text: model.mapExists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
-//                text: "Download Preplanned Area"
-                onClicked: {
-                    model.downloadMapArea(preplannedCombo.currentIndex);
-                }
-            }
-//            Text {
-//                id: name1
-//                text: qsTr("Downloads (deleted on exit):")
-//                color: "white"
-//                Layout.alignment: Qt.AlignLeft
-//            }
-
-            Repeater {
-                id: appliedmaps
-                model: null
-                delegate: Row {
-                    Text {
-                        text: itemTitle
-                        color: "white"
-                    }
-                }
+                onClicked: model.downloadMapArea(preplannedCombo.currentIndex);
             }
         }
     }
