@@ -18,7 +18,6 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Esri.Samples 1.0
-import Esri.ArcGISExtras 1.1
 
 Item {
 
@@ -28,7 +27,7 @@ Item {
         anchors.fill: parent
     }
 
-    // Declare the C++ instance which creates the scene etc. and supply the view
+    // Declare the C++ instance which creates the map etc. and supply the view
     DownloadPreplannedMapSample {
         id: model
         mapView: view
@@ -68,7 +67,6 @@ Item {
                 text: qsTr("Available Preplanned Areas:")
                 color: "white"
                 Layout.alignment: Qt.AlignHCenter
-
             }
 
             ComboBox {
@@ -97,10 +95,6 @@ Item {
                 Layout.margins: 2
             }
         }
-    }
-
-    FileFolder {
-        id: fileFolder
     }
 
     BusyIndicator {

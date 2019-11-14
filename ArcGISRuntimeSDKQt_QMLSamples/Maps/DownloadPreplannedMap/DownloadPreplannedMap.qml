@@ -32,33 +32,15 @@ Rectangle {
     property var path: null
     property var mapExists: false
     property var viewingOnlineMaps: true
+    property var job: null
 
     MapView {
         id: mapView
         anchors.fill: parent
 
         Map {
-            id: onlineMap
+            id: arcgisOnlineMap
             item: portalItem
-        }
-
-        Portal {
-            id: portal
-            url: "https://www.arcgis.com"
-        }
-
-        PortalItem {
-            id: portalItem
-            portal: portal
-            itemId: "acc027394bc84c2fb04d1ed317aac674"
-
-            onLoadStatusChanged: {
-                if (loadStatus !== Enums.LoadStatusLoaded)
-                    return;
-
-                busy.visible = true;
-                offlineMapTask.load();
-            }
         }
 
         GraphicsOverlay {
@@ -74,7 +56,7 @@ Rectangle {
 
         OfflineMapTask {
             id: offlineMapTask
-            onlineMap: onlineMap
+            onlineMap: arcgisOnlineMap
 
             onErrorChanged: console.log(error.message, error.additionalMessage);
 
@@ -85,7 +67,7 @@ Rectangle {
                 offlineMapTask.preplannedMapAreas();
                 path = outputMapPackage;
                 fileFolder.url = path;
-                let worked = fileFolder.makeFolder();
+                const worked = fileFolder.makeFolder();
                 if (!worked)
                     console.log("Make Folder Failed");
             }
@@ -105,7 +87,7 @@ Rectangle {
                         if (i === 0)
                             checkIfFileExists(i);
 
-                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: offlineMapTask.preplannedMapAreaList.get(i).areaOfInterest });
+                        const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: offlineMapTask.preplannedMapAreaList.get(i).areaOfInterest });
 
                         graphicsOverlay.graphics.append(graphic);
                     });
@@ -120,7 +102,7 @@ Rectangle {
                 createDefaultDownloadPreplannedOfflineMapParametersResult.updateMode = Enums.PreplannedUpdateModeNoUpdates;
                 let result = createDefaultDownloadPreplannedOfflineMapParametersResult;
 
-                path = outputMapPackage +"/" + result.preplannedMapArea.portalItem.title + ".mmpk";
+                path = outputMapPackage +"/" + result.preplannedMapArea.portalItem.title;
                 fileFolder.url = path;
 
                 if (fileFolder.exists) {
@@ -139,7 +121,7 @@ Rectangle {
                     return;
                 }
 
-                var job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
+                job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
 
                 job.jobStatusChanged.connect(function () {
                     if (job.jobStatus === Enums.JobStatusFailed) {
@@ -159,8 +141,22 @@ Rectangle {
             }
         }
 
-        Component.onCompleted: {
-            portalItem.load();
+//        Component.onCompleted: {
+//            portalItem.load();
+//        }
+    }
+
+    PortalItem {
+        id: portalItem
+        portal: portal
+        itemId: "acc027394bc84c2fb04d1ed317aac674"
+
+        onLoadStatusChanged: {
+            if (loadStatus !== Enums.LoadStatusLoaded)
+                return;
+
+            busy.visible = true;
+            offlineMapTask.load();
         }
     }
 
@@ -193,8 +189,7 @@ Rectangle {
                 text: qsTr("Show Online Map")
                 enabled: !busy.visible & !viewingOnlineMaps
                 onClicked: {
-
-                    mapView.map = onlineMap;
+                    mapView.map = arcgisOnlineMap;
                     graphicsOverlay.visible = true;
                     viewingOnlineMaps = true;
                     mapView.setViewpointGeometry(offlineMapTask.preplannedMapAreaList.get(preplannedCombo.currentIndex).areaOfInterest);
@@ -244,10 +239,6 @@ Rectangle {
                     viewingOnlineMaps = false;
                     busy.visible = true;
                 }
-
-                onWidthChanged: {
-
-                }
             }
 
             Text {
@@ -266,11 +257,11 @@ Rectangle {
     BusyIndicator {
         id: busy
         anchors.centerIn: parent
-        visible: false;
+        visible: false
     }
 
     function checkIfFileExists(index) {
-        path = outputMapPackage + "/" + offlineMapTask.preplannedMapAreaList.get(index).portalItem.title + ".mmpk";
+        path = outputMapPackage + "/" + offlineMapTask.preplannedMapAreaList.get(index).portalItem.title;
         fileFolder.url = path;
         mapExists = fileFolder.exists;
         return;

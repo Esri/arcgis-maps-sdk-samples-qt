@@ -36,6 +36,7 @@ class SimpleLineSymbol;
 #include <QObject>
 #include <QTemporaryDir>
 #include <QAbstractListModel>
+
 #include "DownloadPreplannedOfflineMapParameters.h"
 
 class DownloadPreplannedMap : public QObject
@@ -53,9 +54,9 @@ public:
   ~DownloadPreplannedMap();
 
   static void init();
-  Q_INVOKABLE void downloadMapArea(const int index);
-  Q_INVOKABLE void checkIfMapExists(const int index);
-  Q_INVOKABLE void showOnlineMap(const int index);
+  Q_INVOKABLE void downloadMapArea(int index);
+  Q_INVOKABLE void checkIfMapExists(int index);
+  Q_INVOKABLE void showOnlineMap(int index);
 
 signals:
   void mapViewChanged();
@@ -82,7 +83,6 @@ private:
   Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
   QAbstractListModel* m_preplannedList = nullptr;
   Esri::ArcGISRuntime::DownloadPreplannedOfflineMapParameters m_params;
-  QScopedPointer<QObject> m_graphicParent;
   bool m_busy = false;
   bool m_mapExists = false;
   bool m_viewingOnlineMaps = true;

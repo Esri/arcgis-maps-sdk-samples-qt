@@ -16,29 +16,28 @@
 
 #include "DownloadPreplannedMap.h"
 
+#include "DownloadPreplannedOfflineMapJob.h"
+#include "DownloadPreplannedOfflineMapResult.h"
+#include "Graphic.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "OfflineMapTask.h"
 #include "PreplannedMapArea.h"
 #include "PreplannedMapAreaListModel.h"
-#include "DownloadPreplannedOfflineMapJob.h"
-#include "DownloadPreplannedOfflineMapResult.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
-#include "Graphic.h"
 
 using namespace Esri::ArcGISRuntime;
 
 DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
   QObject(parent),
+  m_graphicsOverlay(new GraphicsOverlay(this)),
   m_portalItem(new PortalItem("acc027394bc84c2fb04d1ed317aac674", this)),
   m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::red), 5, this)),
-  m_graphicParent(new QObject())
+  m_busy(true)
 {
-  m_busy = true;
   emit busyChanged();
 
-  m_graphicsOverlay = new GraphicsOverlay(this);
   m_graphicsOverlay->setRenderer(new SimpleRenderer(m_lineSymbol, this));
 
   connect(m_portalItem, &PortalItem::doneLoading, this, [this] ()
@@ -98,7 +97,7 @@ void DownloadPreplannedMap::downloadMapArea(int index)
   m_busy = true;
   emit busyChanged();
 
-  QString path = QString(m_tempPath.path() + "/" + m_offlineMapTask->preplannedMapAreaList()->at(index)->portalItem()->title() + ".mmpk");
+  const QString path = QString(m_tempPath.path() + "/" + m_offlineMapTask->preplannedMapAreaList()->at(index)->portalItem()->title());
 
   QDir tempDir(path);
 
@@ -130,10 +129,9 @@ void DownloadPreplannedMap::downloadMapArea(int index)
   }
   else
   {
-    connect(m_offlineMapTask, &OfflineMapTask::createDefaultDownloadPreplannedOfflineMapParametersCompleted, this, [this, path] (QUuid ,const DownloadPreplannedOfflineMapParameters &parameters)
+    connect(m_offlineMapTask, &OfflineMapTask::createDefaultDownloadPreplannedOfflineMapParametersCompleted, this, [this, path] (QUuid ,const DownloadPreplannedOfflineMapParameters& parameters)
     {
-
-      m_params = DownloadPreplannedOfflineMapParameters(parameters);
+      m_params = parameters;
       m_params.setUpdateMode(PreplannedUpdateMode::NoUpdates);
 
       m_preplannedMapJob = m_offlineMapTask->downloadPreplannedOfflineMap(m_params, path);
@@ -145,7 +143,7 @@ void DownloadPreplannedMap::downloadMapArea(int index)
   }
 }
 
-void DownloadPreplannedMap::checkIfMapExists(const int index)
+void DownloadPreplannedMap::checkIfMapExists(int index)
 {
   if (!m_offlineMapTask)
     return;
@@ -156,31 +154,23 @@ void DownloadPreplannedMap::checkIfMapExists(const int index)
   if (m_offlineMapTask->preplannedMapAreaList()->at(index)->loadStatus() != LoadStatus::Loaded)
     return;
 
-  QString path = QString(m_tempPath.path() + "/" + m_offlineMapTask->preplannedMapAreaList()->at(index)->portalItem()->title() + ".mmpk");
+  const QString path = QString(m_tempPath.path() + "/" + m_offlineMapTask->preplannedMapAreaList()->at(index)->portalItem()->title());
   QDir tempDir(path);
 
-  if (tempDir.exists())
-  {
-    m_mapExists = true;
-    emit mapExistsChanged();
-  }
-  else
-  {
-    m_mapExists = false;
-    emit mapExistsChanged();
-  }
+  m_mapExists = tempDir.exists();
+  emit mapExistsChanged();
 
   if (m_viewingOnlineMaps)
     m_mapView->setViewpointGeometry(m_offlineMapTask->preplannedMapAreaList()->at(index)->areaOfInterest());
 }
 
-void DownloadPreplannedMap::showOnlineMap(const int index)
+void DownloadPreplannedMap::showOnlineMap(int index)
 {
   m_viewingOnlineMaps = true;
   emit viewingOnlineMapsChanged();
   m_mapView->setMap(m_map);
-  m_offlineMapTask->preplannedMapAreaList()->at(index)->areaOfInterest();
-  m_mapView->setViewpointGeometry(m_offlineMapTask->preplannedMapAreaList()->at(index)->areaOfInterest());
+  const Geometry areaOfInterest = m_offlineMapTask->preplannedMapAreaList()->at(index)->areaOfInterest();
+  m_mapView->setViewpointGeometry(areaOfInterest);
   m_graphicsOverlay->setVisible(true);
 }
 
@@ -217,7 +207,7 @@ void DownloadPreplannedMap::loadPreplannedMapAreas()
         return;
       }
 
-      Graphic* areaOfInterest = new Graphic(mapArea->areaOfInterest(), m_graphicParent.get());
+      Graphic* areaOfInterest = new Graphic(mapArea->areaOfInterest(), this);
       m_graphicsOverlay->graphics()->append(areaOfInterest);
     });
 
