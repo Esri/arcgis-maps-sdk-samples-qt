@@ -84,8 +84,8 @@ Item {
                 Layout.fillWidth: true
                 Layout.margins: 2
                 enabled: !busy.visible
-                text: model.mapExists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
-                onClicked: model.downloadMapArea(preplannedCombo.currentIndex);
+                text: model.preplannedMapExists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
+                onClicked: model.checkIfMapAreaIsLoaded(preplannedCombo.currentIndex);
             }
 
             Text {

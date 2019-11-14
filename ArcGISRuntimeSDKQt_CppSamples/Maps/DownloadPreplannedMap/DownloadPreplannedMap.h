@@ -46,7 +46,7 @@ class DownloadPreplannedMap : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QAbstractListModel* preplannedModel MEMBER m_preplannedList NOTIFY preplannedListChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
-  Q_PROPERTY(bool mapExists MEMBER m_mapExists NOTIFY mapExistsChanged)
+  Q_PROPERTY(bool preplannedMapExists MEMBER m_preplannedMapExists NOTIFY preplannedMapExistsChanged)
   Q_PROPERTY(bool viewingOnlineMaps MEMBER m_viewingOnlineMaps NOTIFY viewingOnlineMapsChanged())
 
 public:
@@ -54,15 +54,15 @@ public:
   ~DownloadPreplannedMap();
 
   static void init();
-  Q_INVOKABLE void downloadMapArea(int index);
   Q_INVOKABLE void checkIfMapExists(int index);
   Q_INVOKABLE void showOnlineMap(int index);
+  Q_INVOKABLE void checkIfMapAreaIsLoaded(int index);
 
 signals:
   void mapViewChanged();
   void preplannedListChanged();
   void busyChanged();
-  void mapExistsChanged();
+  void preplannedMapExistsChanged();
   void viewingOnlineMapsChanged();
 
 private slots:
@@ -72,6 +72,10 @@ private slots:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+
+  void loadSelectedMap(const Esri::ArcGISRuntime::PreplannedMapArea& mapArea, int index);
+  void downloadPreplannedMapArea(const QString& path, int index);
+  void loadExistingPreplannedMap(const QString& path);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -85,6 +89,7 @@ private:
   Esri::ArcGISRuntime::DownloadPreplannedOfflineMapParameters m_params;
   bool m_busy = false;
   bool m_mapExists = false;
+  bool m_preplannedMapExists = false;
   bool m_viewingOnlineMaps = true;
   QTemporaryDir m_tempPath;
 };

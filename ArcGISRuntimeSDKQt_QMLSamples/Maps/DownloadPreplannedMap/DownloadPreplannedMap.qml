@@ -64,6 +64,7 @@ Rectangle {
                 if (loadStatus !== Enums.LoadStatusLoaded)
                     return;
 
+                // fetch preplanned map areas from the portal item
                 offlineMapTask.preplannedMapAreas();
                 path = outputMapPackage;
                 fileFolder.url = path;
@@ -80,7 +81,8 @@ Rectangle {
                 busy.visible = false;
 
                 for (let i = 0; i < offlineMapTask.preplannedMapAreaList.count; i++) {
-                    offlineMapTask.preplannedMapAreaList.get(i).loadStatusChanged.connect(function () {
+                    let mapArea = offlineMapTask.preplannedMapAreaList.get(i);
+                    mapArea.loadStatusChanged.connect(function () {
                         if (offlineMapTask.preplannedMapAreaList.get(i).loadStatus !== Enums.LoadStatusLoaded)
                             return;
 
@@ -99,6 +101,12 @@ Rectangle {
                 if (createDefaultDownloadPreplannedOfflineMapParametersStatus !== Enums.TaskStatusCompleted)
                     return;
 
+                /* Set the update mode to not receive updates.
+                 * Other options:
+                 * SyncWithFeatureServices - changes will be synced directly with the
+                 * underlying feature services.
+                 * DownloadScheduledUpdates - schedulded, read-only updates will be
+                 * downloaded and applied to the local geodatabase. */
                 createDefaultDownloadPreplannedOfflineMapParametersResult.updateMode = Enums.PreplannedUpdateModeNoUpdates;
                 let result = createDefaultDownloadPreplannedOfflineMapParametersResult;
 
@@ -118,32 +126,28 @@ Rectangle {
                         busy.visible = false;
                     });
                     mmpk.load();
-                    return;
+                } else {
+                    job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
+
+                    job.jobStatusChanged.connect(function () {
+                        if (job.jobStatus === Enums.JobStatusFailed) {
+                            console.log(job.error.message + " - " + job.error.additionalMessage)
+                            busy = false;
+                            return;
+                        } else if (job.jobStatus !== Enums.JobStatusSucceeded) {
+                            return;
+                        }
+
+                        mapView.map = job.result.offlineMap;
+                        mapExists = true;
+                        busy.visible = false;
+                    });
+
+                    // Start job to take preplanned map area offline.
+                    job.start();
                 }
-
-                job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
-
-                job.jobStatusChanged.connect(function () {
-                    if (job.jobStatus === Enums.JobStatusFailed) {
-                        console.log(job.error.message + " - " + job.error.additionalMessage)
-                        busy = false;
-                        return;
-                    } else if (job.jobStatus !== Enums.JobStatusSucceeded) {
-                        return;
-                    }
-
-                    mapView.map = job.result.offlineMap;
-                    mapExists = true;
-                    busy.visible = false;
-                });
-
-                job.start();
             }
         }
-
-//        Component.onCompleted: {
-//            portalItem.load();
-//        }
     }
 
     PortalItem {
@@ -156,6 +160,8 @@ Rectangle {
                 return;
 
             busy.visible = true;
+
+            // Load offline map task.
             offlineMapTask.load();
         }
     }
@@ -234,6 +240,8 @@ Rectangle {
                 text: mapExists ? qsTr("View Preplanned area") : qsTr("Download Preplanned Area")
                 onClicked: {
                     preplannedArea = offlineMapTask.preplannedMapAreaList.get(preplannedCombo.currentIndex);
+
+                    // Create the default download parameters appropriate for taking the area offline.
                     offlineMapTask.createDefaultDownloadPreplannedOfflineMapParameters(preplannedArea);
                     graphicsOverlay.visible = false;
                     viewingOnlineMaps = false;
