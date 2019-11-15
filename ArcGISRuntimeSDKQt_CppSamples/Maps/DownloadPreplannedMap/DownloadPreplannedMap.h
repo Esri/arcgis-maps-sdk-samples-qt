@@ -33,9 +33,9 @@ class SimpleLineSymbol;
 }
 }
 
+#include <QAbstractListModel>
 #include <QObject>
 #include <QTemporaryDir>
-#include <QAbstractListModel>
 
 #include "DownloadPreplannedOfflineMapParameters.h"
 
