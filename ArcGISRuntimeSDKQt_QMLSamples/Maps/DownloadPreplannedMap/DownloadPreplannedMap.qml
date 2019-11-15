@@ -86,9 +86,6 @@ Rectangle {
                         if (offlineMapTask.preplannedMapAreaList.get(i).loadStatus !== Enums.LoadStatusLoaded)
                             return;
 
-                        if (i === 0)
-                            checkIfFileExists(i);
-
                         const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: offlineMapTask.preplannedMapAreaList.get(i).areaOfInterest });
 
                         graphicsOverlay.graphics.append(graphic);
@@ -272,7 +269,6 @@ Rectangle {
         path = outputMapPackage + "/" + offlineMapTask.preplannedMapAreaList.get(index).portalItem.title;
         fileFolder.url = path;
         mapExists = fileFolder.exists;
-        return;
     }
 
     Component.onDestruction: {
