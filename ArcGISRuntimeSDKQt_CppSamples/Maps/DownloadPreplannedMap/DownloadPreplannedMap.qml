@@ -54,10 +54,11 @@ Item {
         }
 
         ColumnLayout {
-            width: 185
+            width: 250
+            spacing: 0
             Button {
                 Layout.fillWidth: true
-                Layout.margins: 2
+                Layout.margins: 1
                 Layout.alignment: Qt.AlignHCenter
                 enabled: !busy.visible & !model.viewingOnlineMaps & !progressBar_loading.visible
                 text: qsTr("Show Online Map")
@@ -73,7 +74,7 @@ Item {
             ComboBox {
                 id: preplannedCombo
                 Layout.fillWidth: true
-                Layout.margins: 2
+                Layout.margins: 1
                 enabled: !busy.visible & !progressBar_loading.visible
                 model: model.preplannedList
                 textRole: "itemTitle"
@@ -83,7 +84,7 @@ Item {
             Button {
                 id: downloadOrView
                 Layout.fillWidth: true
-                Layout.margins: 2
+                Layout.margins: 1
                 enabled: !busy.visible & !progressBar_loading.visible
                 text: model.preplannedMapExists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
                 onClicked: model.checkIfMapAreaIsLoaded(preplannedCombo.currentIndex);
@@ -93,7 +94,7 @@ Item {
                 text: qsTr("Download(s) deleted on exit")
                 color: "white"
                 Layout.alignment: Qt.AlignHCenter
-                Layout.margins: 2
+                Layout.margins: 1
             }
         }
     }

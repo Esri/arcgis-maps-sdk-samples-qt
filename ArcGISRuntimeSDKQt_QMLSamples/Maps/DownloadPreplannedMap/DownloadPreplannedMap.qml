@@ -195,11 +195,11 @@ Rectangle {
         }
 
         ColumnLayout {
-            width: 185
+            width: 250
             Button {
                 id: onlineMapButton
                 Layout.fillWidth: true
-                Layout.margins: 2
+                Layout.margins: 1
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Show Online Map")
                 enabled: !busy.visible & !viewingOnlineMaps & !progressBar_loading.visible
@@ -216,13 +216,13 @@ Rectangle {
                 text: qsTr("Available Preplanned Areas:")
                 color: "white"
                 Layout.alignment: Qt.AlignHCenter
-                Layout.margins: 2
+                Layout.margins: 1
             }
 
             ComboBox {
                 id: preplannedCombo
                 Layout.fillWidth: true
-                Layout.margins: 2
+                Layout.margins: 1
                 enabled: !busy.visible && !progressBar_loading.visible
                 model: null
                 textRole: "itemTitle"
@@ -244,7 +244,7 @@ Rectangle {
             Button {
                 id: downloadOrView
                 Layout.fillWidth: true
-                Layout.margins: 2
+                Layout.margins: 1
                 enabled: !busy.visible && !progressBar_loading.visible
                 text: mapExists ? qsTr("View Preplanned area") : qsTr("Download Preplanned Area")
                 onClicked: {
