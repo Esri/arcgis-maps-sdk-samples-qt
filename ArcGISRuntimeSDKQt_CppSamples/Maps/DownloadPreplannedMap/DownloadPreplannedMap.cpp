@@ -94,6 +94,7 @@ void DownloadPreplannedMap::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<DownloadPreplannedMap>("Esri.Samples", 1, 0, "DownloadPreplannedMapSample");
+  qmlRegisterUncreatableType<PreplannedMapAreaListModel>("Esri.Samples", 1, 0, "AbstractListModel", "DownloadPreplannedMapSample");
 }
 
 MapQuickView* DownloadPreplannedMap::mapView() const
@@ -190,7 +191,6 @@ void DownloadPreplannedMap::onDownloadPreplannedMapJobCompleted()
   emit preplannedMapExistsChanged();
   m_viewingOnlineMaps = false;
   emit viewingOnlineMapsChanged();
-//  m_graphicsOverlay->setVisible(false);
 }
 
 void DownloadPreplannedMap::loadPreplannedMapAreas()
@@ -200,7 +200,7 @@ void DownloadPreplannedMap::loadPreplannedMapAreas()
   emit preplannedListChanged();
   emit busyChanged();
 
-  for (PreplannedMapArea* mapArea : *static_cast<PreplannedMapAreaListModel*>(m_preplannedList))
+  for (PreplannedMapArea* mapArea : *m_preplannedList)
   {
     connect(mapArea, &PreplannedMapArea::doneLoading, this, [this, mapArea] (Error e)
     {

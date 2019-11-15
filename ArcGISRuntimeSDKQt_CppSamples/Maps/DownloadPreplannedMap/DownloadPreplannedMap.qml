@@ -74,7 +74,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.margins: 2
                 enabled: !busy.visible & !progressBar_loading.visible
-                model: model.preplannedModel
+                model: model.preplannedList
                 textRole: "itemTitle"
                 onActivated: model.checkIfMapExists(preplannedCombo.currentIndex);
             }
