@@ -54,6 +54,7 @@ Item {
         }
 
         ColumnLayout {
+            width: 185
             Button {
                 Layout.fillWidth: true
                 Layout.margins: 2

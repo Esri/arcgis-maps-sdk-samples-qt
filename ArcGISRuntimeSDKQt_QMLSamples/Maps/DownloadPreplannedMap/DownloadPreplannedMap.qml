@@ -195,6 +195,7 @@ Rectangle {
         }
 
         ColumnLayout {
+            width: 185
             Button {
                 id: onlineMapButton
                 Layout.fillWidth: true
