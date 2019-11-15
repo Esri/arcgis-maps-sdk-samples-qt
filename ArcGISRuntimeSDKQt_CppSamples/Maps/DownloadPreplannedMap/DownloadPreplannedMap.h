@@ -48,6 +48,7 @@ class DownloadPreplannedMap : public QObject
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
   Q_PROPERTY(bool preplannedMapExists MEMBER m_preplannedMapExists NOTIFY preplannedMapExistsChanged)
   Q_PROPERTY(bool viewingOnlineMaps MEMBER m_viewingOnlineMaps NOTIFY viewingOnlineMapsChanged())
+  Q_PROPERTY(double percentDownloaded MEMBER m_percentDownloaded NOTIFY percentDownloadedChanged())
 
 public:
   explicit DownloadPreplannedMap(QObject* parent = nullptr);
@@ -64,6 +65,7 @@ signals:
   void busyChanged();
   void preplannedMapExistsChanged();
   void viewingOnlineMapsChanged();
+  void percentDownloadedChanged();
 
 private slots:
   void onDownloadPreplannedMapJobCompleted();
@@ -73,9 +75,8 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-  void loadSelectedMap(const Esri::ArcGISRuntime::PreplannedMapArea& mapArea, int index);
-  void downloadPreplannedMapArea(const QString& path, int index);
-  void loadExistingPreplannedMap(const QString& path);
+  void loadSelectedMap(int index);
+  void loadExistingPreplannedMap();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -91,6 +92,8 @@ private:
   bool m_mapExists = false;
   bool m_preplannedMapExists = false;
   bool m_viewingOnlineMaps = true;
+  double m_percentDownloaded = 0.0;
+  QString m_path;
   QTemporaryDir m_tempPath;
 };
 

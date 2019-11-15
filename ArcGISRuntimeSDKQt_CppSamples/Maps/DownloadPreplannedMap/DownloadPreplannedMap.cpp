@@ -53,6 +53,33 @@ DownloadPreplannedMap::DownloadPreplannedMap(QObject* parent /* = nullptr */):
       m_offlineMapTask->preplannedMapAreas();
     });
 
+    connect(m_offlineMapTask, &OfflineMapTask::createDefaultDownloadPreplannedOfflineMapParametersCompleted, this, [this] (QUuid ,const DownloadPreplannedOfflineMapParameters& parameters)
+    {
+
+      m_params = parameters;
+
+      /* Set the update mode to not receive updates.
+       * Other options:
+       * SyncWithFeatureServices - changes will be synced directly with the
+       * underlying feature services.
+       * DownloadScheduledUpdates - schedulded, read-only updates will be
+       * downloaded and applied to the local geodatabase. */
+      m_params.setUpdateMode(PreplannedUpdateMode::NoUpdates);
+
+      m_preplannedMapJob = m_offlineMapTask->downloadPreplannedOfflineMap(m_params, m_path);
+      connect(m_preplannedMapJob, &DownloadPreplannedOfflineMapJob::progressChanged, this, [this] ()
+      {
+        m_percentDownloaded = .01 * m_preplannedMapJob->progress();
+        emit percentDownloadedChanged();
+      });
+      connect(m_preplannedMapJob, &DownloadPreplannedOfflineMapJob::jobDone, this, &DownloadPreplannedMap::onDownloadPreplannedMapJobCompleted);
+
+      // Start job to take preplanned map area offline.
+      m_preplannedMapJob->start();
+      m_busy = false;
+      emit busyChanged();
+    });
+
     // Load offline map task.
     m_offlineMapTask->load();
   });
@@ -100,21 +127,24 @@ void DownloadPreplannedMap::checkIfMapAreaIsLoaded(int index)
     return;
 
   m_busy = true;
+  m_viewingOnlineMaps = false;
   emit busyChanged();
+  emit viewingOnlineMapsChanged();
 
-  loadSelectedMap(*mapArea, index);
+  if(m_graphicsOverlay->isVisible())
+    m_graphicsOverlay->setVisible(false);
+
+  loadSelectedMap(index);
 }
 
-void DownloadPreplannedMap::loadSelectedMap(const PreplannedMapArea& mapArea, int index)
+void DownloadPreplannedMap::loadSelectedMap(int index)
 {
-  const QString path = QString(m_tempPath.path() + "/" + mapArea.portalItem()->title());
-
-  QDir tempDir(path);
+  checkIfMapExists(index);
 
   if (m_preplannedMapExists)
-    loadExistingPreplannedMap(path);
+    loadExistingPreplannedMap();
   else
-    downloadPreplannedMapArea(path, index);
+    m_offlineMapTask->createDefaultDownloadPreplannedOfflineMapParameters(m_offlineMapTask->preplannedMapAreaList()->at(index));
 }
 
 void DownloadPreplannedMap::checkIfMapExists(int index)
@@ -130,8 +160,8 @@ void DownloadPreplannedMap::checkIfMapExists(int index)
   if (!mapArea || mapArea->loadStatus() != LoadStatus::Loaded)
     return;
 
-  const QString path = QString(m_tempPath.path() + "/" + mapArea->portalItem()->title());
-  QDir tempDir(path);
+  m_path = QString(m_tempPath.path() + "/" + mapArea->portalItem()->title());
+  QDir tempDir(m_path);
 
   m_preplannedMapExists = tempDir.exists();
   emit preplannedMapExistsChanged();
@@ -156,14 +186,11 @@ void DownloadPreplannedMap::onDownloadPreplannedMapJobCompleted()
     return;
 
   m_mapView->setMap(m_preplannedMapJob->result()->offlineMap());
-  m_offlineMapTask->disconnect();
-  m_busy = false;
-  emit busyChanged();
   m_preplannedMapExists = true;
   emit preplannedMapExistsChanged();
   m_viewingOnlineMaps = false;
   emit viewingOnlineMapsChanged();
-  m_graphicsOverlay->setVisible(false);
+//  m_graphicsOverlay->setVisible(false);
 }
 
 void DownloadPreplannedMap::loadPreplannedMapAreas()
@@ -191,32 +218,7 @@ void DownloadPreplannedMap::loadPreplannedMapAreas()
   }
 }
 
-void DownloadPreplannedMap::downloadPreplannedMapArea(const QString& path, int index)
-{
-  connect(m_offlineMapTask, &OfflineMapTask::createDefaultDownloadPreplannedOfflineMapParametersCompleted, this, [this, path] (QUuid ,const DownloadPreplannedOfflineMapParameters& parameters)
-  {
-    m_params = parameters;
-
-    /* Set the update mode to not receive updates.
-     * Other options:
-     * SyncWithFeatureServices - changes will be synced directly with the
-     * underlying feature services.
-     * DownloadScheduledUpdates - schedulded, read-only updates will be
-     * downloaded and applied to the local geodatabase. */
-    m_params.setUpdateMode(PreplannedUpdateMode::NoUpdates);
-
-    m_preplannedMapJob = m_offlineMapTask->downloadPreplannedOfflineMap(m_params, path);
-    connect(m_preplannedMapJob, &DownloadPreplannedOfflineMapJob::jobDone, this, &DownloadPreplannedMap::onDownloadPreplannedMapJobCompleted);
-
-    // Start job to take preplanned map area offline.
-    m_preplannedMapJob->start();
-  });
-
-  // Create the default download parameters appropriate for taking the area offline.
-  m_offlineMapTask->createDefaultDownloadPreplannedOfflineMapParameters(m_offlineMapTask->preplannedMapAreaList()->at(index));
-}
-
-void DownloadPreplannedMap::loadExistingPreplannedMap(const QString& path)
+void DownloadPreplannedMap::loadExistingPreplannedMap()
 {
   if (m_mmpk)
   {
@@ -224,7 +226,7 @@ void DownloadPreplannedMap::loadExistingPreplannedMap(const QString& path)
     m_mmpk = nullptr;
   }
 
-  m_mmpk = new MobileMapPackage(path, this);
+  m_mmpk = new MobileMapPackage(m_path, this);
 
   connect(m_mmpk, &MobileMapPackage::doneLoading, this, [this] (Error e)
   {

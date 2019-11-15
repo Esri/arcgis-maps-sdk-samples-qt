@@ -33,10 +33,17 @@ Rectangle {
     property var mapExists: false
     property var viewingOnlineMaps: true
     property var job: null
+    property var mmpk: null
 
     MapView {
         id: mapView
         anchors.fill: parent
+
+        ProgressBar {
+            id: progressBar_loading
+            anchors.centerIn: parent
+            visible: (value === 0.0 || value === 1.0) ? false : true
+        }
 
         Map {
             id: arcgisOnlineMap
@@ -111,7 +118,7 @@ Rectangle {
                 fileFolder.url = path;
 
                 if (fileFolder.exists) {
-                    var mmpk = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", { path: path });
+                    mmpk = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", { path: path });
                     mmpk.loadStatusChanged.connect(function () {
                         if (loadStatus !== Enums.LoadStatusLoaded )
                             return;
@@ -140,8 +147,13 @@ Rectangle {
                         busy.visible = false;
                     });
 
+                    job.progressChanged.connect(function () {
+                        progressBar_loading.value = job.progress * .01;
+                    });
+
                     // Start job to take preplanned map area offline.
                     job.start();
+                    busy.visible = false;
                 }
             }
         }
@@ -149,7 +161,6 @@ Rectangle {
 
     PortalItem {
         id: portalItem
-        portal: portal
         itemId: "acc027394bc84c2fb04d1ed317aac674"
 
         onLoadStatusChanged: {
@@ -190,7 +201,7 @@ Rectangle {
                 Layout.margins: 2
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Show Online Map")
-                enabled: !busy.visible & !viewingOnlineMaps
+                enabled: !busy.visible & !viewingOnlineMaps & !progressBar_loading.visible
                 onClicked: {
                     mapView.map = arcgisOnlineMap;
                     graphicsOverlay.visible = true;
@@ -211,7 +222,7 @@ Rectangle {
                 id: preplannedCombo
                 Layout.fillWidth: true
                 Layout.margins: 2
-                enabled: !busy.visible
+                enabled: !busy.visible && !progressBar_loading.visible
                 model: null
                 textRole: "itemTitle"
 
@@ -233,14 +244,16 @@ Rectangle {
                 id: downloadOrView
                 Layout.fillWidth: true
                 Layout.margins: 2
-                enabled: !busy.visible
+                enabled: !busy.visible && !progressBar_loading.visible
                 text: mapExists ? qsTr("View Preplanned area") : qsTr("Download Preplanned Area")
                 onClicked: {
                     preplannedArea = offlineMapTask.preplannedMapAreaList.get(preplannedCombo.currentIndex);
 
                     // Create the default download parameters appropriate for taking the area offline.
                     offlineMapTask.createDefaultDownloadPreplannedOfflineMapParameters(preplannedArea);
-                    graphicsOverlay.visible = false;
+                    if (graphicsOverlay.visible)
+                        graphicsOverlay.visible = false;
+
                     viewingOnlineMaps = false;
                     busy.visible = true;
                 }

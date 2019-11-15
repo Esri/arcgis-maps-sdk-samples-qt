@@ -58,7 +58,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.margins: 2
                 Layout.alignment: Qt.AlignHCenter
-                enabled: !busy.visible & !model.viewingOnlineMaps
+                enabled: !busy.visible & !model.viewingOnlineMaps & !progressBar_loading.visible
                 text: qsTr("Show Online Map")
                 onClicked: model.showOnlineMap(preplannedCombo.currentIndex);
             }
@@ -73,7 +73,7 @@ Item {
                 id: preplannedCombo
                 Layout.fillWidth: true
                 Layout.margins: 2
-                enabled: !busy.visible
+                enabled: !busy.visible & !progressBar_loading.visible
                 model: model.preplannedModel
                 textRole: "itemTitle"
                 onActivated: model.checkIfMapExists(preplannedCombo.currentIndex);
@@ -83,7 +83,7 @@ Item {
                 id: downloadOrView
                 Layout.fillWidth: true
                 Layout.margins: 2
-                enabled: !busy.visible
+                enabled: !busy.visible & !progressBar_loading.visible
                 text: model.preplannedMapExists ? qsTr("View preplanned area") : qsTr("Download preplanned area")
                 onClicked: model.checkIfMapAreaIsLoaded(preplannedCombo.currentIndex);
             }
@@ -101,5 +101,12 @@ Item {
         id: busy
         anchors.centerIn: parent
         visible: model.busy
+    }
+
+    ProgressBar {
+        id: progressBar_loading
+        anchors.centerIn: parent
+        visible: (value === 0.0 || value === 1.0) ? false : true
+        value: model.percentDownloaded
     }
 }
