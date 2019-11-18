@@ -1,0 +1,26 @@
+{
+    "category": "Maps",
+    "description": "Take a map offline using a preplanned map area.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "map area",
+        "offline",
+        "preplanned",
+        "pre-planned"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "DownloadPreplannedOfflineMapJob",
+        "DownloadPreplannedOfflineMapParameters",
+        "DownloadPreplannedOfflineMapResult",
+        "OfflineMapTask",
+        "PreplannedMapArea"
+    ],
+    "snippets": [
+        "DownloadPreplannedMap.qml"
+    ],
+    "title": "Download preplanned map"
+}
