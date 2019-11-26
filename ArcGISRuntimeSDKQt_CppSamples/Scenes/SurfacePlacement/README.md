@@ -20,7 +20,7 @@ The application loads a scene showing three points that use the individual surfa
     * `DrapedBillboarded`, position graphic upright on the surface and always facing the camera, not using its z value.
     * `DrapedFlat`, position graphic flat on the surface, not using its z value.
 2. Add graphics to the graphics overlay, `GraphicsOverlay::graphics()::append(Graphic)`.
-3. Add each graphics overlay to the scene view by calling `SceneView::graphicsOverlays::append(overlay)`.
+3. Add each graphics overlay to the scene view by calling `SceneView::graphicsOverlays()::append(overlay)`.
 
 ## Relevant API
 
