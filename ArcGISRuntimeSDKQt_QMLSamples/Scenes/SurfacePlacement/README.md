@@ -1,19 +1,43 @@
 # Surface placement
 
-This sample demonstrates how to control the surface placement of a 3D graphic. Graphics can either be placed relative to the elevation surface (RELATIVE), relative to sea level (ABSOLUTE), or draped over the elevation surface (DRAPED).
+Position graphics relative to a surface using different surface placement modes.
 
 ![](screenshot.png)
 
-## How it works
-Graphics in 3D can be displayed in 3 different surface placement modes: draped, relative, or absolute. Draped mode will display the graphic draped over the scene's surface, regardless of the z-value that is set on the geometry. Relative mode will display the graphic by the associated geometry's z-value, relative to the scene's surface (the ground elevation). Absolute mode will display the graphic by the associated geometry'z absolute z-value, relative to sea level. The surface placement is set on the graphics overlay by setting its `sceneProperties` `surfacePlacement`. All graphics added to the overlay will display using the specified surface placement mode.
+## Use case
 
-## Features
-- SceneView
-- Scene
-- Viewpoint
-- Camera
-- Graphic
-- GraphicsOverlay
-- SimpleMarkerSymbol
-- TextSymbol
-- Point
+Depending on the use case, data might be displayed at a consistent, absolute height (e.g. flight data recorded relative to sea level), at a relative height to the terrain (e.g. transmission lines positioned relative to the ground), or draped directly onto the terrain (e.g. location markers, area boundaries).
+
+## How to use the sample
+
+The application loads a scene showing three points that use the individual surface placement rules (Absolute, Relative, and either Draped Billboarded or Draped Flat). Use the control to toggle the draped mode, then explore the scene by zooming in/out and by panning around to observe the effects of the surface placement rules.
+
+## How it works
+
+1. Create a `GraphicsOverlay` for each placement mode, setting `SceneProperties.SurfacePlacement`:
+    * `Absolute`, position graphic using only its Z value.
+    * `Relative`, position graphic using its Z value plus the elevation of the surface.
+    * `DrapedBillboarded`, position graphic upright on the surface and always facing the camera, not using its z value.
+    * `DrapedFlat`, position graphic flat on the surface, not using its z value.
+2. Add graphics to the graphics overlay, `GraphicsOverlay.graphics.append(Graphic)`.
+3. Add each graphics overlay to the scene view by calling `SceneView.graphicsOverlays.append(overlay)`.
+
+## Relevant API
+
+* Graphic
+* GraphicsOverlay
+* LayerSceneProperties.SurfacePlacement
+* SceneProperties
+* Surface
+
+## About the data
+
+The scene launches with a view of northern Snowdonia National Park. Three points are shown hovering with positions defined by each of the different surface placement modes.
+
+## Additional information
+
+This sample uses an elevation service to add elevation/terrain to the scene. Graphics are positioned relative to that surface for the `DrapedBillboarded`, `DrapedFlat`, and `Relative` surface placement modes.
+
+## Tags
+
+3D, absolute, altitude, draped, elevation, floating, relative, scenes, sea level, surface placement

@@ -1,24 +1,29 @@
 {
     "category": "Scenes",
-    "description": "This sample demonstrates how to control the surface placement of a 3D graphic",
+    "description": "Position graphics relative to a surface using different surface placement modes.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "vertical placement"
+        "3D",
+        "absolute",
+        "altitude",
+        "draped",
+        "elevation",
+        "floating",
+        "relative",
+        "scenes",
+        "sea level",
+        "surface placement"
     ],
     "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-surfaceplacement.htm",
     "relevant_apis": [
-        "SceneView",
-        "Scene",
-        "Viewpoint",
-        "Camera",
         "Graphic",
         "GraphicsOverlay",
-        "SimpleMarkerSymbol",
-        "TextSymbol",
-        "Point"
+        "LayerSceneProperties::SurfacePlacement",
+        "SceneProperties",
+        "Surface"
     ],
     "snippets": [
         "Surface_Placement.qml",
