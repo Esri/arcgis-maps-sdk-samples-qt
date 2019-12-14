@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = FindPlace
 
-ARCGIS_RUNTIME_VERSION = 100.7
+ARCGIS_RUNTIME_VERSION = 100.8
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
