@@ -12,6 +12,10 @@
 // See the Sample code usage restrictions document for further information.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "Credential.h"
 #include "Portal.h"
 
