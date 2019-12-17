@@ -20,7 +20,7 @@ QT += opengl qml quick
 
 CONFIG += c++14
 
-ARCGIS_RUNTIME_VERSION = 100.7
+ARCGIS_RUNTIME_VERSION = 100.8
 include($$PWD/arcgisruntime.pri)
 
 qtHaveModule(webengine) {
