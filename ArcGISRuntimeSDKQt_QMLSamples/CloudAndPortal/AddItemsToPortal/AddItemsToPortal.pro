@@ -19,7 +19,7 @@ TEMPLATE = app
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 100.6
+ARCGIS_RUNTIME_VERSION = 100.7
 include($$PWD/arcgisruntime.pri)
 
 qtHaveModule(webengine) {
@@ -27,7 +27,7 @@ qtHaveModule(webengine) {
   DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
 }
 
-CONFIG += c++11
+CONFIG += c++14
 
 SOURCES += main.cpp
 

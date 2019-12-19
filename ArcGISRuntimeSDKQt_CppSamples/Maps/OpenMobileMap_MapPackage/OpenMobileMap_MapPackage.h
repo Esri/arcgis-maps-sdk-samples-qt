@@ -29,7 +29,6 @@ namespace Esri
 }
 
 #include <QQuickItem>
-#include <QTemporaryDir>
 
 class OpenMobileMap_MapPackage : public QQuickItem
 {
@@ -47,7 +46,6 @@ private:
 
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::MobileMapPackage* m_mobileMapPackage = nullptr;
-  QTemporaryDir m_unpackTempDir;
 };
 
 #endif // OPEN_MOBILE_MAP_MAP_PACKAGE_H

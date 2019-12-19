@@ -1,0 +1,8 @@
+{
+    "source" :  "CreateAndSaveKmlFile.qml",
+    "otherSourceFiles" :  [
+        "CreateAndSaveKmlFile.h",
+        "CreateAndSaveKmlFile.cpp"
+    ],
+    "name" : "Create and save KML file"
+}

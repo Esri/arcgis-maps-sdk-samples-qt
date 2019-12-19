@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
+import QtQuick.Layouts 1.12
 
 SurfacePlacementSample {
     width: 800
@@ -27,6 +28,36 @@ SurfacePlacementSample {
     SceneView {
         objectName: "sceneView"
         anchors.fill: parent
+    }
+
+    Rectangle {
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 3
+        }
+        width: childrenRect.width
+        height: childrenRect.height
+        color: "#000000"
+        opacity: .8
+        radius: 5
+
+        ColumnLayout {
+            Text {
+                Layout.alignment: Qt.AlignHCenter
+                Layout.margins: 2
+                text: qsTr("Draped mode")
+                color: "white"
+            }
+
+            Switch {
+                id: surfacePlacementMode
+                Layout.alignment: Qt.AlignHCenter
+                Layout.margins: 2
+
+                onCheckedChanged: changeDrapedVisibility();
+            }
+        }
     }
     //! [add a sceneView component]
 }

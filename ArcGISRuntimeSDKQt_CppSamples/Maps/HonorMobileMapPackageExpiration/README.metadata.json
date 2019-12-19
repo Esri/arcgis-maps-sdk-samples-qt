@@ -1,0 +1,24 @@
+{
+    "category": "Maps",
+    "description": "Access the expiration information of an expired mobile map package.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Expiration",
+        "mmpk",
+        "MobileMapPackage"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "Expiration",
+        "MobileMapPackage"
+    ],
+    "snippets": [
+        "HonorMobileMapPackageExpiration.cpp",
+        "HonorMobileMapPackageExpiration.h",
+        "HonorMobileMapPackageExpiration.qml"
+    ],
+    "title": "Honor mobile map package expiration date"
+}

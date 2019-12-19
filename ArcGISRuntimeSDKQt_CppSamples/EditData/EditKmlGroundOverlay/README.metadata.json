@@ -1,0 +1,28 @@
+{
+    "category": "Edit data",
+    "description": "Edit the values of a KML ground overlay.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "imagery",
+        "keyhole",
+        "KML",
+        "KMZ",
+        "OGC"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "KmlDataset",
+        "KmlGroundOverlay",
+        "KmlIcon",
+        "KmlLayer"
+    ],
+    "snippets": [
+        "EditKmlGroundOverlay.h",
+        "EditKmlGroundOverlay.cpp",
+        "EditKmlGroundOverlay.qml"
+    ],
+    "title": "Edit KML ground overlay"
+}

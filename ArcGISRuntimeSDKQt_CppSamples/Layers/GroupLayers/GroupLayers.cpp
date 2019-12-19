@@ -39,22 +39,24 @@ GroupLayers::GroupLayers(QObject* parent /* = nullptr */):
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-  //  Create 3 scene layers and append to a group layer
-  ArcGISSceneLayer* sceneLayer1 = new ArcGISSceneLayer(QUrl("https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_Trees/SceneServer/layers/0"), this);
-  ArcGISSceneLayer* sceneLayer2 = new ArcGISSceneLayer(QUrl("https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_Pathways/SceneServer/layers/0"), this);
-  ArcGISSceneLayer* sceneLayer3 = new ArcGISSceneLayer(QUrl("https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/DevA_BuildingShell_Textured/SceneServer/layers/0"), this);
-  GroupLayer* groupLayer = new GroupLayer(QList<Layer*>{sceneLayer1, sceneLayer2, sceneLayer3}, this);
-  groupLayer->setName("Group: Dev A");
+  // Create layers and append to a group layer
+  ArcGISSceneLayer* layer1 = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer"), this);
+  ArcGISSceneLayer* layer2 = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevB_BuildingShells/SceneServer"), this);
+  GroupLayer* groupLayer = new GroupLayer(QList<Layer*>{layer1, layer2}, this);
+  groupLayer->setName("Buildings group");
 
-  // Create 2 layers outside of group layer
-  ArcGISSceneLayer* sceneLayer4 = new ArcGISSceneLayer(QUrl("https://scenesampleserverdev.arcgis.com/arcgis/rest/services/Hosted/PlannedDemo_BuildingShell/SceneServer/layers/0"), this);
-  ServiceFeatureTable* ft = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/DevelopmentProjectArea/FeatureServer/0"), this);
-  FeatureLayer* featureLayer = new FeatureLayer(ft, this);
+  // Create additional layers
+  ArcGISSceneLayer* layer3 = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_Trees/SceneServer"), this);
+  ServiceFeatureTable* ft1 = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/DevelopmentProjectArea/FeatureServer/0"), this);
+  FeatureLayer* layer4 = new FeatureLayer(ft1, this);
+  ServiceFeatureTable* ft2 = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_Pathways/FeatureServer/1"), this);
+  FeatureLayer* layer5 = new FeatureLayer(ft2, this);
 
   // Add layers to the scene
   m_scene->operationalLayers()->append(groupLayer);
-  m_scene->operationalLayers()->append(sceneLayer4);
-  m_scene->operationalLayers()->append(featureLayer);
+  m_scene->operationalLayers()->append(layer3);
+  m_scene->operationalLayers()->append(layer4);
+  m_scene->operationalLayers()->append(layer5);
 
   connect(m_scene, &Scene::doneLoading, this, [this](Error e)
   {

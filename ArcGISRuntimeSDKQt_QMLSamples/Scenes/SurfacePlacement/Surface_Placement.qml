@@ -15,7 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.6
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Esri.ArcGISRuntime 100.7
 
 Rectangle {
     width: 800
@@ -61,18 +63,19 @@ Rectangle {
             }
         }
 
-        // Graphics overlay with draped surface placement
+        // Graphics overlay with draped flat surface placement
         GraphicsOverlay {
-            id: drapedOverlay
-            sceneProperties.surfacePlacement: Enums.SurfacePlacementDraped
+            id: drapedFlatOverlay
+            sceneProperties.surfacePlacement: Enums.SurfacePlacementDrapedFlat
+            visible: false
 
-            // Graphics will be draped on the surface of the scene
+            // Graphics will be draped on the surface of the scene and will appear flat
             Graphic {
                 geometry: point
 
                 SimpleMarkerSymbol {
                     color: "red"
-                    style: Enums.SimpleMarkerSymbolStyleCircle
+                    style: Enums.SimpleMarkerSymbolStyleTriangle
                     size: 20
                 }
             }
@@ -82,7 +85,37 @@ Rectangle {
 
                 TextSymbol {
                     size: 20
-                    text: "DRAPED"
+                    text: "DRAPED FLAT"
+                    color: "white"
+                    horizontalAlignment: Enums.HorizontalAlignmentLeft
+                    verticalAlignment: Enums.VerticalAlignmentMiddle
+                    offsetX: 20
+                }
+            }
+        }
+
+        // Graphics overlay with draped billboard surface placement
+        GraphicsOverlay {
+            id: drapedBillboardedOverlay
+            sceneProperties.surfacePlacement: Enums.SurfacePlacementDrapedBillboarded
+
+            // Graphics will be draped on the surface of the scene and will always face the camera.
+            Graphic {
+                geometry: point
+
+                SimpleMarkerSymbol {
+                    color: "red"
+                    style: Enums.SimpleMarkerSymbolStyleTriangle
+                    size: 20
+                }
+            }
+
+            Graphic {
+                geometry: point
+
+                TextSymbol {
+                    size: 20
+                    text: "DRAPED BILLBOARDED"
                     color: "white"
                     horizontalAlignment: Enums.HorizontalAlignmentLeft
                     verticalAlignment: Enums.VerticalAlignmentMiddle
@@ -102,7 +135,7 @@ Rectangle {
 
                 SimpleMarkerSymbol {
                     color: "red"
-                    style: Enums.SimpleMarkerSymbolStyleCircle
+                    style: Enums.SimpleMarkerSymbolStyleTriangle
                     size: 20
                 }
             }
@@ -132,7 +165,7 @@ Rectangle {
 
                 SimpleMarkerSymbol {
                     color: "red"
-                    style: Enums.SimpleMarkerSymbolStyleCircle
+                    style: Enums.SimpleMarkerSymbolStyleTriangle
                     size: 20
                 }
             }
@@ -147,6 +180,39 @@ Rectangle {
                     horizontalAlignment: Enums.HorizontalAlignmentLeft
                     verticalAlignment: Enums.VerticalAlignmentMiddle
                     offsetX: 20
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 3
+        }
+        width: childrenRect.width
+        height: childrenRect.height
+        color: "#000000"
+        opacity: .8
+        radius: 5
+
+        ColumnLayout {
+            Text {
+                Layout.alignment: Qt.AlignHCenter
+                Layout.margins: 2
+                text: qsTr("Draped mode")
+                color: "white"
+            }
+
+            Switch {
+                id: surfacePlacementMode
+                Layout.alignment: Qt.AlignHCenter
+                Layout.margins: 2
+
+                onCheckedChanged: {
+                    drapedFlatOverlay.visible = !drapedFlatOverlay.visible;
+                    drapedBillboardedOverlay.visible = !drapedBillboardedOverlay.visible;
                 }
             }
         }

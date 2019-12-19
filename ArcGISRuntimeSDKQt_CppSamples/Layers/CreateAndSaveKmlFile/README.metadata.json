@@ -1,0 +1,32 @@
+{
+    "category": "Layers",
+    "description": "Construct a KML document and save it as a KMZ file.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "Keyhole",
+        "KML",
+        "KMZ",
+        "OGC"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "KmlDocument",
+        "KmlGeometry",
+        "KmlNode::saveAs",
+        "KmlPlacemark",
+        "KmlStyle",
+        "KmlIconStyle",
+        "KmlLineStyle",
+        "KmlPolygonStyle",
+        "KmlIcon"
+    ],
+    "snippets": [
+        "CreateAndSaveKmlFile.cpp",
+        "CreateAndSaveKmlFile.h",
+        "CreateAndSaveKmlFile.qml"
+    ],
+    "title": "Create and save KML file"
+}

@@ -1,0 +1,28 @@
+{
+    "category": "Display Information",
+    "description": "Use a custom dictionary style (.stylx) to symbolize features using a variety of attribute values.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "dictionary",
+        "military",
+        "renderer",
+        "style",
+        "stylx",
+        "unique value",
+        "visualization"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "DictionaryRenderer",
+        "DictionarySymbolStyle"
+    ],
+    "snippets": [
+        "CustomDictionaryStyle.cpp",
+        "CustomDictionaryStyle.h",
+        "CustomDictionaryStyle.qml"
+    ],
+    "title": "Custom dictionary style"
+}

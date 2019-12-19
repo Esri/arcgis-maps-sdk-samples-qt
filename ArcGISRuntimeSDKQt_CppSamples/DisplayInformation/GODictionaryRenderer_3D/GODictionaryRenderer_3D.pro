@@ -19,12 +19,12 @@ mac {
 
 #-------------------------------------------------------------------------------
 
-CONFIG += c++11
+CONFIG += c++14
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 100.6
+ARCGIS_RUNTIME_VERSION = 100.7
 include($$PWD/arcgisruntime.pri)
 
 TEMPLATE = app
