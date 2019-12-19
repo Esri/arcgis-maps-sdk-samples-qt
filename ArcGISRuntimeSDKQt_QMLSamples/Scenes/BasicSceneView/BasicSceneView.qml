@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.7
 
 Rectangle {
     width: 800
@@ -25,7 +25,9 @@ Rectangle {
     //! [create the scene with a basemap and surface]
     // Create a scene view
     SceneView {
+        id: sceneView
         anchors.fill: parent
+        cameraController: tmcc
 
         // create a scene...scene is a default property of sceneview
         // and thus will get added to the sceneview
@@ -35,6 +37,7 @@ Rectangle {
 
             // add a surface...surface is a default property of scene
             Surface {
+                navigationConstraint: Enums.NavigationConstraintNone
                 // add an arcgis tiled elevation source...elevation source is a default property of surface
                 ArcGISTiledElevationSource {
                     url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
@@ -47,13 +50,21 @@ Rectangle {
             setViewpointCameraAndWait(camera);
         }
     }
+
+    TransformationMatrixCameraController {
+        id: tmcc
+        originCamera: camera
+        clippingDistance: 50000
+        translationFactor: 100
+    }
+
     //! [create the scene with a basemap and surface]
 
     //! [create the camera to be used as the scene view's viewpoint]
     Camera {
         id: camera
         heading: 10.0
-        pitch: 80.0
+        pitch: 45.0
         roll: 0.0
 
         Point {

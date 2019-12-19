@@ -36,9 +36,6 @@ Rectangle {
         anchors.fill: parent
         tracking: true
         sceneView: sceneView
-        originCamera: Camera {}
-        locationDataSource: null
-        translationFactor: 1.0
     }
 
     SceneView {

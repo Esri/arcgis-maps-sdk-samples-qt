@@ -66,12 +66,6 @@ void DisplayScenesInTabletopAR::setArcGISArView(ArcGISArView* arcGISArView)
     return;
 
   m_arcGISArView = arcGISArView;
-
-  // full scale mode
-  m_arcGISArView->setOriginCamera(Camera());
-  m_arcGISArView->setTranslationFactor(1.0);
-  m_arcGISArView->setLocationDataSource(nullptr);
-
   emit arcGISArViewChanged();
 }
 
