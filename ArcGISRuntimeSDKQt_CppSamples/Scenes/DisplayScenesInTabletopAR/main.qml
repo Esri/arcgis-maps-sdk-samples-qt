@@ -1,4 +1,3 @@
-
 // Copyright 2019 ESRI
 //
 // All rights reserved under the copyright laws of the United States

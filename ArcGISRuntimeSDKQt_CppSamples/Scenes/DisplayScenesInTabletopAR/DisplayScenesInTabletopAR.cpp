@@ -20,12 +20,12 @@
 
 #include "DisplayScenesInTabletopAR.h"
 
-#include "ArcGISTiledElevationSource.h"
-#include "Scene.h"
-#include "SceneQuickView.h"
 #include "ArcGISSceneLayer.h"
+#include "ArcGISTiledElevationSource.h"
 #include "Error.h"
 #include "MobileScenePackage.h"
+#include "Scene.h"
+#include "SceneQuickView.h"
 
 #include <QDir>
 #include <QtCore/qglobal.h>
@@ -83,7 +83,7 @@ DisplayScenesInTabletopAR::DisplayScenesInTabletopAR(QObject* parent /* = nullpt
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
 
   // Connect to the Mobile Scene Package instance to know when errors occur
-  connect(MobileScenePackage::instance(), &MobileScenePackage::errorOccurred, [] (Error e)
+  connect(MobileScenePackage::instance(), &MobileScenePackage::errorOccurred, [](Error e)
   {
     if (e.isEmpty())
       return;
@@ -157,8 +157,6 @@ void DisplayScenesInTabletopAR::onMouseClicked(QMouseEvent& event)
 {
   Q_CHECK_PTR(m_arcGISArView);
 
-  const QPoint screenPoint = event.localPos().toPoint();
-
   if (!m_scene && !m_sceneView)
     return;
 
@@ -177,6 +175,7 @@ void DisplayScenesInTabletopAR::onMouseClicked(QMouseEvent& event)
   m_sceneView->arcGISScene()->baseSurface()->setNavigationConstraint(NavigationConstraint::None);
 
   // Set the initial transformation using the point clicked on the screen
+  const QPoint screenPoint = event.localPos().toPoint();
   m_arcGISArView->setInitialTransformation(screenPoint);
 
   // Set the origin camera.

@@ -21,12 +21,11 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
-class Scene;
-class SceneQuickView;
 class ArcGISSceneLayer;
-
 class Error;
 class MobileScenePackage;
+class Scene;
+class SceneQuickView;
 }
 }
 
@@ -65,7 +64,6 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::MobileScenePackage* m_scenePackage = nullptr;
   Esri::ArcGISRuntime::Camera m_originCamera;
-
 
   Esri::ArcGISRuntime::Toolkit::ArcGISArView* arcGISArView() const;
   void setArcGISArView(Esri::ArcGISRuntime::Toolkit::ArcGISArView* arcGISArView);

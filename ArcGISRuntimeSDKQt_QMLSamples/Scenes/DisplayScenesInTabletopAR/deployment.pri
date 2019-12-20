@@ -13,7 +13,6 @@
 # limitations under the License.
 #-------------------------------------------------
 
-
 android-no-sdk {
     target.path = /data/user/qt
     export(target.path)
