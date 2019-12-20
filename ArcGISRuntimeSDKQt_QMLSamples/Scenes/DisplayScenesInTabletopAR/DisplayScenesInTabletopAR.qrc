@@ -4,6 +4,5 @@
         <file>DisplayScenesInTabletopAR.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>ArcGISArView.qml</file>
     </qresource>
 </RCC>

@@ -20,7 +20,7 @@ QT += opengl qml quick
 
 CONFIG += c++14
 
-ARCGIS_RUNTIME_VERSION = 100.7
+ARCGIS_RUNTIME_VERSION = 100.8
 include($$PWD/arcgisruntime.pri)
 
 SOURCES += \
@@ -41,7 +41,8 @@ include(deployment.pri)
 
 # The path to the ArcGIS runtime toolkit for Qt sources, corresponding to the files downloaded
 # from the GitHub repo: https://github.com/Esri/arcgis-runtime-toolkit-qt
-AR_TOOLKIT_SOURCE_PATH = /Users/jare8800/Applications/arvr # must be set to the path to toolkit sources
+
+AR_TOOLKIT_SOURCE_PATH = # must be set to the path to toolkit sources
 
 isEmpty(AR_TOOLKIT_SOURCE_PATH) {
     error(AR_TOOLKIT_SOURCE_PATH is not set)
