@@ -15,6 +15,10 @@
 // [Legal]
 
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "Unique_Value_Renderer.h"
 
 #include "Map.h"
