@@ -39,7 +39,7 @@ namespace Esri
 class FindPlace : public QQuickItem
 {
   Q_OBJECT
-  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData MEMBER m_calloutData NOTIFY calloutDataChanged)
+
   Q_PROPERTY(QAbstractListModel* suggestions MEMBER m_suggestListModel NOTIFY suggestionsChanged)
   Q_PROPERTY(bool poiTextHasFocus READ poiTextHasFocus WRITE setPoiTextHasFocus NOTIFY poiTextHasFocusChanged)
 
@@ -63,7 +63,6 @@ public:
   Q_INVOKABLE void geocodePOIs(const QString& poi);
 
 signals:
-  void calloutDataChanged();
   void suggestionsChanged();
   void poiTextHasFocusChanged();
   void hideSuggestionView();

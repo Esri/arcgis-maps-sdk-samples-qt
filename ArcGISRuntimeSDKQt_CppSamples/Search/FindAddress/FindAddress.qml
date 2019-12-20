@@ -27,6 +27,7 @@ FindAddressSample {
 
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
 
@@ -34,7 +35,7 @@ FindAddressSample {
             id: callout
             borderColor: "lightgrey"
             borderWidth: 1
-            calloutData: findAddressSample.calloutData
+            calloutData: mapView.calloutData
             maxWidth: findAddressSample.width * 0.75
             leaderPosition: leaderPositionEnum.Automatic
             accessoryButtonHidden: true

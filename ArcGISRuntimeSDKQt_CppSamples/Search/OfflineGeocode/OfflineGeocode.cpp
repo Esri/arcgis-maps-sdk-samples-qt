@@ -135,7 +135,6 @@ void OfflineGeocode::componentComplete()
   m_mapView->calloutData()->setVisible(false);
   m_mapView->calloutData()->setTitle("Address");
   m_calloutData = m_mapView->calloutData();
-  emit calloutDataChanged();
 
   connectSignals();
 }
@@ -158,11 +157,6 @@ void OfflineGeocode::setSuggestionsText(const QString& searchText)
 void OfflineGeocode::logError(const Error error)
 {
   setErrorMessage( QString("%1: %2").arg(error.message(), error.additionalMessage()));
-}
-
-CalloutData* OfflineGeocode::calloutData() const
-{
-  return m_calloutData;
 }
 
 SuggestListModel* OfflineGeocode::suggestions() const

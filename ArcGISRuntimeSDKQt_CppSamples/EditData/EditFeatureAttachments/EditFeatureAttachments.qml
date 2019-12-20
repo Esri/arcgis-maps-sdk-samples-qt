@@ -36,7 +36,7 @@ EditFeatureAttachmentsSample {
             id: callout
             borderColor: "lightgrey"
             borderWidth: 1
-            calloutData: editAttachmentsSample.calloutData
+            calloutData: mapView.calloutData
             leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
                 attachmentWindow.visible = true;

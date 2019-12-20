@@ -80,8 +80,7 @@ void FindPlace::componentComplete()
 
   // initialize callout
   m_mapView->calloutData()->setVisible(false);
-  m_calloutData = m_mapView->calloutData();
-  emit calloutDataChanged();
+  m_calloutData = m_mapView->calloutData();  
 
   // connect mapview signals
   connectSignals();

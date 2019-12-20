@@ -80,7 +80,6 @@ void ProjectGeometry::componentComplete()
   // Set up callout data
   m_calloutData = m_mapView->calloutData();
   m_calloutData->setTitle(QStringLiteral("Coordinates"));
-  emit calloutDataChanged();
 }
 
 void ProjectGeometry::onMouseClicked(QMouseEvent& event)
@@ -105,7 +104,4 @@ void ProjectGeometry::onMouseClicked(QMouseEvent& event)
   const QString py = QString::number(projectedPoint.y(), 'f', 5);
   m_calloutData->setDetail(QString("Original: %1, %2\nProjected: %3, %4").arg(ox, oy, px, py));
   m_calloutData->setVisible(true);
-
-  // show the callout
-  emit calloutDataChanged();
 }

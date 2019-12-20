@@ -20,8 +20,7 @@
 namespace Esri
 {
   namespace ArcGISRuntime
-  {
-    class CalloutData;
+  {    
     class Map;
     class MapQuickView;
     class FeatureLayer;
@@ -38,8 +37,6 @@ class DeleteFeaturesFeatureService : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
-
 public:
   explicit DeleteFeaturesFeatureService(QQuickItem* parent = nullptr);
   ~DeleteFeaturesFeatureService() override;
@@ -49,13 +46,11 @@ public:
   Q_INVOKABLE void deleteSelectedFeature();
 
 signals:
-  void calloutDataChanged();
   void featureSelected();
   void hideWindow();
 
 private:
   void connectSignals();
-  Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

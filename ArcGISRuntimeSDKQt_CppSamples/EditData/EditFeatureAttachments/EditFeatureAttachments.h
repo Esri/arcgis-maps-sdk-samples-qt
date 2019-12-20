@@ -39,7 +39,6 @@ class EditFeatureAttachments : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
   Q_PROPERTY(QAbstractListModel* attachmentModel READ attachmentModel NOTIFY attachmentModelChanged)
 
 public:
@@ -52,7 +51,6 @@ public:
   Q_INVOKABLE void deleteAttachment(int index);
 
 signals:
-  void calloutDataChanged();
   void featureSelected();
   void hideWindow();
   void attachmentModelChanged();
@@ -60,7 +58,6 @@ signals:
 private:
   void connectSignals();
   QAbstractListModel* attachmentModel() const;
-  Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;

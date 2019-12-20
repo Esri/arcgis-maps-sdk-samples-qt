@@ -96,9 +96,7 @@ void MobileMap_SearchAndRoute::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // initialize Callout
-  m_mapView->calloutData()->setTitle("Address");
-  m_calloutData = m_mapView->calloutData();
-  emit calloutDataChanged();
+  m_mapView->calloutData()->setTitle("Address");  
 
   // set reverse geocoding parameters
   m_reverseGeocodeParameters.setMaxResults(1);
@@ -208,7 +206,7 @@ void MobileMap_SearchAndRoute::resetMapView()
   emit canRouteChanged();
 
   // dimiss callout
-  m_calloutData->setVisible(false);
+  m_mapView->calloutData()->setVisible(false);
 
   // clear the graphics overlays and stops
   m_stopsGraphicsOverlay->graphics()->clear();
@@ -373,11 +371,6 @@ QStringList MobileMap_SearchAndRoute::mmpkList() const
 QVariantList MobileMap_SearchAndRoute::mapList() const
 {
   return m_mapList;
-}
-
-CalloutData *MobileMap_SearchAndRoute::calloutData() const
-{
-  return m_calloutData;
 }
 
 bool MobileMap_SearchAndRoute::isGeocodeInProgress() const

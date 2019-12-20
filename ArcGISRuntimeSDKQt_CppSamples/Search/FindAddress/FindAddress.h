@@ -21,7 +21,6 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class CalloutData;
     class Map;
     class MapQuickView;
     class GraphicsOverlay;
@@ -36,7 +35,6 @@ namespace Esri
 class FindAddress : public QQuickItem
 {
   Q_OBJECT
-  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
 
 public:
   explicit FindAddress(QQuickItem* parent = nullptr);
@@ -50,11 +48,9 @@ public:
 signals:
   void hideCallout();
   void showCallout();
-  void calloutDataChanged();
 
 private:
   void connectSignals();
-  Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
