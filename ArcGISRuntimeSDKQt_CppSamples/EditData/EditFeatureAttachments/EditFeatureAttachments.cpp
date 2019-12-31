@@ -74,7 +74,6 @@ void EditFeatureAttachments::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
-  emit calloutDataChanged();
 
   // create a Map by passing in the Basemap
   m_map = new Map(Basemap::streets(this), this);
@@ -254,9 +253,4 @@ void EditFeatureAttachments::deleteAttachment(int index)
     });
     m_selectedFeature->load();
   }
-}
-
-CalloutData* EditFeatureAttachments::calloutData() const
-{
-  return m_mapView ? m_mapView->calloutData() : nullptr;
 }

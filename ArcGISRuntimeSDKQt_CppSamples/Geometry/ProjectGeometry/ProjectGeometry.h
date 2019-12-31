@@ -24,7 +24,6 @@ namespace ArcGISRuntime
 class Map;
 class MapQuickView;
 class Graphic;
-class CalloutData;
 }
 }
 
@@ -39,13 +38,8 @@ public:
   explicit ProjectGeometry(QQuickItem* parent = nullptr);
   ~ProjectGeometry() override = default;
 
-  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData MEMBER m_calloutData NOTIFY calloutDataChanged)
-
   void componentComplete() override;
   static void init();
-
-signals:
-  void calloutDataChanged();
 
 private slots:
   void onMouseClicked(QMouseEvent& event);

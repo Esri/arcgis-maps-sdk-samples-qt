@@ -21,7 +21,6 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class CalloutData;
     class Map;
     class MapQuickView;
     class FeatureLayer;
@@ -38,7 +37,6 @@ class UpdateAttributesFeatureService : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
   Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
 
 public:
@@ -49,15 +47,13 @@ public:
   static void init();
   Q_INVOKABLE void updateSelectedFeature(QString fieldVal);
 
-signals:
-  void calloutDataChanged();
+signals:  
   void featureSelected();
   void featureTypeChanged();
   void hideWindow();
 
 private:
   void connectSignals();
-  Esri::ArcGISRuntime::CalloutData* calloutData() const;
   QString featureType() const;
 
 private:

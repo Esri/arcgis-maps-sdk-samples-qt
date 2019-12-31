@@ -28,13 +28,14 @@ OfflineGeocodeSample {
 
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
 
         Callout {
             id: callout
             leaderPosition: leaderPositionEnum.Automatic
-            calloutData: offlineGeocodeSample.calloutData
+            calloutData: mapView.calloutData
             screenOffsetY: -19
             accessoryButtonHidden: true
         }

@@ -54,7 +54,6 @@ void FindAddress::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-  emit calloutDataChanged();
 
   // create a new basemap instance
   Basemap* basemap = Basemap::imageryWithLabels(this);
@@ -103,12 +102,6 @@ void FindAddress::connectSignals()
   });
   //! [FindAddress geocodeCompleted handler]
 
-  // connect to the viewpoint changed signal on the MapQuickView
-  connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
-  {
-    emit hideCallout();
-  });
-
   // connect to the mouse click signal on the MapQuickView
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
   {
@@ -138,11 +131,6 @@ void FindAddress::connectSignals()
       emit showCallout();
     }
   });
-}
-
-CalloutData* FindAddress::calloutData() const
-{
-  return m_mapView ? m_mapView->calloutData() : nullptr;
 }
 
 void FindAddress::geocodeAddress(const QString& address)

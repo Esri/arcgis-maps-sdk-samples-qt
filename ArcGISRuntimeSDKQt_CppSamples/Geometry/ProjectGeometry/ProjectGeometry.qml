@@ -25,9 +25,7 @@ ProjectGeometrySample {
     clip: true
     width: 800
     height: 600
-
     
-
     // add a mapView component
     MapView {
         id: mapView
@@ -37,13 +35,11 @@ ProjectGeometrySample {
         // Declare a callout
         Callout {
             id: callout
-            calloutData: rootRectangle.calloutData
+            calloutData: mapView.calloutData
             accessoryButtonHidden: true
             autoAdjustWidth: true
             maxWidth: 350
             leaderPosition: leaderPositionEnum.Automatic
         }
-    }
-
-    onCalloutDataChanged: callout.showCallout();
+    }    
 }

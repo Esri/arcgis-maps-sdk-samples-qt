@@ -24,9 +24,9 @@ ShowCalloutSample {
     width: 800
     height: 600
 
-
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
         clip: true
@@ -34,7 +34,7 @@ ShowCalloutSample {
         //! [set callout data]
         Callout {
             id: callout
-            calloutData: showCalloutSample.calloutData // bind to the property that is exposed
+            calloutData: mapView.calloutData // bind to the property that is exposed
             accessoryButtonHidden: true
             leaderPosition: leaderPositionEnum.Automatic
         }

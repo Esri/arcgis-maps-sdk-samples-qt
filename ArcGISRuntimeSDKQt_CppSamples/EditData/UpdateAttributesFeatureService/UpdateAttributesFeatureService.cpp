@@ -70,7 +70,6 @@ void UpdateAttributesFeatureService::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
-  emit calloutDataChanged();
 
   // create a Map by passing in the Basemap
   m_map = new Map(Basemap::streets(this), this);
@@ -178,11 +177,6 @@ void UpdateAttributesFeatureService::connectSignals()
     }
     m_featureLayer->clearSelection();
   });
-}
-
-CalloutData* UpdateAttributesFeatureService::calloutData() const
-{
- return m_mapView ? m_mapView->calloutData() : nullptr;
 }
 
 void UpdateAttributesFeatureService::updateSelectedFeature(QString fieldVal)

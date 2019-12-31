@@ -39,7 +39,7 @@ MobileMap_SearchAndRouteSample {
 
             // callout to display information
             Callout {
-                calloutData: mobileMapSearchRoute.calloutData
+                calloutData: mapView.calloutData
                 screenOffsetY: -19
                 accessoryButtonHidden: true
                 leaderPosition: leaderPositionEnum.Automatic

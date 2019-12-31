@@ -36,6 +36,7 @@ FindPlaceSample {
 
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
 
@@ -43,7 +44,7 @@ FindPlaceSample {
         Callout {
             id: callout
             leaderPosition: leaderPositionEnum.Automatic
-            calloutData: findPlaceSample.calloutData
+            calloutData: mapView.calloutData
             accessoryButtonHidden: true
             screenOffsetY: -19
         }

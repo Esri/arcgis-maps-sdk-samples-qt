@@ -32,7 +32,7 @@ DeleteFeaturesFeatureServiceSample {
         // map callout window
         Callout {
             id: callout
-            calloutData: deleteFeaturesSample.calloutData
+            calloutData: mapView.calloutData
             borderColor: "lightgrey"
             borderWidth : 1
             accessoryButtonType: "Custom"

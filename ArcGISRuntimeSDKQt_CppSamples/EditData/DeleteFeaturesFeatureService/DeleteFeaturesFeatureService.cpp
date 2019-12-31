@@ -60,8 +60,7 @@ void DeleteFeaturesFeatureService::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
-  emit calloutDataChanged();
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);  
 
   // create a Map by passing in the Basemap
   m_map = new Map(Basemap::streets(this), this);
@@ -189,11 +188,6 @@ void DeleteFeaturesFeatureService::connectSignals()
 
     qDeleteAll(featureEditResults);
   });
-}
-
-CalloutData* DeleteFeaturesFeatureService::calloutData() const
-{
-  return m_mapView ? m_mapView->calloutData() : nullptr;
 }
 
 void DeleteFeaturesFeatureService::deleteSelectedFeature()
