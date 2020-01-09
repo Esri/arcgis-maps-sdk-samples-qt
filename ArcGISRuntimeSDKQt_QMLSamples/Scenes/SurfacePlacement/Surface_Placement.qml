@@ -41,9 +41,9 @@ Rectangle {
             // set an initial viewpoint
             ViewpointCenter {
                 Point {
-                    x: -4.04
-                    y: 53.04
-                    z: 1300
+                    x: -4.01
+                    y: 53.05
+                    z: 1115
                     spatialReference: SpatialReference { wkid: 4326 }
                 }
                 targetScale: 62.013264927081764
@@ -51,13 +51,13 @@ Rectangle {
                 Camera {
                     id: camera
                     location: Point {
-                        x: -4.04
-                        y: 53.04
-                        z: 1300
+                        x: -4.01
+                        y: 53.05
+                        z: 1115
                         spatialReference: SpatialReference { wkid: 4326 }
                     }
-                    heading: 0
-                    pitch: 90.0
+                    heading: 299
+                    pitch: 88.0
                     roll: 0
                 }
             }
