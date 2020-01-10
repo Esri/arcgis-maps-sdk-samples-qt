@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Scenes/DisplayScenesInTabletopAR/DisplayScenesInTabletopAR.qml"));
+  view.setSource(QUrl("qrc:/qml/DisplayScenesInTabletopAR.qml"));
 
   view.show();
 
