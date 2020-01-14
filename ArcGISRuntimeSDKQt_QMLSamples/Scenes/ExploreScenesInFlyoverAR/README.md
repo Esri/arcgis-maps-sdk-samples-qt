@@ -2,7 +2,7 @@
 
 Use augmented reality (AR) to quickly explore a scene more naturally than you could with a touch or mouse interface.
 
-![](screenShot.jpg)
+![](screenshot.jpg)
 
 ## Use case
 
