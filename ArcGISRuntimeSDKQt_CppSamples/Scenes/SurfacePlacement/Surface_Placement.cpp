@@ -62,8 +62,8 @@ void Surface_Placement::componentComplete()
   //! [Create Scene API snippet]
 
   // set an initial viewpoint
-  Camera camera(53.04, -4.04, 1300, 0, 90, 0);
-  Viewpoint viewpoint(53.04, -4.04, 1300, camera);
+  Camera camera(53.05, -4.01, 1115, 299, 88, 0);
+  Viewpoint viewpoint(53.05, -4.01, 1115, camera);
   scene->setInitialViewpoint(viewpoint);
 
   // set the scene to the scene view
