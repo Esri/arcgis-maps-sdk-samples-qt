@@ -1,31 +1,44 @@
 # Explore scenes in flyover AR
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Use augmented reality (AR) to quickly explore a scene more naturally than you could with a touch or mouse interface.
 
-![](screenshot.png)
+![](screenShot.jpg)
+
+## Use case
+
+You can use AR to drop into an area and visualize information, like a proposed development or a historical model of a city. You could use flyover AR to explore a city by walking through it virtually.
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+When you open the sample, you'll be viewing the scene from above. You can walk around, using your device as a window into the scene. Try moving vertically to get closer to the ground.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create the `ArcGISARView` and add it to the view.
+2. Create the scene, add content, then display it.
+4. When the content you want to view loads, get its center point and use that to create the origin camera for the AR view. Note that the altitude should be set so that all scene content is visible. For a city, a good value might be a bit higher than the tallest building. The sample uses 250 meters in the absence of tall buildings in the sample data.
+5. Set the translation factor so that you can move through the scene easily. With a translation factor of 1000, you will move 1000 feet in the scene for every foot you move the physical device.
+6. Set the space effect to `SpaceEffect::Stars` and atmosphere effect to `AtmosphereEffect::Realistic` to create an immersive experience.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* ArcGISARView
+* SceneView
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
+
+This sample uses a sample [integrated mesh layer](https://www.arcgis.com/home/item.html?id=dbc72b3ebb024c848d89a42fe6387a1b) provided by [Vricon](https://www.vricon.com/). The integrated mesh layer shows an area around the US-Mexico border.
+
+The [world elevation service](https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer) is used to show terrain while the integrated mesh layer loads.
 
 ## Additional information
-A standard level license is required to ...
+
+This sample requires a device that is compatible with ARKit 1 on iOS or ARCore 1.8 on Android.
+
+**Flyover AR** is one of three main patterns for working with geographic information in augmented reality. See the [guide doc]() for more information.
+
+This sample uses the ArcGIS Runtime Toolkit. See [Agumented reality]() in the guide to learn about the toolkit and how to add it to your app.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+augmented reality, bird's eye, birds-eye-view, fly over, flyover, mixed reality, translation factor
