@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
   qputenv("QSG_RENDER_LOOP", "basic");
 #endif
 
+  // register the ArcGISArView and LocationDataSource with the QML engine before it's creation
   Esri::ArcGISRuntime::Toolkit::QmlArcGISArView::qmlRegisterTypes();
 
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)

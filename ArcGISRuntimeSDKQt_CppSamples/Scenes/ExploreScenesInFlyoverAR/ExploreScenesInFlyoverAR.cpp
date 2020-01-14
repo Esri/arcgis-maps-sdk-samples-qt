@@ -54,10 +54,17 @@ ExploreScenesInFlyoverAR::ExploreScenesInFlyoverAR(QObject* parent /* = nullptr 
       return;
     }
 
+    // Enable subsurface navigation. This allows you to look at the scene from below.
     m_scene->baseSurface()->setNavigationConstraint(NavigationConstraint::None);
+
+    // Start with the camera at the center of the mesh layer.
     m_originCamera = Camera(m_integratedMeshLayer->fullExtent().center().y(), m_integratedMeshLayer->fullExtent().center().x(), 250, 0, 90, 0);
     arcGISArView()->setOriginCamera(m_originCamera);
+
+    // Set the translation factor to enable rapid movement through the scene.
     arcGISArView()->setTranslationFactor(1000);
+
+    // Enable atmosphere and space effects for a more immersive experience.
     m_sceneView->setSpaceEffect(SpaceEffect::Stars);
     m_sceneView->setAtmosphereEffect(AtmosphereEffect::Realistic);
     emit arcGISArViewChanged();

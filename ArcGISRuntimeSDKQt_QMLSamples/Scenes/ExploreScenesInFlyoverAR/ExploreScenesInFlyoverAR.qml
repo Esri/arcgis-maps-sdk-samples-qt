@@ -47,6 +47,7 @@ Rectangle {
                 }
             }
 
+            // create the integrated mesh layer
             IntegratedMeshLayer {
                 id: integratedMeshLayer
                 url: "https://www.arcgis.com/home/item.html?id=dbc72b3ebb024c848d89a42fe6387a1b"
@@ -58,6 +59,7 @@ Rectangle {
                     // Enable subsurface navigation. This allows you to look at the scene from below.
                     sceneView.scene.baseSurface.navigationConstraint = Enums.NavigationConstraintNone;
 
+                    // Start with the camera at the center of the mesh layer.
                     const viewPoint = ArcGISRuntimeEnvironment.createObject("Point", {
                                                                                       y: integratedMeshLayer.fullExtent.center.y,
                                                                                       x: integratedMeshLayer.fullExtent.center.x,
@@ -72,7 +74,11 @@ Rectangle {
                                                                                });
 
                     arcGISArView.originCamera = originCamera;
+
+                    // Set the translation factor to enable rapid movement through the scene.
                     arcGISArView.translationFactor = 1000;
+
+                    // Enable atmosphere and space effects for a more immersive experience.
                     sceneView.spaceEffect = Enums.SpaceEffectStars;
                     sceneView.atmosphereEffect = Enums.AtmosphereEffectRealistic;
                 }
