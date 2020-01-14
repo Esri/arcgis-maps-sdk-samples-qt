@@ -58,7 +58,10 @@ ExploreScenesInFlyoverAR::ExploreScenesInFlyoverAR(QObject* parent /* = nullptr 
     m_originCamera = Camera(m_integratedMeshLayer->fullExtent().center().y(), m_integratedMeshLayer->fullExtent().center().x(), 250, 0, 90, 0);
     arcGISArView()->setOriginCamera(m_originCamera);
     arcGISArView()->setTranslationFactor(1000);
+    m_sceneView->setSpaceEffect(SpaceEffect::Stars);
+    m_sceneView->setAtmosphereEffect(AtmosphereEffect::Realistic);
     emit arcGISArViewChanged();
+    emit sceneViewChanged();
   });
 }
 

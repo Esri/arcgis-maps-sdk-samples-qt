@@ -73,6 +73,8 @@ Rectangle {
 
                     arcGISArView.originCamera = originCamera;
                     arcGISArView.translationFactor = 1000;
+                    sceneView.spaceEffect = Enums.SpaceEffectStars;
+                    sceneView.atmosphereEffect = Enums.AtmosphereEffectRealistic;
                 }
 
                 onErrorChanged: {
