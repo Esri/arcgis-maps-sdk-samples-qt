@@ -33,6 +33,21 @@ ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
 
+#-------------------------------------------------------------------------------
+# AR configuration
+
+# The path to the ArcGIS runtime toolkit for Qt sources, corresponding to the files downloaded
+# from the GitHub repo: https://github.com/Esri/arcgis-runtime-toolkit-qt
+
+AR_TOOLKIT_SOURCE_PATH = # must be set to the path to toolkit sources
+
+isEmpty(AR_TOOLKIT_SOURCE_PATH) {
+    error(AR_TOOLKIT_SOURCE_PATH is not set)
+}
+
+include($$AR_TOOLKIT_SOURCE_PATH/Plugin/QmlApi/ArQmlApi.pri)
+#-------------------------------------------------------------------------------
+
 android {
 DISTFILES += \
     android/AndroidManifest.xml \
@@ -50,19 +65,4 @@ contains(ANDROID_TARGET_ARCH,arm64-v8a) {
 
 # Default rules for deployment.
 include(deployment.pri)
-
-#-------------------------------------------------------------------------------
-# AR configuration
-
-# The path to the ArcGIS runtime toolkit for Qt sources, corresponding to the files downloaded
-# from the GitHub repo: https://github.com/Esri/arcgis-runtime-toolkit-qt
-
-AR_TOOLKIT_SOURCE_PATH = # must be set to the path to toolkit sources
-
-isEmpty(AR_TOOLKIT_SOURCE_PATH) {
-    error(AR_TOOLKIT_SOURCE_PATH is not set)
-}
-
-include($$AR_TOOLKIT_SOURCE_PATH/Plugin/QmlApi/ArQmlApi.pri)
-#-------------------------------------------------------------------------------
 }

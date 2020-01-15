@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayScenesInTabletopAR, Category=Scenes]
+// [WriteFile Name=DisplayScenesInTabletopAR, Category=AR]
 // [Legal]
 // Copyright 2019 Esri.
 

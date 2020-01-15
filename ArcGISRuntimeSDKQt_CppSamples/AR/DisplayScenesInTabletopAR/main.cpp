@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
   engine.addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Scenes/DisplayScenesInTabletopAR/main.qml"));
+  engine.load(QUrl("qrc:/Samples/AR/DisplayScenesInTabletopAR/main.qml"));
 
   return app.exec();
 }
