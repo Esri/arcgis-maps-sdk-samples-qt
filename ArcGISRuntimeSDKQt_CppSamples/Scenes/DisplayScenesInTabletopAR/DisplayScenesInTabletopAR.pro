@@ -41,22 +41,6 @@ SOURCES += \
 
 RESOURCES += DisplayScenesInTabletopAR.qrc
 
-#-------------------------------------------------------------------------------
-# AR configuration
-
-# The path to the ArcGIS runtime toolkit for Qt sources, corresponding to the files downloaded
-# from the GitHub repo: https://github.com/Esri/arcgis-runtime-toolkit-qt
-
-AR_TOOLKIT_SOURCE_PATH = # must be set to the path to toolkit sources
-
-isEmpty(AR_TOOLKIT_SOURCE_PATH) {
-    error(AR_TOOLKIT_SOURCE_PATH is not set)
-}
-
-include($$AR_TOOLKIT_SOURCE_PATH/Plugin/CppApi/ArCppApi.pri)
-
-#-------------------------------------------------------------------------------
-
 win32 {
     LIBS += \
         Ole32.lib
@@ -75,7 +59,6 @@ ios {
 android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
-}
 
 DISTFILES += \
     android/AndroidManifest.xml \
@@ -89,4 +72,21 @@ DISTFILES += \
 contains(ANDROID_TARGET_ARCH,arm64-v8a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/android
+}
+
+#-------------------------------------------------------------------------------
+# AR configuration
+
+# The path to the ArcGIS runtime toolkit for Qt sources, corresponding to the files downloaded
+# from the GitHub repo: https://github.com/Esri/arcgis-runtime-toolkit-qt
+
+AR_TOOLKIT_SOURCE_PATH = # must be set to the path to toolkit sources
+
+isEmpty(AR_TOOLKIT_SOURCE_PATH) {
+    error(AR_TOOLKIT_SOURCE_PATH is not set)
+}
+
+include($$AR_TOOLKIT_SOURCE_PATH/Plugin/CppApi/ArCppApi.pri)
+
+#-------------------------------------------------------------------------------
 }
