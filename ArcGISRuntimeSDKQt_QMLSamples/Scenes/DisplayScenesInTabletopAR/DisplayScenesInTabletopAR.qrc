@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file alias="sample.json">DisplayScenesInTabletopAR.json</file>
+        <file>DisplayScenesInTabletopAR.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
