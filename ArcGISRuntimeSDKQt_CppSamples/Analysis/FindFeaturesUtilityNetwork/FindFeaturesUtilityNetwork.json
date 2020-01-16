@@ -1,8 +1,0 @@
-{
-    "source" :  "FindFeaturesUtilityNetwork.qml",
-    "otherSourceFiles" :  [
-        "FindFeaturesUtilityNetwork.h",
-        "FindFeaturesUtilityNetwork.cpp"
-    ],
-    "name" : "Find connected features in utility networks"
-}
