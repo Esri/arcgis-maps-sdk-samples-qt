@@ -57,8 +57,10 @@ ExploreScenesInFlyoverAR::ExploreScenesInFlyoverAR(QObject* parent /* = nullptr 
     // Enable subsurface navigation. This allows you to look at the scene from below.
     m_scene->baseSurface()->setNavigationConstraint(NavigationConstraint::None);
 
+    const Point centerPoint = m_integratedMeshLayer->fullExtent().center();
+
     // Start with the camera at the center of the mesh layer.
-    m_originCamera = Camera(m_integratedMeshLayer->fullExtent().center().y(), m_integratedMeshLayer->fullExtent().center().x(), 250, 0, 90, 0);
+    m_originCamera = Camera(centerPoint.y(), centerPoint.x(), 250, 0, 90, 0);
     arcGISArView()->setOriginCamera(m_originCamera);
 
     // Set the translation factor to enable rapid movement through the scene.
