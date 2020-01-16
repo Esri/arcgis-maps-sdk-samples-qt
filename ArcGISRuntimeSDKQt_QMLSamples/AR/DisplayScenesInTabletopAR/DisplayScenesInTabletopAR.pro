@@ -48,7 +48,6 @@ isEmpty(AR_TOOLKIT_SOURCE_PATH) {
 include($$AR_TOOLKIT_SOURCE_PATH/Plugin/QmlApi/ArQmlApi.pri)
 #-------------------------------------------------------------------------------
 
-android {
 DISTFILES += \
     android/AndroidManifest.xml \
     android/build.gradle \
@@ -61,7 +60,6 @@ DISTFILES += \
 contains(ANDROID_TARGET_ARCH,arm64-v8a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/android
-}
 
 # Default rules for deployment.
 include(deployment.pri)
