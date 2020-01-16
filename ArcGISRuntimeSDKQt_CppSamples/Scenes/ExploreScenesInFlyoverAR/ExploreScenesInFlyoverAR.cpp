@@ -26,7 +26,7 @@
 #include "IntegratedMeshLayer.h"
 
 using namespace Esri::ArcGISRuntime;
-using namespace Esri::ArcGISRuntime::Toolkit;
+namespace toolkit = Esri::ArcGISRuntime::Toolkit;
 
 ExploreScenesInFlyoverAR::ExploreScenesInFlyoverAR(QObject* parent /* = nullptr */):
   QObject(parent),
@@ -86,7 +86,7 @@ SceneQuickView* ExploreScenesInFlyoverAR::sceneView() const
   return m_sceneView;
 }
 
-ArcGISArView* ExploreScenesInFlyoverAR::arcGISArView() const
+toolkit::ArcGISArView* ExploreScenesInFlyoverAR::arcGISArView() const
 {
   return m_arcGISArView;
 }
@@ -104,7 +104,7 @@ void ExploreScenesInFlyoverAR::setSceneView(SceneQuickView* sceneView)
 }
 
 // Set the AR view
-void ExploreScenesInFlyoverAR::setArcGISArView(ArcGISArView* arcGISArView)
+void ExploreScenesInFlyoverAR::setArcGISArView(toolkit::ArcGISArView* arcGISArView)
 {
   if (!arcGISArView || arcGISArView == m_arcGISArView)
     return;
