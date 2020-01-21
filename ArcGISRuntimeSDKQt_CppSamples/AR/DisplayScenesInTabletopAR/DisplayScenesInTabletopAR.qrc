@@ -1,11 +1,13 @@
 <RCC>
     <qresource prefix="/Samples/AR/DisplayScenesInTabletopAR">
-        <file alias="sample.json">DisplayScenesInTabletopAR.json</file>        
+        <file alias="sample.json">DisplayScenesInTabletopAR.json</file>
         <file>DisplayScenesInTabletopAR.qml</file>
         <file>DisplayScenesInTabletopAR.h</file>
         <file>DisplayScenesInTabletopAR.cpp</file>
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>PermissionsHelper.cpp</file>
+        <file>PermissionsHelper.h</file>
     </qresource>
 </RCC>

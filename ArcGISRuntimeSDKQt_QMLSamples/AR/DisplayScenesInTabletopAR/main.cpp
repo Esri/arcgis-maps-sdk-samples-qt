@@ -11,6 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "PermissionsHelper.h"
+
 #include <QSettings>
 #include <QGuiApplication>
 #include <QQuickView>
@@ -33,6 +35,7 @@ int main(int argc, char *argv[])
 #endif
 
   Esri::ArcGISRuntime::Toolkit::QmlArcGISArView::qmlRegisterTypes();
+  qmlRegisterType<PermissionsHelper>("Esri.Samples", 1, 0, "PermissionsHelper");
 
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   // Linux requires 3.2 OpenGL Context

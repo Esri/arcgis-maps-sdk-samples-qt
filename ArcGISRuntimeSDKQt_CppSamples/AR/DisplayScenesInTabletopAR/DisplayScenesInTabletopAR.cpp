@@ -75,7 +75,8 @@ void DisplayScenesInTabletopAR::setArcGISArView(ArcGISArView* arcGISArView)
 
 DisplayScenesInTabletopAR::DisplayScenesInTabletopAR(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(SceneViewTilingScheme::Geographic, this))
+  m_scene(new Scene(SceneViewTilingScheme::Geographic, this)),
+  m_permissionsHelper(new PermissionsHelper(this))
 {
   // Display an empty scene
   m_scene->baseSurface()->setOpacity(0.0);
@@ -150,7 +151,17 @@ void DisplayScenesInTabletopAR::createScenePackage(const QString& path)
 {
   m_scenePackage = new MobileScenePackage(path, this);
   connect(m_scenePackage, &MobileScenePackage::doneLoading, this, &DisplayScenesInTabletopAR::packageLoaded);
-  m_scenePackage->load();
+
+  connect(m_permissionsHelper, &PermissionsHelper::requestFilesystemAccessCompleted, this, [this]()
+  {
+    m_scenePackage->load();
+  });
+
+
+  if (!m_permissionsHelper->fileSystemAccessGranted())
+    m_permissionsHelper->requestFilesystemAccess();
+  else
+    m_scenePackage->load();
 }
 
 void DisplayScenesInTabletopAR::onMouseClicked(QMouseEvent& event)

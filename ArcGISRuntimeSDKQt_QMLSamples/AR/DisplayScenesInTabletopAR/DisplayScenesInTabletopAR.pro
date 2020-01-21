@@ -23,8 +23,12 @@ CONFIG += c++14
 ARCGIS_RUNTIME_VERSION = 100.8
 include($$PWD/arcgisruntime.pri)
 
+HEADERS += \
+    PermissionsHelper.h
+
 SOURCES += \
-    main.cpp
+    main.cpp \
+    PermissionsHelper.cpp
 
 RESOURCES += \
     DisplayScenesInTabletopAR.qrc
