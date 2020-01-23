@@ -32,9 +32,6 @@ public:
 signals:
   void fileSystemAccessGrantedChanged();
   void requestFilesystemAccessCompleted(); // notifies even if request denied
-
-private:
-  bool fileSystemAccessCheckRequired() const;
 };
 
 #endif // PERMISSIONSHELPER_H

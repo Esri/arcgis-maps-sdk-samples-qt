@@ -157,7 +157,6 @@ void DisplayScenesInTabletopAR::createScenePackage(const QString& path)
     m_scenePackage->load();
   });
 
-
   if (!m_permissionsHelper->fileSystemAccessGranted())
     m_permissionsHelper->requestFilesystemAccess();
   else
