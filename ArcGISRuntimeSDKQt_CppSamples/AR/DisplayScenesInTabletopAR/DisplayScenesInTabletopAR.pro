@@ -22,7 +22,7 @@ mac {
 CONFIG += c++14
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += opengl qml quick
+QT += opengl qml quick androidextras
 
 TEMPLATE = app
 TARGET = DisplayScenesInTabletopAR
@@ -64,7 +64,7 @@ ios {
 # The path to the ArcGIS runtime toolkit for Qt sources, corresponding to the files downloaded
 # from the GitHub repo: https://github.com/Esri/arcgis-runtime-toolkit-qt
 
-AR_TOOLKIT_SOURCE_PATH = # must be set to the path to toolkit sources
+AR_TOOLKIT_SOURCE_PATH = /Users/jare8800/Applications/arvr# must be set to the path to toolkit sources
 
 isEmpty(AR_TOOLKIT_SOURCE_PATH) {
     error(AR_TOOLKIT_SOURCE_PATH is not set)

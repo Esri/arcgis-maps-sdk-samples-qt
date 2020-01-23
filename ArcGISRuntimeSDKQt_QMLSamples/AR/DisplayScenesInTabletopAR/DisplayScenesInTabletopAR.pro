@@ -16,7 +16,7 @@
 TEMPLATE = app
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += opengl qml quick
+QT += opengl qml quick androidextras
 
 CONFIG += c++14
 
