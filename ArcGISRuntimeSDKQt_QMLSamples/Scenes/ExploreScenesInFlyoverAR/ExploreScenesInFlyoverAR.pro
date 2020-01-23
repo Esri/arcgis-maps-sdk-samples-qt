@@ -50,3 +50,27 @@ include($$AR_TOOLKIT_SOURCE_PATH/Plugin/QmlApi/ArQmlApi.pri)
 
 # Default rules for deployment.
 include(deployment.pri)
+
+android {
+    ANDROID_LIBS = $$dirname(QMAKE_QMAKE)/../lib
+
+    ANDROID_EXTRA_LIBS += \
+        $$ANDROID_LIBS/libssl_1_1.so \
+        $$ANDROID_LIBS/libcrypto_1_1.so
+
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
+    android/gradlew.bat \
+    android/res/values/libs.xml
+}
+
+
+
+contains(ANDROID_TARGET_ARCH,arm64-v8a) {
+    ANDROID_PACKAGE_SOURCE_DIR = \
+        $$PWD/android
+}
