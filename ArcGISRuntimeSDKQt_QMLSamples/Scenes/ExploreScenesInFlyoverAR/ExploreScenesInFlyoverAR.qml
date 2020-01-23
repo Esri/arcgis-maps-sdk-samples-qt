@@ -42,7 +42,7 @@ Rectangle {
             BasemapImagery {}
 
             Surface {
-                opacity: 0.0;
+                opacity: 0.0
                 ArcGISTiledElevationSource {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
