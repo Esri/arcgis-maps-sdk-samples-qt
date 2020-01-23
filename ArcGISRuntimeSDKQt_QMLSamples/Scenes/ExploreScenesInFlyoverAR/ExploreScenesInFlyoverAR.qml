@@ -42,6 +42,7 @@ Rectangle {
             BasemapImagery {}
 
             Surface {
+                opacity: 0.0;
                 ArcGISTiledElevationSource {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
@@ -57,7 +58,8 @@ Rectangle {
                         return;
 
                     // Enable subsurface navigation. This allows you to look at the scene from below.
-                    sceneView.scene.baseSurface.navigationConstraint = Enums.NavigationConstraintNone;
+                    sceneView.scene.baseSurface.navigationConstraint = Enums.NavigationConstraintStayAbove;
+                    scene.baseSurface.opacity = 1.0;
 
                     // Start with the camera at the center of the mesh layer.
                     const viewPoint = ArcGISRuntimeEnvironment.createObject("Point", {

@@ -38,6 +38,7 @@ ExploreScenesInFlyoverAR::ExploreScenesInFlyoverAR(QObject* parent /* = nullptr 
 
   // add the elevation source to the scene to display elevation
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
+  m_scene->baseSurface()->setOpacity(0.0f);
 
   // create the integrated mesh layer
   const QUrl meshLyrUrl("https://www.arcgis.com/home/item.html?id=dbc72b3ebb024c848d89a42fe6387a1b");
@@ -55,7 +56,8 @@ ExploreScenesInFlyoverAR::ExploreScenesInFlyoverAR(QObject* parent /* = nullptr 
     }
 
     // Enable subsurface navigation. This allows you to look at the scene from below.
-    m_scene->baseSurface()->setNavigationConstraint(NavigationConstraint::None);
+    m_scene->baseSurface()->setNavigationConstraint(NavigationConstraint::StayAbove);
+    m_scene->baseSurface()->setOpacity(1.0f);
 
     const Point centerPoint = m_integratedMeshLayer->fullExtent().center();
 
@@ -112,6 +114,7 @@ void ExploreScenesInFlyoverAR::setArcGISArView(toolkit::ArcGISArView* arcGISArVi
     return;
 
   m_arcGISArView = arcGISArView;
+  m_arcGISArView->setTracking(true);
 
   emit arcGISArViewChanged();
 }
