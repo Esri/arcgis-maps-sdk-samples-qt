@@ -7,7 +7,5 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
-        <file>PermissionsHelper.cpp</file>
-        <file>PermissionsHelper.h</file>
     </qresource>
 </RCC>
