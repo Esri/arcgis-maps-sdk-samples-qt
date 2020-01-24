@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Scenes/ExploreScenesInFlyoverAR">
+        <file alias="sample.json">ExploreScenesInFlyoverAR.json</file>        
+        <file>ExploreScenesInFlyoverAR.qml</file>
+        <file>ExploreScenesInFlyoverAR.h</file>
+        <file>ExploreScenesInFlyoverAR.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
