@@ -53,10 +53,17 @@ include(deployment.pri)
 
 android {
     ANDROID_LIBS = $$dirname(QMAKE_QMAKE)/../lib
+    LIST_SSL_LIBS = libcrypto_1_1.so libssl_1_1.so
 
-    ANDROID_EXTRA_LIBS += \
-        $$ANDROID_LIBS/libssl_1_1.so \
-        $$ANDROID_LIBS/libcrypto_1_1.so
+    for(lib, LIST_SSL_LIBS) {
+        exists($$ANDROID_LIBS/$${lib}) {
+            ANDROID_EXTRA_LIBS += $$ANDROID_LIBS/$${lib}
+        }
+        else {
+            error($$ANDROID_LIBS is missing the $${lib} library which is required to build this Android application.)
+        }
+    }
+
 
 DISTFILES += \
     android/AndroidManifest.xml \
@@ -67,8 +74,6 @@ DISTFILES += \
     android/gradlew.bat \
     android/res/values/libs.xml
 }
-
-
 
 contains(ANDROID_TARGET_ARCH,arm64-v8a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
