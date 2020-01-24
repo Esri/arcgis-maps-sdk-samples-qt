@@ -1,4 +1,4 @@
-// [WriteFile Name=ExploreScenesInFlyoverAR, Category=Scenes]
+// [WriteFile Name=ExploreScenesInFlyoverAR, Category=AR]
 // [Legal]
 // Copyright 2020 Esri.
 

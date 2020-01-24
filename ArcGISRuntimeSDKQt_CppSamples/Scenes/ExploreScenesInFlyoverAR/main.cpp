@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Scenes/ExploreScenesInFlyoverAR/main.qml"));
+  engine.load(QUrl("qrc:/Samples/AR/ExploreScenesInFlyoverAR/main.qml"));
 
   return app.exec();
 }
