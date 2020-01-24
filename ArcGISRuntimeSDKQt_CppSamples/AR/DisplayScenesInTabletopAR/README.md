@@ -41,7 +41,13 @@ This sample uses the [Philadelphia Mobile Scene Package](https://www.arcgis.com/
 
 ## Additional information
 
-The Augmented Reality (AR) toolkit components provide support for ARKit for iOS apps and ARCore for Android apps written using ArcGIS Runtime SDK for Qt. For details, see [the AR README on GitHub](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/master/Common/AR/README.md).
+1. Clone the [ArcGIS Runtime Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) repository.
+2. In the project's `.pro` file, make sure to set the path, `AR_TOOLKIT_SOURCE_PATH`, to the ArcGIS Toolkit source folder you just cloned.
+3. The sample contains the necessary changes to deploy to iOS or Android as is.
+
+Note: Filesystem permissions is required for this sample.
+
+For more information on the Augmented Reality (AR) toolkit see [the AR README on GitHub](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/master/Common/AR/README.md#augmented-reality-toolkit-components).
 
 ## Tags
 

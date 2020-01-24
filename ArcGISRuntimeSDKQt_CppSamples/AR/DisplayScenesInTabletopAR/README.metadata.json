@@ -1,5 +1,5 @@
 {
-    "category": "Scenes",
+    "category": "AR",
     "description": "Use augmented reality (AR) to pin a scene to a table or desk for easy exploration.",
     "ignore": false,
     "images": [
@@ -21,7 +21,11 @@
         "Surface"
     ],
     "snippets": [
-        "DisplayScenesInTabletopAR.qml"
+        "DisplayScenesInTabletopAR.cpp",
+        "DisplayScenesInTabletopAR.h",
+        "DisplayScenesInTabletopAR.qml",
+        "PermissionsHelper.cpp",
+        "PermissionsHelper.h"
     ],
     "title": "Display scenes in tabletop AR"
 }

@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2019 Esri.
+# Copyright 2020 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,33 +13,29 @@
 # limitations under the License.
 #-------------------------------------------------
 
-mac {
-    cache()
-}
-
-#-------------------------------------------------------------------------------
-
-CONFIG += c++14
+TEMPLATE = app
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += opengl qml quick
+QT += opengl qml quick androidextras
 
-TEMPLATE = app
-TARGET = DisplayScenesInTabletopAR
+CONFIG += c++14
 
 ARCGIS_RUNTIME_VERSION = 100.8
 include($$PWD/arcgisruntime.pri)
 
-#-------------------------------------------------------------------------------
-
 HEADERS += \
-    DisplayScenesInTabletopAR.h
+    PermissionsHelper.h
 
 SOURCES += \
     main.cpp \
-    DisplayScenesInTabletopAR.cpp
+    PermissionsHelper.cpp
 
-RESOURCES += DisplayScenesInTabletopAR.qrc
+RESOURCES += \
+    DisplayScenesInTabletopAR.qrc
+
+ios {
+    QMAKE_INFO_PLIST = $$PWD/Info.plist
+}
 
 #-------------------------------------------------------------------------------
 # AR configuration
@@ -53,29 +49,8 @@ isEmpty(AR_TOOLKIT_SOURCE_PATH) {
     error(AR_TOOLKIT_SOURCE_PATH is not set)
 }
 
-include($$AR_TOOLKIT_SOURCE_PATH/Plugin/CppApi/ArCppApi.pri)
-
+include($$AR_TOOLKIT_SOURCE_PATH/Plugin/QmlApi/ArQmlApi.pri)
 #-------------------------------------------------------------------------------
-
-win32 {
-    LIBS += \
-        Ole32.lib
-}
-
-ios {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-
-    OTHER_FILES += \
-        $$PWD/Info.plist
-
-    QMAKE_INFO_PLIST = $$PWD/Info.plist
-}
-
-android {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-}
 
 DISTFILES += \
     android/AndroidManifest.xml \
@@ -89,4 +64,7 @@ DISTFILES += \
 contains(ANDROID_TARGET_ARCH,arm64-v8a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/android
+
+# Default rules for deployment.
+include(deployment.pri)
 }

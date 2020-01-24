@@ -1,6 +1,6 @@
-// [WriteFile Name=DisplayScenesInTabletopAR, Category=Scenes]
+// [WriteFile Name=DisplayScenesInTabletopAR, Category=AR]
 // [Legal]
-// Copyright 2019 Esri.
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ class SceneQuickView;
 
 #include <QObject>
 #include "ArcGISArView.h"
+#include "PermissionsHelper.h"
 
 class DisplayScenesInTabletopAR : public QObject
 {
@@ -64,6 +65,7 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::MobileScenePackage* m_scenePackage = nullptr;
   Esri::ArcGISRuntime::Camera m_originCamera;
+  PermissionsHelper* m_permissionsHelper = nullptr;
 
   Esri::ArcGISRuntime::Toolkit::ArcGISArView* arcGISArView() const;
   void setArcGISArView(Esri::ArcGISRuntime::Toolkit::ArcGISArView* arcGISArView);

@@ -1,6 +1,6 @@
 // [WriteFile Name=DisplayScenesInTabletopAR, Category=Scenes]
 // [Legal]
-// Copyright 2019 Esri.
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import QtQuick.Controls 2.12
 import Esri.ArcGISRuntime 100.8
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISArToolkit 1.0
+import Esri.Samples 1.0
 
 Rectangle {
     id: rootRectangle
@@ -30,6 +31,11 @@ Rectangle {
     readonly property double sceneWidth: 800.0
     readonly property double tableTopWidth: 1.0
     property var philadelphiaScene: null
+
+    PermissionsHelper {
+        id: permissionsHelper
+        onRequestFilesystemAccessCompleted: mspk.load();
+    }
 
     ArcGISArView {
         id: arcGISArView
@@ -93,7 +99,12 @@ Rectangle {
         }
     }
 
-    Component.onCompleted: mspk.load();
+    Component.onCompleted: {
+        if (!permissionsHelper.fileSystemAccessGranted)
+            permissionsHelper.requestFilesystemAccess();
+        else
+            mspk.load();
+    }
 
     MobileScenePackage {
         id: mspk

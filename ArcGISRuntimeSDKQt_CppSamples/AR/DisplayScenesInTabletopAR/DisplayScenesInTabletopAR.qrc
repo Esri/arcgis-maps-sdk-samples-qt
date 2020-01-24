@@ -1,6 +1,6 @@
 <RCC>
-    <qresource prefix="/Samples/Scenes/DisplayScenesInTabletopAR">
-        <file alias="sample.json">DisplayScenesInTabletopAR.json</file>        
+    <qresource prefix="/Samples/AR/DisplayScenesInTabletopAR">
+        <file alias="sample.json">DisplayScenesInTabletopAR.json</file>
         <file>DisplayScenesInTabletopAR.qml</file>
         <file>DisplayScenesInTabletopAR.h</file>
         <file>DisplayScenesInTabletopAR.cpp</file>

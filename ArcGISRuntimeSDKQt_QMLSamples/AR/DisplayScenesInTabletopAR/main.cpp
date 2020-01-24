@@ -1,4 +1,4 @@
-// Copyright 2019 Esri.
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,18 +11,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
+#include "PermissionsHelper.h"
 
-#include "DisplayScenesInTabletopAR.h"
-
-#include <QDir>
+#include <QSettings>
 #include <QGuiApplication>
-#include <QQmlApplicationEngine>
+#include <QQuickView>
+#include <QCommandLineParser>
+#include <QDir>
+#include <QQmlEngine>
 #include <QSurfaceFormat>
-
-#include "ArcGISArView.h"
+#include "QmlArcGISArView.h"
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -36,6 +34,9 @@ int main(int argc, char *argv[])
   qputenv("QSG_RENDER_LOOP", "basic");
 #endif
 
+  Esri::ArcGISRuntime::Toolkit::QmlArcGISArView::qmlRegisterTypes();
+  qmlRegisterType<PermissionsHelper>("Esri.Samples", 1, 0, "PermissionsHelper");
+
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
   // Linux requires 3.2 OpenGL Context
   // in order to instance 3D symbols
@@ -46,10 +47,11 @@ int main(int argc, char *argv[])
 
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("DisplayScenesInTabletopAR - C++"));
+  app.setApplicationName(QStringLiteral("DisplayScenesInTabletopAR - QML"));
 
-  // Initialize the sample
-  DisplayScenesInTabletopAR::init();
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
   QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
@@ -62,19 +64,17 @@ int main(int argc, char *argv[])
   arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
 #endif
 
-  Esri::ArcGISRuntime::Toolkit::ArcGISArView::qmlRegisterTypes();
-
-  // Initialize application view
-  QQmlApplicationEngine engine;
   // Add the import Path
-  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   // Add the Runtime and Extras path
-  engine.addImportPath(arcGISRuntimeImportPath);
+  view.engine()->addImportPath(arcGISRuntimeImportPath);
   // Add the Toolkit path
-  engine.addImportPath(arcGISToolkitImportPath);
+  view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Scenes/DisplayScenesInTabletopAR/main.qml"));
+  view.setSource(QUrl("qrc:/qml/DisplayScenesInTabletopAR.qml"));
+
+  view.show();
 
   return app.exec();
 }
