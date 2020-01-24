@@ -33,11 +33,11 @@ The [world elevation service](https://elevation3d.arcgis.com/arcgis/rest/service
 
 ## Additional information
 
-This sample requires a device that is compatible with ARKit.
+1. Clone the [ArcGIS Runtime Toolkit](https://github.com/Esri/arcgis-runtime-toolkit-qt) repository.
+2. In the project's `.pro` file, make sure to set the path, `AR_TOOLKIT_SOURCE_PATH`, to the ArcGIS Toolkit source folder you just cloned.
+3. The sample contains the necessary changes to deploy to iOS or Android as is.
 
-**Flyover AR** is one of three main patterns for working with geographic information in augmented reality. See the [guide doc](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/master/Common/AR/README.md#overview) for more information.
-
-The Augmented Reality (AR) toolkit components provide support for ARKit for iOS apps and ARCore for Android apps written using ArcGIS Runtime SDK for Qt. For details, see [the AR README on GitHub](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/master/Common/AR/README.md).
+For more information on the Augmented Reality (AR) toolkit see [the AR README on GitHub](https://github.com/Esri/arcgis-runtime-toolkit-qt/blob/master/Common/AR/README.md#augmented-reality-toolkit-components).
 
 ## Tags
 
