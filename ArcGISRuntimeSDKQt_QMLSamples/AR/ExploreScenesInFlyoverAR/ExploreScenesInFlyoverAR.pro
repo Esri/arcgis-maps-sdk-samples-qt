@@ -13,54 +13,24 @@
 # limitations under the License.
 #-------------------------------------------------
 
-mac {
-    cache()
-}
-
-#-------------------------------------------------------------------------------
-
-CONFIG += c++14
+TEMPLATE = app
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-TEMPLATE = app
-TARGET = ExploreScenesInFlyoverAR
+CONFIG += c++14
 
 ARCGIS_RUNTIME_VERSION = 100.8
 include($$PWD/arcgisruntime.pri)
 
-#-------------------------------------------------------------------------------
-
-HEADERS += \
-    ExploreScenesInFlyoverAR.h
-
 SOURCES += \
-    main.cpp \
-    ExploreScenesInFlyoverAR.cpp
+    main.cpp
 
-RESOURCES += ExploreScenesInFlyoverAR.qrc
-
-#-------------------------------------------------------------------------------
-
-win32 {
-    LIBS += \
-        Ole32.lib
-}
+RESOURCES += \
+    ExploreScenesInFlyoverAR.qrc
 
 ios {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-
-    OTHER_FILES += \
-        $$PWD/Info.plist
-
     QMAKE_INFO_PLIST = $$PWD/Info.plist
-}
-
-android {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
 }
 
 #-------------------------------------------------------------------------------
@@ -75,15 +45,25 @@ isEmpty(AR_TOOLKIT_SOURCE_PATH) {
     error(AR_TOOLKIT_SOURCE_PATH is not set)
 }
 
-include($$AR_TOOLKIT_SOURCE_PATH/Plugin/CppApi/ArCppApi.pri)
+include($$AR_TOOLKIT_SOURCE_PATH/Plugin/QmlApi/ArQmlApi.pri)
 #-------------------------------------------------------------------------------
+
+# Default rules for deployment.
+include(deployment.pri)
 
 android {
     ANDROID_LIBS = $$dirname(QMAKE_QMAKE)/../lib
+    LIST_SSL_LIBS = libcrypto_1_1.so libssl_1_1.so
 
-    ANDROID_EXTRA_LIBS += \
-        $$ANDROID_LIBS/libssl_1_1.so \
-        $$ANDROID_LIBS/libcrypto_1_1.so
+    for(lib, LIST_SSL_LIBS) {
+        exists($$ANDROID_LIBS/$${lib}) {
+            ANDROID_EXTRA_LIBS += $$ANDROID_LIBS/$${lib}
+        }
+        else {
+            error($$ANDROID_LIBS is missing the $${lib} library which is required to build this Android application.)
+        }
+    }
+
 
 DISTFILES += \
     android/AndroidManifest.xml \
