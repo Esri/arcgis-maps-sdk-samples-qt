@@ -95,49 +95,61 @@ Item {
             onWheel: wheel.accepted = true
         }
 
-        GridLayout {
-            columns: 2
-            rows: 3
-            flow: GridLayout.LeftToRight
-            RadioButton {
-                id: startingLocBtn
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                checked: true
-                text: qsTr("Add starting location(s)")
-                onToggled: model.startingLocationsEnabled = checked;
-            }
+        Column {
 
-            RadioButton {
-                id: barriersBtn
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                text: qsTr("Add barrier(s)")
-                onToggled: model.startingLocationsEnabled = !checked;
+            GridLayout {
+                columns: 2
+                rows: 3
+                flow: GridLayout.LeftToRight
+                RadioButton {
+                    id: startingLocBtn
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    checked: true
+                    text: qsTr("Add starting location(s)")
+                    onToggled: model.startingLocationsEnabled = checked;
+                }
+
+                RadioButton {
+                    id: barriersBtn
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    text: qsTr("Add barrier(s)")
+                    onToggled: model.startingLocationsEnabled = !checked;
+                }
+
+                Text {
+                    text: qsTr("Trace Type:")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                }
+
+                ComboBox {
+                    id: traceTypes
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    model: ["Connected", "Subnetwork", "Upstream", "Downstream"]
+                }
+
+                Button {
+                    id: resetBtn
+                    text: qsTr("Reset")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    enabled: !busy.visible
+                    onClicked: model.reset();
+                }
+
+                Button {
+                    id: traceBtn
+                    text: qsTr("Trace")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    enabled: !busy.visible
+                    onClicked: model.trace(traceTypes.currentIndex);
+                }
             }
 
             Text {
-                text: qsTr("Trace Type:")
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                // Displays fraction along edge or if a junction is selected
+                text: model.juncSelected ? qsTr("Junction selected") : qsTr("Fraction along edge: %1".arg(model.fractionAlongEdge.toFixed(6)))
+                anchors.horizontalCenter: parent.horizontalCenter
             }
 
-            ComboBox {
-                id: traceTypes
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                model: ["Connected", "Subnetwork", "Upstream", "Downstream"]
-            }
-
-            Button {
-                id: resetBtn
-                text: qsTr("Reset")
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                onClicked: model.reset();
-            }
-
-            Button {
-                id: traceBtn
-                text: qsTr("Trace")
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                onClicked: model.trace(traceTypes.currentIndex);
-            }
         }
     }
 }

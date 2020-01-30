@@ -38,6 +38,7 @@ Rectangle {
     property var deviceObjIds: []
     property var lineObjIds: []
     property var myTraceResult
+    property bool juncSelected: false
 
     MapView {
         id: mapView
@@ -141,6 +142,7 @@ Rectangle {
             }
 
             if (utilityNetworkSource.sourceType === Enums.UtilityNetworkSourceTypeJunction) {
+                juncSelected = true;
                 const assetGroupFieldName = identifiedFeature.featureTable.subtypeField;
                 const assetGroupCode = identifiedFeature.attributes.attributeValue(assetGroupFieldName);
 
@@ -171,7 +173,7 @@ Rectangle {
                 }
 
             } else if (utilityNetworkSource.sourceType === Enums.UtilityNetworkSourceTypeEdge) {
-
+                juncSelected = false;
                 element = utilityNetwork.createElementWithArcGISFeature(identifiedFeature);
 
                 // Compute how far tapped location is along the edge feature.
@@ -202,18 +204,13 @@ Rectangle {
     UtilityNetwork {
         id: utilityNetwork
         url: featureLayerUrl
-//        initMap: mapView.map
 
         onTraceStatusChanged: {
-            console.log(params.traceType);
-
             if (traceStatus !== Enums.TaskStatusCompleted)
                 return;
 
             if (traceResult.count === 0) {
                 busy.visible = false;
-                dialogText.text = qsTr("Trace completed with no results.");
-                traceCompletedDialog.open();
                 return;
             }
 
@@ -240,14 +237,19 @@ Rectangle {
         }
 
         onErrorChanged: {
-            console.log("%1 - %2 - %3 - %4".arg(error.code).arg(error.domain).arg(error.message).arg(error.additionalMessage));
+            dialogText.text = qsTr("%1 - %2".arg(error.message).arg(error.additionalMessage));
+            traceCompletedDialog.open();
+        }
+
+        onComponentCompleted: {
+            busy.visible = true;
+            load();
         }
 
         onLoadStatusChanged: {
-            print(loadStatus);
+            if (loadStatus === Enums.LoadStatusLoaded)
+                busy.visible = false;
         }
-
-        onComponentCompleted: load();
     }
 
     UtilityTraceParameters {
@@ -308,11 +310,9 @@ Rectangle {
             margins: 3
         }
         width: childrenRect.width
-//        width: parent.width
         height: childrenRect.height
         color: "lightgrey"
         opacity: 0.8
-//        opacity: 1
         radius: 5
 
         // catch mouse signals from propagating to parent
@@ -322,83 +322,96 @@ Rectangle {
             onWheel: wheel.accepted = true
         }
 
-        GridLayout {
-            columns: 2
-            rows: 3
-            property var centerAlignment: Qt.AlignHCenter | Qt.AlignVCenter
-            flow: GridLayout.LeftToRight
-            anchors.centerIn: parent
-//            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            RadioButton {
-                id: startingLocBtn
-                checked: true
-                text: qsTr("Add starting location(s)")
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            }
+        Column {
+            GridLayout {
+                columns: 2
+                rows: 3
+                property var centerAlignment: Qt.AlignHCenter | Qt.AlignVCenter
+                flow: GridLayout.LeftToRight
 
-            RadioButton {
-                id: barriersBtn
-                text: qsTr("Add barrier(s)")
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                RadioButton {
+                    id: startingLocBtn
+                    checked: true
+                    text: qsTr("Add starting location(s)")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                }
+
+                RadioButton {
+                    id: barriersBtn
+                    text: qsTr("Add barrier(s)")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                }
+
+                Text {
+                    text: qsTr("Trace Type:")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                }
+
+                ComboBox {
+                    id: traceTypes
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    model: ["Connected", "Subnetwork", "Upstream", "Downstream"]
+                }
+
+                Button {
+                    id: resetBtn
+                    text: qsTr("Reset")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    enabled: !busy.visible
+                    onClicked: {
+                        params.barriers = null;
+                        barriers = [];
+                        params.startingLocations = null;
+                        startingLocations = [];
+                        deviceObjIds = [];
+                        lineObjIds = [];
+                        mapView.graphicsOverlays.get(0).graphics.clear();
+                        mapView.map.operationalLayers.forEach(function(layer){
+                            layer.clearSelection();
+                        });
+                    }
+                }
+
+                Button {
+                    id: traceBtn
+                    text: qsTr("Trace")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    enabled: !busy.visible
+                    onClicked: {
+                        busy.visible = true;
+                        switch (traceTypes.currentIndex) {
+                        case 0:
+                            params.traceType = Enums.UtilityTraceTypeConnected;
+                            break;
+                        case 1:
+                            params.traceType = Enums.UtilityTraceTypeSubnetwork;
+                            break;
+                        case 2:
+                            params.traceType = Enums.UtilityTraceTypeUpstream;
+                            break;
+                        case 3:
+                            params.traceType = Enums.UtilityTraceTypeDownstream;
+                        }
+
+                        // check to see if it exists before assigning it to the parameters.
+                        if (mediumVoltageTier)
+                            params.traceConfiguration = mediumVoltageTier.traceConfiguration;
+
+                        // Perform a connected trace on the utility network
+                        utilityNetwork.trace(params);
+                    }
+                }
             }
 
             Text {
-                text: qsTr("Trace Type:")
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-            }
-
-            ComboBox {
-                id: traceTypes
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                model: ["Connected", "Subnetwork", "Upstream", "Downstream"]
-            }
-
-            Button {
-                id: resetBtn
-                text: qsTr("Reset")
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-//                Layout.alignment: controlLayout.centerAlignment
-                onClicked: {
-                    params.barriers = null;
-                    barriers = [];
-                    params.startingLocations = null;
-                    startingLocations = [];
-                    deviceObjIds = [];
-                    lineObjIds = [];
-                    mapView.graphicsOverlays.get(0).graphics.clear();
-                    mapView.map.operationalLayers.forEach(function(layer){
-                        layer.clearSelection();
-                    });
-                }
-            }
-
-            Button {
-                id: traceBtn
-                text: qsTr("Trace")
-                Layout.alignment: controlLayout.centerAlignment
-                onClicked: {
-                    busy.visible = true;
-//                    params.traceType = Enums.UtilityTraceTypeUpstream;
-                    switch (traceTypes.currentIndex) {
-                    case 0:
-                        params.traceType = Enums.UtilityTraceTypeConnected;
-                        break;
-                    case 1:
-                        params.traceType = Enums.UtilityTraceTypeSubnetwork;
-                        break;
-                    case 2:
-                        params.traceType = Enums.UtilityTraceTypeUpstream;
-                        break;
-                    case 3:
-                        params.traceType = Enums.UtilityTraceTypeDownstream;
-                    }
-                    params.traceConfiguration = mediumVoltageTier.traceConfiguration;
-
-                    // Perform a connected trace on the utility network
-                    utilityNetwork.trace(params);
-                }
+                // Displays fraction along edge
+//                text: qsTr("Fraction along edge: %1".arg(element ? element.fractionAlongEdge.toFixed(6) : 0.0.toFixed(6)))
+//                text: qsTr("Fraction along edge: %1".arg(element.fractionAlongEdge.toFixed(6)));
+                text: juncSelected ? qsTr("Junction Selected") : qsTr("Fraction along edge: %1".arg(element ? element.fractionAlongEdge.toFixed(6) : 0.0.toFixed(6)))
+                anchors.horizontalCenter: parent.horizontalCenter
             }
         }
+
     }
 
     function addToParamAndGraphic() {
@@ -412,9 +425,9 @@ Rectangle {
         }
 
         const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                geometry: clickPoint,
-                                                                symbol: startingLocBtn.checked ? startingPointSymbol : barrierPointSymbol
-                                                            });
+                                                                  geometry: clickPoint,
+                                                                  symbol: startingLocBtn.checked ? startingPointSymbol : barrierPointSymbol
+                                                              });
         unGraphicsOverlay.graphics.append(graphic);
     }
 
