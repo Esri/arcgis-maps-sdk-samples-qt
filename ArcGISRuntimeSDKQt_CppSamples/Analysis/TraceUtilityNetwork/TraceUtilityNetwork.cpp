@@ -101,7 +101,6 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
 
       m_dialogText = QString(e.message() + " - " + e.additionalMessage());
       emit dialogTextChanged();
-      return;
     });
 
     // select the features returned from the trace
@@ -205,10 +204,10 @@ void TraceUtilityNetwork::trace(int index)
   m_busy = true;
   emit busyChanged();
 
-  if (m_traceParams)
-    delete m_traceParams;
+  delete m_traceParams;
 
-  switch (index) {
+  switch (index)
+  {
     case 0:
       m_traceParams = new UtilityTraceParameters(UtilityTraceType::Connected, {}, this);
       break;
@@ -279,8 +278,8 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
 
   if (networkSource->sourceType() == UtilityNetworkSourceType::Junction)
   {
-    m_juncSelected = true;
-    emit juncSelectedChanged();
+    m_junctionSelected = true;
+    emit junctionSelectedChanged();
 
     const QString assetGroupFieldName = static_cast<ArcGISFeatureTable*>(m_feature->featureTable())->subtypeField();
     const int assetGroupCode = m_feature->attributes()->attributeValue(assetGroupFieldName).toInt();
@@ -330,8 +329,8 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
   }
   else if (networkSource->sourceType() == UtilityNetworkSourceType::Edge)
   {
-    m_juncSelected = false;
-    emit juncSelectedChanged();
+    m_junctionSelected = false;
+    emit junctionSelectedChanged();
 
     element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, nullptr, this);
 

@@ -57,7 +57,7 @@ class TraceUtilityNetwork : public QObject
   Q_PROPERTY(bool startingLocationsEnabled MEMBER m_startingLocationsEnabled NOTIFY startingLocationsChanged)
   Q_PROPERTY(double fractionAlongEdge MEMBER m_fractionAlongEdge NOTIFY fractionAlongEdgeChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
-  Q_PROPERTY(bool juncSelected MEMBER m_juncSelected NOTIFY juncSelectedChanged)
+  Q_PROPERTY(bool junctionSelected MEMBER m_junctionSelected NOTIFY junctionSelectedChanged)
 
 public:
   explicit TraceUtilityNetwork(QObject* parent = nullptr);
@@ -76,7 +76,7 @@ signals:
   void dialogTextChanged();
   void startingLocationsChanged();
   void fractionAlongEdgeChanged();
-  void juncSelectedChanged();
+  void junctionSelectedChanged();
   void busyChanged();
 
 private slots:
@@ -112,7 +112,7 @@ private:
   bool m_dialogVisible = false;
   bool m_startingLocationsEnabled = true;
   bool m_busy = false;
-  bool m_juncSelected = false;
+  bool m_junctionSelected = false;
   double m_fractionAlongEdge = 0.0;
   QString m_dialogText;
   Esri::ArcGISRuntime::Point m_clickPoint;

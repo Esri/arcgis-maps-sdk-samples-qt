@@ -146,7 +146,7 @@ Item {
 
             Text {
                 // Displays fraction along edge or if a junction is selected
-                text: model.juncSelected ? qsTr("Junction selected") : qsTr("Fraction along edge: %1".arg(model.fractionAlongEdge.toFixed(6)))
+                text: model.junctionSelected ? qsTr("Junction selected") : qsTr("Fraction along edge: %1".arg(model.fractionAlongEdge.toFixed(6)))
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 

@@ -24,7 +24,7 @@ Rectangle {
     width: 800
     height: 600
 
-    property bool juncSelected: false
+    property bool junctionSelected: false
     property Point clickPoint
     property var barriers: []
     property var deviceObjIds: []
@@ -143,7 +143,7 @@ Rectangle {
             }
 
             if (utilityNetworkSource.sourceType === Enums.UtilityNetworkSourceTypeJunction) {
-                juncSelected = true;
+                junctionSelected = true;
                 const assetGroupFieldName = identifiedFeature.featureTable.subtypeField;
                 const assetGroupCode = identifiedFeature.attributes.attributeValue(assetGroupFieldName);
 
@@ -174,7 +174,7 @@ Rectangle {
                 }
 
             } else if (utilityNetworkSource.sourceType === Enums.UtilityNetworkSourceTypeEdge) {
-                juncSelected = false;
+                junctionSelected = false;
                 element = utilityNetwork.createElementWithArcGISFeature(identifiedFeature);
 
                 // Compute how far tapped location is along the edge feature.
@@ -406,7 +406,7 @@ Rectangle {
 
             Text {
                 // Displays fraction along edge
-                text: juncSelected ? qsTr("Junction Selected") : qsTr("Fraction along edge: %1".arg(element ? element.fractionAlongEdge.toFixed(6) : 0.0.toFixed(6)))
+                text: junctionSelected ? qsTr("Junction Selected") : qsTr("Fraction along edge: %1".arg(element ? element.fractionAlongEdge.toFixed(6) : 0.0.toFixed(6)))
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }
