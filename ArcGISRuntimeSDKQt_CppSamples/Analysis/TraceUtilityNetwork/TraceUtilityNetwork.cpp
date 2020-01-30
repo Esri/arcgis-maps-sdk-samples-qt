@@ -53,7 +53,6 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   m_mediumVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
   m_lowVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(Qt::darkCyan), 3, this)),
   m_graphicParent(new QObject())
-
 {
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9813547.35557238, 5129980.36635111, -9813185.0602376, 5130215.41254146, SpatialReference::webMercator())));
 
@@ -67,14 +66,14 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
 
   m_lineFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/115"), this);
   m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
+
   // create unique renderer
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
-  // you can add multiple fields. In this case, only one is used
   m_uniqueValueRenderer->setFieldNames(QStringList("ASSETGROUP"));
-
   createUniqueValue(QString("Medium Voltage"), m_mediumVoltageSymbol, 5);
   createUniqueValue(QString("Low Voltage"), m_lowVoltageSymbol, 3);
 
+  // set unique value renderer to the line layer
   m_lineLayer->setRenderer(m_uniqueValueRenderer);
 
   // Add electric distribution lines and electric devices layers
@@ -269,8 +268,8 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
     return;
   }
 
+  // Get domain network
   const UtilityDomainNetwork * domainNetwork = m_utilityNetwork->definition()->domainNetwork("ElectricDistribution");
-
   m_mediumVoltageTier = domainNetwork->tier(QString("Medium Voltage Radial"));
 
   const IdentifyLayerResult* result = results[0];
@@ -362,8 +361,6 @@ void TraceUtilityNetwork::onTraceCompleted()
   if (m_utilityNetwork->traceResult()->isEmpty())
   {
     m_busy = false;
-    //    m_dialogText = QString("Trace complete with no results.");
-    //    emit dialogTextChanged();
     emit busyChanged();
     return;
   }
