@@ -396,7 +396,7 @@ void TraceUtilityNetwork::onTraceCompleted()
   m_lineLayer->selectFeatures(lineParams, SelectionMode::Add);
 }
 
-void TraceUtilityNetwork::createUniqueValue(QString label, Symbol* fillSymbol, int value)
+void TraceUtilityNetwork::createUniqueValue(const QString& label, Symbol* fillSymbol, int value)
 {
   // add state's attribute value for field "STATE_ABBR" to QVariantList
   QVariantList labelValue;
