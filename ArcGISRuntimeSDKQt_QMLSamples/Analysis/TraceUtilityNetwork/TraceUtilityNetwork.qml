@@ -24,21 +24,21 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
-    property var element
-    property var utilityNetworkSource
-    property var domainNetwork
-    property var mediumVoltageTier
-    property var startingLocations: []
-    property var barriers: []
-    property var terminals: []
-    property var terminal
-    property var identifiedFeature
-    property Point clickPoint
-    property var deviceObjIds: []
-    property var lineObjIds: []
-    property var myTraceResult
     property bool juncSelected: false
+    property Point clickPoint
+    property var barriers: []
+    property var deviceObjIds: []
+    property var domainNetwork
+    property var element
+    property var identifiedFeature
+    property var lineObjIds: []
+    property var mediumVoltageTier
+    property var myTraceResult
+    property var startingLocations: []
+    property var terminal
+    property var terminals: []
+    property var utilityNetworkSource
+    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
 
     MapView {
         id: mapView
@@ -90,7 +90,6 @@ Rectangle {
                         }
                     }
                 }
-
                 onSelectFeaturesStatusChanged: checkSelectionStatus();
             }
 
@@ -133,6 +132,8 @@ Rectangle {
 
             identifiedFeature = result.geoElements[0];
             utilityNetworkSource = utilityNetwork.definition.networkSource(identifiedFeature.featureTable.tableName);
+
+            // get domain network
             domainNetwork = utilityNetwork.definition.domainNetwork("ElectricDistribution");
 
             const tiers = domainNetwork.tiers;
@@ -409,7 +410,6 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }
-
     }
 
     function addToParamAndGraphic() {
