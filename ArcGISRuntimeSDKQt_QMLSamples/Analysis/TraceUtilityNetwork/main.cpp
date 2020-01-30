@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("FindFeaturesUtilityNetwork - QML"));
+  app.setApplicationName(QStringLiteral("TraceUtilityNetwork - QML"));
 
   // Intialize application view
   QQuickView view;

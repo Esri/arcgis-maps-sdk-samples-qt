@@ -1,4 +1,4 @@
-// [WriteFile Name=FindFeaturesUtilityNetwork, Category=Analysis]
+// [WriteFile Name=TraceUtilityNetwork, Category=Analysis]
 // [Legal]
 // Copyright 2020 Esri.
 

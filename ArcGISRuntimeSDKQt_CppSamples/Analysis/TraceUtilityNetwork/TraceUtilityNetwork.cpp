@@ -1,4 +1,4 @@
-// [WriteFile Name=FindFeaturesUtilityNetwork, Category=Analysis]
+// [WriteFile Name=TraceUtilityNetwork, Category=Analysis]
 // [Legal]
 // Copyright 2020 Esri.
 
@@ -123,16 +123,16 @@ void TraceUtilityNetwork::connectSignals()
   });
 
   // handle the identify results
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &FindFeaturesUtilityNetwork::onIdentifyLayersCompleted);
+  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &TraceUtilityNetwork::onIdentifyLayersCompleted);
 }
 
-TraceUtilityNetwork::~FindFeaturesUtilityNetwork() = default;
+TraceUtilityNetwork::~TraceUtilityNetwork() = default;
 
 void TraceUtilityNetwork::init()
 {
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<FindFeaturesUtilityNetwork>("Esri.Samples", 1, 0, "FindFeaturesUtilityNetworkSample");
+  qmlRegisterType<TraceUtilityNetwork>("Esri.Samples", 1, 0, "TraceUtilityNetworkSample");
 }
 
 MapQuickView* TraceUtilityNetwork::mapView() const

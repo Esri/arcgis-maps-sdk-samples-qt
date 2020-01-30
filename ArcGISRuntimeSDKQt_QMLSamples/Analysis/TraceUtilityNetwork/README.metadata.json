@@ -23,7 +23,7 @@
         "GeometryEngine.FractionAlong"
     ],
     "snippets": [
-        "FindFeaturesUtilityNetwork.qml"
+        "TraceUtilityNetwork.qml"
     ],
-    "title": "Find connected features in utility networks"
+    "title": "Trace utility network"
 }
