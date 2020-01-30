@@ -4,5 +4,5 @@
         "TraceUtilityNetwork.h",
         "TraceUtilityNetwork.cpp"
     ],
-    "name" : "Find connected features in utility networks"
+    "name" : "Trace utility network"
 }

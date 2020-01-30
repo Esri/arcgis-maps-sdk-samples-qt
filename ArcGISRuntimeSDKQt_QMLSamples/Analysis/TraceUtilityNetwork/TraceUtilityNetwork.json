@@ -1,5 +1,5 @@
 {
     "source" :  "TraceUtilityNetwork.qml",
     "otherSourceFiles" :  [],
-    "name" : "Find connected features in utility networks"
+    "name" : "Trace utility network"
 }
