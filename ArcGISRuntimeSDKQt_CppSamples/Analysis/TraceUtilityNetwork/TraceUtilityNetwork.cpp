@@ -20,12 +20,17 @@
 
 #include "TraceUtilityNetwork.h"
 
+#include "ArcGISFeatureListModel.h"
+#include "FeatureLayer.h"
+#include "GeometryEngine.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "ServiceFeatureTable.h"
-#include "FeatureLayer.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "UniqueValueRenderer.h"
+#include "UtilityAssetGroup.h"
+#include "UtilityAssetType.h"
 #include "UtilityDomainNetwork.h"
 #include "UtilityElement.h"
 #include "UtilityElementTraceResult.h"
@@ -33,14 +38,10 @@
 #include "UtilityNetworkDefinition.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
+#include "UtilityTerminalConfiguration.h"
 #include "UtilityTier.h"
 #include "UtilityTraceParameters.h"
 #include "UtilityTraceResultListModel.h"
-#include "UtilityAssetGroup.h"
-#include "UtilityAssetType.h"
-#include "UtilityTerminalConfiguration.h"
-#include "ArcGISFeatureListModel.h"
-#include "GeometryEngine.h"
 
 using namespace Esri::ArcGISRuntime;
 
