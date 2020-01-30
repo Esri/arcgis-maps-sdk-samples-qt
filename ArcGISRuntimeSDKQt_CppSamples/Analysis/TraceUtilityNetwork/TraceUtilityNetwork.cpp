@@ -116,7 +116,7 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
       if (!e.isEmpty())
       {
         m_dialogText = QString(e.message() + " - " + e.additionalMessage());
-        emit dialogVisibleChanged();
+        emit dialogTextChanged();
         return;
       }
 
@@ -190,14 +190,12 @@ void TraceUtilityNetwork::updateTraceParams(UtilityElement* element)
   if (m_startingLocationsEnabled)
   {
     m_startingLocations.append(element);
-//    m_traceParams->setStartingLocations(m_startingLocations);
     Graphic* traceLocation = new Graphic(m_clickPoint, m_startingSymbol, m_graphicParent.get());
     m_graphicsOverlay->graphics()->append(traceLocation);
   }
   else
   {
     m_barriers.append(element);
-//    m_traceParams->setBarriers(m_barriers);
     Graphic* traceLocation = new Graphic(m_clickPoint, m_barrierSymbol, m_graphicParent.get());
     m_graphicsOverlay->graphics()->append(traceLocation);
   }
@@ -211,7 +209,6 @@ void TraceUtilityNetwork::trace(int index)
   if (m_traceParams)
     delete m_traceParams;
 
-  //  m_traceParams->setTraceConfiguration(mediumVoltageTier->traceConfiguration());
   switch (index) {
     case 0:
       m_traceParams = new UtilityTraceParameters(UtilityTraceType::Connected, {}, this);
@@ -241,9 +238,13 @@ void TraceUtilityNetwork::trace(int index)
 void TraceUtilityNetwork::reset()
 {
   m_startingLocations.clear();
-  m_traceParams->setStartingLocations(m_startingLocations);
   m_barriers.clear();
-  m_traceParams->setBarriers(m_barriers);
+  if (m_traceParams)
+  {
+    m_traceParams->setStartingLocations(m_startingLocations);
+    m_traceParams->setBarriers(m_barriers);
+  }
+
   m_graphicsOverlay->graphics()->clear();
   m_graphicParent.reset(new QObject());
 
@@ -279,6 +280,9 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
 
   if (networkSource->sourceType() == UtilityNetworkSourceType::Junction)
   {
+    m_juncSelected = true;
+    emit juncSelectedChanged();
+
     const QString assetGroupFieldName = static_cast<ArcGISFeatureTable*>(m_feature->featureTable())->subtypeField();
     const int assetGroupCode = m_feature->attributes()->attributeValue(assetGroupFieldName).toInt();
     UtilityAssetGroup* assetGroup = nullptr;
@@ -327,6 +331,9 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
   }
   else if (networkSource->sourceType() == UtilityNetworkSourceType::Edge)
   {
+    m_juncSelected = false;
+    emit juncSelectedChanged();
+
     element = m_utilityNetwork->createElementWithArcGISFeature(m_feature, nullptr, this);
 
     // Compute how far tapped location is along the edge feature.
@@ -335,6 +342,8 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
       const Polyline line = GeometryEngine::removeZ(m_feature->geometry());
       // Set how far the element is along the edge.
       element->setFractionAlongEdge(GeometryEngine::fractionAlong(line, m_clickPoint, -1));
+      m_fractionAlongEdge = element->fractionAlongEdge();
+      emit fractionAlongEdgeChanged();
     }
   }
   else
@@ -353,8 +362,8 @@ void TraceUtilityNetwork::onTraceCompleted()
   if (m_utilityNetwork->traceResult()->isEmpty())
   {
     m_busy = false;
-    m_dialogText = QString("Trace complete with no results.");
-    emit dialogTextChanged();
+    //    m_dialogText = QString("Trace complete with no results.");
+    //    emit dialogTextChanged();
     emit busyChanged();
     return;
   }
@@ -388,4 +397,16 @@ void TraceUtilityNetwork::onTraceCompleted()
 
   m_deviceLayer->selectFeatures(deviceParams, SelectionMode::Add);
   m_lineLayer->selectFeatures(lineParams, SelectionMode::Add);
+}
+
+void TraceUtilityNetwork::createUniqueValue(QString label, Symbol* fillSymbol, int value)
+{
+  // add state's attribute value for field "STATE_ABBR" to QVariantList
+  QVariantList labelValue;
+  labelValue.append(value);
+
+  // set value for a State to be rendered. (label, description, attribute value list, symbol, parent)
+  UniqueValue* uniqueValue = new UniqueValue(label, "", labelValue, fillSymbol, this);
+  // append to UniqueValueRenderer
+  m_uniqueValueRenderer->uniqueValues()->append(uniqueValue);
 }

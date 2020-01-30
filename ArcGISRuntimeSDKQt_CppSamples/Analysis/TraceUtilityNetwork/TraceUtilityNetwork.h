@@ -28,8 +28,11 @@ class IdentifyLayerResult;
 class Map;
 class MapQuickView;
 class ServiceFeatureTable;
+class SimpleFillSymbol;
 class SimpleLineSymbol;
 class SimpleMarkerSymbol;
+class Symbol;
+class UniqueValueRenderer;
 class UtilityElement;
 class UtilityNetwork;
 class UtilityTerminal;
@@ -52,7 +55,9 @@ class TraceUtilityNetwork : public QObject
   Q_PROPERTY(bool dialogVisible MEMBER m_dialogVisible NOTIFY dialogVisibleChanged)
   Q_PROPERTY(QString dialogText MEMBER m_dialogText NOTIFY dialogTextChanged)
   Q_PROPERTY(bool startingLocationsEnabled MEMBER m_startingLocationsEnabled NOTIFY startingLocationsChanged)
+  Q_PROPERTY(double fractionAlongEdge MEMBER m_fractionAlongEdge NOTIFY fractionAlongEdgeChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
+  Q_PROPERTY(bool juncSelected MEMBER m_juncSelected NOTIFY juncSelectedChanged)
 
 public:
   explicit TraceUtilityNetwork(QObject* parent = nullptr);
@@ -70,6 +75,8 @@ signals:
   void dialogVisibleChanged();
   void dialogTextChanged();
   void startingLocationsChanged();
+  void fractionAlongEdgeChanged();
+  void juncSelectedChanged();
   void busyChanged();
 
 private slots:
@@ -81,6 +88,7 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void connectSignals();
   void updateTraceParams(Esri::ArcGISRuntime::UtilityElement* element);
+  void createUniqueValue(QString label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -90,18 +98,22 @@ private:
   Esri::ArcGISRuntime::ServiceFeatureTable* m_lineFeatureTable = nullptr;
   Esri::ArcGISRuntime::SimpleMarkerSymbol* m_startingSymbol = nullptr;
   Esri::ArcGISRuntime::SimpleMarkerSymbol* m_barrierSymbol = nullptr;
-  Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleLineSymbol* m_mediumVoltageSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleLineSymbol* m_lowVoltageSymbol = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_feature = nullptr;
   Esri::ArcGISRuntime::UtilityTier * m_mediumVoltageTier = nullptr;
+  Esri::ArcGISRuntime::UniqueValueRenderer* m_uniqueValueRenderer = nullptr;
 
   const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
   bool m_terminalDialogVisisble = false;
   bool m_dialogVisible = false;
   bool m_startingLocationsEnabled = true;
   bool m_busy = false;
+  bool m_juncSelected = false;
+  double m_fractionAlongEdge = 0.0;
   QString m_dialogText;
   Esri::ArcGISRuntime::Point m_clickPoint;
   QList<Esri::ArcGISRuntime::UtilityElement*> m_startingLocations;
