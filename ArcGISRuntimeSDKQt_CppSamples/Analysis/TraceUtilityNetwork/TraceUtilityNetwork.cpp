@@ -50,7 +50,8 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   m_map(new Map(Basemap::streetsNightVector(this), this)),
   m_startingSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, QColor(Qt::green), 20, this)),
   m_barrierSymbol(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(Qt::red), 20, this)),
-  m_lineSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
+  m_mediumVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(Qt::darkCyan), 3, this)),
+  m_lowVoltageSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, QColor(Qt::darkCyan), 3, this)),
   m_graphicParent(new QObject())
 
 {
@@ -66,7 +67,15 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
 
   m_lineFeatureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/115"), this);
   m_lineLayer = new FeatureLayer(m_lineFeatureTable, this);
-  m_lineLayer->setRenderer(new SimpleRenderer(m_lineSymbol, this));
+  // create unique renderer
+  m_uniqueValueRenderer = new UniqueValueRenderer(this);
+  // you can add multiple fields. In this case, only one is used
+  m_uniqueValueRenderer->setFieldNames(QStringList("ASSETGROUP"));
+
+  createUniqueValue(QString("Medium Voltage"), m_mediumVoltageSymbol, 5);
+  createUniqueValue(QString("Low Voltage"), m_lowVoltageSymbol, 3);
+
+  m_lineLayer->setRenderer(m_uniqueValueRenderer);
 
   // Add electric distribution lines and electric devices layers
   m_map->operationalLayers()->append(m_lineLayer);
@@ -86,12 +95,14 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
 
     m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, this);
 
-    connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, [](Error e)
+    connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, [this](Error e)
     {
       if (e.isEmpty())
         return;
 
-      qDebug() << e.code() << " - " << " - " << e.message() << " - " << e.additionalMessage();
+      m_dialogText = QString(e.message() + " - " + e.additionalMessage());
+      emit dialogTextChanged();
+      return;
     });
 
     // select the features returned from the trace

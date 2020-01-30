@@ -21,7 +21,6 @@ import Esri.ArcGISRuntime 100.8
 
 Rectangle {
     id: rootRectangle
-    clip: true
     width: 800
     height: 600
 
@@ -65,8 +64,30 @@ Rectangle {
                     url: featureLayerUrl + "/115"
                 }
 
-                renderer: SimpleRenderer {
-                    symbol: featureLineSymbol
+                UniqueValueRenderer {
+                    fieldNames: ["ASSETGROUP"]
+
+                    // set for medium voltage
+                    UniqueValue {
+                        label: "Medium Voltage"
+                        values: ["5"]
+                        SimpleLineSymbol {
+                            style: Enums.SimpleLineSymbolStyleSolid
+                            color: "DarkCyan"
+                            width: 3
+                        }
+                    }
+
+                    // set for low voltage
+                    UniqueValue {
+                        label: "Low Voltage"
+                        values: ["3"]
+                        SimpleLineSymbol {
+                            style: Enums.SimpleLineSymbolStyleDash
+                            color: "DarkCyan"
+                            width: 3
+                        }
+                    }
                 }
 
                 onSelectFeaturesStatusChanged: checkSelectionStatus();
@@ -162,13 +183,6 @@ Rectangle {
             }
             addToParamAndGraphic();
         }
-    }
-
-    SimpleLineSymbol {
-        id: featureLineSymbol
-        style: Enums.SimpleLineSymbolStyleSolid
-        color: "DarkCyan"
-        width: 3
     }
 
     SimpleMarkerSymbol {
