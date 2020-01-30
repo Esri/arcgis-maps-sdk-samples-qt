@@ -26,12 +26,14 @@
 #include "FeatureLayer.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
+#include "UtilityDomainNetwork.h"
 #include "UtilityElement.h"
 #include "UtilityElementTraceResult.h"
 #include "UtilityNetwork.h"
 #include "UtilityNetworkDefinition.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
+#include "UtilityTier.h"
 #include "UtilityTraceParameters.h"
 #include "UtilityTraceResultListModel.h"
 #include "UtilityAssetGroup.h"
@@ -82,10 +84,17 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
     m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
     m_utilityNetwork = new UtilityNetwork(m_serviceUrl, m_map, this);
-    m_traceParams = new UtilityTraceParameters(UtilityTraceType::Connected, {}, this);
+
+    connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, [](Error e)
+    {
+      if (e.isEmpty())
+        return;
+
+      qDebug() << e.code() << " - " << " - " << e.message() << " - " << e.additionalMessage();
+    });
 
     // select the features returned from the trace
-    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &FindFeaturesUtilityNetwork::onTraceCompleted);
+    connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &TraceUtilityNetwork::onTraceCompleted);
 
     connect(m_utilityNetwork, &UtilityNetwork::doneLoading, [this](Error e)
     {
@@ -169,23 +178,50 @@ void TraceUtilityNetwork::updateTraceParams(UtilityElement* element)
   if (m_startingLocationsEnabled)
   {
     m_startingLocations.append(element);
-    m_traceParams->setStartingLocations(m_startingLocations);
+//    m_traceParams->setStartingLocations(m_startingLocations);
     Graphic* traceLocation = new Graphic(m_clickPoint, m_startingSymbol, m_graphicParent.get());
     m_graphicsOverlay->graphics()->append(traceLocation);
   }
   else
   {
     m_barriers.append(element);
-    m_traceParams->setBarriers(m_barriers);
+//    m_traceParams->setBarriers(m_barriers);
     Graphic* traceLocation = new Graphic(m_clickPoint, m_barrierSymbol, m_graphicParent.get());
     m_graphicsOverlay->graphics()->append(traceLocation);
   }
 }
 
-void TraceUtilityNetwork::trace()
+void TraceUtilityNetwork::trace(int index)
 {
   m_busy = true;
   emit busyChanged();
+
+  if (m_traceParams)
+    delete m_traceParams;
+
+  //  m_traceParams->setTraceConfiguration(mediumVoltageTier->traceConfiguration());
+  switch (index) {
+    case 0:
+      m_traceParams = new UtilityTraceParameters(UtilityTraceType::Connected, {}, this);
+      break;
+    case 1:
+      m_traceParams = new UtilityTraceParameters(UtilityTraceType::Subnetwork, {}, this);
+      break;
+    case 2:
+      m_traceParams = new UtilityTraceParameters(UtilityTraceType::Upstream, {}, this);
+      break;
+    case 3:
+      m_traceParams = new UtilityTraceParameters(UtilityTraceType::Downstream, {}, this);
+      break;
+    default:
+      return;
+  }
+
+  if (m_mediumVoltageTier)
+    m_traceParams->setTraceConfiguration(m_mediumVoltageTier->traceConfiguration());
+
+  m_traceParams->setStartingLocations(m_startingLocations);
+  m_traceParams->setBarriers(m_barriers);
   // Perform a connected trace on the utility network
   m_utilityNetwork->trace(m_traceParams);
 }
@@ -219,6 +255,10 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
     emit dialogVisibleChanged();
     return;
   }
+
+  const UtilityDomainNetwork * domainNetwork = m_utilityNetwork->definition()->domainNetwork("ElectricDistribution");
+
+  m_mediumVoltageTier = domainNetwork->tier(QString("Medium Voltage Radial"));
 
   const IdentifyLayerResult* result = results[0];
   m_feature = static_cast<ArcGISFeature*>(result->geoElements()[0]);

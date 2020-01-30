@@ -21,19 +21,20 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class ArcGISFeature;
+class FeatureLayer;
+class GraphicsOverlay;
+class IdentifyLayerResult;
 class Map;
 class MapQuickView;
-class UtilityNetwork;
-class UtilityElement;
-class UtilityTerminal;
-class UtilityTraceParameters;
-class FeatureLayer;
 class ServiceFeatureTable;
-class SimpleMarkerSymbol;
 class SimpleLineSymbol;
-class GraphicsOverlay;
-class ArcGISFeature;
-class IdentifyLayerResult;
+class SimpleMarkerSymbol;
+class UtilityElement;
+class UtilityNetwork;
+class UtilityTerminal;
+class UtilityTier;
+class UtilityTraceParameters;
 }
 }
 
@@ -60,7 +61,7 @@ public:
   static void init();
 
   Q_INVOKABLE void multiTerminalIndex(int index);
-  Q_INVOKABLE void trace();
+  Q_INVOKABLE void trace(int index);
   Q_INVOKABLE void reset();
 
 signals:
@@ -94,6 +95,7 @@ private:
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_feature = nullptr;
+  Esri::ArcGISRuntime::UtilityTier * m_mediumVoltageTier = nullptr;
 
   const QUrl m_serviceUrl = QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
   bool m_terminalDialogVisisble = false;

@@ -28,6 +28,8 @@ Rectangle {
     readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
     property var element
     property var utilityNetworkSource
+    property var domainNetwork
+    property var mediumVoltageTier
     property var startingLocations: []
     property var barriers: []
     property var terminals: []
@@ -109,6 +111,13 @@ Rectangle {
 
             identifiedFeature = result.geoElements[0];
             utilityNetworkSource = utilityNetwork.definition.networkSource(identifiedFeature.featureTable.tableName);
+            domainNetwork = utilityNetwork.definition.domainNetwork("ElectricDistribution");
+
+            const tiers = domainNetwork.tiers;
+            for (let i = 0; i < tiers.length; i++) {
+                if ( tiers[i].name === "Medium Voltage Radial" )
+                    mediumVoltageTier = tiers[i];
+            }
 
             if (utilityNetworkSource.sourceType === Enums.UtilityNetworkSourceTypeJunction) {
                 const assetGroupFieldName = identifiedFeature.featureTable.subtypeField;
@@ -179,9 +188,11 @@ Rectangle {
     UtilityNetwork {
         id: utilityNetwork
         url: featureLayerUrl
-        initMap: mapView.map
+//        initMap: mapView.map
 
         onTraceStatusChanged: {
+            console.log(params.traceType);
+
             if (traceStatus !== Enums.TaskStatusCompleted)
                 return;
 
@@ -212,6 +223,14 @@ Rectangle {
 
             deviceLayer.selectFeaturesWithQuery(deviceParams, Enums.SelectionModeAdd);
             lineLayer.selectFeaturesWithQuery(lineParams, Enums.SelectionModeAdd);
+        }
+
+        onErrorChanged: {
+            console.log("%1 - %2 - %3 - %4".arg(error.code).arg(error.domain).arg(error.message).arg(error.additionalMessage));
+        }
+
+        onLoadStatusChanged: {
+            print(loadStatus);
         }
 
         onComponentCompleted: load();
@@ -275,9 +294,11 @@ Rectangle {
             margins: 3
         }
         width: childrenRect.width
+//        width: parent.width
         height: childrenRect.height
         color: "lightgrey"
         opacity: 0.8
+//        opacity: 1
         radius: 5
 
         // catch mouse signals from propagating to parent
@@ -289,23 +310,40 @@ Rectangle {
 
         GridLayout {
             columns: 2
-            rows: 2
+            rows: 3
+            property var centerAlignment: Qt.AlignHCenter | Qt.AlignVCenter
             flow: GridLayout.LeftToRight
+            anchors.centerIn: parent
+//            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             RadioButton {
                 id: startingLocBtn
                 checked: true
                 text: qsTr("Add starting location(s)")
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
 
             RadioButton {
                 id: barriersBtn
                 text: qsTr("Add barrier(s)")
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            }
+
+            Text {
+                text: qsTr("Trace Type:")
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            }
+
+            ComboBox {
+                id: traceTypes
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                model: ["Connected", "Subnetwork", "Upstream", "Downstream"]
             }
 
             Button {
                 id: resetBtn
                 text: qsTr("Reset")
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+//                Layout.alignment: controlLayout.centerAlignment
                 onClicked: {
                     params.barriers = null;
                     barriers = [];
@@ -323,9 +361,25 @@ Rectangle {
             Button {
                 id: traceBtn
                 text: qsTr("Trace")
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.alignment: controlLayout.centerAlignment
                 onClicked: {
                     busy.visible = true;
+//                    params.traceType = Enums.UtilityTraceTypeUpstream;
+                    switch (traceTypes.currentIndex) {
+                    case 0:
+                        params.traceType = Enums.UtilityTraceTypeConnected;
+                        break;
+                    case 1:
+                        params.traceType = Enums.UtilityTraceTypeSubnetwork;
+                        break;
+                    case 2:
+                        params.traceType = Enums.UtilityTraceTypeUpstream;
+                        break;
+                    case 3:
+                        params.traceType = Enums.UtilityTraceTypeDownstream;
+                    }
+                    params.traceConfiguration = mediumVoltageTier.traceConfiguration;
+
                     // Perform a connected trace on the utility network
                     utilityNetwork.trace(params);
                 }

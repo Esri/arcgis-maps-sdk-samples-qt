@@ -97,10 +97,11 @@ Item {
 
         GridLayout {
             columns: 2
-            rows: 2
+            rows: 3
             flow: GridLayout.LeftToRight
             RadioButton {
                 id: startingLocBtn
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 checked: true
                 text: qsTr("Add starting location(s)")
                 onToggled: model.startingLocationsEnabled = checked;
@@ -108,8 +109,20 @@ Item {
 
             RadioButton {
                 id: barriersBtn
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 text: qsTr("Add barrier(s)")
                 onToggled: model.startingLocationsEnabled = !checked;
+            }
+
+            Text {
+                text: qsTr("Trace Type:")
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            }
+
+            ComboBox {
+                id: traceTypes
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                model: ["Connected", "Subnetwork", "Upstream", "Downstream"]
             }
 
             Button {
@@ -123,7 +136,7 @@ Item {
                 id: traceBtn
                 text: qsTr("Trace")
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                onClicked: model.trace();
+                onClicked: model.trace(traceTypes.currentIndex);
             }
         }
     }
