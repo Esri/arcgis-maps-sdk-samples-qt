@@ -405,8 +405,6 @@ Rectangle {
 
             Text {
                 // Displays fraction along edge
-//                text: qsTr("Fraction along edge: %1".arg(element ? element.fractionAlongEdge.toFixed(6) : 0.0.toFixed(6)))
-//                text: qsTr("Fraction along edge: %1".arg(element.fractionAlongEdge.toFixed(6)));
                 text: juncSelected ? qsTr("Junction Selected") : qsTr("Fraction along edge: %1".arg(element ? element.fractionAlongEdge.toFixed(6) : 0.0.toFixed(6)))
                 anchors.horizontalCenter: parent.horizontalCenter
             }
