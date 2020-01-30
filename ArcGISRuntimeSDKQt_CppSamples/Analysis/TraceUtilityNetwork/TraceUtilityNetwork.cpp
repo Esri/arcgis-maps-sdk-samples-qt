@@ -270,7 +270,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
 
   // Get domain network
   const UtilityDomainNetwork* domainNetwork = m_utilityNetwork->definition()->domainNetwork("ElectricDistribution");
-  m_mediumVoltageTier = domainNetwork->tier(QString("Medium Voltage Radial"));
+  m_mediumVoltageTier = domainNetwork->tier("Medium Voltage Radial");
 
   const IdentifyLayerResult* result = results[0];
   m_feature = static_cast<ArcGISFeature*>(result->geoElements()[0]);
