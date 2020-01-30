@@ -269,7 +269,7 @@ void TraceUtilityNetwork::onIdentifyLayersCompleted(QUuid, const QList<IdentifyL
   }
 
   // Get domain network
-  const UtilityDomainNetwork * domainNetwork = m_utilityNetwork->definition()->domainNetwork("ElectricDistribution");
+  const UtilityDomainNetwork* domainNetwork = m_utilityNetwork->definition()->domainNetwork("ElectricDistribution");
   m_mediumVoltageTier = domainNetwork->tier(QString("Medium Voltage Radial"));
 
   const IdentifyLayerResult* result = results[0];
