@@ -138,7 +138,7 @@ Rectangle {
 
             const tiers = domainNetwork.tiers;
             for (let i = 0; i < tiers.length; i++) {
-                if ( tiers[i].name === "Medium Voltage Radial" )
+                if (tiers[i].name === "Medium Voltage Radial")
                     mediumVoltageTier = tiers[i];
             }
 
