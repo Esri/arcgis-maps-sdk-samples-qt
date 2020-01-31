@@ -32,6 +32,7 @@ class SimpleFillSymbol;
 class SimpleLineSymbol;
 class SimpleMarkerSymbol;
 class Symbol;
+class UniqueValue;
 class UniqueValueRenderer;
 class UtilityElement;
 class UtilityNetwork;
@@ -88,7 +89,7 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void connectSignals();
   void updateTraceParams(Esri::ArcGISRuntime::UtilityElement* element);
-  void createUniqueValue(QString label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value);
+  Esri::ArcGISRuntime::UniqueValue* createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

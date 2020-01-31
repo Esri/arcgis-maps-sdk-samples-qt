@@ -70,8 +70,12 @@ TraceUtilityNetwork::TraceUtilityNetwork(QObject* parent /* = nullptr */):
   // create unique renderer
   m_uniqueValueRenderer = new UniqueValueRenderer(this);
   m_uniqueValueRenderer->setFieldNames(QStringList("ASSETGROUP"));
-  createUniqueValue(QString("Medium Voltage"), m_mediumVoltageSymbol, 5);
-  createUniqueValue(QString("Low Voltage"), m_lowVoltageSymbol, 3);
+  UniqueValue* mediumVoltageUniqueValue = createUniqueValue(QString("Medium Voltage"), m_mediumVoltageSymbol, 5);
+  UniqueValue* lowVoltageUniqueValue = createUniqueValue(QString("Low Voltage"), m_lowVoltageSymbol, 3);
+
+  // append to UniqueValueRenderer
+  m_uniqueValueRenderer->uniqueValues()->append(mediumVoltageUniqueValue);
+  m_uniqueValueRenderer->uniqueValues()->append(lowVoltageUniqueValue);
 
   // set unique value renderer to the line layer
   m_lineLayer->setRenderer(m_uniqueValueRenderer);
@@ -395,7 +399,7 @@ void TraceUtilityNetwork::onTraceCompleted()
   m_lineLayer->selectFeatures(lineParams, SelectionMode::Add);
 }
 
-void TraceUtilityNetwork::createUniqueValue(const QString& label, Symbol* fillSymbol, int value)
+UniqueValue* TraceUtilityNetwork::createUniqueValue(const QString& label, Esri::ArcGISRuntime::Symbol* fillSymbol, int value)
 {
   // add state's attribute value for field "STATE_ABBR" to QVariantList
   QVariantList labelValue;
@@ -403,6 +407,7 @@ void TraceUtilityNetwork::createUniqueValue(const QString& label, Symbol* fillSy
 
   // set value for a State to be rendered. (label, description, attribute value list, symbol, parent)
   UniqueValue* uniqueValue = new UniqueValue(label, "", labelValue, fillSymbol, this);
-  // append to UniqueValueRenderer
-  m_uniqueValueRenderer->uniqueValues()->append(uniqueValue);
+
+  // return Unique value created
+  return uniqueValue;
 }
