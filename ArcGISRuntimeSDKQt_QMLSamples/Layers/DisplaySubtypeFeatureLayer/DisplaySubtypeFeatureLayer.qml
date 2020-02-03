@@ -60,7 +60,8 @@ Rectangle {
                     subtypeSublayer.labelDefinitions.append(labelDefinition);
                     originalRenderer = subtypeSublayer.renderer;
                     subtypeSublayer.labelsEnabled = true;
-                    subtypeSublayer.minScale = 3000;
+                    subtypeSublayer.minScale = 3000.0;
+                    sublayerMinScale = subtypeSublayer.minScale;
                 }
 
                 onErrorChanged: print("%1 - %2 - %3 - %4".arg(error.code, error.domain, error.message, error.additionalMessage));
@@ -134,7 +135,10 @@ Rectangle {
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                     enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
-                    onClicked: setAlternativeRenderer();
+                    onCheckedChanged: {
+                        if (checked)
+                            setAlternativeRenderer();
+                    }
                 }
 
                 Shape {

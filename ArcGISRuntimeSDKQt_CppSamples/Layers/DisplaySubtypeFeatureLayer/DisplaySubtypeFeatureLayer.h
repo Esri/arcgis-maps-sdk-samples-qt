@@ -22,28 +22,44 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class FeatureLayer;
+class LabelDefinition;
 class Map;
 class MapQuickView;
+class Renderer;
+class SimpleRenderer;
 class SubtypeFeatureLayer;
+class SubtypeSublayer;
 }
 }
 
 #include <QObject>
+#include "SubtypeSublayer.h"
 
 class DisplaySubtypeFeatureLayer : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(double mapScale MEMBER m_mapScale NOTIFY mapScaleChanged)
+  Q_PROPERTY(double sublayerMinScale MEMBER m_sublayerMinScale NOTIFY sublayerMinScaleChanged)
+  Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
 
 public:
   explicit DisplaySubtypeFeatureLayer(QObject* parent = nullptr);
   ~DisplaySubtypeFeatureLayer();
 
+  Q_INVOKABLE void switchSublayerVisibility();
+  Q_INVOKABLE void setOringalRenderer();
+  Q_INVOKABLE void setAlternativeRenderer();
+  Q_INVOKABLE void setSublayerMinScale();
+
   static void init();
 
 signals:
   void mapViewChanged();
+  void mapScaleChanged();
+  void sublayerMinScaleChanged();
+  void busyChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -52,6 +68,15 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::SubtypeFeatureLayer* m_subtypeFeatureLayer = nullptr;
+  Esri::ArcGISRuntime::SubtypeSublayer* m_subtypeSublayer = nullptr;
+  Esri::ArcGISRuntime::LabelDefinition* m_labelDefinition = nullptr;
+  Esri::ArcGISRuntime::Renderer* m_originalRenderer = nullptr;
+  Esri::ArcGISRuntime::SimpleRenderer* m_alternateRenderer = nullptr;
+  const QString m_labelJson = QStringLiteral("{ \"labelExpression\":\"[nominalvoltage]\",\"labelPlacement\":\"esriServerPointLabelPlacementAboveRight\",\"useCodedValues\":true,\"symbol\":{\"angle\":0,\"backgroundColor\":[0,0,0,0],\"borderLineColor\":[0,0,0,0],\"borderLineSize\":0,\"color\":[0,0,255,255],\"font\":{\"decoration\":\"none\",\"size\":10.5,\"style\":\"normal\",\"weight\":\"normal\"},\"haloColor\":[255,255,255,255],\"haloSize\":2,\"horizontalAlignment\":\"center\",\"kerning\":false,\"type\":\"esriTS\",\"verticalAlignment\":\"middle\",\"xoffset\":0,\"yoffset\":0}}");
+
+  double m_mapScale = 0.0;
+  double m_sublayerMinScale = 0.0;
+  bool m_busy = true;
 };
 
 #endif // DISPLAYSUBTYPEFEATURELAYER_H
