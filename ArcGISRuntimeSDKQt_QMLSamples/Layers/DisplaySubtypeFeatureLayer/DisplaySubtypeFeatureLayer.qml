@@ -115,7 +115,7 @@ Rectangle {
                     Layout.alignment: Qt.AlignLeft
                     checked: true
                     enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
-                    onCheckedChanged: switchSublayerVisibility();
+                    onCheckedChanged: subtypeSublayer.visible = !subtypeSublayer.visible
                 }
 
                 RadioButton {
@@ -126,7 +126,7 @@ Rectangle {
                     enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
                     onCheckedChanged: {
                         if (checked)
-                            setOringalRenderer();
+                            subtypeSublayer.renderer = originalRenderer;
                     }
                 }
 
@@ -137,7 +137,7 @@ Rectangle {
                     enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
                     onCheckedChanged: {
                         if (checked)
-                            setAlternativeRenderer();
+                            subtypeSublayer.renderer = alternativeRenderer;
                     }
                 }
 
@@ -160,7 +160,7 @@ Rectangle {
                 }
 
                 Text {
-                    text: qsTr("Sublayer min scale: %1".arg(sublayerMinScale ? sublayerMinScale : "not set"))
+                    text: qsTr("Sublayer min scale: 1:%1".arg(subtypeSublayer ? subtypeSublayer.minScale : "not set"))
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                 }
@@ -170,7 +170,7 @@ Rectangle {
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                     enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
-                    onClicked: setSublayerMinScale();
+                    onClicked: subtypeSublayer ? subtypeSublayer.minScale = mapScale : null
                 }
             }
         }
@@ -180,26 +180,5 @@ Rectangle {
             anchors.centerIn: parent
             visible: subtypeFeatureLayer.loadStatus !== Enums.LoadStatusLoaded ? true : false
         }
-    }
-
-    function switchSublayerVisibility() {
-        print("switchSublayerVisibility");
-        subtypeSublayer.visible = !subtypeSublayer.visible;
-    }
-
-    function setOringalRenderer() {
-        print("set original renderer");
-        subtypeSublayer.renderer = originalRenderer;
-    }
-
-    function setAlternativeRenderer() {
-        print("set alternative renderer");
-        subtypeSublayer.renderer = alternativeRenderer;
-    }
-
-    function setSublayerMinScale() {
-        print("set sublayer min scale");
-        subtypeSublayer.minScale = mapView.mapScale;
-        sublayerMinScale = subtypeSublayer.minScale;
     }
 }
