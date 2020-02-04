@@ -54,12 +54,20 @@ Rectangle {
                     if (loadStatus != Enums.LoadStatusLoaded)
                         return;
 
+                    // get the Street Light sublayer and define its labels
                     subtypeSublayer = subtypeFeatureLayer.sublayerWithSubtypeName("Street Light");
-
                     var labelDefinition = ArcGISRuntimeEnvironment.createObject("LabelDefinition", { json : labelJson});
+
+                    if (!labelDefinition || !subtypeSublayer)
+                      return;
+
                     subtypeSublayer.labelDefinitions.append(labelDefinition);
-                    originalRenderer = subtypeSublayer.renderer;
                     subtypeSublayer.labelsEnabled = true;
+
+                    // get the original renderer of the sublayer
+                    originalRenderer = subtypeSublayer.renderer;
+
+                    // set a default minimum scale
                     subtypeSublayer.minScale = 3000.0;
                     sublayerMinScale = subtypeSublayer.minScale;
                 }
@@ -81,7 +89,7 @@ Rectangle {
             id: alternativeRenderer
             SimpleMarkerSymbol {
                 style: Enums.SimpleMarkerSymbolStyleDiamond
-                color: "#fff58f84"
+                color: "magenta"
                 size: 20
             }
         }
@@ -95,7 +103,7 @@ Rectangle {
             }
             width: childrenRect.width
             height: childrenRect.height
-            color: "lightgrey"
+            color: Qt.lightGray
             opacity: 0.8
             radius: 5
 
@@ -146,7 +154,7 @@ Rectangle {
                     height: 2
                     ShapePath {
                         strokeWidth: 1
-                        strokeColor: "black"
+                        strokeColor: Qt.black()
                         strokeStyle: ShapePath.SolidLine
                         startX: 2; startY: 0
                         PathLine { x: controlItemsLayout.width - 2 ; y: 0 }

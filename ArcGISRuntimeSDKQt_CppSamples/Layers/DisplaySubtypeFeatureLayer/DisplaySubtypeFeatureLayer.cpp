@@ -21,21 +21,21 @@
 #include "DisplaySubtypeFeatureLayer.h"
 
 #include "FeatureLayer.h"
+#include "Map.h"
+#include "MapQuickView.h"
+#include "ServiceFeatureTable.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimpleRenderer.h"
 #include "SubtypeFeatureLayer.h"
 #include "SubtypeSublayer.h"
 #include "SubtypeSublayerListModel.h"
-#include "ServiceFeatureTable.h"
-#include "Map.h"
-#include "MapQuickView.h"
 
 using namespace Esri::ArcGISRuntime;
 
 DisplaySubtypeFeatureLayer::DisplaySubtypeFeatureLayer(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::streetsNightVector(this), this)),
-  m_alternateRenderer(new SimpleRenderer(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor(Qt::GlobalColor::magenta), 20, this), this))
+  m_alternateRenderer(new SimpleRenderer(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor(Qt::magenta), 20, this), this))
 {
   // create the feature table
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100"), this);
@@ -48,36 +48,8 @@ DisplaySubtypeFeatureLayer::DisplaySubtypeFeatureLayer(QObject* parent /* = null
   // set the viewpoint to Naperville, Illinois
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9812691.11079696, 5128687.20710657, -9812377.9447607, 5128865.36767282, SpatialReference::webMercator())));
 
-  connect(m_subtypeFeatureLayer, &SubtypeFeatureLayer::doneLoading, this, [this](Error e)
-  {
-    if (!e.isEmpty())
-      return;
-
-    m_busy = false;
-    emit busyChanged();
-
-    m_subtypeSublayer = m_subtypeFeatureLayer->sublayerWithSubtypeName("Street Light", this);
-    m_labelDefinition = LabelDefinition::fromJson(m_labelJson, this);
-
-    if (!m_labelDefinition)
-    {
-      qDebug() << "m_labelDefinition";
-      return;
-    }
-
-    if (!m_subtypeSublayer)
-      return;
-
-    m_subtypeSublayer->labelDefinitions()->append(m_labelDefinition);
-    m_originalRenderer = m_subtypeSublayer->renderer()->clone(this);
-    m_subtypeSublayer->setLabelsEnabled(true);
-    m_subtypeSublayer->setMinScale(3000.0);
-    m_sublayerMinScale = m_subtypeSublayer->minScale();
-    emit sublayerMinScaleChanged();
-
-
-
-  });
+  // when subtype feature layer is loaded get the subtype sublayer street lights and define it's labels
+  connect(m_subtypeFeatureLayer, &SubtypeFeatureLayer::doneLoading, this, &DisplaySubtypeFeatureLayer::getSubtypeSublayerAndDefineLabels);
 
   connect(m_map, &Map::doneLoading, this, [this](Error e)
   {
@@ -118,31 +90,54 @@ void DisplaySubtypeFeatureLayer::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
- void DisplaySubtypeFeatureLayer::switchSublayerVisibility()
- {
-   qDebug() << "switchSublayerVisibility";
-   if (m_subtypeSublayer)
-     m_subtypeSublayer->setVisible(!m_subtypeSublayer->isVisible());
- }
+void DisplaySubtypeFeatureLayer::getSubtypeSublayerAndDefineLabels(const Error& e)
+{
+  if (!e.isEmpty())
+    return;
 
- void DisplaySubtypeFeatureLayer::setOringalRenderer()
- {
-   qDebug() << "setOringalRenderer";
-   if (m_subtypeSublayer)
+  m_busy = false;
+  emit busyChanged();
+
+  // get the Street Light sublayer and define its labels
+  m_subtypeSublayer = m_subtypeFeatureLayer->sublayerWithSubtypeName("Street Light", this);
+  m_labelDefinition = LabelDefinition::fromJson(m_labelJson, this);
+
+  if (!m_labelDefinition || !m_subtypeSublayer)
+    return;
+
+  m_subtypeSublayer->labelDefinitions()->append(m_labelDefinition);
+  m_subtypeSublayer->setLabelsEnabled(true);
+
+  // get the original renderer of the sublayer
+  m_originalRenderer = m_subtypeSublayer->renderer()->clone(this);
+
+  // Set a default minimum scale.
+  m_subtypeSublayer->setMinScale(3000.0);
+  m_sublayerMinScale = m_subtypeSublayer->minScale();
+  emit sublayerMinScaleChanged();
+}
+
+void DisplaySubtypeFeatureLayer::switchSublayerVisibility()
+{
+  if (m_subtypeSublayer)
+    m_subtypeSublayer->setVisible(!m_subtypeSublayer->isVisible());
+}
+
+void DisplaySubtypeFeatureLayer::setOringalRenderer()
+{
+  if (m_subtypeSublayer)
     m_subtypeSublayer->setRenderer(m_originalRenderer);
- }
+}
 
- void DisplaySubtypeFeatureLayer::setAlternativeRenderer()
- {
-   qDebug() << "setAlternativeRenderer";
-   if (m_subtypeSublayer)
+void DisplaySubtypeFeatureLayer::setAlternativeRenderer()
+{
+  if (m_subtypeSublayer)
     m_subtypeSublayer->setRenderer(m_alternateRenderer);
- }
+}
 
- void DisplaySubtypeFeatureLayer::setSublayerMinScale()
- {
-   qDebug() << "setSublayerMinScale";
-   m_subtypeSublayer->setMinScale(m_mapView->mapScale());
-   m_sublayerMinScale = m_subtypeSublayer->minScale();
-   emit sublayerMinScaleChanged();
- }
+void DisplaySubtypeFeatureLayer::setSublayerMinScale()
+{
+  m_subtypeSublayer->setMinScale(m_mapView->mapScale());
+  m_sublayerMinScale = m_subtypeSublayer->minScale();
+  emit sublayerMinScaleChanged();
+}

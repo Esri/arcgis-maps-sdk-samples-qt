@@ -61,6 +61,9 @@ signals:
   void sublayerMinScaleChanged();
   void busyChanged();
 
+private slots:
+  void getSubtypeSublayerAndDefineLabels(const Esri::ArcGISRuntime::Error& e);
+
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);

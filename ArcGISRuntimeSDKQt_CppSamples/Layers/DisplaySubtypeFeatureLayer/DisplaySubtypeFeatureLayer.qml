@@ -56,7 +56,6 @@ Item {
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                     checked: true
-//                    enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
                     enabled: !busy.visible
                     onCheckedChanged: model.switchSublayerVisibility();
                 }
@@ -66,7 +65,6 @@ Item {
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                     checked: true
-//                    enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
                     enabled: !busy.visible
                     onCheckedChanged: {
                         if (checked)
@@ -78,7 +76,6 @@ Item {
                     text: qsTr("Show alternative renderer")
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
-//                    enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
                     enabled: !busy.visible
                     onCheckedChanged: {
                         if (checked)
@@ -99,13 +96,13 @@ Item {
                 }
 
                 Text {
-                    text: qsTr("Current map scale: 1:%1".arg(model.mapScale))
+                    text: qsTr("Current map scale: 1:%1".arg(Math.round(model.mapScale)))
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                 }
 
                 Text {
-                    text: qsTr("Sublayer min scale: %1".arg(model.sublayerMinScale > 0.0 ? model.sublayerMinScale : "not set"))
+                    text: qsTr("Sublayer min scale: %1".arg(model.sublayerMinScale > 0.0 ? Math.round(model.sublayerMinScale) : "not set"))
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                 }
@@ -114,7 +111,6 @@ Item {
                     text: qsTr("Set sublayer minimum scale")
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
-//                    enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
                     enabled: !busy.visible
                     onClicked: model.setSublayerMinScale();
                 }
