@@ -103,7 +103,7 @@ Rectangle {
             }
             width: childrenRect.width
             height: childrenRect.height
-            color: Qt.lightGray
+            color: "lightgrey"
             opacity: 0.8
             radius: 5
 
