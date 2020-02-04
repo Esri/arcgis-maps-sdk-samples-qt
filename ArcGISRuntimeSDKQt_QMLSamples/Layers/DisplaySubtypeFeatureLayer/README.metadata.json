@@ -1,16 +1,26 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Layers",
+    "description": "Displays a composite layer of all the subtype values in a feature class.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "asset group",
+        "feature layer",
+        "labeling",
+        "sublayer",
+        "subtype",
+        "symbology",
+        "utility network",
+        "visible scale range"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "LabelDefinition",
+        "ServiceFeatureTable",
+        "SubtypeFeatureLayer",
+        "SubtypeSublayer"
     ],
     "snippets": [
         "DisplaySubtypeFeatureLayer.qml"

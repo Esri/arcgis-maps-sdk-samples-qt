@@ -1,31 +1,37 @@
-# Display subtype feature Layer
+# Display subtype feature layer
 
 Displays a composite layer of all the subtype values in a feature class.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
 
 ![](screenshot.png)
 
+## Use case
+
+This is useful for controlling labeling, visibility and symbology of a given subtype as though they are distinct layers on the map.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+The sample loads with the sublayer visible on the map. Toggle its visibility with the "Show sublayer" checkbox. Change the sublayer's renderer with the radio buttons, using "Show original renderer" or "Show alternative renderer", and set its minimum scale using the "Set sublayer minimum scale" button. This will set the sublayer's minimum scale to that of the current map scale. Zoom in and out to see the sublayer become visible based on its new scale range.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create a `SubtypeFeatureLayer` from a `ServiceFeatureTable` that defines a subtype, and add it to the `Map`.
+2. Get a `SubtypeSublayer` from the subtype feature using its name.
+3. Enable the sublayer's labels and define them with `LabelDefinitions`.
+4. Set the visibility status using this sublayer's `setVisible` property.
+5. Change the sublayer's symbology with `SubtypeSublayer.renderer`.
+6. Update the sublayer's minimum scale value with `SubtypeSublayer.minScale`.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* LabelDefinition
+* ServiceFeatureTable
+* SubtypeFeatureLayer
+* SubtypeSublayer
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
 
-## Additional information
-A standard level license is required to ...
+The [feature service layer](https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer/100) in this sample represents an electric network in Naperville, Illinois, which contains a utility network with asset classification for different devices.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+asset group, feature layer, labeling, sublayer, subtype, symbology, utility network, visible scale range
