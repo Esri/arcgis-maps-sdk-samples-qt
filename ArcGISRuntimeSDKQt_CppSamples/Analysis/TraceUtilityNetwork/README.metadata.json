@@ -23,9 +23,9 @@
         "GeometryEngine::FractionAlong"
     ],
     "snippets": [
-        "FindFeaturesUtilityNetwork.cpp",
-        "FindFeaturesUtilityNetwork.h",
-        "FindFeaturesUtilityNetwork.qml"
+        "TraceUtilityNetwork.cpp",
+        "TraceUtilityNetwork.h",
+        "TraceUtilityNetwork.qml"
     ],
-    "title": "Find connected features in utility networks"
+    "title": "Trace utility network"
 }

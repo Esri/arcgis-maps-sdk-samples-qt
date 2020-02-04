@@ -25,7 +25,7 @@ CONFIG += c++14
 QT += opengl qml quick
 
 TEMPLATE = app
-TARGET = FindFeaturesUtilityNetwork
+TARGET = TraceUtilityNetwork
 
 ARCGIS_RUNTIME_VERSION = 100.8
 include($$PWD/arcgisruntime.pri)
@@ -33,13 +33,14 @@ include($$PWD/arcgisruntime.pri)
 #-------------------------------------------------------------------------------
 
 HEADERS += \
-    FindFeaturesUtilityNetwork.h
+    TraceUtilityNetwork.h
 
 SOURCES += \
     main.cpp \
-    FindFeaturesUtilityNetwork.cpp
+    TraceUtilityNetwork.cpp
 
-RESOURCES += FindFeaturesUtilityNetwork.qrc
+RESOURCES += \
+    TraceUtilityNetwork.qrc
 
 #-------------------------------------------------------------------------------
 

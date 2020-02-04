@@ -11,15 +11,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef Q_OS_WIN
-#include <Windows.h>
-#endif
-
-#include "FindFeaturesUtilityNetwork.h"
-
-#include <QDir>
+#include <QSettings>
 #include <QGuiApplication>
-#include <QQmlApplicationEngine>
+#include <QQuickView>
+#include <QCommandLineParser>
+#include <QDir>
+#include <QQmlEngine>
 
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
@@ -28,10 +25,11 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("FindFeaturesUtilityNetwork - C++"));
+  app.setApplicationName(QStringLiteral("TraceUtilityNetwork - QML"));
 
-  // Initialize the sample
-  FindFeaturesUtilityNetwork::init();
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
   QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
@@ -44,17 +42,17 @@ int main(int argc, char *argv[])
   arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
 #endif
 
-  // Initialize application view
-  QQmlApplicationEngine engine;
   // Add the import Path
-  engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   // Add the Runtime and Extras path
-  engine.addImportPath(arcGISRuntimeImportPath);
+  view.engine()->addImportPath(arcGISRuntimeImportPath);
   // Add the Toolkit path
-  engine.addImportPath(arcGISToolkitImportPath);
+  view.engine()->addImportPath(arcGISToolkitImportPath);
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Analysis/FindFeaturesUtilityNetwork/main.qml"));
+  view.setSource(QUrl("qrc:/Samples/Analysis/TraceUtilityNetwork/TraceUtilityNetwork.qml"));
+
+  view.show();
 
   return app.exec();
 }

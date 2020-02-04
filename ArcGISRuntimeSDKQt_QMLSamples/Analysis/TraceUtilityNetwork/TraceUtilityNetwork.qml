@@ -1,4 +1,4 @@
-// [WriteFile Name=FindFeaturesUtilityNetwork, Category=Analysis]
+// [WriteFile Name=TraceUtilityNetwork, Category=Analysis]
 // [Legal]
 // Copyright 2019 Esri.
 
@@ -21,22 +21,24 @@ import Esri.ArcGISRuntime 100.8
 
 Rectangle {
     id: rootRectangle
-    clip: true
     width: 800
     height: 600
 
-    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
-    property var element
-    property var utilityNetworkSource
-    property var startingLocations: []
-    property var barriers: []
-    property var terminals: []
-    property var terminal
-    property var identifiedFeature
+    property bool junctionSelected: false
     property Point clickPoint
+    property var barriers: []
     property var deviceObjIds: []
+    property var domainNetwork
+    property var element
+    property var identifiedFeature
     property var lineObjIds: []
+    property var mediumVoltageTier
     property var myTraceResult
+    property var startingLocations: []
+    property var terminal
+    property var terminals: []
+    property var utilityNetworkSource
+    readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
 
     MapView {
         id: mapView
@@ -63,10 +65,31 @@ Rectangle {
                     url: featureLayerUrl + "/115"
                 }
 
-                renderer: SimpleRenderer {
-                    symbol: featureLineSymbol
-                }
+                UniqueValueRenderer {
+                    fieldNames: ["ASSETGROUP"]
 
+                    // set for medium voltage
+                    UniqueValue {
+                        label: "Medium Voltage"
+                        values: ["5"]
+                        SimpleLineSymbol {
+                            style: Enums.SimpleLineSymbolStyleSolid
+                            color: "DarkCyan"
+                            width: 3
+                        }
+                    }
+
+                    // set for low voltage
+                    UniqueValue {
+                        label: "Low Voltage"
+                        values: ["3"]
+                        SimpleLineSymbol {
+                            style: Enums.SimpleLineSymbolStyleDash
+                            color: "DarkCyan"
+                            width: 3
+                        }
+                    }
+                }
                 onSelectFeaturesStatusChanged: checkSelectionStatus();
             }
 
@@ -110,7 +133,17 @@ Rectangle {
             identifiedFeature = result.geoElements[0];
             utilityNetworkSource = utilityNetwork.definition.networkSource(identifiedFeature.featureTable.tableName);
 
+            // get domain network
+            domainNetwork = utilityNetwork.definition.domainNetwork("ElectricDistribution");
+
+            const tiers = domainNetwork.tiers;
+            for (let i = 0; i < tiers.length; i++) {
+                if (tiers[i].name === "Medium Voltage Radial")
+                    mediumVoltageTier = tiers[i];
+            }
+
             if (utilityNetworkSource.sourceType === Enums.UtilityNetworkSourceTypeJunction) {
+                junctionSelected = true;
                 const assetGroupFieldName = identifiedFeature.featureTable.subtypeField;
                 const assetGroupCode = identifiedFeature.attributes.attributeValue(assetGroupFieldName);
 
@@ -141,7 +174,7 @@ Rectangle {
                 }
 
             } else if (utilityNetworkSource.sourceType === Enums.UtilityNetworkSourceTypeEdge) {
-
+                junctionSelected = false;
                 element = utilityNetwork.createElementWithArcGISFeature(identifiedFeature);
 
                 // Compute how far tapped location is along the edge feature.
@@ -153,13 +186,6 @@ Rectangle {
             }
             addToParamAndGraphic();
         }
-    }
-
-    SimpleLineSymbol {
-        id: featureLineSymbol
-        style: Enums.SimpleLineSymbolStyleSolid
-        color: "DarkCyan"
-        width: 3
     }
 
     SimpleMarkerSymbol {
@@ -179,7 +205,6 @@ Rectangle {
     UtilityNetwork {
         id: utilityNetwork
         url: featureLayerUrl
-        initMap: mapView.map
 
         onTraceStatusChanged: {
             if (traceStatus !== Enums.TaskStatusCompleted)
@@ -187,8 +212,6 @@ Rectangle {
 
             if (traceResult.count === 0) {
                 busy.visible = false;
-                dialogText.text = qsTr("Trace completed with no results.");
-                traceCompletedDialog.open();
                 return;
             }
 
@@ -214,7 +237,20 @@ Rectangle {
             lineLayer.selectFeaturesWithQuery(lineParams, Enums.SelectionModeAdd);
         }
 
-        onComponentCompleted: load();
+        onErrorChanged: {
+            dialogText.text = qsTr("%1 - %2".arg(error.message).arg(error.additionalMessage));
+            traceCompletedDialog.open();
+        }
+
+        onComponentCompleted: {
+            busy.visible = true;
+            load();
+        }
+
+        onLoadStatusChanged: {
+            if (loadStatus === Enums.LoadStatusLoaded)
+                busy.visible = false;
+        }
     }
 
     UtilityTraceParameters {
@@ -287,48 +323,91 @@ Rectangle {
             onWheel: wheel.accepted = true
         }
 
-        GridLayout {
-            columns: 2
-            rows: 2
-            flow: GridLayout.LeftToRight
-            RadioButton {
-                id: startingLocBtn
-                checked: true
-                text: qsTr("Add starting location(s)")
-            }
+        Column {
+            GridLayout {
+                columns: 2
+                rows: 3
+                property var centerAlignment: Qt.AlignHCenter | Qt.AlignVCenter
+                flow: GridLayout.LeftToRight
 
-            RadioButton {
-                id: barriersBtn
-                text: qsTr("Add barrier(s)")
-            }
+                RadioButton {
+                    id: startingLocBtn
+                    checked: true
+                    text: qsTr("Add starting location(s)")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                }
 
-            Button {
-                id: resetBtn
-                text: qsTr("Reset")
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                onClicked: {
-                    params.barriers = null;
-                    barriers = [];
-                    params.startingLocations = null;
-                    startingLocations = [];
-                    deviceObjIds = [];
-                    lineObjIds = [];
-                    mapView.graphicsOverlays.get(0).graphics.clear();
-                    mapView.map.operationalLayers.forEach(function(layer){
-                        layer.clearSelection();
-                    });
+                RadioButton {
+                    id: barriersBtn
+                    text: qsTr("Add barrier(s)")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                }
+
+                Text {
+                    text: qsTr("Trace Type:")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                }
+
+                ComboBox {
+                    id: traceTypes
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    model: ["Connected", "Subnetwork", "Upstream", "Downstream"]
+                }
+
+                Button {
+                    id: resetBtn
+                    text: qsTr("Reset")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    enabled: !busy.visible
+                    onClicked: {
+                        params.barriers = null;
+                        barriers = [];
+                        params.startingLocations = null;
+                        startingLocations = [];
+                        deviceObjIds = [];
+                        lineObjIds = [];
+                        mapView.graphicsOverlays.get(0).graphics.clear();
+                        mapView.map.operationalLayers.forEach(function(layer){
+                            layer.clearSelection();
+                        });
+                    }
+                }
+
+                Button {
+                    id: traceBtn
+                    text: qsTr("Trace")
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    enabled: !busy.visible
+                    onClicked: {
+                        busy.visible = true;
+                        switch (traceTypes.currentIndex) {
+                        case 0:
+                            params.traceType = Enums.UtilityTraceTypeConnected;
+                            break;
+                        case 1:
+                            params.traceType = Enums.UtilityTraceTypeSubnetwork;
+                            break;
+                        case 2:
+                            params.traceType = Enums.UtilityTraceTypeUpstream;
+                            break;
+                        case 3:
+                            params.traceType = Enums.UtilityTraceTypeDownstream;
+                        }
+
+                        // check to see if it exists before assigning it to the parameters.
+                        if (mediumVoltageTier)
+                            params.traceConfiguration = mediumVoltageTier.traceConfiguration;
+
+                        // Perform a connected trace on the utility network
+                        utilityNetwork.trace(params);
+                    }
                 }
             }
 
-            Button {
-                id: traceBtn
-                text: qsTr("Trace")
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                onClicked: {
-                    busy.visible = true;
-                    // Perform a connected trace on the utility network
-                    utilityNetwork.trace(params);
-                }
+            Text {
+                // Displays fraction along edge
+                text: junctionSelected ? qsTr("Junction Selected") : qsTr("Fraction along edge: %1".arg(element ? element.fractionAlongEdge.toFixed(6) : 0.0.toFixed(6)))
+                anchors.horizontalCenter: parent.horizontalCenter
             }
         }
     }
@@ -344,9 +423,9 @@ Rectangle {
         }
 
         const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                geometry: clickPoint,
-                                                                symbol: startingLocBtn.checked ? startingPointSymbol : barrierPointSymbol
-                                                            });
+                                                                  geometry: clickPoint,
+                                                                  symbol: startingLocBtn.checked ? startingPointSymbol : barrierPointSymbol
+                                                              });
         unGraphicsOverlay.graphics.append(graphic);
     }
 

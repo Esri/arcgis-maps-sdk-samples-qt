@@ -27,7 +27,7 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    FindFeaturesUtilityNetwork.qrc
+    TraceUtilityNetwork.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

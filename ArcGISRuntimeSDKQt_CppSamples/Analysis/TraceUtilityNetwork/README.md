@@ -1,4 +1,4 @@
-# Find connected features in utility networks
+# Trace utility network
 
 Find all features connected to a set of starting points in a utility network.
 
@@ -19,13 +19,15 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 3. Create and load a `UtilityNetwork` with the same feature service URL and map.
 4. Add a `GraphicsOverlay` with symbology that distinguishes starting points from barriers.
 5. Identify features on the map and add a `Graphic` that represents its purpose (starting point or barrier) at the location of each identified feature.
-6. Determine the type of the identified feature using `UtilityNetwork.definition.networkSource` passing its table name.
-7. If a junction, display a terminal picker when more than one terminal is found and create a `UtilityElement` with the selected terminal or the single terminal if there is only one.
-8. If an edge, create a `UtilityElement` from the identified feature and compute its `FractionAlongLine` using `GeometryEngine.fractionAlong`.
-9. Run a `UtilityNetwork.trace` with the specified parameters.
-10. Create two list of ObjectId's from `UtilityElementTraceResult.Elements` separated by their `NetworkSource.Name`.
-11. Create two `QueryParameters` and assign each a list of ObjectId's.
-12. For every feature layer in this map with elements, select features by passing in their respective query parameters.
+6.  Create a `UtilityElement` for the identified feature.
+7.  Determine the type of this element using its `NetworkSource::SourceType` property.
+8.  If the element is a junction with more than one terminal, display a terminal picker. Then set the junction's `terminal` property with the selected terminal.
+9.  If an edge, set its `fractionAlongEdge` property using `GeometryEngine::fractionAlong`.
+10. Add this utility element to a collection of starting locations or barriers.
+11. Create `UtilityTraceParameters` with the selected trace type along with the collected starting locations and barriers (if applicable). 
+12. Set the `UtilityTraceParameters::traceConfiguration` with the utility tier's `traceConfiguration` property.
+13. Run a `UtilityNetwork::trace` with the specified parameters.
+14. For every `FeatureLayer` in the map, select the features using the `UtilityElement::objectId` from the filtered list of `UtilityElementTraceResult::elements`.
 
 ## Relevant API
 
@@ -37,7 +39,7 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 * UtilityNetworkSource
 * UtilityAssetType
 * UtilityTerminal
-* GeometryEngine.fractionAlong
+* GeometryEngine::fractionAlong
 
 ## About the data
 
