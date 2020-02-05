@@ -22,7 +22,7 @@ mac {
 CONFIG += c++14
 
 # additional modules are pulled in via arcgisruntime.pri
-QT += opengl qml quick androidextras
+QT += opengl qml quick
 
 TEMPLATE = app
 TARGET = DisplayScenesInTabletopAR
@@ -75,6 +75,7 @@ include($$AR_TOOLKIT_SOURCE_PATH/Plugin/CppApi/ArCppApi.pri)
 #-------------------------------------------------------------------------------
 
 android {
+    QT += androidextras
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 
