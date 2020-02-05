@@ -79,7 +79,7 @@ private:
 
   double m_mapScale = 0.0;
   double m_sublayerMinScale = 0.0;
-  bool m_busy = true;
+  bool m_busy = false;
 };
 
 #endif // DISPLAYSUBTYPEFEATURELAYER_H
