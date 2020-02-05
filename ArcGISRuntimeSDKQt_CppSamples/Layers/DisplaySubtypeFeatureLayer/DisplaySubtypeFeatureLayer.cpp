@@ -51,7 +51,7 @@ DisplaySubtypeFeatureLayer::DisplaySubtypeFeatureLayer(QObject* parent /* = null
   // set the viewpoint to Naperville, Illinois
   m_map->setInitialViewpoint(Viewpoint(Envelope(-9812691.11079696, 5128687.20710657, -9812377.9447607, 5128865.36767282, SpatialReference::webMercator())));
 
-  // when subtype feature layer is loaded get the subtype sublayer street lights and define it's labels
+  // when subtype feature layer is loaded get the subtype sublayer street lights and define its labels
   connect(m_subtypeFeatureLayer, &SubtypeFeatureLayer::doneLoading, this, &DisplaySubtypeFeatureLayer::getSubtypeSublayerAndDefineLabels);
 
   connect(m_map, &Map::doneLoading, this, [this](Error e)
