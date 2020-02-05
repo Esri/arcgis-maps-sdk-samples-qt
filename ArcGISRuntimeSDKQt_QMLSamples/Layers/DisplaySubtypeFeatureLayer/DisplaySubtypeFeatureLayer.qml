@@ -30,7 +30,7 @@ Rectangle {
     property var subtypeSublayer
     property var originalRenderer
     property double mapScale: mapView ? Math.round(mapView.mapScale) : 0
-    property var sublayerMinScale
+    property double sublayerMinScale
 
 
     MapView {
