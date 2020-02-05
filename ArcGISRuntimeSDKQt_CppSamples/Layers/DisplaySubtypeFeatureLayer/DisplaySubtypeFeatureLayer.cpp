@@ -112,7 +112,7 @@ void DisplaySubtypeFeatureLayer::getSubtypeSublayerAndDefineLabels(const Error& 
   m_subtypeSublayer->setLabelsEnabled(true);
 
   // get the original renderer of the sublayer
-  m_originalRenderer = m_subtypeSublayer->renderer()->clone(this);
+  m_originalRenderer = m_subtypeSublayer->renderer();
 
   // Set a default minimum scale.
   m_subtypeSublayer->setMinScale(3000.0);
