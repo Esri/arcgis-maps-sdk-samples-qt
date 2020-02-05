@@ -127,7 +127,7 @@ Rectangle {
                 }
 
                 RadioButton {
-                    text: qsTr("Show original rednerer")
+                    text: qsTr("Show original renderer")
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                     checked: true
