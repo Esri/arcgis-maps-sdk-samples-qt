@@ -123,7 +123,7 @@ Rectangle {
                     Layout.alignment: Qt.AlignLeft
                     checked: true
                     enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
-                    onCheckedChanged: subtypeSublayer.visible = !subtypeSublayer.visible
+                    onCheckedChanged: subtypeSublayer ? subtypeSublayer.visible = !subtypeSublayer.visible : null
                 }
 
                 RadioButton {
@@ -133,7 +133,7 @@ Rectangle {
                     checked: true
                     enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
                     onCheckedChanged: {
-                        if (checked)
+                        if (checked && subtypeSublayer)
                             subtypeSublayer.renderer = originalRenderer;
                     }
                 }
@@ -144,7 +144,7 @@ Rectangle {
                     Layout.alignment: Qt.AlignLeft
                     enabled: subtypeFeatureLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
                     onCheckedChanged: {
-                        if (checked)
+                        if (checked && subtypeSublayer)
                             subtypeSublayer.renderer = alternativeRenderer;
                     }
                 }
