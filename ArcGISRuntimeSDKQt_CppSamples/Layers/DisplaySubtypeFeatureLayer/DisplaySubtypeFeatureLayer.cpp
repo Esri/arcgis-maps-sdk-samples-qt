@@ -140,7 +140,8 @@ void DisplaySubtypeFeatureLayer::setAlternativeRenderer()
 
 void DisplaySubtypeFeatureLayer::setSublayerMinScale()
 {
-  m_subtypeSublayer->setMinScale(m_mapView->mapScale());
-  m_sublayerMinScale = m_subtypeSublayer->minScale();
+  const double currentScale = m_mapView->mapScale();
+  m_subtypeSublayer->setMinScale(currentScale);
+  m_sublayerMinScale = currentScale;
   emit sublayerMinScaleChanged();
 }
