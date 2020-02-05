@@ -168,7 +168,7 @@ Rectangle {
                 }
 
                 Text {
-                    text: qsTr("Sublayer min scale: 1:%1".arg(subtypeSublayer ? subtypeSublayer.minScale : "not set"))
+                    text: subtypeSublayer ? qsTr("Sublayer min scale: 1:%1".arg(subtypeSublayer.minScale)) : qsTr("Sublayer min scale:")
                     Layout.margins: 2
                     Layout.alignment: Qt.AlignLeft
                 }
