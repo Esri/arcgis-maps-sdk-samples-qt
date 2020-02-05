@@ -53,18 +53,6 @@ DisplaySubtypeFeatureLayer::DisplaySubtypeFeatureLayer(QObject* parent /* = null
 
   // when subtype feature layer is loaded get the subtype sublayer street lights and define its labels
   connect(m_subtypeFeatureLayer, &SubtypeFeatureLayer::doneLoading, this, &DisplaySubtypeFeatureLayer::getSubtypeSublayerAndDefineLabels);
-
-  connect(m_map, &Map::doneLoading, this, [this](Error e)
-  {
-    if (!e.isEmpty())
-      return;
-
-    connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
-    {
-      m_mapScale = m_mapView->mapScale();
-      emit mapScaleChanged();
-    });
-  });
 }
 
 DisplaySubtypeFeatureLayer::~DisplaySubtypeFeatureLayer() = default;
@@ -89,6 +77,12 @@ void DisplaySubtypeFeatureLayer::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
+
+  connect(m_mapView, &MapQuickView::mapScaleChanged, this, [this]()
+  {
+    m_mapScale = m_mapView->mapScale();
+    emit mapScaleChanged();
+  });
 
   emit mapViewChanged();
 }
@@ -140,6 +134,9 @@ void DisplaySubtypeFeatureLayer::setAlternativeRenderer()
 
 void DisplaySubtypeFeatureLayer::setSublayerMinScale()
 {
+  if (!m_subtypeSublayer)
+    return;
+
   const double currentScale = m_mapView->mapScale();
   m_subtypeSublayer->setMinScale(currentScale);
   m_sublayerMinScale = currentScale;
