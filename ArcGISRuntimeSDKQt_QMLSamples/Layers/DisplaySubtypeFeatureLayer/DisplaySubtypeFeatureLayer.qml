@@ -29,7 +29,7 @@ Rectangle {
     readonly property var labelJson: { "labelExpression": "[nominalvoltage]", "labelPlacement": "esriServerPointLabelPlacementAboveRight", "useCodedValues": true, "symbol": { "angle": 0, "backgroundColor": [ 0, 0, 0, 0 ], "borderLineColor": [ 0, 0, 0, 0 ], "borderLineSize": 0, "color": [ 0, 0, 255, 255 ], "font": { "decoration": "none", "size": 10.5, "style": "normal", "weight": "normal" }, "haloColor": [ 255, 255, 255, 255 ], "haloSize": 2, "horizontalAlignment": "center", "kerning": false, "type": "esriTS", "verticalAlignment": "middle", "xoffset": 0, "yoffset": 0 } }
     property var subtypeSublayer
     property var originalRenderer
-    property var mapScale: mapView ? Math.round(mapView.mapScale) : 0
+    property double mapScale: mapView ? Math.round(mapView.mapScale) : 0
     property var sublayerMinScale
 
 
