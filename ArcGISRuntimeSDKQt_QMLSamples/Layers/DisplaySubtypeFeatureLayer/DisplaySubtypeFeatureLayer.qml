@@ -154,7 +154,7 @@ Rectangle {
                     height: 2
                     ShapePath {
                         strokeWidth: 1
-                        strokeColor: Qt.black()
+                        strokeColor: "black"
                         strokeStyle: ShapePath.SolidLine
                         startX: 2; startY: 0
                         PathLine { x: controlItemsLayout.width - 2 ; y: 0 }
