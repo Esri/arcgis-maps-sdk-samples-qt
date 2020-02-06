@@ -95,6 +95,9 @@ void DisplaySubtypeFeatureLayer::getSubtypeSublayerAndDefineLabels(const Error& 
   m_busy = false;
   emit busyChanged();
 
+  if (!m_subtypeFeatureLayer)
+    return;
+
   // get the Street Light sublayer and define its labels
   m_subtypeSublayer = m_subtypeFeatureLayer->sublayerWithSubtypeName("Street Light", this);
   m_labelDefinition = LabelDefinition::fromJson(m_labelJson, this);
