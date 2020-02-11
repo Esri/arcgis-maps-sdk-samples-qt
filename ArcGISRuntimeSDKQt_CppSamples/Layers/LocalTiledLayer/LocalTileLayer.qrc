@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/LocalTileLayer">
+        <file alias="sample.json">LocalTileLayer.json</file>        
+        <file>LocalTileLayer.qml</file>
+        <file>LocalTileLayer.h</file>
+        <file>LocalTileLayer.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

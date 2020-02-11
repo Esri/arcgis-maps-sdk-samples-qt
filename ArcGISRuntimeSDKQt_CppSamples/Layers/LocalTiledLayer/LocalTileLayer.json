@@ -1,0 +1,8 @@
+{
+    "source" :  "LocalTileLayer.qml",
+    "otherSourceFiles" :  [
+        "LocalTileLayer.h",
+        "LocalTileLayer.cpp"
+    ],
+    "name" : "Local Tile Layer"
+}

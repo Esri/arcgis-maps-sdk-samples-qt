@@ -44,21 +44,17 @@ Rectangle {
                 }
             }
 
-            initialViewpoint: viewpoint
-
+            initialViewpoint:
+                ViewpointCenter {
+                // Specify the center Point
+                center: Point {
+                    x: -2.725610
+                    y: 55.882436
+                    spatialReference: SpatialReference { wkid: 4326 }
+                }
+                // Specify the scale
+                targetScale: 50000
+            }
         }
     }
-
-    // Create the intial Viewpoint
-        ViewpointCenter {
-            id: viewpoint
-            // Specify the center Point
-            center: Point {
-                x: -2.725610
-                y: 55.882436
-                spatialReference: SpatialReference { wkid: 4326 }
-            }
-            // Specify the scale
-            targetScale: 50000
-        }
 }
