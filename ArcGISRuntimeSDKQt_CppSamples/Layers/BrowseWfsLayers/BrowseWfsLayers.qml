@@ -68,6 +68,7 @@ Item {
                 text: qsTr("Load Selected Layer")
                 Layout.fillWidth: true
                 Layout.margins: 3
+                enabled: layersComboBox.count > 0
                 onClicked: browseWfsLayersSampleModel.createWfsFeatureTable(layersComboBox.currentIndex, !swapAxis);
             }
 
@@ -76,6 +77,7 @@ Item {
                 text: qsTr("Swap Coordinate Order")
                 Layout.margins: 3
                 Layout.fillWidth: true
+                enabled: layersComboBox.count > 0
                 onClicked:{
                     browseWfsLayersSampleModel.createWfsFeatureTable(layersComboBox.currentIndex, swapAxis);
                 }
