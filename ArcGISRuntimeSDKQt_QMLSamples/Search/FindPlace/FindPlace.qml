@@ -45,14 +45,6 @@ Rectangle {
             }
         }
 
-        // declare the location display and set the PositionSource
-        locationDisplay {
-            autoPanMode: Enums.LocationDisplayAutoPanModeRecenter
-            positionSource: PositionSource {
-                active: true
-            }
-        }
-
         // add a graphics overlay to the mapview
         GraphicsOverlay {
             id: graphicsOverlay
