@@ -19,16 +19,31 @@
 #endif // PCH_BUILD
 
 #include "ConfigureSubnetworkTrace.h"
+#include "UtilityTraceOrCondition.h"
+#include "UtilityNetworkAttributeComparison.h"
+#include "UtilityTraceCondition.h"
+#include "UtilityNetworkAttribute.h"
+#include "UtilityNetwork.h"
+#include "UtilityNetworkTypes.h"
 
-#include "Map.h"
+//#include "Map.h"
 #include "MapQuickView.h"
 
 using namespace Esri::ArcGISRuntime;
 
 ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_map(new Map(Basemap::imagery(this), this))
+  QObject(parent)
+//  m_map(new Map(Basemap::imagery(this), this))
 {
+
+  auto unac_1 = new UtilityNetworkAttributeComparison(nullptr, UtilityAttributeComparisonOperator::Equal, 2, this);
+  auto unac_2 = new UtilityNetworkAttributeComparison(nullptr, UtilityAttributeComparisonOperator::Equal, 1, this);
+
+  auto utoc_1 = new UtilityTraceOrCondition(unac_1, unac_2, this);
+
+  auto tmp = static_cast<UtilityNetworkAttributeComparison*>(utoc_1->leftExpression());
+
+  qDebug() << tmp->networkAttribute()->name();
 
 }
 
@@ -37,23 +52,23 @@ ConfigureSubnetworkTrace::~ConfigureSubnetworkTrace() = default;
 void ConfigureSubnetworkTrace::init()
 {
   // Register the map view for QML
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+//  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ConfigureSubnetworkTrace>("Esri.Samples", 1, 0, "ConfigureSubnetworkTraceSample");
 }
 
-MapQuickView* ConfigureSubnetworkTrace::mapView() const
-{
-  return m_mapView;
-}
+//MapQuickView* ConfigureSubnetworkTrace::mapView() const
+//{
+//  return m_mapView;
+//}
 
 // Set the view (created in QML)
-void ConfigureSubnetworkTrace::setMapView(MapQuickView* mapView)
-{
-  if (!mapView || mapView == m_mapView)
-    return;
+//void ConfigureSubnetworkTrace::setMapView(MapQuickView* mapView)
+//{
+//  if (!mapView || mapView == m_mapView)
+//    return;
 
-  m_mapView = mapView;
-  m_mapView->setMap(m_map);
+//  m_mapView = mapView;
+//  m_mapView->setMap(m_map);
 
-  emit mapViewChanged();
-}
+//  emit mapViewChanged();
+//}
