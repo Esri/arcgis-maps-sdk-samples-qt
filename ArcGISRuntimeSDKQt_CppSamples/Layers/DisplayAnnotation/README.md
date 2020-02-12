@@ -22,7 +22,7 @@ Pan and zoom to see names of waters and burns in a small region of Scotland.
 
 ## About the data
 
-Data derived from [Ordnance Survey OpenRivers](https://www.ordnancesurvey.co.uk/business-government/products/open-map-rivers). Contains OS data &copy; Crown copyright and database right 2018.
+Data derived from [Ordnance Survey OpenRivers](https://www.ordnancesurvey.co.uk/business-government/products/open-map-rivers). Contains OS data © Crown copyright and database right 2018.
 
 The annotation layer contains two sublayers of rivers in East Lothian, Scotland, which were set by the author to only be visible within the following scale ranges:
 

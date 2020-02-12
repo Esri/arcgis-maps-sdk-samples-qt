@@ -9,9 +9,9 @@
         "AnnotationLayer",
 		"FeatureLayer",
 		"feature",
-        "web",
-        "service",
-        "layers",
+		"web",
+		"service",
+		"layers",
 		"labels"
     ],
     "redirect_from": "",
