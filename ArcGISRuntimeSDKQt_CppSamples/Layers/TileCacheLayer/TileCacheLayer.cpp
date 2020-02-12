@@ -51,10 +51,7 @@ namespace
 TileCacheLayer::TileCacheLayer(QObject* parent /* = nullptr */):
   QObject(parent)
 {
-  //QString fileLocation("C:/Users/swa10836/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk");
-//  qDebug() << defaultDataPath();
   QString fileLocation = QString("%1/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk").arg(defaultDataPath());
-  qDebug() << fileLocation;
   TileCache* tileCache = new TileCache(fileLocation, this);
   ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);
   Basemap* basemap = new Basemap(tiledLayer, this);
