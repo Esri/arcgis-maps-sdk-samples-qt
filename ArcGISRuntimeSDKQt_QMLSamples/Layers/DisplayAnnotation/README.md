@@ -1,4 +1,4 @@
-# Display Annotation
+# Display annotation
 
 Display annotation from a feature service URL.
 

@@ -30,13 +30,12 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-static const QUrl url("https://services1.arcgis.com/6677msI40mnLuuLr/arcgis/rest/services/East_Lothian_Rivers/FeatureServer/0");
-static const QUrl annotationUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/RiversAnnotation/FeatureServer/0");
+const QUrl url("https://services1.arcgis.com/6677msI40mnLuuLr/arcgis/rest/services/East_Lothian_Rivers/FeatureServer/0");
+const QUrl annotationUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/RiversAnnotation/FeatureServer/0");
 }
 
 DisplayAnnotation::DisplayAnnotation(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_annotationLayer(new AnnotationLayer(annotationUrl, this)),
   m_map(new Map(Basemap::lightGrayCanvas(this), this))
 {
   const Point center(-2.725610, 55.882436, SpatialReference::wgs84());
@@ -46,7 +45,10 @@ DisplayAnnotation::DisplayAnnotation(QObject* parent /* = nullptr */):
   ServiceFeatureTable* riverFeaturetable = new ServiceFeatureTable(url, this);
   FeatureLayer* riverFeatureLayer = new FeatureLayer(riverFeaturetable, this);
   m_map->operationalLayers()->append(riverFeatureLayer);
-  m_map->operationalLayers()->append(m_annotationLayer);
+
+  ServiceFeatureTable* riverAnnotationtable = new ServiceFeatureTable(annotationUrl, this);
+  AnnotationLayer* riverAnnotationLayer = new AnnotationLayer(riverAnnotationtable, this);
+  m_map->operationalLayers()->append(riverAnnotationLayer);
 }
 
 DisplayAnnotation::~DisplayAnnotation() = default;

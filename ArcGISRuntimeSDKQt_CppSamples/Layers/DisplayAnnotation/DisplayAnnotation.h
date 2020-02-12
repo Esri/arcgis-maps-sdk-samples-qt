@@ -21,7 +21,6 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
-class AnnotationLayer;
 class Map;
 class MapQuickView;
 }
@@ -31,26 +30,25 @@ class MapQuickView;
 
 class DisplayAnnotation : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
-    Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
 public:
-    explicit DisplayAnnotation(QObject* parent = nullptr);
-    ~DisplayAnnotation();
+  explicit DisplayAnnotation(QObject* parent = nullptr);
+  ~DisplayAnnotation();
 
-    static void init();
+  static void init();
 
 signals:
-    void mapViewChanged();
+  void mapViewChanged();
 
 private:
-    Esri::ArcGISRuntime::MapQuickView* mapView() const;
-    void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-    Esri::ArcGISRuntime::AnnotationLayer* m_annotationLayer = nullptr;
-    Esri::ArcGISRuntime::Map* m_map = nullptr;
-    Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::Map* m_map = nullptr;
+  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // DISPLAYANNOTATION_H

@@ -20,29 +20,29 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName(QStringLiteral("DisplayAnnotation - QML"));
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QGuiApplication app(argc, argv);
+  app.setApplicationName(QStringLiteral("DisplayAnnotation - QML"));
 
-    // Intialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
-    view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
+  view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
 #ifdef ARCGIS_TOOLKIT_IMPORT_PATH_2
-    view.engine()->addImportPath(ARCGIS_TOOLKIT_IMPORT_PATH_2);
+  view.engine()->addImportPath(ARCGIS_TOOLKIT_IMPORT_PATH_2);
 #endif
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Layers/DisplayAnnotation/DisplayAnnotation.qml"));
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/Layers/DisplayAnnotation/DisplayAnnotation.qml"));
 
-    view.show();
+  view.show();
 
-    return app.exec();
+  return app.exec();
 }

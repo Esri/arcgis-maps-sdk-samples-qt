@@ -1,19 +1,27 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Layers",
+    "description": "Display annotation from a feature service URL.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "AnnotationLayer",
+		"FeatureLayer",
+		"feature",
+        "web",
+        "service",
+        "layers",
+		"labels"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "AnnotationLayer",
+		"FeatureLayer",
+		"ServiceFeatureTable"
     ],
     "snippets": [
         "DisplayAnnotation.qml"
     ],
-    "title": "Display Annotation"
+    "title": "Display annotation"
 }

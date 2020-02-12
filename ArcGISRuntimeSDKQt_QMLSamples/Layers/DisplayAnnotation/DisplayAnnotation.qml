@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.7
 
 Rectangle {
     id: rootRectangle
@@ -32,25 +32,22 @@ Rectangle {
 
             FeatureLayer {
                 ServiceFeatureTable {
-                    id: featureTable
                     url: "https://services1.arcgis.com/6677msI40mnLuuLr/arcgis/rest/services/East_Lothian_Rivers/FeatureServer/0"
                 }
             }
 
             AnnotationLayer {
                 ServiceFeatureTable {
-                    id: annotationFeatureTable
                     url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/RiversAnnotation/FeatureServer/0"
                 }
             }
 
-            initialViewpoint:
-                ViewpointCenter {
+            ViewpointCenter {
                 // Specify the center Point
-                center: Point {
+                Point {
                     x: -2.725610
                     y: 55.882436
-                    spatialReference: SpatialReference { wkid: 4326 }
+                    SpatialReference { wkid: 4326 }
                 }
                 // Specify the scale
                 targetScale: 50000
