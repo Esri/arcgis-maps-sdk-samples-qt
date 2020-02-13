@@ -7,16 +7,16 @@
     ],
     "keywords": [
         "cache",
-		"layers",
-		"offline",
-		"tile"
+        "layers",
+        "offline",
+        "tile"
     ],
     "redirect_from": "",
     "relevant_apis": [
         "ArcGISTiledLayer",
-		"Basemap",
-		"Map",
-		"TileCacheLayer"
+        "Basemap",
+        "Map",
+        "TileCacheLayer"
     ],
     "snippets": [
         "TileCacheLayer.cpp",

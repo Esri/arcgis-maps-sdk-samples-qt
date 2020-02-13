@@ -5,10 +5,10 @@
         "TileCacheLayer.cpp"
     ],
     "name" : "Tile cache layer",
-	"dataItems" : [
-	{
-		"itemId" : "72e703cd01654e7796eb1ae75af1cb53",
-		"path" : "~/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk"
-	}
-	]
+    "dataItems" : [
+    {
+        "itemId" : "72e703cd01654e7796eb1ae75af1cb53",
+        "path" : "~/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk"
+    }
+    ]
 }
