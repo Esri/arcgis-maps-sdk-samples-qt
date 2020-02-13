@@ -16,11 +16,9 @@
         "ArcGISTiledLayer",
 		"Basemap",
 		"Map",
-		"TileCacheLayer"
+		"TileCache"
     ],
     "snippets": [
-        "TileCacheLayer.cpp",
-        "TileCacheLayer.h",
         "TileCacheLayer.qml"
     ],
     "title": "Tile cache layer"

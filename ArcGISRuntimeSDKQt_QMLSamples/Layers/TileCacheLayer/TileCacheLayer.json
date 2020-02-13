@@ -1,0 +1,5 @@
+{
+    "source" :  "TileCacheLayer.qml",
+    "otherSourceFiles" :  [],
+    "name" : "Tile cache layer"
+}

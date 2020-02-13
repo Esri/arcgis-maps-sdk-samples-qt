@@ -10,10 +10,10 @@ Constructing an 'ArcGISTiledLayer' from a local tile package (.tpk & .tpkx) allo
 Launch the app to view the "San Francisco offline tile package" as the basemap.
 
 ## How it works
-1. Construct a `TileCache`, specifying the path to the local tile package.
-2. Construct an `ArcGISTiledLayer` with the tile cache.
-3. Construct a `Basemap` with the tiled layer.
-4. Construct a `Map` with the basemap and set it to a MapView.
+1. Create a `TileCache`, specifying the path to the local tile package.
+2. Create an `ArcGISTiledLayer` with the tile cache.
+3. Create a `Basemap` with the tiled layer.
+4. Create a `Map` with the basemap and set it to a MapView.
 
 ## Relevant API
  - ArcGISTiledLayer
