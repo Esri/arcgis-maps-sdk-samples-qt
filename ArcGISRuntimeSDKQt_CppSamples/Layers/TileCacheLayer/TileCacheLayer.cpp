@@ -56,6 +56,7 @@ TileCacheLayer::TileCacheLayer(QObject* parent /* = nullptr */):
   ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);
   Basemap* basemap = new Basemap(tiledLayer, this);
   m_map = new Map(basemap, this);
+  m_map->setMinScale(110000);
 }
 
 TileCacheLayer::~TileCacheLayer() = default;

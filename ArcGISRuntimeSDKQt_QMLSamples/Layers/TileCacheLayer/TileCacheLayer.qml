@@ -30,6 +30,7 @@ Rectangle {
         anchors.fill: parent
 
         Map {
+            minScale: 110000
             Basemap {
                 ArcGISTiledLayer {
                     tileCache: TileCache {
