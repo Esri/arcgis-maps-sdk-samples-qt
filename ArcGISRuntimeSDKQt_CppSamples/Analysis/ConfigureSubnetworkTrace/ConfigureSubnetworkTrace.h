@@ -28,6 +28,17 @@ class MapQuickView;
 
 #include <QObject>
 
+//#include <QQuickItem>
+
+//class ConfigureSubnetworkTrace : public QQuickItem  //* maybe change at end
+//{
+//  Q_OBJECT
+
+////  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+
+//public:
+//  explicit ConfigureSubnetworkTrace(QQuickItem* parent = nullptr); //* maybe change at end since
+
 class ConfigureSubnetworkTrace : public QObject
 {
   Q_OBJECT

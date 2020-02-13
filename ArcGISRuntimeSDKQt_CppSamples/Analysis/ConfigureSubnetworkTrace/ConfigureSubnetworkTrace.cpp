@@ -29,21 +29,20 @@
 //#include "Map.h"
 #include "MapQuickView.h"
 
+////* maybe change at end
+//ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QQuickItem* parent /* = nullptr */):
+//  QQuickItem(parent)
+////  m_map(new Map(Basemap::imagery(this), this))
+//{
+
+//}
+
 using namespace Esri::ArcGISRuntime;
 
 ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
   QObject(parent)
 //  m_map(new Map(Basemap::imagery(this), this))
 {
-
-  auto unac_1 = new UtilityNetworkAttributeComparison(nullptr, UtilityAttributeComparisonOperator::Equal, 2, this);
-  auto unac_2 = new UtilityNetworkAttributeComparison(nullptr, UtilityAttributeComparisonOperator::Equal, 1, this);
-
-  auto utoc_1 = new UtilityTraceOrCondition(unac_1, unac_2, this);
-
-  auto tmp = static_cast<UtilityNetworkAttributeComparison*>(utoc_1->leftExpression());
-
-  qDebug() << tmp->networkAttribute()->name();
 
 }
 
@@ -53,6 +52,8 @@ void ConfigureSubnetworkTrace::init()
 {
   // Register the map view for QML
 //  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+
+  // MapQuickView.h needed for this and I don't know why
   qmlRegisterType<ConfigureSubnetworkTrace>("Esri.Samples", 1, 0, "ConfigureSubnetworkTraceSample");
 }
 

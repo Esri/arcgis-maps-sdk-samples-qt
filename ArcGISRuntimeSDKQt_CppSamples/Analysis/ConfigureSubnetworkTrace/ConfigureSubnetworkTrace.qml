@@ -86,33 +86,7 @@ Item {
 
                 onModelChanged: currentIndex = 0;
 
-                onCurrentTextChanged: {
-                    if(networkDefinition) {
-                        let workingDomain = networkDefinition.networkAttribute(currentText).domain;
-                        if (workingDomain) {
-                            print("domain: %1".arg(workingDomain.domainType)); //* remove
-                            print(workingDomain.codedValues.length); //* remove
-                            valueSelectionListModel.clear();
-                            for(let i = 0; i < workingDomain.codedValues.length; i++) {
-                                print(workingDomain.codedValues[i].name + " - " + workingDomain.codedValues[i].code); //* remove
-                                valueSelectionListModel.append({value: workingDomain.codedValues[i].name})
-
-                            }
-                            valueSelectionComboBox.model = valueSelectionListModel;
-                            valueSelectionComboBox.currentIndex = 0;
-
-                            inputTextField.visible = false;
-
-
-                        } else {
-                            inputTextField.visible = true;
-                        }
-
-
-
-                        print(networkDefinition.networkAttribute(currentText).name);
-                    }
-                }
+                onCurrentTextChanged:{}
             }
 
             ComboBox {
@@ -225,9 +199,6 @@ Item {
                 text: qsTr("test input text field to comboBox")
 //                onClicked: inputTextField.visible = !inputTextField.visible
                 onClicked: {
-                    let workingNetworkAttribute = networkDefinition.networkAttribute(networkAttributeComboBox.currentText);
-                    print(workingNetworkAttribute.domain.codedValues[valueSelectionComboBox.currentIndex].code);
-                    print(valueSelectionComboBox.currentIndex);
                 }
             }
         }
