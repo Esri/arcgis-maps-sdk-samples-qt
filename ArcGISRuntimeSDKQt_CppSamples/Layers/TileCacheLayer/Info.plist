@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>TileCacheLayer</string>
+	<string>ArcGIS tiled layer (tile cache)</string>
 	<key>CFBundleExecutable</key>
 	<string>TileCacheLayer</string>
 	<key>CFBundleGetInfoString</key>

@@ -1,4 +1,4 @@
-# Tile cache layer
+# ArcGIS tiled layer (tile cache)
 Load an offline copy of a tiled map service as a basemap.
 
 ![](screenshot.png)
