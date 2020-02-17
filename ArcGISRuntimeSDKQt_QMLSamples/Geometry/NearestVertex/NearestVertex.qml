@@ -15,13 +15,14 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Controls 2.4
 import Esri.ArcGISRuntime 100.8
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
-    height: 800
+    height: 600
 
     MapView {
         id: mapView
@@ -64,6 +65,15 @@ Rectangle {
 
         Map {
             BasemapTopographic {}
+
+            ViewpointCenter {
+                Point {
+                    x: -4487263.495911
+                    y: 3699176.480377
+                    SpatialReference {wkid: 102100}
+                }
+                targetScale: 50000000
+            }
         }
     }
 
@@ -84,6 +94,25 @@ Rectangle {
             var nearestCoordinateSymbol = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {style: "SimpleMarkerSymbolStyleDiamond", color: "red", size: 10});
             var nearestCoordinateGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: nearestCoordinateResult.coordinate, symbol: nearestCoordinateSymbol});
             graphicsOverlay.graphics.append(nearestCoordinateGraphic);
+
+            distancesLabel.text = "Vertex distance: " + Math.round(nearestVertexPoint.distance/1000.0) + " km\nCoordinate distance: " + Math.round(nearestCoordinateResult.distance/1000.0) + " km";
+            distancesLabel.font.pointSize = 14;
+            distancesLabel.leftPadding = 5;
+            labelRectangle.visible = "true";
+        }
+    }
+
+    Rectangle
+    {
+        id: labelRectangle
+        width: 350
+        height: 60
+        visible: false
+        color: "white"
+        border.color: "black"
+        border.width: 2
+        Label {
+            id: distancesLabel
         }
     }
 }

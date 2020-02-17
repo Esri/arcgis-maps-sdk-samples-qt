@@ -38,7 +38,9 @@ NearestVertex::NearestVertex(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::topographic(this), this))
 {
-
+  const Point center(-4487263.495911, 3699176.480377, SpatialReference::webMercator());
+  const Viewpoint viewpoint(center, 80000000);
+  m_map->setInitialViewpoint(viewpoint);
 }
 
 NearestVertex::~NearestVertex() = default;
@@ -53,6 +55,16 @@ void NearestVertex::init()
 MapQuickView* NearestVertex::mapView() const
 {
   return m_mapView;
+}
+
+ProximityResult NearestVertex::vertexDistance() const
+{
+  return m_vertexDistance;
+}
+
+ProximityResult NearestVertex::coordinateDistance() const
+{
+  return m_coordinateDistance;
 }
 
 // Set the view (created in QML)
@@ -113,6 +125,9 @@ void NearestVertex::setMapView(MapQuickView* mapView)
     ProximityResult nearestVertexResult = GeometryEngine::nearestVertex(polygonBuilder->toGeometry(), clickedLocation);
     nearestVertexGraphic->setGeometry(nearestVertexResult.coordinate());
     graphicsOverlay->graphics()->append(nearestVertexGraphic);
+
+    int vertexDistance = (int) (nearestVertexResult.distance()/1000.0);
+    int coordinateDistance = (int) (nearestCoordinateResult.distance()/1000.0);
   });
 
   m_mapView->graphicsOverlays()->append(graphicsOverlay);

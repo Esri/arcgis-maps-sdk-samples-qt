@@ -30,5 +30,19 @@ Item {
     NearestVertexSample {
         id: model
         mapView: view
+
+//        Rectangle
+//        {
+//            id: labelRectangle
+//            width: 350
+//            height: 60
+//            visible: false
+//            color: "white"
+//            border.color: "black"
+//            border.width: 2
+//            Label {
+//                id: distancesLabel
+//            }
+//        }
     }
 }
