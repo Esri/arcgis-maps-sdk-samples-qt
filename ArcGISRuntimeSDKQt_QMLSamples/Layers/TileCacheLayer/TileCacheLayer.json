@@ -1,7 +1,7 @@
 {
     "source" :  "TileCacheLayer.qml",
     "otherSourceFiles" :  [],
-    "name" : "Tile cache layer",
+    "name" : "ArcGIS tiled layer (tile cache)",
     "dataItems" : [
     {
         "itemId" : "72e703cd01654e7796eb1ae75af1cb53",

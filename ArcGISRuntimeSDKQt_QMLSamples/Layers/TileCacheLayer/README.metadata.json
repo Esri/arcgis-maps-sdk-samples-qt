@@ -21,5 +21,5 @@
     "snippets": [
         "TileCacheLayer.qml"
     ],
-    "title": "Tile cache layer"
+    "title": "ArcGIS tiled layer (tile cache)"
 }
