@@ -13,11 +13,10 @@
     "redirect_from": "",
     "relevant_apis": [
         "GeometryEngine",
+        "MapView"
         "ProximityResult"
     ],
     "snippets": [
-        "NearestVertex.cpp",
-        "NearestVertex.h",
         "NearestVertex.qml"
     ],
     "title": "Nearest vertex"

@@ -8,11 +8,12 @@ Tap anywhere on the map. An orange marker will show at that tapped location. A b
 
 ## How it works
 1. Get a `Point` to check the nearest vertex against.
-2. Call `GeometryEngine::nearestVertex(inputGeometry, point)`. The returned `ProximityResult` can be used to get the `coordinate` and distance between the vertex and point.
-3. Call `GeometryEngine::nearestCoordinate(inputGeometry, point)`. The returned `ProximityResult` can be used to get the `coordinate` and distance between the coordinate and point.
+2. Call `GeometryEngine.nearestVertex(inputGeometry, point)`. The returned `ProximityResult` can be used to get the `coordinate` and distance between the vertex and point.
+3. Call `GeometryEngine.nearestCoordinate(inputGeometry, point)`. The returned `ProximityResult` can be used to get the `coordinate` and distance between the coordinate and point.
 
 ## Relevant API
  - GeometryEngine
+ - MapView
  - ProximityResult
 
 ## Tags
