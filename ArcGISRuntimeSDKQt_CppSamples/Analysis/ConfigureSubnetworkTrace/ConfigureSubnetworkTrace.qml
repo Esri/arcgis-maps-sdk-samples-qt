@@ -22,7 +22,10 @@ import Esri.Samples 1.0
 
 Item {
 
+    readonly property var comparisonOperatorModel: ["Equal","NotEqual","GreaterThan","GreaterThanEqual","LessThan","LessThanEqual","IncludesTheValues","DoesNotIncludeTheValues","IncludesAny","DoesNotIncludeAny"]
+
     Rectangle {
+        id: rootRectangle
         anchors.fill: parent
         color: "white"
 
@@ -31,15 +34,20 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             CheckBox {
-                text: qsTr("Include barriers:")
+                text: qsTr("Include barriers")
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+//                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.alignment: Qt.AlignRight
+                checkState: Qt.Checked
+                onCheckStateChanged: model.changeIncludeBarriersState();
             }
 
             CheckBox {
-                text: qsTr("Include containers:")
+                text: qsTr("Include containers")
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                checkState: Qt.Checked
+                onCheckStateChanged: model.changeIncludeContainersState();
             }
 
             Shape {
@@ -79,14 +87,13 @@ Item {
             ComboBox {
                 //                model: ["One", "Two", "Three"] // test model
                 id: networkAttributeComboBox
-                model: comparisonSourceListModel ? comparisonSourceListModel : null
+                model: model.attributeListModel ? model.attributeListModel : null
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                textRole: comparisonSourceListModel ? "name" : null
 
                 onModelChanged: currentIndex = 0;
 
-                onCurrentTextChanged:{}
+                onCurrentTextChanged: model.codedValueOrInputText(currentText);
             }
 
             ComboBox {
@@ -102,7 +109,8 @@ Item {
                     //                    model: ["One", "Two", "Three"]  // test model
                     id: valueSelectionComboBox
                     Layout.fillWidth: true
-                    visible: !inputTextField.visible
+                    visible: !model.textFieldVisible
+                    model: model.valueSelectionListModel
 
 //                    onModelChanged: currentIndex = 0;
 //                    onVisibleChanged: {
@@ -114,7 +122,7 @@ Item {
                 TextField {
                     id: inputTextField
                     Layout.fillWidth: true
-                    visible: true
+                    visible: model.textFieldVisible
                 }
             }
 
@@ -123,7 +131,12 @@ Item {
                 Layout.fillWidth: true
                 onClicked: {
 //                    myModel.append({condition: "`Operation Device Status` Equal `Open` %1".arg(inc++)});
-                    addCondition();
+
+                    if (model.textFieldVisible) {
+                        model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, parseFloat(inputTextField.text, 10));
+                    } else {
+                        model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, valueSelectionComboBox.currentIndex);
+                    }
                     print("appended");
                 }
             }
@@ -139,46 +152,64 @@ Item {
             //                    width:  1
             //                }
 
-            ListView {
-                id: groupingView
+            ScrollView {
                 Layout.fillWidth: true
-                Layout.minimumHeight: 150
-                //                    Layout.fillHeight: true
-                //                    Layout.fillWidth: true
-
-                //                anchors {
-                //                    fill: parent
-                //                    margins: 5
-                //                }
-                //                highlight: highlightRectangle
-                //                highlightResizeVelocity: 1000000
-                //                highlightMoveVelocity: 1000000
-
+                Layout.minimumHeight: 50
+                Layout.maximumHeight: .2 * rootRectangle.height
                 clip: true
-                model: myModel
-                delegate: Item {
-                    width: parent.width
-                    height: 25
+                Row {
+                    anchors.fill: parent
 
-                    Row {
-                        anchors.verticalCenter: parent.verticalCenter
-                        spacing: 10
-                        Text {
-                            text: "(%1)".arg(condition)
-                            font.pixelSize: 12
-                        }
+
+
+                    Text {
+                        text: model.expressionBuilder
                     }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: groupingView.currentIndex = index;
-                    }
-                }
-
-                onCurrentIndexChanged: {
-                    print("currentIndex: %1".arg(currentIndex));
                 }
             }
+
+
+
+//            ListView {
+//                id: groupingView
+//                Layout.fillWidth: true
+//                Layout.minimumHeight: 150
+//                //                    Layout.fillHeight: true
+//                //                    Layout.fillWidth: true
+
+//                //                anchors {
+//                //                    fill: parent
+//                //                    margins: 5
+//                //                }
+//                //                highlight: highlightRectangle
+//                //                highlightResizeVelocity: 1000000
+//                //                highlightMoveVelocity: 1000000
+
+//                clip: true
+//                model: model.conditionBarrierExpressionListModel
+//                delegate: Item {
+//                    width: parent.width
+//                    height: 25
+
+//                    Row {
+//                        anchors.verticalCenter: parent.verticalCenter
+//                        spacing: 10
+//                        Text {
+//                            text: "(%1)".arg(condition)
+//                            font.pixelSize: 12
+//                        }
+//                    }
+
+//                    MouseArea {
+//                        anchors.fill: parent
+//                        onClicked: groupingView.currentIndex = index;
+//                    }
+//                }
+
+//                onCurrentIndexChanged: {
+//                    print("currentIndex: %1".arg(currentIndex));
+//                }
+//            }
 
             //            }
 
@@ -186,24 +217,38 @@ Item {
                 Button {
                     text: qsTr("Trace")
                     Layout.fillWidth: true
+                    onClicked: model.trace();
                 }
 
                 Button {
                     text: qsTr("Reset")
                     Layout.fillWidth: true
+                    onClicked: model.reset();
                 }
             }
 
-            Button {
-                id: testButton
-                text: qsTr("test input text field to comboBox")
-//                onClicked: inputTextField.visible = !inputTextField.visible
-                onClicked: {
-                }
-            }
+//            Button {
+//                id: testButton
+//                text: qsTr("test input text field to comboBox")
+////                onClicked: inputTextField.visible = !inputTextField.visible
+//                onClicked: {
+//                }
+//            }
         }
     }
 
+    Dialog {
+        modal: true
+        standardButtons: Dialog.Ok
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+        visible: model.dialogVisible
+
+        Text {
+            text: model.dialogText
+            anchors.centerIn: parent
+        }
+    }
     // Declare the C++ instance which creates the scene etc. and supply the view
     ConfigureSubnetworkTraceSample {
         id: model

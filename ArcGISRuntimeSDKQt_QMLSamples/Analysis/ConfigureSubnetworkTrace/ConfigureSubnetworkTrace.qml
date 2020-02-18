@@ -111,8 +111,6 @@ Rectangle {
 
             initialExpression = traceConfiguration.traversability.barriers;
 
-            var traceConditionType = initialExpression.traceConditionType;
-
             traceConfiguration.traversability.scope = Enums.UtilityTraversabilityScopeJunctions;
 
             let expression = expressionToString(initialExpression);
@@ -149,7 +147,7 @@ Rectangle {
             }
         case Enums.UtilityTraceConditionTypUtilityCategoryComparisone:
             print("UtilityTraceConditionTypeUtilityCategoryComparisone"); //* remove
-            return "`%1` %2".arg(networkAttribute.name).arg(comparisonOperatorToString(initialExpression.comparisonOperator));
+            return "`%1` %2".arg(networkAttribute.name).arg(comparisonOperatorToString(initialExpression.comparisonOperator)); //* wrong
         case Enums.UtilityTraceConditionTypeUtilityTraceAndCondition:
             print("UtilityTraceConditionTypeUtilityTraceAndCondition"); //* remove
             return "`%1` AND\n `%3`".arg(expressionToString(initialExpression.leftExpression)).arg(initialExpression.rightExpression);
@@ -254,15 +252,17 @@ Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             CheckBox {
-                text: qsTr("Include barriers:")
+                text: qsTr("Include barriers")
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                checkState: Qt.Checked
             }
 
             CheckBox {
-                text: qsTr("Include containers:")
+                text: qsTr("Include containers")
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                checkState: Qt.Checked
             }
 
             Shape {
