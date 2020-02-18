@@ -41,6 +41,7 @@ class UtilityTraceConfiguration;
 #include <QStringList>
 #include <QUuid>
 #include "UtilityNetworkAttributeComparison.h"
+#include "UtilityNetworkAttribute.h"
 
 //#include <QQuickItem>
 
@@ -73,7 +74,7 @@ public:
   static void init();
 
   Q_INVOKABLE void codedValueOrInputText(const QString& currentText);
-  Q_INVOKABLE void addCondition(const QString& selectedAttribute, int selectedOperator, double selectedValue);
+  Q_INVOKABLE void addCondition(const QString& selectedAttribute, int selectedOperator, QVariant selectedValue);
   Q_INVOKABLE void changeIncludeBarriersState();
   Q_INVOKABLE void changeIncludeContainersState();
   Q_INVOKABLE void reset();
@@ -93,6 +94,8 @@ private slots:
   void onTraceCompleted();
 
 private:
+
+  QVariant convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::UtilityNetworkAttributeDataType& dataType);
 
   QString expressionToString(Esri::ArcGISRuntime::UtilityTraceConditionalExpression* expression);
   QString comparisonOperatorToString(const Esri::ArcGISRuntime::UtilityAttributeComparisonOperator& comparisonOperator);

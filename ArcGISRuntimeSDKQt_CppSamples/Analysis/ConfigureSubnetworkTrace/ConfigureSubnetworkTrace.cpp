@@ -22,7 +22,7 @@
 #include "UtilityTraceOrCondition.h"
 #include "UtilityNetworkAttributeComparison.h"
 #include "UtilityTraceCondition.h"
-#include "UtilityNetworkAttribute.h"
+//#include "UtilityNetworkAttribute.h"
 #include "UtilityNetwork.h"
 #include "UtilityNetworkTypes.h"
 #include "UtilityTraceConfiguration.h"
@@ -227,7 +227,27 @@ QString ConfigureSubnetworkTrace::comparisonOperatorToString(const UtilityAttrib
   }
 }
 
-
+QVariant ConfigureSubnetworkTrace::convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::UtilityNetworkAttributeDataType& dataType)
+{
+  switch (dataType) {
+    case UtilityNetworkAttributeDataType::Integer:
+    {
+      return value.toInt();
+    }
+    case UtilityNetworkAttributeDataType::Float:
+    {
+      return value.toFloat();
+    }
+    case UtilityNetworkAttributeDataType::Double:
+    {
+      return value.toDouble();
+    }
+    case UtilityNetworkAttributeDataType::Boolean:
+    {
+      return value.toBool();
+    }
+  }
+}
 
 void ConfigureSubnetworkTrace::codedValueOrInputText(const QString& currentText)
 {
@@ -258,7 +278,7 @@ void ConfigureSubnetworkTrace::codedValueOrInputText(const QString& currentText)
   }
 }
 
-void ConfigureSubnetworkTrace::addCondition(const QString &selectedAttribute, int selectedOperator, double selectedValue)
+void ConfigureSubnetworkTrace::addCondition(const QString &selectedAttribute, int selectedOperator, QVariant selectedValue)
 {
   // is this even needed?
   if (!m_traceConfiguration)
@@ -272,8 +292,41 @@ void ConfigureSubnetworkTrace::addCondition(const QString &selectedAttribute, in
 
   qDebug() << "selectedNetAtt-Name  - " << selectedNetworkAttribute->name();
 
+  QVariant convertedSelectedValue = convertToDataType(selectedValue, selectedNetworkAttribute->dataType());
+
+  UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
+
+  UtilityTraceConditionalExpression* expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, convertedSelectedValue, this);
+
+
+
+//  switch (selectedNetworkAttribute->dataType()) {
+//    case UtilityNetworkAttributeDataType::Integer:
+//    {
+//      expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, static_cast<int>(selectedValue), this);
+//      break;
+//    }
+//    case UtilityNetworkAttributeDataType::Float:
+//    {
+//      expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, static_cast<float>(selectedValue), this);
+//      break;
+//    }
+//    case UtilityNetworkAttributeDataType::Double:
+//    {
+//      expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, static_cast<double>(selectedValue), this);
+//      break;
+//    }
+//    case UtilityNetworkAttributeDataType::Boolean:
+//    {
+//      expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, static_cast<bool>(selectedValue), this);
+//      break;
+//    }
+//  }
+
 //  if ( static_cast<int>(selectedNetworkAttribute->dataType()) != 0 )
 //  {
+
+//  }
 //    qDebug() << "type - " << static_cast<int>(selectedNetworkAttribute->dataType());
 //    double temp = selectedValue;
 //    UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
@@ -285,9 +338,16 @@ void ConfigureSubnetworkTrace::addCondition(const QString &selectedAttribute, in
 //  }
   qDebug() << "data type - " << static_cast<int>(selectedNetworkAttribute->dataType());
 
-  UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
+//  UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
 
-  UtilityTraceConditionalExpression* expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, selectedValue, this);
+//  UtilityTraceConditionalExpression* expression;
+
+//  if (selectedNetworkAttribute->dataType() == UtilityNetworkAttributeDataType::Integer)
+//  {
+//    expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, static_cast<int>(selectedValue), this);
+//  }
+
+//  UtilityTraceConditionalExpression* expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, selectedValue, this);
 
   qDebug() << expressionToString(expression);
 

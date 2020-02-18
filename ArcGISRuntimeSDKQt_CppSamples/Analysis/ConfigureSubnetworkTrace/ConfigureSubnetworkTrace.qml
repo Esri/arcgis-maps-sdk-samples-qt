@@ -133,7 +133,7 @@ Item {
 //                    myModel.append({condition: "`Operation Device Status` Equal `Open` %1".arg(inc++)});
 
                     if (model.textFieldVisible) {
-                        model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, parseFloat(inputTextField.text, 10));
+                        model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, inputTextField.text);
                     } else {
                         model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, valueSelectionComboBox.currentIndex);
                     }
