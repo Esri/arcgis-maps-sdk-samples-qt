@@ -52,13 +52,6 @@ Rectangle {
                 }
             }
         }
-
-        // set the location display's position source
-        locationDisplay {
-            positionSource: PositionSource {
-            }
-            compass: Compass {}
-        }
     }
 
     Rectangle {
