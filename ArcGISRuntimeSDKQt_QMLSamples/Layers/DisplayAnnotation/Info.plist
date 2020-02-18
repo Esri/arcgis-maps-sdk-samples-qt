@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>DisplayAnnotation</string>
+	<string>Display annotation</string>
 	<key>CFBundleExecutable</key>
 	<string>DisplayAnnotation</string>
 	<key>CFBundleGetInfoString</key>

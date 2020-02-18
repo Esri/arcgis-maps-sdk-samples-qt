@@ -12,7 +12,7 @@ Pan and zoom to see names of waters and burns in a small region of Scotland.
 
 ## How it works
 1. Create a `ServiceFeatureTable` with a URL.
-2. Create a `FeatureLayer` from the feature table and add it to the map.
+2. Create an `AnnotationLayer` from the feature table and add it to the map.
 
 ## Relevant API
  - AnnotationLayer

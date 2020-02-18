@@ -7,18 +7,18 @@
     ],
     "keywords": [
         "AnnotationLayer",
-		"FeatureLayer",
-		"feature",
-		"web",
-		"service",
-		"layers",
-		"labels"
+        "FeatureLayer",
+        "feature",
+        "web",
+        "service",
+        "layers",
+        "labels"
     ],
     "redirect_from": "",
     "relevant_apis": [
         "AnnotationLayer",
-		"FeatureLayer",
-		"ServiceFeatureTable"
+        "FeatureLayer",
+        "ServiceFeatureTable"
     ],
     "snippets": [
         "DisplayAnnotation.qml"
