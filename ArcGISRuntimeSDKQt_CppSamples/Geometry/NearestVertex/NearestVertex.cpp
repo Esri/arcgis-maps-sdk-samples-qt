@@ -106,20 +106,24 @@ void NearestVertex::setMapView(MapQuickView* mapView)
   Graphic* nearestVertexGraphic = new Graphic(this);
   nearestVertexGraphic->setSymbol(nearestVertexSymbol);
 
+  graphicsOverlay->graphics()->append(clickedLocationGraphic);
+  graphicsOverlay->graphics()->append(nearestCoordinateGraphic);
+  graphicsOverlay->graphics()->append(nearestVertexGraphic);
+
   // add graphic to clicked location
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this, polygonBuilder, graphicsOverlay, clickedLocationGraphic, nearestCoordinateGraphic, nearestVertexGraphic](QMouseEvent& e)
   {
     Point clickedLocation = m_mapView->screenToLocation(e.x(), e.y());
     clickedLocationGraphic->setGeometry(clickedLocation);
-    graphicsOverlay->graphics()->append(clickedLocationGraphic);
+//    graphicsOverlay->graphics()->append(clickedLocationGraphic);
 
     ProximityResult nearestCoordinateResult = GeometryEngine::nearestCoordinate(polygonBuilder->toGeometry(), clickedLocation);
     nearestCoordinateGraphic->setGeometry(nearestCoordinateResult.coordinate());
-    graphicsOverlay->graphics()->append(nearestCoordinateGraphic);
+//    graphicsOverlay->graphics()->append(nearestCoordinateGraphic);
 
     ProximityResult nearestVertexResult = GeometryEngine::nearestVertex(polygonBuilder->toGeometry(), clickedLocation);
     nearestVertexGraphic->setGeometry(nearestVertexResult.coordinate());
-    graphicsOverlay->graphics()->append(nearestVertexGraphic);
+//    graphicsOverlay->graphics()->append(nearestVertexGraphic);
 
     // get distance in kilometers
     m_vertexDistance = static_cast<int>(nearestVertexResult.distance()/1000.0);
