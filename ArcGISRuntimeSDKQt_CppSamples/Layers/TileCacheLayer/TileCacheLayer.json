@@ -1,0 +1,14 @@
+{
+    "source" :  "TileCacheLayer.qml",
+    "otherSourceFiles" :  [
+        "TileCacheLayer.h",
+        "TileCacheLayer.cpp"
+    ],
+    "name" : "ArcGIS tiled layer (tile cache)",
+    "dataItems" : [
+    {
+        "itemId" : "72e703cd01654e7796eb1ae75af1cb53",
+        "path" : "~/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk"
+    }
+    ]
+}
