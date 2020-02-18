@@ -55,8 +55,8 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  double m_vertexDistance = 0;
-  double m_coordinateDistance = 0;
+  int m_vertexDistance = 0;
+  int m_coordinateDistance = 0;
 };
 
 #endif // NEARESTVERTEX_H

@@ -30,8 +30,6 @@
 #include "SimpleLineSymbol.h"
 #include "SimpleMarkerSymbol.h"
 
-#include <QLabel>
-
 using namespace Esri::ArcGISRuntime;
 
 NearestVertex::NearestVertex(QObject* parent /* = nullptr */):
@@ -79,6 +77,7 @@ void NearestVertex::setMapView(MapQuickView* mapView)
   // create a graphics overlay to show the polygon, clicked location, and nearest vertex
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
 
+  // Points for polygon in the middle of Atlantic Ocean
   QList<Point> points = {
     Point(-5991501.677830, 5599295.131468),
     Point(-6928550.398185, 2087936.739807),
@@ -89,16 +88,16 @@ void NearestVertex::setMapView(MapQuickView* mapView)
 
   PolygonBuilder* polygonBuilder = new PolygonBuilder(SpatialReference::webMercator(), this);
   polygonBuilder->addPoints(points);
-  SimpleLineSymbol* polygonOutlineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, QColor(0xFF00FF00), 2, this);
-  SimpleFillSymbol* polygonFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::ForwardDiagonal, QColor(0xFF00FF00), polygonOutlineSymbol, this);
+  SimpleLineSymbol* polygonOutlineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::green, 2, this);
+  SimpleFillSymbol* polygonFillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::ForwardDiagonal, Qt::green, polygonOutlineSymbol, this);
   Graphic* polygonGraphic = new Graphic(polygonBuilder->toGeometry(), polygonFillSymbol, this);
 
   graphicsOverlay->graphics()->append(polygonGraphic);
 
   // create graphics for the clicked location, nearest coordinate, and nearest vertex markers
-  SimpleMarkerSymbol* clickedLocationSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, QColor(0xFFFFA500), 15, this);
-  SimpleMarkerSymbol* nearestCoordinateSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, QColor(0xFFFF0000), 10, this);
-  SimpleMarkerSymbol* nearestVertexSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, QColor(0xFF0000FF), 15, this);
+  SimpleMarkerSymbol* clickedLocationSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, Qt::yellow, 15, this);
+  SimpleMarkerSymbol* nearestCoordinateSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, Qt::red, 10, this);
+  SimpleMarkerSymbol* nearestVertexSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::blue, 15, this);
 
   Graphic* clickedLocationGraphic = new Graphic(this);
   clickedLocationGraphic->setSymbol(clickedLocationSymbol);
