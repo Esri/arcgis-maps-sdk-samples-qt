@@ -57,12 +57,12 @@ MapQuickView* NearestVertex::mapView() const
   return m_mapView;
 }
 
-ProximityResult NearestVertex::vertexDistance() const
+double NearestVertex::vertexDistance() const
 {
   return m_vertexDistance;
 }
 
-ProximityResult NearestVertex::coordinateDistance() const
+double NearestVertex::coordinateDistance() const
 {
   return m_coordinateDistance;
 }
@@ -75,9 +75,6 @@ void NearestVertex::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-
-//  QLabel* label = new QLabel();
-//  label->setText("hello");
 
   // create a graphics overlay to show the polygon, clicked location, and nearest vertex
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
@@ -110,7 +107,6 @@ void NearestVertex::setMapView(MapQuickView* mapView)
   Graphic* nearestVertexGraphic = new Graphic(this);
   nearestVertexGraphic->setSymbol(nearestVertexSymbol);
 
-
   // add graphic to clicked location
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this, polygonBuilder, graphicsOverlay, clickedLocationGraphic, nearestCoordinateGraphic, nearestVertexGraphic](QMouseEvent& e)
   {
@@ -126,8 +122,12 @@ void NearestVertex::setMapView(MapQuickView* mapView)
     nearestVertexGraphic->setGeometry(nearestVertexResult.coordinate());
     graphicsOverlay->graphics()->append(nearestVertexGraphic);
 
-    int vertexDistance = (int) (nearestVertexResult.distance()/1000.0);
-    int coordinateDistance = (int) (nearestCoordinateResult.distance()/1000.0);
+    // get distance in kilometers
+    m_vertexDistance = static_cast<int>(nearestVertexResult.distance()/1000.0);
+    m_coordinateDistance = static_cast<int>(nearestCoordinateResult.distance()/1000.0);
+
+    emit vertexDistanceCalculated();
+    emit coordinateDistanceCalculated();
   });
 
   m_mapView->graphicsOverlays()->append(graphicsOverlay);

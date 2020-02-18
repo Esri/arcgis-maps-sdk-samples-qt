@@ -4,7 +4,7 @@ Get the vertex of a geometry closest to a point.
 ![](screenshot.png)
 
 ## How to use the sample
-Tap anywhere on the map. An orange marker will show at that tapped location. A blue marker will show the polygon's nearest vertex to the tapped location. A red marker will show the nearest coordinate within the polygon geometry.
+Tap anywhere on the map. An orange marker will show at that tapped location. A blue marker will show the polygon's nearest vertex to the tapped location. A red marker will show the nearest coordinate within the polygon geometry. A label will display the distance from the tapped location to the nearest vertex and nearest coordinate.
 
 ## How it works
 1. Get a `Point` to check the nearest vertex against.

@@ -17,15 +17,12 @@
 #ifndef NEARESTVERTEX_H
 #define NEARESTVERTEX_H
 
-#include "GeometryEngine.h"
-
 namespace Esri
 {
 namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
-class ProximityResult;
 }
 }
 
@@ -36,8 +33,8 @@ class NearestVertex : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(Esri::ArcGISRuntime::ProximityResult vertexResult READ vertexDistance NOTIFY vertexDistanceCalculated)
-  Q_PROPERTY(Esri::ArcGISRuntime::ProximityResult coordinateDistance READ coordinateDistance NOTIFY coordinateDistanceCalculated )
+  Q_PROPERTY(int vertexDistance READ vertexDistance NOTIFY vertexDistanceCalculated)
+  Q_PROPERTY(int coordinateDistance READ coordinateDistance NOTIFY coordinateDistanceCalculated)
 
 public:
   explicit NearestVertex(QObject* parent = nullptr);
@@ -47,19 +44,19 @@ public:
 
 signals:
   void mapViewChanged();
-  void vertexDistanceCalculated(Esri::ArcGISRuntime::ProximityResult vertexDistance);
+  void vertexDistanceCalculated();
   void coordinateDistanceCalculated();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
-  Esri::ArcGISRuntime::ProximityResult vertexDistance() const;
-  Esri::ArcGISRuntime::ProximityResult coordinateDistance() const;
+  double vertexDistance() const;
+  double coordinateDistance() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::ProximityResult m_vertexResult;
-  Esri::ArcGISRuntime::ProximityResult m_coordinateDistance;
+  double m_vertexDistance = 0;
+  double m_coordinateDistance = 0;
 };
 
 #endif // NEARESTVERTEX_H

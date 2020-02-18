@@ -30,19 +30,21 @@ Item {
     NearestVertexSample {
         id: model
         mapView: view
+    }
 
-//        Rectangle
-//        {
-//            id: labelRectangle
-//            width: 350
-//            height: 60
-//            visible: false
-//            color: "white"
-//            border.color: "black"
-//            border.width: 2
-//            Label {
-//                id: distancesLabel
-//            }
-//        }
+    // Rectangle to display distances
+    Rectangle
+    {
+        width: 325
+        height: 70
+        color: "white"
+        border.color: "black"
+        border.width: 2
+        Label {
+            id: distancesLabel
+            text: "Vertex distance: " + model.vertexDistance + " km\nCoordinate distance: " + model.coordinateDistance + " km";
+            font.pointSize: 14
+            padding: 5
+        }
     }
 }
