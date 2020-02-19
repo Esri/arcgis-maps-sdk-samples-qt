@@ -74,6 +74,14 @@ void NearestVertex::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  // shows the polygon, clicked location, and nearest coordinate and vertex on polygon
+  setupGraphics();
+
+  emit mapViewChanged();
+}
+
+void NearestVertex::setupGraphics()
+{
   // create a graphics overlay to show the polygon, clicked location, and nearest vertex
   GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
 
@@ -131,6 +139,4 @@ void NearestVertex::setMapView(MapQuickView* mapView)
   });
 
   m_mapView->graphicsOverlays()->append(graphicsOverlay);
-
-  emit mapViewChanged();
 }

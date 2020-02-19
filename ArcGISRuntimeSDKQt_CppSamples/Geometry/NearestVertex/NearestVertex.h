@@ -52,6 +52,7 @@ private:
   double vertexDistance() const;
   double coordinateDistance() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  void setupGraphics();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
