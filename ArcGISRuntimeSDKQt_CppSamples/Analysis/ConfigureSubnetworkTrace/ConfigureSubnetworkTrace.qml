@@ -158,7 +158,7 @@ Item {
             ScrollView {
                 Layout.fillWidth: true
                 Layout.minimumHeight: 50
-                Layout.maximumHeight: .2 * rootRectangle.height
+                Layout.maximumHeight: .15 * rootRectangle.height
                 clip: true
                 Row {
                     anchors.fill: parent
