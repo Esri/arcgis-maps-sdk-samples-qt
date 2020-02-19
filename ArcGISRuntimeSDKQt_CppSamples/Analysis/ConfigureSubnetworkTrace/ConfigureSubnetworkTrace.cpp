@@ -21,6 +21,7 @@
 #include "ConfigureSubnetworkTrace.h"
 
 #include "CodedValueDomain.h"
+#include "TaskWatcher.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
 #include "UtilityCategory.h"
@@ -44,7 +45,7 @@
 
 
 //#include "Map.h"
-#include "MapQuickView.h"
+//#include "MapQuickView.h"
 
 ////* maybe change at end
 //ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QQuickItem* parent /* = nullptr */):
@@ -56,9 +57,11 @@
 
 using namespace Esri::ArcGISRuntime;
 
-ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
-  QObject(parent)
+//ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
+//  QObject(parent)
 //  m_map(new Map(Basemap::imagery(this), this))
+ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QQuickItem* parent /* = nullptr */):
+  QQuickItem(parent)
 {
   m_utilityNetwork = new UtilityNetwork(m_featureLayerUrl, this);
 
@@ -72,7 +75,6 @@ ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr 
 
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, [this](Error e)
   {
-
     m_networkDefinition = m_utilityNetwork->definition();
 
     for (UtilityNetworkAttribute* networkAttribute : m_networkDefinition->networkAttributes())
@@ -87,7 +89,6 @@ ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr 
     UtilityNetworkSource* networkSource = m_networkDefinition->networkSource(m_deviceTableName);
     UtilityAssetGroup* assetGroup = networkSource->assetGroup(m_assetGroupName);
     UtilityAssetType* assetType = assetGroup->assetType(m_assetTypeName);
-
 
     m_utilityElementStartingLocation = m_utilityNetwork->createElementWithAssetType(assetType, m_gloabId);
 
@@ -177,7 +178,6 @@ QString ConfigureSubnetworkTrace::expressionToString(UtilityTraceConditionalExpr
 
       UtilityTraceAndCondition* andExpression = static_cast<UtilityTraceAndCondition*>(expression);
 
-      //      return QString("'%1' AND\n '%2'").arg(expressionToString(andExpression->leftExpression()), expressionToString(andExpression->rightExpression()));
       return QString("(%1) AND\n (%2)").arg(expressionToString(andExpression->leftExpression()), expressionToString(andExpression->rightExpression()));
     }
     case UtilityTraceConditionType::UtilityTraceOrCondition:

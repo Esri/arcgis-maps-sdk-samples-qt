@@ -36,7 +36,7 @@ Item {
             CheckBox {
                 text: qsTr("Include barriers")
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignRight
+//                Layout.alignment: Qt.AlignRight
                 checkState: Qt.Checked
                 onCheckStateChanged: model.changeIncludeBarriersState();
             }
@@ -44,7 +44,7 @@ Item {
             CheckBox {
                 text: qsTr("Include containers")
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+//                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 checkState: Qt.Checked
                 onCheckStateChanged: model.changeIncludeContainersState();
             }

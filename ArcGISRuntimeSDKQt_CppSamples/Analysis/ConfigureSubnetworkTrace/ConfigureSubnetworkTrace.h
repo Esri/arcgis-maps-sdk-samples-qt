@@ -43,20 +43,20 @@ class UtilityTraceConfiguration;
 #include "UtilityNetworkAttributeComparison.h"
 #include "UtilityNetworkAttribute.h"
 
-//#include <QQuickItem>
+#include <QQuickItem>
 
-//class ConfigureSubnetworkTrace : public QQuickItem  //* maybe change at end
-//{
-//  Q_OBJECT
+class ConfigureSubnetworkTrace : public QQuickItem  //* maybe change at end
+{
+  Q_OBJECT
 
 ////  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
-//public:
-//  explicit ConfigureSubnetworkTrace(QQuickItem* parent = nullptr); //* maybe change at end since
+public:
+  explicit ConfigureSubnetworkTrace(QQuickItem* parent = nullptr); //* maybe change at end since
 
-class ConfigureSubnetworkTrace : public QObject
-{
-  Q_OBJECT
+//class ConfigureSubnetworkTrace : public QObject
+//{
+//  Q_OBJECT
 
   //  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QStringList attributeListModel MEMBER m_attributeListModel NOTIFY attributeListModelChanged)
@@ -67,8 +67,8 @@ class ConfigureSubnetworkTrace : public QObject
   Q_PROPERTY(bool dialogVisible MEMBER m_dialogVisible NOTIFY dialogVisibleChanged)
   Q_PROPERTY(QString dialogText MEMBER m_dialogText NOTIFY dialogTextChanged)
 
-public:
-  explicit ConfigureSubnetworkTrace(QObject* parent = nullptr);
+//public:
+//  explicit ConfigureSubnetworkTrace(QObject* parent = nullptr);
   ~ConfigureSubnetworkTrace();
 
   static void init();
@@ -99,7 +99,6 @@ private:
 
   QString expressionToString(Esri::ArcGISRuntime::UtilityTraceConditionalExpression* expression);
   QString comparisonOperatorToString(const Esri::ArcGISRuntime::UtilityAttributeComparisonOperator& comparisonOperator);
-//  Esri::ArcGISRuntime::UtilityAttributeComparisonOperator
 
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
