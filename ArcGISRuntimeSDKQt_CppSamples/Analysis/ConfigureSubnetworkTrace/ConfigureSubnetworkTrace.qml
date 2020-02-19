@@ -36,17 +36,19 @@ Item {
             CheckBox {
                 text: qsTr("Include barriers")
                 Layout.fillWidth: true
+                enabled: !model.busy
 //                Layout.alignment: Qt.AlignRight
                 checkState: Qt.Checked
-                onCheckStateChanged: model.changeIncludeBarriersState();
+                onCheckStateChanged: model.changeIncludeBarriersState(checked);
             }
 
             CheckBox {
                 text: qsTr("Include containers")
                 Layout.fillWidth: true
+                enabled: !model.busy
 //                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 checkState: Qt.Checked
-                onCheckStateChanged: model.changeIncludeContainersState();
+                onCheckStateChanged: model.changeIncludeContainersState(checked);
             }
 
             Shape {
@@ -64,6 +66,7 @@ Item {
                 text: qsTr("Example barrier condition for this data. 'Transformer Load' Equal '15'")
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                enabled: !model.busy
             }
 
             Shape {
@@ -88,6 +91,7 @@ Item {
                 model: model.attributeListModel ? model.attributeListModel : null
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                enabled: !model.busy
 
                 onModelChanged: currentIndex = 0;
 
@@ -99,9 +103,11 @@ Item {
                 model: comparisonOperatorModel
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                enabled: !model.busy
             }
 
             RowLayout {
+                enabled: !model.busy
                 ComboBox {
                     id: valueSelectionComboBox
                     Layout.fillWidth: true
@@ -119,6 +125,7 @@ Item {
             Button {
                 text: qsTr("Add")
                 Layout.fillWidth: true
+                enabled: !model.busy
                 onClicked: {
                     if (model.textFieldVisible) {
                         model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, inputTextField.text);
@@ -201,6 +208,7 @@ Item {
             //            }
 
             RowLayout {
+                enabled: !model.busy
                 Button {
                     text: qsTr("Trace")
                     Layout.fillWidth: true
@@ -236,6 +244,12 @@ Item {
             anchors.centerIn: parent
         }
     }
+
+    BusyIndicator {
+        anchors.centerIn: parent
+        visible: model.busy
+    }
+
     // Declare the C++ instance which creates the scene etc. and supply the view
     ConfigureSubnetworkTraceSample {
         id: model

@@ -21,6 +21,7 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Error;
 class Map;
 class MapQuickView;
 class UtilityTraceCondition;
@@ -59,13 +60,14 @@ public:
 //  Q_OBJECT
 
   //  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QStringList attributeListModel MEMBER m_attributeListModel NOTIFY attributeListModelChanged)
-  Q_PROPERTY(QStringList valueSelectionListModel MEMBER m_valueSelectionListModel NOTIFY valueSelectionListModelChanged)
-  Q_PROPERTY(QStringList conditionBarrierExpressionListModel MEMBER m_conditionBarrierExpressionListModel NOTIFY conditionBarrierExpressionChanged)
-  Q_PROPERTY(bool textFieldVisible MEMBER m_textFieldVisible NOTIFY textFieldVisibleChanged)
-  Q_PROPERTY(QString expressionBuilder MEMBER m_expressionBuilder NOTIFY expressionBuilderChanged)
+  Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
   Q_PROPERTY(bool dialogVisible MEMBER m_dialogVisible NOTIFY dialogVisibleChanged)
+  Q_PROPERTY(bool textFieldVisible MEMBER m_textFieldVisible NOTIFY textFieldVisibleChanged)
   Q_PROPERTY(QString dialogText MEMBER m_dialogText NOTIFY dialogTextChanged)
+  Q_PROPERTY(QString expressionBuilder MEMBER m_expressionBuilder NOTIFY expressionBuilderChanged)
+  Q_PROPERTY(QStringList attributeListModel MEMBER m_attributeListModel NOTIFY attributeListModelChanged)
+  Q_PROPERTY(QStringList conditionBarrierExpressionListModel MEMBER m_conditionBarrierExpressionListModel NOTIFY conditionBarrierExpressionChanged)
+  Q_PROPERTY(QStringList valueSelectionListModel MEMBER m_valueSelectionListModel NOTIFY valueSelectionListModelChanged)
 
 //public:
 //  explicit ConfigureSubnetworkTrace(QObject* parent = nullptr);
@@ -73,63 +75,57 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void addCondition(const QString& selectedAttribute, int selectedOperator, const QVariant& selectedValue);
+  Q_INVOKABLE void changeIncludeBarriersState(bool includeBarriers);
+  Q_INVOKABLE void changeIncludeContainersState(bool includeContainers);
   Q_INVOKABLE void codedValueOrInputText(const QString& currentText);
-  Q_INVOKABLE void addCondition(const QString& selectedAttribute, int selectedOperator, QVariant selectedValue);
-  Q_INVOKABLE void changeIncludeBarriersState();
-  Q_INVOKABLE void changeIncludeContainersState();
   Q_INVOKABLE void reset();
   Q_INVOKABLE void trace();
 
 signals:
   //  void mapViewChanged();
   void attributeListModelChanged();
-  void valueSelectionListModelChanged();
+  void busyChanged();
   void conditionBarrierExpressionChanged();
-  void textFieldVisibleChanged();
-  void expressionBuilderChanged();
-  void dialogVisibleChanged();
   void dialogTextChanged();
+  void dialogVisibleChanged();
+  void expressionBuilderChanged();
+  void textFieldVisibleChanged();
+  void valueSelectionListModelChanged();
 
 private slots:
   void onTraceCompleted();
+  void onUtilityNetworkLoaded(const Esri::ArcGISRuntime::Error& e);
 
 private:
 
+  QString comparisonOperatorToString(const Esri::ArcGISRuntime::UtilityAttributeComparisonOperator& comparisonOperator) const;
+  QString expressionToString(Esri::ArcGISRuntime::UtilityTraceConditionalExpression* expression) const;
   QVariant convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::UtilityNetworkAttributeDataType& dataType);
 
-  QString expressionToString(Esri::ArcGISRuntime::UtilityTraceConditionalExpression* expression);
-  QString comparisonOperatorToString(const Esri::ArcGISRuntime::UtilityAttributeComparisonOperator& comparisonOperator);
-
-  Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
-  Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
-  Esri::ArcGISRuntime::UtilityTraceCondition* m_initialExpression = nullptr;
-  Esri::ArcGISRuntime::UtilityNetworkDefinition* m_networkDefinition = nullptr;
   Esri::ArcGISRuntime::UtilityElement* m_utilityElementStartingLocation = nullptr;
+  Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
+  Esri::ArcGISRuntime::UtilityNetworkDefinition* m_networkDefinition = nullptr;
+  Esri::ArcGISRuntime::UtilityTraceCondition* m_initialExpression = nullptr;
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
+  Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
 
   QStringList m_attributeListModel;
-  QStringList m_valueSelectionListModel;
   QStringList m_conditionBarrierExpressionListModel;
+  QStringList m_valueSelectionListModel;
 
-  const QUrl m_featureLayerUrl = QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
-  const QString m_deviceTableName = "Electric Distribution Device";
-  const QString m_assetGroupName = "Circuit Breaker";
-  const QString m_assetTypeName = "Three Phase";
-  const QUuid m_gloabId = QUuid("{1CAF7740-0BF4-4113-8DB2-654E18800028}");
-  bool m_textFieldVisible = true;
-  bool m_dialogVisible = false;
+  bool m_busy;
+  bool m_dialogVisible;
+  bool m_textFieldVisible;
+  const QString m_assetGroupName;
+  const QString m_assetTypeName;
+  const QString m_deviceTableName;
+  const QString m_domainNetworkName;
+  const QString m_tierName;
+  const QUrl m_featureLayerUrl;
+  const QUuid m_gloabId;
   QString m_dialogText;
   QString m_expressionBuilder;
-
-
-  // For creating the default trace configuration.
-  const QString m_domainNetworkName = "ElectricDistribution";
-  const QString m_tierName = "Medium Voltage Radial";
-  //  Esri::ArcGISRuntime::MapQuickView* mapView() const;
-  //  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-
-  //  Esri::ArcGISRuntime::Map* m_map = nullptr;
-  //  Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 };
 
 #endif // CONFIGURESUBNETWORKTRACE_H

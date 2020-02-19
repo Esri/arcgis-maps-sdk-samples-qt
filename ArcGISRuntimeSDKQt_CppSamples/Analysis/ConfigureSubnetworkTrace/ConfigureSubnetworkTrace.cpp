@@ -61,142 +61,83 @@ using namespace Esri::ArcGISRuntime;
 //  QObject(parent)
 //  m_map(new Map(Basemap::imagery(this), this))
 ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent)
+  QQuickItem(parent),
+  m_busy(true),
+  m_dialogVisible(false),
+  m_textFieldVisible(true),
+  m_assetGroupName(QString("Circuit Breaker")),
+  m_assetTypeName(QString("Three Phase")),
+  m_deviceTableName(QString("Electric Distribution Device")),
+  m_domainNetworkName(QString("ElectricDistribution")),
+  m_tierName(QString("Medium Voltage Radial")),
+  m_featureLayerUrl(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer")),
+  m_gloabId(QUuid("{1CAF7740-0BF4-4113-8DB2-654E18800028}"))
 {
   m_utilityNetwork = new UtilityNetwork(m_featureLayerUrl, this);
 
-  connect(m_utilityNetwork, &UtilityNetwork::errorOccurred, [](Error e)
-  {
-    if (e.isEmpty())
-      return;
-
-    qDebug() << QString(e.message() + " - " + e.additionalMessage());
-  });
-
-  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, [this](Error e)
-  {
-    m_networkDefinition = m_utilityNetwork->definition();
-
-    for (UtilityNetworkAttribute* networkAttribute : m_networkDefinition->networkAttributes())
-    {
-      if (!networkAttribute->isSystemDefined())
-      {
-        m_attributeListModel.append(networkAttribute->name());
-      }
-    }
-    emit attributeListModelChanged();
-
-    UtilityNetworkSource* networkSource = m_networkDefinition->networkSource(m_deviceTableName);
-    UtilityAssetGroup* assetGroup = networkSource->assetGroup(m_assetGroupName);
-    UtilityAssetType* assetType = assetGroup->assetType(m_assetTypeName);
-
-    m_utilityElementStartingLocation = m_utilityNetwork->createElementWithAssetType(assetType, m_gloabId);
-
-    QList<UtilityTerminal*> terminals = m_utilityElementStartingLocation->assetType()->terminalConfiguration()->terminals();
-
-    for (UtilityTerminal* terminal : terminals)
-    {
-      if (terminal->name() == "Load")
-      {
-        m_utilityElementStartingLocation->setTerminal(terminal);
-        break;
-      }
-    }
-
-    UtilityDomainNetwork* domainNetwork = m_networkDefinition->domainNetwork(m_domainNetworkName);
-    UtilityTier* utilityTierSource = domainNetwork->tier(m_tierName);
-
-    m_traceConfiguration = utilityTierSource->traceConfiguration();
-
-    m_initialExpression = m_traceConfiguration->traversability()->barriers();
-
-
-    QString expressionString = expressionToString(static_cast<UtilityTraceConditionalExpression*>(m_initialExpression));
-    qDebug() << expressionString;
-    m_expressionBuilder = expressionString;
-    emit expressionBuilderChanged();
-
-
-    //* need to think about how to display the built expression
-    //    m_conditionBarrierExpressionListModel.append(expressionString);
-    //    emit conditionBarrierExpressionChanged();
-
-    //    traceConfiguration.traversability.scope = Enums.UtilityTraversabilityScopeJunctions;
-
-    //    let expression = expressionToString(initialExpression);
-    //    print(expression); //* remove
-
-    //    myModel.append({condition: expression});
-
-  });
+  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this,&ConfigureSubnetworkTrace::onUtilityNetworkLoaded);
 
   connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &ConfigureSubnetworkTrace::onTraceCompleted);
 
   m_utilityNetwork->load();
 }
 
-//* displaying information is incorrect need to look at closer
-QString ConfigureSubnetworkTrace::expressionToString(UtilityTraceConditionalExpression* expression)
+QString ConfigureSubnetworkTrace::expressionToString(UtilityTraceConditionalExpression* expression) const
 {
-  switch (expression->traceConditionType()) {
+  switch (expression->traceConditionType())
+  {
     case UtilityTraceConditionType::UtilityNetworkAttributeComparison:
     {
-      qDebug() << "UtilityNetworkAttributeComparison";
-
       UtilityNetworkAttributeComparison* attributeExpression = static_cast<UtilityNetworkAttributeComparison*>(expression);
       UtilityNetworkAttribute* networkAttribute = attributeExpression->networkAttribute();
-      qDebug() << "NetAtt_Name - " <<networkAttribute->name();
       UtilityNetworkAttribute* otherNetworkAttribute = attributeExpression->otherNetworkAttribute();
       Domain networkDomain = networkAttribute->domain();
+      QString operatorAsString = comparisonOperatorToString(attributeExpression->comparisonOperator());
 
+      // check if attribute domain is a coded value domain.
       if (!networkDomain.isEmpty() && (networkDomain.domainType() == DomainType::CodedValueDomain))
       {
-        CodedValueDomain codedValueDomain = static_cast<CodedValueDomain>(networkDomain);
-        QList<CodedValue> codedValues = codedValueDomain.codedValues();
-        return QString("`%1` %2 `%3`").arg(networkAttribute->name(),comparisonOperatorToString(attributeExpression->comparisonOperator()), codedValues[attributeExpression->value().toInt()].name());
+        const CodedValueDomain codedValueDomain = static_cast<CodedValueDomain>(networkDomain);
+        const QList<CodedValue> codedValues = codedValueDomain.codedValues();
+
+        // get the coded value using the value as the index for the list of coded values
+        const QString codedValueName = codedValues[attributeExpression->value().toInt()].name();
+
+        return QString("`%1` %2 `%3`").arg(networkAttribute->name(), operatorAsString, codedValueName);
       }
       else
       {
         if (otherNetworkAttribute)
         {
-          return QString("`%1` %2 `%3`").arg(networkAttribute->name(),comparisonOperatorToString(attributeExpression->comparisonOperator()),otherNetworkAttribute->name());
+          return QString("`%1` %2 `%3`").arg(networkAttribute->name(), operatorAsString, otherNetworkAttribute->name());
         }
-        return QString("`%1` %2 `%3`").arg(networkAttribute->name(),comparisonOperatorToString(attributeExpression->comparisonOperator()),attributeExpression->value().toString());
+        return QString("`%1` %2 `%3`").arg(networkAttribute->name(), operatorAsString, attributeExpression->value().toString());
       }
     }
     case UtilityTraceConditionType::UtilityCategoryComparison:
     {
-      qDebug() << "UtilityCategoryComparison";
+      const UtilityCategoryComparison* comparisonExpression = static_cast<UtilityCategoryComparison*>(expression);
 
-      UtilityCategoryComparison* comparisonExpression = static_cast<UtilityCategoryComparison*>(expression);
-
-      return QString("`%1` %2").arg(comparisonExpression->category()->name(), (comparisonExpression->comparisonOperator() == UtilityCategoryComparisonOperator::Exists ) ? "Exists" : "DoesNotExist" );
+      return QString("`%1` %2").arg(comparisonExpression->category()->name(), (comparisonExpression->comparisonOperator() == UtilityCategoryComparisonOperator::Exists) ? "Exists" : "DoesNotExist");
     }
     case UtilityTraceConditionType::UtilityTraceAndCondition:
     {
-      qDebug() << "UtilityTraceAndCondition";
-
-      UtilityTraceAndCondition* andExpression = static_cast<UtilityTraceAndCondition*>(expression);
+      const UtilityTraceAndCondition* andExpression = static_cast<UtilityTraceAndCondition*>(expression);
 
       return QString("(%1) AND\n (%2)").arg(expressionToString(andExpression->leftExpression()), expressionToString(andExpression->rightExpression()));
     }
     case UtilityTraceConditionType::UtilityTraceOrCondition:
     {
-
-      qDebug() << "UtilityTraceOrCondition";
-
-      UtilityTraceOrCondition* orExpression = static_cast<UtilityTraceOrCondition*>(expression);
+      const UtilityTraceOrCondition* orExpression = static_cast<UtilityTraceOrCondition*>(expression);
       return QString("(%1) OR\n (%2)").arg(expressionToString(orExpression->leftExpression()), expressionToString(orExpression->rightExpression()));
     }
-
   }
-
-  return "";
 }
 
-QString ConfigureSubnetworkTrace::comparisonOperatorToString(const UtilityAttributeComparisonOperator& comparisonOperator)
+QString ConfigureSubnetworkTrace::comparisonOperatorToString(const UtilityAttributeComparisonOperator& comparisonOperator) const
 {
-  switch (comparisonOperator) {
+  switch (comparisonOperator)
+  {
     case UtilityAttributeComparisonOperator::Equal:
       return QString("Equal");
     case UtilityAttributeComparisonOperator::NotEqual:
@@ -222,7 +163,8 @@ QString ConfigureSubnetworkTrace::comparisonOperatorToString(const UtilityAttrib
 
 QVariant ConfigureSubnetworkTrace::convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::UtilityNetworkAttributeDataType& dataType)
 {
-  switch (dataType) {
+  switch (dataType)
+  {
     case UtilityNetworkAttributeDataType::Integer:
     {
       return value.toInt();
@@ -244,21 +186,17 @@ QVariant ConfigureSubnetworkTrace::convertToDataType(const QVariant& value, cons
 
 void ConfigureSubnetworkTrace::codedValueOrInputText(const QString& currentText)
 {
+  // Update the UI to show the correct value entry for the attribute.
   if (m_networkDefinition)
   {
     Domain domain = m_networkDefinition->networkAttribute(currentText)->domain();
     if (!domain.isEmpty() && (domain.domainType() == DomainType::CodedValueDomain))
     {
-      qDebug() << QString("domain: %1").arg(domain.name());
-
       m_valueSelectionListModel.clear();
-
       CodedValueDomain codedValueDomain = static_cast<CodedValueDomain>(domain);
 
       for (CodedValue codedValue: codedValueDomain.codedValues())
-      {
         m_valueSelectionListModel.append(codedValue.name());
-      }
 
       m_textFieldVisible = false;
     }
@@ -271,9 +209,10 @@ void ConfigureSubnetworkTrace::codedValueOrInputText(const QString& currentText)
   }
 }
 
-void ConfigureSubnetworkTrace::addCondition(const QString &selectedAttribute, int selectedOperator, QVariant selectedValue)
+void ConfigureSubnetworkTrace::addCondition(const QString& selectedAttribute, int selectedOperator, const QVariant& selectedValue)
 {
-  // is this even needed?
+  // NOTE: You may also create a UtilityCategoryComparison with UtilityNetworkDefinition.Categories and UtilityCategoryComparisonOperator.
+
   if (!m_traceConfiguration)
     m_traceConfiguration = new UtilityTraceConfiguration(this);
 
@@ -283,49 +222,41 @@ void ConfigureSubnetworkTrace::addCondition(const QString &selectedAttribute, in
 
   UtilityNetworkAttribute* selectedNetworkAttribute = m_networkDefinition->networkAttribute(selectedAttribute);
 
-  qDebug() << "selectedNetAtt-Name  - " << selectedNetworkAttribute->name();
-
   QVariant convertedSelectedValue = convertToDataType(selectedValue, selectedNetworkAttribute->dataType());
 
   UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
 
+
+  // NOTE: You may also create a UtilityNetworkAttributeComparison with another NetworkAttribute.
   UtilityTraceConditionalExpression* expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, convertedSelectedValue, this);
 
   if (traversability->barriers())
   {
     UtilityTraceConditionalExpression* otherExpression = static_cast<UtilityTraceConditionalExpression*>(m_traceConfiguration->traversability()->barriers());
 
+    // NOTE: You may also combine expressions with UtilityTraceAndCondition
     UtilityTraceConditionalExpression* combineExpressions = new UtilityTraceOrCondition(otherExpression, expression, this);
 
     m_expressionBuilder = expressionToString(combineExpressions);
     emit expressionBuilderChanged();
 
-    qDebug() << m_expressionBuilder;
-
     m_traceConfiguration->traversability()->setBarriers(combineExpressions);
-
   }
 }
 
-void ConfigureSubnetworkTrace::changeIncludeBarriersState()
+void ConfigureSubnetworkTrace::changeIncludeBarriersState(bool includeBarriers)
 {
-  qDebug() << "changeIncludeBarriersState";
-  // barriers are included by default, i.e. true
-  if (m_traceConfiguration)
-    m_traceConfiguration->setIncludeBarriers(!m_traceConfiguration->isIncludeBarriers());
+  m_traceConfiguration->setIncludeBarriers(includeBarriers);
 }
 
-void ConfigureSubnetworkTrace::changeIncludeContainersState()
+void ConfigureSubnetworkTrace::changeIncludeContainersState(bool includeContainers)
 {
-  qDebug() << "changeIncludeContainersState";
-  // containers are included by default, i.e. true
-  if (m_traceConfiguration)
-    m_traceConfiguration->setIncludeContainers(!m_traceConfiguration->isIncludeContainers());
+  m_traceConfiguration->setIncludeContainers(includeContainers);
 }
 
 void ConfigureSubnetworkTrace::reset()
 {
-  qDebug() << "Reset";
+  // Reset the barrier condition to the initial value.
   m_traceConfiguration->traversability()->setBarriers(m_initialExpression);
   m_expressionBuilder.clear();
   m_expressionBuilder = expressionToString(static_cast<UtilityTraceConditionalExpression*>(m_initialExpression));
@@ -334,8 +265,8 @@ void ConfigureSubnetworkTrace::reset()
 
 void ConfigureSubnetworkTrace::trace()
 {
-  qDebug() << "Trace";
-
+  m_busy = true;
+  emit busyChanged();
   if (!m_utilityNetwork || !m_utilityElementStartingLocation)
   {
     return;
@@ -343,8 +274,11 @@ void ConfigureSubnetworkTrace::trace()
   else
   {
     QList<UtilityElement*> startingLocations {m_utilityElementStartingLocation};
+    // Create utility trace parameters for the starting location.
     m_traceParams = new UtilityTraceParameters(UtilityTraceType::Subnetwork, startingLocations, this);
     m_traceParams->setTraceConfiguration(m_traceConfiguration);
+
+    // trace the network
     m_utilityNetwork->trace(m_traceParams);
   }
 }
@@ -358,14 +292,80 @@ void ConfigureSubnetworkTrace::onTraceCompleted()
     m_dialogVisible = true;
     emit dialogVisibleChanged();
   }
+  // Get the first result.
   UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
 
   const QList<UtilityElement*> elements = static_cast<UtilityElementTraceResult*>(result)->elements(this);
 
+  // Display the number of elements found by the trace.
   m_dialogText = QString("%1 elements found.").arg(elements.length());
-  emit dialogTextChanged();
   m_dialogVisible = true;
+  m_busy = false;
+  emit dialogTextChanged();
   emit dialogVisibleChanged();
+  emit busyChanged();
+}
+
+void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
+{
+  if (!e.isEmpty())
+  {
+    m_dialogText = QString("%1 - %2").arg(e.message(), e.additionalMessage());
+    m_dialogVisible = true;
+    emit dialogTextChanged();
+    emit dialogVisibleChanged();
+    return;
+  }
+
+  m_busy = false;
+  emit busyChanged();
+  m_networkDefinition = m_utilityNetwork->definition();
+
+  // Build the choice lists for network attribute comparison.
+  for (UtilityNetworkAttribute* networkAttribute : m_networkDefinition->networkAttributes())
+  {
+    if (!networkAttribute->isSystemDefined())
+    {
+      m_attributeListModel.append(networkAttribute->name());
+    }
+  }
+  emit attributeListModelChanged();
+
+  // Create a default starting location.
+  UtilityNetworkSource* networkSource = m_networkDefinition->networkSource(m_deviceTableName);
+  UtilityAssetGroup* assetGroup = networkSource->assetGroup(m_assetGroupName);
+  UtilityAssetType* assetType = assetGroup->assetType(m_assetTypeName);
+  m_utilityElementStartingLocation = m_utilityNetwork->createElementWithAssetType(assetType, m_gloabId);
+
+  QList<UtilityTerminal*> terminals = m_utilityElementStartingLocation->assetType()->terminalConfiguration()->terminals();
+
+  // Set the terminal for this location. (For our case, we use the 'Load' terminal.)
+  for (UtilityTerminal* terminal : terminals)
+  {
+    if (terminal->name() == "Load")
+    {
+      m_utilityElementStartingLocation->setTerminal(terminal);
+      break;
+    }
+  }
+
+  // Get a default trace configuration from a tier to update the UI.
+  UtilityDomainNetwork* domainNetwork = m_networkDefinition->domainNetwork(m_domainNetworkName);
+  UtilityTier* utilityTierSource = domainNetwork->tier(m_tierName);
+
+  // Set the trace configuration.
+  m_traceConfiguration = utilityTierSource->traceConfiguration();
+
+  m_initialExpression = m_traceConfiguration->traversability()->barriers();
+
+  if (m_initialExpression)
+  {
+    m_expressionBuilder = expressionToString(static_cast<UtilityTraceConditionalExpression*>(m_initialExpression));
+    emit expressionBuilderChanged();
+  }
+
+  // Set the traversability scope.
+  utilityTierSource->traceConfiguration()->traversability()->setScope(UtilityTraversabilityScope::Junctions);
 }
 
 ConfigureSubnetworkTrace::~ConfigureSubnetworkTrace() = default;
