@@ -32,20 +32,17 @@ Rectangle {
             id: graphicsOverlay
         }
 
-        SimpleFillSymbol {
-            id: fillSymbol
-            style: Enums.SimpleFillSymbolStyleForwardDiagonal
-            color: "lime"
-            SimpleLineSymbol {
-                style: Enums.SimpleLineSymbolStyleSolid
-                color: "lime"
-                width: 2.0
-            }
-        }
-
         Graphic {
             id: polygonGraphic
-            symbol: fillSymbol
+            symbol: SimpleFillSymbol {
+                style: Enums.SimpleFillSymbolStyleForwardDiagonal
+                color: "lime"
+                SimpleLineSymbol {
+                    style: Enums.SimpleLineSymbolStyleSolid
+                    color: "lime"
+                    width: 2.0
+                }
+            }
         }
 
         PolygonBuilder {
@@ -53,14 +50,47 @@ Rectangle {
             spatialReference: SpatialReference { wkid: 102100 }
         }
 
+        Graphic {
+            id:  clickedPointGraphic
+            symbol: SimpleMarkerSymbol {
+                style: Enums.SimpleMarkerSymbolStyleX
+                color: "orange"
+                size: 15
+            }
+        }
+
+        Graphic {
+            id: nearestVertexGraphic
+            symbol : SimpleMarkerSymbol {
+                style: Enums.SimpleMarkerSymbolStyleCircle
+                color: "blue"
+                size: 15
+            }
+        }
+
+        Graphic {
+            id: nearestCoordinateGraphic
+            symbol : SimpleMarkerSymbol {
+                style: Enums.SimpleMarkerSymbolStyleDiamond
+                color: "red"
+                size: 10
+            }
+        }
+
         Component.onCompleted: {
+            // create polygon in middle of Atlantic Ocean
             polygonBuilder.addPointXY(-5991501.677830, 5599295.131468);
             polygonBuilder.addPointXY(-6928550.398185, 2087936.739807);
             polygonBuilder.addPointXY(-3149463.800709, 1840803.011362);
             polygonBuilder.addPointXY(-1563689.043184, 3714900.452072);
             polygonBuilder.addPointXY(-3180355.516764, 5619889.608838);
             polygonGraphic.geometry = polygonBuilder.geometry;
+
+            // append graphics to overlay
             graphicsOverlay.graphics.append(polygonGraphic);
+            graphicsOverlay.graphics.append(clickedPointGraphic);
+            graphicsOverlay.graphics.append(nearestVertexGraphic);
+            graphicsOverlay.graphics.append(nearestCoordinateGraphic);
         }
 
         Map {
@@ -81,38 +111,37 @@ Rectangle {
         anchors.fill: parent
         onClicked: {
             var clickedPoint = mapView.screenToLocation(mouseX, mouseY);
-            var clickedPointSymbol = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {style: "SimpleMarkerSymbolStyleX", color: "orange", size: 15});
-            var clickedPointGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: clickedPointSymbol});
-            graphicsOverlay.graphics.append(clickedPointGraphic);
+            clickedPointGraphic.geometry = clickedPoint;
 
             var nearestVertexPoint = GeometryEngine.nearestVertex(polygonBuilder.geometry, clickedPoint);
-            var nearestVertexSymbol = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {style: "SimpleMarkerSymbolStyleCircle", color: "blue", size: 15});
-            var nearestVertexGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: nearestVertexPoint.coordinate, symbol: nearestVertexSymbol});
-            graphicsOverlay.graphics.append(nearestVertexGraphic);
+            nearestVertexGraphic.geometry = nearestVertexPoint.coordinate;
 
             var nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, clickedPoint);
-            var nearestCoordinateSymbol = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {style: "SimpleMarkerSymbolStyleDiamond", color: "red", size: 10});
-            var nearestCoordinateGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: nearestCoordinateResult.coordinate, symbol: nearestCoordinateSymbol});
-            graphicsOverlay.graphics.append(nearestCoordinateGraphic);
+            nearestCoordinateGraphic.geometry = nearestCoordinateResult.coordinate;
 
             distancesLabel.text = "Vertex distance: " + Math.round(nearestVertexPoint.distance/1000.0) + " km\nCoordinate distance: " + Math.round(nearestCoordinateResult.distance/1000.0) + " km";
-            distancesLabel.font.pointSize = 14;
-            distancesLabel.leftPadding = 5;
-            labelRectangle.visible = "true";
         }
     }
 
+    // create box to display label with distances to nearest vertex and coordinate
     Rectangle
     {
         id: labelRectangle
-        width: 350
-        height: 60
-        visible: false
+        width: parent.width / 2.5
+        height: parent.height / 10
+        anchors {
+            top: parent.top
+            left: parent.left
+            margins: 15
+        }
+        visible: true
         color: "white"
         border.color: "black"
         border.width: 2
         Label {
             id: distancesLabel
+            font.pointSize: 14;
+            leftPadding: 5;
         }
     }
 }
