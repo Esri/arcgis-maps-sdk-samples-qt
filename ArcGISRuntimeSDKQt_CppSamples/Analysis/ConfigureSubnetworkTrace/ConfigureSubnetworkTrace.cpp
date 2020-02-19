@@ -19,17 +19,12 @@
 #endif // PCH_BUILD
 
 #include "ConfigureSubnetworkTrace.h"
-#include "UtilityTraceOrCondition.h"
-#include "UtilityNetworkAttributeComparison.h"
-#include "UtilityTraceCondition.h"
-//#include "UtilityNetworkAttribute.h"
-#include "UtilityNetwork.h"
-#include "UtilityNetworkTypes.h"
-#include "UtilityTraceConfiguration.h"
-#include "UtilityTraversability.h"
 
+#include "CodedValueDomain.h"
 #include "UtilityAssetGroup.h"
 #include "UtilityAssetType.h"
+#include "UtilityCategory.h"
+#include "UtilityCategoryComparison.h"
 #include "UtilityDomainNetwork.h"
 #include "UtilityElement.h"
 #include "UtilityElementTraceResult.h"
@@ -37,17 +32,15 @@
 #include "UtilityNetworkDefinition.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
+#include "UtilityTerminal.h"
 #include "UtilityTerminalConfiguration.h"
 #include "UtilityTier.h"
 #include "UtilityTraceAndCondition.h"
+#include "UtilityTraceConfiguration.h"
+#include "UtilityTraceOrCondition.h"
 #include "UtilityTraceParameters.h"
 #include "UtilityTraceResultListModel.h"
-#include "UtilityCategoryComparison.h"
-#include "UtilityTraceAndCondition.h"
-#include "UtilityCategory.h"
-#include "Domain.h"
-#include "CodedValueDomain.h"
-#include "UtilityTerminal.h"
+#include "UtilityTraversability.h"
 
 
 //#include "Map.h"
@@ -297,59 +290,6 @@ void ConfigureSubnetworkTrace::addCondition(const QString &selectedAttribute, in
   UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
 
   UtilityTraceConditionalExpression* expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, convertedSelectedValue, this);
-
-
-
-//  switch (selectedNetworkAttribute->dataType()) {
-//    case UtilityNetworkAttributeDataType::Integer:
-//    {
-//      expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, static_cast<int>(selectedValue), this);
-//      break;
-//    }
-//    case UtilityNetworkAttributeDataType::Float:
-//    {
-//      expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, static_cast<float>(selectedValue), this);
-//      break;
-//    }
-//    case UtilityNetworkAttributeDataType::Double:
-//    {
-//      expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, static_cast<double>(selectedValue), this);
-//      break;
-//    }
-//    case UtilityNetworkAttributeDataType::Boolean:
-//    {
-//      expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, static_cast<bool>(selectedValue), this);
-//      break;
-//    }
-//  }
-
-//  if ( static_cast<int>(selectedNetworkAttribute->dataType()) != 0 )
-//  {
-
-//  }
-//    qDebug() << "type - " << static_cast<int>(selectedNetworkAttribute->dataType());
-//    double temp = selectedValue;
-//    UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
-
-//    UtilityTraceConditionalExpression* expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, temp, this);
-
-//    qDebug() << expressionToString(expression);
-//    return;
-//  }
-  qDebug() << "data type - " << static_cast<int>(selectedNetworkAttribute->dataType());
-
-//  UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
-
-//  UtilityTraceConditionalExpression* expression;
-
-//  if (selectedNetworkAttribute->dataType() == UtilityNetworkAttributeDataType::Integer)
-//  {
-//    expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, static_cast<int>(selectedValue), this);
-//  }
-
-//  UtilityTraceConditionalExpression* expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, selectedValue, this);
-
-  qDebug() << expressionToString(expression);
 
   if (traversability->barriers())
   {

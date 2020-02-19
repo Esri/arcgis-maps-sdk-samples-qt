@@ -26,27 +26,25 @@ Rectangle {
     width: 800
     height: 600
 
-    property alias myModel: myModel //* rename
     property alias comparisonSourceListModel: comparisonSourceListModel
-    readonly property var comparisonOperatorModel: ["Equal","NotEqual","GreaterThan","GreaterThanEqual","LessThan","LessThanEqual","IncludesTheValues","DoesNotIncludeTheValues","IncludesAny","DoesNotIncludeAny"]
-    readonly property string deviceTableName: "Electric Distribution Device"
-    readonly property string assetGroupName: "Circuit Breaker"
-    readonly property string assetTypeName: "Three Phase"
-    readonly property string globalId: "{1CAF7740-0BF4-4113-8DB2-654E18800028}"
-    readonly property string domainNetworkName: "ElectricDistribution"
-    readonly property string tierName: "Medium Voltage Radial"
-    property var traceConfiguration
-    property var utilityElementStartingLocation
+    property alias myModel: myModel //* rename
+    property int inc: 0 //* remove
+    property var combineExpression
+    property var currentComparisonOperator
+    property var expression1
     property var initialExpression
     property var networkDefinition
-    property var currentComparisonOperator
-    property var combineExpression
-
     property var otherExpression
-    property var expression1
-
-    property int inc: 0 //* remove
+    property var traceConfiguration
+    property var utilityElementStartingLocation
+    readonly property string assetGroupName: "Circuit Breaker"
+    readonly property string assetTypeName: "Three Phase"
+    readonly property string deviceTableName: "Electric Distribution Device"
+    readonly property string domainNetworkName: "ElectricDistribution"
+    readonly property string globalId: "{1CAF7740-0BF4-4113-8DB2-654E18800028}"
+    readonly property string tierName: "Medium Voltage Radial"
     readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
+    readonly property var comparisonOperatorModel: ["Equal","NotEqual","GreaterThan","GreaterThanEqual","LessThan","LessThanEqual","IncludesTheValues","DoesNotIncludeTheValues","IncludesAny","DoesNotIncludeAny"]
 
     ListModel {
         id: myModel //* rename
@@ -388,44 +386,57 @@ Rectangle {
             //                    width:  1
             //                }
 
-            ListView {
-                id: groupingView
+//            ListView {
+//                id: groupingView
+//                Layout.fillWidth: true
+//                Layout.minimumHeight: 150
+//                //                    Layout.fillHeight: true
+//                //                    Layout.fillWidth: true
+
+//                //                anchors {
+//                //                    fill: parent
+//                //                    margins: 5
+//                //                }
+//                //                highlight: highlightRectangle
+//                //                highlightResizeVelocity: 1000000
+//                //                highlightMoveVelocity: 1000000
+
+//                clip: true
+//                model: myModel
+//                delegate: Item {
+//                    width: parent.width
+//                    height: 25
+
+//                    Row {
+//                        anchors.verticalCenter: parent.verticalCenter
+//                        spacing: 10
+//                        Text {
+//                            text: "(%1)".arg(condition)
+//                            font.pixelSize: 12
+//                        }
+//                    }
+
+//                    MouseArea {
+//                        anchors.fill: parent
+//                        onClicked: groupingView.currentIndex = index;
+//                    }
+//                }
+
+//                onCurrentIndexChanged: {
+//                    print("currentIndex: %1".arg(currentIndex));
+//                }
+//            }
+
+            ScrollView {
                 Layout.fillWidth: true
-                Layout.minimumHeight: 150
-                //                    Layout.fillHeight: true
-                //                    Layout.fillWidth: true
-
-                //                anchors {
-                //                    fill: parent
-                //                    margins: 5
-                //                }
-                //                highlight: highlightRectangle
-                //                highlightResizeVelocity: 1000000
-                //                highlightMoveVelocity: 1000000
-
+                Layout.minimumHeight: 50
+                Layout.maximumHeight: .2 * rootRectangle.height
                 clip: true
-                model: myModel
-                delegate: Item {
-                    width: parent.width
-                    height: 25
-
-                    Row {
-                        anchors.verticalCenter: parent.verticalCenter
-                        spacing: 10
-                        Text {
-                            text: "(%1)".arg(condition)
-                            font.pixelSize: 12
-                        }
+                Row {
+                    anchors.fill: parent
+                    Text {
+                        text: model.expressionBuilder
                     }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: groupingView.currentIndex = index;
-                    }
-                }
-
-                onCurrentIndexChanged: {
-                    print("currentIndex: %1".arg(currentIndex));
                 }
             }
 

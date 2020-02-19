@@ -36,7 +36,6 @@ Item {
             CheckBox {
                 text: qsTr("Include barriers")
                 Layout.fillWidth: true
-//                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.alignment: Qt.AlignRight
                 checkState: Qt.Checked
                 onCheckStateChanged: model.changeIncludeBarriersState();
@@ -85,7 +84,6 @@ Item {
             }
 
             ComboBox {
-                //                model: ["One", "Two", "Three"] // test model
                 id: networkAttributeComboBox
                 model: model.attributeListModel ? model.attributeListModel : null
                 Layout.fillWidth: true
@@ -97,7 +95,6 @@ Item {
             }
 
             ComboBox {
-                //                model: ["Four", "TFive", "Six"] // test model
                 id: comparisonOperatorComboBox
                 model: comparisonOperatorModel
                 Layout.fillWidth: true
@@ -106,17 +103,10 @@ Item {
 
             RowLayout {
                 ComboBox {
-                    //                    model: ["One", "Two", "Three"]  // test model
                     id: valueSelectionComboBox
                     Layout.fillWidth: true
                     visible: !model.textFieldVisible
                     model: model.valueSelectionListModel
-
-//                    onModelChanged: currentIndex = 0;
-//                    onVisibleChanged: {
-//                        if (visible)
-//                            currentIndex = 0;
-//                    }
                 }
 
                 TextField {
@@ -130,14 +120,11 @@ Item {
                 text: qsTr("Add")
                 Layout.fillWidth: true
                 onClicked: {
-//                    myModel.append({condition: "`Operation Device Status` Equal `Open` %1".arg(inc++)});
-
                     if (model.textFieldVisible) {
                         model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, inputTextField.text);
                     } else {
                         model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, valueSelectionComboBox.currentIndex);
                     }
-                    print("appended");
                 }
             }
 
