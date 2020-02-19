@@ -243,7 +243,7 @@ Rectangle {
 
     Rectangle {
         anchors.fill: parent
-        color: "white"
+        color: "lightgrey"
 
         ColumnLayout {
             id: controlItemsLayout

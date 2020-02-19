@@ -27,12 +27,13 @@ Item {
     Rectangle {
         id: rootRectangle
         anchors.fill: parent
-        color: "white"
+        color: "lightgrey"
 
         ColumnLayout {
             id: controlItemsLayout
             anchors.left: parent.left
             anchors.right: parent.right
+            Layout.alignment: Qt.AlignHCenter
             CheckBox {
                 text: qsTr("Include barriers")
                 Layout.fillWidth: true
@@ -64,8 +65,8 @@ Item {
 
             Text {
                 text: qsTr("Example barrier condition for this data. 'Transformer Load' Equal '15'")
+                horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 enabled: !model.busy
             }
 
@@ -117,8 +118,16 @@ Item {
 
                 TextField {
                     id: inputTextField
-                    Layout.fillWidth: true
+                    Layout.minimumWidth: rootRectangle.width
                     visible: model.textFieldVisible
+                    color: "black"
+                    placeholderText: qsTr("Enter value here")
+                    placeholderTextColor: "black"
+                    background: Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.width
+                        color: "white"
+                    }
                 }
             }
 
