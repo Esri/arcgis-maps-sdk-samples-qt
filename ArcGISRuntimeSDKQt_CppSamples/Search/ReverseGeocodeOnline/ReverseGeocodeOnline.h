@@ -22,6 +22,7 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class CalloutData;
+class GraphicsOverlay;
 class Map;
 class MapQuickView;
 }
@@ -51,9 +52,12 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
+  void configureGraphic();
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
 };
 
 #endif // REVERSEGEOCODEONLINE_H

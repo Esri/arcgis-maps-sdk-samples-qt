@@ -62,3 +62,5 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
+
+DISTFILES +=

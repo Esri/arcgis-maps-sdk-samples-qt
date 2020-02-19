@@ -26,6 +26,8 @@
 #include "LocatorTask.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "PictureMarkerSymbol.h"
+#include "SimpleRenderer.h"
 
 #include <QUrl>
 
@@ -35,8 +37,6 @@ ReverseGeocodeOnline::ReverseGeocodeOnline(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::imageryWithLabels(this), this))
 {
-//  GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
-
   const QUrl url("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
   LocatorTask* locatorTask = new LocatorTask(url, this);
 
@@ -44,6 +44,18 @@ ReverseGeocodeOnline::ReverseGeocodeOnline(QObject* parent /* = nullptr */):
 }
 
 ReverseGeocodeOnline::~ReverseGeocodeOnline() = default;
+
+void ReverseGeocodeOnline::configureGraphic()
+{
+  m_graphicsOverlay = new GraphicsOverlay(this);
+
+  const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin.png");
+  PictureMarkerSymbol* pinSymbol = new PictureMarkerSymbol(pinUrl, this);
+  SimpleRenderer* simpleRenderer = new SimpleRenderer(pinSymbol, this);
+
+  m_graphicsOverlay->setRenderer(simpleRenderer);
+  m_graphicsOverlay->graphics()->append(new Graphic(this));
+}
 
 void ReverseGeocodeOnline::init()
 {
@@ -71,6 +83,14 @@ void ReverseGeocodeOnline::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
+
+  configureGraphic();
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
+
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
+  {
+    m_mapView->identifyGraphicsOverlay(m_graphicsOverlay, e.x(), e.y(), 5, false, 1);
+  });
 
   emit mapViewChanged();
 }
