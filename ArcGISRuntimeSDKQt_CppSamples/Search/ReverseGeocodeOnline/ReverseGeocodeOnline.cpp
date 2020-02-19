@@ -38,9 +38,9 @@ ReverseGeocodeOnline::ReverseGeocodeOnline(QObject* parent /* = nullptr */):
   m_map(new Map(Basemap::imageryWithLabels(this), this))
 {
   const QUrl url("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
-  LocatorTask* locatorTask = new LocatorTask(url, this);
+  m_locatorTask = new LocatorTask(url, this);
 
-//  m_mapView->graphicsOverlays()->append(graphicsOverlay);
+  //  m_mapView->graphicsOverlays()->append(graphicsOverlay);
 }
 
 ReverseGeocodeOnline::~ReverseGeocodeOnline() = default;
@@ -89,8 +89,34 @@ void ReverseGeocodeOnline::setMapView(MapQuickView* mapView)
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
-    Point clickedPoint(e.x(),e.y());
-    qDebug() << clickedPoint.x();
+    const Point clickedLocation = m_mapView->screenToLocation(e.x(), e.y());
+    ReverseGeocodeParameters* reverseGeocodeParameters = new ReverseGeocodeParameters();
+    reverseGeocodeParameters->setOutputSpatialReference(m_mapView->spatialReference());
+    m_locatorTask->reverseGeocodeWithParameters(clickedLocation, *reverseGeocodeParameters);
+  });
+
+  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, const   QList<GeocodeResult>& geocodeResults)
+  {
+    if (geocodeResults.length() == 0)
+      return;
+
+    GeocodeResult geocode = geocodeResults.at(0);
+    const Point location = geocode.displayLocation();
+    m_mapView->setViewpointCenter(location);
+
+    const QString address = geocode.label();
+    const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin.png");
+
+    m_mapView->calloutData()->setVisible(true);
+    m_mapView->calloutData()->setTitle("Location");
+    m_mapView->calloutData()->setLocation(location);
+    m_mapView->calloutData()->setDetail(address);
+    m_mapView->calloutData()->setImageUrl(pinUrl);
+
+    m_calloutData = m_mapView->calloutData();
+    emit calloutDataChanged();
+
+    qDebug() << "Reverse geocode result: " << address;
   });
 
   emit mapViewChanged();

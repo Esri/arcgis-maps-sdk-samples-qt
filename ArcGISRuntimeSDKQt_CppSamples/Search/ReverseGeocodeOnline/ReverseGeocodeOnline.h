@@ -23,6 +23,7 @@ namespace ArcGISRuntime
 {
 class CalloutData;
 class GraphicsOverlay;
+class LocatorTask;
 class Map;
 class MapQuickView;
 }
@@ -58,6 +59,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
 };
 
 #endif // REVERSEGEOCODEONLINE_H
