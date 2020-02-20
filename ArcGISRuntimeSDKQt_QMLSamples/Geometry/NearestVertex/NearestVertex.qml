@@ -119,7 +119,8 @@ Rectangle {
             var nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, clickedPoint);
             nearestCoordinateGraphic.geometry = nearestCoordinateResult.coordinate;
 
-            distancesLabel.text = "Vertex distance: " + Math.round(nearestVertexPoint.distance/1000.0) + " km\nCoordinate distance: " + Math.round(nearestCoordinateResult.distance/1000.0) + " km";
+            distancesLabel.text = `Vertex distance:  ${(nearestVertexPoint.distance/1000.0).toFixed()} km
+Coordinate distance: ${(nearestCoordinateResult.distance/1000.0).toFixed()} km` ;
         }
     }
 
