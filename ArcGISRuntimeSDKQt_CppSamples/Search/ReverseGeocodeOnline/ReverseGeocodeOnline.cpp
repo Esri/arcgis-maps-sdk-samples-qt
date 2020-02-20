@@ -55,6 +55,7 @@ void ReverseGeocodeOnline::configureGraphic()
 
   m_graphicsOverlay->setRenderer(simpleRenderer);
   m_graphicsOverlay->graphics()->append(new Graphic(this));
+  m_graphic = m_graphicsOverlay->graphics()->at(0);
 }
 
 void ReverseGeocodeOnline::init()
@@ -105,16 +106,20 @@ void ReverseGeocodeOnline::setMapView(MapQuickView* mapView)
     m_mapView->setViewpointCenter(location);
 
     const QString address = geocode.label();
-    const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin.png");
 
-    m_mapView->calloutData()->setVisible(true);
     m_mapView->calloutData()->setTitle("Location");
     m_mapView->calloutData()->setLocation(location);
     m_mapView->calloutData()->setDetail(address);
-    m_mapView->calloutData()->setImageUrl(pinUrl);
+    m_mapView->calloutData()->setVisible(true);
 
-    m_calloutData = m_mapView->calloutData();
-    emit calloutDataChanged();
+    m_graphic->setGeometry(geocode.displayLocation());
+    m_graphic->attributes()->setAttributesMap(geocode.attributes());
+    constexpr double scale = 8000.0;
+    m_mapView->setViewpointCenter(geocode.extent().center(), scale);
+    m_graphic->setVisible(true);
+
+    //m_calloutData = m_mapView->calloutData();
+    //emit calloutDataChanged();
 
     qDebug() << "Reverse geocode result: " << address;
   });

@@ -22,6 +22,7 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class CalloutData;
+class Graphic;
 class GraphicsOverlay;
 class LocatorTask;
 class Map;
@@ -58,6 +59,7 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_graphic = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::LocatorTask* m_locatorTask = nullptr;
 };

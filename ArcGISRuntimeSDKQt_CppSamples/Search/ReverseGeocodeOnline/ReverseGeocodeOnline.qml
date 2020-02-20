@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.6 // needed to use Callout in QML
+import Esri.ArcGISRuntime.Toolkit.Controls 100.8 // needed to use Callout in QML
 
 Item {
 
@@ -25,6 +25,13 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        Callout {
+            id: callout
+            calloutData: view.calloutData
+            accessoryButtonHidden: true
+            leaderPosition: leaderPositionEnum.Top
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
@@ -33,10 +40,6 @@ Item {
         mapView: view
     }
 
-    Callout {
-        id: callout
-        calloutData: model.calloutData
-        accessoryButtonHidden: true
-    }
+
 
 }
