@@ -20,8 +20,11 @@
 
 #include "ConvexHull.h"
 
+#include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "SimpleFillSymbol.h"
+#include "SimpleMarkerSymbol.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -54,6 +57,19 @@ void ConvexHull::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
+
+  // graphics overlay to show clicked points and convex hull
+  GraphicsOverlay* graphicsOverlay = new GraphicsOverlay();
+
+  // create a graphic to show clicked points
+  SimpleMarkerSymbol* simpleMarkerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 10, this);
+  Graphic* inputsGraphic = new Graphic();
+  inputsGraphic->setSymbol(simpleMarkerSymbol);
+  graphicsOverlay->graphics()->append(inputsGraphic);
+
+  // create a graphic to show the convex hull
+  SimpleLineSymbol* lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 3, this);
+  SimpleFillSymbol* fillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Null, Qt::transparent, lineSymbol, this);
 
   emit mapViewChanged();
 }
