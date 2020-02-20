@@ -42,7 +42,6 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-
 // helper method to get cross platform data path
 QString defaultDataPath()
 {
