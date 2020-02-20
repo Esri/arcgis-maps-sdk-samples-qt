@@ -49,8 +49,8 @@ signals:
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
-  double vertexDistance() const;
-  double coordinateDistance() const;
+  int vertexDistance() const;
+  int coordinateDistance() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void setupGraphics();
 

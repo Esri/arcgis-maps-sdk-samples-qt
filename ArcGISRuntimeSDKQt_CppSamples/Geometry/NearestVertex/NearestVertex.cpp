@@ -55,12 +55,12 @@ MapQuickView* NearestVertex::mapView() const
   return m_mapView;
 }
 
-double NearestVertex::vertexDistance() const
+int NearestVertex::vertexDistance() const
 {
   return m_vertexDistance;
 }
 
-double NearestVertex::coordinateDistance() const
+int NearestVertex::coordinateDistance() const
 {
   return m_coordinateDistance;
 }
@@ -119,7 +119,7 @@ void NearestVertex::setupGraphics()
   graphicsOverlay->graphics()->append(nearestVertexGraphic);
 
   // add graphic to clicked location
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this, polygonBuilder, clickedLocationGraphic, nearestCoordinateGraphic, nearestVertexGraphic](QMouseEvent& e)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [=](QMouseEvent& e)
   {
     Point clickedLocation = m_mapView->screenToLocation(e.x(), e.y());
     clickedLocationGraphic->setGeometry(clickedLocation);
@@ -131,9 +131,10 @@ void NearestVertex::setupGraphics()
     nearestVertexGraphic->setGeometry(nearestVertexResult.coordinate());
 
     // get distance in kilometers
-    m_vertexDistance = static_cast<int>(nearestVertexResult.distance()/1000.0);
-    m_coordinateDistance = static_cast<int>(nearestCoordinateResult.distance()/1000.0);
+    m_vertexDistance = nearestVertexResult.distance()/1000;
+    m_coordinateDistance = nearestCoordinateResult.distance()/1000;
 
+    e.accept();
     emit vertexDistanceCalculated();
     emit coordinateDistanceCalculated();
   });

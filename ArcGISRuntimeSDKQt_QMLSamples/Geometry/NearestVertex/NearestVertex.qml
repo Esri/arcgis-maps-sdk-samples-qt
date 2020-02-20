@@ -34,7 +34,7 @@ Rectangle {
 
         Graphic {
             id: polygonGraphic
-            symbol: SimpleFillSymbol {
+            SimpleFillSymbol {
                 style: Enums.SimpleFillSymbolStyleForwardDiagonal
                 color: "lime"
                 SimpleLineSymbol {
@@ -47,12 +47,12 @@ Rectangle {
 
         PolygonBuilder {
             id: polygonBuilder
-            spatialReference: SpatialReference { wkid: 102100 }
+            SpatialReference { wkid: 3857 }
         }
 
         Graphic {
             id:  clickedPointGraphic
-            symbol: SimpleMarkerSymbol {
+            SimpleMarkerSymbol {
                 style: Enums.SimpleMarkerSymbolStyleX
                 color: "orange"
                 size: 15
@@ -61,7 +61,7 @@ Rectangle {
 
         Graphic {
             id: nearestVertexGraphic
-            symbol : SimpleMarkerSymbol {
+            SimpleMarkerSymbol {
                 style: Enums.SimpleMarkerSymbolStyleCircle
                 color: "blue"
                 size: 15
@@ -70,7 +70,7 @@ Rectangle {
 
         Graphic {
             id: nearestCoordinateGraphic
-            symbol : SimpleMarkerSymbol {
+            SimpleMarkerSymbol {
                 style: Enums.SimpleMarkerSymbolStyleDiamond
                 color: "red"
                 size: 10
@@ -100,7 +100,7 @@ Rectangle {
                 Point {
                     x: -4487263.495911
                     y: 3699176.480377
-                    SpatialReference {wkid: 102100}
+                    SpatialReference {wkid: 3857}
                 }
                 targetScale: 50000000
             }
@@ -140,8 +140,8 @@ Rectangle {
         border.width: 2
         Label {
             id: distancesLabel
-            font.pointSize: 14;
-            leftPadding: 5;
+            font.pointSize: 14
+            leftPadding: 5
         }
     }
 }
