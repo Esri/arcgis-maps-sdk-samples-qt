@@ -1,16 +1,22 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Search",
+    "description": "This sample demonstrates how to get the address for a point on the map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "callout",
+        "geocode"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "Callout",
+        "CalloutData",
+        "GraphicsOverlay",
+        "LocatorTask"
+        "PictureMarkerSymbol",
+        "ReverseGeocodeParameters"
     ],
     "snippets": [
         "ReverseGeocodeOnline.cpp",

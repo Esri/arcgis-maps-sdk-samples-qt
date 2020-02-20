@@ -29,15 +29,39 @@
 #include "PictureMarkerSymbol.h"
 #include "SimpleRenderer.h"
 
+#include <QDir>
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 
+//namespace
+//{
+//const QUrl url("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
+//const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin.png");
+//}
+
 namespace
 {
-const QUrl url("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
-const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin.png");
+
+// helper method to get cross platform data path
+QString defaultDataPath()
+{
+  QString dataPath;
+
+#ifdef Q_OS_ANDROID
+  dataPath = "/sdcard";
+#elif defined Q_OS_IOS
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  dataPath = QDir::homePath();
+#endif
+
+  return dataPath;
 }
+
+const QUrl url("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
+const QUrl pinUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/symbol/pin.png");
+} // namespace
 
 ReverseGeocodeOnline::ReverseGeocodeOnline(QObject* parent /* = nullptr */):
   QObject(parent),
@@ -58,6 +82,42 @@ void ReverseGeocodeOnline::configureGraphic()
   m_graphicsOverlay->setRenderer(simpleRenderer);
   m_graphicsOverlay->graphics()->append(new Graphic(this));
   m_graphic = m_graphicsOverlay->graphics()->at(0);
+}
+
+void ReverseGeocodeOnline::getAddress()
+{
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
+  {
+    const Point clickedLocation = m_mapView->screenToLocation(e.x(), e.y());
+    ReverseGeocodeParameters* reverseGeocodeParameters = new ReverseGeocodeParameters();
+    reverseGeocodeParameters->setOutputSpatialReference(m_mapView->spatialReference());
+    m_locatorTask->reverseGeocodeWithParameters(clickedLocation, *reverseGeocodeParameters);
+  });
+
+  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, const QList<GeocodeResult>& geocodeResults)
+  {
+    if (geocodeResults.length() == 0)
+      return;
+
+    GeocodeResult geocode = geocodeResults.at(0);
+    const Point location = geocode.displayLocation();
+    m_mapView->setViewpointCenter(location);
+
+    const QString address = geocode.label();
+
+    m_mapView->calloutData()->setTitle(address.split(",")[0]);
+    m_mapView->calloutData()->setDetail(address.mid(address.indexOf(",") + 1, -1));
+    m_mapView->calloutData()->setLocation(location);
+    m_mapView->calloutData()->setVisible(true);
+
+    m_graphic->setGeometry(geocode.displayLocation());
+    m_graphic->attributes()->setAttributesMap(geocode.attributes());
+    constexpr double scale = 8000.0;
+    m_mapView->setViewpointCenter(geocode.extent().center(), scale);
+    m_graphic->setVisible(true);
+
+    qDebug() << address;
+  });
 }
 
 void ReverseGeocodeOnline::init()
@@ -90,41 +150,7 @@ void ReverseGeocodeOnline::setMapView(MapQuickView* mapView)
   configureGraphic();
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
-  {
-    const Point clickedLocation = m_mapView->screenToLocation(e.x(), e.y());
-    ReverseGeocodeParameters* reverseGeocodeParameters = new ReverseGeocodeParameters();
-    reverseGeocodeParameters->setOutputSpatialReference(m_mapView->spatialReference());
-    m_locatorTask->reverseGeocodeWithParameters(clickedLocation, *reverseGeocodeParameters);
-  });
-
-  connect(m_locatorTask, &LocatorTask::geocodeCompleted, this, [this](QUuid, const   QList<GeocodeResult>& geocodeResults)
-  {
-    if (geocodeResults.length() == 0)
-      return;
-
-    GeocodeResult geocode = geocodeResults.at(0);
-    const Point location = geocode.displayLocation();
-    m_mapView->setViewpointCenter(location);
-
-    const QString address = geocode.label();
-
-    m_mapView->calloutData()->setTitle("Location");
-    m_mapView->calloutData()->setLocation(location);
-    m_mapView->calloutData()->setDetail(address);
-    m_mapView->calloutData()->setVisible(true);
-
-    m_graphic->setGeometry(geocode.displayLocation());
-    m_graphic->attributes()->setAttributesMap(geocode.attributes());
-    constexpr double scale = 8000.0;
-    m_mapView->setViewpointCenter(geocode.extent().center(), scale);
-    m_graphic->setVisible(true);
-
-    //m_calloutData = m_mapView->calloutData();
-    //emit calloutDataChanged();
-
-    qDebug() << "Reverse geocode result: " << address;
-  });
+  getAddress();
 
   emit mapViewChanged();
 }

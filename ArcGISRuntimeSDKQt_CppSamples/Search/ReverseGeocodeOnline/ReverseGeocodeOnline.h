@@ -55,6 +55,7 @@ private:
   Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
   void configureGraphic();
+  void getAddress();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
