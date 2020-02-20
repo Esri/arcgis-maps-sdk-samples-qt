@@ -35,8 +35,8 @@ Item {
     // Rectangle to display distances
     Rectangle
     {
-        width: parent.width / 2.5
-        height: parent.height / 10
+        width: childrenRect.width
+        height: childrenRect.height
         color: "white"
         border.color: "black"
         border.width: 2

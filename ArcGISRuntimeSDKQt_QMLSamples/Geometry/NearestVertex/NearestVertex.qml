@@ -119,7 +119,7 @@ Rectangle {
             var nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, clickedPoint);
             nearestCoordinateGraphic.geometry = nearestCoordinateResult.coordinate;
 
-            distancesLabel.text = `Vertex distance:  ${(nearestVertexPoint.distance/1000.0).toFixed()} km
+            distancesLabel.text = `Vertex distance: ${(nearestVertexPoint.distance/1000.0).toFixed()} km
 Coordinate distance: ${(nearestCoordinateResult.distance/1000.0).toFixed()} km` ;
         }
     }
@@ -128,8 +128,8 @@ Coordinate distance: ${(nearestCoordinateResult.distance/1000.0).toFixed()} km` 
     Rectangle
     {
         id: labelRectangle
-        width: parent.width / 2.5
-        height: parent.height / 10
+        width: childrenRect.width
+        height: childrenRect.height
         anchors {
             top: parent.top
             left: parent.left
@@ -142,7 +142,8 @@ Coordinate distance: ${(nearestCoordinateResult.distance/1000.0).toFixed()} km` 
         Label {
             id: distancesLabel
             font.pointSize: 14
-            leftPadding: 5
+            padding: 5
+            text: "Vertex Distance: 0 km\nCoordinate distance: 0 km"
         }
     }
 }
