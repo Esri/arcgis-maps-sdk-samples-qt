@@ -33,14 +33,17 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+const QUrl url("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
+const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin.png");
+}
+
 ReverseGeocodeOnline::ReverseGeocodeOnline(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::imageryWithLabels(this), this))
 {
-  const QUrl url("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
   m_locatorTask = new LocatorTask(url, this);
-
-  //  m_mapView->graphicsOverlays()->append(graphicsOverlay);
 }
 
 ReverseGeocodeOnline::~ReverseGeocodeOnline() = default;
@@ -49,7 +52,6 @@ void ReverseGeocodeOnline::configureGraphic()
 {
   m_graphicsOverlay = new GraphicsOverlay(this);
 
-  const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin.png");
   PictureMarkerSymbol* pinSymbol = new PictureMarkerSymbol(pinUrl, this);
   SimpleRenderer* simpleRenderer = new SimpleRenderer(pinSymbol, this);
 
