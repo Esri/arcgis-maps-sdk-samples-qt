@@ -23,8 +23,11 @@
 #include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "Multipoint.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleMarkerSymbol.h"
+
+#include <QList>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -70,6 +73,19 @@ void ConvexHull::setMapView(MapQuickView* mapView)
   // create a graphic to show the convex hull
   SimpleLineSymbol* lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 3, this);
   SimpleFillSymbol* fillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Null, Qt::transparent, lineSymbol, this);
+  Graphic* convexHullGraphic = new Graphic(this);
+  graphicsOverlay->graphics()->append(convexHullGraphic);
 
+  // list of Points clicked by user
+  QList<Point> inputs;
+
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this, inputsGraphic](QMouseEvent& e){
+    Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    inputsGraphic->geometry() = clickedPoint;
+    inputsGraphic->setVisible(true);
+    qDebug() << "clicked";
+  });
+
+  m_mapView->graphicsOverlays()->append(graphicsOverlay);
   emit mapViewChanged();
 }
