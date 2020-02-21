@@ -15,6 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
+import QtQuick.Controls 2.6
+import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.8
 import Esri.ArcGISRuntime.Toolkit.Controls 100.8 // needed to use Callout in QML
 
@@ -24,14 +26,27 @@ Rectangle {
     width: 800
     height: 600
 
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/symbol"
     property Point clickedPoint: null
 
     MapView {
         id: mapView
         anchors.fill: parent
 
+
+
+        //        CalloutData {
+        //            title: "Address"
+        //        }
+
+        Callout {
+            id: callout
+            calloutData: parent.calloutData
+            accessoryButtonHidden: true
+            leaderPosition: leaderPositionEnum.Top
+        }
         onMouseClicked: {
-            clickedPoint = mouse.mapPoint;
+            clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);//mouse.mapPoint;
             mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, false, 1);
         }
 
@@ -41,13 +56,23 @@ Rectangle {
                 if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
                 {
                     locatorTask.reverseGeocodeWithParameters(clickedPoint, reverseGeocodeParameters);
-                    console.log("geocoded");
                 }
             }
         }
 
         Map {
             BasemapImageryWithLabels {}
+
+            ViewpointCenter {
+                Point {
+                    x: -13042254.715252
+                    y: 3857970.236806
+                    SpatialReference {
+                        wkid: 3857
+                    }
+                }
+                targetScale: 1e5
+            }
         }
 
         GraphicsOverlay {
@@ -57,74 +82,48 @@ Rectangle {
                 id: simpleRenderer
                 PictureMarkerSymbol {
                     id: pinSymbol
-                    url: "file:///C:/Users/swa10836/ArcGIS/Runtime/Data/symbol/pin.png"
+                    url: dataPath + "/pin.png"
                 }
             }
+
             Graphic {
-                id: graphic
                 geometry: clickedPoint
             }
         }
 
+        ReverseGeocodeParameters {
+            id: reverseGeocodeParameters
+            outputSpatialReference: mapView.spatialReference
+        }
+
         LocatorTask {
             id: locatorTask
-            ReverseGeocodeParameters {
-                id: reverseGeocodeParameters
-                maxResults: 1
-                maxDistance: 1000
-            }
+
+            url: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+            //            Component.onCompleted: {
+            //                load();
+            //            }
 
             onGeocodeStatusChanged: {
                 if (geocodeStatus === Enums.TaskStatusCompleted)
                 {
                     if (geocodeResults.length > 0)
-                        console.log("found results");
-                    if (geocodeResults.length == 0)
-                        console.log("no results");
-                    console.log("task completed");
-                } else {
-                    console.log("task not completed");
+                    {
+                        mapView.setViewpointCenter(geocodeResults[0].displayLocation);
+                        mapView.calloutData.location = clickedPoint;
+                        mapView.calloutData.detail = geocodeResults[0].label;
+                        mapView.calloutData.title = "Location";
+                        callout.showCallout();
+                    }
                 }
             }
         }
-
-        onErrorChanged: {console.log(error.message); }
     }
 
-    //    MouseArea {
-    //        anchors.fill: parent
-    //        onClicked: {
-    //            var clickedPoint = mapView.screenToLocation(mouseX, mouseY);
-    //            graphic.geometry = clickedPoint;
-    //            mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, false, 1);
-
-    //            if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
-    //            {
-    //                console.log("here");
-    //                locatorTask.reverseGeocodeWithParameters(mouse.mapPoint, reverseGeocodeParameters);
-    //                console.log(mouse.mapPoint);
-    //            }
-
-
-    //        }
-    //    }
+    BusyIndicator {
+        anchors.centerIn: parent
+        visible: true
+        running: locatorTask.geocodeStatus === Enums.TaskStatusInProgress
+    }
 
 }
-
-//console.log(reverseGeocodeParameters);
-//if (locatorTask.geocodeStatus === Enums.TaskStatusInProgress)
-//{
-//    console.log("In progress");
-//    //                locatorTask.reverseGeocodeWithParameters(clickedPoint, reverseGeocodeParameters);
-//} else if (locatorTask.geocodeStatus === Enums.TaskStatusReady)
-//{
-//    console.log("ready");
-//    locatorTask.reverseGeocodeWithParameters(clickedPoint, reverseGeocodeParameters);
-//    console.log("done");
-//} else if (locatorTask.geocodeStatus === Enums.TaskStatusErrored)
-//{
-//    console.log("errored");
-//} else if (locatorTask.geocodeStatus === Enums.TaskStatusCompleted)
-//{
-//    console.log("Completed");
-//}
