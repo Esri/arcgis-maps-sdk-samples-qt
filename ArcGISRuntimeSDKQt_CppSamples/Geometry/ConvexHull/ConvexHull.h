@@ -23,10 +23,14 @@ namespace ArcGISRuntime
 {
 class Map;
 class MapQuickView;
+class Point;
 }
 }
 
 #include <QObject>
+#include <QList>
+
+#include "Point.h"
 
 class ConvexHull : public QObject
 {
@@ -40,6 +44,8 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void displayConvexHull();
+
 signals:
   void mapViewChanged();
 
@@ -49,6 +55,7 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  QList<Esri::ArcGISRuntime::Point> m_inputs;
 };
 
 #endif // CONVEXHULL_H

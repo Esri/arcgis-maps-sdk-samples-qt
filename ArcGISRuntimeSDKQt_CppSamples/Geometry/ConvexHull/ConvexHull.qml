@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.6
 import Esri.Samples 1.0
 
 Item {
@@ -24,6 +24,31 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        Rectangle {
+            id: buttonBackground
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 2
+//                color: "white"
+            }
+
+            width: 80 //childrenRect.width
+            height: 20 //childrenRect.height
+
+            Button {
+                id: hullButton
+                width: parent.width
+                height: parent.height
+                Text {
+                    text: "Convex Hull"
+                }
+                onClicked: {
+                    model.displayConvexHull();
+                }
+            }
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view

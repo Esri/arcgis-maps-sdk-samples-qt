@@ -20,10 +20,14 @@
 
 #include "ConvexHull.h"
 
+#include "GeometryEngine.h"
+#include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Multipoint.h"
+#include "MultipointBuilder.h"
+#include "PointCollection.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleMarkerSymbol.h"
 
@@ -52,6 +56,13 @@ MapQuickView* ConvexHull::mapView() const
   return m_mapView;
 }
 
+void ConvexHull::displayConvexHull()
+{
+  qDebug() << "clicked!";
+  return;
+
+}
+
 // Set the view (created in QML)
 void ConvexHull::setMapView(MapQuickView* mapView)
 {
@@ -62,11 +73,11 @@ void ConvexHull::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // graphics overlay to show clicked points and convex hull
-  GraphicsOverlay* graphicsOverlay = new GraphicsOverlay();
+  GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
 
   // create a graphic to show clicked points
   SimpleMarkerSymbol* simpleMarkerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 10, this);
-  Graphic* inputsGraphic = new Graphic();
+  Graphic* inputsGraphic = new Graphic(this);
   inputsGraphic->setSymbol(simpleMarkerSymbol);
   graphicsOverlay->graphics()->append(inputsGraphic);
 
@@ -77,13 +88,22 @@ void ConvexHull::setMapView(MapQuickView* mapView)
   graphicsOverlay->graphics()->append(convexHullGraphic);
 
   // list of Points clicked by user
-  QList<Point> inputs;
+//  QList<Point> inputs;
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this, inputsGraphic](QMouseEvent& e){
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [inputsGraphic, this](QMouseEvent& e){
     Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
-    inputsGraphic->geometry() = clickedPoint;
-    inputsGraphic->setVisible(true);
-    qDebug() << "clicked";
+    m_inputs.push_back(clickedPoint);
+    inputsGraphic->setGeometry(clickedPoint);
+
+    PointCollection* pointCollection = new PointCollection(m_mapView->spatialReference(), this);
+    pointCollection->addPoints(m_inputs);
+    MultipointBuilder* multipointBuilder = new MultipointBuilder(m_mapView->spatialReference(), this);
+    multipointBuilder->setPoints(pointCollection);
+    Multipoint* inputsGeometry = new Multipoint(multipointBuilder->toGeometry());
+    Multipoint blah(multipointBuilder->toGeometry());
+
+    e.accept();
+    qDebug() << m_inputs.length();
   });
 
   m_mapView->graphicsOverlays()->append(graphicsOverlay);
