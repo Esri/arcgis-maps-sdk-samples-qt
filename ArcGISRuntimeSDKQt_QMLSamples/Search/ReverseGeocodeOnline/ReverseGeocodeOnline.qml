@@ -45,10 +45,8 @@ Rectangle {
         }
 
         onIdentifyGraphicsOverlayStatusChanged: {
-            if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted)
-            {
-                if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress)
-                {
+            if (identifyGraphicsOverlayStatus === Enums.TaskStatusCompleted) {
+                if (locatorTask.geocodeStatus !== Enums.TaskStatusInProgress) {
                     locatorTask.reverseGeocodeWithParameters(clickedPoint, reverseGeocodeParameters);
                 }
             }
@@ -65,7 +63,7 @@ Rectangle {
                         wkid: 3857
                     }
                 }
-                targetScale: 3e4
+                targetScale: 30000
             }
         }
 
@@ -92,18 +90,19 @@ Rectangle {
 
         LocatorTask {
             id: locatorTask
-            url: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+            url: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
 
             onGeocodeStatusChanged: {
-                if (geocodeStatus === Enums.TaskStatusCompleted)
-                {
-                    if (geocodeResults.length > 0)
-                    {
+                if (geocodeStatus === Enums.TaskStatusCompleted) {
+                    if (geocodeResults.length > 0) {
                         var address = geocodeResults[0].label;
+                        let splitIndex = address.indexOf(",");
                         mapView.setViewpointCenter(geocodeResults[0].displayLocation);
                         mapView.calloutData.location = clickedPoint;
-                        mapView.calloutData.title = address.split(",")[0];
-                        mapView.calloutData.detail = address.substring(address.indexOf(", ") + 2);
+//                        mapView.calloutData.title = address.split(",")[0];
+//                        mapView.calloutData.detail = address.substring(address.indexOf(", ") + 2);
+                        mapView.calloutData.title = address.substring(0, splitIndex < 0 ? undefined: splitIndex).trim();
+                        mapView.calloutData.detail = address.substring(splitIndex + 1).trim();
                         callout.showCallout();
                     }
                 }
