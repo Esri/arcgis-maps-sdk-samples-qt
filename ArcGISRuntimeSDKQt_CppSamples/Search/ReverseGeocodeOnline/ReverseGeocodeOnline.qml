@@ -21,7 +21,7 @@ import Esri.ArcGISRuntime.Toolkit.Controls 100.8 // needed to use Callout in QML
 
 Item {
 
-    // add a mapView component
+    // add a MapView component
     MapView {
         id: view
         anchors.fill: parent
@@ -39,7 +39,4 @@ Item {
         id: model
         mapView: view
     }
-
-
-
 }

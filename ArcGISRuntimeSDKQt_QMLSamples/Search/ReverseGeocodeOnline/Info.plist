@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>ReverseGeocodeOnline</string>
+	<string>Reverse geocode</string>
 	<key>CFBundleExecutable</key>
 	<string>ReverseGeocodeOnline</string>
 	<key>CFBundleGetInfoString</key>

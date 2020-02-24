@@ -33,12 +33,6 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
-
-
-        //        CalloutData {
-        //            title: "Address"
-        //        }
-
         Callout {
             id: callout
             calloutData: parent.calloutData
@@ -46,7 +40,7 @@ Rectangle {
             leaderPosition: leaderPositionEnum.Top
         }
         onMouseClicked: {
-            clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);//mouse.mapPoint;
+            clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
             mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, 5, false, 1);
         }
 
@@ -71,7 +65,7 @@ Rectangle {
                         wkid: 3857
                     }
                 }
-                targetScale: 1e5
+                targetScale: 3e4
             }
         }
 
@@ -79,10 +73,10 @@ Rectangle {
             id: graphicsOverlay
 
             SimpleRenderer {
-                id: simpleRenderer
                 PictureMarkerSymbol {
-                    id: pinSymbol
                     url: dataPath + "/pin.png"
+                    height: 72
+                    width: 19
                 }
             }
 
@@ -98,21 +92,18 @@ Rectangle {
 
         LocatorTask {
             id: locatorTask
-
             url: "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
-            //            Component.onCompleted: {
-            //                load();
-            //            }
 
             onGeocodeStatusChanged: {
                 if (geocodeStatus === Enums.TaskStatusCompleted)
                 {
                     if (geocodeResults.length > 0)
                     {
+                        var address = geocodeResults[0].label;
                         mapView.setViewpointCenter(geocodeResults[0].displayLocation);
                         mapView.calloutData.location = clickedPoint;
-                        mapView.calloutData.detail = geocodeResults[0].label;
-                        mapView.calloutData.title = "Location";
+                        mapView.calloutData.title = address.split(",")[0];
+                        mapView.calloutData.detail = address.substring(address.indexOf(", ") + 2);
                         callout.showCallout();
                     }
                 }
@@ -125,5 +116,4 @@ Rectangle {
         visible: true
         running: locatorTask.geocodeStatus === Enums.TaskStatusInProgress
     }
-
 }

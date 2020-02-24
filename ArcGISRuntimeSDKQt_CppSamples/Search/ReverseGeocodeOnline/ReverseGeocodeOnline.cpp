@@ -34,12 +34,6 @@
 
 using namespace Esri::ArcGISRuntime;
 
-//namespace
-//{
-//const QUrl url("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
-//const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin.png");
-//}
-
 namespace
 {
 // helper method to get cross platform data path
@@ -76,6 +70,8 @@ void ReverseGeocodeOnline::configureGraphic()
   m_graphicsOverlay = new GraphicsOverlay(this);
 
   PictureMarkerSymbol* pinSymbol = new PictureMarkerSymbol(pinUrl, this);
+  pinSymbol->setHeight(72);
+  pinSymbol->setWidth(19);
   SimpleRenderer* simpleRenderer = new SimpleRenderer(pinSymbol, this);
 
   m_graphicsOverlay->setRenderer(simpleRenderer);
@@ -114,8 +110,6 @@ void ReverseGeocodeOnline::getAddress()
     constexpr double scale = 8000.0;
     m_mapView->setViewpointCenter(geocode.extent().center(), scale);
     m_graphic->setVisible(true);
-
-    qDebug() << address;
   });
 }
 
@@ -145,6 +139,10 @@ void ReverseGeocodeOnline::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
+
+  // center map in San Diego
+  const Point center(-13042254.715252, 3857970.236806, SpatialReference(3857));
+  m_mapView->setViewpointCenter(center, 3e4);
 
   configureGraphic();
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);

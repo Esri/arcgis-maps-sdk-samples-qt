@@ -1,31 +1,33 @@
 # Reverse geocode
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+This sample demonstrates how to get the address for a point on the map.
 
 ![](screenshot.png)
 
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Click on a point on the map to perform online reverse geocoding and show the matching results on the map.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+To perform online reverse geocode:
+1. Create the `Map` with `Basemap`.
+2. Create a `LocatorTask` using a URL.
+3. Set the `ReverseGeocodeParameters` for the `LocatorTask` and specify the geocode's attributes.
+4. Get the matching results from the `GeocodeResult` using `ReverseGeocodeWithParameters`
+5. Change the attributes of the `MapView`'s `CalloutData` and display the location using a `Callout`
 
 ## Relevant API
- - ClassName1
- - MethodName
+ - Callout
+ - CalloutData
+ - GraphicsOverlay
+ - LocatorTask
+ - PictureMarkerSymbol
+ - ReverseGeocodeParameters
 
 ## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
 Link | Local Location
 ---------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+[pin PNG file](https://github.com/Esri/arcgis-runtime-samples-java/blob/master/search/reverse-geocode-online/src/main/resources/pin.png)| `<userhome>`/ArcGIS/Runtime/Data/symbol/pin.png |
 
-## Additional information
-A standard level license is required to ...
 
 ## Tags
-Routing, Network analysis, Geocode
-
+Callout, Geocode

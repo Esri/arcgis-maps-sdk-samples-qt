@@ -8,6 +8,7 @@
     "keywords": [
         "callout",
         "geocode"
+        "reverse geocode"
     ],
     "redirect_from": "",
     "relevant_apis": [

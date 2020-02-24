@@ -9,7 +9,7 @@ Click on a point on the map to perform online reverse geocoding and show the mat
 
 ## How it works
 To perform online reverse geocode:
-1. Create the `ArcGISMap` with `Basemap`.
+1. Create the `Map` with a `Basemap`.
 2. Create a `LocatorTask` using a URL.
 3. Set the `ReverseGeocodeParameters` for the `LocatorTask` and specify the geocode's attributes.
 4. Get the matching results from the `GeocodeResult` using `ReverseGeocodeWithParameters`
