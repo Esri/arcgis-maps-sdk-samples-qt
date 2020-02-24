@@ -21,9 +21,14 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Graphic;
+class GraphicsOverlay;
 class Map;
 class MapQuickView;
 class Point;
+class SimpleFillSymbol;
+class SimpleLineSymbol;
+class SimpleMarkerSymbol;
 }
 }
 
@@ -45,6 +50,7 @@ public:
   static void init();
 
   Q_INVOKABLE void displayConvexHull();
+  Q_INVOKABLE void clearGraphics();
 
 signals:
   void mapViewChanged();
@@ -53,9 +59,19 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
+  void setupGraphics();
+  void getInputs();
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+
   QList<Esri::ArcGISRuntime::Point> m_inputs;
+  Esri::ArcGISRuntime::Graphic* m_inputsGraphic = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_convexHullGraphic = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
+  Esri::ArcGISRuntime::SimpleFillSymbol* m_fillSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
+  Esri::ArcGISRuntime::SimpleMarkerSymbol* m_markerSymbol = nullptr;
 };
 
 #endif // CONVEXHULL_H

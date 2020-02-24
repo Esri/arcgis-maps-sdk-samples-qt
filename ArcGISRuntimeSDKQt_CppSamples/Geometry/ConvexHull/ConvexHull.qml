@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.6
 import Esri.Samples 1.0
+import QtQuick.Layouts 1.11
 
 Item {
 
@@ -25,29 +26,39 @@ Item {
         id: view
         anchors.fill: parent
 
-        Rectangle {
-            id: buttonBackground
+        RowLayout {
+            id: layout
+//            anchors.fill: parent
             anchors {
-                top: parent.top
-                left: parent.left
-                margins: 2
-//                color: "white"
+             left: parent.left
+             top: parent.top
             }
-
-            width: 80 //childrenRect.width
-            height: 20 //childrenRect.height
-
-            Button {
-                id: hullButton
-                width: parent.width
-                height: parent.height
-                Text {
-                    text: "Convex Hull"
-                }
-                onClicked: {
-                    model.displayConvexHull();
-                }
+        // create a button to create and show the convex hull
+        Button {
+            id: hullButton
+//            anchors {
+//                left: parent.left
+//                top: parent.top
+//                margins: 5
+//            }
+            width: implicitWidth
+            height: implicitHeight
+            text: "Convex Hull"
+            onClicked: {
+                model.displayConvexHull();
             }
+        }
+
+        Button {
+            id: clearButton
+            width: implicitWidth
+            height: implicitHeight
+            text: "Reset"
+            onClicked: {
+                model.clearGraphics();
+            }
+        }
+
         }
     }
 
@@ -55,5 +66,6 @@ Item {
     ConvexHullSample {
         id: model
         mapView: view
+
     }
 }

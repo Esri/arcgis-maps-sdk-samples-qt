@@ -58,9 +58,67 @@ MapQuickView* ConvexHull::mapView() const
 
 void ConvexHull::displayConvexHull()
 {
-  qDebug() << "clicked!";
-  return;
+  Geometry convexHull = GeometryEngine::convexHull(m_inputsGraphic->geometry());
+  switch (convexHull.geometryType()) {
+  case GeometryType::Point:
+    m_convexHullGraphic->setSymbol(m_markerSymbol);
+    break;
+  case GeometryType::Polyline:
+    m_convexHullGraphic->setSymbol(m_lineSymbol);
+    break;
+  case GeometryType::Polygon:
+    m_convexHullGraphic->setSymbol(m_fillSymbol);
+    break;
+  }
 
+  m_convexHullGraphic->setGeometry(convexHull);
+  return;
+}
+
+void ConvexHull::clearGraphics()
+{
+  m_inputs.clear();
+  m_inputsGraphic->setGeometry(Geometry());
+  m_convexHullGraphic->setGeometry(Geometry());
+}
+
+void ConvexHull::setupGraphics()
+{
+  // graphics overlay to show clicked points and convex hull
+  m_graphicsOverlay = new GraphicsOverlay(this);
+
+  // create a graphic to show clicked points
+  m_markerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 10, this);
+  m_inputsGraphic = new Graphic(this);
+  m_inputsGraphic->setSymbol(m_markerSymbol);
+  m_graphicsOverlay->graphics()->append(m_inputsGraphic);
+
+  // create a graphic to display the convex hull
+  m_convexHullGraphic = new Graphic(this);
+  m_graphicsOverlay->graphics()->append(m_convexHullGraphic);
+
+  // create a graphic to show the convex hull
+  m_lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 3, this);
+  m_fillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Null, Qt::transparent, m_lineSymbol, this);
+}
+
+void ConvexHull::getInputs()
+{
+  // show clicked points on MapView
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e){
+    Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    m_inputs.push_back(clickedPoint);
+
+    PointCollection* pointCollection = new PointCollection(m_mapView->spatialReference(), this);
+    pointCollection->addPoints(m_inputs);
+    MultipointBuilder* multipointBuilder = new MultipointBuilder(m_mapView->spatialReference(), this);
+    multipointBuilder->setPoints(pointCollection);
+    m_inputsGraphic->setGeometry(multipointBuilder->toGeometry());
+
+
+    e.accept();
+    qDebug() << m_inputs.length();
+  });
 }
 
 // Set the view (created in QML)
@@ -72,40 +130,9 @@ void ConvexHull::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  // graphics overlay to show clicked points and convex hull
-  GraphicsOverlay* graphicsOverlay = new GraphicsOverlay(this);
+  setupGraphics();
+  getInputs();
 
-  // create a graphic to show clicked points
-  SimpleMarkerSymbol* simpleMarkerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 10, this);
-  Graphic* inputsGraphic = new Graphic(this);
-  inputsGraphic->setSymbol(simpleMarkerSymbol);
-  graphicsOverlay->graphics()->append(inputsGraphic);
-
-  // create a graphic to show the convex hull
-  SimpleLineSymbol* lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 3, this);
-  SimpleFillSymbol* fillSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::Null, Qt::transparent, lineSymbol, this);
-  Graphic* convexHullGraphic = new Graphic(this);
-  graphicsOverlay->graphics()->append(convexHullGraphic);
-
-  // list of Points clicked by user
-//  QList<Point> inputs;
-
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [inputsGraphic, this](QMouseEvent& e){
-    Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
-    m_inputs.push_back(clickedPoint);
-    inputsGraphic->setGeometry(clickedPoint);
-
-    PointCollection* pointCollection = new PointCollection(m_mapView->spatialReference(), this);
-    pointCollection->addPoints(m_inputs);
-    MultipointBuilder* multipointBuilder = new MultipointBuilder(m_mapView->spatialReference(), this);
-    multipointBuilder->setPoints(pointCollection);
-    Multipoint* inputsGeometry = new Multipoint(multipointBuilder->toGeometry());
-    Multipoint blah(multipointBuilder->toGeometry());
-
-    e.accept();
-    qDebug() << m_inputs.length();
-  });
-
-  m_mapView->graphicsOverlays()->append(graphicsOverlay);
+  m_mapView->graphicsOverlays()->append(m_graphicsOverlay);
   emit mapViewChanged();
 }
