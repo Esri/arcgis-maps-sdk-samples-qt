@@ -12,12 +12,9 @@
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "Geometry",
         "GeometryEngine"
     ],
     "snippets": [
-        "ConvexHull.cpp",
-        "ConvexHull.h",
         "ConvexHull.qml"
     ],
     "title": "Convex hull"

@@ -25,19 +25,16 @@
 #include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "Multipoint.h"
 #include "MultipointBuilder.h"
 #include "PointCollection.h"
 #include "SimpleFillSymbol.h"
 #include "SimpleMarkerSymbol.h"
 
-#include <QList>
-
 using namespace Esri::ArcGISRuntime;
 
 ConvexHull::ConvexHull(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::imagery(this), this))
+  m_map(new Map(Basemap::topographic(this), this))
 {
 
 }
@@ -59,21 +56,23 @@ MapQuickView* ConvexHull::mapView() const
 void ConvexHull::displayConvexHull()
 {
   Geometry convexHull = GeometryEngine::convexHull(m_inputsGraphic->geometry());
-  switch (convexHull.geometryType()) {
-  case GeometryType::Point:
+
+  if (convexHull.geometryType() == GeometryType::Point)
+  {
     m_convexHullGraphic->setSymbol(m_markerSymbol);
-    break;
-  case GeometryType::Polyline:
+  }
+  else if (convexHull.geometryType() == GeometryType::Polyline)
+  {
     m_convexHullGraphic->setSymbol(m_lineSymbol);
-    break;
-  case GeometryType::Polygon:
+  }
+  else if (convexHull.geometryType() == GeometryType::Polygon)
+  {
     m_convexHullGraphic->setSymbol(m_fillSymbol);
-    break;
   }
 
   m_convexHullGraphic->setGeometry(convexHull);
   return;
-}
+  }
 
 void ConvexHull::clearGraphics()
 {
@@ -115,9 +114,7 @@ void ConvexHull::getInputs()
     multipointBuilder->setPoints(pointCollection);
     m_inputsGraphic->setGeometry(multipointBuilder->toGeometry());
 
-
     e.accept();
-    qDebug() << m_inputs.length();
   });
 }
 
