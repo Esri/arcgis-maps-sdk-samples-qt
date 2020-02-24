@@ -57,6 +57,7 @@ void ConvexHull::displayConvexHull()
 {
   Geometry convexHull = GeometryEngine::convexHull(m_inputsGraphic->geometry());
 
+  // change the symbol based on the returned geometry type
   if (convexHull.geometryType() == GeometryType::Point)
   {
     m_convexHullGraphic->setSymbol(m_markerSymbol);
@@ -105,7 +106,9 @@ void ConvexHull::getInputs()
 {
   // show clicked points on MapView
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e){
-    Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    e.accept();
+
+    const Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
     m_inputs.push_back(clickedPoint);
 
     PointCollection* pointCollection = new PointCollection(m_mapView->spatialReference(), this);
@@ -113,8 +116,6 @@ void ConvexHull::getInputs()
     MultipointBuilder* multipointBuilder = new MultipointBuilder(m_mapView->spatialReference(), this);
     multipointBuilder->setPoints(pointCollection);
     m_inputsGraphic->setGeometry(multipointBuilder->toGeometry());
-
-    e.accept();
   });
 }
 

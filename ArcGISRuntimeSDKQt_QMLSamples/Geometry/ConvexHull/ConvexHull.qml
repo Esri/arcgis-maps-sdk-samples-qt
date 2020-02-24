@@ -64,6 +64,7 @@ Rectangle {
             }
         }
 
+        // stores clicked points
         PointCollection {
             id: inputs
             spatialReference: mapView.spatialReference
@@ -85,12 +86,11 @@ Rectangle {
 
         RowLayout {
             anchors {
-             left: parent.left
-             top: parent.top
+                left: parent.left
+                top: parent.top
             }
 
             Button {
-                id: hullButton
                 width: implicitWidth
                 height: implicitHeight
                 text: "Convex Hull"
@@ -113,7 +113,6 @@ Rectangle {
             }
 
             Button {
-                id: clearButton
                 width: implicitWidth
                 height: implicitHeight
                 text: "Reset"

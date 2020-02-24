@@ -27,38 +27,28 @@ Item {
         anchors.fill: parent
 
         RowLayout {
-            id: layout
-//            anchors.fill: parent
             anchors {
-             left: parent.left
-             top: parent.top
+                left: parent.left
+                top: parent.top
             }
-        // create a button to create and show the convex hull
-        Button {
-            id: hullButton
-//            anchors {
-//                left: parent.left
-//                top: parent.top
-//                margins: 5
-//            }
-            width: implicitWidth
-            height: implicitHeight
-            text: "Convex Hull"
-            onClicked: {
-                model.displayConvexHull();
-            }
-        }
 
-        Button {
-            id: clearButton
-            width: implicitWidth
-            height: implicitHeight
-            text: "Reset"
-            onClicked: {
-                model.clearGraphics();
+            Button {
+                width: implicitWidth
+                height: implicitHeight
+                text: "Convex Hull"
+                onClicked: {
+                    model.displayConvexHull();
+                }
             }
-        }
 
+            Button {
+                width: implicitWidth
+                height: implicitHeight
+                text: "Reset"
+                onClicked: {
+                    model.clearGraphics();
+                }
+            }
         }
     }
 
