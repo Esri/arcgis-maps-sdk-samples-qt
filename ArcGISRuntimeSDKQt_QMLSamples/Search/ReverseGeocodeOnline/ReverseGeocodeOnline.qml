@@ -99,8 +99,6 @@ Rectangle {
                         let splitIndex = address.indexOf(",");
                         mapView.setViewpointCenter(geocodeResults[0].displayLocation);
                         mapView.calloutData.location = clickedPoint;
-//                        mapView.calloutData.title = address.split(",")[0];
-//                        mapView.calloutData.detail = address.substring(address.indexOf(", ") + 2);
                         mapView.calloutData.title = address.substring(0, splitIndex < 0 ? undefined: splitIndex).trim();
                         mapView.calloutData.detail = address.substring(splitIndex + 1).trim();
                         callout.showCallout();
