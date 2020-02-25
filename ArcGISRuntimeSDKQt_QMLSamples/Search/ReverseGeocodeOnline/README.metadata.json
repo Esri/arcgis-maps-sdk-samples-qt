@@ -1,0 +1,26 @@
+{
+    "category": "Search",
+    "description": "This sample demonstrates how to get the address for a point on the map.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "callout",
+        "geocode"
+        "reverse geocode"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "Callout",
+        "CalloutData",
+        "GraphicsOverlay",
+        "LocatorTask"
+        "PictureMarkerSymbol",
+        "ReverseGeocodeParameters"
+    ],
+    "snippets": [
+        "ReverseGeocodeOnline.qml"
+    ],
+    "title": "Reverse geocode"
+}

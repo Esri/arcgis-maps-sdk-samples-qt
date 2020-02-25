@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Search/ReverseGeocodeOnline">
+        <file alias="sample.json">ReverseGeocodeOnline.json</file>
+        <file>ReverseGeocodeOnline.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
