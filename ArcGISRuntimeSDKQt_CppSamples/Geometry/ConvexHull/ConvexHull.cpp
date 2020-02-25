@@ -36,7 +36,7 @@ ConvexHull::ConvexHull(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::topographic(this), this))
 {
-
+  setupGraphics();
 }
 
 ConvexHull::~ConvexHull() = default;
@@ -73,7 +73,7 @@ void ConvexHull::displayConvexHull()
 
   m_convexHullGraphic->setGeometry(convexHull);
   return;
-  }
+}
 
 void ConvexHull::clearGraphics()
 {
@@ -128,7 +128,6 @@ void ConvexHull::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  setupGraphics();
   getInputs();
 
   m_mapView->graphicsOverlays()->append(m_graphicsOverlay);

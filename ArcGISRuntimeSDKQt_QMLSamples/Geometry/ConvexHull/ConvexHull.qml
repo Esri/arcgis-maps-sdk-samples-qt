@@ -55,7 +55,6 @@ Rectangle {
             id: fillSymbol
             style: Enums.SimpleFillSymbolStyleNull
             color: "transparent"
-
             SimpleLineSymbol {
                 id: lineSymbol
                 style: Enums.SimpleLineSymbolStyleSolid
@@ -123,9 +122,6 @@ Rectangle {
                     convexHullGraphic.geometry = null;
                 }
             }
-
         }
     }
-
-
 }
