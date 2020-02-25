@@ -21,8 +21,18 @@
 #include "OfflineRouting.h"
 
 #include "ArcGISTiledLayer.h"
+#include "Graphic.h"
+#include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "Polyline.h"
+#include "RouteParameters.h"
+#include "RouteResult.h"
+#include "RouteTask.h"
+#include "SimpleLineSymbol.h"
+#include "SimpleRenderer.h"
+#include "Stop.h"
+#include "TextSymbol.h"
 #include "TileCache.h"
 
 #include <QDir>
@@ -57,6 +67,13 @@ OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
   Basemap* basemap = new Basemap(tiledLayer, this);
   m_map = new Map(basemap, this);
   m_map->setMinScale(100000);
+
+  m_stopsOverlay = new GraphicsOverlay(this);
+  m_routeOverlay = new GraphicsOverlay(this);
+
+  SimpleLineSymbol* lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 2, this);
+  SimpleRenderer* routeRenderer = new SimpleRenderer(lineSymbol, this);
+  m_routeOverlay->setRenderer(routeRenderer);
 }
 
 OfflineRouting::~OfflineRouting() = default;
@@ -73,6 +90,60 @@ MapQuickView* OfflineRouting::mapView() const
   return m_mapView;
 }
 
+QStringList OfflineRouting::travelModeNames()
+{
+  QList<TravelMode> modesList = m_routeTask->routeTaskInfo().travelModes();
+  QStringList strList;
+  for (int i = 0; i < modesList.size(); ++i)
+  {
+    strList << modesList[i].name();
+  }
+  return strList;
+}
+
+void OfflineRouting::setTravelModeIndex(int index)
+{
+  m_travelModeIndex = index;
+  emit travelModeIndexChanged();
+//  qDebug() << m_travelModeIndex;
+}
+
+int OfflineRouting::travelModeIndex()
+{
+  return m_travelModeIndex;
+}
+
+void OfflineRouting::findRoute()
+{
+  qDebug() << m_travelModeIndex;
+  int numGraphics = m_stopsOverlay->graphics()->size();
+  if (numGraphics > 1)
+  {
+    QList<Stop> stops;
+    for (int i = 0; i < numGraphics; ++i)
+    {
+      stops.append(Stop(m_stopsOverlay->graphics()->at(i)->geometry()));
+    }
+
+    // configure stops and travel mode
+    m_routeParameters.setStops(stops);
+    m_routeParameters.setTravelMode(m_routeTask->routeTaskInfo().travelModes().at(m_travelModeIndex));
+
+    // solve the route
+    m_routeTask->solveRoute(m_routeParameters); // emits solveRouteCompleted
+
+    connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult routeResult){
+      // clear old route
+      m_routeOverlay->graphics()->clear();
+      Polyline routeGeometry = routeResult.routes().first().routeGeometry();
+      Graphic* routeGraphic = new Graphic(routeGeometry, this);
+
+      m_routeOverlay->graphics()->append(routeGraphic);
+    });
+
+  }
+}
+
 // Set the view (created in QML)
 void OfflineRouting::setMapView(MapQuickView* mapView)
 {
@@ -82,7 +153,54 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  m_mapView->graphicsOverlays()->append(m_stopsOverlay);
+  m_mapView->graphicsOverlays()->append(m_routeOverlay);
+
   const QString geodatabaseLocation = QString("%1/ArcGIS/Runtime/Data/tpk/san_diego/sandiego.geodatabase").arg(defaultDataPath());
+  m_routeTask = new RouteTask(geodatabaseLocation, "Streets_ND",this);
+  m_routeTask->load();
+
+  connect(m_routeTask, &RouteTask::doneLoading, this, [this](Error loadError){
+    if (loadError.isEmpty())
+    {
+//      m_routeParameters = m_routeTask->createDefaultParameters();
+      m_routeTask->createDefaultParameters();
+      emit travelModeNamesChanged();
+
+    }
+    else
+    {
+      qDebug() << loadError.message();
+      return;
+    }
+  });
+
+  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, const RouteParameters& defaultParameters){
+    m_routeParameters = defaultParameters;
+  });
+
+  // get stops from clicked locations
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e){
+    e.accept();
+    const Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+
+    // if didn't click on an existing stop, then add a stop
+    if (m_stopsOverlay->selectedGraphics().isEmpty())
+    {
+      TextSymbol* stopLabel = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::red, 20, HorizontalAlignment::Right, VerticalAlignment::Top);
+      Graphic* stopGraphic = new Graphic(clickedPoint, stopLabel, this);
+      m_stopsOverlay->graphics()->append(stopGraphic);
+    }
+    // otherwise move existing stop
+    else
+    {
+
+    }
+
+    findRoute();
+  });
+
+//  connect(m_mapView, &MapQuickView::mouse);
 
   emit mapViewChanged();
 }

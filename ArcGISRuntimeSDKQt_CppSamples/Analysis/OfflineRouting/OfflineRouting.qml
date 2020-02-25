@@ -19,16 +19,25 @@ import QtQuick.Controls 2.2
 import Esri.Samples 1.0
 
 Item {
-
     // add a mapView component
     MapView {
         id: view
         anchors.fill: parent
     }
 
+    ComboBox {
+        id: comboBox
+        width: 200
+        model: routingModel.travelModeNames
+        onCurrentIndexChanged: {
+            routingModel.travelModeIndex = currentIndex;
+            routingModel.findRoute();
+        }
+    }
+
     // Declare the C++ instance which creates the scene etc. and supply the view
     OfflineRoutingSample {
-        id: model
+        id: routingModel
         mapView: view
     }
 }

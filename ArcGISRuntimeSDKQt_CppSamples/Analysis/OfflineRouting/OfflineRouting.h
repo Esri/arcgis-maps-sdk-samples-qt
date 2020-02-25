@@ -21,18 +21,25 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class GraphicsOverlay;
 class Map;
 class MapQuickView;
+class RouteParameters;
+class RouteTask;
 }
 }
 
 #include <QObject>
+
+#include "RouteParameters.h"
 
 class OfflineRouting : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QStringList travelModeNames READ travelModeNames NOTIFY travelModeNamesChanged)
+  Q_PROPERTY(int travelModeIndex READ travelModeIndex WRITE setTravelModeIndex NOTIFY travelModeIndexChanged)
 
 public:
   explicit OfflineRouting(QObject* parent = nullptr);
@@ -40,15 +47,30 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void findRoute();
+//  Q_INVOKABLE int getTravelMode();
+
 signals:
   void mapViewChanged();
+  void travelModeNamesChanged();
+  void travelModeIndexChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
+  QStringList travelModeNames();
+  int travelModeIndex();
+  void setTravelModeIndex(int index);
+
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+
+  Esri::ArcGISRuntime::GraphicsOverlay* m_stopsOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
+  Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
+  Esri::ArcGISRuntime::RouteParameters m_routeParameters;
+  int m_travelModeIndex = 0;
 };
 
 #endif // OFFLINEROUTING_H
