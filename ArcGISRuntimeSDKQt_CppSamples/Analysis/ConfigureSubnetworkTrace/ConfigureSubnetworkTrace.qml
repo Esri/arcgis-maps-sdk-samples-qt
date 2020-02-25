@@ -163,8 +163,6 @@ Item {
                 Row {
                     anchors.fill: parent
 
-
-
                     Text {
                         text: model.expressionBuilder
                     }

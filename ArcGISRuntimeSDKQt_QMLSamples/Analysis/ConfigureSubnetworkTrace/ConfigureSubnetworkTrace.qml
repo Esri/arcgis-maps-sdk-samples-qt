@@ -31,10 +31,10 @@ Rectangle {
     property int inc: 0 //* remove
     property var combineExpression
     property var currentComparisonOperator
-    property var expression1
+//    property var expression1
     property var initialExpression
     property var networkDefinition
-    property var otherExpression
+//    property var otherExpression
     property var traceConfiguration
     property var utilityElementStartingLocation
     readonly property string assetGroupName: "Circuit Breaker"
@@ -65,7 +65,19 @@ Rectangle {
         url: featureLayerUrl
 
         onTraceStatusChanged: {
+            if (traceStatus !== Enums.TaskStatusCompleted)
+                return;
 
+            if (traceResult.count === 0) {
+                busy.visible = false;
+                return;
+            }
+
+            const myTraceResult = traceResult.get(0);
+            const resultElements = myTraceResult.elements;
+
+            dialogText.text = qsTr("%1 elements found.".arg(resultElements.length))
+            dialog.visible = true;
         }
 
         onErrorChanged: {
@@ -111,10 +123,11 @@ Rectangle {
 
             traceConfiguration.traversability.scope = Enums.UtilityTraversabilityScopeJunctions;
 
-            let expression = expressionToString(initialExpression);
-            print(expression); //* remove
+            let expressionAsString = expressionToString(initialExpression);
+            print(expressionAsString); //* remove
 
-            myModel.append({condition: expression});
+//            myModel.append({condition: expression});
+            expressionBuilder.text = expressionAsString;
 
         }
 
@@ -194,34 +207,30 @@ Rectangle {
         }
         //*
 
-        let workingNetworkAttribute = networkDefinition.networkAttribute(networkAttributeComboBox.currentText);
+        const selectedNetworkAttribute = networkDefinition.networkAttribute(networkAttributeComboBox.currentText);
 
         if (workingNetworkAttribute.domain.domainType === Enums.DomainTypeCodedValueDomain) {
             print("DomainTypeCodedValueDomain"); //* remove
 
-            expression1 = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
-                                                                   networkAttribute: workingNetworkAttribute,
+            const expression = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
+                                                                   networkAttribute: selectedNetworkAttribute,
                                                                    comparisonOperator: comparisonOperatorComboBox.currentIndex,
                                                                    value: valueSelectionComboBox.currentIndex});
 
-            otherExpression = traceConfiguration.traversability.barriers;
+            const otherExpression = traceConfiguration.traversability.barriers;
 
             if (otherExpression) {
-                combineExpression = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
+                combineExpressions = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
                                                                                   leftExpression: otherExpression,
-                                                                                  rightExpression: expression1
+                                                                                  rightExpression: expression
                                                                               });
 
-                var tmp1 = combineExpression;
+                traceConfiguration.traversability.barriers = combineExpressions;
 
-                var temp3 = expression1;
-                traceConfiguration.traversability.barriers = combineExpression;
-//                traceConfiguration.traversability.barriers = expression1;
-//                print(expressionToString(traceConfiguration.traversability.barriers));
+                print(expressionToString(combineExpressions));
 
-                var tmp2 = combineExpression.leftExpression;
 
-                print(expressionToString(combineExpression));
+                expressionBuilder.text = expressionToString(combineExpressions);
 
 //                combineExpression = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
 //                                                                                  leftExpression: otherExpression,
@@ -235,6 +244,25 @@ Rectangle {
             let expression = ArcGISRuntimeEnvironment.createObject("", {});
         }
 
+    }
+
+    function reset() {
+        traceConfiguration.traversability.barriers = initialExpression;
+        expressionBuilder.text = expressionToString(initialExpression);
+    }
+
+    function trace() {
+        busyIndicator.visible = true;
+        if (!utilityNetwork || !utilityElementStartingLocation) {
+            return;
+        } else {
+            let startingLocations = [utilityElementStartingLocation];
+            params.startingLocations = startingLocations;
+            params.traceType = Enums.UtilityTraceTypeSubnetwork;
+            params.traceConfiguration = traceConfiguration;
+
+            utilityNetwork.trace(params);
+        }
     }
 
     UtilityTraceParameters {
@@ -435,7 +463,7 @@ Rectangle {
                 Row {
                     anchors.fill: parent
                     Text {
-                        text: model.expressionBuilder
+                        id: expressionBuilder
                     }
                 }
             }
@@ -446,24 +474,47 @@ Rectangle {
                 Button {
                     text: qsTr("Trace")
                     Layout.fillWidth: true
+                    onClicked: trace();
                 }
 
                 Button {
                     text: qsTr("Reset")
                     Layout.fillWidth: true
+                    onClicked: reset();
                 }
             }
 
-            Button {
-                id: testButton
-                text: qsTr("test input text field to comboBox")
-//                onClicked: inputTextField.visible = !inputTextField.visible
-                onClicked: {
-//                    let workingNetworkAttribute = networkDefinition.networkAttribute(networkAttributeComboBox.currentText);
-//                    print(workingNetworkAttribute.domain.codedValues[valueSelectionComboBox.currentIndex].code);
-//                    print(valueSelectionComboBox.currentIndex);
-                }
-            }
+//            Button {
+//                id: testButton
+//                text: qsTr("test input text field to comboBox")
+////                onClicked: inputTextField.visible = !inputTextField.visible
+//                onClicked: {
+////                    let workingNetworkAttribute = networkDefinition.networkAttribute(networkAttributeComboBox.currentText);
+////                    print(workingNetworkAttribute.domain.codedValues[valueSelectionComboBox.currentIndex].code);
+////                    print(valueSelectionComboBox.currentIndex);
+//                }
+//            }
         }
     }
+
+    Dialog {
+        id: dialog
+        modal: true
+        standardButtons: Dialog.Ok
+        x: (parent.width - width) / 2
+        y: (parent.height - height) / 2
+        visible: model.dialogVisible
+
+        Text {
+            id: dialogText
+            anchors.centerIn: parent
+        }
+    }
+
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        visible: false
+    }
+
 }
