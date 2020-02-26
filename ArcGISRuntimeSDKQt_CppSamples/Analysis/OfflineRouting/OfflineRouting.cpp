@@ -29,6 +29,7 @@
 #include "RouteParameters.h"
 #include "RouteResult.h"
 #include "RouteTask.h"
+#include "SimpleMarkerSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
 #include "Stop.h"
@@ -115,7 +116,6 @@ int OfflineRouting::travelModeIndex()
 
 void OfflineRouting::findRoute()
 {
-  qDebug() << m_travelModeIndex;
   int numGraphics = m_stopsOverlay->graphics()->size();
   if (numGraphics > 1)
   {
@@ -163,10 +163,8 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
   connect(m_routeTask, &RouteTask::doneLoading, this, [this](Error loadError){
     if (loadError.isEmpty())
     {
-//      m_routeParameters = m_routeTask->createDefaultParameters();
       m_routeTask->createDefaultParameters();
       emit travelModeNamesChanged();
-
     }
     else
     {
@@ -179,28 +177,38 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
     m_routeParameters = defaultParameters;
   });
 
-  // get stops from clicked locations
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e){
-    e.accept();
-    const Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+  connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this,
+      [this](QUuid, IdentifyGraphicsOverlayResult* result)
+  {
+    if (!result->error().isEmpty())
+      qDebug() << result->error().message() << result->error().additionalMessage();
 
     // if didn't click on an existing stop, then add a stop
-    if (m_stopsOverlay->selectedGraphics().isEmpty())
+    if (result->graphics().isEmpty())
     {
-      TextSymbol* stopLabel = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::red, 20, HorizontalAlignment::Right, VerticalAlignment::Top);
-      Graphic* stopGraphic = new Graphic(clickedPoint, stopLabel, this);
+//      SimpleMarkerSymbol* stopLabel = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 20, this);
+      TextSymbol* stopLabel = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::red, 30, HorizontalAlignment::Right, VerticalAlignment::Top);
+      stopLabel->setBackgroundColor(Qt::black);
+      Graphic* stopGraphic = new Graphic(m_clickedPoint, stopLabel, this);
       m_stopsOverlay->graphics()->append(stopGraphic);
     }
     // otherwise move existing stop
     else
     {
-
+//      Point hoverPoint = m_mapView->screenToLocation(e.x(), e.y());
+      qDebug() << "reclicked";
     }
-
     findRoute();
+    delete result;
   });
 
-//  connect(m_mapView, &MapQuickView::mouse);
+
+  // get stops from clicked locations
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e){
+    m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    m_mapView->identifyGraphicsOverlay(m_stopsOverlay, e.x(), e.y(), 10, false);
+    e.accept();
+  });
 
   emit mapViewChanged();
 }
