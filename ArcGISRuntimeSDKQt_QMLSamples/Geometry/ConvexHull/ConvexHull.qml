@@ -63,12 +63,6 @@ Rectangle {
             }
         }
 
-        // stores clicked points
-        PointCollection {
-            id: inputs
-            spatialReference: mapView.spatialReference
-        }
-
         MultipointBuilder {
             id: multipointBuilder
             spatialReference: mapView.spatialReference
@@ -76,11 +70,8 @@ Rectangle {
 
         onMouseClicked: {
             var clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
-            inputsGraphic.geometry = clickedPoint;
-            inputs.addPoint(clickedPoint);
-            multipointBuilder.points = inputs;
+            multipointBuilder.points.addPoint(clickedPoint);
             inputsGraphic.geometry = multipointBuilder.geometry;
-            console.log(inputs.size);
         }
 
         RowLayout {
@@ -90,8 +81,8 @@ Rectangle {
             }
 
             Button {
-                width: implicitWidth
-                height: implicitHeight
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 text: "Convex Hull"
 
                 // display the convex hull
@@ -101,10 +92,11 @@ Rectangle {
                         convexHullGraphic.symbol = markerSymbol;
                     } else if (convHull.geometryType === Enums.GeometryTypePolyline) {
                         convexHullGraphic.symbol = lineSymbol;
-                        console.log("polyline");
                     } else if (convHull.geometryType === Enums.GeometryTypePolygon) {
                         convexHullGraphic.symbol = fillSymbol;
-                        console.log("polygon");
+                    }
+                    else {
+                        console.warn("Not a valid geometry");
                     }
 
                     convexHullGraphic.geometry = convHull;
@@ -112,12 +104,12 @@ Rectangle {
             }
 
             Button {
-                width: implicitWidth
-                height: implicitHeight
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 text: "Reset"
 
                 onClicked: {
-                    inputs.removeAll();
+                    multipointBuilder.points.removeAll();
                     inputsGraphic.geometry = null;
                     convexHullGraphic.geometry = null;
                 }

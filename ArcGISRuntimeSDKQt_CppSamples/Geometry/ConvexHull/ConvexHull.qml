@@ -25,7 +25,6 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
-
         RowLayout {
             anchors {
                 left: parent.left

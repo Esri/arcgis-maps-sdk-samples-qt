@@ -25,7 +25,7 @@ class Graphic;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
-class Point;
+class MultipointBuilder;
 class SimpleFillSymbol;
 class SimpleLineSymbol;
 class SimpleMarkerSymbol;
@@ -34,8 +34,6 @@ class SimpleMarkerSymbol;
 
 #include <QObject>
 #include <QList>
-
-#include "Point.h"
 
 class ConvexHull : public QObject
 {
@@ -65,13 +63,13 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
-  QList<Esri::ArcGISRuntime::Point> m_inputs;
   Esri::ArcGISRuntime::Graphic* m_inputsGraphic = nullptr;
   Esri::ArcGISRuntime::Graphic* m_convexHullGraphic = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_graphicsOverlay = nullptr;
   Esri::ArcGISRuntime::SimpleFillSymbol* m_fillSymbol = nullptr;
   Esri::ArcGISRuntime::SimpleLineSymbol* m_lineSymbol = nullptr;
   Esri::ArcGISRuntime::SimpleMarkerSymbol* m_markerSymbol = nullptr;
+  Esri::ArcGISRuntime::MultipointBuilder* m_multipointBuilder = nullptr;
 };
 
 #endif // CONVEXHULL_H

@@ -70,14 +70,18 @@ void ConvexHull::displayConvexHull()
   {
     m_convexHullGraphic->setSymbol(m_fillSymbol);
   }
+  else
+  {
+    qWarning("Not a valid geometry.");
+  }
 
   m_convexHullGraphic->setGeometry(convexHull);
-  return;
 }
 
 void ConvexHull::clearGraphics()
 {
-  m_inputs.clear();
+//  m_inputs.clear();
+  m_multipointBuilder->points()->removeAll();
   m_inputsGraphic->setGeometry(Geometry());
   m_convexHullGraphic->setGeometry(Geometry());
 }
@@ -105,17 +109,14 @@ void ConvexHull::setupGraphics()
 void ConvexHull::getInputs()
 {
   // show clicked points on MapView
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e){
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
+  {
     e.accept();
 
     const Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
-    m_inputs.push_back(clickedPoint);
-
-    PointCollection* pointCollection = new PointCollection(m_mapView->spatialReference(), this);
-    pointCollection->addPoints(m_inputs);
-    MultipointBuilder* multipointBuilder = new MultipointBuilder(m_mapView->spatialReference(), this);
-    multipointBuilder->setPoints(pointCollection);
-    m_inputsGraphic->setGeometry(multipointBuilder->toGeometry());
+    m_multipointBuilder->points()->addPoint(clickedPoint.x(), clickedPoint.y());
+    qDebug() << m_multipointBuilder->points()->size();
+    m_inputsGraphic->setGeometry(m_multipointBuilder->toGeometry());
   });
 }
 
@@ -127,6 +128,7 @@ void ConvexHull::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
+  m_multipointBuilder = new MultipointBuilder(m_mapView->spatialReference(), this);
 
   getInputs();
 
