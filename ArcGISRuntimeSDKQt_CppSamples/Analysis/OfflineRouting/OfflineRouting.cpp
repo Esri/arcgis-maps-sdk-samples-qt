@@ -216,7 +216,6 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
 
   // update the route if a stop has been selected, and move the stop
   connect(m_mapView, &MapQuickView::mouseMoved, this, [this](QMouseEvent& e){
-//    qDebug() << e.pos().x();
     qDebug() << e.x();
   });
 
