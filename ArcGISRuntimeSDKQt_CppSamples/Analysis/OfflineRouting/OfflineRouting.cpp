@@ -37,26 +37,27 @@
 #include "TileCache.h"
 
 #include <QDir>
+#include <QHoverEvent>
 
 using namespace Esri::ArcGISRuntime;
 
 // helper method to get cross platform data path
 namespace
 {
-  QString defaultDataPath()
-  {
-    QString dataPath;
+QString defaultDataPath()
+{
+  QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
-    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
-    dataPath = QDir::homePath();
-  #endif
+#ifdef Q_OS_ANDROID
+  dataPath = "/sdcard";
+#elif defined Q_OS_IOS
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  dataPath = QDir::homePath();
+#endif
 
-    return dataPath;
-  }
+  return dataPath;
+}
 } // namespace
 
 OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
@@ -106,7 +107,7 @@ void OfflineRouting::setTravelModeIndex(int index)
 {
   m_travelModeIndex = index;
   emit travelModeIndexChanged();
-//  qDebug() << m_travelModeIndex;
+  //  qDebug() << m_travelModeIndex;
 }
 
 int OfflineRouting::travelModeIndex()
@@ -151,6 +152,7 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
     return;
 
   m_mapView = mapView;
+  m_mapView->setAcceptHoverEvents(true);
   m_mapView->setMap(m_map);
 
   m_mapView->graphicsOverlays()->append(m_stopsOverlay);
@@ -168,7 +170,7 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
     }
     else
     {
-      qDebug() << loadError.message();
+      qDebug() << loadError.message() << loadError.additionalMessage();
       return;
     }
   });
@@ -178,7 +180,7 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
   });
 
   connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this,
-      [this](QUuid, IdentifyGraphicsOverlayResult* result)
+          [this](QUuid, IdentifyGraphicsOverlayResult* result)
   {
     if (!result->error().isEmpty())
       qDebug() << result->error().message() << result->error().additionalMessage();
@@ -186,16 +188,18 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
     // if didn't click on an existing stop, then add a stop
     if (result->graphics().isEmpty())
     {
-//      SimpleMarkerSymbol* stopLabel = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 20, this);
-      TextSymbol* stopLabel = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::red, 30, HorizontalAlignment::Right, VerticalAlignment::Top);
-      stopLabel->setBackgroundColor(Qt::black);
+      SimpleMarkerSymbol* stopLabel = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 20, this);
+      //TextSymbol* stopLabel = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::red, 30, HorizontalAlignment::Right, VerticalAlignment::Top);
+      //stopLabel->setBackgroundColor(Qt::black);
       Graphic* stopGraphic = new Graphic(m_clickedPoint, stopLabel, this);
       m_stopsOverlay->graphics()->append(stopGraphic);
+      m_selectedStop = false;
     }
+
     // otherwise move existing stop
     else
     {
-//      Point hoverPoint = m_mapView->screenToLocation(e.x(), e.y());
+      m_selectedStop = true;
       qDebug() << "reclicked";
     }
     findRoute();
@@ -208,6 +212,12 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
     m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
     m_mapView->identifyGraphicsOverlay(m_stopsOverlay, e.x(), e.y(), 10, false);
     e.accept();
+  });
+
+  // update the route if a stop has been selected, and move the stop
+  connect(m_mapView, &MapQuickView::mouseMoved, this, [this](QMouseEvent& e){
+//    qDebug() << e.pos().x();
+    qDebug() << e.x();
   });
 
   emit mapViewChanged();

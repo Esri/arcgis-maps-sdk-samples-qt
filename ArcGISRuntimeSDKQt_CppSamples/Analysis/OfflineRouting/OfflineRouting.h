@@ -73,6 +73,7 @@ private:
   Esri::ArcGISRuntime::RouteParameters m_routeParameters;
   Esri::ArcGISRuntime::Point m_clickedPoint;
   int m_travelModeIndex = 0;
+  bool m_selectedStop = false;
 };
 
 #endif // OFFLINEROUTING_H
