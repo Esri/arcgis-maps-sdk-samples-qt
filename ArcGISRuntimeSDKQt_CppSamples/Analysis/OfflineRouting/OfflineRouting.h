@@ -21,6 +21,7 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Graphic;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
@@ -28,6 +29,8 @@ class RouteParameters;
 class RouteTask;
 }
 }
+
+//class CustomMapView;
 
 #include <QObject>
 
@@ -51,6 +54,8 @@ public:
   Q_INVOKABLE void findRoute();
 //  Q_INVOKABLE int getTravelMode();
 
+  bool eventFilter(QObject* obj, QEvent* event) override;
+
 signals:
   void mapViewChanged();
   void travelModeNamesChanged();
@@ -67,6 +72,7 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
+  Esri::ArcGISRuntime::Graphic* m_selectedGraphic = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_stopsOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
   Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
