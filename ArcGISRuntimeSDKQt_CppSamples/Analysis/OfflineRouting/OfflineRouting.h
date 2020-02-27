@@ -55,6 +55,7 @@ public:
 //  Q_INVOKABLE int getTravelMode();
 
   bool eventFilter(QObject* obj, QEvent* event) override;
+  void connectSignals();
 
 signals:
   void mapViewChanged();
