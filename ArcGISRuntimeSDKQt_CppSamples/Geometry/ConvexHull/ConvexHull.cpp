@@ -55,6 +55,9 @@ MapQuickView* ConvexHull::mapView() const
 
 void ConvexHull::displayConvexHull()
 {
+  if (m_inputsGraphic->geometry().isEmpty())
+    return;
+
   Geometry convexHull = GeometryEngine::convexHull(m_inputsGraphic->geometry());
 
   // change the symbol based on the returned geometry type
@@ -114,8 +117,7 @@ void ConvexHull::getInputs()
     e.accept();
 
     const Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
-    m_multipointBuilder->points()->addPoint(clickedPoint.x(), clickedPoint.y());
-    qDebug() << m_multipointBuilder->points()->size();
+    m_multipointBuilder->points()->addPoint(clickedPoint);
     m_inputsGraphic->setGeometry(m_multipointBuilder->toGeometry());
   });
 }
@@ -128,7 +130,23 @@ void ConvexHull::setMapView(MapQuickView* mapView)
 
   m_mapView = mapView;
   m_mapView->setMap(m_map);
-  m_multipointBuilder = new MultipointBuilder(m_mapView->spatialReference(), this);
+
+  // wait for map to load before creating multipoint builder
+  connect(m_map, &Map::doneLoading, this, [this](Error e){
+    if (!e.isEmpty())
+    {
+      qDebug() << e.message() << e.additionalMessage();
+      return;
+    }
+
+    if (m_map->loadStatus() == LoadStatus::FailedToLoad)
+    {
+      qWarning( "Failed to load map.");
+      return;
+    }
+
+    m_multipointBuilder = new MultipointBuilder(m_map->spatialReference(), this);
+  });
 
   getInputs();
 
