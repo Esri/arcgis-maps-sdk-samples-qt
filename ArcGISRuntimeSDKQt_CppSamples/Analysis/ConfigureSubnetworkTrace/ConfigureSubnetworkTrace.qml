@@ -38,7 +38,6 @@ Item {
                 text: qsTr("Include barriers")
                 Layout.fillWidth: true
                 enabled: !model.busy
-//                Layout.alignment: Qt.AlignRight
                 checkState: Qt.Checked
                 onCheckStateChanged: model.changeIncludeBarriersState(checked);
             }
@@ -47,7 +46,6 @@ Item {
                 text: qsTr("Include containers")
                 Layout.fillWidth: true
                 enabled: !model.busy
-//                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 checkState: Qt.Checked
                 onCheckStateChanged: model.changeIncludeContainersState(checked);
             }
@@ -120,6 +118,7 @@ Item {
                     id: inputTextField
                     Layout.minimumWidth: rootRectangle.width
                     visible: model.textFieldVisible
+                    validator: DoubleValidator {}
                     color: "black"
                     placeholderText: qsTr("Enter value here")
                     placeholderTextColor: "black"
@@ -144,17 +143,6 @@ Item {
                 }
             }
 
-            //            Rectangle {
-            //                id: borderBoxForListView
-            //                Layout.fillWidth: true
-            //                Layout.minimumHeight: 150
-            //                color: "transparent"
-            //                Layout.margins: 2
-            //                border {
-            //                    color: "black"
-            //                    width:  1
-            //                }
-
             ScrollView {
                 Layout.fillWidth: true
                 Layout.minimumHeight: 50
@@ -168,51 +156,6 @@ Item {
                     }
                 }
             }
-
-
-
-//            ListView {
-//                id: groupingView
-//                Layout.fillWidth: true
-//                Layout.minimumHeight: 150
-//                //                    Layout.fillHeight: true
-//                //                    Layout.fillWidth: true
-
-//                //                anchors {
-//                //                    fill: parent
-//                //                    margins: 5
-//                //                }
-//                //                highlight: highlightRectangle
-//                //                highlightResizeVelocity: 1000000
-//                //                highlightMoveVelocity: 1000000
-
-//                clip: true
-//                model: model.conditionBarrierExpressionListModel
-//                delegate: Item {
-//                    width: parent.width
-//                    height: 25
-
-//                    Row {
-//                        anchors.verticalCenter: parent.verticalCenter
-//                        spacing: 10
-//                        Text {
-//                            text: "(%1)".arg(condition)
-//                            font.pixelSize: 12
-//                        }
-//                    }
-
-//                    MouseArea {
-//                        anchors.fill: parent
-//                        onClicked: groupingView.currentIndex = index;
-//                    }
-//                }
-
-//                onCurrentIndexChanged: {
-//                    print("currentIndex: %1".arg(currentIndex));
-//                }
-//            }
-
-            //            }
 
             RowLayout {
                 enabled: !model.busy
@@ -228,14 +171,6 @@ Item {
                     onClicked: model.reset();
                 }
             }
-
-//            Button {
-//                id: testButton
-//                text: qsTr("test input text field to comboBox")
-////                onClicked: inputTextField.visible = !inputTextField.visible
-//                onClicked: {
-//                }
-//            }
         }
     }
 
@@ -260,6 +195,5 @@ Item {
     // Declare the C++ instance which creates the scene etc. and supply the view
     ConfigureSubnetworkTraceSample {
         id: model
-//        mapView: view
     }
 }

@@ -22,8 +22,6 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class Error;
-class Map;
-class MapQuickView;
 class UtilityTraceCondition;
 class UtilityElement;
 class UtilityNetwork;
@@ -38,28 +36,15 @@ class UtilityTraceConfiguration;
 
 #include <QObject>
 #include <QUrl>
-#include <QVariantList>
-#include <QStringList>
 #include <QUuid>
+
 #include "UtilityNetworkAttributeComparison.h"
 #include "UtilityNetworkAttribute.h"
 
-#include <QQuickItem>
-
-class ConfigureSubnetworkTrace : public QQuickItem  //* maybe change at end
+class ConfigureSubnetworkTrace : public QObject
 {
   Q_OBJECT
 
-////  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-
-public:
-  explicit ConfigureSubnetworkTrace(QQuickItem* parent = nullptr); //* maybe change at end since
-
-//class ConfigureSubnetworkTrace : public QObject
-//{
-//  Q_OBJECT
-
-  //  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
   Q_PROPERTY(bool dialogVisible MEMBER m_dialogVisible NOTIFY dialogVisibleChanged)
   Q_PROPERTY(bool textFieldVisible MEMBER m_textFieldVisible NOTIFY textFieldVisibleChanged)
@@ -69,8 +54,8 @@ public:
   Q_PROPERTY(QStringList conditionBarrierExpressionListModel MEMBER m_conditionBarrierExpressionListModel NOTIFY conditionBarrierExpressionChanged)
   Q_PROPERTY(QStringList valueSelectionListModel MEMBER m_valueSelectionListModel NOTIFY valueSelectionListModelChanged)
 
-//public:
-//  explicit ConfigureSubnetworkTrace(QObject* parent = nullptr);
+public:
+  explicit ConfigureSubnetworkTrace(QObject* parent = nullptr);
   ~ConfigureSubnetworkTrace();
 
   static void init();
@@ -83,7 +68,6 @@ public:
   Q_INVOKABLE void trace();
 
 signals:
-  //  void mapViewChanged();
   void attributeListModelChanged();
   void busyChanged();
   void conditionBarrierExpressionChanged();

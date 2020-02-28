@@ -43,25 +43,12 @@
 #include "UtilityTraceResultListModel.h"
 #include "UtilityTraversability.h"
 
-
-//#include "Map.h"
-//#include "MapQuickView.h"
-
-////* maybe change at end
-//ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QQuickItem* parent /* = nullptr */):
-//  QQuickItem(parent)
-////  m_map(new Map(Basemap::imagery(this), this))
-//{
-
-//}
+#include <QQmlEngine>
 
 using namespace Esri::ArcGISRuntime;
 
-//ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
-//  QObject(parent)
-//  m_map(new Map(Basemap::imagery(this), this))
-ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QQuickItem* parent /* = nullptr */):
-  QQuickItem(parent),
+ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
+  QObject(parent),
   m_busy(true),
   m_dialogVisible(false),
   m_textFieldVisible(true),
@@ -88,11 +75,11 @@ QString ConfigureSubnetworkTrace::expressionToString(UtilityTraceConditionalExpr
   {
     case UtilityTraceConditionType::UtilityNetworkAttributeComparison:
     {
-      UtilityNetworkAttributeComparison* attributeExpression = static_cast<UtilityNetworkAttributeComparison*>(expression);
-      UtilityNetworkAttribute* networkAttribute = attributeExpression->networkAttribute();
-      UtilityNetworkAttribute* otherNetworkAttribute = attributeExpression->otherNetworkAttribute();
-      Domain networkDomain = networkAttribute->domain();
-      QString operatorAsString = comparisonOperatorToString(attributeExpression->comparisonOperator());
+      const UtilityNetworkAttributeComparison* attributeExpression = static_cast<UtilityNetworkAttributeComparison*>(expression);
+      const UtilityNetworkAttribute* networkAttribute = attributeExpression->networkAttribute();
+      const UtilityNetworkAttribute* otherNetworkAttribute = attributeExpression->otherNetworkAttribute();
+      const Domain networkDomain = networkAttribute->domain();
+      const QString operatorAsString = comparisonOperatorToString(attributeExpression->comparisonOperator());
 
       // check if attribute domain is a coded value domain.
       if (!networkDomain.isEmpty() && (networkDomain.domainType() == DomainType::CodedValueDomain))
@@ -167,7 +154,7 @@ QVariant ConfigureSubnetworkTrace::convertToDataType(const QVariant& value, cons
   {
     case UtilityNetworkAttributeDataType::Integer:
     {
-      return value.toInt();
+      return static_cast<int>(value.toDouble());
     }
     case UtilityNetworkAttributeDataType::Float:
     {
@@ -189,11 +176,11 @@ void ConfigureSubnetworkTrace::codedValueOrInputText(const QString& currentText)
   // Update the UI to show the correct value entry for the attribute.
   if (m_networkDefinition)
   {
-    Domain domain = m_networkDefinition->networkAttribute(currentText)->domain();
+    const Domain domain = m_networkDefinition->networkAttribute(currentText)->domain();
     if (!domain.isEmpty() && (domain.domainType() == DomainType::CodedValueDomain))
     {
       m_valueSelectionListModel.clear();
-      CodedValueDomain codedValueDomain = static_cast<CodedValueDomain>(domain);
+      const CodedValueDomain codedValueDomain = static_cast<CodedValueDomain>(domain);
 
       for (CodedValue codedValue: codedValueDomain.codedValues())
         m_valueSelectionListModel.append(codedValue.name());
@@ -222,9 +209,9 @@ void ConfigureSubnetworkTrace::addCondition(const QString& selectedAttribute, in
 
   UtilityNetworkAttribute* selectedNetworkAttribute = m_networkDefinition->networkAttribute(selectedAttribute);
 
-  QVariant convertedSelectedValue = convertToDataType(selectedValue, selectedNetworkAttribute->dataType());
+  const QVariant convertedSelectedValue = convertToDataType(selectedValue, selectedNetworkAttribute->dataType());
 
-  UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
+  const UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
 
 
   // NOTE: You may also create a UtilityNetworkAttributeComparison with another NetworkAttribute.
@@ -241,6 +228,13 @@ void ConfigureSubnetworkTrace::addCondition(const QString& selectedAttribute, in
     emit expressionBuilderChanged();
 
     m_traceConfiguration->traversability()->setBarriers(combineExpressions);
+  }
+  else
+  {
+    m_expressionBuilder = expressionToString(expression);
+    emit expressionBuilderChanged();
+
+    m_traceConfiguration->traversability()->setBarriers(expression);
   }
 }
 
@@ -273,7 +267,7 @@ void ConfigureSubnetworkTrace::trace()
   }
   else
   {
-    QList<UtilityElement*> startingLocations {m_utilityElementStartingLocation};
+    const QList<UtilityElement*> startingLocations {m_utilityElementStartingLocation};
     // Create utility trace parameters for the starting location.
     m_traceParams = new UtilityTraceParameters(UtilityTraceType::Subnetwork, startingLocations, this);
     m_traceParams->setTraceConfiguration(m_traceConfiguration);
@@ -332,8 +326,8 @@ void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
   emit attributeListModelChanged();
 
   // Create a default starting location.
-  UtilityNetworkSource* networkSource = m_networkDefinition->networkSource(m_deviceTableName);
-  UtilityAssetGroup* assetGroup = networkSource->assetGroup(m_assetGroupName);
+  const UtilityNetworkSource* networkSource = m_networkDefinition->networkSource(m_deviceTableName);
+  const UtilityAssetGroup* assetGroup = networkSource->assetGroup(m_assetGroupName);
   UtilityAssetType* assetType = assetGroup->assetType(m_assetTypeName);
   m_utilityElementStartingLocation = m_utilityNetwork->createElementWithAssetType(assetType, m_gloabId);
 
@@ -350,8 +344,8 @@ void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
   }
 
   // Get a default trace configuration from a tier to update the UI.
-  UtilityDomainNetwork* domainNetwork = m_networkDefinition->domainNetwork(m_domainNetworkName);
-  UtilityTier* utilityTierSource = domainNetwork->tier(m_tierName);
+  const UtilityDomainNetwork* domainNetwork = m_networkDefinition->domainNetwork(m_domainNetworkName);
+  const UtilityTier* utilityTierSource = domainNetwork->tier(m_tierName);
 
   // Set the trace configuration.
   m_traceConfiguration = utilityTierSource->traceConfiguration();
@@ -372,26 +366,5 @@ ConfigureSubnetworkTrace::~ConfigureSubnetworkTrace() = default;
 
 void ConfigureSubnetworkTrace::init()
 {
-  // Register the map view for QML
-  //  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-
-  // MapQuickView.h needed for this and I don't know why
   qmlRegisterType<ConfigureSubnetworkTrace>("Esri.Samples", 1, 0, "ConfigureSubnetworkTraceSample");
 }
-
-//MapQuickView* ConfigureSubnetworkTrace::mapView() const
-//{
-//  return m_mapView;
-//}
-
-// Set the view (created in QML)
-//void ConfigureSubnetworkTrace::setMapView(MapQuickView* mapView)
-//{
-//  if (!mapView || mapView == m_mapView)
-//    return;
-
-//  m_mapView = mapView;
-//  m_mapView->setMap(m_map);
-
-//  emit mapViewChanged();
-//}

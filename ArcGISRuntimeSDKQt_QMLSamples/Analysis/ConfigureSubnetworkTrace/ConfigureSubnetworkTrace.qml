@@ -26,15 +26,9 @@ Rectangle {
     width: 800
     height: 600
 
-    property alias comparisonSourceListModel: comparisonSourceListModel
-    property alias myModel: myModel //* rename
-    property int inc: 0 //* remove
-    property var combineExpression
-    property var currentComparisonOperator
-//    property var expression1
+    property var attributeStringListModel: []
     property var initialExpression
     property var networkDefinition
-//    property var otherExpression
     property var traceConfiguration
     property var utilityElementStartingLocation
     readonly property string assetGroupName: "Circuit Breaker"
@@ -47,18 +41,8 @@ Rectangle {
     readonly property var comparisonOperatorModel: ["Equal","NotEqual","GreaterThan","GreaterThanEqual","LessThan","LessThanEqual","IncludesTheValues","DoesNotIncludeTheValues","IncludesAny","DoesNotIncludeAny"]
 
     ListModel {
-        id: myModel //* rename
-    }
-
-    ListModel {
-        id: comparisonSourceListModel //* rename networkAttributesListModel
-    }
-
-    ListModel {
         id: valueSelectionListModel
     }
-
-
 
     UtilityNetwork {
         id: utilityNetwork
@@ -78,44 +62,43 @@ Rectangle {
 
             dialogText.text = qsTr("%1 elements found.".arg(resultElements.length))
             dialog.visible = true;
+            busyIndicator.visible = false;
         }
 
         onErrorChanged: {
             dialogText.text = qsTr("%1 - %2".arg(error.message).arg(error.additionalMessage));
+            dialog.visible = true;
         }
 
         onLoadStatusChanged: {
             if(loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
-            print("Matrix Reloaded"); //* remove
-
             networkDefinition = utilityNetwork.definition;
 
             for (let i = 0; i < definition.networkAttributes.length; i++) {
-//                print("i:%1 name:%2 systemDefined:%3".arg(i).arg(networkDefinition.networkAttributes[i].name).arg(utilityNetwork.definition.networkAttributes[i].systemDefined)) //* remove
-
                 if (!networkDefinition.networkAttributes[i].systemDefined)
-                    comparisonSourceListModel.append({name: "%1".arg(networkDefinition.networkAttributes[i].name)});
+                    attributeStringListModel.push(networkDefinition.networkAttributes[i].name);
             }
 
-            var networkSource = networkDefinition.networkSource(deviceTableName);
-            var assetGroup = networkSource.assetGroup(assetGroupName);
-            var assetType = assetGroup.assetType(assetTypeName);
+            networkAttributeComboBox.model = attributeStringListModel;
+
+            const networkSource = networkDefinition.networkSource(deviceTableName);
+            const assetGroup = networkSource.assetGroup(assetGroupName);
+            const assetType = assetGroup.assetType(assetTypeName);
 
             utilityElementStartingLocation = utilityNetwork.createElementWithAssetType(assetType, globalId);
 
-            var terminals = utilityElementStartingLocation.assetType.terminalConfiguration.terminals;
+            const terminals = utilityElementStartingLocation.assetType.terminalConfiguration.terminals;
 
             for (let i = 0; i < terminals.length; i++) {
-                print(terminals[i].name); //* remove
                 let terminal = terminals[i];
                 if (terminal.name === "Load")
                     utilityElementStartingLocation.terminal = terminal;
             }
 
-            var domainNetwork = networkDefinition.domainNetwork(domainNetworkName);
-            var utilityTierSource = domainNetwork.tier(tierName);
+            const domainNetwork = networkDefinition.domainNetwork(domainNetworkName);
+            const utilityTierSource = domainNetwork.tier(tierName);
 
             traceConfiguration = utilityTierSource.traceConfiguration;
 
@@ -123,50 +106,52 @@ Rectangle {
 
             traceConfiguration.traversability.scope = Enums.UtilityTraversabilityScopeJunctions;
 
-            let expressionAsString = expressionToString(initialExpression);
-            print(expressionAsString); //* remove
-
-//            myModel.append({condition: expression});
-            expressionBuilder.text = expressionAsString;
-
+            expressionBuilder.text = expressionToString(initialExpression);
         }
 
         onComponentCompleted: load();
     }
 
-    function expressionToString(initialExpression) {
+    function updateInputMethod(currentText, currentIndex) {
+        if(networkDefinition) {
+            const workingDomain = networkDefinition.networkAttribute(currentText).domain;
+            if (workingDomain) {
 
-        var traceConditionType = initialExpression.traceConditionType;
-        print(traceConditionType); //* remove
-        var networkAttribute = initialExpression.networkAttribute;
-//        print(networkAttribute.name); //* remove
-        var otherNetworkAttribute = initialExpression.otherNetworkAttribute;
-//        print(otherNetworkAttribute.name); //* remove
+                valueSelectionListModel.clear();
+                for (let i = 0; i < workingDomain.codedValues.length; i++) {
+                    valueSelectionListModel.append({value: workingDomain.codedValues[i].name})
+                }
+                valueSelectionComboBox.model = valueSelectionListModel;
+                valueSelectionComboBox.currentIndex = 0;
+
+                inputTextField.visible = false;
+            } else {
+                inputTextField.visible = true;
+            }
+        }
+    }
+
+    function expressionToString(expression) {
+
+        const traceConditionType = expression.traceConditionType;
+        const networkAttribute = expression.networkAttribute;
+        const otherNetworkAttribute = expression.otherNetworkAttribute;
 
         switch (traceConditionType) {
         case Enums.UtilityTraceConditionTypeUtilityNetworkAttributeComparison:
-            print("UtilityTraceConditionTypeUtilityNetworkAttributeComparison"); //* remove
-            if (networkAttribute.domain) {
-                if (networkAttribute.domain.domainType === Enums.DomainTypeCodedValueDomain) {
-                    print("codedvaluedomain"); //* remove
-                    let dataType = networkAttribute.dataType;
-                    let domain = networkAttribute.domain;
-                    return "`%1` %2 `%3`".arg(networkAttribute.name).arg(comparisonOperatorToString(initialExpression.comparisonOperator)).arg(domain.codedValues[initialExpression.value].name);
-                }
+            if (networkAttribute.domain && (networkAttribute.domain.domainType === Enums.DomainTypeCodedValueDomain)) {
+                const dataType = networkAttribute.dataType;
+                const domain = networkAttribute.domain;
+                return "`%1` %2 `%3`".arg(networkAttribute.name).arg(comparisonOperatorToString(expression.comparisonOperator)).arg(domain.codedValues[expression.value].name);
             } else {
-                return "`%1` %2 `%3`".arg(networkAttribute.name).arg(comparisonOperatorToString(initialExpression.comparisonOperator)).arg(otherNetworkAttribute? otherNetworkAttribute.name : initialExpression.value)
+                return "`%1` %2 `%3`".arg(networkAttribute.name).arg(comparisonOperatorToString(expression.comparisonOperator)).arg(otherNetworkAttribute? otherNetworkAttribute.name : expression.value)
             }
         case Enums.UtilityTraceConditionTypUtilityCategoryComparisone:
-            print("UtilityTraceConditionTypeUtilityCategoryComparisone"); //* remove
-            return "`%1` %2".arg(networkAttribute.name).arg(comparisonOperatorToString(initialExpression.comparisonOperator)); //* wrong
+            return "`%1` %2".arg(networkAttribute.category.name).arg(networkAttribute.comparisonOperator === Enums.UtilityCategoryComparisonOperatorExists ? "Exists" : "DoesNotExist");
         case Enums.UtilityTraceConditionTypeUtilityTraceAndCondition:
-            print("UtilityTraceConditionTypeUtilityTraceAndCondition"); //* remove
-            return "`%1` AND\n `%3`".arg(expressionToString(initialExpression.leftExpression)).arg(initialExpression.rightExpression);
+            return "`%1` AND\n `%3`".arg(expressionToString(expression.leftExpression)).arg(expressionToString(expression.rightExpression));
         case Enums.UtilityTraceConditionTypeUtilityTraceOrCondition:
-            print("UtilityTraceConditionTypeUtilityTraceOrCondition"); //* remove
-            var temp = initialExpression.leftExpression;
-            print(temp.networkAttribute.name);
-            return "`%1` OR\n `%3`".arg(expressionToString(initialExpression.leftExpression)).arg(initialExpression.rightExpression);
+            return "`%1` OR\n `%3`".arg(expressionToString(expression.leftExpression)).arg(expressionToString(expression.rightExpression));
         }
     }
 
@@ -198,52 +183,53 @@ Rectangle {
     }
 
     function addCondition() {
-        // in what situation is this needed?
         if (traceConfiguration === null) {
             traceConfiguration = ArcGISRuntimeEnvironment.createObject("UtilityTraceConfiguration");
         }
         if (traceConfiguration.traversability === null) {
             traceConfiguration.traversability = ArcGISRuntimeEnvironment.createObject("UtilityTraversability");
         }
-        //*
 
         const selectedNetworkAttribute = networkDefinition.networkAttribute(networkAttributeComboBox.currentText);
+        const data = convertToDataType(valueSelectionComboBox.visible ? valueSelectionComboBox.currentIndex : inputTextField.text, selectedNetworkAttribute.dataType)
 
-        if (workingNetworkAttribute.domain.domainType === Enums.DomainTypeCodedValueDomain) {
-            print("DomainTypeCodedValueDomain"); //* remove
-
-            const expression = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
-                                                                   networkAttribute: selectedNetworkAttribute,
-                                                                   comparisonOperator: comparisonOperatorComboBox.currentIndex,
-                                                                   value: valueSelectionComboBox.currentIndex});
-
-            const otherExpression = traceConfiguration.traversability.barriers;
-
-            if (otherExpression) {
-                combineExpressions = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
-                                                                                  leftExpression: otherExpression,
-                                                                                  rightExpression: expression
-                                                                              });
-
-                traceConfiguration.traversability.barriers = combineExpressions;
-
-                print(expressionToString(combineExpressions));
-
-
-                expressionBuilder.text = expressionToString(combineExpressions);
-
-//                combineExpression = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
-//                                                                                  leftExpression: otherExpression,
-//                                                                                  rightExpression: expression1
-//                                                                              });
-//                traceConfiguration.traversability.barriers = combineExpression;
-//                print(expressionToString(traceConfiguration.traversability.barriers));
-            }
-
-        } else {
-            let expression = ArcGISRuntimeEnvironment.createObject("", {});
+        if (isNaN(data)) {
+            dialogText.text = qsTr("Invalid input. Please try again.")
+            dialog.visible = true;
+            return;
         }
 
+        const expression = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
+                                                                     networkAttribute: selectedNetworkAttribute,
+                                                                     comparisonOperator: comparisonOperatorComboBox.currentIndex,
+                                                                     value: data});
+
+        const otherExpression = traceConfiguration.traversability.barriers;
+
+        if (otherExpression) {
+            const combineExpressions = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
+                                                                           leftExpression: otherExpression,
+                                                                           rightExpression: expression
+                                                                       });
+
+            traceConfiguration.traversability.barriers = combineExpressions;
+            expressionBuilder.text = expressionToString(combineExpressions);
+        } else {
+            traceConfiguration.traversability.barriers = expression;
+            expressionBuilder.text = expressionToString(expression);
+        }
+    }
+
+    function convertToDataType(data, dataType) {
+        switch(dataType) {
+        case Enums.UtilityNetworkAttributeDataTypeInteger:
+            return parseInt(data, 10);
+        case Enums.UtilityNetworkAttributeDataTypeFloat:
+        case Enums.UtilityNetworkAttributeDataTypeDouble:
+            return data;
+        case Enums.UtilityNetworkAttributeDataTypeBoolean:
+            return data == 1 ? true : false;
+        }
     }
 
     function reset() {
@@ -256,7 +242,7 @@ Rectangle {
         if (!utilityNetwork || !utilityElementStartingLocation) {
             return;
         } else {
-            let startingLocations = [utilityElementStartingLocation];
+            const startingLocations = [utilityElementStartingLocation];
             params.startingLocations = startingLocations;
             params.traceType = Enums.UtilityTraceTypeSubnetwork;
             params.traceConfiguration = traceConfiguration;
@@ -280,15 +266,15 @@ Rectangle {
             CheckBox {
                 text: qsTr("Include barriers")
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 checkState: Qt.Checked
+                onCheckStateChanged: traceConfiguration.includeBarriers = checked;
             }
 
             CheckBox {
                 text: qsTr("Include containers")
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 checkState: Qt.Checked
+                onCheckStateChanged: traceConfiguration.includeContainers = checked;
             }
 
             Shape {
@@ -305,7 +291,7 @@ Rectangle {
             Text {
                 text: qsTr("Example barrier condition for this data. 'Transformer Load' Equal '15'")
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
             }
 
             Shape {
@@ -322,143 +308,54 @@ Rectangle {
             Text {
                 text: qsTr("New Barrier Condition:")
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
 
             ComboBox {
-                //                model: ["One", "Two", "Three"] // test model
                 id: networkAttributeComboBox
-                model: comparisonSourceListModel ? comparisonSourceListModel : null
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                textRole: comparisonSourceListModel ? "name" : null
 
-                onModelChanged: currentIndex = 0;
-
-                onCurrentTextChanged: {
-                    if(networkDefinition) {
-                        let workingDomain = networkDefinition.networkAttribute(currentText).domain;
-                        if (workingDomain) {
-                            print("domain: %1".arg(workingDomain.domainType)); //* remove
-                            print(workingDomain.codedValues.length); //* remove
-                            valueSelectionListModel.clear();
-                            for(let i = 0; i < workingDomain.codedValues.length; i++) {
-                                print(workingDomain.codedValues[i].name + " - " + workingDomain.codedValues[i].code); //* remove
-                                valueSelectionListModel.append({value: workingDomain.codedValues[i].name})
-
-                            }
-                            valueSelectionComboBox.model = valueSelectionListModel;
-                            valueSelectionComboBox.currentIndex = 0;
-
-                            inputTextField.visible = false;
-
-
-                        } else {
-                            inputTextField.visible = true;
-                        }
-
-
-
-                        print(networkDefinition.networkAttribute(currentText).name);
-                    }
-                }
+                onCurrentTextChanged: updateInputMethod(currentText, currentIndex);
             }
 
             ComboBox {
-                //                model: ["Four", "TFive", "Six"] // test model
                 id: comparisonOperatorComboBox
                 model: comparisonOperatorModel
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
 
             RowLayout {
                 ComboBox {
-                    //                    model: ["One", "Two", "Three"]  // test model
                     id: valueSelectionComboBox
                     Layout.fillWidth: true
                     visible: !inputTextField.visible
-
-//                    onModelChanged: currentIndex = 0;
-//                    onVisibleChanged: {
-//                        if (visible)
-//                            currentIndex = 0;
-//                    }
                 }
 
                 TextField {
                     id: inputTextField
                     Layout.fillWidth: true
                     visible: true
+                    validator: DoubleValidator {}
+                    color: "black"
+                    placeholderText: qsTr("Enter value here")
+                    placeholderTextColor: "black"
+                    background: Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.width
+                        color: "white"
+                    }
                 }
             }
 
             Button {
                 text: qsTr("Add")
                 Layout.fillWidth: true
-                onClicked: {
-//                    myModel.append({condition: "`Operation Device Status` Equal `Open` %1".arg(inc++)});
-                    addCondition();
-                    print("appended");
-                }
+                onClicked: addCondition();
             }
-
-            //            Rectangle {
-            //                id: borderBoxForListView
-            //                Layout.fillWidth: true
-            //                Layout.minimumHeight: 150
-            //                color: "transparent"
-            //                Layout.margins: 2
-            //                border {
-            //                    color: "black"
-            //                    width:  1
-            //                }
-
-//            ListView {
-//                id: groupingView
-//                Layout.fillWidth: true
-//                Layout.minimumHeight: 150
-//                //                    Layout.fillHeight: true
-//                //                    Layout.fillWidth: true
-
-//                //                anchors {
-//                //                    fill: parent
-//                //                    margins: 5
-//                //                }
-//                //                highlight: highlightRectangle
-//                //                highlightResizeVelocity: 1000000
-//                //                highlightMoveVelocity: 1000000
-
-//                clip: true
-//                model: myModel
-//                delegate: Item {
-//                    width: parent.width
-//                    height: 25
-
-//                    Row {
-//                        anchors.verticalCenter: parent.verticalCenter
-//                        spacing: 10
-//                        Text {
-//                            text: "(%1)".arg(condition)
-//                            font.pixelSize: 12
-//                        }
-//                    }
-
-//                    MouseArea {
-//                        anchors.fill: parent
-//                        onClicked: groupingView.currentIndex = index;
-//                    }
-//                }
-
-//                onCurrentIndexChanged: {
-//                    print("currentIndex: %1".arg(currentIndex));
-//                }
-//            }
 
             ScrollView {
                 Layout.fillWidth: true
                 Layout.minimumHeight: 50
-                Layout.maximumHeight: .2 * rootRectangle.height
+                Layout.maximumHeight: .15 * rootRectangle.height
                 clip: true
                 Row {
                     anchors.fill: parent
@@ -467,8 +364,6 @@ Rectangle {
                     }
                 }
             }
-
-            //            }
 
             RowLayout {
                 Button {
@@ -483,17 +378,6 @@ Rectangle {
                     onClicked: reset();
                 }
             }
-
-//            Button {
-//                id: testButton
-//                text: qsTr("test input text field to comboBox")
-////                onClicked: inputTextField.visible = !inputTextField.visible
-//                onClicked: {
-////                    let workingNetworkAttribute = networkDefinition.networkAttribute(networkAttributeComboBox.currentText);
-////                    print(workingNetworkAttribute.domain.codedValues[valueSelectionComboBox.currentIndex].code);
-////                    print(valueSelectionComboBox.currentIndex);
-//                }
-//            }
         }
     }
 
@@ -503,7 +387,6 @@ Rectangle {
         standardButtons: Dialog.Ok
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
-        visible: model.dialogVisible
 
         Text {
             id: dialogText
@@ -516,5 +399,4 @@ Rectangle {
         anchors.centerIn: parent
         visible: false
     }
-
 }
