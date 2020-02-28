@@ -1,6 +1,6 @@
 // [WriteFile Name=ConfigureSubnetworkTrace, Category=Analysis]
 // [Legal]
-// Copyright 2019 Esri.
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -280,6 +280,7 @@ Rectangle {
                 text: qsTr("Include barriers")
                 Layout.fillWidth: true
                 checkState: Qt.Checked
+                enabled: !busyIndicator.visible
                 onCheckStateChanged: traceConfiguration.includeBarriers = checked;
             }
 
@@ -287,6 +288,7 @@ Rectangle {
                 text: qsTr("Include containers")
                 Layout.fillWidth: true
                 checkState: Qt.Checked
+                enabled: !busyIndicator.visible
                 onCheckStateChanged: traceConfiguration.includeContainers = checked;
             }
 
@@ -326,7 +328,7 @@ Rectangle {
             ComboBox {
                 id: networkAttributeComboBox
                 Layout.fillWidth: true
-
+                enabled: !busyIndicator.visible
                 onCurrentTextChanged: updateInputMethod(currentText, currentIndex);
             }
 
@@ -334,12 +336,14 @@ Rectangle {
                 id: comparisonOperatorComboBox
                 model: attributeComparisonOperatorModel
                 Layout.fillWidth: true
+                enabled: !busyIndicator.visible
             }
 
             RowLayout {
                 ComboBox {
                     id: valueSelectionComboBox
                     Layout.fillWidth: true
+                    enabled: !busyIndicator.visible
                     visible: !inputTextField.visible
                 }
 
@@ -362,6 +366,7 @@ Rectangle {
             Button {
                 text: qsTr("Add")
                 Layout.fillWidth: true
+                enabled: !busyIndicator.visible
                 onClicked: addCondition();
             }
 
@@ -382,12 +387,14 @@ Rectangle {
                 Button {
                     text: qsTr("Trace")
                     Layout.fillWidth: true
+                    enabled: !busyIndicator.visible
                     onClicked: trace();
                 }
 
                 Button {
                     text: qsTr("Reset")
                     Layout.fillWidth: true
+                    enabled: !busyIndicator.visible
                     onClicked: reset();
                 }
             }
@@ -404,6 +411,7 @@ Rectangle {
         Text {
             id: dialogText
             anchors.centerIn: parent
+            color: "white"
         }
     }
 

@@ -1,6 +1,6 @@
 // [WriteFile Name=ConfigureSubnetworkTrace, Category=Analysis]
 // [Legal]
-// Copyright 2019 Esri.
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ Item {
             CheckBox {
                 text: qsTr("Include barriers")
                 Layout.fillWidth: true
-                enabled: !model.busy
+                enabled: !busyIndicator.visible
                 checkState: Qt.Checked
                 onCheckStateChanged: model.changeIncludeBarriersState(checked);
             }
@@ -45,7 +45,7 @@ Item {
             CheckBox {
                 text: qsTr("Include containers")
                 Layout.fillWidth: true
-                enabled: !model.busy
+                enabled: !busyIndicator.visible
                 checkState: Qt.Checked
                 onCheckStateChanged: model.changeIncludeContainersState(checked);
             }
@@ -90,7 +90,7 @@ Item {
                 model: model.attributeListModel ? model.attributeListModel : null
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                enabled: !model.busy
+                enabled: !busyIndicator.visible
 
                 onModelChanged: currentIndex = 0;
 
@@ -102,7 +102,7 @@ Item {
                 model: comparisonOperatorModel
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                enabled: !model.busy
+                enabled: !busyIndicator.visible
             }
 
             RowLayout {
@@ -110,6 +110,7 @@ Item {
                 ComboBox {
                     id: valueSelectionComboBox
                     Layout.fillWidth: true
+                    enabled: !busyIndicator.visible
                     visible: !model.textFieldVisible
                     model: model.valueSelectionListModel
                 }
@@ -133,7 +134,7 @@ Item {
             Button {
                 text: qsTr("Add")
                 Layout.fillWidth: true
-                enabled: !model.busy
+                enabled: !busyIndicator.visible
                 onClicked: {
                     if (model.textFieldVisible) {
                         model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, inputTextField.text);
@@ -162,12 +163,14 @@ Item {
                 Button {
                     text: qsTr("Trace")
                     Layout.fillWidth: true
+                    enabled: !busyIndicator.visible
                     onClicked: model.trace();
                 }
 
                 Button {
                     text: qsTr("Reset")
                     Layout.fillWidth: true
+                    enabled: !busyIndicator.visible
                     onClicked: model.reset();
                 }
             }
@@ -184,10 +187,12 @@ Item {
         Text {
             text: model.dialogText
             anchors.centerIn: parent
+            color: "white"
         }
     }
 
     BusyIndicator {
+        id: busyIndicator
         anchors.centerIn: parent
         visible: model.busy
     }
