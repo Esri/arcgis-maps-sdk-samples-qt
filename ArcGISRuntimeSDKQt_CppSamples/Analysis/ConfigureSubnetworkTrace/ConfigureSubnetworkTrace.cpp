@@ -319,9 +319,7 @@ void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
   for (UtilityNetworkAttribute* networkAttribute : m_networkDefinition->networkAttributes())
   {
     if (!networkAttribute->isSystemDefined())
-    {
       m_attributeListModel.append(networkAttribute->name());
-    }
   }
   emit attributeListModelChanged();
 

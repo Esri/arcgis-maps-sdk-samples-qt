@@ -38,8 +38,7 @@ Rectangle {
     readonly property string globalId: "{1CAF7740-0BF4-4113-8DB2-654E18800028}"
     readonly property string tierName: "Medium Voltage Radial"
     readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
-    readonly property var comparisonOperatorModel: ["Equal","NotEqual","GreaterThan","GreaterThanEqual","LessThan","LessThanEqual","IncludesTheValues","DoesNotIncludeTheValues","IncludesAny","DoesNotIncludeAny"]
-
+    readonly property var attributeComparisonOperatorModel: ["Equal","NotEqual","GreaterThan","GreaterThanEqual","LessThan","LessThanEqual","IncludesTheValues","DoesNotIncludeTheValues","IncludesAny","DoesNotIncludeAny"]
     ListModel {
         id: valueSelectionListModel
     }
@@ -57,9 +56,11 @@ Rectangle {
                 return;
             }
 
+            // Get the first result.
             const myTraceResult = traceResult.get(0);
             const resultElements = myTraceResult.elements;
 
+            // Display the number of elements found by the trace.
             dialogText.text = qsTr("%1 elements found.".arg(resultElements.length))
             dialog.visible = true;
             busyIndicator.visible = false;
@@ -76,6 +77,7 @@ Rectangle {
 
             networkDefinition = utilityNetwork.definition;
 
+            // Build the choice lists for network attribute comparison.
             for (let i = 0; i < definition.networkAttributes.length; i++) {
                 if (!networkDefinition.networkAttributes[i].systemDefined)
                     attributeStringListModel.push(networkDefinition.networkAttributes[i].name);
@@ -87,23 +89,28 @@ Rectangle {
             const assetGroup = networkSource.assetGroup(assetGroupName);
             const assetType = assetGroup.assetType(assetTypeName);
 
+            // Create a default starting location.
             utilityElementStartingLocation = utilityNetwork.createElementWithAssetType(assetType, globalId);
 
             const terminals = utilityElementStartingLocation.assetType.terminalConfiguration.terminals;
 
+            // Set the terminal for this location. (For our case, we use the 'Load' terminal.)
             for (let i = 0; i < terminals.length; i++) {
                 let terminal = terminals[i];
                 if (terminal.name === "Load")
                     utilityElementStartingLocation.terminal = terminal;
             }
 
+            // Get a default trace configuration from a tier to update the UI.
             const domainNetwork = networkDefinition.domainNetwork(domainNetworkName);
             const utilityTierSource = domainNetwork.tier(tierName);
 
+            // Set the trace configuration.
             traceConfiguration = utilityTierSource.traceConfiguration;
 
             initialExpression = traceConfiguration.traversability.barriers;
 
+            // Set the traversability scope.
             traceConfiguration.traversability.scope = Enums.UtilityTraversabilityScopeJunctions;
 
             expressionBuilder.text = expressionToString(initialExpression);
@@ -116,7 +123,6 @@ Rectangle {
         if(networkDefinition) {
             const workingDomain = networkDefinition.networkAttribute(currentText).domain;
             if (workingDomain) {
-
                 valueSelectionListModel.clear();
                 for (let i = 0; i < workingDomain.codedValues.length; i++) {
                     valueSelectionListModel.append({value: workingDomain.codedValues[i].name})
@@ -136,15 +142,18 @@ Rectangle {
         const traceConditionType = expression.traceConditionType;
         const networkAttribute = expression.networkAttribute;
         const otherNetworkAttribute = expression.otherNetworkAttribute;
+        const operatorAsString = comparisonOperatorToString(expression.comparisonOperator)
 
         switch (traceConditionType) {
         case Enums.UtilityTraceConditionTypeUtilityNetworkAttributeComparison:
+            // check if attribute domain is a coded value domain.
             if (networkAttribute.domain && (networkAttribute.domain.domainType === Enums.DomainTypeCodedValueDomain)) {
                 const dataType = networkAttribute.dataType;
                 const domain = networkAttribute.domain;
-                return "`%1` %2 `%3`".arg(networkAttribute.name).arg(comparisonOperatorToString(expression.comparisonOperator)).arg(domain.codedValues[expression.value].name);
+                const codedValueName = domain.codedValues[expression.value].name;
+                return "`%1` %2 `%3`".arg(networkAttribute.name).arg(operatorAsString).arg(codedValueName);
             } else {
-                return "`%1` %2 `%3`".arg(networkAttribute.name).arg(comparisonOperatorToString(expression.comparisonOperator)).arg(otherNetworkAttribute? otherNetworkAttribute.name : expression.value)
+                return "`%1` %2 `%3`".arg(networkAttribute.name).arg(operatorAsString).arg(otherNetworkAttribute? otherNetworkAttribute.name : expression.value)
             }
         case Enums.UtilityTraceConditionTypUtilityCategoryComparisone:
             return "`%1` %2".arg(networkAttribute.category.name).arg(networkAttribute.comparisonOperator === Enums.UtilityCategoryComparisonOperatorExists ? "Exists" : "DoesNotExist");
@@ -183,6 +192,8 @@ Rectangle {
     }
 
     function addCondition() {
+        // NOTE: You may also create a UtilityCategoryComparison with UtilityNetworkDefinition.Categories and UtilityCategoryComparisonOperator.
+
         if (traceConfiguration === null) {
             traceConfiguration = ArcGISRuntimeEnvironment.createObject("UtilityTraceConfiguration");
         }
@@ -199,6 +210,7 @@ Rectangle {
             return;
         }
 
+        // NOTE: You may also create a UtilityNetworkAttributeComparison with another NetworkAttribute.
         const expression = ArcGISRuntimeEnvironment.createObject("UtilityNetworkAttributeComparison", {
                                                                      networkAttribute: selectedNetworkAttribute,
                                                                      comparisonOperator: comparisonOperatorComboBox.currentIndex,
@@ -207,10 +219,11 @@ Rectangle {
         const otherExpression = traceConfiguration.traversability.barriers;
 
         if (otherExpression) {
+            // NOTE: You may also combine expressions with UtilityTraceAndCondition
             const combineExpressions = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
-                                                                           leftExpression: otherExpression,
-                                                                           rightExpression: expression
-                                                                       });
+                                                                                 leftExpression: otherExpression,
+                                                                                 rightExpression: expression
+                                                                             });
 
             traceConfiguration.traversability.barriers = combineExpressions;
             expressionBuilder.text = expressionToString(combineExpressions);
@@ -319,7 +332,7 @@ Rectangle {
 
             ComboBox {
                 id: comparisonOperatorComboBox
-                model: comparisonOperatorModel
+                model: attributeComparisonOperatorModel
                 Layout.fillWidth: true
             }
 
