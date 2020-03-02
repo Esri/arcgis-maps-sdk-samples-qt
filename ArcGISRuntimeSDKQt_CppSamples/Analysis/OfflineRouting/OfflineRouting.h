@@ -52,7 +52,7 @@ public:
   static void init();
 
   Q_INVOKABLE void findRoute();
-//  Q_INVOKABLE int getTravelMode();
+  Q_INVOKABLE void resetMap();
 
   bool eventFilter(QObject* obj, QEvent* event) override;
   void connectSignals();

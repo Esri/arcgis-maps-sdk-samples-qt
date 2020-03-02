@@ -21,6 +21,7 @@
 #include "OfflineRouting.h"
 
 #include "ArcGISTiledLayer.h"
+#include "Envelope.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "Map.h"
@@ -78,8 +79,6 @@ OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
   SimpleLineSymbol* lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 2, this);
   SimpleRenderer* routeRenderer = new SimpleRenderer(lineSymbol, this);
   m_routeOverlay->setRenderer(routeRenderer);
-
-  //  m_selectedGraphic = new Graphic(this);
 }
 
 OfflineRouting::~OfflineRouting() = default;
@@ -114,7 +113,6 @@ void OfflineRouting::setTravelModeIndex(int index)
 {
   m_travelModeIndex = index;
   emit travelModeIndexChanged();
-  //  qDebug() << m_travelModeIndex;
 }
 
 int OfflineRouting::travelModeIndex()
@@ -148,17 +146,22 @@ void OfflineRouting::connectSignals()
     if (!result->error().isEmpty())
       qDebug() << result->error().message() << result->error().additionalMessage();
 
-    // if didn't click on an existing stop, then add a stop
     if (result->graphics().isEmpty())
     {
-      m_selectedStop = false;
+      m_selectedGraphic = nullptr;
     }
-    // otherwise move existing stop
+    // identify selected graphic in m_stopsOverlay
     else
     {
-      m_selectedStop = true;
-      m_selectedGraphic = result->graphics().at(0);
-      qDebug() << m_selectedGraphic->geometry().toJson();
+      // find corresponding graphic in m_stopsOverlay
+      for (int i = 0; i < m_stopsOverlay->graphics()->size(); ++i)
+      {
+        if (m_stopsOverlay->graphics()->at(i)->operator==(result->graphics().at(0)))
+        {
+          m_selectedGraphic = m_stopsOverlay->graphics()->at(i);
+          break;
+        }
+      }
     }
 
   });
@@ -172,20 +175,7 @@ void OfflineRouting::connectSignals()
   // get stops from clicked locations
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e){
     // track mouse location and update geometry of selected stop's graphic
-    if (m_selectedStop)
-    {
-      if (m_selectedGraphic)
-      {
-        qDebug() << "Not empty";
-//        m_selectedGraphic->setGeometry(m_clickedPoint);
-      }
-      qDebug() << "Start";
-      m_selectedGraphic->setGeometry(m_clickedPoint);
-      qDebug() << "end";
-      qDebug() << m_stopsOverlay->graphics()->size();
-      qDebug() << "updating";
-    }
-    else
+    if (!m_selectedGraphic)
     {
       m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
       SimpleMarkerSymbol* stopLabel = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 20, this);
@@ -195,7 +185,6 @@ void OfflineRouting::connectSignals()
       m_stopsOverlay->graphics()->append(stopGraphic);
       findRoute();
     }
-    m_selectedStop = false;
     e.accept();
   });
 
@@ -248,6 +237,13 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
   m_routeTask = new RouteTask(geodatabaseLocation, "Streets_ND",this);
   m_routeTask->load();
 
+  GraphicsOverlay* boundaryOverlay = new GraphicsOverlay(this);
+  Envelope envelop = Envelope(Point(-13045352.223196, 3864910.900750,SpatialReference::webMercator()), Point(-13024588.857198, 3838880.505604, SpatialReference::webMercator()));
+  SimpleLineSymbol* boundarySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::green, 3, this);
+  Graphic* boundaryGraphic = new Graphic(envelop, boundarySymbol, this);
+  boundaryOverlay->graphics()->append(boundaryGraphic);
+  m_mapView->graphicsOverlays()->append(boundaryOverlay);
+
   connectSignals();
 
   emit mapViewChanged();
@@ -258,15 +254,12 @@ bool OfflineRouting::eventFilter(QObject* /*obj*/, QEvent* event)
   if (event->type() == QEvent::MouseMove)
   {
     // track mouse location and update geometry of selected stop's graphic
-    if (m_selectedStop)
+    if (m_selectedGraphic)
     {
       auto mouseEvent = static_cast<QMouseEvent*>(event);
-      qDebug() << "Before";
       m_clickedPoint = m_mapView->screenToLocation(mouseEvent->x(), mouseEvent->y());
-      qDebug() << "After";
-      qDebug() << m_selectedGraphic->geometry().toJson() << "Selected Graphic";
-      qDebug() << m_clickedPoint.toJson();
-      //      m_selectedGraphic->setGeometry(m_clickedPoint);
+      m_selectedGraphic->setGeometry(m_clickedPoint);
+      findRoute();
       return true;
     }
     else
@@ -275,4 +268,11 @@ bool OfflineRouting::eventFilter(QObject* /*obj*/, QEvent* event)
     }
   }
   return false;
+}
+
+void OfflineRouting::resetMap()
+{
+  m_selectedGraphic = nullptr;
+  m_stopsOverlay->graphics()->clear();
+  m_routeOverlay->graphics()->clear();
 }

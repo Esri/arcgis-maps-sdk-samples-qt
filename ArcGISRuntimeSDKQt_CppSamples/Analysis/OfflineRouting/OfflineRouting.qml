@@ -15,8 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.6
 import Esri.Samples 1.0
+import QtQuick.Layouts 1.11
 
 Item {
     // add a mapView component
@@ -25,13 +26,29 @@ Item {
         anchors.fill: parent
     }
 
-    ComboBox {
-        id: comboBox
-        width: 200
-        model: routingModel.travelModeNames
-        onCurrentIndexChanged: {
-            routingModel.travelModeIndex = currentIndex;
-            routingModel.findRoute();
+    RowLayout {
+        anchors {
+            left: parent.left
+            top: parent.top
+        }
+
+        ComboBox {
+            id: comboBox
+            width: 200
+            model: routingModel.travelModeNames
+            onCurrentIndexChanged: {
+                routingModel.travelModeIndex = currentIndex;
+                routingModel.findRoute();
+            }
+        }
+
+        Button {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            text: "Reset"
+            onClicked: {
+                routingModel.resetMap();
+            }
         }
     }
 
