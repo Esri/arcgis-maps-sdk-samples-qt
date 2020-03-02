@@ -62,7 +62,7 @@ ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr 
 {
   m_utilityNetwork = new UtilityNetwork(m_featureLayerUrl, this);
 
-  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this,&ConfigureSubnetworkTrace::onUtilityNetworkLoaded);
+  connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, &ConfigureSubnetworkTrace::onUtilityNetworkLoaded);
 
   connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, &ConfigureSubnetworkTrace::onTraceCompleted);
 
