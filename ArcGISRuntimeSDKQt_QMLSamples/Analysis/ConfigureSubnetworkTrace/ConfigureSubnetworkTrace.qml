@@ -27,10 +27,10 @@ Rectangle {
     height: 600
 
     property var attributeStringListModel: []
-    property var initialExpression
-    property var networkDefinition
-    property var traceConfiguration
-    property var utilityElementStartingLocation
+    property var initialExpression: null
+    property var networkDefinition: null
+    property var traceConfiguration: null
+    property var utilityElementStartingLocation: null
     readonly property string assetGroupName: "Circuit Breaker"
     readonly property string assetTypeName: "Three Phase"
     readonly property string deviceTableName: "Electric Distribution Device"
