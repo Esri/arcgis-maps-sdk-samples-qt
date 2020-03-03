@@ -118,6 +118,8 @@ QString ConfigureSubnetworkTrace::expressionToString(UtilityTraceConditionalExpr
       const UtilityTraceOrCondition* orExpression = static_cast<UtilityTraceOrCondition*>(expression);
       return QString("(%1) OR\n (%2)").arg(expressionToString(orExpression->leftExpression()), expressionToString(orExpression->rightExpression()));
     }
+    default:
+      return QString("Unknown trace conditional expression");
   }
 }
 
@@ -145,6 +147,8 @@ QString ConfigureSubnetworkTrace::comparisonOperatorToString(const UtilityAttrib
       return QString("IncludesAny");
     case UtilityAttributeComparisonOperator::DoesNotIncludeAny:
       return QString("DoesNotIncludeAny");
+    default:
+      return QString("Unknown comparison operator");
   }
 }
 
@@ -168,6 +172,8 @@ QVariant ConfigureSubnetworkTrace::convertToDataType(const QVariant& value, cons
     {
       return value.toBool();
     }
+    default:
+      return QVariant();
   }
 }
 
