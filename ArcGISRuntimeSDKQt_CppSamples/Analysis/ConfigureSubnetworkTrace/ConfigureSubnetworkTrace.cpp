@@ -52,17 +52,7 @@ QVariant convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::Uti
 
 
 ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
-  QObject(parent),
-  m_busy(true),
-  m_dialogVisible(false),
-  m_textFieldVisible(true),
-  m_assetGroupName(QString("Circuit Breaker")),
-  m_assetTypeName(QString("Three Phase")),
-  m_deviceTableName(QString("Electric Distribution Device")),
-  m_domainNetworkName(QString("ElectricDistribution")),
-  m_tierName(QString("Medium Voltage Radial")),
-  m_featureLayerUrl(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer")),
-  m_gloabId(QUuid("{1CAF7740-0BF4-4113-8DB2-654E18800028}"))
+  QObject(parent)
 {
   m_utilityNetwork = new UtilityNetwork(m_featureLayerUrl, this);
 
