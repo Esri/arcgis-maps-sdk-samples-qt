@@ -201,19 +201,13 @@ Rectangle {
     function addCondition() {
         // NOTE: You may also create a UtilityCategoryComparison with UtilityNetworkDefinition.Categories and UtilityCategoryComparisonOperator.
 
-        if (traceConfiguration === null) {
-            traceConfiguration = ArcGISRuntimeEnvironment.createObject("UtilityTraceConfiguration");
-        }
-        if (traceConfiguration.traversability === null) {
-            traceConfiguration.traversability = ArcGISRuntimeEnvironment.createObject("UtilityTraversability");
-        }
-
         const selectedNetworkAttribute = networkDefinition.networkAttribute(networkAttributeComboBox.currentText);
-        const data = convertToDataType(valueSelectionComboBox.visible ? valueSelectionComboBox.currentIndex : inputTextField.text, selectedNetworkAttribute.dataType)
+        const data = convertToDataType(valueSelectionComboBox.visible ? valueSelectionComboBox.currentIndex : inputTextField.text , selectedNetworkAttribute.dataType)
 
-        if (isNaN(data)) {
+        // check to make sure the conversion was successful.
+        if (!data) {
             dialogText.text = qsTr("Invalid input. Please try again.")
-            dialog.visible = true;
+            dialog.open();
             return;
         }
 
@@ -247,7 +241,7 @@ Rectangle {
         case Enums.UtilityNetworkAttributeDataTypeBoolean:
             return data == 1 ? true : false;
         default:
-            return null;
+            return;
         }
     }
 
@@ -257,17 +251,20 @@ Rectangle {
     }
 
     function trace() {
-        busyIndicator.visible = true;
         if (!utilityNetwork || !utilityElementStartingLocation) {
             return;
-        } else {
-            const startingLocations = [utilityElementStartingLocation];
-            params.startingLocations = startingLocations;
-            params.traceType = Enums.UtilityTraceTypeSubnetwork;
-            params.traceConfiguration = traceConfiguration;
-
-            utilityNetwork.trace(params);
         }
+
+        busyIndicator.visible = true;
+        const startingLocations = [utilityElementStartingLocation];
+
+        // initialize utility trace parameters with the starting location.
+        params.startingLocations = startingLocations;
+        params.traceType = Enums.UtilityTraceTypeSubnetwork;
+        params.traceConfiguration = traceConfiguration;
+
+        // trace the network
+        utilityNetwork.trace(params);
     }
 
     UtilityTraceParameters {
