@@ -39,6 +39,7 @@ Rectangle {
     readonly property string tierName: "Medium Voltage Radial"
     readonly property url featureLayerUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer"
     readonly property var attributeComparisonOperatorModel: ["Equal","NotEqual","GreaterThan","GreaterThanEqual","LessThan","LessThanEqual","IncludesTheValues","DoesNotIncludeTheValues","IncludesAny","DoesNotIncludeAny"]
+
     ListModel {
         id: valueSelectionListModel
     }
@@ -62,19 +63,21 @@ Rectangle {
 
             // Display the number of elements found by the trace.
             dialogText.text = qsTr("%1 elements found.".arg(resultElements.length))
-            dialog.visible = true;
+            dialog.open();
             busyIndicator.visible = false;
         }
 
         onErrorChanged: {
             dialogText.text = qsTr("%1 - %2".arg(error.message).arg(error.additionalMessage));
-            dialog.visible = true;
+            dialog.open();
+            busyIndicator.visible = false;
         }
 
         onLoadStatusChanged: {
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
+            busyIndicator.visible = false;
             networkDefinition = utilityNetwork.definition;
 
             // Build the choice lists for network attribute comparison.
@@ -116,7 +119,10 @@ Rectangle {
             expressionBuilder.text = expressionToString(initialExpression);
         }
 
-        onComponentCompleted: load();
+        onComponentCompleted: {
+            busyIndicator.visible = true;
+            load();
+        }
     }
 
     function updateInputMethod(currentText, currentIndex) {
@@ -138,7 +144,6 @@ Rectangle {
     }
 
     function expressionToString(expression) {
-
         const traceConditionType = expression.traceConditionType;
         const networkAttribute = expression.networkAttribute;
         const otherNetworkAttribute = expression.otherNetworkAttribute;
@@ -220,22 +225,19 @@ Rectangle {
 
         const otherExpression = traceConfiguration.traversability.barriers;
 
-        if (otherExpression) {
-            // NOTE: You may also combine expressions with UtilityTraceAndCondition
-            const combineExpressions = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
-                                                                                 leftExpression: otherExpression,
-                                                                                 rightExpression: expression
-                                                                             });
+        // NOTE: You may also combine expressions with UtilityTraceAndCondition
+        const combineExpressions = ArcGISRuntimeEnvironment.createObject("UtilityTraceOrCondition", {
+                                                                             leftExpression: otherExpression,
+                                                                             rightExpression: expression
+                                                                         });
 
-            traceConfiguration.traversability.barriers = combineExpressions;
-            expressionBuilder.text = expressionToString(combineExpressions);
-        } else {
-            traceConfiguration.traversability.barriers = expression;
-            expressionBuilder.text = expressionToString(expression);
-        }
+        traceConfiguration.traversability.barriers = combineExpressions;
+        expressionBuilder.text = expressionToString(combineExpressions);
     }
 
     function convertToDataType(data, dataType) {
+        if (!data)
+            return;
         switch(dataType) {
         case Enums.UtilityNetworkAttributeDataTypeInteger:
             return parseInt(data, 10);
