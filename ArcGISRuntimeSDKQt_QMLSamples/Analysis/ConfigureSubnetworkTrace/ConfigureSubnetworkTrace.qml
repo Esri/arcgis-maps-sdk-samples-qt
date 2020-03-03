@@ -72,7 +72,7 @@ Rectangle {
         }
 
         onLoadStatusChanged: {
-            if(loadStatus !== Enums.LoadStatusLoaded)
+            if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
             networkDefinition = utilityNetwork.definition;
@@ -120,7 +120,7 @@ Rectangle {
     }
 
     function updateInputMethod(currentText, currentIndex) {
-        if(networkDefinition) {
+        if (networkDefinition) {
             const workingDomain = networkDefinition.networkAttribute(currentText).domain;
             if (workingDomain) {
                 valueSelectionListModel.clear();
