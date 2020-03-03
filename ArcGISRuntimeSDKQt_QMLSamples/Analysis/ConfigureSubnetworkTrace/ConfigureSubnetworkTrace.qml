@@ -161,6 +161,8 @@ Rectangle {
             return "`%1` AND\n `%3`".arg(expressionToString(expression.leftExpression)).arg(expressionToString(expression.rightExpression));
         case Enums.UtilityTraceConditionTypeUtilityTraceOrCondition:
             return "`%1` OR\n `%3`".arg(expressionToString(expression.leftExpression)).arg(expressionToString(expression.rightExpression));
+        default:
+            return "Unknown trace conditional expression";
         }
     }
 
@@ -187,7 +189,7 @@ Rectangle {
         case Enums.UtilityAttributeComparisonOperatorDoesNotIncludeAny:
             return "DoesNotIncludeAny";
         default:
-            return null;
+            return "Unknown comparison operator";
         }
     }
 
@@ -242,6 +244,8 @@ Rectangle {
             return data;
         case Enums.UtilityNetworkAttributeDataTypeBoolean:
             return data == 1 ? true : false;
+        default:
+            return null;
         }
     }
 
