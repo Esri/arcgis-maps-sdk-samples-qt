@@ -178,11 +178,11 @@ Item {
     }
 
     Dialog {
+        id: dialog
         modal: true
         standardButtons: Dialog.Ok
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
-        visible: model.dialogVisible
 
         Text {
             text: model.dialogText
@@ -200,5 +200,7 @@ Item {
     // Declare the C++ instance which creates the scene etc. and supply the view
     ConfigureSubnetworkTraceSample {
         id: model
+
+        onShowDialog: dialog.open();
     }
 }

@@ -200,42 +200,31 @@ void ConfigureSubnetworkTrace::addCondition(const QString& selectedAttribute, in
 {
   // NOTE: You may also create a UtilityCategoryComparison with UtilityNetworkDefinition.Categories and UtilityCategoryComparisonOperator.
 
-  if (!m_traceConfiguration)
-    m_traceConfiguration = new UtilityTraceConfiguration(this);
-
-  UtilityTraversability* traversability = m_traceConfiguration->traversability();
-  if (!traversability)
-    m_traceConfiguration->setTraversability(new UtilityTraversability(this));
-
   UtilityNetworkAttribute* selectedNetworkAttribute = m_networkDefinition->networkAttribute(selectedAttribute);
-
   const QVariant convertedSelectedValue = convertToDataType(selectedValue, selectedNetworkAttribute->dataType());
 
-  const UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
+  if (convertedSelectedValue.isNull())
+  {
+    m_dialogText = "Unknow network attribute data type";
+    emit dialogTextChanged();
+    emit showDialog();
+    return;
+  }
 
+  const UtilityAttributeComparisonOperator selectedOperatorEnum = static_cast<UtilityAttributeComparisonOperator>(selectedOperator);
 
   // NOTE: You may also create a UtilityNetworkAttributeComparison with another NetworkAttribute.
   UtilityTraceConditionalExpression* expression = new UtilityNetworkAttributeComparison(selectedNetworkAttribute, selectedOperatorEnum, convertedSelectedValue, this);
 
-  if (traversability->barriers())
-  {
-    UtilityTraceConditionalExpression* otherExpression = static_cast<UtilityTraceConditionalExpression*>(m_traceConfiguration->traversability()->barriers());
+  UtilityTraceConditionalExpression* otherExpression = static_cast<UtilityTraceConditionalExpression*>(m_traceConfiguration->traversability()->barriers());
 
-    // NOTE: You may also combine expressions with UtilityTraceAndCondition
-    UtilityTraceConditionalExpression* combineExpressions = new UtilityTraceOrCondition(otherExpression, expression, this);
+  // NOTE: You may also combine expressions with UtilityTraceAndCondition
+  UtilityTraceConditionalExpression* combineExpressions = new UtilityTraceOrCondition(otherExpression, expression, this);
 
-    m_expressionBuilder = expressionToString(combineExpressions);
-    emit expressionBuilderChanged();
+  m_expressionBuilder = expressionToString(combineExpressions);
+  emit expressionBuilderChanged();
 
-    m_traceConfiguration->traversability()->setBarriers(combineExpressions);
-  }
-  else
-  {
-    m_expressionBuilder = expressionToString(expression);
-    emit expressionBuilderChanged();
-
-    m_traceConfiguration->traversability()->setBarriers(expression);
-  }
+  m_traceConfiguration->traversability()->setBarriers(combineExpressions);
 }
 
 void ConfigureSubnetworkTrace::changeIncludeBarriersState(bool includeBarriers)
@@ -259,32 +248,29 @@ void ConfigureSubnetworkTrace::reset()
 
 void ConfigureSubnetworkTrace::trace()
 {
-  m_busy = true;
-  emit busyChanged();
   if (!m_utilityNetwork || !m_utilityElementStartingLocation)
   {
     return;
   }
-  else
-  {
-    const QList<UtilityElement*> startingLocations {m_utilityElementStartingLocation};
-    // Create utility trace parameters for the starting location.
-    m_traceParams = new UtilityTraceParameters(UtilityTraceType::Subnetwork, startingLocations, this);
-    m_traceParams->setTraceConfiguration(m_traceConfiguration);
 
-    // trace the network
-    m_utilityNetwork->trace(m_traceParams);
-  }
+  m_busy = true;
+  emit busyChanged();
+  const QList<UtilityElement*> startingLocations {m_utilityElementStartingLocation};
+  // Create utility trace parameters for the starting location.
+  m_traceParams = new UtilityTraceParameters(UtilityTraceType::Subnetwork, startingLocations, this);
+  m_traceParams->setTraceConfiguration(m_traceConfiguration);
+
+  // trace the network
+  m_utilityNetwork->trace(m_traceParams);
 }
 
 void ConfigureSubnetworkTrace::onTraceCompleted()
 {
   if (m_utilityNetwork->traceResult()->isEmpty())
   {
-    m_dialogText = QString("No results returned");
+    m_dialogText = "No results returned";
     emit dialogTextChanged();
-    m_dialogVisible = true;
-    emit dialogVisibleChanged();
+    emit showDialog();
   }
   // Get the first result.
   UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
@@ -293,10 +279,9 @@ void ConfigureSubnetworkTrace::onTraceCompleted()
 
   // Display the number of elements found by the trace.
   m_dialogText = QString("%1 elements found.").arg(elements.length());
-  m_dialogVisible = true;
   m_busy = false;
   emit dialogTextChanged();
-  emit dialogVisibleChanged();
+  emit showDialog();
   emit busyChanged();
 }
 
@@ -305,9 +290,10 @@ void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
   if (!e.isEmpty())
   {
     m_dialogText = QString("%1 - %2").arg(e.message(), e.additionalMessage());
-    m_dialogVisible = true;
+    m_busy = false;
     emit dialogTextChanged();
-    emit dialogVisibleChanged();
+    emit showDialog();
+    emit busyChanged();
     return;
   }
 

@@ -46,7 +46,6 @@ class ConfigureSubnetworkTrace : public QObject
   Q_OBJECT
 
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
-  Q_PROPERTY(bool dialogVisible MEMBER m_dialogVisible NOTIFY dialogVisibleChanged)
   Q_PROPERTY(bool textFieldVisible MEMBER m_textFieldVisible NOTIFY textFieldVisibleChanged)
   Q_PROPERTY(QString dialogText MEMBER m_dialogText NOTIFY dialogTextChanged)
   Q_PROPERTY(QString expressionBuilder MEMBER m_expressionBuilder NOTIFY expressionBuilderChanged)
@@ -72,7 +71,7 @@ signals:
   void busyChanged();
   void conditionBarrierExpressionChanged();
   void dialogTextChanged();
-  void dialogVisibleChanged();
+  void showDialog();
   void expressionBuilderChanged();
   void textFieldVisibleChanged();
   void valueSelectionListModelChanged();
@@ -94,7 +93,6 @@ private:
   QStringList m_valueSelectionListModel;
 
   bool m_busy = true;
-  bool m_dialogVisible = true;
   bool m_textFieldVisible = true;
   const QString m_assetGroupName = "Circuit Breaker";
   const QString m_assetTypeName = "Three Phase";
