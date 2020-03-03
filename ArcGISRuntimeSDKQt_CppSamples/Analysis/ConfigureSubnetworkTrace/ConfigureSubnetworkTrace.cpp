@@ -46,6 +46,10 @@
 #include <QQmlEngine>
 
 using namespace Esri::ArcGISRuntime;
+QString expressionToString(UtilityTraceConditionalExpression* expression);
+QString comparisonOperatorToString(const UtilityAttributeComparisonOperator& comparisonOperator);
+QVariant convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::UtilityNetworkAttributeDataType& dataType);
+
 
 ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr */):
   QObject(parent),
@@ -69,7 +73,7 @@ ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr 
   m_utilityNetwork->load();
 }
 
-QString ConfigureSubnetworkTrace::expressionToString(UtilityTraceConditionalExpression* expression) const
+QString expressionToString(UtilityTraceConditionalExpression* expression)
 {
   switch (expression->traceConditionType())
   {
@@ -123,7 +127,7 @@ QString ConfigureSubnetworkTrace::expressionToString(UtilityTraceConditionalExpr
   }
 }
 
-QString ConfigureSubnetworkTrace::comparisonOperatorToString(const UtilityAttributeComparisonOperator& comparisonOperator) const
+QString comparisonOperatorToString(const UtilityAttributeComparisonOperator& comparisonOperator)
 {
   switch (comparisonOperator)
   {
@@ -152,7 +156,7 @@ QString ConfigureSubnetworkTrace::comparisonOperatorToString(const UtilityAttrib
   }
 }
 
-QVariant ConfigureSubnetworkTrace::convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::UtilityNetworkAttributeDataType& dataType)
+QVariant convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::UtilityNetworkAttributeDataType& dataType)
 {
   switch (dataType)
   {
