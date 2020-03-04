@@ -137,7 +137,9 @@ Item {
                 enabled: !busyIndicator.visible
                 onClicked: {
                     if (model.textFieldVisible) {
-                        model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, inputTextField.text);
+                        if (inputTextField.text)
+                            model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, inputTextField.text);
+                        return;
                     } else {
                         model.addCondition(networkAttributeComboBox.currentText, comparisonOperatorComboBox.currentIndex, valueSelectionComboBox.currentIndex);
                     }
