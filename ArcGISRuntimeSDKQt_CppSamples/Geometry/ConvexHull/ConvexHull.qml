@@ -32,8 +32,8 @@ Item {
             }
 
             Button {
-                width: implicitWidth
-                height: implicitHeight
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 text: "Convex Hull"
                 onClicked: {
                     model.displayConvexHull();
@@ -41,8 +41,8 @@ Item {
             }
 
             Button {
-                width: implicitWidth
-                height: implicitHeight
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 text: "Reset"
                 onClicked: {
                     model.clearGraphics();
