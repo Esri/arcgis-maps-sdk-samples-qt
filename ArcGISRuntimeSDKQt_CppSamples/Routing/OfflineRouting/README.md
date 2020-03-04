@@ -5,7 +5,7 @@ This sample demonstrates how to solve a route on-the-fly using offline data.
 ![](screenshot.png)
 
 ## How to use the sample
-Click near a road to add a stop to the route. A number graphic will show its order in the route. After adding at least 2 stops, a route will display. Use the combo box in the top left corner to choose between the travel modes "Fastest" and "Shortest" (how the route is optimized). To move a stop, press the mouse on the graphic to select it, then move your mouse while pressing to reposition, and finally release the mouse to set the new position. The route will update on-the-fly while moving stops. The green box marks the boundary of the route geodatabase.
+Click near a road to add a stop to the route. A red graphic will show the position of the stop. After adding at least 2 stops, a route will display. Use the combo box in the top left corner to choose between the travel modes "Fastest" and "Shortest" (how the route is optimized). To move a stop, press the mouse on the graphic to select it, then move your mouse while pressing to reposition, and finally release the mouse to set the new position. The route will update on-the-fly while moving stops. The green box marks the boundary of the route geodatabase.
 
 ## How it works
 To display a `Route` using a `RouteTask` with offline data:
@@ -26,9 +26,9 @@ To display a `Route` using a `RouteTask` with offline data:
  - RouteParameters
  - RouteResult
  - SimpleLineSymbol
+ - SimpleMarkerSymbol
  - Stop
  - TaskWatcher
- - TextSymbol
  - TileCache
 
 ## Offline data
