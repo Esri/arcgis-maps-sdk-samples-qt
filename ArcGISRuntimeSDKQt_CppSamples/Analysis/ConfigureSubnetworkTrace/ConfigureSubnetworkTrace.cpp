@@ -318,14 +318,12 @@ void ConfigureSubnetworkTrace::onUtilityNetworkLoaded(const Error& e)
   QList<UtilityTerminal*> terminals = m_utilityElementStartingLocation->assetType()->terminalConfiguration()->terminals();
 
   // Set the terminal for this location. (For our case, we use the 'Load' terminal.)
-  for (UtilityTerminal* terminal : terminals)
+  auto terminal = std::find_if(terminals.begin(), terminals.end(), [](UtilityTerminal* terminal)
   {
-    if (terminal->name() == "Load")
-    {
-      m_utilityElementStartingLocation->setTerminal(terminal);
-      break;
-    }
-  }
+      return terminal->name() == "Load";
+  });
+
+  m_utilityElementStartingLocation->setTerminal(static_cast<UtilityTerminal*>(*terminal));
 
   // Get a default trace configuration from a tier to update the UI.
   const UtilityDomainNetwork* domainNetwork = m_networkDefinition->domainNetwork(m_domainNetworkName);
