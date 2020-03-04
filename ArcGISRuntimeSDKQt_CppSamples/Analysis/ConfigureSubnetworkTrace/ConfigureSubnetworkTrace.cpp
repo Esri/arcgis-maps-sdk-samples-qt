@@ -60,7 +60,7 @@ ConfigureSubnetworkTrace::ConfigureSubnetworkTrace(QObject* parent /* = nullptr 
   m_utilityNetwork->load();
 }
 
-QString ConfigureSubnetworkTrace::expressionToString(UtilityTraceConditionalExpression* expression) const
+QString ConfigureSubnetworkTrace::expressionToString(UtilityTraceConditionalExpression* expression)
 {
   switch (expression->traceConditionType())
   {
@@ -114,7 +114,7 @@ QString ConfigureSubnetworkTrace::expressionToString(UtilityTraceConditionalExpr
   }
 }
 
-QString ConfigureSubnetworkTrace::comparisonOperatorToString(const UtilityAttributeComparisonOperator& comparisonOperator) const
+QString ConfigureSubnetworkTrace::comparisonOperatorToString(const UtilityAttributeComparisonOperator& comparisonOperator)
 {
   switch (comparisonOperator)
   {

@@ -82,9 +82,9 @@ private slots:
 
 private:
 
-  QString comparisonOperatorToString(const Esri::ArcGISRuntime::UtilityAttributeComparisonOperator& comparisonOperator) const;
-  QString expressionToString(Esri::ArcGISRuntime::UtilityTraceConditionalExpression* expression) const;
-  QVariant convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::UtilityNetworkAttributeDataType& dataType);
+  static QString comparisonOperatorToString(const Esri::ArcGISRuntime::UtilityAttributeComparisonOperator& comparisonOperator);
+  static QString expressionToString(Esri::ArcGISRuntime::UtilityTraceConditionalExpression* expression);
+  static QVariant convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::UtilityNetworkAttributeDataType& dataType);
 
   Esri::ArcGISRuntime::UtilityElement* m_utilityElementStartingLocation = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
