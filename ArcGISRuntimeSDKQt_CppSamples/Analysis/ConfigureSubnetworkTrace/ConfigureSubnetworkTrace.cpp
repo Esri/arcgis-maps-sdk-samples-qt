@@ -44,6 +44,7 @@
 #include "UtilityTraversability.h"
 
 #include <QQmlEngine>
+#include <algorithm>
 
 using namespace Esri::ArcGISRuntime;
 QString expressionToString(UtilityTraceConditionalExpression* expression);
