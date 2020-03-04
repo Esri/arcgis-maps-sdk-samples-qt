@@ -83,10 +83,12 @@ void ConvexHull::displayConvexHull()
 
 void ConvexHull::clearGraphics()
 {
-//  m_inputs.clear();
-  m_multipointBuilder->points()->removeAll();
-  m_inputsGraphic->setGeometry(Geometry());
-  m_convexHullGraphic->setGeometry(Geometry());
+  if (m_multipointBuilder)
+    m_multipointBuilder->points()->removeAll();
+  if (m_inputsGraphic)
+    m_inputsGraphic->setGeometry(Geometry());
+  if (m_convexHullGraphic)
+    m_convexHullGraphic->setGeometry(Geometry());
 }
 
 void ConvexHull::setupGraphics()

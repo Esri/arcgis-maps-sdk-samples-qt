@@ -55,6 +55,5 @@ Item {
     ConvexHullSample {
         id: model
         mapView: view
-
     }
 }
