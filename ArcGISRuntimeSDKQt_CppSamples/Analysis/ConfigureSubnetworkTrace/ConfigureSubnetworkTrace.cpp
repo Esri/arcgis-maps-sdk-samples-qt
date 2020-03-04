@@ -149,6 +149,9 @@ QVariant ConfigureSubnetworkTrace::convertToDataType(const QVariant& value, cons
   {
     case UtilityNetworkAttributeDataType::Integer:
     {
+      // inconsistent results when using QVariant.toInt() on a
+      // QString that doesn't contain an Integer dataType.
+      // e.g. QVariant(QString("123.321")).toInt();
       return static_cast<int>(value.toDouble());
     }
     case UtilityNetworkAttributeDataType::Float:
