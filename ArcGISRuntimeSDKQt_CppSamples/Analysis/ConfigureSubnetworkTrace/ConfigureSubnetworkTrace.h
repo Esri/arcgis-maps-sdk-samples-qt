@@ -81,6 +81,11 @@ private slots:
   void onUtilityNetworkLoaded(const Esri::ArcGISRuntime::Error& e);
 
 private:
+
+  QString comparisonOperatorToString(const Esri::ArcGISRuntime::UtilityAttributeComparisonOperator& comparisonOperator) const;
+  QString expressionToString(Esri::ArcGISRuntime::UtilityTraceConditionalExpression* expression) const;
+  QVariant convertToDataType(const QVariant& value, const Esri::ArcGISRuntime::UtilityNetworkAttributeDataType& dataType);
+
   Esri::ArcGISRuntime::UtilityElement* m_utilityElementStartingLocation = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityNetworkDefinition* m_networkDefinition = nullptr;
