@@ -34,8 +34,8 @@ class RouteTask;
 
 #include <QObject>
 
-#include "Point.h"
 #include "RouteParameters.h"
+#include "TaskWatcher.h"
 
 class OfflineRouting : public QObject
 {
@@ -54,7 +54,6 @@ public:
   Q_INVOKABLE void findRoute();
   Q_INVOKABLE void resetMap();
 
-  bool eventFilter(QObject* obj, QEvent* event) override;
   void connectSignals();
 
 signals:
@@ -78,9 +77,8 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
   Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
   Esri::ArcGISRuntime::RouteParameters m_routeParameters;
-  Esri::ArcGISRuntime::Point m_clickedPoint;
+  Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
   int m_travelModeIndex = 0;
-  bool m_selectedStop = false;
 };
 
 #endif // OFFLINEROUTING_H

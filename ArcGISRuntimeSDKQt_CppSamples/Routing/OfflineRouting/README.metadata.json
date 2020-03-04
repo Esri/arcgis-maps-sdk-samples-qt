@@ -29,10 +29,13 @@
         "RouteResult",
         "SimpleLineSymbol",
         "Stop",
+        "TaskWatcher",
         "TextSymbol",
         "TileCache"
     ],
     "snippets": [
+        "OfflineRouting.cpp",
+        "OfflineRouting.h",
         "OfflineRouting.qml"
     ],
     "title": "Offline routing"

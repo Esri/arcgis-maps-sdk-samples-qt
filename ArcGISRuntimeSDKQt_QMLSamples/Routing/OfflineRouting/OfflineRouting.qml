@@ -19,6 +19,7 @@ import QtQuick.Controls 2.6
 import Esri.ArcGISRuntime 100.8
 import Esri.ArcGISExtras 1.1
 import QtQml 2.11
+import QtQuick.Layouts 1.11
 
 Rectangle {
     id: rootRectangle
@@ -31,6 +32,32 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
+        focus: false
+
+        RowLayout {
+            anchors {
+                left: parent.left
+                top: parent.top
+            }
+            ComboBox {
+                id: comboBox
+                Layout.fillWidth: true
+                onCurrentIndexChanged: {
+                    if (routeTask.findRoute){
+                        routeTask.findRoute();
+                    }
+                }
+            }
+            Button {
+                text: "Reset"
+                Layout.fillWidth: true
+                onClicked: {
+                    stopsOverlay.graphics.clear();
+                    routeOverlay.graphics.clear();
+                    selectedGraphic = null;
+                }
+            }
+        }
 
         Map {
             minScale: 100000
@@ -76,50 +103,59 @@ Rectangle {
             }
         }
 
+        SimpleMarkerSymbol {
+            id: stopLabel
+            style: Enums.SimpleMarkerSymbolStyleCircle
+            color: "red"
+            size: 20
+        }
+
         RouteTask {
             id: routeTask
             url: dataPath + "san_diego/sandiego.geodatabase"
             networkName: "Streets_ND"
-
-            //            RouteParameters {
-            //                id: routeParameters
-            //            }
 
             onComponentCompleted: {
                 load();
             }
 
             onLoadStatusChanged: {
-                if (loadStatus === Enums.LoadStatusLoaded)
-                {
+                if (loadStatus === Enums.LoadStatusLoaded) {
+                    // assign ComboBox model from travel mode names
+                    let modesList = routeTask.routeTaskInfo.travelModes;
+                    let travelModeNames = [];
+                    for (let i = 0; i < modesList.length; i++) {
+                        travelModeNames.push(modesList[i].name);
+                    }
+                    comboBox.model = travelModeNames;
                     createDefaultParameters();
                 }
             }
 
-            onCreateDefaultParametersStatusChanged: {
-                if (createDefaultParametersStatus === Enums.TaskStatusCompleted) {
-                    var routeParameters = createDefaultParametersResult;
+            function findRoute() {
+                if (routeTask.solveRouteStatus === Enums.TaskStatusInProgress)
+                    return;
 
-                    findRoute = function() {
-                        let stopsList = [];
-                        let numGraphics = stopsOverlay.graphics.count;
-                        if (numGraphics > 1) {
-                            for (let i = 0; i < numGraphics; i++) {
-                                let tempStop = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stopsOverlay.graphics.get(i).geometry});
-                                stopsList.push(tempStop);
-                            }
-                            routeParameters.setStops(stopsList);
-                            routeParameters.travelMode = routeTask.routeTaskInfo.travelModes[0];
+                if (createDefaultParametersResult === null)
+                    return;
 
-                            routeTask.solveRoute(routeParameters);
-                        }
+                let routeParameters = createDefaultParametersResult;
+                let stopsList = [];
+                let numGraphics = stopsOverlay.graphics.count;
+                if (numGraphics > 1) {
+                    for (let i = 0; i < numGraphics; i++) {
+                        let tempStop = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stopsOverlay.graphics.get(i).geometry});
+                        stopsList.push(tempStop);
                     }
+                    routeParameters.setStops(stopsList);
+                    routeParameters.travelMode = routeTask.routeTaskInfo.travelModes[comboBox.currentIndex];
+
+                    routeTask.solveRoute(routeParameters);
                 }
             }
 
             onErrorChanged: {
-                console.log(routeTask.error.message);
-                console.log(routeTask.error.additionalMessage);
+                console.log(routeTask.error.message, routeTask.error.additionalMessage);
             }
 
             onSolveRouteStatusChanged: {
@@ -128,31 +164,64 @@ Rectangle {
                     // clear old route
                     routeOverlay.graphics.clear();
                     if (routeTask.error) {
+                        console.warn(routeTask.error.message);
                     }
-                    var routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: solveRouteResult.routes[0].routeGeometry});
+                    let routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: solveRouteResult.routes[0].routeGeometry});
                     routeOverlay.graphics.append(routeGraphic);
                 }
             }
         }
 
-        //        onMousePressed: {
-        //            mapView.identifyGraphicsOverlayWithMaxResults(stopsOverlay, mouse.x, mouse.y, 10, false, 1);
-        //        }
+        onIdentifyGraphicsOverlayStatusChanged: {
+            if (identifyGraphicsOverlayStatus !== Enums.TaskStatusCompleted)
+                return;
+
+            if (identifyGraphicsOverlayResult === null) {
+                return;
+            }
+
+            if (identifyGraphicsOverlayResult.graphics.length === 0) {
+                selectedGraphic = null;
+            } else {
+                for (let i = 0; i < stopsOverlay.graphics.count; i++) {
+                    if(identifyGraphicsOverlayResult.graphics[0].equals(stopsOverlay.graphics.get(i))) {
+                        selectedGraphic = stopsOverlay.graphics.get(i);
+                        break;
+                    }
+
+                }
+            }
+        }
+
+        onMousePressed: {
+            mapView.identifyGraphicsOverlay(stopsOverlay, mouse.x, mouse.y, 10, false);
+        }
 
         onMouseClicked: {
-            var clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
-            let numStops = stopsOverlay.graphics.count + 1;
-            var stopLabel = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
-                                                                      color: "red",
-                                                                      size: 30,
-                                                                      text: numStops
-                                                                  });
-            var stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopLabel});
-            stopsOverlay.graphics.append(stopGraphic);
-            findRoute();
+            if (!selectedGraphic) {
+                let clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
+                let stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopLabel});
+                stopsOverlay.graphics.append(stopGraphic);
+                routeTask.findRoute();
+            }
+            mouse.accepted = true;
+        }
+
+        onMousePositionChanged: {
+            mouse.accepted = !!selectedGraphic; // whether to pass mouse event to MapView
+            if (selectedGraphic) {
+                selectedGraphic.geometry = mapView.screenToLocation(mouse.x, mouse.y);
+                routeTask.findRoute();
+            }
+        }
+
+        onMouseReleased: {
+            if (selectedGraphic) {
+                selectedGraphic = null;
+                mouse.accepted = true;
+            }
         }
     }
-
 
     BusyIndicator {
         anchors.centerIn: parent
@@ -161,4 +230,5 @@ Rectangle {
     }
 
     property var findRoute;
+    property Graphic selectedGraphic: null;
 }
