@@ -20,16 +20,16 @@ IWA, which is built into Microsoft Internet Information Server (IIS), works well
 
 ## How it works
 
-1. Declare an `AuthenticationView` and connect the `AuthenticationManager` to it.
-2. The authentication manager object is configured with a challenge handler that will prompt for a Windows login (username and password) if a secure resource is encountered.
-3. When a search for portal items is performed against an IWA-secured portal, the challenge handler creates an `UserCredential` object from the information entered by the user or what was automatically obtained by the current Windows login.
-4. If the user authenticates, the search returns a list of web maps from `PortalItem` objects and the user can select one to display as an `Map`.
+1. The `AuthenticationManager` object is configured with a challenge handler that will prompt for a Windows login (username, password, and domain) if a secure resource is encountered.
+2. When a search for portal items is performed against an IWA-secured portal, the challenge handler creates an `ArcGISNetworkCredential` object from the information entered by the user.
+3. If the user authenticates, the search returns a list of web maps (`ArcGISPortalItem`) and the user can select one to display as a `Map`.
+4. On some platforms, the current Windows account is used by default and a login prompt will not be shown if it can authenticate successfully.
 
 ## Relevant API
 
+* ArcGISNetworkCredential
+* ArcGISPortal
 * AuthenticationManager
-* Portal
-* UserCredential
 
 ## About the data
 
@@ -37,6 +37,12 @@ This sample searches for web map portal items on a secure portal. To successfull
  - Access to a portal secured with Integrated Windows Authentication that contains one or more web map items.
  - A login that grants you access to the portal.
 
+## Additional information
+
+More information about IWA and its use with ArcGIS can be found at the following links:
+ - [IWA - Wikipedia](https://en.wikipedia.org/wiki/Integrated_Windows_Authentication)
+ - [Use Integrated Windows Authentication with your portal](http://enterprise.arcgis.com/en/portal/latest/administer/windows/use-integrated-windows-authentication-with-your-portal.htm)
+
 ## Tags
 
-authentication, security, windows
+authentication, Portal, security, Windows
