@@ -20,7 +20,7 @@ The sample loads with a predefined simple renderer, which displays a red cross s
 4.  Create a simple renderer with `SimpleRenderer(simpleMarkerSymbol)`.
 5.  Set the simple renderer to the graphics overlay using `graphicsOverlay::setRenderer(simpleRenderer)`.
 6.  Create a number of `Graphic` objects with the points initiated in step 2.
-7.  Add the graphics to the graphics overlay with `graphicsOverlay::graphics().append(graphic)`.
+7.  Add the graphics to the graphics overlay with `graphicsOverlay::graphics()::append(graphic)`.
 
 ## Relevant API
 
