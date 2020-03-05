@@ -264,6 +264,8 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
 void OfflineRouting::resetMap()
 {
   m_selectedGraphic = nullptr;
-  m_stopsOverlay->graphics()->clear();
-  m_routeOverlay->graphics()->clear();
+  if (m_stopsOverlay)
+    m_stopsOverlay->graphics()->clear();
+  if(m_routeOverlay)
+    m_routeOverlay->graphics()->clear();
 }
