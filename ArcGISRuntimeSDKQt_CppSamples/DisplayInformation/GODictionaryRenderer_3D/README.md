@@ -4,32 +4,42 @@ This sample demonstrates applying a dictionary renderer to a graphics overlay in
 
 ![](screenshot.png)
 
+## Use case
+
+Use a dictionary renderer on a graphics overlay to display more transient data, such as military messages coming through a local tactical network.
+
 ## How it works
 
-The sample loads a number of point military elements from an XML file and adds them as graphics to a `GraphicsOverlay`. A `DictionaryRenderer` is applied to the `GraphicsOverlay` in order to display the graphics with MIL-STD-2525D military symbology. The `GraphicsOverlay`'s `renderingMode` parameter is set to `GraphicsRenderingMode::Dynamic`, so that point features are displayed with billboarded symbols facing the user (a developer can set `renderingMode` to `GraphicsRenderingMode::Static` if desired to instead drape the symbols on the surface). When all graphics are created, the 3D scene's viewpoint is set to zoom to the full extent of all graphics.
+1. Create a new `DictionarySymbolStyle(dictionaryPath)`.
+2. Create a new `DictionaryRenderer(symbolDictionary)`.
+3. Create a new `GraphicsOverlay`
+4. Set the  dictionary renderer to the graphics overlay.
+5. Parse through the XML and create a graphic for each element.
+6. Use the `_wkid` key to get the geometry's spatial reference.
+7. Use the `_control_points` key to get the geometry's shape.
+8. Create a geometry using the shape and spatial reference from above.
+9. Create a `Graphic` for each attribute, utilizing it's defined geometry.
+10. Add the graphic to the graphics overlay.
 
-## Features
-- ArcGISTiledElevationSource
-- Basemap
-- Camera
-- DictionaryRenderer
-- Envelope
-- Geometry
-- GeometryEngine
-- Graphic
-- GraphicsOverlay
-- Point
-- Scene
-- SceneQuickView
-- SceneView
-- SpatialReference
-- Surface
-- DictionarySymbolStyle
+## Relevant API
+
+* DictionaryRenderer
+* DictionarySymbolStyle
+* GraphicsOverlay
 
 ## Offline Data
+
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
 ---------|-------|
 |[Mil2525d Stylx File](https://www.arcgis.com/home/item.html?id=c78b149a1d52414682c86a5feeb13d30)| `<userhome>`/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx |
 |[MIL-STD-2525D XML Message File](https://arcgisruntime.maps.arcgis.com/home/item.html?id=1e4ea99af4b440c092e7959cf3957bfa)| `<userhome>`/ArcGIS/Runtime/Data/xml/arcade_style/Mil2525DMessages.xml |
+
+## About the data
+
+The sample opens to a view of the county Wiltshire, United Kingdom. It displays military symbols illustrating a simulated combat situation in the area.
+
+## Tags
+
+defense, military, situational awareness, tactical, visualization
