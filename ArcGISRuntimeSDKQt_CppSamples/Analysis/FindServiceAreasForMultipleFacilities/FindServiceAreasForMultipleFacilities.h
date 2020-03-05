@@ -21,9 +21,13 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class FeatureLayer;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
+class ServiceAreaTask;
+class ServiceFeatureTable;
+class SimpleFillSymbol;
 }
 }
 
@@ -41,6 +45,8 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void findServiceAreas();
+
 signals:
   void mapViewChanged();
 
@@ -48,9 +54,13 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
+  Esri::ArcGISRuntime::FeatureLayer* m_facilitiesFeatureLayer = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_serviceAreasOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::ServiceAreaTask* m_serviceAreaTask = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_facilitiesTable = nullptr;
+  QList<Esri::ArcGISRuntime::SimpleFillSymbol*> m_fillSymbols;
 };
 
 #endif // FINDSERVICEAREASFORMULTIPLEFACILITIES_H

@@ -16,6 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.11
 import Esri.Samples 1.0
 
 Item {
@@ -24,6 +25,23 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        RowLayout {
+            anchors {
+                left: parent.left
+                top: parent.top
+            }
+
+            Button {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                text: "Find Service Areas"
+                onClicked: {
+                    model.findServiceAreas();
+                    enabled = false;
+                }
+            }
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
