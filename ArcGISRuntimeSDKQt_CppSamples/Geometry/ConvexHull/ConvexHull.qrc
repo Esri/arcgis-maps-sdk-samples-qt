@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Geometry/ConvexHull">
+        <file alias="sample.json">ConvexHull.json</file>        
+        <file>ConvexHull.qml</file>
+        <file>ConvexHull.h</file>
+        <file>ConvexHull.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

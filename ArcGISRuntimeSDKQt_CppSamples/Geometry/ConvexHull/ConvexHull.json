@@ -1,0 +1,8 @@
+{
+    "source" :  "ConvexHull.qml",
+    "otherSourceFiles" :  [
+        "ConvexHull.h",
+        "ConvexHull.cpp"
+    ],
+    "name" : "Convex hull"
+}
