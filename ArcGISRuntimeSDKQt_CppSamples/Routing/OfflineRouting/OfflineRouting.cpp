@@ -78,6 +78,10 @@ OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
   SimpleLineSymbol* lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 2, this);
   SimpleRenderer* routeRenderer = new SimpleRenderer(lineSymbol, this);
   m_routeOverlay->setRenderer(routeRenderer);
+
+  const QString geodatabaseLocation = QString("%1/ArcGIS/Runtime/Data/tpk/san_diego/sandiego.geodatabase").arg(defaultDataPath());
+  m_routeTask = new RouteTask(geodatabaseLocation, "Streets_ND",this);
+  m_routeTask->load();
 }
 
 OfflineRouting::~OfflineRouting() = default;
@@ -94,38 +98,45 @@ MapQuickView* OfflineRouting::mapView() const
   return m_mapView;
 }
 
-QStringList OfflineRouting::travelModeNames()
+QStringList OfflineRouting::travelModeNames() const
 {
+  // if route task not initialized or loaded, then do not execute
   if (!m_routeTask)
+    return { };
+  if(m_routeTask->loadStatus() != LoadStatus::Loaded)
     return { };
 
   QList<TravelMode> modesList = m_routeTask->routeTaskInfo().travelModes();
   QStringList strList;
-  for (int i = 0; i < modesList.size(); ++i)
+  for (const TravelMode& mode : modesList)
   {
-    strList << modesList[i].name();
+    strList << mode.name();
   }
   return strList;
 }
 
 void OfflineRouting::setTravelModeIndex(int index)
 {
+  if (m_travelModeIndex == index)
+    return;
   m_travelModeIndex = index;
   emit travelModeIndexChanged();
 }
 
-int OfflineRouting::travelModeIndex()
+int OfflineRouting::travelModeIndex() const
 {
   return m_travelModeIndex;
 }
 
 void OfflineRouting::connectSignals()
 {
-  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, const RouteParameters& defaultParameters){
+  connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, const RouteParameters& defaultParameters)
+  {
     m_routeParameters = defaultParameters;
   });
 
-  connect(m_routeTask, &RouteTask::doneLoading, this, [this](Error loadError){
+  connect(m_routeTask, &RouteTask::doneLoading, this, [this](Error loadError)
+  {
     if (loadError.isEmpty())
     {
       m_routeTask->createDefaultParameters();
@@ -134,7 +145,6 @@ void OfflineRouting::connectSignals()
     else
     {
       qDebug() << loadError.message() << loadError.additionalMessage();
-      return;
     }
   });
 
@@ -144,23 +154,12 @@ void OfflineRouting::connectSignals()
     if (!result->error().isEmpty())
       qDebug() << result->error().message() << result->error().additionalMessage();
 
-    if (result->graphics().isEmpty())
+    m_selectedGraphic = nullptr;
+    if (!result->graphics().isEmpty())
     {
-      m_selectedGraphic = nullptr;
-    }
-    // identify selected graphic in m_stopsOverlay
-    else
-    {
-      m_selectedGraphic = nullptr;
-      // find corresponding graphic in m_stopsOverlay
-      for (int i = 0; i < m_stopsOverlay->graphics()->size(); ++i)
-      {
-        if (m_stopsOverlay->graphics()->at(i)->operator==(result->graphics().at(0)))
-        {
-          m_selectedGraphic = m_stopsOverlay->graphics()->at(i);
-          break;
-        }
-      }
+      // identify selected graphic in m_stopsOverlay
+      int index = m_stopsOverlay->graphics()->indexOf(result->graphics().at(0));
+      m_selectedGraphic = m_stopsOverlay->graphics()->at(index);
     }
 
   });
@@ -182,6 +181,7 @@ void OfflineRouting::connectSignals()
     e.accept();
   });
 
+  // mouseMoved is processed before identifyGraphicsOverlayCompleted, so must clear graphic upon mouseReleased
   connect(m_mapView, &MapQuickView::mouseReleased, this, [this](QMouseEvent& e) {
     if (m_selectedGraphic)
     {
@@ -190,6 +190,7 @@ void OfflineRouting::connectSignals()
     }
   });
 
+  // if mouse is moved while pressing on a graphic, the click-and-pan effect of the MapView is prevented by e.accept()
   connect(m_mapView, &MapQuickView::mouseMoved, this, [this](QMouseEvent&e){
     if (m_selectedGraphic)
     {
@@ -200,6 +201,9 @@ void OfflineRouting::connectSignals()
   });
 
   connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult routeResult){
+    if (routeResult.isEmpty())
+      return;
+
     // clear old route
     m_routeOverlay->graphics()->clear();
     Polyline routeGeometry = routeResult.routes().first().routeGeometry();
@@ -211,24 +215,21 @@ void OfflineRouting::connectSignals()
 
 void OfflineRouting::findRoute()
 {
-  if(!m_taskWatcher.isDone()) {
+  if(!m_taskWatcher.isDone())
     return;
-  }
 
-  int numGraphics = m_stopsOverlay->graphics()->size();
-  if (numGraphics > 1)
+  if (m_stopsOverlay->graphics()->size() > 1)
   {
     QList<Stop> stops;
-    for (int i = 0; i < numGraphics; ++i)
+    for (const Graphic* graphic : *m_stopsOverlay->graphics())
     {
-      stops.append(Stop(m_stopsOverlay->graphics()->at(i)->geometry()));
+      stops << Stop(graphic->geometry());
     }
 
     // configure stops and travel mode
     m_routeParameters.setStops(stops);
     m_routeParameters.setTravelMode(m_routeTask->routeTaskInfo().travelModes().at(m_travelModeIndex));
 
-    // solve the route
     m_taskWatcher = m_routeTask->solveRoute(m_routeParameters);
   }
 }
@@ -245,14 +246,10 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
   m_mapView->graphicsOverlays()->append(m_stopsOverlay);
   m_mapView->graphicsOverlays()->append(m_routeOverlay);
 
-  const QString geodatabaseLocation = QString("%1/ArcGIS/Runtime/Data/tpk/san_diego/sandiego.geodatabase").arg(defaultDataPath());
-  m_routeTask = new RouteTask(geodatabaseLocation, "Streets_ND",this);
-  m_routeTask->load();
-
   GraphicsOverlay* boundaryOverlay = new GraphicsOverlay(this);
-  Envelope envelop = Envelope(Point(-13045352.223196, 3864910.900750,SpatialReference::webMercator()), Point(-13024588.857198, 3838880.505604, SpatialReference::webMercator()));
+  Envelope envelope = Envelope(Point(-13045352.223196, 3864910.900750,SpatialReference::webMercator()), Point(-13024588.857198, 3838880.505604, SpatialReference::webMercator()));
   SimpleLineSymbol* boundarySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::green, 3, this);
-  Graphic* boundaryGraphic = new Graphic(envelop, boundarySymbol, this);
+  Graphic* boundaryGraphic = new Graphic(envelope, boundarySymbol, this);
   boundaryOverlay->graphics()->append(boundaryGraphic);
   m_mapView->graphicsOverlays()->append(boundaryOverlay);
 

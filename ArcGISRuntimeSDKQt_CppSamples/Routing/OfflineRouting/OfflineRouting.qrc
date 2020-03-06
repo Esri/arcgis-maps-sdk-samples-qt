@@ -5,7 +5,7 @@
         <file>OfflineRouting.h</file>
         <file>OfflineRouting.cpp</file>
         <file>main.qml</file>
-        <file>screenshot.png</file>
+        <file>sample.gif</file>
         <file>README.md</file>
     </qresource>
 </RCC>

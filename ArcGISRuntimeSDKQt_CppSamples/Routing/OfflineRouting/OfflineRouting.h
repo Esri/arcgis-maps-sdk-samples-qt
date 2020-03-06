@@ -25,7 +25,6 @@ class Graphic;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
-class RouteParameters;
 class RouteTask;
 }
 }
@@ -65,8 +64,8 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-  QStringList travelModeNames();
-  int travelModeIndex();
+  QStringList travelModeNames() const;
+  int travelModeIndex() const;
   void setTravelModeIndex(int index);
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -78,7 +77,7 @@ private:
   Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
   Esri::ArcGISRuntime::RouteParameters m_routeParameters;
   Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
-  int m_travelModeIndex = 0;
+  int m_travelModeIndex = -1;
 };
 
 #endif // OFFLINEROUTING_H

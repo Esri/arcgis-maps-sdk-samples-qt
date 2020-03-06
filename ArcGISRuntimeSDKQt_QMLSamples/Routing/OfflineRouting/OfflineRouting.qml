@@ -28,6 +28,8 @@ Rectangle {
     height: 600
 
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpk/"
+    property var findRoute;
+    property Graphic selectedGraphic: null;
 
     MapView {
         id: mapView
@@ -43,9 +45,9 @@ Rectangle {
                 id: comboBox
                 Layout.fillWidth: true
                 onCurrentIndexChanged: {
-                    if (routeTask.findRoute){
+//                    if (routeTask.findRoute){
                         routeTask.findRoute();
-                    }
+//                    }
                 }
             }
             Button {
@@ -159,8 +161,7 @@ Rectangle {
             }
 
             onSolveRouteStatusChanged: {
-                if (solveRouteStatus === Enums.TaskStatusCompleted)
-                {
+                if (solveRouteStatus === Enums.TaskStatusCompleted) {
                     // clear old route
                     routeOverlay.graphics.clear();
                     if (routeTask.error) {
@@ -183,13 +184,8 @@ Rectangle {
             if (identifyGraphicsOverlayResult.graphics.length === 0) {
                 selectedGraphic = null;
             } else {
-                for (let i = 0; i < stopsOverlay.graphics.count; i++) {
-                    if(identifyGraphicsOverlayResult.graphics[0].equals(stopsOverlay.graphics.get(i))) {
-                        selectedGraphic = stopsOverlay.graphics.get(i);
-                        break;
-                    }
-
-                }
+                let index = stopsOverlay.graphics.indexOf(identifyGraphicsOverlayResult.graphics[0]);
+                selectedGraphic = stopsOverlay.graphics.get(index);
             }
         }
 
@@ -228,7 +224,4 @@ Rectangle {
         visible: true
         running: routeTask.taskStatus === Enums.TaskStatusInProgress
     }
-
-    property var findRoute;
-    property Graphic selectedGraphic: null;
 }

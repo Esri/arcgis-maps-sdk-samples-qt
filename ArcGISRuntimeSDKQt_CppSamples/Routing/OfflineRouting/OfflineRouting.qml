@@ -34,7 +34,7 @@ Item {
 
         ComboBox {
             id: comboBox
-            width: 200
+            Layout.fillWidth: true
             model: routingModel.travelModeNames
             onCurrentIndexChanged: {
                 routingModel.travelModeIndex = currentIndex;
