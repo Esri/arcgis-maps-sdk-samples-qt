@@ -33,7 +33,7 @@ The taxi will be highlighted when it is visible. You can change the observer hei
 
 1. AnalysisOverlay
 1. GeoElementLineOfSight
-1. LineOfSight.targetVisibility
+1. LineOfSight::targetVisibility
 
 ## Offline data
 
