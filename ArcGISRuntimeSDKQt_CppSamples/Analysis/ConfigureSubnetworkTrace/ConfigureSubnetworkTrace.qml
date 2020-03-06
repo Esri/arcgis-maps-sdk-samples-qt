@@ -189,7 +189,6 @@ Item {
         Text {
             text: model.dialogText
             anchors.centerIn: parent
-            color: "white"
         }
     }
 

@@ -414,7 +414,6 @@ Rectangle {
         Text {
             id: dialogText
             anchors.centerIn: parent
-            color: "white"
         }
     }
 
