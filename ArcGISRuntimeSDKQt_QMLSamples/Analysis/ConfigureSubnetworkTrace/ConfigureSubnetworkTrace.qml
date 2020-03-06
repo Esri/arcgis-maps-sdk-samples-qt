@@ -279,8 +279,10 @@ Rectangle {
             id: controlItemsLayout
             anchors.left: parent.left
             anchors.right: parent.right
+
             CheckBox {
                 text: qsTr("Include barriers")
+                font.pixelSize: 15
                 Layout.fillWidth: true
                 checkState: Qt.Checked
                 enabled: !busyIndicator.visible
@@ -289,6 +291,7 @@ Rectangle {
 
             CheckBox {
                 text: qsTr("Include containers")
+                font.pixelSize: 15
                 Layout.fillWidth: true
                 checkState: Qt.Checked
                 enabled: !busyIndicator.visible
@@ -308,7 +311,8 @@ Rectangle {
 
             Text {
                 text: qsTr("Example barrier condition for this data. 'Transformer Load' Equal '15'")
-                Layout.fillWidth: true
+                font.pixelSize: 11
+                Layout.minimumWidth: rootRectangle.width
                 horizontalAlignment: Text.AlignHCenter
             }
 
@@ -325,6 +329,7 @@ Rectangle {
 
             Text {
                 text: qsTr("New Barrier Condition:")
+                font.pixelSize: 15
                 Layout.fillWidth: true
             }
 
@@ -352,6 +357,8 @@ Rectangle {
 
                 TextField {
                     id: inputTextField
+                    font.pixelSize: 11
+                    Layout.minimumHeight: valueSelectionComboBox.height
                     Layout.fillWidth: true
                     visible: true
                     validator: DoubleValidator {}
@@ -360,6 +367,7 @@ Rectangle {
                     placeholderTextColor: "black"
                     background: Rectangle {
                         anchors.centerIn: parent
+                        height: parent.height
                         width: parent.width
                         color: "white"
                     }
@@ -382,6 +390,7 @@ Rectangle {
                     anchors.fill: parent
                     Text {
                         id: expressionBuilder
+                        font.pixelSize: 11
                     }
                 }
             }
