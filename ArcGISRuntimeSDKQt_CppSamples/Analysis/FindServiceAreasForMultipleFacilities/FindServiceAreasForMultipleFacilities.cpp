@@ -42,7 +42,7 @@ using namespace Esri::ArcGISRuntime;
 namespace
 {
 const QUrl url("https://services2.arcgis.com/ZQgQTuoyBrtmoGdP/ArcGIS/rest/services/San_Diego_Facilities/FeatureServer/0");
-const QUrl imageUrl("http://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png");
+const QUrl imageUrl("https://static.arcgis.com/images/Symbols/SafetyHealth/Hospital.png");
 const QUrl serviceAreaTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/ServiceArea");
 }
 
@@ -51,6 +51,22 @@ FindServiceAreasForMultipleFacilities::FindServiceAreasForMultipleFacilities(QOb
   m_map(new Map(Basemap::lightGrayCanvas(this), this))
 {
   m_serviceAreasOverlay = new GraphicsOverlay(this);
+
+  // create fill symbols for rendering the results
+  m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 166, 0, 66), this));
+  m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 0, 0, 66), this));
+
+  m_facilitiesTable = new ServiceFeatureTable(url, this);
+  m_facilitiesFeatureLayer = new FeatureLayer(m_facilitiesTable, this);
+
+  // create a symbol to display the facilities
+  PictureMarkerSymbol* facilitiesSymbol = new PictureMarkerSymbol(imageUrl, this);
+  facilitiesSymbol->setWidth(25);
+  facilitiesSymbol->setHeight(25);
+  m_facilitiesFeatureLayer->setRenderer(new SimpleRenderer(facilitiesSymbol, this));
+
+  // add the facilities feature layer to the map
+  m_map->operationalLayers()->append(m_facilitiesFeatureLayer);
 }
 
 FindServiceAreasForMultipleFacilities::~FindServiceAreasForMultipleFacilities() = default;
@@ -67,6 +83,11 @@ MapQuickView* FindServiceAreasForMultipleFacilities::mapView() const
   return m_mapView;
 }
 
+bool FindServiceAreasForMultipleFacilities::taskRunning() const
+{
+  return m_taskRunning;
+}
+
 // Set the view (created in QML)
 void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
 {
@@ -78,25 +99,6 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
 
   m_mapView->graphicsOverlays()->append(m_serviceAreasOverlay);
 
-  // create fill symbols for rendering the results
-//  QList<SimpleFillSymbol*> fillSymbols;
-//  m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(0x66FFA500), this));
-//  m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(0x66FF0000), this));
-  m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 166, 0, 66), this));
-  m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 0, 0, 66), this));
-
-  m_facilitiesTable = new ServiceFeatureTable(url, this);
-  m_facilitiesFeatureLayer = new FeatureLayer(m_facilitiesTable, this);
-
-  // create a symbol to display the facilities
-  PictureMarkerSymbol* facilitiesSymbol = new PictureMarkerSymbol(imageUrl, this);
-  facilitiesSymbol->setWidth(25);
-  facilitiesSymbol->setHeight(25);
-  m_facilitiesFeatureLayer->setRenderer(new SimpleRenderer(facilitiesSymbol, this));
-
-  // add the facilities feature layer to the map
-  m_map->operationalLayers()->append(m_facilitiesFeatureLayer);
-
   connect(m_facilitiesFeatureLayer, &FeatureLayer::doneLoading, this, [this](Error loadError){
     if (!loadError.isEmpty())
     {
@@ -107,11 +109,7 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
     if (m_facilitiesFeatureLayer->loadStatus() == LoadStatus::Loaded)
     {
       // zoom to the full extent of the feature layer
-      m_mapView->setViewpointGeometry(m_facilitiesFeatureLayer->fullExtent(), 130);
-
-      // enable the find service areas button when the draw status is completed for the first time
-
-
+      m_mapView->setViewpointGeometry(m_facilitiesFeatureLayer->fullExtent(), 100);
     }
   });
 
@@ -120,10 +118,14 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
 
 void FindServiceAreasForMultipleFacilities::findServiceAreas()
 {
-  qDebug() << "pressed";
+  // start showing indicator
+  m_taskRunning = true;
+  emit taskRunningChanged();
+
   m_serviceAreaTask = new ServiceAreaTask(serviceAreaTaskUrl, this);
   m_serviceAreaTask->load();
 
+  // once service area task is done loading, create default parameters
   connect(m_serviceAreaTask, &ServiceAreaTask::doneLoading, this, [this](Error loadError){
     if (!loadError.isEmpty())
     {
@@ -133,15 +135,15 @@ void FindServiceAreasForMultipleFacilities::findServiceAreas()
     m_serviceAreaTask->createDefaultParameters();
   });
 
+  // once default parameters created, set parameters and solve
   connect(m_serviceAreaTask, &ServiceAreaTask::createDefaultParametersCompleted, this, [this](QUuid, ServiceAreaParameters serviceAreaParameters){
     serviceAreaParameters.setPolygonDetail(ServiceAreaPolygonDetail::High);
     serviceAreaParameters.setReturnPolygons(true);
 
     QList<double> travelTimes = {1.0, 3.0};
 
-    // clear the default service area, and add service areas of 1 minute and 3 minutes travel time by car
-    serviceAreaParameters.defaultImpedanceCutoffs().clear();
-    serviceAreaParameters.defaultImpedanceCutoffs().append(travelTimes);
+    // add service areas of 1 minute and 3 minutes travel time by car
+    serviceAreaParameters.setDefaultImpedanceCutoffs(travelTimes);
 
     // create query parameters used to select all facilities from the feature table
     QueryParameters queryParameters;
@@ -151,26 +153,23 @@ void FindServiceAreasForMultipleFacilities::findServiceAreas()
     serviceAreaParameters.setFacilitiesWithFeatureTable(m_facilitiesTable, queryParameters);
 
     TaskWatcher taskWatcher = m_serviceAreaTask->solveServiceArea(serviceAreaParameters);
-    if (taskWatcher.isValid())
-      qDebug("solving");
-    else
-      qDebug("invalid");
+    if (!taskWatcher.isValid())
+      qWarning() << "Task not valid.";
   });
 
   connect(m_serviceAreaTask, &ServiceAreaTask::solveServiceAreaCompleted, this, [this](QUuid, ServiceAreaResult serviceAreaResult){
-    qDebug("solve completed");
+    m_taskRunning = false;
+    emit taskRunningChanged();
+
     // iterate through the facilities to get the service area polygons
-    for (int i = 0; i < serviceAreaResult.facilities().size(); i++)
+    for (int i = 0; i < serviceAreaResult.facilities().size(); ++i)
     {
       QList<ServiceAreaPolygon> serviceAreaPolygonList = serviceAreaResult.resultPolygons(i);
       // create a graphic for each available polygon
-      for (int j = 0; j < serviceAreaPolygonList.size(); j++)
+      for (int j = 0; j < serviceAreaPolygonList.size(); ++j)
       {
         m_serviceAreasOverlay->graphics()->append(new Graphic(serviceAreaPolygonList[j].geometry(), m_fillSymbols[j], this));
       }
     }
-    qDebug("done");
-
-//    if (m_serviceAreaTask->)
   });
 }

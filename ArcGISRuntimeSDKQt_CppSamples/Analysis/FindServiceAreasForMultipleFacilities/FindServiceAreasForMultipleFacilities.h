@@ -38,6 +38,7 @@ class FindServiceAreasForMultipleFacilities : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(bool taskRunning READ taskRunning NOTIFY taskRunningChanged)
 
 public:
   explicit FindServiceAreasForMultipleFacilities(QObject* parent = nullptr);
@@ -49,10 +50,12 @@ public:
 
 signals:
   void mapViewChanged();
+  void taskRunningChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  bool taskRunning() const;
 
   Esri::ArcGISRuntime::FeatureLayer* m_facilitiesFeatureLayer = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_serviceAreasOverlay = nullptr;
@@ -61,6 +64,7 @@ private:
   Esri::ArcGISRuntime::ServiceAreaTask* m_serviceAreaTask = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_facilitiesTable = nullptr;
   QList<Esri::ArcGISRuntime::SimpleFillSymbol*> m_fillSymbols;
+  bool m_taskRunning = false;
 };
 
 #endif // FINDSERVICEAREASFORMULTIPLEFACILITIES_H

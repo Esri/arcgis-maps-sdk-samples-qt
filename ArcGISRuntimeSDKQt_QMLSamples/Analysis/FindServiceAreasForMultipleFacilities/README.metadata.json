@@ -21,8 +21,6 @@
         "ServiceAreaTask"
     ],
     "snippets": [
-        "FindServiceAreasForMultipleFacilities.cpp",
-        "FindServiceAreasForMultipleFacilities.h",
         "FindServiceAreasForMultipleFacilities.qml"
     ],
     "title": "Find service areas for multiple facilities"

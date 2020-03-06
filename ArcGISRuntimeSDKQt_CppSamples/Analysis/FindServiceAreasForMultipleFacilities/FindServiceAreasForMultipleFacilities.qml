@@ -49,4 +49,10 @@ Item {
         id: model
         mapView: view
     }
+
+    BusyIndicator {
+        anchors.centerIn: parent
+        visible: true
+        running: model.taskRunning
+    }
 }

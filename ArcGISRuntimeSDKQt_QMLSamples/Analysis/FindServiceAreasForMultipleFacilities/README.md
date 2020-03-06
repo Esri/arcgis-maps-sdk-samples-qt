@@ -16,7 +16,7 @@ Click 'Find Service Areas' to calculate and display the service area of each fac
 
 1. Create a new `ServiceAreaTask` from a network service.
 2. Create default `ServiceAreaParameters` from the service area task.
-3. Set the parameters `ServiceAreaParameters.setReturnPolygons(true)` to return polygons of all service areas.
+3. Set the parameters `ServiceAreaParameters.returnPolygons = true` to return polygons of all service areas.
 4. Define `QueryParameters` that retrieve all `Facility` items from a `ServiceFeatureTable`. Add the facilities to the service area parameters using the query parameters, `serviceAreaParameters.SetFacilitiesWithFeatureTable(facilitiesTable, queryParameters).`
 5. Get the `ServiceAreaResult` by solving the service area task using the parameters.
 6. For each facility, get any `ServiceAreaPolygons` that were returned, `serviceAreaResult.resultPolygons(facilityIndex)`.
@@ -36,4 +36,3 @@ This sample uses a street map of San Diego, in combination with a feature servic
 ## Tags
 
 facilities, feature service, impedance, network analysis, service area, travel time
-
