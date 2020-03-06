@@ -126,7 +126,8 @@ void FindServiceAreasForMultipleFacilities::findServiceAreas()
   m_serviceAreaTask->load();
 
   // once service area task is done loading, create default parameters
-  connect(m_serviceAreaTask, &ServiceAreaTask::doneLoading, this, [this](Error loadError){
+  connect(m_serviceAreaTask, &ServiceAreaTask::doneLoading, this, [this](Error loadError)
+  {
     if (!loadError.isEmpty())
     {
       qDebug() << loadError.message() << loadError.additionalMessage();
@@ -136,7 +137,8 @@ void FindServiceAreasForMultipleFacilities::findServiceAreas()
   });
 
   // once default parameters created, set parameters and solve
-  connect(m_serviceAreaTask, &ServiceAreaTask::createDefaultParametersCompleted, this, [this](QUuid, ServiceAreaParameters serviceAreaParameters){
+  connect(m_serviceAreaTask, &ServiceAreaTask::createDefaultParametersCompleted, this, [this](QUuid, ServiceAreaParameters serviceAreaParameters)
+  {
     serviceAreaParameters.setPolygonDetail(ServiceAreaPolygonDetail::High);
     serviceAreaParameters.setReturnPolygons(true);
 
@@ -157,7 +159,8 @@ void FindServiceAreasForMultipleFacilities::findServiceAreas()
       qWarning() << "Task not valid.";
   });
 
-  connect(m_serviceAreaTask, &ServiceAreaTask::solveServiceAreaCompleted, this, [this](QUuid, ServiceAreaResult serviceAreaResult){
+  connect(m_serviceAreaTask, &ServiceAreaTask::solveServiceAreaCompleted, this, [this](QUuid, ServiceAreaResult serviceAreaResult)
+  {
     m_taskRunning = false;
     emit taskRunningChanged();
 
