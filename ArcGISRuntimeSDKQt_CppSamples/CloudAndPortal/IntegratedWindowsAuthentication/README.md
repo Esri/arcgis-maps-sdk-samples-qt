@@ -21,14 +21,14 @@ IWA, which is built into Microsoft Internet Information Server (IIS), works well
 ## How it works
 
 1. The `AuthenticationManager` object is configured with a challenge handler that will prompt for a Windows login (username, password, and domain) if a secure resource is encountered.
-2. When a search for portal items is performed against an IWA-secured portal, the challenge handler creates an `ArcGISNetworkCredential` object from the information entered by the user.
-3. If the user authenticates, the search returns a list of web maps (`ArcGISPortalItem`) and the user can select one to display as a `Map`.
+2. When a search for portal items is performed against an IWA-secured portal, the challenge handler creates an `Credential` object from the information entered by the user.
+3. If the user authenticates, the search returns a list of web maps (`PortalItem`) and the user can select one to display as a `Map`.
 4. On some platforms, the current Windows account is used by default and a login prompt will not be shown if it can authenticate successfully.
 
 ## Relevant API
 
-* ArcGISNetworkCredential
-* ArcGISPortal
+* Credential
+* Portal
 * AuthenticationManager
 
 ## About the data
