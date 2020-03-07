@@ -33,9 +33,10 @@ Item {
             id: controlItemsLayout
             anchors.left: parent.left
             anchors.right: parent.right
-            Layout.alignment: Qt.AlignHCenter
+
             CheckBox {
                 text: qsTr("Include barriers")
+                font.pixelSize: 15
                 Layout.fillWidth: true
                 enabled: !busyIndicator.visible
                 checkState: Qt.Checked
@@ -44,6 +45,7 @@ Item {
 
             CheckBox {
                 text: qsTr("Include containers")
+                font.pixelSize: 15
                 Layout.fillWidth: true
                 enabled: !busyIndicator.visible
                 checkState: Qt.Checked
@@ -63,8 +65,9 @@ Item {
 
             Text {
                 text: qsTr("Example barrier condition for this data. 'Transformer Load' Equal '15'")
+                font.pixelSize: 11
+                Layout.minimumWidth: rootRectangle.width
                 horizontalAlignment: Text.AlignHCenter
-                Layout.fillWidth: true
                 enabled: !model.busy
             }
 
@@ -81,15 +84,14 @@ Item {
 
             Text {
                 text: qsTr("New Barrier Condition:")
+                font.pixelSize: 15
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
 
             ComboBox {
                 id: networkAttributeComboBox
                 model: model.attributeListModel ? model.attributeListModel : null
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 enabled: !busyIndicator.visible
 
                 onModelChanged: currentIndex = 0;
@@ -101,7 +103,6 @@ Item {
                 id: comparisonOperatorComboBox
                 model: comparisonOperatorModel
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 enabled: !busyIndicator.visible
             }
 
@@ -117,7 +118,9 @@ Item {
 
                 TextField {
                     id: inputTextField
-                    Layout.minimumWidth: rootRectangle.width
+                    font.pixelSize: 11
+                    Layout.minimumHeight: valueSelectionComboBox.height
+                    Layout.fillWidth: true
                     visible: model.textFieldVisible
                     validator: DoubleValidator {}
                     color: "black"
@@ -125,6 +128,7 @@ Item {
                     placeholderTextColor: "black"
                     background: Rectangle {
                         anchors.centerIn: parent
+                        height: parent.height
                         width: parent.width
                         color: "white"
                     }
@@ -153,9 +157,9 @@ Item {
                 clip: true
                 Row {
                     anchors.fill: parent
-
                     Text {
                         text: model.expressionBuilder
+                        font.pixelSize: 11
                     }
                 }
             }
