@@ -14,7 +14,7 @@ Pan and zoom around the map. View the data loaded from the geopackage.
 
 ## How it works
 
-1. Create a `GeoPackage` passing the URI string into the constructor.
+1. Create a `GeoPackage` passing the URL string into the constructor.
 2. Load the `GeoPackage` with `GeoPackage::load`
 3. When it's done loading, get the `GeoPackageFeatureTable` objects from the geopackage with `geoPackage::geoPackageFeatureTables()`
 4. Create a `FeatureLayer(featureTable)` for the first feature table and add it to the map as an operational layer using, `map::operationalLayers()::append(featureLayer)`
