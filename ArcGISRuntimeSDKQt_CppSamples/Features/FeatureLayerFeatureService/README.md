@@ -15,8 +15,8 @@ Run the sample and view the feature service as an operational layer on top of th
 ## How it works
 
 1. Create a `ServiceFeatureTable` from a URL.
-1. Create a feature layer from the service feature table.
-1. Add the feature layer to your ArcGISMap using `ArcGISMap::operationalLayers()::append(FeatureLayer)`.
+2. Create a feature layer from the service feature table.
+3. Add the feature layer to your Map using `Map::operationalLayers()::append(FeatureLayer)`.
 
 ## Relevant API
 
