@@ -1,28 +1,42 @@
 # Edit feature attachments
 
-The sample demonstrates how to add, delete, and fetch attachments for a specific feature in a feature service.
+Add, delete, and download attachments for features from a service.
 
 ![](screenshot.png)
 
+## Use case
+
+Attachments provide a flexible way to manage additional information that is related to your features. Attachments allow you to add files to individual features, including: PDFs, text documents, or any other type of file. For example, if you have a feature representing a building, you could use attachments to add multiple photographs of the building taken from several angles, along with PDF files containing the building's deed and tax information.
+
+## How to use the sample
+
+Tap a feature on the map to open a callout displaying the number of attachments. Tap on the info button to view/edit the attachments. Select an entry from the list to download and view the attachment in the gallery. Tap on the floating action button '+' or '-' too add or remove an attachment.
+
 ## How it works
 
-Click or tap on a feature to show its callout. The callout specifies the number of attachments for that particular feature. Selecting on the `info` button inside the callout shows the list of those attachments. In the list you can add a new attachment by selecting the `+` button. You can delete an attachment by selecting an attachment and selecting the `-` button. This is all controlled through the attachment list model, which is obtained through the feature. The attachment list model works similarly to other QML models, and can be directly fed into a list view for easy display and user interaction. 
+1. Create a `ServiceFeatureTable` from a URL.
+2. Create a `FeatureLayer` object from the service feature table.
+3. Select features from the feature layer with `selectFeatures`.
+4. To fetch the feature's attachments, cast to an `ArcGISFeature` and use`ArcGISFeature::attachments()`.
+5. To add an attachment to the selected ArcGISFeature, create an attachment and use `ArcGISFeature::attachments()::addAttachment()`.
+6. To delete an attachment from the selected ArcGISFeature, use the `ArcGISFeature.deleteAttachment()`.
+7. By default, edits are automatically applied to the service and `applyEdits` does not need to be called.
 
-To work with this C++ class in QML, you must create a `Q_PROPERTY` in C++, and register the class as a QML type. Once this is done, the model will be accessible from QML. 
-To populate the model, obtain the selected feature and set a member variable equal to the selected feature's `AttachmentListModel`. Emit a signal indicating that this has been updated, and QML property binding will detect the change and display the new model in the view. 
+## Additional information
 
-To edit the attachments, call `addAttachment` or `deleteAttachment` on the `AttachmentListModel`. By default, edits are automatically applied to the service and `applyEdits` does not need to be called.
+Attachments can only be added to and accessed on service feature tables when their hasAttachments property is true.
 
-## Features
-- MapView
-- Map
-- Basemap
-- Viewpoint
-- SpatialReference
-- ServiceFeatureTable
-- FeatureLayer
-- Feature
-- ArcGISFeature
-- FeatureEditResult
-- FeatureQueryResult
-- AttachmentListModel
+## Relevant API
+
+* ApplyEdits
+* AttachmentListModel
+* DeleteAttachment
+* FeatureLayer
+* FetchAttachments
+* FetchData
+* ServiceFeatureTable
+* UpdateFeature
+
+## Tags
+
+Edit and Manage Data, image, picture, JPEG, PNG, PDF, TXT
