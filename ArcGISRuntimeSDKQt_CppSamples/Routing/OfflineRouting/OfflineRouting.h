@@ -17,6 +17,9 @@
 #ifndef OFFLINEROUTING_H
 #define OFFLINEROUTING_H
 
+#include "RouteParameters.h"
+#include "TaskWatcher.h"
+
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -29,12 +32,7 @@ class RouteTask;
 }
 }
 
-//class CustomMapView;
-
 #include <QObject>
-
-#include "RouteParameters.h"
-#include "TaskWatcher.h"
 
 class OfflineRouting : public QObject
 {

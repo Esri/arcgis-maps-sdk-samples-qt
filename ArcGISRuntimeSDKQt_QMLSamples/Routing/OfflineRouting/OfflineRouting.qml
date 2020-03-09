@@ -45,9 +45,7 @@ Rectangle {
                 id: comboBox
                 Layout.fillWidth: true
                 onCurrentIndexChanged: {
-//                    if (routeTask.findRoute){
-                        routeTask.findRoute();
-//                    }
+                    routeTask.findRoute();
                 }
             }
             Button {
@@ -189,10 +187,12 @@ Rectangle {
             }
         }
 
+        // check whether mouse pressed over an existing stop
         onMousePressed: {
             mapView.identifyGraphicsOverlay(stopsOverlay, mouse.x, mouse.y, 10, false);
         }
 
+        // get stops from clicked locations and find route
         onMouseClicked: {
             if (!selectedGraphic) {
                 let clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
@@ -203,6 +203,8 @@ Rectangle {
             mouse.accepted = true;
         }
 
+        // if mouse is moved while pressing on a graphic, the click-and-pan effect of the MapView is prevented by mouse.accepted = true
+        // and the mouse position is tracked and route is updated on-the-fly
         onMousePositionChanged: {
             mouse.accepted = !!selectedGraphic; // whether to pass mouse event to MapView
             if (selectedGraphic) {
@@ -211,6 +213,7 @@ Rectangle {
             }
         }
 
+        // mouseMoved is processed before identifyGraphicsOverlayCompleted, so must clear graphic upon mouseReleased
         onMouseReleased: {
             if (selectedGraphic) {
                 selectedGraphic = null;

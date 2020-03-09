@@ -65,6 +65,10 @@ QString defaultDataPath()
 OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
   QObject(parent)
 {
+  const QString folderLocation = QString("%1/ArcGIS/Runtime/Data/tpk/san_diego").arg(defaultDataPath());
+  if (!QFileInfo::exists(folderLocation))
+    qWarning() << "Please download required data.";
+
   const QString fileLocation = QString("%1/ArcGIS/Runtime/Data/tpk/san_diego/streetmap_SD.tpk").arg(defaultDataPath());
   TileCache* tileCache = new TileCache(fileLocation, this);
   ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);
@@ -150,6 +154,7 @@ void OfflineRouting::connectSignals()
 
   connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
+    // automatically deletes result once it is out of scope
     QScopedPointer<IdentifyGraphicsOverlayResult> result(rawIdentifyResult);
     if (!result->error().isEmpty())
       qDebug() << result->error().message() << result->error().additionalMessage();
