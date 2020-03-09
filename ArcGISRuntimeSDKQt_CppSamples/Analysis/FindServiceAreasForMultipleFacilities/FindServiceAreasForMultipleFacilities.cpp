@@ -48,10 +48,9 @@ const QUrl serviceAreaTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/res
 
 FindServiceAreasForMultipleFacilities::FindServiceAreasForMultipleFacilities(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::lightGrayCanvas(this), this))
+  m_map(new Map(Basemap::lightGrayCanvas(this), this)),
+  m_serviceAreasOverlay(new GraphicsOverlay(this))
 {
-  m_serviceAreasOverlay = new GraphicsOverlay(this);
-
   // create fill symbols for rendering the results
   m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 166, 0, 66), this));
   m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 0, 0, 66), this));
@@ -95,11 +94,9 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
     return;
 
   m_mapView = mapView;
-  m_mapView->setMap(m_map);
 
-  m_mapView->graphicsOverlays()->append(m_serviceAreasOverlay);
-
-  connect(m_facilitiesFeatureLayer, &FeatureLayer::doneLoading, this, [this](Error loadError){
+  connect(m_facilitiesFeatureLayer, &FeatureLayer::doneLoading, this, [this](Error loadError)
+  {
     if (!loadError.isEmpty())
     {
       qDebug() << loadError.message() << loadError.additionalMessage();
@@ -109,22 +106,22 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
     if (m_facilitiesFeatureLayer->loadStatus() == LoadStatus::Loaded)
     {
       // zoom to the full extent of the feature layer
-      m_mapView->setViewpointGeometry(m_facilitiesFeatureLayer->fullExtent(), 100);
+      int buffer = 100;
+      m_mapView->setViewpointGeometry(m_facilitiesFeatureLayer->fullExtent(), buffer);
     }
   });
+
+  m_mapView->setMap(m_map);
+
+  m_mapView->graphicsOverlays()->append(m_serviceAreasOverlay);
+
+
 
   emit mapViewChanged();
 }
 
-void FindServiceAreasForMultipleFacilities::findServiceAreas()
+void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
 {
-  // start showing indicator
-  m_taskRunning = true;
-  emit taskRunningChanged();
-
-  m_serviceAreaTask = new ServiceAreaTask(serviceAreaTaskUrl, this);
-  m_serviceAreaTask->load();
-
   // once service area task is done loading, create default parameters
   connect(m_serviceAreaTask, &ServiceAreaTask::doneLoading, this, [this](Error loadError)
   {
@@ -175,4 +172,20 @@ void FindServiceAreasForMultipleFacilities::findServiceAreas()
       }
     }
   });
+}
+
+void FindServiceAreasForMultipleFacilities::findServiceAreas()
+{
+  // start showing indicator
+  m_taskRunning = true;
+  emit taskRunningChanged();
+
+  if (m_serviceAreaTask)
+    return;
+
+  m_serviceAreaTask = new ServiceAreaTask(serviceAreaTaskUrl, this);
+  connectServiceAreaTaskSignals();
+  m_serviceAreaTask->load();
+
+
 }

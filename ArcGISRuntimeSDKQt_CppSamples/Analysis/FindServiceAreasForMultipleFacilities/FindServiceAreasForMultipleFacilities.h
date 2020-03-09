@@ -45,6 +45,7 @@ public:
   ~FindServiceAreasForMultipleFacilities();
 
   static void init();
+  void connectServiceAreaTaskSignals();
 
   Q_INVOKABLE void findServiceAreas();
 

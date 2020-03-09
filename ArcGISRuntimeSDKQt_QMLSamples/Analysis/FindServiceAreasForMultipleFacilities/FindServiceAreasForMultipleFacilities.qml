@@ -62,15 +62,14 @@ Rectangle {
                     id: featureTable
                     url: featureTableUrl
                 }
-                onComponentCompleted: {
-                    load(); }
                 onLoadStatusChanged: {
                     if(loadStatus === Enums.LoadStatusLoaded) {
                         mapView.setViewpointGeometryAndPadding(fullExtent, 100);
                     }
                 }
                 onErrorChanged: {
-                    console.warn(error.message); }
+                    console.warn(error.message);
+                }
 
                 renderer: SimpleRenderer {
                     PictureMarkerSymbol {
@@ -86,7 +85,8 @@ Rectangle {
                 url: serviceTaskAreaUrl
 
                 onErrorChanged: {
-                    console.warn(error.message); }
+                    console.warn(error.message);
+                }
                 onLoadStatusChanged: {
                     if (loadStatus === Enums.LoadStatusLoaded) {
                         createDefaultParameters();
