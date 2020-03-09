@@ -23,21 +23,13 @@ Click the map to see all areas visible from that point within a 15km radius. Cli
 7. Iterate through the viewshed features to use their geometry or display the geometry in a new `Graphic` object.
 
 ## Relevant API
-* GeoprocessingTask
-* GeoprocessingParameters
-* GeoprocessingJob
-* GeoprocessingFeatures
-* GeoprocessingResult
+
 * FeatureCollectionTable
-* GraphicsOverlay
-* SimpleRenderer
-* Graphic
-* SimpleMarkerSymbol
-* SimpleFillSymbol
-* FeatureIterator
-* MapView
-* Map
-* Basemap
+* GeoprocessingFeatures
+* GeoprocessingJob
+* GeoprocessingParameters
+* GeoprocessingResult
+* GeoprocessingTask
 
 ## Tags
 
