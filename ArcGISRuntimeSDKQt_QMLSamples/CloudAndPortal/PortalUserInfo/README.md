@@ -5,6 +5,7 @@ This sample demonstrates how to retrieve a user's details via a Portal.
 ![](screenshot.png)
 
 ## How it works
+
 A `Portal` is created, and supplied a `Credential` which uses OAuth in user mode. 
 When the app launches, the portal is loaded, which triggers an authentication challenge.
 
@@ -26,10 +27,19 @@ Similarly, the `portalInfo` property is used to populate:
  - `canSearchPublic`
  - `canSharePublic`
  
-## Features
-- Portal
-- Credential
-- PortalUser
-- PortalInfo
-- AuthenticationView
-- AuthenticationManager
+## Relevant API
+
+* Portal
+* Credential
+* PortalUser
+* PortalInfo
+* AuthenticationView
+* AuthenticationManager
+
+## About the data
+
+This sample signs into your ArcGIS online account and displays the user's profile information.
+
+## Tags
+
+account, avatar, bio, cloud and portal, email, login, picture, profile, user, username

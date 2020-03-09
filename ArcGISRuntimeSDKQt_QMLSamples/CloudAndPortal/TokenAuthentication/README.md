@@ -1,17 +1,32 @@
 # Token authentication
 
-This sample demonstrates how to access a map service that is secured with ArcGIS token-based authentication.
+Access a web map that is secured with ArcGIS token-based authentication.
 
 ![](screenshot.png)
 
+## Use case
+
+Allows you to access a secure service with the convenience and security of ArcGIS token-based authentication. For example, rather than providing a user name and password every time you want to access a secure service, you only provide those creditials initially to obtain a token which then can be used to access secured resources.
+
+## How to use the sample
+
+Once you launch the app, you will be challenged for an ArcGIS Online login to view the protected map service. Enter a user name and password for an ArcGIS Online named user account (such as your ArcGIS for Developers account). If you authenticate successfully, the protected map service will display in the map.
+
 ## How it works
 
-A map service that is secured with ArcGIS token-based authentication is added to the map's operational layers. Next, the `AuthenticationView` component from the ArcGIS Runtime Toolkit is added to the QML layout, and its `authenticationManager` property is set to the `AuthenticationManager` singleton. The `AuthenticationView` handles all of the authentication challenges that are issued, automatically displays the appropriate view, and continues the challenge with the user provided credential. When the map loads and attempts to load the secured map service, a challenge is issued, the `UserCredentialsView` is automatically displayed by the `AuthenticationView`, and the user can then provide the username and password for this resource. In this case, the username is `user1` and the password is also `user1`.
+1. Create a `ArcGISMapImageLayer` passing in the URL to a map service that is secured with token-based authentication
+2. Append the map image layer to the operational layers to display the map.
 
-## Features
-- AuthenticationManager
-- AuthenticationChallenge
-- AuthenticationView
-- Map
-- MapView
-- ArcGISMapImageLayer
+## Relevant API
+
+* Map
+* MapView
+* ArcGISMapImageLayer
+
+## About the data
+
+The Traffic web map uses public layers as well as the world traffic (premium content) layer. The world traffic service presents historical and near real-time traffic information for different regions in the world. The data is updated every 5 minutes. This map service requires an ArcGIS Online organizational subscription.
+
+## Tags
+
+authentication, cloud, portal, remember, security
