@@ -19,13 +19,13 @@ This tool identifies statistically significant spatial clusters of high values (
 
 ## Relevant API
 
-- ArcGISMapImageLayer
-- GeoprocessingTask
-- GeoprocessingJob
-- GeoprocessingParameters
-- GeoprocessingString
-- GeoprocessingResult
-- Map
+* ArcGISMapImageLayer
+* GeoprocessingTask
+* GeoprocessingJob
+* GeoprocessingParameters
+* GeoprocessingString
+* GeoprocessingResult
+* Map
 
 ## Tags
 

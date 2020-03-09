@@ -31,6 +31,7 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 
 ## Relevant API
 
+* GeometryEngine.fractionAlong
 * UtilityNetwork
 * UtilityTraceParameters
 * UtilityTraceResult
@@ -39,7 +40,6 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 * UtilityNetworkSource
 * UtilityAssetType
 * UtilityTerminal
-* GeometryEngine::fractionAlong
 
 ## About the data
 
