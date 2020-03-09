@@ -15,7 +15,7 @@ Tap on the map to add points. Click "Create Convex Hull" button to generate the 
 ## How it works
 
 1. Create an input geometry such as a `Multipoint` object.
-1. Use `GeometryEngine::convexHull(inputGeometry)`to create a new `Geometry` object representing the convex hull of the input points. The returned geometry will either be a `Point`, `Polyline`, or `Polygon` based on the number of input points.
+2. Use `GeometryEngine::convexHull(inputGeometry)`to create a new `Geometry` object representing the convex hull of the input points. The returned geometry will either be a `Point`, `Polyline`, or `Polygon` based on the number of input points.
 
 ## Relevant API
 
