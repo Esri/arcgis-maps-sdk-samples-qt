@@ -20,7 +20,7 @@ A `Feature` is added to a `ServiceFeatureTable` which then pushes that new featu
 2. Create a `FeatureLayer` from the service feature table.
 3. Create a `Feature` with attributes and a location using `createFeature()`.
 4. Add the feature to the table.
-5. *Apply edits* to the service feature table which will upload the new feature to the online service.
+5. Update the table on the server using `applyEdits()`.
 
 ## Relevant API
 
