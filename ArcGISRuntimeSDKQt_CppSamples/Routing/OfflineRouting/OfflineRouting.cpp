@@ -63,7 +63,9 @@ QString defaultDataPath()
 } // namespace
 
 OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
-  QObject(parent)
+  QObject(parent),
+  m_stopsOverlay(new GraphicsOverlay(this)),
+  m_routeOverlay(new GraphicsOverlay(this))
 {
   const QString folderLocation = QString("%1/ArcGIS/Runtime/Data/tpk/san_diego").arg(defaultDataPath());
   if (!QFileInfo::exists(folderLocation))
@@ -75,9 +77,6 @@ OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
   Basemap* basemap = new Basemap(tiledLayer, this);
   m_map = new Map(basemap, this);
   m_map->setMinScale(100000);
-
-  m_stopsOverlay = new GraphicsOverlay(this);
-  m_routeOverlay = new GraphicsOverlay(this);
 
   SimpleLineSymbol* lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 2, this);
   SimpleRenderer* routeRenderer = new SimpleRenderer(lineSymbol, this);
