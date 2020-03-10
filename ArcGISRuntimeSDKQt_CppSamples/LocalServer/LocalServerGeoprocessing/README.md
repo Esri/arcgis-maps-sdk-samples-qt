@@ -1,22 +1,22 @@
-# Local Server geoprocessing
+# Local server geoprocessing
 
-Demonstrates how to create contour lines from local raster data using a local geoprocessing package (.gpk) and the contour geoprocessing tool.
-
-**Note:** Local Server is not supported on macOS.
+Create contour lines from local raster data using a local geoprocessing package `.gpk` and the contour geoprocessing tool.
 
 ![](screenshot.png)
+
+## Use case
+
+For executing offline geoprocessing tasks in your ArcGIS Runtime apps via an offline (local) server.
 
 ## How to use the sample
 
 Contour Line Controls (Top Left):
 
- * Interval-- Specifies the spacing between contour lines.
- * Generate Contours -- Adds contour lines to map using interval.
- * Clear Results -- Removes contour lines from map.
+* Interval - Specifies the spacing between contour lines.
+* Generate Contours - Adds contour lines to map using interval.
+* Clear Results - Removes contour lines from map.
 
 ## How it works
-
-To create a `FeatureLayer` from a `LocalFeatureService`:
 
 1. Add raster data to map using as an `ArcGISTiledLayer`.
 2. Create and run the Local Server.
@@ -41,7 +41,7 @@ To create a `FeatureLayer` from a `LocalFeatureService`:
     * Replace `GPServer` from url with `MapServer/jobs/jobId`, to get generate contour lines data
     * create a map image layer from that new url and add that layer to the map
 
-## Features
+## Relevant API
 
 * GeoprocessingDouble
 * GeoprocessingJob
@@ -49,15 +49,23 @@ To create a `FeatureLayer` from a `LocalFeatureService`:
 * GeoprocessingParameters
 * GeoprocessingTask
 * LocalGeoprocessingService
-* LocalGeoprocessingService.ServiceType
+* LocalGeoprocessingService::serviceType
 * LocalServer
 * LocalServerStatus
 
 ## Offline Data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
 
 Link | Local Location
 ---------|-------|
 |[Contour geoprocessing package](https://www.arcgis.com/home/item.html?id=da9e565a52ca41c1937cff1a01017068)| `<userhome>`/ArcGIS/Runtime/Data/gpk/Contour.gpk |
 |[Raster Hillshade TPK](https://www.arcgis.com/home/item.html?id=f7c7b4a30fb9415896ba0d1921fe014b)| `<userhome>`/ArcGIS/Runtime/Data/tpk/RasterHillshade.tpk |
 
+## Additional information
+
+Local Server can be downloaded for Windows and Linux platforms. Local Server is not supported on **macOS**.
+
+## Tags
+
+geoprocessing, local, offline, parameters, processing, service,
