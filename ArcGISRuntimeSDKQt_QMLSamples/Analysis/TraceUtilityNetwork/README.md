@@ -20,7 +20,7 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 4. Add a `GraphicsOverlay` with symbology that distinguishes starting points from barriers.
 5. Identify features on the map and add a `Graphic` that represents its purpose (starting point or barrier) at the location of each identified feature.
 6.  Create a `UtilityElement` for the identified feature.
-7.  Determine the type of this element using its `NetworkSource.SourceType` property.
+7.  Determine the type of this element using its `NetworkSource.sourceType` property.
 8.  If the element is a junction with more than one terminal, display a terminal picker. Then set the junction's `terminal` property with the selected terminal.
 9.  If an edge, set its `fractionAlongEdge` property using `GeometryEngine.fractionAlong`.
 10. Add this utility element to a collection of starting locations or barriers.
@@ -31,6 +31,7 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 
 ## Relevant API
 
+* GeometryEngine.fractionAlong
 * UtilityNetwork
 * UtilityTraceParameters
 * UtilityTraceResult
@@ -39,7 +40,6 @@ To add a starting point, select 'Add starting location(s)' and tap on one or mor
 * UtilityNetworkSource
 * UtilityAssetType
 * UtilityTerminal
-* GeometryEngine.fractionAlong
 
 ## About the data
 

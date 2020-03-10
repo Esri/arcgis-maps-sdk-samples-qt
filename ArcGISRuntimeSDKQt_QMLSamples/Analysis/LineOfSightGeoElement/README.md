@@ -2,13 +2,13 @@
 
 Show a line of sight between two moving objects.
 
+![](screenshot.png)
+
 ## How to use the sample
 
 To determine if an observer can see a target, you can show a line of sight between them.
 The line will be green until the line of sight is obstructed, in which case it will turn red.
 By using the GeoElement variant of the line of sight, the line will automatically update when either GeoElement moves.
-
-![](screenshot.png)
 
 ## Use case
 
@@ -25,15 +25,15 @@ The taxi will be highlighted when it is visible. You can change the observer hei
 
 ## How it works
 
-1. Instantiate an `AnalysisOverlay` and add it to the `SceneView`'s analysis overlays collection.
-1. Instantiate a `GeoElementLineOfSight`, passing in observer and target `GeoElement`s (features or graphics). Add the line of sight to the analysis overlay's analyses collection.
-1. To get the target visibility when it changes, react to the target visibility changing on the `GeoElementLineOfSight` instance.
+1. Create an `AnalysisOverlay` and add it to the `SceneView`'s analysis overlays collection.
+2. Create a `GeoElementLineOfSight`, passing in observer and target `GeoElement`s (features or graphics). Add the line of sight to the analysis overlay's analyses collection.
+3. To get the target visibility when it changes, react to the target visibility changing on the `GeoElementLineOfSight` instance.
 
 ## Relevant API
 
-1. AnalysisOverlay
-1. GeoElementLineOfSight
-1. LineOfSight.targetVisibility
+* AnalysisOverlay
+* GeoElementLineOfSight
+* LineOfSight.targetVisibility
 
 ## Offline data
 
