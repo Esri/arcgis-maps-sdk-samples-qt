@@ -19,7 +19,7 @@ Click "Cut" to cut the polygon with the polyline and see the resulting parts (sh
 
 ## Relevant API
 
-* GeometryEngine::Cut
+* GeometryEngine::cut
 * Polygon
 * Polyline
 
