@@ -28,7 +28,7 @@ Portals allow you to share and publish data with others. For example, you may cr
 * Portal
 * PortalItem
 * PortalUser
-* PortalUser:.addPortalItemWithUrl
+* PortalUser.addPortalItemWithUrl
 * PortalUser.deleteItem
 
 ## Tags

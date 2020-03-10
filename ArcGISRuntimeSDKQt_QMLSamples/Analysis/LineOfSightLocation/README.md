@@ -18,7 +18,7 @@ Click to turn on the mouse move event listener, then move the mouse to update th
 
 1. Create an `AnalysisOverlay` and add it to the scene view.
 2. Create a `LocationLineOfSight` with initial observer and target locations and add it to the analysis overlay.
-3. Capture mouse movementwith the `MousePositionChanged` signal. Turn the screen point into a scene point with `sceneView.screenToLocation(screenPoint)`.
+3. Capture mouse movement with the `mousePositionChanged` signal. Turn the screen point into a scene point with `sceneView.screenToLocation(screenPoint)`.
 4. Update the target location with `lineOfSight.setTargetLocation(scenePoint)`.
 
 ## Relevant API

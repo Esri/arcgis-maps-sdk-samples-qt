@@ -21,7 +21,7 @@ The sample will start with some default options selected. You can immediately cl
 ## How it works
 
 1. Create a `ServiceFeatureTable` using the `URL` of a feature service and load the table.
-2. Get the feature tables field names list with `featureTable.getFields()`.
+2. Get the feature tables field names list with `featureTable.fields`.
 3. Create `StatisticDefinition`s specifying the field to compute statistics on and the `StatisticType` to compute.
 4. Create `StatisticsQueryParameters` passing in the list of statistic definitions.
 5. To have the results grouped by fields, add the field names to the query parameters' `groupByFieldNames` collection.

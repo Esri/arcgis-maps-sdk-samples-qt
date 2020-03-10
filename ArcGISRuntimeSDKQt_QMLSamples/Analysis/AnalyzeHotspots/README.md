@@ -14,7 +14,7 @@ This tool identifies statistically significant spatial clusters of high values (
 2. Create a query string with the date range as an input of `GeoprocessingParameters`.
 3. Use the `GeoprocessingTask` to create a `GeoprocessingJob` with the `GeoprocessingParameters` instance.
 4. Start the `GeoprocessingJob` and wait for it to complete and return a `GeoprocessingResult`.
-5. Get the resulting `ArcGISMapImageLayer` using `GeoprocessingResult.getMapImageLayer`.
+5. Get the resulting `ArcGISMapImageLayer` using `GeoprocessingResult.MapImageLayer`.
 6. Add the layer to the map's operational layers.
 
 ## Relevant API
