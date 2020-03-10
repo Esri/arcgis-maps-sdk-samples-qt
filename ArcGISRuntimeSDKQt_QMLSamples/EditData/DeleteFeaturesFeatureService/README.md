@@ -1,22 +1,32 @@
 # Delete features (feature service)
 
-This sample demonstrates how to delete a feature from a feature service.
+Delete features from an online feature service.
 
 ![](screenshot.png)
 
+## Use case
+
+Sometimes users may want to delete features from an online feature service.
+
+## How to use the sample
+
+* click on a feature on the Map
+* click on the delete button
+
 ## How it works
 
-Clicking or tapping on a feature displays a callout for it. To delete that feature from the feature service, select the `delete` button in the callout. This button will invoke the `deleteFeature` method on the feature table, deleting the feature from the local table. Then the `applyEdits` method is called to apply the edits to the service, deleting the feature from the service.
+1. Create a `ServiceFeatureTable` object from a URL.
+2. Create a `FeatureLayer` from the service feature table.
+3. Select features from the feature layer via `selectFeatures()`.
+4. Remove the selected features from the table using `deleteFeatures()`.
+5. Update the table on the server using `applyEdits()`.
 
-## Features
-- MapView
-- Map
-- Basemap
-- Viewpoint
-- SpatialReference
-- ServiceFeatureTable
-- FeatureLayer
-- Feature
-- ArcGISFeature
-- FeatureEditResult
-- FeatureQueryResult
+## Relevant API
+
+* Feature
+* FeatureLayer
+* ServiceFeatureTable
+
+## Tags
+
+deletion, feature, online, Service, table
