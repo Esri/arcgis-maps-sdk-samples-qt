@@ -26,7 +26,6 @@ Tap anywhere on the map. A callout showing the WGS84 coordinates for the tapped 
 * GeometryEngine.project
 * GeoViewTappedEventArgs
 * MapView.geoViewTapped
-* MapView.showCallout
 
 ## Tags
 

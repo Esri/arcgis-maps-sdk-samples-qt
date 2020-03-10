@@ -19,16 +19,16 @@ A `MapView` is declared with a `Map` that contains the imagery basemap. The `Map
 
 1. Create an instance of one of the `Grid` types.
 2. Grid lines and labels can be styled per grid level with `setLineSymbol(gridLevel, lineSymbol)` and `setTextSymbol(gridLevel, textSymbol)` methods on the grid.
-3. The label position can be set with `setLabelPosition(labelPosition)` method on the grid.
+3. The label position can be set with the `labelPosition` property of the grid.
 4. For the `LatitudeLongitudeGrid` type, you can specify a label format of `DecimalDegrees` or `DegreesMinutesSeconds`.
 5. To set the grid, set `mapView.grid`
 
 ## Relevant API
 
 * ArcGISGrid
+* Enums.LatitudeLongitudeGridLabelFormatDecimalDegrees
+* Enums.LatitudeLongitudeGridLabelFormatDegreesMinutesSeconds
 * LatitudeLongitudeGrid
-* LatitudeLongitudeGridLabelFormat.DecimalDegrees
-* LatitudeLongitudeGridLabelFormat.DegreesMinutesSeconds
 * MapView
 * MGRSGrid
 * SimpleLineSymbol
