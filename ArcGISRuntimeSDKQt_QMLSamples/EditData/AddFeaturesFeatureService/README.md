@@ -1,20 +1,35 @@
 # Add features (feature service)
 
-This sample demonstrates how to add features to a feature service. Click or tap on a location in the map view to add a feature at that location.
+Add features to a feature layer.
 
 ![](screenshot.png)
 
+
+## Use case
+
+An end-user performing a survey may want to add features to the map during the course of their work.
+
+## How to use the sample
+
+Click on a location on the map to add a feature at that location.
+
 ## How it works
 
-This workflow is accomplished through obtaining the map point from the mouse event on the map view. Once the map point is obtained, attributes must be created. This is done by creating a JSON of key/value pairs for the field name and field value. Once the geometry and attributes are ready, the feature can be created through the `createFeature` method. To add the feature to the feature table, call `addFeature`, and pass in the new feature. Finally, to update the service, call the `applyEdits` method, and this will apply the feature edits to the service.  
+A `Feature` is added to a `ServiceFeatureTable` which then pushes that new feature to the server.
 
-## Features
-- MapView
-- Map
-- Basemap
-- Viewpoint
-- SpatialReference
-- ServiceFeatureTable
-- FeatureLayer
-- Feature
-- FeatureEditResult
+1. Create a `ServiceFeatureTable` from a URL.
+2. Create a `FeatureLayer` from the service feature table.
+3. Create a `Feature` with attributes and a location using `createFeature()`.
+4. Add the feature to the table using `addFeature`.
+5. Update the table on the server using `applyEdits()`.
+
+## Relevant API
+
+* Feature
+* FeatureEditResult
+* FeatureLayer
+* ServiceFeatureTable
+
+## Tags
+
+edit, feature, online service
