@@ -1,27 +1,38 @@
 # List transformations by suitability
 
-Transformations (sometimes known as datum or geographic transformations) are used when projecting data from one spatial reference to another, when there is a difference in the underlying datum of the spatial references. Transformations can be mathematically defined by specific equations (equation-based transformations), or may rely on external supporting files (grid-based transformations). Choosing the most appropriate transformation for a situation can ensure the best possible accuracy for this operation. Some users familiar with transformations may wish to control which transformation is used in an operation.
-
-This sample demonstrates how to use the TransformationCatalog to get a list of available DatumTransformations that can be used to project a Geometry between two different SpatialReferences, and how to use one of the transformations to perform the GeometryEngine.project operation. The TransformationCatalog is also used to set the location of files upon which grid-based transformations depend, and to find the default transformation used for the two SpatialReferences.
+Get a list of suitable transformations for projecting a geometry between two spatial references with different horizontal datums.
 
 ![](screenshot.png)
 
+## Use case
+
+Transformations (sometimes known as datum or geographic transformations) are used when projecting data from one spatial reference to another when there is a difference in the underlying datum of the spatial references. Transformations can be mathematically defined by specific equations (equation-based transformations), or may rely on external supporting files (grid-based transformations). Choosing the most appropriate transformation for a situation can ensure the best possible accuracy for this operation. Some users familiar with transformations may wish to control which transformation is used in an operation.
+
+## How to use the sample
+
+Select a transformation from the list to see the result of projecting the point from EPSG:27700 to EPSG:3857 using that transformation. The result is shown as a red cross; you can visually compare the original blue point with the projected red cross.
+
+If the selected transformation is not usable (has missing grid files) then an error is displayed.
+
 ## How it works
-The sample sets the location of projection engine data on the device by calling `TransformationCatalog::setProjectionEngineDirectory`. If the directory is not accessible, an error is reported.
 
-The list of `DatumTransformations` is created by calling `TransformationsCatalog::transformationsBySuitability`, passing in the `SpatialReference` of the original Geometry (the input spatial reference) and that of the `Map` (the output spatial reference). Depending on the state of a check box, the current visible extent of the map is used to sort the list by suitability.
+1. Pass the input and output spatial references to `TransformationCatalog::transformationsBySuitability` for transformations based on the map's spatial reference OR additionally provide an extent argument to only return transformations suitable to the extent. This returns a list of ranked transformations.
+2. Use one of the `DatumTransformation` objects returned to project the input geometry to the output spatial reference.
 
-When the user taps on a transformation in the list, the selected transformation is used to reproject a `Point`. The `Graphic's` geometry is then updated with the new `Point`. If the selected transformation is not usable (has missing grid files) then an error is displayed.
+## Relevant API
 
-## Features
-- TransformationCatalog
-- DatumTransformation
-- GeographicTransformation
-- GeographicTransformationStep
-- GeometryEngine
+* DatumTransformation
+* GeographicTransformation
+* GeographicTransformationStep
+* GeometryEngine
+* GeometryEngine::project
+* TransformationCatalog
 
-## Provision your device
-This sample can be used with or without provisioning projection engine data to your device. If you do not provision data, a limited number of transformations will be available to you.
+## Additional information
+
+Some transformations aren't available until transformation data is provided.
+
+This sample can be used with or without provisioning projection engine data to your device. If you do not provision data, a limited number of transformations will be available.
 
 To download projection engine data to your device:
 1. Log in to the ArcGIS for Developers site using your Developer account.
@@ -29,3 +40,11 @@ To download projection engine data to your device:
 3. Click the download button next to `ArcGIS Runtime Coordinate System Data 100.x` to download projection engine data to your computer.
 4. Unzip the downloaded data on your computer.
 5. Create an `~/ArcGIS/Runtime/Data/PEDataRuntime` directory on your device and copy the files to this directory.
+
+## About the data
+
+The map starts out zoomed into the grounds of the Royal Observatory, Greenwich. The initial point is in the [British National Grid](https://epsg.io/27700) spatial reference, which was created by the United Kingdom Ordnance Survey. The spatial reference after projection is in [web mercator](https://epsg.io/3857).
+
+## Tags
+
+datum, geodesy, projection, spatial reference, transformation

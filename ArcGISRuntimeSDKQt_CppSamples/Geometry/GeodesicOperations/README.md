@@ -1,26 +1,34 @@
 # Geodesic operations
 
-This sample demonstrates how to perform geodesic operations on geometries using the GeometryEngine. Geodesic calculations take into account the curvature of the Earth, while planar calculations are based on a 2D Cartesian plane.
-
-Visualizing flight paths between cities is a common example of a geodesic operation--notice the lines are not straight, but curved. A geodesic distance must be calculated, to get an accurate real world distance between two points on a 2D map.
+Calculate a geodesic path between two points and measure its distance.
 
 ![](screenshot.png)
 
+## Use case
+
+A geodesic distance provides an accurate, real-world distance between two points. Visualizing flight paths between cities is a common example of a geodesic operation since the flight path between two airports takes into account the curvature of the earth, rather than following the planar path between those points, which appears as a straight line on a projected map.
+
 ## How to use the sample
-1. Click anywhere on the map. A line graphic will display the geodesic line between the two points. In addition, text that indicates the geodesic distance between the two points will be updated.
-2. Click elsewhere and a new line will be created.
+
+Click anywhere on the map. A line graphic will display the geodesic line between the two points. In addition, text that indicates the geodesic distance between the two points will be updated. Click elsewhere and a new line will be created.
 
 ## How it works
-1. A `Point` is created in New York City and displayed as a `Graphic`.
-2. When a click occurs on the `MapView`, a new `Point` is obtained from the mouse click. This `Point` is added as a `Graphic`.
-3. A `Polyline` is created with the two `Point` objects.
-4. `GeometryEngine::densifyGeodetic` is executed by passing in the `Polyline` object, and the returned `Geometry` is added as a `Graphic`.
-5. `GeometryEngine::lengthGeodetic` is executed by passing in the two `Point` objects, and the returned number is displayed on the screen.
+
+1. Create a `Point` in New York City and display it as a `Graphic`.
+2. Obtain a new point when a click occurs on the `MapView` and add this point as a graphic.
+3. Create a `Polyline` from the two points.
+4. Execute `GeometryEngine::densifyGeodetic` by passing in the created polyine then create a graphic from the returned `Geometry`.
+5. Execute `GeometryEngine::lengthGeodetic` by passing in the two points and display the returned length on the screen.
 
 ## Relevant API
- - GeometryEngine::densifyGeodetic
- - GeometryEngine::lengthGeodetic
+
+* GeometryEngine::densifyGeodetic
+* GeometryEngine::lengthGeodetic
+
+## About the data
+
+The Imagery basemap provides the global context for the displayed geodesic line.
 
 ## Tags
-GeometryEngine, densify, distance, geodetic, geodesic
 
+ densify, distance, geodesic, geodetic
