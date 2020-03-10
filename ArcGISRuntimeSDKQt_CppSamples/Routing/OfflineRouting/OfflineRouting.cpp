@@ -106,6 +106,7 @@ QStringList OfflineRouting::travelModeNames() const
   // if route task not initialized or loaded, then do not execute
   if (!m_routeTask)
     return { };
+
   if(m_routeTask->loadStatus() != LoadStatus::Loaded)
     return { };
 
@@ -122,6 +123,7 @@ void OfflineRouting::setTravelModeIndex(int index)
 {
   if (m_travelModeIndex == index)
     return;
+
   m_travelModeIndex = index;
   emit travelModeIndexChanged();
 }
