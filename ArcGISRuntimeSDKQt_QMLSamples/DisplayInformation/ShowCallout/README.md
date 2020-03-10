@@ -18,7 +18,7 @@ Tap anywhere on the map. A callout showing the WGS84 coordinates for the tapped 
 2. When the user taps, get the tapped location using the mouseEvent x and y coordinates, `MapQuickView.screenToLocation(mouse.x, mouse.y)`.
 3. Create a string to display the coordinates; note that latitude and longitude in WGS84 map to the Y and X coordinates.
 4. Create a new callout definition using a title and the coordinate string.
-5. Display the callout by calling `setVisible` and `setLocation` on the `CalloutData`.
+5. Display the callout by setting the`location` property of the `CalloutData` and calling `showCallout`.
 
 ## Relevant API
 
@@ -26,7 +26,7 @@ Tap anywhere on the map. A callout showing the WGS84 coordinates for the tapped 
 * GeometryEngine.project
 * GeoViewTappedEventArgs
 * MapView.geoViewTapped
-* MapView.showCalloutAt
+* MapView.showCallout
 
 ## Tags
 

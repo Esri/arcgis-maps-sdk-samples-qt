@@ -19,7 +19,6 @@ Click the button to apply a new symbology renderer to the feature layer created 
 3. Create a `SimpleRenderer` to override the default symbology. The simple renderer takes a symbol and applies that to all features in a layer.
 4. Apply the renderer to the `FeatureLayer` by setting the renderer.
 
-
 ## Relevant API
 
 * FeatureLayer

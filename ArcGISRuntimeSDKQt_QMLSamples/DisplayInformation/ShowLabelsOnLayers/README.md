@@ -1,4 +1,4 @@
-# Show labels on layers# Show labels on layers
+## Show labels on layers
 
 Display custom labels on a feature layer.
 
@@ -16,15 +16,11 @@ Pan and zoom around the United States. Labels for congressional districts will b
 
 To show custom labels on a feature layer:
 
-1. Create a `ServiceFeatureTable` using a feature service URL.
-2. Create a `FeatureLayer` from the service feature table.
-3. Create a `TextSymbol` to use for displaying the label text.
-4. Create a JSON string for the label definition.
-    * Set the "LabelExpressionInfo.expression" key to express what the text the label should display. You can use fields of the feature by using `$feature.field_name` in the expression.
-    * To use the text symbol, set the "symbol" key to the symbol's JSON representation using `textSymbol.toJson()`.
-5. Create a label definition from the JSON using `LabelDefinition.fromJson(json)`.
-6. Add the definition to the feature layer with `featureLayer.labelDefinitions().append(labelDefinition)` .
-7. Lastly, enable labels on the layer using `featureLayer.setLabelsEnabled()`.
+1. A `FeatureLayer` and `ServiceFeatureTable` are created by passing in a URL to the REST endpoint of a map service.
+2. A label JSON is created using the ArcGIS [JSON specification for labels](https://developers.arcgis.com/web-map-specification/objects/labelingInfo/).
+3. A `LabelDefinition` is created from the label JSON.
+4. The `LabelDefinition` is added to the list of `LabelDefinitions` in the `FeatureLayer` instance.
+5. Labels are enabled on the `FeatureLayer` by setting `labelsEnabled` to true.
 
 ## Relevant API
 

@@ -13,7 +13,7 @@ A unique value renderer allows you to symbolize features in a layer based on one
 The map with the symbolized feature layer will be shown automatically when the sample loads.
 
 ## How it works
-This sample demonstrates how to use a `UniqueValueRenderer` to style different features in a `FeatureLayer`. Using the `UniqueValueRenderer` allows for separate symbols to be used for features that have a specific value in a certain field. In this case, the field is state abbreviations in the USA. Multiple fields can be used; this sample only uses one:
+This sample demonstrates how to use a `UniqueValueRenderer` to style different features in a `FeatureLayer`. Using the `UniqueValueRenderer` allows for separate symbols to be used for features that have a specific value in a certain field. In this case, the field is state abbreviations in the USA. Multiple fields can be used; this sample only uses one.
 
 1. Multiple `SimpleFillSymbols`s are defined for each type of feature we want to render differently.
 2. `SimpleFillSymbol`s can be applied to polygon features, which is the type of feature used for this `ServiceFeatureTable`.
