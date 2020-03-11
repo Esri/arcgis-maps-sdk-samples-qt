@@ -16,9 +16,10 @@ To change the atmosphere effect:
 2. Change the atmosphere effect with ``SceneQuickView::setAtmosphereEffect``.
 
 ## Relevant API
-- ``Scene``
-- ``AtmosphereEffect``
-- ``SceneQuickView``
+
+- Scene
+- AtmosphereEffect
+- SceneView
 
 ## Additional Information
 
@@ -30,4 +31,4 @@ There are three atmosphere effect options:
 
 ## Tags
 
-3D, AtmosphereEffect, Scene
+atmosphere, horizon, sky
