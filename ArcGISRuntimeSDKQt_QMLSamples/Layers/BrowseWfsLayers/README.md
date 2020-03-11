@@ -26,11 +26,11 @@ Some WFS services return coordinates in X,Y order, while others return coordinat
 
 ## Relevant API
 
+* FeatureLayer
+* WfsLayerInfo
 * WfsService
 * WfsServiceInfo
-* WfsLayerInfo
 * WfsFeatureTable
-* FeatureLayer
 * WfsFeatureTable.AxisOrder
 
 ## About the data
@@ -39,4 +39,4 @@ This service shows features for downtown Seattle. For additional information, se
 
 ## Tags
 
-OGC, WFS, feature, web, service, layers, browse, catalog
+browse, catalog, feature, layers, OGC, service, web, WFS

@@ -24,10 +24,6 @@ An ENC exchange set is a catalog of data files which can be loaded as cells. The
 * EncExchangeSet
 * EncLayer
 
-## Tags
-
-Data, ENC, maritime, nautical chart, layers, hydrographic
-
 ## Offline data
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
@@ -35,3 +31,7 @@ Link | Local Location
 ---------|-------|
 |[Exchange Set](https://www.arcgis.com/home/item.html?id=9d2987a825c646468b3ce7512fb76e2d)| `<userhome>`/ArcGIS/Runtime/Data/ENC/ExchangeSetwithoutUpdates |
 |[Hydrography](https://www.arcgis.com/home/item.html?id=af74ccbb69c846ef97085e4bebd3e76a)| `<userhome>`/ArcGIS/Runtime/Data/ENC/hydrography |
+
+## Tags
+
+Data, ENC, maritime, nautical chart, layers, hydrographic
