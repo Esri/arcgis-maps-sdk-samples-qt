@@ -35,7 +35,8 @@ Start the app. It will display an offline map, check for available updates, and 
 * OfflineMapUpdatesInfo
 
 ## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
 
 Link | Local Location
 ---------|-------|

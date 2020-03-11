@@ -1,14 +1,35 @@
 # Open Map (URL)
 
-This sample demonstrates how to open an existing map from a URL.
+Display a web map.
 
 ![](screenshot.png)
 
+## Use case
+
+For displaying web maps stored on ArcGISOnline (e.g. soil survey results, as demonstrated in this sample).
+
+## How to use the sample
+
+A web map can be selected from the drop-down list. On selection the web map displays in the map view.
+
 ## How it works
 
-The existing maps are web maps stored in ArcGIS Online. The webmaps are presented in a list view with the item's thumbnail, title and item ID. When a webmap is selected, a url is constructed using the item ID, a new map object is created from that initial Url, and the new map object is assigned the map view.
+1. Create a `Portal`.
+2. Create a `PortalItem` using the Portal and the web map ID: `new PortalItem(portal, ID)`.
+3. Create a `Map` using the portal item.
+4. Set the map to the `MapView`.
 
-## Features
-- MapView
-- Map
-- Basemap
+## Relevant API
+
+* Map
+* MapView
+* Portal
+* PortalItem
+
+## Additional information
+
+Mobile map packages can also include address locators and geometric networks. For an example of this, see the "Mobile Map Search and Route Sample".
+
+## Tags
+
+portal item, web map

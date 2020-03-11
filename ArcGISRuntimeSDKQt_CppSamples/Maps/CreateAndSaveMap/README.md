@@ -1,27 +1,32 @@
 # Create and save map
 
-This sample demonstrates how to author a `Map` in ArcGIS Runtime and save it to ArcGIS Online as a web map.
+Create and save a map as an ArcGIS `PortalItem` (i.e. web map).
 
 ![](screenshot.png)
 
+## Use case
+
+Maps can be created programatically in code and then serialized and saved as an ArcGIS `web map`. A `web map` can be shared with others and opened in various applications and APIs throughout the platform, such as ArcGIS Pro, ArcGIS Online, the JavaScript API, Collector, and Explorer.
+
 ## How to use the sample
-- Select the basemap and operational layers to include in the `Map`.
-- Press the save button to save the `Map`.
-- Sign in to ArcGIS Online with a valid organizational account.
-- Give the `Map` a title, and optionally give it a description and some tags.
-- Press the save button to save the `Map` to ArcGIS Online with the provided information.
+
+1. Select the basemap and layers you'd like to add to your map.
+2. Press the Save button.
+3. Sign into an ArcGIS Online account.
+4. Provide a title, tags, and description.
+5. Save the map.
 
 ## How it works
-- A `Map` is created with the user options and added to a `MapView`.
-- A `Portal` object is created by setting the URL to `https://www.arcgis.com` and setting `loginRequired` to true.
-- Once the Save button is pressed, the `Portal` load cycle is started, which will trigger an `AuthenticationChallenge`.
-- User credentials are gathered and passed into the `AuthenticationManager` via the Toolkit's `AuthenticationView`.
-- Title, tags, and description strings are gathered, and `Map::saveAs` is executed.
+
+1. A `Map` is created with a `Basemap` and a few operational layers.
+2. A `Portal` object is created and loaded. This will issue an authentication challenge, prompting the user to provide credentials.
+3. Once the user is authenticated, `Map::saveAs` is called and a new `Map` is saved with the specified title, tags, and folder.
 
 ## Relevant API
- - Map
- - Portal
- - Map::saveAs()
+- Map
+- Map::saveAs
+- Portal
 
 ## Tags
-Author Map, Save Map, Web Map, Create Map
+
+ArcGIS Online, ArcGIS Pro, portal, publish, share, web map
