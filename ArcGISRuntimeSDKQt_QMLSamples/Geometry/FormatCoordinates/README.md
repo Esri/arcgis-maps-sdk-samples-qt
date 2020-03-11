@@ -16,7 +16,7 @@ Click on the map to see a callout with the clicked location's coordinate formatt
 
 1.  Get or create a map `Point` with a spatial reference.
 2.  Use one of the static "to" methods on `CoordinateFormatter` such as `CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDecimalDegrees, 4)` to get the formatted string.
-3.  To go from a formatted string to a `Point`, use one of the "from" static methods like `CoordinateFormatter.fromUtm(coordinateString, map.getSpatialReference(), Enums.UtmConversionModeLatitudeBandIndicators)`.
+3.  To go from a formatted string to a `Point`, use one of the "from" static methods like `CoordinateFormatter.fromUtm(coordinateString, map.spatialReference(), Enums.UtmConversionModeLatitudeBandIndicators)`.
 
 ## Relevant API
 
