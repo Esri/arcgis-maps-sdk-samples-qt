@@ -1,18 +1,18 @@
 # Local Server map image layer
 
-Demonstrates how to start the Local Server and Local Map Service, create an ArcGIS Map Image Layer from the Local Map Service, and add it to a map.
-
-**Note:** Local Server is not supported on macOS.
+Start the Local Server and Local Map Service, create an ArcGIS Map Image Layer from the Local Map Service, and add it to a map.
 
 ![](screenshot.png)
+
+## Use case
+
+For executing offline geoprocessing tasks in your ArcGIS Runtime apps via an offline (local) server.
 
 ## How to use the sample
 
 The Local Server and local map service will automatically be started and, once running, a map image layer will be created and added to the map.
 
 ## How it works
-
-To create a `ArcGISMapImageLayer` from a `LocalMapService`:
 
 1. Create and run the Local Server.
     * `LocalServer::instance` creates the Local Server.
@@ -27,20 +27,29 @@ To create a `ArcGISMapImageLayer` from a `LocalMapService`:
     * `LocalMapService::statusChanged()` signal fires whenever the status of the local service has changed.
 5. Create an ArcGIS map image layer from local map service.
     * Create a `ArcGISMapImageLayer(Url)` from local map service URL, `LocalMapService::url()`
-	* Add the layer to the map's operational layers. 
+	* Add the layer to the map's operational layers.
 	* Connect to the map image layer's `LoadStatusChanged` signal.
 	* When the layer's status is `Loaded`, set the map view's extent to the layer's full extent.
 
-## Features
+## Relevant API
 
 * ArcGISMapImageLayer
 * LocalMapService
 * LocalServer
 * LocalServerStatus
 
-## Offline Data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+## Offline data
+
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
 
 Link | Local Location
 ---------|-------|
-|[RelationshipID map package](https://www.arcgis.com/home/item.html?id=dee5d8060a6048a4b063484199a9546b)| `<userhome>`/ArcGIS/Runtime/Data/mpk/RelationshipID.mpk |
+|[RelationshipID map package](https://www.arcgis.com/home/item.html?id=dee5d8060a6048a4b063484199a9546b)| `<userhome>`/ArcGIS/Runtime/Data/mpk/RelationshipID.mpk
+
+## Additional information
+
+Local Server can be downloaded for Windows and Linux platforms. Local Server is not supported on **macOS**.
+
+## Tags
+
+image, layer, local, offline, server
