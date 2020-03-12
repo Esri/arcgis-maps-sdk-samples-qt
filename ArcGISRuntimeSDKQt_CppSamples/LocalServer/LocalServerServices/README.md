@@ -21,7 +21,7 @@ When the running service's url appears, select it and click `Open Url`. To stop 
 ## How it works
 
 1. Create it with `LocalServer::instance` and use `LocalServer::start()` to start the server asynchronously.
-2. `LocalServer::statusChanged()` fires whenever the running status of the Local Server changes. Wait for the server to be in the `LocalServerStatus::STARTED` state.
+2. `LocalServer::statusChanged()` fires whenever the running status of the Local Server changes. Wait for the server to be in the `LocalServerStatus::Started` state.
 3. Create and run a local service. Here is an example of running a `LocalMapService`:
     * `new LocalMapService(Url)` creates a local map service with the given URL path to map package (`mpk` or `mpkx` file).
     * `LocalMapService::start()` starts the service asynchronously.
