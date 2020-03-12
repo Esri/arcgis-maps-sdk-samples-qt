@@ -23,9 +23,9 @@ The ArcGIS map image layer will now use the spatial reference set to the ArcGIS 
 
 ## Relevant API
 
-* Map
 * ArcGISMapImageLayer
 * Basemap
+* Map
 * MapView
 * SpatialReference
 
