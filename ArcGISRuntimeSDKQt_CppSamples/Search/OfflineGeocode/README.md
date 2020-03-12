@@ -15,7 +15,7 @@ Type the address in the Search menu option or select from the list to `Geocode` 
 ## How it works
 
 1. Use the path of a .loc file to create a `LocatorTask` object.
-2. Set up `GeocodeParameters` and call `Geocode` to get geocode results.
+2. Set up `GeocodeParameters` and call `geocode` to get geocode results.
 
 ## Relevant API
 
