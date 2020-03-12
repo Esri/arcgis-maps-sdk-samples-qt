@@ -47,7 +47,6 @@ public:
   ~FindServiceAreasForMultipleFacilities();
 
   static void init();
-  void connectServiceAreaTaskSignals();
 
   Q_INVOKABLE void findServiceAreas();
 
@@ -59,6 +58,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   bool taskRunning() const;
+  void connectServiceAreaTaskSignals();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
