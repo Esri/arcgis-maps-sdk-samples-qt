@@ -14,15 +14,17 @@ When the sample loads, the feature tables and rasters from the GeoPackage will b
 
 ## How it works
 
-1. Open the GeoPackage using `GeoPackage::open(path)`.
-2. Iterate through available rasters, exposed by `geopackage::geoPackageRasters`.
+1. Create a `GeoPackage` object using the path the local geoPackage.
+2. Connect to the `GeoPackage::doneLoading` signal.
+3. Load the geoPackage `geoPackage::load()`, then iterate through the available rasters, exposed by `geopackage::geoPackageRasters`.
     * For each raster, create a raster layer using `new Rasterlayer(geopackageRaster)`, then add it to the map.
-3. Iterate through available feature tables, exposed by `geopackage::geoPackageFeatureTables`.
+4. Iterate through available feature tables, exposed by `geopackage::geoPackageFeatureTables`.
     * For each feature table, create a feature layer using `new FeatureLayer(geopackageFeatureTable)`, then add it to the map.
 
 ## Relevant API
 
 * GeoPackage
+* GeoPackage::doneLoading
 * GeoPackage::geoPackageFeatureTables
 * GeoPackage::geoPackageRasters
 * GeoPackageFeatureTable

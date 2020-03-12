@@ -20,7 +20,7 @@ When the map loads, note the specific location of the initial map view.
 
 ## Relevant API
 
-* BasemapType
+* Basemap
 * Map
 * MapView
 
