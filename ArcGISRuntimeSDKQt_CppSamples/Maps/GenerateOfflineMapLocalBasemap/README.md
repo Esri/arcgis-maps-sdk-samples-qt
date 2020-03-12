@@ -15,7 +15,7 @@ There are a number of use-cases where you may wish to use a basemap which is alr
 
 The author of a web map can support the use of basemaps which are already on a device by configuring the web map to specify the name of a suitable basemap file. This could be a basemap which:
 
-* Has been authored in ArcGIS Pro to make use of your organizations custom data.
+* Has been authored in ArcGIS Pro to make use of your organization's custom data.
 * Is available as a PortalItem which can be downloaded once and re-used many times.
 
 ## How to use the sample
