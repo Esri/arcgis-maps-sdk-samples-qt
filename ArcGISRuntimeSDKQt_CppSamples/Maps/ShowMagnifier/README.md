@@ -14,8 +14,8 @@ Tap and hold on the map to show a magnifier, then drag across the map to move th
 
 ## How it works
 
-1. Create a new `MapView`, and add an `Map` to it: `mapView::setMap(map)`.
-2. Enable the magnifier using `mapView::setMagnifierEnabled(true)`. This will set the magnifier to be shown on the `Map` when the user performs a long press gesture. Note: The default value is `false`.
+1. Create a new `MapView`, and add a `Map` to it: `mapView::setMap(map)`.
+2. Enable the magnifier using `mapView::setMagnifierEnabled(true)`. This will set the magnifier to be shown on the map when the user performs a long press gesture. Note: The default value is `false`.
 3. `MapView::setMagnifierMapPanningEnabled()` is set to `true` by default to allow you to pan the map when the magnifier get's near the edge of the map.
 
 ## Relevant API

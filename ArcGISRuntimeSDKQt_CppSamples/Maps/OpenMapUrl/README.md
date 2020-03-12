@@ -14,17 +14,14 @@ A web map can be selected from the drop-down list. On selection the web map disp
 
 ## How it works
 
-1. Create a `Portal`.
-2. Create a `PortalItem` using the Portal and the web map ID: `new PortalItem(portal, ID)`.
-3. Create a `Map` using the portal item.
-4. Set the map to the `MapView`.
+1. Create a URL comprised of the Organization's Portal URL and the webmap of interest.
+2. Create a `Map` using the URL.
+3. Set the map to the `MapView`.
 
 ## Relevant API
 
 * Map
 * MapView
-* Portal
-* PortalItem
 
 ## Additional information
 

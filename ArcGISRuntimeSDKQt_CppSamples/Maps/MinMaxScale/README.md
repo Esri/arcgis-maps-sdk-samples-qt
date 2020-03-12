@@ -14,7 +14,7 @@ Zoom in and out of the map. The zoom extents of the map are limited between the 
 
 ## How it works
 
-1. Instantiate an `Map` object.
+1. Create an `Map` object.
 2. Set min and max scales of map with `setMaxScale()` and `setMinScale()`.
 3. Set the map to a `MapView` object.
 

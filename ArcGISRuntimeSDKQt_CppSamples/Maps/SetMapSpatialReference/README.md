@@ -14,8 +14,8 @@ Pan and zoom around the map. Observe how the map is displayed using the World Bo
 
 ## How it works
 
-1. Instantiate an `Map` object using a spatial reference e.g. `Map(SpatialReference.create(54024))`.
-2. Instantiate a `Basemap` object using an `ArcGISMapImageLayer` object.
+1. Create an `Map` object using a spatial reference e.g. `Map(SpatialReference.create(54024))`.
+2. Create a `Basemap` object using an `ArcGISMapImageLayer` object.
 3. Set the base map to the map.
 4. Set the map to a `MapView` object.
 

@@ -14,7 +14,7 @@ When the map loads, note the specific location and scale of the initial map view
 
 ## How it works
 
-1. Create a `Map`, specifying a basemap type, latitude and longitude in WGS84, and a level of detail.
+1. Create a `Map`, specifying a basemap type, latitude and longitude in WGS84, and target scale.
 2. Display the map in a map view.
 
 ## Relevant API

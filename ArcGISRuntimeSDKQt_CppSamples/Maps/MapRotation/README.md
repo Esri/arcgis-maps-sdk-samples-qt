@@ -14,7 +14,7 @@ Use the slider to rotate the map.
 
 ## How it works
 
-1. Instantiate a `Map` object.
+1. Create a `Map` object.
 2. Set the map to a `MapView` object.
 3. Use `setViewpointRotation` to indicate the rotation angle.
 
