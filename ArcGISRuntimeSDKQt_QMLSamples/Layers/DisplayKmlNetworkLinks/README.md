@@ -14,7 +14,7 @@ The sample will load the KML file automatically. The data shown should refresh a
 
 ## How it works
 
-In general, no special code is needed to support showing KML/KMZ files with network links. KML supports specifying a message to show the user when loading a network link. Apps can optionally listen to the `KmlDataset::kmlNetworkLinkMessageReceived` event to show any messages from KML network link controls.
+In general, no special code is needed to support showing KML/KMZ files with network links. KML supports specifying a message to show the user when loading a network link. Apps can optionally listen to the `KmlDataset.kmlNetworkLinkMessageReceived` signal to show any messages from KML network link controls.
 1. Create a `KmlDataset` from a KML source which has network links.
 2. Create a `KmlLayer` with the dataset and add the layer as an operational layer.
 3. To listen for network messages, connect to the `kmlNetworkLinkMessageReceived` signal of the dataset.
