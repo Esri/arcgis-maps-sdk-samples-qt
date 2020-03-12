@@ -21,43 +21,35 @@ Camera Controls (Top Right Corner):
 ![](screenshot.png)
 
 ## How it works
-To animate a `Graphic` by updating it's `Geometry`, heading, pitch, and roll:
 
 1. Create a `GraphicsOverlay` and add it to the `SceneView`.
-2. Create a `ModelSceneSymbol`.
-3. Create a `Graphic` and set the geometry to a point where the graphic will be located in scene view
-4. Set the graphic's symbol to the one we made above.
-5. Add Attributes to graphic. Get attributes from graphic, `Graphic::attributes()`.
-6. Add heading, pitch, and roll attribute, `insertAttribute("heading", myHeading);`.
-7. Create a `SimpleRenderer` to access and set it's expression properties - e.g. `setHeadingExpression("[heading]");`.
-8. Add graphic to the graphics overlay.
-9. Add a renderer to graphics overlay
-10. Create a `OrbitGeoElementCameraController` which is set to target the graphic.
-11. Assign the camera controller too the `SceneView`
-12. Update graphic's location, `Graphic::setGeometry(const Geometry& geometry);`.
-13. Update graphics's heading, pitch, and roll, `replaceAttribute("heading", myHeading);`.
-14. The camera controller will automatically update the view to follow the graphic.
+1. Create a `ModelSceneSymbol` object.
+1. Create a `Graphic` object and set its geometry to a `Point`.
+1. Set the `ModelSceneSymbol` object to the graphic.
+1. Add heading, pitch, and roll attributes to the graphic. Get the attributes from the graphic with `Graphic::attributes`.
+1. Create a `SimpleRenderer` object and set its expression properties.
+1. Add graphic and a renderer to the graphics overlay.
+1. Create a `OrbitGeoElementCameraController` which is set to target the graphic.
+1. Assign the camera controller to the `SceneView`.
+1. Update the graphic's location, heading, pitch, and roll.
 
-## Features
- - Map
- - Scene
- - Camera
- - GlobeCameraController
- - Graphic
- - GraphicsOverlay
- - SurfacePlacement
- - MapView
- - ModelSceneSymbol
- - OrbitGeoElementCameraController
- - Point
- - Polyline
- - Renderer
- - SceneProperties
- - SceneView
- - Viewpoint
+## Relevant API
+
+* Scene
+* Camera
+* GlobeCameraController
+* Graphic
+* GraphicsOverlay
+* ModelSceneSymbol
+* OrbitGeoElementCameraController
+* Renderer
+* SceneProperties
+* SceneView
+* SurfacePlacement
 
 ## Offline Data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
 
 Link | Local Location
 ---------|-------|
@@ -66,3 +58,7 @@ Link | Local Location
 |[Hawaii.csv mission data](https://www.arcgis.com/home/item.html?id=e87c154fb9c2487f999143df5b08e9b1)| `<userhome>`/ArcGIS/Runtime/Data/3D/Missions/Hawaii.csv |
 |[Pyrenees.csv mission data](https://www.arcgis.com/home/item.html?id=5a9b60cee9ba41e79640a06bcdf8084d)| `<userhome>`/ArcGIS/Runtime/Data/3D/Missions/Pyrenees.csv |
 |[Snowdon.csv mission data](https://www.arcgis.com/home/item.html?id=12509ffdc684437f8f2656b0129d2c13)| `<userhome>`/ArcGIS/Runtime/Data/3D/Missions/Snowdon.csv |
+
+## Tags
+
+animation, camera, heading, pitch, roll, rotation, visualize
