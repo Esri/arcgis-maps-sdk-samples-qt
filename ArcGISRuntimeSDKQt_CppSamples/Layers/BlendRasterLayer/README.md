@@ -1,28 +1,43 @@
 # Blend raster layer
 
-This sample demonstrates how to use blend renderer on a raster layer.
-You can get a hillshade blended with either a colored raster or color ramp.
+Blend a hillshade with a raster by specifying the elevation data. The resulting raster looks similar to the original raster, but with some terrain shading, giving it a textured look.
 
 ![](screenshot.png)
 
-## How it works
-- Tap on the "Edit Renderer" button in the toolbar to change the settings for the blend renderer.
-- The sample allows you to change the altitude, azimuth, slope type and color ramp type.
-- You can tap on the "Render" button to update the raster.
-- If you use "none" as the color ramp type, the colored raster is blended with the hillshade output.
-- For all the other types a color ramp is used.
+## Use case
 
-## Features
-- `Map`
-- `MapQuickView`
-- `Raster`
-- `RasterLayer`
-- `BlendRenderer`
+`BlendRenderer` can be used to apply a color ramp to a hillshade to emphasize areas of high or low elevation. A `BlendRenderer` can also be used to add a hillshade effect to aerial or satellite imagery, thereby making changes in elevation more visible.
+
+## How to use the sample
+
+Tap on "Edit Renderer" in the toolbar to change the settings for the blend renderer. Choose and adjust the altitude, azimuth, slope type and color ramp type settings to update the image.
+
+## How it works
+
+1. Create a `Raster` object from a raster file.
+2. Create a `RasterLayer` object from the raster.
+3. Create a `Basemap` object from the raster layer and set it to the map.
+4. Create another `Raster` object for elevation from a grayscale raster file.
+5. Create a `BlendRenderer` object, specifying the elevation raster, color ramp, and other properties.
+	- If you specify a non-null color ramp, use the elevation raster as the base raster in addition to the elevation raster parameter. That way, the color ramp is used instead of the satellite imagery.
+6. Set the blend renderer to the raster layer.
+
+## Relevant API
+
+* BlendRenderer
+* ColorRamp
+* Raster
+* RasterLayer
 
 ## Offline Data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
 
 Link | Local Location
 ---------|-------|
 |[Shasta.tif raster](https://www.arcgis.com/home/item.html?id=c669445e6cb4490b8306f0c170a9cbb1)| `<userhome>`/ArcGIS/Runtime/Data/raster/Shasta.tif |
 |[Shasta_Elevation.tif raster](https://www.arcgis.com/home/item.html?id=b051f5c3e01048f3bf11c59b41507896)| `<userhome>`/ArcGIS/Runtime/Data/raster/Shasta_Elevation.tif |
+
+## Tags
+
+color ramp, elevation, hillshade, image, raster, raster layer, visualization

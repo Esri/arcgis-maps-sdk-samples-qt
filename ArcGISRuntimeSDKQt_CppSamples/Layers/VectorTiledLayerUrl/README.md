@@ -1,15 +1,27 @@
 # Vector tiled layer (URL)
 
-This sample demonstrates how to use a vector tiled layer from an ArcGIS Online service as a basemap.
+Load an ArcGIS Vector Tiled Layer from a URL.
 
 ![](screenshot.png)
 
+## Use case
+
+Vector tile basemaps can be created in ArcGIS Pro and published as offline packages or online services. `ArcGISVectorTiledLayer` has many advantages over traditional raster based basemaps (`ArcGISTiledLayer`), including smooth scaling between different screen DPIs, smaller package sizes, and the ability to rotate symbols and labels dynamically.
+
+## How to use the sample
+
+Use the drop down menu to load different vector tile basemaps.
+
 ## How it works
 
-When a new item is selected from the combo box, an invokable C++ function that determines the currently selected vector tiled layer basemap is executed. The map's basemap is replaced by simply calling its `setBasemap` method, passing in the desired basemap.
+1. An `ArcGISVectorTiledLayer` is constructed with an ArcGIS Online service URL
+2. The layer instance is added to the `Map`
 
-## Features
-- MapView
-- Map
-- Basemap
-- ArcGISVectorTiledLayer
+## Relevant API
+
+* ArcGISVectorTiledLayer
+* Basemap
+
+## Tags
+
+tiles, vector, vector basemap, vector tiled layer, vector tiles

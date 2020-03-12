@@ -1,14 +1,39 @@
-# OpenStreetMap layer
+# OpenStreetMap Layer
 
-This sample demonstrates how to add the OpenStreetMap layer to a map as a Basemap.
+Add OpenStreetMap as a basemap layer.
 
 ![](screenshot.png)
 
-## How it works
-The `Basemap::openStreetMap()` static function is used to create a `Basemap` with an `OpenStreetMapLayer` as the baseLayer of the basemap. The returned basemap is used to instantiate a `Map`. The attribution text that is required by OpenStreetMap is automatically added to the `MapView's` attributionText without any additional code.
+## Use case
 
-## Features
-- `OpenStreetMapLayer`
-- `Basemap`
-- `Map`
-- `MapView`
+[OpenStreetMap](https://www.openstreetmap.org) is a free community-edited basemap.
+
+## How to use the sample
+
+When the sample opens, it will automatically display the map with the OpenStreetMap basemap. Pan and zoom to observe the basemap.
+
+## How it works
+
+1. Create a basemap with the static method `Basemap::openStreetMap()`
+2. Create a map with that basemap.
+3. Show the map in a map view.
+
+## Relevant API
+
+* Basemap
+* Basemap::openStreetMap
+* Map
+* MapView
+* OpenStreetMapLayer
+
+## Additional information
+
+The attribution text will be set to the required OpenStreetMap attribution automatically.
+
+Apps that expect to make many requests to OpenStreetMap should consider using an alternative tile server via the `WebTiledLayer` class. See [layer types described](https://developers.arcgis.com/qt/latest/cpp/guide/layer-types-described.htm#ESRI_SECTION1_B995CCAB20584F91890B3614CF16CF43) in the *ArcGIS Runtime SDK for Qt* documentation for more information on OpenStreetMap usage restrictions and alternatives.
+
+Esri now hosts an [OpenStreetMap vector layer on ArcGIS Online](http://www.arcgis.com/home/item.html?id=3e1a00aeae81496587988075fe529f71) that uses recent OpenStreetMap data in conjunction with a style matching the default OpenStreetMap style. This layer is not subject to the tile access restrictions that apply to tiles fetched from OpenStreetMap.org.
+
+## Tags
+
+basemap, layers, map, open, OpenStreetMap, OSM, street

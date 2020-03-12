@@ -19,16 +19,11 @@ The second list shows layers that have been removed from the map. Select the men
 ## How it works
 
 1. Get the operational layers `LayerListModel` from the map using `Map::operationalLayers`.
-2. Subclass `QSortFilterProxyModel` so that the order in the view can be reversed. This is important when creating a table of contents so that the first layer in the map draws at the bottom of the list and the last layer in the map (which will render at the top) will draw on the top of the list.
-3. Set the `LayerListModel` as the source model on you sort proxy model.
-4. Create a QML `ListView` and set the model property to the reversed sort proxy model.
-5. Create a delegate that displays the layer name and a QML menu which provides options to add, remove, and reorder the layer.
-6. Add or remove layers using `operationalLayers()->append(layer)` and `operationalLayers()->remove(layer)` respectively.
-7. Move layers using `operationalLayers()->move(from, to)`.
+2. Add or remove layers using `operationalLayers()->append(layer)` and `operationalLayers()->remove(layer)` respectively. The last layer in the list will be rendered on top.
 
 ## Relevant API
 
-* ArcGISMap
+* Map
 * ArcGISMapImageLayer
 * LayerListModel
 * LayerListModel::append
@@ -37,4 +32,4 @@ The second list shows layers that have been removed from the map. Select the men
 
 ## Tags
 
-layers
+add, delete, layer, map, remove
