@@ -17,13 +17,13 @@ A Local Server and Local Feature Service will automatically be started. Once sta
 1. Create and run the Local Server.
     * `LocalServer::instance` creates the Local Server.
     * `LocalServer::start()` starts the server asynchronously.
-2. Wait for server to be in the `LocalServerStatus::STARTED` state.
+2. Wait for server to be in the `LocalServerStatus::Started` state.
     * `LocalServer::statusChanged()` fires whenever the running status of the Local Server changes.
 3. Create and run a local service. For example, to run a `LocalMapService`:
     * `new LocalFeatureService(Url)` creates a local feature service with the given URL path to the map package (`mpk` file).
     * `LocalFeatureService::start()` starts the service asynchronously.
     * The service is added to the Local Server automatically.
-4. Wait for feature service to be in the `LocalServerStatus::STARTED` state.
+4. Wait for feature service to be in the `LocalServerStatus::Started` state.
     * `LocalFeatureService::statusChanged()` signal fires whenever the status of the Local Service changes.
 5. Create a feature layer from local feature service.
     * Create a `ServiceFeatureTable(Url)` from local feature service URL, `LocalFeatureService::url()`.

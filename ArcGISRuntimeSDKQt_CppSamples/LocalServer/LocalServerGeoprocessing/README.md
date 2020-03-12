@@ -22,7 +22,7 @@ Contour Line Controls (Top Left):
 2. Create and run the Local Server.
     * `LocalServer::instance` creates the Local Server.
     * `LocalServer::start()` starts the server asynchronously.
-3. Wait for server to be in the `LocalServerStatus::STARTED` state.
+3. Wait for server to be in the `LocalServerStatus::Started` state.
     * `LocalServer::statusChanged()` fires whenever the running status of the Local Server changes.
 4. Start a `LocalGeoprocessingService` and run a `GeoprocessingTask`
     * `new LocalGeoprocessingService(Url, ServiceType)`, creates a local geoprocessing service
