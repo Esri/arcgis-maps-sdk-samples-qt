@@ -84,9 +84,14 @@ Rectangle {
                 id: serviceAreaTask
                 url: serviceTaskAreaUrl
 
+                Component.onCompleted: {
+                    load();
+                }
+
                 onErrorChanged: {
                     console.warn(error.message);
                 }
+
                 onLoadStatusChanged: {
                     if (loadStatus === Enums.LoadStatusLoaded) {
                         createDefaultParameters();
@@ -101,8 +106,6 @@ Rectangle {
                         // add service areas of 1 minute and 3 minutes travel time by car
                         createDefaultParametersResult.defaultImpedanceCutoffs = [1.0, 3.0];
                         createDefaultParametersResult.setFacilitiesWithFeatureTable(featureTable, queryParameters);
-
-                        solveServiceArea(createDefaultParametersResult);
                     }
                 }
 
@@ -130,10 +133,10 @@ Rectangle {
             Button {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                text: "Find Service Areas"
+                text: "Find service areas"
                 onClicked: {
                     enabled = false;
-                    serviceAreaTask.load();
+                    serviceAreaTask.solveServiceArea(serviceAreaTask.createDefaultParametersResult)
                 }
             }
         }

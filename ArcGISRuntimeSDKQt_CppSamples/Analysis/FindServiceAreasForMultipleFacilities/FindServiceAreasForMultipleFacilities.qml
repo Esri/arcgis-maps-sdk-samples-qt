@@ -35,7 +35,7 @@ Item {
             Button {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                text: "Find Service Areas"
+                text: "Find service areas"
                 onClicked: {
                     model.findServiceAreas();
                     enabled = false;

@@ -52,8 +52,8 @@ FindServiceAreasForMultipleFacilities::FindServiceAreasForMultipleFacilities(QOb
   m_serviceAreasOverlay(new GraphicsOverlay(this))
 {
   // create fill symbols for rendering the results
-  m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 166, 0, 66), this));
-  m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 0, 0, 66), this));
+  m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 166, 0, 66), this)); // translucent orange
+  m_fillSymbols.append(new SimpleFillSymbol(SimpleFillSymbolStyle::Solid, QColor(255, 0, 0, 66), this)); // translucent red
 
   m_facilitiesTable = new ServiceFeatureTable(url, this);
   m_facilitiesFeatureLayer = new FeatureLayer(m_facilitiesTable, this);
@@ -84,7 +84,7 @@ MapQuickView* FindServiceAreasForMultipleFacilities::mapView() const
 
 bool FindServiceAreasForMultipleFacilities::taskRunning() const
 {
-  return m_taskRunning;
+  return !m_taskWatcher.isDone();
 }
 
 // Set the view (created in QML)
@@ -103,12 +103,10 @@ void FindServiceAreasForMultipleFacilities::setMapView(MapQuickView* mapView)
       return;
     }
 
-    if (m_facilitiesFeatureLayer->loadStatus() == LoadStatus::Loaded)
-    {
-      // zoom to the full extent of the feature layer
-      int buffer = 100;
-      m_mapView->setViewpointGeometry(m_facilitiesFeatureLayer->fullExtent(), buffer);
-    }
+    // zoom to the full extent of the feature layer
+    int buffer = 100;
+    m_mapView->setViewpointGeometry(m_facilitiesFeatureLayer->fullExtent(), buffer);
+
   });
 
   m_mapView->setMap(m_map);
@@ -151,14 +149,15 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
     // add all facilities to the service area parameters
     serviceAreaParameters.setFacilitiesWithFeatureTable(m_facilitiesTable, queryParameters);
 
-    TaskWatcher taskWatcher = m_serviceAreaTask->solveServiceArea(serviceAreaParameters);
-    if (!taskWatcher.isValid())
+    m_taskWatcher = m_serviceAreaTask->solveServiceArea(serviceAreaParameters);
+    if (!m_taskWatcher.isValid())
       qWarning() << "Task not valid.";
+
+    emit taskRunningChanged();
   });
 
   connect(m_serviceAreaTask, &ServiceAreaTask::solveServiceAreaCompleted, this, [this](QUuid, ServiceAreaResult serviceAreaResult)
   {
-    m_taskRunning = false;
     emit taskRunningChanged();
 
     // iterate through the facilities to get the service area polygons
@@ -176,16 +175,10 @@ void FindServiceAreasForMultipleFacilities::connectServiceAreaTaskSignals()
 
 void FindServiceAreasForMultipleFacilities::findServiceAreas()
 {
-  // start showing indicator
-  m_taskRunning = true;
-  emit taskRunningChanged();
-
   if (m_serviceAreaTask)
     return;
 
   m_serviceAreaTask = new ServiceAreaTask(serviceAreaTaskUrl, this);
   connectServiceAreaTaskSignals();
   m_serviceAreaTask->load();
-
-
 }

@@ -17,6 +17,8 @@
 #ifndef FINDSERVICEAREASFORMULTIPLEFACILITIES_H
 #define FINDSERVICEAREASFORMULTIPLEFACILITIES_H
 
+#include "TaskWatcher.h"
+
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -58,14 +60,15 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   bool taskRunning() const;
 
-  Esri::ArcGISRuntime::FeatureLayer* m_facilitiesFeatureLayer = nullptr;
-  Esri::ArcGISRuntime::GraphicsOverlay* m_serviceAreasOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_facilitiesFeatureLayer = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_serviceAreasOverlay = nullptr;
   Esri::ArcGISRuntime::ServiceAreaTask* m_serviceAreaTask = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_facilitiesTable = nullptr;
   QList<Esri::ArcGISRuntime::SimpleFillSymbol*> m_fillSymbols;
   bool m_taskRunning = false;
+  Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
 };
 
 #endif // FINDSERVICEAREASFORMULTIPLEFACILITIES_H

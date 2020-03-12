@@ -24,10 +24,10 @@ Click 'Find Service Areas' to calculate and display the service area of each fac
 
 ## Relevant API
 
- - ServiceAreaParameters
- - ServiceAreaPolygon
- - ServiceAreaResult
- - ServiceAreaTask
+ * ServiceAreaParameters
+ * ServiceAreaPolygon
+ * ServiceAreaResult
+ * ServiceAreaTask
 
 ## About the data
 
