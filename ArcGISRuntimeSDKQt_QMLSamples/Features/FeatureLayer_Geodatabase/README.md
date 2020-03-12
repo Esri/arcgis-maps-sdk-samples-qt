@@ -16,7 +16,7 @@ Pan and zoom around the map. View the data loaded from the geodatabase.
 
 The sample creates an instance of GeodatabaseFeatureTable by supplying the path to the local mobile geodatabase. The FeatureLayer is then supplied with the GeodatabaseFeatureTable and added to the Map. The mobile geodatabase can either be obtained through ArcMap, with the Create Runtime Content geoprocessing tool, or through a feature service with the GeodatabaseSyncTask.
 1. Create a geodatabase using the provided local resource.
-2. Get the 'Trailheads' `GeodatabaseFeatureTable` from the geodatabase, `Geodatabase.getGeodatabaseFeatureTable(tableName)`.
+2. Get the 'Trailheads' `GeodatabaseFeatureTable` from the geodatabase, `Geodatabase.geodatabaseFeatureTable(tableName)`.
 4. Create a feature layer using the table from above.
 5. Add the feature layer to the `Map`.
 
@@ -45,7 +45,7 @@ One of the ArcGIS Runtime data set types that can be accessed via the local stor
 
 In ArcMap, choose File > Share As > ArcGIS Runtime Content from the menu items to create the .geodatabase file (see the document: http://desktop.arcgis.com/en/arcmap/latest/map/working-with-arcmap/creating-arcgis-runtime-content.htm). 
 
-Note: You could also use the 'Services Pattern' and access the Geodatabase class via a Feature Service served up via ArcGIS Online or ArcGIS Enterprise. Instead of using the Geodatabase class to access the .geodatabase file on disk, you would use GeodatabaseSyncTask point to a url instead. For more information review the document: https://developers.arcgis.com/net/latest/wpf/guide/create-an-offline-layer.htm.
+Note: You could also use the 'Services Pattern' and access the Geodatabase class via a Feature Service served up via ArcGIS Online or ArcGIS Enterprise. Instead of using the Geodatabase class to access the .geodatabase file on disk, you would use GeodatabaseSyncTask point to a url instead.
 
 ## Tags
 

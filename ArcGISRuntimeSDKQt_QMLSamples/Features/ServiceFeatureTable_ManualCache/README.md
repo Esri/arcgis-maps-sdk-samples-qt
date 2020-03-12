@@ -16,7 +16,7 @@ Run the sample and pan and zoom around the map. No features will be requested an
 
 1. Set the `ServiceFeatureTable.featureRequestMode` property of the service feature table to `Enums.FeatureRequestModeManualCache` before the table is loaded.
 2. Load the table.
-3. Call `PopulateFromService` on the table to request features.
+3. Call `populateFromService` on the table to request features.
 
 ## Relevant API
 

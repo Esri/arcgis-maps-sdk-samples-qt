@@ -17,7 +17,7 @@ Run the sample and view the feature service as an operational layer on top of th
 The sample declares a FeatureLayer using a ServiceFeatureTable with a URL REST endpoint to the feature service. The FeatureLayer is then added to the Map.
 1. Create a `ServiceFeatureTable` from a URL.
 2. Create a feature layer from the service feature table.
-3. Add the feature layer to your Map using `map.geoperationalLayers.append(FeatureLayer)`.
+3. Add the feature layer to your Map using `map.operationalLayers.append(FeatureLayer)`.
 
 ## Relevant API
 

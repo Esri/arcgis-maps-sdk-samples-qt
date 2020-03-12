@@ -23,7 +23,7 @@ This sample loads a number of point, line, and polygon feature tables from a Run
 5. Wait for geodatabase to completely load by connecting to the `loadStatusChanged` signal and checking the `loadStatus`.
 6. Cycle through each `GeodatabaseFeatureTable` from the geodatabase using `Geodatabase.geodatabaseFeatureTables()`.
 7. Create a `FeatureLayer` from each table within the geodatabase.
-9. Wait for each layer to load by connecting to the layer's `loadsStatusChanged` signal and checking the `loadStatus`.
+9. Wait for each layer to load by connecting to the layer's `loadStatusChanged` signal and checking the `loadStatus`.
 10. After the last layer has loaded, then create a new `Envelope` from a union of the extents of all layers.
    * Set the envelope to be the `Viewpoint` of the map view using `MapView.setViewpoint(new Viewpoint(Envelope))`.
 11. Add the feature layer to map using `Map.operationalLayers.append(FeatureLayer)`.
