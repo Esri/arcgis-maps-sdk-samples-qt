@@ -1,27 +1,48 @@
 # Find a place
 
-This sample demonstrates how to use geocode functionality to search for points of interest around a location or within an extent.
+Find places of interest near a location or within a specific area.
 
 ![](screenshot.png)
 
+## Use case
+
+When getting directions or looking for nearby places, users may only know what the place has ("food"), the type of place ("gym"), or the generic place name ("Starbucks"), rather than the specific address. You can get suggestions and locations for these places of interest (POIs) using a natural language query. Additionally, you can filter the results to a specific area.
+
+## How to use the sample
+
+Choose a place of interest to enter in the first field and an area to search within in the second field. Click the magnifying glass or hit enter to search and show the results of the query on the map from your current extent. Click on a result pin to show its name and address. If you pan away from the result area, a "Redo search in this area" button will appear. Click it to query again for the currently viewed area on the map.
+
 ## How it works
-Two text boxes allow you to input a point of interest (such as "Movie Theater", "Starbucks", or "Park"), as well as a location. Setting a location will set the preferred search location, so that geocode results closer to that location are preferred. Optionally, tap the pin symbol in the text box to search near your current location. When you pan the map and change the current viewpoint, a button will appear, allowing you to search the current map extent for a place of interest.
 
-This workflow is accomplished by creating a `LocatorTask` with the URL to the World Geocoding Service. Suggestions are obtained by setting the locator's suggestion `searchText` from the text boxes. "POI" and "Populated Place" categories are set on the `SuggestionParameters` so that the suggestions that are returned for each text box make sense. Once a suggestion is selected or enter is hit on the keyboard, `geocodeWithParameters` is called. The `GeocodeParameters` sets the `preferredSearchLocation`, so that results near this location are preferred. If the button to search within an extent is clicked, the `searchArea` property is set to the MapView's current viewpoint. Search area differs from preferred search location because it only shows results within the search area, whereas the preferred search area only prefers closer results over further results. Once the geocode completes successfully, a `Graphic` is created for each `GeocodeResult`, and is added to a `GraphicsOverlay` for display on the Map.
+1. Create a `LocatorTask` using a URL to a locator service.
+2. Find the location for an address (or city name) to build an envelope to search within:
+    * Create `GeocodeParameters`.
+    * Add return fields to the parameters' `resultAttributeNames` collection. Only add a single "\*" option to return all fields.
+    * Call `locatorTask::geocodeWithParameters(locationQueryString, geocodeParameters)` to get a list of `GeocodeResult`s.
+    * Use the `displayLocation` from one of the results to build an `Envelope` to search within.
+3. Get place of interest (POI) suggestions based on a place name query:
+    * Create `SuggestParameters`.
+    * Add "POI" to the parameters' `categories` collection.
+    * Call `locatorTask::suggestions()` to get a list of `SuggestResults`.
+    * The `SuggestResult` will have a `label` to display in the search suggestions list.
+4. Use one of the suggestions or a user-written query to find the locations of POIs:
+    * Create `GeocodeParameters`.
+    * Set the parameters' `searchArea` to the envelope.
+    * Call `locatorTask::geocodeWithParameters(suggestionLabelOrPlaceQueryString, geocodeParameters)` to get a list of `GeocodeResult`s.
+    * Display the places of interest using the results' `displayLocation`s.
 
-## Features
-- LocatorTask
-- GeocodeParameters
-- GeocodeResult
-- SuggestListModel
-- SuggestParameters
-- Callout
-- GeometryEngine
-- GraphicsOverlay
-- Graphic
-- SimpleRenderer
-- PictureMarkerSymbol
-- LocationDisplay
-- IdentifyGraphicsOverlayResult
-- MapView
-- Map
+## Relevant API
+
+* GeocodeParameters
+* GeocodeResult
+* LocatorTask
+* SuggestParameters
+* SuggestResult
+
+## About the data  
+
+This sample uses the world locator service "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer".
+
+## Tags
+
+businesses, geocode, locations, locator, places of interest, POI, point of interest, search, suggestions

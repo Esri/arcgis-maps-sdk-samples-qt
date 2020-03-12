@@ -1,14 +1,19 @@
 # Reverse geocode
 
-This sample demonstrates how to get the address for a point on the map.
+Use an online service to find the address for a tapped point.
 
 ![](screenshot.png)
 
+## Use case
+
+You might use a geocoder to find a customer's delivery address based on the location returned by their device's GPS.
+
 ## How to use the sample
-Click on a point on the map to perform online reverse geocoding and show the matching results on the map.
+
+Tap the map to see the nearest address displayed in a callout.
 
 ## How it works
-To perform online reverse geocode:
+
 1. Create the `Map` with a `Basemap`.
 2. Create a `LocatorTask` using a URL.
 3. Set the `ReverseGeocodeParameters` for the `LocatorTask` and specify the geocode's attributes.
@@ -16,19 +21,19 @@ To perform online reverse geocode:
 5. Change the attributes of the `MapView`'s `CalloutData` and display the location using a `Callout`
 
 ## Relevant API
- - Callout
- - CalloutData
- - GraphicsOverlay
- - LocatorTask
- - PictureMarkerSymbol
- - ReverseGeocodeParameters
+
+* GeocodeParameters
+* LocatorTask
+* ReverseGeocodeParameters
 
 ## Offline data
+
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
+
 Link | Local Location
 ---------|-------|
 [pin PNG file](https://github.com/Esri/arcgis-runtime-samples-java/blob/master/search/reverse-geocode-online/src/main/resources/pin.png)| `<userhome>`/ArcGIS/Runtime/Data/symbol/pin.png |
 
-
 ## Tags
-Callout, Geocode
 
+address, geocode, locate, reverse geocode, search
