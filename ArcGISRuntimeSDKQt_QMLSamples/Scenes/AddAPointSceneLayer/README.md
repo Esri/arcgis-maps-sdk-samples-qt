@@ -20,7 +20,7 @@ Pan around the scene and zoom in. Notice how many thousands of additional featur
 
 ## Relevant API
 
-- ArcGISSceneLayer
+* ArcGISSceneLayer
 
 ## About the data
 
@@ -33,5 +33,3 @@ Point scene layers can also be retrieved from scene layer packages (.slpk) and m
 ## Tags
 
 3D, point scene layer, layers
-
-
