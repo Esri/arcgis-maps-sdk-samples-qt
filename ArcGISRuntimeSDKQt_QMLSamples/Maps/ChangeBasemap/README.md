@@ -14,7 +14,7 @@ Use the drop down menu to select the active basemap from the list of available b
 
 ## How it works
 
-1. Create an `Map`.
+1. Create a `Map`.
 2. Set the map to the `MapView`.
 3. Choose a new basemap type and set it on the map.
 

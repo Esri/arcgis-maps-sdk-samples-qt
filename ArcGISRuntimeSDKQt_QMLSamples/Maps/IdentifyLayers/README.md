@@ -23,7 +23,7 @@ Tap to identify features. An alert will show all layers with features under the 
 * IdentifyLayerResult
 * IdentifyLayerResult.layerContent.name
 * IdentifyLayerResult.sublayerResults
-* MapView::identifyLayers
+* MapView.identifyLayers
 
 ## Additional information
 

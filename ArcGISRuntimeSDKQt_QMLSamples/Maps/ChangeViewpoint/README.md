@@ -6,7 +6,7 @@ Set the map view to a new viewpoint.
 
 ## Use case
 
-Programatically navigate to a specified location in the map or scene. Use this to focus on a particular point or area of interest.
+Programmatically navigate to a specified location in the map or scene. Use this to focus on a particular point or area of interest.
 
 ## How to use the sample
 
@@ -16,13 +16,13 @@ The map view has several methods for setting its current viewpoint. Select a vie
 
 1. Create a `Map` object and set it to the `MapView` object.
 2. Change the map's `Viewpoint` using one of the available methods:
-  * Use `MapView.setViewpointWithAnimationCurve(viewPoint, duration, AnimationCurve)` to pan to a viewpoint over the specified length of time.
+  * Use `MapView.setViewpointWithAnimationCurve(viewPoint, duration, Enums.AnimationCurve)` to pan to a viewpoint over the specified length of time.
   * Use `MapView.setViewpointCenter()` to center the viewpoint on a `Point` and set a distance from the ground using a scale.
   * Use `MapView.setViewpointGeometry()` to set the viewpoint to a given `Geometry`.
 
 ## Relevant API
 
-* AnimationCurve
+* Enums.AnimationCurve
 * Map
 * Geometry
 * MapView

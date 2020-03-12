@@ -15,8 +15,8 @@ When the sample loads, the feature tables and rasters from the GeoPackage will b
 ## How it works
 
 1. Create a `GeoPackage` object using the path the local geoPackage.
-2. Connect to the `GeoPackage::LoadStatusChanged` signal.
-3. Load the geoPackage `geoPackage.load()`, then iterate through the available rasters, exposed by `geopackage::geoPackageRasters`.
+2. Connect to the `GeoPackage.loadStatusChanged` signal.
+3. Load the geoPackage `geoPackage.load()`, then iterate through the available rasters, exposed by `geopackage.geoPackageRasters`.
     * For each raster, create a raster layer then add it to the map.
 4. Iterate through available feature tables, exposed by `geopackage.geoPackageFeatureTables`.
     * For each feature table, create a feature layer then add it to the map.
