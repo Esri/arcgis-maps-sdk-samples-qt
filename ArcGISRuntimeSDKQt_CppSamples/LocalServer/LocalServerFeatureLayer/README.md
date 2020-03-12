@@ -36,9 +36,9 @@ A Local Server and Local Feature Service will automatically be started. Once sta
 
 * FeatureLayer
 * LocalFeatureService
+* LocalFeatureService::statusChanged
 * LocalServer
 * LocalServerStatus
-* StatusChangedEvent
 
 ## Offline Data
 
