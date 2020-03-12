@@ -1,12 +1,36 @@
 # Feature layer (shapefile)
 
-This sample demonstrates how to open a shapefile stored on the device and display it as a feature layer with default symbology. The shapefile will be downloaded from an ArcGIS Online portal automatically.
+Open a shapefile stored on the device and display it as a feature layer with default symbology.
 
 ![](screenshot.png)
 
-## How it works
-A ShapefileFeatureTable is created using the path to a shapefile (.shp) on the file system. The ShapefileFeatureTable is then used to create a FeatureLayer. The FeatureLayer is added to the map as an operational layer, using default symbology and rendering.
+## Use case
 
-## Features
-- ShapefileFeatureTable
-- FeatureLayer
+Shapefiles store location, shape and attributes of geospatial vector data. Shapefiles can be loaded directly into ArcGIS Runtime.
+
+## How to use the sample
+
+Run the sample and explore the map created from the shapefile.
+
+## How it works
+
+1. Create a `ShapefileFeatureTable` passing in the URL of a shapefile.
+2. Create a `FeatureLayer` using the shapefile feature table.
+3. Add the layer to the map's operation layers.
+
+## Relevant API
+
+* FeatureLayer
+* ShapefileFeatureTable
+
+## Offline data
+
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
+
+Link | Local Location
+---------|-------|
+|[Public Art Shapefile](https://www.arcgis.com/home/item.html?id=d98b3e5293834c5f852f13c569930caa)| `<sdcard>`/ArcGIS/Samples/ShapeFile/Aurora_CO_shp/Public_Art.shp|
+
+## Tags
+
+Layers, shapefile, shp, vector

@@ -1,17 +1,42 @@
 # WMTS layer
 
-This sample demonstrates how to load a Web Map Tile Service (WMTS) and display it as a layer in a Map.
+Display a layer from a Web Map Tile Service.
 
 ![](screenshot.png)
 
-## How it works
-WMTS is a type of web map service developed by the Open Geospatial Consortium (OGC). To consume in ArcGIS Runtime, first create a `WmtsService` by passing in the URL to the WMTS service. Load the `WmtsService` by calling `load`, and wait for the service to load by connecting to the `loadStatusChanged` signal. Once the service loads, obtain the `WmtsServiceInfo` and the list of `WmtsLayerInfo` from the loaded `WmtsService`. In this particular sample, the first layer is obtained from the list of `WmtsLayerInfo`, and that layer's ID is retrieved. Finally, a `WmtsLayer` is created by setting the URL and the layer ID that was obtained in the previous step. A `Basemap` is created from the `WmtsLayer`, and this Basemap is added to a new Map.
+## Use case
 
-## Features
-- WmtsLayer
-- WmtsLayerInfo
-- WmtsService
-- WmtsServiceInfo
-- Basemap
-- Map
-- MapView
+WMTS services can have several layers. You can use Runtime to explore the layers available from a service. This would commonly be used to enable a browsing experience where users can choose which layers they want to display at run time.
+
+## How to use the sample
+
+The layer will be displayed automatically. Use the buttons to choose a different method of loading the layer.
+
+## How it works
+
+To display a WMTS layer directly from a URL:
+
+1. Create a `WmtsService` object using the URL of the WMTS service.
+2. Create a `WmtsLayer` object with the ID of the layer to display.
+
+To explore layers from a WMTS service:
+
+1. Create a `WmtsService` object using the URL of the WMTS service.
+2. After loading the WMTS service, get the list of `WmtsLayerInfo` objects from the service info of the WMTS service.
+3. Use one of the layer infos to create the WMTS layer.
+4. Create a basemap with the WMTS layer and set it to the map.
+
+## Relevant API
+
+* WmtsLayer
+* WmtsLayerInfo
+* WmtsService
+* WmtsServiceInfo
+
+## About the data
+
+The map visualizes world time zones.
+
+## Tags
+
+layer, OGC, raster, tiled, web map tile service

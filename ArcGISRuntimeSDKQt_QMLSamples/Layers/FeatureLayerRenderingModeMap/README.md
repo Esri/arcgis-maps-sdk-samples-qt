@@ -17,7 +17,7 @@ Use the 'Animated Zoom' button to trigger the same zoom animation on both static
 ## How it works
 
 1. Create an `ArcGISMap` and set several `loadSettings`: `preferred[Point/Polyline/Polygon]FeatureRenderingMode(...)`.
-2. The `RenderingMode` can be set to `Enums.FeatureRenderingModeStatic`, `Enums.FeatureRenderingModeDynamic` or `Enums.FeatureRenderingModeAutomatic`.
+2. The rendering mode can be set to `Enums.FeatureRenderingModeStatic`, `Enums.FeatureRenderingModeDynamic` or `Enums.FeatureRenderingModeAutomatic`.
    * In Static rendering mode, the number of features and graphics has little impact on frame render time, meaning it scales well, however points don't stay screen-aligned and point/polyline/polygon objects are only redrawn once map view navigation is complete.
    * In Dynamic rendering mode, large numbers of features or graphics can affect the responsiveness of maps or scenes to user interaction, however points remain screen-aligned and point/polyline/polygon objects are continually redrawn while the map view is navigating.
 3. When left to automatic rendering, points are drawn dynamically and polylines and polygons statically.
@@ -25,7 +25,7 @@ Use the 'Animated Zoom' button to trigger the same zoom animation on both static
 ## Relevant API
 
 * FeatureLayer
-* FeatureLayer.RenderingMode
+* FeatureLayer.renderingMode
 * LoadSettings
 * Map 
 * MapView

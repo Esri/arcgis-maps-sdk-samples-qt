@@ -17,7 +17,7 @@ Use the 'Animated Zoom' button to trigger the same zoom animation on both static
 ## How it works
 Two `Scenes` are created, each containing several `FeatureLayers`. Prior to loading each `Scene`, several `LoadSettings` are set: `preferredPointFeatureRenderingMode`, `preferredPolygonFeatureRenderingMode`, and `preferredPolylineFeatureRenderingMode`. One `Scene` explicitly sets the rendering mode to be `Static` while the other sets the rendering mode to be `Dynamic`. The rendering mode can change the behavior and performance of the `FeatureLayer` depending on several factors with the underlying data. This sample animates the `SceneView` viewpoint between two `Camera` viewpoints, which helps display the differences between the two modes.
 1. Create a `Scene` and set several `loadSettings`: `preferred[Point/Polyline/Polygon]FeatureRenderingMode(...)`.
-2. The `RenderingMode` can be set to `STATIC`, `DYNAMIC` or `AUTOMATIC`.
+2. The rendering mode can be set to `Enums.FeatureRenderingModeStatic`, `Enums.FeatureRenderingModeDynamic` or `Enums.FeatureRenderingModeAutomatic`.
     * In Static rendering mode, the number of features and graphics has little impact on frame render time, meaning it scales well, however points don't stay screen-aligned and point/polyline/polygon objects are only redrawn once map view navigation is complete.
     * In Dynamic rendering mode, large numbers of features or graphics can affect the responsiveness of maps or scenes to user interaction, however points remain screen-aligned and point/polyline/polygon objects are continually redrawn while the map view is navigating.
 3. When left to automatic rendering, points are drawn dynamically and polylines and polygons statically.
@@ -26,7 +26,7 @@ Two `Scenes` are created, each containing several `FeatureLayers`. Prior to load
 #
 * Camera 
 * FeatureLayer
-* FeatureLayer.RenderingMode
+* FeatureLayer.renderingMode
 * LoadSettings
 * Scene
 * SceneView
