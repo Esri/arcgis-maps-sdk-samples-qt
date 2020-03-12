@@ -69,7 +69,10 @@ OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
 {
   const QString folderLocation = QString("%1/ArcGIS/Runtime/Data/tpk/san_diego").arg(defaultDataPath());
   if (!QFileInfo::exists(folderLocation))
+  {
     qWarning() << "Please download required data.";
+    return;
+  }
 
   const QString fileLocation = QString("%1/ArcGIS/Runtime/Data/tpk/san_diego/streetmap_SD.tpk").arg(defaultDataPath());
   TileCache* tileCache = new TileCache(fileLocation, this);
