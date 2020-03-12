@@ -1,18 +1,38 @@
 # Set map spatial reference
 
-This sample demonstrates how to set the initial spatial reference of a map so that all layers that support reprojection are projected into the map’s spatial reference.
+Specify a map's spatial reference.
 
-![](screenshot.png) 
+![](screenshot.png)
+
+## Use case
+
+Choosing the correct spatial reference is important for ensuring accurate projection of data points to a map.  
+
+## How to use the sample
+
+Pan and zoom around the map. Observe how the map is displayed using the World Bonne spatial reference.
 
 ## How it works
 
-The basemap contains an `ArcGISMapImageLayer`, which supports reprojection, and has a default spatial reference of `GCS_WGS_1984 (WKID: 4326)`. 
-When the basemap is added to the map, the `ArcGISMapImageLayer` is automatically reprojected into the map’s spatial reference.
+1. Create an `Map` object using a spatial reference.
+2. Create a `Basemap` object using an `ArcGISMapImageLayer` object.
+3. Set the base map to the map.
+4. Set the map to a `MapView` object.
 
-## Features
+The ArcGIS map image layer will now use the spatial reference set to the ArcGIS map (World Bonne (WKID: 54024)) and not it's default spatial reference.
 
-- MapView
-- Map
-- Basemap
-- SpatialReference
+## Relevant API
 
+* ArcGISMapImageLayer
+* Basemap
+* Map
+* MapView
+* SpatialReference
+
+## Additional information
+
+Operational layers will automatically project to this spatial reference when possible.
+
+## Tags
+
+project, SpatialReference, WKID

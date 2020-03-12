@@ -1,14 +1,34 @@
 # Show magnifier
 
-This sample demonstrates how you can tap and hold on a map to get the magnifier. You can also pan while tapping and holding to move the magnifier across the map.
+Tap and hold on a map to show a magnifier.
 
 ![](screenshot.png)
 
+## Use case
+
+Due to the limited screen size of some mobile devices, it may be difficult to identify individual features on a map where there is a high density of information, or the scale is very small. This can be the case when a mobile device is used for navigation, and the user wishes to magnify a particular area to better identify a road intersection.
+
+## How to use the sample
+
+Tap and hold on the map to show a magnifier, then drag across the map to move the magnifier. You can also pan the map while holding the magnifier, by dragging the magnifier to the edge of the map.
+
 ## How it works
 
-MapView has a magnifierEnabled property that determines whether a magnifier should be shown on the map when the user performs a tap and hold gesture. Its default value is false. You can also use the magnifierMapPanningEnabled property to indicate whether the map should be panned automatically when the magnifer gets near the edge of the map's bounds.
+1. Create a `MapView`, and add a `Map` to it.
+2. Enable the magnifier using `mapView.magnifierEnabled: true`. This will set the magnifier to be shown on the map when the user performs a long press gesture. Note: The default value is `false`.
+3. `MapView.allowMagnifierToPanMap` is set to `true` by default to allow you to pan the map when the magnifier get's near the edge of the map.
 
-## Features
-- MapView
-- Map
-- Basemap
+## Relevant API
+
+* Map
+* MapView
+* MapView.allowMagnifierToPanMap
+* MapView.magnifierEnabled
+
+## Additional information
+
+This sample only works on a device with a touch screen. The magnifier will not appear via a mouse click.
+
+## Tags
+
+magnify, map, zoom
