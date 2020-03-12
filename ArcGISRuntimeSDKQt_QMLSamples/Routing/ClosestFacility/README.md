@@ -1,14 +1,18 @@
 # Closest facility
 
-This sample demonstrates how to solve a Closest Facility Task to find the closest route between a facility (hospital) and an incident (black cross).
+Find a route to the closest facility from a location.
 
 ![](screenshot.png)
 
-## How to use sample
-Click near any of the hospitals and a route will be displayed from that clicked location to the nearest facility.
+## Use case
+
+Quickly and accurately determining the most efficient route between a location and a facility is a frequently encountered task. For example, a paramedic may need to know which hospital in the vicinity offers the possibility of getting an ambulance patient critical medical care in the shortest amount of time. Solving for the closest hospital to the ambulance's location using an impedance of "travel time" would provide this information.
+
+## How to use the sample
+
+Click near any of the hospitals and a route will be displayed from that clicked location to the nearest hospital.
 
 ## How it works
-To display a `ClosestFacilityRoute` between an `Incident` and a `Facility`:
 
 1. Create a `ClosestFacilityTask` using an Url from an online service.
 2. Get a `ClosestFacilityParameters` from this task, using `createDefaultParameters`.
@@ -22,9 +26,18 @@ To display a `ClosestFacilityRoute` between an `Incident` and a `Facility`:
  - create a `Graphic` from the route geometry, `route.routeGeometry`.
  - add graphic to `GraphicsOverlay` which is attached to the mapview.
 
-## Features
-- `ClosestFacilityTask`
-- `ClosestFacilityParameters`
-- `ClosestFacilityResult`
-- `Facility`
-- `Incident`
+## Relevant API
+
+* ClosestFacilityParameters
+* ClosestFacilityResult
+* ClosestFacilityRoute
+* ClosestFacilityTask
+* Facility
+* Graphic
+* GraphicsOverlay
+* Incident
+* MapView
+
+## Tags
+
+incident, network analysis, route, search
