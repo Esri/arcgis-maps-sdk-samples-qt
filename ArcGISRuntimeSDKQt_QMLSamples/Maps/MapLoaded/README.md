@@ -2,7 +2,7 @@
 
 Determine the map's load status which can be: `NotLoaded`, `FailedToLoad`, `Loading`, `Loaded`, `Unknown`.
 
-SCREENSHOT
+![](screenshot.png)
 
 ## Use case
 
