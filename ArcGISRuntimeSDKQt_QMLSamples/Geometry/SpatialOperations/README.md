@@ -19,7 +19,7 @@ The sample provides an option to select a spatial operation. When an operation i
 2. Use `PolygonBuilder` to create two polygons.
 3. Add the overlapping polygons to the graphics overlay.
 4. Perform spatial relationships between the polygons by using the appropriate operation:
-    * `GeometryEngine.union(geometry1, geometry2)` - This method returns the two geometries united together as one geometry.
+    * `GeometryEngine.unionOf(geometry1, geometry2)` - This method returns the two geometries united together as one geometry.
     * `GeometryEngine.difference(geometry1, geometry2)` - This method returns any part of Geometry2 that does not intersect Geometry1.
     * `GeometryEngine.symmetricDifference(geometry1, geometry2)` - This method returns any part of Geometry1 or Geometry2 which do not intersect.
     * `GeometryEngine.intersection(geometry1, geometry2)` - This method returns the intersection of Geometry1 and Geometry2.
@@ -32,7 +32,7 @@ The sample provides an option to select a spatial operation. When an operation i
 * GeometryEngine.difference
 * GeometryEngine.intersection
 * GeometryEngine.symmetricDifference
-* GeometryEngine.union
+* GeometryEngine.unionPf
 * Graphic
 * GraphicsOverlay
 

@@ -1,6 +1,6 @@
 # Spatial relationships
 
-Determine spatial relationships between two geometries..
+Determine spatial relationships between two geometries.
 
 ![](screenshot.png)
 

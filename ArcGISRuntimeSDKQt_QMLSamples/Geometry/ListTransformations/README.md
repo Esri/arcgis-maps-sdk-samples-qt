@@ -28,7 +28,7 @@ If the selected transformation is not usable (has missing grid files) then an er
 * GeographicTransformation
 * GeographicTransformationStep
 * GeometryEngine
-* GeometryEngine.Project
+* GeometryEngine.project
 * TransformationCatalog
 
 ## Additional information
