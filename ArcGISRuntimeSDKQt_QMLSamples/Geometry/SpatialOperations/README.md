@@ -32,7 +32,7 @@ The sample provides an option to select a spatial operation. When an operation i
 * GeometryEngine.difference
 * GeometryEngine.intersection
 * GeometryEngine.symmetricDifference
-* GeometryEngine.unionPf
+* GeometryEngine.unionOf
 * Graphic
 * GraphicsOverlay
 
