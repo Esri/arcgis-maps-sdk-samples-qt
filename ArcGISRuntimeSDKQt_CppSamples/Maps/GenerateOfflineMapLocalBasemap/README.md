@@ -43,7 +43,7 @@ The author of a web map can support the use of basemaps which are already on a d
 
 ## Offline data
 
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
 
 Link | Local Location
 ---------|-------|
@@ -51,4 +51,4 @@ Link | Local Location
 
 ## Tags
 
-Offline
+basemap, download, local, offline, save, web map

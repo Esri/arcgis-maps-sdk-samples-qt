@@ -1,17 +1,25 @@
-# Display drawing status
+# Display draw status
 
-This sample demonstrates how to use the `DrawStatus` value of the `MapView` to notify the user that the `MapView` is drawing.
+Get the draw status of your map view or scene view to know when all layers in the map or scene have finished drawing.
 
 ![](screenshot.png)
 
+## Use case
+
+You may want to display a loading indicator while layers are loading.
+
 ## How it works
-When the `MapView`'s `drawStatusChanged` signal is emitted, a boolean is set to true if the DrawStatus is `InProgress` and false if `Completed`. In QML, The `visible` property of a popup `Rectangle` is bound to that boolean so that it will display if the `MapView` is drawing. 
 
-## Features
-- MapView
-- Map
-- FeatureLayer
-- ServiceFeatureTable
-- Viewpoint
-- Envelope
+1. Create a `MapView` and connect to the `MapQuickView::drawStatusChanged` signal.
+2. Use `drawStatus` on the to determine draw status.
 
+## Relevant API
+
+* Map
+* drawStatus
+* MapQuickView::drawStatusChanged
+* MapView
+
+## Tags
+
+draw, loading, map, render

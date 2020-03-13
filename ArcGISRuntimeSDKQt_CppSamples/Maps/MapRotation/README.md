@@ -1,35 +1,28 @@
 # Map rotation
 
-This sample demonstrates how to rotate a map view.
-The rotation is set using a slider control, with the rotation
-in degrees displayed next to the slider.
+Rotate a map.
 
 ![](screenshot.png)
 
+## Use case
+
+A user may wish to view the map in an orientation other than north-facing.
+
+## How to use the sample
+
+Use the slider to rotate the map.
+
 ## How it works
 
-The slider is initialized to zero degrees and limited to
-values from 0 to 360. When the slider
-is released, it emits the `pressedChanged` signal.
-The rotation is changed by calling the `setViewpoint`
-method on the map view. Rotation using two fingers on a
-touch screen device is disabled in this sample.
+1. Create a `Map` object.
+2. Set the map to a `MapView` object.
+3. Use `setViewpointRotation` to indicate the rotation angle.
 
-## Tips
+## Relevant API
 
-This sample code includes a handler for the `pressedChanged`
-signal rather than the `valueChanged` signal to avoid
-processing the many signals emitted as the slider moves.
-Changing the rotation value rapidly interrupts the animated
-rotation and may cause animation jitter. Instead, you could
-defeat the animation so the rotation tracks the slider value
-as it changes by using the method `setViewpointAnimated`
-with animation duration set to zero seconds.
+* Map
+* MapView
 
-## Features
+## Tags
 
-- MapView
-- Map
-- Basemap
-- Point
-- SpatialReference
+rotate, rotation, viewpoint
