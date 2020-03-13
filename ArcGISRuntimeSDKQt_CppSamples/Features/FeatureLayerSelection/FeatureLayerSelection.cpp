@@ -61,7 +61,6 @@ void FeatureLayerSelection::componentComplete()
 
   // Create a map using the streets basemap
   m_map = new Map(Basemap::lightGrayCanvas(this), this);
-//  m_map->setInitialViewpoint(Viewpoint(Point(-10800000, 4500000, SpatialReference(102100)), 3e7));
   m_map->setInitialViewpoint(Viewpoint(Envelope(-6603299.491810, 1679677.742046, 9002253.947487, 8691318.054732, SpatialReference::webMercator())));
 
   // Set map to map view
