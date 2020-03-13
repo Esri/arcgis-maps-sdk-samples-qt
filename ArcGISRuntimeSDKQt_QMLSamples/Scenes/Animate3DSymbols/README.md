@@ -30,7 +30,7 @@ Camera Controls (Top Right Corner):
 5. Add heading, pitch, and roll attributes to the graphic. Get the attributes from the graphic with `Graphic::attributes`.
 6. Create a `SimpleRenderer` object and set its expression properties.
 7. Add graphic and a renderer to the graphics overlay.
-8. Create a `OrbitGeoElementCameraController` which is set to target the graphic.
+8. Create an `OrbitGeoElementCameraController` which is set to target the graphic.
 9. Assign the camera controller to the `SceneView`.
 10. Update the graphic's location, heading, pitch, and roll.
 

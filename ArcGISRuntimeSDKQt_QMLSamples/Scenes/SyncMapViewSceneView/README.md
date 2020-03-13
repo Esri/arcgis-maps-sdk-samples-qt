@@ -25,7 +25,7 @@ Interact with the MapView or SceneView by zooming or panning. The other MapView 
 * MapView
 * viewpointChanged
 * SceneView
-* SetViewPoint
+* setViewpoint
 
 ## About the data
 

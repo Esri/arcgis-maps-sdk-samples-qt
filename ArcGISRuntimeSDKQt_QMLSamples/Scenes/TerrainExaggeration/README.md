@@ -23,9 +23,9 @@ Use the slider to update terrain exaggeration.
 ## Relevant API
 
 * Scene
-* Scene::baseSurface
+* Scene.baseSurface
 * Surface
-* Surface::elevationExaggeration
+* Surface.elevationExaggeration
 
 ## Tags
 

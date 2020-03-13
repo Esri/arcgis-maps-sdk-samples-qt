@@ -14,7 +14,7 @@ Run the sample and watch the integrated mesh layer load in place of the extruded
 
 ## How it works
 
-1. Create an `Scene`.
+1. Create a `Scene`.
 2. Create an `IntegratedMeshLayer` with the URL to an integrated mesh layer scene service.
 3. Add the layer to the scene's operational layers.
 
