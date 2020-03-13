@@ -10,7 +10,7 @@ A city taxi company may calculate service areas around their vehicle lots to ide
 
 ## How to use the sample
 
-Click 'Find Service Areas' to calculate and display the service area of each facility (hospital) on the map. The polygons displayed around each facility represent the facility's service area: the red area is within 1 minute travel time from the hospital by car, whilst orange is within 3 minutes by car. All service areas are semi-transparent to show where they overlap.
+Click 'Find service areas' to calculate and display the service area of each facility (hospital) on the map. The polygons displayed around each facility represent the facility's service area: the red area is within 1 minute travel time from the hospital by car, whilst orange is within 3 minutes by car. All service areas are semi-transparent to show where they overlap.
 
 ## How it works
 
