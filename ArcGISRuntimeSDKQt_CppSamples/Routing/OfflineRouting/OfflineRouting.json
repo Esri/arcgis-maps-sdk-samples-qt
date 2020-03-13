@@ -1,0 +1,8 @@
+{
+    "source" :  "OfflineRouting.qml",
+    "otherSourceFiles" :  [
+        "OfflineRouting.h",
+        "OfflineRouting.cpp"
+    ],
+    "name" : "Offline routing"
+}

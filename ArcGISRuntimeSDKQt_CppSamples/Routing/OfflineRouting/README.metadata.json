@@ -1,0 +1,42 @@
+{
+    "category": "Routing",
+    "description": "This sample demonstrates how to solve a route on-the-fly using offline data.",
+    "ignore": false,
+    "images": [
+        "sample.gif"
+    ],
+    "keywords": [
+        "offline",
+        "disconnected",
+        "network analysis",
+        "routing",
+        "fastest",
+        "shortest",
+        "routing",
+        "locator",
+        "navigation",
+        "connectivity",
+        "turn-by-turn"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "ArcGISTiledLayer",
+        "Graphic",
+        "GraphicsOverlay",
+        "MapView",
+        "RouteTask",
+        "RouteParameters",
+        "RouteResult",
+        "SimpleLineSymbol",
+        "Stop",
+        "TaskWatcher",
+        "TextSymbol",
+        "TileCache"
+    ],
+    "snippets": [
+        "OfflineRouting.cpp",
+        "OfflineRouting.h",
+        "OfflineRouting.qml"
+    ],
+    "title": "Offline routing"
+}
