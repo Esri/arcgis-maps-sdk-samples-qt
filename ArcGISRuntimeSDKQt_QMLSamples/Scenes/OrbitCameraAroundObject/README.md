@@ -33,26 +33,26 @@ Use the "Cockpit view" button to offset and fix the camera into the cockpit of t
 2. Load a plane graphic and set the `OrbitGeoElementCameraController` to be the targetGeoElement
 3. Assign this controller to the `cameraController` sceneview property to set the camera to the scene view  
 4. Set the heading, pitch and distance camera properties :
- * `OrbitGeoElementCameraController::cameraHeadingOffset`
- * `OrbitGeoElementCameraController::cameraPitchOffset`
- * `OrbitGeoElementCameraController::cameraDistance`
+ * `OrbitGeoElementCameraController.cameraHeadingOffset`
+ * `OrbitGeoElementCameraController.cameraPitchOffset`
+ * `OrbitGeoElementCameraController.cameraDistance`
 5. Set the minimum and maximum angle of heading and pitch, and minimum and maximum distance for the camera with properties:
- * `OrbitGeoElementCameraController::minCameraHeadingOffset` or `maxCameraHeadingOffset`
- * `OrbitGeoElementCameraController::minCameraHeadingOffset` or `maxCameraPitchOffset`
- * `OrbitGeoElementCameraController::minCameraHeadingOffset` or `maxCameraDistance`
+ * `OrbitGeoElementCameraController.minCameraHeadingOffset` or `maxCameraHeadingOffset`
+ * `OrbitGeoElementCameraController.minCameraHeadingOffset` or `maxCameraPitchOffset`
+ * `OrbitGeoElementCameraController.minCameraHeadingOffset` or `maxCameraDistance`
 6. Set the distance from which the camera is offset from the plane with method:
- * `OrbitGeoElementCameraController::setTargetOffsets(x, y, z, duration)`
+ * `OrbitGeoElementCameraController.setTargetOffsets(x, y, z, duration)`
  * or properties :
- * `OrbitGeoElementCameraController::targetOffsetX`
- * `OrbitGeoElementCameraController::targetOffsetY`
- * `OrbitGeoElementCameraController::targetOffsetZ`
+ * `OrbitGeoElementCameraController.targetOffsetX`
+ * `OrbitGeoElementCameraController.targetOffsetY`
+ * `OrbitGeoElementCameraController.targetOffsetZ`
 7. Set the vertical screen factor to determine where the plane appears in the scene:
- * `OrbitGeoElementCameraController::targetVerticalScreenFactor`
+ * `OrbitGeoElementCameraController.targetVerticalScreenFactor`
 8. Animate the camera to the cockpit using `orbitCameraController.setTargetOffsets(x, y, z, duration)`  
 9. Set if the camera distance will adjust when zooming or panning using mouse or keyboard (default is true):
- * `OrbitGeoElementCameraController::cameraDistanceInteractive`
+ * `OrbitGeoElementCameraController.cameraDistanceInteractive`
 10. Set if the camera will follow the pitch of the plane (default is true):
- * `OrbitGeoElementCameraController::autoPitchEnabled`
+ * `OrbitGeoElementCameraController.autoPitchEnabled`
 
 ## Relevant API
 
