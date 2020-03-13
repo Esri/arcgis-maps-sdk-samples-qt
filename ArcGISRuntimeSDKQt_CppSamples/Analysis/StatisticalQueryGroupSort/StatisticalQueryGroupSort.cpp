@@ -52,15 +52,15 @@ void StatisticalQueryGroupSort::componentComplete()
   QQuickItem::componentComplete();
 
   // Create the Service Feature Table
-  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/Counties_Obesity_Inactivity_Diabetes_2013/FeatureServer/0"), this);
   connectSignals();
   m_featureTable->load();
 
   // Setup default values for the Options page
-  addStatisticDefinition("POP2007", "Sum");
-  addStatisticDefinition("POP2007", "Average");
-  addStatisticDefinition("AGE_5_17", "Minimum");
-  addOrderBy("SUB_REGION", "Ascending");
+  addStatisticDefinition("Diabetes_Percent", "Average");
+  addStatisticDefinition("Diabetes_Percent", "Count");
+  addStatisticDefinition("Diabetes_Percent", "Standard Deviation");
+  addOrderBy("State", "Ascending");
   m_statisticTypes << "Average" << "Count" << "Maximum" << "Minimum"
                    << "Standard Deviation" << "Sum" << "Variance";
   emit statisticTypesChanged();
@@ -158,6 +158,9 @@ void StatisticalQueryGroupSort::queryStatistics()
     orderByList.append(orderBy);
   }
   params.setOrderByFields(orderByList);
+
+  // ignore counties with missing data
+  params.setWhereClause("\"State\" IS NOT NULL");
 
   // execute the query
   m_featureTable->queryStatistics(params);
