@@ -20,12 +20,12 @@ Interact with the MapView or SceneView by zooming or panning. The other MapView 
 
 ## Relevant API
 
-* GeoView
 * currentViewpointCenter
+* GeoView
 * MapView
-* viewpointChanged
 * SceneView
 * setViewpoint
+* viewpointChanged
 
 ## About the data
 
