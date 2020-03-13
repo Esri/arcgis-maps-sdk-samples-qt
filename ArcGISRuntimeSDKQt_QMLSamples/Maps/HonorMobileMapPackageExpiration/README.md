@@ -26,7 +26,8 @@ Load the app. The author of the MMPK used in this sample chose to set the MMPK's
 * MobileMapPackage
 
 ## Offline Data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples#use-offline-data-in-the-samples).
 
 Link | Local Location
 ---------|-------|
