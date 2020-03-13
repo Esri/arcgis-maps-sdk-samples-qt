@@ -5,18 +5,23 @@ Display annotation from a feature service URL.
 ![](screenshot.png)
 
 ## Use case
+
 Annotation is useful for displaying text that you don't want to move or resize when the map is panned or zoomed (unlike labels which will move and resize). You can use annotation to place text at a fixed size, position, orientation, font, and so on. You may choose to do this for cartographic reasons or because the exact placement of the text is important.
 
 ## How to use the sample
+
 Pan and zoom to see names of waters and burns in a small region of Scotland.
 
 ## How it works
-1. Create a `ServiceFeatureTable` with a URL.
-2. Create an `AnnotationLayer` from the feature table and add it to the map.
+
+1. Create a `Map` with a light gray canvas and a viewpoint near the data.
+2. Create a `ServiceFeatureTable` with a URL.
+3. Create an `AnnotationLayer` from the feature table and add it to the map.
 
 ## Relevant API
- - AnnotationLayer
- - ServiceFeatureTable
+
+* AnnotationLayer
+* FeatureLayer
 
 ## About the data
 

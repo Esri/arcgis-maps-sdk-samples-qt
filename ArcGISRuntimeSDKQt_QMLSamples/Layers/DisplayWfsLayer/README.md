@@ -31,4 +31,4 @@ This service shows building footprints for downtown Seattle. For additional info
 
 ## Tags
 
-OGC, WFS, feature, web, service, layers, browse, catalog, interaction cache
+browse, catalog, feature, interaction cache, layers, OGC, service, web, WFS
