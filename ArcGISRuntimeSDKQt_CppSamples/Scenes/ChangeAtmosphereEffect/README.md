@@ -12,8 +12,8 @@ Select one of the three available atmosphere effects. The sky will change to dis
 
 To change the atmosphere effect:
 
-1. Create a ``Scene`` and display it in a ``SceneQuickView``.
-2. Change the atmosphere effect with ``SceneQuickView::setAtmosphereEffect``.
+1. Create a `Scene` and display it in a `SceneQuickView`.
+2. Change the atmosphere effect with `SceneQuickView::setAtmosphereEffect`.
 
 ## Relevant API
 
