@@ -32,15 +32,15 @@ Rectangle {
         id: statisticsModel
 
         ListElement {
-            field: "POP2007"
-            statistic: "Sum"
-        }
-        ListElement {
-            field: "POP2007"
+            field: "Diabetes_Percent"
             statistic: "Average"
         }
         ListElement {
-            field: "AGE_5_17"
+            field: "Diabetes_Percent"
+            statistic: "Count"
+        }
+        ListElement {
+            field: "Diabetes_Percent"
             statistic: "Minimum"
         }
     }
@@ -50,7 +50,7 @@ Rectangle {
         id: orderByModel
 
         ListElement {
-            field: "SUB_REGION"
+            field: "State"
             order: "Ascending"
         }
     }
@@ -283,7 +283,7 @@ Rectangle {
                                 CheckBox {
                                     anchors.verticalCenter: parent.verticalCenter
                                     text: modelData
-                                    checked: text === "SUB_REGION"
+                                    checked: text === "State"
                                     onCheckedChanged: {
                                         if (checked) {
                                             groupingFields.push(text);
