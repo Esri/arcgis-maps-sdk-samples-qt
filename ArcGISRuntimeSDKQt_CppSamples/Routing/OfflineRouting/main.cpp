@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Analysis/OfflineRouting/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Routing/OfflineRouting/main.qml"));
 
   return app.exec();
 }
