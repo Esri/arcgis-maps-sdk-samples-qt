@@ -51,7 +51,6 @@ void ShowLabelsOnLayers::componentComplete()
   m_map = new Map(Basemap::lightGrayCanvas(this), this);
 
   // Create a feature layer
-//  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/1"), this);
   ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_115th_Congressional_Districts/FeatureServer/0"), this);
   FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
   connect(featureLayer, &FeatureLayer::doneLoading, [this, featureLayer](Error e)
@@ -64,9 +63,12 @@ void ShowLabelsOnLayers::componentComplete()
   m_map->operationalLayers()->append(featureLayer);
 
   // Apply labels to the feature layer
-  const QString labelJson = createLabelJson();
-  LabelDefinition* labelDef = LabelDefinition::fromJson(labelJson, this);
+  const QString republicanJson = createRepublicanJson();
+  const QString democratJson = createDemocratJson();
+  LabelDefinition* labelDef = LabelDefinition::fromJson(republicanJson, this);
+  LabelDefinition* democratLabelDef = LabelDefinition::fromJson(democratJson, this);
   featureLayer->labelDefinitions()->append(labelDef);
+  featureLayer->labelDefinitions()->append(democratLabelDef);
   featureLayer->setLabelsEnabled(true);
 
   // Set map to map view
@@ -75,7 +77,7 @@ void ShowLabelsOnLayers::componentComplete()
 }
 
 // Creates the label JSON for use in the LabelDefinition
-QString ShowLabelsOnLayers::createLabelJson() const
+QString ShowLabelsOnLayers::createRepublicanJson() const
 {
   // Help regarding the JSON syntax for defining the LabelDefinition.FromJson syntax can be found here:
   // https://developers.arcgis.com/web-map-specification/objects/labelingInfo/
@@ -86,8 +88,70 @@ QString ShowLabelsOnLayers::createLabelJson() const
   // (3) The 'where' clause restricts the labels to be displayed that has valid (non-empty) data. Empty data
   //     for this service has a single blank space in the 'rte_num1' field.
   // (4) The 'symbol' for the labeled text will be blue with a yellow halo.
-  QString republicanJson = QString(QStringLiteral("{\"labelExpressionInfo\":{\"expression\":$feature.NAME + \" (\" + left($feature.PARTY,1) + \")\\nDistrict \" + $feature.CDFIPS\"},\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":\"PARTY = 'Republican'\",\"symbol\": {\"angle\":0,\"backgroundColor\":[0,0,0,0],\"borderLineColor\":[0,0,0,0],\"borderLineSize\":0,\"color\":[255,0,0,255],\"font\": {\"decoration\":\"none\",\"size\":10,\"style\":\"normal\",\"weight\":\"normal\"},\"haloColor\":[255,255,255,255],\"haloSize\":1.5,\"horizontalAlignment\":\"center\",\"kerning\":false,\"type\":\"esriTS\",\"verticalAlignment\":\"middle\",\"xoffset\":0,\"yoffset\":0}}"));
-  QString democratJson = QString(QStringLiteral("{\"labelExpressionInfo\":{\"expression\":\"'I - ' + $feature.rte_num1\"},\"labelPlacement\":\"esriServerLinePlacementAboveAlong\",\"where\":\"rte_num1 <> ' '\",\"symbol\": {\"angle\":0,\"backgroundColor\":[0,0,0,0],\"borderLineColor\":[0,0,0,0],\"borderLineSize\":0,\"color\":[0,0,255,255],\"font\": {\"decoration\":\"none\",\"size\":10,\"style\":\"normal\",\"weight\":\"normal\"},\"haloColor\":[255,255,255,255],\"haloSize\":1.5,\"horizontalAlignment\":\"center\",\"kerning\":false,\"type\":\"esriTS\",\"verticalAlignment\":\"middle\",\"xoffset\":0,\"yoffset\":0}}"));
+
+  QString republicanJson = R"rawstring(
+                 {
+                    "labelExpressionInfo": {
+                      "expression": "$feature.NAME + ' (' + left($feature.PARTY,1) + ')\\nDistrict ' + $feature.CDFIPS" // arcade expression
+                    },
+                    "labelPlacement": "esriServerPolygonPlacementAlwaysHorizontal",
+                    "where": "PARTY = 'Republican'",
+                    "symbol": {
+                      "angle": 0,
+                      "backgroundColor": [0,0,0,0],
+                      "borderLineColor": [0,0,0,0],
+                      "borderLineSize": 0,
+                      "color": [255,0,0,255],
+                      "font": {
+                        "decoration": "none",
+                        "size": 8,
+                        "style": "normal",
+                        "weight": "normal"
+                      },
+                    "haloColor": [255,255,255,255],
+                    "haloSize": 1.5,
+                    "horizontalAlignment": "center",
+                    "kerning": false,
+                    "type": "esriTS",
+                    "verticalAlignment": "middle",
+                    "xoffset": 0,
+                    "yoffset": 0
+                  }
+                })rawstring";
   return republicanJson;
-//  return QString(QStringLiteral("{\"labelExpressionInfo\":{\"expression\":\"'I - ' + $feature.rte_num1\"},\"labelPlacement\":\"esriServerLinePlacementAboveAlong\",\"where\":\"rte_num1 <> ' '\",\"symbol\": {\"angle\":0,\"backgroundColor\":[0,0,0,0],\"borderLineColor\":[0,0,0,0],\"borderLineSize\":0,\"color\":[0,0,255,255],\"font\": {\"decoration\":\"none\",\"size\":15,\"style\":\"normal\",\"weight\":\"normal\"},\"haloColor\":[255,255,0,255],\"haloSize\":1.5,\"horizontalAlignment\":\"center\",\"kerning\":false,\"type\":\"esriTS\",\"verticalAlignment\":\"middle\",\"xoffset\":0,\"yoffset\":0}}"));
+}
+
+QString ShowLabelsOnLayers::createDemocratJson() const
+{
+  QString democratJson = R"rawstring(
+                           {
+                    "labelExpressionInfo": {
+                      "expression": "$feature.NAME + ' (' + left($feature.PARTY,1) + ')\\nDistrict ' + $feature.CDFIPS" // arcade expression
+                    },
+                    "labelPlacement": "esriServerPolygonPlacementAlwaysHorizontal",
+                    "where": "PARTY = 'Democrat'",
+                    "symbol": {
+                      "angle": 0,
+                      "backgroundColor": [0,0,0,0],
+                      "borderLineColor": [0,0,0,0],
+                      "borderLineSize": 0,
+                      "color": [0,0,255,255],
+                      "font": {
+                        "decoration": "none",
+                        "size": 8,
+                        "style": "normal",
+                        "weight": "normal"
+                      },
+                    "haloColor": [255,255,255,255],
+                    "haloSize": 1.5,
+                    "horizontalAlignment": "center",
+                    "kerning": false,
+                    "type": "esriTS",
+                    "verticalAlignment": "middle",
+                    "xoffset": 0,
+                    "yoffset": 0
+                  }
+                })rawstring";
+
+return democratJson;
 }

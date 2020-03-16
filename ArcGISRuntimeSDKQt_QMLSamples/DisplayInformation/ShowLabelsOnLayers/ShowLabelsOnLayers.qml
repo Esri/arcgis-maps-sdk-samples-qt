@@ -33,7 +33,7 @@ Rectangle {
             FeatureLayer {
                 // Add a feature service
                 ServiceFeatureTable {
-                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/1"
+                    url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_115th_Congressional_Districts/FeatureServer/0"
                 }
 
                 // Enable Labels
@@ -51,12 +51,45 @@ Rectangle {
                 //     for this service has a single blank space in the 'rte_num1' field.
                 // (4) The 'symbol' for the labeled text will be blue with a yellow halo.
                 LabelDefinition {
+                    id: republicanJson
                     json: {
                         "labelExpressionInfo":{
-                            "expression":"'I - ' + $feature.rte_num1"
+                            "expression":"$feature.NAME + ' (' + left($feature.PARTY,1) + ') \\nDistrict ' + $feature.CDFIPS"
                         },
-                        "labelPlacement":"esriServerLinePlacementAboveAlong",
-                        "where":"rte_num1 <> ' '",
+                        "labelPlacement":"esriServerPolygonPlacementAlwaysHorizontal",
+                        "where":"PARTY = 'Republican'",
+                        "symbol": {
+                            "angle":0,
+                            "backgroundColor":[0,0,0,0],
+                            "borderLineColor":[0,0,0,0],
+                            "borderLineSize":0,
+                            "color":[255,0,0,255],
+                            "font": {
+                                "decoration":"none",
+                                "size":8,
+                                "style":"normal",
+                                "weight":"normal"
+                            },
+                            "haloColor":[255,255,255,255],
+                            "haloSize":1.5,
+                            "horizontalAlignment":"center",
+                            "kerning":false,
+                            "type":"esriTS",
+                            "verticalAlignment":"middle",
+                            "xoffset":0,
+                            "yoffset":0
+                        }
+                    }
+                }
+
+                LabelDefinition {
+                    id: democratJson
+                    json: {
+                        "labelExpressionInfo":{
+                            "expression":"$feature.NAME + ' (' + left($feature.PARTY,1) + ') \\nDistrict ' + $feature.CDFIPS"
+                        },
+                        "labelPlacement":"esriServerPolygonPlacementAlwaysHorizontal",
+                        "where":"PARTY = 'Democrat'",
                         "symbol": {
                             "angle":0,
                             "backgroundColor":[0,0,0,0],
@@ -65,11 +98,11 @@ Rectangle {
                             "color":[0,0,255,255],
                             "font": {
                                 "decoration":"none",
-                                "size":15,
+                                "size":8,
                                 "style":"normal",
                                 "weight":"normal"
                             },
-                            "haloColor":[255,255,0,255],
+                            "haloColor":[255,255,255,255],
                             "haloSize":1.5,
                             "horizontalAlignment":"center",
                             "kerning":false,

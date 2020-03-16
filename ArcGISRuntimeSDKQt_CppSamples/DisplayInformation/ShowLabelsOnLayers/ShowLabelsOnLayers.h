@@ -44,7 +44,8 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
 private:
-  QString createLabelJson() const;
+  QString createRepublicanJson() const;
+  QString createDemocratJson() const;
 };
 
 #endif // SHOWLABELSONLAYERS_H
