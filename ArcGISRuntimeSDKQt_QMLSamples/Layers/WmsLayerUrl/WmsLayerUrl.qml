@@ -28,12 +28,25 @@ Rectangle {
         anchors.fill: parent
 
         Map {
-            BasemapImagery {}                        
+            BasemapLightGrayCanvas {}
 
             // Add a WMS Layer by specifying the URL and layer name
             WmsLayer {
-                url: "https://certmapper.cr.usgs.gov/arcgis/services/geology/africa/MapServer/WMSServer?request=GetCapabilities&service=WMS"
-                layerNames: ["0"]
+                url: "https://nowcoast.noaa.gov/arcgis/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/WMSServer?request=GetCapabilities&service=WMS"
+                layerNames: ["1"]
+            }
+
+            // start zoomed in over the US
+            ViewpointExtent {
+                Envelope {
+                    xMin: -19195297.778679
+                    yMin: 512343.939994
+                    xMax: -3620418.579987
+                    yMax: 8658913.035426
+                    SpatialReference {
+                        wkid: 3857
+                    }
+                }
             }
         }
     }
