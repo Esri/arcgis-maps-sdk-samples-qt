@@ -1,6 +1,9 @@
 # Animate 3D symbols
+
 Demonstrates how to animate a graphic's position and rotation and follow it using a `OrbitGeoElementCameraController`.
 Also shows how to combine a `SceneView` and `MapView` in an MVC application with property binding.
+
+![](screenshot.png)
 
 ## How to use the sample
 
@@ -18,20 +21,18 @@ Camera Controls (Top Right Corner):
  2D Map Controls (Bottom Left Corner):
  - Plus and Minus -- controls distance of 2D view from ground level
 
-![](screenshot.png)
-
 ## How it works
 
 1. Create a `GraphicsOverlay` and add it to the `SceneView`.
-1. Create a `ModelSceneSymbol` object.
-1. Create a `Graphic` object and set its geometry to a `Point`.
-1. Set the `ModelSceneSymbol` object to the graphic.
-1. Add heading, pitch, and roll attributes to the graphic. Get the attributes from the graphic with `Graphic::attributes`.
-1. Create a `SimpleRenderer` object and set its expression properties.
-1. Add graphic and a renderer to the graphics overlay.
-1. Create a `OrbitGeoElementCameraController` which is set to target the graphic.
-1. Assign the camera controller to the `SceneView`.
-1. Update the graphic's location, heading, pitch, and roll.
+2. Create a `ModelSceneSymbol` object.
+3. Create a `Graphic` object and set its geometry to a `Point`.
+4. Set the `ModelSceneSymbol` object to the graphic.
+5. Add heading, pitch, and roll attributes to the graphic. Get the attributes from the graphic with `Graphic::attributes`.
+6. Create a `SimpleRenderer` object and set its expression properties.
+7. Add graphic and a renderer to the graphics overlay.
+8. Create a `OrbitGeoElementCameraController` which is set to target the graphic.
+9. Assign the camera controller to the `SceneView`.
+10. Update the graphic's location, heading, pitch, and roll.
 
 ## Relevant API
 

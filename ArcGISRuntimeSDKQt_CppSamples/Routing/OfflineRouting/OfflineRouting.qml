@@ -1,4 +1,4 @@
-// [WriteFile Name=OfflineRouting, Category=Analysis]
+// [WriteFile Name=OfflineRouting, Category=Routing]
 // [Legal]
 // Copyright 2020 Esri.
 

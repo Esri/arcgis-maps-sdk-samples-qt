@@ -244,7 +244,7 @@ Rectangle {
                                 CheckBox {
                                     anchors.verticalCenter: parent.verticalCenter
                                     text: modelData
-                                    checked: text === "SUB_REGION"
+                                    checked: text === "State"
 
                                     onCheckedChanged: {
                                         if (checked)

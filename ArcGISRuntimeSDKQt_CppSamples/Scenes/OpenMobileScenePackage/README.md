@@ -37,6 +37,7 @@ Link | Local Location
 |[Philadelphia MSPK](https://www.arcgis.com/home/item.html?id=7dd2f97bb007466ea939160d0de96a9d)| `<userhome>`/ArcGIS/Runtime/Data/mspk/philadelphia.mspk |
 
 ## Additional information
+
 Before loading the MobileScenePackage, it is important to first check if direct read is supported. The MobileScenePackage could contain certain data types that would require the data to be unpacked. For example, Scenes containing raster data will need to be unpacked.
 
 ## Tags

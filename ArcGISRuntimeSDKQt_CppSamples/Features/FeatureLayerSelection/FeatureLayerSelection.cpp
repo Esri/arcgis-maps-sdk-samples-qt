@@ -60,14 +60,14 @@ void FeatureLayerSelection::componentComplete()
   m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
 
   // Create a map using the streets basemap
-  m_map = new Map(Basemap::streets(this), this);
-  m_map->setInitialViewpoint(Viewpoint(Point(-10800000, 4500000, SpatialReference(102100)), 3e7));
+  m_map = new Map(Basemap::lightGrayCanvas(this), this);
+  m_map->setInitialViewpoint(Viewpoint(Envelope(-6603299.491810, 1679677.742046, 9002253.947487, 8691318.054732, SpatialReference::webMercator())));
 
   // Set map to map view
   m_mapView->setMap(m_map);
 
   // create the feature table
-  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
+  m_featureTable = new ServiceFeatureTable(QUrl("https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/GDP_per_capita_1960_2016/FeatureServer/0"), this);
   // create the feature layer using the feature table
   m_featureLayer = new FeatureLayer(m_featureTable, this);
 

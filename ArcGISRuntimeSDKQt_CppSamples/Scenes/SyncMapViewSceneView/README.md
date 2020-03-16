@@ -15,8 +15,8 @@ Interact with the MapView or SceneView by zooming or panning. The other MapView 
 ## How it works
 
 1. Wire up both `SceneQuickView::viewpointChanged` and `MapQuickView::viewpointChanged` signals for both geo views.
-2. In each event handler, get the current viewpoint from the geo view that is being interacted with and then set the viewpoint of the other geo view to the same value.
-3. Note: The reason for setting the viewpoints in multiple event handlers is to account for different types of interactions that can occur (ie. single click pan -vs- continuous pan, single click zoom in -vs- mouse scroll wheel zoom, etc.).
+2. In each slot, get the current viewpoint from the geo view that is being interacted with and then set the viewpoint of the other geo view to the same value.
+3. Note: The reason for setting the viewpoints in multiple slots is to account for different types of interactions that can occur (ie. single click pan -vs- continuous pan, single click zoom in -vs- mouse scroll wheel zoom, etc.).
 
 ## Relevant API
 

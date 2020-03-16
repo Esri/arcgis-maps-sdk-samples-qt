@@ -39,7 +39,7 @@ Rectangle {
 
         Map {
             id: map
-            BasemapStreets {}
+            BasemapLightGrayCanvas {}
 
             FeatureLayer {
                 id: featureLayer
@@ -47,7 +47,7 @@ Rectangle {
                 // feature table
                 ServiceFeatureTable {
                     id: featureTable
-                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"
+                    url: "https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/GDP_per_capita_1960_2016/FeatureServer/0"
                 }
             }
 
@@ -59,16 +59,17 @@ Rectangle {
         }
 
         // initial viewpoint
-        ViewpointCenter {
+        ViewpointExtent {
             id: viewPoint
-            Point {
-                x: -10800000
-                y: 4500000
-                spatialReference: SpatialReference {
-                    wkid: 102100
+            Envelope {
+                xMin: -6603299.491810
+                yMin: 1679677.742046
+                xMax: 9002253.947487
+                yMax: 8691318.054732
+                SpatialReference {
+                    wkid: 3857
                 }
             }
-            targetScale: 3e7
         }
 
         //! [identify feature layer qml api snippet]
