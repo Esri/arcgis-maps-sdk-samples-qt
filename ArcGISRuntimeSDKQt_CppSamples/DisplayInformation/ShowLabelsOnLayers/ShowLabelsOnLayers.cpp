@@ -82,12 +82,13 @@ QString ShowLabelsOnLayers::createRepublicanJson() const
   // Help regarding the JSON syntax for defining the LabelDefinition.FromJson syntax can be found here:
   // https://developers.arcgis.com/web-map-specification/objects/labelingInfo/
   // This particular JSON string will have the following characteristics:
-  // (1) The 'labelExpressionInfo' defines that the label text displayed comes from the field 'rte_num1' in the
-  //     feature service and will be prefaced with an "I -". Example: "I - 10", "I - 15", "I - 95", etc.
-  // (2) The 'labelPlacement' will be placed above and along the highway polyline segment.
-  // (3) The 'where' clause restricts the labels to be displayed that has valid (non-empty) data. Empty data
-  //     for this service has a single blank space in the 'rte_num1' field.
-  // (4) The 'symbol' for the labeled text will be blue with a yellow halo.
+  // (1) The 'labelExpressionInfo' defines that the label text displayed comes from the fields 'NAME',
+  //     'PARTY' (R or D), and 'CDFIPS' in the feature service in the format
+  //     "Firstname Lastname (R)
+  //     District #".
+  // (2) The 'labelPlacement' will be placed horizontally in the polygon.
+  // (3) The 'where' clause restricts the labels to data from Republican districts.
+  // (4) The 'symbol' for the labeled text will be red with a white halo.
 
   QString republicanJson = R"rawstring(
                  {
@@ -123,6 +124,15 @@ QString ShowLabelsOnLayers::createRepublicanJson() const
 
 QString ShowLabelsOnLayers::createDemocratJson() const
 {
+  // This particular JSON string will have the following characteristics:
+  // (1) The 'labelExpressionInfo' defines that the label text displayed comes from the fields 'NAME',
+  //     'PARTY', and 'CDFIPS' in the feature service in the format
+  //     "Firstname Lastname (D)
+  //     District #".
+  // (2) The 'labelPlacement' will be placed horizontally in the polygon.
+  // (3) The 'where' clause restricts the labels to data from Democrat districts.
+  // (4) The 'symbol' for the labeled text will be blue with a white halo.
+
   QString democratJson = R"rawstring(
                            {
                     "labelExpressionInfo": {
@@ -153,5 +163,5 @@ QString ShowLabelsOnLayers::createDemocratJson() const
                   }
                 })rawstring";
 
-return democratJson;
+  return democratJson;
 }
