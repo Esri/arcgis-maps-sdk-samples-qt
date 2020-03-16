@@ -65,9 +65,9 @@ void ShowLabelsOnLayers::componentComplete()
   // Apply labels to the feature layer
   const QString republicanJson = createRepublicanJson();
   const QString democratJson = createDemocratJson();
-  LabelDefinition* labelDef = LabelDefinition::fromJson(republicanJson, this);
+  LabelDefinition* republicanLabelDef = LabelDefinition::fromJson(republicanJson, this);
   LabelDefinition* democratLabelDef = LabelDefinition::fromJson(democratJson, this);
-  featureLayer->labelDefinitions()->append(labelDef);
+  featureLayer->labelDefinitions()->append(republicanLabelDef);
   featureLayer->labelDefinitions()->append(democratLabelDef);
   featureLayer->setLabelsEnabled(true);
 
