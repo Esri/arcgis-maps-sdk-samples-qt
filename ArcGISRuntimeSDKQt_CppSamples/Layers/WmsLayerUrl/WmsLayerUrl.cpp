@@ -49,7 +49,7 @@ void WmsLayerUrl::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
 
-  // Create a map using the imagery basemap
+  // Create a map using the light gray canvas basemap
   m_map = new Map(Basemap::lightGrayCanvas(this), this);
 
   // Add a WMS Layer by specifying the URL and layer name
