@@ -286,7 +286,6 @@ Rectangle {
 
                 CheckBox {
                     text: qsTr("Include barriers")
-                    font.pixelSize: 15
                     Layout.fillWidth: true
                     checkState: Qt.Checked
                     enabled: !busyIndicator.visible
@@ -295,7 +294,6 @@ Rectangle {
 
                 CheckBox {
                     text: qsTr("Include containers")
-                    font.pixelSize: 15
                     Layout.fillWidth: true
                     checkState: Qt.Checked
                     enabled: !busyIndicator.visible
@@ -333,7 +331,6 @@ Rectangle {
 
                 Text {
                     text: qsTr("New Barrier Condition:")
-                    font.pixelSize: 15
                     Layout.fillWidth: true
                 }
 
@@ -361,7 +358,6 @@ Rectangle {
 
                     TextField {
                         id: inputTextField
-                        font.pixelSize: 11
                         Layout.minimumHeight: valueSelectionComboBox.height
                         Layout.fillWidth: true
                         visible: true
@@ -387,6 +383,7 @@ Rectangle {
 
                 ScrollView {
                     Layout.fillWidth: true
+                    Layout.maximumWidth: rootRectangle.width
                     Layout.minimumHeight: 50
                     Layout.maximumHeight: .15 * rootRectangle.height
                     clip: true
@@ -394,7 +391,6 @@ Rectangle {
                         anchors.fill: parent
                         Text {
                             id: expressionBuilder
-                            font.pixelSize: 11
                         }
                     }
                 }
