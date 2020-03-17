@@ -3,6 +3,7 @@
         <file alias="sample.json">OfflineRouting.json</file>
         <file>OfflineRouting.qml</file>
         <file>README.md</file>
+        <file>screenshot.png</file>
         <file>sample.gif</file>
     </qresource>
 </RCC>
