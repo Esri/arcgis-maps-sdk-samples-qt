@@ -27,8 +27,6 @@
 #include "Map.h"
 #include "MapQuickView.h"
 
-#include <QScopedPointer>
-
 using namespace Esri::ArcGISRuntime;
 
 namespace  {
@@ -74,7 +72,7 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
 
   connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult *rawResult)
   {
-    QScopedPointer<IdentifyLayerResult> result(rawResult);
+    auto result = std::unique_ptr<IdentifyLayerResult>(rawResult);
 
     // find the first geoElement that is a KML placemark
     for (GeoElement* geoElement : result->geoElements())
