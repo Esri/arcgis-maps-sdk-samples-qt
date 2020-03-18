@@ -18,8 +18,9 @@ You'll see a feed from the camera when you open the sample. Tap on any flat, hor
     * Note: this sample uses content in the WGS 84 geographic tiling scheme, rather than the web mercator tiling scheme. Once a scene has been displayed, the scene view cannot display another scene with a non-matching tiling scheme. To avoid that, the sample starts by showing a blank scene with an invisible base surface. Touch events will not be raised for the scene view unless a scene is displayed.
 2. Wait for the user to tap the view, then use `ArcGISArView.setInitialTransformation(mouse.x, mouse.y)` to set the initial transformation, which allows you to place the scene. This method uses ARKit's built-in plane detection.
 3. To enable looking at the scene from below, set `scene.baseSurface.navigationConstraint` to `Enums.NavigationConstraintNone`.
-4. Set the origin camera to the point in the scene where it should be anchored to the real-world surface you tapped. Typically that is the point at the center of the scene, with the altitude of the lowest point in the scene.
-5. Set `ArcGISArView.translationFactor` such that the user can view the entire scene by moving the device around it. The translation factor defines how far the virtual camera moves when the physical camera moves.
+4. Set the clipping distance property of the AR view. This will clip the scene to the area you want to show.
+5. Set the origin camera to the point in the scene where it should be anchored to the real-world surface you tapped. Typically that is the point at the center of the scene, with the altitude of the lowest point in the scene.
+6. Set `ArcGISArView.translationFactor` such that the user can view the entire scene by moving the device around it. The translation factor defines how far the virtual camera moves when the physical camera moves.
     * A good formula for determining translation factor to use in a tabletop map experience is **translationFactor = sceneWidth / tableTopWidth**. The scene width is the width/length of the scene content you wish to display in meters. The tabletop width is the length of the area on the physical surface that you want the scene content to fill. For simplicity, the sample assumes a scene width of 800 meters and physical size of 1 meter.
 
 ## Relevant API
