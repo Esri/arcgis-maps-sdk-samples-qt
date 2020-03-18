@@ -35,16 +35,6 @@ Item {
             accessoryButtonHidden: true
             leaderPosition: leaderPositionEnum.Top
             calloutContent: customComponent
-
-//            calloutContent: Text {
-//                id: calloutText
-//                anchors.fill: parent
-//                height: 200
-//                text: model.calloutText
-//                textFormat: Text.StyledText
-//                wrapMode: Text.WrapAnywhere
-//            }
-
         }
 
         Component {

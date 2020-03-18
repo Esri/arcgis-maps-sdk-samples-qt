@@ -73,7 +73,6 @@ Rectangle {
         onIdentifyLayerStatusChanged: {
             if (identifyLayerStatus === Enums.TaskStatusCompleted) {
                 calloutText = identifyLayerResult.geoElements[0].balloonContent;
-                console.log(calloutText);
                 callout.calloutData.location = clickedPoint;
                 callout.calloutContent = customComponent;
                 callout.showCallout();
