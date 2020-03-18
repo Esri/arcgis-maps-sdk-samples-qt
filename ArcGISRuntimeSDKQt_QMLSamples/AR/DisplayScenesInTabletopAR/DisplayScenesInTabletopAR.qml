@@ -62,8 +62,8 @@ Rectangle {
             if (sceneView.scene !== philadelphiaScene)
                 sceneView.scene = philadelphiaScene;
 
-            // Hide the base surface.
-            sceneView.scene.baseSurface.opacity = 0.0;
+            // Set the clipping distance for the scene.
+            arcGISArView.clippingDistance = 400;
 
             // Enable subsurface navigation. This allows you to look at the scene from below.
             sceneView.scene.baseSurface.navigationConstraint = Enums.NavigationConstraintNone;

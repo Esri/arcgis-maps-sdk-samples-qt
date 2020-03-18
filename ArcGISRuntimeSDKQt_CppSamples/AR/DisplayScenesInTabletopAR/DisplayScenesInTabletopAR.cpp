@@ -178,8 +178,8 @@ void DisplayScenesInTabletopAR::onMouseClicked(QMouseEvent& event)
     emit dialogVisibleChanged();
   }
 
-  // Hide the base surface.
-  m_sceneView->arcGISScene()->baseSurface()->setOpacity(0.0f);
+  // Set the clipping distance for the scene.
+  m_arcGISArView->setClippingDistance(400);
 
   // Enable subsurface navigation. This allows you to look at the scene from below.
   m_sceneView->arcGISScene()->baseSurface()->setNavigationConstraint(NavigationConstraint::None);
