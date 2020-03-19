@@ -46,6 +46,7 @@ class RouteAroundBarriers : public QObject
   Q_PROPERTY(bool findBestSequence READ findBestSequence WRITE setFindBestSequence NOTIFY findBestSequenceChanged)
   Q_PROPERTY(bool preserveFirstStop READ preserveFirstStop WRITE setPreserveFirstStop NOTIFY preserveFirstStopChanged)
   Q_PROPERTY(bool preserveLastStop READ preserveLastStop WRITE setPreserveLastStop NOTIFY preserveLastStopChanged)
+  Q_PROPERTY(QAbstractListModel* directions READ directions NOTIFY directionsChanged)
 
 public:
   explicit RouteAroundBarriers(QObject* parent = nullptr);
@@ -62,6 +63,7 @@ signals:
   void findBestSequenceChanged();
   void preserveFirstStopChanged();
   void preserveLastStopChanged();
+  void directionsChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -70,6 +72,7 @@ private:
   void setAddStops(bool addStops);
   bool addBarriers() const;
   void setAddBarriers(bool addBarriers);
+  QAbstractListModel* directions() const;
 
   bool findBestSequence() const;
   void setFindBestSequence(bool findBestSequence);
@@ -92,6 +95,7 @@ private:
 
   QList<Esri::ArcGISRuntime::Stop> m_stopsList;
   QList<Esri::ArcGISRuntime::PolygonBarrier> m_barriersList;
+  QAbstractListModel* m_directions = nullptr;
   bool m_addStops = false;
   bool m_addBarriers = false;
   bool m_findBestSequence = false;

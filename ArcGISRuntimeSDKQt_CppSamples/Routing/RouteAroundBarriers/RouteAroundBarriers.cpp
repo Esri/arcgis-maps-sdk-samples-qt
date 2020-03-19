@@ -119,7 +119,6 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
 
   // create route task
   m_routeTask = new RouteTask(routeTaskUrl, this);
-  m_routeTask->load();
 
   connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, const RouteParameters& defaultParameters)
   {
@@ -172,6 +171,7 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
     createAndDisplayRoute();
   });
 
+  m_routeTask->load();
   emit mapViewChanged();
 }
 
@@ -183,11 +183,13 @@ void RouteAroundBarriers::createAndDisplayRoute()
     m_routeOverlay->graphics()->clear();
 
     // clear the directions list
+//    m_directions->
 
     m_routeParameters.setStops(m_stopsList);
     m_routeParameters.setPolygonBarriers(m_barriersList);
     m_routeParameters.setFindBestSequence(m_findBestSequence);
-    qDebug() << m_findBestSequence;
+    m_routeParameters.setPreserveFirstStop(m_preserveFirstStop);
+    m_routeParameters.setPreserveLastStop(m_preserveLastStop);
 
     connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult routeResult)
     {
@@ -198,6 +200,9 @@ void RouteAroundBarriers::createAndDisplayRoute()
       Geometry routeGeometry = route.routeGeometry();
       Graphic* routeGraphic = new Graphic(routeGeometry, this);
       m_routeOverlay->graphics()->append(routeGraphic);
+
+      m_directions = route.directionManeuvers(this);
+      emit directionsChanged();
     });
 
     m_routeTask->solveRoute(m_routeParameters);
@@ -250,4 +255,9 @@ bool RouteAroundBarriers::preserveLastStop() const
 void RouteAroundBarriers::setPreserveLastStop(bool preserveLastStop)
 {
   m_preserveLastStop = preserveLastStop;
+}
+
+QAbstractListModel* RouteAroundBarriers::directions() const
+{
+  return m_directions;
 }
