@@ -6,6 +6,7 @@
         <file>ReverseGeocodeOnline.cpp</file>
         <file>main.qml</file>
         <file>screenshot.png</file>
+        <file>pin_circle_red.png</file>
         <file>README.md</file>
     </qresource>
 </RCC>

@@ -36,24 +36,8 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-// helper method to get cross platform data path
-QString defaultDataPath()
-{
-  QString dataPath;
-
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-#else
-  dataPath = QDir::homePath();
-#endif
-
-  return dataPath;
-}
-
 const QUrl url("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
-const QUrl pinUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/symbol/orange_symbol.png");
+const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin_circle_red.png");
 } // namespace
 
 ReverseGeocodeOnline::ReverseGeocodeOnline(QObject* parent /* = nullptr */):

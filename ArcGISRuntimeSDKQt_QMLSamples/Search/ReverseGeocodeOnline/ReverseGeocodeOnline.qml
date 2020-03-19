@@ -73,7 +73,7 @@ Rectangle {
 
             SimpleRenderer {
                 PictureMarkerSymbol {
-                    url: dataPath + "/orange_symbol.png"
+                    url: "qrc:/Samples/Search/ReverseGeocodeOnline/pin_circle_red.png"
                     height: 40
                     width: 40
                     offsetY: height/2
