@@ -8,7 +8,11 @@
     "dataItems" : [        
         {
             "itemId" : "567e14f3420d40c5a206e5c0284cf8fc",
-            "path" : "~/ArcGIS/Runtime/Data/tpk/san_diego"
+            "path" : "~/ArcGIS/Runtime/Data/tpk/san_diego/streetmap_SD.tpk"
+        },
+        {
+            "itemId" : "567e14f3420d40c5a206e5c0284cf8fc",
+            "path" : "~/ArcGIS/Runtime/Data/tpk/san_diego/sandiego.geodatabase"
         }
     ]
 }
