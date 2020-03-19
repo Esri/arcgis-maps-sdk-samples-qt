@@ -36,24 +36,8 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-// helper method to get cross platform data path
-QString defaultDataPath()
-{
-  QString dataPath;
-
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-#else
-  dataPath = QDir::homePath();
-#endif
-
-  return dataPath;
-}
-
 const QUrl url("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
-const QUrl pinUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/symbol/pin.png");
+const QUrl pinUrl("qrc:/Samples/Search/ReverseGeocodeOnline/pin_circle_red.png");
 } // namespace
 
 ReverseGeocodeOnline::ReverseGeocodeOnline(QObject* parent /* = nullptr */):
@@ -69,8 +53,9 @@ ReverseGeocodeOnline::~ReverseGeocodeOnline() = default;
 void ReverseGeocodeOnline::configureGraphic()
 {
   PictureMarkerSymbol* pinSymbol = new PictureMarkerSymbol(pinUrl, this);
-  pinSymbol->setHeight(72);
-  pinSymbol->setWidth(19);
+  pinSymbol->setHeight(40);
+  pinSymbol->setWidth(40);
+  pinSymbol->setOffsetY(pinSymbol->height() / 2);
   SimpleRenderer* simpleRenderer = new SimpleRenderer(pinSymbol, this);
 
   m_graphicsOverlay->setRenderer(simpleRenderer);
