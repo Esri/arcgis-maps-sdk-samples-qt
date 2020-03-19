@@ -54,7 +54,7 @@ Rectangle {
             id:  clickedPointGraphic
             SimpleMarkerSymbol {
                 style: Enums.SimpleMarkerSymbolStyleX
-                color: "orange"
+                color: "yellow"
                 size: 15
             }
         }
@@ -133,7 +133,6 @@ Coordinate distance: ${(nearestCoordinateResult.distance/1000.0).toFixed()} km` 
         anchors {
             top: parent.top
             left: parent.left
-            margins: 15
         }
         visible: true
         color: "white"
