@@ -21,110 +21,97 @@ import QtQuick.Layouts 1.11
 
 Item {
 
+    property int checkBoxPadding: 20
+
     // add a mapView component
     MapView {
         id: view
         anchors.fill: parent
 
-        GridLayout {
-            id: grid
-            rows: 2
-            columns: 1
-            rowSpacing: 10
-            columnSpacing: 2
-
-            Row {
-                id: buttonsRow
-
-                spacing: 5
-                padding: 5
-                Button {
-                    id: stopButton
-                    text: "Stops"
-                    onClicked: {
-                        model.addStops = !model.addStops;
-                        highlighted = !highlighted;
-                    }
-                }
-                Button {
-                    id: barrierButton
-                    text: "Barriers"
-                    onClicked: {
-                        model.addBarriers = !model.addBarriers;
-                        highlighted = !highlighted;
-                    }
-                }
-                Button {
-                    id: resetButton
-                    text: "Reset"
-                }
+        Rectangle {
+            id: backBox
+            anchors {
+                left: parent.left
+                top: parent.top
+                margins: 3
             }
+            width: childrenRect.width
+            height: childrenRect.height
+            color: "lightgrey"
+            opacity: 0.8
+            radius: 5
 
-            Column {
-                spacing: 2
 
-                CheckBox {
-                    id: bestSequenceBox
-                    text: "Find best sequence"
+            GridLayout {
+                id: grid
+                rows: 2
+                columns: 1
+                rowSpacing: 10
+                columnSpacing: 2
+
+                Row {
+                    id: buttonsRow
+                    Layout.alignment: Qt.AlignHCenter
+                    spacing: 5
+                    padding: 5
+                    Button {
+                        id: stopButton
+                        text: "Stops"
+                        onClicked: {
+                            model.addStops = !model.addStops;
+                            highlighted = !highlighted;
+                        }
+                    }
+                    Button {
+                        id: barrierButton
+                        text: "Barriers"
+                        onClicked: {
+                            model.addBarriers = !model.addBarriers;
+                            highlighted = !highlighted;
+                        }
+                    }
+                    Button {
+                        id: resetButton
+                        text: "Reset"
+                    }
                 }
-                CheckBox {
-                    id: firstStopBox
-                    text: "Preserve first stop"
-                }
-                CheckBox {
-                    id: lastStopBox
-                    text: "Preserve last stop"
+
+                Column {
+                    spacing: 2
+
+                    CheckBox {
+                        id: bestSequenceBox
+                        text: "Find best sequence"
+                        onCheckedChanged: {
+                            model.findBestSequence = checked;
+                            model.createAndDisplayRoute();
+                        }
+                    }
+                    CheckBox {
+                        id: firstStopBox
+                        text: "Preserve first stop"
+                        leftPadding: checkBoxPadding
+                        onCheckedChanged: {
+                            model.preserveFirstStop = checked;
+                        }
+                    }
+                    CheckBox {
+                        id: lastStopBox
+                        text: "Preserve last stop"
+                        leftPadding: checkBoxPadding
+                        onCheckedChanged: {
+                            model.preserveLastStop = checked;
+                        }
+                    }
                 }
             }
         }
 
-
-        //        Rectangle {
-        //            id: controlBox
-        //            width: buttonsRow.width
-        ////            anchors.centerIn: buttonsRow
-        //            color: "lightgrey"
-        //            border.color: "darkgrey"
-        //            border.width: 2
-        ////            opacity: 0.75
-
-        //            Row {
-        //                id: buttonsRow
-        //                anchors {
-        ////                    bottom: mapView.attributionTop
-        //                    top: parent.top
-        //                    horizontalCenter: parent.horizontalCenter
-        //                    margins: 15
-        //                }
-        //                spacing: 5
-        //                Button {
-        //                    id: stopButton
-        //                    text: "Stops"
-        //                }
-        //                Button {
-        //                    id: barrierButton
-        //                    text: "Barriers"
-        //                }
-        //                Button {
-        //                    id: resetButton
-        //                    text: "Reset"
-        //                }
-        //            }
-
-        //            Column {
-        //                top: buttonsRow.bottom
-        //                CheckBox {
-        //                    text: "Find best sequence"
-        //                }
-        //                CheckBox {
-        //                    text: "Preserve first stop"
-        //                }
-        //                CheckBox {
-        //                    text: "Preserve last stop"
-        //                }
-        //            }
-        //        }
     }
+
+
+
+
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     RouteAroundBarriersSample {

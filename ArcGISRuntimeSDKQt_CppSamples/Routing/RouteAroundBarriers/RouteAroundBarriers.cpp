@@ -179,7 +179,6 @@ void RouteAroundBarriers::createAndDisplayRoute()
 {
   if (m_stopsList.size() > 1)
   {
-    qDebug("making route");
     // clear the previous route, if it exists
     m_routeOverlay->graphics()->clear();
 
@@ -187,6 +186,8 @@ void RouteAroundBarriers::createAndDisplayRoute()
 
     m_routeParameters.setStops(m_stopsList);
     m_routeParameters.setPolygonBarriers(m_barriersList);
+    m_routeParameters.setFindBestSequence(m_findBestSequence);
+    qDebug() << m_findBestSequence;
 
     connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult routeResult)
     {
@@ -223,3 +224,30 @@ void RouteAroundBarriers::setAddBarriers(bool addBarriers)
   m_addBarriers = addBarriers;
 }
 
+bool RouteAroundBarriers::findBestSequence() const
+{
+  return m_findBestSequence;
+}
+
+void RouteAroundBarriers::setFindBestSequence(bool findBestSequence)
+{
+  m_findBestSequence = findBestSequence;
+}
+
+bool RouteAroundBarriers::preserveFirstStop() const
+{
+  return m_preserveFirstStop;
+}
+
+void RouteAroundBarriers::setPreserveFirstStop(bool preserveFirstStop)
+{
+  m_preserveFirstStop = preserveFirstStop;
+}
+bool RouteAroundBarriers::preserveLastStop() const
+{
+  return m_preserveLastStop;
+}
+void RouteAroundBarriers::setPreserveLastStop(bool preserveLastStop)
+{
+  m_preserveLastStop = preserveLastStop;
+}

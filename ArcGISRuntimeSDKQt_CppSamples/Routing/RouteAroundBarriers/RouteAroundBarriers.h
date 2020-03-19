@@ -43,6 +43,9 @@ class RouteAroundBarriers : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool addStops READ addStops WRITE setAddStops NOTIFY addStopsChanged)
   Q_PROPERTY(bool addBarriers READ addBarriers WRITE setAddBarriers NOTIFY addBarriersChanged)
+  Q_PROPERTY(bool findBestSequence READ findBestSequence WRITE setFindBestSequence NOTIFY findBestSequenceChanged)
+  Q_PROPERTY(bool preserveFirstStop READ preserveFirstStop WRITE setPreserveFirstStop NOTIFY preserveFirstStopChanged)
+  Q_PROPERTY(bool preserveLastStop READ preserveLastStop WRITE setPreserveLastStop NOTIFY preserveLastStopChanged)
 
 public:
   explicit RouteAroundBarriers(QObject* parent = nullptr);
@@ -50,10 +53,15 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void createAndDisplayRoute();
+
 signals:
   void mapViewChanged();
   void addStopsChanged();
   void addBarriersChanged();
+  void findBestSequenceChanged();
+  void preserveFirstStopChanged();
+  void preserveLastStopChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -62,7 +70,15 @@ private:
   void setAddStops(bool addStops);
   bool addBarriers() const;
   void setAddBarriers(bool addBarriers);
-  void createAndDisplayRoute();
+
+  bool findBestSequence() const;
+  void setFindBestSequence(bool findBestSequence);
+  bool preserveFirstStop() const;
+  void setPreserveFirstStop(bool preserveFirstStop);
+  bool preserveLastStop() const;
+  void setPreserveLastStop(bool preserveLastStop);
+
+
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -78,6 +94,9 @@ private:
   QList<Esri::ArcGISRuntime::PolygonBarrier> m_barriersList;
   bool m_addStops = false;
   bool m_addBarriers = false;
+  bool m_findBestSequence = false;
+  bool m_preserveFirstStop = false;
+  bool m_preserveLastStop = false;
 };
 
 #endif // ROUTEAROUNDBARRIERS_H
