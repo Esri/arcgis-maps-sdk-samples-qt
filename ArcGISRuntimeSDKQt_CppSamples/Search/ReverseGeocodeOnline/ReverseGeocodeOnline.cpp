@@ -53,7 +53,7 @@ QString defaultDataPath()
 }
 
 const QUrl url("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
-const QUrl pinUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/symbol/pin.png");
+const QUrl pinUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/symbol/orange_symbol.png");
 } // namespace
 
 ReverseGeocodeOnline::ReverseGeocodeOnline(QObject* parent /* = nullptr */):
@@ -69,8 +69,9 @@ ReverseGeocodeOnline::~ReverseGeocodeOnline() = default;
 void ReverseGeocodeOnline::configureGraphic()
 {
   PictureMarkerSymbol* pinSymbol = new PictureMarkerSymbol(pinUrl, this);
-  pinSymbol->setHeight(72);
-  pinSymbol->setWidth(19);
+  pinSymbol->setHeight(40);
+  pinSymbol->setWidth(40);
+  pinSymbol->setOffsetY(pinSymbol->height() / 2);
   SimpleRenderer* simpleRenderer = new SimpleRenderer(pinSymbol, this);
 
   m_graphicsOverlay->setRenderer(simpleRenderer);

@@ -38,6 +38,7 @@ Rectangle {
             calloutData: parent.calloutData
             accessoryButtonHidden: true
             leaderPosition: leaderPositionEnum.Top
+            padding: 5
         }
         onMouseClicked: {
             clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
@@ -72,9 +73,10 @@ Rectangle {
 
             SimpleRenderer {
                 PictureMarkerSymbol {
-                    url: dataPath + "/pin.png"
-                    height: 72
-                    width: 19
+                    url: dataPath + "/orange_symbol.png"
+                    height: 40
+                    width: 40
+                    offsetY: height/2
                 }
             }
 
