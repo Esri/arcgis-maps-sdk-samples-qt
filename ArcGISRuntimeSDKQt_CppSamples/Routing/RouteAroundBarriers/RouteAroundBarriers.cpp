@@ -112,8 +112,6 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
   m_routeOverlay->setRenderer(routeRenderer);
 
   m_pinSymbol = new PictureMarkerSymbol(pinUrl, this);
-//  m_pinSymbol->setHeight(72);
-//  m_pinSymbol->setWidth(19);
   m_pinSymbol->load(); // needed ??
 
   // create route task
@@ -168,7 +166,6 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
     }
 
     createAndDisplayRoute();
-    qDebug("called from cpp");
   });
 
   connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult routeResult)
@@ -182,7 +179,6 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
     m_routeOverlay->graphics()->append(routeGraphic);
 
     m_directions = route.directionManeuvers(this);
-    qDebug() << m_directions << "\n";
     emit directionsChanged();
   });
 
@@ -195,11 +191,15 @@ void RouteAroundBarriers::createAndDisplayRoute()
   if (m_stopsList.size() > 1)
   {
     // clear the previous route, if it exists
-    m_routeOverlay->graphics()->clear();
+    if (m_routeOverlay)
+      m_routeOverlay->graphics()->clear();
 
     // clear the directions list
     if (m_directions)
+    {
       delete m_directions;
+      m_directions = nullptr;
+    }
 
     m_routeParameters.setStops(m_stopsList);
     m_routeParameters.setPolygonBarriers(m_barriersList);
@@ -209,6 +209,42 @@ void RouteAroundBarriers::createAndDisplayRoute()
 
     m_routeTask->solveRoute(m_routeParameters);
   }
+}
+
+void RouteAroundBarriers::clearRouteAndGraphics()
+{
+  // clear stops from route parameters and stops list
+  m_routeParameters.clearStops();
+  m_stopsList.clear();
+
+  // clear barriers
+  m_routeParameters.clearPolygonBarriers();
+  m_barriersList.clear();
+
+  // clear directions list
+  if (m_directions)
+  {
+    delete m_directions;
+    m_directions = nullptr;
+  }
+
+  // clear graphics overlays
+  if (m_routeOverlay)
+    m_routeOverlay->graphics()->clear();
+
+  if (m_stopsOverlay)
+    m_stopsOverlay->graphics()->clear();
+
+  if (m_barriersOverlay)
+    m_barriersOverlay->graphics()->clear();
+
+//  for (GraphicsOverlay* overlay : *m_mapView->graphicsOverlays())
+//  {
+//    if (overlay)
+//      overlay->graphics()->clear();
+//  }
+
+
 }
 
 bool RouteAroundBarriers::addStops() const

@@ -21,12 +21,46 @@ import QtQuick.Layouts 1.11
 
 Item {
 
-    property int checkBoxPadding: 20
+    readonly property int checkBoxPadding: 20
 
     // add a mapView component
     MapView {
         id: view
         anchors.fill: parent
+
+        // Create window for displaying the route directions
+        Rectangle {
+            id: directionWindow
+            anchors {
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+            }
+            visible: true
+            width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 250 : 350
+            color: "#FBFBFB"
+
+            //! [RouteAroundBarriers cpp ListView directionsView]
+            ListView {
+                id: directionsView
+                anchors {
+                    fill: parent
+                    margins: 5
+                }
+                header: Component {
+                    Text {
+                        height: 40
+                        text: "Directions:"
+                        font.pixelSize: 22
+                    }
+                }
+
+                // set the model to the DirectionManeuverListModel returned from the route
+                model: sampleModel.directions
+                delegate: directionDelegate
+            }
+            //! [RouteAroundBarriers cpp ListView directionsView]
+        }
 
         Rectangle {
             id: backBox
@@ -40,7 +74,6 @@ Item {
             color: "lightgrey"
             opacity: 0.8
             radius: 5
-
 
             GridLayout {
                 id: grid
@@ -58,21 +91,32 @@ Item {
                         id: stopButton
                         text: "Stops"
                         onClicked: {
-                            sampleModel.addStops = !sampleModel.addStops;
                             highlighted = !highlighted;
+                            sampleModel.addStops = highlighted;
+
+                            // unset barriers button, if set
+                            barrierButton.highlighted = false;
+                            sampleModel.addBarriers = false;
                         }
                     }
                     Button {
                         id: barrierButton
                         text: "Barriers"
                         onClicked: {
-                            sampleModel.addBarriers = !sampleModel.addBarriers;
                             highlighted = !highlighted;
+                            sampleModel.addBarriers = highlighted;
+
+                            // unset stops button, if set
+                            stopButton.highlighted = false;
+                            sampleModel.addStops = false;
                         }
                     }
                     Button {
                         id: resetButton
                         text: "Reset"
+                        onClicked: {
+                            sampleModel.clearRouteAndGraphics();
+                        }
                     }
                 }
 
@@ -85,7 +129,6 @@ Item {
                         onCheckedChanged: {
                             sampleModel.findBestSequence = checked;
                             sampleModel.createAndDisplayRoute();
-                            console.log("called from checkbox");
                         }
                     }
                     CheckBox {
@@ -94,6 +137,7 @@ Item {
                         leftPadding: checkBoxPadding
                         onCheckedChanged: {
                             sampleModel.preserveFirstStop = checked;
+                            sampleModel.createAndDisplayRoute();
                         }
                     }
                     CheckBox {
@@ -102,67 +146,46 @@ Item {
                         leftPadding: checkBoxPadding
                         onCheckedChanged: {
                             sampleModel.preserveLastStop = checked;
+                            sampleModel.createAndDisplayRoute();
                         }
-                    }
-                }
-
-                Row {
-                    Text {text: " "}
-                    ListView {
-                        id: directionsView
-                        header: Text {
-                                height: 40
-                                text: "Directions: "
-                                font.pixelSize: 22
-                            }
-
-                        model: sampleModel.directions
-                        delegate: directionDelegate
-                        visible: true
-                    }
-                }
-            }
-
-            Component {
-                id: directionDelegate
-                Rectangle {
-                    id: rect
-                    width: parent.width
-                    height: 35
-                    color: backBox.color
-
-                    Rectangle {
-                        anchors {
-                            top: parent.top;
-                            left: parent.left;
-                            right: parent.right;
-                            topMargin: -8
-                            leftMargin: 20
-                            rightMargin: 20
-                        }
-                        color: "darkgrey"
-                        height: 1
-                    }
-
-                    Text {
-                        text: directionText
-                        anchors {
-                            fill: parent
-                            leftMargin: 5
-                        }
-                        elide: Text.ElideRight
-                        font.pixelSize: 10
                     }
                 }
             }
         }
-
-
-
     }
 
+    Component {
+           id: directionDelegate
+           Rectangle {
+               id: rect
+               width: parent.width
+               height: 35
+               color: directionWindow.color
 
+               Rectangle {
+                   anchors {
+                       top: parent.top;
+                       left: parent.left;
+                       right: parent.right;
+                       topMargin: -8
+                       leftMargin: 20
+                       rightMargin: 20
+                   }
+                   color: "darkgrey"
+                   height: 1
+               }
 
+               Text {
+                   text: directionText
+                   anchors {
+                       fill: parent
+                       leftMargin: 5
+                   }
+                   elide: Text.ElideRight
+                   font.pixelSize: 14
+               }
+           }
+       }
 
 
 

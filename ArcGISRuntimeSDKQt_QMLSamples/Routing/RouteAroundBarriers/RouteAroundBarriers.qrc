@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Routing/RouteAroundBarriers">
+        <file alias="sample.json">RouteAroundBarriers.json</file>        
+        <file>RouteAroundBarriers.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
