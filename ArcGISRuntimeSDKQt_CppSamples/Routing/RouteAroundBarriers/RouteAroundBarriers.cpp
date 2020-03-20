@@ -71,7 +71,6 @@ RouteAroundBarriers::RouteAroundBarriers(QObject* parent /* = nullptr */):
   m_stopsOverlay(new GraphicsOverlay(this)),
   m_barriersOverlay(new GraphicsOverlay(this))
 {
-
 }
 
 RouteAroundBarriers::~RouteAroundBarriers() = default;
@@ -169,6 +168,22 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
     }
 
     createAndDisplayRoute();
+    qDebug("called from cpp");
+  });
+
+  connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult routeResult)
+  {
+    if (routeResult.isEmpty())
+      return;
+
+    Route route = routeResult.routes()[0];
+    Geometry routeGeometry = route.routeGeometry();
+    Graphic* routeGraphic = new Graphic(routeGeometry, this);
+    m_routeOverlay->graphics()->append(routeGraphic);
+
+    m_directions = route.directionManeuvers(this);
+    qDebug() << m_directions << "\n";
+    emit directionsChanged();
   });
 
   m_routeTask->load();
@@ -183,27 +198,14 @@ void RouteAroundBarriers::createAndDisplayRoute()
     m_routeOverlay->graphics()->clear();
 
     // clear the directions list
-//    m_directions->
+    if (m_directions)
+      delete m_directions;
 
     m_routeParameters.setStops(m_stopsList);
     m_routeParameters.setPolygonBarriers(m_barriersList);
     m_routeParameters.setFindBestSequence(m_findBestSequence);
     m_routeParameters.setPreserveFirstStop(m_preserveFirstStop);
     m_routeParameters.setPreserveLastStop(m_preserveLastStop);
-
-    connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult routeResult)
-    {
-      if (routeResult.isEmpty())
-        return;
-
-      Route route = routeResult.routes()[0];
-      Geometry routeGeometry = route.routeGeometry();
-      Graphic* routeGraphic = new Graphic(routeGeometry, this);
-      m_routeOverlay->graphics()->append(routeGraphic);
-
-      m_directions = route.directionManeuvers(this);
-      emit directionsChanged();
-    });
 
     m_routeTask->solveRoute(m_routeParameters);
   }

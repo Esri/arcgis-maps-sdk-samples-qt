@@ -44,7 +44,7 @@ Item {
 
             GridLayout {
                 id: grid
-                rows: 2
+                rows: 3
                 columns: 1
                 rowSpacing: 10
                 columnSpacing: 2
@@ -58,7 +58,7 @@ Item {
                         id: stopButton
                         text: "Stops"
                         onClicked: {
-                            model.addStops = !model.addStops;
+                            sampleModel.addStops = !sampleModel.addStops;
                             highlighted = !highlighted;
                         }
                     }
@@ -66,7 +66,7 @@ Item {
                         id: barrierButton
                         text: "Barriers"
                         onClicked: {
-                            model.addBarriers = !model.addBarriers;
+                            sampleModel.addBarriers = !sampleModel.addBarriers;
                             highlighted = !highlighted;
                         }
                     }
@@ -83,8 +83,9 @@ Item {
                         id: bestSequenceBox
                         text: "Find best sequence"
                         onCheckedChanged: {
-                            model.findBestSequence = checked;
-                            model.createAndDisplayRoute();
+                            sampleModel.findBestSequence = checked;
+                            sampleModel.createAndDisplayRoute();
+                            console.log("called from checkbox");
                         }
                     }
                     CheckBox {
@@ -92,7 +93,7 @@ Item {
                         text: "Preserve first stop"
                         leftPadding: checkBoxPadding
                         onCheckedChanged: {
-                            model.preserveFirstStop = checked;
+                            sampleModel.preserveFirstStop = checked;
                         }
                     }
                     CheckBox {
@@ -100,12 +101,63 @@ Item {
                         text: "Preserve last stop"
                         leftPadding: checkBoxPadding
                         onCheckedChanged: {
-                            model.preserveLastStop = checked;
+                            sampleModel.preserveLastStop = checked;
                         }
+                    }
+                }
+
+                Row {
+                    Text {text: " "}
+                    ListView {
+                        id: directionsView
+                        header: Text {
+                                height: 40
+                                text: "Directions: "
+                                font.pixelSize: 22
+                            }
+
+                        model: sampleModel.directions
+                        delegate: directionDelegate
+                        visible: true
+                    }
+                }
+            }
+
+            Component {
+                id: directionDelegate
+                Rectangle {
+                    id: rect
+                    width: parent.width
+                    height: 35
+                    color: backBox.color
+
+                    Rectangle {
+                        anchors {
+                            top: parent.top;
+                            left: parent.left;
+                            right: parent.right;
+                            topMargin: -8
+                            leftMargin: 20
+                            rightMargin: 20
+                        }
+                        color: "darkgrey"
+                        height: 1
+                    }
+
+                    Text {
+                        text: directionText
+                        anchors {
+                            fill: parent
+                            leftMargin: 5
+                        }
+                        elide: Text.ElideRight
+                        font.pixelSize: 10
                     }
                 }
             }
         }
+
+
 
     }
 
@@ -113,9 +165,11 @@ Item {
 
 
 
+
+
     // Declare the C++ instance which creates the scene etc. and supply the view
     RouteAroundBarriersSample {
-        id: model
+        id: sampleModel
         mapView: view
     }
 }
