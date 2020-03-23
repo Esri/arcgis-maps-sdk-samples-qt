@@ -271,6 +271,7 @@ void ConfigureSubnetworkTrace::onTraceCompleted()
     m_dialogText = "No results returned";
     emit dialogTextChanged();
     emit showDialog();
+    return;
   }
   // Get the first result.
   UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
