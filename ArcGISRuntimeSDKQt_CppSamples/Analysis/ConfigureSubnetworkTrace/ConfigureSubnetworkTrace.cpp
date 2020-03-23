@@ -224,17 +224,20 @@ void ConfigureSubnetworkTrace::addCondition(const QString& selectedAttribute, in
   m_expressionBuilder = expressionToString(combineExpressions);
   emit expressionBuilderChanged();
 
-  m_traceConfiguration->traversability()->setBarriers(combineExpressions);
+  if (m_traceConfiguration)
+    m_traceConfiguration->traversability()->setBarriers(combineExpressions);
 }
 
 void ConfigureSubnetworkTrace::changeIncludeBarriersState(bool includeBarriers)
 {
-  m_traceConfiguration->setIncludeBarriers(includeBarriers);
+  if (m_traceConfiguration)
+    m_traceConfiguration->setIncludeBarriers(includeBarriers);
 }
 
 void ConfigureSubnetworkTrace::changeIncludeContainersState(bool includeContainers)
 {
-  m_traceConfiguration->setIncludeContainers(includeContainers);
+  if (m_traceConfiguration)
+    m_traceConfiguration->setIncludeContainers(includeContainers);
 }
 
 void ConfigureSubnetworkTrace::reset()
@@ -271,6 +274,7 @@ void ConfigureSubnetworkTrace::onTraceCompleted()
     m_dialogText = "No results returned";
     emit dialogTextChanged();
     emit showDialog();
+    return;
   }
   // Get the first result.
   UtilityTraceResult* result = m_utilityNetwork->traceResult()->at(0);
