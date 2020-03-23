@@ -56,6 +56,7 @@ public:
 
   Q_INVOKABLE void createAndDisplayRoute();
   Q_INVOKABLE void clearRouteAndGraphics();
+  Q_INVOKABLE void clearDirections();
 
 signals:
   void mapViewChanged();

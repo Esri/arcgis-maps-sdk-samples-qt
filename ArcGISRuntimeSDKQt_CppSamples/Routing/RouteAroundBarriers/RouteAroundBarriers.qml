@@ -28,164 +28,179 @@ Item {
         id: view
         anchors.fill: parent
 
-        // Create window for displaying the route directions
-        Rectangle {
-            id: directionWindow
-            anchors {
-                right: parent.right
-                top: parent.top
-                bottom: parent.bottom
+        ColumnLayout {
+            spacing: 0
+            Layout.alignment: Qt.AlignTop
+
+            Rectangle {
+                id: backBox
+                z: 1
+
+                Layout.alignment: Qt.AlignLeft
+                Layout.margins: 3
+                Layout.bottomMargin: 0
+                width: childrenRect.width
+                height: childrenRect.height
+
+                color: "lightgrey"
+                opacity: 0.8
+                radius: 5
+
+                GridLayout {
+                    id: grid
+                    rows: 4
+                    columns: 1
+                    rowSpacing: 10
+                    columnSpacing: 2
+
+                    Row {
+                        id: buttonsRow
+                        Layout.alignment: Qt.AlignHCenter
+                        spacing: 5
+                        padding: 5
+                        Button {
+                            id: stopButton
+                            text: "Add stops"
+                            onClicked: {
+                                highlighted = !highlighted;
+                                sampleModel.addStops = highlighted;
+
+                                // unset barriers button, if set
+                                barrierButton.highlighted = false;
+                                sampleModel.addBarriers = false;
+                            }
+                        }
+                        Button {
+                            id: barrierButton
+                            text: "Add barriers"
+                            onClicked: {
+                                highlighted = !highlighted;
+                                sampleModel.addBarriers = highlighted;
+
+                                // unset stops button, if set
+                                stopButton.highlighted = false;
+                                sampleModel.addStops = false;
+                            }
+                        }
+
+                    }
+
+                    Row {
+                        Layout.alignment: Qt.AlignHCenter
+                        Button {
+                            id: resetButton
+                            text: "Reset"
+                            onClicked: {
+                                sampleModel.clearRouteAndGraphics();
+                                sampleModel.clearDirections();
+                            }
+                        }
+                    }
+
+                    Column {
+                        spacing: 2
+
+                        CheckBox {
+                            id: bestSequenceBox
+                            text: "Find best sequence"
+                            onCheckedChanged: {
+                                sampleModel.findBestSequence = checked;
+                                sampleModel.createAndDisplayRoute();
+                            }
+                        }
+                        CheckBox {
+                            id: firstStopBox
+                            text: "Preserve first stop"
+                            leftPadding: checkBoxPadding
+                            enabled: bestSequenceBox.checked
+                            onCheckedChanged: {
+                                sampleModel.preserveFirstStop = checked;
+                                sampleModel.createAndDisplayRoute();
+                            }
+                        }
+                        CheckBox {
+                            id: lastStopBox
+                            text: "Preserve last stop"
+                            leftPadding: checkBoxPadding
+                            enabled: bestSequenceBox.checked
+                            onCheckedChanged: {
+                                sampleModel.preserveLastStop = checked;
+                                sampleModel.createAndDisplayRoute();
+                            }
+                        }
+                    }
+                }
             }
-            visible: true
-            width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 250 : 350
-            color: "#FBFBFB"
 
-            //! [RouteAroundBarriers cpp ListView directionsView]
-            ListView {
-                id: directionsView
-                anchors {
-                    fill: parent
-                    margins: 5
+            // Create window for displaying the route directions
+            Rectangle {
+                id: directionWindow
+                Layout.alignment: Qt.AlignBottom
+                Layout.topMargin: 0
+                visible: true
+                Layout.preferredWidth: backBox.width
+                Layout.preferredHeight: 300
+                Layout.margins: 3
+                color: "lightgrey"
+                opacity: 0.8
+                radius: 5
+
+                //! [RouteAroundBarriers cpp ListView directionsView]
+                ListView {
+                    id: directionsView
+                    anchors {
+                        fill: parent
+                        margins: 5
+                    }
+                    header: Component {
+                        Text {
+                            height: 40
+                            text: "Directions:"
+                            font.pixelSize: 22
+                        }
+                    }
+
+                    // set the model to the DirectionManeuverListModel returned from the route
+                    model: sampleModel.directions
+                    delegate: directionDelegate
                 }
-                header: Component {
-                    Text {
-                        height: 40
-                        text: "Directions:"
-                        font.pixelSize: 22
-                    }
-                }
-
-                // set the model to the DirectionManeuverListModel returned from the route
-                model: sampleModel.directions
-                delegate: directionDelegate
-            }
-            //! [RouteAroundBarriers cpp ListView directionsView]
-        }
-
-        Rectangle {
-            id: backBox
-            anchors {
-                left: parent.left
-                top: parent.top
-                margins: 3
-            }
-            width: childrenRect.width
-            height: childrenRect.height
-            color: "lightgrey"
-            opacity: 0.8
-            radius: 5
-
-            GridLayout {
-                id: grid
-                rows: 3
-                columns: 1
-                rowSpacing: 10
-                columnSpacing: 2
-
-                Row {
-                    id: buttonsRow
-                    Layout.alignment: Qt.AlignHCenter
-                    spacing: 5
-                    padding: 5
-                    Button {
-                        id: stopButton
-                        text: "Stops"
-                        onClicked: {
-                            highlighted = !highlighted;
-                            sampleModel.addStops = highlighted;
-
-                            // unset barriers button, if set
-                            barrierButton.highlighted = false;
-                            sampleModel.addBarriers = false;
-                        }
-                    }
-                    Button {
-                        id: barrierButton
-                        text: "Barriers"
-                        onClicked: {
-                            highlighted = !highlighted;
-                            sampleModel.addBarriers = highlighted;
-
-                            // unset stops button, if set
-                            stopButton.highlighted = false;
-                            sampleModel.addStops = false;
-                        }
-                    }
-                    Button {
-                        id: resetButton
-                        text: "Reset"
-                        onClicked: {
-                            sampleModel.clearRouteAndGraphics();
-                        }
-                    }
-                }
-
-                Column {
-                    spacing: 2
-
-                    CheckBox {
-                        id: bestSequenceBox
-                        text: "Find best sequence"
-                        onCheckedChanged: {
-                            sampleModel.findBestSequence = checked;
-                            sampleModel.createAndDisplayRoute();
-                        }
-                    }
-                    CheckBox {
-                        id: firstStopBox
-                        text: "Preserve first stop"
-                        leftPadding: checkBoxPadding
-                        onCheckedChanged: {
-                            sampleModel.preserveFirstStop = checked;
-                            sampleModel.createAndDisplayRoute();
-                        }
-                    }
-                    CheckBox {
-                        id: lastStopBox
-                        text: "Preserve last stop"
-                        leftPadding: checkBoxPadding
-                        onCheckedChanged: {
-                            sampleModel.preserveLastStop = checked;
-                            sampleModel.createAndDisplayRoute();
-                        }
-                    }
-                }
+                //! [RouteAroundBarriers cpp ListView directionsView]
             }
         }
     }
 
     Component {
-           id: directionDelegate
-           Rectangle {
-               id: rect
-               width: parent.width
-               height: 35
-               color: directionWindow.color
+        id: directionDelegate
+        Rectangle {
+            id: rect
+            width: parent.width
+            height: 35
+            color: directionWindow.color
 
-               Rectangle {
-                   anchors {
-                       top: parent.top;
-                       left: parent.left;
-                       right: parent.right;
-                       topMargin: -8
-                       leftMargin: 20
-                       rightMargin: 20
-                   }
-                   color: "darkgrey"
-                   height: 1
-               }
+            Rectangle {
+                anchors {
+                    top: parent.top;
+                    left: parent.left;
+                    right: parent.right;
+                    topMargin: -8
+                    leftMargin: 20
+                    rightMargin: 20
+                }
+                color: "darkgrey"
+                height: 1
+            }
 
-               Text {
-                   text: directionText
-                   anchors {
-                       fill: parent
-                       leftMargin: 5
-                   }
-                   elide: Text.ElideRight
-                   font.pixelSize: 14
-               }
-           }
-       }
+            Text {
+                text: directionText
+                anchors {
+                    fill: parent
+                    leftMargin: 5
+                }
+                elide: Text.ElideRight
+                font.pixelSize: 14
+            }
+        }
+    }
 
 
 

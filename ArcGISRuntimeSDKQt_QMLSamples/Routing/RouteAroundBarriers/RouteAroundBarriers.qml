@@ -29,9 +29,16 @@ Rectangle {
     readonly property int checkBoxPadding: 20
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/symbol"
     readonly property url routeTaskUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"
-    property list<Stop> stopsList
-    property var createAndDisplayRoute;
-    property var routeParameters;
+    property var stopsList: []
+    property var barriersList: []
+    property var createAndDisplayRoute
+    property var routeParameters: null
+    property var directionListModel: null
+    property bool addStops: false
+    property bool addBarriers: false
+    property bool findBestSeq: false
+    property bool preserveFirstStp: false
+    property bool preserveLastStp: false
 
     MapView {
         id: mapView
@@ -76,12 +83,20 @@ Rectangle {
             id: barriersOverlay
         }
 
+        SimpleFillSymbol {
+            id: barrierSymbol
+            style: Enums.SimpleFillSymbolStyleDiagonalCross
+            color: "red"
+            outline: SimpleLineSymbol {
+                style: Enums.SimpleLineSymbolStyleNull
+            }
+        }
+
         RouteTask {
             id: routeTask
             url: routeTaskUrl
             Component.onCompleted: {
                 load();
-                console.log("load called");
             }
 
             onLoadStatusChanged: {
@@ -93,30 +108,21 @@ Rectangle {
             onCreateDefaultParametersStatusChanged: {
                 if (createDefaultParametersStatus === Enums.TaskStatusCompleted) {
                     routeParameters = createDefaultParametersResult;
-                    console.log("assigned routeParameters");
-                    //                createDefaultParametersResult.returnStops = true;
-                    //                routeParameters.returnDirections = true;
+                    routeParameters.returnStops = true;
+                    routeParameters.returnDirections = true;
                 }
             }
 
             function createAndDisplayRoute() {
                 if (stopsList.length > 1) {
-
                     routeOverlay.graphics.clear();
 
-                    console.log(stopsList.length);
-                    console.log(routeParameters);
-                    routeParameters.clearStops();
-                    console.log("cleared");
                     routeParameters.setStops(stopsList);
-                    console.log("set stops");
+                    routeParameters.setPolygonBarriers(barriersList);
+                    routeParameters.findBestSequence = findBestSeq;
+                    routeParameters.preserveFirstStop = preserveFirstStp;
+                    routeParameters.preserveLastStop = preserveLastStp;
                     solveRoute(routeParameters);
-
-                    //                    m_routeParameters.setPolygonBarriers(m_barriersList);
-                    //                    m_routeParameters.setFindBestSequence(m_findBestSequence);
-                    //                    m_routeParameters.setPreserveFirstStop(m_preserveFirstStop);
-                    //                    m_routeParameters.setPreserveLastStop(m_preserveLastStop);
-
                 }
             }
 
@@ -127,112 +133,223 @@ Rectangle {
                         return;
                     }
 
-//                    Route route = routeResult.routes()[0];
-//                    Geometry routeGeometry = route.routeGeometry();
-//                    Graphic* routeGraphic = new Graphic(routeGeometry, this);
-//                    m_routeOverlay->graphics()->append(routeGraphic);
-
-//                    m_directions = route.directionManeuvers(this);
-//                    emit directionsChanged();
+                    //                    m_directions = route.directionManeuvers(this);
+                    //                    emit directionsChanged();
 
                     let route = solveRouteResult.routes[0];
                     let routeGeometry = route.routeGeometry;
                     let routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeGeometry});
                     routeOverlay.graphics.append(routeGraphic);
+
+                    directionListModel = route.directionManeuvers;
                 }
             }
         }
 
         onMouseClicked: {
-            console.log("clicked");
             let clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
-            let stopPoint = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: clickedPoint});
-            stopsList.push(stopPoint);
 
-            let textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {text: stopsList.length, color: "white", size: 16, horizontalAlignment: Enums.HorizontalAlignmentCenter, verticalAlignment: Enums.VerticalAlignmentBottom});
-            textSymbol.offsetY = pinSymbol.height/2;
+            if (addStops) {
+                let stopPoint = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: clickedPoint});
+                stopsList.push(stopPoint);
 
-            let stopSymbol = ArcGISRuntimeEnvironment.createObject("CompositeSymbol");
-            console.log("composite symbol created");
-            stopSymbol.symbols.append(pinSymbol);
-            stopSymbol.symbols.append(textSymbol);
-            let stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopSymbol});
-            stopsOverlay.graphics.append(stopGraphic);
+                let textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {text: stopsList.length, color: "white", size: 16, horizontalAlignment: Enums.HorizontalAlignmentCenter, verticalAlignment: Enums.VerticalAlignmentBottom});
+                textSymbol.offsetY = pinSymbol.height/2;
 
-            console.log("before");
-            routeTask.createAndDisplayRoute();
-            console.log("after\n\n");
+                let stopSymbol = ArcGISRuntimeEnvironment.createObject("CompositeSymbol");
+                stopSymbol.symbols.append(pinSymbol);
+                stopSymbol.symbols.append(textSymbol);
+                let stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopSymbol});
+                stopsOverlay.graphics.append(stopGraphic);
+
+                routeTask.createAndDisplayRoute();
+            } else if (addBarriers) {
+                let barrierPolygon = GeometryEngine.buffer(clickedPoint, 500);
+                let barrier = ArcGISRuntimeEnvironment.createObject("PolygonBarrier", {geometry: barrierPolygon});
+                barriersList.push(barrier);
+
+                let barrierGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: barrierPolygon, symbol: barrierSymbol});
+                barriersOverlay.graphics.append(barrierGraphic);
+
+                routeTask.createAndDisplayRoute();
+            }
+
         }
 
-        Rectangle {
-            id: backBox
-            anchors {
-                left: parent.left
-                top: parent.top
-                margins: 3
-            }
-            width: childrenRect.width
-            height: childrenRect.height
-            color: "lightgrey"
-            opacity: 0.8
-            radius: 5
+        ColumnLayout {
+            spacing: 0
+            Layout.alignment: Qt.AlignTop
 
-            GridLayout {
-                id: grid
-                rows: 3
-                columns: 1
-                rowSpacing: 10
-                columnSpacing: 2
+            Rectangle {
+                id: backBox
+                z: 1
+                Layout.alignment: Qt.AlignLeft
+                Layout.margins: 3
+                Layout.bottomMargin: 0
+                width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 200 : 300
+                height: childrenRect.height
+                color: "lightgrey"
 
-                Row {
-                    id: buttonsRow
+                GridLayout {
+                    id: grid
+                    rows: 3
+                    columns: 1
+                    rowSpacing: 10
+                    columnSpacing: 2
                     Layout.alignment: Qt.AlignHCenter
-                    spacing: 5
-                    padding: 5
-                    Button {
-                        id: stopButton
-                        text: "Stops"
+//                    anchors.centerIn: parent
+
+                    Row {
+                        id: buttonsRow
+                        Layout.alignment: Qt.AlignHCenter
+                        spacing: 5
+                        padding: 5
+                        Button {
+                            id: stopButton
+                            text: "Add stops"
+                            onClicked: {
+                                highlighted = !highlighted;
+                                addStops = highlighted;
+                            }
+                        }
+                        Button {
+                            id: barrierButton
+                            text: "Add barriers"
+
+                            onClicked: {
+                                highlighted = !highlighted;
+                                addBarriers = highlighted;
+
+                                stopButton.highlighted = false;
+                                addStops = false;
+                            }
+                        }
                     }
-                    Button {
-                        id: barrierButton
-                        text: "Barriers"
+
+                    Column {
+                        spacing: 2
+
+                        CheckBox {
+                            id: bestSequenceBox
+                            text: "Find best sequence"
+                            onCheckedChanged: {
+                                findBestSeq = checked;
+                                routeTask.createAndDisplayRoute();
+                            }
+                        }
+                        CheckBox {
+                            id: firstStopBox
+                            text: "Preserve first stop"
+                            leftPadding: checkBoxPadding
+                            enabled: bestSequenceBox.checked
+                            onCheckedChanged: {
+                                preserveFirstStp = checked;
+                                routeTask.createAndDisplayRoute();
+                            }
+                        }
+                        CheckBox {
+                            id: lastStopBox
+                            text: "Preserve last stop"
+                            leftPadding: checkBoxPadding
+                            enabled: bestSequenceBox.checked
+                            onCheckedChanged: {
+                                preserveLastStp = checked;
+                                routeTask.createAndDisplayRoute();
+                            }
+                        }
                     }
-                    Button {
-                        id: resetButton
-                        text: "Reset"
+
+                    Row {
+                        Layout.alignment: Qt.AlignHCenter
+                        Button {
+                            id: resetButton
+                            text: "Reset"
+                            onClicked: {
+                                // clear stops
+                                routeParameters.clearStops();
+                                stopsList = [];
+
+                                // clear barriers
+                                routeParameters.clearPolygonBarriers();
+                                barriersList = [];
+
+                                // clear directions
+
+                                // clear graphics overlays
+                                routeOverlay.graphics.clear();
+                                stopsOverlay.graphics.clear();
+                                barriersOverlay.graphics.clear();
+                            }
+                        }
                     }
                 }
+            }
 
-                Column {
-                    spacing: 2
+            // Create window for displaying the route directions
+            Rectangle {
+                id: directionWindow
+                Layout.alignment: Qt.AlignBottom
+                Layout.topMargin: 0
+                visible: true
+                Layout.preferredWidth: backBox.width
+                Layout.preferredHeight: 300
+                Layout.margins: 3
+                color: "lightgrey"
 
-                    CheckBox {
-                        id: bestSequenceBox
-                        text: "Find best sequence"
-                        //                        onCheckedChanged: {
-                        //                            sampleModel.findBestSequence = checked;
-                        //                            sampleModel.createAndDisplayRoute();
-                        //                        }
+                //! [RouteAroundBarriers cpp ListView directionsView]
+                ListView {
+                    id: directionsView
+                    anchors {
+                        fill: parent
+                        margins: 5
                     }
-                    CheckBox {
-                        id: firstStopBox
-                        text: "Preserve first stop"
-                        leftPadding: checkBoxPadding
-                        //                        onCheckedChanged: {
-                        //                            sampleModel.preserveFirstStop = checked;
-                        //                            sampleModel.createAndDisplayRoute();
-                        //                        }
+                    header: Component {
+                        Text {
+                            height: 40
+                            text: "Directions:"
+                            font.pixelSize: 22
+                        }
                     }
-                    CheckBox {
-                        id: lastStopBox
-                        text: "Preserve last stop"
-                        leftPadding: checkBoxPadding
-                        //                        onCheckedChanged: {
-                        //                            sampleModel.preserveLastStop = checked;
-                        //                            sampleModel.createAndDisplayRoute();
-                        //                        }
-                    }
+
+                    // set the model to the DirectionManeuverListModel returned from the route
+                    model: directionListModel
+                    delegate: directionDelegate
                 }
+                //! [RouteAroundBarriers cpp ListView directionsView]
+            }
+
+        }
+    }
+
+    Component {
+        id: directionDelegate
+        Rectangle {
+            id: rect
+            width: parent.width
+            height: 35
+            color: directionWindow.color
+
+            Rectangle {
+                anchors {
+                    top: parent.top;
+                    left: parent.left;
+                    right: parent.right;
+                    topMargin: -8
+                    leftMargin: 20
+                    rightMargin: 20
+                }
+                color: "darkgrey"
+                height: 1
+            }
+
+            Text {
+                text: directionText
+                anchors {
+                    fill: parent
+                    leftMargin: 5
+                }
+                elide: Text.ElideRight
+                font.pixelSize: 14
             }
         }
     }

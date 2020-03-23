@@ -247,6 +247,16 @@ void RouteAroundBarriers::clearRouteAndGraphics()
 
 }
 
+void RouteAroundBarriers::clearDirections()
+{
+  if (m_directions)
+  {
+    delete m_directions;
+    m_directions = nullptr;
+    emit directionsChanged();
+  }
+}
+
 bool RouteAroundBarriers::addStops() const
 {
   return m_addStops;
