@@ -31,6 +31,7 @@ Rectangle {
     readonly property url routeTaskUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"
     property list<Stop> stopsList
     property var createAndDisplayRoute;
+    property var routeParameters;
 
     MapView {
         id: mapView
@@ -77,7 +78,11 @@ Rectangle {
 
         RouteTask {
             id: routeTask
-            Component.onCompleted: load();
+            url: routeTaskUrl
+            Component.onCompleted: {
+                load();
+                console.log("load called");
+            }
 
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
@@ -86,8 +91,12 @@ Rectangle {
             }
 
             onCreateDefaultParametersStatusChanged: {
-                createDefaultParametersResult.returnStops = true;
-                createDefaultParametersResult.returnDirections = true;
+                if (createDefaultParametersStatus === Enums.TaskStatusCompleted) {
+                    routeParameters = createDefaultParametersResult;
+                    console.log("assigned routeParameters");
+                    //                createDefaultParametersResult.returnStops = true;
+                    //                routeParameters.returnDirections = true;
+                }
             }
 
             function createAndDisplayRoute() {
@@ -95,20 +104,47 @@ Rectangle {
 
                     routeOverlay.graphics.clear();
 
-                    createDefaultParametersResult.setStops(stopsList);
-                    solveRoute(createDefaultParametersResult);
+                    console.log(stopsList.length);
+                    console.log(routeParameters);
+                    routeParameters.clearStops();
+                    console.log("cleared");
+                    routeParameters.setStops(stopsList);
+                    console.log("set stops");
+                    solveRoute(routeParameters);
 
-//                    m_routeParameters.setStops(m_stopsList);
-//                    m_routeParameters.setPolygonBarriers(m_barriersList);
-//                    m_routeParameters.setFindBestSequence(m_findBestSequence);
-//                    m_routeParameters.setPreserveFirstStop(m_preserveFirstStop);
-//                    m_routeParameters.setPreserveLastStop(m_preserveLastStop);
+                    //                    m_routeParameters.setPolygonBarriers(m_barriersList);
+                    //                    m_routeParameters.setFindBestSequence(m_findBestSequence);
+                    //                    m_routeParameters.setPreserveFirstStop(m_preserveFirstStop);
+                    //                    m_routeParameters.setPreserveLastStop(m_preserveLastStop);
 
+                }
+            }
+
+            onSolveRouteStatusChanged: {
+                if (solveRouteStatus === Enums.TaskStatusCompleted) {
+                    if (solveRouteResult.routes.length === 0) {
+                        console.log("No routes found");
+                        return;
+                    }
+
+//                    Route route = routeResult.routes()[0];
+//                    Geometry routeGeometry = route.routeGeometry();
+//                    Graphic* routeGraphic = new Graphic(routeGeometry, this);
+//                    m_routeOverlay->graphics()->append(routeGraphic);
+
+//                    m_directions = route.directionManeuvers(this);
+//                    emit directionsChanged();
+
+                    let route = solveRouteResult.routes[0];
+                    let routeGeometry = route.routeGeometry;
+                    let routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeGeometry});
+                    routeOverlay.graphics.append(routeGraphic);
                 }
             }
         }
 
         onMouseClicked: {
+            console.log("clicked");
             let clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
             let stopPoint = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: clickedPoint});
             stopsList.push(stopPoint);
@@ -117,12 +153,15 @@ Rectangle {
             textSymbol.offsetY = pinSymbol.height/2;
 
             let stopSymbol = ArcGISRuntimeEnvironment.createObject("CompositeSymbol");
+            console.log("composite symbol created");
             stopSymbol.symbols.append(pinSymbol);
             stopSymbol.symbols.append(textSymbol);
             let stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopSymbol});
             stopsOverlay.graphics.append(stopGraphic);
 
+            console.log("before");
             routeTask.createAndDisplayRoute();
+            console.log("after\n\n");
         }
 
         Rectangle {
@@ -153,33 +192,14 @@ Rectangle {
                     Button {
                         id: stopButton
                         text: "Stops"
-//                        onClicked: {
-//                            highlighted = !highlighted;
-//                            sampleModel.addStops = highlighted;
-
-//                            // unset barriers button, if set
-//                            barrierButton.highlighted = false;
-//                            sampleModel.addBarriers = false;
-//                        }
                     }
                     Button {
                         id: barrierButton
                         text: "Barriers"
-//                        onClicked: {
-//                            highlighted = !highlighted;
-//                            sampleModel.addBarriers = highlighted;
-
-//                            // unset stops button, if set
-//                            stopButton.highlighted = false;
-//                            sampleModel.addStops = false;
-//                        }
                     }
                     Button {
                         id: resetButton
                         text: "Reset"
-//                        onClicked: {
-//                            sampleModel.clearRouteAndGraphics();
-//                        }
                     }
                 }
 
@@ -189,28 +209,28 @@ Rectangle {
                     CheckBox {
                         id: bestSequenceBox
                         text: "Find best sequence"
-//                        onCheckedChanged: {
-//                            sampleModel.findBestSequence = checked;
-//                            sampleModel.createAndDisplayRoute();
-//                        }
+                        //                        onCheckedChanged: {
+                        //                            sampleModel.findBestSequence = checked;
+                        //                            sampleModel.createAndDisplayRoute();
+                        //                        }
                     }
                     CheckBox {
                         id: firstStopBox
                         text: "Preserve first stop"
                         leftPadding: checkBoxPadding
-//                        onCheckedChanged: {
-//                            sampleModel.preserveFirstStop = checked;
-//                            sampleModel.createAndDisplayRoute();
-//                        }
+                        //                        onCheckedChanged: {
+                        //                            sampleModel.preserveFirstStop = checked;
+                        //                            sampleModel.createAndDisplayRoute();
+                        //                        }
                     }
                     CheckBox {
                         id: lastStopBox
                         text: "Preserve last stop"
                         leftPadding: checkBoxPadding
-//                        onCheckedChanged: {
-//                            sampleModel.preserveLastStop = checked;
-//                            sampleModel.createAndDisplayRoute();
-//                        }
+                        //                        onCheckedChanged: {
+                        //                            sampleModel.preserveLastStop = checked;
+                        //                            sampleModel.createAndDisplayRoute();
+                        //                        }
                     }
                 }
             }
