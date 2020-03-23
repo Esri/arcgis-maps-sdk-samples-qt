@@ -133,9 +133,6 @@ Rectangle {
                         return;
                     }
 
-                    //                    m_directions = route.directionManeuvers(this);
-                    //                    emit directionsChanged();
-
                     let route = solveRouteResult.routes[0];
                     let routeGeometry = route.routeGeometry;
                     let routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeGeometry});
@@ -274,6 +271,7 @@ Rectangle {
                                 barriersList = [];
 
                                 // clear directions
+                                directionListModel = [];
 
                                 // clear graphics overlays
                                 routeOverlay.graphics.clear();
