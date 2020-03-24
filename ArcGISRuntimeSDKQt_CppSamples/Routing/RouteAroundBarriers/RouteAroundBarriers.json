@@ -4,5 +4,11 @@
         "RouteAroundBarriers.h",
         "RouteAroundBarriers.cpp"
     ],
-    "name" : "Route around barriers"
+    "name" : "Route around barriers",
+    "dataItems" : [        
+        {
+            "itemId" : "1c95ea3b6e4843cdbd6ae354efb97f0c",
+            "path" : "~/ArcGIS/Runtime/Data/symbol/orange_symbol.png"
+        }
+    ]
 }

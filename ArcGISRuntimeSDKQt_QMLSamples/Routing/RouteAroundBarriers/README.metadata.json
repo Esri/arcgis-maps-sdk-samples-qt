@@ -1,16 +1,30 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Routing",
+    "description": "Find a route that reaches all stops without crossing any barriers.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "barriers",
+        "best sequence",
+        "directions",
+        "maneuver",
+        "network analysis",
+        "routing",
+        "sequence",
+        "stop order",
+        "stops"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "DirectionManeuverList",
+        "PolygonBarrier",
+        "Route",
+        "RouteParameters",
+        "RouteResult",
+        "RouteTask",
+        "Stop"
     ],
     "snippets": [
         "RouteAroundBarriers.qml"

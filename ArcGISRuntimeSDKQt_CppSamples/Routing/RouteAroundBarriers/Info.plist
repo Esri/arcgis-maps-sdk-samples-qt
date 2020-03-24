@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>RouteAroundBarriers</string>
+	<string>Route around barriers</string>
 	<key>CFBundleExecutable</key>
 	<string>RouteAroundBarriers</string>
 	<key>CFBundleGetInfoString</key>
