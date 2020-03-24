@@ -26,9 +26,9 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property int checkBoxPadding: 20
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/symbol"
     readonly property url routeTaskUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"
+    readonly property int checkBoxPadding: 20
     property var stopsList: []
     property var barriersList: []
     property var createAndDisplayRoute
@@ -193,8 +193,7 @@ Rectangle {
                     columns: 1
                     rowSpacing: 10
                     columnSpacing: 2
-                    Layout.alignment: Qt.AlignHCenter
-//                    anchors.centerIn: parent
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     Row {
                         id: buttonsRow
@@ -207,6 +206,9 @@ Rectangle {
                             onClicked: {
                                 highlighted = !highlighted;
                                 addStops = highlighted;
+
+                                barrierButton.highlighted = false;
+                                addBarriers = false;
                             }
                         }
                         Button {

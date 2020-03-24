@@ -34,17 +34,14 @@ Item {
 
             Rectangle {
                 id: backBox
-                z: 1
 
+                z: 1
                 Layout.alignment: Qt.AlignLeft
                 Layout.margins: 3
                 Layout.bottomMargin: 0
-                width: childrenRect.width
+                width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 200 : 300
                 height: childrenRect.height
-
                 color: "lightgrey"
-                opacity: 0.8
-                radius: 5
 
                 GridLayout {
                     id: grid
@@ -52,7 +49,7 @@ Item {
                     columns: 1
                     rowSpacing: 10
                     columnSpacing: 2
-
+                    anchors.horizontalCenter: parent.horizontalCenter
                     Row {
                         id: buttonsRow
                         Layout.alignment: Qt.AlignHCenter
@@ -83,18 +80,6 @@ Item {
                             }
                         }
 
-                    }
-
-                    Row {
-                        Layout.alignment: Qt.AlignHCenter
-                        Button {
-                            id: resetButton
-                            text: "Reset"
-                            onClicked: {
-                                sampleModel.clearRouteAndGraphics();
-                                sampleModel.clearDirections();
-                            }
-                        }
                     }
 
                     Column {
@@ -129,6 +114,18 @@ Item {
                             }
                         }
                     }
+
+                    Row {
+                        Layout.alignment: Qt.AlignHCenter
+                        Button {
+                            id: resetButton
+                            text: "Reset"
+                            onClicked: {
+                                sampleModel.clearRouteAndGraphics();
+                                sampleModel.clearDirections();
+                            }
+                        }
+                    }
                 }
             }
 
@@ -142,8 +139,6 @@ Item {
                 Layout.preferredHeight: 300
                 Layout.margins: 3
                 color: "lightgrey"
-                opacity: 0.8
-                radius: 5
 
                 //! [RouteAroundBarriers cpp ListView directionsView]
                 ListView {

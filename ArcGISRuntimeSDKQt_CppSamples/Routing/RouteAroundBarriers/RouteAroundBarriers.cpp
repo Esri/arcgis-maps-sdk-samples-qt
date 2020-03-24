@@ -154,6 +154,8 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
 
       Graphic* stopGraphic = new Graphic(clickedPoint, newStopSymbol, this);
       m_stopsOverlay->graphics()->append(stopGraphic);
+
+      createAndDisplayRoute();
     }
     else if (m_addBarriers)
     {
@@ -163,9 +165,9 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
 
       Graphic* barrierGraphic = new Graphic(barrierPolygon, m_barrierSymbol);
       m_barriersOverlay->graphics()->append(barrierGraphic);
-    }
 
-    createAndDisplayRoute();
+      createAndDisplayRoute();
+    }
   });
 
   connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult routeResult)
@@ -226,25 +228,15 @@ void RouteAroundBarriers::clearRouteAndGraphics()
   {
     delete m_directions;
     m_directions = nullptr;
+    emit directionsChanged();
   }
 
   // clear graphics overlays
-  if (m_routeOverlay)
-    m_routeOverlay->graphics()->clear();
-
-  if (m_stopsOverlay)
-    m_stopsOverlay->graphics()->clear();
-
-  if (m_barriersOverlay)
-    m_barriersOverlay->graphics()->clear();
-
-//  for (GraphicsOverlay* overlay : *m_mapView->graphicsOverlays())
-//  {
-//    if (overlay)
-//      overlay->graphics()->clear();
-//  }
-
-
+  for (GraphicsOverlay* overlay : *m_mapView->graphicsOverlays())
+  {
+    if (overlay)
+      overlay->graphics()->clear();
+  }
 }
 
 void RouteAroundBarriers::clearDirections()
