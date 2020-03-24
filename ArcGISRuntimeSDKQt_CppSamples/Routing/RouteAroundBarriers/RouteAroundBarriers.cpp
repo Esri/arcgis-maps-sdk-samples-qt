@@ -117,6 +117,13 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
   // create route task
   m_routeTask = new RouteTask(routeTaskUrl, this);
 
+  connectRouteSignals();
+  m_routeTask->load();
+  emit mapViewChanged();
+}
+
+void RouteAroundBarriers::connectRouteSignals()
+{
   connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, const RouteParameters& defaultParameters)
   {
     m_routeParameters = defaultParameters;
@@ -183,9 +190,6 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
     m_directions = route.directionManeuvers(this);
     emit directionsChanged();
   });
-
-  m_routeTask->load();
-  emit mapViewChanged();
 }
 
 void RouteAroundBarriers::createAndDisplayRoute()

@@ -82,6 +82,7 @@ private:
   void setPreserveFirstStop(bool preserveFirstStop);
   bool preserveLastStop() const;
   void setPreserveLastStop(bool preserveLastStop);
+  void connectRouteSignals();
 
 
 
