@@ -37,7 +37,10 @@ IdentifyKmlFeatures::IdentifyKmlFeatures(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::darkGrayCanvasVector(this), this))
 {
-
+  // create new KML layer
+  KmlDataset* forecastDataset = new KmlDataset(datasetUrl, this);
+  m_forecastLayer = new KmlLayer(forecastDataset, this);
+  m_map->operationalLayers()->append(m_forecastLayer);
 }
 
 IdentifyKmlFeatures::~IdentifyKmlFeatures() = default;
@@ -66,10 +69,6 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
   // start zoomed in over the US
   m_mapView->setViewpointGeometry(Envelope(-19195297.778679, 512343.939994, -3620418.579987, 8658913.035426, SpatialReference::webMercator()));
 
-  KmlDataset* forecastDataset = new KmlDataset(datasetUrl, this);
-  m_forecastLayer = new KmlLayer(forecastDataset, this);
-  m_map->operationalLayers()->append(m_forecastLayer);
-
   connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult *rawResult)
   {
     auto result = std::unique_ptr<IdentifyLayerResult>(rawResult);
@@ -85,6 +84,7 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
 
         emit calloutDataChanged();
         emit calloutTextChanged();
+        return;
       }
     }
   });

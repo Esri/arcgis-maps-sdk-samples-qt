@@ -17,10 +17,9 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.6 // needed to use Callout in QML
+import Esri.ArcGISRuntime.Toolkit.Controls 100.8 // needed to use Callout in QML
 
 Item {
-
 
     // add a mapView component
     MapView {

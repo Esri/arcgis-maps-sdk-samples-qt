@@ -26,7 +26,7 @@ Rectangle {
 
     property Point clickedPoint: null
     property string calloutText: ""
-    property url layerUrl: "https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx.kml"
+    readonly property url layerUrl: "https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx.kml"
 
     MapView {
         id: mapView
@@ -39,6 +39,7 @@ Rectangle {
             calloutWidth: 400
             accessoryButtonHidden: true
             leaderPosition: leaderPositionEnum.Top
+            calloutContent: customComponent
         }
 
         Map {
@@ -67,14 +68,18 @@ Rectangle {
 
         onMouseClicked: {
             clickedPoint = screenToLocation(mouse.x, mouse.y);
-            identifyLayer(forecastLayer, mouse.x, mouse.y, 15, false, 1);
+            if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
+                identifyLayer(forecastLayer, mouse.x, mouse.y, 15, false, 1);
+            }
         }
 
         onIdentifyLayerStatusChanged: {
             if (identifyLayerStatus === Enums.TaskStatusCompleted) {
+                if (identifyLayerResult.geoElements.length < 1) {
+                    return;
+                }
                 calloutText = identifyLayerResult.geoElements[0].balloonContent;
                 callout.calloutData.location = clickedPoint;
-                callout.calloutContent = customComponent;
                 callout.showCallout();
             }
         }
