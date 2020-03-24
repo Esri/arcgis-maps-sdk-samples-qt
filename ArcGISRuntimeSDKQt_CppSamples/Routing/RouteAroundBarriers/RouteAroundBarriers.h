@@ -84,8 +84,6 @@ private:
   void setPreserveLastStop(bool preserveLastStop);
   void connectRouteSignals();
 
-
-
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;

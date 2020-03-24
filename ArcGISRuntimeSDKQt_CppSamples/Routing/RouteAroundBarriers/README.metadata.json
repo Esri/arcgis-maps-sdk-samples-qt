@@ -18,7 +18,7 @@
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "DirectionManeuverList",
+        "DirectionManeuverListModel",
         "PolygonBarrier",
         "Route",
         "RouteParameters",

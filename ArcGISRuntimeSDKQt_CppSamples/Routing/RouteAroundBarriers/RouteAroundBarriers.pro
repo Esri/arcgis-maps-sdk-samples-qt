@@ -62,7 +62,3 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
-
-DISTFILES += \
-    ../../../../../../../../Users/swa10836/ArcGIS/Runtime/Data/symbol/orange_symbol.png \
-    orange_symbol.png

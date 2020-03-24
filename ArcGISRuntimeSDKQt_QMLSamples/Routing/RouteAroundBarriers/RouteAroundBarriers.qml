@@ -19,6 +19,7 @@ import QtQuick.Controls 2.2
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.8
 import QtQuick.Layouts 1.11
+import QtQuick.Dialogs 1.1
 
 Rectangle {
     id: rootRectangle
@@ -27,7 +28,7 @@ Rectangle {
     height: 600
 
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/symbol"
-    readonly property url routeTaskUrl: "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"
+    readonly property url routeTaskUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"
     readonly property int checkBoxPadding: 20
     property var stopsList: []
     property var barriersList: []
@@ -39,6 +40,16 @@ Rectangle {
     property bool findBestSeq: false
     property bool preserveFirstStp: false
     property bool preserveLastStp: false
+
+    MessageDialog {
+        id: messageDialog
+        title: "Route around barriers"
+        text: "No route found."
+        visible: false
+        onRejected: {
+            visible = false;
+        }
+    }
 
     MapView {
         id: mapView
@@ -70,7 +81,7 @@ Rectangle {
 
         GraphicsOverlay {
             id: routeOverlay
-            renderer: SimpleRenderer {
+            SimpleRenderer {
                 SimpleLineSymbol {
                     style: Enums.SimpleLineSymbolStyleSolid
                     color: "blue"
@@ -129,13 +140,13 @@ Rectangle {
             onSolveRouteStatusChanged: {
                 if (solveRouteStatus === Enums.TaskStatusCompleted) {
                     if (solveRouteResult.routes.length === 0) {
-                        console.log("No routes found");
+                        messageDialog.visible = true;
                         return;
                     }
 
-                    let route = solveRouteResult.routes[0];
-                    let routeGeometry = route.routeGeometry;
-                    let routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeGeometry});
+                    const route = solveRouteResult.routes[0];
+                    const routeGeometry = route.routeGeometry;
+                    const routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeGeometry});
                     routeOverlay.graphics.append(routeGraphic);
 
                     directionListModel = route.directionManeuvers;
@@ -144,33 +155,34 @@ Rectangle {
         }
 
         onMouseClicked: {
-            let clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
+            const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
 
             if (addStops) {
-                let stopPoint = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: clickedPoint});
+                const stopPoint = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: clickedPoint});
                 stopsList.push(stopPoint);
 
-                let textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {text: stopsList.length, color: "white", size: 16, horizontalAlignment: Enums.HorizontalAlignmentCenter, verticalAlignment: Enums.VerticalAlignmentBottom});
+                let textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {text: stopsList.length,
+                                                                           color: "white",
+                                                                           size: 16,
+                                                                           horizontalAlignment: Enums.HorizontalAlignmentCenter,
+                                                                           verticalAlignment: Enums.VerticalAlignmentBottom});
                 textSymbol.offsetY = pinSymbol.height/2;
 
                 let stopSymbol = ArcGISRuntimeEnvironment.createObject("CompositeSymbol");
                 stopSymbol.symbols.append(pinSymbol);
                 stopSymbol.symbols.append(textSymbol);
-                let stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopSymbol});
+                const stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopSymbol});
                 stopsOverlay.graphics.append(stopGraphic);
-
                 routeTask.createAndDisplayRoute();
             } else if (addBarriers) {
-                let barrierPolygon = GeometryEngine.buffer(clickedPoint, 500);
-                let barrier = ArcGISRuntimeEnvironment.createObject("PolygonBarrier", {geometry: barrierPolygon});
+                const barrierPolygon = GeometryEngine.buffer(clickedPoint, 500);
+                const barrier = ArcGISRuntimeEnvironment.createObject("PolygonBarrier", {geometry: barrierPolygon});
                 barriersList.push(barrier);
 
-                let barrierGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: barrierPolygon, symbol: barrierSymbol});
+                const barrierGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: barrierPolygon, symbol: barrierSymbol});
                 barriersOverlay.graphics.append(barrierGraphic);
-
                 routeTask.createAndDisplayRoute();
             }
-
         }
 
         ColumnLayout {
@@ -296,7 +308,6 @@ Rectangle {
                 Layout.margins: 3
                 color: "lightgrey"
 
-                //! [RouteAroundBarriers cpp ListView directionsView]
                 ListView {
                     id: directionsView
                     anchors {
@@ -315,7 +326,6 @@ Rectangle {
                     model: directionListModel
                     delegate: directionDelegate
                 }
-                //! [RouteAroundBarriers cpp ListView directionsView]
             }
 
         }

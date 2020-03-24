@@ -61,7 +61,7 @@ QString defaultDataPath()
 }
 
 const QUrl pinUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/symbol/orange_symbol.png");
-const QUrl routeTaskUrl("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route");
+const QUrl routeTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route");
 }
 
 RouteAroundBarriers::RouteAroundBarriers(QObject* parent /* = nullptr */):
@@ -71,6 +71,17 @@ RouteAroundBarriers::RouteAroundBarriers(QObject* parent /* = nullptr */):
   m_stopsOverlay(new GraphicsOverlay(this)),
   m_barriersOverlay(new GraphicsOverlay(this))
 {
+  // create symbols for displaying the barriers and the route line
+  m_barrierSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::DiagonalCross, Qt::red, this);
+  SimpleLineSymbol* routeLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 3, this);
+
+  SimpleRenderer* routeRenderer = new SimpleRenderer(routeLineSymbol, this);
+  m_routeOverlay->setRenderer(routeRenderer);
+
+  m_pinSymbol = new PictureMarkerSymbol(pinUrl, this);
+
+  // create route task
+  m_routeTask = new RouteTask(routeTaskUrl, this);
 }
 
 RouteAroundBarriers::~RouteAroundBarriers() = default;
@@ -103,20 +114,6 @@ void RouteAroundBarriers::setMapView(MapQuickView* mapView)
   m_mapView->graphicsOverlays()->append(m_stopsOverlay);
   m_mapView->graphicsOverlays()->append(m_barriersOverlay);
 
-  // create symbols for displaying the barriers and the route line
-  m_barrierSymbol = new SimpleFillSymbol(SimpleFillSymbolStyle::DiagonalCross, Qt::red, nullptr, this);
-  SimpleLineSymbol* routeLineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 3, this);
-
-  SimpleRenderer* routeRenderer = new SimpleRenderer(this);
-  routeRenderer->setSymbol(routeLineSymbol);
-  m_routeOverlay->setRenderer(routeRenderer);
-
-  m_pinSymbol = new PictureMarkerSymbol(pinUrl, this);
-  m_pinSymbol->load(); // needed ??
-
-  // create route task
-  m_routeTask = new RouteTask(routeTaskUrl, this);
-
   connectRouteSignals();
   m_routeTask->load();
   emit mapViewChanged();
@@ -147,15 +144,16 @@ void RouteAroundBarriers::connectRouteSignals()
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e)
   {
-    Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    const Point clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
     if (m_addStops)
     {
       // add stop to list of stops
-      Stop stopPoint(clickedPoint);
+      const Stop stopPoint(clickedPoint);
       m_stopsList << stopPoint;
 
       // create a marker symbol and graphics, and add the graphics to the graphics overlay
-      TextSymbol* textSymbol = new TextSymbol(QString::number(m_stopsList.size()), Qt::white, 16, HorizontalAlignment::Center, VerticalAlignment::Bottom, this);
+      TextSymbol* textSymbol = new TextSymbol(QString::number(m_stopsList.size()), Qt::white, 16,
+                                              HorizontalAlignment::Center, VerticalAlignment::Bottom, this);
       textSymbol->setOffsetY(m_pinSymbol->height() / 2);
       CompositeSymbol* newStopSymbol = new CompositeSymbol(QList<Symbol*>{m_pinSymbol, textSymbol}, this);
 
@@ -166,24 +164,24 @@ void RouteAroundBarriers::connectRouteSignals()
     }
     else if (m_addBarriers)
     {
-      Polygon barrierPolygon = GeometryEngine::buffer(clickedPoint, 500);
-      PolygonBarrier barrier(barrierPolygon);
+      const Polygon barrierPolygon = GeometryEngine::buffer(clickedPoint, 500);
+      const PolygonBarrier barrier(barrierPolygon);
       m_barriersList << barrier;
 
-      Graphic* barrierGraphic = new Graphic(barrierPolygon, m_barrierSymbol);
+      Graphic* barrierGraphic = new Graphic(barrierPolygon, m_barrierSymbol, this);
       m_barriersOverlay->graphics()->append(barrierGraphic);
 
       createAndDisplayRoute();
     }
   });
 
-  connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult routeResult)
+  connect (m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, const RouteResult& routeResult)
   {
     if (routeResult.isEmpty())
       return;
 
-    Route route = routeResult.routes()[0];
-    Geometry routeGeometry = route.routeGeometry();
+    const Route route = routeResult.routes()[0];
+    const Geometry routeGeometry = route.routeGeometry();
     Graphic* routeGraphic = new Graphic(routeGeometry, this);
     m_routeOverlay->graphics()->append(routeGraphic);
 
@@ -235,11 +233,17 @@ void RouteAroundBarriers::clearRouteAndGraphics()
     emit directionsChanged();
   }
 
-  // clear graphics overlays
+  // delete graphics from overlay, then clear graphics overlays
   for (GraphicsOverlay* overlay : *m_mapView->graphicsOverlays())
   {
     if (overlay)
+    {
+      for (Graphic* graphic : *overlay->graphics())
+      {
+        delete graphic;
+      }
       overlay->graphics()->clear();
+    }
   }
 }
 
@@ -261,6 +265,7 @@ bool RouteAroundBarriers::addStops() const
 void RouteAroundBarriers::setAddStops(bool addStops)
 {
   m_addStops = addStops;
+  emit addStopsChanged();
 }
 
 bool RouteAroundBarriers::addBarriers() const
@@ -271,6 +276,7 @@ bool RouteAroundBarriers::addBarriers() const
 void RouteAroundBarriers::setAddBarriers(bool addBarriers)
 {
   m_addBarriers = addBarriers;
+  emit addBarriersChanged();
 }
 
 bool RouteAroundBarriers::findBestSequence() const
@@ -281,6 +287,7 @@ bool RouteAroundBarriers::findBestSequence() const
 void RouteAroundBarriers::setFindBestSequence(bool findBestSequence)
 {
   m_findBestSequence = findBestSequence;
+  emit findBestSequenceChanged();
 }
 
 bool RouteAroundBarriers::preserveFirstStop() const
@@ -291,6 +298,7 @@ bool RouteAroundBarriers::preserveFirstStop() const
 void RouteAroundBarriers::setPreserveFirstStop(bool preserveFirstStop)
 {
   m_preserveFirstStop = preserveFirstStop;
+  emit preserveFirstStopChanged();
 }
 bool RouteAroundBarriers::preserveLastStop() const
 {
@@ -299,6 +307,7 @@ bool RouteAroundBarriers::preserveLastStop() const
 void RouteAroundBarriers::setPreserveLastStop(bool preserveLastStop)
 {
   m_preserveLastStop = preserveLastStop;
+  emit preserveLastStopChanged();
 }
 
 QAbstractListModel* RouteAroundBarriers::directions() const

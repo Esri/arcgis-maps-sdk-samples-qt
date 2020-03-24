@@ -20,7 +20,6 @@ import Esri.Samples 1.0
 import QtQuick.Layouts 1.11
 
 Item {
-
     readonly property int checkBoxPadding: 20
 
     // add a mapView component
@@ -34,7 +33,6 @@ Item {
 
             Rectangle {
                 id: backBox
-
                 z: 1
                 Layout.alignment: Qt.AlignLeft
                 Layout.margins: 3
@@ -45,11 +43,11 @@ Item {
 
                 GridLayout {
                     id: grid
+                    anchors.horizontalCenter: parent.horizontalCenter
                     rows: 4
                     columns: 1
                     rowSpacing: 10
                     columnSpacing: 2
-                    anchors.horizontalCenter: parent.horizontalCenter
                     Row {
                         id: buttonsRow
                         Layout.alignment: Qt.AlignHCenter
@@ -79,7 +77,6 @@ Item {
                                 sampleModel.addStops = false;
                             }
                         }
-
                     }
 
                     Column {
@@ -140,7 +137,6 @@ Item {
                 Layout.margins: 3
                 color: "lightgrey"
 
-                //! [RouteAroundBarriers cpp ListView directionsView]
                 ListView {
                     id: directionsView
                     anchors {
@@ -159,7 +155,6 @@ Item {
                     model: sampleModel.directions
                     delegate: directionDelegate
                 }
-                //! [RouteAroundBarriers cpp ListView directionsView]
             }
         }
     }
@@ -196,9 +191,6 @@ Item {
             }
         }
     }
-
-
-
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     RouteAroundBarriersSample {
