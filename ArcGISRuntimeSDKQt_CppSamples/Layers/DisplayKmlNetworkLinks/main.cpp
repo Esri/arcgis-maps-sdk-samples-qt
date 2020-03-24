@@ -35,14 +35,7 @@ int main(int argc, char *argv[])
   QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
   fmt.setVersion(3, 2);
   QSurfaceFormat::setDefaultFormat(fmt);
-#elif defined(Q_OS_MACOS)
-  // macOS requires 4.1 OpenGL Context
-  QSurfaceFormat fmt = QSurfaceFormat::defaultFormat();
-  fmt.setProfile(QSurfaceFormat::OpenGLContextProfile::CoreProfile);
-  fmt.setVersion(4, 1);
-  QSurfaceFormat::setDefaultFormat(fmt);
 #endif
-
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
   app.setApplicationName(QStringLiteral("DisplayKmlNetworkLinks - C++"));
