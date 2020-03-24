@@ -34,7 +34,6 @@
 #include "Polygon.h"
 #include "GeometryEngine.h"
 #include <QStringList>
-#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -148,7 +147,7 @@ void SpatialRelationships::connectSignals()
   connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawResult)
   {
     // Delete rawReslt when we leave scope.
-    QScopedPointer<IdentifyGraphicsOverlayResult> result(rawResult);
+    auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawResult);
     
     const QList<Graphic*> identifiedGraphics = result->graphics();
     if (identifiedGraphics.isEmpty())

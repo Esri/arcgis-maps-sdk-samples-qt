@@ -34,7 +34,6 @@
 #include <QString>
 #include <QUrl>
 #include <QMouseEvent>
-#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -94,7 +93,7 @@ void FeatureLayerSelection::connectSignals()
   // once the identify is done
   connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
   {
-    QScopedPointer<IdentifyLayerResult> identifyResult(rawIdentifyResult);
+    auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
 
     if (!identifyResult)
       return;

@@ -36,7 +36,6 @@
 #include <QUuid>
 #include <QMouseEvent>
 #include <QString>
-#include <QScopedPointer>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -112,7 +111,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* rawIdentifyResult)
   {
     // Deletes rawIdentifyResult instance when we leave scope.
-    QScopedPointer<IdentifyLayerResult> identifyResult(rawIdentifyResult);
+    auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
 
     if(!identifyResult)
     {
@@ -152,7 +151,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawFeatureQueryResult)
   {
     // Delete rawFeatureQueryResult pointer when we leave scope.
-    QScopedPointer<FeatureQueryResult> featureQueryResult(rawFeatureQueryResult);
+    auto featureQueryResult = std::unique_ptr<FeatureQueryResult>(rawFeatureQueryResult);
     
     FeatureIterator iter = featureQueryResult->iterator();
     if (iter.hasNext())

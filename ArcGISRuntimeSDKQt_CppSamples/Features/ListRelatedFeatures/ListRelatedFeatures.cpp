@@ -136,7 +136,7 @@ void ListRelatedFeatures::connectSignals()
         // connect to selectFeaturesCompleted signal
         connect(m_alaskaNationalParks, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawResult)
         {
-          QScopedPointer<FeatureQueryResult> result(rawResult);
+          auto result = std::unique_ptr<FeatureQueryResult>(rawResult);
           // The result could contain more than 1 feature, but we assume that
           // there is only ever 1. If more are given they are ignored. We
           // are only interested in the first (and only) feature.
