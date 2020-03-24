@@ -37,6 +37,7 @@
 #include <QScopedPointer>
 #include <QDir>
 #include <QtCore/qglobal.h>
+#include <memory>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>

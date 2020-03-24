@@ -37,6 +37,7 @@
 #include <QUrl>
 #include <QColor>
 #include <QList>
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 

@@ -32,6 +32,7 @@
 #include <QStringList>
 #include <QVariantList>
 #include <QList>
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 

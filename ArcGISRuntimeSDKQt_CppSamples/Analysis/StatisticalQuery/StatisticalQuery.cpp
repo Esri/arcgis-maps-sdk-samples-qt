@@ -32,6 +32,7 @@
 #include "StatisticRecordIterator.h"
 #include "Viewpoint.h"
 
+#include <memory>
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;

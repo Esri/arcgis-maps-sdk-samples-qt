@@ -36,6 +36,7 @@
 #include <QUuid>
 #include <QMouseEvent>
 #include <QString>
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 

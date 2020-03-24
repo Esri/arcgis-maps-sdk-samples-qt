@@ -34,6 +34,7 @@
 #include "Polygon.h"
 #include "GeometryEngine.h"
 #include <QStringList>
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 

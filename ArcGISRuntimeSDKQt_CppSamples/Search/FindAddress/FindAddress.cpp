@@ -30,6 +30,7 @@
 #include "GeocodeParameters.h"
 #include "Graphic.h"
 #include <QUrl>
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 
