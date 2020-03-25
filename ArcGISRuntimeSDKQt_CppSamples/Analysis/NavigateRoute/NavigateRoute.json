@@ -1,0 +1,8 @@
+{
+    "source" :  "NavigateRoute.qml",
+    "otherSourceFiles" :  [
+        "NavigateRoute.h",
+        "NavigateRoute.cpp"
+    ],
+    "name" : "Navigate route"
+}
