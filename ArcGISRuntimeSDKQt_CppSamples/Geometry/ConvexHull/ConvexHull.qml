@@ -34,7 +34,7 @@ Item {
             Button {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                text: "Convex Hull"
+                text: "Convex hull"
                 onClicked: {
                     model.displayConvexHull();
                 }
