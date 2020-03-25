@@ -70,17 +70,14 @@ Rectangle {
         GraphicsOverlay {
             id: graphicsOverlay
 
-            SimpleRenderer {
+            Graphic {
+                id: pointGraphic
                 PictureMarkerSymbol {
                     url: "qrc:/Samples/Search/ReverseGeocodeOnline/pin_circle_red.png"
                     height: 40
                     width: 40
                     offsetY: height/2
                 }
-            }
-
-            Graphic {
-                geometry: clickedPoint
             }
         }
 
@@ -103,6 +100,7 @@ Rectangle {
                         mapView.calloutData.title = address.substring(0, splitIndex < 0 ? undefined: splitIndex).trim();
                         mapView.calloutData.detail = address.substring(splitIndex + 1).trim();
                         callout.showCallout();
+                        pointGraphic.geometry = clickedPoint;
                     }
                 }
             }
