@@ -7,5 +7,6 @@
         <file>main.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
+        <file>orange_symbol.png</file>
     </qresource>
 </RCC>

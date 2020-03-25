@@ -41,12 +41,17 @@ class RouteAroundBarriers : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(bool addStops READ addStops WRITE setAddStops NOTIFY addStopsChanged)
-  Q_PROPERTY(bool addBarriers READ addBarriers WRITE setAddBarriers NOTIFY addBarriersChanged)
-  Q_PROPERTY(bool findBestSequence READ findBestSequence WRITE setFindBestSequence NOTIFY findBestSequenceChanged)
-  Q_PROPERTY(bool preserveFirstStop READ preserveFirstStop WRITE setPreserveFirstStop NOTIFY preserveFirstStopChanged)
-  Q_PROPERTY(bool preserveLastStop READ preserveLastStop WRITE setPreserveLastStop NOTIFY preserveLastStopChanged)
-  Q_PROPERTY(QAbstractListModel* directions READ directions NOTIFY directionsChanged)
+//  Q_PROPERTY(bool addBarriers READ addBarriers WRITE setAddBarriers NOTIFY addBarriersChanged)
+//  Q_PROPERTY(bool findBestSequence READ findBestSequence WRITE setFindBestSequence NOTIFY findBestSequenceChanged)
+//  Q_PROPERTY(bool preserveFirstStop READ preserveFirstStop WRITE setPreserveFirstStop NOTIFY preserveFirstStopChanged)
+//  Q_PROPERTY(bool preserveLastStop READ preserveLastStop WRITE setPreserveLastStop NOTIFY preserveLastStopChanged)
+
+  Q_PROPERTY(bool addStops MEMBER m_addStops NOTIFY addStopsChanged)
+  Q_PROPERTY(bool addBarriers MEMBER m_addBarriers NOTIFY addBarriersChanged)
+  Q_PROPERTY(bool findBestSequence MEMBER m_findBestSequence NOTIFY findBestSequenceChanged)
+  Q_PROPERTY(bool preserveFirstStop MEMBER m_preserveFirstStop NOTIFY preserveFirstStopChanged)
+  Q_PROPERTY(bool preserveLastStop MEMBER m_preserveLastStop NOTIFY preserveLastStopChanged)
+  Q_PROPERTY(QAbstractListModel* directions MEMBER m_directions NOTIFY directionsChanged)
 
 public:
   explicit RouteAroundBarriers(QObject* parent = nullptr);
@@ -70,18 +75,6 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  bool addStops() const;
-  void setAddStops(bool addStops);
-  bool addBarriers() const;
-  void setAddBarriers(bool addBarriers);
-  QAbstractListModel* directions() const;
-
-  bool findBestSequence() const;
-  void setFindBestSequence(bool findBestSequence);
-  bool preserveFirstStop() const;
-  void setPreserveFirstStop(bool preserveFirstStop);
-  bool preserveLastStop() const;
-  void setPreserveLastStop(bool preserveLastStop);
   void connectRouteSignals();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;

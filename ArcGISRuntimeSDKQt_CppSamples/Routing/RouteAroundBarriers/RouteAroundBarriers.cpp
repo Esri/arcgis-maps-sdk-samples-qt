@@ -60,7 +60,7 @@ QString defaultDataPath()
   return dataPath;
 }
 
-const QUrl pinUrl(defaultDataPath() + "/ArcGIS/Runtime/Data/symbol/orange_symbol.png");
+const QUrl pinUrl("qrc:/Samples/Routing/RouteAroundBarriers/orange_symbol.png");
 const QUrl routeTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route");
 }
 
@@ -164,6 +164,7 @@ void RouteAroundBarriers::connectRouteSignals()
     }
     else if (m_addBarriers)
     {
+      // add barrier to list
       const Polygon barrierPolygon = GeometryEngine::buffer(clickedPoint, 500);
       const PolygonBarrier barrier(barrierPolygon);
       m_barriersList << barrier;
@@ -255,62 +256,4 @@ void RouteAroundBarriers::clearDirections()
     m_directions = nullptr;
     emit directionsChanged();
   }
-}
-
-bool RouteAroundBarriers::addStops() const
-{
-  return m_addStops;
-}
-
-void RouteAroundBarriers::setAddStops(bool addStops)
-{
-  m_addStops = addStops;
-  emit addStopsChanged();
-}
-
-bool RouteAroundBarriers::addBarriers() const
-{
-  return m_addBarriers;
-}
-
-void RouteAroundBarriers::setAddBarriers(bool addBarriers)
-{
-  m_addBarriers = addBarriers;
-  emit addBarriersChanged();
-}
-
-bool RouteAroundBarriers::findBestSequence() const
-{
-  return m_findBestSequence;
-}
-
-void RouteAroundBarriers::setFindBestSequence(bool findBestSequence)
-{
-  m_findBestSequence = findBestSequence;
-  emit findBestSequenceChanged();
-}
-
-bool RouteAroundBarriers::preserveFirstStop() const
-{
-  return m_preserveFirstStop;
-}
-
-void RouteAroundBarriers::setPreserveFirstStop(bool preserveFirstStop)
-{
-  m_preserveFirstStop = preserveFirstStop;
-  emit preserveFirstStopChanged();
-}
-bool RouteAroundBarriers::preserveLastStop() const
-{
-  return m_preserveLastStop;
-}
-void RouteAroundBarriers::setPreserveLastStop(bool preserveLastStop)
-{
-  m_preserveLastStop = preserveLastStop;
-  emit preserveLastStopChanged();
-}
-
-QAbstractListModel* RouteAroundBarriers::directions() const
-{
-  return m_directions;
 }

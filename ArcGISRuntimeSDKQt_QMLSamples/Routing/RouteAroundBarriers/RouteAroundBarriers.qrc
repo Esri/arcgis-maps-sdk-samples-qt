@@ -3,6 +3,7 @@
         <file alias="sample.json">RouteAroundBarriers.json</file>        
         <file>RouteAroundBarriers.qml</file>
         <file>screenshot.png</file>
+        <file>orange_symbol.png</file>
         <file>README.md</file>
     </qresource>
 </RCC>

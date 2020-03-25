@@ -22,6 +22,10 @@ import QtQuick.Layouts 1.11
 Item {
     readonly property int checkBoxPadding: 20
 
+    ButtonGroup {
+        buttons: buttonsRow.children
+    }
+
     // add a mapView component
     MapView {
         id: view
@@ -55,26 +59,24 @@ Item {
                         padding: 5
                         Button {
                             id: stopButton
-                            text: "Add stops"
+                            text: "Add stop"
+                            highlighted: checked
                             onClicked: {
-                                highlighted = !highlighted;
-                                sampleModel.addStops = highlighted;
-
-                                // unset barriers button, if set
-                                barrierButton.highlighted = false;
-                                sampleModel.addBarriers = false;
+                                checked = true;
+                            }
+                            onCheckedChanged: {
+                                sampleModel.addStops = checked;
                             }
                         }
                         Button {
                             id: barrierButton
-                            text: "Add barriers"
+                            text: "Add barrier"
+                            highlighted: checked;
                             onClicked: {
-                                highlighted = !highlighted;
-                                sampleModel.addBarriers = highlighted;
-
-                                // unset stops button, if set
-                                stopButton.highlighted = false;
-                                sampleModel.addStops = false;
+                                checked = true;
+                            }
+                            onCheckedChanged: {
+                                sampleModel.addBarriers = checked;
                             }
                         }
                     }

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISExtras 1.1
+//import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.8
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.1
@@ -27,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/symbol"
+    readonly property url pinUrl: "qrc:/Samples/Routing/RouteAroundBarriers/orange_symbol.png"
     readonly property url routeTaskUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"
     readonly property int checkBoxPadding: 20
     property var stopsList: []
@@ -49,6 +49,11 @@ Rectangle {
         onRejected: {
             visible = false;
         }
+    }
+
+    ButtonGroup {
+        id: buttonGroup
+        buttons: buttonsRow.children
     }
 
     MapView {
@@ -76,7 +81,7 @@ Rectangle {
 
         PictureMarkerSymbol {
             id: pinSymbol
-            url: dataPath + "/orange_symbol.png"
+            url: pinUrl
         }
 
         GraphicsOverlay {
@@ -119,6 +124,8 @@ Rectangle {
             onCreateDefaultParametersStatusChanged: {
                 if (createDefaultParametersStatus === Enums.TaskStatusCompleted) {
                     routeParameters = createDefaultParametersResult;
+
+                    // set flags to return stops and directions
                     routeParameters.returnStops = true;
                     routeParameters.returnDirections = true;
                 }
@@ -126,6 +133,7 @@ Rectangle {
 
             function createAndDisplayRoute() {
                 if (stopsList.length > 1) {
+                    // clear the previous route, if it exists
                     routeOverlay.graphics.clear();
 
                     routeParameters.setStops(stopsList);
@@ -144,6 +152,7 @@ Rectangle {
                         return;
                     }
 
+                    // get the first route and add to graphics overlay
                     const route = solveRouteResult.routes[0];
                     const routeGeometry = route.routeGeometry;
                     const routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeGeometry});
@@ -158,9 +167,11 @@ Rectangle {
             const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
 
             if (addStops) {
+                // add stop to list of stops
                 const stopPoint = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: clickedPoint});
                 stopsList.push(stopPoint);
 
+                // create a marker symbol and graphics, and add the graphics to the graphics overlay
                 let textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {text: stopsList.length,
                                                                            color: "white",
                                                                            size: 16,
@@ -175,6 +186,7 @@ Rectangle {
                 stopsOverlay.graphics.append(stopGraphic);
                 routeTask.createAndDisplayRoute();
             } else if (addBarriers) {
+                // create barrier and add to list of barriers
                 const barrierPolygon = GeometryEngine.buffer(clickedPoint, 500);
                 const barrier = ArcGISRuntimeEnvironment.createObject("PolygonBarrier", {geometry: barrierPolygon});
                 barriersList.push(barrier);
@@ -215,24 +227,23 @@ Rectangle {
                         Button {
                             id: stopButton
                             text: "Add stops"
+                            highlighted: checked
                             onClicked: {
-                                highlighted = !highlighted;
-                                addStops = highlighted;
-
-                                barrierButton.highlighted = false;
-                                addBarriers = false;
+                                checked = true;
+                            }
+                            onCheckedChanged: {
+                                addStops = checked;
                             }
                         }
                         Button {
                             id: barrierButton
                             text: "Add barriers"
-
+                            highlighted: checked
                             onClicked: {
-                                highlighted = !highlighted;
-                                addBarriers = highlighted;
-
-                                stopButton.highlighted = false;
-                                addStops = false;
+                                checked = true;
+                            }
+                            onCheckedChanged: {
+                                addBarriers = checked;
                             }
                         }
                     }
