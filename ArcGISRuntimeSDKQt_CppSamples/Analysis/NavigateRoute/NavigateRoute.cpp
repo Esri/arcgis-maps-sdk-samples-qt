@@ -85,22 +85,20 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
 
   connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters defaultParameters)
   {
-    m_routeParameters = defaultParameters;
-
     // set values for parameters
-    m_routeParameters.setReturnStops(true);
-    m_routeParameters.setReturnDirections(true);
-    m_routeParameters.setReturnRoutes(true);
-    m_routeParameters.setOutputSpatialReference(SpatialReference::wgs84());
+    defaultParameters.setReturnStops(true);
+    defaultParameters.setReturnDirections(true);
+    defaultParameters.setReturnRoutes(true);
+    defaultParameters.setOutputSpatialReference(SpatialReference::wgs84());
 
     Stop stop1(conventionCenterPoint);
     Stop stop2(memorialPoint);
     Stop stop3(aerospaceMuseumPoint);
 
     QList<Stop> stopsList = {stop1, stop2, stop3};
-    m_routeParameters.setStops(stopsList);
+    defaultParameters.setStops(stopsList);
 
-    m_routeTask->solveRoute(m_routeParameters);
+    m_routeTask->solveRoute(defaultParameters);
   });
 
   connect(m_routeTask, &RouteTask::doneLoading, this, [this](Error error)
