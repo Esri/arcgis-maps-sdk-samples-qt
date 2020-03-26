@@ -71,8 +71,8 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  GraphicsOverlay* routeOverlay = new GraphicsOverlay(this);
-  m_mapView->graphicsOverlays()->append(routeOverlay);
+  m_routeOverlay = new GraphicsOverlay(this);
+  m_mapView->graphicsOverlays()->append(m_routeOverlay);
 
   m_routeTask = new RouteTask(routeTaskUrl, this);
 
@@ -81,6 +81,18 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
     if (routeResult.isEmpty())
       return;
     Route route = routeResult.routes()[0];
+
+    m_mapView->setViewpointGeometry(route.routeGeometry(), 100);
+
+    // create a graphic to show the route
+    Graphic* fullRouteGraphic = new Graphic(route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);
+
+    // Create a graphic to represent the route that's been traveled (initially empty).
+    Graphic* routeTraveledGraphic = new Graphic(this);
+    routeTraveledGraphic->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this));
+    m_routeOverlay->graphics()->append(fullRouteGraphic);
+    m_routeOverlay->graphics()->append(routeTraveledGraphic);
+
   });
 
   connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters defaultParameters)
@@ -118,9 +130,9 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
 
   // add graphics for the predefined stops
   SimpleMarkerSymbol* stopSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, Qt::red, 20, this);
-  routeOverlay->graphics()->append(new Graphic(conventionCenterPoint, stopSymbol, this));
-  routeOverlay->graphics()->append(new Graphic(memorialPoint, stopSymbol, this));
-  routeOverlay->graphics()->append(new Graphic(aerospaceMuseumPoint, stopSymbol, this));
+  m_routeOverlay->graphics()->append(new Graphic(conventionCenterPoint, stopSymbol, this));
+  m_routeOverlay->graphics()->append(new Graphic(memorialPoint, stopSymbol, this));
+  m_routeOverlay->graphics()->append(new Graphic(aerospaceMuseumPoint, stopSymbol, this));
 
   emit mapViewChanged();
 }

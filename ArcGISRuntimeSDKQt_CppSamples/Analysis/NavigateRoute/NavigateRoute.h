@@ -21,6 +21,7 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class GraphicsOverlay;
 class Map;
 class MapQuickView;
 class RouteTask;
@@ -48,6 +49,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
+  Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
