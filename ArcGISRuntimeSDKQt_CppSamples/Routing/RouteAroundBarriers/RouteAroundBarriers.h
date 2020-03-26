@@ -41,11 +41,6 @@ class RouteAroundBarriers : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-//  Q_PROPERTY(bool addBarriers READ addBarriers WRITE setAddBarriers NOTIFY addBarriersChanged)
-//  Q_PROPERTY(bool findBestSequence READ findBestSequence WRITE setFindBestSequence NOTIFY findBestSequenceChanged)
-//  Q_PROPERTY(bool preserveFirstStop READ preserveFirstStop WRITE setPreserveFirstStop NOTIFY preserveFirstStopChanged)
-//  Q_PROPERTY(bool preserveLastStop READ preserveLastStop WRITE setPreserveLastStop NOTIFY preserveLastStopChanged)
-
   Q_PROPERTY(bool addStops MEMBER m_addStops NOTIFY addStopsChanged)
   Q_PROPERTY(bool addBarriers MEMBER m_addBarriers NOTIFY addBarriersChanged)
   Q_PROPERTY(bool findBestSequence MEMBER m_findBestSequence NOTIFY findBestSequenceChanged)

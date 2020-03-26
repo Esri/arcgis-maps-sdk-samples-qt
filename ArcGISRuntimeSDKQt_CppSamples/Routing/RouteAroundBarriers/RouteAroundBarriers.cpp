@@ -44,22 +44,6 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-// helper method to get cross platform data path
-QString defaultDataPath()
-{
-  QString dataPath;
-
-#ifdef Q_OS_ANDROID
-  dataPath = "/sdcard";
-#elif defined Q_OS_IOS
-  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-#else
-  dataPath = QDir::homePath();
-#endif
-
-  return dataPath;
-}
-
 const QUrl pinUrl("qrc:/Samples/Routing/RouteAroundBarriers/orange_symbol.png");
 const QUrl routeTaskUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route");
 }
