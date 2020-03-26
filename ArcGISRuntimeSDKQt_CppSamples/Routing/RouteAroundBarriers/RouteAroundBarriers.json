@@ -1,0 +1,8 @@
+{
+    "source" :  "RouteAroundBarriers.qml",
+    "otherSourceFiles" :  [
+        "RouteAroundBarriers.h",
+        "RouteAroundBarriers.cpp"
+    ],
+    "name" : "Route around barriers"
+}

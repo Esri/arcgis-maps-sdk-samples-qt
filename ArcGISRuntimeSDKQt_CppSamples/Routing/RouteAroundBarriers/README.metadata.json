@@ -1,0 +1,35 @@
+{
+    "category": "Routing",
+    "description": "Find a route that reaches all stops without crossing any barriers.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "barriers",
+        "best sequence",
+        "directions",
+        "maneuver",
+        "network analysis",
+        "routing",
+        "sequence",
+        "stop order",
+        "stops"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "DirectionManeuverListModel",
+        "PolygonBarrier",
+        "Route",
+        "RouteParameters",
+        "RouteResult",
+        "RouteTask",
+        "Stop"
+    ],
+    "snippets": [
+        "RouteAroundBarriers.cpp",
+        "RouteAroundBarriers.h",
+        "RouteAroundBarriers.qml"
+    ],
+    "title": "Route around barriers"
+}
