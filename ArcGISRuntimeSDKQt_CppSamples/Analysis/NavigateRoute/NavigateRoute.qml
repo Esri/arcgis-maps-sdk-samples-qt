@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
+import QtQuick.Layouts 1.11
 
 Item {
 
@@ -24,6 +25,37 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        Rectangle {
+            id: backBox
+            z: 1
+            width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 200 : 300
+            height: 200
+            color: "#FBFBFB"
+            border.color: "black"
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.margins: 20
+
+            RowLayout {
+                anchors {
+                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
+                    margins: 5
+                }
+            Button {
+                text: "Navigate"
+                enabled: model.navigationButtonEnabled
+                onClicked: {
+                    model.startNavigation();
+                }
+            }
+            Button {
+                text: "Recenter"
+                enabled: model.navigationButtonEnabled
+            }
+            }
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view

@@ -20,15 +20,21 @@
 
 #include "NavigateRoute.h"
 
+#include "DefaultLocationDataSource.h"
 #include "GraphicsOverlay.h"
+#include "Location"
+#include "LocationDisplay.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Point.h"
 #include "Route.h"
 #include "RouteResult.h"
 #include "RouteTask.h"
+#include "RouteTracker.h"
 #include "SimpleMarkerSymbol.h"
+#include "SimulatedLocationDataSource.h"
 #include "Stop.h"
+#include "VoiceGuidance.h"
 
 #include <QList>
 #include <QUrl>
@@ -80,12 +86,13 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
   {
     if (routeResult.isEmpty())
       return;
-    Route route = routeResult.routes()[0];
+    m_routeResult = routeResult;
+    m_route = m_routeResult.routes()[0];
 
-    m_mapView->setViewpointGeometry(route.routeGeometry(), 100);
+    m_mapView->setViewpointGeometry(m_route.routeGeometry(), 100);
 
     // create a graphic to show the route
-    Graphic* fullRouteGraphic = new Graphic(route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);
+    Graphic* fullRouteGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);
 
     // Create a graphic to represent the route that's been traveled (initially empty).
     Graphic* routeTraveledGraphic = new Graphic(this);
@@ -93,6 +100,8 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
     m_routeOverlay->graphics()->append(fullRouteGraphic);
     m_routeOverlay->graphics()->append(routeTraveledGraphic);
 
+    m_navigationButtonEnabled = true;
+    emit navigationButtonChanged();
   });
 
   connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters defaultParameters)
@@ -118,7 +127,6 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
     if (error.isEmpty())
     {
       m_routeTask->createDefaultParameters();
-      qDebug("loaded");
     }
     else
     {
@@ -135,4 +143,51 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
   m_routeOverlay->graphics()->append(new Graphic(aerospaceMuseumPoint, stopSymbol, this));
 
   emit mapViewChanged();
+}
+
+bool NavigateRoute::navigationButtonEnabled() const
+{
+  return m_navigationButtonEnabled;
+}
+
+void NavigateRoute::startNavigation()
+{
+  // disable the navigation button
+  m_navigationButtonEnabled = false;
+  emit navigationButtonChanged();
+
+  // get the directions for the route
+  m_directions = m_route.directionManeuvers(this);
+
+  // create a route tracker
+  m_routeTracker = new RouteTracker(m_routeResult, 0, this);
+  //m_routeTracker->enableRerouting(m_routeTask, )
+
+//  connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* voiceGuidance)
+//  {
+//    qDebug("new voice guidance");
+//  });
+
+  connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
+  {
+    // enable recenter button
+  });
+
+  connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this](Location location)
+  {});
+
+  // turn on map view's navigation mode
+  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
+
+  // MyMapView.LocationDisplay.AutoPanModeChanged += AutoPanModeChanged;
+
+  // Add a data source for the location display.
+  SimulatedLocationDataSource* simulatedLocationDataSource = new SimulatedLocationDataSource(this);
+  simulatedLocationDataSource->setLocationsWithPolyline(m_route.routeGeometry());
+  m_mapView->locationDisplay()->setDataSource(simulatedLocationDataSource);
+
+//  m_mapView->locationDisplay()->setDataSource(new SimulatedLocationDataSource(this));
+
+//  m_mapView->locationDisplay()->setDataSource(new SimulatedLocationDataSource(this));
+
 }

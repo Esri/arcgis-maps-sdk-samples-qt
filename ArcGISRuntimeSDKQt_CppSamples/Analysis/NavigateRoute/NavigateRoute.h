@@ -17,6 +17,9 @@
 #ifndef NAVIGATEROUTE_H
 #define NAVIGATEROUTE_H
 
+#include "Route.h"
+#include "RouteResult.h"
+
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -25,6 +28,7 @@ class GraphicsOverlay;
 class Map;
 class MapQuickView;
 class RouteTask;
+class RouteTracker;
 }
 }
 
@@ -35,6 +39,7 @@ class NavigateRoute : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(bool navigationButtonEnabled READ navigationButtonEnabled NOTIFY navigationButtonChanged)
 
 public:
   explicit NavigateRoute(QObject* parent = nullptr);
@@ -42,18 +47,26 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void startNavigation();
+
 signals:
   void mapViewChanged();
+  void navigationButtonChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  bool navigationButtonEnabled() const;
 
   Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::RouteTask* m_routeTask = nullptr;
-
+  Esri::ArcGISRuntime::Route m_route;
+  Esri::ArcGISRuntime::RouteResult m_routeResult;
+  Esri::ArcGISRuntime::RouteTracker* m_routeTracker = nullptr;
+  QAbstractListModel* m_directions = nullptr;
+  bool m_navigationButtonEnabled = false;
 };
 
 #endif // NAVIGATEROUTE_H
