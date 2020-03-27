@@ -74,7 +74,7 @@ OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
     return;
   }
 
-  const QString fileLocation = QString("%1/ArcGIS/Runtime/Data/tpk/san_diego/streetmap_SD.tpk").arg(defaultDataPath());
+  const QString fileLocation = folderLocation + QString("/streetmap_SD.tpk");
   TileCache* tileCache = new TileCache(fileLocation, this);
   ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(tileCache, this);
   Basemap* basemap = new Basemap(tiledLayer, this);
@@ -85,8 +85,8 @@ OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
   SimpleRenderer* routeRenderer = new SimpleRenderer(lineSymbol, this);
   m_routeOverlay->setRenderer(routeRenderer);
 
-  const QString geodatabaseLocation = QString("%1/ArcGIS/Runtime/Data/tpk/san_diego/sandiego.geodatabase").arg(defaultDataPath());
-  m_routeTask = new RouteTask(geodatabaseLocation, "Streets_ND",this);
+  const QString geodatabaseLocation = folderLocation + QString("/sandiego.geodatabase");
+  m_routeTask = new RouteTask(geodatabaseLocation, "Streets_ND", this);
   m_routeTask->load();
 }
 
