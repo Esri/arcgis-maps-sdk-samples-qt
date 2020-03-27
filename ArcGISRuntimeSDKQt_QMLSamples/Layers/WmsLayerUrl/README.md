@@ -13,7 +13,6 @@ WMS is an OGC standard for displaying maps from images that are dynamically-gene
 The map will load automatically when the sample starts.
 
 ## How it works
-A `WmsLayer` is declared inside a `Map` by setting its URL and layerNames properties. The URL must be the URL to the "GetCapabilities" endpoint of the WMS Service. Alternatively, the layer could be constructed by setting the layerInfos property.
 
 1. Create a `WmsLayer` specifying the URL of the service and the names of layers you want to display.
     * **Note**: The name comes from the `Name` property, not the `Title` property. On many services, the title is human-readable while the name is a numeric identifier.
