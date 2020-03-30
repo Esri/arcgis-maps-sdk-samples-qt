@@ -37,24 +37,37 @@ Item {
             anchors.left: parent.left
             anchors.margins: 20
 
-            RowLayout {
-                anchors {
-                    top: parent.top
-                    horizontalCenter: parent.horizontalCenter
-                    margins: 5
+
+                RowLayout {
+                    anchors {
+                        top: parent.top
+                        horizontalCenter: parent.horizontalCenter
+                        margins: 5
+                    }
+                    Button {
+                        text: "Navigate"
+                        enabled: model.navigationButtonEnabled
+                        onClicked: {
+                            model.startNavigation();
+                        }
+                    }
+                    Button {
+                        text: "Recenter"
+                        enabled: model.navigationButtonEnabled
+                    }
                 }
-            Button {
-                text: "Navigate"
-                enabled: model.navigationButtonEnabled
-                onClicked: {
-                    model.startNavigation();
+
+                Row {
+                    anchors {
+                        left: parent.left
+                        top: parent.top
+                    }
+                    Text {
+                        text: model.textString
+                    }
                 }
-            }
-            Button {
-                text: "Recenter"
-                enabled: model.navigationButtonEnabled
-            }
-            }
+
+
         }
     }
 

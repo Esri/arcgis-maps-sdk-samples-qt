@@ -29,10 +29,12 @@ class Map;
 class MapQuickView;
 class RouteTask;
 class RouteTracker;
+class SimulatedLocationDataSource;
 }
 }
 
 #include <QObject>
+#include <QString>
 
 class NavigateRoute : public QObject
 {
@@ -40,6 +42,7 @@ class NavigateRoute : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool navigationButtonEnabled READ navigationButtonEnabled NOTIFY navigationButtonChanged)
+  Q_PROPERTY(QString textString READ textString NOTIFY textStringChanged)
 
 public:
   explicit NavigateRoute(QObject* parent = nullptr);
@@ -52,11 +55,13 @@ public:
 signals:
   void mapViewChanged();
   void navigationButtonChanged();
+  void textStringChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   bool navigationButtonEnabled() const;
+  QString textString() const;
 
   Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -65,8 +70,10 @@ private:
   Esri::ArcGISRuntime::Route m_route;
   Esri::ArcGISRuntime::RouteResult m_routeResult;
   Esri::ArcGISRuntime::RouteTracker* m_routeTracker = nullptr;
+  Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
   QAbstractListModel* m_directions = nullptr;
   bool m_navigationButtonEnabled = false;
+  QString m_textString = "";
 };
 
 #endif // NAVIGATEROUTE_H

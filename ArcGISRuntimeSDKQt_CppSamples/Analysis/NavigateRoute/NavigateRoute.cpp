@@ -21,11 +21,14 @@
 #include "NavigateRoute.h"
 
 #include "DefaultLocationDataSource.h"
+//#include "DestinationStatus
+#include "GeometryEngine.h"
 #include "GraphicsOverlay.h"
-#include "Location"
+#include "Location.h"
 #include "LocationDisplay.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "NavigationTypes.h"
 #include "Point.h"
 #include "Route.h"
 #include "RouteResult.h"
@@ -34,9 +37,13 @@
 #include "SimpleMarkerSymbol.h"
 #include "SimulatedLocationDataSource.h"
 #include "Stop.h"
+#include "TrackingDistance.h"
+#include "TrackingProgress.h"
+#include "TrackingStatus.h"
 #include "VoiceGuidance.h"
 
 #include <QList>
+#include <QGeoPositionInfo>
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
@@ -163,31 +170,62 @@ void NavigateRoute::startNavigation()
   m_routeTracker = new RouteTracker(m_routeResult, 0, this);
   //m_routeTracker->enableRerouting(m_routeTask, )
 
-//  connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* voiceGuidance)
-//  {
-//    qDebug("new voice guidance");
-//  });
+  connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* voiceGuidance)
+  {
+    qDebug("new voice guidance");
+    qDebug() << voiceGuidance->text();
+  });
+
+  connect(m_routeTracker, &RouteTracker::trackingStatusChanged, this, [this](TrackingStatus* trackingStatus)
+  {
+    QString textString("Route status: \n");
+    if (trackingStatus->destinationStatus() == DestinationStatus::NotReached || trackingStatus->destinationStatus() == DestinationStatus::Approaching)
+    {
+      textString += "Distance remaining: " + trackingStatus->routeProgress()->remainingDistance()->displayText() + "km. \n";
+    }
+    else if (trackingStatus->destinationStatus() == DestinationStatus::Reached)
+    {
+      textString += "Destination reached.\n";
+    }
+    m_textString = textString;
+    emit textStringChanged();
+  });
 
   connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
   {
     // enable recenter button
   });
 
-  connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this](Location location)
-  {});
+  connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this](const Location& location)
+  {
+//    m_routeTracker->trackLocation(location);
+    Point projectedLocation = GeometryEngine::project(location.position(), SpatialReference::wgs84());
+    QGeoPositionInfo tempLocation(QGeoCoordinate(projectedLocation.y(), projectedLocation.x()), QDateTime::currentDateTime());
+    m_routeTracker->trackLocation(tempLocation);
+  });
+
+  connect(m_routeTracker, &RouteTracker::trackLocationCompleted, this, [this](QUuid)
+  {
+    qDebug("completed");
+    m_routeTracker->generateVoiceGuidance();
+  });
 
   // turn on map view's navigation mode
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
 
-  // MyMapView.LocationDisplay.AutoPanModeChanged += AutoPanModeChanged;
-
   // Add a data source for the location display.
-  SimulatedLocationDataSource* simulatedLocationDataSource = new SimulatedLocationDataSource(this);
-  simulatedLocationDataSource->setLocationsWithPolyline(m_route.routeGeometry());
-  m_mapView->locationDisplay()->setDataSource(simulatedLocationDataSource);
+  m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
+  m_simulatedLocationDataSource->setLocationsWithPolyline(m_route.routeGeometry());
+  m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
+  m_simulatedLocationDataSource->start();
 
 //  m_mapView->locationDisplay()->setDataSource(new SimulatedLocationDataSource(this));
 
 //  m_mapView->locationDisplay()->setDataSource(new SimulatedLocationDataSource(this));
 
+}
+
+QString NavigateRoute::textString() const
+{
+  return m_textString;
 }
