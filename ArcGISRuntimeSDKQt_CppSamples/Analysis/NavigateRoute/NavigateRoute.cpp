@@ -21,7 +21,7 @@
 #include "NavigateRoute.h"
 
 #include "DefaultLocationDataSource.h"
-//#include "DestinationStatus
+#include "DirectionManeuverListModel.h"
 #include "GeometryEngine.h"
 #include "GraphicsOverlay.h"
 #include "Location.h"
@@ -44,6 +44,8 @@
 
 #include <QList>
 #include <QGeoPositionInfo>
+#include <QTextToSpeech>
+#include <QTime>
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
@@ -59,6 +61,9 @@ NavigateRoute::NavigateRoute(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::navigationVector(this), this))
 {
+  m_routeOverlay = new GraphicsOverlay(this);
+  m_routeTask = new RouteTask(routeTaskUrl, this);
+  m_speaker = new QTextToSpeech(this);
 }
 
 NavigateRoute::~NavigateRoute() = default;
@@ -84,10 +89,7 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  m_routeOverlay = new GraphicsOverlay(this);
   m_mapView->graphicsOverlays()->append(m_routeOverlay);
-
-  m_routeTask = new RouteTask(routeTaskUrl, this);
 
   connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
   {
@@ -99,13 +101,13 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
     m_mapView->setViewpointGeometry(m_route.routeGeometry(), 100);
 
     // create a graphic to show the route
-    Graphic* fullRouteGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);
+    m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);
 
-    // Create a graphic to represent the route that's been traveled (initially empty).
-    Graphic* routeTraveledGraphic = new Graphic(this);
-    routeTraveledGraphic->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this));
-    m_routeOverlay->graphics()->append(fullRouteGraphic);
-    m_routeOverlay->graphics()->append(routeTraveledGraphic);
+    // create a graphic to represent the route that's been traveled (initially empty).
+    m_routeTraveledGraphic = new Graphic(this);
+    m_routeTraveledGraphic->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this));
+    m_routeOverlay->graphics()->append(m_routeAheadGraphic);
+    m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
 
     m_navigationButtonEnabled = true;
     emit navigationButtonChanged();
@@ -157,6 +159,11 @@ bool NavigateRoute::navigationButtonEnabled() const
   return m_navigationButtonEnabled;
 }
 
+bool NavigateRoute::recenterButtonEnabled() const
+{
+  return m_recenterButtonEnabled;
+}
+
 void NavigateRoute::startNavigation()
 {
   // disable the navigation button
@@ -172,8 +179,7 @@ void NavigateRoute::startNavigation()
 
   connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* voiceGuidance)
   {
-    qDebug("new voice guidance");
-    qDebug() << voiceGuidance->text();
+    m_speaker->say(voiceGuidance->text());
   });
 
   connect(m_routeTracker, &RouteTracker::trackingStatusChanged, this, [this](TrackingStatus* trackingStatus)
@@ -181,11 +187,32 @@ void NavigateRoute::startNavigation()
     QString textString("Route status: \n");
     if (trackingStatus->destinationStatus() == DestinationStatus::NotReached || trackingStatus->destinationStatus() == DestinationStatus::Approaching)
     {
-      textString += "Distance remaining: " + trackingStatus->routeProgress()->remainingDistance()->displayText() + "km. \n";
+      textString += "Distance remaining: " + trackingStatus->routeProgress()->remainingDistance()->displayText() + " " +
+          trackingStatus->routeProgress()->remainingDistance()->displayTextUnits().pluralDisplayName() + "\n";
+      QTime time = QTime::fromMSecsSinceStartOfDay(trackingStatus->routeProgress()->remainingTime() * 60 * 1000); // convert time to milliseconds
+      textString += "Time remaining: " + time.toString("hh:mm:ss") + "\n";
+
+      // display next direction
+      if (trackingStatus->currentManeuverIndex() + 1 < dynamic_cast<DirectionManeuverListModel*>(m_directions)->directionManeuvers().length())
+      {
+        textString += "Next direction: "  + dynamic_cast<DirectionManeuverListModel*>(m_directions)->directionManeuvers()[trackingStatus->currentManeuverIndex() + 1].directionText() + "\n";
+      }
+      m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
+      m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());
     }
     else if (trackingStatus->destinationStatus() == DestinationStatus::Reached)
     {
       textString += "Destination reached.\n";
+
+      // set the route geometries to reflect the completed route
+      m_routeAheadGraphic->setGeometry(Geometry());
+      m_routeTraveledGraphic->setGeometry(trackingStatus->routeResult().routes()[0].routeGeometry());
+
+      // navigate to next stop, if available
+      if (trackingStatus->remainingDestinationCount() > 1)
+      {
+        m_routeTracker->switchToNextDestination();
+      }
     }
     m_textString = textString;
     emit textStringChanged();
@@ -193,12 +220,12 @@ void NavigateRoute::startNavigation()
 
   connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
   {
-    // enable recenter button
+    m_recenterButtonEnabled = autoPanMode != LocationDisplayAutoPanMode::Navigation;
+    emit recenterButtonChanged();
   });
 
   connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this](const Location& location)
   {
-//    m_routeTracker->trackLocation(location);
     Point projectedLocation = GeometryEngine::project(location.position(), SpatialReference::wgs84());
     QGeoPositionInfo tempLocation(QGeoCoordinate(projectedLocation.y(), projectedLocation.x()), QDateTime::currentDateTime());
     m_routeTracker->trackLocation(tempLocation);
@@ -206,7 +233,6 @@ void NavigateRoute::startNavigation()
 
   connect(m_routeTracker, &RouteTracker::trackLocationCompleted, this, [this](QUuid)
   {
-    qDebug("completed");
     m_routeTracker->generateVoiceGuidance();
   });
 
@@ -218,14 +244,14 @@ void NavigateRoute::startNavigation()
   m_simulatedLocationDataSource->setLocationsWithPolyline(m_route.routeGeometry());
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
   m_simulatedLocationDataSource->start();
-
-//  m_mapView->locationDisplay()->setDataSource(new SimulatedLocationDataSource(this));
-
-//  m_mapView->locationDisplay()->setDataSource(new SimulatedLocationDataSource(this));
-
 }
 
 QString NavigateRoute::textString() const
 {
   return m_textString;
+}
+
+void NavigateRoute::recenterMap()
+{
+  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
 }

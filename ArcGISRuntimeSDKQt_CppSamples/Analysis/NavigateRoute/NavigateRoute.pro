@@ -23,6 +23,7 @@ CONFIG += c++14
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
+QT += texttospeech
 
 TEMPLATE = app
 TARGET = NavigateRoute

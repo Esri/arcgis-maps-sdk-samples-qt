@@ -24,6 +24,7 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Graphic;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
@@ -35,6 +36,7 @@ class SimulatedLocationDataSource;
 
 #include <QObject>
 #include <QString>
+#include <QTextToSpeech>
 
 class NavigateRoute : public QObject
 {
@@ -42,6 +44,7 @@ class NavigateRoute : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(bool navigationButtonEnabled READ navigationButtonEnabled NOTIFY navigationButtonChanged)
+  Q_PROPERTY(bool recenterButtonEnabled READ recenterButtonEnabled NOTIFY recenterButtonChanged)
   Q_PROPERTY(QString textString READ textString NOTIFY textStringChanged)
 
 public:
@@ -51,18 +54,23 @@ public:
   static void init();
 
   Q_INVOKABLE void startNavigation();
+  Q_INVOKABLE void recenterMap();
 
 signals:
   void mapViewChanged();
   void navigationButtonChanged();
+  void recenterButtonChanged();
   void textStringChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   bool navigationButtonEnabled() const;
+  bool recenterButtonEnabled() const;
   QString textString() const;
 
+  Esri::ArcGISRuntime::Graphic* m_routeAheadGraphic = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_routeTraveledGraphic = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -73,7 +81,9 @@ private:
   Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
   QAbstractListModel* m_directions = nullptr;
   bool m_navigationButtonEnabled = false;
+  bool m_recenterButtonEnabled = false;
   QString m_textString = "";
+  QTextToSpeech* m_speaker = nullptr;
 };
 
 #endif // NAVIGATEROUTE_H

@@ -37,37 +37,43 @@ Item {
             anchors.left: parent.left
             anchors.margins: 20
 
-
-                RowLayout {
-                    anchors {
-                        top: parent.top
-                        horizontalCenter: parent.horizontalCenter
-                        margins: 5
-                    }
-                    Button {
-                        text: "Navigate"
-                        enabled: model.navigationButtonEnabled
-                        onClicked: {
-                            model.startNavigation();
-                        }
-                    }
-                    Button {
-                        text: "Recenter"
-                        enabled: model.navigationButtonEnabled
+            RowLayout {
+                id: buttonRow
+                anchors {
+                    top: parent.top
+                    horizontalCenter: parent.horizontalCenter
+                    margins: 5
+                }
+                Button {
+                    text: "Navigate"
+                    enabled: model.navigationButtonEnabled
+                    onClicked: {
+                        model.startNavigation();
                     }
                 }
-
-                Row {
-                    anchors {
-                        left: parent.left
-                        top: parent.top
-                    }
-                    Text {
-                        text: model.textString
+                Button {
+                    text: "Recenter"
+                    enabled: model.recenterButtonEnabled
+                    onClicked: {
+                        model.recenterMap();
                     }
                 }
+            }
 
-
+            Rectangle {
+                anchors {
+                    top: buttonRow.bottom
+                    left: parent.left
+                    margins: 5
+                }
+                width: parent.width
+                Text {
+                    padding: 5
+                    width: parent.width
+                    wrapMode: Text.Wrap
+                    text: model.textString
+                }
+            }
         }
     }
 
