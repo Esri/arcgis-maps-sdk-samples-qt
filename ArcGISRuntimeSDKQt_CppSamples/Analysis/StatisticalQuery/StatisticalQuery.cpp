@@ -32,6 +32,7 @@
 #include "StatisticRecordIterator.h"
 #include "Viewpoint.h"
 
+#include <memory>
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
@@ -83,7 +84,7 @@ void StatisticalQuery::componentComplete()
       return;
 
     // Delete rawResult when we leave local scope.
-    QScopedPointer<StatisticsQueryResult> result(rawResult);
+    auto result = std::unique_ptr<StatisticsQueryResult>(rawResult);
 
     // Iterate through the results
     QObject parent;

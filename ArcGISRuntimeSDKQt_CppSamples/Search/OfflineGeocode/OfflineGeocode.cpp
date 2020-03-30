@@ -37,6 +37,7 @@
 #include <QScopedPointer>
 #include <QDir>
 #include <QtCore/qglobal.h>
+#include <memory>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
@@ -240,7 +241,7 @@ void OfflineGeocode::connectSignals()
   connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
     // Delete rawIdentifyResult when we leave scope.
-    QScopedPointer<IdentifyGraphicsOverlayResult> identifyResult(rawIdentifyResult);
+    auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
     
     if (!identifyResult)
       return;

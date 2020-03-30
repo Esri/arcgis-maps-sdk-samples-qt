@@ -37,7 +37,7 @@
 #include <QUrl>
 #include <QColor>
 #include <QList>
-#include <QScopedPointer>
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -96,7 +96,7 @@ void FeatureLayerQuery::connectSignals()
     // iterate over the query results once the query is done
     connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
     {
-        QScopedPointer<FeatureQueryResult> queryResult(rawQueryResult);
+      auto queryResult = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
 
         if (queryResult && !queryResult->iterator().hasNext())
         {

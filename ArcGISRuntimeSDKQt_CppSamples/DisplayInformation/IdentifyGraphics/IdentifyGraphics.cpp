@@ -32,7 +32,7 @@
 #include <QMouseEvent>
 #include <QList>
 #include <QUuid>
-#include <QScopedPointer>
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -112,7 +112,7 @@ void IdentifyGraphics::connectSignals()
   connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
     // Delete rawIdentifyResult on leaving scope.
-    QScopedPointer<IdentifyGraphicsOverlayResult> identifyResult(rawIdentifyResult);
+    auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
     
     if (identifyResult)
     {

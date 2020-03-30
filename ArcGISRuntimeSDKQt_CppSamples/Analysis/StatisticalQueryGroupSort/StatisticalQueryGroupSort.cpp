@@ -32,7 +32,7 @@
 #include <QStringList>
 #include <QVariantList>
 #include <QList>
-#include <QScopedPointer>
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -92,7 +92,7 @@ void StatisticalQueryGroupSort::connectSignals()
   connect(m_featureTable, &ServiceFeatureTable::queryStatisticsCompleted, this, [this](QUuid, StatisticsQueryResult* rawResult)
   {
     // Delete rawResult when we leave local scope.
-    QScopedPointer<StatisticsQueryResult> result(rawResult);
+    auto result = std::unique_ptr<StatisticsQueryResult>(rawResult);
 
     if (!result)    
       return;    
@@ -105,7 +105,7 @@ void StatisticalQueryGroupSort::connectSignals()
     while (iter.hasNext())
     {
       // get the statistic record
-      StatisticRecord* record = iter.next(result.data());
+      StatisticRecord* record = iter.next();
 
       // get the group string
       QStringList sectionStrings;
