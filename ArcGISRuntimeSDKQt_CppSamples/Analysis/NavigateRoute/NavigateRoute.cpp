@@ -218,6 +218,7 @@ void NavigateRoute::startNavigation()
     emit textStringChanged();
   });
 
+  // enable "recenter" button when location display is moved from nagivation mode
   connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
   {
     m_recenterButtonEnabled = autoPanMode != LocationDisplayAutoPanMode::Navigation;
@@ -239,7 +240,7 @@ void NavigateRoute::startNavigation()
   // turn on map view's navigation mode
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
 
-  // Add a data source for the location display.
+  // add a data source for the location display
   m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
   m_simulatedLocationDataSource->setLocationsWithPolyline(m_route.routeGeometry());
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
