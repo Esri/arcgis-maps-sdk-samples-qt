@@ -76,6 +76,7 @@ Rectangle {
         onIdentifyLayerStatusChanged: {
             if (identifyLayerStatus === Enums.TaskStatusCompleted) {
                 if (identifyLayerResult.geoElements.length < 1) {
+                    callout.dismiss();
                     return;
                 }
                 calloutText = identifyLayerResult.geoElements[0].balloonContent;

@@ -73,6 +73,13 @@ void IdentifyKmlFeatures::setMapView(MapQuickView* mapView)
   {
     auto result = std::unique_ptr<IdentifyLayerResult>(rawResult);
 
+    // if not clicked on KML feature then close callout
+    if (result->geoElements().length() < 1)
+    {
+      m_mapView->calloutData()->setVisible(false);
+      return;
+    }
+
     // find the first geoElement that is a KML placemark
     for (GeoElement* geoElement : result->geoElements())
     {
