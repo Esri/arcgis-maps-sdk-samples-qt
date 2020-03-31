@@ -1,4 +1,4 @@
-# Change feature layer renderer
+# Feature layer change renderer
 
 Change the appearance of a feature layer with a renderer.
 
