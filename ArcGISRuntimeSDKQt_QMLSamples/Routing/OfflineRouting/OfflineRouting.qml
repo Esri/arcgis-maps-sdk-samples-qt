@@ -89,6 +89,7 @@ Rectangle {
             id: boundaryOverlay
             Graphic {
                 Envelope {
+                    id: routableArea
                     xMin: -13045352.223196
                     xMax: -13024588.857198
                     yMin: 3864910.900750
@@ -196,6 +197,10 @@ Rectangle {
         onMouseClicked: {
             if (!selectedGraphic) {
                 let clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
+                if (!GeometryEngine.within(clickedPoint, routableArea)) {
+                    console.warn("Outside of routable area");
+                    return;
+                }
                 let stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopLabel});
                 stopsOverlay.graphics.append(stopGraphic);
                 routeTask.findRoute();
@@ -208,6 +213,10 @@ Rectangle {
         onMousePositionChanged: {
             mouse.accepted = !!selectedGraphic; // whether to pass mouse event to MapView
             if (selectedGraphic) {
+                if (!GeometryEngine.within(mapView.screenToLocation(mouse.x, mouse.y), routableArea)) {
+                    console.warn("Outside of routable area");
+                    return;
+                }
                 selectedGraphic.geometry = mapView.screenToLocation(mouse.x, mouse.y);
                 routeTask.findRoute();
             }

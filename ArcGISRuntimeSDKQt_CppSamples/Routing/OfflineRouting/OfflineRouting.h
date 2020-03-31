@@ -17,6 +17,7 @@
 #ifndef OFFLINEROUTING_H
 #define OFFLINEROUTING_H
 
+#include "Envelope.h"
 #include "RouteParameters.h"
 #include "TaskWatcher.h"
 
@@ -76,6 +77,7 @@ private:
   Esri::ArcGISRuntime::RouteParameters m_routeParameters;
   Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
   int m_travelModeIndex = -1;
+  Esri::ArcGISRuntime::Envelope m_routableArea;
 };
 
 #endif // OFFLINEROUTING_H
