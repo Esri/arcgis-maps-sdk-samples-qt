@@ -121,8 +121,6 @@ void DisplayScenesInTabletopAR::setSceneView(SceneQuickView* sceneView)
   // Connect the mouse clicked events.
   connect(m_sceneView, &SceneQuickView::mouseClicked, this, &DisplayScenesInTabletopAR::onMouseClicked);
 
-  m_sceneView->setArcGISScene(m_scene);
-
   emit sceneViewChanged();
 }
 
