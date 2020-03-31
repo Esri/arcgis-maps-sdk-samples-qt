@@ -18,6 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.8
 import QtQuick.Layouts 1.11
+import QtPositioning 5.2
 
 Rectangle {
     id: rootRectangle
@@ -35,17 +36,20 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
-//        property var m_locationDisplay: mapView.locationDisplay
-
         locationDisplay.onLocationChanged: {
             /*
     Point projectedLocation = GeometryEngine::project(location.position(), SpatialReference::wgs84());
     QGeoPositionInfo tempLocation(QGeoCoordinate(projectedLocation.y(), projectedLocation.x()), QDateTime::currentDateTime());
     m_routeTracker->trackLocation(tempLocation);
 */
-            var projectedLocation = GeometryEngine.project(mapView.locationDisplay.location, SpatialReference.createWgs84());
-            var tempLocation = new QGeoPositionInfo(new QGeoCoordinate(projectedLocation.y(), projectedLocation.x()), QDateTime.currentDateTime()); //new QGeoCoordinate(projectedLocation.y(), projectedLocation.x())
-            routeTracker.trackLocation(mapView.locationDisplay.location);
+            console.log(typeof(mapView.locationDisplay.location));
+//            var projectedLocation = GeometryEngine.project(mapView.locationDisplay.location, SpatialReference.createWgs84());
+//            QtPositioning.coordinate(projectedLocation.y(), projectedLocation.x());
+//            new Date();
+//            var tempLocation = new QGeoPositionInfo(QtPositioning.coordinate(projectedLocation.y(), projectedLocation.x()), new Date());
+//            routeTracker.trackLocation(tempLocation);
+//            var tempLocation = new QGeoPositionInfo(new QGeoCoordinate(projectedLocation.y(), projectedLocation.x()), QDateTime.currentDateTime());
+//            routeTracker.trackLocation(mapView.locationDisplay.location);
         }
 
         Map {
