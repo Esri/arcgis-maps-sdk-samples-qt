@@ -36,20 +36,28 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
+//        Binding {
+//            target: currentPosition
+//            property: "coordinate"
+//        }
+
         locationDisplay.onLocationChanged: {
-            /*
-    Point projectedLocation = GeometryEngine::project(location.position(), SpatialReference::wgs84());
-    QGeoPositionInfo tempLocation(QGeoCoordinate(projectedLocation.y(), projectedLocation.x()), QDateTime::currentDateTime());
-    m_routeTracker->trackLocation(tempLocation);
-*/
-            console.log(typeof(mapView.locationDisplay.location));
 //            var projectedLocation = GeometryEngine.project(mapView.locationDisplay.location, SpatialReference.createWgs84());
 //            QtPositioning.coordinate(projectedLocation.y(), projectedLocation.x());
 //            new Date();
-//            var tempLocation = new QGeoPositionInfo(QtPositioning.coordinate(projectedLocation.y(), projectedLocation.x()), new Date());
-//            routeTracker.trackLocation(tempLocation);
-//            var tempLocation = new QGeoPositionInfo(new QGeoCoordinate(projectedLocation.y(), projectedLocation.x()), QDateTime.currentDateTime());
-//            routeTracker.trackLocation(mapView.locationDisplay.location);
+
+            var projectedLocation = GeometryEngine.project(mapView.locationDisplay.location.position, SpatialReference.createWgs84());
+            var currentCoordinate = QtPositioning.coordinate(projectedLocation.y, projectedLocation.x);
+            var textBlock = 'import QtQuick 2.0; Position {coordinate: ' + currentCoordinate + '; speed: ' + locationDisplay.location.velocity + '; course: ' + 0 + '; timestamp: ' + locationDisplay.location.timestamp + '}';
+            console.log(textBlock);
+            var currentPosition = Qt.createQmlObject(textBlock, rootRectangle, "dynamicSnippet1");
+//            currentPosition.coordinate = QtPositioning.coordinate(projectedLocation.y, projectedLocation.x);
+//            routeTracker.trackLocation(tempPosition);
+//            currentPosition.coordinate.latitude = projectedLocation.y;
+//            currentPosition.coordinate.longitude = projectedLocation.x;
+//            currentPosition.speed = locationDisplay.location.velocity;
+            routeTracker.trackLocation(currentPosition);
+
         }
 
         Map {

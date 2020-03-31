@@ -42,6 +42,7 @@
 #include "TrackingStatus.h"
 #include "VoiceGuidance.h"
 
+#include <memory>
 #include <QList>
 #include <QGeoPositionInfo>
 #include <QTextToSpeech>
@@ -182,8 +183,9 @@ void NavigateRoute::startNavigation()
     m_speaker->say(voiceGuidance->text());
   });
 
-  connect(m_routeTracker, &RouteTracker::trackingStatusChanged, this, [this](TrackingStatus* trackingStatus)
+  connect(m_routeTracker, &RouteTracker::trackingStatusChanged, this, [this](TrackingStatus* rawTrackingStatus)
   {
+    auto trackingStatus = std::unique_ptr<TrackingStatus>(rawTrackingStatus);
     QString textString("Route status: \n");
     if (trackingStatus->destinationStatus() == DestinationStatus::NotReached || trackingStatus->destinationStatus() == DestinationStatus::Approaching)
     {
