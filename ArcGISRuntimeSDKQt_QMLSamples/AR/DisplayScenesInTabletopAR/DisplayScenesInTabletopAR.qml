@@ -48,25 +48,24 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
-        // Display an empty scene
-        Scene {
-            sceneViewTilingScheme: Enums.SceneViewTilingSchemeGeographic
-            baseSurface.opacity: 0.0
-        }
-
         onMouseClicked: {
             if (mspk.loadStatus !== Enums.LoadStatusLoaded || !arcGISArView.tracking || !philadelphiaScene)
                 return;
 
             // Display the scene
-            if (sceneView.scene !== philadelphiaScene)
+            if (sceneView.scene !== philadelphiaScene) {
                 sceneView.scene = philadelphiaScene;
+                sceneView.scene.sceneViewTilingScheme = Enums.SceneViewTilingSchemeGeographic;
+            }
 
             // Set the clipping distance for the scene.
             arcGISArView.clippingDistance = 400;
 
+            // Set the surface opacity to 0.
+            arcGISArView.sceneView.scene.baseSurface.opacity = 0.0;
+
             // Enable subsurface navigation. This allows you to look at the scene from below.
-            sceneView.scene.baseSurface.navigationConstraint = Enums.NavigationConstraintNone;
+            arcGISArView.sceneView.scene.baseSurface.navigationConstraint = Enums.NavigationConstraintNone;
 
             // Set the initial transformation using the point clicked on the screen
             arcGISArView.setInitialTransformation(mouse.x, mouse.y);
