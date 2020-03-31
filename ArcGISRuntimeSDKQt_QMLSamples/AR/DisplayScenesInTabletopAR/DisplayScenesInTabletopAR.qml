@@ -48,12 +48,6 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
-        // Display an empty scene
-        Scene {
-            sceneViewTilingScheme: Enums.SceneViewTilingSchemeGeographic
-            baseSurface.opacity: 0.0
-        }
-
         onMouseClicked: {
             if (mspk.loadStatus !== Enums.LoadStatusLoaded || !arcGISArView.tracking || !philadelphiaScene)
                 return;
