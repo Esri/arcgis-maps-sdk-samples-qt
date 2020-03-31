@@ -22,6 +22,7 @@
 
 #include "ArcGISTiledLayer.h"
 #include "Envelope.h"
+#include "GeometryEngine.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "Map.h"
@@ -37,6 +38,7 @@
 #include "TextSymbol.h"
 #include "TileCache.h"
 
+#include <memory>
 #include <QDir>
 #include <QScopedPointer>
 
@@ -158,8 +160,7 @@ void OfflineRouting::connectSignals()
 
   connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
-    // automatically deletes result once it is out of scope
-    QScopedPointer<IdentifyGraphicsOverlayResult> result(rawIdentifyResult);
+    auto result = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
     if (!result->error().isEmpty())
       qDebug() << result->error().message() << result->error().additionalMessage();
 
@@ -182,6 +183,12 @@ void OfflineRouting::connectSignals()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& e){
     if (!m_selectedGraphic)
     {
+      // return if point is outside of bounds
+      if (!GeometryEngine::within(m_mapView->screenToLocation(e.x(), e.y()), m_routableArea))
+      {
+        qWarning() << "Outside of routable area.";
+        return;
+      }
       SimpleMarkerSymbol* stopLabel = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 20, this);
       Graphic* stopGraphic = new Graphic(m_mapView->screenToLocation(e.x(), e.y()), stopLabel, this);
       m_stopsOverlay->graphics()->append(stopGraphic);
@@ -204,6 +211,13 @@ void OfflineRouting::connectSignals()
     if (m_selectedGraphic)
     {
       e.accept();
+
+      // return if point is outside of bounds
+      if (!GeometryEngine::within(m_mapView->screenToLocation(e.x(), e.y()), m_routableArea))
+      {
+        qWarning() << "Outside of routable area.";
+        return;
+      }
       m_selectedGraphic->setGeometry(m_mapView->screenToLocation(e.x(), e.y()));
       findRoute();
     }
@@ -256,9 +270,9 @@ void OfflineRouting::setMapView(MapQuickView* mapView)
   m_mapView->graphicsOverlays()->append(m_routeOverlay);
 
   GraphicsOverlay* boundaryOverlay = new GraphicsOverlay(this);
-  Envelope envelope = Envelope(Point(-13045352.223196, 3864910.900750,SpatialReference::webMercator()), Point(-13024588.857198, 3838880.505604, SpatialReference::webMercator()));
+  m_routableArea = Envelope(Point(-13045352.223196, 3864910.900750,SpatialReference::webMercator()), Point(-13024588.857198, 3838880.505604, SpatialReference::webMercator()));
   SimpleLineSymbol* boundarySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::green, 3, this);
-  Graphic* boundaryGraphic = new Graphic(envelope, boundarySymbol, this);
+  Graphic* boundaryGraphic = new Graphic(m_routableArea, boundarySymbol, this);
   boundaryOverlay->graphics()->append(boundaryGraphic);
   m_mapView->graphicsOverlays()->append(boundaryOverlay);
 

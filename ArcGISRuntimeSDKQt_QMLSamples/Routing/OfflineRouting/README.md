@@ -2,7 +2,7 @@
 
 This sample demonstrates how to solve a route on-the-fly using offline data.
 
-![](sample.gif)
+![](screenshot.png)
 
 ## How to use the sample
 
