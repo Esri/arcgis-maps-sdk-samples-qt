@@ -78,8 +78,6 @@ DisplayScenesInTabletopAR::DisplayScenesInTabletopAR(QObject* parent /* = nullpt
   m_scene(new Scene(SceneViewTilingScheme::Geographic, this)),
   m_permissionsHelper(new PermissionsHelper(this))
 {
-  // Display an empty scene
-  m_scene->baseSurface()->setOpacity(0.0);
 
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/mspk/philadelphia.mspk";
 
@@ -178,6 +176,9 @@ void DisplayScenesInTabletopAR::onMouseClicked(QMouseEvent& event)
 
   // Set the clipping distance for the scene.
   m_arcGISArView->setClippingDistance(400);
+
+  // Set the surface opacity to 0.
+  m_arcGISArView->sceneView()->arcGISScene()->baseSurface()->setOpacity(0.0f);
 
   // Enable subsurface navigation. This allows you to look at the scene from below.
   m_sceneView->arcGISScene()->baseSurface()->setNavigationConstraint(NavigationConstraint::None);
