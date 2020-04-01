@@ -68,6 +68,8 @@ private:
   bool navigationButtonEnabled() const;
   bool recenterButtonEnabled() const;
   QString textString() const;
+  void connectRouteTaskSignals();
+  void connectRouteTrackerSignals();
 
   Esri::ArcGISRuntime::Graphic* m_routeAheadGraphic = nullptr;
   Esri::ArcGISRuntime::Graphic* m_routeTraveledGraphic = nullptr;

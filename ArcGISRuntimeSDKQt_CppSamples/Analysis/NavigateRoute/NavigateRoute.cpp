@@ -91,7 +91,21 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   m_mapView->graphicsOverlays()->append(m_routeOverlay);
+  connectRouteTaskSignals();
 
+  m_routeTask->load();
+
+  // add graphics for the predefined stops
+  SimpleMarkerSymbol* stopSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, Qt::red, 20, this);
+  m_routeOverlay->graphics()->append(new Graphic(conventionCenterPoint, stopSymbol, this));
+  m_routeOverlay->graphics()->append(new Graphic(memorialPoint, stopSymbol, this));
+  m_routeOverlay->graphics()->append(new Graphic(aerospaceMuseumPoint, stopSymbol, this));
+
+  emit mapViewChanged();
+}
+
+void NavigateRoute::connectRouteTaskSignals()
+{
   connect(m_routeTask, &RouteTask::solveRouteCompleted, this, [this](QUuid, RouteResult routeResult)
   {
     if (routeResult.isEmpty())
@@ -143,16 +157,6 @@ void NavigateRoute::setMapView(MapQuickView* mapView)
      qDebug() << error.message() << error.additionalMessage();
     }
   });
-
-  m_routeTask->load();
-
-  // add graphics for the predefined stops
-  SimpleMarkerSymbol* stopSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Diamond, Qt::red, 20, this);
-  m_routeOverlay->graphics()->append(new Graphic(conventionCenterPoint, stopSymbol, this));
-  m_routeOverlay->graphics()->append(new Graphic(memorialPoint, stopSymbol, this));
-  m_routeOverlay->graphics()->append(new Graphic(aerospaceMuseumPoint, stopSymbol, this));
-
-  emit mapViewChanged();
 }
 
 bool NavigateRoute::navigationButtonEnabled() const
@@ -177,7 +181,34 @@ void NavigateRoute::startNavigation()
   // create a route tracker
   m_routeTracker = new RouteTracker(m_routeResult, 0, this);
   //m_routeTracker->enableRerouting(m_routeTask, )
+  connectRouteTrackerSignals();
 
+  // enable "recenter" button when location display is moved from nagivation mode
+  connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
+  {
+    m_recenterButtonEnabled = autoPanMode != LocationDisplayAutoPanMode::Navigation;
+    emit recenterButtonChanged();
+  });
+
+  connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this](const Location& location)
+  {
+    Point projectedLocation = GeometryEngine::project(location.position(), SpatialReference::wgs84());
+    QGeoPositionInfo tempLocation(QGeoCoordinate(projectedLocation.y(), projectedLocation.x()), QDateTime::currentDateTime());
+    m_routeTracker->trackLocation(tempLocation);
+  });
+
+  // turn on map view's navigation mode
+  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
+
+  // add a data source for the location display
+  m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
+  m_simulatedLocationDataSource->setLocationsWithPolyline(m_route.routeGeometry());
+  m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
+  m_simulatedLocationDataSource->start();
+}
+
+void NavigateRoute::connectRouteTrackerSignals()
+{
   connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* voiceGuidance)
   {
     m_speaker->say(voiceGuidance->text());
@@ -224,33 +255,10 @@ void NavigateRoute::startNavigation()
     emit textStringChanged();
   });
 
-  // enable "recenter" button when location display is moved from nagivation mode
-  connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
-  {
-    m_recenterButtonEnabled = autoPanMode != LocationDisplayAutoPanMode::Navigation;
-    emit recenterButtonChanged();
-  });
-
-  connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this](const Location& location)
-  {
-    Point projectedLocation = GeometryEngine::project(location.position(), SpatialReference::wgs84());
-    QGeoPositionInfo tempLocation(QGeoCoordinate(projectedLocation.y(), projectedLocation.x()), QDateTime::currentDateTime());
-    m_routeTracker->trackLocation(tempLocation);
-  });
-
   connect(m_routeTracker, &RouteTracker::trackLocationCompleted, this, [this](QUuid)
   {
     m_routeTracker->generateVoiceGuidance();
   });
-
-  // turn on map view's navigation mode
-  m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
-
-  // add a data source for the location display
-  m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
-  m_simulatedLocationDataSource->setLocationsWithPolyline(m_route.routeGeometry());
-  m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
-  m_simulatedLocationDataSource->start();
 }
 
 QString NavigateRoute::textString() const
