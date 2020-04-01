@@ -1,4 +1,4 @@
-// [WriteFile Name=NavigateRoute, Category=Analysis]
+// [WriteFile Name=NavigateRoute, Category=Routing]
 // [Legal]
 // Copyright 2020 Esri.
 
