@@ -1,31 +1,52 @@
 # Navigate route
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Use a routing service to navigate between points.
 
 ![](screenshot.png)
 
+## Use case
+
+Navigation is often used by field workers while traveling between points to get live directions based on their location.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Click 'Navigate' to simulate travelling and to receive directions from a preset starting point to a preset destination. Click 'Recenter' to recenter the navigation display.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create a `RouteTask` using a URL to an online route service.
+2. Generate default `RouteParameters` using `RouteTask.createDefaultParameters()`.
+3. Set `returnStops` and `returnDirections` on the parameters to true.
+4. Add `Stop`s to the parameters for each destination using `setStops(stops)`.
+5. Solve the route using `RouteTask.solveRoute(routeParameters)` to get a `RouteResult`.
+6. Create a `RouteTracker` using the route result, and the index of the desired route to take.
+7. Use `trackLocation(Location)` to track the location of the device and update the route tracking status.
+8. Use the `trackingStatusResultChanged` signal to get the `TrackingStatus` and use it to display updated route information. Tracking status includes a variety of information on the route progress, such as the remaining distance, remaining geometry or traversed geometry (represented by a `Polyline`), or the remaining time, amongst others.
+9. Use the `newVoiceGuidanceResultChanged` signal to get the `VoiceGuidance` whenever new instructions are available. From the voice guidance, get the `string` representing the directions and use a text-to-speech engine to output the maneuver directions.
+10. You can also query the tracking status for the current `DirectionManeuver` index, retrieve that maneuver from the `Route` and get its direction text to display in the GUI.
+11. To establish whether the destination has been reached, get the `DestinationStatus` from the tracking status. If the destination status is `Enums.DestinationStatusReached`, we have arrived at the destination and can stop routing. If there are several destinations in your route, and the remaining destination count is greater than 1, switch the route tracker to the next destination.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* DestinationStatus
+* DirectionManeuver
+* Location
+* Route
+* RouteParameters
+* RouteTask
+* RouteTracker
+* SimulatedLocationDataSource
+* Stop
+* VoiceGuidance
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
 
-## Additional information
-A standard level license is required to ...
+The route taken in this sample interacts with three locations:
+- Starts at the San Diego Convention Center, site of the annual Esri User Conference
+- Stops at the USS San Diego Memorial
+- Ends at the Fleet Science Center, San Diego.
 
 ## Tags
-Routing, Network analysis, Geocode
+
+directions, maneuver, navigation, route, turn-by-turn, voice
 

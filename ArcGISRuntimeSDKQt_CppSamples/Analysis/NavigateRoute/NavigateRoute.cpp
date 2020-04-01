@@ -215,6 +215,10 @@ void NavigateRoute::startNavigation()
       {
         m_routeTracker->switchToNextDestination();
       }
+      else
+      {
+        m_simulatedLocationDataSource->stop();
+      }
     }
     m_textString = textString;
     emit textStringChanged();

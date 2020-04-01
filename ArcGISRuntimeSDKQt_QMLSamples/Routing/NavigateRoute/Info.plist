@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>NavigateRoute</string>
+	<string>Navigate route</string>
 	<key>CFBundleExecutable</key>
 	<string>NavigateRoute</string>
 	<key>CFBundleGetInfoString</key>

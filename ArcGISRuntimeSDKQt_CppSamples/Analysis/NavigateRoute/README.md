@@ -31,11 +31,11 @@ Click 'Navigate' to simulate travelling and to receive directions from a preset 
 * DestinationStatus
 * DirectionManeuver
 * Location
-* LocationDataSource
 * Route
 * RouteParameters
 * RouteTask
 * RouteTracker
+* SimulatedLocationDataSource
 * Stop
 * VoiceGuidance
 

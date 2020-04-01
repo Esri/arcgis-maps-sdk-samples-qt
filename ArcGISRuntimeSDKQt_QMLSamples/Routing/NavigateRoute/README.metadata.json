@@ -1,16 +1,30 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Routing",
+    "description": "Use a routing service to navigate between points.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "directions",
+        "maneuver",
+        "navigation",
+        "route",
+        "turn-by-turn",
+        "voice"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "DestinationStatus",
+        "DirectionManeuver",
+        "Location",
+        "Route",
+        "RouteParameters",
+        "RouteTask",
+        "RouteTracker",
+        "SimulatedLocationDataSource",
+        "Stop",
+        "VoiceGuidance"
     ],
     "snippets": [
         "NavigateRoute.qml"

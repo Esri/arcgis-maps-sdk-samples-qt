@@ -19,6 +19,7 @@ import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.8
 import QtQuick.Layouts 1.11
 import QtPositioning 5.2
+//import ArcGIS.AppFramework.Speech 1.0
 
 Rectangle {
     id: rootRectangle
@@ -29,40 +30,24 @@ Rectangle {
     readonly property url routeTaskUrl: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/NAServer/Route"
     property var m_route: null
     property var m_routeResult: null
-//    property var routeTracker: null
     property var directionListModel: null
+    property string textString: ""
 
     MapView {
         id: mapView
         anchors.fill: parent
 
-//        Binding {
-//            target: currentPosition
-//            property: "coordinate"
-//        }
-
         locationDisplay.onLocationChanged: {
-//            var projectedLocation = GeometryEngine.project(mapView.locationDisplay.location, SpatialReference.createWgs84());
-//            QtPositioning.coordinate(projectedLocation.y(), projectedLocation.x());
-//            new Date();
+            routeTracker.trackRuntimeLocation(locationDisplay.location);
+        }
 
-            var projectedLocation = GeometryEngine.project(mapView.locationDisplay.location.position, SpatialReference.createWgs84());
-            var currentCoordinate = QtPositioning.coordinate(projectedLocation.y, projectedLocation.x);
-            var textBlock = 'import QtQuick 2.0; Position {coordinate: ' + currentCoordinate + '; speed: ' + locationDisplay.location.velocity + '; course: ' + 0 + '; timestamp: ' + locationDisplay.location.timestamp + '}';
-            console.log(textBlock);
-            var currentPosition = Qt.createQmlObject(textBlock, rootRectangle, "dynamicSnippet1");
-//            currentPosition.coordinate = QtPositioning.coordinate(projectedLocation.y, projectedLocation.x);
-//            routeTracker.trackLocation(tempPosition);
-//            currentPosition.coordinate.latitude = projectedLocation.y;
-//            currentPosition.coordinate.longitude = projectedLocation.x;
-//            currentPosition.speed = locationDisplay.location.velocity;
-            routeTracker.trackLocation(currentPosition);
-
+        // enable "recenter" button
+        locationDisplay.onAutoPanModeChanged: {
+            recenterButton.enabled = locationDisplay.autoPanMode !== Enums.LocationDisplayAutoPanModeNavigation;
         }
 
         Map {
             BasemapNavigationVector {}
-
         }
 
         GraphicsOverlay {
@@ -199,8 +184,11 @@ Rectangle {
                 Button {
                     id: recenterButton
                     text: "Recenter"
+//                    enabled: mapView.locationDisplay.autoPanMode !== Enums.LocationDisplayAutoPanModeNavigation;
                     enabled: false
-//                    enabled: model.recenterButtonEnabled
+                    onClicked: {
+                        recenterMap();
+                    }
 
                 }
             }
@@ -216,7 +204,7 @@ Rectangle {
                     padding: 5
                     width: parent.width
                     wrapMode: Text.Wrap
-//                    text:
+                    text: textString
                 }
             }
         }
@@ -227,32 +215,58 @@ Rectangle {
         RouteTracker {
             id: routeTracker
 
-            Component.onCompleted: {
-                console.log("route tracker created");
-            }
-
             onTrackingStatusResultChanged: {
+                textString = "Route status: \n";
+                if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusApproaching || routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusNotReached) {
+                    textString += "Distance remaining: " + trackingStatusResult.routeProgress.remainingDistance.displayText + " " +
+                            trackingStatusResult.routeProgress.remainingDistance.displayTextUnits.pluralDisplayName + "\n";
+                    let time = new Date(trackingStatusResult.routeProgress.remainingTime * 60 * 1000);
+                    let hours = time.getUTCHours();
+                    let minutes = time.getUTCMinutes();
+                    let seconds = time.getSeconds();
+                    textString += "Time remaining: " + hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' +
+                            seconds.toString().padStart(2, '0') + "\n";
 
-                console.log(trackingStatusResult.routeProgress.remainingDistance.displayText);
+                    // display next direction
+                    if (trackingStatusResult.currentManeuverIndex + 1 < directionListModel.count) {
+                        textString += "Next direction: " + directionListModel.get(trackingStatusResult.currentManeuverIndex + 1).directionText;
+                    }
+
+                    routeTraveledGraphic.geometry = trackingStatusResult.routeProgress.traversedGeometry;
+                    routeAheadGraphic.geometry = trackingStatusResult.routeProgress.remainingGeometry;
+                } else if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusReached) {
+                    textString += "Destination reached.\n";
+
+                    // set the route geometries to reflect the completed route
+                    routeTraveledGraphic.geometry = trackingStatusResult.routeResult.routes[0].routeGeometry;
+
+                    // navigate to next stop, if available
+                    if (trackingStatusResult.remainingDestinationCount > 1) {
+                        switchToNextDestination();
+                    } else {
+                        simulatedLocationDataSource.stop();
+                    }
+                }
             }
 
             onTrackLocationStatusChanged: {
-//                console.log("track location status changed");
-                if (trackLocationStatus === Enums.TaskStatusInProgress) {
-                    console.log("in progress");
-                } else if (trackLocationStatus === Enums.TaskStatusReady) {
-                    console.log("ready");
-                } else if (trackLocationStatus === Enums.TaskStatusCompleted) {
-                    console.log("completed");
+               if (trackLocationStatus === Enums.TaskStatusCompleted) {
+
+//                    let voiceGuidance = routeTracker.generateVoiceGuidance;
+
+
                 } else if (trackLocationStatus === Enums.TaskStatusErrored) {
-                    console.log("errored");
+                    console.warn("Task status: errored");
                 }
+            }
+
+            onNewVoiceGuidanceResultChanged: {
+                console.log(newVoiceGuidanceResult.text);
+                // NEED TO ADD SPEECH SYNTHESIZER
             }
         }
     }
     function startNavigation() {
-        console.log("pressed");
-
         // get the directions for the route
         directionListModel = m_route.directionManeuvers;
 
@@ -267,5 +281,8 @@ Rectangle {
         simulatedLocationDataSource.setLocationsWithPolyline(m_route.routeGeometry);
         mapView.locationDisplay.dataSource = simulatedLocationDataSource;
         simulatedLocationDataSource.start();
+    }
+    function recenterMap() {
+        mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
     }
 }
