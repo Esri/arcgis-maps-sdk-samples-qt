@@ -49,6 +49,7 @@ private:
   Esri::ArcGISRuntime::GraphicsOverlay* m_drapedFlatOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_drapedBillboardedOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_relativeOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_relativeToSceneOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_absoluteOverlay = nullptr;
 };
 
