@@ -17,6 +17,25 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
+#include <QObject>
+#include <QTextToSpeech>
+
+class NavigateRoute : public QObject
+{
+  Q_OBJECT
+public:
+  explicit NavigateRoute(QObject* parent = nullptr);
+  ~NavigateRoute();
+  Q_INVOKABLE void textToSpeech(QString text);
+};
+
+NavigateRoute::~NavigateRoute() = default;
+
+void NavigateRoute::textToSpeech(QString text)
+{
+  QTextToSpeech speaker(this);
+  speaker.say(text);
+}
 
 int main(int argc, char *argv[])
 {
@@ -27,6 +46,8 @@ int main(int argc, char *argv[])
   // Intialize application view
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+//  qmlRegisterSingletonType()
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
@@ -46,3 +67,5 @@ int main(int argc, char *argv[])
 
   return app.exec();
 }
+
+#include "NavigateRoute.moc"

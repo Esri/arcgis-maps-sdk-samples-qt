@@ -19,7 +19,6 @@ import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.8
 import QtQuick.Layouts 1.11
 import QtPositioning 5.2
-//import ArcGIS.AppFramework.Speech 1.0
 
 Rectangle {
     id: rootRectangle
@@ -263,6 +262,7 @@ Rectangle {
             onNewVoiceGuidanceResultChanged: {
                 console.log(newVoiceGuidanceResult.text);
                 // NEED TO ADD SPEECH SYNTHESIZER
+                NavigateRoute.textToS
             }
         }
     }
