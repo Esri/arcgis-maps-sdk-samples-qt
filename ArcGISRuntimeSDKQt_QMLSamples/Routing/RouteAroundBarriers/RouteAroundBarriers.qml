@@ -226,7 +226,7 @@ Rectangle {
                         padding: 5
                         Button {
                             id: stopButton
-                            text: "Add stops"
+                            text: "Add stop"
                             highlighted: checked
                             onClicked: {
                                 checked = true;
@@ -237,7 +237,7 @@ Rectangle {
                         }
                         Button {
                             id: barrierButton
-                            text: "Add barriers"
+                            text: "Add barrier"
                             highlighted: checked
                             onClicked: {
                                 checked = true;
