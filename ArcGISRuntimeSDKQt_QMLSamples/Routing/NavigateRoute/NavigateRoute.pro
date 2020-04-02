@@ -25,6 +25,7 @@ ARCGIS_RUNTIME_VERSION = 100.8
 include($$PWD/arcgisruntime.pri)
 
 SOURCES += \
+    NavigateRouteSpeaker.cpp \
     main.cpp
 
 RESOURCES += \
@@ -36,3 +37,6 @@ ios {
 
 # Default rules for deployment.
 include(deployment.pri)
+
+HEADERS += \
+    NavigateRouteSpeaker.h

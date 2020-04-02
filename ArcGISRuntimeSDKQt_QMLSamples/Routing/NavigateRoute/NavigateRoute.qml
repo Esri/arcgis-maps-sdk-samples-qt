@@ -19,6 +19,7 @@ import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.8
 import QtQuick.Layouts 1.11
 import QtPositioning 5.2
+import Esri.samples 1.0
 
 Rectangle {
     id: rootRectangle
@@ -35,15 +36,6 @@ Rectangle {
     MapView {
         id: mapView
         anchors.fill: parent
-
-        locationDisplay.onLocationChanged: {
-            routeTracker.trackRuntimeLocation(locationDisplay.location);
-        }
-
-        // enable "recenter" button
-        locationDisplay.onAutoPanModeChanged: {
-            recenterButton.enabled = locationDisplay.autoPanMode !== Enums.LocationDisplayAutoPanModeNavigation;
-        }
 
         Map {
             BasemapNavigationVector {}
@@ -152,6 +144,15 @@ Rectangle {
             }
         }
 
+        locationDisplay.onLocationChanged: {
+            routeTracker.trackRuntimeLocation(locationDisplay.location);
+        }
+
+        // enable "recenter" button
+        locationDisplay.onAutoPanModeChanged: {
+            recenterButton.enabled = locationDisplay.autoPanMode !== Enums.LocationDisplayAutoPanModeNavigation;
+        }
+
         Rectangle {
             id: backBox
             z: 1
@@ -183,12 +184,10 @@ Rectangle {
                 Button {
                     id: recenterButton
                     text: "Recenter"
-//                    enabled: mapView.locationDisplay.autoPanMode !== Enums.LocationDisplayAutoPanModeNavigation;
                     enabled: false
                     onClicked: {
                         recenterMap();
                     }
-
                 }
             }
 
@@ -207,6 +206,7 @@ Rectangle {
                 }
             }
         }
+
         SimulatedLocationDataSource {
             id: simulatedLocationDataSource
         }
@@ -248,21 +248,9 @@ Rectangle {
                 }
             }
 
-            onTrackLocationStatusChanged: {
-               if (trackLocationStatus === Enums.TaskStatusCompleted) {
-
-//                    let voiceGuidance = routeTracker.generateVoiceGuidance;
-
-
-                } else if (trackLocationStatus === Enums.TaskStatusErrored) {
-                    console.warn("Task status: errored");
-                }
-            }
-
+            // output new voice guidance
             onNewVoiceGuidanceResultChanged: {
-                console.log(newVoiceGuidanceResult.text);
-                // NEED TO ADD SPEECH SYNTHESIZER
-                NavigateRoute.textToS
+                NavigateRouteSpeaker.textToSpeech(newVoiceGuidanceResult.text);
             }
         }
     }
@@ -282,6 +270,7 @@ Rectangle {
         mapView.locationDisplay.dataSource = simulatedLocationDataSource;
         simulatedLocationDataSource.start();
     }
+
     function recenterMap() {
         mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
     }

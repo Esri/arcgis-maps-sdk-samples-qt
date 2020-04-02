@@ -180,7 +180,6 @@ void NavigateRoute::startNavigation()
 
   // create a route tracker
   m_routeTracker = new RouteTracker(m_routeResult, 0, this);
-  //m_routeTracker->enableRerouting(m_routeTask, )
   connectRouteTrackerSignals();
 
   // enable "recenter" button when location display is moved from nagivation mode

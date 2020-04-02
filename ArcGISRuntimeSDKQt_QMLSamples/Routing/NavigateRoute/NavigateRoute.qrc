@@ -2,6 +2,8 @@
     <qresource prefix="/Samples/Routing/NavigateRoute">
         <file alias="sample.json">NavigateRoute.json</file>        
         <file>NavigateRoute.qml</file>
+        <file>NavigateRouteSpeaker.h</file>
+        <file>NavigateRouteSpeaker.cpp</file>
         <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>

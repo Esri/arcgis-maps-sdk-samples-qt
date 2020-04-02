@@ -17,24 +17,16 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
-#include <QObject>
-#include <QTextToSpeech>
 
-class NavigateRoute : public QObject
+#include "NavigateRouteSpeaker.h"
+
+static QObject *example_qobject_singletontype_provider(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
-  Q_OBJECT
-public:
-  explicit NavigateRoute(QObject* parent = nullptr);
-  ~NavigateRoute();
-  Q_INVOKABLE void textToSpeech(QString text);
-};
+    Q_UNUSED(engine)
+    Q_UNUSED(scriptEngine)
 
-NavigateRoute::~NavigateRoute() = default;
-
-void NavigateRoute::textToSpeech(QString text)
-{
-  QTextToSpeech speaker(this);
-  speaker.say(text);
+    NavigateRouteSpeaker *example = new NavigateRouteSpeaker();
+    return example;
 }
 
 int main(int argc, char *argv[])
@@ -47,7 +39,9 @@ int main(int argc, char *argv[])
   QQuickView view;
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-//  qmlRegisterSingletonType()
+  // Register the C++ NavigateRouteSpeaker class
+  qmlRegisterSingletonType<NavigateRouteSpeaker>("Esri.samples", 1, 0, "NavigateRouteSpeaker", [](QQmlEngine* parent, QJSEngine*)-> QObject* { return new NavigateRouteSpeaker
+        (parent);  } );
 
   // Add the import Path
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
@@ -67,5 +61,3 @@ int main(int argc, char *argv[])
 
   return app.exec();
 }
-
-#include "NavigateRoute.moc"
