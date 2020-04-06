@@ -228,7 +228,7 @@ void NavigateRoute::connectRouteTrackerSignals()
       textString += "Time remaining: " + time.toString("hh:mm:ss") + "\n";
 
       // display next direction
-      if (auto directionList = dynamic_cast<DirectionManeuverListModel*>(m_directions))
+      if (DirectionManeuverListModel* directionList = dynamic_cast<DirectionManeuverListModel*>(m_directions))
       {
         if (trackingStatus->currentManeuverIndex() + 1 < directionList->directionManeuvers().length())
         {
