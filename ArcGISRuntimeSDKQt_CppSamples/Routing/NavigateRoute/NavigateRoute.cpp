@@ -110,7 +110,7 @@ void NavigateRoute::connectRouteTaskSignals()
     if (routeResult.isEmpty())
       return;
 
-    if (routeResult.routes().length() == 0)
+    if (routeResult.routes().empty())
       return;
 
     m_routeResult = routeResult;
