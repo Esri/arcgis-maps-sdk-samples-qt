@@ -29,7 +29,7 @@ Item {
         Rectangle {
             id: backBox
             z: 1
-            width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 200 : 300
+            width: buttonRow.width * 1.5
             height: 200
             color: "#FBFBFB"
             border.color: "black"
@@ -46,14 +46,14 @@ Item {
                 }
                 Button {
                     text: "Navigate"
-                    enabled: model.navigationButtonEnabled
+                    enabled: model.navigationEnabled
                     onClicked: {
                         model.startNavigation();
                     }
                 }
                 Button {
                     text: "Recenter"
-                    enabled: model.recenterButtonEnabled
+                    enabled: model.recenterEnabled
                     onClicked: {
                         model.recenterMap();
                     }

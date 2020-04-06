@@ -20,7 +20,6 @@
 
 #include "NavigateRoute.h"
 
-#include "DefaultLocationDataSource.h"
 #include "DirectionManeuverListModel.h"
 #include "GeometryEngine.h"
 #include "GraphicsOverlay.h"
@@ -44,7 +43,6 @@
 
 #include <memory>
 #include <QList>
-#include <QGeoPositionInfo>
 #include <QTextToSpeech>
 #include <QTime>
 #include <QUrl>
@@ -110,22 +108,26 @@ void NavigateRoute::connectRouteTaskSignals()
   {
     if (routeResult.isEmpty())
       return;
+
+    if (routeResult.routes().length() == 0)
+      return;
+
     m_routeResult = routeResult;
     m_route = m_routeResult.routes()[0];
 
+    // adjust viewpoint to enclose the route with a 100 DPI padding
     m_mapView->setViewpointGeometry(m_route.routeGeometry(), 100);
 
     // create a graphic to show the route
     m_routeAheadGraphic = new Graphic(m_route.routeGeometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Dash, Qt::blue, 5, this), this);
 
     // create a graphic to represent the route that's been traveled (initially empty).
-    m_routeTraveledGraphic = new Graphic(this);
-    m_routeTraveledGraphic->setSymbol(new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this));
+    m_routeTraveledGraphic = new Graphic(Geometry(), new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::cyan, 3, this), this);
     m_routeOverlay->graphics()->append(m_routeAheadGraphic);
     m_routeOverlay->graphics()->append(m_routeTraveledGraphic);
 
-    m_navigationButtonEnabled = true;
-    emit navigationButtonChanged();
+    m_navigationEnabled = true;
+    emit navigationEnabledChanged();
   });
 
   connect(m_routeTask, &RouteTask::createDefaultParametersCompleted, this, [this](QUuid, RouteParameters defaultParameters)
@@ -146,7 +148,7 @@ void NavigateRoute::connectRouteTaskSignals()
     m_routeTask->solveRoute(defaultParameters);
   });
 
-  connect(m_routeTask, &RouteTask::doneLoading, this, [this](Error error)
+  connect(m_routeTask, &RouteTask::doneLoading, this, [this](const Error& error)
   {
     if (error.isEmpty())
     {
@@ -154,26 +156,26 @@ void NavigateRoute::connectRouteTaskSignals()
     }
     else
     {
-     qDebug() << error.message() << error.additionalMessage();
+      qDebug() << error.message() << error.additionalMessage();
     }
   });
 }
 
-bool NavigateRoute::navigationButtonEnabled() const
+bool NavigateRoute::navigationEnabled() const
 {
-  return m_navigationButtonEnabled;
+  return m_navigationEnabled;
 }
 
-bool NavigateRoute::recenterButtonEnabled() const
+bool NavigateRoute::recenterEnabled() const
 {
-  return m_recenterButtonEnabled;
+  return m_recenterEnabled;
 }
 
 void NavigateRoute::startNavigation()
 {
   // disable the navigation button
-  m_navigationButtonEnabled = false;
-  emit navigationButtonChanged();
+  m_navigationEnabled = false;
+  emit navigationEnabledChanged();
 
   // get the directions for the route
   m_directions = m_route.directionManeuvers(this);
@@ -185,15 +187,13 @@ void NavigateRoute::startNavigation()
   // enable "recenter" button when location display is moved from nagivation mode
   connect(m_mapView->locationDisplay(), &LocationDisplay::autoPanModeChanged, this, [this](LocationDisplayAutoPanMode autoPanMode)
   {
-    m_recenterButtonEnabled = autoPanMode != LocationDisplayAutoPanMode::Navigation;
-    emit recenterButtonChanged();
+    m_recenterEnabled = autoPanMode != LocationDisplayAutoPanMode::Navigation;
+    emit recenterEnabledChanged();
   });
 
   connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this](const Location& location)
   {
-    Point projectedLocation = GeometryEngine::project(location.position(), SpatialReference::wgs84());
-    QGeoPositionInfo tempLocation(QGeoCoordinate(projectedLocation.y(), projectedLocation.x()), QDateTime::currentDateTime());
-    m_routeTracker->trackLocation(tempLocation);
+    m_routeTracker->trackLocation(location);
   });
 
   // turn on map view's navigation mode
@@ -208,8 +208,9 @@ void NavigateRoute::startNavigation()
 
 void NavigateRoute::connectRouteTrackerSignals()
 {
-  connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* voiceGuidance)
+  connect(m_routeTracker, &RouteTracker::newVoiceGuidance, this, [this](VoiceGuidance* rawVoiceGuidance)
   {
+    auto voiceGuidance = std::unique_ptr<VoiceGuidance>(rawVoiceGuidance);
     m_speaker->say(voiceGuidance->text());
   });
 
@@ -225,9 +226,12 @@ void NavigateRoute::connectRouteTrackerSignals()
       textString += "Time remaining: " + time.toString("hh:mm:ss") + "\n";
 
       // display next direction
-      if (trackingStatus->currentManeuverIndex() + 1 < dynamic_cast<DirectionManeuverListModel*>(m_directions)->directionManeuvers().length())
+      if (auto directionList = dynamic_cast<DirectionManeuverListModel*>(m_directions))
       {
-        textString += "Next direction: "  + dynamic_cast<DirectionManeuverListModel*>(m_directions)->directionManeuvers()[trackingStatus->currentManeuverIndex() + 1].directionText() + "\n";
+        if (trackingStatus->currentManeuverIndex() + 1 < directionList->directionManeuvers().length())
+        {
+          textString += "Next direction: "  + directionList->directionManeuvers()[trackingStatus->currentManeuverIndex() + 1].directionText() + "\n";
+        }
       }
       m_routeTraveledGraphic->setGeometry(trackingStatus->routeProgress()->traversedGeometry());
       m_routeAheadGraphic->setGeometry(trackingStatus->routeProgress()->remainingGeometry());

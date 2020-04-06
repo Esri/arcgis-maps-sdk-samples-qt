@@ -43,8 +43,8 @@ class NavigateRoute : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(bool navigationButtonEnabled READ navigationButtonEnabled NOTIFY navigationButtonChanged)
-  Q_PROPERTY(bool recenterButtonEnabled READ recenterButtonEnabled NOTIFY recenterButtonChanged)
+  Q_PROPERTY(bool navigationEnabled READ navigationEnabled NOTIFY navigationEnabledChanged)
+  Q_PROPERTY(bool recenterEnabled READ recenterEnabled NOTIFY recenterEnabledChanged)
   Q_PROPERTY(QString textString READ textString NOTIFY textStringChanged)
 
 public:
@@ -58,15 +58,15 @@ public:
 
 signals:
   void mapViewChanged();
-  void navigationButtonChanged();
-  void recenterButtonChanged();
+  void navigationEnabledChanged();
+  void recenterEnabledChanged();
   void textStringChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  bool navigationButtonEnabled() const;
-  bool recenterButtonEnabled() const;
+  bool navigationEnabled() const;
+  bool recenterEnabled() const;
   QString textString() const;
   void connectRouteTaskSignals();
   void connectRouteTrackerSignals();
@@ -82,8 +82,8 @@ private:
   Esri::ArcGISRuntime::RouteTracker* m_routeTracker = nullptr;
   Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
   QAbstractListModel* m_directions = nullptr;
-  bool m_navigationButtonEnabled = false;
-  bool m_recenterButtonEnabled = false;
+  bool m_navigationEnabled = false;
+  bool m_recenterEnabled = false;
   QString m_textString = "";
   QTextToSpeech* m_speaker = nullptr;
 };

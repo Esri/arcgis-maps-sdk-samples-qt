@@ -90,7 +90,7 @@ Rectangle {
 
         SimpleMarkerSymbol {
             id: stopSymbol
-            style: "SimpleMarkerSymbolStyleDiamond"
+            style: Enums.SimpleMarkerSymbolStyleDiamond
             color: "red"
             size: 20
         }
@@ -120,16 +120,18 @@ Rectangle {
                 }
             }
             onCreateDefaultParametersStatusChanged: {
-                if (createDefaultParametersStatus === Enums.TaskStatusCompleted) {
-                    createDefaultParametersResult.returnStops = true;
-                    createDefaultParametersResult.returnDirections = true;
-                    createDefaultParametersResult.returnRoutes = true;
-                    createDefaultParametersResult.outputSpatialReference = SpatialReference.createWgs84();
-                    createDefaultParametersResult.setStops([stop1, stop2, stop3]);
-
-                    //solve the route with these parameters
-                    routeTask.solveRoute(createDefaultParametersResult);
+                if (createDefaultParametersStatus !== Enums.TaskStatusCompleted) {
+                    return;
                 }
+
+                createDefaultParametersResult.returnStops = true;
+                createDefaultParametersResult.returnDirections = true;
+                createDefaultParametersResult.returnRoutes = true;
+                createDefaultParametersResult.outputSpatialReference = SpatialReference.createWgs84();
+                createDefaultParametersResult.setStops([stop1, stop2, stop3]);
+
+                //solve the route with these parameters
+                routeTask.solveRoute(createDefaultParametersResult);
             }
             onSolveRouteStatusChanged: {
                 if (solveRouteStatus === Enums.TaskStatusCompleted) {
@@ -156,7 +158,7 @@ Rectangle {
         Rectangle {
             id: backBox
             z: 1
-            width: Qt.platform.os === "ios" || Qt.platform.os === "android" ? 200 : 300
+            width: buttonRow.width * 1.5
             height: 200
             color: "#FBFBFB"
             border.color: "black"

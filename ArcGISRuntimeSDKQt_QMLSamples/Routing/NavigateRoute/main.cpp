@@ -20,15 +20,6 @@
 
 #include "NavigateRouteSpeaker.h"
 
-static QObject *example_qobject_singletontype_provider(QQmlEngine *engine, QJSEngine *scriptEngine)
-{
-    Q_UNUSED(engine)
-    Q_UNUSED(scriptEngine)
-
-    NavigateRouteSpeaker *example = new NavigateRouteSpeaker();
-    return example;
-}
-
 int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
