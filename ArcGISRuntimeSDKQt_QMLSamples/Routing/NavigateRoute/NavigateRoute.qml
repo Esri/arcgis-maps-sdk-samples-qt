@@ -213,6 +213,11 @@ Rectangle {
             id: simulatedLocationDataSource
         }
 
+        SimulationParameters {
+            id: simulationParameters
+            velocity: 40
+        }
+
         RouteTracker {
             id: routeTracker
 
@@ -268,7 +273,7 @@ Rectangle {
         mapView.locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeNavigation;
 
         // add a data source for the location display
-        simulatedLocationDataSource.setLocationsWithPolyline(m_route.routeGeometry);
+        simulatedLocationDataSource.setLocationsWithPolylineAndParameters(m_route.routeGeometry, simulationParameters);
         mapView.locationDisplay.dataSource = simulatedLocationDataSource;
         simulatedLocationDataSource.start();
     }

@@ -35,6 +35,7 @@
 #include "RouteTracker.h"
 #include "SimpleMarkerSymbol.h"
 #include "SimulatedLocationDataSource.h"
+#include "SimulationParameters.h"
 #include "Stop.h"
 #include "TrackingDistance.h"
 #include "TrackingProgress.h"
@@ -200,8 +201,9 @@ void NavigateRoute::startNavigation()
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Navigation);
 
   // add a data source for the location display
+  SimulationParameters* simulationParameters = new SimulationParameters(QDateTime::currentDateTime(), 40.0, 0.0, 0.0, this); // set speed
   m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
-  m_simulatedLocationDataSource->setLocationsWithPolyline(m_route.routeGeometry());
+  m_simulatedLocationDataSource->setLocationsWithPolyline(m_route.routeGeometry(), simulationParameters);
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
   m_simulatedLocationDataSource->start();
 }
