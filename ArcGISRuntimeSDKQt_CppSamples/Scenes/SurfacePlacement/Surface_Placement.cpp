@@ -112,9 +112,10 @@ void Surface_Placement::addGraphicsOverlays()
 
 void Surface_Placement::addGraphics()
 {
+  // create point for the scene related graphic with a z value of 0
+  Point sceneRelatedPoint(-4.4610562, 48.3902727, 0, SpatialReference::wgs84());
 
-  Point sceneRelatedPoint(-4.4610562, 48.3902727 , 5000, SpatialReference::wgs84());
-
+  // create point for the surface related graphics with z value of 70
   Point surfaceRelatedPoint(-4.4609257, 48.3903965 , 70, SpatialReference::wgs84());
 
   // create simple marker symbol
@@ -127,8 +128,8 @@ void Surface_Placement::addGraphics()
   drapedFlatText->setOffsetX(20);
   TextSymbol* relativeText = new TextSymbol("RELATIVE", QColor("blue"), 20, HorizontalAlignment::Left, VerticalAlignment::Middle, this);
   relativeText->setOffsetX(20);
-  TextSymbol* relativeToSceneText = new TextSymbol("RELATIVE TO SCENE", QColor("blue"), 20, HorizontalAlignment::Left, VerticalAlignment::Middle, this);
-  relativeToSceneText->setOffsetX(20);
+  TextSymbol* relativeToSceneText = new TextSymbol("RELATIVE TO SCENE", QColor("blue"), 20, HorizontalAlignment::Right, VerticalAlignment::Middle, this);
+  relativeToSceneText->setOffsetX(-20);
   TextSymbol* absoluteText = new TextSymbol("ABSOLUTE", QColor("blue"), 20, HorizontalAlignment::Left, VerticalAlignment::Middle, this);
   absoluteText->setOffsetX(20);
 
