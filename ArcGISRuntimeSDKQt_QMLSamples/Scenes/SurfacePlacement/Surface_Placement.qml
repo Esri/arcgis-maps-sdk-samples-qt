@@ -39,7 +39,7 @@ Rectangle {
             }
 
             ArcGISSceneLayer {
-                url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer/"
+                url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer"
             }
 
             // set an initial viewpoint

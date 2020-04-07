@@ -66,9 +66,9 @@ void Surface_Placement::componentComplete()
   //! [Create Scene API snippet]
 
   // set an initial viewpoint
-  Point initialViewPoint(-4.45968, 48.3889, 37.9922);
-  Camera camera(initialViewPoint, 329.91, 96.6632, 0);
-  Viewpoint viewpoint(initialViewPoint, camera);
+  const Point initialViewPoint(-4.45968, 48.3889, 37.9922);
+  const Camera camera(initialViewPoint, 329.91, 96.6632, 0);
+  const Viewpoint viewpoint(initialViewPoint, camera);
   scene->setInitialViewpoint(viewpoint);
 
   // set the scene to the scene view
@@ -113,10 +113,10 @@ void Surface_Placement::addGraphicsOverlays()
 void Surface_Placement::addGraphics()
 {
   // create point for the scene related graphic with a z value of 0
-  Point sceneRelatedPoint(-4.4610562, 48.3902727, 0, SpatialReference::wgs84());
+  const Point sceneRelatedPoint(-4.4610562, 48.3902727, 0, SpatialReference::wgs84());
 
   // create point for the surface related graphics with z value of 70
-  Point surfaceRelatedPoint(-4.4609257, 48.3903965 , 70, SpatialReference::wgs84());
+  const Point surfaceRelatedPoint(-4.4609257, 48.3903965 , 70, SpatialReference::wgs84());
 
   // create simple marker symbol
   SimpleMarkerSymbol* simpleMarkerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Triangle, QColor("red"), 20, this);
