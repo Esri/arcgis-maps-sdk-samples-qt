@@ -14,7 +14,7 @@ The application loads a scene showing four points that use the individual surfac
 
 ## How it works
 
-1. Create a `GraphicsOverlay` for each placement mode, setting `SceneProperties::setSurfacePlacement`:
+1. Create a `GraphicsOverlay` for each placement mode, setting `SceneProperties::surfacePlacement`:
     * `Absolute`, position graphic using only its Z value.
     * `Relative`, position graphic using its Z value plus the elevation of the surface.
     * `DrapedBillboarded`, position graphic upright on the surface and always facing the camera, not using its z value.
