@@ -1,0 +1,8 @@
+{
+    "source" :  "AnimateImagesWithImageOverlay.qml",
+    "otherSourceFiles" :  [
+        "AnimateImagesWithImageOverlay.h",
+        "AnimateImagesWithImageOverlay.cpp"
+    ],
+    "name" : "Animate images with image overlay"
+}
