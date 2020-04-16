@@ -1,8 +1,0 @@
-{
-    "source" :  "ConfigureSubnetworkTrace.qml",
-    "otherSourceFiles" :  [
-        "ConfigureSubnetworkTrace.h",
-        "ConfigureSubnetworkTrace.cpp"
-    ],
-    "name" : "Configure subnetwork trace"
-}
