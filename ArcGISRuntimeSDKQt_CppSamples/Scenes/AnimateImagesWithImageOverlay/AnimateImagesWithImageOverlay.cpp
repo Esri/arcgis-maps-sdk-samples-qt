@@ -145,12 +145,12 @@ void AnimateImagesWithImageOverlay::setupImageOverlay()
 
 void AnimateImagesWithImageOverlay::animateImageFrames()
 {
-  //  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest";
+    const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest";
   //  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest1";
   //  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest";
 //  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/newdata";
 //  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/200ishdata";
-    const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/240_4_sec";
+//    const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/240_4_sec";
 
   // get the image files and store the names
   const QDir dir(dataPath);
@@ -224,12 +224,16 @@ void AnimateImagesWithImageOverlay::stopTimer()
 
 void AnimateImagesWithImageOverlay::getInfo()
 {
-  auto temp = m_sceneView->currentViewpointCamera();
+  auto temp = m_imageOverlay->imageFrame()->extent();
 //  qDebug() << QString("here%1 %2").arg(1, 2);
-  qDebug() << temp.location().x();
-  qDebug() << temp.location().y();
-  qDebug() << temp.location().z(); //QString("point x:%1, y:%2, z:%3").arg(t, , temp.location().z());
-  qDebug() << temp.heading();
-  qDebug() << temp.pitch();
-  qDebug() << temp.roll();
+//  qDebug() << temp.location().x();
+//  qDebug() << temp.location().y();
+//  qDebug() << temp.location().z(); //QString("point x:%1, y:%2, z:%3").arg(t, , temp.location().z());
+//  qDebug() << temp.heading();
+//  qDebug() << temp.pitch();
+//  qDebug() << temp.roll();
+  qDebug() << temp.xMin();
+  qDebug() << temp.xMax();
+  qDebug() << temp.yMin();
+  qDebug() << temp.yMax();
 }
