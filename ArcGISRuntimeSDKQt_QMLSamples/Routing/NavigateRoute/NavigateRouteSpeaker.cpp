@@ -1,4 +1,5 @@
 #include "NavigateRouteSpeaker.h"
+#include <QTextToSpeech>
 
 NavigateRouteSpeaker::NavigateRouteSpeaker(QObject* parent):
   QObject(parent)
