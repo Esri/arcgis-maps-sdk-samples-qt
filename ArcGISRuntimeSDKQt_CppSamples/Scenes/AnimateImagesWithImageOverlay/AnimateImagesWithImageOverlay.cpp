@@ -40,6 +40,8 @@
 #include <QtCore/qglobal.h>
 #include <QTimer>
 
+#include <memory>
+
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
 #endif // Q_OS_IOS
@@ -156,6 +158,8 @@ void AnimateImagesWithImageOverlay::animateImageFrames()
 
   // create an image with the given path and use it to create an image frame
   const QImage image(dataPath + "/" + images[m_index]);
+
+//  std::unique_ptr<ImageFrame*> imageFrame = new ImageFrame(image, m_pacificSouthwestEnvelope, this);
   ImageFrame* imageFrame = new ImageFrame(image, m_pacificSouthwestEnvelope, this);
 
   // connect to the doneLoading signal to set the image frame to the image overlay
