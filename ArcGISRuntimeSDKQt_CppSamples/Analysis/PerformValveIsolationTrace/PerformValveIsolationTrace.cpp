@@ -50,7 +50,6 @@
 #include "UtilityTraceParameters.h"
 
 #include <QUuid>
-#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 
