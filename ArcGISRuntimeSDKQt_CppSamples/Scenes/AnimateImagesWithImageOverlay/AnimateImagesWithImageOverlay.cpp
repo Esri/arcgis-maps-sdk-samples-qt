@@ -154,32 +154,18 @@ void AnimateImagesWithImageOverlay::animateImageFrames()
   // create an image with the given path and use it to create an image frame
   const QImage image(dataPath + "/" + images[m_index]);
 
-//  std::unique_ptr<ImageFrame*> imageFrame = new ImageFrame(image, m_pacificSouthwestEnvelope, this);
-  ImageFrame* imageFrame = new ImageFrame(image, m_pacificSouthwestEnvelope, this);
+  // use std::unqiue_ptr to handle the lifetime of the image frame
+  std::unique_ptr<ImageFrame> imageFrame = std::make_unique<ImageFrame>(image, m_pacificSouthwestEnvelope, this);
 
-  // connect to the doneLoading signal to set the image frame to the image overlay
-  connect(imageFrame, &ImageFrame::doneLoading, this, [this, imageFrame, images](Error e)
-  {
-    if (!e.isEmpty())
-    {
-      qDebug() << e.message();
-      return;
-    }
+  // set image frame to image overlay
+  m_imageOverlay->setImageFrame(imageFrame.get());
 
-    // set image frame to image overlay
-    m_imageOverlay->setImageFrame(imageFrame);
+  // increment the index to keep track of which image to load next
+  m_index++;
 
-    // delete the image frame
-    delete imageFrame;
-
-    // increment the index to keep track of which image to load next
-    m_index++;
-
-    // reset index once all files have been loaded
-    if (m_index == images.size())
-      m_index = 0;
-  });
-  imageFrame->load();
+  // reset index once all files have been loaded
+  if (m_index == images.size())
+    m_index = 0;
 }
 
 void AnimateImagesWithImageOverlay::setTimerInterval(int value)
