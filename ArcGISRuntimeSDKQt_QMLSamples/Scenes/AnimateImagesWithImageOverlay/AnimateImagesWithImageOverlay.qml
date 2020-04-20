@@ -28,8 +28,7 @@ Rectangle {
 
     readonly property var timerIntervals: [17,34,68]
     readonly property var imageFrameRefreshRate: ["60 fps","30 fps","15 fps"]
-    readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D"
-//    property ImageOverlay imo: null
+    readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"
 
     Timer {
         id: timer
@@ -39,17 +38,16 @@ Rectangle {
         property var i: 0
 
         onTriggered: {
-            let imageFrame = ArcGISRuntimeEnvironment.createObject("ImageFrame", {url: dataPath + "/ImageOverlay/PacificSouthWest/pacsouthwest_20200409_0658_N0Ronly.png"});
-//            imo.imageFrame = imageFrame;
+            let imageFrame = ArcGISRuntimeEnvironment.createObject("ImageFrame", {
+                                                                       url: dataPath + "/" + imageFrameFolder.fileNames()[i],
+                                                                       extent: imageFrameExtent
+                                                                   });
             imageOverlay.imageFrame = imageFrame;
 
             i++;
-            if (i === 10) {
+            if (i === imageFrameFolder.fileNames().length) {
                 i = 0;
             }
-//            if (!isAnimating) {
-//                isAnimating = true;
-//            }
         }
     }
 
@@ -61,7 +59,6 @@ Rectangle {
 
         Scene {
             id: scene
-//            BasemapImagery {}
 
             Surface {
                 ArcGISTiledElevationSource {
@@ -96,119 +93,106 @@ Rectangle {
 
         ImageOverlay {
             id: imageOverlay
-//            visible: true
-
-//            imageFrame: ImageFrame {
-//                id: imageFrame
-//                url: dataPath + "/ImageOverlay/PacificSouthWest/pacsouthwest_20200409_0658_N0Ronly.png"
-//                extent: imageFrameExtent
-
-//                onLoadStatusChanged: {
-//                    if (loadStatus != Enums.LoadStatusLoaded)
-//                        return;
-
-//                    print("loaded");
-//                }
-//            }
         }
+
         Rectangle {
-                id: controlsRect
-                anchors.bottom: sceneView.attributionTop
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: childrenRect.width
-                height: childrenRect.height
-                color: "lightgrey"
-                opacity: 0.8
-                radius: 5
-                ColumnLayout {
-                    id: controlsLayout
-                    Layout.alignment: Qt.AlignBottom
-                    spacing: 0
+            id: controlsRect
+            anchors.bottom: sceneView.attributionTop
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: childrenRect.width
+            height: childrenRect.height
+            color: "lightgrey"
+            opacity: 0.8
+            radius: 5
+            ColumnLayout {
+                id: controlsLayout
+                Layout.alignment: Qt.AlignBottom
+                spacing: 0
 
-                    Slider {
-                        id: opacitySlider
-                        from: 0
-                        to: 1
-                        value: 1
-                        Layout.preferredHeight: bottomRowControls.height
-                        Layout.alignment: Qt.AlignHCenter
+                Slider {
+                    id: opacitySlider
+                    from: 0
+                    to: 1
+                    value: 1
+                    Layout.preferredHeight: bottomRowControls.height
+                    Layout.alignment: Qt.AlignHCenter
 
-//                        onMoved: imageOverlay.opacity = value;
-//                        onMoved:  print(value.toFixed(2));
+                    onMoved: imageOverlay.opacity = value;
+                    //                        onMoved:  print(value.toFixed(2));
 
-                        //Custom slider handle that displays the current value
-                        handle: Item {
-                            x: parent.leftPadding + parent.visualPosition * (parent.availableWidth - headingHandleNub.width)
-                            y: parent.topPadding + parent.availableHeight / 2 - headingHandleNub.height / 2
+                    //Custom slider handle that displays the current value
+                    handle: Item {
+                        x: parent.leftPadding + parent.visualPosition * (parent.availableWidth - headingHandleNub.width)
+                        y: parent.topPadding + parent.availableHeight / 2 - headingHandleNub.height / 2
 
-                            Rectangle {
-                                id: headingHandleNub
-                                color: headingHandleRect.color
-                                radius: width * 0.5
-                                width: 20
-                                height: width
-                            }
-                            Rectangle {
-                                id: headingHandleRect
-                                height: childrenRect.height
-                                width: childrenRect.width
-                                radius: 3
-                                x: headingHandleNub.x - width / 2 + headingHandleNub.width / 2
-                                y: headingHandleNub.y - height
-                                color: opacitySlider.background.children[0].color
-
-                                Text {
-                                    id: headingValue
-                                    font.pixelSize: 14
-                                    padding: 3
-                                    horizontalAlignment: Qt.AlignHCenter
-                                    verticalAlignment: Qt.AlignVCenter
-                                    text: "opacity: " + (opacitySlider.value).toFixed(2)
-                                    color: "white"
-                                }
-                            }
+                        Rectangle {
+                            id: headingHandleNub
+                            color: headingHandleRect.color
+                            radius: width * 0.5
+                            width: 20
+                            height: width
                         }
-                    }
+                        Rectangle {
+                            id: headingHandleRect
+                            height: childrenRect.height
+                            width: childrenRect.width
+                            radius: 3
+                            x: headingHandleNub.x - width / 2 + headingHandleNub.width / 2
+                            y: headingHandleNub.y - height
+                            color: opacitySlider.background.children[0].color
 
-                    RowLayout {
-                        id: bottomRowControls
-                        spacing: 2
-                        Button {
-                            id: startStopBtn
-                            text: !timer.running ? qsTr("Start") : qsTr("Stop")
-                            Layout.minimumWidth: timerIntervalComboBox.width
-                            onClicked: {
-                                if (!timer.running) {
-                                    timer.start();
-//                                    model.startTimer();
-                                } else {
-                                    timer.stop();
-//                                    model.stopTimer();
-                                }
-                            }
-                        }
-
-                        ComboBox {
-                            id: timerIntervalComboBox
-                            currentIndex: 2
-                            model: imageFrameRefreshRate
-                            Layout.minimumWidth: startStopBtn.width
-
-                            onActivated: {
-//                                model.setTimerInterval(timerIntervals[currentIndex]);
-                                timer.interval = timerIntervals[currentIndex];
+                            Text {
+                                id: headingValue
+                                font.pixelSize: 14
+                                padding: 3
+                                horizontalAlignment: Qt.AlignHCenter
+                                verticalAlignment: Qt.AlignVCenter
+                                text: "opacity: " + (opacitySlider.value).toFixed(2)
+                                color: "white"
                             }
                         }
                     }
                 }
-    //        Button {
-    //            id: locCam
-    //            text: "temp"
-    //            anchors.top: parent.top
-    //            onClicked: {
-    //                model.getInfo();
-    //            }
-    //        }
+
+                RowLayout {
+                    id: bottomRowControls
+                    spacing: 2
+                    Button {
+                        id: startStopBtn
+                        text: !timer.running ? qsTr("Start") : qsTr("Stop")
+                        Layout.minimumWidth: timerIntervalComboBox.width
+                        onClicked: {
+                            if (!timer.running) {
+                                timer.start();
+                                //                                    model.startTimer();
+                            } else {
+                                timer.stop();
+                                //                                    model.stopTimer();
+                            }
+                        }
+                    }
+
+                    ComboBox {
+                        id: timerIntervalComboBox
+                        currentIndex: 2
+                        model: imageFrameRefreshRate
+                        Layout.minimumWidth: startStopBtn.width
+
+                        onActivated: {
+                            //                                model.setTimerInterval(timerIntervals[currentIndex]);
+                            timer.interval = timerIntervals[currentIndex];
+                        }
+                    }
+                }
+            }
+            //        Button {
+            //            id: locCam
+            //            text: "temp"
+            //            anchors.top: parent.top
+            //            onClicked: {
+            //                model.getInfo();
+            //            }
+            //        }
         }
     }
 
@@ -220,4 +204,10 @@ Rectangle {
         yMax: 42.3195
         spatialReference: SpatialReference { wkid: 4326 }
     }
+
+    FileFolder {
+        id: imageFrameFolder
+        url: dataPath
+    }
+
 }

@@ -1,31 +1,38 @@
 # Animate images with image overlay
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Animate a series of images with an image overlay.
 
 ![](screenshot.png)
 
+## Use case
+
+An image overlay is useful for displaying fast and dynamic images; for example, rendering real-time sensor data captured from a drone. Each frame from the drone becomes a static image which is updated on the fly as the data is made available.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+The application loads a map of the Southwestern United States. Click the "Start" or "Stop" buttons to start or stop the radar animation. Use the drop down menu to select how quickly the animation plays. Move the slider to change the opacity of the image overlay.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create an `ImageOverlay` and add it to the `SceneView`.
+2. Set up a timer with an initial interval time of 68ms, equivalent to ~15fps.
+3. Connect to the timeout signal from the timer.
+4. Create a new `ImageFrame` every timeout and set it on the image overlay.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* ImageFrame
+* ImageOverlay
+* SceneView
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
+
+These radar images were captured by the US National Weather Service (NWS). They highlight the Pacific Southwest sector which is made up of part the western United States and Mexico. For more information visit the [National Weather Service](https://www.weather.gov/jetstream/gis) website.
 
 ## Additional information
-A standard level license is required to ...
+
+The supported image formats are GeoTIFF, TIFF, JPEG, and PNG. `ImageOverlay` does not support the rich processing and rendering capabilities of a `RasterLayer`. Use `Raster` and `RasterLayer` for static image rendering, analysis, and persistence.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+3d, animation, drone, dynamic, image frame, image overlay, real time, rendering

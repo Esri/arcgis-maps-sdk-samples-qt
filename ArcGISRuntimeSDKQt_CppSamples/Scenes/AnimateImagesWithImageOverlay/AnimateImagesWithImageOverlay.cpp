@@ -145,12 +145,7 @@ void AnimateImagesWithImageOverlay::setupImageOverlay()
 
 void AnimateImagesWithImageOverlay::animateImageFrames()
 {
-    const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest";
-  //  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest1";
-  //  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest";
-//  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/newdata";
-//  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/200ishdata";
-//    const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/240_4_sec";
+  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest";
 
   // get the image files and store the names
   const QDir dir(dataPath);

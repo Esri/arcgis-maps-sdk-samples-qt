@@ -1,16 +1,25 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Scenes",
+    "description": "Animate a series of images with an image overlay.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "3d", 
+        "animation", 
+        "drone", 
+        "dynamic", 
+        "image frame", 
+        "image overlay", 
+        "real time", 
+        "rendering"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "ImageFrame",
+        "ImageOverlay",
+        "SceneView"
     ],
     "snippets": [
         "AnimateImagesWithImageOverlay.cpp",
