@@ -28,7 +28,6 @@ Item {
         anchors.fill: parent
     }
 
-
     ColumnLayout {
         anchors {
             left: parent.left
@@ -39,15 +38,33 @@ Item {
             color: "#FBFBFB"
             height: childrenRect.height
             width: row.width * 1.5
+
+            RowLayout {
+                id: titleRow
+                Rectangle {
+                    color: backgroundRect.color
+                    width: childrenRect.width
+                    height: childrenRect.height
+                    Text {
+                        text: "Choose category for filter barrier:"
+                        font.pixelSize: 14
+                    }
+                }
+                anchors {
+                    left: row.left
+                    top: parent.top
+                }
+            }
             RowLayout {
                 id: row
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    top: titleRow.bottom
+                }
                 ComboBox {
                     id: comboBox
                     enabled: sampleModel.uiEnabled
-                    Layout.fillWidth: true
-                    width: 200
-
+                    Layout.minimumWidth: 200
                     model: sampleModel.categoriesList
                     onCurrentIndexChanged: {
                         sampleModel.selectedIndex = currentIndex;
@@ -63,10 +80,14 @@ Item {
             }
             RowLayout {
                 id: checkBoxRow
-                anchors.top: row.bottom
+                anchors {
+                    top: row.bottom
+                    left: row.left
+                }
                 CheckBox {
                     text: "Include isolated features"
                     enabled: sampleModel.uiEnabled
+                    leftPadding: 0
                     onCheckedChanged: {
                         sampleModel.isolateFeatures = checked;
                     }

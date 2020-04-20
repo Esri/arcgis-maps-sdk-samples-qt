@@ -33,7 +33,6 @@ class UtilityTraceConfiguration;
 }
 
 #include <QObject>
-#include <QList>
 
 class PerformValveIsolationTrace : public QObject
 {
@@ -67,16 +66,15 @@ private:
   QStringList categoriesList() const;
   bool uiEnabled() const;
   bool noResults() const;
+  void connectSignals();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::FeatureLayer* m_currentFeatureLayer = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_startingLocationOverlay = nullptr;
   Esri::ArcGISRuntime::UtilityElement* m_startingLocation = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
   QStringList m_categoriesList;
-  QList<Esri::ArcGISRuntime::UtilityCategory*> m_categories;
   int m_selectedIndex = -1;
   bool m_isolateFeatures = false;
   bool m_uiEnabled = false;

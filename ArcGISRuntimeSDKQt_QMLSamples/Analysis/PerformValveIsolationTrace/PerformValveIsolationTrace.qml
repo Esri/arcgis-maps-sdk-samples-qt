@@ -95,6 +95,7 @@ Rectangle {
                     if (traceStatus !== Enums.TaskStatusCompleted)
                         return;
 
+                    // re-enable UI and select features
                     uiEnabled = true;
 
                     if (traceResult.count < 1) {
@@ -104,6 +105,8 @@ Rectangle {
 
                     let utilityTraceResult = traceResult.get(0);
                     let allElements = traceResult.get(0).elements;
+
+                    // if no elements found, then display message
                     if (allElements.length === 0) {
                         messageDialog.visible = true;
                         return;
@@ -186,23 +189,41 @@ Rectangle {
                 height: childrenRect.height
                 width: row.width * 1.5
                 RowLayout {
+                    id: titleRow
+                    Rectangle {
+                        color: backgroundRect.color
+                        width: childrenRect.width
+                        height: childrenRect.height
+                        Text {
+                            text: "Choose category for filter barrier:"
+                            font.pixelSize: 14
+                        }
+                    }
+                    anchors {
+                        left: row.left
+                        top: parent.top
+                    }
+                }
+                RowLayout {
                     id: row
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        top: titleRow.bottom
+                    }
                     ComboBox {
                         id: comboBox
                         enabled: uiEnabled
-                        Layout.fillWidth: true
-                        width: 200
+                        Layout.minimumWidth: 200
                         model: categories
                     }
                     Button {
                         text: "Trace"
                         onClicked: {
-                            // disable UI and perform trace
-                            uiEnabled = false;
-
                             if (comboBox.currentIndex < 0)
                                 return;
+
+                            // disable UI and perform trace
+                            uiEnabled = false;
 
                             // clear previous selection from the feature layers
                             for (let i = 0; i < map.operationalLayers.count; i++) {
@@ -234,11 +255,15 @@ Rectangle {
                 }
                 RowLayout {
                     id: checkBoxRow
-                    anchors.top: row.bottom
+                    anchors {
+                        top: row.bottom
+                        left: row.left
+                    }
                     CheckBox {
                         id: checkBox
                         text: "Include isolated features"
                         enabled: uiEnabled
+                        leftPadding: 0
                     }
                 }
             }
@@ -259,5 +284,4 @@ Rectangle {
             visible = false;
         }
     }
-
 }

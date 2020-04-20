@@ -74,6 +74,100 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
   m_map->operationalLayers()->append(deviceLayer);
 
   m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, this);
+  connectSignals();
+  m_utilityNetwork->load();
+}
+
+PerformValveIsolationTrace::~PerformValveIsolationTrace() = default;
+
+void PerformValveIsolationTrace::init()
+{
+  // Register the map view for QML
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<PerformValveIsolationTrace>("Esri.Samples", 1, 0, "PerformValveIsolationTraceSample");
+}
+
+MapQuickView* PerformValveIsolationTrace::mapView() const
+{
+  return m_mapView;
+}
+
+// Set the view (created in QML)
+void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
+{
+  if (!mapView || mapView == m_mapView)
+    return;
+
+  m_mapView = mapView;
+  m_mapView->setMap(m_map);
+
+  // apply renderers
+  SimpleMarkerSymbol* startingPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, Qt::green, 25, this);
+  m_startingLocationOverlay->setRenderer(new SimpleRenderer(startingPointSymbol, this));
+  m_mapView->graphicsOverlays()->append(m_startingLocationOverlay);
+
+  emit mapViewChanged();
+}
+
+QStringList PerformValveIsolationTrace::categoriesList() const
+{
+  if (!m_utilityNetwork)
+    return { };
+
+  if (m_utilityNetwork->loadStatus() != LoadStatus::Loaded)
+    return { };
+
+  QList<UtilityCategory*> categories = m_utilityNetwork->definition()->categories();
+  QStringList strList;
+  for (UtilityCategory* category : categories)
+  {
+    strList << category->name();
+  }
+  return strList;
+}
+
+void PerformValveIsolationTrace::performTrace()
+{
+  if (m_selectedIndex < 0)
+    return;
+
+  // disable UI while trace is run
+  m_uiEnabled = false;
+  emit uiEnabledChanged();
+
+  for (Layer* layer : *m_map->operationalLayers())
+  {
+     // clear previous selection from the feature layers
+    if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
+    {
+      featureLayer->clearSelection();
+    }
+  }
+
+  QList<UtilityCategory*> categories = m_utilityNetwork->definition()->categories();
+
+  // get the selected utility category
+  if (categories[m_selectedIndex] != nullptr)
+  {
+    UtilityCategory* selectedCategory = categories[m_selectedIndex];
+    UtilityCategoryComparison* categoryComparison = new UtilityCategoryComparison(selectedCategory, UtilityCategoryComparisonOperator::Exists, this);
+
+    // set the category comparison to the barriers of the configuration's trace filter
+    m_traceConfiguration->filter()->setBarriers(categoryComparison);
+
+    // set whether to include isolated features
+    m_traceConfiguration->setIncludeIsolatedFeatures(m_isolateFeatures);
+
+    // build parameters for the isolation trace
+    UtilityTraceParameters* traceParameters = new UtilityTraceParameters(UtilityTraceType::Isolation, QList<UtilityElement*> {m_startingLocation}, this);
+    traceParameters->setTraceConfiguration(m_traceConfiguration);
+
+    m_utilityNetwork->trace(traceParameters);
+  }
+}
+
+void PerformValveIsolationTrace::connectSignals()
+{
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
@@ -108,11 +202,8 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
     emit categoriesListChanged();
   });
 
-
-
   connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](QUuid)
   {
-    qDebug("trace completed");
     m_uiEnabled = true;
     emit uiEnabledChanged();
 
@@ -138,7 +229,6 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
       {
         if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
         {
-          m_currentFeatureLayer = featureLayer;
           // create query parameters to find features whose network source names match layer's feature table name
           QueryParameters queryParameters;
           QList<qint64> objectIds = {};
@@ -146,53 +236,18 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
           for (UtilityElement* utilityElement : utilityElementTraceResult->elements(this))
           {
             QString networkSourceName = utilityElement->networkSource()->name();
-            QString featureTableName = m_currentFeatureLayer->featureTable()->tableName();
+            QString featureTableName = featureLayer->featureTable()->tableName();
             if (networkSourceName == featureTableName)
             {
               objectIds.append(utilityElement->objectId());
             }
           }
           queryParameters.setObjectIds(objectIds);
-          qDebug() << queryParameters.objectIds().length();
-          m_currentFeatureLayer->selectFeatures(queryParameters, SelectionMode::New);
+          featureLayer->selectFeatures(queryParameters, SelectionMode::New);
         }
       }
-      qDebug("done iterating");
-
     }
-
   });
-
-  m_utilityNetwork->load();
-}
-
-PerformValveIsolationTrace::~PerformValveIsolationTrace() = default;
-
-void PerformValveIsolationTrace::init()
-{
-  // Register the map view for QML
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<PerformValveIsolationTrace>("Esri.Samples", 1, 0, "PerformValveIsolationTraceSample");
-}
-
-MapQuickView* PerformValveIsolationTrace::mapView() const
-{
-  return m_mapView;
-}
-
-// Set the view (created in QML)
-void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
-{
-  if (!mapView || mapView == m_mapView)
-    return;
-
-  m_mapView = mapView;
-  m_mapView->setMap(m_map);
-
-  // apply renderers
-  SimpleMarkerSymbol* startingPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, Qt::green, 25, this);
-  m_startingLocationOverlay->setRenderer(new SimpleRenderer(startingPointSymbol, this));
-  m_mapView->graphicsOverlays()->append(m_startingLocationOverlay);
 
   connect(m_utilityNetwork, &UtilityNetwork::featuresForElementsCompleted, this, [this](QUuid)
   {
@@ -206,70 +261,6 @@ void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
     m_uiEnabled = true;
     emit uiEnabledChanged();
   });
-
-  emit mapViewChanged();
-}
-
-QStringList PerformValveIsolationTrace::categoriesList() const
-{
-  if (!m_utilityNetwork)
-    return { };
-
-  if (m_utilityNetwork->loadStatus() != LoadStatus::Loaded)
-    return { };
-
-  QList<UtilityCategory*> categories = m_utilityNetwork->definition()->categories();
-  QStringList strList;
-  for (UtilityCategory* category : categories)
-  {
-    strList << category->name();
-  }
-  return strList;
-}
-
-void PerformValveIsolationTrace::performTrace()
-{
-  // disable UI while trace is run
-  m_uiEnabled = false;
-  emit uiEnabledChanged();
-
-  for (Layer* layer : *m_map->operationalLayers())
-  {
-     // clear previous selection from the feature layers
-    if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
-    {
-      featureLayer->clearSelection();
-    }
-  }
-
-  if (m_selectedIndex < 0)
-    return;
-
-  QList<UtilityCategory*> categories = m_utilityNetwork->definition()->categories();
-
-  // get the selected utility category
-  if (categories[m_selectedIndex] != nullptr)
-  {
-    UtilityCategory* selectedCategory = categories[m_selectedIndex];
-    UtilityCategoryComparison* categoryComparison = new UtilityCategoryComparison(selectedCategory, UtilityCategoryComparisonOperator::Exists, this);
-
-    // set the category comparison to the barriers of the configuration's trace filter
-    m_traceConfiguration->filter()->setBarriers(categoryComparison);
-
-    // set whether to include isolated features
-    m_traceConfiguration->setIncludeIsolatedFeatures(m_isolateFeatures);
-
-    // build parameters for the isolation trace
-    UtilityTraceParameters* traceParameters = new UtilityTraceParameters(UtilityTraceType::Isolation, QList<UtilityElement*> {m_startingLocation}, this);
-    traceParameters->setTraceConfiguration(m_traceConfiguration);
-
-    m_utilityNetwork->trace(traceParameters);
-  }
-
-//    connect(m_currentFeatureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawFeatureQueryResult)
-//    {
-//      qDebug("select features completed");
-//    });
 }
 
 bool PerformValveIsolationTrace::uiEnabled() const
