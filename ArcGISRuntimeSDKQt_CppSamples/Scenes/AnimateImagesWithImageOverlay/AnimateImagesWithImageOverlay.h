@@ -50,7 +50,6 @@ public:
   Q_INVOKABLE void setOpacity(float value);
   Q_INVOKABLE void startTimer();
   Q_INVOKABLE void stopTimer();
-  Q_INVOKABLE void getInfo();
 
 signals:
   void sceneViewChanged();

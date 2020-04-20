@@ -216,19 +216,3 @@ void AnimateImagesWithImageOverlay::stopTimer()
   emit isStoppedChanged();
   m_timer->stop();
 }
-
-void AnimateImagesWithImageOverlay::getInfo()
-{
-  auto temp = m_imageOverlay->imageFrame()->extent();
-//  qDebug() << QString("here%1 %2").arg(1, 2);
-//  qDebug() << temp.location().x();
-//  qDebug() << temp.location().y();
-//  qDebug() << temp.location().z(); //QString("point x:%1, y:%2, z:%3").arg(t, , temp.location().z());
-//  qDebug() << temp.heading();
-//  qDebug() << temp.pitch();
-//  qDebug() << temp.roll();
-  qDebug() << temp.xMin();
-  qDebug() << temp.xMax();
-  qDebug() << temp.yMin();
-  qDebug() << temp.yMax();
-}

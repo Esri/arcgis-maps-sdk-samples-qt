@@ -114,14 +114,6 @@ Item {
                 }
             }
         }
-        Button {
-            id: locCam
-            text: "temp"
-            anchors.top: parent.top
-            onClicked: {
-                model.getInfo();
-            }
-        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
