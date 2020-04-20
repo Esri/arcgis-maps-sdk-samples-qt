@@ -106,9 +106,6 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
     // populate the combo box choices
     m_categoriesList = categoriesList();
     emit categoriesListChanged();
-
-
-
   });
 
 
@@ -129,6 +126,13 @@ PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = null
 
     if (UtilityElementTraceResult* utilityElementTraceResult = dynamic_cast<UtilityElementTraceResult*>(utilityTraceResultList->at(0)))
     {
+      if (utilityElementTraceResult->elements(this).empty())
+      {
+        m_noResults = true;
+        emit noResultsChanged();
+        return;
+      }
+
       // iterate through the map's features
       for (Layer* layer : *m_map->operationalLayers())
       {
@@ -225,8 +229,6 @@ QStringList PerformValveIsolationTrace::categoriesList() const
 
 void PerformValveIsolationTrace::performTrace()
 {
-  qDebug("clicked");
-
   // disable UI while trace is run
   m_uiEnabled = false;
   emit uiEnabledChanged();
@@ -273,4 +275,9 @@ void PerformValveIsolationTrace::performTrace()
 bool PerformValveIsolationTrace::uiEnabled() const
 {
   return m_uiEnabled;
+}
+
+bool PerformValveIsolationTrace::noResults() const
+{
+  return m_noResults;
 }

@@ -44,7 +44,7 @@ class PerformValveIsolationTrace : public QObject
   Q_PROPERTY(int selectedIndex MEMBER m_selectedIndex NOTIFY selectedIndexChanged)
   Q_PROPERTY(bool isolateFeatures MEMBER m_isolateFeatures NOTIFY isolateFeaturesChanged)
   Q_PROPERTY(bool uiEnabled READ uiEnabled NOTIFY uiEnabledChanged)
-  Q_PROPERTY(bool traceRunning READ traceRunning NOTIFY traceRunningChanged)
+  Q_PROPERTY(bool noResults READ noResults NOTIFY noResultsChanged)
 
 public:
   explicit PerformValveIsolationTrace(QObject* parent = nullptr);
@@ -59,14 +59,14 @@ signals:
   void selectedIndexChanged();
   void isolateFeaturesChanged();
   void uiEnabledChanged();
-  void traceRunningChanged();
+  void noResultsChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QStringList categoriesList() const;
   bool uiEnabled() const;
-  bool traceRunning() const;
+  bool noResults() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -81,6 +81,7 @@ private:
   bool m_isolateFeatures = false;
   bool m_uiEnabled = false;
   bool m_traceRunning = false;
+  bool m_noResults = false;
 };
 
 #endif // PERFORMVALVEISOLATIONTRACE_H
