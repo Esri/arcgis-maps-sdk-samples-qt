@@ -30,7 +30,6 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
-
         ColumnLayout {
             spacing: 0
             Layout.alignment: Qt.AlignTop
@@ -139,23 +138,28 @@ Item {
                 Layout.margins: 3
                 color: "lightgrey"
 
-                ListView {
-                    id: directionsView
-                    anchors {
-                        fill: parent
-                        margins: 5
-                    }
-                    header: Component {
-                        Text {
-                            height: 40
-                            text: "Directions:"
-                            font.pixelSize: 22
-                        }
-                    }
+                ScrollView {
+                    width: parent.width
+                    height: parent.height
 
-                    // set the model to the DirectionManeuverListModel returned from the route
-                    model: sampleModel.directions
-                    delegate: directionDelegate
+                    ListView {
+                        id: directionsView
+                        anchors {
+                            fill: parent
+                            margins: 5
+                        }
+                        header: Component {
+                            Text {
+                                height: 40
+                                text: "Directions:"
+                                font.pixelSize: 22
+                            }
+                        }
+
+                        // set the model to the DirectionManeuverListModel returned from the route
+                        model: sampleModel.directions
+                        delegate: directionDelegate
+                    }
                 }
             }
         }
