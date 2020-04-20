@@ -1,16 +1,35 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Analysis",
+    "description": "Run a filtered trace to locate operable features that will isolate an area from the flow of network resources.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "category comparison",
+        "condition barriers",
+        "isolated features",
+        "network analysis",
+        "subnetwork trace",
+        "trace configuration",
+        "trace filter",
+        "utility network"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "UtilityCategory",
+        "UtilityCategoryComparison",
+        "UtilityCategoryComparisonOperator",
+        "UtilityDomainNetwork",
+        "UtilityElement",
+        "UtilityElementTraceResult",
+        "UtilityNetwork",
+        "UtilityNetworkDefinition",
+        "UtilityTier",
+        "UtilityTraceFilter",
+        "UtilityTraceParameters",
+        "UtilityTraceResult",
+        "UtilityTraceType""
     ],
     "snippets": [
         "PerformValveIsolationTrace.qml"

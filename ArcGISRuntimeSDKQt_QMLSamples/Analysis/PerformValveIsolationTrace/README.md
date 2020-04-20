@@ -1,31 +1,53 @@
 # Perform valve isolation trace
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Run a filtered trace to locate operable features that will isolate an area from the flow of network resources.
 
 ![](screenshot.png)
 
+## Use case
+
+Determine the set of operable features required to stop a network's resource, effectively isolating an area of the network. For example, you can choose to return only accessible and operable valves: ones that are not paved over or rusted shut.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Create and set the configuration's filter barriers by selecting a category. Check or uncheck 'Include isolated features'. Click 'Trace' to run a subnetwork-based isolation trace.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1.  Create a `MapView`.
+2.  Create and load a `UtilityNetwork` with a feature service URL.
+3.  Create a `Map` that contains `FeatureLayer`(s) that are part of this utility network.
+4.  Create a default starting location from a given asset type and global id.
+5.  Add a `GraphicsOverlay` with a `Graphic` that represents this starting location.
+6.  Populate the choice list for the 'Filter barrier: category exists' from `UtilityNetworkDefinition.categories`.
+7.  Get a default `UtilityTraceConfiguration` from a given tier in a domain network. Set its `Filter` with a new `UtilityTraceFilter`.
+8.  When 'Trace' is clicked,
+    - Create a new `UtilityCategoryComparison` with the selected category and `Enums.UtilityCategoryComparisonOperatorExists`. 
+    - Assign this condition to `TraceFilter.barriers` from the default configuration from step 7. Update this configuration's `includeIsolatedFeatures` property. 
+    - Create a `UtilityTraceParameters` with `Enums.UtilityTraceTypeIsolation` and default starting location from step 4. 
+    - Set its `TraceConfiguration` with this configuration and then, run a `UtilityNetwork.trace()`.
+11. For every `FeatureLayer` in the map, select the features returned by `featuresForElements` from the elements matching their `NetworkSource.name` with the layer's `FeatureTable.name`.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* UtilityCategory
+* UtilityCategoryComparison
+* UtilityCategoryComparisonOperator
+* UtilityDomainNetwork
+* UtilityElement
+* UtilityElementTraceResult
+* UtilityNetwork
+* UtilityNetworkDefinition
+* UtilityTier
+* UtilityTraceFilter
+* UtilityTraceParameters
+* UtilityTraceResult
+* UtilityTraceType
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
 
-## Additional information
-A standard level license is required to ...
+The [Naperville gas network feature service](https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleGas/FeatureServer), hosted on ArcGIS Online, contains a utility network used to run the isolation trace shown in this sample.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+category comparison, condition barriers, isolated features, network analysis, subnetwork trace, trace configuration, trace filter, utility network
