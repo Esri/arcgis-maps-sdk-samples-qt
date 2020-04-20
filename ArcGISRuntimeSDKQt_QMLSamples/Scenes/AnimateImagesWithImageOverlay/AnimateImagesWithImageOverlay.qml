@@ -34,7 +34,6 @@ Rectangle {
         id: timer
         interval: 68
         repeat: true
-
         property var i: 0
 
         onTriggered: {
@@ -54,8 +53,6 @@ Rectangle {
     SceneView {
         id: sceneView
         anchors.fill: parent
-
-        property alias sceneViewAtt: sceneView.attributionTop
 
         Scene {
             id: scene
@@ -118,7 +115,6 @@ Rectangle {
                     Layout.alignment: Qt.AlignHCenter
 
                     onMoved: imageOverlay.opacity = value;
-                    //                        onMoved:  print(value.toFixed(2));
 
                     //Custom slider handle that displays the current value
                     handle: Item {
@@ -162,13 +158,10 @@ Rectangle {
                         text: !timer.running ? qsTr("Start") : qsTr("Stop")
                         Layout.minimumWidth: timerIntervalComboBox.width
                         onClicked: {
-                            if (!timer.running) {
+                            if (!timer.running)
                                 timer.start();
-                                //                                    model.startTimer();
-                            } else {
+                            else
                                 timer.stop();
-                                //                                    model.stopTimer();
-                            }
                         }
                     }
 
@@ -178,21 +171,10 @@ Rectangle {
                         model: imageFrameRefreshRate
                         Layout.minimumWidth: startStopBtn.width
 
-                        onActivated: {
-                            //                                model.setTimerInterval(timerIntervals[currentIndex]);
-                            timer.interval = timerIntervals[currentIndex];
-                        }
+                        onActivated: timer.interval = timerIntervals[currentIndex];
                     }
                 }
             }
-            //        Button {
-            //            id: locCam
-            //            text: "temp"
-            //            anchors.top: parent.top
-            //            onClicked: {
-            //                model.getInfo();
-            //            }
-            //        }
         }
     }
 
@@ -209,5 +191,4 @@ Rectangle {
         id: imageFrameFolder
         url: dataPath
     }
-
 }
