@@ -31,7 +31,7 @@ Rectangle {
     readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"
 
     // Create new Timer and set the timeout interval to 68
-    // 68 ms interval timer equates to approximatey 15 frames a second
+    // 68 ms interval timer equates to approximately 15 frames a second
     Timer {
         id: timer
         interval: 68
