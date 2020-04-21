@@ -41,7 +41,11 @@ Rectangle {
 
         // connect to the triggered signal to load and display a new image frame each time
         onTriggered: {
-            // Create an image frame with the url to the image file and a extent
+            // check if images are found before trying to load them
+            if (fileNamesLength === 0)
+                return;
+
+            // create an image frame with the url to the image file and a extent
             let imageFrame = ArcGISRuntimeEnvironment.createObject("ImageFrame", {
                                                                        url: dataPath + "/" + imageFrameFolder.fileNames()[index],
                                                                        extent: imageFrameExtent
@@ -54,7 +58,7 @@ Rectangle {
             index++;
 
             // reset index once all files have been loaded
-            if (i === fileNamesLength) {
+            if (index === fileNamesLength) {
                 index = 0;
             }
         }
