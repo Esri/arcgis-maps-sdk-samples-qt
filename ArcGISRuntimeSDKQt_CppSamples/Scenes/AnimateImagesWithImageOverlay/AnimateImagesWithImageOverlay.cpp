@@ -155,7 +155,7 @@ void AnimateImagesWithImageOverlay::animateImageFrames()
   const QImage image(dataPath + "/" + images[m_index]);
 
   // use std::unqiue_ptr to handle the lifetime of the image frame
-  std::unique_ptr<ImageFrame> imageFrame = std::make_unique<ImageFrame>(image, m_pacificSouthwestEnvelope, this);
+  std::unique_ptr<ImageFrame> imageFrame = std::make_unique<ImageFrame>(image, m_pacificSouthwestEnvelope);
 
   // set image frame to image overlay
   m_imageOverlay->setImageFrame(imageFrame.get());
