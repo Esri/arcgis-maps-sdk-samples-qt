@@ -4,6 +4,6 @@
         "ClosestFacility.h",
         "ClosestFacility.cpp"
     ],
-    "name" : "Closest facility"
+    "name" : "Find closest facility to an incident (interactive)"
 }
 
