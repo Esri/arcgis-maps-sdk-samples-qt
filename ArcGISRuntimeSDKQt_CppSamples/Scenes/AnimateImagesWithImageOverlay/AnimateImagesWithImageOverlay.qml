@@ -29,8 +29,10 @@ Item {
 
         Rectangle {
             id: controlsRect
-            anchors.bottom: view.attributionTop
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors {
+                bottom: view.attributionTop
+                horizontalCenter: parent.horizontalCenter
+            }
             width: childrenRect.width
             height: childrenRect.height
             color: "lightgrey"
@@ -51,7 +53,7 @@ Item {
 
                     onMoved: model.setOpacity(value);
 
-                    //Custom slider handle that displays the current value
+                    // Custom slider handle that displays the current value
                     handle: Item {
                         x: parent.leftPadding + parent.visualPosition * (parent.availableWidth - headingHandleNub.width)
                         y: parent.topPadding + parent.availableHeight / 2 - headingHandleNub.height / 2
