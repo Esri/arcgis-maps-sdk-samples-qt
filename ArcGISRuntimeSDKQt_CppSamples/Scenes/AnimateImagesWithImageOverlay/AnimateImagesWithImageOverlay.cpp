@@ -139,7 +139,7 @@ void AnimateImagesWithImageOverlay::setupImageOverlay()
   m_timer = new QTimer(this);
   m_timer->setInterval(68);
 
-  // connect to the timeout signal to load and display a new image each time
+  // connect to the timeout signal to load and display a new image frame each time
   connect(m_timer, &QTimer::timeout, this, &AnimateImagesWithImageOverlay::animateImageFrames);
 }
 

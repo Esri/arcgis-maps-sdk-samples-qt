@@ -30,22 +30,31 @@ Rectangle {
     readonly property var imageFrameRefreshRate: ["60 fps","30 fps","15 fps"]
     readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"
 
+    // Create new Timer and set the timeout interval to 68
+    // 68 ms interval timer equates to approximatey 15 frames a second
     Timer {
         id: timer
         interval: 68
         repeat: true
-        property var i: 0
+        property var index: 0
 
+        // connect to the triggered signal to load and display a new image frame each time
         onTriggered: {
+            // Create an image frame with the url to the image file and a extent
             let imageFrame = ArcGISRuntimeEnvironment.createObject("ImageFrame", {
-                                                                       url: dataPath + "/" + imageFrameFolder.fileNames()[i],
+                                                                       url: dataPath + "/" + imageFrameFolder.fileNames()[index],
                                                                        extent: imageFrameExtent
                                                                    });
+
+            // set image frame to image overlay
             imageOverlay.imageFrame = imageFrame;
 
-            i++;
+            // increment the index to keep track of which image to load next
+            index++;
+
+            // reset index once all files have been loaded
             if (i === imageFrameFolder.fileNames().length) {
-                i = 0;
+                index = 0;
             }
         }
     }
@@ -58,11 +67,13 @@ Rectangle {
             id: scene
 
             Surface {
+                // create a new elevation source from Terrain3D REST service
                 ArcGISTiledElevationSource {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
 
+            // create a new tiled layer from World_Dark_Gray_Base REST service
             ArcGISTiledLayer {
                 id: worldDarkGrayBasemap
                 url: "https://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
@@ -78,6 +89,7 @@ Rectangle {
                     spatialReference: SpatialReference { wkid: 4326 }
                 }
 
+                // create a camera, looking at the pacific southwest sector
                 Camera {
                     id: camera
                     location: initialViewpoint
@@ -178,6 +190,7 @@ Rectangle {
         }
     }
 
+    // create an envelope of the pacific southwest sector for displaying the image frame
     Envelope {
         id: imageFrameExtent
         xMin: -127.62
@@ -187,6 +200,7 @@ Rectangle {
         spatialReference: SpatialReference { wkid: 4326 }
     }
 
+    // Create file folder to find image file names
     FileFolder {
         id: imageFrameFolder
         url: dataPath
