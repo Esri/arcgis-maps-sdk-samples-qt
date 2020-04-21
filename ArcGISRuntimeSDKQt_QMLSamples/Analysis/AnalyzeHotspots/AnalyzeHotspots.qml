@@ -59,7 +59,7 @@ Rectangle {
             job = hotspotTask.createJob(hotspotParameters);
 
             // Connect to the job's status changed signal
-            job.jobStatusChanged.connect(function(){
+            job.jobStatusChanged.connect(()=> {
                 if (job.jobStatus === Enums.JobStatusFailed) {
                     showErrorDialog(job.error);
                     jobInProgress = false;
@@ -86,7 +86,7 @@ Rectangle {
         function processResults(result) {
             mapView.map.operationalLayers.clear();
             var layer = result.mapImageLayer;
-            layer.loadStatusChanged.connect(function() {
+            layer.loadStatusChanged.connect(()=> {
                 if (layer.loadStatus === Enums.LoadStatusLoaded)
                     mapView.setViewpointGeometry(layer.fullExtent);
             });

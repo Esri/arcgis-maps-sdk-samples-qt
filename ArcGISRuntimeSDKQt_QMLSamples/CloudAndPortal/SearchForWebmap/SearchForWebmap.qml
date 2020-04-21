@@ -51,7 +51,7 @@ Rectangle {
         portalItem = selectedWebmap;
 
         portalItem.loadStatusChanged.connect(createMap);
-        portalItem.loadErrorChanged.connect( function() {
+        portalItem.loadErrorChanged.connect(()=> {
             webMapMsg.text = portalItem.loadError.message;
             webMapMsg.visible = true;
         });
@@ -66,7 +66,7 @@ Rectangle {
         mapView.map = ArcGISRuntimeEnvironment.createObject("Map", {"item": portalItem});
 
         mapView.map.loadStatusChanged.connect(assignWebmap);
-        mapView.map.loadErrorChanged.connect( function() {
+        mapView.map.loadErrorChanged.connect(()=> {
             webMapMsg.text = mapView.map.loadError.message;
             webMapMsg.visible = true;
         });

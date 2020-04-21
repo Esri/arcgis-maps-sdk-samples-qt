@@ -95,7 +95,7 @@ Rectangle {
                     gdbLayers.push(layer);
 
                     // Connect the layer's loadStatusChanged signal
-                    layer.loadStatusChanged.connect(function () {
+                    layer.loadStatusChanged.connect(()=> {
 
                         // See if all the layers have loaded.
                         for (var j = 0; j < gdbLayers.length; j++) {

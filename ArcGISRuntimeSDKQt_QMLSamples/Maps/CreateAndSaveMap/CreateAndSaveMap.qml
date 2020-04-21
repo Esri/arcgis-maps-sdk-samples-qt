@@ -156,7 +156,7 @@ Rectangle {
         // Create the Map with the basemap
         var map = ArcGISRuntimeEnvironment.createObject("Map", { basemap: selectedBasemap }, mapView);
 
-        map.saveStatusChanged.connect(function() {
+        map.saveStatusChanged.connect(()=> {
             if (map.saveStatus === Enums.TaskStatusCompleted) {
                 var url =  "https://www.arcgis.com/home/item.html?id=%1".arg(map.item.itemId);
                 stackView.push(completionRect,

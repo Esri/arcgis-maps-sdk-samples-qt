@@ -38,7 +38,7 @@ Rectangle {
         service = ArcGISRuntimeEnvironment.createObject("WmtsService", { url: wmtsServiceUrl });
 
         // connect to loadStatusChanged signal of the service
-        service.loadStatusChanged.connect(function() {
+        service.loadStatusChanged.connect(()=> {
             if (service.loadStatus === Enums.LoadStatusLoaded) {
                 // get the layer info list
                 var serviceInfo = service.serviceInfo;

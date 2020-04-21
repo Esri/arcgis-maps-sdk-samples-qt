@@ -120,7 +120,7 @@ Rectangle {
             currentSymbol.color = colorComboBox.currentText;
 
             // update swatch
-            currentSymbol.swatchImageChanged.connect(function(){
+            currentSymbol.swatchImageChanged.connect(()=> {
                 symbolImage.source = currentSymbol.swatchImage;
             });
 

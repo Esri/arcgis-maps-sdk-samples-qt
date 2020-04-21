@@ -147,7 +147,7 @@ Rectangle {
             map.operationalLayers.clear();
 
             // load the geodatabase to access the feature tables
-            geodatabase.loadStatusChanged.connect(function() {
+            geodatabase.loadStatusChanged.connect(()=> {
                 if (geodatabase.loadStatus === Enums.LoadStatusLoaded) {
                     // create a feature layer from each feature table, and add to the map
                     for (var i = 0; i < geodatabase.geodatabaseFeatureTables.length; i++) {

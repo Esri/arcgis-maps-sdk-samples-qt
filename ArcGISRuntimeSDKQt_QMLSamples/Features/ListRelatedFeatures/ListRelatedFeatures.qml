@@ -101,7 +101,7 @@ Rectangle {
                     var selectedTable = arcGISFeature.featureTable;
 
                     // connect signal
-                    selectedTable.queryRelatedFeaturesStatusChanged.connect(function() {
+                    selectedTable.queryRelatedFeaturesStatusChanged.connect(()=> {
                         if (selectedTable.queryRelatedFeaturesStatus !== Enums.TaskStatusCompleted)
                             return;
 

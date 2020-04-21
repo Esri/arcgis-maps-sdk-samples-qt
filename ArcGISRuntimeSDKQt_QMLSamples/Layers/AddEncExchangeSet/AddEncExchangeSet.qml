@@ -75,7 +75,7 @@ Rectangle {
                         layers.push(encLayer);
 
                         // connect to loadStatusChanged for each layer
-                        encLayer.loadStatusChanged.connect(function() {
+                        encLayer.loadStatusChanged.connect(()=> {
                             if (encLayer.loadStatus === Enums.LoadStatusLoaded) {
                                 loadedEncLayerCount++;
                             }

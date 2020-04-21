@@ -622,7 +622,7 @@ Rectangle {
                 var mobileMap = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", { path: mobilePathsList[index] });
                 mobileMap.load();
 
-                mobileMap.loadStatusChanged.connect(function() {
+                mobileMap.loadStatusChanged.connect(()=> {
                     // after mmpk is loaded, add it to the list of mobile map packages
                     if (mobileMap.loadStatus === Enums.LoadStatusLoaded) {
                         var title = mobileMap.item.title;
