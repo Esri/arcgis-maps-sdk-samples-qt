@@ -35,7 +35,6 @@
 
 // Qt headers
 #include <QString>
-#include <QDir>
 #include <QFile>
 #include <QtCore/qglobal.h>
 #include <QTimer>
@@ -71,7 +70,11 @@ using namespace Esri::ArcGISRuntime;
 
 AnimateImagesWithImageOverlay::AnimateImagesWithImageOverlay(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(this))
+  m_scene(new Scene(this)),
+  m_dataPath(defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"),
+  m_dir(m_dataPath),
+  m_images(m_dir.entryList(QStringList() << "*.png", QDir::Files)),
+  m_imagesSize(m_images.size())
 {
   // create a new elevation source from Terrain3D REST service
   ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -145,14 +148,12 @@ void AnimateImagesWithImageOverlay::setupImageOverlay()
 
 void AnimateImagesWithImageOverlay::animateImageFrames()
 {
-  const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest";
-
-  // get the image files and store the names
-  const QDir dir(dataPath);
-  const QStringList images = dir.entryList(QStringList() << "*.png", QDir::Files);
+  // check if string list of images is empty before trying to load and aniamte them
+  if (m_images.empty())
+    return;
 
   // create an image with the given path and use it to create an image frame
-  const QImage image(dataPath + "/" + images[m_index]);
+  const QImage image(m_dataPath + "/" + m_images[m_index]);
 
   // use std::unqiue_ptr to handle the lifetime of the image frame
   std::unique_ptr<ImageFrame> imageFrame = std::make_unique<ImageFrame>(image, m_pacificSouthwestEnvelope);
@@ -164,7 +165,7 @@ void AnimateImagesWithImageOverlay::animateImageFrames()
   m_index++;
 
   // reset index once all files have been loaded
-  if (m_index == images.size())
+  if (m_index == m_imagesSize)
     m_index = 0;
 }
 

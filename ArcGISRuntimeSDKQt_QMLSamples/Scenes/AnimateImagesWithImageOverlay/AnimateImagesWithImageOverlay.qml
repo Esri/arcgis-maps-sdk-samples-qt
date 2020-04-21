@@ -29,6 +29,7 @@ Rectangle {
     readonly property var timerIntervals: [17,34,68]
     readonly property var imageFrameRefreshRate: ["60 fps","30 fps","15 fps"]
     readonly property url dataPath: System.userHomePath +  "/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest"
+    property int fileNamesLength: 0
 
     // Create new Timer and set the timeout interval to 68
     // 68 ms interval timer equates to approximately 15 frames a second
@@ -53,7 +54,7 @@ Rectangle {
             index++;
 
             // reset index once all files have been loaded
-            if (i === imageFrameFolder.fileNames().length) {
+            if (i === fileNamesLength) {
                 index = 0;
             }
         }
@@ -206,5 +207,7 @@ Rectangle {
     FileFolder {
         id: imageFrameFolder
         url: dataPath
+
+        Component.onCompleted: fileNamesLength = imageFrameFolder.fileNames().length;
     }
 }

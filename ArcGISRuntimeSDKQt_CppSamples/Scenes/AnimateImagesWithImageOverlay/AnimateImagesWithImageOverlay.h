@@ -28,7 +28,9 @@ class ImageOverlay;
 }
 }
 
+#include <QDir>
 #include <QObject>
+
 class QTimer;
 
 #include "Envelope.h"
@@ -71,6 +73,10 @@ private:
   int m_index = 0;
   bool m_isStopped = true;
   QTimer* m_timer = nullptr;
+  const QString m_dataPath = "";
+  const QDir m_dir;
+  const QStringList m_images;
+  const int m_imagesSize = 0;
 };
 
 #endif // ANIMATEIMAGESWITHIMAGEOVERLAY_H
