@@ -64,7 +64,6 @@ private:
   void setupImageOverlay();
 
   Esri::ArcGISRuntime::Envelope m_pacificSouthwestEnvelope;
-  Esri::ArcGISRuntime::ImageFrame* m_imageFrame = nullptr;
   Esri::ArcGISRuntime::ImageOverlay* m_imageOverlay = nullptr;
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
