@@ -173,7 +173,7 @@ Rectangle {
 
     //pass in layers name and checked status to update featurelayer.ScaleSymbols property accordingly
     function featureLayerScaleSymbols(layerName, checkedStatus) {
-        featureLayerModel.forEach(function(lyr){
+        featureLayerModel.forEach(lyr => {
             if(layerName === lyr.name){
                 lyr.scaleSymbols = checkedStatus;
             }

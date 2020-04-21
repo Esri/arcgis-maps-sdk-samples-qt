@@ -177,7 +177,7 @@ Rectangle {
     // by calling appendAll and pass in the list.
     Component.onCompleted: {
         // add buoy points
-        buoyLocArray.forEach(function(buoyPoint) {
+        buoyLocArray.forEach(buoyPoint => {
             graphicsOverlay.graphics.append(createGraphic(buoyPoint, buoyMarkerSymbol));
         });
 

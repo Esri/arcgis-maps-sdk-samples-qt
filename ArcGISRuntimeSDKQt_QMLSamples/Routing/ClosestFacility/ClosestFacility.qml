@@ -227,7 +227,7 @@ Rectangle {
     }
 
     function createFacilities() {
-        facilitiesOverlay.graphics.forEach(function(graphic) {
+        facilitiesOverlay.graphics.forEach(graphic => {
             var facility = ArcGISRuntimeEnvironment.createObject("Facility", {geometry: graphic.geometry});
             facilities.push(facility);
         });

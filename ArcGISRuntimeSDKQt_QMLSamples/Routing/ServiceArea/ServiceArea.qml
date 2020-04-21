@@ -311,7 +311,7 @@ Rectangle {
         busy = true;
 
         var facilities = [];
-        facilitiesOverlay.graphics.forEach(function(graphic) {
+        facilitiesOverlay.graphics.forEach(graphic => {
             var facility = ArcGISRuntimeEnvironment.createObject(
                         "ServiceAreaFacility", {geometry: graphic.geometry});
             facilities.push(facility);
@@ -320,7 +320,7 @@ Rectangle {
         facilityParams.setFacilities(facilities);
 
         var barriers = [];
-        barriersOverlay.graphics.forEach(function(graphic) {
+        barriersOverlay.graphics.forEach(graphic => {
             var barrier = ArcGISRuntimeEnvironment.createObject(
                         "PolylineBarrier", {geometry: graphic.geometry});
             barriers.push(barrier);

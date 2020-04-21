@@ -46,7 +46,7 @@ Rectangle {
                     return;
 
                 // get the Alaska National Parks feature layer
-                map.operationalLayers.forEach(function(fl) {
+                map.operationalLayers.forEach(fl => {
                     if (fl.name.indexOf("- Alaska National Parks") !== -1) {
                         alaskaNationalParks = fl;
                     }

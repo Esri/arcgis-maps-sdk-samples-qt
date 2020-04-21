@@ -171,7 +171,7 @@ Rectangle {
 
         var lowerStateName = stateName.toLowerCase();
         var words = lowerStateName.split(" ");
-        words.forEach(function(word) {
+        words.forEach(word => {
             formattedWords.push(word.charAt(0).toUpperCase() + word.slice(1));
         });
 

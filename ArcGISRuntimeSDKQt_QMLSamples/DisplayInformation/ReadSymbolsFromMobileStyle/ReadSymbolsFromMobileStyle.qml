@@ -107,7 +107,7 @@ Rectangle {
             currentSymbol = fetchSymbolResult;
 
             // set the color locked preferences per layer
-            currentSymbol.symbolLayers.forEach(function(symbolLyr) {
+            currentSymbol.symbolLayers.forEach(symbolLyr => {
                 symbolLyr.colorLocked = true;
             });
 

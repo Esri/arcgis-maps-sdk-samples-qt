@@ -94,7 +94,7 @@ Rectangle {
         }
 
         // for each point construct a polygon by manipulating the co-ordinates
-        points.forEach(function(item){
+        points.forEach(item => {
             var randNum = Math.ceil(Math.random() * 6);
             var z = maxZ * randNum;
             var newPoints = [createPoint(item.x, item.y, z),
@@ -114,7 +114,7 @@ Rectangle {
         var polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder");
         polygonBuilder.spatialReference = sceneView.spatialReference;
 
-        pointsList.forEach(function(pnt){
+        pointsList.forEach(pnt => {
             polygonBuilder.addPoint(pnt);
         });
         return polygonBuilder.geometry;

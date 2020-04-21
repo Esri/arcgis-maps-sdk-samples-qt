@@ -171,7 +171,7 @@ Rectangle {
             coloradoOverlay.visible = false;
 
             // Iterate through the clipping envelopes
-            envelopesOverlay.graphics.forEach(function(graphic) {
+            envelopesOverlay.graphics.forEach(graphic => {
 
                 // Create a variable that contains the clip result, which is an envelope of the overlap between colorado and the current graphic
                 var clippedGeometry = GeometryEngine.clip(coloradoGraphic.geometry, graphic.geometry.extent);

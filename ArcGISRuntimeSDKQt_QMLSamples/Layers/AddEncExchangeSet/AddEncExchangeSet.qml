@@ -83,7 +83,7 @@ Rectangle {
                             // loop through the layers and zoom to the combined full extent
                             if (loadedEncLayerCount === datasets.length) {
                                 var fullExtents = [];
-                                map.operationalLayers.forEach(function(layer) {
+                                map.operationalLayers.forEach(layer => {
                                     fullExtents.push(layer.fullExtent);
                                 });
                                 var fullExtentOfLayers = GeometryEngine.combineExtentsOfGeometries(fullExtents);
