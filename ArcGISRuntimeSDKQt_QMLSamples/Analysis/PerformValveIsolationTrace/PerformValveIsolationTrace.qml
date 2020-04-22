@@ -26,8 +26,13 @@ Rectangle {
     width: 800
     height: 600
 
-    property url featureServiceUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleGas/FeatureServer"
-    property string globalId: "98A06E95-70BE-43E7-91B7-E34C9D3CB9FF"
+    readonly property url featureServiceUrl: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleGas/FeatureServer"
+    readonly property string domainNetworkName: "Pipeline"
+    readonly property string tierName: "Pipe Distribution System"
+    readonly property string networkSourceName: "Gas Device"
+    readonly property string assetGroupName: "Meter"
+    readonly property string assetTypeName: "Customer"
+    readonly property string globalId: "98A06E95-70BE-43E7-91B7-E34C9D3CB9FF"
     property var traceConfiguration: null
     property var startingLocation: null
     property var categories: null
@@ -150,16 +155,34 @@ Rectangle {
                         return;
 
                     // get a trace configuration from a tier
-                    let domainNetwork = definition.domainNetwork("Pipeline");
-                    let tier = domainNetwork.tier("Pipe Distribution System");
-                    traceConfiguration = tier.traceConfiguration;
+                    if (definition.domainNetwork(domainNetworkName) !== null) {
+                        let domainNetwork = definition.domainNetwork(domainNetworkName);
+                        if (domainNetwork.tier(tierName) !== null) {
+                            let tier = domainNetwork.tier(tierName);
+                            traceConfiguration = tier.traceConfiguration;
+                        }
+                    }
+
+                    if (traceConfiguration === null)
+                        return;
+
+                    // set the trace filter
                     traceConfiguration.filter = traceFilter;
 
                     // get a default starting location
-                    let networkSource = definition.networkSource("Gas Device");
-                    let assetGroup = networkSource.assetGroup("Meter");
-                    let assetType = assetGroup.assetType("Customer");
-                    startingLocation = createElementWithAssetType(assetType, globalId);
+                    if (definition.networkSource(networkSourceName) !== null) {
+                        let networkSource = definition.networkSource(networkSourceName);
+                        if (networkSource.assetGroup(assetGroupName) !== null) {
+                            let assetGroup = networkSource.assetGroup(assetGroupName);
+                            if (assetGroup.assetType(assetTypeName) !== null) {
+                                let assetType = assetGroup.assetType(assetTypeName);
+                                startingLocation = createElementWithAssetType(assetType, globalId);
+                            }
+                        }
+                    }
+
+                    if (startingLocation === null)
+                        return;
 
                     // display starting location
                     featuresForElements([startingLocation]);

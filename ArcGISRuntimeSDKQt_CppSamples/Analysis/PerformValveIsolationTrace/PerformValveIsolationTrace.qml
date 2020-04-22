@@ -65,7 +65,7 @@ Item {
                 }
                 ComboBox {
                     id: comboBox
-                    enabled: sampleModel.runningTrace
+                    enabled: !sampleModel.tasksRunning
                     Layout.minimumWidth: 200
                     model: sampleModel.categoriesList
                     onCurrentIndexChanged: {
@@ -77,7 +77,7 @@ Item {
                     onClicked: {
                         sampleModel.performTrace();
                     }
-                    enabled: sampleModel.runningTrace
+                    enabled: !sampleModel.tasksRunning
                 }
             }
 
@@ -89,7 +89,7 @@ Item {
                 }
                 CheckBox {
                     text: "Include isolated features"
-                    enabled: sampleModel.runningTrace
+                    enabled: !sampleModel.tasksRunning
                     leftPadding: 0
                     onCheckedChanged: {
                         sampleModel.isolateFeatures = checked;
@@ -102,7 +102,7 @@ Item {
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        running: !sampleModel.runningTrace
+        running: sampleModel.tasksRunning
     }
 
     MessageDialog {

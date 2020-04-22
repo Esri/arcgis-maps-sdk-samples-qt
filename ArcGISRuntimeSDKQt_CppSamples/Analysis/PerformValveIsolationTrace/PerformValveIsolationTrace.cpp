@@ -137,8 +137,8 @@ void PerformValveIsolationTrace::performTrace()
     return;
 
   // disable UI while trace is run
-  m_runningTrace = false;
-  emit runningTraceChanged();
+  m_tasksRunning = true;
+  emit tasksRunningChanged();
 
   for (Layer* layer : *m_map->operationalLayers())
   {
@@ -225,8 +225,8 @@ void PerformValveIsolationTrace::connectSignals()
 
   connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](QUuid)
   {
-    m_runningTrace = true;
-    emit runningTraceChanged();
+    m_tasksRunning = false;
+    emit tasksRunningChanged();
 
     UtilityTraceResultListModel* utilityTraceResultList = m_utilityNetwork->traceResult();
 
@@ -279,14 +279,9 @@ void PerformValveIsolationTrace::connectSignals()
     m_startingLocationOverlay->graphics()->append(graphic);
 
     m_mapView->setViewpointCenter(startingLocationGeometry, 3000);
-    m_runningTrace = true;
-    emit runningTraceChanged();
+    m_tasksRunning = false;
+    emit tasksRunningChanged();
   });
-}
-
-bool PerformValveIsolationTrace::runningTrace() const
-{
-  return m_runningTrace;
 }
 
 bool PerformValveIsolationTrace::noResults() const
