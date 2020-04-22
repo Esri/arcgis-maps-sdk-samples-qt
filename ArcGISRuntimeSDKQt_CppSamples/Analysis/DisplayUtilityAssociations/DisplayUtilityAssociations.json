@@ -1,0 +1,8 @@
+{
+    "source" :  "DisplayUtilityAssociations.qml",
+    "otherSourceFiles" :  [
+        "DisplayUtilityAssociations.h",
+        "DisplayUtilityAssociations.cpp"
+    ],
+    "name" : "Display utility associations"
+}

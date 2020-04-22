@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/DisplayUtilityAssociations">
+        <file alias="sample.json">DisplayUtilityAssociations.json</file>        
+        <file>DisplayUtilityAssociations.qml</file>
+        <file>DisplayUtilityAssociations.h</file>
+        <file>DisplayUtilityAssociations.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
