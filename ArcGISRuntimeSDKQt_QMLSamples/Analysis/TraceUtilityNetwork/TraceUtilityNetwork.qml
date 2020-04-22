@@ -367,9 +367,7 @@ Rectangle {
                         deviceObjIds = [];
                         lineObjIds = [];
                         mapView.graphicsOverlays.get(0).graphics.clear();
-                        mapView.map.operationalLayers.forEach(layer => {
-                            layer.clearSelection();
-                        });
+                        mapView.map.operationalLayers.forEach(layer => layer.clearSelection());
                     }
                 }
 

@@ -83,9 +83,7 @@ Rectangle {
                             // loop through the layers and zoom to the combined full extent
                             if (loadedEncLayerCount === datasets.length) {
                                 var fullExtents = [];
-                                map.operationalLayers.forEach(layer => {
-                                    fullExtents.push(layer.fullExtent);
-                                });
+                                map.operationalLayers.forEach(layer => fullExtents.push(layer.fullExtent));
                                 var fullExtentOfLayers = GeometryEngine.combineExtentsOfGeometries(fullExtents);
                                 mapView.setViewpointGeometry(fullExtentOfLayers)
                             }

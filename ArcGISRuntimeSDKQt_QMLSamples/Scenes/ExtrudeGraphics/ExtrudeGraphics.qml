@@ -114,9 +114,7 @@ Rectangle {
         var polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder");
         polygonBuilder.spatialReference = sceneView.spatialReference;
 
-        pointsList.forEach(pnt => {
-            polygonBuilder.addPoint(pnt);
-        });
+        pointsList.forEach(pnt => polygonBuilder.addPoint(pnt));
         return polygonBuilder.geometry;
     }
 
