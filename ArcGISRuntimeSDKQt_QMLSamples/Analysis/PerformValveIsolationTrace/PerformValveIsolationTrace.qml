@@ -177,7 +177,6 @@ Rectangle {
 
         }
 
-
         ColumnLayout {
             anchors {
                 left: parent.left
@@ -188,6 +187,7 @@ Rectangle {
                 color: "#FBFBFB"
                 height: childrenRect.height
                 width: row.width * 1.5
+
                 RowLayout {
                     id: titleRow
                     Rectangle {
@@ -204,6 +204,7 @@ Rectangle {
                         top: parent.top
                     }
                 }
+
                 RowLayout {
                     id: row
                     anchors {
@@ -253,6 +254,7 @@ Rectangle {
                         enabled: uiEnabled
                     }
                 }
+
                 RowLayout {
                     id: checkBoxRow
                     anchors {
@@ -275,9 +277,10 @@ Rectangle {
             running: utilityNetwork.traceStatus === Enums.TaskStatusInProgress
         }
     }
+
     MessageDialog {
         id: messageDialog
-        title: "Perform vale isolation trace"
+        title: "Perform valve isolation trace"
         text: "Isolation trace returned no elements."
         visible: false
         onRejected: {

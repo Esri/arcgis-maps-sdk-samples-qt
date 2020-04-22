@@ -55,6 +55,12 @@ using namespace Esri::ArcGISRuntime;
 
 namespace  {
 const QString featureServiceUrl = "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleGas/FeatureServer";
+const QString domainNetworkName = "Pipeline";
+const QString tierName = "Pipe Distribution System";
+const QString networkSourceName = "Gas Device";
+const QString assetGroupName = "Meter";
+const QString assetTypeName = "Customer";
+const QString globalId = "{98A06E95-70BE-43E7-91B7-E34C9D3CB9FF}";
 }
 
 PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */):
@@ -116,7 +122,7 @@ QStringList PerformValveIsolationTrace::categoriesList() const
   if (m_utilityNetwork->loadStatus() != LoadStatus::Loaded)
     return { };
 
-  QList<UtilityCategory*> categories = m_utilityNetwork->definition()->categories();
+  const QList<UtilityCategory*> categories = m_utilityNetwork->definition()->categories();
   QStringList strList;
   for (UtilityCategory* category : categories)
   {
@@ -131,8 +137,8 @@ void PerformValveIsolationTrace::performTrace()
     return;
 
   // disable UI while trace is run
-  m_uiEnabled = false;
-  emit uiEnabledChanged();
+  m_runningTrace = false;
+  emit runningTraceChanged();
 
   for (Layer* layer : *m_map->operationalLayers())
   {
@@ -143,7 +149,7 @@ void PerformValveIsolationTrace::performTrace()
     }
   }
 
-  QList<UtilityCategory*> categories = m_utilityNetwork->definition()->categories();
+  const QList<UtilityCategory*> categories = m_utilityNetwork->definition()->categories();
 
   // get the selected utility category
   if (categories[m_selectedIndex] != nullptr)
@@ -180,18 +186,34 @@ void PerformValveIsolationTrace::connectSignals()
 
     // get a trace configuration from a tier
     UtilityNetworkDefinition* networkDefinition = m_utilityNetwork->definition();
-    UtilityDomainNetwork* domainNetwork = networkDefinition->domainNetwork("Pipeline");
-    UtilityTier* tier = domainNetwork->tier("Pipe Distribution System");
-    m_traceConfiguration = tier->traceConfiguration();
+    if (UtilityDomainNetwork* domainNetwork = networkDefinition->domainNetwork(domainNetworkName))
+    {
+      if (UtilityTier* tier = domainNetwork->tier(tierName))
+      {
+        m_traceConfiguration = tier->traceConfiguration();
+      }
+    }
+
+    if (!m_traceConfiguration)
+      return;
 
     // create a trace filter
     m_traceConfiguration->setFilter(new UtilityTraceFilter(this));
 
     // get a default starting location
-    UtilityNetworkSource* networkSource = networkDefinition->networkSource("Gas Device");
-    UtilityAssetGroup* assetGroup = networkSource->assetGroup("Meter");
-    UtilityAssetType* assetType = assetGroup->assetType("Customer");
-    m_startingLocation = m_utilityNetwork->createElementWithAssetType(assetType, QUuid("98A06E95-70BE-43E7-91B7-E34C9D3CB9FF"), nullptr, this);
+    if (UtilityNetworkSource* networkSource = networkDefinition->networkSource(networkSourceName))
+    {
+      if (UtilityAssetGroup* assetGroup = networkSource->assetGroup(assetGroupName))
+      {
+        if (UtilityAssetType* assetType = assetGroup->assetType(assetTypeName))
+        {
+          m_startingLocation = m_utilityNetwork->createElementWithAssetType(assetType, QUuid(globalId), nullptr, this);
+        }
+      }
+    }
+
+    if (!m_startingLocation)
+      return;
 
     // display starting location
     m_utilityNetwork->featuresForElements(QList<UtilityElement*> {m_startingLocation});
@@ -203,8 +225,8 @@ void PerformValveIsolationTrace::connectSignals()
 
   connect(m_utilityNetwork, &UtilityNetwork::traceCompleted, this, [this](QUuid)
   {
-    m_uiEnabled = true;
-    emit uiEnabledChanged();
+    m_runningTrace = true;
+    emit runningTraceChanged();
 
     UtilityTraceResultListModel* utilityTraceResultList = m_utilityNetwork->traceResult();
 
@@ -216,7 +238,7 @@ void PerformValveIsolationTrace::connectSignals()
 
     if (UtilityElementTraceResult* utilityElementTraceResult = dynamic_cast<UtilityElementTraceResult*>(utilityTraceResultList->at(0)))
     {
-      if (utilityElementTraceResult->elements(this).empty())
+      if (utilityElementTraceResult->elements().empty())
       {
         m_noResults = true;
         emit noResultsChanged();
@@ -232,10 +254,10 @@ void PerformValveIsolationTrace::connectSignals()
           QueryParameters queryParameters;
           QList<qint64> objectIds = {};
 
-          for (UtilityElement* utilityElement : utilityElementTraceResult->elements(this))
+          for (UtilityElement* utilityElement : utilityElementTraceResult->elements())
           {
-            QString networkSourceName = utilityElement->networkSource()->name();
-            QString featureTableName = featureLayer->featureTable()->tableName();
+            const QString networkSourceName = utilityElement->networkSource()->name();
+            const QString featureTableName = featureLayer->featureTable()->tableName();
             if (networkSourceName == featureTableName)
             {
               objectIds.append(utilityElement->objectId());
@@ -257,14 +279,14 @@ void PerformValveIsolationTrace::connectSignals()
     m_startingLocationOverlay->graphics()->append(graphic);
 
     m_mapView->setViewpointCenter(startingLocationGeometry, 3000);
-    m_uiEnabled = true;
-    emit uiEnabledChanged();
+    m_runningTrace = true;
+    emit runningTraceChanged();
   });
 }
 
-bool PerformValveIsolationTrace::uiEnabled() const
+bool PerformValveIsolationTrace::runningTrace() const
 {
-  return m_uiEnabled;
+  return m_runningTrace;
 }
 
 bool PerformValveIsolationTrace::noResults() const

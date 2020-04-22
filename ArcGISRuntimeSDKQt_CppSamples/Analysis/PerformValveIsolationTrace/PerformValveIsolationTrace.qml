@@ -33,6 +33,7 @@ Item {
             left: parent.left
             top: parent.top
         }
+
         Rectangle {
             id: backgroundRect
             color: "#FBFBFB"
@@ -41,6 +42,10 @@ Item {
 
             RowLayout {
                 id: titleRow
+                anchors {
+                    left: row.left
+                    top: parent.top
+                }
                 Rectangle {
                     color: backgroundRect.color
                     width: childrenRect.width
@@ -50,11 +55,8 @@ Item {
                         font.pixelSize: 14
                     }
                 }
-                anchors {
-                    left: row.left
-                    top: parent.top
-                }
             }
+
             RowLayout {
                 id: row
                 anchors {
@@ -63,7 +65,7 @@ Item {
                 }
                 ComboBox {
                     id: comboBox
-                    enabled: sampleModel.uiEnabled
+                    enabled: sampleModel.runningTrace
                     Layout.minimumWidth: 200
                     model: sampleModel.categoriesList
                     onCurrentIndexChanged: {
@@ -75,9 +77,10 @@ Item {
                     onClicked: {
                         sampleModel.performTrace();
                     }
-                    enabled: sampleModel.uiEnabled
+                    enabled: sampleModel.runningTrace
                 }
             }
+
             RowLayout {
                 id: checkBoxRow
                 anchors {
@@ -86,7 +89,7 @@ Item {
                 }
                 CheckBox {
                     text: "Include isolated features"
-                    enabled: sampleModel.uiEnabled
+                    enabled: sampleModel.runningTrace
                     leftPadding: 0
                     onCheckedChanged: {
                         sampleModel.isolateFeatures = checked;
@@ -99,12 +102,12 @@ Item {
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        running: !sampleModel.uiEnabled
+        running: !sampleModel.runningTrace
     }
 
     MessageDialog {
         id: messageDialog
-        title: "Perform vale isolation trace"
+        title: "Perform valve isolation trace"
         text: "Isolation trace returned no elements."
         visible: sampleModel.noResults
         onRejected: {

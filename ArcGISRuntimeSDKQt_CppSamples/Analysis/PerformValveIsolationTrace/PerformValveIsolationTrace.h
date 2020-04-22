@@ -42,7 +42,8 @@ class PerformValveIsolationTrace : public QObject
   Q_PROPERTY(QStringList categoriesList READ categoriesList NOTIFY categoriesListChanged)
   Q_PROPERTY(int selectedIndex MEMBER m_selectedIndex NOTIFY selectedIndexChanged)
   Q_PROPERTY(bool isolateFeatures MEMBER m_isolateFeatures NOTIFY isolateFeaturesChanged)
-  Q_PROPERTY(bool uiEnabled READ uiEnabled NOTIFY uiEnabledChanged)
+  Q_PROPERTY(bool runningTrace READ runningTrace NOTIFY runningTraceChanged)
+  Q_PROPERTY(bool tasksRunning READ tasksRunning NOTIFY tasksRunningChanged)
   Q_PROPERTY(bool noResults READ noResults NOTIFY noResultsChanged)
 
 public:
@@ -57,14 +58,16 @@ signals:
   void categoriesListChanged();
   void selectedIndexChanged();
   void isolateFeaturesChanged();
-  void uiEnabledChanged();
+  void runningTraceChanged();
+  void tasksRunningChanged();
   void noResultsChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QStringList categoriesList() const;
-  bool uiEnabled() const;
+  bool runningTrace() const;
+  bool tasksRunning() const { return m_tasksRunning; }
   bool noResults() const;
   void connectSignals();
 
@@ -77,7 +80,8 @@ private:
   QStringList m_categoriesList;
   int m_selectedIndex = -1;
   bool m_isolateFeatures = false;
-  bool m_uiEnabled = false;
+  bool m_runningTrace = false;
+  bool m_tasksRunning = false;
   bool m_traceRunning = false;
   bool m_noResults = false;
 };
