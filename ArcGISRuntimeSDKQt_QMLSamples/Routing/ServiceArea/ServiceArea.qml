@@ -311,20 +311,16 @@ Rectangle {
         busy = true;
 
         var facilities = [];
-        facilitiesOverlay.graphics.forEach(graphic => {
-            var facility = ArcGISRuntimeEnvironment.createObject(
-                        "ServiceAreaFacility", {geometry: graphic.geometry});
-            facilities.push(facility);
-        });
+        facilitiesOverlay.graphics.forEach(graphic => facilities.push(ArcGISRuntimeEnvironment.createObject("ServiceAreaFacility", {
+                                                                                                                geometry: graphic.geometry
+                                                                                                            })));
 
         facilityParams.setFacilities(facilities);
 
         var barriers = [];
-        barriersOverlay.graphics.forEach(graphic => {
-            var barrier = ArcGISRuntimeEnvironment.createObject(
-                        "PolylineBarrier", {geometry: graphic.geometry});
-            barriers.push(barrier);
-        });
+        barriersOverlay.graphics.forEach(graphic => barriers.push(ArcGISRuntimeEnvironment.createObject("PolylineBarrier", {
+                                                                                                            geometry: graphic.geometry
+                                                                                                        })));
 
         if (barriers.length > 0)
             facilityParams.setPolylineBarriers(barriers);
