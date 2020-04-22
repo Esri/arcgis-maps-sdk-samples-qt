@@ -149,7 +149,7 @@ void AnimateImagesWithImageOverlay::setupImageOverlay()
 void AnimateImagesWithImageOverlay::animateImageFrames()
 {
   // check if string list of images is empty before trying to load and animate them
-  if (m_images.empty())
+  if (m_imagesSize == 0)
     return;
 
   // create an image with the given path and use it to create an image frame
