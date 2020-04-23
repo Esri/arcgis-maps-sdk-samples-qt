@@ -88,7 +88,7 @@ Rectangle {
 
         onStatusChanged: {
             if (status === XmlListModel.Ready) {
-                for (var i = 0; i < count; i++) {
+                for (let i = 0; i < count; i++) {
                     var element = get(i);
                     var wkid = element._wkid;
                     if (!wkid) {
@@ -109,7 +109,7 @@ Rectangle {
                         var builder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder");
                         builder.spatialReference = sr;
 
-                        for (var ptIndex = 0; ptIndex < pointStrings.length; ptIndex++) {
+                        for (let ptIndex = 0; ptIndex < pointStrings.length; ptIndex++) {
                             var coords = pointStrings[ptIndex].split(",");
                             builder.points.addPointXY(coords[0], coords[1]);
                         }

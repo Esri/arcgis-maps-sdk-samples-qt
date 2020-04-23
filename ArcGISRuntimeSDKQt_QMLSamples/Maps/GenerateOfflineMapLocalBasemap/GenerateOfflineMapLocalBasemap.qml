@@ -153,7 +153,7 @@ Rectangle {
                 if (generateJob.result.hasErrors) {
                     var layerErrors = generateJob.result.layerErrors;
                     var errorText = "";
-                    for (var i = 0; i < layerErrors.length; i++) {
+                    for (let i = 0; i < layerErrors.length; i++) {
                         var errorPair = layerErrors[i];
                         errorText += errorPair.layer.name + ": " + errorPair.error.message + "\n";
                     }

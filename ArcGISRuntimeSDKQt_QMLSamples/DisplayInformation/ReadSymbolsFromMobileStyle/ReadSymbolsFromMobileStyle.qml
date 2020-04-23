@@ -87,7 +87,7 @@ Rectangle {
                 return;
 
             // get initial list of symbols
-            for (var i = 0; i < searchSymbolsResult.count; i++) {
+            for (let i = 0; i < searchSymbolsResult.count; i++) {
                 var result = searchSymbolsResult.get(i);
                 if (result.category === "Face") {
                     currentFace = result;

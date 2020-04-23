@@ -62,7 +62,7 @@ ChangeBasemapSample {
 
         onModelChanged: {
             var w = bestWidth;
-            for (var i = 0; i < comboBoxBasemap.model.length; ++i) {
+            for (let i = 0; i < comboBoxBasemap.model.length; ++i) {
                 metrics.text = comboBoxBasemap.model[i];
                 w = Math.max(w, metrics.width);
             }

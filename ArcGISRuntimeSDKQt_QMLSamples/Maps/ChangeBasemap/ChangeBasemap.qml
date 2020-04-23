@@ -59,7 +59,7 @@ Rectangle {
         }
 
         Component.onCompleted : {
-            for (var i = 0; i < model.count; ++i) {
+            for (let i = 0; i < model.count; ++i) {
                 metrics.text = model.get(i).text;
                 modelWidth = Math.max(modelWidth, metrics.width);
             }

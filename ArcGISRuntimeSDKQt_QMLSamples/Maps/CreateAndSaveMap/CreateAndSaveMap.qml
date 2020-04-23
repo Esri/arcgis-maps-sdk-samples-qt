@@ -171,7 +171,7 @@ Rectangle {
         });
 
         // Add Operational Layers
-        for (var i = 0; i < layerList.length; i++) {
+        for (let i = 0; i < layerList.length; i++) {
             if (layerList[i] === "WorldElevations") {
                 var elevationLyr = ArcGISRuntimeEnvironment.createObject("ArcGISMapImageLayer", {
                                                                              url : "https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"

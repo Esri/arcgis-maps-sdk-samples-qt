@@ -228,7 +228,7 @@ Rectangle {
             offlineGdb.loadStatusChanged.connect(function() {
                 if (offlineGdb.loadStatus === Enums.LoadStatusLoaded) {
                     // create a feature layer from each feature table, and add to the map
-                    for (var i = 0; i < offlineGdb.geodatabaseFeatureTables.length; i++) {
+                    for (let i = 0; i < offlineGdb.geodatabaseFeatureTables.length; i++) {
                         var featureTable = offlineGdb.geodatabaseFeatureTables[i];
                         var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
                         featureLayer.featureTable = featureTable;

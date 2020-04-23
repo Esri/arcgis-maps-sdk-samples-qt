@@ -87,7 +87,7 @@ Rectangle {
 
                 // create an array to store the features
                 var identifiedObjects = [];
-                for (var i = 0; i < identifyLayerResult.geoElements.length; i++){
+                for (let i = 0; i < identifyLayerResult.geoElements.length; i++){
                     var elem = identifyLayerResult.geoElements[i];
                     identifiedObjects.push(elem);
                 }

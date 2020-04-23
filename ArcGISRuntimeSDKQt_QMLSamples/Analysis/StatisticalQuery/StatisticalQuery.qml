@@ -59,7 +59,7 @@ Rectangle {
                         var iter = queryStatisticsResult.iterator;
                         while (iter.hasNext) {
                             var record = iter.next();
-                            for (var key in record.statistics) {
+                            for (let key in record.statistics) {
                                 if (record.statistics.hasOwnProperty(key)) {
                                     resultsText += key + ": " + record.statistics[key] + "\n";
                                 }

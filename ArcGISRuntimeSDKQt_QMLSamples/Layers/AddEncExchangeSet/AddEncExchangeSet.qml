@@ -61,7 +61,7 @@ Rectangle {
                     }
 
                     // loop through the datasets
-                    for (var i = 0; i < datasets.length; i++) {
+                    for (let i = 0; i < datasets.length; i++) {
 
                         // create an EncCell from each dataset
                         var encCell = ArcGISRuntimeEnvironment.createObject("EncCell", {

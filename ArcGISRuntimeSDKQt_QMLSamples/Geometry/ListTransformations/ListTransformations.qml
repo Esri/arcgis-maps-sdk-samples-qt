@@ -164,8 +164,8 @@ Rectangle {
                         if (transform.missingProjectionEngineFiles) {
                             var missingFiles = "Missing grid files: ";
                             var steps = transform.steps;
-                            for (var i = 0; i < steps.length; i++) {
-                                for (var j = 0; j < steps[i].projectionEngineFilenames.length; j++) {
+                            for (let i = 0; i < steps.length; i++) {
+                                for (let j = 0; j < steps[i].projectionEngineFilenames.length; j++) {
                                     missingFiles += steps[i].projectionEngineFilenames[j];
                                 }
                             }

@@ -53,7 +53,7 @@ Rectangle {
 
                             var renderingRuleInfos = imageServiceRaster.serviceInfo.renderingRuleInfos;
                             var names = [];
-                            for (var i = 0; i < renderingRuleInfos.length; i++) {
+                            for (let i = 0; i < renderingRuleInfos.length; i++) {
                                 names.push(renderingRuleInfos[i].name);
                             }
                             renderingRuleNames = names;
@@ -92,7 +92,7 @@ Rectangle {
                     Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                     model: renderingRuleNames
                     onModelChanged: {
-                        for (var i = 0; i < model.length; ++i) {
+                        for (let i = 0; i < model.length; ++i) {
                             metrics.text = model[i];
                             modelWidth = Math.max(modelWidth, metrics.width);
                         }

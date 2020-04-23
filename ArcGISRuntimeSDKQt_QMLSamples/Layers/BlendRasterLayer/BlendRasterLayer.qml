@@ -163,7 +163,7 @@ Rectangle {
                 model: slopeTypeModel
 
                 Component.onCompleted : {
-                    for (var i = 0; i < model.count; ++i) {
+                    for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
                         modelWidth = Math.max(modelWidth, metrics.width);
                     }
@@ -188,7 +188,7 @@ Rectangle {
                 model: colorRampModel
 
                 Component.onCompleted : {
-                    for (var i = 0; i < model.count; ++i) {
+                    for (let i = 0; i < model.count; ++i) {
                         metrics2.text = model.get(i).name;
                         modelWidth = Math.max(modelWidth, metrics2.width);
                     }

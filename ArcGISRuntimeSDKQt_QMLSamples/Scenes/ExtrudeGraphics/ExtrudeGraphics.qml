@@ -88,7 +88,7 @@ Rectangle {
 
         // create a random set of points
         var points = [];
-        for (var i = 0; i <= 100; i++) {
+        for (let i = 0; i <= 100; i++) {
             var point = ArcGISRuntimeEnvironment.createObject("Point", {x:i / 10 * (size * 2) + lon, y:i % 10 * (size * 2) + lat, spatialReference:sceneView.spatialReference});
             points.push(point);
         }

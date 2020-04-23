@@ -66,7 +66,7 @@ Item {
 
     onSupportedExtensionsChanged: {
         var nameFiltersString = "Raster files (";
-        for (var i = 0; i < supportedFormats.length; i++)
+        for (let i = 0; i < supportedFormats.length; i++)
             nameFiltersString += "*." + supportedFormats[i] + " ";
 
         nameFiltersString += ")";

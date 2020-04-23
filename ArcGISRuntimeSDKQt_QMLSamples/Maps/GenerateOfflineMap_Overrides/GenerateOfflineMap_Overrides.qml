@@ -143,7 +143,7 @@ Rectangle {
 
         // Create a new sublist of LODs in the range requested by the user.
         var newLODs = [];
-        for (var i = min; i < max; ++i )
+        for (let i = min; i < max; ++i )
             newLODs.push(i);
 
         // Apply the sublist as the LOD level in tilecache parameters for the given
@@ -190,7 +190,7 @@ Rectangle {
     {
         // Find the feature layer with the given name
         var opLayers = map.operationalLayers;
-        for (var i = 0; i < opLayers.count; ++i)
+        for (let i = 0; i < opLayers.count; ++i)
         {
             var candidateLayer = opLayers.get(i);
 
@@ -233,7 +233,7 @@ Rectangle {
         // Remove the layer option from the list.
         var layerOptions = generateGdbParam.layerOptions;
         var newLayerOptions = [];
-        for (var i = 0; i < layerOptions.length; i++) {
+        for (let i = 0; i < layerOptions.length; i++) {
             if (layerOptions[i].layerIdAsInt !== targetLayerId) {
                 newLayerOptions.push(layerOptions[i]);
             }
@@ -278,7 +278,7 @@ Rectangle {
 
         // Update the where-clause on the layer.
         var layerOptions = generateGdbParam.layerOptions;
-        for (var i = 0; i < layerOptions.length; i++) {
+        for (let i = 0; i < layerOptions.length; i++) {
             var layerOption = layerOptions[i];
             if (layerOption.layerIdAsInt === targetLayerId) {
                 layerOption.whereClause = whereClause;
@@ -319,7 +319,7 @@ Rectangle {
 
         // Set the use geometry flag on the layer.
         var layerOptions = generateGdbParam.layerOptions;
-        for (var i = 0; i < layerOptions.length; i++) {
+        for (let i = 0; i < layerOptions.length; i++) {
             var layerOption = layerOptions[i];
             if (layerOption.layerIdAsInt === targetLayerId) {
                 layerOption.useGeometry = clip;
@@ -370,7 +370,7 @@ Rectangle {
             if (generateJob.result.hasErrors) {
                 var layerErrors = generateJob.result.layerErrors;
                 var errorText = "";
-                for (var i = 0; i < layerErrors.length; i++) {
+                for (let i = 0; i < layerErrors.length; i++) {
                     var errorPair = layerErrors[i];
                     errorText += errorPair.layer.name + ": " + errorPair.error.message + "\n";
                 }

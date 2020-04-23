@@ -71,7 +71,7 @@ Rectangle {
                 Component.onCompleted: {
                     var pointCollection = createPointCollection();
                     var polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", { spatialReference: pointCollection.spatialReference });
-                    for (var i = 0; i < pointCollection.size; i++) {
+                    for (let i = 0; i < pointCollection.size; i++) {
                         polylineBuilder.addPoint(pointCollection.point(i));
                     }
                     originalLineGraphic.geometry = polylineBuilder.geometry;
@@ -130,7 +130,7 @@ Rectangle {
             return;
 
         var polylinePoints = polyline.parts.part(0).points();
-        for (var i = 0; i < polylinePoints.size; i++) {
+        for (let i = 0; i < polylinePoints.size; i++) {
             pointCollection.addPoint(polylinePoints.point(i));
         }
         multipointBuilder.points = pointCollection;

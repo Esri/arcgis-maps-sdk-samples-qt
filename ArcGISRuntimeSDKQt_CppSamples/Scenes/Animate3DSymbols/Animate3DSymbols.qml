@@ -63,7 +63,7 @@ Animate3DSymbolsSample {
                 Layout.minimumWidth: leftPadding + rightPadding + indicator.width + modelWidth
 
                 onModelChanged: {
-                    for (var i = 0; i < missionsModel.rowCount(); ++i) {
+                    for (let i = 0; i < missionsModel.rowCount(); ++i) {
                         var index = missionsModel.index(i, 0);
                         textMetrics.text = missionsModel.data(index);
                         modelWidth = Math.max(modelWidth, textMetrics.width);

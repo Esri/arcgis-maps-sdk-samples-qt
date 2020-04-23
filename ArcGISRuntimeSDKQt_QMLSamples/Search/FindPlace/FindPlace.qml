@@ -139,7 +139,7 @@ Rectangle {
                 if (geocodeResults.length > 0) {
                     graphicsOverlay.graphics.clear();
                     var bbox;
-                    for (var i = 0; i < geocodeResults.length; i++) {
+                    for (let i = 0; i < geocodeResults.length; i++) {
                         var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
                         graphic.geometry = geocodeResults[i].displayLocation;
                         graphic.attributes.attributesJson = geocodeResults[i].attributes;

@@ -106,7 +106,7 @@ Rectangle {
 
     // function to dynamically create the graphics and add them to the graphics overlay
     function addSymbols() {
-        for (var i = 0; i < symbolModel.count; i++) {
+        for (let i = 0; i < symbolModel.count; i++) {
             var elem = symbolModel.get(i);
 
             // create a simple marker scene symbol

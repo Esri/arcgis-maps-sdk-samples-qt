@@ -69,7 +69,7 @@ Rectangle {
                 model: ["Streets", "Imagery", "Topographic", "Oceans"]
 
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         metrics.text = model[i];
                         modelWidth = Math.max(modelWidth, metrics.width);
                     }
@@ -107,7 +107,7 @@ Rectangle {
                 text: "Create Map"
                 onClicked: {
                     var layerList = [];
-                    for (var i = 0; i < operationalLayerRepeater.count; i++) {
+                    for (let i = 0; i < operationalLayerRepeater.count; i++) {
                         var currentCheckbox = operationalLayerRepeater.itemAt(i);
                         if (currentCheckbox.checked) {
                             layerList.push(currentCheckbox.text)

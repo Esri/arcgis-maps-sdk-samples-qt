@@ -128,7 +128,7 @@ Rectangle {
                 textRole: "name"
 
                 onModelChanged: {
-                    for (var i = 0; i < missionsModel.count; ++i) {
+                    for (let i = 0; i < missionsModel.count; ++i) {
                         textMetrics.text = missionsModel.get(i).name;
                         modelWidth = Math.max(modelWidth, textMetrics.width);
                     }
@@ -354,7 +354,7 @@ Rectangle {
         var fileName = missionName.replace(/\s/g, '') + ".csv";
         var fileContents = missionsFolder.readTextFile(fileName);
         var lines = fileContents.split("\n");
-        for (var i = 0; i < lines.length; i++) {
+        for (let i = 0; i < lines.length; i++) {
             var dataParts = lines[i].split(",");
             if (dataParts.length !== 6)
                 continue;
@@ -376,7 +376,7 @@ Rectangle {
         // for the mission polyline
         var rtBldr = ArcGISRuntimeEnvironment.createObject(
                     "PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
-        for (var j = 0; j < currentMissionModel.count; j++) {
+        for (let j = 0; j < currentMissionModel.count; j++) {
             var missionData = currentMissionModel.get(j);
             rtBldr.addPointXY(missionData.lon, missionData.lat);
         }

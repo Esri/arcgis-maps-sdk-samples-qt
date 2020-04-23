@@ -37,7 +37,7 @@ Rectangle {
                 return;
 
             var fieldModel = [];
-            for (var i = 0; i < fields.length; i++) {
+            for (let i = 0; i < fields.length; i++) {
                 fieldModel.push(fields[i].name);
             }
             statisticOptionsPage.fields = fieldModel;
@@ -66,7 +66,7 @@ Rectangle {
                 var record = iter.next();
                 var sectionString = JSON.stringify(record.group).replace("{","").replace("}","");
 
-                for (var statKey in record.statistics) {
+                for (let statKey in record.statistics) {
                     if (record.statistics.hasOwnProperty(statKey)) {
                         var result = {
                             "section" : sectionString,
@@ -94,7 +94,7 @@ Rectangle {
 
                 // add the statistic definition objects
                 var statisticDefinitions = [];
-                for (var i = 0; i < statisticsModel.count; i++) {
+                for (let i = 0; i < statisticsModel.count; i++) {
                     var statistic = statisticsModel.get(i);
                     var definition = ArcGISRuntimeEnvironment.createObject("StatisticDefinition", {
                                                                                onFieldName: statistic.field,
@@ -109,7 +109,7 @@ Rectangle {
 
                 // add the order by objects
                 var orderBys = [];
-                for (var j = 0; j < orderByModel.count; j++) {
+                for (let j = 0; j < orderByModel.count; j++) {
                     var group = orderByModel.get(j);
                     var orderBy = ArcGISRuntimeEnvironment.createObject("OrderBy", {
                                                                             fieldName: group.field,

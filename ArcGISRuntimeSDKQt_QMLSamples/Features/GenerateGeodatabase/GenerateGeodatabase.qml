@@ -79,7 +79,7 @@ Rectangle {
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusLoaded) {
                 var idInfos = featureServiceInfo.layerInfos;
-                for (var i = 0; i < idInfos.length; i++) {
+                for (let i = 0; i < idInfos.length; i++) {
                     // add the layer to the map
                     var featureLayerUrl = featureServiceInfo.url + "/" + idInfos[i].infoId;
                     var serviceFeatureTable = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {url: featureLayerUrl});
@@ -150,7 +150,7 @@ Rectangle {
             geodatabase.loadStatusChanged.connect(function() {
                 if (geodatabase.loadStatus === Enums.LoadStatusLoaded) {
                     // create a feature layer from each feature table, and add to the map
-                    for (var i = 0; i < geodatabase.geodatabaseFeatureTables.length; i++) {
+                    for (let i = 0; i < geodatabase.geodatabaseFeatureTables.length; i++) {
                         var featureTable = geodatabase.geodatabaseFeatureTables[i];
                         var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
                         featureLayer.featureTable = featureTable;

@@ -89,7 +89,7 @@ Rectangle {
 
             // loop through the results
             var results = mapView.identifyLayersResults;
-            for (var i = 0; i < results.length; i++) {
+            for (let i = 0; i < results.length; i++) {
                 var result = results[i];
                 var count = geoElementsCountFromResult(result);
                 var layerName = result.layerContent.name;

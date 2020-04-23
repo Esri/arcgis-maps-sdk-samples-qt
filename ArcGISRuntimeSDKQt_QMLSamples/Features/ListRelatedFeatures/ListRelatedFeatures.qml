@@ -108,7 +108,7 @@ Rectangle {
                         var relatedFeatureQueryResultList = selectedTable.queryRelatedFeaturesResults;
 
                         // iterate over returned RelatedFeatureQueryResults
-                        for (var i = 0; i < relatedFeatureQueryResultList.length; i++) {
+                        for (let i = 0; i < relatedFeatureQueryResultList.length; i++) {
 
                             // iterate over Features returned
                             var iter = relatedFeatureQueryResultList[i].iterator;

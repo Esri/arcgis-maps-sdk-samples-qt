@@ -157,7 +157,7 @@ Rectangle {
             onCountChanged: {
                 var model = bookmarks.model;
                 if (model) {
-                    for (var i = 0; i < model.count; ++i) {
+                    for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
                         bookmarks.modelWidth = Math.max(bookmarks.modelWidth,
                                                         metrics.width);

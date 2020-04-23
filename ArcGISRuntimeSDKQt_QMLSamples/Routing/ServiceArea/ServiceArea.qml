@@ -181,9 +181,9 @@ Rectangle {
             }
 
             var numFacilities = facilitiesOverlay.graphics.rowCount();
-            for (var i = 0; i < numFacilities; i++) {
+            for (let i = 0; i < numFacilities; i++) {
                 var results = solveServiceAreaResult.resultPolygons(i);
-                for (var j = 0; j < results.length; j++) {
+                for (let j = 0; j < results.length; j++) {
                     var resultGeometry = results[j].geometry;
                     var resultGraphic = ArcGISRuntimeEnvironment.createObject(
                                 "Graphic", {geometry: resultGeometry});
@@ -228,7 +228,7 @@ Rectangle {
             }
 
             Component.onCompleted : {
-                for (var i = 0; i < model.length; ++i) {
+                for (let i = 0; i < model.length; ++i) {
                     metrics.text = model[i];
                     modelWidth = Math.max(modelWidth, metrics.width);
                 }

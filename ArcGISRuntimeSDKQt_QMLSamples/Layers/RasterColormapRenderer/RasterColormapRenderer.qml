@@ -64,7 +64,7 @@ Rectangle {
 
         // create a color map where values 0-150 are red and 150-250 are yellow
         var colorArray = [];
-        for (var i = 0; i < 250; i++)
+        for (let i = 0; i < 250; i++)
             colorArray.push(i < 150 ? Qt.rgba(255, 0, 0) : Qt.rgba(255,255,0));
 
         // create a colormap

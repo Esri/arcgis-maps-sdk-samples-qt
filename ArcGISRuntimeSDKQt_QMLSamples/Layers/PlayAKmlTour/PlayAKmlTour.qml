@@ -137,7 +137,7 @@ Rectangle {
     }
 
     function findFirstKMLTour(nodes) {
-        for (var i = 0; i < nodes.length; i++) {
+        for (let i = 0; i < nodes.length; i++) {
             let node = nodes[i];
             if (node.kmlNodeType === Enums.KmlNodeTypeKmlTour)
                 return node;
@@ -148,7 +148,7 @@ Rectangle {
     }
 
     function findFirstKMLTourFromListModel(nodes) {
-        for (var i = 0; i < nodes.count; ++i) {
+        for (let i = 0; i < nodes.count; ++i) {
             const node = nodes.get(i);
             if (node.kmlNodeType === Enums.KmlNodeTypeKmlTour)
                 return node;

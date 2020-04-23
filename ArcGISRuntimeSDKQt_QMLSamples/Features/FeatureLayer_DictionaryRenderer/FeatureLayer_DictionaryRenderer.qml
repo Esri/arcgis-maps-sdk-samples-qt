@@ -58,7 +58,7 @@ Rectangle {
                 var tables = geodatabase_militaryOverlay.geodatabaseFeatureTables;
 
                 // Create a layer for each table
-                for (var i = tables.length - 1; i >= 0; i--) {
+                for (let i = tables.length - 1; i >= 0; i--) {
                     //! [Apply Dictionary Renderer Feature Layer QML]
                     // Create a layer and set the feature table
                     var layer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
@@ -98,7 +98,7 @@ Rectangle {
                     layer.loadStatusChanged.connect(function () {
 
                         // See if all the layers have loaded.
-                        for (var j = 0; j < gdbLayers.length; j++) {
+                        for (let j = 0; j < gdbLayers.length; j++) {
                             if (Enums.LoadStatusLoaded !== gdbLayers[j].loadStatus) {
                                 return;
                             }

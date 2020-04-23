@@ -182,7 +182,7 @@ Rectangle {
         });
 
         // add text symbols
-        for (var i = 0; i < textLocArray.length; i++) {
+        for (let i = 0; i < textLocArray.length; i++) {
             var textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol");
             textSymbol.size = 10;
             textSymbol.color = Qt.rgba(0.1, 0.4, 0.9, 1);

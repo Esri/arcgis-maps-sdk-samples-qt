@@ -64,7 +64,7 @@ Rectangle {
                 return;
 
             // For each raster, create a raster layer and add the layer to the map
-            for (var k = 0; k < gpkg.geoPackageRasters.length; k++){
+            for (let k = 0; k < gpkg.geoPackageRasters.length; k++){
                 var raster = gpkg.geoPackageRasters[k];
                 var rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: raster}, gpkg);
                 rasterLayer.opacity = 0.55;
@@ -72,7 +72,7 @@ Rectangle {
             }
 
             // For each feature table, create a feature layer and add the layer to the map
-            for (var i = 0; i < gpkg.geoPackageFeatureTables.length; i++){
+            for (let i = 0; i < gpkg.geoPackageFeatureTables.length; i++){
                 var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: gpkg.geoPackageFeatureTables[i]}, gpkg);
                 map.operationalLayers.append(featureLayer);
             }

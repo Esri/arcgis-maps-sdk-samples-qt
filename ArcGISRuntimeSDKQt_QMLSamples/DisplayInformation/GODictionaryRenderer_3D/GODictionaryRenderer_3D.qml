@@ -84,7 +84,7 @@ Rectangle {
         onStatusChanged: {
             if (status === XmlListModel.Ready) {
                 let bbox = null;
-                for (var i = 0; i < count; i++) {
+                for (let i = 0; i < count; i++) {
                     let element = get(i);
                     let wkid = element._wkid;
                     if (!wkid) {

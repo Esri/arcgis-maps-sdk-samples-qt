@@ -70,7 +70,7 @@ Rectangle {
 
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded)
-                    for (var i = 0; i < map.operationalLayers.count; i++)
+                    for (let i = 0; i < map.operationalLayers.count; i++)
                         layerViewModel.append(
                                     { "name": map.operationalLayers.get(i).name, "status": "Unknown" });
             }
@@ -104,7 +104,7 @@ Rectangle {
         }
 
         function getindex(layer) {
-            for (var i = 0; i < layerViewModel.count; i++) {
+            for (let i = 0; i < layerViewModel.count; i++) {
                 if (layer === map.operationalLayers.get(i))
                     return i;
             }
