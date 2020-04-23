@@ -63,6 +63,7 @@ private:
   QString attachmentSymbolUrl() const { return m_attachmentSymbolUrl; }
   QString connectivitySymbolUrl() const { return m_connectivitySymbolUrl; }
   bool swatchesCompleted() const { return m_swatchesCompleted; }
+  void connectSignals();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;

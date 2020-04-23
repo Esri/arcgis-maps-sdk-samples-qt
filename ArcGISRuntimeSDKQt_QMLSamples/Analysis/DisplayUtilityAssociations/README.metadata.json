@@ -1,16 +1,24 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Analysis",
+    "description": "Create graphics for utility associations in a utility network.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "associating",
+        "association",
+        "attachment",
+        "connectivity",
+        "containment",
+        "relationships"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "GraphicsOverlay",
+        "UtilityAssociation",
+        "UtilityAssociationType",
+        "UtilityNetwork"
     ],
     "snippets": [
         "DisplayUtilityAssociations.qml"

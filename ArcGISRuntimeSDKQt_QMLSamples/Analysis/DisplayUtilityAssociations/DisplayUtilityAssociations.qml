@@ -136,14 +136,21 @@ Rectangle {
                     if (associationsStatus !== Enums.TaskStatusCompleted)
                         return;
 
+                    let matchedGraphic = false;
                     for (let i = 0; i < associationsResult.length; i++) {
                         let association = associationsResult[i];
                         // check if the graphics overlay already contains the association
                         for (let j = 0; j < associationsOverlay.graphics.count; j++) {
                             if (associationsOverlay.graphics.get(j).attributes.containsAttribute("GlobalId") && associationsOverlay.graphics.get(j).attributes.attributeValue("GlobalId") === association.globalId) {
-                                console.log("matched");
+                                matchedGraphic = true;
                                 break;
                             }
+                        }
+
+                        // if the association is already in the overlay, don't add a new graphic
+                        if (matchedGraphic) {
+                            matchedGraphic = false;
+                            continue;
                         }
 
                         // add a graphic for the association
@@ -184,6 +191,7 @@ Rectangle {
                     }
                 }
             }
+
             UniqueValue {
                 id: connectivityValue
                 label: "Connectivity"
@@ -202,30 +210,35 @@ Rectangle {
                     }
                 }
             }
-
-            defaultSymbol: SimpleLineSymbol {
-                style: Enums.SimpleLineSymbolStyleDot
-                color: "blue"
-                width: 5
-            }
         }
 
-        // add associations
+        // add associations to the map view
+        function addAssociations() {
+            // check if outside maximum scale
+            if (currentViewpointCenter.targetScale >= maxScale)
+                return;
+
+            let currentExtent = currentViewpointExtent.extent;
+            if (currentExtent.empty) {
+                console.warn("Extent not valid.");
+                return;
+            }
+
+            utilityNetwork.associationsWithEnvelope(currentExtent);
+        }
+
         onSetViewpointCompleted: {
            if (!succeeded)
                return;
 
-           // check
-           if (currentViewpointCenter.targetScale >= maxScale)
-               return;
+           addAssociations();
+        }
 
-           let currentExtent = currentViewpointExtent.extent;
-           if (currentExtent.empty) {
-               console.warn("Extent not valid.");
-               return;
-           }
+        onNavigatingChanged: {
+            if (navigating)
+                return;
 
-           utilityNetwork.associationsWithEnvelope(currentExtent);
+            addAssociations();
         }
     }
 }

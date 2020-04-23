@@ -1,31 +1,42 @@
 # Display utility associations
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Create graphics for utility associations in a utility network.
 
 ![](screenshot.png)
 
+## Use case
+
+Visualizing utility associations can help you to better understand trace results and the topology of your utility network. For example, connectivity associations allow you to model connectivity between two junctions that don't have geometric coincidence (are not in the same location); structural attachment associations allow you to model equipment that may be attached to structures; and containment associations allow you to model features contained within other features.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Pan and zoom around the map. Observe graphics that show utility associations between junctions.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create and load a `UtilityNetwork` with a feature service URL.
+2. Add a `FeatureLayer` to the map for every `UtilityNetworkSource` of type `Edge` or `Junction`.
+3. Create a `GraphicsOverlay` for the utility associations.
+4. Add connection for the `ViewpointChanged` signal of the `MapView`.
+5. When the sample starts and every time the viewpoint changes, do the following steps.
+6. Get the geometry of the mapview's extent using `currentViewpointExtent.extent`.
+7. Get the associations that are within the current extent using `associationsWithEnvelope(extent)`.
+8. Get the `UtilityAssociationType` for each association.
+9. Create a `Graphic` using the `Geometry` property of the association and a preferred symbol.
+10. Add the graphic to the graphics overlay.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* GraphicsOverlay
+* UtilityAssociation
+* UtilityAssociationType
+* UtilityNetwork
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
 
-## Additional information
-A standard level license is required to ...
+The [feature service](https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer) in this sample represents an electric network in Naperville, Illinois, which contains a utility network used to run the subnetwork-based trace.
 
 ## Tags
-Routing, Network analysis, Geocode
+
+associating, association, attachment, connectivity, containment, relationships
 

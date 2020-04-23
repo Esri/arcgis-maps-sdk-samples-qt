@@ -47,6 +47,7 @@ namespace
 {
 const QString featureServerUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 const int maxScale = 2000;
+const int targetScale = 50;
 }
 
 DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = nullptr */):
@@ -60,6 +61,82 @@ DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = null
   m_attachmentSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::green, 5, this);
   m_connectivitySymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Dot, Qt::red, 5, this);
 
+  connectSignals();
+}
+
+void DisplayUtilityAssociations::addAssociations()
+{
+  // check if current viewpoint is outside the max scale
+  if(m_mapView->currentViewpoint(ViewpointType::CenterAndScale).targetScale() >= maxScale)
+  {
+    return;
+  }
+
+  // check if current viewpoint has a valid extent
+  Envelope extent = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent();
+  if (!extent.isValid())
+  {
+    qDebug("Extent not valid");
+    return;
+  }
+
+  // get all the associations in the extent of the viewpoint
+  m_utilityNetwork->associations(extent);
+}
+
+DisplayUtilityAssociations::~DisplayUtilityAssociations() = default;
+
+void DisplayUtilityAssociations::init()
+{
+  // Register the map view for QML
+  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
+  qmlRegisterType<DisplayUtilityAssociations>("Esri.Samples", 1, 0, "DisplayUtilityAssociationsSample");
+}
+
+MapQuickView* DisplayUtilityAssociations::mapView() const
+{
+  return m_mapView;
+}
+
+// Set the view (created in QML)
+void DisplayUtilityAssociations::setMapView(MapQuickView* mapView)
+{
+  if (!mapView || mapView == m_mapView)
+    return;
+
+  m_mapView = mapView;
+  m_mapView->setMap(m_map);
+
+  m_mapView->graphicsOverlays()->append(m_associationsOverlay);
+
+  // Get the image provider from the QML Engine
+  QQmlEngine* engine = QQmlEngine::contextForObject(this)->engine();
+  engine->addImageProvider(SymbolImageProvider::imageProviderId(), new SymbolImageProvider);
+  m_symbolImageProvider = static_cast<SymbolImageProvider*>(engine->imageProvider(SymbolImageProvider::imageProviderId()));
+
+  connect(m_mapView, &MapQuickView::setViewpointCompleted, this, [this](bool succeeded)
+  {
+    if (!succeeded)
+      return;
+
+    addAssociations();
+  });
+
+  connect(m_mapView, &MapQuickView::navigatingChanged, this, [this]()
+  {
+    if (!m_mapView->isNavigating())
+    {
+      addAssociations();
+    }
+  });
+
+  m_utilityNetwork->load();
+
+  emit mapViewChanged();
+}
+
+void DisplayUtilityAssociations::connectSignals()
+{
   connect(m_utilityNetwork, &UtilityNetwork::doneLoading, this, [this](const Error& error)
   {
     if (!error.isEmpty())
@@ -68,7 +145,7 @@ DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = null
       return;
     }
 
-    m_mapView->setViewpoint(Viewpoint(Point(-9812698.37297436, 5131928.33743317, SpatialReference::webMercator()), 50));
+    m_mapView->setViewpoint(Viewpoint(Point(-9812698.37297436, 5131928.33743317, SpatialReference::webMercator()), targetScale));
 
     // get all the edges and junctions in the network
     QList<UtilityNetworkSource*> edges;
@@ -115,6 +192,38 @@ DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = null
     m_connectivitySymbol->createSwatch();
   });
 
+  connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](QUuid, const QList<UtilityAssociation*>& associations)
+  {
+    bool matchedGraphic = false;
+    for (UtilityAssociation* association : associations)
+    {
+      // check if the graphics overlay already contains the association
+      for (Graphic* graphic : *m_associationsOverlay->graphics())
+      {
+        if (graphic->attributes()->containsAttribute("GlobalId") && qvariant_cast<QUuid>(graphic->attributes()->operator[]("GlobalId")) == association->globalId())
+        {
+          matchedGraphic = true;
+          break;
+        }
+      }
+
+      // if the association is already in the overlay, don't add a new graphic
+      if (matchedGraphic)
+      {
+        matchedGraphic = false;
+        continue;
+      }
+
+      // add a graphic for the association
+      QVariantMap graphicAttributes;
+      graphicAttributes["GlobalId"] = association->globalId();
+      graphicAttributes["AssociationType"] = static_cast<int>(association->associationType());
+      Graphic* graphic = new Graphic(association->geometry(), graphicAttributes, this);
+
+      m_associationsOverlay->graphics()->append(graphic);
+    }
+  });
+
   connect(m_attachmentSymbol, &Symbol::createSwatchCompleted, this, [this](QUuid id, QImage image)
   {
     if (!m_symbolImageProvider)
@@ -153,99 +262,4 @@ DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = null
     m_swatchesCompleted = true;
     emit swatchesCompletedChanged();
   });
-}
-
-void DisplayUtilityAssociations::addAssociations()
-{
-  // check if current viewpoint is outside the max scale
-  if(m_mapView->currentViewpoint(ViewpointType::CenterAndScale).targetScale() >= maxScale)
-  {
-    return;
-  }
-
-  // check if current viewpoint has a valid extent
-  Envelope extent = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent();
-  if (!extent.isValid())
-  {
-    qDebug("extent not valid");
-    return;
-  }
-
-  connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](QUuid, const QList<UtilityAssociation*>& associations)
-  {
-    bool matchedGraphic = false;
-    for (UtilityAssociation* association : associations)
-    {
-      // check if the graphics overlay already contains the association
-      for (Graphic* graphic : *m_associationsOverlay->graphics())
-      {
-        if (graphic->attributes()->containsAttribute("GlobalId") && qvariant_cast<QUuid>(graphic->attributes()->operator[]("GlobalId")) == association->globalId())
-        {
-          matchedGraphic = true;
-          break;
-        }
-      }
-
-      // if the association is already in the overlay, don't add a new graphic
-      if (matchedGraphic)
-      {
-        matchedGraphic = false;
-        continue;
-      }
-
-      // add a graphic for the association
-      QVariantMap graphicAttributes;
-      graphicAttributes["GlobalId"] = association->globalId();
-      graphicAttributes["AssociationType"] = static_cast<int>(association->associationType());
-      Graphic* graphic = new Graphic(association->geometry(), graphicAttributes, this);
-
-      m_associationsOverlay->graphics()->append(graphic);
-    }
-  });
-
-  // get all the associations in the extent of the viewpoint
-  m_utilityNetwork->associations(extent);
-}
-
-DisplayUtilityAssociations::~DisplayUtilityAssociations() = default;
-
-void DisplayUtilityAssociations::init()
-{
-  // Register the map view for QML
-  qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
-  qmlRegisterType<DisplayUtilityAssociations>("Esri.Samples", 1, 0, "DisplayUtilityAssociationsSample");
-}
-
-MapQuickView* DisplayUtilityAssociations::mapView() const
-{
-  return m_mapView;
-}
-
-// Set the view (created in QML)
-void DisplayUtilityAssociations::setMapView(MapQuickView* mapView)
-{
-  if (!mapView || mapView == m_mapView)
-    return;
-
-  m_mapView = mapView;
-  m_mapView->setMap(m_map);
-
-  m_mapView->graphicsOverlays()->append(m_associationsOverlay);
-
-  // Get the image provider from the QML Engine
-  QQmlEngine* engine = QQmlEngine::contextForObject(this)->engine();
-  engine->addImageProvider(SymbolImageProvider::imageProviderId(), new SymbolImageProvider);
-  m_symbolImageProvider = static_cast<SymbolImageProvider*>(engine->imageProvider(SymbolImageProvider::imageProviderId()));
-
-  connect(m_mapView, &MapQuickView::setViewpointCompleted, this, [this](bool succeeded)
-  {
-    if (!succeeded)
-      return;
-
-    addAssociations();
-  });
-
-  m_utilityNetwork->load();
-
-  emit mapViewChanged();
 }
