@@ -100,8 +100,6 @@ Rectangle {
                     if (loadStatus !== Enums.LoadStatusLoaded)
                         return;
 
-                    mapView.setViewpointCenterAndScale(centerPoint, viewpointScale);
-
                     let edges = [];
                     let junctions = [];
 
@@ -130,6 +128,8 @@ Rectangle {
 
                     attachmentValue.values = [Enums.UtilityAssociationTypeAttachment];
                     connectivityValue.values = [Enums.UtilityAssociationTypeConnectivity];
+
+                    mapView.setViewpointCenterAndScale(centerPoint, viewpointScale);
                 }
 
                 onAssociationsStatusChanged: {
@@ -165,48 +165,47 @@ Rectangle {
 
         GraphicsOverlay {
             id: associationsOverlay
-            renderer: uniqueValueRenderer
-        }
 
-        // create a renderer for the associations
-        UniqueValueRenderer {
-            id: uniqueValueRenderer
-            fieldNames: ["AssociationType"]
+            // create a renderer for the associations
+            UniqueValueRenderer {
+                id: uniqueValueRenderer
+                fieldNames: ["AssociationType"]
 
-            UniqueValue {
-                id: attachmentValue
-                label: "Attachment"
-                SimpleLineSymbol {
-                    id: attachmentSymbol
-                    style: Enums.SimpleLineSymbolStyleDot
-                    color: "lime"
-                    width: 5
+                UniqueValue {
+                    id: attachmentValue
+                    label: "Attachment"
+                    SimpleLineSymbol {
+                        id: attachmentSymbol
+                        style: Enums.SimpleLineSymbolStyleDot
+                        color: "lime"
+                        width: 5
 
-                    // create swatch image for the legend
-                    Component.onCompleted: {
-                        createSwatch();
-                    }
-                    onSwatchImageChanged: {
-                        connectivityImage.source = swatchImage;
+                        // create swatch image for the legend
+                        Component.onCompleted: {
+                            createSwatch();
+                        }
+                        onSwatchImageChanged: {
+                            connectivityImage.source = swatchImage;
+                        }
                     }
                 }
-            }
 
-            UniqueValue {
-                id: connectivityValue
-                label: "Connectivity"
-                SimpleLineSymbol {
-                    id: connectivitySymbol
-                    style: Enums.SimpleLineSymbolStyleDot
-                    color: "red"
-                    width: 5
+                UniqueValue {
+                    id: connectivityValue
+                    label: "Connectivity"
+                    SimpleLineSymbol {
+                        id: connectivitySymbol
+                        style: Enums.SimpleLineSymbolStyleDot
+                        color: "red"
+                        width: 5
 
-                    // create swatch image for the legend
-                    Component.onCompleted: {
-                        createSwatch();
-                    }
-                    onSwatchImageChanged: {
-                        attachmentImage.source = swatchImage;
+                        // create swatch image for the legend
+                        Component.onCompleted: {
+                            createSwatch();
+                        }
+                        onSwatchImageChanged: {
+                            attachmentImage.source = swatchImage;
+                        }
                     }
                 }
             }
@@ -228,12 +227,13 @@ Rectangle {
         }
 
         onSetViewpointCompleted: {
-           if (!succeeded)
-               return;
+            if (!succeeded)
+                return;
 
-           addAssociations();
+            addAssociations();
         }
 
+        // add new associations when navigation is finished
         onNavigatingChanged: {
             if (navigating)
                 return;
