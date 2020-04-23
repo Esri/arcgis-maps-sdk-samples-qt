@@ -31,8 +31,8 @@ class UtilityNetwork;
 }
 }
 
-#include <QImage>
-#include <QMap>
+class SymbolImageProvider;
+
 #include <QObject>
 
 class DisplayUtilityAssociations : public QObject
@@ -40,11 +40,10 @@ class DisplayUtilityAssociations : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-//  Q_PROPERTY(QVariantMap)
-//  Q_PROPERTY(QString attachmentLabelUrl READ attachmentLabelUrl NOTIFY attachmentLabelUrlChanged)
-//  Q_PROPERTY(QString attachmentLabelUrl READ attachmentLabelUrl NOTIFY attachmentLabelUrlChanged)
-//  Q_PROPERTY(QMap<Esri::ArcGISRuntime::UtilityAssociationType, QImage> servicesList MEMBER m_services NOTIFY servicesChanged)
-  //need image url
+  Q_PROPERTY(QString attachmentSymbolUrl READ attachmentSymbolUrl NOTIFY attachmentSymbolUrlChanged)
+  Q_PROPERTY(QString connectivitySymbolUrl READ connectivitySymbolUrl NOTIFY connectivitySymbolUrlChanged)
+  Q_PROPERTY(bool swatchesCompleted READ swatchesCompleted NOTIFY swatchesCompletedChanged)
+
 public:
   explicit DisplayUtilityAssociations(QObject* parent = nullptr);
   ~DisplayUtilityAssociations();
@@ -53,11 +52,17 @@ public:
 
 signals:
   void mapViewChanged();
+  void attachmentSymbolUrlChanged();
+  void connectivitySymbolUrlChanged();
+  void swatchesCompletedChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void addAssociations();
+  QString attachmentSymbolUrl() const { return m_attachmentSymbolUrl; }
+  QString connectivitySymbolUrl() const { return m_connectivitySymbolUrl; }
+  bool swatchesCompleted() const { return m_swatchesCompleted; }
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -65,7 +70,10 @@ private:
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::Symbol* m_attachmentSymbol = nullptr;
   Esri::ArcGISRuntime::Symbol* m_connectivitySymbol = nullptr;
-  QMap<Esri::ArcGISRuntime::UtilityAssociationType, QImage> m_legend;
+  QString m_attachmentSymbolUrl = "";
+  QString m_connectivitySymbolUrl = "";
+  SymbolImageProvider* m_symbolImageProvider = nullptr;
+  bool m_swatchesCompleted = false;
 };
 
 #endif // DISPLAYUTILITYASSOCIATIONS_H

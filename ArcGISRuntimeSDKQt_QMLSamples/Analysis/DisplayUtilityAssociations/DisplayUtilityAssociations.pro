@@ -13,54 +13,25 @@
 # limitations under the License.
 #-------------------------------------------------
 
-mac {
-    cache()
-}
-
-#-------------------------------------------------------------------------------
-
-CONFIG += c++14
+TEMPLATE = app
 
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-TEMPLATE = app
-TARGET = DisplayUtilityAssociations
+CONFIG += c++14
 
 ARCGIS_RUNTIME_VERSION = 100.8
 include($$PWD/arcgisruntime.pri)
 
-#-------------------------------------------------------------------------------
-
-HEADERS += \
-    DisplayUtilityAssociations.h \
-    SymbolImageProvider.h
-
 SOURCES += \
-    SymbolImageProvider.cpp \
-    main.cpp \
-    DisplayUtilityAssociations.cpp
+    main.cpp
 
-RESOURCES += DisplayUtilityAssociations.qrc
-
-#-------------------------------------------------------------------------------
-
-win32 {
-    LIBS += \
-        Ole32.lib
-}
+RESOURCES += \
+    DisplayUtilityAssociations.qrc
 
 ios {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-
-    OTHER_FILES += \
-        $$PWD/Info.plist
-
     QMAKE_INFO_PLIST = $$PWD/Info.plist
 }
 
-android {
-    INCLUDEPATH += $$PWD
-    DEPENDPATH += $$PWD
-}
+# Default rules for deployment.
+include(deployment.pri)

@@ -16,14 +16,62 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
 
 Item {
-
     // add a mapView component
     MapView {
         id: view
         anchors.fill: parent
+
+        Rectangle {
+            id: backgroundRect
+            border.color: "black"
+            border.width: 1
+            width: connectivityLabel.width * 1.5
+            height: width/2
+            anchors {
+                top: parent.top
+                left: parent.left
+                margins: 20
+            }
+
+            ColumnLayout {
+                anchors.horizontalCenter: parent.horizontalCenter
+                Label {
+                    text: "Utility association types"
+                    Layout.alignment: Qt.AlignHCenter
+                }
+
+                RowLayout {
+                    Layout.leftMargin: 5
+                    Image {
+                        id: attachmentImage
+                        source: model.attachmentSymbolUrl
+                        fillMode: Image.PreserveAspectFit
+                    }
+                    Label {
+                        id: attachmentLabel
+                        text: "Attachment symbol"
+                        visible: model.swatchesCompleted
+                    }
+                }
+
+                RowLayout {
+                    Layout.leftMargin: 5
+                    Image {
+                        id: connectivityImage
+                        source: model.connectivitySymbolUrl
+                    }
+                    Label {
+                        id: connectivityLabel
+                        text: "Connectivity symbol"
+                        visible: model.swatchesCompleted
+                    }
+                }
+            }
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
