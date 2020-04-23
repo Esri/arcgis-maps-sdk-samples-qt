@@ -238,7 +238,8 @@ void PerformValveIsolationTrace::connectSignals()
 
     if (UtilityElementTraceResult* utilityElementTraceResult = dynamic_cast<UtilityElementTraceResult*>(utilityTraceResultList->at(0)))
     {
-      if (utilityElementTraceResult->elements().empty())
+      QList<UtilityElement*> utilityElementList = utilityElementTraceResult->elements(this);
+      if (utilityElementList.empty())
       {
         m_noResults = true;
         emit noResultsChanged();
@@ -254,7 +255,7 @@ void PerformValveIsolationTrace::connectSignals()
           QueryParameters queryParameters;
           QList<qint64> objectIds = {};
 
-          for (UtilityElement* utilityElement : utilityElementTraceResult->elements())
+          for (UtilityElement* utilityElement : utilityElementList)
           {
             const QString networkSourceName = utilityElement->networkSource()->name();
             const QString featureTableName = featureLayer->featureTable()->tableName();
@@ -287,4 +288,9 @@ void PerformValveIsolationTrace::connectSignals()
 bool PerformValveIsolationTrace::noResults() const
 {
   return m_noResults;
+}
+
+bool PerformValveIsolationTrace::tasksRunning() const
+{
+  return m_tasksRunning;
 }

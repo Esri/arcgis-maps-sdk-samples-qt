@@ -64,7 +64,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QStringList categoriesList() const;
-  bool tasksRunning() const { return m_tasksRunning; }
+  bool tasksRunning() const;
   bool noResults() const;
   void connectSignals();
 

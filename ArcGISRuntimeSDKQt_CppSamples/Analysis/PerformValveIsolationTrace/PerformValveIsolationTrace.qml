@@ -87,6 +87,7 @@ Item {
                     top: row.bottom
                     left: row.left
                 }
+
                 CheckBox {
                     text: "Include isolated features"
                     enabled: !sampleModel.tasksRunning
