@@ -263,3 +263,18 @@ void DisplayUtilityAssociations::connectSignals()
     emit swatchesCompletedChanged();
   });
 }
+
+QString DisplayUtilityAssociations::attachmentSymbolUrl() const
+{
+  return m_attachmentSymbolUrl;
+}
+
+QString DisplayUtilityAssociations::connectivitySymbolUrl() const
+{
+  return m_connectivitySymbolUrl;
+}
+
+bool DisplayUtilityAssociations::swatchesCompleted() const
+{
+  return m_swatchesCompleted;
+}

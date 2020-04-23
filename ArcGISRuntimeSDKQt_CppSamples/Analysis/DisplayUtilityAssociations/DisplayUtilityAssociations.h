@@ -60,9 +60,9 @@ private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void addAssociations();
-  QString attachmentSymbolUrl() const { return m_attachmentSymbolUrl; }
-  QString connectivitySymbolUrl() const { return m_connectivitySymbolUrl; }
-  bool swatchesCompleted() const { return m_swatchesCompleted; }
+  QString attachmentSymbolUrl() const;
+  QString connectivitySymbolUrl() const;
+  bool swatchesCompleted() const;
   void connectSignals();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
