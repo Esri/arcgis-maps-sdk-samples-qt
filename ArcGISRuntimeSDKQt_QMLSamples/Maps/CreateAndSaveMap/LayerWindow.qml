@@ -106,9 +106,9 @@ Rectangle {
                 Layout.fillWidth: true
                 text: "Create Map"
                 onClicked: {
-                    var layerList = [];
+                    let layerList = [];
                     for (let i = 0; i < operationalLayerRepeater.count; i++) {
-                        var currentCheckbox = operationalLayerRepeater.itemAt(i);
+                        let currentCheckbox = operationalLayerRepeater.itemAt(i);
                         if (currentCheckbox.checked) {
                             layerList.push(currentCheckbox.text)
                         }

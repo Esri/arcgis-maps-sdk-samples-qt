@@ -41,20 +41,20 @@ Rectangle {
         service.loadStatusChanged.connect(function() {
             if (service.loadStatus === Enums.LoadStatusLoaded) {
                 // get the layer info list
-                var serviceInfo = service.serviceInfo;
-                var layerInfos = serviceInfo.layerInfos;
+                let serviceInfo = service.serviceInfo;
+                let layerInfos = serviceInfo.layerInfos;
                 // get the first layer id from the list
-                var layerId = layerInfos[0].wmtsLayerId;
+                let layerId = layerInfos[0].wmtsLayerId;
                 // create WMTS layer
-                var wmtsLayer = ArcGISRuntimeEnvironment.createObject("WmtsLayer", {
+                let wmtsLayer = ArcGISRuntimeEnvironment.createObject("WmtsLayer", {
                                                                           url: wmtsServiceUrl,
                                                                           layerId: layerId
                                                                       });
                 // create a basemap from the layer
-                var basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
+                let basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
                 basemap.baseLayers.append(wmtsLayer);
                 // create a map
-                var map = ArcGISRuntimeEnvironment.createObject("Map", {
+                let map = ArcGISRuntimeEnvironment.createObject("Map", {
                                                                     basemap: basemap
                                                                 });
                 // set the map on the mapview

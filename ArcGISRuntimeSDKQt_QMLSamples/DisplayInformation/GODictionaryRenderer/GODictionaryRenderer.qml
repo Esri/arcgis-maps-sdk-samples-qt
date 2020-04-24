@@ -89,28 +89,28 @@ Rectangle {
         onStatusChanged: {
             if (status === XmlListModel.Ready) {
                 for (let i = 0; i < count; i++) {
-                    var element = get(i);
-                    var wkid = element._wkid;
+                    let element = get(i);
+                    let wkid = element._wkid;
                     if (!wkid) {
                         // If _wkid was absent, use WGS 1984 (4326) by default.
                         wkid = 4326;
                     }
-                    var pointStrings = element._control_points.split(";");
-                    var sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
-                    var geom;
+                    let pointStrings = element._control_points.split(";");
+                    let sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
+                    let geom;
                     if (pointStrings.length === 1) {
                         // It's a point
-                        var pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder");
+                        let pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder");
                         pointBuilder.spatialReference = sr;
-                        var coords = pointStrings[0].split(",");
+                        let coords = pointStrings[0].split(",");
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
                     } else {
-                        var builder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder");
+                        let builder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder");
                         builder.spatialReference = sr;
 
                         for (let ptIndex = 0; ptIndex < pointStrings.length; ptIndex++) {
-                            var coords = pointStrings[ptIndex].split(",");
+                            let coords = pointStrings[ptIndex].split(",");
                             builder.points.addPointXY(coords[0], coords[1]);
                         }
                         geom = builder.geometry;
@@ -121,7 +121,7 @@ Rectangle {
                         element._control_points = undefined;
                         element._wkid = undefined;
 
-                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: geom });
+                        let graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: geom });
                         graphic.attributes.attributesJson = element;
                         graphicsOverlay.graphics.append(graphic);
                     }

@@ -46,7 +46,7 @@ Rectangle {
         }
 
         onMouseClicked: {
-            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+            let graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
             graphic.geometry = mouse.mapPoint;
             graphic.symbol = currentSymbol;
             graphicsOverlay.graphics.append(graphic);
@@ -88,7 +88,7 @@ Rectangle {
 
             // get initial list of symbols
             for (let i = 0; i < searchSymbolsResult.count; i++) {
-                var result = searchSymbolsResult.get(i);
+                let result = searchSymbolsResult.get(i);
                 if (result.category === "Face") {
                     currentFace = result;
                     break;

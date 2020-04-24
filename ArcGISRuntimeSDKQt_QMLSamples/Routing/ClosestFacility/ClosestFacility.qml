@@ -142,7 +142,7 @@ Rectangle {
 
             resultsOverlay.graphics.clear();
 
-            var incidentGraphic = ArcGISRuntimeEnvironment.createObject(
+            let incidentGraphic = ArcGISRuntimeEnvironment.createObject(
                 "Graphic", {geometry: mouse.mapPoint, symbol: incidentSymbol});
             resultsOverlay.graphics.append(incidentGraphic);
 
@@ -193,13 +193,13 @@ Rectangle {
             if (solveClosestFacilityResult === null || solveClosestFacilityResult.error)
                 message = "Incident not within San Diego Area!";
 
-            var rankedList = solveClosestFacilityResult.rankedFacilityIndexes(0);
-            var closestFacilityIdx = rankedList[0];
+            let rankedList = solveClosestFacilityResult.rankedFacilityIndexes(0);
+            let closestFacilityIdx = rankedList[0];
 
-            var incidentIndex = 0; // 0 since there is just 1 incident at a time
-            var route = solveClosestFacilityResult.route(closestFacilityIdx, incidentIndex);
+            let incidentIndex = 0; // 0 since there is just 1 incident at a time
+            let route = solveClosestFacilityResult.route(closestFacilityIdx, incidentIndex);
 
-            var routeGraphic = ArcGISRuntimeEnvironment.createObject(
+            let routeGraphic = ArcGISRuntimeEnvironment.createObject(
                 "Graphic", { geometry: route.routeGeometry, symbol: routeSymbol});
             resultsOverlay.graphics.append(routeGraphic);
         }
@@ -228,7 +228,7 @@ Rectangle {
 
     function createFacilities() {
         facilitiesOverlay.graphics.forEach(function(graphic) {
-            var facility = ArcGISRuntimeEnvironment.createObject("Facility", {geometry: graphic.geometry});
+            let facility = ArcGISRuntimeEnvironment.createObject("Facility", {geometry: graphic.geometry});
             facilities.push(facility);
         });
     }
@@ -241,7 +241,7 @@ Rectangle {
     }
 
     function solveRoute(incidentPoint) {
-        var incident = ArcGISRuntimeEnvironment.createObject("Incident", {geometry: incidentPoint});
+        let incident = ArcGISRuntimeEnvironment.createObject("Incident", {geometry: incidentPoint});
         facilityParams.setIncidents( [ incident ] );
 
         busy = true;

@@ -55,17 +55,17 @@ Rectangle {
 
         onLoadStatusChanged: {
             if (Enums.LoadStatusLoaded === geodatabase_militaryOverlay.loadStatus) {
-                var tables = geodatabase_militaryOverlay.geodatabaseFeatureTables;
+                let tables = geodatabase_militaryOverlay.geodatabaseFeatureTables;
 
                 // Create a layer for each table
                 for (let i = tables.length - 1; i >= 0; i--) {
                     //! [Apply Dictionary Renderer Feature Layer QML]
                     // Create a layer and set the feature table
-                    var layer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
+                    let layer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
                     layer.featureTable = tables[i];
 
                     // Create a dictionary renderer and apply to the layer
-                    var renderer = ArcGISRuntimeEnvironment.createObject(
+                    let renderer = ArcGISRuntimeEnvironment.createObject(
                                 "DictionaryRenderer",
                                 { dictionarySymbolStyle:
                                     //! [Create Dictionary Symbol Style QML]
@@ -86,7 +86,7 @@ Rectangle {
                      * expects the field name "identity" but the database table contains the field "affiliation" instead.
                      */
                     /**
-                    var fieldOverrides = {
+                    let fieldOverrides = {
                         identity: "affiliation"
                     };
                     renderer.symbologyFieldOverrides = fieldOverrides;
@@ -108,7 +108,7 @@ Rectangle {
                          * If we get here, all the layers loaded. Union the extents and set
                          * the viewpoint.
                          */
-                        var bbox = gdbLayers[0].fullExtent;
+                        let bbox = gdbLayers[0].fullExtent;
                         for (j = 1; j < gdbLayers.length; j++) {
                             bbox = GeometryEngine.unionOf(bbox, gdbLayers[j].fullExtent);
                         }

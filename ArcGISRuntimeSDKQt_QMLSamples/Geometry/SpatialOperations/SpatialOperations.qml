@@ -95,25 +95,25 @@ Rectangle {
             return;
 
         // create blue polygon
-        var polygonBuilder1 = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", { spatialReference: spatialRef });
+        let polygonBuilder1 = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", { spatialReference: spatialRef });
         polygonBuilder1.addPointXY(-13960, 6709400);
         polygonBuilder1.addPointXY(-14660, 6710000);
         polygonBuilder1.addPointXY(-13760, 6710730);
         polygonBuilder1.addPointXY(-13300, 6710500);
         polygonBuilder1.addPointXY(-13160, 6710100);
 
-        var fillSymbol1 = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
+        let fillSymbol1 = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
         fillSymbol1.style = Enums.SimpleFillSymbolStyleSolid;
         fillSymbol1.color = "blue";
         geometry1 = polygonBuilder1.geometry;
-        var graphic1 = ArcGISRuntimeEnvironment.createObject("Graphic");
+        let graphic1 = ArcGISRuntimeEnvironment.createObject("Graphic");
         graphic1.geometry = geometry1;
         graphic1.symbol = fillSymbol1;
         inputOverlay.graphics.append(graphic1);
 
         // create green polygon
         // outer ring
-        var outerRing = ArcGISRuntimeEnvironment.createObject("Part", { spatialReference: spatialRef });
+        let outerRing = ArcGISRuntimeEnvironment.createObject("Part", { spatialReference: spatialRef });
         outerRing.addPointXY(-13060, 6711030);
         outerRing.addPointXY(-12160, 6710730);
         outerRing.addPointXY(-13160, 6709700);
@@ -121,21 +121,21 @@ Rectangle {
         outerRing.addPointXY(-13060, 6711030);
 
         // inner ring
-        var innerRing = ArcGISRuntimeEnvironment.createObject("Part", { spatialReference: spatialRef });
+        let innerRing = ArcGISRuntimeEnvironment.createObject("Part", { spatialReference: spatialRef });
         innerRing.addPointXY(-13060, 6710910);
         innerRing.addPointXY(-14160, 6710630);
         innerRing.addPointXY(-13160, 6709900);
         innerRing.addPointXY(-12450, 6710660);
         innerRing.addPointXY(-13060, 6710910);
 
-        var polygonBuilder2 = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", { spatialReference: spatialRef });
+        let polygonBuilder2 = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", { spatialReference: spatialRef });
         polygonBuilder2.parts.addPart(outerRing);
         polygonBuilder2.parts.addPart(innerRing);
         geometry2 = polygonBuilder2.geometry;
-        var fillSymbol2 = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
+        let fillSymbol2 = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
         fillSymbol2.style = Enums.SimpleFillSymbolStyleSolid;
         fillSymbol2.color = "green";
-        var graphic2 = ArcGISRuntimeEnvironment.createObject("Graphic");
+        let graphic2 = ArcGISRuntimeEnvironment.createObject("Graphic");
         graphic2.geometry = geometry2;
         graphic2.symbol = fillSymbol2;
         inputOverlay.graphics.append(graphic2);
@@ -146,7 +146,7 @@ Rectangle {
             return;
 
         // Perform geometry calculations
-        var resultPolygon;
+        let resultPolygon;
         switch (index) {
         case 1:
           resultPolygon = GeometryEngine.unionOf(geometry1, geometry2);
@@ -171,10 +171,10 @@ Rectangle {
           return;
 
         // Add the resulting polygon as a Graphic
-        var fillSymbol = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
+        let fillSymbol = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
         fillSymbol.style = Enums.SimpleFillSymbolStyleSolid;
         fillSymbol.color = "red";
-        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+        let graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
         graphic.geometry = resultPolygon;
         graphic.symbol = fillSymbol;
         outputOverlay.graphics.append(graphic);

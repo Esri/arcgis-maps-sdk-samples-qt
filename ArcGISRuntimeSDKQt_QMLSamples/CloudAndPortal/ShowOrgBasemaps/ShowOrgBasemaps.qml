@@ -31,7 +31,7 @@ Rectangle {
         title.text = selectedBasemap.item.title;
         basemapsGrid.enabled = false;
 
-        var newMap = ArcGISRuntimeEnvironment.createObject("Map", {item: selectedBasemap.item});
+        let newMap = ArcGISRuntimeEnvironment.createObject("Map", {item: selectedBasemap.item});
         mapView.map = newMap;
         gridFadeOut.running = true;
         mapView.visible = true;

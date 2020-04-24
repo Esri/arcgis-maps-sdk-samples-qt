@@ -48,7 +48,7 @@ Rectangle {
             // helper function for creating bookmarks
             function createBookmark(bookmarkName,bookmarkViewpoint) {
                 // create a bookmark object and assign the name and viewpoint
-                var bookmark = ArcGISRuntimeEnvironment.createObject("Bookmark");
+                let bookmark = ArcGISRuntimeEnvironment.createObject("Bookmark");
                 bookmark.name = bookmarkName;
                 bookmark.viewpoint = bookmarkViewpoint;
                 // append the bookmark to the map's BookmarkListModel
@@ -155,7 +155,7 @@ Rectangle {
         Connections {
             target: bookmarks.model
             onCountChanged: {
-                var model = bookmarks.model;
+                let model = bookmarks.model;
                 if (model) {
                     for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
@@ -168,7 +168,7 @@ Rectangle {
 
         onCurrentIndexChanged: {
             if (currentIndex >= 0) {
-                var bookmark = map.bookmarks.get(currentIndex);
+                let bookmark = map.bookmarks.get(currentIndex);
                 if (bookmark) {
                     mapView.setViewpoint(
                                 map.bookmarks.get(currentIndex).viewpoint);
@@ -234,7 +234,7 @@ Rectangle {
                 onClicked: {
                     // Create the new bookmark by getting the current viewpoint and using the
                     // user's input bookmark name
-                    var viewpoint = mapView.currentViewpointExtent;
+                    let viewpoint = mapView.currentViewpointExtent;
                     map.createBookmark(textField.text,viewpoint);
                     bookmarks.currentIndex = map.bookmarks.count -1;
                     textField.text = "";

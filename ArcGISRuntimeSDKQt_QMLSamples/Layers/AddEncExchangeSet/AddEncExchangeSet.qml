@@ -64,12 +64,12 @@ Rectangle {
                     for (let i = 0; i < datasets.length; i++) {
 
                         // create an EncCell from each dataset
-                        var encCell = ArcGISRuntimeEnvironment.createObject("EncCell", {
+                        let encCell = ArcGISRuntimeEnvironment.createObject("EncCell", {
                                                                                 dataset: datasets[i]
                                                                             }, map);
 
                         // create an EncLayer from each cell
-                        var encLayer = ArcGISRuntimeEnvironment.createObject("EncLayer", {
+                        let encLayer = ArcGISRuntimeEnvironment.createObject("EncLayer", {
                                                                                  cell: encCell
                                                                              }, map);
                         layers.push(encLayer);
@@ -82,11 +82,11 @@ Rectangle {
 
                             // loop through the layers and zoom to the combined full extent
                             if (loadedEncLayerCount === datasets.length) {
-                                var fullExtents = [];
+                                let fullExtents = [];
                                 map.operationalLayers.forEach(function(layer) {
                                     fullExtents.push(layer.fullExtent);
                                 });
-                                var fullExtentOfLayers = GeometryEngine.combineExtentsOfGeometries(fullExtents);
+                                let fullExtentOfLayers = GeometryEngine.combineExtentsOfGeometries(fullExtents);
                                 mapView.setViewpointGeometry(fullExtentOfLayers)
                             }
                         });

@@ -85,7 +85,7 @@ Rectangle {
         // Extract the layer from the result and add to the map
         function processResults(result) {
             mapView.map.operationalLayers.clear();
-            var layer = result.mapImageLayer;
+            let layer = result.mapImageLayer;
             layer.loadStatusChanged.connect(function() {
                 if (layer.loadStatus === Enums.LoadStatusLoaded)
                     mapView.setViewpointGeometry(layer.fullExtent);
@@ -108,11 +108,11 @@ Rectangle {
 
         function addParameter(fromDateString, toDateString) {
             // create the query string
-            var queryString = "(\"DATE\" > date '%1 00:00:00' AND \"DATE\" < date '%2 00:00:00')"
+            let queryString = "(\"DATE\" > date '%1 00:00:00' AND \"DATE\" < date '%2 00:00:00')"
             queryString = queryString.arg(fromDateString).arg(toDateString);
 
             // Add query that contains the date range and the days of the week that are used in analysis
-            var inputs = {};
+            let inputs = {};
             inputs["Query"] = ArcGISRuntimeEnvironment.createObject("GeoprocessingString", { value: queryString });
             hotspotParameters.inputs = inputs;
 
@@ -217,8 +217,8 @@ Rectangle {
             enabled: !jobInProgress && validateDates(fromThisDate, toThisDate)
 
             onClicked: {
-                var fromString = fromThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
-                var toString = toThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
+                let fromString = fromThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
+                let toString = toThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
                 // Run the task
                 hotspotParameters.addParameter(fromString, toString);
             }
@@ -379,7 +379,7 @@ Rectangle {
 
         // check that there is at least one day in between the from and to date
 
-        var oneDay = 86400000;
+        let oneDay = 86400000;
         if ((_toDate - _fromDate) < oneDay) {
             return false;
         }

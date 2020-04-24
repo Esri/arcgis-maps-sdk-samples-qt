@@ -111,11 +111,11 @@ Rectangle {
 
     function addResultsAsGraphics(results, symbol) {
         // get the iterator of features
-        var iter = results.iterator;
+        let iter = results.iterator;
         // add a graphic for each feature in the result
         while (iter.hasNext) {
-            var feat = iter.next();
-            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic",
+            let feat = iter.next();
+            let graphic = ArcGISRuntimeEnvironment.createObject("Graphic",
                                                                     {
                                                                         geometry: feat.geometry,
                                                                         symbol: symbol
@@ -174,7 +174,7 @@ Rectangle {
                 selectedFeaturesOverlay.graphics.clear();
 
                 // create the parameters
-                var queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters",
+                let queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters",
                                                                         {
                                                                             whereClause: fieldText.text + populationText.text,
                                                                             geometry: mapView.currentViewpointExtent.extent

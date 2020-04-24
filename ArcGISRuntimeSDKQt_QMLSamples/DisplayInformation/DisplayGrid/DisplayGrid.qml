@@ -71,11 +71,11 @@ Rectangle {
     function changeGridColor(color) {
         if (mapView.grid) {
             // find the number of resolution levels in the grid
-            var gridLevels = mapView.grid.levelCount;
+            let gridLevels = mapView.grid.levelCount;
 
             //! [DisplayGrid Set_Grid_Lines]
             for (let level = 0; level < gridLevels; ++level) {
-                var lineSym = ArcGISRuntimeEnvironment.createObject("SimpleLineSymbol", {style: Enums.SimpleLineSymbolStyleSolid,
+                let lineSym = ArcGISRuntimeEnvironment.createObject("SimpleLineSymbol", {style: Enums.SimpleLineSymbolStyleSolid,
                                                                         color: color,
                                                                         width: 1 + level} );
                 mapView.grid.setLineSymbol(level, lineSym);
@@ -89,12 +89,12 @@ Rectangle {
         if (mapView.grid) {
             //! [DisplayGrid Grid_Levels]
             // find the number of resolution levels in the grid
-            var gridLevels = mapView.grid.levelCount;
+            let gridLevels = mapView.grid.levelCount;
             //! [DisplayGrid Grid_Levels]
 
             //! [DisplayGrid Set_Grid_Labels]
             for (let level = 0; level < gridLevels; ++level) {
-                var textSym = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
+                let textSym = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
                                                                         text: "text",
                                                                         size: 14,
                                                                         color: color,

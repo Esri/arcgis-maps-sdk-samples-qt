@@ -51,7 +51,7 @@ Rectangle {
                     if (loadStatus !== Enums.LoadStatusLoaded)
                         return;
 
-                    var vp = ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: fullExtent});
+                    let vp = ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: fullExtent});
                     sceneView.setViewpoint(vp);
                 }
             }

@@ -184,7 +184,7 @@ Rectangle {
 
     //! [RasterStretchRenderer qml set renderers]
     function applyRendererSettings(){
-        var rgbRenderer = ArcGISRuntimeEnvironment.createObject("StretchRenderer");
+        let rgbRenderer = ArcGISRuntimeEnvironment.createObject("StretchRenderer");
 
         if (stretchTypeCombo.currentText === minMax){
             minMaxParams.minValues = [minMaxMin.value];

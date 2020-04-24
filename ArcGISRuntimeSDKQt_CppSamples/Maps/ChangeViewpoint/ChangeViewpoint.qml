@@ -57,7 +57,7 @@ ChangeViewpointSample {
         }
 
         onModelChanged: {
-            var w = bestWidth;
+            let w = bestWidth;
             for (let i = 0; i < comboBoxViewpoint.model.length; ++i) {
                 metrics.text = comboBoxViewpoint.model[i];
                 w = Math.max(w, metrics.width);

@@ -289,7 +289,7 @@ Rectangle {
                                             groupingFields.push(text);
                                         } else {
                                             // remove the item from the selected list
-                                            var i = groupingFields.indexOf(text);
+                                            let i = groupingFields.indexOf(text);
                                             if (i !== -1)
                                                 groupingFields.splice(i, 1);
 
@@ -404,7 +404,7 @@ Rectangle {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Change Sort Order"
                         onClicked: {
-                            var i = groupingView.currentIndex;
+                            let i = groupingView.currentIndex;
                             if (orderByModel.get(i).order === "Ascending")
                                 orderByModel.get(i).order = "Descending";
                             else

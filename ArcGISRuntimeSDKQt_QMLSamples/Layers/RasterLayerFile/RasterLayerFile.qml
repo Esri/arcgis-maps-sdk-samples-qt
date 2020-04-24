@@ -91,7 +91,7 @@ Rectangle {
     }
 
     function createAndAddRasterLayer(rasterUrl) {
-        var newRaster = ArcGISRuntimeEnvironment.createObject("Raster", {path: rasterUrl});
+        let newRaster = ArcGISRuntimeEnvironment.createObject("Raster", {path: rasterUrl});
         rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newRaster});
 
         rasterLayer.loadStatusChanged.connect(zoomToRaster);

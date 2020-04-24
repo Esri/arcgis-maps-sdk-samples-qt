@@ -88,7 +88,7 @@ Rectangle {
             resultsOverlay.graphics.clear();
 
             // Create a marker graphic where the user clicked on the map and add it to the existing graphics overlay
-            var inputGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: mouse.mapPoint});
+            let inputGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: mouse.mapPoint});
             inputOverlay.graphics.append(inputGraphic);
 
             // Execute the geoprocessing task
@@ -110,13 +110,13 @@ Rectangle {
         // function to caclulate the viewshed
         function calculateViewshed(location) {
             // Create a new feature collection table based upon point geometries using the current map view spatial reference
-            var inputFeatures = ArcGISRuntimeEnvironment.createObject("FeatureCollectionTable", {
+            let inputFeatures = ArcGISRuntimeEnvironment.createObject("FeatureCollectionTable", {
                                                                           geometryType: Enums.GeometryTypePoint,
                                                                           spatialReference: SpatialReference.createWebMercator()
                                                                       });
 
             // Create a new feature from the feature collection table. It will not have a coordinate location (x,y) yet
-            var inputFeature = inputFeatures.createFeature();
+            let inputFeature = inputFeatures.createFeature();
 
             // Assign a physical location to the new point feature based upon where the user clicked on the map view
             inputFeature.geometry = location;
@@ -125,7 +125,7 @@ Rectangle {
             inputFeatures.addFeatureStatusChanged.connect(function() {
                 if (inputFeatures.addFeatureStatus === Enums.TaskStatusCompleted) {
                     // Create the parameters that are passed to the used geoprocessing task
-                    var viewshedParameters = ArcGISRuntimeEnvironment.createObject("GeoprocessingParameters", {
+                    let viewshedParameters = ArcGISRuntimeEnvironment.createObject("GeoprocessingParameters", {
                                                                                          executionType: Enums.GeoprocessingExecutionTypeSynchronousExecute
                                                                                      });
 
@@ -133,7 +133,7 @@ Rectangle {
                     viewshedParameters.outputSpatialReference = SpatialReference.createWebMercator();
 
                     // Add an input location to the geoprocessing parameters
-                    var inputs = {};
+                    let inputs = {};
                     inputs["Input_Observation_Point"] = ArcGISRuntimeEnvironment.createObject("GeoprocessingFeatures", { features: inputFeatures });
                     viewshedParameters.inputs = inputs;
 
@@ -175,13 +175,13 @@ Rectangle {
         // function to handle the results from the GeoprocessingJob
         function processResults(result) {
             // Get the results from the outputs as GeoprocessingFeatures
-            var viewshedResultFeatures = result.outputs["Viewshed_Result"];
+            let viewshedResultFeatures = result.outputs["Viewshed_Result"];
 
             // Add all the features from the result feature set as a graphics to the map
-            var viewshedAreas = viewshedResultFeatures.features.iterator;
+            let viewshedAreas = viewshedResultFeatures.features.iterator;
             while (viewshedAreas.hasNext) {
-                var feat = viewshedAreas.next();
-                var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                let feat = viewshedAreas.next();
+                let graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
                                                                         geometry: feat.geometry
                                                                     });
                 resultsOverlay.graphics.append(graphic);

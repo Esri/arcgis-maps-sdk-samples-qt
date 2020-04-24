@@ -66,9 +66,9 @@ Rectangle {
                 return;
 
             // Get the first raster
-            var gpkgRaster = gpkg.geoPackageRasters[0];
+            let gpkgRaster = gpkg.geoPackageRasters[0];
             // Create a RasterLayer with the raster
-            var rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: gpkgRaster});
+            let rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: gpkgRaster});
             // Append the layer to the map
             map.operationalLayers.append(rasterLayer);
         }

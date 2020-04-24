@@ -45,7 +45,7 @@ Rectangle {
                     // zoom to the extent of the raster once it's loaded
                     onLoadStatusChanged: {
                         if (loadStatus === Enums.LoadStatusLoaded) {
-                            var scale = 50000000.;
+                            let scale = 50000000.;
                             mapView.setViewpointCenterAndScale(imageServiceRaster.serviceInfo.fullExtent.center, scale);
                         }
                     }
@@ -100,17 +100,17 @@ Rectangle {
 
         //! [ImageServiceRaster Apply a raster function]
         // create raster function
-        var rasterFunction = ArcGISRuntimeEnvironment.createObject("RasterFunction", {path: dataPath + "/hillshade_simplified.json"});
+        let rasterFunction = ArcGISRuntimeEnvironment.createObject("RasterFunction", {path: dataPath + "/hillshade_simplified.json"});
         // get the arguments
-        var rasterFunctionArguments = rasterFunction.arguments;
+        let rasterFunctionArguments = rasterFunction.arguments;
         // set the raster
         rasterFunctionArguments.setRaster("raster", imageServiceRaster);
 
         // create the raster from the raster function
-        var raster = ArcGISRuntimeEnvironment.createObject("Raster", { rasterFunction: rasterFunction });
+        let raster = ArcGISRuntimeEnvironment.createObject("Raster", { rasterFunction: rasterFunction });
 
         // create raster layer from raster
-        var rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster });
+        let rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster });
         //! [ImageServiceRaster Apply a raster function]
 
         // add raster to map

@@ -212,7 +212,7 @@ EditFeatureAttachmentsSample {
     FileDialog {
         id: fileDialog
         folder: {
-            var locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation)
+            let locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation)
             return locs.length > 0 ? locs.last() : "";
         }
         onAccepted: {

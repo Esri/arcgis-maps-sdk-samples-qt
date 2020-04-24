@@ -274,7 +274,7 @@ Rectangle {
     }
 
     function applyRendererSettings(){
-        var rgbRenderer = ArcGISRuntimeEnvironment.createObject("RGBRenderer");
+        let rgbRenderer = ArcGISRuntimeEnvironment.createObject("RGBRenderer");
 
         if (stretchTypeCombo.currentText === minMax){
             minMaxParams.minValues = [minMaxMin.itemAt(0).value, minMaxMin.itemAt(1).value, minMaxMin.itemAt(2).value];

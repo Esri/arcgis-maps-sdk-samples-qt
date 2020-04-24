@@ -97,10 +97,10 @@ Rectangle {
                     let geom = null;
                     if (pointStrings.length === 1) {
                         // It's a point
-                        var pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {
+                        let pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {
                                                                                      spatialReference: sr
                                                                                  });
-                        var coords = pointStrings[0].split(",");
+                        let coords = pointStrings[0].split(",");
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
                     }
@@ -113,7 +113,7 @@ Rectangle {
                         element._control_points = undefined;
                         element._wkid = undefined;
 
-                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                        let graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
                                                                                 geometry: geom
                                                                             });
                         graphic.attributes.attributesJson = element;
@@ -135,7 +135,7 @@ Rectangle {
                      * Create a camera directly above the center of the features, and then rotate that
                      * camera around the center to tip it.
                      */
-                    var camera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                    let camera = ArcGISRuntimeEnvironment.createObject("Camera", {
                                                                            location: bbox.extent.center,
                                                                            heading: 0,
                                                                            pitch: 0,

@@ -214,7 +214,7 @@ Rectangle {
     }
 
     function applyRendererSettings() {
-        var blendRenderer = ArcGISRuntimeEnvironment.createObject("BlendRenderer");
+        let blendRenderer = ArcGISRuntimeEnvironment.createObject("BlendRenderer");
         blendRenderer.elevationRaster = elevationRaster;
         blendRenderer.altitude = altSlider.value;
         blendRenderer.azimuth = azimuthSlider.value;
@@ -232,7 +232,7 @@ Rectangle {
     }
 
     function applyRenderer(blendRenderer) {
-        var val = colorRampModel.get(colorCombo.currentIndex).value;
+        let val = colorRampModel.get(colorCombo.currentIndex).value;
         if (val.length === 0)
             rasterLayer.renderer = blendRenderer;
         else
@@ -240,11 +240,11 @@ Rectangle {
     }
 
     function getColorRamp() {
-        var val = colorRampModel.get(colorCombo.currentIndex).value;
+        let val = colorRampModel.get(colorCombo.currentIndex).value;
         if (val.length === 0)
             return null;
 
-        var colorRamp = ArcGISRuntimeEnvironment.createObject(val);
+        let colorRamp = ArcGISRuntimeEnvironment.createObject(val);
         colorRamp.size = 800;
 
         return colorRamp;

@@ -154,8 +154,8 @@ Rectangle {
                         routeParameters.clearStops();
 
                         // set the stops to the parameters
-                        var stop1 = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stop1Geometry, name: "Origin"});
-                        var stop2 = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stop2Geometry, name: "Destination"});
+                        let stop1 = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stop1Geometry, name: "Origin"});
+                        let stop2 = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stop2Geometry, name: "Destination"});
                         routeParameters.setStops([stop1, stop2]);
 
                         // solve the route with the parameters
@@ -233,8 +233,8 @@ Rectangle {
         onSolveRouteStatusChanged: {
             if (solveRouteStatus === Enums.TaskStatusCompleted) {
                 // Add the route graphic once the solve completes
-                var generatedRoute = solveRouteResult.routes[0];
-                var routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: generatedRoute.routeGeometry});
+                let generatedRoute = solveRouteResult.routes[0];
+                let routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: generatedRoute.routeGeometry});
                 routeGraphicsOverlay.graphics.append(routeGraphic);
 
                 // set the direction maneuver list model
@@ -295,13 +295,13 @@ Rectangle {
                                                               });
 
         // create the stop graphics' symbols
-        var stop1Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
+        let stop1Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
                                                                     url: "qrc:/Samples/Routing/FindRoute/pinA.png",
                                                                     width: 32,
                                                                     height: 32,
                                                                     offsetY: 16
                                                                 });
-        var stop2Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
+        let stop2Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
                                                                     url: "qrc:/Samples/Routing/FindRoute/pinB.png",
                                                                     width: 32,
                                                                     height: 32,
@@ -309,8 +309,8 @@ Rectangle {
                                                                 });
 
         // create the stop graphics
-        var stop1Graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: stop1Geometry, symbol: stop1Symbol});
-        var stop2Graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: stop2Geometry, symbol: stop2Symbol});
+        let stop1Graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: stop1Geometry, symbol: stop1Symbol});
+        let stop2Graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: stop2Geometry, symbol: stop2Symbol});
 
         // add to the overlay
         stopsGraphicsOverlay.graphics.append(stop1Graphic);

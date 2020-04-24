@@ -71,8 +71,8 @@ Rectangle {
                 return;
 
             // get the results
-            var result = sceneView.identifyLayerResult;
-            var geoElements = result.geoElements;
+            let result = sceneView.identifyLayerResult;
+            let geoElements = result.geoElements;
 
             // get the first GeoElement
             if (geoElements.length > 0) {

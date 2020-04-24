@@ -79,7 +79,7 @@ Rectangle {
                     if (selectedFeaturesStatus === Enums.TaskStatusCompleted) {
                         while (selectedFeaturesResult.iterator.hasNext) {
                             // obtain the feature
-                            var feat = selectedFeaturesResult.iterator.next();
+                            let feat = selectedFeaturesResult.iterator.next();
 
                             // delete the feature in the feature table asynchronously
                             featureTable.deleteFeature(feat);
@@ -93,7 +93,7 @@ Rectangle {
                         if (!selectFeaturesResult.iterator.hasNext)
                             return;
 
-                        var feat  = selectFeaturesResult.iterator.next();
+                        let feat  = selectFeaturesResult.iterator.next();
                         damageType = feat.attributes.attributeValue("typdamage");
                         calloutLocation = feat.geometry.extent.center;
 
@@ -122,8 +122,8 @@ Rectangle {
 
             //! [DeleteFeaturesFeatureService identify feature]
             // call identify on the feature layer
-            var tolerance = 10;
-            var returnPopupsOnly = false;
+            let tolerance = 10;
+            let returnPopupsOnly = false;
             mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, tolerance, returnPopupsOnly, 1);
             //! [DeleteFeaturesFeatureService identify feature]
         }

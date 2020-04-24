@@ -104,7 +104,7 @@ Rectangle {
 
     function createWfsService() {
         // create WFS Service
-        var service = ArcGISRuntimeEnvironment.createObject("WfsService", {url: serviceUrl});
+        let service = ArcGISRuntimeEnvironment.createObject("WfsService", {url: serviceUrl});
 
         // once WFS service is laoded create ListModel from Layer titles for ComboBox and create WFS Feature Table
         service.loadStatusChanged.connect(function() {
@@ -112,8 +112,8 @@ Rectangle {
                 wfsLayersInfoList = service.serviceInfo.layerInfos;
 
                 //once loaded populate myWfsListModel with titles from the service to display in a comboBox
-                for(var i in wfsLayersInfoList){
-                    var data = {"title": wfsLayersInfoList[i].title};
+                for(let i in wfsLayersInfoList){
+                    let data = {"title": wfsLayersInfoList[i].title};
                     myWfsListModel.append(data);
                 }
             }
@@ -152,7 +152,7 @@ Rectangle {
 
     function populateWfsFeatureTable() {
         // Create query parameters
-        var params = ArcGISRuntimeEnvironment.createObject("QueryParameters", {
+        let params = ArcGISRuntimeEnvironment.createObject("QueryParameters", {
                                                                geometry: mapView.visibleArea.extent,
                                                                spatialRelationship: Enums.SpatialRelationshipIntersects
                                                            });
@@ -171,8 +171,8 @@ Rectangle {
     }
 
     function addFeatureLayerToMap() {
-        var simpleSymbol;
-        var symbolLine;
+        let simpleSymbol;
+        let symbolLine;
 
         // appropriate symbology for each corresponding geometry type
         switch (wfsFeatureTable.geometryType) {
@@ -205,9 +205,9 @@ Rectangle {
             return;
         }
 
-        var simpleRenderer = ArcGISRuntimeEnvironment.createObject("SimpleRenderer",{symbol: simpleSymbol});
+        let simpleRenderer = ArcGISRuntimeEnvironment.createObject("SimpleRenderer",{symbol: simpleSymbol});
 
-        var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
+        let featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
                                                                   featureTable: wfsFeatureTable,
                                                                   renderer: simpleRenderer
                                                               });

@@ -71,11 +71,11 @@ Rectangle {
 
         // identify layers on mouse click
         onMouseClicked: {
-            var screenX = mouse.x;
-            var screenY = mouse.y;
-            var tolerance = 12;
-            var returnPopups = false;
-            var maxResults = 10;
+            let screenX = mouse.x;
+            let screenY = mouse.y;
+            let tolerance = 12;
+            let returnPopups = false;
+            let maxResults = 10;
             mapView.identifyLayersWithMaxResults(screenX, screenY, tolerance, returnPopups, maxResults);
         }
 
@@ -88,11 +88,11 @@ Rectangle {
             msgText = "";
 
             // loop through the results
-            var results = mapView.identifyLayersResults;
+            let results = mapView.identifyLayersResults;
             for (let i = 0; i < results.length; i++) {
-                var result = results[i];
-                var count = geoElementsCountFromResult(result);
-                var layerName = result.layerContent.name;
+                let result = results[i];
+                let count = geoElementsCountFromResult(result);
+                let layerName = result.layerContent.name;
                 msgText += "%1 : %2".arg(layerName).arg(count);
                 // add new line character if not the final element in array
                 if (i !== results.length)
@@ -113,15 +113,15 @@ Rectangle {
 
     function geoElementsCountFromResult(identifyLayerResult) {
         // create temp array
-        var tempResults = [identifyLayerResult];
+        let tempResults = [identifyLayerResult];
 
         // use Depth First Search approach to handle recursion
-        var count = 0;
-        var index = 0;
+        let count = 0;
+        let index = 0;
 
         while (index < tempResults.length) {
             //get the result object from the array
-            var identifyResult = tempResults[index];
+            let identifyResult = tempResults[index];
 
             // update count with geoElements from the result
             count += identifyResult.geoElements.length;

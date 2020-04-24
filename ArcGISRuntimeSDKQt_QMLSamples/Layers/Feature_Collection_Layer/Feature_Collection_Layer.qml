@@ -62,9 +62,9 @@ Rectangle {
 
                         Component.onCompleted: {
                             // Create a new point feature, provide geometry and attribute values
-                            var pointFeature = pointsTable.createFeature();
+                            let pointFeature = pointsTable.createFeature();
                             pointFeature.attributes.replaceAttribute("Place", "Current location");
-                            var point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: SpatialReference.createWgs84()});
+                            let point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: SpatialReference.createWgs84()});
                             pointFeature.geometry = point1;
 
                             // Add to the table
@@ -97,11 +97,11 @@ Rectangle {
 
                         Component.onCompleted: {
                             // Create a new polyline feature, provide geometry and attribute values
-                            var lineFeature = linesTable.createFeature();
+                            let lineFeature = linesTable.createFeature();
                             lineFeature.attributes.replaceAttribute("Boundary", "AManAPlanACanalPanama");
-                            var point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: SpatialReference.createWgs84()});
-                            var point2 = ArcGISRuntimeEnvironment.createObject("Point", {x: -80.035568, y: 9.432302, spatialReference: SpatialReference.createWgs84()});
-                            var lineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
+                            let point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: SpatialReference.createWgs84()});
+                            let point2 = ArcGISRuntimeEnvironment.createObject("Point", {x: -80.035568, y: 9.432302, spatialReference: SpatialReference.createWgs84()});
+                            let lineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
                             lineBuilder.addPoint(point1);
                             lineBuilder.addPoint(point2);
                             lineFeature.geometry = lineBuilder.geometry;
@@ -143,12 +143,12 @@ Rectangle {
 
                         Component.onCompleted: {
                             // Create a new point feature, provide geometry and attribute values
-                            var polygonFeature = linesTable.createFeature();
+                            let polygonFeature = linesTable.createFeature();
                             polygonFeature.attributes.replaceAttribute("Area", "Restricted area");
-                            var point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: SpatialReference.createWgs84()});
-                            var point2 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.337936, y: 8.638903, spatialReference: SpatialReference.createWgs84()});
-                            var point3 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.11409, y: 8.895422, spatialReference: SpatialReference.createWgs84()});
-                            var polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: SpatialReference.createWgs84()});
+                            let point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: SpatialReference.createWgs84()});
+                            let point2 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.337936, y: 8.638903, spatialReference: SpatialReference.createWgs84()});
+                            let point3 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.11409, y: 8.895422, spatialReference: SpatialReference.createWgs84()});
+                            let polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: SpatialReference.createWgs84()});
                             polygonBuilder.addPoint(point1);
                             polygonBuilder.addPoint(point2);
                             polygonBuilder.addPoint(point3);

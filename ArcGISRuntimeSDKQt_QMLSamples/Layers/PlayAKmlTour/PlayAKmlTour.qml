@@ -51,7 +51,7 @@ Rectangle {
                    if (loadStatus !== Enums.LoadStatusLoaded)
                        return;
 
-                   var kmlTour = findFirstKMLTour(kmlDataset.rootNodes)
+                   let kmlTour = findFirstKMLTour(kmlDataset.rootNodes)
 
                    if (kmlTour !== null) {
                        kmlTour.tourStatusChanged.connect(function() {

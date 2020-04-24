@@ -110,13 +110,13 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            var clickedPoint = mapView.screenToLocation(mouseX, mouseY);
+            let clickedPoint = mapView.screenToLocation(mouseX, mouseY);
             clickedPointGraphic.geometry = clickedPoint;
 
-            var nearestVertexPoint = GeometryEngine.nearestVertex(polygonBuilder.geometry, clickedPoint);
+            let nearestVertexPoint = GeometryEngine.nearestVertex(polygonBuilder.geometry, clickedPoint);
             nearestVertexGraphic.geometry = nearestVertexPoint.coordinate;
 
-            var nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, clickedPoint);
+            let nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, clickedPoint);
             nearestCoordinateGraphic.geometry = nearestCoordinateResult.coordinate;
 
             distancesLabel.text = `Vertex distance: ${(nearestVertexPoint.distance/1000.0).toFixed()} km

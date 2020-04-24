@@ -49,8 +49,8 @@ Rectangle {
                 }
 
                 Component.onCompleted: {
-                    var pointCollection = createPointCollection();
-                    var multipointBuilder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder", { spatialReference: pointCollection.spatialReference });
+                    let pointCollection = createPointCollection();
+                    let multipointBuilder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder", { spatialReference: pointCollection.spatialReference });
                     multipointBuilder.points = pointCollection;
                     originalMultipointGraphic.geometry = multipointBuilder.geometry;
                     mapView.setViewpointGeometryAndPadding(originalMultipointGraphic.geometry, 100);
@@ -69,8 +69,8 @@ Rectangle {
                 }
 
                 Component.onCompleted: {
-                    var pointCollection = createPointCollection();
-                    var polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", { spatialReference: pointCollection.spatialReference });
+                    let pointCollection = createPointCollection();
+                    let polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", { spatialReference: pointCollection.spatialReference });
                     for (let i = 0; i < pointCollection.size; i++) {
                         polylineBuilder.addPoint(pointCollection.point(i));
                     }
@@ -108,7 +108,7 @@ Rectangle {
 
     function updateGeometry() {
         // Get the initial Geometry
-        var polyline = originalLineGraphic.geometry;
+        let polyline = originalLineGraphic.geometry;
         if (!polyline)
             return;
 
@@ -124,12 +124,12 @@ Rectangle {
         resultPolylineGraphic.geometry = polyline;
 
         // Update the multipoint graphic
-        var multipointBuilder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder", { spatialReference: polyline.spatialReference });
-        var pointCollection = ArcGISRuntimeEnvironment.createObject("PointCollection", { spatialReference: polyline.spatialReference });
+        let multipointBuilder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder", { spatialReference: polyline.spatialReference });
+        let pointCollection = ArcGISRuntimeEnvironment.createObject("PointCollection", { spatialReference: polyline.spatialReference });
         if (polyline.parts.size < 1)
             return;
 
-        var polylinePoints = polyline.parts.part(0).points();
+        let polylinePoints = polyline.parts.part(0).points();
         for (let i = 0; i < polylinePoints.size; i++) {
             pointCollection.addPoint(polylinePoints.point(i));
         }
@@ -138,8 +138,8 @@ Rectangle {
     }
 
     function createPointCollection() {
-        var sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", {wkid: 32126});
-        var pointCollection = ArcGISRuntimeEnvironment.createObject("PointCollection", { spatialReference: sr });
+        let sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", {wkid: 32126});
+        let pointCollection = ArcGISRuntimeEnvironment.createObject("PointCollection", { spatialReference: sr });
         pointCollection.addPointXYZ(2330611.130549, 202360.002957, 0.000000);
         pointCollection.addPointXYZ(2330583.834672, 202525.984012, 0.000000);
         pointCollection.addPointXYZ(2330574.164902, 202691.488009, 0.000000);

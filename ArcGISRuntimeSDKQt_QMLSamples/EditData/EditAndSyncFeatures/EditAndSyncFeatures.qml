@@ -75,7 +75,7 @@ Rectangle {
             } else if (isOffline && selectedFeature) {
 
                 // connect to feature table signal
-                var featureTable = map.operationalLayers.get(0).featureTable;
+                let featureTable = map.operationalLayers.get(0).featureTable;
                 featureTable.updateFeatureStatusChanged.connect(function() {
                     if (featureTable.updateFeatureStatus === Enums.TaskStatusCompleted) {
                         // clear selections
@@ -94,7 +94,7 @@ Rectangle {
 
         onIdentifyLayerStatusChanged: {
             if (identifyLayerStatus === Enums.TaskStatusCompleted) {
-                var featureLayer = map.operationalLayers.get(0);
+                let featureLayer = map.operationalLayers.get(0);
 
                 // clear any previous selections
                 featureLayer.clearSelection();
@@ -102,7 +102,7 @@ Rectangle {
 
                 // select the feature
                 if (identifyLayerResult.geoElements.length > 0) {
-                    var geoElement = identifyLayerResult.geoElements[0];
+                    let geoElement = identifyLayerResult.geoElements[0];
                     featureLayer.selectFeature(geoElement);
                     selectedFeature = geoElement;
                     instructionText = "Tap on map to move feature";
@@ -229,8 +229,8 @@ Rectangle {
                 if (offlineGdb.loadStatus === Enums.LoadStatusLoaded) {
                     // create a feature layer from each feature table, and add to the map
                     for (let i = 0; i < offlineGdb.geodatabaseFeatureTables.length; i++) {
-                        var featureTable = offlineGdb.geodatabaseFeatureTables[i];
-                        var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
+                        let featureTable = offlineGdb.geodatabaseFeatureTables[i];
+                        let featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
                         featureLayer.featureTable = featureTable;
                         map.operationalLayers.append(featureLayer);
                     }
@@ -344,9 +344,9 @@ Rectangle {
             }
 
             function getRectangleEnvelope() {
-                var corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
-                var corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
-                var envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
+                let corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
+                let corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+                let envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
                 envBuilder.setCorners(corner1, corner2);
                 generateExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
             }

@@ -37,8 +37,8 @@ Rectangle {
                     featureRequestMode: Enums.FeatureRequestModeManualCache // set the cache mode to manual
                     onLoadStatusChanged: {
                         if (loadStatus === Enums.LoadStatusLoaded) {
-                            var clearCache = true;
-                            var outFields = ["*"];
+                            let clearCache = true;
+                            let outFields = ["*"];
 
                             // populate the table with records matching the query
                             hurricaneTable.populateFromService(queryParams, clearCache, outFields);

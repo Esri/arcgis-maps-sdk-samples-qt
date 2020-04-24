@@ -93,7 +93,7 @@ Rectangle {
             onGeocodeStatusChanged: {
                 if (geocodeStatus === Enums.TaskStatusCompleted) {
                     if (geocodeResults.length > 0) {
-                        var address = geocodeResults[0].label;
+                        let address = geocodeResults[0].label;
                         let splitIndex = address.indexOf(",");
                         mapView.setViewpointCenter(geocodeResults[0].displayLocation);
                         mapView.calloutData.location = clickedPoint;

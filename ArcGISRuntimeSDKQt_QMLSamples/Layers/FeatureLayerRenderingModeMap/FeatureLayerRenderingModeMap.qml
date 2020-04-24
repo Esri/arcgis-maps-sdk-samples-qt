@@ -189,7 +189,7 @@ Rectangle {
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            var viewpoint;
+            let viewpoint;
             if (zoomedOut)
                 viewpoint = zoomInViewpoint;
             else

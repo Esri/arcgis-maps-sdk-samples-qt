@@ -56,7 +56,7 @@ Rectangle {
                     return;
 
                 // Set the Camera Controller
-                var controller = ArcGISRuntimeEnvironment.createObject("OrbitGeoElementCameraController", {
+                let controller = ArcGISRuntimeEnvironment.createObject("OrbitGeoElementCameraController", {
                                                                            targetGeoElement: tank, cameraDistance: 200,
                                                                            cameraPitchOffset: 45
                                                                        });
@@ -133,15 +133,15 @@ Rectangle {
             return;
 
         // get current location and distance from waypoint
-        var location = tank.geometry;
-        var distance = GeometryEngine.distanceGeodetic(location, waypoint, linearUnit, angularUnit, geodeticCurveType);
+        let location = tank.geometry;
+        let distance = GeometryEngine.distanceGeodetic(location, waypoint, linearUnit, angularUnit, geodeticCurveType);
 
         // move toward waypoint based on speed and update orientation
         location = GeometryEngine.moveGeodetic([location], 1.0, linearUnit, distance.azimuth1, angularUnit, geodeticCurveType);
         tank.geometry = location[0];
 
         // update the heading
-        var heading = tank.attributes.attributeValue(headingAttr);
+        let heading = tank.attributes.attributeValue(headingAttr);
         tank.attributes.replaceAttribute(headingAttr, heading + (distance.azimuth1 - heading) / 10);
 
         // reached waypoint

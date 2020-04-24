@@ -74,10 +74,10 @@ Rectangle {
         //! [AddFeaturesFeatureService new feature at mouse click]
         onMouseClicked: {  // mouseClicked came from the MapView
             // create attributes json for the new feature
-            var featureAttributes = {"typdamage" : "Minor", "primcause" : "Earthquake"};
+            let featureAttributes = {"typdamage" : "Minor", "primcause" : "Earthquake"};
 
             // create a new feature using the mouse's map point
-            var feature = featureTable.createFeatureWithAttributes(featureAttributes, mouse.mapPoint);
+            let feature = featureTable.createFeatureWithAttributes(featureAttributes, mouse.mapPoint);
 
             // add the new feature to the feature table
             featureTable.addFeature(feature);

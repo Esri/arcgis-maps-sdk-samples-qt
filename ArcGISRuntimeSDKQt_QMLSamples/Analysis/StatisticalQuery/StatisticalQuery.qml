@@ -56,9 +56,9 @@ Rectangle {
                         resultsText = "";
 
                         // Iterate through the results
-                        var iter = queryStatisticsResult.iterator;
+                        let iter = queryStatisticsResult.iterator;
                         while (iter.hasNext) {
-                            var record = iter.next();
+                            let record = iter.next();
                             for (let key in record.statistics) {
                                 if (record.statistics.hasOwnProperty(key)) {
                                     resultsText += key + ": " + record.statistics[key] + "\n";

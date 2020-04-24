@@ -121,9 +121,9 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
                 text: "Apply"
                 onClicked: {
-                    var altitude = altitudeSlider.value;
-                    var azimuth = azimuthSlider.value;
-                    var slope = slopeBox.model.get(slopeBox.currentIndex).value;
+                    let altitude = altitudeSlider.value;
+                    let azimuth = azimuthSlider.value;
+                    let slope = slopeBox.model.get(slopeBox.currentIndex).value;
                     applyHillshadeRenderer(altitude, azimuth, slope);
                     root.visible = false;
                 }

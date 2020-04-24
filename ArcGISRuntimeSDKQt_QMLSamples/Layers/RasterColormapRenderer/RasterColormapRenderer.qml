@@ -63,15 +63,15 @@ Rectangle {
     function setColormap() {
 
         // create a color map where values 0-150 are red and 150-250 are yellow
-        var colorArray = [];
+        let colorArray = [];
         for (let i = 0; i < 250; i++)
             colorArray.push(i < 150 ? Qt.rgba(255, 0, 0) : Qt.rgba(255,255,0));
 
         // create a colormap
-        var colormap = ArcGISRuntimeEnvironment.createObject("Colormap", {colors: colorArray});
+        let colormap = ArcGISRuntimeEnvironment.createObject("Colormap", {colors: colorArray});
 
         // create colormap renderer
-        var colormapRenderer = ArcGISRuntimeEnvironment.createObject("ColormapRenderer", {colormap: colormap});
+        let colormapRenderer = ArcGISRuntimeEnvironment.createObject("ColormapRenderer", {colormap: colormap});
 
         // apply the renderer to the raster layer
         rasterLayer.renderer = colormapRenderer;

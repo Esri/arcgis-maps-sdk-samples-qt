@@ -86,7 +86,7 @@ Rectangle {
 
     function populateWfsFeatureTable() {
         // Create query parameters
-        var params = ArcGISRuntimeEnvironment.createObject("QueryParameters", {
+        let params = ArcGISRuntimeEnvironment.createObject("QueryParameters", {
                                                                geometry: mapView.visibleArea.extent,
                                                                spatialRelationship: Enums.SpatialRelationshipIntersects
                                                            });

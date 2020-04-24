@@ -205,16 +205,16 @@ Rectangle {
 
     function animate() {
         // Get current goal waypoint and taxi location.
-        var waypoint = waypoints[waypointIndex];
-        var location = taxi.geometry;
+        let waypoint = waypoints[waypointIndex];
+        let location = taxi.geometry;
 
         // Discover the azimuth between these two points.
-        var distance = GeometryEngine.distanceGeodetic(
+        let distance = GeometryEngine.distanceGeodetic(
                     location, waypoint, metres, degrees,
                     Enums.GeodeticCurveTypeGeodesic);
 
         // Move the taxi location along 1 metre in the direction of the azimuth. Update the taxi.
-        var points = GeometryEngine.moveGeodetic(
+        let points = GeometryEngine.moveGeodetic(
                     [location], 1.0, metres, distance.azimuth1, degrees,
                     Enums.GeodeticCurveTypeGeodesic);
 

@@ -82,7 +82,7 @@ Rectangle {
 
     function applyHillshadeRenderer(altitude, azimuth, slope) {
         // create the new renderer
-        var hillshadeRenderer = ArcGISRuntimeEnvironment.createObject("HillshadeRenderer", {
+        let hillshadeRenderer = ArcGISRuntimeEnvironment.createObject("HillshadeRenderer", {
                                                                           altitude: altitude,
                                                                           azimuth: azimuth,
                                                                           zFactor: 0.000016,

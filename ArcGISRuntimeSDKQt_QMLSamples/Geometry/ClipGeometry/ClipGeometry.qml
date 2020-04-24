@@ -174,11 +174,11 @@ Rectangle {
             envelopesOverlay.graphics.forEach(function(graphic) {
 
                 // Create a variable that contains the clip result, which is an envelope of the overlap between colorado and the current graphic
-                var clippedGeometry = GeometryEngine.clip(coloradoGraphic.geometry, graphic.geometry.extent);
+                let clippedGeometry = GeometryEngine.clip(coloradoGraphic.geometry, graphic.geometry.extent);
                 if (clippedGeometry !== null) {
 
                     // Create a new graphic using the clip envelope, and fill it in with the colorado fill symbol
-                    var clippedGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: clippedGeometry, symbol: coloradoFillSymbol });
+                    let clippedGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: clippedGeometry, symbol: coloradoFillSymbol });
 
                     // Add the new clipped graphic to the map
                     clippedAreasOverlay.graphics.append(clippedGraphic);

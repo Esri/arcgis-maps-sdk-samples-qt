@@ -153,7 +153,7 @@ Rectangle {
                                         anchors.fill: parent
                                         onClicked: {
                                             menu.close();
-                                            var modelIndex = drawOrderModel.mappedIndex(index);
+                                            let modelIndex = drawOrderModel.mappedIndex(index);
                                             layerListModel.move(modelIndex, modelIndex - 1);
                                         }
                                     }
@@ -168,7 +168,7 @@ Rectangle {
                                         anchors.fill: parent
                                         onClicked: {
                                             menu.close();
-                                            var modelIndex = drawOrderModel.mappedIndex(index);
+                                            let modelIndex = drawOrderModel.mappedIndex(index);
                                             layerListModel.move(modelIndex, modelIndex + 1);
                                         }
                                     }
@@ -181,7 +181,7 @@ Rectangle {
                                         anchors.fill: parent
                                         onClicked: {
                                             menu.close();
-                                            var modelIndex = drawOrderModel.mappedIndex(index);
+                                            let modelIndex = drawOrderModel.mappedIndex(index);
                                             deletedLayerListModel.push(layerListModel.get(modelIndex));
                                             deletedLayersList.model = deletedLayerListModel
                                             layerListModel.remove(modelIndex);

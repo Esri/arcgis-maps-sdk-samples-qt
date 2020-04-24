@@ -50,9 +50,9 @@ Rectangle {
         //! [identify graphics api snippet]
         // Signal handler for mouse click event on the map view
         onMouseClicked: {
-            var tolerance = 22;
-            var returnPopupsOnly = false;
-            var maximumResults = 1000;
+            let tolerance = 22;
+            let returnPopupsOnly = false;
+            let maximumResults = 1000;
             mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, tolerance, returnPopupsOnly, maximumResults);
         }
 
@@ -84,13 +84,13 @@ Rectangle {
 
     Component.onCompleted: {
         // create the polygon by assigning points
-        var polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: SpatialReference.createWebMercator()});
+        let polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: SpatialReference.createWebMercator()});
         polygonBuilder.addPointXY(-20e5, 20e5);
         polygonBuilder.addPointXY(20e5, 20e5);
         polygonBuilder.addPointXY(20e5, -20e5);
         polygonBuilder.addPointXY(-20e5, -20e5);
         // assign the geometry of the graphic to be the polygon
-        var polygonGraphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+        let polygonGraphic = ArcGISRuntimeEnvironment.createObject("Graphic");
         polygonGraphic.geometry = polygonBuilder.geometry;
         // add the graphic to the polygon graphics overlay
         graphicsOverlay.graphics.append(polygonGraphic);

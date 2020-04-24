@@ -64,7 +64,7 @@ Animate3DSymbolsSample {
 
                 onModelChanged: {
                     for (let i = 0; i < missionsModel.rowCount(); ++i) {
-                        var index = missionsModel.index(i, 0);
+                        let index = missionsModel.index(i, 0);
                         textMetrics.text = missionsModel.data(index);
                         modelWidth = Math.max(modelWidth, textMetrics.width);
                     }

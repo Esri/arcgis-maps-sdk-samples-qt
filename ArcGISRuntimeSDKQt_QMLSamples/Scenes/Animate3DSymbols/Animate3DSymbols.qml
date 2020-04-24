@@ -351,11 +351,11 @@ Rectangle {
         if (!missionsFolder.exists)
             return;
 
-        var fileName = missionName.replace(/\s/g, '') + ".csv";
-        var fileContents = missionsFolder.readTextFile(fileName);
-        var lines = fileContents.split("\n");
+        let fileName = missionName.replace(/\s/g, '') + ".csv";
+        let fileContents = missionsFolder.readTextFile(fileName);
+        let lines = fileContents.split("\n");
         for (let i = 0; i < lines.length; i++) {
-            var dataParts = lines[i].split(",");
+            let dataParts = lines[i].split(",");
             if (dataParts.length !== 6)
                 continue;
 
@@ -374,15 +374,15 @@ Rectangle {
 
         // create polyline builder and fill with points
         // for the mission polyline
-        var rtBldr = ArcGISRuntimeEnvironment.createObject(
+        let rtBldr = ArcGISRuntimeEnvironment.createObject(
                     "PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
         for (let j = 0; j < currentMissionModel.count; j++) {
-            var missionData = currentMissionModel.get(j);
+            let missionData = currentMissionModel.get(j);
             rtBldr.addPointXY(missionData.lon, missionData.lat);
         }
 
-        var firstData = currentMissionModel.get(0);
-        var firstPos = createPoint(firstData);
+        let firstData = currentMissionModel.get(0);
+        let firstPos = createPoint(firstData);
 
         // update model graphic's attributes
         graphic3d.attributes.replaceAttribute(headingAtt, firstData.heading);
@@ -413,8 +413,8 @@ Rectangle {
 
     function animate() {
         if (progressSlider.value < missionSize ) {
-            var missionData = currentMissionModel.get(progressSlider.value);
-            var newPos = createPoint(missionData);
+            let missionData = currentMissionModel.get(progressSlider.value);
+            let newPos = createPoint(missionData);
 
             graphic3d.geometry = newPos;
             graphic3d.attributes.replaceAttribute(headingAtt, missionData.heading);

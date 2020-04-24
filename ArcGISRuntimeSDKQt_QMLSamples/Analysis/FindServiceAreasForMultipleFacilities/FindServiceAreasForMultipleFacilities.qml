@@ -113,7 +113,7 @@ Rectangle {
                     if (solveServiceAreaStatus === Enums.TaskStatusCompleted) {
                         // iterate through the facilities to get the service area polygons
                         for (let i = 0; i < solveServiceAreaResult.facilities.length; i++) {
-                            var serviceAreaPolygonList = solveServiceAreaResult.resultPolygons(i);
+                            let serviceAreaPolygonList = solveServiceAreaResult.resultPolygons(i);
                             //create a graphic for each available polygon
                             for (let j = 0; j < serviceAreaPolygonList.length; j++) {
                                 serviceAreasOverlay.graphics.append(ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: serviceAreaPolygonList[j].geometry, symbol: fillSymbols[j]}));

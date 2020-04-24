@@ -128,10 +128,10 @@ Rectangle {
 
         function displayOutputTileCache(tileCache) {
             // create a new tiled layer from the output tile cache
-            var tiledLayer = ArcGISRuntimeEnvironment.createObject("ArcGISTiledLayer", { tileCache: tileCache } );
+            let tiledLayer = ArcGISRuntimeEnvironment.createObject("ArcGISTiledLayer", { tileCache: tileCache } );
 
             // create a new basemap with the tiled layer
-            var basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
+            let basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
             basemap.baseLayers.append(tiledLayer);
 
             // set the new basemap on the map
@@ -209,9 +209,9 @@ Rectangle {
             }
 
             function getRectangleEnvelope() {
-                var corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
-                var corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
-                var envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
+                let corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
+                let corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+                let envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
                 envBuilder.setCorners(corner1, corner2);
                 tileCacheExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
                 exportTask.generateDefaultParameters();
