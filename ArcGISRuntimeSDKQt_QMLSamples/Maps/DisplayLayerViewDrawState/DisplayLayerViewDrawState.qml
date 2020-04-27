@@ -78,9 +78,9 @@ Rectangle {
 
         onLayerViewStateChanged: {
             // find index of changed layer
-            let index = getindex(layer);
+            const index = getindex(layer);
             // get Current Status
-            let status = viewStatusString(layerViewState);
+            const status = viewStatusString(layerViewState);
             // change name if layer loaded
             layerViewModel.setProperty(index, "name", layer.name);
             // update Status in ListModel
@@ -88,7 +88,7 @@ Rectangle {
         }
 
         function viewStatusString(layerViewState) {
-            let stateFlag = layerViewState.statusFlags;
+            const stateFlag = layerViewState.statusFlags;
             if (stateFlag & Enums.LayerViewStatusActive)
                 return "Active";
             if (stateFlag & Enums.LayerViewStatusNotVisible)

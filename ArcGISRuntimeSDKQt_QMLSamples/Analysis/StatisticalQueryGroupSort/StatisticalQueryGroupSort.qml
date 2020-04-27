@@ -36,7 +36,7 @@ Rectangle {
             if (loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
-            let fieldModel = [];
+            const fieldModel = [];
             for (let i = 0; i < fields.length; i++) {
                 fieldModel.push(fields[i].name);
             }
@@ -61,14 +61,14 @@ Rectangle {
             }
 
             // iterate the results and add to a model
-            let iter = queryStatisticsResult.iterator;
+            const iter = queryStatisticsResult.iterator;
             while (iter.hasNext) {
-                let record = iter.next();
-                let sectionString = JSON.stringify(record.group).replace("{","").replace("}","");
+                const record = iter.next();
+                const sectionString = JSON.stringify(record.group).replace("{","").replace("}","");
 
                 for (let statKey in record.statistics) {
                     if (record.statistics.hasOwnProperty(statKey)) {
-                        let result = {
+                        const result = {
                             "section" : sectionString,
                             "statistic" : statKey + ": " + record.statistics[statKey]
                         };
@@ -90,13 +90,13 @@ Rectangle {
             height: parent.height
             onStatisticButtonClicked: {
                 // create the parameter object
-                let params = ArcGISRuntimeEnvironment.createObject("StatisticsQueryParameters");
+                const params = ArcGISRuntimeEnvironment.createObject("StatisticsQueryParameters");
 
                 // add the statistic definition objects
-                let statisticDefinitions = [];
+                const statisticDefinitions = [];
                 for (let i = 0; i < statisticsModel.count; i++) {
-                    let statistic = statisticsModel.get(i);
-                    let definition = ArcGISRuntimeEnvironment.createObject("StatisticDefinition", {
+                    const statistic = statisticsModel.get(i);
+                    const definition = ArcGISRuntimeEnvironment.createObject("StatisticDefinition", {
                                                                                onFieldName: statistic.field,
                                                                                statisticType: statisticStringToEnum(statistic.statistic)
                                                                            });
@@ -108,10 +108,10 @@ Rectangle {
                 params.groupByFieldNames = groupingFields;
 
                 // add the order by objects
-                let orderBys = [];
+                const orderBys = [];
                 for (let j = 0; j < orderByModel.count; j++) {
-                    let group = orderByModel.get(j);
-                    let orderBy = ArcGISRuntimeEnvironment.createObject("OrderBy", {
+                    const group = orderByModel.get(j);
+                    const orderBy = ArcGISRuntimeEnvironment.createObject("OrderBy", {
                                                                             fieldName: group.field,
                                                                             sortOrder: orderStringToEnum(group.order)
                                                                         });

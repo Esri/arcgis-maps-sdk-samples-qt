@@ -119,8 +119,8 @@ Rectangle {
     }
 
     function screenRatio() {
-        let width = mv.mapWidth;
-        let height = mv.mapHeight;
+        const width = mv.mapWidth;
+        const height = mv.mapHeight;
         return height > width ? width / height : height / width;
     }
 }

@@ -107,10 +107,10 @@ Rectangle {
     // function to dynamically create the graphics and add them to the graphics overlay
     function addSymbols() {
         for (let i = 0; i < symbolModel.count; i++) {
-            let elem = symbolModel.get(i);
+            const elem = symbolModel.get(i);
 
             // create a simple marker scene symbol
-            let smss = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSceneSymbol", {
+            const smss = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSceneSymbol", {
                                                                  style: elem.symbolStyle,
                                                                  color: elem.color,
                                                                  width: 200,
@@ -120,7 +120,7 @@ Rectangle {
                                                              });
 
             // create a new point geometry
-            let point = ArcGISRuntimeEnvironment.createObject("Point", {
+            const point = ArcGISRuntimeEnvironment.createObject("Point", {
                                                                   x: pointX + 0.01 * i,
                                                                   y: pointY,
                                                                   z: pointZ,
@@ -128,7 +128,7 @@ Rectangle {
                                                               });
 
             // create a graphic using the point and the symbol
-            let graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+            const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
                                                                     geometry: point,
                                                                     symbol: smss
                                                                 });

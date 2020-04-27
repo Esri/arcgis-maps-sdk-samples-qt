@@ -45,14 +45,14 @@ Rectangle {
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
                     // Set a viewpoint
-                    let point = ArcGISRuntimeEnvironment.createObject("Point", {
+                    const point = ArcGISRuntimeEnvironment.createObject("Point", {
                                                                           x: 6.86088,
                                                                           y: 45.3604,
                                                                           z: 3582.55,
                                                                           spatialReference: SpatialReference.createWgs84()
                                                                       });
 
-                    let camera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                    const camera = ArcGISRuntimeEnvironment.createObject("Camera", {
                                                                            location: point,
                                                                            heading: 345,
                                                                            pitch: 70,

@@ -62,16 +62,16 @@ Rectangle {
             relatedFeaturesModel.clear();
 
             // create objects required to do a selection with a query
-            let clickPoint = mouse.mapPoint;
-            let mapTolerance = 10 * mapView.unitsPerDIP;
-            let envelope = ArcGISRuntimeEnvironment.createObject("Envelope", {
+            const clickPoint = mouse.mapPoint;
+            const mapTolerance = 10 * mapView.unitsPerDIP;
+            const envelope = ArcGISRuntimeEnvironment.createObject("Envelope", {
                                                                      xMin: clickPoint.x - mapTolerance,
                                                                      yMin: clickPoint.y - mapTolerance,
                                                                      xMax: clickPoint.x + mapTolerance,
                                                                      yMax: clickPoint.y + mapTolerance,
                                                                      spatialReference: map.spatialReference
                                                                  });
-            let queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+            const queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
             queryParams.geometry = envelope;
             queryParams.spatialRelationship = Enums.SpatialRelationshipIntersects;
 
@@ -88,38 +88,38 @@ Rectangle {
 
         onSelectFeaturesStatusChanged: {
             if (alaskaNationalParks.selectFeaturesStatus === Enums.TaskStatusErrored) {
-                let errorString = "Error: %1".arg(alaskaNationalParks.error.message);
+                const errorString = "Error: %1".arg(alaskaNationalParks.error.message);
                 msgDialog.text = errorString;
                 msgDialog.open();
                 console.log(errorString);
             } else if (alaskaNationalParks.selectFeaturesStatus === Enums.TaskStatusCompleted) {
-                let featureQueryResult = alaskaNationalParks.selectFeaturesResult;
+                const featureQueryResult = alaskaNationalParks.selectFeaturesResult;
 
                 // iterate over features returned
                 while (featureQueryResult.iterator.hasNext) {
-                    let arcGISFeature = featureQueryResult.iterator.next();
-                    let selectedTable = arcGISFeature.featureTable;
+                    const arcGISFeature = featureQueryResult.iterator.next();
+                    const selectedTable = arcGISFeature.featureTable;
 
                     // connect signal
                     selectedTable.queryRelatedFeaturesStatusChanged.connect(function() {
                         if (selectedTable.queryRelatedFeaturesStatus !== Enums.TaskStatusCompleted)
                             return;
 
-                        let relatedFeatureQueryResultList = selectedTable.queryRelatedFeaturesResults;
+                        const relatedFeatureQueryResultList = selectedTable.queryRelatedFeaturesResults;
 
                         // iterate over returned RelatedFeatureQueryResults
                         for (let i = 0; i < relatedFeatureQueryResultList.length; i++) {
 
                             // iterate over Features returned
-                            let iter = relatedFeatureQueryResultList[i].iterator;
+                            const iter = relatedFeatureQueryResultList[i].iterator;
                             while (iter.hasNext) {
-                                let feat = iter.next();
-                                let displayFieldName = feat.featureTable.layerInfo.displayFieldName;
-                                let serviceLayerName = feat.featureTable.layerInfo.serviceLayerName;
-                                let displayFieldValue = feat.attributes.attributeValue(displayFieldName);
+                                const feat = iter.next();
+                                const displayFieldName = feat.featureTable.layerInfo.displayFieldName;
+                                const serviceLayerName = feat.featureTable.layerInfo.serviceLayerName;
+                                const displayFieldValue = feat.attributes.attributeValue(displayFieldName);
 
                                 // add the related feature info to a list model
-                                let listElement = {
+                                const listElement = {
                                     "displayFieldName" : displayFieldName,
                                     "displayFieldValue" : displayFieldValue,
                                     "serviceLayerName" : serviceLayerName

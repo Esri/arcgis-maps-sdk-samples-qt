@@ -51,8 +51,8 @@ Rectangle {
                         if (loadStatus === Enums.LoadStatusLoaded) {
                             mapView.setViewpointGeometry(imageServiceRaster.serviceInfo.fullExtent);
 
-                            let renderingRuleInfos = imageServiceRaster.serviceInfo.renderingRuleInfos;
-                            let names = [];
+                            const renderingRuleInfos = imageServiceRaster.serviceInfo.renderingRuleInfos;
+                            const names = [];
                             for (let i = 0; i < renderingRuleInfos.length; i++) {
                                 names.push(renderingRuleInfos[i].name);
                             }
@@ -118,15 +118,15 @@ Rectangle {
     function applyRenderingRule(index) {
         //! [ImageServiceRaster Create a rendering rule]
         // get the rendering rule info at the selected index
-        let renderingRuleInfo = imageServiceRaster.serviceInfo.renderingRuleInfos[index];
+        const renderingRuleInfo = imageServiceRaster.serviceInfo.renderingRuleInfos[index];
         // create a rendering rule object using the rendering rule info
-        let renderingRule = ArcGISRuntimeEnvironment.createObject("RenderingRule", {renderingRuleInfo: renderingRuleInfo});
+        const renderingRule = ArcGISRuntimeEnvironment.createObject("RenderingRule", {renderingRuleInfo: renderingRuleInfo});
         // create a new image service raster
-        let newImageServiceRaster = ArcGISRuntimeEnvironment.createObject("ImageServiceRaster", {url: imageServiceUrl});
+        const newImageServiceRaster = ArcGISRuntimeEnvironment.createObject("ImageServiceRaster", {url: imageServiceUrl});
         // apply the rendering rule
         newImageServiceRaster.renderingRule = renderingRule;
         // create a raster layer using the image service raster
-        let rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newImageServiceRaster});
+        const rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newImageServiceRaster});
         //! [ImageServiceRaster Create a rendering rule]
         // add the raster layer to the map
         map.operationalLayers.append(rasterLayer);

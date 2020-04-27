@@ -47,27 +47,27 @@ Rectangle {
     // function to add Graphics to a Graphics Overlay
     function addGraphics() {
         // Create a simple fill symbol - used to render a polygon covering Colorado.
-        let simpleFillSymbol = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol", {
+        const simpleFillSymbol = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol", {
                                                                          style: Enums.SimpleFillSymbolStyleCross,
                                                                          color: "blue"
                                                                      });
 
         // Create a simple line symbol - used to render a polyline border between California and Nevada.
-        let simpleLineSymbol = ArcGISRuntimeEnvironment.createObject("SimpleLineSymbol", {
+        const simpleLineSymbol = ArcGISRuntimeEnvironment.createObject("SimpleLineSymbol", {
                                                                          style: Enums.SimpleLineSymbolStyleSolid,
                                                                          color: "blue",
                                                                          width: 3
                                                                      });
 
         // Create a simple marker symbol - used to render multi-points for various state capital locations in the Western United States.
-        let simpleMarkerSymbol = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
+        const simpleMarkerSymbol = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
                                                                            style: Enums.SimpleMarkerSymbolStyleTriangle,
                                                                            color: "blue",
                                                                            size: 14
                                                                        });
 
         // Create a simple marker symbol - used to render a map point where the Esri headquarters is located.
-        let simpleMarkerSymbol2 = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
+        const simpleMarkerSymbol2 = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
                                                                             style: Enums.SimpleMarkerSymbolStyleDiamond,
                                                                             color: "red",
                                                                             size: 18
@@ -103,7 +103,7 @@ Rectangle {
 
     function createPolygon() {
         // Create a polygon builder
-        let polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {
+        const polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {
                                                                        spatialReference: SpatialReference.createWgs84()
                                                                    });
 
@@ -119,7 +119,7 @@ Rectangle {
 
     function createPolyline() {
         // Create a polyline builder
-        let polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {
+        const polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {
                                                                         spatialReference: SpatialReference.createWgs84()
                                                                     });
 
@@ -143,7 +143,7 @@ Rectangle {
 
     function createMultipoint() {
         // Create a polygon builder
-        let multipointBuilder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder", {
+        const multipointBuilder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder", {
                                                                           spatialReference: SpatialReference.createWgs84()
                                                                       });
 

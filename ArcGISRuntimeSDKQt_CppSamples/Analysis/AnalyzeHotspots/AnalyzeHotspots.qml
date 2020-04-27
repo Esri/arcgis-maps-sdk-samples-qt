@@ -139,8 +139,8 @@ AnalyzeHotspotsSample {
             enabled: !jobInProgress && validateDates(fromThisDate, toThisDate)
 
             onClicked: {
-                let fromString = fromThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
-                let toString = toThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
+                const fromString = fromThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
+                const toString = toThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
                 // Run the task
                 executeTaskWithDates(fromString, toString);
             }
@@ -301,7 +301,7 @@ AnalyzeHotspotsSample {
         }
 
         // check that there is at least one day in between the from and to date
-        let oneDayMilliseconds = 86400000;
+        const oneDayMilliseconds = 86400000;
         if ((_toDate - _fromDate) < oneDayMilliseconds) {
             return false;
         }

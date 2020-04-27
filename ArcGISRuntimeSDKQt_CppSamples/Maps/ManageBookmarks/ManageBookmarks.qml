@@ -82,7 +82,7 @@ ManageBookmarksSample {
         model: manageBookmarksSample.bookmarks
 
         onModelChanged: {
-            let model = bookmarkComboBox.model;
+            const model = bookmarkComboBox.model;
             if (model)
             {
                 let w = bestWidth;

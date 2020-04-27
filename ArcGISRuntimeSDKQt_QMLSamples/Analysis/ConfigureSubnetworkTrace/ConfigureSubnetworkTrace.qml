@@ -99,7 +99,7 @@ Rectangle {
 
             // Set the terminal for this location. (For our case, we use the 'Load' terminal.)
             for (let i = 0; i < terminals.length; i++) {
-                let terminal = terminals[i];
+                const terminal = terminals[i];
                 if (terminal.name === "Load")
                     utilityElementStartingLocation.terminal = terminal;
             }

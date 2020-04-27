@@ -60,7 +60,7 @@ Rectangle {
         LayerWindow {
             onCreateMapSelected: {
                 stackView.push(mapView)
-                let map = createMap(basemap, layerList);
+                const map = createMap(basemap, layerList);
                 mapView.map = map;
             }
         }
@@ -75,10 +75,10 @@ Rectangle {
             }
 
             onSaveMapClicked: {
-                let thumbnail = null;
-                let folder = null;
-                let forceSave = true;
-                let tagsList = tags.split(",");
+                const thumbnail = null;
+                const folder = null;
+                const forceSave = true;
+                const tagsList = tags.split(",");
                 mapView.map.saveAs(portal, title, tagsList, forceSave, folder, description, thumbnail);
             }
         }
@@ -110,8 +110,8 @@ Rectangle {
                     // We need a local ref to the stackView and layerWindow
                     // object as our object references will have been deleted
                     // once "clear" cleans up this object.
-                    let sv = stackView;
-                    let lWindow = layerWindow;
+                    const sv = stackView;
+                    const lWindow = layerWindow;
                     sv.clear();
                     sv.push(lWindow);
                 }
@@ -154,11 +154,11 @@ Rectangle {
             selectedBasemap = ArcGISRuntimeEnvironment.createObject("BasemapOceans");
 
         // Create the Map with the basemap
-        let map = ArcGISRuntimeEnvironment.createObject("Map", { basemap: selectedBasemap }, mapView);
+        const map = ArcGISRuntimeEnvironment.createObject("Map", { basemap: selectedBasemap }, mapView);
 
         map.saveStatusChanged.connect(function() {
             if (map.saveStatus === Enums.TaskStatusCompleted) {
-                let url =  "https://www.arcgis.com/home/item.html?id=%1".arg(map.item.itemId);
+                const url =  "https://www.arcgis.com/home/item.html?id=%1".arg(map.item.itemId);
                 stackView.push(completionRect,
                                { text: 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(url) });
             } else if (map.saveStatus === Enums.TaskStatusErrored) {
@@ -173,7 +173,7 @@ Rectangle {
         // Add Operational Layers
         for (let i = 0; i < layerList.length; i++) {
             if (layerList[i] === "WorldElevations") {
-                let elevationLyr = ArcGISRuntimeEnvironment.createObject("ArcGISMapImageLayer", {
+                const elevationLyr = ArcGISRuntimeEnvironment.createObject("ArcGISMapImageLayer", {
                                                                              url : "https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"
                                                                          });
                 elevationLyr.opacity = 0.5;

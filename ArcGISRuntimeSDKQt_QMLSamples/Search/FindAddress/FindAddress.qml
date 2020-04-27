@@ -106,7 +106,7 @@ Rectangle {
             if (geocodeStatus === Enums.TaskStatusCompleted) {
                 if (geocodeResults.length > 0) {
                     graphicsOverlay.graphics.clear();
-                    let graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+                    const graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
                     graphic.geometry = geocodeResults[0].displayLocation;
                     graphic.attributes.attributesJson = geocodeResults[0].attributes;
                     graphicsOverlay.graphics.append(graphic);

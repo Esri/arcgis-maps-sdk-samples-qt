@@ -222,7 +222,7 @@ Rectangle {
                     onClicked: {
                         addItemButton.border.width = 4;
                         //! [PortalUser addItemWithUrl]
-                        let localCSVFile = "qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv";
+                        const localCSVFile = "qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv";
                         myUser.addPortalItemWithUrl(itemToAdd, localCSVFile, "add_item_sample.csv");
                         //! [PortalUser addItemWithUrl]
                     }

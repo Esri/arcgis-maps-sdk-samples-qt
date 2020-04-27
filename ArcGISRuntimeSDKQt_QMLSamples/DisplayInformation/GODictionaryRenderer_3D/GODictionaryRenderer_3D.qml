@@ -85,22 +85,22 @@ Rectangle {
             if (status === XmlListModel.Ready) {
                 let bbox = null;
                 for (let i = 0; i < count; i++) {
-                    let element = get(i);
+                    const element = get(i);
                     let wkid = element._wkid;
                     if (!wkid) {
                         // If _wkid was absent, use WGS 1984 (4326) by default.
                         wkid = 4326;
                     }
-                    let pointStrings = element._control_points.split(";");
-                    let sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
+                    const pointStrings = element._control_points.split(";");
+                    const sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
 
                     let geom = null;
                     if (pointStrings.length === 1) {
                         // It's a point
-                        let pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {
+                        const pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {
                                                                                      spatialReference: sr
                                                                                  });
-                        let coords = pointStrings[0].split(",");
+                        const coords = pointStrings[0].split(",");
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
                     }
@@ -113,7 +113,7 @@ Rectangle {
                         element._control_points = undefined;
                         element._wkid = undefined;
 
-                        let graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                        const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
                                                                                 geometry: geom
                                                                             });
                         graphic.attributes.attributesJson = element;

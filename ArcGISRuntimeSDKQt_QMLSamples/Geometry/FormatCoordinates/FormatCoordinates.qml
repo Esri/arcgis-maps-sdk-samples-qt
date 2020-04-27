@@ -177,7 +177,7 @@ Rectangle {
     }
 
     function handleTextUpdate(textType, text) {
-        let point = createPointFromText(textType, text);
+        const point = createPointFromText(textType, text);
         if (point)
             handleLocationUpdate(point);
     }
@@ -192,7 +192,7 @@ Rectangle {
         decimalPlaces = 1;
         textDMS.text  = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDegreesMinutesSeconds, decimalPlaces);
 
-        let addSpaces = true;
+        const addSpaces = true;
         textUsng.text = CoordinateFormatter.toUsng(point, 5, addSpaces);
 
         textUtm.text  = CoordinateFormatter.toUtm(point, Enums.UtmConversionModeLatitudeBandIndicators, addSpaces);

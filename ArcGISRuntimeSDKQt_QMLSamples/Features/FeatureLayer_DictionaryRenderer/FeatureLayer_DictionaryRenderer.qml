@@ -55,17 +55,17 @@ Rectangle {
 
         onLoadStatusChanged: {
             if (Enums.LoadStatusLoaded === geodatabase_militaryOverlay.loadStatus) {
-                let tables = geodatabase_militaryOverlay.geodatabaseFeatureTables;
+                const tables = geodatabase_militaryOverlay.geodatabaseFeatureTables;
 
                 // Create a layer for each table
                 for (let i = tables.length - 1; i >= 0; i--) {
                     //! [Apply Dictionary Renderer Feature Layer QML]
                     // Create a layer and set the feature table
-                    let layer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
+                    const layer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
                     layer.featureTable = tables[i];
 
                     // Create a dictionary renderer and apply to the layer
-                    let renderer = ArcGISRuntimeEnvironment.createObject(
+                    const renderer = ArcGISRuntimeEnvironment.createObject(
                                 "DictionaryRenderer",
                                 { dictionarySymbolStyle:
                                     //! [Create Dictionary Symbol Style QML]

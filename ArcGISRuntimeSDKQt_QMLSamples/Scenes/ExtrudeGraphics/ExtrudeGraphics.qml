@@ -83,27 +83,27 @@ Rectangle {
     }
 
     function createGraphics(){
-        let lon = camera.location.x;
-        let lat = camera.location.y + 0.2;
+        const lon = camera.location.x;
+        const lat = camera.location.y + 0.2;
 
         // create a random set of points
-        let points = [];
+        const points = [];
         for (let i = 0; i <= 100; i++) {
-            let point = ArcGISRuntimeEnvironment.createObject("Point", {x:i / 10 * (size * 2) + lon, y:i % 10 * (size * 2) + lat, spatialReference:sceneView.spatialReference});
+            const point = ArcGISRuntimeEnvironment.createObject("Point", {x:i / 10 * (size * 2) + lon, y:i % 10 * (size * 2) + lat, spatialReference:sceneView.spatialReference});
             points.push(point);
         }
 
         // for each point construct a polygon by manipulating the co-ordinates
         points.forEach(function(item){
-            let randNum = Math.ceil(Math.random() * 6);
-            let z = maxZ * randNum;
-            let newPoints = [createPoint(item.x, item.y, z),
+            const randNum = Math.ceil(Math.random() * 6);
+            const z = maxZ * randNum;
+            const newPoints = [createPoint(item.x, item.y, z),
                              createPoint(item.x + size, item.y, z),
                              createPoint(item.x + size, item.y + size, z),
                              createPoint(item.x, item.y + size, z)];
 
             // create a graphic
-            let graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: createPolygonFromPoints(newPoints)});
+            const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: createPolygonFromPoints(newPoints)});
             graphic.attributes.insertAttribute("height", z);
             graphicsOverlay.graphics.append(graphic);
         });
@@ -111,7 +111,7 @@ Rectangle {
 
     // create a polygon from a list of points
     function createPolygonFromPoints(pointsList) {
-        let polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder");
+        const polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder");
         polygonBuilder.spatialReference = sceneView.spatialReference;
 
         pointsList.forEach(function(pnt){

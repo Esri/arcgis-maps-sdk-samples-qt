@@ -73,7 +73,7 @@ Rectangle {
 
         Component.onCompleted: {
             // create initial viewpoint extent
-            let env = ArcGISRuntimeEnvironment.createObject("Envelope", {
+            const env = ArcGISRuntimeEnvironment.createObject("Envelope", {
                                                                 json: {
                                                                     "spatialReference": {
                                                                         "wkid":4326

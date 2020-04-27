@@ -51,7 +51,7 @@ Rectangle {
                    if (loadStatus !== Enums.LoadStatusLoaded)
                        return;
 
-                   let kmlTour = findFirstKMLTour(kmlDataset.rootNodes)
+                   const kmlTour = findFirstKMLTour(kmlDataset.rootNodes)
 
                    if (kmlTour !== null) {
                        kmlTour.tourStatusChanged.connect(function() {
@@ -138,7 +138,7 @@ Rectangle {
 
     function findFirstKMLTour(nodes) {
         for (let i = 0; i < nodes.length; i++) {
-            let node = nodes[i];
+            const node = nodes[i];
             if (node.kmlNodeType === Enums.KmlNodeTypeKmlTour)
                 return node;
             else if ((node.kmlNodeType === Enums.KmlNodeTypeKmlFolder) || (node.kmlNodeType === Enums.KmlNodeTypeKmlDocument))

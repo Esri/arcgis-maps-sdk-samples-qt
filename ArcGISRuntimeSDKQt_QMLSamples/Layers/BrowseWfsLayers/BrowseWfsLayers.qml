@@ -104,7 +104,7 @@ Rectangle {
 
     function createWfsService() {
         // create WFS Service
-        let service = ArcGISRuntimeEnvironment.createObject("WfsService", {url: serviceUrl});
+        const service = ArcGISRuntimeEnvironment.createObject("WfsService", {url: serviceUrl});
 
         // once WFS service is laoded create ListModel from Layer titles for ComboBox and create WFS Feature Table
         service.loadStatusChanged.connect(function() {
@@ -152,7 +152,7 @@ Rectangle {
 
     function populateWfsFeatureTable() {
         // Create query parameters
-        let params = ArcGISRuntimeEnvironment.createObject("QueryParameters", {
+        const params = ArcGISRuntimeEnvironment.createObject("QueryParameters", {
                                                                geometry: mapView.visibleArea.extent,
                                                                spatialRelationship: Enums.SpatialRelationshipIntersects
                                                            });
@@ -205,9 +205,9 @@ Rectangle {
             return;
         }
 
-        let simpleRenderer = ArcGISRuntimeEnvironment.createObject("SimpleRenderer",{symbol: simpleSymbol});
+        const simpleRenderer = ArcGISRuntimeEnvironment.createObject("SimpleRenderer",{symbol: simpleSymbol});
 
-        let featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
+        const featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
                                                                   featureTable: wfsFeatureTable,
                                                                   renderer: simpleRenderer
                                                               });

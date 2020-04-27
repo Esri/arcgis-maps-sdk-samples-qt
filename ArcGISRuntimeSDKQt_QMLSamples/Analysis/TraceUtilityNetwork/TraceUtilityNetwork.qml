@@ -228,8 +228,8 @@ Rectangle {
                 }
             }
 
-            let deviceParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
-            let lineParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+            const deviceParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+            const lineParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
             deviceParams.objectIds = deviceObjIds;
             lineParams.objectIds = lineObjIds;
 

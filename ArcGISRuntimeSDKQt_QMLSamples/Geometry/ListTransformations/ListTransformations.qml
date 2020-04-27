@@ -160,10 +160,10 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         transformationList.currentIndex = index;
-                        let transform = transformationList.model[index];
+                        const transform = transformationList.model[index];
                         if (transform.missingProjectionEngineFiles) {
                             let missingFiles = "Missing grid files: ";
-                            let steps = transform.steps;
+                            const steps = transform.steps;
                             for (let i = 0; i < steps.length; i++) {
                                 for (let j = 0; j < steps[i].projectionEngineFilenames.length; j++) {
                                     missingFiles += steps[i].projectionEngineFilenames[j];

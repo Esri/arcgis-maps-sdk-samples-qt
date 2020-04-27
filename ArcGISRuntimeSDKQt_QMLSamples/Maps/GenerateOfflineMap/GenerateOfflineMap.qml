@@ -76,11 +76,11 @@ Rectangle {
         }
 
         function getRectangleEnvelope() {
-            let corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
-            let corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
-            let envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
+            const corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
+            const corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+            const envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
             envBuilder.setCorners(corner1, corner2);
-            let mapExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
+            const mapExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
             offlineMapTask.createDefaultGenerateOfflineMapParameters(mapExtent);
         }
     }
@@ -143,10 +143,10 @@ Rectangle {
             case Enums.JobStatusSucceeded:
                 // show any layer errors
                 if (generateJob.result.hasErrors) {
-                    let layerErrors = generateJob.result.layerErrors;
+                    const layerErrors = generateJob.result.layerErrors;
                     let errorText = "";
                     for (let i = 0; i < layerErrors.length; i++) {
-                        let errorPair = layerErrors[i];
+                        const errorPair = layerErrors[i];
                         errorText += errorPair.layer.name + ": " + errorPair.error.message + "\n";
                     }
                     msgDialog.detailedText = errorText;

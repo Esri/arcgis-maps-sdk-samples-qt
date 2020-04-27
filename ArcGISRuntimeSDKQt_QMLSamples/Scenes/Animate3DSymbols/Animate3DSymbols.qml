@@ -351,11 +351,11 @@ Rectangle {
         if (!missionsFolder.exists)
             return;
 
-        let fileName = missionName.replace(/\s/g, '') + ".csv";
-        let fileContents = missionsFolder.readTextFile(fileName);
-        let lines = fileContents.split("\n");
+        const fileName = missionName.replace(/\s/g, '') + ".csv";
+        const fileContents = missionsFolder.readTextFile(fileName);
+        const lines = fileContents.split("\n");
         for (let i = 0; i < lines.length; i++) {
-            let dataParts = lines[i].split(",");
+            const dataParts = lines[i].split(",");
             if (dataParts.length !== 6)
                 continue;
 
@@ -374,15 +374,15 @@ Rectangle {
 
         // create polyline builder and fill with points
         // for the mission polyline
-        let rtBldr = ArcGISRuntimeEnvironment.createObject(
+        const rtBldr = ArcGISRuntimeEnvironment.createObject(
                     "PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
         for (let j = 0; j < currentMissionModel.count; j++) {
-            let missionData = currentMissionModel.get(j);
+            const missionData = currentMissionModel.get(j);
             rtBldr.addPointXY(missionData.lon, missionData.lat);
         }
 
-        let firstData = currentMissionModel.get(0);
-        let firstPos = createPoint(firstData);
+        const firstData = currentMissionModel.get(0);
+        const firstPos = createPoint(firstData);
 
         // update model graphic's attributes
         graphic3d.attributes.replaceAttribute(headingAtt, firstData.heading);
@@ -413,8 +413,8 @@ Rectangle {
 
     function animate() {
         if (progressSlider.value < missionSize ) {
-            let missionData = currentMissionModel.get(progressSlider.value);
-            let newPos = createPoint(missionData);
+            const missionData = currentMissionModel.get(progressSlider.value);
+            const newPos = createPoint(missionData);
 
             graphic3d.geometry = newPos;
             graphic3d.attributes.replaceAttribute(headingAtt, missionData.heading);

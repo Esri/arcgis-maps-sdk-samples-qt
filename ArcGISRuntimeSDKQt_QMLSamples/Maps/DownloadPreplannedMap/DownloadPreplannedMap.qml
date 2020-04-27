@@ -88,7 +88,7 @@ Rectangle {
                 busy.visible = false;
 
                 for (let i = 0; i < offlineMapTask.preplannedMapAreaList.count; i++) {
-                    let mapArea = offlineMapTask.preplannedMapAreaList.get(i);
+                    const mapArea = offlineMapTask.preplannedMapAreaList.get(i);
                     mapArea.loadStatusChanged.connect(function () {
                         if (offlineMapTask.preplannedMapAreaList.get(i).loadStatus !== Enums.LoadStatusLoaded)
                             return;
@@ -112,7 +112,7 @@ Rectangle {
                  * DownloadScheduledUpdates - schedulded, read-only updates will be
                  * downloaded and applied to the local geodatabase. */
                 createDefaultDownloadPreplannedOfflineMapParametersResult.updateMode = Enums.PreplannedUpdateModeNoUpdates;
-                let result = createDefaultDownloadPreplannedOfflineMapParametersResult;
+                const result = createDefaultDownloadPreplannedOfflineMapParametersResult;
 
                 path = outputMapPackage +"/" + result.preplannedMapArea.portalItem.title;
                 fileFolder.url = path;

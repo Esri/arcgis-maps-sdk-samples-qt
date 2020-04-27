@@ -101,28 +101,28 @@ Rectangle {
     // function to buffer a point and add graphics
     function bufferPoint(point) {
         // Create a variable to be the buffer size in meters. There are 1609.34 meters in one mile.
-        let bufferInMeters = bufferSizeText.text * 1609.34;
+        const bufferInMeters = bufferSizeText.text * 1609.34;
 
         // Create a planar buffer graphic around the input location at the specified distance.
-        let buffer = GeometryEngine.buffer(point, bufferInMeters);
+        const buffer = GeometryEngine.buffer(point, bufferInMeters);
 
         // Add the result planar buffer as a graphic
-        let resultGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+        const resultGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
                                                                       geometry: buffer
                                                                   });
         graphicsOverlayPlanar.graphics.append(resultGraphic);
 
         // Create a geodesic buffer graphic using the same location and distance.
-        let bufferGeodesic = GeometryEngine.bufferGeodetic(point, bufferInMeters, Enums.LinearUnitIdMeters, NaN, Enums.geodesicCurveTypeGeodesic);
+        const bufferGeodesic = GeometryEngine.bufferGeodetic(point, bufferInMeters, Enums.LinearUnitIdMeters, NaN, Enums.geodesicCurveTypeGeodesic);
 
         // Add the result planar buffer as a graphic
-        let resultGraphicGeodesic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+        const resultGraphicGeodesic = ArcGISRuntimeEnvironment.createObject("Graphic", {
                                                                               geometry: bufferGeodesic
                                                                           });
         graphicsOverlaygeodesic.graphics.append(resultGraphicGeodesic);
 
         // Add the clicked point as a graphic
-        let clickedPointGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+        const clickedPointGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
                                                                             geometry: point
                                                                         });
         graphicsOverlayPoints.graphics.append(clickedPointGraphic);

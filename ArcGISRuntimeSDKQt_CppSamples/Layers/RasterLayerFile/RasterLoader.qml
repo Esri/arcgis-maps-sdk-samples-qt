@@ -58,8 +58,8 @@ Item {
     }
 
     function validateFileExtension(filePath) {
-        let extension = filePath.split('.').pop();
-        let idx = supportedExtensions.indexOf(extension);
+        const extension = filePath.split('.').pop();
+        const idx = supportedExtensions.indexOf(extension);
 
         return idx !== -1;
     }

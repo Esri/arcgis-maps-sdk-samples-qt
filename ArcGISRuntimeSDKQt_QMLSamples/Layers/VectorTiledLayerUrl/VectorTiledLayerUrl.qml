@@ -92,7 +92,7 @@ Rectangle {
                 layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"https://www.arcgis.com/home/item.html?id=86f556a2d1fd468181855a35e344567f"});
                 break;
             }
-            let newBasemap = ArcGISRuntimeEnvironment.createObject("Basemap");
+            const newBasemap = ArcGISRuntimeEnvironment.createObject("Basemap");
             newBasemap.baseLayers.append(layer);
             map.basemap = newBasemap;
         }

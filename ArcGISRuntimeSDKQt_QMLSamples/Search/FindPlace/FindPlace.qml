@@ -130,7 +130,7 @@ Rectangle {
                     if (!geocodeResults.length > 0)
                         return;
 
-                    let topLocation = geocodeResults[0];
+                    const topLocation = geocodeResults[0];
                     geocodePOIs(poiTextField.text, topLocation.displayLocation);
                     return;
                 }
@@ -140,7 +140,7 @@ Rectangle {
                     graphicsOverlay.graphics.clear();
                     let bbox;
                     for (let i = 0; i < geocodeResults.length; i++) {
-                        let graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+                        const graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
                         graphic.geometry = geocodeResults[i].displayLocation;
                         graphic.attributes.attributesJson = geocodeResults[i].attributes;
                         graphicsOverlay.graphics.append(graphic);
@@ -252,7 +252,7 @@ Rectangle {
 
     function geocodePOIs(poi, location, extent) {
         // create base geocode parameters
-        let geocodeParams = ArcGISRuntimeEnvironment.createObject("GeocodeParameters");
+        const geocodeParams = ArcGISRuntimeEnvironment.createObject("GeocodeParameters");
         geocodeParams.resultAttributeNames = ["*"];
         geocodeParams.maxResults = 50;
         geocodeParams.minScore = 75.0;

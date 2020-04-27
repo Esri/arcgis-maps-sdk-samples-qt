@@ -166,9 +166,9 @@ Rectangle {
 
             // finding the closest facility for each incident to create a route graphic between each pair
             for (let incidentIndex = 0; incidentIndex < incidentsFeatureTable.numberOfFeaturesAsInt; incidentIndex++) {
-                let closestFacilityIndex = solveClosestFacilityResult.rankedFacilityIndexes(incidentIndex)[0];
-                let route = solveClosestFacilityResult.route(closestFacilityIndex, incidentIndex);
-                let routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: route.routeGeometry, symbol: routeSymbol});
+                const closestFacilityIndex = solveClosestFacilityResult.rankedFacilityIndexes(incidentIndex)[0];
+                const route = solveClosestFacilityResult.route(closestFacilityIndex, incidentIndex);
+                const routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: route.routeGeometry, symbol: routeSymbol});
 
                 resultsOverlay.graphics.append(routeGraphic);
             }

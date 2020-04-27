@@ -71,26 +71,26 @@ Rectangle {
         // handle mouseClicked signal
         onMouseClicked: {
             // get the mouse click as a point
-            let originalPoint = mouse.mapPoint;
+            const originalPoint = mouse.mapPoint;
 
             // show the clicked location on the map with a graphic
             inputGraphic.geometry = originalPoint;
 
             // create the output SpatialReference by specifying a well known ID (WKID)
-            let spatialReference = ArcGISRuntimeEnvironment.createObject("SpatialReference", {
+            const spatialReference = ArcGISRuntimeEnvironment.createObject("SpatialReference", {
                                                                              wkid: 4326
                                                                          });
 
             // project the web mercator point to WGS84
-            let projectedPoint = GeometryEngine.project(originalPoint, spatialReference);
+            const projectedPoint = GeometryEngine.project(originalPoint, spatialReference);
 
             // update callout data
             calloutData.title = "Coordinates"
             calloutData.location = originalPoint;
-            let ox = originalPoint.x.toFixed(5)
-            let oy = originalPoint.y.toFixed(5);
-            let px = projectedPoint.x.toFixed(5);
-            let py = projectedPoint.y.toFixed(5);
+            const ox = originalPoint.x.toFixed(5)
+            const oy = originalPoint.y.toFixed(5);
+            const px = projectedPoint.x.toFixed(5);
+            const py = projectedPoint.y.toFixed(5);
             calloutData.detail = "Original: %1, %2\nProjected: %3, %4".arg(ox).arg(oy).arg(px).arg(py);
 
             // show the callout

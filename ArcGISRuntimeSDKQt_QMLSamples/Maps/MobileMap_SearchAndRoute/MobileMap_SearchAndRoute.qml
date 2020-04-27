@@ -278,7 +278,7 @@ Rectangle {
 
                 if (currentLocatorTask.geocodeResults.length > 0) {
                     // create a pin graphic to display location
-                    let pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: currentLocatorTask.geocodeResults[0].displayLocation, symbol: bluePinSymbol});
+                    const pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: currentLocatorTask.geocodeResults[0].displayLocation, symbol: bluePinSymbol});
                     stopsGraphicsOverlay.graphics.append(pinGraphic);
                     pinGraphic.attributes.insertAttribute("AddressLabel", currentLocatorTask.geocodeResults[0].label);
 
@@ -287,14 +287,14 @@ Rectangle {
 
                     // add geocoded point as a stop if routing is available for current map
                     if (currentRouteTask !== null) {
-                        let stop = ArcGISRuntimeEnvironment.createObject("Stop", {name: "stop", geometry: pinGraphic.geometry});
+                        const stop = ArcGISRuntimeEnvironment.createObject("Stop", {name: "stop", geometry: pinGraphic.geometry});
                         routeStops.push(stop);
 
                         if (routeStops.length > 1)
                             routeButton.visible = true;
 
                         // create a Text symbol to display stop number
-                        let textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
+                        const textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
                                                                                    color: "white",
                                                                                    text: routeStops.length,
                                                                                    size: 18,
@@ -302,7 +302,7 @@ Rectangle {
                                                                                });
 
                         // create graphic using the text symbol
-                        let labelGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: pinGraphic.geometry, symbol: textSymbol});
+                        const labelGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: pinGraphic.geometry, symbol: textSymbol});
                         labelGraphic.zIndex = pinGraphic.zIndex + 1;
                         stopsGraphicsOverlay.graphics.append(labelGraphic);
                     }
@@ -334,9 +334,9 @@ Rectangle {
         onSolveRouteStatusChanged: {
             // if route solve is successful, add a route graphic
             if(currentRouteTask.solveRouteStatus === Enums.TaskStatusCompleted) {
-                let routeTaskResult = currentRouteTask.solveRouteResult;
+                const routeTaskResult = currentRouteTask.solveRouteResult;
                 if (routeTaskResult !== null && routeTaskResult.routes.length > 0) {
-                    let routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeTaskResult.routes[0].routeGeometry});
+                    const routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeTaskResult.routes[0].routeGeometry});
                     routeGraphicsOverlay.graphics.append(routeGraphic);
                 }
                 else {
@@ -618,14 +618,14 @@ Rectangle {
         // recursively create and load MobileMapPackages
         function loadMmpks() {
             if (mapPackageLoadIndex < mobilePathsList.length) {
-                let index = mapPackageLoadIndex;
-                let mobileMap = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", { path: mobilePathsList[index] });
+                const index = mapPackageLoadIndex;
+                const mobileMap = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", { path: mobilePathsList[index] });
                 mobileMap.load();
 
                 mobileMap.loadStatusChanged.connect(function() {
                     // after mmpk is loaded, add it to the list of mobile map packages
                     if (mobileMap.loadStatus === Enums.LoadStatusLoaded) {
-                        let title = mobileMap.item.title;
+                        const title = mobileMap.item.title;
                         mobileMapList.push(mobileMap);
                         mobileMapPackages.append({"name": title});
                     }

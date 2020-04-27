@@ -71,11 +71,11 @@ Rectangle {
 
         // identify layers on mouse click
         onMouseClicked: {
-            let screenX = mouse.x;
-            let screenY = mouse.y;
-            let tolerance = 12;
-            let returnPopups = false;
-            let maxResults = 10;
+            const screenX = mouse.x;
+            const screenY = mouse.y;
+            const tolerance = 12;
+            const returnPopups = false;
+            const maxResults = 10;
             mapView.identifyLayersWithMaxResults(screenX, screenY, tolerance, returnPopups, maxResults);
         }
 
@@ -88,11 +88,11 @@ Rectangle {
             msgText = "";
 
             // loop through the results
-            let results = mapView.identifyLayersResults;
+            const results = mapView.identifyLayersResults;
             for (let i = 0; i < results.length; i++) {
-                let result = results[i];
-                let count = geoElementsCountFromResult(result);
-                let layerName = result.layerContent.name;
+                const result = results[i];
+                const count = geoElementsCountFromResult(result);
+                const layerName = result.layerContent.name;
                 msgText += "%1 : %2".arg(layerName).arg(count);
                 // add new line character if not the final element in array
                 if (i !== results.length)
@@ -113,7 +113,7 @@ Rectangle {
 
     function geoElementsCountFromResult(identifyLayerResult) {
         // create temp array
-        let tempResults = [identifyLayerResult];
+        const tempResults = [identifyLayerResult];
 
         // use Depth First Search approach to handle recursion
         let count = 0;
@@ -121,7 +121,7 @@ Rectangle {
 
         while (index < tempResults.length) {
             //get the result object from the array
-            let identifyResult = tempResults[index];
+            const identifyResult = tempResults[index];
 
             // update count with geoElements from the result
             count += identifyResult.geoElements.length;

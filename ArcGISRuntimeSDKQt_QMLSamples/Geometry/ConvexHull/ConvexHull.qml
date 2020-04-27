@@ -69,7 +69,7 @@ Rectangle {
         }
 
         onMouseClicked: {
-            let clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
+            const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
             multipointBuilder.points.addPoint(clickedPoint);
             inputsGraphic.geometry = multipointBuilder.geometry;
         }
@@ -87,7 +87,7 @@ Rectangle {
 
                 // display the convex hull
                 onClicked: {
-                    let convHull = GeometryEngine.convexHull(multipointBuilder.geometry);
+                    const convHull = GeometryEngine.convexHull(multipointBuilder.geometry);
                     if (convHull.geometryType === Enums.GeometryTypePoint) {
                         convexHullGraphic.symbol = markerSymbol;
                     } else if (convHull.geometryType === Enums.GeometryTypePolyline) {

@@ -105,17 +105,17 @@ Rectangle {
     //! [RasterFunctionFile qml raster from function]
     function applyRasterFunction() {
         // create raster function
-        let rasterFunction = createRasterFunction();
+        const rasterFunction = createRasterFunction();
 
         // check for valid raster function
         if (!rasterFunction)
             return;
 
         // create the raster from the raster function
-        let raster = ArcGISRuntimeEnvironment.createObject("Raster", { rasterFunction: rasterFunction });
+        const raster = ArcGISRuntimeEnvironment.createObject("Raster", { rasterFunction: rasterFunction });
 
         // create raster layer from raster
-        let newRasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster });
+        const newRasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster });
         newRasterLayer.opacity = 0.5;
 
         // add raster to map
@@ -129,7 +129,7 @@ Rectangle {
           return;
 
         // create the raster function
-        let rasterFunction = ArcGISRuntimeEnvironment.createObject("RasterFunction", {path: dataPath + "/color.json"});
+        const rasterFunction = ArcGISRuntimeEnvironment.createObject("RasterFunction", {path: dataPath + "/color.json"});
 
         // check for valid raster function
         if (!rasterFunction)

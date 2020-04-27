@@ -183,7 +183,7 @@ Rectangle {
 
         // add text symbols
         for (let i = 0; i < textLocArray.length; i++) {
-            let textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol");
+            const textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol");
             textSymbol.size = 10;
             textSymbol.color = Qt.rgba(0.1, 0.4, 0.9, 1);
             textSymbol.text = symbolTextArray[i];
@@ -208,7 +208,7 @@ Rectangle {
     //! [GOSymbol createGraphic]
     // create and return a graphic
     function createGraphic(geometry, symbol) {
-        let graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+        const graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
         graphic.geometry = geometry;
         graphic.symbol = symbol;
         return graphic;

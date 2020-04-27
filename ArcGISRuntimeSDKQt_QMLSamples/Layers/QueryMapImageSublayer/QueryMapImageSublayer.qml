@@ -111,16 +111,15 @@ Rectangle {
 
     function addResultsAsGraphics(results, symbol) {
         // get the iterator of features
-        let iter = results.iterator;
+        const iter = results.iterator;
         // add a graphic for each feature in the result
         while (iter.hasNext) {
-            let feat = iter.next();
-            let graphic = ArcGISRuntimeEnvironment.createObject("Graphic",
+            const feat = iter.next();
+            const graphic = ArcGISRuntimeEnvironment.createObject("Graphic",
                                                                     {
                                                                         geometry: feat.geometry,
                                                                         symbol: symbol
-                                                                    }
-                                                                );
+                                                                    });
             selectedFeaturesOverlay.graphics.append(graphic);
         }
     }
@@ -174,7 +173,7 @@ Rectangle {
                 selectedFeaturesOverlay.graphics.clear();
 
                 // create the parameters
-                let queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters",
+                const queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters",
                                                                         {
                                                                             whereClause: fieldText.text + populationText.text,
                                                                             geometry: mapView.currentViewpointExtent.extent

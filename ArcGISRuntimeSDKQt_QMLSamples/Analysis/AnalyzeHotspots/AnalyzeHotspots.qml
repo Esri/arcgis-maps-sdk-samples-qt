@@ -85,7 +85,7 @@ Rectangle {
         // Extract the layer from the result and add to the map
         function processResults(result) {
             mapView.map.operationalLayers.clear();
-            let layer = result.mapImageLayer;
+            const layer = result.mapImageLayer;
             layer.loadStatusChanged.connect(function() {
                 if (layer.loadStatus === Enums.LoadStatusLoaded)
                     mapView.setViewpointGeometry(layer.fullExtent);
@@ -112,7 +112,7 @@ Rectangle {
             queryString = queryString.arg(fromDateString).arg(toDateString);
 
             // Add query that contains the date range and the days of the week that are used in analysis
-            let inputs = {};
+            const inputs = {};
             inputs["Query"] = ArcGISRuntimeEnvironment.createObject("GeoprocessingString", { value: queryString });
             hotspotParameters.inputs = inputs;
 
@@ -217,8 +217,8 @@ Rectangle {
             enabled: !jobInProgress && validateDates(fromThisDate, toThisDate)
 
             onClicked: {
-                let fromString = fromThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
-                let toString = toThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
+                const fromString = fromThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
+                const toString = toThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
                 // Run the task
                 hotspotParameters.addParameter(fromString, toString);
             }
@@ -379,7 +379,7 @@ Rectangle {
 
         // check that there is at least one day in between the from and to date
 
-        let oneDay = 86400000;
+        const oneDay = 86400000;
         if ((_toDate - _fromDate) < oneDay) {
             return false;
         }

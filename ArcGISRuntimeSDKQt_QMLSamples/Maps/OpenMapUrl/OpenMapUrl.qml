@@ -71,10 +71,10 @@ Rectangle {
 
                     //! [Construct map from a webmap url]
                     // construct the webmap Url using the itemId
-                    let organizationPortalUrl = "https://arcgis.com/sharing/rest/content/items/";
-                    let webmapUrl = organizationPortalUrl + itemId;
+                    const organizationPortalUrl = "https://arcgis.com/sharing/rest/content/items/";
+                    const webmapUrl = organizationPortalUrl + itemId;
                     // Create a new map and assign it the initUrl
-                    let newMap = ArcGISRuntimeEnvironment.createObject("Map", {initUrl: webmapUrl});
+                    const newMap = ArcGISRuntimeEnvironment.createObject("Map", {initUrl: webmapUrl});
                     //! [Construct map from a webmap url]
 
                     // Set the map to the MapView

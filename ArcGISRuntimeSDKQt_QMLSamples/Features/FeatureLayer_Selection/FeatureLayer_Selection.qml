@@ -74,9 +74,9 @@ Rectangle {
 
         //! [identify feature layer qml api snippet]
         onMouseClicked: {
-            let tolerance = 22;
-            let returnPopupsOnly = false;
-            let maximumResults = 1000;
+            const tolerance = 22;
+            const returnPopupsOnly = false;
+            const maximumResults = 1000;
             mapView.identifyLayerWithMaxResults(featureLayer, mouse.x, mouse.y, tolerance, returnPopupsOnly, maximumResults);
         }
 
@@ -86,13 +86,13 @@ Rectangle {
                 featureLayer.clearSelection();
 
                 // create an array to store the features
-                let identifiedObjects = [];
+                const identifiedObjects = [];
                 for (let i = 0; i < identifyLayerResult.geoElements.length; i++){
-                    let elem = identifyLayerResult.geoElements[i];
+                    const elem = identifyLayerResult.geoElements[i];
                     identifiedObjects.push(elem);
                 }
                 // cache the number of identifyLayerResult
-                let count = identifyLayerResult.geoElements.length;
+                const count = identifyLayerResult.geoElements.length;
 
                 // select the features in the feature layer
                 featureLayer.selectFeatures(identifiedObjects);

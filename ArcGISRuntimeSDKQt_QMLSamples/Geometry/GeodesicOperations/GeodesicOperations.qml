@@ -64,21 +64,21 @@ Rectangle {
         // handle the mouse click
         onMouseClicked: {
             // re-project the point to match the NYC graphic
-            let destination = GeometryEngine.project(mouse.mapPoint, nycGraphic.geometry.spatialReference);
+            const destination = GeometryEngine.project(mouse.mapPoint, nycGraphic.geometry.spatialReference);
 
             // update the destination graphic
             destinationGraphic.geometry = destination;
 
             // create line with start/end points
-            let polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: destination.spatialReference});
+            const polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: destination.spatialReference});
             polylineBuilder.addPoints([nycGraphic.geometry, destinationGraphic.geometry]);
-            let polyline = polylineBuilder.geometry;
+            const polyline = polylineBuilder.geometry;
 
             // densify the path as a geodesic curve and show it with the path graphic
-            let maxSegmentLength = 1;
-            let unitOfMeasurement = ArcGISRuntimeEnvironment.createObject("LinearUnit", {linearUnitId: Enums.LinearUnitIdKilometers});
-            let curveType = Enums.GeodeticCurveTypeGeodesic;
-            let pathGeometry = GeometryEngine.densifyGeodetic(polyline, maxSegmentLength, unitOfMeasurement, curveType);
+            const maxSegmentLength = 1;
+            const unitOfMeasurement = ArcGISRuntimeEnvironment.createObject("LinearUnit", {linearUnitId: Enums.LinearUnitIdKilometers});
+            const curveType = Enums.GeodeticCurveTypeGeodesic;
+            const pathGeometry = GeometryEngine.densifyGeodetic(polyline, maxSegmentLength, unitOfMeasurement, curveType);
 
             // update the graphic
             pathGraphic.geometry = pathGeometry;
