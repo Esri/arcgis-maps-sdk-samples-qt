@@ -320,20 +320,17 @@ Rectangle {
                 color: "lightgrey"
 
                 ScrollView {
-                    width: parent.width
-                    height: parent.height
+                    anchors.fill: parent
                     ListView {
                         id: directionsView
                         anchors {
                             fill: parent
                             margins: 5
                         }
-                        header: Component {
-                            Text {
-                                height: 40
-                                text: "Directions:"
-                                font.pixelSize: 22
-                            }
+                        header: Text {
+                            text: "Directions:"
+                            font.pixelSize: 22
+                            bottomPadding: 8
                         }
 
                         // set the model to the DirectionManeuverListModel returned from the route

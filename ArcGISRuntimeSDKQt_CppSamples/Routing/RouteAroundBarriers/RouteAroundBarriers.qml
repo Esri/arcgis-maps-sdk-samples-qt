@@ -148,9 +148,9 @@ Item {
                             margins: 5
                         }
                         header: Text {
-                            height: 40
                             text: "Directions:"
                             font.pixelSize: 22
+                            bottomPadding: 8
                         }
 
                         // set the model to the DirectionManeuverListModel returned from the route
