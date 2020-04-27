@@ -19,6 +19,7 @@
 #endif // PCH_BUILD
 
 #include "DisplayUtilityAssociations.h"
+#include "SymbolImageProvider.h"
 
 #include "ArcGISFeatureTable.h"
 #include "AttributeListModel.h"
@@ -35,8 +36,6 @@
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
 
-#include "SymbolImageProvider.h"
-
 #include <QList>
 #include <QImage>
 #include <QQmlContext>
@@ -47,7 +46,7 @@ namespace
 {
 const QString featureServerUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleElectric/FeatureServer");
 const int maxScale = 2000;
-const int targetScale = 50;
+constexpr int targetScale = 50;
 }
 
 DisplayUtilityAssociations::DisplayUtilityAssociations(QObject* parent /* = nullptr */):
@@ -111,8 +110,8 @@ void DisplayUtilityAssociations::setMapView(MapQuickView* mapView)
 
   // Get the image provider from the QML Engine
   QQmlEngine* engine = QQmlEngine::contextForObject(this)->engine();
-  engine->addImageProvider(SymbolImageProvider::imageProviderId(), new SymbolImageProvider);
-  m_symbolImageProvider = static_cast<SymbolImageProvider*>(engine->imageProvider(SymbolImageProvider::imageProviderId()));
+  m_symbolImageProvider = new SymbolImageProvider();
+  engine->addImageProvider(SymbolImageProvider::imageProviderId(), m_symbolImageProvider);
 
   connect(m_mapView, &MapQuickView::setViewpointCompleted, this, [this](bool succeeded)
   {
@@ -150,8 +149,9 @@ void DisplayUtilityAssociations::connectSignals()
     // get all the edges and junctions in the network
     QList<UtilityNetworkSource*> edges;
     QList<UtilityNetworkSource*> junctions;
+    QList<UtilityNetworkSource*> allSources = m_utilityNetwork->definition()->networkSources();
 
-    for (UtilityNetworkSource* networkSource : m_utilityNetwork->definition()->networkSources())
+    for (UtilityNetworkSource* networkSource : allSources)
     {
       if (networkSource->sourceType() == UtilityNetworkSourceType::Edge)
       {
@@ -182,9 +182,12 @@ void DisplayUtilityAssociations::connectSignals()
     }
 
     // create a renderer for the associations
-    UniqueValue* attachmentValue = new UniqueValue("Attachment", "", QVariantList{static_cast<int>(UtilityAssociationType::Attachment)}, m_attachmentSymbol, this);
-    UniqueValue* connectivityValue = new UniqueValue("Connectivity", "", QVariantList{static_cast<int>(UtilityAssociationType::Connectivity)}, m_connectivitySymbol, this);
-    UniqueValueRenderer* uniqueValueRenderer = new UniqueValueRenderer("", nullptr, QStringList{"AssociationType"}, QList<UniqueValue*>{attachmentValue, connectivityValue}, this);
+    UniqueValue* attachmentValue = new UniqueValue("Attachment", "",
+                                                   QVariantList{static_cast<int>(UtilityAssociationType::Attachment)}, m_attachmentSymbol, this);
+    UniqueValue* connectivityValue = new UniqueValue("Connectivity", "",
+                                                     QVariantList{static_cast<int>(UtilityAssociationType::Connectivity)}, m_connectivitySymbol, this);
+    UniqueValueRenderer* uniqueValueRenderer = new UniqueValueRenderer("", nullptr,
+                                                                       QStringList{"AssociationType"}, QList<UniqueValue*>{attachmentValue, connectivityValue}, this);
     m_associationsOverlay->setRenderer(uniqueValueRenderer);
 
     // populate the legend
@@ -197,6 +200,7 @@ void DisplayUtilityAssociations::connectSignals()
     bool matchedGraphic = false;
     for (UtilityAssociation* association : associations)
     {
+      matchedGraphic = false;
       // check if the graphics overlay already contains the association
       for (Graphic* graphic : *m_associationsOverlay->graphics())
       {
@@ -210,7 +214,6 @@ void DisplayUtilityAssociations::connectSignals()
       // if the association is already in the overlay, don't add a new graphic
       if (matchedGraphic)
       {
-        matchedGraphic = false;
         continue;
       }
 
@@ -258,9 +261,6 @@ void DisplayUtilityAssociations::connectSignals()
 
     // emit the signal to trigger the QML Image to update
     emit connectivitySymbolUrlChanged();
-
-    m_swatchesCompleted = true;
-    emit swatchesCompletedChanged();
   });
 }
 
@@ -272,9 +272,4 @@ QString DisplayUtilityAssociations::attachmentSymbolUrl() const
 QString DisplayUtilityAssociations::connectivitySymbolUrl() const
 {
   return m_connectivitySymbolUrl;
-}
-
-bool DisplayUtilityAssociations::swatchesCompleted() const
-{
-  return m_swatchesCompleted;
 }

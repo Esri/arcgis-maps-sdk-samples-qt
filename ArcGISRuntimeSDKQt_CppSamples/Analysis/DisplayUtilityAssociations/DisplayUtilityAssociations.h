@@ -19,6 +19,8 @@
 
 #include "UtilityNetworkTypes.h"
 
+#include <QObject>
+
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -33,8 +35,6 @@ class UtilityNetwork;
 
 class SymbolImageProvider;
 
-#include <QObject>
-
 class DisplayUtilityAssociations : public QObject
 {
   Q_OBJECT
@@ -42,7 +42,6 @@ class DisplayUtilityAssociations : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString attachmentSymbolUrl READ attachmentSymbolUrl NOTIFY attachmentSymbolUrlChanged)
   Q_PROPERTY(QString connectivitySymbolUrl READ connectivitySymbolUrl NOTIFY connectivitySymbolUrlChanged)
-  Q_PROPERTY(bool swatchesCompleted READ swatchesCompleted NOTIFY swatchesCompletedChanged)
 
 public:
   explicit DisplayUtilityAssociations(QObject* parent = nullptr);
@@ -54,7 +53,6 @@ signals:
   void mapViewChanged();
   void attachmentSymbolUrlChanged();
   void connectivitySymbolUrlChanged();
-  void swatchesCompletedChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -62,7 +60,6 @@ private:
   void addAssociations();
   QString attachmentSymbolUrl() const;
   QString connectivitySymbolUrl() const;
-  bool swatchesCompleted() const;
   void connectSignals();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
@@ -74,7 +71,6 @@ private:
   QString m_attachmentSymbolUrl = "";
   QString m_connectivitySymbolUrl = "";
   SymbolImageProvider* m_symbolImageProvider = nullptr;
-  bool m_swatchesCompleted = false;
 };
 
 #endif // DISPLAYUTILITYASSOCIATIONS_H

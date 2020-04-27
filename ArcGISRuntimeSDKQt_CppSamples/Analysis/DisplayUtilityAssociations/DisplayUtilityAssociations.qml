@@ -54,7 +54,7 @@ Item {
                     Label {
                         id: attachmentLabel
                         text: "Attachment symbol"
-                        visible: model.swatchesCompleted
+                        visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""
                     }
                 }
 
@@ -67,7 +67,7 @@ Item {
                     Label {
                         id: connectivityLabel
                         text: "Connectivity symbol"
-                        visible: model.swatchesCompleted
+                        visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""
                     }
                 }
             }
