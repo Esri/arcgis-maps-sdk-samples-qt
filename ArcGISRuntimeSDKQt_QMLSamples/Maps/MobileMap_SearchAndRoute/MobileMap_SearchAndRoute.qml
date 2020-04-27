@@ -447,7 +447,7 @@ Rectangle {
                                     mapsInBundle.clear();
 
                                     // create the list of maps within a package
-                                    for(let i = 0; i < mobileMapList[index].maps.length; i++) {
+                                    for (let i = 0; i < mobileMapList[index].maps.length; i++) {
                                         let mapTitle = mobileMapList[index].maps[i].item.title;
 
                                         mapTitle += " " + (i + 1);
@@ -638,7 +638,7 @@ Rectangle {
 
         Component.onCompleted: {
             // search through every file in the folder
-            for(let i = 0; i < mmpkFolder.fileNames().length; i++) {
+            for (let i = 0; i < mmpkFolder.fileNames().length; i++) {
 
                 // if it is an mmpk file, store its path
                 if (mmpkFolder.fileInfo(mmpkFolder.fileNames()[i]).suffix === "mmpk") {

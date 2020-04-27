@@ -112,8 +112,8 @@ Rectangle {
                 wfsLayersInfoList = service.serviceInfo.layerInfos;
 
                 //once loaded populate myWfsListModel with titles from the service to display in a comboBox
-                for(let i in wfsLayersInfoList){
-                    let data = {"title": wfsLayersInfoList[i].title};
+                for (let i in wfsLayersInfoList){
+                    const data = {"title": wfsLayersInfoList[i].title};
                     myWfsListModel.append(data);
                 }
             }
