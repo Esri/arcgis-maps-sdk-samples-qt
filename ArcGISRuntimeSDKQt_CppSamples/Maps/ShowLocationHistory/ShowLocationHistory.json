@@ -1,0 +1,8 @@
+{
+    "source" :  "ShowLocationHistory.qml",
+    "otherSourceFiles" :  [
+        "ShowLocationHistory.h",
+        "ShowLocationHistory.cpp"
+    ],
+    "name" : "Show location history"
+}
