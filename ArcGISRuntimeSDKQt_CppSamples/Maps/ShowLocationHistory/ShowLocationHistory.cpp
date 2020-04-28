@@ -23,7 +23,6 @@
 #include "GeometryEngine.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
-#include "ImmutablePointCollection.h"
 #include "Location.h"
 #include "Map.h"
 #include "MapQuickView.h"
@@ -38,13 +37,13 @@ using namespace Esri::ArcGISRuntime;
 
 namespace
 {
-const Point circleRouteCenter(-117.195801, 34.056007, SpatialReference::wgs84());
 constexpr int initialZoomScale = 10000;
+const QList<Point> polylinePoints = {Point(-13011809.657491295,4039640.7880717744),Point(-13011701.568936104,4039568.214327574),Point(-13011421.31075371,4039507.9935611095),Point(-13011391.20037048,4039491.7802778305),Point(-13011322.48693183,4039583.6555497493),Point(-13011388.112126058,4039654.6851717336),Point(-13011265.354409827,4039800.6047212547),Point(-13011536.347858932,4039929.538926385),Point(-13011405.869531592,4039975.0905317874),Point(-13011511.64190346,4040024.5024427325),Point(-13011580.355342126,4040222.922147628),Point(-13011617.41427536,4040253.8045919817),Point(-13011693.848325104,4040314.7974195546),Point(-13011672.230614064,4040421.34185253),Point(-13011601.973053196,4040524.0259799687)};
 }
 
 ShowLocationHistory::ShowLocationHistory(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::darkGrayCanvasVector(this), this)),
+  m_map(new Map(Basemap::imageryWithLabelsVector(this), this)),
   m_locationHistoryOverlay(new GraphicsOverlay(this)),
   m_locationHistoryLineOverlay(new GraphicsOverlay(this))
 {
@@ -56,51 +55,34 @@ ShowLocationHistory::ShowLocationHistory(QObject* parent /* = nullptr */):
   SimpleMarkerSymbol* locationPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 3, this);
   m_locationHistoryOverlay->setRenderer(new SimpleRenderer(locationPointSymbol, this));
 
-  m_polylineBuilder = new PolylineBuilder(SpatialReference::wgs84(), this);
+  m_polylineBuilder = new PolylineBuilder(SpatialReference::webMercator(), this);
 }
 
 void ShowLocationHistory::handleLocationReady()
 {
   m_simulatedLocationDataSource = new SimulatedLocationDataSource(this);
-  Polygon outerCircle = GeometryEngine::bufferGeodetic(circleRouteCenter, 1000, LinearUnit::feet(), 10, GeodeticCurveType::ShapePreserving);
-  Polyline circlePath = outerCircle.toPolyline();
-//  ImmutablePointCollection pointCollection = outerCircle.parts().part(0).points();
-//  for (int i = 0; i < pointCollection.size(); ++i)
-//  {
-//    Location location;
-//    location
-//  }
-  m_simulatedLocationDataSource->setLocationsWithPolyline(circlePath);
+
+  PolylineBuilder polylineBuilder(SpatialReference::webMercator());
+  polylineBuilder.addPoints(polylinePoints);
+
+  m_simulatedLocationDataSource->setLocationsWithPolyline(GeometryEngine::densify(polylineBuilder.toPolyline(), 10));
+//  m_simulatedLocationDataSource->setLocationsWithPolyline(polylineBuilder.toPolyline());
   m_simulatedLocationDataSource->start();
 
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
   m_mapView->locationDisplay()->setInitialZoomScale(initialZoomScale);
 
+  // if tracking is enabled then show location history
   connect(m_mapView->locationDisplay(), &LocationDisplay::locationChanged, this, [this](const Location& location)
   {
-    // if tracking is enabled then show location history
-
     if (!m_trackingEnabled)
     {
-      // if graphics overlays contain graphics then clear them
-//      if (m_locationHistoryLineOverlay->graphics() != nullptr)
-//      {
-//        m_locationHistoryLineOverlay->graphics()->clear();
-//      }
-
-//      if (m_locationHistoryOverlay->graphics() != nullptr)
-//      {
-//        m_locationHistoryOverlay->graphics()->clear();
-//      }
-
       return;
     }
 
     // clear old route
-//    qDebug() << m_locationHistoryLineOverlay->graphics()->size();
     m_locationHistoryLineOverlay->graphics()->clear();
-//    qDebug() << m_locationHistoryLineOverlay->graphics()->size() << "\n\n";
 
     if (m_lastPosition.isValid())
     {
@@ -112,10 +94,7 @@ void ShowLocationHistory::handleLocationReady()
     m_lastPosition = location.position();
 
     // update the polyline
-    m_locationHistoryLineOverlay->graphics()->append(new Graphic(m_polylineBuilder->toGeometry()));
-    
-    
-
+    m_locationHistoryLineOverlay->graphics()->append(new Graphic(m_polylineBuilder->toGeometry()));   
   });
 }
 
