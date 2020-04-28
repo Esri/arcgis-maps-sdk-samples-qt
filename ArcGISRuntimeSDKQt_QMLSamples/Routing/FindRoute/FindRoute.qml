@@ -296,17 +296,17 @@ Rectangle {
 
         // create the stop graphics' symbols
         const stop1Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
-                                                                    url: "qrc:/Samples/Routing/FindRoute/pinA.png",
-                                                                    width: 32,
-                                                                    height: 32,
-                                                                    offsetY: 16
-                                                                });
+                                                                      url: "qrc:/Samples/Routing/FindRoute/pinA.png",
+                                                                      width: 32,
+                                                                      height: 32,
+                                                                      offsetY: 16
+                                                                  });
         const stop2Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
-                                                                    url: "qrc:/Samples/Routing/FindRoute/pinB.png",
-                                                                    width: 32,
-                                                                    height: 32,
-                                                                    offsetY: 16
-                                                                });
+                                                                      url: "qrc:/Samples/Routing/FindRoute/pinB.png",
+                                                                      width: 32,
+                                                                      height: 32,
+                                                                      offsetY: 16
+                                                                  });
 
         // create the stop graphics
         const stop1Graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: stop1Geometry, symbol: stop1Symbol});

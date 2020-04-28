@@ -116,10 +116,10 @@ Rectangle {
         while (iter.hasNext) {
             const feat = iter.next();
             const graphic = ArcGISRuntimeEnvironment.createObject("Graphic",
-                                                                    {
-                                                                        geometry: feat.geometry,
-                                                                        symbol: symbol
-                                                                    });
+                                                                  {
+                                                                      geometry: feat.geometry,
+                                                                      symbol: symbol
+                                                                  });
             selectedFeaturesOverlay.graphics.append(graphic);
         }
     }
@@ -174,10 +174,10 @@ Rectangle {
 
                 // create the parameters
                 const queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters",
-                                                                        {
-                                                                            whereClause: fieldText.text + populationText.text,
-                                                                            geometry: mapView.currentViewpointExtent.extent
-                                                                        });
+                                                                          {
+                                                                              whereClause: fieldText.text + populationText.text,
+                                                                              geometry: mapView.currentViewpointExtent.extent
+                                                                          });
 
                 // query the feature tables
                 citiesTable.queryFeatures(queryParams);

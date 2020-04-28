@@ -108,8 +108,8 @@ Rectangle {
 
         // Add the result planar buffer as a graphic
         const resultGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                      geometry: buffer
-                                                                  });
+                                                                        geometry: buffer
+                                                                    });
         graphicsOverlayPlanar.graphics.append(resultGraphic);
 
         // Create a geodesic buffer graphic using the same location and distance.
@@ -117,14 +117,14 @@ Rectangle {
 
         // Add the result planar buffer as a graphic
         const resultGraphicGeodesic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                              geometry: bufferGeodesic
-                                                                          });
+                                                                                geometry: bufferGeodesic
+                                                                            });
         graphicsOverlaygeodesic.graphics.append(resultGraphicGeodesic);
 
         // Add the clicked point as a graphic
         const clickedPointGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                            geometry: point
-                                                                        });
+                                                                              geometry: point
+                                                                          });
         graphicsOverlayPoints.graphics.append(clickedPointGraphic);
     }
 

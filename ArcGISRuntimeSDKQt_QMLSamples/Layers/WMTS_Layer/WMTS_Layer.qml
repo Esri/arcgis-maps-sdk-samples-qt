@@ -47,16 +47,16 @@ Rectangle {
                 const layerId = layerInfos[0].wmtsLayerId;
                 // create WMTS layer
                 const wmtsLayer = ArcGISRuntimeEnvironment.createObject("WmtsLayer", {
-                                                                          url: wmtsServiceUrl,
-                                                                          layerId: layerId
-                                                                      });
+                                                                            url: wmtsServiceUrl,
+                                                                            layerId: layerId
+                                                                        });
                 // create a basemap from the layer
                 const basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
                 basemap.baseLayers.append(wmtsLayer);
                 // create a map
                 const map = ArcGISRuntimeEnvironment.createObject("Map", {
-                                                                    basemap: basemap
-                                                                });
+                                                                      basemap: basemap
+                                                                  });
                 // set the map on the mapview
                 mapView.map = map;
             }

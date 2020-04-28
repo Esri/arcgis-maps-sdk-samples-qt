@@ -63,10 +63,10 @@ Rectangle {
 
                     // Start with the camera at the center of the mesh layer.
                     const viewPoint = ArcGISRuntimeEnvironment.createObject("Point", {
-                                                                                      y: integratedMeshLayer.fullExtent.center.y,
-                                                                                      x: integratedMeshLayer.fullExtent.center.x,
-                                                                                      z: 250.0
-                                                                                  });
+                                                                                y: integratedMeshLayer.fullExtent.center.y,
+                                                                                x: integratedMeshLayer.fullExtent.center.x,
+                                                                                z: 250.0
+                                                                            });
 
                     const originCamera = ArcGISRuntimeEnvironment.createObject("Camera", {
                                                                                    location: viewPoint,

@@ -94,18 +94,18 @@ Rectangle {
     function setInitialViewpoint() {
         // Set a viewpoint
         const point = ArcGISRuntimeEnvironment.createObject("Point", {
-                                                              x: -73.0815,
-                                                              y: -49.3272,
-                                                              z: 4059,
-                                                              spatialReference: SpatialReference.createWgs84()
-                                                          });
+                                                                x: -73.0815,
+                                                                y: -49.3272,
+                                                                z: 4059,
+                                                                spatialReference: SpatialReference.createWgs84()
+                                                            });
 
         const camera = ArcGISRuntimeEnvironment.createObject("Camera", {
-                                                               location: point,
-                                                               heading: 11,
-                                                               pitch: 62,
-                                                               roll: 0
-                                                           });
+                                                                 location: point,
+                                                                 heading: 11,
+                                                                 pitch: 62,
+                                                                 roll: 0
+                                                             });
 
         sceneView.setViewpointCamera(camera);
     }

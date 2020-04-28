@@ -98,8 +98,8 @@ Rectangle {
                     if (pointStrings.length === 1) {
                         // It's a point
                         const pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {
-                                                                                     spatialReference: sr
-                                                                                 });
+                                                                                       spatialReference: sr
+                                                                                   });
                         const coords = pointStrings[0].split(",");
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
@@ -114,8 +114,8 @@ Rectangle {
                         element._wkid = undefined;
 
                         const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                                geometry: geom
-                                                                            });
+                                                                                  geometry: geom
+                                                                              });
                         graphic.attributes.attributesJson = element;
                         graphicsOverlay.graphics.append(graphic);
 

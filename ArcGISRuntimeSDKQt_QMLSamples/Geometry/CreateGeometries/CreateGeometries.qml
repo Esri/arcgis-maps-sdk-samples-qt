@@ -48,30 +48,30 @@ Rectangle {
     function addGraphics() {
         // Create a simple fill symbol - used to render a polygon covering Colorado.
         const simpleFillSymbol = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol", {
-                                                                         style: Enums.SimpleFillSymbolStyleCross,
-                                                                         color: "blue"
-                                                                     });
+                                                                           style: Enums.SimpleFillSymbolStyleCross,
+                                                                           color: "blue"
+                                                                       });
 
         // Create a simple line symbol - used to render a polyline border between California and Nevada.
         const simpleLineSymbol = ArcGISRuntimeEnvironment.createObject("SimpleLineSymbol", {
-                                                                         style: Enums.SimpleLineSymbolStyleSolid,
-                                                                         color: "blue",
-                                                                         width: 3
-                                                                     });
+                                                                           style: Enums.SimpleLineSymbolStyleSolid,
+                                                                           color: "blue",
+                                                                           width: 3
+                                                                       });
 
         // Create a simple marker symbol - used to render multi-points for various state capital locations in the Western United States.
         const simpleMarkerSymbol = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
-                                                                           style: Enums.SimpleMarkerSymbolStyleTriangle,
-                                                                           color: "blue",
-                                                                           size: 14
-                                                                       });
+                                                                             style: Enums.SimpleMarkerSymbolStyleTriangle,
+                                                                             color: "blue",
+                                                                             size: 14
+                                                                         });
 
         // Create a simple marker symbol - used to render a map point where the Esri headquarters is located.
         const simpleMarkerSymbol2 = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSymbol", {
-                                                                            style: Enums.SimpleMarkerSymbolStyleDiamond,
-                                                                            color: "red",
-                                                                            size: 18
-                                                                        });
+                                                                              style: Enums.SimpleMarkerSymbolStyleDiamond,
+                                                                              color: "red",
+                                                                              size: 18
+                                                                          });
 
         // Add a graphic to the graphic collection - polygon with a simple fill symbol.
         graphicsOverlay.graphics.append(createGraphic(createPolygon(), simpleFillSymbol));
@@ -104,8 +104,8 @@ Rectangle {
     function createPolygon() {
         // Create a polygon builder
         const polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {
-                                                                       spatialReference: SpatialReference.createWgs84()
-                                                                   });
+                                                                         spatialReference: SpatialReference.createWgs84()
+                                                                     });
 
         // add points to the builder that approximates the boundary of Colorado.
         polygonBuilder.addPointXY(-109.048, 40.998);
@@ -120,8 +120,8 @@ Rectangle {
     function createPolyline() {
         // Create a polyline builder
         const polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {
-                                                                        spatialReference: SpatialReference.createWgs84()
-                                                                    });
+                                                                          spatialReference: SpatialReference.createWgs84()
+                                                                      });
 
         // add points to the builder that approximates the border between California and Nevada.
         polylineBuilder.addPointXY(-119.992, 41.989);
@@ -144,8 +144,8 @@ Rectangle {
     function createMultipoint() {
         // Create a polygon builder
         const multipointBuilder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder", {
-                                                                          spatialReference: SpatialReference.createWgs84()
-                                                                      });
+                                                                            spatialReference: SpatialReference.createWgs84()
+                                                                        });
 
         // add points to the builder representing various state capital locations in the Western United States.
         multipointBuilder.points.addPointXY(-121.491014, 38.579065); // - Sacramento, CA

@@ -65,13 +65,12 @@ Rectangle {
                     layer.featureTable = tables[i];
 
                     // Create a dictionary renderer and apply to the layer
-                    const renderer = ArcGISRuntimeEnvironment.createObject(
-                                "DictionaryRenderer",
-                                { dictionarySymbolStyle:
-                                    //! [Create Dictionary Symbol Style QML]
-                                    DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
-                                    //! [Create Dictionary Symbol Style QML]
-                                });
+                    const renderer = ArcGISRuntimeEnvironment.createObject("DictionaryRenderer",{
+                                                                               dictionarySymbolStyle:
+                                                                               //! [Create Dictionary Symbol Style QML]
+                                                                               DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
+                                                                               //! [Create Dictionary Symbol Style QML]
+                                                                           });
                     layer.renderer = renderer;
                     //! [Apply Dictionary Renderer Feature Layer QML]
 

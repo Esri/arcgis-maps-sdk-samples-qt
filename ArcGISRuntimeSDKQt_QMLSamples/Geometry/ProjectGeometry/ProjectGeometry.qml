@@ -78,8 +78,8 @@ Rectangle {
 
             // create the output SpatialReference by specifying a well known ID (WKID)
             const spatialReference = ArcGISRuntimeEnvironment.createObject("SpatialReference", {
-                                                                             wkid: 4326
-                                                                         });
+                                                                               wkid: 4326
+                                                                           });
 
             // project the web mercator point to WGS84
             const projectedPoint = GeometryEngine.project(originalPoint, spatialReference);

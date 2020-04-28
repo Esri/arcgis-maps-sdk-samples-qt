@@ -172,11 +172,13 @@ Rectangle {
                 stopsList.push(stopPoint);
 
                 // create a marker symbol and graphics, and add the graphics to the graphics overlay
-                const textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {text: stopsList.length,
-                                                                           color: "white",
-                                                                           size: 16,
-                                                                           horizontalAlignment: Enums.HorizontalAlignmentCenter,
-                                                                           verticalAlignment: Enums.VerticalAlignmentBottom});
+                const textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
+                                                                             text: stopsList.length,
+                                                                             color: "white",
+                                                                             size: 16,
+                                                                             horizontalAlignment: Enums.HorizontalAlignmentCenter,
+                                                                             verticalAlignment: Enums.VerticalAlignmentBottom
+                                                                         });
                 textSymbol.offsetY = pinSymbol.height/2;
 
                 const stopSymbol = ArcGISRuntimeEnvironment.createObject("CompositeSymbol");

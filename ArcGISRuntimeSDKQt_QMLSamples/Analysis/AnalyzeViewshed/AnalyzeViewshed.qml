@@ -111,9 +111,9 @@ Rectangle {
         function calculateViewshed(location) {
             // Create a new feature collection table based upon point geometries using the current map view spatial reference
             const inputFeatures = ArcGISRuntimeEnvironment.createObject("FeatureCollectionTable", {
-                                                                          geometryType: Enums.GeometryTypePoint,
-                                                                          spatialReference: SpatialReference.createWebMercator()
-                                                                      });
+                                                                            geometryType: Enums.GeometryTypePoint,
+                                                                            spatialReference: SpatialReference.createWebMercator()
+                                                                        });
 
             // Create a new feature from the feature collection table. It will not have a coordinate location (x,y) yet
             const inputFeature = inputFeatures.createFeature();
@@ -182,8 +182,8 @@ Rectangle {
             while (viewshedAreas.hasNext) {
                 const feat = viewshedAreas.next();
                 const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                        geometry: feat.geometry
-                                                                    });
+                                                                          geometry: feat.geometry
+                                                                      });
                 resultsOverlay.graphics.append(graphic);
             }
         }

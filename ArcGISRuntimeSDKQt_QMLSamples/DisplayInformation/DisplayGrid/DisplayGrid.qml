@@ -76,8 +76,8 @@ Rectangle {
             //! [DisplayGrid Set_Grid_Lines]
             for (let level = 0; level < gridLevels; ++level) {
                 const lineSym = ArcGISRuntimeEnvironment.createObject("SimpleLineSymbol", {style: Enums.SimpleLineSymbolStyleSolid,
-                                                                        color: color,
-                                                                        width: 1 + level} );
+                                                                          color: color,
+                                                                          width: 1 + level} );
                 mapView.grid.setLineSymbol(level, lineSym);
             }
             //! [DisplayGrid Set_Grid_Lines]
@@ -95,12 +95,12 @@ Rectangle {
             //! [DisplayGrid Set_Grid_Labels]
             for (let level = 0; level < gridLevels; ++level) {
                 const textSym = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
-                                                                        text: "text",
-                                                                        size: 14,
-                                                                        color: color,
-                                                                        horizontalAlignment: Enums.HorizontalAlignmentLeft,
-                                                                        verticalAlignment: Enums.VerticalAlignmentBottom
-                                                                    });
+                                                                          text: "text",
+                                                                          size: 14,
+                                                                          color: color,
+                                                                          horizontalAlignment: Enums.HorizontalAlignmentLeft,
+                                                                          verticalAlignment: Enums.VerticalAlignmentBottom
+                                                                      });
                 textSym.haloColor = "white";
                 textSym.haloWidth = 2 + level;
 

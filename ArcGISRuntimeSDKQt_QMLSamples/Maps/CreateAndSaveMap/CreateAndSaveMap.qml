@@ -174,8 +174,8 @@ Rectangle {
         for (let i = 0; i < layerList.length; i++) {
             if (layerList[i] === "WorldElevations") {
                 const elevationLyr = ArcGISRuntimeEnvironment.createObject("ArcGISMapImageLayer", {
-                                                                             url : "https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"
-                                                                         });
+                                                                               url : "https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"
+                                                                           });
                 elevationLyr.opacity = 0.5;
                 map.operationalLayers.append(elevationLyr);
             } else if (layerList[i] === "Census") {

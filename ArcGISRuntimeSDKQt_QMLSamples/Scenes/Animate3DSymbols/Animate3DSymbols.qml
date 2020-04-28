@@ -374,8 +374,7 @@ Rectangle {
 
         // create polyline builder and fill with points
         // for the mission polyline
-        const rtBldr = ArcGISRuntimeEnvironment.createObject(
-                    "PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
+        const rtBldr = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
         for (let j = 0; j < currentMissionModel.count; j++) {
             const missionData = currentMissionModel.get(j);
             rtBldr.addPointXY(missionData.lon, missionData.lat);

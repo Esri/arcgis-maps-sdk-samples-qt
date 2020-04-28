@@ -153,9 +153,9 @@ Rectangle {
     function populateWfsFeatureTable() {
         // Create query parameters
         const params = ArcGISRuntimeEnvironment.createObject("QueryParameters", {
-                                                               geometry: mapView.visibleArea.extent,
-                                                               spatialRelationship: Enums.SpatialRelationshipIntersects
-                                                           });
+                                                                 geometry: mapView.visibleArea.extent,
+                                                                 spatialRelationship: Enums.SpatialRelationshipIntersects
+                                                             });
 
         wfsFeatureTable.populateFromServiceStatusChanged.connect(function() {
             if(wfsFeatureTable.populateFromServiceStatus !== Enums.TaskStatusCompleted)
@@ -208,9 +208,9 @@ Rectangle {
         const simpleRenderer = ArcGISRuntimeEnvironment.createObject("SimpleRenderer",{symbol: simpleSymbol});
 
         const featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
-                                                                  featureTable: wfsFeatureTable,
-                                                                  renderer: simpleRenderer
-                                                              });
+                                                                       featureTable: wfsFeatureTable,
+                                                                       renderer: simpleRenderer
+                                                                   });
         // add the layer to the map
         mapView.map.operationalLayers.append(featureLayer);
         // disable busy indicator

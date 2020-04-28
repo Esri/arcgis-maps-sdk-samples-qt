@@ -95,8 +95,7 @@ Rectangle {
                 return;
 
             if (modeComboBox.currentText === "Facility") {
-                const facilityGraphic = ArcGISRuntimeEnvironment.createObject(
-                            "Graphic", {geometry: mouse.mapPoint});
+                const facilityGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: mouse.mapPoint});
                 facilitiesOverlay.graphics.append(facilityGraphic);
             }
             else {
@@ -185,8 +184,7 @@ Rectangle {
                 const results = solveServiceAreaResult.resultPolygons(i);
                 for (let j = 0; j < results.length; j++) {
                     const resultGeometry = results[j].geometry;
-                    const resultGraphic = ArcGISRuntimeEnvironment.createObject(
-                                "Graphic", {geometry: resultGeometry});
+                    const resultGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: resultGeometry});
                     areasOverlay.graphics.append(resultGraphic);
                 }
             }
@@ -294,8 +292,7 @@ Rectangle {
     }
 
     function addBarrierGraphic() {
-        const barrierGraphic = ArcGISRuntimeEnvironment.createObject(
-                    "Graphic", {geometry: barrierBuilder.geometry});
+        const barrierGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: barrierBuilder.geometry});
         barriersOverlay.graphics.append(barrierGraphic);
     }
 
@@ -312,8 +309,7 @@ Rectangle {
 
         const facilities = [];
         facilitiesOverlay.graphics.forEach(function(graphic) {
-            const facility = ArcGISRuntimeEnvironment.createObject(
-                        "ServiceAreaFacility", {geometry: graphic.geometry});
+            const facility = ArcGISRuntimeEnvironment.createObject("ServiceAreaFacility", {geometry: graphic.geometry});
             facilities.push(facility);
         });
 
@@ -321,8 +317,7 @@ Rectangle {
 
         const barriers = [];
         barriersOverlay.graphics.forEach(function(graphic) {
-            const barrier = ArcGISRuntimeEnvironment.createObject(
-                        "PolylineBarrier", {geometry: graphic.geometry});
+            const barrier = ArcGISRuntimeEnvironment.createObject("PolylineBarrier", {geometry: graphic.geometry});
             barriers.push(barrier);
         });
 

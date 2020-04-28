@@ -74,16 +74,16 @@ Rectangle {
         Component.onCompleted: {
             // create initial viewpoint extent
             const env = ArcGISRuntimeEnvironment.createObject("Envelope", {
-                                                                json: {
-                                                                    "spatialReference": {
-                                                                        "wkid":4326
-                                                                    },
-                                                                    "xmax":-122.67960721754773,
-                                                                    "xmin":-122.68647066116789,
-                                                                    "ymax":45.53584958588318,
-                                                                    "ymin":45.531539857343745
-                                                                }
-                                                            });
+                                                                  json: {
+                                                                      "spatialReference": {
+                                                                          "wkid":4326
+                                                                      },
+                                                                      "xmax":-122.67960721754773,
+                                                                      "xmin":-122.68647066116789,
+                                                                      "ymax":45.53584958588318,
+                                                                      "ymin":45.531539857343745
+                                                                  }
+                                                              });
 
             // set viewpoint
             sceneView.setViewpoint(ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {

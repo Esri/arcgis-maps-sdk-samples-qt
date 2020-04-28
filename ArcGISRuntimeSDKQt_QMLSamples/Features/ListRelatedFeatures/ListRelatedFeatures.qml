@@ -65,12 +65,12 @@ Rectangle {
             const clickPoint = mouse.mapPoint;
             const mapTolerance = 10 * mapView.unitsPerDIP;
             const envelope = ArcGISRuntimeEnvironment.createObject("Envelope", {
-                                                                     xMin: clickPoint.x - mapTolerance,
-                                                                     yMin: clickPoint.y - mapTolerance,
-                                                                     xMax: clickPoint.x + mapTolerance,
-                                                                     yMax: clickPoint.y + mapTolerance,
-                                                                     spatialReference: map.spatialReference
-                                                                 });
+                                                                       xMin: clickPoint.x - mapTolerance,
+                                                                       yMin: clickPoint.y - mapTolerance,
+                                                                       xMax: clickPoint.x + mapTolerance,
+                                                                       yMax: clickPoint.y + mapTolerance,
+                                                                       spatialReference: map.spatialReference
+                                                                   });
             const queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
             queryParams.geometry = envelope;
             queryParams.spatialRelationship = Enums.SpatialRelationshipIntersects;

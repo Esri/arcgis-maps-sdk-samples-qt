@@ -97,9 +97,9 @@ Rectangle {
                 for (let i = 0; i < statisticsModel.count; i++) {
                     const statistic = statisticsModel.get(i);
                     const definition = ArcGISRuntimeEnvironment.createObject("StatisticDefinition", {
-                                                                               onFieldName: statistic.field,
-                                                                               statisticType: statisticStringToEnum(statistic.statistic)
-                                                                           });
+                                                                                 onFieldName: statistic.field,
+                                                                                 statisticType: statisticStringToEnum(statistic.statistic)
+                                                                             });
                     statisticDefinitions.push(definition);
                 }
                 params.statisticDefinitions = statisticDefinitions;
@@ -112,9 +112,9 @@ Rectangle {
                 for (let j = 0; j < orderByModel.count; j++) {
                     const group = orderByModel.get(j);
                     const orderBy = ArcGISRuntimeEnvironment.createObject("OrderBy", {
-                                                                            fieldName: group.field,
-                                                                            sortOrder: orderStringToEnum(group.order)
-                                                                        });
+                                                                              fieldName: group.field,
+                                                                              sortOrder: orderStringToEnum(group.order)
+                                                                          });
                     orderBys.push(orderBy);
                 }
                 params.orderByFields = orderBys;

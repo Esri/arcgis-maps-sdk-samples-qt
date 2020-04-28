@@ -65,13 +65,13 @@ Rectangle {
 
                         // create an EncCell from each dataset
                         const encCell = ArcGISRuntimeEnvironment.createObject("EncCell", {
-                                                                                dataset: datasets[i]
-                                                                            }, map);
+                                                                                  dataset: datasets[i]
+                                                                              }, map);
 
                         // create an EncLayer from each cell
                         const encLayer = ArcGISRuntimeEnvironment.createObject("EncLayer", {
-                                                                                 cell: encCell
-                                                                             }, map);
+                                                                                   cell: encCell
+                                                                               }, map);
                         layers.push(encLayer);
 
                         // connect to loadStatusChanged for each layer

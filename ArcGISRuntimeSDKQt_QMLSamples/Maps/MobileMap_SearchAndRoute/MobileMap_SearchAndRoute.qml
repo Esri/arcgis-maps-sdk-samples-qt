@@ -295,11 +295,11 @@ Rectangle {
 
                         // create a Text symbol to display stop number
                         const textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
-                                                                                   color: "white",
-                                                                                   text: routeStops.length,
-                                                                                   size: 18,
-                                                                                   offsetY: 19
-                                                                               });
+                                                                                     color: "white",
+                                                                                     text: routeStops.length,
+                                                                                     size: 18,
+                                                                                     offsetY: 19
+                                                                                 });
 
                         // create graphic using the text symbol
                         const labelGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: pinGraphic.geometry, symbol: textSymbol});

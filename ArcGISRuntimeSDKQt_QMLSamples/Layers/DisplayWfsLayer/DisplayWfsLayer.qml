@@ -87,9 +87,9 @@ Rectangle {
     function populateWfsFeatureTable() {
         // Create query parameters
         const params = ArcGISRuntimeEnvironment.createObject("QueryParameters", {
-                                                               geometry: mapView.visibleArea.extent,
-                                                               spatialRelationship: Enums.SpatialRelationshipIntersects
-                                                           });
+                                                                 geometry: mapView.visibleArea.extent,
+                                                                 spatialRelationship: Enums.SpatialRelationshipIntersects
+                                                             });
 
         // Populate features based on query
         wfsFeatureTable.populateFromService(params, false, ["*"]);

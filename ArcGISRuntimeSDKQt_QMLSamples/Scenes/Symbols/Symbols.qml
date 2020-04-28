@@ -111,27 +111,27 @@ Rectangle {
 
             // create a simple marker scene symbol
             const smss = ArcGISRuntimeEnvironment.createObject("SimpleMarkerSceneSymbol", {
-                                                                 style: elem.symbolStyle,
-                                                                 color: elem.color,
-                                                                 width: 200,
-                                                                 height: 200,
-                                                                 depth: 200,
-                                                                 anchorPosition: Enums.SceneSymbolAnchorPositionCenter
-                                                             });
+                                                                   style: elem.symbolStyle,
+                                                                   color: elem.color,
+                                                                   width: 200,
+                                                                   height: 200,
+                                                                   depth: 200,
+                                                                   anchorPosition: Enums.SceneSymbolAnchorPositionCenter
+                                                               });
 
             // create a new point geometry
             const point = ArcGISRuntimeEnvironment.createObject("Point", {
-                                                                  x: pointX + 0.01 * i,
-                                                                  y: pointY,
-                                                                  z: pointZ,
-                                                                  spatialReference: SpatialReference.createWgs84()
-                                                              });
+                                                                    x: pointX + 0.01 * i,
+                                                                    y: pointY,
+                                                                    z: pointZ,
+                                                                    spatialReference: SpatialReference.createWgs84()
+                                                                });
 
             // create a graphic using the point and the symbol
             const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                    geometry: point,
-                                                                    symbol: smss
-                                                                });
+                                                                      geometry: point,
+                                                                      symbol: smss
+                                                                  });
 
             // add the graphic to the graphics overlay
             graphicsOverlay.graphics.append(graphic);

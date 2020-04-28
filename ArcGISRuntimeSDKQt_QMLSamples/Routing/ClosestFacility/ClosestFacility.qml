@@ -142,8 +142,10 @@ Rectangle {
 
             resultsOverlay.graphics.clear();
 
-            const incidentGraphic = ArcGISRuntimeEnvironment.createObject(
-                "Graphic", {geometry: mouse.mapPoint, symbol: incidentSymbol});
+            const incidentGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                              geometry: mouse.mapPoint,
+                                                                              symbol: incidentSymbol
+                                                                          });
             resultsOverlay.graphics.append(incidentGraphic);
 
             solveRoute(mouse.mapPoint);
@@ -199,8 +201,10 @@ Rectangle {
             const incidentIndex = 0; // 0 since there is just 1 incident at a time
             const route = solveClosestFacilityResult.route(closestFacilityIdx, incidentIndex);
 
-            const routeGraphic = ArcGISRuntimeEnvironment.createObject(
-                "Graphic", { geometry: route.routeGeometry, symbol: routeSymbol});
+            const routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                           geometry: route.routeGeometry,
+                                                                           symbol: routeSymbol
+                                                                       });
             resultsOverlay.graphics.append(routeGraphic);
         }
 

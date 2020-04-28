@@ -83,14 +83,14 @@ Rectangle {
     function applyHillshadeRenderer(altitude, azimuth, slope) {
         // create the new renderer
         const hillshadeRenderer = ArcGISRuntimeEnvironment.createObject("HillshadeRenderer", {
-                                                                          altitude: altitude,
-                                                                          azimuth: azimuth,
-                                                                          zFactor: 0.000016,
-                                                                          slopeType: slope,
-                                                                          pixelSizeFactor: 1,
-                                                                          pixelSizePower: 1,
-                                                                          outputBitDepth: 8
-                                                                      });
+                                                                            altitude: altitude,
+                                                                            azimuth: azimuth,
+                                                                            zFactor: 0.000016,
+                                                                            slopeType: slope,
+                                                                            pixelSizeFactor: 1,
+                                                                            pixelSizePower: 1,
+                                                                            outputBitDepth: 8
+                                                                        });
 
         // set the renderer on the layer
         rasterLayer.renderer = hillshadeRenderer;

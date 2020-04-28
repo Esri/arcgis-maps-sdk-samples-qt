@@ -117,13 +117,13 @@ Rectangle {
     function createFromUrl() {
         // create the dataset from an online URL
         const kmlDataset = ArcGISRuntimeEnvironment.createObject("KmlDataset", {
-                                                                   url: "https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx.kml"
-                                                               });
+                                                                     url: "https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx.kml"
+                                                                 });
 
         // create the layer
         const kmlLayer = ArcGISRuntimeEnvironment.createObject("KmlLayer", {
-                                                                 dataset: kmlDataset
-                                                             });
+                                                                   dataset: kmlDataset
+                                                               });
 
         // return the KML Layer
         return kmlLayer;
@@ -132,13 +132,13 @@ Rectangle {
     function createFromFile() {
         // create the dataset from a local file
         const kmlDataset = ArcGISRuntimeEnvironment.createObject("KmlDataset", {
-                                                                   url: System.userHomePath + "/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
-                                                               });
+                                                                     url: System.userHomePath + "/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
+                                                                 });
 
         // create the layer
         const kmlLayer = ArcGISRuntimeEnvironment.createObject("KmlLayer", {
-                                                                 dataset: kmlDataset
-                                                             });
+                                                                   dataset: kmlDataset
+                                                               });
 
         // return the KML Layer
         return kmlLayer;
@@ -147,13 +147,13 @@ Rectangle {
     function createFromPortalItem() {
         // create the portal item with an item ID
         const portalItem = ArcGISRuntimeEnvironment.createObject("PortalItem", {
-                                                                   itemId: "9fe0b1bfdcd64c83bd77ea0452c76253"
-                                                               });
+                                                                     itemId: "9fe0b1bfdcd64c83bd77ea0452c76253"
+                                                                 });
 
         // create the layer
         const kmlLayer = ArcGISRuntimeEnvironment.createObject("KmlLayer", {
-                                                                 item: portalItem
-                                                             });
+                                                                   item: portalItem
+                                                               });
 
         // return the KML Layer
         return kmlLayer;

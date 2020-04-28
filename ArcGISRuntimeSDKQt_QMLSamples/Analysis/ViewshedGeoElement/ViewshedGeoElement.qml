@@ -57,9 +57,9 @@ Rectangle {
 
                 // Set the Camera Controller
                 const controller = ArcGISRuntimeEnvironment.createObject("OrbitGeoElementCameraController", {
-                                                                           targetGeoElement: tank, cameraDistance: 200,
-                                                                           cameraPitchOffset: 45
-                                                                       });
+                                                                             targetGeoElement: tank, cameraDistance: 200,
+                                                                             cameraPitchOffset: 45
+                                                                         });
                 sceneView.cameraController = controller;
             }
         }

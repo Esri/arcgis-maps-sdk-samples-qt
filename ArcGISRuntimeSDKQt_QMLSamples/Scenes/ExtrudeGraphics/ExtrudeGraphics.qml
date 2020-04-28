@@ -98,9 +98,9 @@ Rectangle {
             const randNum = Math.ceil(Math.random() * 6);
             const z = maxZ * randNum;
             const newPoints = [createPoint(item.x, item.y, z),
-                             createPoint(item.x + size, item.y, z),
-                             createPoint(item.x + size, item.y + size, z),
-                             createPoint(item.x, item.y + size, z)];
+                               createPoint(item.x + size, item.y, z),
+                               createPoint(item.x + size, item.y + size, z),
+                               createPoint(item.x, item.y + size, z)];
 
             // create a graphic
             const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: createPolygonFromPoints(newPoints)});
