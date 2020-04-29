@@ -1,31 +1,39 @@
 # Show location history
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Display your location history on the map.
 
 ![](screenshot.png)
 
+## Use case
+
+You can track device location history and display it as lines and points on the map. The history can be used to visualize how the user moved through the world, to retrace their steps, or to create new feature geometry. An unmapped trail, for example, could be added to the map using this technique.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Click, 'Start tracking' to start tracking your location, which will appear as points on the map. A line will connect the points for easier visualization. Click 'Stop tracking' to stop updating the location history.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. If necessary, request location permission from the operating system.
+2. Create a graphics overlay to show each point and another graphics overlay for displaying the route line.
+3. Create a `SimulatedLocationDataSource` and initialize it with a polyline. Start the `SimulatedLocationDataSource` to begin receiving location updates.
+4. Connect to the `LocationChanged` signal to handle location updates.
+5. Every time the location updates, store that location, display a point on the map, and re-create the route line.
 
 ## Relevant API
- - ClassName1
- - MethodName
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+* Location::position
+* LocationDataSource::locationChanged
+* LocationDisplay::autoPanMode
+* LocationDisplay::dataSource
+* MapView::locationDisplay
+* SimulatedLocationDataSource
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+## About the data
 
-## Additional information
-A standard level license is required to ...
+The sample uses a dark gray basemap with lime and red graphics. A custom set of `Points`s is used to initialize the `Polyline` to enable easier testing and allow the sample to be useful on desktop/non-mobile devices.
 
 ## Tags
-Routing, Network analysis, Geocode
+
+bread crumb, breadcrumb, GPS, history, movement, navigation, real-time, trace, track, trail
 
