@@ -23,6 +23,7 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class Graphic;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
@@ -38,7 +39,6 @@ class ShowLocationHistory : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-//  Q_PROPERTY(bool trackingEnabled READ trackingEnabled NOTIFY trackingEnabledChanged)
   Q_PROPERTY(bool trackingEnabled MEMBER m_trackingEnabled NOTIFY trackingEnabledChanged)
 
 public:
@@ -54,13 +54,13 @@ signals:
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-//  bool trackingEnabled() const { return m_trackingEnabled; }
-  void handleLocationReady();
+  void handleLocationChanges();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_locationHistoryOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_locationHistoryLineOverlay = nullptr;
+  Esri::ArcGISRuntime::Graphic* m_locationHistoryLineGraphic = nullptr;
   Esri::ArcGISRuntime::PolylineBuilder* m_polylineBuilder = nullptr;
   Esri::ArcGISRuntime::SimulatedLocationDataSource* m_simulatedLocationDataSource = nullptr;
   Esri::ArcGISRuntime::Point m_lastPosition;

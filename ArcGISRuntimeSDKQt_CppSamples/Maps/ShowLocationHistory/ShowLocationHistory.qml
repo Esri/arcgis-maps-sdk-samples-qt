@@ -27,7 +27,7 @@ Item {
 
         Button {
             id: button
-            text: !model.trackingEnabled ? "Start tracking" : "Stop tracking"
+            text: model.trackingEnabled ? "Stop tracking" : "Start tracking"
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
             onClicked: model.trackingEnabled = !model.trackingEnabled

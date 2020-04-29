@@ -20,9 +20,9 @@
     "redirect_from": "",
     "relevant_apis": [
         "Location::position",
-        "LocationDataSource::locationChanged",
         "LocationDisplay::autoPanMode",
         "LocationDisplay::dataSource",
+        "LocationDisplay::locationChanged",
         "MapView::locationDisplay",
         "SimulatedLocationDataSource"
     ],
