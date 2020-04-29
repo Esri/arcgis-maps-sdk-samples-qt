@@ -10,7 +10,7 @@ You can track device location history and display it as lines and points on the 
 
 ## How to use the sample
 
-Click, 'Start tracking' to start tracking your location, which will appear as points on the map. A line will connect the points for easier visualization. Click 'Stop tracking' to stop updating the location history.
+Click 'Start tracking' to start tracking your location, which will appear as points on the map. A line will connect the points for easier visualization. Click 'Stop tracking' to stop updating the location history.
 
 ## How it works
 
@@ -31,7 +31,7 @@ Click, 'Start tracking' to start tracking your location, which will appear as po
 
 ## About the data
 
-The sample uses a dark gray basemap with lime and red graphics. A custom set of `Points`s is used to initialize the `Polyline` to enable easier testing and allow the sample to be useful on desktop/non-mobile devices.
+The sample uses a dark gray basemap with lime and red graphics. A custom set of `Points` is used to initialize the `Polyline` to enable easier testing and allow the sample to be useful on desktop/non-mobile devices.
 
 ## Tags
 
