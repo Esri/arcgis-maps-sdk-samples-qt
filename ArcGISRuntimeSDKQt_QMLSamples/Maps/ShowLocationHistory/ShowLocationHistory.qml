@@ -52,8 +52,6 @@ Rectangle {
                     setLocationsWithPolyline(GeometryEngine.densify(polyline, 10));
                 }
             }
-
-//            autoPanMode: Enums.LocationDisplayAutoPanModeRecenter
             initialZoomScale: initialZoomScale
         }
 
@@ -78,8 +76,8 @@ Rectangle {
         }
 
         Component.onCompleted: {
-            simulatedLocationDataSource.start()
-            locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeRecenter
+            simulatedLocationDataSource.start();
+            locationDisplay.autoPanMode = Enums.LocationDisplayAutoPanModeRecenter;
         }
 
         Polyline {
