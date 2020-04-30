@@ -19,6 +19,8 @@
 
 #include "Point.h"
 
+#include <QObject>
+
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -31,8 +33,6 @@ class PolylineBuilder;
 class SimulatedLocationDataSource;
 }
 }
-
-#include <QObject>
 
 class ShowLocationHistory : public QObject
 {

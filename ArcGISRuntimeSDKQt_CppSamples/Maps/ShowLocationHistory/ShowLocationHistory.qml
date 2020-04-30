@@ -30,7 +30,7 @@ Item {
             text: model.trackingEnabled ? "Stop tracking" : "Start tracking"
             anchors.horizontalCenter: parent.horizontalCenter
             width: 200
-            onClicked: model.trackingEnabled = !model.trackingEnabled
+            onClicked: model.trackingEnabled =! model.trackingEnabled
         }
     }
 
