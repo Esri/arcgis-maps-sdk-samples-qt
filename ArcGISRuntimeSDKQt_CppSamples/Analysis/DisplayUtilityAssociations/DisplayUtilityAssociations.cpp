@@ -72,7 +72,7 @@ void DisplayUtilityAssociations::addAssociations()
   }
 
   // check if current viewpoint has a valid extent
-  Envelope extent = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent();
+  const Envelope extent = m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent();
   if (!extent.isValid())
   {
     qDebug("Extent not valid");
@@ -145,6 +145,7 @@ void DisplayUtilityAssociations::connectSignals()
     }
 
     m_mapView->setViewpoint(Viewpoint(Point(-9812698.37297436, 5131928.33743317, SpatialReference::webMercator()), targetScale));
+    qDebug() << m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent().toJson();
 
     // get all the edges and junctions in the network
     QList<UtilityNetworkSource*> edges;
@@ -197,33 +198,28 @@ void DisplayUtilityAssociations::connectSignals()
 
   connect(m_utilityNetwork, &UtilityNetwork::associationsCompleted, this, [this](QUuid, const QList<UtilityAssociation*>& associations)
   {
-    bool matchedGraphic = false;
+    const GraphicListModel* graphics = m_associationsOverlay->graphics();
+
     for (UtilityAssociation* association : associations)
     {
-      matchedGraphic = false;
+
       // check if the graphics overlay already contains the association
-      for (Graphic* graphic : *m_associationsOverlay->graphics())
+      const bool uniqueGraphic = std::none_of(graphics->begin(), graphics->end(), [=](const Graphic* graphic)
       {
-        if (graphic->attributes()->containsAttribute("GlobalId") && qvariant_cast<QUuid>(graphic->attributes()->operator[]("GlobalId")) == association->globalId())
-        {
-          matchedGraphic = true;
-          break;
-        }
-      }
+        const AttributeListModel* attributes = graphic->attributes();
+        return attributes->containsAttribute("GlobalId") && qvariant_cast<QUuid>(graphic->attributes()->operator[]("GlobalId")) == association->globalId();
+      });
 
-      // if the association is already in the overlay, don't add a new graphic
-      if (matchedGraphic)
+      if (uniqueGraphic)
       {
-        continue;
+        // add a graphic for the association
+        QVariantMap graphicAttributes;
+        graphicAttributes["GlobalId"] = association->globalId();
+        graphicAttributes["AssociationType"] = static_cast<int>(association->associationType());
+        Graphic* graphic = new Graphic(association->geometry(), graphicAttributes, this);
+
+        m_associationsOverlay->graphics()->append(graphic);
       }
-
-      // add a graphic for the association
-      QVariantMap graphicAttributes;
-      graphicAttributes["GlobalId"] = association->globalId();
-      graphicAttributes["AssociationType"] = static_cast<int>(association->associationType());
-      Graphic* graphic = new Graphic(association->geometry(), graphicAttributes, this);
-
-      m_associationsOverlay->graphics()->append(graphic);
     }
   });
 
