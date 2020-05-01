@@ -17,23 +17,27 @@
 #ifndef IDENTIFYRASTERCELL_H
 #define IDENTIFYRASTERCELL_H
 
+#include "Point.h"
+
+#include <QObject>
+
 namespace Esri
 {
 namespace ArcGISRuntime
 {
+class CalloutData;
 class Map;
 class MapQuickView;
 class RasterLayer;
 }
 }
 
-#include <QObject>
-
 class IdentifyRasterCell : public QObject
 {
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
 
 public:
   explicit IdentifyRasterCell(QObject* parent = nullptr);
@@ -43,14 +47,19 @@ public:
 
 signals:
   void mapViewChanged();
+  void calloutDataChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  Esri::ArcGISRuntime::CalloutData* calloutData() const;
+  void connectSignals();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
+  Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
+  Esri::ArcGISRuntime::Point m_clickedPoint;
 };
 
 #endif // IDENTIFYRASTERCELL_H

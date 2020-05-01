@@ -20,6 +20,7 @@
 
 #include "IdentifyRasterCell.h"
 
+#include "CalloutData.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Raster.h"
@@ -35,20 +36,20 @@ using namespace Esri::ArcGISRuntime;
 // helper method to get cross platform data path
 namespace
 {
-  QString defaultDataPath()
-  {
-    QString dataPath;
+QString defaultDataPath()
+{
+  QString dataPath;
 
-  #ifdef Q_OS_ANDROID
-    dataPath = "/sdcard";
-  #elif defined Q_OS_IOS
-    dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-  #else
-    dataPath = QDir::homePath();
-  #endif
+#ifdef Q_OS_ANDROID
+  dataPath = "/sdcard";
+#elif defined Q_OS_IOS
+  dataPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#else
+  dataPath = QDir::homePath();
+#endif
 
-    return dataPath;
-  }
+  return dataPath;
+}
 } // namespace
 
 IdentifyRasterCell::IdentifyRasterCell(QObject* parent /* = nullptr */):
@@ -86,6 +87,13 @@ void IdentifyRasterCell::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  connectSignals();
+
+  emit mapViewChanged();
+}
+
+void IdentifyRasterCell::connectSignals()
+{
   connect(m_rasterLayer, &Layer::doneLoading, this, [this](Error error)
   {
     if (!error.isEmpty())
@@ -113,7 +121,17 @@ void IdentifyRasterCell::setMapView(MapQuickView* mapView)
           QString value = QVariant(attributes->operator[](attributeNames[i])).toString();
           calloutString.append(attributeNames[i] + ": " + value + "\n");
         }
-        qDebug() << calloutString;
+
+        const double xPoint = rasterCell->geometry().extent().xMin();
+        const double yPoint = rasterCell->geometry().extent().yMin();
+
+        calloutString.append("X: " + QString::number(xPoint, 'f', 2) + " Y: " + QString::number(yPoint, 'f', 2));
+
+        m_mapView->calloutData()->setLocation(m_clickedPoint);
+        m_mapView->calloutData()->setDetail(calloutString);
+        m_mapView->calloutData()->setVisible(true);
+        m_calloutData = m_mapView->calloutData();
+        emit calloutDataChanged();
       }
     }
   });
@@ -121,7 +139,11 @@ void IdentifyRasterCell::setMapView(MapQuickView* mapView)
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent e)
   {
     m_mapView->identifyLayer(m_rasterLayer, e.x(), e.y(), 10, false, 1);
+    m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
   });
+}
 
-  emit mapViewChanged();
+CalloutData* IdentifyRasterCell::calloutData() const
+{
+  return m_calloutData;
 }
