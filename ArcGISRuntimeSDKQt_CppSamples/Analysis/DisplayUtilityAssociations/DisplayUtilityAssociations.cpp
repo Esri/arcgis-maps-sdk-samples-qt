@@ -145,7 +145,6 @@ void DisplayUtilityAssociations::connectSignals()
     }
 
     m_mapView->setViewpoint(Viewpoint(Point(-9812698.37297436, 5131928.33743317, SpatialReference::webMercator()), targetScale));
-    qDebug() << m_mapView->currentViewpoint(ViewpointType::BoundingGeometry).targetGeometry().extent().toJson();
 
     // get all the edges and junctions in the network
     QList<UtilityNetworkSource*> edges;
@@ -207,7 +206,7 @@ void DisplayUtilityAssociations::connectSignals()
       const bool uniqueGraphic = std::none_of(graphics->begin(), graphics->end(), [=](const Graphic* graphic)
       {
         const AttributeListModel* attributes = graphic->attributes();
-        return attributes->containsAttribute("GlobalId") && qvariant_cast<QUuid>(graphic->attributes()->operator[]("GlobalId")) == association->globalId();
+        return attributes->containsAttribute("GlobalId") && qvariant_cast<QUuid>((*graphic->attributes())["GlobalId"]) == association->globalId();
       });
 
       if (uniqueGraphic)
