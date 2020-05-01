@@ -37,8 +37,8 @@ Rectangle {
             id: backgroundRect
             border.color: "black"
             border.width: 1
-            width: connectivityLabel.width * 1.5
-            height: width/2
+            width: column.width + 10
+            height: column.height + 5
             anchors {
                 top: parent.top
                 left: parent.left
@@ -46,7 +46,9 @@ Rectangle {
             }
 
             ColumnLayout {
+                id: column
                 anchors.horizontalCenter: parent.horizontalCenter
+                Layout.fillWidth: true
                 Label {
                     text: "Utility association types"
                     Layout.alignment: Qt.AlignHCenter
@@ -54,6 +56,7 @@ Rectangle {
 
                 RowLayout {
                     Layout.leftMargin: 5
+                    Layout.fillWidth: true
                     Image {
                         id: attachmentImage
                         fillMode: Image.PreserveAspectFit
@@ -66,6 +69,7 @@ Rectangle {
 
                 RowLayout {
                     Layout.leftMargin: 5
+                    Layout.fillWidth: true
                     Image {
                         id: connectivityImage
                     }
@@ -136,28 +140,25 @@ Rectangle {
                     if (associationsStatus !== Enums.TaskStatusCompleted)
                         return;
 
-                    let matchedGraphic = false;
-                    for (let i = 0; i < associationsResult.length; i++) {
-                        let association = associationsResult[i];
-                        // check if the graphics overlay already contains the association
-                        for (let j = 0; j < associationsOverlay.graphics.count; j++) {
-                            if (associationsOverlay.graphics.get(j).attributes.containsAttribute("GlobalId") && associationsOverlay.graphics.get(j).attributes.attributeValue("GlobalId") === association.globalId) {
-                                matchedGraphic = true;
-                                break;
+                    let isGraphicUnique = (graphics, id) => {
+                        for (let j = 0; j < graphics.count; j++) {
+                            const attributes = graphics.get(j).attributes;
+                            if (attributes.containsAttribute("GlobalId") && attributes.attributeValue("GlobalId") === id) {
+                                return false;
                             }
                         }
+                        return true;
+                    }
 
-                        // if the association is already in the overlay, don't add a new graphic
-                        if (matchedGraphic) {
-                            matchedGraphic = false;
-                            continue;
+                    for (let i = 0; i < associationsResult.length; i++) {
+                        const association = associationsResult[i];
+
+                        if (isGraphicUnique(associationsOverlay.graphics, association.globalId)) {
+                            const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: association.geometry});
+                            graphic.attributes.insertAttribute("GlobalId", association.globalId);
+                            graphic.attributes.insertAttribute("AssociationType", association.associationType);
+                            associationsOverlay.graphics.append(graphic);
                         }
-
-                        // add a graphic for the association
-                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: association.geometry});
-                        graphic.attributes.insertAttribute("GlobalId", association.globalId);
-                        graphic.attributes.insertAttribute("AssociationType", association.associationType);
-                        associationsOverlay.graphics.append(graphic);
                     }
                 }
             }

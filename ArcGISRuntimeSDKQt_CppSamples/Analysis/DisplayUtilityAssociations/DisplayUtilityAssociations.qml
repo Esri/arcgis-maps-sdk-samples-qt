@@ -29,8 +29,9 @@ Item {
             id: backgroundRect
             border.color: "black"
             border.width: 1
-            width: connectivityLabel.width * 1.5
-            height: width/2
+            width: column.width + 10
+            height: column.height + 5
+            visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""
             anchors {
                 top: parent.top
                 left: parent.left
@@ -38,7 +39,9 @@ Item {
             }
 
             ColumnLayout {
+                id: column
                 anchors.horizontalCenter: parent.horizontalCenter
+                Layout.fillWidth: true
                 Label {
                     text: "Utility association types"
                     Layout.alignment: Qt.AlignHCenter
@@ -46,6 +49,7 @@ Item {
 
                 RowLayout {
                     Layout.leftMargin: 5
+                    Layout.fillWidth: true
                     Image {
                         id: attachmentImage
                         source: model.attachmentSymbolUrl
@@ -60,6 +64,7 @@ Item {
 
                 RowLayout {
                     Layout.leftMargin: 5
+                    Layout.fillWidth: true
                     Image {
                         id: connectivityImage
                         source: model.connectivitySymbolUrl
