@@ -25,12 +25,12 @@ Item {
         id: view
         anchors.fill: parent
 
-        Rectangle {
-            id: backgroundRect
-            border.color: "black"
-            border.width: 1
-            width: column.width + 10
-            height: column.height + 5
+        Control {
+            background: Rectangle {
+                border.color: "black"
+                border.width: 1
+            }
+            padding: 5
             visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""
             anchors {
                 top: parent.top
@@ -38,42 +38,37 @@ Item {
                 margins: 20
             }
 
-            ColumnLayout {
-                id: column
+            contentItem: GridLayout {
+                id: grid
+                columns: 2
                 anchors.horizontalCenter: parent.horizontalCenter
                 Layout.fillWidth: true
                 Label {
                     text: "Utility association types"
                     Layout.alignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
+                    Layout.columnSpan: 2
                 }
 
-                RowLayout {
-                    Layout.leftMargin: 5
-                    Layout.fillWidth: true
-                    Image {
-                        id: attachmentImage
-                        source: model.attachmentSymbolUrl
-                        fillMode: Image.PreserveAspectFit
-                    }
-                    Label {
-                        id: attachmentLabel
-                        text: "Attachment symbol"
-                        visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""
-                    }
+                Image {
+                    id: attachmentImage
+                    source: model.attachmentSymbolUrl
+                    fillMode: Image.PreserveAspectFit
+                }
+                Label {
+                    id: attachmentLabel
+                    text: "Attachment symbol"
+                    visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""
                 }
 
-                RowLayout {
-                    Layout.leftMargin: 5
-                    Layout.fillWidth: true
-                    Image {
-                        id: connectivityImage
-                        source: model.connectivitySymbolUrl
-                    }
-                    Label {
-                        id: connectivityLabel
-                        text: "Connectivity symbol"
-                        visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""
-                    }
+                Image {
+                    id: connectivityImage
+                    source: model.connectivitySymbolUrl
+                }
+                Label {
+                    id: connectivityLabel
+                    text: "Connectivity symbol"
+                    visible: model.attachmentSymbolUrl !== "" && model.connectivitySymbolUrl !== ""
                 }
             }
         }

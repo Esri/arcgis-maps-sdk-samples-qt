@@ -33,50 +33,46 @@ Rectangle {
         id: mapView
         anchors.fill: parent
 
-        Rectangle {
-            id: backgroundRect
-            border.color: "black"
-            border.width: 1
-            width: column.width + 10
-            height: column.height + 5
+        Control {
+            background: Rectangle {
+                border.color: "black"
+                border.width: 1
+            }
+
+            padding: 5
             anchors {
                 top: parent.top
                 left: parent.left
                 margins: 20
             }
 
-            ColumnLayout {
-                id: column
+            contentItem: GridLayout {
+                id: grid
+                columns: 2
                 anchors.horizontalCenter: parent.horizontalCenter
-                Layout.fillWidth: true
+
                 Label {
                     text: "Utility association types"
                     Layout.alignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
+                    Layout.columnSpan: 2
                 }
 
-                RowLayout {
-                    Layout.leftMargin: 5
-                    Layout.fillWidth: true
-                    Image {
-                        id: attachmentImage
-                        fillMode: Image.PreserveAspectFit
-                    }
-                    Label {
-                        id: attachmentLabel
-                        text: "Attachment symbol"
-                    }
+                Image {
+                    id: attachmentImage
+                    fillMode: Image.PreserveAspectFit
+                }
+                Label {
+                    id: attachmentLabel
+                    text: "Attachment symbol"
                 }
 
-                RowLayout {
-                    Layout.leftMargin: 5
-                    Layout.fillWidth: true
-                    Image {
-                        id: connectivityImage
-                    }
-                    Label {
-                        id: connectivityLabel
-                        text: "Connectivity symbol"
-                    }
+                Image {
+                    id: connectivityImage
+                }
+                Label {
+                    id: connectivityLabel
+                    text: "Connectivity symbol"
                 }
             }
         }
