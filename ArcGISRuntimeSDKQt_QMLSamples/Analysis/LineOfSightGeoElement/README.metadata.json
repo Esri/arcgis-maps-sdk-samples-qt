@@ -21,5 +21,11 @@
     "snippets": [
         "LineOfSightGeoElement.qml"
     ],
+    "dataItems" : [
+        {
+            "itemId": "3af5cfec0fd24dac8d88aea679027cb9",
+            "path": "~/ArcGIS/Runtime/Data/3D/dolmus_3ds/dolmus.zip"
+        }
+    ],
     "title": "Line of sight (geoelement)"
 }

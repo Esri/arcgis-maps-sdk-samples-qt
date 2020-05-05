@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Analysis/StatisticalQueryGroupSort">
-        <file alias="sample.json">StatisticalQueryGroupSort.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>StatisticalQueryGroupSort.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
