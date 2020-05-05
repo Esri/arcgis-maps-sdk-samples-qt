@@ -72,6 +72,7 @@ OfflineGeocodeSample {
                     id: textField
                     Layout.fillWidth: true
                     leftPadding: 5
+                    selectByMouse: true
 
                     placeholderText: "Enter an Address"
 

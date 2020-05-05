@@ -149,6 +149,7 @@ Rectangle {
                     id: textField
                     font.pixelSize: 14
                     placeholderText: "Type in an address"
+                    selectByMouse: true
 
                     Keys.onEnterPressed: geocodeAddress();
                     Keys.onReturnPressed: geocodeAddress();

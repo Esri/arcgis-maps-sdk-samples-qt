@@ -85,6 +85,7 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.margins: 2
                 placeholderText: qsTr("Enter portal url secured by IWA")
+                selectByMouse: true
                 background: Rectangle {
                     implicitWidth: parent.width
                     implicitHeight: parent.height

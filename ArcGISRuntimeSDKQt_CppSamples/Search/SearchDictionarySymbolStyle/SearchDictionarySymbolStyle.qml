@@ -80,6 +80,7 @@ SearchDictionarySymbolStyleSample {
                             id: categoryEntry
                             Layout.fillWidth: true
                             placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
+                            selectByMouse: true
                             validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
                             onAccepted: addCategoryButton.mouseArea.clicked();
                         }

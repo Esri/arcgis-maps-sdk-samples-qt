@@ -157,6 +157,7 @@ Rectangle {
             id: fromDate
             width: parent.width
             text: fromThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
+            selectByMouse: true
 
             Image {
                 anchors {
@@ -188,6 +189,7 @@ Rectangle {
             id: toDate
             width: parent.width
             text: toThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
+            selectByMouse: true
 
             Image {
                 anchors {

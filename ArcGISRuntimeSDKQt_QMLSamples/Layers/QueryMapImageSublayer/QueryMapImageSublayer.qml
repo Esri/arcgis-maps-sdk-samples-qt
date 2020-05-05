@@ -160,6 +160,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 width: 100
                 text: "1100000"
+                selectByMouse: true
                 validator: IntValidator{}
             }
         }
