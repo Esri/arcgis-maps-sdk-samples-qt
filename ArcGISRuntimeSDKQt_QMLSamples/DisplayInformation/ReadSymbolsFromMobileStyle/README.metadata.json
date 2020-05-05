@@ -37,5 +37,11 @@
         "ReadSymbolsFromMobileStyle.qml",
         "SymbolComboBox.qml"
     ],
+    "dataItems" : [
+        {
+            "itemId" : "1bd036f221f54a99abc9e46ff3511cbf",
+            "path" : "~/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx"
+        }
+    ],
     "title": "Read symbols from a mobile style"
 }

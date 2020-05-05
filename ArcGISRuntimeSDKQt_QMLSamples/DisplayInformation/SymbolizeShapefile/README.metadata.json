@@ -27,5 +27,11 @@
     "snippets": [
         "SymbolizeShapefile.qml"
     ],
+    "dataItems" : [
+        {
+            "itemId" : "d98b3e5293834c5f852f13c569930caa",
+            "path" : "~/ArcGIS/Runtime/Data/shp/Subdivisions.shp"
+        }
+    ],
     "title": "Symbolize a shapefile"
 }

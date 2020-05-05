@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/GORenderers">
-        <file alias="sample.json">GORenderers.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>GORenderers.qml</file>
         <file>README.md</file>
