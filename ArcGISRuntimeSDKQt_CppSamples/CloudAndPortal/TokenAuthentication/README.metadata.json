@@ -26,8 +26,8 @@
         "ArcGISMapImageLayer"
     ],
     "snippets": [
-        "TokenAuthentication.cpp",
         "TokenAuthentication.qml",
+        "TokenAuthentication.cpp",
         "TokenAuthentication.h"
     ],
     "title": "Token authentication"

@@ -24,8 +24,8 @@
         "MapView"
     ],
     "snippets": [
-        "ShowOrgBasemaps.h",
         "ShowOrgBasemaps.qml",
+        "ShowOrgBasemaps.h",
         "ShowOrgBasemaps.cpp"
     ],
     "title": "Show organization basemaps"

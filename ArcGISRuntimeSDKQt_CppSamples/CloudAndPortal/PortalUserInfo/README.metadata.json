@@ -25,9 +25,9 @@
         "AuthenticationManager"
     ],
     "snippets": [
+        "PortalUserInfo.qml",
         "PortalUserInfo.h",
-        "PortalUserInfo.cpp",
-        "PortalUserInfo.qml"
+        "PortalUserInfo.cpp"
     ],
     "title": "Portal user info"
 }
