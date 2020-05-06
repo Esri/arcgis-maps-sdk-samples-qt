@@ -44,9 +44,9 @@
         "Basemap"
     ],
     "snippets": [
+        "AnalyzeViewshed.qml",
         "AnalyzeViewshed.cpp",
-        "AnalyzeViewshed.h",
-        "AnalyzeViewshed.qml"
+        "AnalyzeViewshed.h"
     ],
     "title": "Viewshed (geoprocessing)"
 }

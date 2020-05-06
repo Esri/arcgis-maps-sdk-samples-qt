@@ -29,8 +29,8 @@
         "Camera"
     ],
     "snippets": [
-        "ViewshedCamera.cpp",
         "ViewshedCamera.qml",
+        "ViewshedCamera.cpp",
         "ViewshedCamera.h"
     ],
     "title": "Viewshed (camera)"

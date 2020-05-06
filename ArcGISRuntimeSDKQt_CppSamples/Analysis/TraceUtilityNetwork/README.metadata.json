@@ -23,9 +23,9 @@
         "GeometryEngine::FractionAlong"
     ],
     "snippets": [
+        "TraceUtilityNetwork.qml",
         "TraceUtilityNetwork.cpp",
-        "TraceUtilityNetwork.h",
-        "TraceUtilityNetwork.qml"
+        "TraceUtilityNetwork.h"
     ],
     "title": "Trace utility network"
 }
