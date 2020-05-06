@@ -19,9 +19,15 @@
         "LayerContent"
     ],
     "snippets": [
+        "ControlAnnotationSublayerVisibility.qml",
         "ControlAnnotationSublayerVisibility.cpp",
-        "ControlAnnotationSublayerVisibility.h",
-        "ControlAnnotationSublayerVisibility.qml"
+        "ControlAnnotationSublayerVisibility.h"
+    ],
+    "dataItems" : [
+        {
+            "itemId" : "b87307dcfb26411eb2e92e1627cb615b",
+            "path" : "~/ArcGIS/Runtime/Data/mmpk/GasDeviceAnno.mmpk"
+        }
     ],
     "title": "Control annotation sublayer visibility"
 }

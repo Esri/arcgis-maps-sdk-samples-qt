@@ -35,8 +35,8 @@
         "GraphicsOverlay"
     ],
     "snippets": [
-        "GOSymbols.cpp",
         "GOSymbols.qml",
+        "GOSymbols.cpp",
         "GOSymbols.h"
     ],
     "title": "Add graphics with symbols"
