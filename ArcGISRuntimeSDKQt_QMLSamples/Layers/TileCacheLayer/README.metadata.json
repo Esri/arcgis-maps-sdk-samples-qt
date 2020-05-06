@@ -1,5 +1,5 @@
 {
-    "category": "layers",
+    "category": "Layers",
     "description": "Load an offline copy of a tiled map service as a basemap.",
     "ignore": false,
     "images": [
