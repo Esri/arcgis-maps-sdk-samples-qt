@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Routing/ClosestFacility">
-        <file alias="sample.json">ClosestFacility.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>ClosestFacility.qml</file>
         <file>README.md</file>
