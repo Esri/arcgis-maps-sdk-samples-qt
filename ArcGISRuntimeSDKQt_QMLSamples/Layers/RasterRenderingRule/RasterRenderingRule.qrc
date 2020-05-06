@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/RasterRenderingRule">
-        <file alias="sample.json">RasterRenderingRule.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>RasterRenderingRule.qml</file>
         <file>README.md</file>
         <file>screenshot.png</file>

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/BlendRasterLayer">
-        <file alias="sample.json">BlendRasterLayer.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>BlendRasterLayer.qml</file>
         <file>README.md</file>
         <file>screenshot.png</file>
