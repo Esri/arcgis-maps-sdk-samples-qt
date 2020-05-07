@@ -36,9 +36,9 @@
         "FeatureQueryResult"
     ],
     "snippets": [
+        "DeleteFeaturesFeatureService.qml",
         "DeleteFeaturesFeatureService.cpp",
-        "DeleteFeaturesFeatureService.h",
-        "DeleteFeaturesFeatureService.qml"
+        "DeleteFeaturesFeatureService.h"
     ],
     "title": "Delete features (feature service)"
 }
