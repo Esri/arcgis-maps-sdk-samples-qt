@@ -28,9 +28,9 @@
         "Map"
     ],
     "snippets": [
+        "FindPlace.qml",
         "FindPlace.cpp",
         "FindPlace.h",
-        "FindPlace.qml",
         "SearchBox.qml",
         "SuggestionView.qml",
         "SearchButton.qml"
