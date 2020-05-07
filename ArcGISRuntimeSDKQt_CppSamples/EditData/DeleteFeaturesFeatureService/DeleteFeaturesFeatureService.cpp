@@ -14,6 +14,10 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "DeleteFeaturesFeatureService.h"
 
 #include "Map.h"
@@ -32,7 +36,7 @@
 #include <QUuid>
 #include <QMouseEvent>
 #include <QString>
-#include <QScopedPointer>
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -56,8 +60,7 @@ void DeleteFeaturesFeatureService::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);
-  emit calloutDataChanged();
+  m_mapView->setWrapAroundMode(WrapAroundMode::Disabled);  
 
   // create a Map by passing in the Basemap
   m_map = new Map(Basemap::streets(this), this);
@@ -109,7 +112,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* rawIdentifyResult)
   {
     // Deletes rawIdentifyResult instance when we leave scope.
-    QScopedPointer<IdentifyLayerResult> identifyResult(rawIdentifyResult);
+    auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
 
     if(!identifyResult)
     {
@@ -149,7 +152,7 @@ void DeleteFeaturesFeatureService::connectSignals()
   connect(m_featureLayer, &FeatureLayer::selectFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawFeatureQueryResult)
   {
     // Delete rawFeatureQueryResult pointer when we leave scope.
-    QScopedPointer<FeatureQueryResult> featureQueryResult(rawFeatureQueryResult);
+    auto featureQueryResult = std::unique_ptr<FeatureQueryResult>(rawFeatureQueryResult);
     
     FeatureIterator iter = featureQueryResult->iterator();
     if (iter.hasNext())
@@ -185,11 +188,6 @@ void DeleteFeaturesFeatureService::connectSignals()
 
     qDeleteAll(featureEditResults);
   });
-}
-
-CalloutData* DeleteFeaturesFeatureService::calloutData() const
-{
-  return m_mapView ? m_mapView->calloutData() : nullptr;
 }
 
 void DeleteFeaturesFeatureService::deleteSelectedFeature()

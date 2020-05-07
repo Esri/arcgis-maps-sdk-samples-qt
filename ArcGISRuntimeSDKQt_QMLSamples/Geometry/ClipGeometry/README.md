@@ -1,11 +1,17 @@
 # Clip Geometry
 
-This sample demonstrates how to clip a geometry with an envelope using the GeometryEngine.
+Clip a geometry with another geometry.
 
 ![](screenshot.png)
 
+
+## Use case
+
+Create a new set of geometries for analysis (e.g. displaying buffer zones around abandoned coal mine shafts in an area of planned urban development) by clipping intersecting geometries.
+
 ## How to use the sample
-Click or tap the 'Clip' button to display the clipping results of the blue graphic and the red outlines.
+
+Click the "Clip" button to clip the blue graphic with the red dashed envelopes.
 
 ## How it works
 1. Create a `GraphicsOverlay` and add a `Graphic` containing an envelope.
@@ -15,12 +21,20 @@ Click or tap the 'Clip' button to display the clipping results of the blue graph
 5. Add each clipped `Geometry` graphic to the empty `GraphicsOverlay` to visualize the clipped geometries.
 
 ## Relevant API
-- GeometryEngine.clip
-- GraphicsOverlay
-- Graphic
-- Geometry
-- Envelope
+
+* Envelope
+* Geometry
+* GeometryEngine.clip
+* Graphic
+* GraphicsOverlay
+
+## Additional information
+
+Note: the resulting geometry may be null if the envelope does not intersect the geometry being clipped.
 
 ## Tags
-Geometry, Clip, GeometryEngine
+
+analysis, clip, geometry
+
+
 

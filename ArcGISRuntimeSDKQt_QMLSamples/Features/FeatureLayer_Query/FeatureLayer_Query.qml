@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.7
+import Esri.ArcGISRuntime 100.8
 
 Rectangle {
     width: 800
@@ -37,6 +37,7 @@ Rectangle {
 
             FeatureLayer {
                 id: featureLayer
+                maxScale: 10000
 
                 // default property (renderer)
                 SimpleRenderer {
@@ -57,7 +58,7 @@ Rectangle {
                 // feature table
                 ServiceFeatureTable {
                     id: featureTable
-                    url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"
+                    url: "https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/USA_Daytime_Population_2016/FeatureServer/0"
 
                     onQueryFeaturesStatusChanged: {
                         if (queryFeaturesStatus === Enums.TaskStatusCompleted) {

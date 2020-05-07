@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Geometry/NearestVertex">
+        <file alias="sample.json">NearestVertex.json</file>        
+        <file>NearestVertex.qml</file>
+        <file>NearestVertex.h</file>
+        <file>NearestVertex.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

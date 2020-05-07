@@ -14,13 +14,15 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "DisplayDeviceLocation.h"
 
 #include "Map.h"
 #include "MapQuickView.h"
 #include "Basemap.h"
-#include <QGeoPositionInfoSource>
-#include <QCompass>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -63,21 +65,10 @@ void DisplayDeviceLocation::componentComplete()
 
 void DisplayDeviceLocation::startLocationDisplay()
 {
-  if (!m_mapView->locationDisplay()->positionSource())
-  {
-    //! [start location display api snippet]
-    // turn on the location display
-    m_mapView->locationDisplay()->setPositionSource(QGeoPositionInfoSource::createDefaultSource(this));
-    QCompass* compass = new QCompass(this);
-    m_mapView->locationDisplay()->setCompass(compass);
-    m_mapView->locationDisplay()->start();
-    //! [start location display api snippet]
-  }
-  else
-  {
-    // start location display
-    m_mapView->locationDisplay()->start();
-  }
+  //! [start location display api snippet]
+  // turn on the location display
+  m_mapView->locationDisplay()->start();
+  //! [start location display api snippet]
 }
 
 void DisplayDeviceLocation::stopLocationDisplay()

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/TileCacheLayer">
+        <file alias="sample.json">TileCacheLayer.json</file>        
+        <file>TileCacheLayer.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

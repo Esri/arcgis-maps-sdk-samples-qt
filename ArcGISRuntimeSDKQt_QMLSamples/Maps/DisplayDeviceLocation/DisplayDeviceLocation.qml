@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtPositioning 5.3
 import QtSensors 5.3
-import Esri.ArcGISRuntime 100.7
+import Esri.ArcGISRuntime 100.8
 
 Rectangle {
     width: 800
@@ -51,13 +51,6 @@ Rectangle {
                     autoPanListModel.append({name: closeMode, image: "qrc:/Samples/Maps/DisplayDeviceLocation/Close.png"});
                 }
             }
-        }
-
-        // set the location display's position source
-        locationDisplay {
-            positionSource: PositionSource {
-            }
-            compass: Compass {}
         }
     }
 

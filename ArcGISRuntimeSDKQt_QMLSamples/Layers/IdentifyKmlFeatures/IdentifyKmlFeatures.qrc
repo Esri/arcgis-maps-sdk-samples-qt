@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/IdentifyKmlFeatures">
+        <file alias="sample.json">IdentifyKmlFeatures.json</file>        
+        <file>IdentifyKmlFeatures.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

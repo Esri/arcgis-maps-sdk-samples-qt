@@ -14,6 +14,10 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "RasterLayerService.h"
 
 #include "Map.h"
@@ -56,12 +60,12 @@ void RasterLayerService::componentComplete()
   //! [ImageServiceRaster Create a new image service raster]
   // create an image service raster
   ImageServiceRaster* imageServiceRaster = new ImageServiceRaster(
-        QUrl(QStringLiteral("https://sampleserver6.arcgisonline.com/arcgis/rest/services/NLCDLandCover2001/ImageServer")), this);
+        QUrl(QStringLiteral("https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer")), this);
   // zoom to the center of the raster once it's loaded
-  connect(imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this, imageServiceRaster]()
+  connect(imageServiceRaster, &ImageServiceRaster::doneLoading, this, [this]()
   {
-    constexpr double scale = 50000000.;
-    Viewpoint vpCenter = Viewpoint(imageServiceRaster->serviceInfo().fullExtent().center(), scale);
+    constexpr double scale = 200000.;
+    Viewpoint vpCenter = Viewpoint(Point(-13643095.660131, 4550009.846004, SpatialReference::webMercator()), scale);
     m_mapView->setViewpoint(vpCenter);
   });
 

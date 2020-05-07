@@ -1,19 +1,31 @@
 # Build a legend
 
-This sample demonstrates how to build a legend for all the operational layers in the map.
+Build a legend for all the operational layers in the map.
 
 ![](screenshot.png)
 
-## How it works
-The sample utilizes the `autoFetchLegendInfos` property on the Map. This property will cause the map to recursively loop through all of the operational layers in the map (including sublayers), and request the `LegendInfo` for each item. All of the resulting LegendInfo objects are passed into the LegendInfoListModel. A QML ListView directly consumes this model, and separates each item by using a `section`.
+## Use case
 
-## Features
-- MapView
-- Map
-- Basemap
-- ArcGISMapImageLayer
-- ArcGISSublayerListModel
-- ArcGISTiledLayer
-- FeatureLayer
-- ServiceFeatureTable
-- LegendInfo
+Legends are used to describe what each symbol on a map represents. A common format is to show an image of the symbol alongside of a text description of what that symbol represents. This sample demonstrates how a simple legend can be built up in code using the `LayerContent` interface.
+
+## How to use the sample
+
+1. Open the sample
+2. Flick through the legend control to see the various elements that represent features on the map.
+
+## How it works
+
+1. Layers implement the `LayerContent` interface, which contain a list of `LegendInfo`. `LegendInfo` contains a `Symbol` and a name string. `Layer.autoFetchLegendInfos` must be called on each `Layer` instance to fetch the info from the data.
+2. All of the resulting LegendInfo objects are passed into the `LegendInfoListModel`.
+3. A QML `ListView` directly consumes this model, and separates each item by using a `section`.
+
+## Relevant API
+
+* Layer.autoFetchLegendInfos
+* LayerContent
+* LegendInfo
+* LegendInfoListModel
+
+## Tags
+
+legend, legend info, symbol swatch, toolkit

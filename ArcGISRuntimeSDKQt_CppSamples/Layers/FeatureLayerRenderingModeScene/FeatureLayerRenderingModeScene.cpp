@@ -14,6 +14,10 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "FeatureLayerRenderingModeScene.h"
 
 #include "ArcGISTiledElevationSource.h"

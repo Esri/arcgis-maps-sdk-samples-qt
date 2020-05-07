@@ -1,27 +1,35 @@
 # Find route
 
-This sample demonstrates how to get a route between two locations.
+Display directions for a route between two points.
 
 ![](screenshot.png)
 
+## Use case
+
+Find routes with driving directions between any number of locations. You might use the ArcGIS platform to create a custom network for routing on a private roads.
+
+## How to use the sample
+
+For simplicity, the sample comes loaded with a start and end stop. You can click on the Find Route to display a route between these stops. Once the route is generated, turn-by-turn directions are shown in a list.
+
 ## How it works
 
-For simplicity, the sample comes loaded with a start and end stop. You can tap on the route button to get a route between these stops. Once the route is generated, the directions button gets enabled. Tap on the button to see the step by step directions for the route.
+1. Create a `RouteTask` using a URL to an online route service.
+2. Generate default `RouteParameters` using `routeTask::createDefaultParameters()`.
+3. Set `returnStops` and `returnDirections` on the parameters to true.
+4. Add `Stop`s to the parameters `stops` collection for each destination.
+5. Solve the route using `routeTask::solveRoute(routeParameters)` to get a `RouteResult`.
+6. Iterate through the result's `Route`s. To display the route, create a graphic using the geometry from `route::routeGeometry()`. To display directions, use `route::directionManeuvers()` and apply the list model to the UI.
 
-The sample uses the `generateDefaultParameters` method on `RouteTask` to get the default parameters from the service. Next, the stops are set in those parameters and returnDirections is set to true. Then, the `solveRoute` method is used to solve for the route. Once the route has been solved, the sample displays the route as a `Graphic`, and the `directionManeuvers` are given to a ListView.
+## Relevant API
 
-## Features
-- MapView
-- Map
-- Basemap
-- GraphicsOverlay
-- Graphic
-- Point
-- PictureMarkerSymbol
-- SimpleLineSymbol
-- SimpleRenderer
-- RouteTask
-- RouteParameters
-- Stop
-- RouteResult
-- DirectionManeuverListModel
+*   DirectionManeuver
+*   Route
+*   RouteParameters
+*   RouteResult
+*   RouteTask
+*   Stop
+
+## Tags
+
+directions, driving, navigation, network, network analysis, route, routing, shortest path, turn-by-turn

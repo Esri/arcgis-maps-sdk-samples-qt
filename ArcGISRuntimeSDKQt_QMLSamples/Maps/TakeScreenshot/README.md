@@ -1,19 +1,26 @@
 # Take screenshot
 
-This sample demonstrates how to take a screenshot of the MapView. This could be useful for sending an image of your map to a coworker, or it could be used for testing and debugging your applications. This same workflow works with the 3D SceneView as well.
+Take a screenshot of the map.
 
 ![](screenshot.png)
 
+## Use case
+
+GIS users may want to export a screenshot of a map to enable sharing as an image or printing.
+
 ## How to use the sample
-Open the sample and navigate to a desired location on the map. Press the `Take screenshot` button, and a screenshot image will display over the map. You can close the image by pressing the close button. Continue navigating the map and generating new screenshots.
+
+Pan and zoom to find an interesting location. Press `Take screenshot`, and a screenshot image will display over the map. Note that there may be a small delay if the map is still rendering when you push the button.
 
 ## How it works
-- The `exportImage` function is executed on the `MapView`.
-- Once the asynchronous task completes, a QML Image uses the image URL to render an Image on the screen.
+
+1. The `exportImage` function is executed on the `MapView`.
+2. Once the asynchronous task completes, a QML Image uses the image URL to render an Image on the screen.
 
 ## Relevant API
- - GeoView::exportImage
+
+* GeoView.exportImage
 
 ## Tags
-screenshot, screen capture, export
 
+capture, export, image, print, screen capture, screenshot, share, shot

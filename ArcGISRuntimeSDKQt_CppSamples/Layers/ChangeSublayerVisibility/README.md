@@ -1,16 +1,28 @@
 # Change sublayer visibility
 
-This sample demonstrates how you can hide or show sublayers of a map image layer by using the `ArcGISSublayerListModel`.
+Change the visibility of sublayers.
 
 ![](screenshot.png)
 
+## Use case
+
+A map image layer may contain many sublayers such as different types of roads in a road network or city, county, and state borders in a US map. The user may only be interested in a subset of these sublayers. Or, perhaps showing all of the sublayers would show too much detail. In these cases, you can hide certain sublayers by changing their visibility.
+
+## How to use the sample
+
+Each sublayer has a check box which can be used to toggle the visibility of the sublayer.
+
 ## How it works
 
-A list view is used to display the sublayers of the `ArcGISMapImageLayer`. The list view's model is set to the ArcGISMapImageLayer's `mapImageSublayers` property, which returns an `ArcGISSublayerListModel`. A delegate is created to display the sublayers in the list view. The name and visible roles from the list model are utilized to display the name of the sublayer in the list view, and to control the visibility of the layer with a QML switch component.
+1.  Create an `ArcGISMapImageLayer` object with the URL to a map image service.
+2.  Get the `ArcGISSublayerListModel` with `mapImageLayer::mapImageSublayers()`.
+3.  For each layer in the sublayer list, set its visible property to true or false.
 
-## Features
-- MapView
-- Map
-- Basemap
-- ArcGISMapImageLayer
-- ArcGISSublayerListModel
+## Relevant API
+
+*   ArcGISMapImageLayer
+*   ArcGISSublayerListModel
+
+## Tags
+
+layer, sublayer, visibility

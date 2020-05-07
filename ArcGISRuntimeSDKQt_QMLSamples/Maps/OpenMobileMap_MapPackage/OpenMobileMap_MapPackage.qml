@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.7
+import Esri.ArcGISRuntime 100.8
 import Esri.ArcGISExtras 1.1
 
 Rectangle {

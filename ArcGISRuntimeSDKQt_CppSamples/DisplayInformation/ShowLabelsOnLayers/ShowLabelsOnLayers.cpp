@@ -14,6 +14,10 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "ShowLabelsOnLayers.h"
 
 #include "Map.h"
@@ -47,7 +51,7 @@ void ShowLabelsOnLayers::componentComplete()
   m_map = new Map(Basemap::lightGrayCanvas(this), this);
 
   // Create a feature layer
-  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/1"), this);
+  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_115th_Congressional_Districts/FeatureServer/0"), this);
   FeatureLayer* featureLayer = new FeatureLayer(featureTable, this);
   connect(featureLayer, &FeatureLayer::doneLoading, [this, featureLayer](Error e)
   {
@@ -59,26 +63,105 @@ void ShowLabelsOnLayers::componentComplete()
   m_map->operationalLayers()->append(featureLayer);
 
   // Apply labels to the feature layer
-  const QString labelJson = createLabelJson();
-  LabelDefinition* labelDef = LabelDefinition::fromJson(labelJson, this);
-  featureLayer->labelDefinitions()->append(labelDef);
+  const QString republicanJson = createRepublicanJson();
+  const QString democratJson = createDemocratJson();
+  LabelDefinition* republicanLabelDef = LabelDefinition::fromJson(republicanJson, this);
+  LabelDefinition* democratLabelDef = LabelDefinition::fromJson(democratJson, this);
+  featureLayer->labelDefinitions()->append(republicanLabelDef);
+  featureLayer->labelDefinitions()->append(democratLabelDef);
   featureLayer->setLabelsEnabled(true);
 
   // Set map to map view
+  m_mapView->setViewpointCenter(Point(-10846309.950860, 4683272.219411, SpatialReference::webMercator()), 20000000);
   m_mapView->setMap(m_map);
 }
 
 // Creates the label JSON for use in the LabelDefinition
-QString ShowLabelsOnLayers::createLabelJson() const
+QString ShowLabelsOnLayers::createRepublicanJson() const
 {
   // Help regarding the JSON syntax for defining the LabelDefinition.FromJson syntax can be found here:
   // https://developers.arcgis.com/web-map-specification/objects/labelingInfo/
   // This particular JSON string will have the following characteristics:
-  // (1) The 'labelExpressionInfo' defines that the label text displayed comes from the field 'rte_num1' in the
-  //     feature service and will be prefaced with an "I -". Example: "I - 10", "I - 15", "I - 95", etc.
-  // (2) The 'labelPlacement' will be placed above and along the highway polyline segment.
-  // (3) The 'where' clause restricts the labels to be displayed that has valid (non-empty) data. Empty data
-  //     for this service has a single blank space in the 'rte_num1' field.
-  // (4) The 'symbol' for the labeled text will be blue with a yellow halo.
-  return QString(QStringLiteral("{\"labelExpressionInfo\":{\"expression\":\"'I - ' + $feature.rte_num1\"},\"labelPlacement\":\"esriServerLinePlacementAboveAlong\",\"where\":\"rte_num1 <> ' '\",\"symbol\": {\"angle\":0,\"backgroundColor\":[0,0,0,0],\"borderLineColor\":[0,0,0,0],\"borderLineSize\":0,\"color\":[0,0,255,255],\"font\": {\"decoration\":\"none\",\"size\":15,\"style\":\"normal\",\"weight\":\"normal\"},\"haloColor\":[255,255,0,255],\"haloSize\":1.5,\"horizontalAlignment\":\"center\",\"kerning\":false,\"type\":\"esriTS\",\"verticalAlignment\":\"middle\",\"xoffset\":0,\"yoffset\":0}}"));
+  // (1) The 'labelExpressionInfo' defines that the label text displayed comes from the fields 'NAME',
+  //     'PARTY' (R or D), and 'CDFIPS' in the feature service in the format
+  //     "Firstname Lastname (R)
+  //     District #".
+  // (2) The 'labelPlacement' will be placed horizontally in the polygon.
+  // (3) The 'where' clause restricts the labels to data from Republican districts.
+  // (4) The 'symbol' for the labeled text will be red with a white halo.
+
+  QString republicanJson = R"rawstring(
+                 {
+                    "labelExpressionInfo": {
+                      "expression": "$feature.NAME + ' (' + left($feature.PARTY,1) + ')\\nDistrict ' + $feature.CDFIPS" // arcade expression
+                    },
+                    "labelPlacement": "esriServerPolygonPlacementAlwaysHorizontal",
+                    "where": "PARTY = 'Republican'",
+                    "symbol": {
+                      "angle": 0,
+                      "backgroundColor": [0,0,0,0],
+                      "borderLineColor": [0,0,0,0],
+                      "borderLineSize": 0,
+                      "color": [255,0,0,255],
+                      "font": {
+                        "decoration": "none",
+                        "size": 8,
+                        "style": "normal",
+                        "weight": "normal"
+                      },
+                    "haloColor": [255,255,255,255],
+                    "haloSize": 1.5,
+                    "horizontalAlignment": "center",
+                    "kerning": false,
+                    "type": "esriTS",
+                    "verticalAlignment": "middle",
+                    "xoffset": 0,
+                    "yoffset": 0
+                  }
+                })rawstring";
+  return republicanJson;
+}
+
+QString ShowLabelsOnLayers::createDemocratJson() const
+{
+  // This particular JSON string will have the following characteristics:
+  // (1) The 'labelExpressionInfo' defines that the label text displayed comes from the fields 'NAME',
+  //     'PARTY', and 'CDFIPS' in the feature service in the format
+  //     "Firstname Lastname (D)
+  //     District #".
+  // (2) The 'labelPlacement' will be placed horizontally in the polygon.
+  // (3) The 'where' clause restricts the labels to data from Democrat districts.
+  // (4) The 'symbol' for the labeled text will be blue with a white halo.
+
+  QString democratJson = R"rawstring(
+                           {
+                    "labelExpressionInfo": {
+                      "expression": "$feature.NAME + ' (' + left($feature.PARTY,1) + ')\\nDistrict ' + $feature.CDFIPS" // arcade expression
+                    },
+                    "labelPlacement": "esriServerPolygonPlacementAlwaysHorizontal",
+                    "where": "PARTY = 'Democrat'",
+                    "symbol": {
+                      "angle": 0,
+                      "backgroundColor": [0,0,0,0],
+                      "borderLineColor": [0,0,0,0],
+                      "borderLineSize": 0,
+                      "color": [0,0,255,255],
+                      "font": {
+                        "decoration": "none",
+                        "size": 8,
+                        "style": "normal",
+                        "weight": "normal"
+                      },
+                    "haloColor": [255,255,255,255],
+                    "haloSize": 1.5,
+                    "horizontalAlignment": "center",
+                    "kerning": false,
+                    "type": "esriTS",
+                    "verticalAlignment": "middle",
+                    "xoffset": 0,
+                    "yoffset": 0
+                  }
+                })rawstring";
+
+  return democratJson;
 }

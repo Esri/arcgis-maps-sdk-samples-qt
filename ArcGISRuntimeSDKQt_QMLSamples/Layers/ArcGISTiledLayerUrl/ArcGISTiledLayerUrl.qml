@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.7
+import Esri.ArcGISRuntime 100.8
 
 Rectangle {
     width: 800
@@ -31,7 +31,7 @@ Rectangle {
             Basemap {
                 // Nest the ArcGISTiledLayer to add it as one of the Basemap's baseLayers
                 ArcGISTiledLayer {
-                    url: "https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"
+                    url: "https://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer"
                 }
             }
             //! [display tiled layer from tiled map service]

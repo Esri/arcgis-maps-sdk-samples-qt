@@ -1,23 +1,50 @@
 # Statistical query (group & sort)
 
-This sample demonstrates how to query a feature table to get statistics for one or more specified fields. The sample queries a service feature table of US states to get the selected statistics. The results can be grouped and sorted using one or several fields in the table.
+Query a feature table to get statistics for one or more specified fields. The sample queries a service feature table of US states to get the selected statistics. The results can be grouped and sorted using one or several fields in the table.
 
 ![](screenshot.png)
 
+## Use case
+
+You can use statistical queries, grouping and sorting to process large amounts of data saved in feature tables. This is helpful for identifying trends and relationships within the data, which can be used to support further interpretations and decisions. For example, a health agency can use information on medical conditions occurring throughout a country to identify at-risk areas or demographics, and decide on further action and preventive measures.
+
+## How to use the sample
+
+The sample will start with some default options selected. You can immediately click the "Get Statistics" button to see the results for these options. There are several ways to customize your queries:
+
+* You can add statistic definitions to the top-left table using the combo boxes and "Add" button. Select a table row and click "Remove" to remove a definition.
+
+* To change the Group-by fields, check the box by the field you want to group by in the bottom-left list view.
+
+* To change the Order-by fields, select a Group-by field (it must be checked) and click the ">>" button to add it to the Order-by table. To remove a field from the Order-by table, select it and click the "<<" button. To change the sort order of the Order-by field, the cells of the "Sort Order" column are combo-boxes that may be either ASCENDING or DESCENDING.
+
 ## How it works
-A `ServiceFeatureTable` is created with the `URL` to the REST endpoing of a feature service. `StatisticQueryParameters` are created, and the `statisticDefinitions` list, `groupByFieldNames` list, and the `orderByFields` list are set on the parameters, matching the options selected in the UI. Next, `queryStatistics()` is executed on the `ServiceFeatureTable`. A signal handler is created for the `queryStatisticsStatusChanged` signal, and once this signal emits, the `StatisticQueryResult` is hydrated with the results from the statistical query.
 
-## Instructions
-- Select a combination of fields and statistic types to include in the query.
-- (Optional) Choose one or more fields to group the results on. Grouping by SUB_REGION, for example, will show results grouped (summarized) for each region ('Pacific', 'Mountain', etc).
-- (Optional) Choose one or more fields to order results by. Only those fields selected for grouping are valid choices for ordering results.
-- Execute the query. Results will be displayed in a hierarchical view that is grouped and sorted according to the chosen fields.
+1. Create a `ServiceFeatureTable` using the `URL` of a feature service and load the table.
+2. Get the feature tables field names list with `featureTable.fields`.
+3. Create `StatisticDefinition`s specifying the field to compute statistics on and the `StatisticType` to compute.
+4. Create `StatisticsQueryParameters` passing in the list of statistic definitions.
+5. To have the results grouped by fields, add the field names to the query parameters' `groupByFieldNames` collection.
+6. To have the results ordered by fields, create `OrderBy`s, specifying the field name and `SortOrder`. Pass these `OrderBy`s to the parameters' `orderByFields` collection.
+7. To execute the query, call `featureTable.queryStatistics(queryParameters)`.
+8. Get the `StatisticQueryResult`. From this, you can get an iterator of `StatisticRecord`s to loop through and display.
 
-## Features
-- ServiceFeatureTable
-- StatisticQueryParameters
-- StatisticQueryResult
-- StatisticIterator
-- StatisticRecord
-- StatisticDefinition
-- OrderBy
+## About the data
+
+This sample uses a [Diabetes, Obesity, and Inactivity by US County](https://www.arcgis.com/home/item.html?id=392420848e634079bc7d0648586e818f) feature layer hosted on ArcGIS Online.
+
+## Relevant API
+
+* Field
+* OrderBy
+* QueryParameters
+* ServiceFeatureTable
+* StatisticDefinition
+* StatisticRecord
+* StatisticsQueryParameters
+* StatisticsQueryResult
+* StatisticType
+
+## Tags
+
+correlation, data, fields, filter, group, sort, statistics, table

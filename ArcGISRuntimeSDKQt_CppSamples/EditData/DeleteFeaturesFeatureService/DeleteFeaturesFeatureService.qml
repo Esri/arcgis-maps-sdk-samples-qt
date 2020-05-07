@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.7
+import Esri.ArcGISRuntime.Toolkit.Controls 100.8
 
 DeleteFeaturesFeatureServiceSample {
     id: deleteFeaturesSample
@@ -32,7 +32,7 @@ DeleteFeaturesFeatureServiceSample {
         // map callout window
         Callout {
             id: callout
-            calloutData: deleteFeaturesSample.calloutData
+            calloutData: mapView.calloutData
             borderColor: "lightgrey"
             borderWidth : 1
             accessoryButtonType: "Custom"

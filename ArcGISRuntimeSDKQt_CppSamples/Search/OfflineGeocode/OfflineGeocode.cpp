@@ -14,6 +14,10 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "OfflineGeocode.h"
 
 #include "Map.h"
@@ -33,6 +37,7 @@
 #include <QScopedPointer>
 #include <QDir>
 #include <QtCore/qglobal.h>
+#include <memory>
 
 #ifdef Q_OS_IOS
 #include <QStandardPaths>
@@ -131,7 +136,6 @@ void OfflineGeocode::componentComplete()
   m_mapView->calloutData()->setVisible(false);
   m_mapView->calloutData()->setTitle("Address");
   m_calloutData = m_mapView->calloutData();
-  emit calloutDataChanged();
 
   connectSignals();
 }
@@ -154,11 +158,6 @@ void OfflineGeocode::setSuggestionsText(const QString& searchText)
 void OfflineGeocode::logError(const Error error)
 {
   setErrorMessage( QString("%1: %2").arg(error.message(), error.additionalMessage()));
-}
-
-CalloutData* OfflineGeocode::calloutData() const
-{
-  return m_calloutData;
 }
 
 SuggestListModel* OfflineGeocode::suggestions() const
@@ -242,7 +241,7 @@ void OfflineGeocode::connectSignals()
   connect(m_mapView, &MapQuickView::identifyGraphicsOverlayCompleted, this, [this](QUuid, IdentifyGraphicsOverlayResult* rawIdentifyResult)
   {
     // Delete rawIdentifyResult when we leave scope.
-    QScopedPointer<IdentifyGraphicsOverlayResult> identifyResult(rawIdentifyResult);
+    auto identifyResult = std::unique_ptr<IdentifyGraphicsOverlayResult>(rawIdentifyResult);
     
     if (!identifyResult)
       return;

@@ -1,20 +1,36 @@
-# Scene Properties Expressions
+# Scene properties expressions
 
-This sample demonstrates how to update the orientation of a graphic using scene property rotation expressions.
+Update the orientation of a graphic using expressions based on its attributes.
 
 ![](screenshot.png)
 
+## Use case
+
+Instead of reading the attribute and changing the rotation on the symbol for a single graphic (a manual CPU operation), you can bind the rotation to an expression that applies to the whole overlay (an automatic GPU operation). This usually results in a noticeable performance boost (smooth rotations).
+
 ## How to use the sample
-Move the `Heading` and `Pitch` sliders to change the orientation of graphics in the graphics overlay.
+
+Adjust the heading and pitch sliders to rotate the cone.
 
 ## How it works
-The sample creates a SimpleRenderer within a GraphicOverlay. The SimpleRenderer has expressions for `HEADING` and `PITCH`, which are set via `headingExpression: "[Heading]"`. A graphic is created and its rotation is set by `coneGraphic.attributes.insertAttribute("Heading", initialHeading);` where the attribute key is `"Heading"` and `initialHeading` is the rotation angle.
+
+1. Create a new graphics overlay.
+2. Create a simple renderer and set its scene properties.
+3. Set the heading expression to `[HEADING]`.
+4. Apply the renderer to the graphics overlay.
+5. Create a graphic and add it to the overlay.
+6. To update the graphic's rotation, update the `HEADING` or `PITCH` property in the graphic's attributes.
 
 ## Relevant API
- * SimpleRenderer
- * GraphicsOverlay
- * RendererSceneProperties
+
+* Graphic.attributes
+* GraphicsOverlay
+* SceneProperties
+* SceneProperties.headingExpression
+* SceneProperties.pitchExpression
+* SimpleRenderer
+* SimpleRenderer.RendererSceneProperties
 
 ## Tags
-Scenes, 3D, Expressions, Attributes, rotation, heading, pitch
 
+3D, expression, graphics, heading, pitch, rotation, scene, symbology

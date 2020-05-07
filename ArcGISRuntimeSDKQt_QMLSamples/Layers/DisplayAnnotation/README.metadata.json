@@ -1,0 +1,27 @@
+{
+    "category": "Layers",
+    "description": "Display annotation from a feature service URL.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "AnnotationLayer",
+        "FeatureLayer",
+        "feature",
+        "web",
+        "service",
+        "layers",
+        "labels"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "AnnotationLayer",
+        "FeatureLayer",
+        "ServiceFeatureTable"
+    ],
+    "snippets": [
+        "DisplayAnnotation.qml"
+    ],
+    "title": "Display annotation"
+}

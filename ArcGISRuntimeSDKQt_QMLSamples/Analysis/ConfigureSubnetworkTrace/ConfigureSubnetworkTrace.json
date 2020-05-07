@@ -1,0 +1,5 @@
+{
+    "source" :  "ConfigureSubnetworkTrace.qml",
+    "otherSourceFiles" :  [],
+    "name" : "Configure subnetwork trace"
+}

@@ -14,6 +14,10 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "BrowseWfsLayers.h"
 
 #include "Map.h"
@@ -79,6 +83,9 @@ void BrowseWfsLayers::setMapView(MapQuickView* mapView)
 
 void BrowseWfsLayers::createWfsFeatureTable(int index, bool swap)
 {
+  if (m_wfsLayersInfoList.isEmpty())
+    return;
+
   // if swapAxisOrder button is selected swap the axis otherwise reset to default(OgcAxisOrder::NoSwap or false)
   if (swap)
     m_swapAxis = !m_swapAxis;

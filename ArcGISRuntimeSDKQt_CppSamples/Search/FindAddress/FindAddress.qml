@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.7
+import Esri.ArcGISRuntime.Toolkit.Controls 100.8
 
 FindAddressSample {
     id: findAddressSample
@@ -27,6 +27,7 @@ FindAddressSample {
 
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
 
@@ -34,7 +35,7 @@ FindAddressSample {
             id: callout
             borderColor: "lightgrey"
             borderWidth: 1
-            calloutData: findAddressSample.calloutData
+            calloutData: mapView.calloutData
             maxWidth: findAddressSample.width * 0.75
             leaderPosition: leaderPositionEnum.Automatic
             accessoryButtonHidden: true

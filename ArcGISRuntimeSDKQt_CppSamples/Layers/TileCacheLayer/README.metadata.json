@@ -1,0 +1,27 @@
+{
+    "category": "Layers",
+    "description": "Load an offline copy of a tiled map service as a basemap.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "cache",
+        "layers",
+        "offline",
+        "tile"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "ArcGISTiledLayer",
+        "Basemap",
+        "Map",
+        "TileCacheLayer"
+    ],
+    "snippets": [
+        "TileCacheLayer.cpp",
+        "TileCacheLayer.h",
+        "TileCacheLayer.qml"
+    ],
+    "title": "ArcGIS tiled layer (tile cache)"
+}

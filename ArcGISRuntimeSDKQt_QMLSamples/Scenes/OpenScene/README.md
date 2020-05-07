@@ -1,19 +1,35 @@
 # Open a scene (portal item)
 
-This sample demonstrates how to open a scene from a Portal item. Just like web maps are the ArcGIS format for maps, web scenes are the ArcGIS format for scenes. These scenes can be stored in ArcGIS Online or Portal.
+Open a web scene from a portal item.
 
 ![](screenshot.png)
 
+## Use case
+
+A scene is symbolized geospatial content that allows you to visualize and analyze geographic information in an intuitive and interactive 3D environment. Web scenes are an ArcGIS format for storing scenes in ArcGIS Online or portal. Scenes can be used to visualize a complex 3D environment like a city.
+
 ## How to use the sample
-When the sample loads, a scene from ArcGIS Online will be displayed.
+
+When the sample opens, it will automatically display the scene from ArcGIS Online. Pan and zoom to explore the scene.
 
 ## How it works
-- A `Scene` is declared as a child of a `SceneView`.
-- A `PortalItem` with an item ID is declared as a child of the `Scene`. Since the `portalItem` is a default property of `Scene`, this information is used to create a web scene.
+
+To open a web scene from a portal item:
+
+1. Create a `PortalItem` with an item ID pointing to a web scene.
+2. Create an `Scene` passing in the portal item.
+3. Set the scene to a `SceneView` to display it.
 
 ## Relevant API
-- Scene
-- PortalItem
+
+* Scene
+* PortalItem
+* SceneView
+
+## About the data
+
+This sample uses a [Geneva, Switzerland Scene](https://www.arcgis.com/home/item.html?id=c6f90b19164c4283884361005faea852) hosted on ArcGIS Online.
 
 ## Tags
-Scenes, Web Scene, Portal
+
+portal, scene, web scene

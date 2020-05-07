@@ -1,16 +1,37 @@
 # Service feature table (cache)
 
-This sample demonstrates how to use a feature table with the OnInteractionCache feature request mode. This mode will cache features locally from the remote feature service. This is the default mode, and will minimize the amount of requests sent to the server, thus lending itself to be the ideal choice for working in a partially connected environment.
+Display a feature layer from a service using the **on interaction cache** feature request mode.
 
 ![](screenshot.png)
 
+## Use case
+
+`ServiceFeatureTable` supports three request modes, which define how features are requested from the service and stored in the local table. The feature request modes have different performance characteristics. Use **On interaction cache** in scenarios with large amounts of infrequently edited data. See [Table performance concepts](https://developers.arcgis.com/qt/latest/cpp/guide/layers.htm#ESRI_SECTION1_40F10593308A4718971C9A8F5FB9EC7D) to learn more.
+
+## How to use the sample
+
+Run the sample and pan and zoom around the map. With each interaction, features will be requested and stored in a local cache. Each subsequent interaction will display features from the cache and only request new features from the service.
+
 ## How it works
+1. Create a `ServiceFeatureTable` with the provided URL.
+2. Since the default request mode is `FeatureRequestMode::OnInteractionCache` we do not need to change it.
+3. Add the table to the map using a `FeatureLayer`.
 
-The sample creates an instance of ServiceFeatureTable by supplying the URL to the REST endpoint of the feature service. The FeatureLayer is then supplied with the ServiceFeatureTable and added to the Map. Since OnInteractionCache is the default feature request mode, it doesn't need to be explicitly set. 
+## Relevant API
 
-## Features
-- MapView
-- Map
-- Basemap
-- ServiceFeatureTable
-- FeatureLayer
+* FeatureLayer
+* FeatureRequestMode::OnInteractionCache
+* ServiceFeatureTable
+* ServiceFeatureTable::setFeatureRequestMode
+
+## About the data
+
+The U.S. National Bridge Inventory describes 600,000 bridges in the United States. The sample uses [US Bridges](https://arcgisruntime.maps.arcgis.com/home/item.html?id=250b103a722c4e1ea71e562eac61be1b), a modified copy of the U.S. National Bridge Inventory hosted on ArcGIS Online. The sample opens with an initial visible extent centered over Bridgeport, CT.
+
+## Additional information
+
+**On interaction cache** is the default feature request mode. Features are requested automatically for the visible extent as the users pans and zooms the map. If the user returns to an area where features have previously been requested, those features won't be requested again.
+
+## Tags
+
+cache, feature request mode, performance

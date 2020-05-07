@@ -1,14 +1,29 @@
-# Display a map
+# Display map
 
-This sample demonstrates how to display a map view with a basemap.
+Display a map with an imagery basemap.
 
 ![](screenshot.png)
 
+## Use case
+
+The map is the fundamental building block of any GIS application and is used to specify how geographic data is organized and communicated to your users.
+
+## How to use the sample
+
+Run the sample to view the map. Pan and zoom to navigate the map.
+
 ## How it works
 
-This is the most basic sample for displaying a map. It can be considered the "Hello World" map app for the ArcGIS Runtime SDK for Qt. It shows how to create a map view, and add in a map that contains the imagery with labels basemap. By default, this map supports basic zooming and panning operations.
+1. Create an `Map` with a `Basemap::imageryWithLabels()` basemap.
+2. Create a `MapView` object to display the map.
+3. Set the map to the map view.
 
-## Features
-- MapView
-- Map
-- Basemap
+## Relevant API
+
+* Map
+* Basemap
+* MapView
+
+## Tags
+
+basemap, map

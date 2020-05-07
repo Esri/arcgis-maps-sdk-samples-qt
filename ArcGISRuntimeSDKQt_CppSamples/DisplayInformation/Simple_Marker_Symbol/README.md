@@ -1,19 +1,30 @@
 # Simple marker symbol
 
-This sample demonstrates how to add a point graphic, symbolized by a red circle specified via a `SimpleMarkerSymbol`, to a `GraphicsOverlay`.
+Show a simple marker symbol on a map.
 
 ![](screenshot.png)
 
-## How it works
-A `Graphic` sets a `Point` geometry and a red circle `SimpleMarkerSymbol`. That `Graphic` is added to a `GraphicsOverlay` which is added to the `MapView`.
+## Use case
 
-## Features
-- MapView
-- Map
-- Basemap
-- Graphic
-- GraphicsOverlay
-- SimpleMarkerSymbol
-- Viewpoint
-- Point
-- SpatialReference
+Customize the appearance of a point suitable for the data. For example, a point on the map styled with a circle could represent a drilled borehole location, whereas a cross could represent the location of an old coal mine shaft.
+
+## How to use the sample
+
+The sample loads with a predefined simple marker symbol, set as a red circle.
+
+## How it works
+
+1.  Create a `SimpleMarkerSymbol(SimpleMarkerSymbolStyle, color, size)`.
+2.  Create a `Graphic` passing in a `Point` and the simple marker symbol as parameters.
+3.  Add the graphic to the graphics overlay with `graphicsOverlay::graphics()::append(graphic)`.
+
+## Relevant API
+
+*   Graphic
+*   GraphicsOverlay
+*   Point
+*   SimpleMarkerSymbol
+
+## Tags
+
+SimpleMarkerSymbol, symbol

@@ -18,7 +18,7 @@ import QtQuick 2.6
 import Esri.Samples 1.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime.Toolkit.Controls 100.7
+import Esri.ArcGISRuntime.Toolkit.Controls 100.8
 
 OfflineGeocodeSample {
     id: offlineGeocodeSample
@@ -28,13 +28,14 @@ OfflineGeocodeSample {
 
     // add a mapView component
     MapView {
+        id: mapView
         anchors.fill: parent
         objectName: "mapView"
 
         Callout {
             id: callout
             leaderPosition: leaderPositionEnum.Automatic
-            calloutData: offlineGeocodeSample.calloutData
+            calloutData: mapView.calloutData
             screenOffsetY: -19
             accessoryButtonHidden: true
         }

@@ -22,21 +22,20 @@ Some WFS services return coordinates in X,Y order, while others return coordinat
     * Set the axis order if necessary.
 4. Create a feature layer from the feature table.
 5. Add the feature layer to the map.
-    * The sample uses randomly-generated symbology, similar to the behavior in ArcGIS Pro.
 
 ## Relevant API
 
+* FeatureLayer
+* WfsFeatureTable
+* WfsFeatureTable::axisOrder
+* WfsLayerInfo
 * WfsService
 * WfsServiceInfo
-* WfsLayerInfo
-* WfsFeatureTable
-* FeatureLayer
-* WfsFeatureTable::AxisOrder
 
 ## About the data
 
-This service shows features for downtown Seattle. For additional information, see the underlying service on [ArcGIS Online](https://arcgisruntime.maps.arcgis.com/home/item.html?id=1b81d35c5b0942678140efc29bc25391).
+The sample is configured with a sample WFS service, but you can load other WFS services if desired. The default service shows [Seattle downtown features](https://arcgisruntime.maps.arcgis.com/home/item.html?id=1b81d35c5b0942678140efc29bc25391) hosted on ArcGIS Online.
 
 ## Tags
 
-OGC, WFS, feature, web, service, layers, browse, catalog
+browse, catalog, feature, layers, OGC, service, web, WFS

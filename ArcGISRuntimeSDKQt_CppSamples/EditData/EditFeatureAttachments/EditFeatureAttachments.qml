@@ -19,7 +19,7 @@ import QtQuick.Controls 2.2
 import Qt.labs.platform 1.0
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.7
+import Esri.ArcGISRuntime.Toolkit.Controls 100.8
 
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
@@ -36,7 +36,7 @@ EditFeatureAttachmentsSample {
             id: callout
             borderColor: "lightgrey"
             borderWidth: 1
-            calloutData: editAttachmentsSample.calloutData
+            calloutData: mapView.calloutData
             leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
                 attachmentWindow.visible = true;

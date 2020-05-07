@@ -14,8 +14,13 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "WmsLayerUrl.h"
 
+#include "Envelope.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "WmsLayer.h"
@@ -44,15 +49,18 @@ void WmsLayerUrl::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
 
-  // Create a map using the imagery basemap
-  m_map = new Map(Basemap::imagery(this), this);
+  // Create a map using the light gray canvas basemap
+  m_map = new Map(Basemap::lightGrayCanvas(this), this);
 
   // Add a WMS Layer by specifying the URL and layer name
-  const QUrl wmsServiceUrl("https://certmapper.cr.usgs.gov/arcgis/services/geology/africa/MapServer/WMSServer?request=GetCapabilities&service=WMS");
-  const QStringList layerNames{"0"};
+  const QUrl wmsServiceUrl("https://nowcoast.noaa.gov/arcgis/services/nowcoast/radar_meteo_imagery_nexrad_time/MapServer/WMSServer?request=GetCapabilities&service=WMS");
+  const QStringList layerNames{"1"};
   WmsLayer* wmsLayer = new WmsLayer(wmsServiceUrl, layerNames, this);
   m_map->operationalLayers()->append(wmsLayer);
 
   // Set map to map view
   m_mapView->setMap(m_map);
+
+  // start zoomed in over the US
+  m_mapView->setViewpointGeometry(Envelope(-19195297.778679, 512343.939994, -3620418.579987, 8658913.035426, SpatialReference::webMercator()));
 }

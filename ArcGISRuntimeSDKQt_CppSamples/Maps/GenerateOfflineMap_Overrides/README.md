@@ -1,18 +1,15 @@
 # Generate Offline Map (Overrides)
 
-## Description
-Use the `OfflineMapTask`, with the overrides, to take a webmap offline. The overrides workflow allows you to adjust the settings used for taking each layer in the map offline. For a simple example of how you take a map offline, please consult the "Generate Offline Map" sample.
-
-For applications where you just need to take all layers offline, use the standard workflow (using only `GenerateOfflineMapParameters`). For more fine-grained control over the data you are taking offline, use overrides to adjust the settings for each layer (`GenerateOfflineMapParameters` in conjunction with `GenerateOfflineMapParameterOverrides`). Some example use cases for the overrides approach could be when you need to:
-
-- adjust the extent for one or more layers to be different to the rest of the map.
-- reduce the amount of data (for example tile data) downloaded for one or more layers in the map.
-- filter features to be taken offline.
-- take features with no geometry offline - for example, features whose attributes have been populated in the office, but which need a site survey for their geometry.
+Take a web map offline with additional options for each layer.
 
 ![](screenshot.png)
 
+## Use case
+
+When taking a web map offline, you may adjust the data (such as layers or tiles) that is downloaded by using custom parameter overrides. This can be used to reduce the extent of the map or the download size of the offline map. It can also be used to highlight specific data by removing irrelevant data. Additionally, this workflow allows you to take features offline that don't have a geometry - for example, features whose attributes have been populated in the office, but still need a site survey for their geometry.
+
 ## How to use the sample
+
 1. When the sample starts, you may be prompted to sign into arcgis.com.
 2. Click on "Generate Offline Map (Overrides)".
 3. Use the range slider to adjust the min/max levelIds to be taken offline for the Streets basemap.
@@ -47,13 +44,21 @@ Having adjusted the `GenerateOfflineMapParameterOverrides` to reflect the custom
 As the web map that is being taken offline contains an Esri basemap, this sample requires that you sign in with an ArcGIS Online organizational account.
 
 ## Relevant API
-- OfflineMapTask
-- GenerateGeodatabaseParameters
-- GenerateOfflineMapParameters
-- GenerateOfflineMapParameterOverrides
-- GenerateOfflineMapJob
-- GenerateOfflineMapResult
-- ExportTileCacheParameters
+
+* ExportTileCacheParameters
+* GenerateGeodatabaseParameters
+* GenerateLayerOption
+* GenerateOfflineMapJob
+* GenerateOfflineMapParameterOverrides
+* GenerateOfflineMapParameters
+* GenerateOfflineMapResult
+* OfflineMapParametersKey
+* OfflineMapTask
+
+## Additional information
+
+For applications where you just need to take all layers offline, use the standard workflow (using only `GenerateOfflineMapParameters`). For a simple example of how you take a map offline, please consult the "Generate offline map" sample.
 
 ## Tags
-Offline
+
+adjust, download, extent, filter, LOD, offline, override, parameters, reduce, scale range, setting

@@ -1,19 +1,30 @@
 # Min-Max Scale
 
-This sample demonstrates how to set the minimum and maximum scale of a map.
+Restrict zooming between specific scale ranges.
 
 ![](screenshot.png)
 
+## Use case
+
+Data may only appear at a certain scale on a map, and may be visually lost if zooming too far in or out. Setting the minimum and maximum scales ensures the zoom extents are appropriately limited for the purposes of the map.
+
 ## How to use the sample
-Use the mousewheel or pinch gesture to zoom in and out of the map. Notice that the scale of which you can do that is limited by the application.
+
+Zoom in and out of the map. The zoom extents of the map are limited between the given minimum and maximum scales.
 
 ## How it works
-1. Use the `setMinScale` or `setMaxScale` methods (both part of the C++ API) in your app's `.cpp` file to set these boundaries.
+
+1. Create a `Map` object.
+2. Set min and max scales of map with `setMaxScale()` and `setMinScale()`.
+3. Set the map to a `MapView` object.
 
 ## Relevant API
- - Map::setMinScale
- - Map::setMaxScale
+
+- Map
+- Basemap
+- MapView
+- ViewPoint
 
 ## Tags
-Maps, 2D, scale, setMinScale, setMaxScale, zoom
 
+area of interest, level of detail, maximum, minimum, scale, viewpoint

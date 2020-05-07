@@ -1,8 +1,16 @@
 # Update attributes (feature service)
 
-This sample demonstrates how to edit attributes of a feature in a feature service.
+Update feature attributes in an online feature service.
 
 ![](screenshot.png)
+
+## Use case
+
+Online feature services can be updated with new data. This is useful for updating existing data in real time while working in the field.
+
+## How to use the sample
+
+To change the feature's damage property, tap the feature to select it, and update the damage type using the drop down.
 
 ## How it works
 
@@ -10,16 +18,22 @@ Features in the map represent damage inspection points and are symbolized based 
 
 This is done by first obtaining the inspection point feature after it is selected. Once the feature is obtained, the feature's attribute is updated by calling `setAttributeValue`. To update the feature in the feature table, call `updateFeature` and pass in the edited feature. Finally, to update the service, call `applyEdits` to apply the edits to the service.
 
-## Features
-- MapView
-- Map
-- Basemap
-- Viewpoint
-- SpatialReference
-- ServiceFeatureTable
-- FeatureLayer
-- Feature
-- ArcGISFeature
-- FeatureEditResult
-- FeatureQueryResult
-- Point
+## How it works
+
+1. Create a `ServiceFeatureTable` object from a URL.
+    * When the table loads, you can get the domain to determine which options to present in your UI.
+2. Create a `FeatureLayer` object from the `ServiceFeatureTable`.
+3. Select features from the `FeatureLayer`.
+4. To update the feature's attribute, first load it, then use the `attributeValue`.
+5. Update the table with `updateFeature`.
+6. After a change, apply the changes on the server using `applyEdits`.
+
+## Relevant API
+
+* ArcGISFeature
+* FeatureLayer
+* ServiceFeatureTable
+
+## Tags
+
+attribute, coded value, coded value domain, domain, editing, value

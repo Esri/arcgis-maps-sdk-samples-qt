@@ -43,7 +43,7 @@ namespace Esri
 class OfflineGeocode : public QQuickItem
 {
   Q_OBJECT
-  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
+
   Q_PROPERTY(Esri::ArcGISRuntime::SuggestListModel* suggestions READ suggestions NOTIFY suggestionsChanged)
   Q_PROPERTY(bool geocodeInProgress READ geocodeInProgress NOTIFY geocodeInProgressChanged)
   Q_PROPERTY(bool suggestInProgress READ suggestInProgress NOTIFY suggestInProgressChanged)
@@ -62,7 +62,6 @@ public:
 
 signals:
   void noResultsChanged();
-  void calloutDataChanged();
   void suggestionsChanged();
   void suggestInProgressChanged();
   void geocodeInProgressChanged();
@@ -73,7 +72,6 @@ private slots:
   void logError(const Esri::ArcGISRuntime::Error error);
 
 private:
-  Esri::ArcGISRuntime::CalloutData* calloutData() const;
   Esri::ArcGISRuntime::SuggestListModel* suggestions() const;
   bool geocodeInProgress() const;
   bool noResults() const;

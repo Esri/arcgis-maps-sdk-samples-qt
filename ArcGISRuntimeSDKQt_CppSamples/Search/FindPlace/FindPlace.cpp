@@ -14,6 +14,10 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "FindPlace.h"
 
 #include "CalloutData.h"
@@ -31,7 +35,6 @@
 #include "LocatorTask.h"
 #include "LocationDisplay.h"
 #include "SuggestListModel.h"
-#include <QGeoPositionInfoSource>
 #include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
@@ -64,7 +67,6 @@ void FindPlace::componentComplete()
   m_mapView->setMap(m_map);
 
   // turn on the location display
-  m_mapView->locationDisplay()->setPositionSource(QGeoPositionInfoSource::createDefaultSource(this));
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
   m_mapView->locationDisplay()->start();
 
@@ -76,8 +78,7 @@ void FindPlace::componentComplete()
 
   // initialize callout
   m_mapView->calloutData()->setVisible(false);
-  m_calloutData = m_mapView->calloutData();
-  emit calloutDataChanged();
+  m_calloutData = m_mapView->calloutData();  
 
   // connect mapview signals
   connectSignals();

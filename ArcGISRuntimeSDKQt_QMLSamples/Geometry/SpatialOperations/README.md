@@ -1,30 +1,41 @@
 # Spatial operations
 
-This sample demonstrates how to perform spatial operations on geometries using the GeometryEngine. Spatial operations allow you to perform spatial analysis between two geometries. For example, you can union (combine) two geometries together or find the areas of two geometries that intersect. For example, if you had a polygon representing rivers and another polygon representing counties, you could find the rivers that intersect a given county.
+Find the union, intersection, or difference of two geometries.
 
 ![](screenshot.png)
 
+## Use case
+
+The different spatial operations (union, difference, symmetric difference, and intersection) can be used for a variety of spatial analyses. For example, government authorities may use the intersect operation to determine whether a proposed road cuts through a restricted piece of land such as a nature reserve or a private property.
+When these operations are chained together, they become even more powerful. An analysis of food deserts within an urban area might begin by union-ing service areas of grocery stores, farmer's markets, and food co-ops. Taking the difference between this single geometry of all services areas and that of a polygon delineating a neighborhood would reveal the areas within that neighborhood where access to healthy, whole foods may not exist.
+
 ## How to use the sample
-The sample provides an option to select a geometry operation. When you choose a geometry operation, the application performs this operation between the overlapping polygons and applies the result to the geometries.
+
+The sample provides an option to select a spatial operation. When an operation is selected, the resulting geometry is shown in red.
 
 ## How it works
-The sample creates two overlapping polygons using the `PolygonBuilder` class and adds them as graphics to a `GraphicsOverlay`. These polygons are used for performing all the spatial operations. For each operation, a method on the `GeometryEngine` is called with the two polygons as input. The resulting geometry is added as a red colored graphic to the overlay. The methods used are as follows:
 
-- `GeometryEngine::union` - This method returns the two geometries unioned together as one geometry.
-- `GeometryEngine::difference` - This method returns any part of Geometry2 that does not intersect Geometry1.
-- `GeometryEngine::symmetricDifference` - This method returns any part of Geometry1 or Geometry2 which do not intersect.
-- `GeometryEngine::intersection` - This method returns the intersection of Geometry1 and Geometry2.
+1. Create a `GraphicsOverlay` and add it to the `MapView`.
+2. Use `PolygonBuilder` to create two polygons.
+3. Add the overlapping polygons to the graphics overlay.
+4. Perform spatial relationships between the polygons by using the appropriate operation:
+    * `GeometryEngine.unionOf(geometry1, geometry2)` - This method returns the two geometries united together as one geometry.
+    * `GeometryEngine.difference(geometry1, geometry2)` - This method returns any part of Geometry2 that does not intersect Geometry1.
+    * `GeometryEngine.symmetricDifference(geometry1, geometry2)` - This method returns any part of Geometry1 or Geometry2 which do not intersect.
+    * `GeometryEngine.intersection(geometry1, geometry2)` - This method returns the intersection of Geometry1 and Geometry2.
+5. Use the geometry that is returned from the method call to create a new `Graphic` and add it to the graphics overlay for it to be displayed.
 
 ## Relevant API
-- GeometryEngine
-- GeometryEngine::union
-- GeometryEngine::difference
-- GeometryEngine::symmetricDifference
-- GeometryEngine::intersection
-- Geometry
-- Graphic
-- GraphicsOverlay
-- PolygonBuilder
+
+* Geometry
+* GeometryEngine
+* GeometryEngine.difference
+* GeometryEngine.intersection
+* GeometryEngine.symmetricDifference
+* GeometryEngine.unionOf
+* Graphic
+* GraphicsOverlay
 
 ## Tags
-Geometry Engine, Spatial Operations, Geometry, Analysis
+
+analysis, combine, difference, geometry, intersection, merge, polygon, union

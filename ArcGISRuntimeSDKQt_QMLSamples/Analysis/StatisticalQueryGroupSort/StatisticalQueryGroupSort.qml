@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.7
+import Esri.ArcGISRuntime 100.8
 
 Rectangle {
     id: rootRectangle
@@ -28,7 +28,7 @@ Rectangle {
 
     ServiceFeatureTable {
         id: censusTable
-        url: "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer/3"
+        url: "https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/Counties_Obesity_Inactivity_Diabetes_2013/FeatureServer/0"
 
         Component.onCompleted: load();
 
@@ -118,6 +118,9 @@ Rectangle {
                     orderBys.push(orderBy);
                 }
                 params.orderByFields = orderBys;
+
+                // ignore counties with missing data
+                params.whereClause = "\"State\" IS NOT NULL";
 
                 // execute the query
                 censusTable.queryStatistics(params);

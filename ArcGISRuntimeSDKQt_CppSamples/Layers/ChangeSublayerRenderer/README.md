@@ -1,25 +1,40 @@
 # Change sublayer renderer
 
-This sample demonstrates how to change the renderer on a map image layer sublayer.
-
-In this example, a class breaks renderer is applied to see the different population ranges in the counties sublayer data.
+Apply a renderer to a sublayer.
 
 ![](screenshot.png)
 
+## Use case
+
+A layer showing animal populations contains sublayers for different species. A renderer could be applied which gives each sublayer a different color, so that populations of each species can be compared visually.
+
 ## How to use the sample
-Press the Apply Renderer button to apply the class breaks renderer to the sublayer. Press the Reset button to go back to the original renderer.
+
+Wait for the map image layer to load. Click the 'Change Sublayer Renderer' button to apply a unique value renderer to see different population ranges in the counties sub-layer data.
 
 ## How it works
-- The `ArcGISMapImageSublayer` is obtained from the `ArcGISMapImageLayer` once the layer is loaded.
-- A `ClassBreaksRenderer` is created by defining a series of `ClassBreaks`.
-- When the Apply Renderer button is clicked, the ClassBreaksRenderer is set on the sublayer.
+
+1. Create an `ArcGISMapImageLayer` from its URL.
+2. After it is done loading, get its `ArcGISSublayerListModel` with `imageLayer::mapImageSublayers()`.
+3. Cast the sublayer you want to change to the appropriate type: `dynamic_cast<ArcGISMapImageSublayer>(ArcGISSublayer)`.
+4. Create a `ClassBreaksRenderer` with a collection of `ClassBreak`s for different population ranges.
+5. Set the renderer of the sublayer with `sublayer::setRenderer(renderer)`.
 
 ## Relevant API
-- ArcGISMapImageSublayer
-- ClassBreaksRenderer
-- ClassBreak
-- ArcGISMapImageSublayer::renderer
+
+* ArcGISMapImageLayer
+* ArcGISMapImageSubLayer
+* ClassBreaksRenderer
+* ClassBreaksRenderer::classBreak
+
+## About the data
+
+This application displays census data from an ArcGIS Server map service. It contains various population statistics, including total population for each county in 2007.
+
+## Additional information
+
+The service hosting the layer must support dynamic layers to be able to change the rendering of sublayers.
 
 ## Tags
-Sublayer renderer, renderer, dynamic layer
 
+class breaks, dynamic layer, dynamic rendering, renderer, sublayer, symbology, visualization

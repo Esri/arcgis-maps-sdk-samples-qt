@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.7
+import Esri.ArcGISRuntime.Toolkit.Controls 100.8
 
 MobileMap_SearchAndRouteSample {
     id: mobileMapSearchRoute
@@ -39,7 +39,7 @@ MobileMap_SearchAndRouteSample {
 
             // callout to display information
             Callout {
-                calloutData: mobileMapSearchRoute.calloutData
+                calloutData: mapView.calloutData
                 screenOffsetY: -19
                 accessoryButtonHidden: true
                 leaderPosition: leaderPositionEnum.Automatic

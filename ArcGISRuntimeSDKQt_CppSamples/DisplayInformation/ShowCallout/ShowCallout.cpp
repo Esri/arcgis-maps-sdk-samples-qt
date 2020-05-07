@@ -14,6 +14,10 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "ShowCallout.h"
 
 #include "Map.h"
@@ -56,8 +60,6 @@ void ShowCallout::componentComplete()
   m_mapView->calloutData()->setTitle("Location");
   QImage image(":/Samples/DisplayInformation/ShowCallout/RedShinyPin.png");
   m_mapView->calloutData()->setImage(image);
-  m_calloutData = m_mapView->calloutData();
-  emit calloutDataChanged();
   //! [initialize callout]
 
   // display callout on mouseClicked
@@ -75,9 +77,4 @@ void ShowCallout::componentComplete()
       m_mapView->calloutData()->setVisible(true);
     }
   });
-}
-
-CalloutData* ShowCallout::calloutData() const
-{
-  return m_calloutData;
 }

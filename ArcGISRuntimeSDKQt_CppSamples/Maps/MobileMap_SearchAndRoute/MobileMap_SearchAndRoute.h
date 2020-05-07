@@ -24,7 +24,6 @@ namespace Esri
     class Map;
     class RouteTask;
     class LocatorTask;
-    class CalloutData;
     class MapQuickView;
     class GraphicsOverlay;
     class MobileMapPackage;
@@ -45,12 +44,12 @@ namespace Esri
 class MobileMap_SearchAndRoute : public QQuickItem
 {
   Q_OBJECT
+
   Q_PROPERTY(bool canRoute READ canRoute NOTIFY canRouteChanged)
   Q_PROPERTY(bool canClear READ canClear NOTIFY canClearChanged)
   Q_PROPERTY(bool isGeocodeInProgress READ isGeocodeInProgress NOTIFY isGeocodeInProgressChanged)
   Q_PROPERTY(QStringList mmpkList READ mmpkList NOTIFY mmpkListChanged)
   Q_PROPERTY(QVariantList mapList READ mapList NOTIFY mapListChanged)
-  Q_PROPERTY(Esri::ArcGISRuntime::CalloutData* calloutData READ calloutData NOTIFY calloutDataChanged)
 
 public:
   explicit MobileMap_SearchAndRoute(QQuickItem* parent = nullptr);
@@ -66,7 +65,6 @@ public:
 signals:
   void mmpkListChanged();
   void mapListChanged();
-  void calloutDataChanged();
   void canClearChanged();
   void canRouteChanged();
   void isGeocodeInProgressChanged();
@@ -79,7 +77,6 @@ private:
   QStringList mmpkList() const;
   QVariantList mapList() const;
   bool isGeocodeInProgress() const;
-  Esri::ArcGISRuntime::CalloutData* calloutData() const;
 
 private:
   int m_selectedMmpkIndex = 0;
@@ -103,7 +100,6 @@ private:
   Esri::ArcGISRuntime::RouteTask* m_currentRouteTask = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_stopsGraphicsOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_routeGraphicsOverlay = nullptr;
-  Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
   QObject* m_stopGraphicParent = nullptr;
   QObject* m_routeGraphicParent = nullptr;
 };

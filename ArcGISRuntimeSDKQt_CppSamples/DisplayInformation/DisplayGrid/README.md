@@ -1,23 +1,38 @@
 # Display a grid
 
-This sample demonstrates how to display grids such as MGRS, Lat/Lon, USNG, and UTM on a map. In addition, this sample demonstrates how to configure the look and feel of the grid.
+Display coordinate system grids including Latitude/Longitude, MGRS, UTM and USNG on a map view. Also, toggle label visibility and change the color of grid lines and grid labels.
 
 ![](screenshot.png)
 
-## How it works
-A `MapView` is declared with a `Map` that contains the imagery basemap. The `MapView` is initially set to use the Latitude/Longitude map grid by setting the `MapView::setGrid` method. Press the button on the bottom to display a settings window, which has several controls that modify the grid. Modifications to the grid include the grid type (MGRS, Lat/Lon, USNG, and UTM), label visibility, grid visibility, label color, grid color, label position, and label format.
+## Use case
 
-## Features
-- Map
-- MapView
-- Grid
-- LatitudeLongitudeGrid
-- MGRSGrid
-- UTMGrid
-- USNGGrid
-- MGRSGrid
-- LatitudeLongitudeGrid
-- USNGGrid
-- UTMGrid
-- TextSymbol
-- SimpleLineSymbol
+Grids are often used on printed maps, but can also be helpful on digital maps, to identify locations on a map.
+
+## How to use the sample
+
+Tap on the `Change Grid` button in the toolbar to open a settings view. You can select type of grid from `Grid Type` (LatLong, MGRS, UTM and USNG) and modify its properties like label visibility, grid line color, and grid label color.
+
+## How it works
+
+1. Create an instance of one of the `Grid` types.
+1. Grid lines and labels can be styled per grid level with `setLineSymbol(gridLevel, lineSymbol)` and `setTextSymbol(gridLevel, textSymbol)` methods on the grid.
+1. The label position can be set with `setLabelPosition(labelPosition)` method on the grid.
+1. For the `LatitudeLongitudeGrid` type, you can specify a label format of `DecimalDegrees` or `DegreesMinutesSeconds`.
+1. To set the grid, use the `setGrid(grid)` method on the map view.
+
+## Relevant API
+
+* ArcGISGrid
+* LatitudeLongitudeGrid
+* LatitudeLongitudeGridLabelFormat::DecimalDegrees
+* LatitudeLongitudeGridLabelFormat::DegreesMinutesSeconds
+* MapView
+* MGRSGrid
+* SimpleLineSymbol
+* TextSymbol
+* USNGGrid
+* UTMGrid
+
+## Tags
+
+coordinates, degrees, graticule, grid, latitude, longitude, MGRS, minutes, seconds, USNG, UTM

@@ -28,13 +28,13 @@ The second list shows layers that have been removed from the map. Select the men
 
 ## Relevant API
 
-* ArcGISMap
 * ArcGISMapImageLayer
 * LayerListModel
 * LayerListModel.append
 * LayerListModel.move
 * LayerListModel.remove
+* Map
 
 ## Tags
 
-layers
+add, delete, layer, map, remove

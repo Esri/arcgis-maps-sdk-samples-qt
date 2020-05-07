@@ -14,6 +14,10 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "ArcGISTiledLayerUrl.h"
 
 #include "Map.h"
@@ -46,7 +50,7 @@ void ArcGISTiledLayerUrl::componentComplete()
 
   //! [display tiled layer from tiled map service]
   // create a new tiled layer
-  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer"), this);
+  ArcGISTiledLayer* tiledLayer = new ArcGISTiledLayer(QUrl("https://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer"), this);
   // create a new basemap instance with the tiled layer
   Basemap* basemap = new Basemap(tiledLayer, this);
   // create a new map instance

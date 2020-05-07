@@ -14,6 +14,10 @@
 // limitations under the License.
 // [Legal]
 
+#ifdef PCH_BUILD
+#include "pch.hpp"
+#endif // PCH_BUILD
+
 #include "FeatureLayerQuery.h"
 
 #include "Map.h"
@@ -33,7 +37,7 @@
 #include <QUrl>
 #include <QColor>
 #include <QList>
-#include <QScopedPointer>
+#include <memory>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -66,7 +70,7 @@ void FeatureLayerQuery::componentComplete()
     m_mapView->setMap(m_map);
 
     // create the feature table
-    m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer/2"), this);
+    m_featureTable = new ServiceFeatureTable(QUrl("https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/USA_Daytime_Population_2016/FeatureServer/0"), this);
     // create the feature layer using the feature table
     m_featureLayer = new FeatureLayer(m_featureTable, this);
 
@@ -78,6 +82,7 @@ void FeatureLayerQuery::componentComplete()
     SimpleRenderer* renderer = new SimpleRenderer(sfs, this);
     // set the renderer for the feature layer
     m_featureLayer->setRenderer(renderer);
+    m_featureLayer->setMaxScale(10000);
 
     // add the feature layer to the map
     m_map->operationalLayers()->append(m_featureLayer);
@@ -91,7 +96,7 @@ void FeatureLayerQuery::connectSignals()
     // iterate over the query results once the query is done
     connect(m_featureTable, &ServiceFeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* rawQueryResult)
     {
-        QScopedPointer<FeatureQueryResult> queryResult(rawQueryResult);
+      auto queryResult = std::unique_ptr<FeatureQueryResult>(rawQueryResult);
 
         if (queryResult && !queryResult->iterator().hasNext())
         {

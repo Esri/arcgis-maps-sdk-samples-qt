@@ -1,0 +1,23 @@
+{
+    "category": "Geometry",
+    "description": "Get the vertex of a geometry closest to a point.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "geometry",
+        "polygon",
+        "proximity"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "GeometryEngine",
+        "MapView"
+        "ProximityResult"
+    ],
+    "snippets": [
+        "NearestVertex.qml"
+    ],
+    "title": "Nearest vertex"
+}

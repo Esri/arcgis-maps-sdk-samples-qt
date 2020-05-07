@@ -1,18 +1,28 @@
 # Cut geometry
 
-This sample demonstrates how to cut a geometry with a polyline using the GeometryEngine. For example, you may want to subdivide a large parcel polygon into several smaller parcels.
+Cut a geometry along a polyline.
 
 ![](screenshot.png)
 
+## Use case
+
+You might cut a polygon representing a large parcel to subdivide it into smaller parcels.
+
 ## How to use the sample
-Press the `cut` button, and the solid blue polygon will be cut into two polygons - a yellow and a green polygon with a diagonal pattern.
+
+Click "Cut" to cut the polygon with the polyline and see the resulting parts (shaded in different colors).
 
 ## How it works
-The `GeometryEngine::cut` method is executed with the polygon as the first parameter and the cutting line as the second parameter. This returns a list of geometries. Each geometry is added as a new `Graphic` with differing fill symbols to visualize the results.
+
+1. Pass the geometry and polyline to `GeometryEngine::cut` to cut the geometry along the polyline.
+2. Create a new `Graphic` for each in the list of cut geometries and add them to the `GraphicsOverlay` on the `MapView`.
 
 ## Relevant API
- - GeometryEngine
- - GeometryEngine::cut
+
+* GeometryEngine::cut
+* Polygon
+* Polyline
 
 ## Tags
-geometry, cut, split
+
+cut, geometry, split
