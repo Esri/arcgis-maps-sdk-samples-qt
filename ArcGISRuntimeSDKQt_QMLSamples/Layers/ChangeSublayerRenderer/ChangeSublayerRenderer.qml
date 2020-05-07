@@ -45,7 +45,7 @@ Rectangle {
                     sublayer = mapImageSublayers.get(2);
 
                     // get the original renderer once loaded
-                    sublayer.loadStatusChanged.connect(function() {
+                    sublayer.loadStatusChanged.connect(()=> {
                         if (sublayer.loadStatus !== Enums.LoadStatusLoaded)
                             return;
 

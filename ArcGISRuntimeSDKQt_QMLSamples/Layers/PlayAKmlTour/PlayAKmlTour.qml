@@ -54,7 +54,7 @@ Rectangle {
                    var kmlTour = findFirstKMLTour(kmlDataset.rootNodes)
 
                    if (kmlTour !== null) {
-                       kmlTour.tourStatusChanged.connect(function() {
+                       kmlTour.tourStatusChanged.connect(()=> {
                            switch(kmlTour.tourStatus) {
                            case Enums.KmlTourStatusCompleted:
                            case Enums.KmlTourStatusInitialized:

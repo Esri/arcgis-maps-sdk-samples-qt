@@ -89,7 +89,7 @@ Rectangle {
 
                 for (let i = 0; i < offlineMapTask.preplannedMapAreaList.count; i++) {
                     let mapArea = offlineMapTask.preplannedMapAreaList.get(i);
-                    mapArea.loadStatusChanged.connect(function () {
+                    mapArea.loadStatusChanged.connect(()=> {
                         if (offlineMapTask.preplannedMapAreaList.get(i).loadStatus !== Enums.LoadStatusLoaded)
                             return;
 
@@ -119,7 +119,7 @@ Rectangle {
 
                 if (fileFolder.exists) {
                     mmpk = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", { path: path });
-                    mmpk.loadStatusChanged.connect(function () {
+                    mmpk.loadStatusChanged.connect(()=> {
                         if (loadStatus !== Enums.LoadStatusLoaded )
                             return;
 
@@ -133,7 +133,7 @@ Rectangle {
                 } else {
                     job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
 
-                    job.jobStatusChanged.connect(function () {
+                    job.jobStatusChanged.connect(()=> {
                         if (job.jobStatus === Enums.JobStatusFailed) {
                             console.log(job.error.message + " - " + job.error.additionalMessage)
                             busy = false;
@@ -147,7 +147,7 @@ Rectangle {
                         busy.visible = false;
                     });
 
-                    job.progressChanged.connect(function () {
+                    job.progressChanged.connect(()=> {
                         progressBar_loading.value = job.progress * .01;
                     });
 

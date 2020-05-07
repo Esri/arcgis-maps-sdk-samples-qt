@@ -107,9 +107,7 @@ Rectangle {
             currentSymbol = fetchSymbolResult;
 
             // set the color locked preferences per layer
-            currentSymbol.symbolLayers.forEach(function(symbolLyr) {
-                symbolLyr.colorLocked = true;
-            });
+            currentSymbol.symbolLayers.forEach(symbolLyr => symbolLyr.colorLocked = true);
 
             currentSymbol.symbolLayers.get(0).colorLocked = false;
 
@@ -120,7 +118,7 @@ Rectangle {
             currentSymbol.color = colorComboBox.currentText;
 
             // update swatch
-            currentSymbol.swatchImageChanged.connect(function(){
+            currentSymbol.swatchImageChanged.connect(()=> {
                 symbolImage.source = currentSymbol.swatchImage;
             });
 

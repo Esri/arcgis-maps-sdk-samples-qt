@@ -46,7 +46,7 @@ Rectangle {
         mmpk = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", {
                                                          path: System.resolvedPathUrl(tempDataPath + "/canyonlands")
                                                      });
-        mmpk.loadStatusChanged.connect(()=>{
+        mmpk.loadStatusChanged.connect(()=> {
                                            if (mmpk.loadStatus === Enums.LoadStatusLoaded) {
                                                // check size of maps
                                                if (mmpk.maps.length === 0)
@@ -128,7 +128,7 @@ Rectangle {
                 syncJob = offlineMapSyncTask.syncOfflineMap(createDefaultOfflineMapSyncParametersResult);
 
                 // connect to the job signals
-                syncJob.jobStatusChanged.connect(()=>{
+                syncJob.jobStatusChanged.connect(()=> {
                                                      if (syncJob.jobStatus === Enums.JobStatusSucceeded) {
                                                          const mapResult = syncJob.result;
 

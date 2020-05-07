@@ -167,7 +167,7 @@ Rectangle {
             }
         }
 
-        iwaSecurePortal.loadStatusChanged.connect(function() {
+        iwaSecurePortal.loadStatusChanged.connect(()=> {
             if (iwaSecurePortal.loadStatus === Enums.LoadStatusFailedToLoad) {
                 webMapMsg.text = iwaSecurePortal.loadError.message;
                 webmapsList.model = null;
@@ -183,7 +183,7 @@ Rectangle {
 
         });
 
-        iwaSecurePortal.findItemsStatusChanged.connect(function() {
+        iwaSecurePortal.findItemsStatusChanged.connect(()=> {
             if ( iwaSecurePortal.findItemsStatus === Enums.TaskStatusCompleted ) {
                 indicator.running = false;
                 webmapsList.textRole = "title";

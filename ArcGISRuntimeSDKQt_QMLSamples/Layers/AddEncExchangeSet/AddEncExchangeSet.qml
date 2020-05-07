@@ -75,7 +75,7 @@ Rectangle {
                         layers.push(encLayer);
 
                         // connect to loadStatusChanged for each layer
-                        encLayer.loadStatusChanged.connect(function() {
+                        encLayer.loadStatusChanged.connect(()=> {
                             if (encLayer.loadStatus === Enums.LoadStatusLoaded) {
                                 loadedEncLayerCount++;
                             }
@@ -83,9 +83,7 @@ Rectangle {
                             // loop through the layers and zoom to the combined full extent
                             if (loadedEncLayerCount === datasets.length) {
                                 var fullExtents = [];
-                                map.operationalLayers.forEach(function(layer) {
-                                    fullExtents.push(layer.fullExtent);
-                                });
+                                map.operationalLayers.forEach(layer => fullExtents.push(layer.fullExtent));
                                 var fullExtentOfLayers = GeometryEngine.combineExtentsOfGeometries(fullExtents);
                                 mapView.setViewpointGeometry(fullExtentOfLayers)
                             }

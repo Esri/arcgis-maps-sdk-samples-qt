@@ -122,7 +122,7 @@ Rectangle {
             inputFeature.geometry = location;
 
             // connect to addFeature status changed signal
-            inputFeatures.addFeatureStatusChanged.connect(function() {
+            inputFeatures.addFeatureStatusChanged.connect(()=> {
                 if (inputFeatures.addFeatureStatus === Enums.TaskStatusCompleted) {
                     // Create the parameters that are passed to the used geoprocessing task
                     var viewshedParameters = ArcGISRuntimeEnvironment.createObject("GeoprocessingParameters", {

@@ -136,9 +136,9 @@ Rectangle {
             // set the map view's map to the first map in the mobile map package
             mapView.map = mmpk.maps[0];
             let layers = mapView.map.operationalLayers;
-            layers.forEach(function(layer) {
+            layers.forEach(layer => {
                 if (layer.layerType === Enums.LayerTypeAnnotationLayer) {
-                    layer.loadStatusChanged.connect(function() {
+                    layer.loadStatusChanged.connect(()=> {
                         if (layer.loadStatus !== Enums.LoadStatusLoaded)
                             return;
 

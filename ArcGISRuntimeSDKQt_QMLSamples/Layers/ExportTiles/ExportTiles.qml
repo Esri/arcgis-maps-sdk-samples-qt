@@ -138,7 +138,7 @@ Rectangle {
             map.basemap = basemap;
 
             // zoom to the new layer and hide window once loaded
-            tiledLayer.loadStatusChanged.connect(function() {
+            tiledLayer.loadStatusChanged.connect(()=> {
                 if (tiledLayer.loadStatus === Enums.LoadStatusLoaded) {
                     extentRectangle.visible = false;
                     downloadButton.visible = false;
