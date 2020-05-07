@@ -1,8 +1,0 @@
-{
-    "source" :  "WMTS_Layer.qml",
-    "otherSourceFiles" :  [
-        "WMTS_Layer.h",
-        "WMTS_Layer.cpp"
-    ],
-    "name" : "WMTS layer"
-}

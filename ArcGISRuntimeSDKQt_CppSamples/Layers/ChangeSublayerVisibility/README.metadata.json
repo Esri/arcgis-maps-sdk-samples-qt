@@ -18,9 +18,9 @@
         "ArcGISSublayerListModel"
     ],
     "snippets": [
+        "ChangeSublayerVisibility.qml",
         "ChangeSublayerVisibility.h",
-        "ChangeSublayerVisibility.cpp",
-        "ChangeSublayerVisibility.qml"
+        "ChangeSublayerVisibility.cpp"
     ],
     "title": "Change sublayer visibility"
 }

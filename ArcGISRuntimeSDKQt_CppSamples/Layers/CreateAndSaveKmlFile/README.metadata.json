@@ -24,9 +24,9 @@
         "KmlIcon"
     ],
     "snippets": [
+        "CreateAndSaveKmlFile.qml",
         "CreateAndSaveKmlFile.cpp",
-        "CreateAndSaveKmlFile.h",
-        "CreateAndSaveKmlFile.qml"
+        "CreateAndSaveKmlFile.h"
     ],
     "title": "Create and save KML file"
 }

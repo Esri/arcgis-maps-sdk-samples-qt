@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/IdentifyKmlFeatures">
-        <file alias="sample.json">IdentifyKmlFeatures.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>IdentifyKmlFeatures.qml</file>
         <file>IdentifyKmlFeatures.h</file>
         <file>IdentifyKmlFeatures.cpp</file>

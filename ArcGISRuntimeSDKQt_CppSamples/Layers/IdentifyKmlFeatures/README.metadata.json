@@ -23,9 +23,9 @@
         "KmlPlacemark::balloonContent()"
     ],
     "snippets": [
+        "IdentifyKmlFeatures.qml",
         "IdentifyKmlFeatures.cpp",
-        "IdentifyKmlFeatures.h",
-        "IdentifyKmlFeatures.qml"
+        "IdentifyKmlFeatures.h"
     ],
     "title": "Identify KML features"
 }

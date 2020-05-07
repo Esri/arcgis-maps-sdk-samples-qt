@@ -1,8 +1,0 @@
-{
-    "source" :  "FeatureLayerRenderingModeMap.qml",
-    "otherSourceFiles" :  [
-        "FeatureLayerRenderingModeMap.h",
-        "FeatureLayerRenderingModeMap.cpp"
-    ],
-    "name" : "Feature layer rendering mode (map)"
-}

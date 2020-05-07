@@ -17,8 +17,8 @@
         "ArcGISMapImageSublayer::renderer"
     ],
     "snippets": [
-        "ChangeSublayerRenderer.cpp",
         "ChangeSublayerRenderer.qml",
+        "ChangeSublayerRenderer.cpp",
         "ChangeSublayerRenderer.h"
     ],
     "title": "Change sublayer renderer"

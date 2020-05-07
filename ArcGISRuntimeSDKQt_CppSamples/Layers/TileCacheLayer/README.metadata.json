@@ -19,9 +19,15 @@
         "TileCacheLayer"
     ],
     "snippets": [
+        "TileCacheLayer.qml",
         "TileCacheLayer.cpp",
-        "TileCacheLayer.h",
-        "TileCacheLayer.qml"
+        "TileCacheLayer.h"
+    ],
+    "dataItems" : [
+    {
+        "itemId" : "3f1bbf0ec70b409a975f5c91f363fe7d",
+        "path" : "~/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk"
+    }
     ],
     "title": "ArcGIS tiled layer (tile cache)"
 }

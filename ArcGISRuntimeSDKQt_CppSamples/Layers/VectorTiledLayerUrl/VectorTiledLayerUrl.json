@@ -1,9 +1,0 @@
-{
-    "source" :  "VectorTiledLayerUrl.qml",
-    "otherSourceFiles" : [
-        "VectorTiledLayerUrl.h",
-        "VectorTiledLayerUrl.cpp"
-    ],
-    "name" : "Vector tiled layer (URL)"
-}
-

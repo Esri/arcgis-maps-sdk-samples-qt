@@ -21,9 +21,9 @@
         "ServiceFeatureTable"
     ],
     "snippets": [
+        "DisplayAnnotation.qml",
         "DisplayAnnotation.cpp",
-        "DisplayAnnotation.h",
-        "DisplayAnnotation.qml"
+        "DisplayAnnotation.h"
     ],
     "title": "Display annotation"
 }
