@@ -32,9 +32,9 @@
         "GeoElement"
     ],
     "snippets": [
+        "FeatureLayerSelection.qml",
         "FeatureLayerSelection.cpp",
-        "FeatureLayerSelection.h",
-        "FeatureLayerSelection.qml"
+        "FeatureLayerSelection.h"
     ],
     "title": "Feature layer selection"
 }

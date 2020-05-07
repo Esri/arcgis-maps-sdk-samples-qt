@@ -23,8 +23,8 @@
         "QueryParameters"
     ],
     "snippets": [
-        "ServiceFeatureTableManualCache.cpp",
         "ServiceFeatureTableManualCache.qml",
+        "ServiceFeatureTableManualCache.cpp",
         "ServiceFeatureTableManualCache.h"
     ],
     "title": "Service feature table (manual cache)"

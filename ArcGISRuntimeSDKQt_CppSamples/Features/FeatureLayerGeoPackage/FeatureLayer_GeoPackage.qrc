@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Features/FeatureLayer_GeoPackage">
-        <file alias="sample.json">FeatureLayer_GeoPackage.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>FeatureLayer_GeoPackage.qml</file>
         <file>FeatureLayer_GeoPackage.h</file>
         <file>FeatureLayer_GeoPackage.cpp</file>
