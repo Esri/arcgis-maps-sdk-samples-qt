@@ -27,9 +27,9 @@
         "Stop"
     ],
     "snippets": [
+        "RouteAroundBarriers.qml",
         "RouteAroundBarriers.cpp",
-        "RouteAroundBarriers.h",
-        "RouteAroundBarriers.qml"
+        "RouteAroundBarriers.h"
     ],
     "title": "Route around barriers"
 }
