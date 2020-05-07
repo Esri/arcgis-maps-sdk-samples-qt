@@ -159,6 +159,7 @@ SearchForWebmapSample {
             TextField {
                 id: keyWordField
                 placeholderText: "enter keyword"
+                selectByMouse: true
 
                 Keys.onReturnPressed: {
                     if (text.length > 0)

@@ -79,6 +79,7 @@ AnalyzeHotspotsSample {
             id: fromDate
             width: parent.width
             text: fromThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
+            selectByMouse: true
 
             Image {
                 anchors {
@@ -110,6 +111,7 @@ AnalyzeHotspotsSample {
             id: toDate
             width: parent.width
             text: toThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
+            selectByMouse: true
 
             Image {
                 anchors {
