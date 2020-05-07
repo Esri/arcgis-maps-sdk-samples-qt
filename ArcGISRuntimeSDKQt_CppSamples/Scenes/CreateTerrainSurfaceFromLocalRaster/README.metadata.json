@@ -16,10 +16,16 @@
         "Surface"
     ],
     "snippets": [
+        "CreateTerrainSurfaceFromLocalRaster.qml",
         "CreateTerrainSurfaceFromLocalRaster.cpp",
         "main.qml",
-        "CreateTerrainSurfaceFromLocalRaster.qml",
         "CreateTerrainSurfaceFromLocalRaster.h"
+    ],
+    "dataItems" : [
+        {
+            "itemId" : "98092369c4ae4d549bbbd45dba993ebc",
+            "path" : "~/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"
+        }
     ],
     "title": "Create terrain surface from a local raster"
 }
