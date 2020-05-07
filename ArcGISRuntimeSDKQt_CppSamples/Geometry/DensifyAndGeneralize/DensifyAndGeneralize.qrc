@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Geometry/DensifyAndGeneralize">
-        <file alias="sample.json">DensifyAndGeneralize.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>DensifyAndGeneralize.qml</file>
         <file>DensifyAndGeneralize.h</file>
         <file>DensifyAndGeneralize.cpp</file>

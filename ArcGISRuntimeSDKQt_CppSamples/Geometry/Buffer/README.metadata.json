@@ -16,9 +16,9 @@
         "GraphicsOverlay"
     ],
     "snippets": [
+        "Buffer.qml",
         "Buffer.cpp",
-        "Buffer.h",
-        "Buffer.qml"
+        "Buffer.h"
     ],
     "title": "Buffer"
 }

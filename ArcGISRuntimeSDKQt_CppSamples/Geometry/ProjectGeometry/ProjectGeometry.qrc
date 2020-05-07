@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Geometry/ProjectGeometry">
-        <file alias="sample.json">ProjectGeometry.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>ProjectGeometry.qml</file>
         <file>ProjectGeometry.h</file>
         <file>ProjectGeometry.cpp</file>
