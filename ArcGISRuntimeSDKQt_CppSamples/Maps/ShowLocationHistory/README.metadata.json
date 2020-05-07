@@ -27,9 +27,9 @@
         "SimulatedLocationDataSource"
     ],
     "snippets": [
+        "ShowLocationHistory.qml",
         "ShowLocationHistory.cpp",
-        "ShowLocationHistory.h",
-        "ShowLocationHistory.qml"
+        "ShowLocationHistory.h"
     ],
     "title": "Show location history"
 }
