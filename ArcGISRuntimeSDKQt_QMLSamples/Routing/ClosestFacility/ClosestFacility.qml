@@ -1,4 +1,4 @@
-// [WriteFile Name=ClosestFacilitySample, Category=Routing]
+// [WriteFile Name=ClosestFacility, Category=Routing]
 // [Legal]
 // Copyright 2017 Esri.
 
