@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/GenerateOfflineMapLocalBasemap">
-        <file alias="sample.json">GenerateOfflineMapLocalBasemap.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>GenerateOfflineMapLocalBasemap.qml</file>
         <file>GenerateOfflineMapLocalBasemap.h</file>
         <file>GenerateOfflineMapLocalBasemap.cpp</file>

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/CreateAndSaveMap">
-        <file alias="sample.json">CreateAndSaveMap.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>CreateAndSaveMap.qml</file>
         <file>CreateAndSaveMap.h</file>
         <file>CreateAndSaveMap.cpp</file>

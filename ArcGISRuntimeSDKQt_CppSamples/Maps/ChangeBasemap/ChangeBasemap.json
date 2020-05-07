@@ -1,9 +1,0 @@
-{
-    "source" :  "ChangeBasemap.qml",
-    "otherSourceFiles" : [
-        "ChangeBasemap.h",
-        "ChangeBasemap.cpp"
-    ],
-    "name" : "Change basemap"
-}
-

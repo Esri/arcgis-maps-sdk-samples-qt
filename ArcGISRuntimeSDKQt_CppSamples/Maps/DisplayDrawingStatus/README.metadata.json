@@ -24,8 +24,8 @@
         "Envelope"
     ],
     "snippets": [
-        "DisplayDrawingStatus.h",
         "DisplayDrawingStatus.qml",
+        "DisplayDrawingStatus.h",
         "DisplayDrawingStatus.cpp"
     ],
     "title": "Display drawing status"

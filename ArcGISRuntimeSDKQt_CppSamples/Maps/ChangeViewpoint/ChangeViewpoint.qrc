@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/ChangeViewpoint">
-        <file alias="sample.json">ChangeViewpoint.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>ChangeViewpoint.qml</file>
 		<file>ChangeViewpoint.h</file>
