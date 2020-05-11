@@ -319,23 +319,24 @@ Rectangle {
                 Layout.margins: 3
                 color: "lightgrey"
 
-                ListView {
-                    id: directionsView
-                    anchors {
-                        fill: parent
-                        margins: 5
-                    }
-                    header: Component {
-                        Text {
-                            height: 40
+                ScrollView {
+                    anchors.fill: parent
+                    ListView {
+                        id: directionsView
+                        anchors {
+                            fill: parent
+                            margins: 5
+                        }
+                        header: Text {
                             text: "Directions:"
                             font.pixelSize: 22
+                            bottomPadding: 8
                         }
-                    }
 
-                    // set the model to the DirectionManeuverListModel returned from the route
-                    model: directionListModel
-                    delegate: directionDelegate
+                        // set the model to the DirectionManeuverListModel returned from the route
+                        model: directionListModel
+                        delegate: directionDelegate
+                    }
                 }
             }
 
