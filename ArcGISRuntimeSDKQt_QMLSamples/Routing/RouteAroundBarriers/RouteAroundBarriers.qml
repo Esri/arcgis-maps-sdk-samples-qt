@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 //import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.1
 
@@ -321,23 +321,24 @@ Rectangle {
                 Layout.margins: 3
                 color: "lightgrey"
 
-                ListView {
-                    id: directionsView
-                    anchors {
-                        fill: parent
-                        margins: 5
-                    }
-                    header: Component {
-                        Text {
-                            height: 40
+                ScrollView {
+                    anchors.fill: parent
+                    ListView {
+                        id: directionsView
+                        anchors {
+                            fill: parent
+                            margins: 5
+                        }
+                        header: Text {
                             text: "Directions:"
                             font.pixelSize: 22
+                            bottomPadding: 8
                         }
-                    }
 
-                    // set the model to the DirectionManeuverListModel returned from the route
-                    model: directionListModel
-                    delegate: directionDelegate
+                        // set the model to the DirectionManeuverListModel returned from the route
+                        model: directionListModel
+                        delegate: directionDelegate
+                    }
                 }
             }
 

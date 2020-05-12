@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -138,7 +138,7 @@ Rectangle {
             map.basemap = basemap;
 
             // zoom to the new layer and hide window once loaded
-            tiledLayer.loadStatusChanged.connect(function() {
+            tiledLayer.loadStatusChanged.connect(()=> {
                 if (tiledLayer.loadStatus === Enums.LoadStatusLoaded) {
                     extentRectangle.visible = false;
                     downloadButton.visible = false;

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -76,7 +76,7 @@ Rectangle {
 
                 // connect to feature table signal
                 const featureTable = map.operationalLayers.get(0).featureTable;
-                featureTable.updateFeatureStatusChanged.connect(function() {
+                featureTable.updateFeatureStatusChanged.connect(()=> {
                     if (featureTable.updateFeatureStatus === Enums.TaskStatusCompleted) {
                         // clear selections
                         featureTable.featureLayer.clearSelection();
@@ -225,7 +225,7 @@ Rectangle {
             map.operationalLayers.clear();
 
             // load the geodatabase to access the feature tables
-            offlineGdb.loadStatusChanged.connect(function() {
+            offlineGdb.loadStatusChanged.connect(()=> {
                 if (offlineGdb.loadStatus === Enums.LoadStatusLoaded) {
                     // create a feature layer from each feature table, and add to the map
                     for (let i = 0; i < offlineGdb.geodatabaseFeatureTables.length; i++) {

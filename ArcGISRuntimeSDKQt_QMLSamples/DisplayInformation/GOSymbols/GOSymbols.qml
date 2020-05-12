@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     width: 800
@@ -177,9 +177,7 @@ Rectangle {
     // by calling appendAll and pass in the list.
     Component.onCompleted: {
         // add buoy points
-        buoyLocArray.forEach(function(buoyPoint) {
-            graphicsOverlay.graphics.append(createGraphic(buoyPoint, buoyMarkerSymbol));
-        });
+        buoyLocArray.forEach(buoyPoint => graphicsOverlay.graphics.append(createGraphic(buoyPoint, buoyMarkerSymbol)));
 
         // add text symbols
         for (let i = 0; i < textLocArray.length; i++) {

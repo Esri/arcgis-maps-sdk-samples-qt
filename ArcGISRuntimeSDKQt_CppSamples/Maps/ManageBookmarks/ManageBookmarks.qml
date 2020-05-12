@@ -139,6 +139,7 @@ ManageBookmarksSample {
             TextField {
                 id: textField
                 placeholderText: qsTr("ex: Grand Canyon")
+                selectByMouse: true
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true

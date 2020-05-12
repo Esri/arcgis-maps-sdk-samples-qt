@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -147,7 +147,7 @@ Rectangle {
             map.operationalLayers.clear();
 
             // load the geodatabase to access the feature tables
-            geodatabase.loadStatusChanged.connect(function() {
+            geodatabase.loadStatusChanged.connect(()=> {
                 if (geodatabase.loadStatus === Enums.LoadStatusLoaded) {
                     // create a feature layer from each feature table, and add to the map
                     for (let i = 0; i < geodatabase.geodatabaseFeatureTables.length; i++) {

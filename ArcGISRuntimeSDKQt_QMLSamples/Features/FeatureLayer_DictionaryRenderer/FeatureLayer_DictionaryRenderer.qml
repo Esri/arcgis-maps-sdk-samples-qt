@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -94,7 +94,7 @@ Rectangle {
                     gdbLayers.push(layer);
 
                     // Connect the layer's loadStatusChanged signal
-                    layer.loadStatusChanged.connect(function () {
+                    layer.loadStatusChanged.connect(()=> {
 
                         // See if all the layers have loaded.
                         for (let j = 0; j < gdbLayers.length; j++) {

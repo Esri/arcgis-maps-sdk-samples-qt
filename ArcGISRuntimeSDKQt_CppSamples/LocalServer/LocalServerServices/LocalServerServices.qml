@@ -84,6 +84,7 @@ LocalServerServicesSample {
             TextField {
                 id: filePathText
                 placeholderText: "Browse for a file."
+                selectByMouse: true
                 width: startServiceButton.width - (40)
             }
 

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -64,7 +64,7 @@ Rectangle {
                     countiesTable = mapImageSublayers.get(3).table;
 
                     // connect to city sublayer query signal
-                    citiesTable.queryFeaturesStatusChanged.connect(function() {
+                    citiesTable.queryFeaturesStatusChanged.connect(()=> {
                         if (citiesTable.queryFeaturesStatus !== Enums.TaskStatusCompleted)
                             return;
 
@@ -73,7 +73,7 @@ Rectangle {
                     });
 
                     // connect to county sublayer query signal
-                    countiesTable.queryFeaturesStatusChanged.connect(function() {
+                    countiesTable.queryFeaturesStatusChanged.connect(()=> {
                         if (countiesTable.queryFeaturesStatus !== Enums.TaskStatusCompleted)
                             return;
 
@@ -82,7 +82,7 @@ Rectangle {
                     });
 
                     // connect to state sublayer query signal
-                    statesTable.queryFeaturesStatusChanged.connect(function() {
+                    statesTable.queryFeaturesStatusChanged.connect(()=> {
                         if (statesTable.queryFeaturesStatus !== Enums.TaskStatusCompleted)
                             return;
 
@@ -159,6 +159,7 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 width: 100
                 text: "1100000"
+                selectByMouse: true
                 validator: IntValidator{}
             }
         }

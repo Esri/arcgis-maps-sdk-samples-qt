@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -122,7 +122,7 @@ Rectangle {
             inputFeature.geometry = location;
 
             // connect to addFeature status changed signal
-            inputFeatures.addFeatureStatusChanged.connect(function() {
+            inputFeatures.addFeatureStatusChanged.connect(()=> {
                 if (inputFeatures.addFeatureStatus === Enums.TaskStatusCompleted) {
                     // Create the parameters that are passed to the used geoprocessing task
                     const viewshedParameters = ArcGISRuntimeEnvironment.createObject("GeoprocessingParameters", {

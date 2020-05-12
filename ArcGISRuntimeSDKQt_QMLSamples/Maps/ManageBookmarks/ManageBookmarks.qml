@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -215,6 +215,7 @@ Rectangle {
             TextField {
                 id: textField
                 placeholderText: qsTr("ex: Grand Canyon")
+                selectByMouse: true
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true

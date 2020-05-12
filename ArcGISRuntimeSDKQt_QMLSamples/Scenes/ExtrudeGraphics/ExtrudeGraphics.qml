@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     width: 800
@@ -94,7 +94,7 @@ Rectangle {
         }
 
         // for each point construct a polygon by manipulating the co-ordinates
-        points.forEach(function(item){
+        points.forEach(item => {
             const randNum = Math.ceil(Math.random() * 6);
             const z = maxZ * randNum;
             const newPoints = [createPoint(item.x, item.y, z),
@@ -114,9 +114,7 @@ Rectangle {
         const polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder");
         polygonBuilder.spatialReference = sceneView.spatialReference;
 
-        pointsList.forEach(function(pnt){
-            polygonBuilder.addPoint(pnt);
-        });
+        pointsList.forEach(pnt => polygonBuilder.addPoint(pnt));
         return polygonBuilder.geometry;
     }
 

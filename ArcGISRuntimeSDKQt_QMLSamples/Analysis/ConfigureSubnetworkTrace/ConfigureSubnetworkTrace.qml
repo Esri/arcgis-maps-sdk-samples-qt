@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Shapes 1.12
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -365,6 +365,7 @@ Rectangle {
                         color: "black"
                         placeholderText: qsTr("Enter value here")
                         placeholderTextColor: "black"
+                        selectByMouse: true
                         background: Rectangle {
                             anchors.centerIn: parent
                             height: parent.height

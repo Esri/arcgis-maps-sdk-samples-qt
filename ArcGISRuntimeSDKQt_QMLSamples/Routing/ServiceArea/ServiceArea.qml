@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -308,18 +308,16 @@ Rectangle {
         busy = true;
 
         const facilities = [];
-        facilitiesOverlay.graphics.forEach(function(graphic) {
-            const facility = ArcGISRuntimeEnvironment.createObject("ServiceAreaFacility", {geometry: graphic.geometry});
-            facilities.push(facility);
-        });
+        facilitiesOverlay.graphics.forEach(graphic => facilities.push(ArcGISRuntimeEnvironment.createObject("ServiceAreaFacility", {
+                                                                                                                geometry: graphic.geometry
+                                                                                                            })));
 
         facilityParams.setFacilities(facilities);
 
         const barriers = [];
-        barriersOverlay.graphics.forEach(function(graphic) {
-            const barrier = ArcGISRuntimeEnvironment.createObject("PolylineBarrier", {geometry: graphic.geometry});
-            barriers.push(barrier);
-        });
+        barriersOverlay.graphics.forEach(graphic => barriers.push(ArcGISRuntimeEnvironment.createObject("PolylineBarrier", {
+                                                                                                            geometry: graphic.geometry
+                                                                                                        })));
 
         if (barriers.length > 0)
             facilityParams.setPolylineBarriers(barriers);

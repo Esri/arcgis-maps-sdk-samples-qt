@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -46,7 +46,7 @@ Rectangle {
                     return;
 
                 // get the Alaska National Parks feature layer
-                map.operationalLayers.forEach(function(fl) {
+                map.operationalLayers.forEach(fl => {
                     if (fl.name.indexOf("- Alaska National Parks") !== -1) {
                         alaskaNationalParks = fl;
                     }
@@ -101,7 +101,7 @@ Rectangle {
                     const selectedTable = arcGISFeature.featureTable;
 
                     // connect signal
-                    selectedTable.queryRelatedFeaturesStatusChanged.connect(function() {
+                    selectedTable.queryRelatedFeaturesStatusChanged.connect(()=> {
                         if (selectedTable.queryRelatedFeaturesStatus !== Enums.TaskStatusCompleted)
                             return;
 

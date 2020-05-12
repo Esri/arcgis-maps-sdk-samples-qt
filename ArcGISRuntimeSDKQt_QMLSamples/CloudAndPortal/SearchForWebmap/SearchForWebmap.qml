@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.8
+import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
 Rectangle {
     id: rootRectangle
@@ -51,7 +51,7 @@ Rectangle {
         portalItem = selectedWebmap;
 
         portalItem.loadStatusChanged.connect(createMap);
-        portalItem.loadErrorChanged.connect( function() {
+        portalItem.loadErrorChanged.connect(()=> {
             webMapMsg.text = portalItem.loadError.message;
             webMapMsg.visible = true;
         });
@@ -66,7 +66,7 @@ Rectangle {
         mapView.map = ArcGISRuntimeEnvironment.createObject("Map", {"item": portalItem});
 
         mapView.map.loadStatusChanged.connect(assignWebmap);
-        mapView.map.loadErrorChanged.connect( function() {
+        mapView.map.loadErrorChanged.connect(()=> {
             webMapMsg.text = mapView.map.loadError.message;
             webMapMsg.visible = true;
         });
@@ -269,6 +269,7 @@ Rectangle {
             TextField {
                 id: keyWordField
                 placeholderText: "enter keyword"
+                selectByMouse: true
 
                 Keys.onReturnPressed: {
                     if (text.length > 0)

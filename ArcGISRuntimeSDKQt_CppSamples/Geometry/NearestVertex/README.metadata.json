@@ -1,5 +1,5 @@
 {
-    "category": "geometry",
+    "category": "Geometry",
     "description": "Get the vertex of a geometry closest to a point.",
     "ignore": false,
     "images": [

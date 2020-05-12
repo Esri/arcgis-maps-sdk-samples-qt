@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -38,7 +38,7 @@ Rectangle {
         service = ArcGISRuntimeEnvironment.createObject("WmtsService", { url: wmtsServiceUrl });
 
         // connect to loadStatusChanged signal of the service
-        service.loadStatusChanged.connect(function() {
+        service.loadStatusChanged.connect(()=> {
             if (service.loadStatus === Enums.LoadStatusLoaded) {
                 // get the layer info list
                 const serviceInfo = service.serviceInfo;

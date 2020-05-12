@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Qt.labs.calendar 1.0
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import QtQuick.Layouts 1.3
 
 Rectangle {
@@ -59,7 +59,7 @@ Rectangle {
             job = hotspotTask.createJob(hotspotParameters);
 
             // Connect to the job's status changed signal
-            job.jobStatusChanged.connect(function(){
+            job.jobStatusChanged.connect(()=> {
                 if (job.jobStatus === Enums.JobStatusFailed) {
                     showErrorDialog(job.error);
                     jobInProgress = false;
@@ -86,7 +86,7 @@ Rectangle {
         function processResults(result) {
             mapView.map.operationalLayers.clear();
             const layer = result.mapImageLayer;
-            layer.loadStatusChanged.connect(function() {
+            layer.loadStatusChanged.connect(()=> {
                 if (layer.loadStatus === Enums.LoadStatusLoaded)
                     mapView.setViewpointGeometry(layer.fullExtent);
             });
@@ -157,6 +157,7 @@ Rectangle {
             id: fromDate
             width: parent.width
             text: fromThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
+            selectByMouse: true
 
             Image {
                 anchors {
@@ -188,6 +189,7 @@ Rectangle {
             id: toDate
             width: parent.width
             text: toThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
+            selectByMouse: true
 
             Image {
                 anchors {

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -159,6 +159,7 @@ Rectangle {
             id: bufferSizeText
             validator: IntValidator { bottom: 1; top: 10000 }
             text: "1000"
+            selectByMouse: true
         }
 
         Row {

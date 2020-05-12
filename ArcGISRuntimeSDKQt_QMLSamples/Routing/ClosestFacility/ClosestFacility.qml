@@ -1,4 +1,4 @@
-// [WriteFile Name=ClosestFacilitySample, Category=Routing]
+// [WriteFile Name=ClosestFacility, Category=Routing]
 // [Legal]
 // Copyright 2017 Esri.
 
@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -231,10 +231,9 @@ Rectangle {
     }
 
     function createFacilities() {
-        facilitiesOverlay.graphics.forEach(function(graphic) {
-            const facility = ArcGISRuntimeEnvironment.createObject("Facility", {geometry: graphic.geometry});
-            facilities.push(facility);
-        });
+        facilitiesOverlay.graphics.forEach(graphic => facilities.push(ArcGISRuntimeEnvironment.createObject("Facility", {
+                                                                                                                geometry: graphic.geometry
+                                                                                                            })));
     }
 
 

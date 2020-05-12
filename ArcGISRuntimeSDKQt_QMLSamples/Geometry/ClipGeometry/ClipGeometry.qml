@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -171,7 +171,7 @@ Rectangle {
             coloradoOverlay.visible = false;
 
             // Iterate through the clipping envelopes
-            envelopesOverlay.graphics.forEach(function(graphic) {
+            envelopesOverlay.graphics.forEach(graphic => {
 
                 // Create a variable that contains the clip result, which is an envelope of the overlap between colorado and the current graphic
                 const clippedGeometry = GeometryEngine.clip(coloradoGraphic.geometry, graphic.geometry.extent);

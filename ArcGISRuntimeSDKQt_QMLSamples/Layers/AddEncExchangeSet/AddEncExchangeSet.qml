@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -75,7 +75,7 @@ Rectangle {
                         layers.push(encLayer);
 
                         // connect to loadStatusChanged for each layer
-                        encLayer.loadStatusChanged.connect(function() {
+                        encLayer.loadStatusChanged.connect(()=> {
                             if (encLayer.loadStatus === Enums.LoadStatusLoaded) {
                                 loadedEncLayerCount++;
                             }
@@ -83,9 +83,7 @@ Rectangle {
                             // loop through the layers and zoom to the combined full extent
                             if (loadedEncLayerCount === datasets.length) {
                                 const fullExtents = [];
-                                map.operationalLayers.forEach(function(layer) {
-                                    fullExtents.push(layer.fullExtent);
-                                });
+                                map.operationalLayers.forEach(layer => fullExtents.push(layer.fullExtent));
                                 const fullExtentOfLayers = GeometryEngine.combineExtentsOfGeometries(fullExtents);
                                 mapView.setViewpointGeometry(fullExtentOfLayers)
                             }

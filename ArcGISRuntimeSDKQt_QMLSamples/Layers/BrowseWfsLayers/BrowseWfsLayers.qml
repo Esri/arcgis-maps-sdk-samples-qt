@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
@@ -107,7 +107,7 @@ Rectangle {
         const service = ArcGISRuntimeEnvironment.createObject("WfsService", {url: serviceUrl});
 
         // once WFS service is laoded create ListModel from Layer titles for ComboBox and create WFS Feature Table
-        service.loadStatusChanged.connect(function() {
+        service.loadStatusChanged.connect(()=> {
             if (service.loadStatus === Enums.LoadStatusLoaded) {
                 wfsLayersInfoList = service.serviceInfo.layerInfos;
 
@@ -141,7 +141,7 @@ Rectangle {
         }
 
         // once WFS Feature Table is loaded, populate the table and add the layer to the map
-        wfsFeatureTable.loadStatusChanged.connect(function() {
+        wfsFeatureTable.loadStatusChanged.connect(()=> {
             if (wfsFeatureTable.loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
@@ -157,7 +157,7 @@ Rectangle {
                                                                  spatialRelationship: Enums.SpatialRelationshipIntersects
                                                              });
 
-        wfsFeatureTable.populateFromServiceStatusChanged.connect(function() {
+        wfsFeatureTable.populateFromServiceStatusChanged.connect(()=> {
             if(wfsFeatureTable.populateFromServiceStatus !== Enums.TaskStatusCompleted)
                 return;
 

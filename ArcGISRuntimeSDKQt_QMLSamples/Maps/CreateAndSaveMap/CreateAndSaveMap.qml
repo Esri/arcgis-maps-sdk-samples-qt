@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.8
+import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
 Rectangle {
     id: rootRectangle
@@ -156,7 +156,7 @@ Rectangle {
         // Create the Map with the basemap
         const map = ArcGISRuntimeEnvironment.createObject("Map", { basemap: selectedBasemap }, mapView);
 
-        map.saveStatusChanged.connect(function() {
+        map.saveStatusChanged.connect(()=> {
             if (map.saveStatus === Enums.TaskStatusCompleted) {
                 const url =  "https://www.arcgis.com/home/item.html?id=%1".arg(map.item.itemId);
                 stackView.push(completionRect,
