@@ -2,10 +2,8 @@
 #define NAVIGATEROUTESPEAKER_H
 
 #include <QObject>
-#include <QTextToSpeech>
-#include <QQmlEngine>
-#include <QJSEngine>
 
+class QTextToSpeech;
 class NavigateRouteSpeaker : public QObject
 {
   Q_OBJECT

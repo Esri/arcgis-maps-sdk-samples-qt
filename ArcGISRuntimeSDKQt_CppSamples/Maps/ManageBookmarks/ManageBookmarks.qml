@@ -82,11 +82,11 @@ ManageBookmarksSample {
         model: manageBookmarksSample.bookmarks
 
         onModelChanged: {
-            var model = bookmarkComboBox.model;
+            const model = bookmarkComboBox.model;
             if (model)
             {
-                var w = bestWidth;
-                for (var i = 0; i < model.rowCount(); ++i) {
+                let w = bestWidth;
+                for (let i = 0; i < model.rowCount(); ++i) {
                     metrics.text = manageBookmarksSample.bookmarkNameForIndex(i);
                     w = Math.max(w, metrics.width);
                 }
@@ -139,6 +139,7 @@ ManageBookmarksSample {
             TextField {
                 id: textField
                 placeholderText: qsTr("ex: Grand Canyon")
+                selectByMouse: true
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true

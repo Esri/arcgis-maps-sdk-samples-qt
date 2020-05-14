@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -228,8 +228,8 @@ Rectangle {
                 }
             }
 
-            let deviceParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
-            let lineParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+            const deviceParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+            const lineParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
             deviceParams.objectIds = deviceObjIds;
             lineParams.objectIds = lineObjIds;
 
@@ -367,9 +367,7 @@ Rectangle {
                         deviceObjIds = [];
                         lineObjIds = [];
                         mapView.graphicsOverlays.get(0).graphics.clear();
-                        mapView.map.operationalLayers.forEach(function(layer){
-                            layer.clearSelection();
-                        });
+                        mapView.map.operationalLayers.forEach(layer => layer.clearSelection());
                     }
                 }
 

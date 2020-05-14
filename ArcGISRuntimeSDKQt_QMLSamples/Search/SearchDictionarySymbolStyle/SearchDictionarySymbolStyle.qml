@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -102,6 +102,7 @@ Rectangle {
                             id: categoryEntry
                             Layout.fillWidth: true
                             placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
+                            selectByMouse: true
                             validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
                             onAccepted:  addCategoryButton.mouseArea.clicked();
                         }
@@ -125,7 +126,7 @@ Rectangle {
                                     if (categoryEntry.text.length === 0)
                                         return;
 
-                                    var tmp = searchParamList;
+                                    const tmp = searchParamList;
                                     tmp[index].push(categoryEntry.text);
 
                                     searchParamList = tmp
@@ -156,7 +157,7 @@ Rectangle {
                                 anchors.fill: parent
                                 onClicked: {
                                     categoryEntry.text = "";
-                                    var tmp = searchParamList;
+                                    const tmp = searchParamList;
                                     tmp[index] = [];
 
                                     searchParamList = tmp;

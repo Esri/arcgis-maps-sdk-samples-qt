@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Shapes 1.12
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -99,7 +99,7 @@ Rectangle {
 
             // Set the terminal for this location. (For our case, we use the 'Load' terminal.)
             for (let i = 0; i < terminals.length; i++) {
-                let terminal = terminals[i];
+                const terminal = terminals[i];
                 if (terminal.name === "Load")
                     utilityElementStartingLocation.terminal = terminal;
             }
@@ -365,6 +365,7 @@ Rectangle {
                         color: "black"
                         placeholderText: qsTr("Enter value here")
                         placeholderTextColor: "black"
+                        selectByMouse: true
                         background: Rectangle {
                             anchors.centerIn: parent
                             height: parent.height

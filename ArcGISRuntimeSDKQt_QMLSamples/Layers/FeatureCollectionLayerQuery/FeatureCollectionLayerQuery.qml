@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -44,9 +44,9 @@ Rectangle {
             if (queryFeaturesStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            var featureCollectionTable = ArcGISRuntimeEnvironment.createObject("FeatureCollectionTable", {featureSet: queryFeaturesResult});
+            const featureCollectionTable = ArcGISRuntimeEnvironment.createObject("FeatureCollectionTable", {featureSet: queryFeaturesResult});
 
-            var featureCollection = ArcGISRuntimeEnvironment.createObject("FeatureCollection");
+            const featureCollection = ArcGISRuntimeEnvironment.createObject("FeatureCollection");
             featureCollection.tables.append(featureCollectionTable);
 
             featureCollectionLayer.featureCollection = featureCollection;

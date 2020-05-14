@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     width: 800
@@ -106,6 +106,7 @@ Rectangle {
                 id: textDD
                 font.pixelSize: fontPixelSize
                 text: coordinatesInDD.length === 0 ? "invalid point" : coordinatesInDD
+                selectByMouse: true
                 Layout.fillWidth: true
                 onAccepted: {
                     handleTextUpdate(strDecimalDegrees, text);
@@ -124,6 +125,7 @@ Rectangle {
                 id: textDMS
                 font.pixelSize: fontPixelSize
                 text: coordinatesInDMS.length === 0 ? "invalid point" : coordinatesInDMS
+                selectByMouse: true
                 Layout.fillWidth: true
                 onAccepted: {
                     handleTextUpdate(strDegreesMinutesSeconds, text);
@@ -142,6 +144,7 @@ Rectangle {
                 id: textUtm
                 font.pixelSize: fontPixelSize
                 text: coordinatesInUtm.length === 0 ? "invalid point" : coordinatesInUtm
+                selectByMouse: true
                 Layout.fillWidth: true
                 onAccepted: {
                     handleTextUpdate(strUtm, text);
@@ -160,6 +163,7 @@ Rectangle {
                 id: textUsng
                 font.pixelSize: fontPixelSize
                 text: coordinatesInUsng.length === 0 ? "invalid point" : coordinatesInUsng
+                selectByMouse: true
                 Layout.fillWidth: true
                 onAccepted: {
                     handleTextUpdate(strUsng, text);
@@ -177,7 +181,7 @@ Rectangle {
     }
 
     function handleTextUpdate(textType, text) {
-        var point = createPointFromText(textType, text);
+        const point = createPointFromText(textType, text);
         if (point)
             handleLocationUpdate(point);
     }
@@ -186,13 +190,13 @@ Rectangle {
         if (point.isEmpty)
             return;
         //! [FormatCoordinates CoordinateFormatter point to text]
-        var decimalPlaces = 6;
+        let decimalPlaces = 6;
         textDD.text   = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDecimalDegrees, decimalPlaces);
 
         decimalPlaces = 1;
         textDMS.text  = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDegreesMinutesSeconds, decimalPlaces);
 
-        var addSpaces = true;
+        const addSpaces = true;
         textUsng.text = CoordinateFormatter.toUsng(point, 5, addSpaces);
 
         textUtm.text  = CoordinateFormatter.toUtm(point, Enums.UtmConversionModeLatitudeBandIndicators, addSpaces);

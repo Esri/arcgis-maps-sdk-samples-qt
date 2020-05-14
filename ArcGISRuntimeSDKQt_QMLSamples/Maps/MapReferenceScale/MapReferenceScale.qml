@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.12
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
@@ -173,7 +173,7 @@ Rectangle {
 
     //pass in layers name and checked status to update featurelayer.ScaleSymbols property accordingly
     function featureLayerScaleSymbols(layerName, checkedStatus) {
-        featureLayerModel.forEach(function(lyr){
+        featureLayerModel.forEach(lyr => {
             if(layerName === lyr.name){
                 lyr.scaleSymbols = checkedStatus;
             }

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 import QtQml 2.11
 import QtQuick.Layouts 1.11
@@ -123,8 +123,8 @@ Rectangle {
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
                     // assign ComboBox model from travel mode names
-                    let modesList = routeTask.routeTaskInfo.travelModes;
-                    let travelModeNames = [];
+                    const modesList = routeTask.routeTaskInfo.travelModes;
+                    const travelModeNames = [];
                     for (let i = 0; i < modesList.length; i++) {
                         travelModeNames.push(modesList[i].name);
                     }
@@ -140,12 +140,12 @@ Rectangle {
                 if (createDefaultParametersResult === null)
                     return;
 
-                let routeParameters = createDefaultParametersResult;
-                let stopsList = [];
-                let numGraphics = stopsOverlay.graphics.count;
+                const routeParameters = createDefaultParametersResult;
+                const stopsList = [];
+                const numGraphics = stopsOverlay.graphics.count;
                 if (numGraphics > 1) {
                     for (let i = 0; i < numGraphics; i++) {
-                        let tempStop = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stopsOverlay.graphics.get(i).geometry});
+                        const tempStop = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stopsOverlay.graphics.get(i).geometry});
                         stopsList.push(tempStop);
                     }
                     routeParameters.setStops(stopsList);
@@ -166,7 +166,7 @@ Rectangle {
                     if (routeTask.error) {
                         console.warn(routeTask.error.message);
                     }
-                    let routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: solveRouteResult.routes[0].routeGeometry});
+                    const routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: solveRouteResult.routes[0].routeGeometry});
                     routeOverlay.graphics.append(routeGraphic);
                 }
             }
@@ -183,7 +183,7 @@ Rectangle {
             if (identifyGraphicsOverlayResult.graphics.length === 0) {
                 selectedGraphic = null;
             } else {
-                let index = stopsOverlay.graphics.indexOf(identifyGraphicsOverlayResult.graphics[0]);
+                const index = stopsOverlay.graphics.indexOf(identifyGraphicsOverlayResult.graphics[0]);
                 selectedGraphic = stopsOverlay.graphics.get(index);
             }
         }
@@ -196,12 +196,12 @@ Rectangle {
         // get stops from clicked locations and find route
         onMouseClicked: {
             if (!selectedGraphic) {
-                let clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
+                const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
                 if (!GeometryEngine.within(clickedPoint, routableArea)) {
                     console.warn("Outside of routable area");
                     return;
                 }
-                let stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopLabel});
+                const stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopLabel});
                 stopsOverlay.graphics.append(stopGraphic);
                 routeTask.findRoute();
             }

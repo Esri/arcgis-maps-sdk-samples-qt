@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
@@ -104,16 +104,16 @@ Rectangle {
 
     function createWfsService() {
         // create WFS Service
-        var service = ArcGISRuntimeEnvironment.createObject("WfsService", {url: serviceUrl});
+        const service = ArcGISRuntimeEnvironment.createObject("WfsService", {url: serviceUrl});
 
         // once WFS service is laoded create ListModel from Layer titles for ComboBox and create WFS Feature Table
-        service.loadStatusChanged.connect(function() {
+        service.loadStatusChanged.connect(()=> {
             if (service.loadStatus === Enums.LoadStatusLoaded) {
                 wfsLayersInfoList = service.serviceInfo.layerInfos;
 
                 //once loaded populate myWfsListModel with titles from the service to display in a comboBox
-                for(var i in wfsLayersInfoList){
-                    var data = {"title": wfsLayersInfoList[i].title};
+                for (let i in wfsLayersInfoList){
+                    const data = {"title": wfsLayersInfoList[i].title};
                     myWfsListModel.append(data);
                 }
             }
@@ -141,7 +141,7 @@ Rectangle {
         }
 
         // once WFS Feature Table is loaded, populate the table and add the layer to the map
-        wfsFeatureTable.loadStatusChanged.connect(function() {
+        wfsFeatureTable.loadStatusChanged.connect(()=> {
             if (wfsFeatureTable.loadStatus !== Enums.LoadStatusLoaded)
                 return;
 
@@ -152,12 +152,12 @@ Rectangle {
 
     function populateWfsFeatureTable() {
         // Create query parameters
-        var params = ArcGISRuntimeEnvironment.createObject("QueryParameters", {
-                                                               geometry: mapView.visibleArea.extent,
-                                                               spatialRelationship: Enums.SpatialRelationshipIntersects
-                                                           });
+        const params = ArcGISRuntimeEnvironment.createObject("QueryParameters", {
+                                                                 geometry: mapView.visibleArea.extent,
+                                                                 spatialRelationship: Enums.SpatialRelationshipIntersects
+                                                             });
 
-        wfsFeatureTable.populateFromServiceStatusChanged.connect(function() {
+        wfsFeatureTable.populateFromServiceStatusChanged.connect(()=> {
             if(wfsFeatureTable.populateFromServiceStatus !== Enums.TaskStatusCompleted)
                 return;
 
@@ -171,8 +171,8 @@ Rectangle {
     }
 
     function addFeatureLayerToMap() {
-        var simpleSymbol;
-        var symbolLine;
+        let simpleSymbol;
+        let symbolLine;
 
         // appropriate symbology for each corresponding geometry type
         switch (wfsFeatureTable.geometryType) {
@@ -205,12 +205,12 @@ Rectangle {
             return;
         }
 
-        var simpleRenderer = ArcGISRuntimeEnvironment.createObject("SimpleRenderer",{symbol: simpleSymbol});
+        const simpleRenderer = ArcGISRuntimeEnvironment.createObject("SimpleRenderer",{symbol: simpleSymbol});
 
-        var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
-                                                                  featureTable: wfsFeatureTable,
-                                                                  renderer: simpleRenderer
-                                                              });
+        const featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
+                                                                       featureTable: wfsFeatureTable,
+                                                                       renderer: simpleRenderer
+                                                                   });
         // add the layer to the map
         mapView.map.operationalLayers.append(featureLayer);
         // disable busy indicator

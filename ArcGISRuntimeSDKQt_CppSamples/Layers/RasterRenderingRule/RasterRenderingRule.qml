@@ -60,7 +60,7 @@ RasterRenderingRuleSample {
                     model: renderingRuleNames
 
                     onModelChanged: {
-                        for (var i = 0; i < model.length; ++i) {
+                        for (let i = 0; i < model.length; ++i) {
                             metrics.text = model[i];
                             modelWidth = Math.max(modelWidth, metrics.width);
                         }

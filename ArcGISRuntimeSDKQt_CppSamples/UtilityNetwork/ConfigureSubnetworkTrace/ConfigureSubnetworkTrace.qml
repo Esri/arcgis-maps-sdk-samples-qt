@@ -125,6 +125,7 @@ Item {
                         color: "black"
                         placeholderText: qsTr("Enter value here")
                         placeholderTextColor: "black"
+                        selectByMouse: true
                         background: Rectangle {
                             anchors.centerIn: parent
                             height: parent.height
