@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  view.setSource(QUrl("qrc:/Samples/Analysis/DisplayUtilityAssociations/DisplayUtilityAssociations.qml"));
+  view.setSource(QUrl("qrc:/Samples/UtilityNetwork/DisplayUtilityAssociations/DisplayUtilityAssociations.qml"));
 
   view.show();
 

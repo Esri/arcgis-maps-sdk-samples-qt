@@ -1,4 +1,4 @@
-// [WriteFile Name=DisplayUtilityAssociations, Category=Analysis]
+// [WriteFile Name=DisplayUtilityAssociations, Category=UtilityNetwork]
 // [Legal]
 // Copyright 2020 Esri.
 

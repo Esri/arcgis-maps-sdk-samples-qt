@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Analysis/DisplayUtilityAssociations/main.qml"));
+  engine.load(QUrl("qrc:/Samples/UtilityNetwork/DisplayUtilityAssociations/main.qml"));
 
   return app.exec();
 }
