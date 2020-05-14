@@ -186,7 +186,7 @@ Rectangle {
                                                                       geometry: geometry,
                                                                       altitudeMode: Enums.KmlAltitudeModeClampToGround
                                                                   });
-        let kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
+        const kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
         kmlPlacemark.geometriesListModel.append(kmlGeometry);
         kmlPlacemark.style = kmlStyle;
         kmlDocument.childNodesListModel.append(kmlPlacemark);

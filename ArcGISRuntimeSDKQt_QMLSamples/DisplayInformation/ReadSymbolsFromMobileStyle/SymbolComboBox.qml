@@ -39,7 +39,7 @@ ComboBox {
                                                           styleLocation: dataPath
                                                       });
 
-        var params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: [filterKeyword]});
+        const params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: [filterKeyword]});
         style.searchSymbols(params);
     }
     delegate: Item {

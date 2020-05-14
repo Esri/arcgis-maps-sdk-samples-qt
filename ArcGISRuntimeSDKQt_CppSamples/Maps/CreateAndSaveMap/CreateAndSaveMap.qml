@@ -33,7 +33,7 @@ CreateAndSaveMapSample {
         if (stackView.currentItem === completionRect)
             return;
 
-        var url =  "https://www.arcgis.com/home/item.html?id=%1".arg(itemId);
+        const url =  "https://www.arcgis.com/home/item.html?id=%1".arg(itemId);
         stackView.push(completionRect,
                        { text: success ? 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(url)
                                        : "An error occurred while saving the map. Details: %1".arg(error)
@@ -114,8 +114,8 @@ CreateAndSaveMapSample {
                     // We need a local ref to the stackView and layerWindow
                     // object as our object references will have been deleted
                     // once "clear" cleans up this object.
-                    var sv = stackView;
-                    var lWindow = layerWindow;
+                    const sv = stackView;
+                    const lWindow = layerWindow;
                     sv.clear();
                     sv.push(lWindow);
                 }

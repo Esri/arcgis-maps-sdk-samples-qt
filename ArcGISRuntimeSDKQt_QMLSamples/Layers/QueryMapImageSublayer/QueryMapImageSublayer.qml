@@ -111,16 +111,15 @@ Rectangle {
 
     function addResultsAsGraphics(results, symbol) {
         // get the iterator of features
-        var iter = results.iterator;
+        const iter = results.iterator;
         // add a graphic for each feature in the result
         while (iter.hasNext) {
-            var feat = iter.next();
-            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic",
-                                                                    {
-                                                                        geometry: feat.geometry,
-                                                                        symbol: symbol
-                                                                    }
-                                                                );
+            const feat = iter.next();
+            const graphic = ArcGISRuntimeEnvironment.createObject("Graphic",
+                                                                  {
+                                                                      geometry: feat.geometry,
+                                                                      symbol: symbol
+                                                                  });
             selectedFeaturesOverlay.graphics.append(graphic);
         }
     }
@@ -175,11 +174,11 @@ Rectangle {
                 selectedFeaturesOverlay.graphics.clear();
 
                 // create the parameters
-                var queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters",
-                                                                        {
-                                                                            whereClause: fieldText.text + populationText.text,
-                                                                            geometry: mapView.currentViewpointExtent.extent
-                                                                        });
+                const queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters",
+                                                                          {
+                                                                              whereClause: fieldText.text + populationText.text,
+                                                                              geometry: mapView.currentViewpointExtent.extent
+                                                                          });
 
                 // query the feature tables
                 citiesTable.queryFeatures(queryParams);

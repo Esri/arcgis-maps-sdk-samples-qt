@@ -95,8 +95,7 @@ Rectangle {
                 return;
 
             if (modeComboBox.currentText === "Facility") {
-                var facilityGraphic = ArcGISRuntimeEnvironment.createObject(
-                            "Graphic", {geometry: mouse.mapPoint});
+                const facilityGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: mouse.mapPoint});
                 facilitiesOverlay.graphics.append(facilityGraphic);
             }
             else {
@@ -180,13 +179,12 @@ Rectangle {
                 return;
             }
 
-            var numFacilities = facilitiesOverlay.graphics.rowCount();
-            for (var i = 0; i < numFacilities; i++) {
-                var results = solveServiceAreaResult.resultPolygons(i);
-                for (var j = 0; j < results.length; j++) {
-                    var resultGeometry = results[j].geometry;
-                    var resultGraphic = ArcGISRuntimeEnvironment.createObject(
-                                "Graphic", {geometry: resultGeometry});
+            const numFacilities = facilitiesOverlay.graphics.rowCount();
+            for (let i = 0; i < numFacilities; i++) {
+                const results = solveServiceAreaResult.resultPolygons(i);
+                for (let j = 0; j < results.length; j++) {
+                    const resultGeometry = results[j].geometry;
+                    const resultGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: resultGeometry});
                     areasOverlay.graphics.append(resultGraphic);
                 }
             }
@@ -228,7 +226,7 @@ Rectangle {
             }
 
             Component.onCompleted : {
-                for (var i = 0; i < model.length; ++i) {
+                for (let i = 0; i < model.length; ++i) {
                     metrics.text = model[i];
                     modelWidth = Math.max(modelWidth, metrics.width);
                 }
@@ -286,7 +284,7 @@ Rectangle {
     function handleBarrierPoint(mapPoint) {
         barrierBuilder.addPoint(mapPoint);
         // update the geometry for the current barrier - or create 1 if it does not exist
-        var barriersCount = barriersOverlay.graphics.rowCount();
+        const barriersCount = barriersOverlay.graphics.rowCount();
         if (barriersCount > 0)
             barriersOverlay.graphics.get(barriersCount-1).geometry = barrierBuilder.geometry
         else
@@ -294,8 +292,7 @@ Rectangle {
     }
 
     function addBarrierGraphic() {
-        var barrierGraphic = ArcGISRuntimeEnvironment.createObject(
-                    "Graphic", {geometry: barrierBuilder.geometry});
+        const barrierGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: barrierBuilder.geometry});
         barriersOverlay.graphics.append(barrierGraphic);
     }
 
@@ -310,14 +307,14 @@ Rectangle {
 
         busy = true;
 
-        var facilities = [];
+        const facilities = [];
         facilitiesOverlay.graphics.forEach(graphic => facilities.push(ArcGISRuntimeEnvironment.createObject("ServiceAreaFacility", {
                                                                                                                 geometry: graphic.geometry
                                                                                                             })));
 
         facilityParams.setFacilities(facilities);
 
-        var barriers = [];
+        const barriers = [];
         barriersOverlay.graphics.forEach(graphic => barriers.push(ArcGISRuntimeEnvironment.createObject("PolylineBarrier", {
                                                                                                             geometry: graphic.geometry
                                                                                                         })));

@@ -126,7 +126,7 @@ Rectangle {
                                     if (categoryEntry.text.length === 0)
                                         return;
 
-                                    var tmp = searchParamList;
+                                    const tmp = searchParamList;
                                     tmp[index].push(categoryEntry.text);
 
                                     searchParamList = tmp
@@ -157,7 +157,7 @@ Rectangle {
                                 anchors.fill: parent
                                 onClicked: {
                                     categoryEntry.text = "";
-                                    var tmp = searchParamList;
+                                    const tmp = searchParamList;
                                     tmp[index] = [];
 
                                     searchParamList = tmp;

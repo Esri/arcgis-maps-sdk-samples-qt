@@ -78,16 +78,16 @@ Rectangle {
 
         onLoadStatusChanged: {
             if (loadStatus === Enums.LoadStatusLoaded) {
-                var idInfos = featureServiceInfo.layerInfos;
-                for (var i = 0; i < idInfos.length; i++) {
+                const idInfos = featureServiceInfo.layerInfos;
+                for (let i = 0; i < idInfos.length; i++) {
                     // add the layer to the map
-                    var featureLayerUrl = featureServiceInfo.url + "/" + idInfos[i].infoId;
-                    var serviceFeatureTable = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {url: featureLayerUrl});
-                    var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: serviceFeatureTable});
+                    const featureLayerUrl = featureServiceInfo.url + "/" + idInfos[i].infoId;
+                    const serviceFeatureTable = ArcGISRuntimeEnvironment.createObject("ServiceFeatureTable", {url: featureLayerUrl});
+                    const featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: serviceFeatureTable});
                     map.operationalLayers.append(featureLayer);
 
                     // add a new GenerateLayerOption to array for use in the GenerateGeodatabaseParameters
-                    var layerOption = ArcGISRuntimeEnvironment.createObject("GenerateLayerOption", {layerId: idInfos[i].infoId});
+                    const layerOption = ArcGISRuntimeEnvironment.createObject("GenerateLayerOption", {layerId: idInfos[i].infoId});
                     generateLayerOptions.push(layerOption);
                     generateParameters.layerOptions = generateLayerOptions;
                 }
@@ -150,9 +150,9 @@ Rectangle {
             geodatabase.loadStatusChanged.connect(()=> {
                 if (geodatabase.loadStatus === Enums.LoadStatusLoaded) {
                     // create a feature layer from each feature table, and add to the map
-                    for (var i = 0; i < geodatabase.geodatabaseFeatureTables.length; i++) {
-                        var featureTable = geodatabase.geodatabaseFeatureTables[i];
-                        var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
+                    for (let i = 0; i < geodatabase.geodatabaseFeatureTables.length; i++) {
+                        const featureTable = geodatabase.geodatabaseFeatureTables[i];
+                        const featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
                         featureLayer.featureTable = featureTable;
                         map.operationalLayers.append(featureLayer);
                     }
@@ -241,9 +241,9 @@ Rectangle {
             }
 
             function getRectangleEnvelope() {
-                var corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
-                var corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
-                var envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
+                const corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
+                const corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+                const envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
                 envBuilder.setCorners(corner1, corner2);
                 generateExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
             }

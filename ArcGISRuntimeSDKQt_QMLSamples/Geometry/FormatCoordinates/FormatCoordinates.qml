@@ -181,7 +181,7 @@ Rectangle {
     }
 
     function handleTextUpdate(textType, text) {
-        var point = createPointFromText(textType, text);
+        const point = createPointFromText(textType, text);
         if (point)
             handleLocationUpdate(point);
     }
@@ -190,13 +190,13 @@ Rectangle {
         if (point.isEmpty)
             return;
         //! [FormatCoordinates CoordinateFormatter point to text]
-        var decimalPlaces = 6;
+        let decimalPlaces = 6;
         textDD.text   = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDecimalDegrees, decimalPlaces);
 
         decimalPlaces = 1;
         textDMS.text  = CoordinateFormatter.toLatitudeLongitude(point, Enums.LatitudeLongitudeFormatDegreesMinutesSeconds, decimalPlaces);
 
-        var addSpaces = true;
+        const addSpaces = true;
         textUsng.text = CoordinateFormatter.toUsng(point, 5, addSpaces);
 
         textUtm.text  = CoordinateFormatter.toUtm(point, Enums.UtmConversionModeLatitudeBandIndicators, addSpaces);

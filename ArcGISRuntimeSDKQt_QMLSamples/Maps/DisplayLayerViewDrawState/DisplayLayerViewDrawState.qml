@@ -70,7 +70,7 @@ Rectangle {
 
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded)
-                    for (var i = 0; i < map.operationalLayers.count; i++)
+                    for (let i = 0; i < map.operationalLayers.count; i++)
                         layerViewModel.append(
                                     { "name": map.operationalLayers.get(i).name, "status": "Unknown" });
             }
@@ -78,9 +78,9 @@ Rectangle {
 
         onLayerViewStateChanged: {
             // find index of changed layer
-            var index = getindex(layer);
+            const index = getindex(layer);
             // get Current Status
-            var status = viewStatusString(layerViewState);
+            const status = viewStatusString(layerViewState);
             // change name if layer loaded
             layerViewModel.setProperty(index, "name", layer.name);
             // update Status in ListModel
@@ -88,7 +88,7 @@ Rectangle {
         }
 
         function viewStatusString(layerViewState) {
-            var stateFlag = layerViewState.statusFlags;
+            const stateFlag = layerViewState.statusFlags;
             if (stateFlag & Enums.LayerViewStatusActive)
                 return "Active";
             if (stateFlag & Enums.LayerViewStatusNotVisible)
@@ -104,7 +104,7 @@ Rectangle {
         }
 
         function getindex(layer) {
-            for (var i = 0; i < layerViewModel.count; i++) {
+            for (let i = 0; i < layerViewModel.count; i++) {
                 if (layer === map.operationalLayers.get(i))
                     return i;
             }

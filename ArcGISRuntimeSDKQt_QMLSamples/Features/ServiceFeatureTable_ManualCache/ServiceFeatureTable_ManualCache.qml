@@ -49,7 +49,7 @@ Rectangle {
                                 return;
                             }
 
-                            var count = populateFromServiceResult.iterator.features.length;
+                            const count = populateFromServiceResult.iterator.features.length;
                             console.log("Retrieved %1 features".arg(count));
                         }
                     }

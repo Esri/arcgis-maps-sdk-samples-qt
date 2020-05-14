@@ -84,23 +84,23 @@ Rectangle {
         onStatusChanged: {
             if (status === XmlListModel.Ready) {
                 let bbox = null;
-                for (var i = 0; i < count; i++) {
-                    let element = get(i);
+                for (let i = 0; i < count; i++) {
+                    const element = get(i);
                     let wkid = element._wkid;
                     if (!wkid) {
                         // If _wkid was absent, use WGS 1984 (4326) by default.
                         wkid = 4326;
                     }
-                    let pointStrings = element._control_points.split(";");
-                    let sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
+                    const pointStrings = element._control_points.split(";");
+                    const sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
 
                     let geom = null;
                     if (pointStrings.length === 1) {
                         // It's a point
-                        var pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {
-                                                                                     spatialReference: sr
-                                                                                 });
-                        var coords = pointStrings[0].split(",");
+                        const pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder", {
+                                                                                       spatialReference: sr
+                                                                                   });
+                        const coords = pointStrings[0].split(",");
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
                     }
@@ -113,9 +113,9 @@ Rectangle {
                         element._control_points = undefined;
                         element._wkid = undefined;
 
-                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                                geometry: geom
-                                                                            });
+                        const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                                  geometry: geom
+                                                                              });
                         graphic.attributes.attributesJson = element;
                         graphicsOverlay.graphics.append(graphic);
 
@@ -135,7 +135,7 @@ Rectangle {
                      * Create a camera directly above the center of the features, and then rotate that
                      * camera around the center to tip it.
                      */
-                    var camera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                    let camera = ArcGISRuntimeEnvironment.createObject("Camera", {
                                                                            location: bbox.extent.center,
                                                                            heading: 0,
                                                                            pitch: 0,

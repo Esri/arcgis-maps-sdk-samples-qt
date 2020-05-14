@@ -56,7 +56,7 @@ Rectangle {
 
                     // get the Street Light sublayer and define its labels
                     subtypeSublayer = subtypeFeatureLayer.sublayerWithSubtypeName("Street Light");
-                    var labelDefinition = ArcGISRuntimeEnvironment.createObject("LabelDefinition", { json : labelJson});
+                    const labelDefinition = ArcGISRuntimeEnvironment.createObject("LabelDefinition", { json : labelJson});
 
                     if (!labelDefinition || !subtypeSublayer)
                       return;

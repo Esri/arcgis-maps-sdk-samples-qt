@@ -40,7 +40,7 @@ Rectangle {
 
     function searchNext(){
         //! [Portal find with nextQueryParameters]
-        var nextQuery = portal.findItemsResult.nextQueryParameters;
+        const nextQuery = portal.findItemsResult.nextQueryParameters;
         // check whether the startIndex of the new query is valid
         if (nextQuery.startIndex !== -1)
             portal.findItems(nextQuery);

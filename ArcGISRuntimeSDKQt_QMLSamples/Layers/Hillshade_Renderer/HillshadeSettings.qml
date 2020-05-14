@@ -103,7 +103,7 @@ Rectangle {
 
 
                 Component.onCompleted : {
-                    for (var i = 0; i < model.count; ++i) {
+                    for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
                         modelWidth = Math.max(modelWidth, metrics.width);
                     }
@@ -121,9 +121,9 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
                 text: "Apply"
                 onClicked: {
-                    var altitude = altitudeSlider.value;
-                    var azimuth = azimuthSlider.value;
-                    var slope = slopeBox.model.get(slopeBox.currentIndex).value;
+                    const altitude = altitudeSlider.value;
+                    const azimuth = azimuthSlider.value;
+                    const slope = slopeBox.model.get(slopeBox.currentIndex).value;
                     applyHillshadeRenderer(altitude, azimuth, slope);
                     root.visible = false;
                 }

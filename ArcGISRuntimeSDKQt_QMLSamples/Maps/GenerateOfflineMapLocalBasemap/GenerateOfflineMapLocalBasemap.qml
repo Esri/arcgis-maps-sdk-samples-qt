@@ -74,11 +74,11 @@ Rectangle {
         }
 
         function getRectangleEnvelope() {
-            var corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
-            var corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
-            var envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
+            const corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
+            const corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+            const envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
             envBuilder.setCorners(corner1, corner2);
-            var mapExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
+            const mapExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
             offlineMapTask.createDefaultGenerateOfflineMapParameters(mapExtent);
         }
     }
@@ -96,7 +96,7 @@ Rectangle {
             if (createDefaultGenerateOfflineMapParametersStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            var parameters = offlineMapTask.createDefaultGenerateOfflineMapParametersResult;
+            const parameters = offlineMapTask.createDefaultGenerateOfflineMapParametersResult;
 
             // update default parameters to specify use of local basemap
             // this will prevent new tiles from being generated on the server
@@ -151,10 +151,10 @@ Rectangle {
             case Enums.JobStatusSucceeded:
                 // show any layer errors
                 if (generateJob.result.hasErrors) {
-                    var layerErrors = generateJob.result.layerErrors;
-                    var errorText = "";
-                    for (var i = 0; i < layerErrors.length; i++) {
-                        var errorPair = layerErrors[i];
+                    const layerErrors = generateJob.result.layerErrors;
+                    let errorText = "";
+                    for (let i = 0; i < layerErrors.length; i++) {
+                        const errorPair = layerErrors[i];
                         errorText += errorPair.layer.name + ": " + errorPair.error.message + "\n";
                     }
                     msgDialog.detailedText = errorText;

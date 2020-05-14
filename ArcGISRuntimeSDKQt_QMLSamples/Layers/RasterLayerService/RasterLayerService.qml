@@ -48,7 +48,7 @@ Rectangle {
                     // zoom to the center of the raster once it's loaded
                     onLoadStatusChanged: {
                         if (loadStatus === Enums.LoadStatusLoaded) {
-                            var scale = 100000.;
+                            const scale = 100000;
                             mapView.setViewpointCenterAndScale(ArcGISRuntimeEnvironment.createObject("Point", {x: -13643095.660131, y: 4550009.846004}), scale);
                         }
                     }

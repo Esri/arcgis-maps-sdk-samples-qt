@@ -204,7 +204,7 @@ Rectangle {
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            var camera;
+            let camera;
             if (zoomedOut)
                 camera = zoomInCamera;
             else

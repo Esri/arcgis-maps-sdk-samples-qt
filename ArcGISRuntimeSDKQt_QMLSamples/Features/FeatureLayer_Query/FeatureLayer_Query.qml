@@ -70,7 +70,7 @@ Rectangle {
                             // clear any previous selection
                             featureLayer.clearSelection();
 
-                            var features = []
+                            const features = []
                             // get the features
                             while (queryFeaturesResult.iterator.hasNext) {
                                 features.push(queryFeaturesResult.iterator.next());
@@ -168,10 +168,10 @@ Rectangle {
         if (stateName === "")
             return "";
 
-        var formattedWords = [];
+        const formattedWords = [];
 
-        var lowerStateName = stateName.toLowerCase();
-        var words = lowerStateName.split(" ");
+        const lowerStateName = stateName.toLowerCase();
+        const words = lowerStateName.split(" ");
         words.forEach(word => formattedWords.push(word.charAt(0).toUpperCase() + word.slice(1)));
 
         return formattedWords.join(" ");

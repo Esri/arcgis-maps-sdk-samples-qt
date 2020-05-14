@@ -45,19 +45,19 @@ Rectangle {
             onLoadStatusChanged: {
                 if (loadStatus === Enums.LoadStatusLoaded) {
                     // Set a viewpoint
-                    var point = ArcGISRuntimeEnvironment.createObject("Point", {
-                                                                          x: 6.86088,
-                                                                          y: 45.3604,
-                                                                          z: 3582.55,
-                                                                          spatialReference: SpatialReference.createWgs84()
-                                                                      });
+                    const point = ArcGISRuntimeEnvironment.createObject("Point", {
+                                                                            x: 6.86088,
+                                                                            y: 45.3604,
+                                                                            z: 3582.55,
+                                                                            spatialReference: SpatialReference.createWgs84()
+                                                                        });
 
-                    var camera = ArcGISRuntimeEnvironment.createObject("Camera", {
-                                                                           location: point,
-                                                                           heading: 345,
-                                                                           pitch: 70,
-                                                                           roll: 0
-                                                                       });
+                    const camera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                                                                             location: point,
+                                                                             heading: 345,
+                                                                             pitch: 70,
+                                                                             roll: 0
+                                                                         });
 
                     sceneView.setViewpointCamera(camera)
                 }

@@ -66,9 +66,9 @@ Rectangle {
                 return;
 
             // Get the first feature table
-            var gpkgFeatureTable = gpkg.geoPackageFeatureTables[0];
+            const gpkgFeatureTable = gpkg.geoPackageFeatureTables[0];
             // Create a FeatureLayer with the table
-            var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: gpkgFeatureTable});
+            const featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: gpkgFeatureTable});
             // Append the layer to the map
             map.operationalLayers.append(featureLayer);
         }

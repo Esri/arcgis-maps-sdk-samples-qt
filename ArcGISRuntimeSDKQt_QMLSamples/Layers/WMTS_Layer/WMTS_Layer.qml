@@ -41,22 +41,22 @@ Rectangle {
         service.loadStatusChanged.connect(()=> {
             if (service.loadStatus === Enums.LoadStatusLoaded) {
                 // get the layer info list
-                var serviceInfo = service.serviceInfo;
-                var layerInfos = serviceInfo.layerInfos;
+                const serviceInfo = service.serviceInfo;
+                const layerInfos = serviceInfo.layerInfos;
                 // get the first layer id from the list
-                var layerId = layerInfos[0].wmtsLayerId;
+                const layerId = layerInfos[0].wmtsLayerId;
                 // create WMTS layer
-                var wmtsLayer = ArcGISRuntimeEnvironment.createObject("WmtsLayer", {
-                                                                          url: wmtsServiceUrl,
-                                                                          layerId: layerId
-                                                                      });
+                const wmtsLayer = ArcGISRuntimeEnvironment.createObject("WmtsLayer", {
+                                                                            url: wmtsServiceUrl,
+                                                                            layerId: layerId
+                                                                        });
                 // create a basemap from the layer
-                var basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
+                const basemap = ArcGISRuntimeEnvironment.createObject("Basemap");
                 basemap.baseLayers.append(wmtsLayer);
                 // create a map
-                var map = ArcGISRuntimeEnvironment.createObject("Map", {
-                                                                    basemap: basemap
-                                                                });
+                const map = ArcGISRuntimeEnvironment.createObject("Map", {
+                                                                      basemap: basemap
+                                                                  });
                 // set the map on the mapview
                 mapView.map = map;
             }
