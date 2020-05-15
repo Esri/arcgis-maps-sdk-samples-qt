@@ -1,8 +1,0 @@
-{
-    "source" :  "CutGeometry.qml",
-    "otherSourceFiles" :  [
-        "CutGeometry.h",
-        "CutGeometry.cpp"
-    ],
-    "name" : "Cut geometry"
-}

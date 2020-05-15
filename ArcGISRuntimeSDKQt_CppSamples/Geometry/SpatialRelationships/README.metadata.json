@@ -28,9 +28,9 @@
         "GeometryEngine::contains"
     ],
     "snippets": [
+        "SpatialRelationships.qml",
         "SpatialRelationships.cpp",
-        "SpatialRelationships.h",
-        "SpatialRelationships.qml"
+        "SpatialRelationships.h"
     ],
     "title": "Spatial relationships"
 }

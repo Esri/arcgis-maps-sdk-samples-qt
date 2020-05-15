@@ -1,8 +1,0 @@
-{
-    "source" :  "SearchForWebmap.qml",
-    "otherSourceFiles" : [
-        "SearchForWebmap.h",
-        "SearchForWebmap.cpp"
-    ],
-    "name" : "Search for web map by keyword"
-}

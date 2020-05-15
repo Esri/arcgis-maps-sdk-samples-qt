@@ -21,9 +21,9 @@
         "Surface"
     ],
     "snippets": [
+        "DisplayScenesInTabletopAR.qml",
         "DisplayScenesInTabletopAR.cpp",
         "DisplayScenesInTabletopAR.h",
-        "DisplayScenesInTabletopAR.qml",
         "PermissionsHelper.cpp",
         "PermissionsHelper.h"
     ],

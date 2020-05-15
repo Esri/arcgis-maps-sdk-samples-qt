@@ -7,7 +7,7 @@
     ],
     "keywords": [
         "callout",
-        "geocode"
+        "geocode",
         "reverse geocode"
     ],
     "redirect_from": "",
@@ -15,14 +15,14 @@
         "Callout",
         "CalloutData",
         "GraphicsOverlay",
-        "LocatorTask"
+        "LocatorTask",
         "PictureMarkerSymbol",
         "ReverseGeocodeParameters"
     ],
     "snippets": [
+        "ReverseGeocodeOnline.qml",
         "ReverseGeocodeOnline.cpp",
-        "ReverseGeocodeOnline.h",
-        "ReverseGeocodeOnline.qml"
+        "ReverseGeocodeOnline.h"
     ],
     "title": "Reverse geocode"
 }

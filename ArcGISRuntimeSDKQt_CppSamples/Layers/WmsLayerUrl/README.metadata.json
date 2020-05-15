@@ -17,9 +17,9 @@
         "MapView"
     ],
     "snippets": [
+        "WmsLayerUrl.qml",
         "WmsLayerUrl.cpp",
-        "WmsLayerUrl.h",
-        "WmsLayerUrl.qml"
+        "WmsLayerUrl.h"
     ],
     "title": "WMS layer (URL)"
 }

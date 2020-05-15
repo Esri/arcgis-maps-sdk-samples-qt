@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/TakeScreenshot">
-        <file alias="sample.json">TakeScreenshot.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>TakeScreenshot.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

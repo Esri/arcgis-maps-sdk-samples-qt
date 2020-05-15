@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/RasterFunctionFile">
-        <file alias="sample.json">RasterFunctionFile.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>RasterFunctionFile.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

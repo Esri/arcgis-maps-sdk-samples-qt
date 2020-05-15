@@ -1,5 +1,0 @@
-{
-    "source" :  "FindPlace.qml",
-    "otherSourceFiles" :  ["SearchBox.qml", "SearchButton.qml", "SuggestionView.qml"],
-    "name" : "Find a place"
-}

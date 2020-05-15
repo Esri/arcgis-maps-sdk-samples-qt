@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/LoadWfsXmlQuery">
-        <file alias="sample.json">LoadWfsXmlQuery.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>LoadWfsXmlQuery.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

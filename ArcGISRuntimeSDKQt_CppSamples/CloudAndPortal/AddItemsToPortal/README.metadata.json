@@ -21,9 +21,9 @@
         "PortalUser"
     ],
     "snippets": [
+        "AddItemsToPortal.qml",
         "AddItemsToPortal.cpp",
-        "AddItemsToPortal.h",
-        "AddItemsToPortal.qml"
+        "AddItemsToPortal.h"
     ],
     "title": "Add items to portal"
 }

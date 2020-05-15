@@ -1,9 +1,0 @@
-{
-    "source" :  "ClosestFacility.qml",
-    "otherSourceFiles" : [
-        "ClosestFacility.h",
-        "ClosestFacility.cpp"
-    ],
-    "name" : "Find closest facility to an incident (interactive)"
-}
-

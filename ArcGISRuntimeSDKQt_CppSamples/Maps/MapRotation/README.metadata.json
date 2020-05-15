@@ -22,9 +22,9 @@
         "SpatialReference"
     ],
     "snippets": [
+        "MapRotation.qml",
         "MapRotation.h",
-        "MapRotation.cpp",
-        "MapRotation.qml"
+        "MapRotation.cpp"
     ],
     "title": "Map rotation"
 }

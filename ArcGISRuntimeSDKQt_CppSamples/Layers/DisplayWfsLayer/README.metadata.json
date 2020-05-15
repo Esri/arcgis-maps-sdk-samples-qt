@@ -26,9 +26,9 @@
         "FeatureLayer"
     ],
     "snippets": [
+        "DisplayWfsLayer.qml",
         "DisplayWfsLayer.cpp",
-        "DisplayWfsLayer.h",
-        "DisplayWfsLayer.qml"
+        "DisplayWfsLayer.h"
     ],
     "title": "Display a WFS layer"
 }

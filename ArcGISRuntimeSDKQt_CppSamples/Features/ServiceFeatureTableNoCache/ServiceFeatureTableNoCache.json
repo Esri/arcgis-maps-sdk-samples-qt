@@ -1,9 +1,0 @@
-{
-    "source" :  "ServiceFeatureTableNoCache.qml",
-    "otherSourceFiles" : [
-        "ServiceFeatureTableNoCache.h",
-        "ServiceFeatureTableNoCache.cpp"
-    ],
-    "name" : "Service feature table (no cache)"
-}
-

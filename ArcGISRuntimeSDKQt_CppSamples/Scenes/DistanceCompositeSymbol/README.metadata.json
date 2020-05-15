@@ -28,5 +28,11 @@
         "DistanceCompositeSymbol.cpp",
         "DistanceCompositeSymbol.h"
     ],
+    "dataItems" : [
+        {
+            "itemId" : "681d6f7694644709a7c830ec57a2d72b",
+            "path" : "~/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
+        }
+    ],
     "title": "Distance composite symbol"
 }

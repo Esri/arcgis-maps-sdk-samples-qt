@@ -1,8 +1,0 @@
-{
-    "source" :  "ExtrudeGraphics.qml",
-    "otherSourceFiles" : [
-        "ExtrudeGraphics.h",
-        "ExtrudeGraphics.cpp"
-    ],
-    "name" : "Extrude graphics"
-}

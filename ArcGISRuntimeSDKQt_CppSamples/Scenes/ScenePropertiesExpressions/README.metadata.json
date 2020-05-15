@@ -16,10 +16,10 @@
         "RendererSceneProperties"
     ],
     "snippets": [
+        "ScenePropertiesExpressions.qml",
         "ScenePropertiesExpressions.cpp",
         "ScenePropertiesExpressions.h",
-        "main.qml",
-        "ScenePropertiesExpressions.qml"
+        "main.qml"
     ],
     "title": "Scene properties expressions"
 }

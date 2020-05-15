@@ -42,9 +42,9 @@
         "UtilityTraversability"
     ],
     "snippets": [
+        "ConfigureSubnetworkTrace.qml",
         "ConfigureSubnetworkTrace.cpp",
-        "ConfigureSubnetworkTrace.h",
-        "ConfigureSubnetworkTrace.qml"
+        "ConfigureSubnetworkTrace.h"
     ],
     "title": "Configure subnetwork trace"
 }

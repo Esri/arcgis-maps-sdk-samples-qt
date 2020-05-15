@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Scenes/OrbitCameraAroundObject">
-        <file alias="sample.json">OrbitCameraAroundObject.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>OrbitCameraAroundObject.qml</file>
         <file>OrbitCameraAroundObject.h</file>
         <file>OrbitCameraAroundObject.cpp</file>

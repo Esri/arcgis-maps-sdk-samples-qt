@@ -23,9 +23,9 @@
         "ArcGISTiledElevationSource"
     ],
     "snippets": [
+        "LineOfSightLocation.qml",
         "LineOfSightLocation.cpp",
-        "LineOfSightLocation.h",
-        "LineOfSightLocation.qml"
+        "LineOfSightLocation.h"
     ],
     "title": "Line of sight (location)"
 }

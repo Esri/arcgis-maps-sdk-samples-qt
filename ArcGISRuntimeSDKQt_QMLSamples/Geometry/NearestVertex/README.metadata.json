@@ -13,7 +13,7 @@
     "redirect_from": "",
     "relevant_apis": [
         "GeometryEngine",
-        "MapView"
+        "MapView",
         "ProximityResult"
     ],
     "snippets": [

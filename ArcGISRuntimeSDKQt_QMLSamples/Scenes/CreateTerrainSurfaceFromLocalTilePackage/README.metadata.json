@@ -18,5 +18,11 @@
     "snippets": [
         "CreateTerrainSurfaceFromLocalTilePackage.qml"
     ],
+    "dataItems" : [
+        {
+            "itemId" : "cce37043eb0440c7a5c109cf8aad5500",
+            "path" : "~/ArcGIS/Runtime/Data/tpk/MontereyElevation.tpk"
+        }
+    ],
     "title": "Create terrain surface from a local tile package"
 }

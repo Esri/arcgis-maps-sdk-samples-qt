@@ -19,8 +19,8 @@
         "GeometryEngine"
     ],
     "snippets": [
-        "ListTransformations.h",
         "ListTransformations.qml",
+        "ListTransformations.h",
         "ListTransformations.cpp"
     ],
     "title": "List transformations by suitability"

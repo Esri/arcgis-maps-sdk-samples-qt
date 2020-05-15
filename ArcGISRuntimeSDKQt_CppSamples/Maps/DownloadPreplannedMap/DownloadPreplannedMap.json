@@ -1,8 +1,0 @@
-{
-    "source" :  "DownloadPreplannedMap.qml",
-    "otherSourceFiles" :  [
-        "DownloadPreplannedMap.h",
-        "DownloadPreplannedMap.cpp"
-    ],
-    "name" : "Download preplanned map"
-}

@@ -26,9 +26,9 @@
         "FeatureLayer"
     ],
     "snippets": [
+        "IdentifyLayers.qml",
         "IdentifyLayers.cpp",
-        "IdentifyLayers.h",
-        "IdentifyLayers.qml"
+        "IdentifyLayers.h"
     ],
     "title": "Identify layers"
 }

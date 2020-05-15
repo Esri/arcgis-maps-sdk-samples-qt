@@ -1,9 +1,0 @@
-{
-    "source" :  "UpdateAttributesFeatureService.qml",
-    "otherSourceFiles" : [
-        "UpdateAttributesFeatureService.h",
-        "UpdateAttributesFeatureService.cpp"
-    ],
-    "name" : "Update attributes (feature service)"
-}
-

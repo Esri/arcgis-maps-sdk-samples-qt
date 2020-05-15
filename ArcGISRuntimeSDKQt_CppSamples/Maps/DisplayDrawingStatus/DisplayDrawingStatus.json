@@ -1,9 +1,0 @@
-{
-    "source" :  "DisplayDrawingStatus.qml",
-    "otherSourceFiles" : [
-        "DisplayDrawingStatus.h",
-        "DisplayDrawingStatus.cpp"
-    ],
-    "name" : "Display drawing status"
-}
-

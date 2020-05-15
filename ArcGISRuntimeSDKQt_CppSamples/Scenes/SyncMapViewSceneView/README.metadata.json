@@ -19,10 +19,10 @@
         "GeoView::setViewpoint"
     ],
     "snippets": [
+        "SyncMapViewSceneView.qml",
         "SyncMapViewSceneView.cpp",
         "main.qml",
-        "SyncMapViewSceneView.h",
-        "SyncMapViewSceneView.qml"
+        "SyncMapViewSceneView.h"
     ],
     "title": "Sync map and scene views"
 }

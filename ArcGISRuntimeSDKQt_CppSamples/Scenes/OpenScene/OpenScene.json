@@ -1,8 +1,0 @@
-{
-    "source" :  "OpenScene.qml",
-    "otherSourceFiles" :  [
-        "OpenScene.h",
-        "OpenScene.cpp"
-    ],
-    "name" : "Open a scene (portal item)"
-}
