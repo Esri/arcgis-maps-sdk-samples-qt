@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.8
+import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 FindAddressSample {
     id: findAddressSample
@@ -75,6 +75,7 @@ FindAddressSample {
                     id: textField
                     font.pixelSize: 14
                     placeholderText: "Type in an address"
+                    selectByMouse: true
 
                     Keys.onEnterPressed: geocodeAddress();
                     Keys.onReturnPressed: geocodeAddress();

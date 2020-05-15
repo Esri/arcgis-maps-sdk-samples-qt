@@ -17,7 +17,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -46,7 +46,7 @@ Rectangle {
         }
 
         onMouseClicked: {
-            var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+            const graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
             graphic.geometry = mouse.mapPoint;
             graphic.symbol = currentSymbol;
             graphicsOverlay.graphics.append(graphic);
@@ -87,8 +87,8 @@ Rectangle {
                 return;
 
             // get initial list of symbols
-            for (var i = 0; i < searchSymbolsResult.count; i++) {
-                var result = searchSymbolsResult.get(i);
+            for (let i = 0; i < searchSymbolsResult.count; i++) {
+                const result = searchSymbolsResult.get(i);
                 if (result.category === "Face") {
                     currentFace = result;
                     break;
@@ -107,9 +107,7 @@ Rectangle {
             currentSymbol = fetchSymbolResult;
 
             // set the color locked preferences per layer
-            currentSymbol.symbolLayers.forEach(function(symbolLyr) {
-                symbolLyr.colorLocked = true;
-            });
+            currentSymbol.symbolLayers.forEach(symbolLyr => symbolLyr.colorLocked = true);
 
             currentSymbol.symbolLayers.get(0).colorLocked = false;
 
@@ -120,7 +118,7 @@ Rectangle {
             currentSymbol.color = colorComboBox.currentText;
 
             // update swatch
-            currentSymbol.swatchImageChanged.connect(function(){
+            currentSymbol.swatchImageChanged.connect(()=> {
                 symbolImage.source = currentSymbol.swatchImage;
             });
 

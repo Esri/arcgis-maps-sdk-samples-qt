@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     width: 800
@@ -177,13 +177,11 @@ Rectangle {
     // by calling appendAll and pass in the list.
     Component.onCompleted: {
         // add buoy points
-        buoyLocArray.forEach(function(buoyPoint) {
-            graphicsOverlay.graphics.append(createGraphic(buoyPoint, buoyMarkerSymbol));
-        });
+        buoyLocArray.forEach(buoyPoint => graphicsOverlay.graphics.append(createGraphic(buoyPoint, buoyMarkerSymbol)));
 
         // add text symbols
-        for (var i = 0; i < textLocArray.length; i++) {
-            var textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol");
+        for (let i = 0; i < textLocArray.length; i++) {
+            const textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol");
             textSymbol.size = 10;
             textSymbol.color = Qt.rgba(0.1, 0.4, 0.9, 1);
             textSymbol.text = symbolTextArray[i];
@@ -208,7 +206,7 @@ Rectangle {
     //! [GOSymbol createGraphic]
     // create and return a graphic
     function createGraphic(geometry, symbol) {
-        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+        const graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
         graphic.geometry = geometry;
         graphic.symbol = symbol;
         return graphic;

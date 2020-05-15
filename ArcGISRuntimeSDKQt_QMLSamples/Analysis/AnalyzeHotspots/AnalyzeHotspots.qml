@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Qt.labs.calendar 1.0
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import QtQuick.Layouts 1.3
 
 Rectangle {
@@ -59,7 +59,7 @@ Rectangle {
             job = hotspotTask.createJob(hotspotParameters);
 
             // Connect to the job's status changed signal
-            job.jobStatusChanged.connect(function(){
+            job.jobStatusChanged.connect(()=> {
                 if (job.jobStatus === Enums.JobStatusFailed) {
                     showErrorDialog(job.error);
                     jobInProgress = false;
@@ -85,8 +85,8 @@ Rectangle {
         // Extract the layer from the result and add to the map
         function processResults(result) {
             mapView.map.operationalLayers.clear();
-            var layer = result.mapImageLayer;
-            layer.loadStatusChanged.connect(function() {
+            const layer = result.mapImageLayer;
+            layer.loadStatusChanged.connect(()=> {
                 if (layer.loadStatus === Enums.LoadStatusLoaded)
                     mapView.setViewpointGeometry(layer.fullExtent);
             });
@@ -108,11 +108,11 @@ Rectangle {
 
         function addParameter(fromDateString, toDateString) {
             // create the query string
-            var queryString = "(\"DATE\" > date '%1 00:00:00' AND \"DATE\" < date '%2 00:00:00')"
+            let queryString = "(\"DATE\" > date '%1 00:00:00' AND \"DATE\" < date '%2 00:00:00')"
             queryString = queryString.arg(fromDateString).arg(toDateString);
 
             // Add query that contains the date range and the days of the week that are used in analysis
-            var inputs = {};
+            const inputs = {};
             inputs["Query"] = ArcGISRuntimeEnvironment.createObject("GeoprocessingString", { value: queryString });
             hotspotParameters.inputs = inputs;
 
@@ -157,6 +157,7 @@ Rectangle {
             id: fromDate
             width: parent.width
             text: fromThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
+            selectByMouse: true
 
             Image {
                 anchors {
@@ -188,6 +189,7 @@ Rectangle {
             id: toDate
             width: parent.width
             text: toThisDate.toLocaleString(Qt.locale(), "d MMM yyyy")
+            selectByMouse: true
 
             Image {
                 anchors {
@@ -217,8 +219,8 @@ Rectangle {
             enabled: !jobInProgress && validateDates(fromThisDate, toThisDate)
 
             onClicked: {
-                var fromString = fromThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
-                var toString = toThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
+                const fromString = fromThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
+                const toString = toThisDate.toLocaleString(Qt.locale(), "yyyy-MM-dd");
                 // Run the task
                 hotspotParameters.addParameter(fromString, toString);
             }
@@ -379,7 +381,7 @@ Rectangle {
 
         // check that there is at least one day in between the from and to date
 
-        var oneDay = 86400000;
+        const oneDay = 86400000;
         if ((_toDate - _fromDate) < oneDay) {
             return false;
         }
