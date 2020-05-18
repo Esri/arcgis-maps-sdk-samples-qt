@@ -60,6 +60,7 @@ private:
   Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
   Esri::ArcGISRuntime::CalloutData* m_calloutData = nullptr;
   Esri::ArcGISRuntime::Point m_clickedPoint;
+  bool m_mousePressed = false;
 };
 
 #endif // IDENTIFYRASTERCELL_H

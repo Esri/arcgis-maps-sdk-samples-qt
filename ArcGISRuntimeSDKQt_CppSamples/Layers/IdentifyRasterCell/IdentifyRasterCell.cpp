@@ -57,7 +57,8 @@ IdentifyRasterCell::IdentifyRasterCell(QObject* parent /* = nullptr */):
   m_map(new Map(Basemap::imagery(this), this))
 {
   // initialize the raster layer
-  const QString filepath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster-file/Shasta.tif";
+//  const QString filepath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster-file/Shasta.tif";
+  const QString filepath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster/SA_EVI_8Day_03May20/SA_EVI_8Day_03May20.tif";
   Raster* raster = new Raster(filepath, this);
   m_rasterLayer = new RasterLayer(raster, this);
 
@@ -136,10 +137,32 @@ void IdentifyRasterCell::connectSignals()
     }
   });
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent e)
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](const QMouseEvent& e)
   {
     m_mapView->identifyLayer(m_rasterLayer, e.x(), e.y(), 10, false, 1);
     m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+  });
+
+  connect(m_mapView, &MapQuickView::mousePressedAndHeld, this, [this](const QMouseEvent& e)
+  {
+    m_mapView->identifyLayer(m_rasterLayer, e.x(), e.y(), 10, false, 1);
+    m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    m_mousePressed = true;
+  });
+
+  connect(m_mapView, &MapQuickView::mouseReleased, this, [this](QMouseEvent)
+  {
+    m_mousePressed = false;
+  });
+
+  // if mouse is moved after press-and-hold, then update callout on-the-fly
+  connect(m_mapView, &MapQuickView::mouseMoved, this, [this](const QMouseEvent& e)
+  {
+    if (m_mousePressed)
+    {
+      m_mapView->identifyLayer(m_rasterLayer, e.x(), e.y(), 10, false, 1);
+      m_clickedPoint = m_mapView->screenToLocation(e.x(), e.y());
+    }
   });
 }
 
