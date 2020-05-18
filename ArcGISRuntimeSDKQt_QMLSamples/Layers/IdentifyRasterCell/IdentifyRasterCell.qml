@@ -15,9 +15,9 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Controls 100.8 // needed to use Callout in QML
+import Esri.ArcGISRuntime.Toolkit.Controls 100.9 // needed to use Callout in QML
 
 Rectangle {
     id: rootRectangle
@@ -25,9 +25,10 @@ Rectangle {
     width: 800
     height: 600
 
-    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster-file/"
+    readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/raster/SA_EVI_8Day_03May20/"
     property Point clickedPoint: null
     property string calloutText: ""
+    property bool pressedMouse: false
 
     MapView {
         id: mapView
@@ -40,6 +41,7 @@ Rectangle {
             calloutWidth: 300
             accessoryButtonHidden: true
             calloutContent: customComponent
+            leaderHeight: 30
         }
 
         Component {
@@ -59,11 +61,15 @@ Rectangle {
           }
 
         Map {
-            BasemapImagery {}
+            BasemapOceans {}
             RasterLayer {
                 id: rasterLayer
                 Raster {
-                    path: dataPath + "Shasta.tif"
+                    path: dataPath + "SA_EVI_8Day_03May20.tif"
+                }
+
+                onErrorChanged: {
+                 console.warn(loadError.message);
                 }
 
                 onLoadStatusChanged: {
@@ -79,6 +85,23 @@ Rectangle {
             clickedPoint = screenToLocation(mouse.x, mouse.y);
             if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
                 identifyLayer(rasterLayer, mouse.x, mouse.y, 10, false, 1);
+            }
+        }
+
+        onMousePressedAndHeld: {
+            pressedMouse = true;
+            clickedPoint = screenToLocation(mouse.x, mouse.y);
+            if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
+                identifyLayer(rasterLayer, mouse.x, mouse.y, 10, false, 1);
+            }
+        }
+        onMouseReleased: pressedMouse = false;
+        onMousePositionChanged: {
+            if (pressedMouse) {
+                clickedPoint = screenToLocation(mouse.x, mouse.y);
+                if (identifyLayerStatus !== Enums.TaskStatusInProgress) {
+                    identifyLayer(rasterLayer, mouse.x, mouse.y, 10, false, 1);
+                }
             }
         }
 

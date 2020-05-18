@@ -29,10 +29,9 @@ Item {
         Callout {
             id: callout
             calloutData: view.calloutData
-//            autoAdjustWidth: false
-//            calloutWidth: 300
             accessoryButtonHidden: true
             calloutContent: customComponent
+            leaderHeight: 30
         }
 
 

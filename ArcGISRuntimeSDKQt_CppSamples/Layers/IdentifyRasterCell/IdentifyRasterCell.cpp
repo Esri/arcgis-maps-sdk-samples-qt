@@ -54,10 +54,9 @@ QString defaultDataPath()
 
 IdentifyRasterCell::IdentifyRasterCell(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::imagery(this), this))
+  m_map(new Map(Basemap::oceans(this), this))
 {
   // initialize the raster layer
-//  const QString filepath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster-file/Shasta.tif";
   const QString filepath = defaultDataPath() + "/ArcGIS/Runtime/Data/raster/SA_EVI_8Day_03May20/SA_EVI_8Day_03May20.tif";
   Raster* raster = new Raster(filepath, this);
   m_rasterLayer = new RasterLayer(raster, this);
@@ -115,11 +114,12 @@ void IdentifyRasterCell::connectSignals()
       if (RasterCell* rasterCell = dynamic_cast<RasterCell*>(geoElement))
       {
         QString calloutString;
-        const AttributeListModel* attributes = geoElement->attributes();
-        const QStringList attributeNames = geoElement->attributes()->attributeNames();
+        const AttributeListModel* attributes = rasterCell->attributes();
+        const QStringList attributeNames = rasterCell->attributes()->attributeNames();
+
         for (int i = 0; i < attributeNames.size(); ++i)
         {
-          QString value = QVariant(attributes->operator[](attributeNames[i])).toString();
+          const QString value = QVariant((*attributes)[attributeNames[i]]).toString();
           calloutString.append(attributeNames[i] + ": " + value + "\n");
         }
 

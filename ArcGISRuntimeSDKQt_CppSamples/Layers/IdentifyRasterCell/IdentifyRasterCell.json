@@ -1,8 +1,0 @@
-{
-    "source" :  "IdentifyRasterCell.qml",
-    "otherSourceFiles" :  [
-        "IdentifyRasterCell.h",
-        "IdentifyRasterCell.cpp"
-    ],
-    "name" : "Identify raster cell"
-}
