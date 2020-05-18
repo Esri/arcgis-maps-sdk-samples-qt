@@ -118,6 +118,7 @@ void ShowLocationHistory::handleLocationChanges()
   m_mapView->locationDisplay()->setDataSource(m_simulatedLocationDataSource);
   m_mapView->locationDisplay()->setAutoPanMode(LocationDisplayAutoPanMode::Recenter);
   m_mapView->locationDisplay()->setInitialZoomScale(initialZoomScale);
+  m_mapView->locationDisplay()->start();
 
   m_simulatedLocationDataSource->start();
 
