@@ -109,7 +109,7 @@ Rectangle {
                          * the viewpoint.
                          */
                         var bbox = gdbLayers[0].fullExtent;
-                        for (j = 1; j < gdbLayers.length; j++) {
+                        for (let j = 1; j < gdbLayers.length; j++) {
                             bbox = GeometryEngine.unionOf(bbox, gdbLayers[j].fullExtent);
                         }
                         mapView.setViewpointGeometry(bbox);
