@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/MinMaxScale">
-        <file alias="sample.json">MinMaxScale.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>MinMaxScale.qml</file>
         <file>MinMaxScale.h</file>
         <file>MinMaxScale.cpp</file>

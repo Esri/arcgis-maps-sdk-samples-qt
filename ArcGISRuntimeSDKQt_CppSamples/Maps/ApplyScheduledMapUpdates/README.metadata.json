@@ -22,9 +22,15 @@
         "OfflineMapUpdatesInfo"
     ],
     "snippets": [
+        "ApplyScheduledMapUpdates.qml",
         "ApplyScheduledMapUpdates.h",
-        "ApplyScheduledMapUpdates.cpp",
-        "ApplyScheduledMapUpdates.qml"
+        "ApplyScheduledMapUpdates.cpp"
+    ],
+    "dataItems" : [
+        {
+            "itemId" : "740b663bff5e4198b9b6674af93f638a",
+            "path" : "~/ArcGIS/Runtime/Data/mmpk/canyonlands/package.info"
+        }
     ],
     "title": "Apply scheduled updates to preplanned map areas"
 }

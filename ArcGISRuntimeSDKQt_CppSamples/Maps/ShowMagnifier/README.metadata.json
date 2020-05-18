@@ -17,9 +17,9 @@
         "Basemap"
     ],
     "snippets": [
+        "ShowMagnifier.qml",
         "ShowMagnifier.cpp",
-        "ShowMagnifier.h",
-        "ShowMagnifier.qml"
+        "ShowMagnifier.h"
     ],
     "title": "Show magnifier"
 }

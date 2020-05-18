@@ -80,6 +80,7 @@ SearchDictionarySymbolStyleSample {
                             id: categoryEntry
                             Layout.fillWidth: true
                             placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
+                            selectByMouse: true
                             validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
                             onAccepted: addCategoryButton.mouseArea.clicked();
                         }
@@ -102,7 +103,7 @@ SearchDictionarySymbolStyleSample {
                                     if (categoryEntry.text.length === 0)
                                         return;
 
-                                    var tmp = searchParamList;
+                                    const tmp = searchParamList;
                                     tmp[index].push(categoryEntry.text);
 
                                     searchParamList = tmp;
@@ -133,7 +134,7 @@ SearchDictionarySymbolStyleSample {
                                 anchors.fill: parent
                                 onClicked: {
                                     categoryEntry.text = "";
-                                    var tmp = searchParamList;
+                                    const tmp = searchParamList;
                                     tmp[index] = [];
 
                                     searchParamList = tmp;

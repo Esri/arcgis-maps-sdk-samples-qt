@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Analysis/DistanceMeasurementAnalysis">
-        <file alias="sample.json">DistanceMeasurementAnalysis.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>DistanceMeasurementAnalysis.qml</file>
         <file>DistanceMeasurementAnalysis.h</file>
         <file>DistanceMeasurementAnalysis.cpp</file>

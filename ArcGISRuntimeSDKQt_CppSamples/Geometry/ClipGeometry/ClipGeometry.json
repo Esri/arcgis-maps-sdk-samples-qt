@@ -1,8 +1,0 @@
-{
-    "source" :  "ClipGeometry.qml",
-    "otherSourceFiles" :  [
-        "ClipGeometry.h",
-        "ClipGeometry.cpp"
-    ],
-    "name" : "Clip geometry"
-}

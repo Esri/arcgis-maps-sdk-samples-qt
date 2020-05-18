@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Scenes/DisplaySceneLayer">
-        <file alias="sample.json">DisplaySceneLayer.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>DisplaySceneLayer.qml</file>
         <file>DisplaySceneLayer.h</file>

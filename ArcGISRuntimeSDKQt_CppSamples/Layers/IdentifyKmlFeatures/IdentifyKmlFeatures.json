@@ -1,8 +1,0 @@
-{
-    "source" :  "IdentifyKmlFeatures.qml",
-    "otherSourceFiles" :  [
-        "IdentifyKmlFeatures.h",
-        "IdentifyKmlFeatures.cpp"
-    ],
-    "name" : "Identify KML features"
-}

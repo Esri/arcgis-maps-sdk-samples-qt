@@ -17,7 +17,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -92,7 +92,7 @@ Rectangle {
             }
 
             Component.onCompleted : {
-                for (var i = 0; i < model.length; ++i) {
+                for (let i = 0; i < model.length; ++i) {
                     metrics.text = model[i];
                     modelWidth = Math.max(modelWidth, metrics.width);
                 }

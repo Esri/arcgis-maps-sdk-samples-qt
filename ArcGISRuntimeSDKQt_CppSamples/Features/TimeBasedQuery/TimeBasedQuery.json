@@ -1,8 +1,0 @@
-{
-    "source" :  "TimeBasedQuery.qml",
-    "otherSourceFiles" :  [
-        "TimeBasedQuery.h",
-        "TimeBasedQuery.cpp"
-    ],
-    "name" : "Time based query"
-}

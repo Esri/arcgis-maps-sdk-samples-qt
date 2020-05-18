@@ -1,9 +1,0 @@
-{
-    "source" :  "BuildLegend.qml",
-    "otherSourceFiles" : [
-        "BuildLegend.h",
-        "BuildLegend.cpp"
-    ],
-    "name" : "Build a legend"
-}
-

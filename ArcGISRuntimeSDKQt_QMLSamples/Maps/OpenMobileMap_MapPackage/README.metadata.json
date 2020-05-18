@@ -19,5 +19,11 @@
     "snippets": [
         "OpenMobileMap_MapPackage.qml"
     ],
+    "dataItems" : [        
+        {
+            "itemId" : "e1f3a7254cb845b09450f54937c16061",
+            "path" : "~/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk"
+        }
+    ],
     "title": "Open mobile map (map package)"
 }

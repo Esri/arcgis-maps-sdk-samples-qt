@@ -14,9 +14,9 @@
         "GeometryEngine::cut"
     ],
     "snippets": [
+        "CutGeometry.qml",
         "CutGeometry.cpp",
-        "CutGeometry.h",
-        "CutGeometry.qml"
+        "CutGeometry.h"
     ],
     "title": "Cut geometry"
 }

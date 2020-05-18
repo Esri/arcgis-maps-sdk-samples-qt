@@ -16,8 +16,8 @@
         "MapView"
     ],
     "snippets": [
-        "Web_Tiled_Layer.cpp",
         "Web_Tiled_Layer.qml",
+        "Web_Tiled_Layer.cpp",
         "Web_Tiled_Layer.h"
     ],
     "title": "Web tiled layer"

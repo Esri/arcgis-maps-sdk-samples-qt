@@ -35,5 +35,11 @@
     "snippets": [
         "OfflineRouting.qml"
     ],
+    "dataItems" : [        
+        {
+            "itemId" : "567e14f3420d40c5a206e5c0284cf8fc",
+            "path" : "~/ArcGIS/Runtime/Data/tpk/san_diego/san_diego.zip"
+        }
+    ],
     "title": "Offline routing"
 }

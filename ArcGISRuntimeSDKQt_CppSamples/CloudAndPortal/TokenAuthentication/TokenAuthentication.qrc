@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/CloudAndPortal/TokenAuthentication">
-        <file alias="sample.json">TokenAuthentication.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>TokenAuthentication.qml</file>
 		<file>TokenAuthentication.h</file>

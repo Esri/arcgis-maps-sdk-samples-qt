@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/AddEncExchangeSet">
-        <file alias="sample.json">AddEncExchangeSet.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>AddEncExchangeSet.qml</file>
         <file>AddEncExchangeSet.h</file>
         <file>AddEncExchangeSet.cpp</file>

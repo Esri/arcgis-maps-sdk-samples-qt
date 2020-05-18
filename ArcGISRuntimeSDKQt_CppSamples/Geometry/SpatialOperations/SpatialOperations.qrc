@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Geometry/SpatialOperations">
-        <file alias="sample.json">SpatialOperations.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>SpatialOperations.qml</file>
         <file>SpatialOperations.h</file>
         <file>SpatialOperations.cpp</file>

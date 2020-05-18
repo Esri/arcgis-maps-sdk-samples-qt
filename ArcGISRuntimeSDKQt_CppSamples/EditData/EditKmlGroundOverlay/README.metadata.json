@@ -20,9 +20,15 @@
         "KmlLayer"
     ],
     "snippets": [
+        "EditKmlGroundOverlay.qml",
         "EditKmlGroundOverlay.h",
-        "EditKmlGroundOverlay.cpp",
-        "EditKmlGroundOverlay.qml"
+        "EditKmlGroundOverlay.cpp"
+    ],
+    "dataItems" : [
+        {
+            "itemId" : "1f3677c24b2c446e96eaf1099292e83e",
+            "path" : "~/ArcGIS/Runtime/Data/raster/1944.jpg"
+        }
     ],
     "title": "Edit KML ground overlay"
 }

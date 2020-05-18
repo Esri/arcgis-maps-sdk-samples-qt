@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/QueryMapImageSublayer">
-        <file alias="sample.json">QueryMapImageSublayer.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>QueryMapImageSublayer.qml</file>
         <file>QueryMapImageSublayer.h</file>
         <file>QueryMapImageSublayer.cpp</file>

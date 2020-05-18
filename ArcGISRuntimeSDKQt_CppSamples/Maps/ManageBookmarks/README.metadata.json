@@ -27,9 +27,9 @@
         "SpatialReference"
     ],
     "snippets": [
+        "ManageBookmarks.qml",
         "ManageBookmarks.cpp",
-        "ManageBookmarks.h",
-        "ManageBookmarks.qml"
+        "ManageBookmarks.h"
     ],
     "title": "Manage bookmarks"
 }

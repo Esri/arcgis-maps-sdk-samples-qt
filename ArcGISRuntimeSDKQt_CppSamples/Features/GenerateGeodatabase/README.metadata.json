@@ -38,5 +38,11 @@
         "GenerateGeodatabase.cpp",
         "GenerateGeodatabase.h"
     ],
+    "dataItems" : [
+        {
+            "itemId" : "3f1bbf0ec70b409a975f5c91f363fe7d",
+            "path" : "~/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk"
+        }
+    ],
     "title": "Generate geodatabase"
 }

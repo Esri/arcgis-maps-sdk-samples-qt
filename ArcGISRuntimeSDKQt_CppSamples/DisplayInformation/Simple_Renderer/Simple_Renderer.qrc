@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/Simple_Renderer">
-        <file alias="sample.json">Simple_Renderer.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>Simple_Renderer.qml</file>
         <file>Simple_Renderer.h</file>

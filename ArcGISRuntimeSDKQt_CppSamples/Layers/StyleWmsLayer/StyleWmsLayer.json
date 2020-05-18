@@ -1,8 +1,0 @@
-{
-    "source" :  "StyleWmsLayer.qml",
-    "otherSourceFiles" :  [
-        "StyleWmsLayer.h",
-        "StyleWmsLayer.cpp"
-    ],
-    "name" : "Style WMS layer"
-}

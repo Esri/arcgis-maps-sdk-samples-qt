@@ -21,5 +21,11 @@
         "OpenMobileMap_MapPackage.cpp",
         "OpenMobileMap_MapPackage.h"
     ],
+    "dataItems" : [
+        {
+            "itemId" : "e1f3a7254cb845b09450f54937c16061",
+            "path" : "~/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk"
+        }
+    ],
     "title": "Open mobile map (map package)"
 }

@@ -23,8 +23,8 @@
         "Incident"
     ],
     "snippets": [
-        "ClosestFacility.h",
         "ClosestFacility.qml",
+        "ClosestFacility.h",
         "ClosestFacility.cpp"
     ],
     "title": "Closest facility"

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import QtQuick.Layouts 1.11
 import QtPositioning 5.2
 import Esri.samples 1.0
@@ -226,10 +226,10 @@ Rectangle {
                 if (routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusApproaching || routeTracker.trackingStatusResult.destinationStatus === Enums.DestinationStatusNotReached) {
                     textString += "Distance remaining: " + trackingStatusResult.routeProgress.remainingDistance.displayText + " " +
                             trackingStatusResult.routeProgress.remainingDistance.displayTextUnits.pluralDisplayName + "\n";
-                    let time = new Date(trackingStatusResult.routeProgress.remainingTime * 60 * 1000);
-                    let hours = time.getUTCHours();
-                    let minutes = time.getUTCMinutes();
-                    let seconds = time.getSeconds();
+                    const time = new Date(trackingStatusResult.routeProgress.remainingTime * 60 * 1000);
+                    const hours = time.getUTCHours();
+                    const minutes = time.getUTCMinutes();
+                    const seconds = time.getSeconds();
                     textString += "Time remaining: " + hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' +
                             seconds.toString().padStart(2, '0') + "\n";
 

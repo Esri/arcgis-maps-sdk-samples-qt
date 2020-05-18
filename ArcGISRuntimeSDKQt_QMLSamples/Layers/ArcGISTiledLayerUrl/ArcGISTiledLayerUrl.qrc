@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/ArcGISTiledLayerUrl">
-        <file alias="sample.json">ArcGISTiledLayerUrl.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>ArcGISTiledLayerUrl.qml</file>
         <file>README.md</file>       

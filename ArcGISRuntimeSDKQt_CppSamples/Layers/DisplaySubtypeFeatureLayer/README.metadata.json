@@ -23,9 +23,9 @@
         "SubtypeSublayer"
     ],
     "snippets": [
+        "DisplaySubtypeFeatureLayer.qml",
         "DisplaySubtypeFeatureLayer.cpp",
-        "DisplaySubtypeFeatureLayer.h",
-        "DisplaySubtypeFeatureLayer.qml"
+        "DisplaySubtypeFeatureLayer.h"
     ],
     "title": "Display subtype feature layer"
 }

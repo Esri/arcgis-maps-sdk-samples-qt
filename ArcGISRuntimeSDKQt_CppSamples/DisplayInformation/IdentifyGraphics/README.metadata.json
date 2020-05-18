@@ -26,8 +26,8 @@
         "PolygonBuilder"
     ],
     "snippets": [
-        "IdentifyGraphics.h",
         "IdentifyGraphics.qml",
+        "IdentifyGraphics.h",
         "IdentifyGraphics.cpp"
     ],
     "title": "Identify graphics"

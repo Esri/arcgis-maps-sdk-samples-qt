@@ -1,9 +1,0 @@
-{
-    "source" :  "AnalyzeViewshed.qml",
-    "otherSourceFiles" : [
-        "AnalyzeViewshed.h",
-        "AnalyzeViewshed.cpp"
-    ],
-    "name" : "Viewshed (Geoprocessing)"
-}
-

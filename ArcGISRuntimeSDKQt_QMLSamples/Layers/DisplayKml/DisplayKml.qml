@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Window 2.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -83,7 +83,7 @@ Rectangle {
             scene.operationalLayers.clear();
 
             // create KML variable
-            var kmlLayer;
+            let kmlLayer;
 
             // create the Layer
             if (currentIndex === 0)
@@ -101,7 +101,7 @@ Rectangle {
         }
 
         Component.onCompleted : {
-            for (var i = 0; i < model.length; ++i) {
+            for (let i = 0; i < model.length; ++i) {
                 metrics.text = model[i];
                 modelWidth = Math.max(modelWidth, metrics.width);
             }
@@ -116,14 +116,14 @@ Rectangle {
 
     function createFromUrl() {
         // create the dataset from an online URL
-        var kmlDataset = ArcGISRuntimeEnvironment.createObject("KmlDataset", {
-                                                                   url: "https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx.kml"
-                                                               });
+        const kmlDataset = ArcGISRuntimeEnvironment.createObject("KmlDataset", {
+                                                                     url: "https://www.wpc.ncep.noaa.gov/kml/noaa_chart/WPC_Day1_SigWx.kml"
+                                                                 });
 
         // create the layer
-        var kmlLayer = ArcGISRuntimeEnvironment.createObject("KmlLayer", {
-                                                                 dataset: kmlDataset
-                                                             });
+        const kmlLayer = ArcGISRuntimeEnvironment.createObject("KmlLayer", {
+                                                                   dataset: kmlDataset
+                                                               });
 
         // return the KML Layer
         return kmlLayer;
@@ -131,14 +131,14 @@ Rectangle {
 
     function createFromFile() {
         // create the dataset from a local file
-        var kmlDataset = ArcGISRuntimeEnvironment.createObject("KmlDataset", {
-                                                                   url: System.userHomePath + "/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
-                                                               });
+        const kmlDataset = ArcGISRuntimeEnvironment.createObject("KmlDataset", {
+                                                                     url: System.userHomePath + "/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
+                                                                 });
 
         // create the layer
-        var kmlLayer = ArcGISRuntimeEnvironment.createObject("KmlLayer", {
-                                                                 dataset: kmlDataset
-                                                             });
+        const kmlLayer = ArcGISRuntimeEnvironment.createObject("KmlLayer", {
+                                                                   dataset: kmlDataset
+                                                               });
 
         // return the KML Layer
         return kmlLayer;
@@ -146,14 +146,14 @@ Rectangle {
 
     function createFromPortalItem() {
         // create the portal item with an item ID
-        var portalItem = ArcGISRuntimeEnvironment.createObject("PortalItem", {
-                                                                   itemId: "9fe0b1bfdcd64c83bd77ea0452c76253"
-                                                               });
+        const portalItem = ArcGISRuntimeEnvironment.createObject("PortalItem", {
+                                                                     itemId: "9fe0b1bfdcd64c83bd77ea0452c76253"
+                                                                 });
 
         // create the layer
-        var kmlLayer = ArcGISRuntimeEnvironment.createObject("KmlLayer", {
-                                                                 item: portalItem
-                                                             });
+        const kmlLayer = ArcGISRuntimeEnvironment.createObject("KmlLayer", {
+                                                                   item: portalItem
+                                                               });
 
         // return the KML Layer
         return kmlLayer;

@@ -20,9 +20,9 @@
         "SceneView"
     ],
     "snippets": [
+        "ExploreScenesInFlyoverAR.qml",
         "ExploreScenesInFlyoverAR.cpp",
-        "ExploreScenesInFlyoverAR.h",
-        "ExploreScenesInFlyoverAR.qml"
+        "ExploreScenesInFlyoverAR.h"
     ],
     "title": "Explore scenes in flyover AR"
 }

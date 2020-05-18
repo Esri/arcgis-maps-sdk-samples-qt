@@ -23,7 +23,9 @@
         "LayerListModel.remove"
     ],
     "snippets": [
-        "ManageOperationalLayers.qml"
+        "ManageOperationalLayers.qml",
+        "DrawOrderLayerListModel.h",
+        "DrawOrderLayerListModel.cpp"
     ],
     "title": "Manage operational layers"
 }

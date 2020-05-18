@@ -28,12 +28,12 @@
         "FeatureLayer"
     ],
     "snippets": [
+        "ListRelatedFeatures.qml",
         "RelatedFeatureListModel.h",
         "ListRelatedFeatures.h",
         "ListRelatedFeatures.cpp",
         "RelatedFeatureListModel.cpp",
         "RelatedFeature.cpp",
-        "ListRelatedFeatures.qml",
         "RelatedFeature.h"
     ],
     "title": "List related features"

@@ -26,10 +26,10 @@
         "ExportTileCacheParameters"
     ],
     "snippets": [
+        "GenerateOfflineMap_Overrides.qml",
         "OverridesWindow.qml",
         "DownloadButton.qml",
-        "GenerateWindow.qml",
-        "GenerateOfflineMap_Overrides.qml"
+        "GenerateWindow.qml"
     ],
     "title": "Generate offline map (overrides)"
 }

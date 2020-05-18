@@ -19,8 +19,8 @@
         "Map::saveAs()"
     ],
     "snippets": [
-        "SaveOptionsWindow.qml",
         "CreateAndSaveMap.qml",
+        "SaveOptionsWindow.qml",
         "LayerWindow.qml"
     ],
     "title": "Create and save map"

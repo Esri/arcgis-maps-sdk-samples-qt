@@ -1,5 +1,5 @@
 {
-    "category": "layers",
+    "category": "Layers",
     "description": "Load an offline copy of a tiled map service as a basemap.",
     "ignore": false,
     "images": [
@@ -20,6 +20,12 @@
     ],
     "snippets": [
         "TileCacheLayer.qml"
+    ],
+    "dataItems" : [
+    {
+        "itemId" : "3f1bbf0ec70b409a975f5c91f363fe7d",
+        "path" : "~/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk"
+    }
     ],
     "title": "ArcGIS tiled layer (tile cache)"
 }

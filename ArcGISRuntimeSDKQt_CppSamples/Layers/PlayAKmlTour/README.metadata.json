@@ -27,9 +27,15 @@
         "KmlTour::tourStatusChanged"
     ],
     "snippets": [
+        "PlayAKmlTour.qml",
         "PlayAKmlTour.cpp",
-        "PlayAKmlTour.h",
-        "PlayAKmlTour.qml"
+        "PlayAKmlTour.h"
     ],
-    "title": "Play A KML tour"
+    "dataItems" : [
+        {
+            "itemId" : "f10b1d37fdd645c9bc9b189fb546307c",
+            "path" : "~/ArcGIS/Runtime/Data/kml/Esri_tour.kmz"
+        }
+    ],
+    "title": "Play a KML tour"
 }

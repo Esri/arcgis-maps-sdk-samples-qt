@@ -27,9 +27,9 @@
         "Viewpoint"
     ],
     "snippets": [
+        "FeatureLayerQuery.qml",
         "FeatureLayerQuery.h",
-        "FeatureLayerQuery.cpp",
-        "FeatureLayerQuery.qml"
+        "FeatureLayerQuery.cpp"
     ],
     "title": "Feature layer query"
 }

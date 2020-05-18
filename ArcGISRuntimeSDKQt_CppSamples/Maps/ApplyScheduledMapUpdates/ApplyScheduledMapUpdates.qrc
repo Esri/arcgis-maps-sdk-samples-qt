@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/ApplyScheduledMapUpdates">
-        <file alias="sample.json">ApplyScheduledMapUpdates.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>ApplyScheduledMapUpdates.qml</file>
         <file>ApplyScheduledMapUpdates.h</file>
         <file>ApplyScheduledMapUpdates.cpp</file>

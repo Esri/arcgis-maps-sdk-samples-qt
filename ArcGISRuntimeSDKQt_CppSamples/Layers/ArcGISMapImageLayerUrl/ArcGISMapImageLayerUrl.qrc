@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/ArcGISMapImageLayerUrl">
-        <file alias="sample.json">ArcGISMapImageLayerUrl.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>ArcGISMapImageLayerUrl.qml</file>
 		<file>ArcGISMapImageLayerUrl.h</file>

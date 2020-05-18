@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Scenes/ChangeAtmosphereEffect">
-        <file alias="sample.json">ChangeAtmosphereEffect.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>ChangeAtmosphereEffect.qml</file>
         <file>ChangeAtmosphereEffect.h</file>
         <file>ChangeAtmosphereEffect.cpp</file>

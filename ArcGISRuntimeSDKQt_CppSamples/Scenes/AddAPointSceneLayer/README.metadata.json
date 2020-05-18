@@ -17,9 +17,9 @@
         "ArcGISSceneLayer"
     ],
     "snippets": [
+        "AddAPointSceneLayer.qml",
         "AddAPointSceneLayer.h",
-        "AddAPointSceneLayer.cpp",
-        "AddAPointSceneLayer.qml"
+        "AddAPointSceneLayer.cpp"
     ],
     "title": "Add a point scene layer"
 }
