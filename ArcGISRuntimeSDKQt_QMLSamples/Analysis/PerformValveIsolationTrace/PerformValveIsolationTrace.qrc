@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Analysis/PerformValveIsolationTrace">
-        <file alias="sample.json">PerformValveIsolationTrace.json</file>        
-        <file>PerformValveIsolationTrace.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>
