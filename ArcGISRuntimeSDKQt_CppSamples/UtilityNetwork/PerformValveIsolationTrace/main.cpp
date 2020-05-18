@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Analysis/PerformValveIsolationTrace/main.qml"));
+  engine.load(QUrl("qrc:/Samples/UtilityNetwork/PerformValveIsolationTrace/main.qml"));
 
   return app.exec();
 }

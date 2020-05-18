@@ -32,9 +32,9 @@
         "UtilityTraceType""
     ],
     "snippets": [
+        "PerformValveIsolationTrace.qml",
         "PerformValveIsolationTrace.cpp",
-        "PerformValveIsolationTrace.h",
-        "PerformValveIsolationTrace.qml"
+        "PerformValveIsolationTrace.h"
     ],
     "title": "Perform valve isolation trace"
 }

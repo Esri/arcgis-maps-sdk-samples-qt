@@ -1,8 +1,0 @@
-{
-    "source" :  "PerformValveIsolationTrace.qml",
-    "otherSourceFiles" :  [
-        "PerformValveIsolationTrace.h",
-        "PerformValveIsolationTrace.cpp"
-    ],
-    "name" : "Perform valve isolation trace"
-}

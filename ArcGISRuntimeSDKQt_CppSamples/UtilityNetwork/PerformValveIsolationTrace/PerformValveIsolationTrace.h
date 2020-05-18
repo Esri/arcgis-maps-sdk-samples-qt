@@ -1,4 +1,4 @@
-// [WriteFile Name=PerformValveIsolationTrace, Category=Analysis]
+// [WriteFile Name=PerformValveIsolationTrace, Category=UtilityNetwork]
 // [Legal]
 // Copyright 2020 Esri.
 
