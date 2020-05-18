@@ -29,7 +29,7 @@
         "UtilityTraceFilter",
         "UtilityTraceParameters",
         "UtilityTraceResult",
-        "UtilityTraceType""
+        "UtilityTraceType"
     ],
     "snippets": [
         "PerformValveIsolationTrace.qml"
