@@ -1,8 +1,0 @@
-{
-    "source" :  "DisplayScenesInTabletopAR.qml",
-    "otherSourceFiles" :  [
-        "DisplayScenesInTabletopAR.h",
-        "DisplayScenesInTabletopAR.cpp"
-    ],
-    "name" : "Display scenes in tabletop AR"
-}

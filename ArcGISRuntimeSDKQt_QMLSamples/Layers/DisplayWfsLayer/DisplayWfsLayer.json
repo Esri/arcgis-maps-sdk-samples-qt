@@ -1,5 +1,0 @@
-{
-    "source" :  "DisplayWfsLayer.qml",
-    "otherSourceFiles" :  [],
-    "name" : "Display a WFS layer"
-}

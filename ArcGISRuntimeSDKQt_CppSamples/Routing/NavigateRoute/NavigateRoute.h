@@ -36,7 +36,7 @@ class SimulatedLocationDataSource;
 
 #include <QObject>
 #include <QString>
-#include <QTextToSpeech>
+class QTextToSpeech;
 
 class NavigateRoute : public QObject
 {

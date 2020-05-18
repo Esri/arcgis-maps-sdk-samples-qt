@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Scenes/Surface_Placement">
-        <file alias="sample.json">Surface_Placement.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>Surface_Placement.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

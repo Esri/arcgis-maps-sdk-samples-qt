@@ -1,8 +1,0 @@
-{
-    "source" :  "FeatureLayerExtrusion.qml",
-    "otherSourceFiles" :  [
-        "FeatureLayerExtrusion.h",
-        "FeatureLayerExtrusion.cpp"
-    ],
-    "name" : "Feature layer extrusion"
-}

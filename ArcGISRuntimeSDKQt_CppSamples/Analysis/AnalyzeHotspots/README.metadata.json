@@ -27,8 +27,8 @@
         "Map"
     ],
     "snippets": [
-        "AnalyzeHotspots.cpp",
         "AnalyzeHotspots.qml",
+        "AnalyzeHotspots.cpp",
         "AnalyzeHotspots.h"
     ],
     "title": "Analyze hotspots"

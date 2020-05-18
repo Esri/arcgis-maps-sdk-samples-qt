@@ -1,8 +1,0 @@
-{
-    "source" :  "CreateAndSaveMap.qml",
-    "otherSourceFiles" :  [
-        "LayerWindow.qml",
-        "SaveOptionsWindow.qml"
-    ],
-    "name" : "Create and save map"
-}

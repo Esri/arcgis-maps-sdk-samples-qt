@@ -21,5 +21,11 @@
     "snippets": [
         "RasterLayerGeoPackage.qml"
     ],
+    "dataItems" : [
+        {
+            "itemId" : "68ec42517cdd439e81b036210483e8e7",
+            "path" : "~/ArcGIS/Runtime/Data/gpkg/AuroraCO.gpkg"
+        }
+    ],
     "title": "Raster layer (GeoPackage)"
 }

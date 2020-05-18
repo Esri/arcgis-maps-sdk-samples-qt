@@ -19,9 +19,9 @@
         "Surface::navigationConstraint"
     ],
     "snippets": [
+        "ViewContentBeneathTerrainSurface.qml",
         "ViewContentBeneathTerrainSurface.h",
-        "ViewContentBeneathTerrainSurface.cpp",
-        "ViewContentBeneathTerrainSurface.qml"
+        "ViewContentBeneathTerrainSurface.cpp"
     ],
     "title": "View content beneath terrain surface"
 }

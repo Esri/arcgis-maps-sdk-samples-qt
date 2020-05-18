@@ -1,8 +1,0 @@
-{
-    "source" :  "DisplaySceneLayer.qml",
-    "otherSourceFiles" : [
-        "DisplaySceneLayer.h",
-        "DisplaySceneLayer.cpp"
-    ],
-    "name" : "Display a scene layer"
-}

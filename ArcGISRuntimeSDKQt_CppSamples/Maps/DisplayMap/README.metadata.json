@@ -17,8 +17,8 @@
         "Basemap"
     ],
     "snippets": [
-        "DisplayMap.cpp",
         "DisplayMap.qml",
+        "DisplayMap.cpp",
         "DisplayMap.h"
     ],
     "title": "Display a map"

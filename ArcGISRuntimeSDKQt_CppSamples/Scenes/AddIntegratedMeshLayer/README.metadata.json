@@ -15,10 +15,10 @@
         "IntegratedMeshLayer"
     ],
     "snippets": [
+        "AddIntegratedMeshLayer.qml",
         "AddIntegratedMeshLayer.cpp",
         "AddIntegratedMeshLayer.h",
-        "main.qml",
-        "AddIntegratedMeshLayer.qml"
+        "main.qml"
     ],
     "title": "Add an integrated mesh layer"
 }

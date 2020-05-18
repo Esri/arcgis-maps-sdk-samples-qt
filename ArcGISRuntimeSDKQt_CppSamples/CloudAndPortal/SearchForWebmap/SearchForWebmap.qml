@@ -16,7 +16,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.8
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
 SearchForWebmapSample {
     id: root
@@ -159,6 +159,7 @@ SearchForWebmapSample {
             TextField {
                 id: keyWordField
                 placeholderText: "enter keyword"
+                selectByMouse: true
 
                 Keys.onReturnPressed: {
                     if (text.length > 0)

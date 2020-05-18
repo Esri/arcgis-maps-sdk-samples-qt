@@ -26,5 +26,11 @@
     "snippets": [
         "OpenMobileScenePackage.qml"
     ],
+    "dataItems" : [
+        {
+            "itemId" : "7dd2f97bb007466ea939160d0de96a9d",
+            "path" : "~/ArcGIS/Runtime/Data/mspk/philadelphia.mspk"
+        }
+    ],
     "title": "Open mobile scene package"
 }

@@ -19,8 +19,8 @@
         "Envelope"
     ],
     "snippets": [
-        "ChangeViewpoint.cpp",
         "ChangeViewpoint.qml",
+        "ChangeViewpoint.cpp",
         "ChangeViewpoint.h"
     ],
     "title": "Change viewpoint"

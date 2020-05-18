@@ -130,7 +130,7 @@ DisplayGridSample {
                 model: [latlonGrid, mgrsGrid, utmGrid, usngGrid]
                 onCurrentTextChanged: changeGrid(currentText)
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         metricsGridTypeComboBox.text = model[i];
                         modelWidth = Math.max(modelWidth, metricsGridTypeComboBox.width);
                     }
@@ -182,7 +182,7 @@ DisplayGridSample {
                 model: ["red", "white", "blue"]
                 onCurrentTextChanged: currentGridColor = currentText
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         colorComboMetrics.text = model[i];
                         modelWidth = Math.max(modelWidth, colorComboMetrics.width);
                     }
@@ -207,7 +207,7 @@ DisplayGridSample {
                 model: ["red", "black", "blue"]
                 onCurrentTextChanged: currentLabelColor = currentText;
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         colorCombo2Metrics.text = model[i];
                         modelWidth = Math.max(modelWidth, colorCombo2Metrics.width);
                     }
@@ -233,7 +233,7 @@ DisplayGridSample {
                 model: [geographicPosition, bottomLeftPosition, bottomRightPosition, topLeftPosition, topRightPosition, centerPosition, allSidesPosition]
                 onCurrentTextChanged: currentLabelPosition = currentText;
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         positionComboMetrics.text = model[i];
                         modelWidth = Math.max(modelWidth, positionComboMetrics.width);
                     }
@@ -261,7 +261,7 @@ DisplayGridSample {
                 enabled: gridTypeComboBox.currentText == latlonGrid
                 onCurrentTextChanged: currentLabelFormat = currentText;
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         formatComboMetrics.text = model[i];
                         modelWidth = Math.max(modelWidth, formatComboMetrics.width);
                     }

@@ -23,9 +23,9 @@
         "Viewpoint"
     ],
     "snippets": [
+        "FeatureLayerRenderingModeMap.qml",
         "FeatureLayerRenderingModeMap.h",
-        "FeatureLayerRenderingModeMap.cpp",
-        "FeatureLayerRenderingModeMap.qml"
+        "FeatureLayerRenderingModeMap.cpp"
     ],
     "title": "Feature layer rendering mode (map)"
 }

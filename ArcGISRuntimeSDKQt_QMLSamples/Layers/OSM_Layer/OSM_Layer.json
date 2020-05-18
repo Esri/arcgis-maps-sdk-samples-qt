@@ -1,5 +1,0 @@
-{
-    "source" :  "OSM_Layer.qml",
-    "otherSourceFiles" :  [],
-    "name" : "OpenStreetMap layer"
-}

@@ -1,9 +1,0 @@
-{
-    "source" :  "DisplayKmlNetworkLinks.qml",
-    "otherSourceFiles" :  [
-        "DisplayKmlNetworkLinks.h",
-        "DisplayKmlNetworkLinks.cpp",
-        "MessageButton.qml"
-    ],
-    "name" : "Display KML network links"
-}

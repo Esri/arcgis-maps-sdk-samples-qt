@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Features/ServiceFeatureTableNoCache">
-        <file alias="sample.json">ServiceFeatureTableNoCache.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>ServiceFeatureTableNoCache.qml</file>
 		<file>ServiceFeatureTableNoCache.h</file>

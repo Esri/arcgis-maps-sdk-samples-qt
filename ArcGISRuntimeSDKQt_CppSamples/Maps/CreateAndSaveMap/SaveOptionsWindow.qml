@@ -57,6 +57,7 @@ Rectangle {
 
             TextField {
                 id: titleText
+                selectByMouse: true
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true
@@ -77,6 +78,7 @@ Rectangle {
 
             TextField {
                 id: tagsText
+                selectByMouse: true
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true
@@ -96,6 +98,7 @@ Rectangle {
 
             TextField {
                 id: descriptionText
+                selectByMouse: true
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true

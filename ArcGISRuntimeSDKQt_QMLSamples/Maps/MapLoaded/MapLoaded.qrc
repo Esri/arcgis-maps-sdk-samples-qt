@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/MapLoaded">
-        <file alias="sample.json">MapLoaded.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>MapLoaded.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

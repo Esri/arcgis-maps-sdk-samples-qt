@@ -1,9 +1,0 @@
-{
-    "source" :  "FindRoute.qml",
-    "otherSourceFiles" : [
-        "FindRoute.h",
-        "FindRoute.cpp"
-    ],
-    "name" : "Find a route"
-}
-

@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -71,8 +71,8 @@ Rectangle {
                 return;
 
             // get the results
-            var result = sceneView.identifyLayerResult;
-            var geoElements = result.geoElements;
+            const result = sceneView.identifyLayerResult;
+            const geoElements = result.geoElements;
 
             // get the first GeoElement
             if (geoElements.length > 0) {

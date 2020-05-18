@@ -1,9 +1,0 @@
-{
-    "source" : "ArcGISTiledLayerUrl.qml",
-    "otherSourceFiles" : [
-        "ArcGISTiledLayerUrl.h",
-        "ArcGISTiledLayerUrl.cpp"
-    ],
-    "name" : "ArcGIS tiled layer (URL)"
-}
-

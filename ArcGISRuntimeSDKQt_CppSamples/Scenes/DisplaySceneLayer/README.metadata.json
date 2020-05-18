@@ -23,9 +23,9 @@
         "Camera"
     ],
     "snippets": [
+        "DisplaySceneLayer.qml",
         "DisplaySceneLayer.cpp",
-        "DisplaySceneLayer.h",
-        "DisplaySceneLayer.qml"
+        "DisplaySceneLayer.h"
     ],
     "title": "Display a scene layer"
 }

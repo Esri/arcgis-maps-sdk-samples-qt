@@ -19,8 +19,8 @@
         "Surface"
     ],
     "snippets": [
-        "BasicSceneView.h",
         "BasicSceneView.qml",
+        "BasicSceneView.h",
         "BasicSceneView.cpp"
     ],
     "title": "Display a scene"

@@ -38,8 +38,8 @@
         "Point"
     ],
     "snippets": [
-        "UpdateAttributesFeatureService.cpp",
         "UpdateAttributesFeatureService.qml",
+        "UpdateAttributesFeatureService.cpp",
         "UpdateAttributesFeatureService.h"
     ],
     "title": "Update attributes (feature service)"

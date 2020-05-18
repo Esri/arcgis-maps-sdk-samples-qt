@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     clip: true
@@ -94,24 +94,24 @@ Rectangle {
     // Cuts the Lake Superior polygon into two and symbolizes each output graphic
     function cutPolygon() {
         // cut the polygon geometry with the polyline, expect two geometries
-        var geoms = GeometryEngine.cut(lakeSuperiorGraphic.geometry, borderGraphic.geometry);
+        const geoms = GeometryEngine.cut(lakeSuperiorGraphic.geometry, borderGraphic.geometry);
 
         // create graphics for the U.S. side
-        var usSide = ArcGISRuntimeEnvironment.createObject("Graphic");
+        const usSide = ArcGISRuntimeEnvironment.createObject("Graphic");
         usSide.geometry = geoms[0];
-        var usSymbol = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
+        const usSymbol = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
         usSymbol.style = Enums.SimpleFillSymbolStyleForwardDiagonal;
         usSymbol.color = "#40ff00";
-        var outlineSymbol = ArcGISRuntimeEnvironment.createObject("SimpleLineSymbol");
+        const outlineSymbol = ArcGISRuntimeEnvironment.createObject("SimpleLineSymbol");
         outlineSymbol.color = "blue";
         outlineSymbol.width = 1;
         usSymbol.outline = outlineSymbol;
         usSide.symbol = usSymbol;
 
         // create graphics for the Canada side
-        var canadaSide = ArcGISRuntimeEnvironment.createObject("Graphic");
+        const canadaSide = ArcGISRuntimeEnvironment.createObject("Graphic");
         canadaSide.geometry = geoms[1];
-        var canadaSymbol = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
+        const canadaSymbol = ArcGISRuntimeEnvironment.createObject("SimpleFillSymbol");
         canadaSymbol.style = Enums.SimpleFillSymbolStyleForwardDiagonal;
         canadaSymbol.color = "#ffff00";
         canadaSymbol.outline = outlineSymbol;
@@ -127,7 +127,7 @@ Rectangle {
 
     // Creates a line between the border of Canada and the United States
     function createBorder() {
-        var polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", { spatialReference: spatialRef });
+        const polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", { spatialReference: spatialRef });
         polylineBuilder.addPointXY(-9981328.687124, 6111053.281447);
         polylineBuilder.addPointXY(-9946518.044066, 6102350.620682);
         polylineBuilder.addPointXY(-9872545.427566, 6152390.920079);
@@ -140,7 +140,7 @@ Rectangle {
 
     // Creates a polygon of Lake Superior
     function createLakeSuperiorPolygon() {
-        var polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", { spatialReference: spatialRef });
+        const polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", { spatialReference: spatialRef });
         polygonBuilder.addPointXY(-10254374.668616, 5908345.076380);
         polygonBuilder.addPointXY(-10178382.525314, 5971402.386779);
         polygonBuilder.addPointXY(-10118558.923141, 6034459.697178);

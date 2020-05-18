@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Geometry/ClipGeometry">
-        <file alias="sample.json">ClipGeometry.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>ClipGeometry.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

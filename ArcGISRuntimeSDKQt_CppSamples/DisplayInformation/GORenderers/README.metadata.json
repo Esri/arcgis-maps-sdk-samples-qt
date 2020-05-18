@@ -27,9 +27,9 @@
         "PolygonBuilder"
     ],
     "snippets": [
+        "GORenderers.qml",
         "GORenderers.cpp",
-        "GORenderers.h",
-        "GORenderers.qml"
+        "GORenderers.h"
     ],
     "title": "Add graphics with renderer"
 }

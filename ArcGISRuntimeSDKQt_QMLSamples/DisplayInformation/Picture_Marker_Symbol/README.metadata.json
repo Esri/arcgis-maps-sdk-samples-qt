@@ -31,5 +31,11 @@
     "snippets": [
         "Picture_Marker_Symbol.qml"
     ],
+    "dataItems" : [
+        {
+            "itemId" : "1c95ea3b6e4843cdbd6ae354efb97f0c",
+            "path" : "~/ArcGIS/Runtime/Data/symbol/orange_symbol.png"
+        }
+    ],
     "title": "Picture marker symbol"
 }

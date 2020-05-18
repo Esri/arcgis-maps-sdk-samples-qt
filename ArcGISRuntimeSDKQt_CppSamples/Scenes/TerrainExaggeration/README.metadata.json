@@ -16,9 +16,9 @@
         "Surface::setElevationExaggeration"
     ],
     "snippets": [
+        "TerrainExaggeration.qml",
         "TerrainExaggeration.h",
-        "TerrainExaggeration.cpp",
-        "TerrainExaggeration.qml"
+        "TerrainExaggeration.cpp"
     ],
     "title": "Terrain exaggeration"
 }

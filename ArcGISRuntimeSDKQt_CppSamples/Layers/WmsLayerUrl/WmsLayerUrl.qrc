@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/WmsLayerUrl">
-        <file alias="sample.json">WmsLayerUrl.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>WmsLayerUrl.qml</file>
         <file>WmsLayerUrl.h</file>
         <file>WmsLayerUrl.cpp</file>

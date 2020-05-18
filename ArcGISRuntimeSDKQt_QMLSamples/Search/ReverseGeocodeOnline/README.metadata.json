@@ -7,7 +7,7 @@
     ],
     "keywords": [
         "callout",
-        "geocode"
+        "geocode",
         "reverse geocode"
     ],
     "redirect_from": "",
@@ -15,7 +15,7 @@
         "Callout",
         "CalloutData",
         "GraphicsOverlay",
-        "LocatorTask"
+        "LocatorTask",
         "PictureMarkerSymbol",
         "ReverseGeocodeParameters"
     ],

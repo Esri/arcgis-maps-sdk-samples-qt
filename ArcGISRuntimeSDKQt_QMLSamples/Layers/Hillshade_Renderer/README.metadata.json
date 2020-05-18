@@ -26,9 +26,15 @@
         "MapView"
     ],
     "snippets": [
-        "HillshadeSettings.qml",
         "Hillshade_Renderer.qml",
+        "HillshadeSettings.qml",
         "HillshadeSlopeTypeModel.qml"
+    ],
+    "dataItems" : [        
+        {
+            "itemId" : "ae9739163a76437ea02482e1a807b806",
+            "path" : "~/ArcGIS/Runtime/Data/raster/srtm.tiff"
+        }
     ],
     "title": "Hillshade renderer"
 }

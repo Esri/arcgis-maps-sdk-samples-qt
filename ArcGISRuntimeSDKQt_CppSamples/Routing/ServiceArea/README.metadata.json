@@ -30,9 +30,9 @@
         "PolylineBuilder"
     ],
     "snippets": [
+        "ServiceArea.qml",
         "ServiceArea.h",
-        "ServiceArea.cpp",
-        "ServiceArea.qml"
+        "ServiceArea.cpp"
     ],
     "title": "Service area"
 }

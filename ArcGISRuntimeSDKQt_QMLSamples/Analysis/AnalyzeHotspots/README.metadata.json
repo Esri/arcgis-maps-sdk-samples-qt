@@ -18,12 +18,12 @@
     ],
     "redirect_from": "/qt/latest/qml/sample-code/sample-qt-analyzehotspots.htm",
     "relevant_apis": [
+        "ArcGISMapImageLayer",
         "GeoprocessingTask",
         "GeoprocessingJob",
         "GeoprocessingParameters",
         "GeoprocessingString",
         "GeoprocessingResult",
-        "ArcGISMapImageLayer",
         "Map"
     ],
     "snippets": [

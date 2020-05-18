@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/LocalServer/LocalServerGeoprocessing">
-        <file alias="sample.json">LocalServerGeoprocessing.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>LocalServerGeoprocessing.qml</file>
 		<file>LocalServerGeoprocessing.h</file>
