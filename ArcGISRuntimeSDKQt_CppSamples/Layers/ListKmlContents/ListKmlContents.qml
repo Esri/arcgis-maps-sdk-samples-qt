@@ -21,6 +21,8 @@ import Esri.Samples 1.0
 
 Item {
 
+    property var nodeNamesList: []
+
     SceneView {
         id: view
         anchors.fill: parent
@@ -34,28 +36,107 @@ Item {
             Layout.margins: 3
             color: "lightgrey"
 
-            ListView {
-                id: listModel
-                model: sampleModel.nodeNames
-                height: contentHeight
-                width: 200
-                delegate: Text {
-                    text: modelData
-                    height: modelData.height
-                }
-                Component.onCompleted: {
-                    console.log(sampleModel.nodeNames.length);
-                }
+            StackView {
+                id: stackView
+                anchors.fill: parent
 
-//                Connections {
-//                 target: sampleModel
-//                 onNodeNamesChanged: console.log(sampleModel.nodeNames.length);
+//                initialItem: hierarchyItem
+
+            }
+
+//            ListView {
+//                id: listModel
+//                model: sampleModel.nodeNames
+//                height: contentHeight
+//                width: 200
+//                delegate: Text {
+//                    text: modelData
+//                    height: modelData.height
 //                }
+//            }
+        }
+    }
+
+    Item {
+        id: hierarchyItem
+
+        Rectangle {
+            visible: true
+            width: 200
+            height: 200
+            Layout.margins: 3
+            color: "lightgrey"
+
+            ListView {
+                id: listView
+                model: sampleModel.nodesList
+                onModelChanged: {
+                    console.log(sampleModel.nodesList.columnCount())
+                }
             }
         }
-        //        StackView {
-        //            id: stackView
-        //        }
+    }
+
+    Item {
+        id: mapSelectView
+
+        Column {
+            anchors {
+                top: parent.top
+                left: parent.left
+            }
+            width: parent.width
+            spacing: 20
+
+            // UI navigation bar
+            Rectangle {
+                width: parent.width
+                height: 100
+                color: "#283593"
+            }
+
+            // list of maps
+            ListView {
+                anchors.horizontalCenter: parent.horizontalCenter
+                height: 400
+                width: 200
+                spacing: 10
+                model: sampleModel.nodeNames
+//                model: mobileMapSearchRoute.mapList
+
+                delegate: Component {
+                    Text {
+                        text: contentData
+                    }
+                    Rectangle {
+                        width: 200
+                        height: 50
+                        color: "#283593"
+                        radius: 2
+                        border.color: "darkgray"
+
+                    }
+                }
+            }
+        }
+    }
+
+
+    Connections {
+        target: sampleModel
+//        onLevelAddedChanged: {
+//            console.log("new level added");
+//        }
+        onNodesListChanged: {
+            if (sampleModel.nodesList === null) {
+                return;
+            }
+            nodeNamesList = [];
+//            for (let i = 0; i < sampleModel.nodesList.rowCount(); i++) {
+//                console.log(sampleModel.nodesList.index())
+//            }
+            console.log(sampleModel.nodesList.rowCount());
+        }
     }
 
     Component {

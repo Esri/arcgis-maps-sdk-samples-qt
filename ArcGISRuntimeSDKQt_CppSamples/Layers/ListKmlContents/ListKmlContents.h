@@ -23,16 +23,18 @@ namespace ArcGISRuntime
 {
 class KmlDataset;
 class KmlNode;
+class KmlNodeListModel;
 class Scene;
 class SceneQuickView;
 }
 }
 
-class QAbstractListModel;
+//class QAbstractListModel;
 
 #include <QObject>
 #include <QList>
 #include <QStringList>
+#include <QAbstractListModel>
 
 class ListKmlContents : public QObject
 {
@@ -40,6 +42,8 @@ class ListKmlContents : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
   Q_PROPERTY(QStringList nodeNames READ nodeNames NOTIFY nodeNamesChanged)
+  Q_PROPERTY(bool levelAdded READ levelAdded NOTIFY levelAddedChanged)
+  Q_PROPERTY(QAbstractListModel* nodesList READ nodesList NOTIFY nodesListChanged)
 
 public:
   explicit ListKmlContents(QObject* parent = nullptr);
@@ -50,18 +54,24 @@ public:
 signals:
   void sceneViewChanged();
   void nodeNamesChanged();
+  void levelAddedChanged();
+  void nodesListChanged();
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
   void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);
   QStringList nodeNames() const { return m_nodeNames; }
+  bool levelAdded() const { return m_levelAdded; }
+  QAbstractListModel* nodesList() const { return m_nodesList; }
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::KmlDataset* m_kmlDataset = nullptr;
   QAbstractListModel* m_nodeListModel = nullptr;
   QStringList m_nodeNames = {};
+  bool m_levelAdded = false;
+  QAbstractListModel* m_nodesList = nullptr;
 };
 
 #endif // LISTKMLCONTENTS_H

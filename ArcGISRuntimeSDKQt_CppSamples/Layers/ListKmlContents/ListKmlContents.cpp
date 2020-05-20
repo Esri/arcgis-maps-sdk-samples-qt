@@ -101,7 +101,11 @@ void ListKmlContents::buildTree(KmlNode* parentNode)
   if (KmlContainer* container = dynamic_cast<KmlContainer*>(parentNode))
   {
     ++myCounter;
+    m_levelAdded = true;
+    emit levelAddedChanged();
     KmlNodeListModel* childNodes = container->childNodesListModel();
+    m_nodesList = childNodes;
+    emit nodesListChanged();
 
     for (KmlNode* node : *childNodes)
     {
@@ -113,6 +117,8 @@ void ListKmlContents::buildTree(KmlNode* parentNode)
       buildTree(node);
     }
     --myCounter;
+    m_levelAdded = false;
+    emit levelAddedChanged();
   }
 
   if (KmlNetworkLink* networkLink = dynamic_cast<KmlNetworkLink*>(parentNode))
