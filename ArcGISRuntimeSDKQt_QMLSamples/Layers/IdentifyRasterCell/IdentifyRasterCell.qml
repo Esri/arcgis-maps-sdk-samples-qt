@@ -111,15 +111,16 @@ Rectangle {
 
             for (let i = 0; i < identifyLayerResult.geoElements.length; i++) {
                 calloutText = "";
-                const attributes = identifyLayerResult.geoElements[i].attributes;
+                let geoElement = identifyLayerResult.geoElements[i];
+                const attributes = geoElement.attributes;
                 const attributeNames = attributes.attributeNames;
 
                 for (let j = 0; j < attributeNames.length; j++) {
                     calloutText = calloutText + attributeNames[j] + ": " + attributes.attributeValue(attributeNames[j]) + "\n";
                 }
 
-                const xPoint = identifyLayerResult.geoElements[i].geometry.extent.xMin;
-                const yPoint = identifyLayerResult.geoElements[i].geometry.extent.yMin;
+                const xPoint = geoElement.geometry.extent.xMin;
+                const yPoint = geoElement.geometry.extent.yMin;
 
                 calloutText = calloutText + "X: " + xPoint.toFixed(2) + " Y: " + yPoint.toFixed(2);
 
