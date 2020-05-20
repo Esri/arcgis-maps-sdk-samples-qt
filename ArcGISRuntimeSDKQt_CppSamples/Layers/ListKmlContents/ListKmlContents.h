@@ -42,6 +42,7 @@ class ListKmlContents : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
   Q_PROPERTY(QStringList nodeNames READ nodeNames NOTIFY nodeNamesChanged)
+  Q_PROPERTY(QStringList levelNodeNames READ levelNodeNames NOTIFY levelNodeNamesChanged)
   Q_PROPERTY(bool levelAdded READ levelAdded NOTIFY levelAddedChanged)
   Q_PROPERTY(QAbstractListModel* nodesList READ nodesList NOTIFY nodesListChanged)
 
@@ -56,12 +57,16 @@ signals:
   void nodeNamesChanged();
   void levelAddedChanged();
   void nodesListChanged();
+  void levelNodeNamesChanged();
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
   void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);
   QStringList nodeNames() const { return m_nodeNames; }
+
+  QStringList levelNodeNames() const { return m_levelNodeNames; }
+
   bool levelAdded() const { return m_levelAdded; }
   QAbstractListModel* nodesList() const { return m_nodesList; }
 
@@ -70,6 +75,7 @@ private:
   Esri::ArcGISRuntime::KmlDataset* m_kmlDataset = nullptr;
   QAbstractListModel* m_nodeListModel = nullptr;
   QStringList m_nodeNames = {};
+  QStringList m_levelNodeNames = {};
   bool m_levelAdded = false;
   QAbstractListModel* m_nodesList = nullptr;
 };

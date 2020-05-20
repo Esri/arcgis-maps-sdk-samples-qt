@@ -107,6 +107,19 @@ void ListKmlContents::buildTree(KmlNode* parentNode)
     m_nodesList = childNodes;
     emit nodesListChanged();
 
+    if (m_levelNodeNames.length() > 0)
+      m_levelNodeNames.clear();
+
+    // for current level, get names of child nodes
+    for (KmlNode* node: *childNodes)
+    {
+      m_levelNodeNames << node->name();
+      qDebug() << node->name();
+    }
+
+    qDebug("end level");
+    emit levelNodeNamesChanged();
+
     for (KmlNode* node : *childNodes)
     {
       // add spaces to show hierarchy
