@@ -40,7 +40,7 @@ Item {
                 id: stackView
                 anchors.fill: parent
 
-//                initialItem: hierarchyItem
+//                initialItem: mapSelectViewComponent
 
             }
 
@@ -56,26 +56,8 @@ Item {
 //            }
         }
     }
-
-    Item {
-        id: hierarchyItem
-
-        Rectangle {
-            visible: true
-            width: 200
-            height: 200
-            Layout.margins: 3
-            color: "lightgrey"
-
-            ListView {
-                id: listView
-                model: sampleModel.nodesList
-                onModelChanged: {
-                    console.log(sampleModel.nodesList.columnCount())
-                }
-            }
-        }
-    }
+    Component {
+        id: mapSelectViewComponent
 
     Item {
         id: mapSelectView
@@ -89,37 +71,37 @@ Item {
             spacing: 20
 
             // UI navigation bar
-            Rectangle {
-                width: parent.width
-                height: 100
-                color: "#283593"
-            }
+//            Rectangle {
+//                width: parent.width
+//                height: 100
+//                color: "#283593"
+//            }
 
-            // list of maps
             ListView {
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 400
                 width: 200
                 spacing: 10
-                model: sampleModel.nodeNames
-//                model: mobileMapSearchRoute.mapList
+//                model: sampleModel.nodeNames
+                model: sampleModel.levelNodeNames
 
                 delegate: Component {
                     Text {
-                        text: contentData
+                        text: modelData
                     }
-                    Rectangle {
-                        width: 200
-                        height: 50
-                        color: "#283593"
-                        radius: 2
-                        border.color: "darkgray"
+//                    Rectangle {
+//                        width: 200
+//                        height: 50
+//                        color: "#283593"
+//                        radius: 2
+//                        border.color: "darkgray"
 
-                    }
+//                    }
                 }
             }
         }
     }
+}
 
 
     Connections {
@@ -131,18 +113,22 @@ Item {
             if (sampleModel.nodesList === null) {
                 return;
             }
+
+            // for current node, get names of children
             nodeNamesList = [];
 //            for (let i = 0; i < sampleModel.nodesList.rowCount(); i++) {
-//                console.log(sampleModel.nodesList.index())
+//                console.log(sampleModel.nodesList.index(0,0).name);
 //            }
             console.log(sampleModel.nodesList.rowCount());
+        }
+        onLevelNodeNamesChanged: {
+            stackView.push(mapSelectViewComponent);
         }
     }
 
     Component {
         id: listViewDelegate
         Text {
-
         }
 //        Rectangle {
 //            id: rect
