@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Scenes/AnimateImagesWithImageOverlay">
-        <file alias="sample.json">AnimateImagesWithImageOverlay.json</file>        
+        <file alias="sample.json">README.metadata.json</file>
         <file>AnimateImagesWithImageOverlay.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>
