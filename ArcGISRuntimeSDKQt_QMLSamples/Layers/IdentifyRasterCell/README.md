@@ -6,16 +6,16 @@ Get the cell value of a local raster at the tapped location and display the resu
 
 ## Use case
 
-You may want to identify a raster layer to get its exact cell value in the case the approximate value conveyed by its symbology is not sufficient. The information available for the raster cell depends on the type of raster layer being identified. For example, a 3-band satellite or aerial image might provide 8-bit RGB values, whereas a digital elevation model (DEM) would provide floating point z values. By identifying a raster cell of a DEM, you can retrieve the precise elevation of a location.
+You may want to identify a raster layer to get its exact cell value in case the approximate value conveyed by its symbology is not sufficient. The information available for the raster cell depends on the type of raster layer being identified. For example, a 3-band satellite or aerial image might provide 8-bit RGB values, whereas a digital elevation model (DEM) would provide floating point z values. By identifying a raster cell of a DEM, you can retrieve the precise elevation of a location.
 
 ## How to use the sample
 
-Tap or press, hold, and drag an area of the raster to identify it and see the raster cell attributes information displayed in a callout.
+Tap on the raster or press on the raster, hold, and move around the raster to identify it and see the raster cell attributes information displayed in a callout.
 
 ## How it works
 
 1. Connect to signals emmited by a `mouseClicked`, `mousePressedAndHeld`, and `mouseMoved` on the `MapView`.
-2. On tap or pressed, held, and dragged:
+2. On tapped or pressed, held, and dragged:
    * Call `identifyLayer(...)` passing in the raster layer, screen point, tolerance, whether to return popups only, and maximum number of results per layer.
    * Connect to the `identifyLayerStatusChanged`. If the `identifyLayerStatus` is `Enums.TaskStatusCompleted` then use the `identifyLayerResult` to get the result of the identify and then get the `GeoElement` from the layer result and get any `RasterCell`s from them.
    * Create a callout at the calculated map point and populate the callout content with text from the `RasterCell` attributes.
