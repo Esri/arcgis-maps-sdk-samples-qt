@@ -122,6 +122,9 @@ void ListKmlContents::buildTree(KmlNode* parentNode)
 
     for (KmlNode* node : *childNodes)
     {
+      // some nodes have default visibility set to false
+      node->setVisible(true);
+
       // add spaces to show hierarchy
       const QString str = node->name().rightJustified(node->name().length() + myCounter*2, ' ');
 //      m_nodeNames << node->name().leftJustified(myCounter*2, ' ');
