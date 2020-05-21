@@ -51,6 +51,8 @@ public:
   ~ListKmlContents();
 
   static void init();
+  Q_INVOKABLE void nodeSelected(const QString nodeName);
+  Q_INVOKABLE void getParents();
 
 signals:
   void sceneViewChanged();
@@ -65,6 +67,8 @@ private:
   void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);
   QStringList nodeNames() const { return m_nodeNames; }
 
+  void displayChildren(Esri::ArcGISRuntime::KmlNode* node);
+
   QStringList levelNodeNames() const { return m_levelNodeNames; }
 
   bool levelAdded() const { return m_levelAdded; }
@@ -78,6 +82,9 @@ private:
   QStringList m_levelNodeNames = {};
   bool m_levelAdded = false;
   QAbstractListModel* m_nodesList = nullptr;
+  QList<Esri::ArcGISRuntime::KmlNode*> m_kmlNodesList = {};
+  QList<Esri::ArcGISRuntime::KmlNode*> m_previousLevel = {};
+  QList<int> m_indices = {};
 };
 
 #endif // LISTKMLCONTENTS_H

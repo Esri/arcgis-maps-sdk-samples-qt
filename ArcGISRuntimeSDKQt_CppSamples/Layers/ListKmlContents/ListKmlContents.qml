@@ -28,87 +28,92 @@ Item {
         anchors.fill: parent
 
         // Create window for displaying the KML contents
+
         Rectangle {
             id: listViewWindow
             visible: true
             width: 200
             height: 200
-            Layout.margins: 3
+            //            Layout.margins: 3
             color: "lightgrey"
 
-            StackView {
-                id: stackView
-                anchors.fill: parent
+            ColumnLayout {
 
-//                initialItem: mapSelectViewComponent
+                RowLayout {
+                    id: buttonRow
+                    spacing: 10
+                    width: parent.width
 
+                    Button {
+                        text: "<"
+                        onClicked: {
+                            console.log(stackView.depth);
+//                            stackView.pop();
+                            sampleModel.getParents();
+                        }
+                    }
+                    Button {
+                        text: "Pop"
+                        enabled: stackView.depth > 1
+                        onClicked: stackView.pop()
+
+                    }
+                }
+
+                RowLayout {
+                    StackView {
+                        id: stackView
+                        width: parent.width
+                    }
+                }
             }
-
-//            ListView {
-//                id: listModel
-//                model: sampleModel.nodeNames
-//                height: contentHeight
-//                width: 200
-//                delegate: Text {
-//                    text: modelData
-//                    height: modelData.height
-//                }
-//            }
         }
     }
     Component {
         id: mapSelectViewComponent
 
-    Item {
-        id: mapSelectView
+        Item {
+            id: mapSelectView
 
-        Column {
-            anchors {
-                top: parent.top
-                left: parent.left
-            }
-            width: parent.width
-            spacing: 20
+            Column {
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                }
+                width: parent.width
+                spacing: 20
 
-            // UI navigation bar
-//            Rectangle {
-//                width: parent.width
-//                height: 100
-//                color: "#283593"
-//            }
+                // UI navigation bar
+                //            Rectangle {
+                //                width: parent.width
+                //                height: 100
+                //                color: "#283593"
+                //            }
 
-            ListView {
-                anchors.horizontalCenter: parent.horizontalCenter
-                height: 400
-                width: 200
-                spacing: 10
-//                model: sampleModel.nodeNames
-                model: sampleModel.levelNodeNames
+                ListView {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: 400
+                    width: 200
+                    spacing: 10
+                    model: sampleModel.levelNodeNames
 
-                delegate: Component {
-                    Text {
-                        text: modelData
+                    delegate: Component {
+                        Button {
+                            text: modelData
+                            onClicked: {
+                                console.log(text);
+                                sampleModel.nodeSelected(text);
+                            }
+                        }
                     }
-//                    Rectangle {
-//                        width: 200
-//                        height: 50
-//                        color: "#283593"
-//                        radius: 2
-//                        border.color: "darkgray"
-
-//                    }
                 }
             }
         }
     }
-}
 
 
     Connections {
         target: sampleModel
-//        onLevelAddedChanged: {
-//            console.log("new level added");
-//        }
         onNodesListChanged: {
             if (sampleModel.nodesList === null) {
                 return;
@@ -116,28 +121,14 @@ Item {
 
             // for current node, get names of children
             nodeNamesList = [];
-//            for (let i = 0; i < sampleModel.nodesList.rowCount(); i++) {
-//                console.log(sampleModel.nodesList.index(0,0).name);
-//            }
-            console.log(sampleModel.nodesList.rowCount());
+            //            for (let i = 0; i < sampleModel.nodesList.rowCount(); i++) {
+            //                console.log(sampleModel.nodesList.index(0,0).name);
+            //            }
+            //            console.log(sampleModel.nodesList.rowCount());
         }
         onLevelNodeNamesChanged: {
             stackView.push(mapSelectViewComponent);
         }
-    }
-
-    Component {
-        id: listViewDelegate
-        Text {
-        }
-//        Rectangle {
-//            id: rect
-//            width: parent.width
-//            height: 35
-//            color: "white"
-
-
-//        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
