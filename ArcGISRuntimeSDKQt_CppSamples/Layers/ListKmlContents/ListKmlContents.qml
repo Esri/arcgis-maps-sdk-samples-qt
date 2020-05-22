@@ -22,6 +22,7 @@ import Esri.Samples 1.0
 Item {
 
     property var nodeNamesList: []
+    property bool showCurrentLevel: true
 
     SceneView {
         id: view
@@ -46,10 +47,13 @@ Item {
 
                     Button {
                         text: "<"
+                        enabled: stackView.depth > 1
                         onClicked: {
-                            console.log(stackView.depth);
+                            sampleModel.displayPreviousLevel();
+//                            showCurrentLevel = false;
+//                            console.log(stackView.depth);
 //                            stackView.pop();
-                            sampleModel.getParents();
+//                            stackView.push(mapSelectViewComponent);
                         }
                     }
                     Button {
@@ -64,6 +68,7 @@ Item {
                     StackView {
                         id: stackView
                         width: parent.width
+                        onDepthChanged: console.log("number of layers: ", depth);
                     }
                 }
             }
@@ -91,17 +96,20 @@ Item {
                 //            }
 
                 ListView {
+                    id: myListView
                     anchors.horizontalCenter: parent.horizontalCenter
                     height: 400
                     width: 200
                     spacing: 10
+//                    model: sampleModel.levelNodeNames
                     model: sampleModel.levelNodeNames
 
                     delegate: Component {
                         Button {
                             text: modelData
+                            width: listViewWindow.width
                             onClicked: {
-                                console.log(text);
+                                showCurrentLevel = true;
                                 sampleModel.nodeSelected(text);
                             }
                         }
@@ -114,18 +122,6 @@ Item {
 
     Connections {
         target: sampleModel
-        onNodesListChanged: {
-            if (sampleModel.nodesList === null) {
-                return;
-            }
-
-            // for current node, get names of children
-            nodeNamesList = [];
-            //            for (let i = 0; i < sampleModel.nodesList.rowCount(); i++) {
-            //                console.log(sampleModel.nodesList.index(0,0).name);
-            //            }
-            //            console.log(sampleModel.nodesList.rowCount());
-        }
         onLevelNodeNamesChanged: {
             stackView.push(mapSelectViewComponent);
         }

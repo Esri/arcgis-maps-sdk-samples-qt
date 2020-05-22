@@ -43,8 +43,8 @@ class ListKmlContents : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
   Q_PROPERTY(QStringList nodeNames READ nodeNames NOTIFY nodeNamesChanged)
   Q_PROPERTY(QStringList levelNodeNames READ levelNodeNames NOTIFY levelNodeNamesChanged)
+  Q_PROPERTY(QStringList parentNodeNames READ parentNodeNames NOTIFY parentNodeNamesChanged)
   Q_PROPERTY(bool levelAdded READ levelAdded NOTIFY levelAddedChanged)
-  Q_PROPERTY(QAbstractListModel* nodesList READ nodesList NOTIFY nodesListChanged)
 
 public:
   explicit ListKmlContents(QObject* parent = nullptr);
@@ -52,14 +52,14 @@ public:
 
   static void init();
   Q_INVOKABLE void nodeSelected(const QString nodeName);
-  Q_INVOKABLE void getParents();
+  Q_INVOKABLE void displayPreviousLevel();
 
 signals:
   void sceneViewChanged();
   void nodeNamesChanged();
   void levelAddedChanged();
-  void nodesListChanged();
   void levelNodeNamesChanged();
+  void parentNodeNamesChanged();
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
@@ -70,9 +70,9 @@ private:
   void displayChildren(Esri::ArcGISRuntime::KmlNode* node);
 
   QStringList levelNodeNames() const { return m_levelNodeNames; }
+  QStringList parentNodeNames() const { return m_parentNodeNames; }
 
   bool levelAdded() const { return m_levelAdded; }
-  QAbstractListModel* nodesList() const { return m_nodesList; }
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
@@ -80,10 +80,11 @@ private:
   QAbstractListModel* m_nodeListModel = nullptr;
   QStringList m_nodeNames = {};
   QStringList m_levelNodeNames = {};
+  QStringList m_parentNodeNames = {};
   bool m_levelAdded = false;
-  QAbstractListModel* m_nodesList = nullptr;
   QList<Esri::ArcGISRuntime::KmlNode*> m_kmlNodesList = {};
   QList<Esri::ArcGISRuntime::KmlNode*> m_previousLevel = {};
+  Esri::ArcGISRuntime::KmlNode* m_currentNode = nullptr;
   QList<int> m_indices = {};
 };
 
