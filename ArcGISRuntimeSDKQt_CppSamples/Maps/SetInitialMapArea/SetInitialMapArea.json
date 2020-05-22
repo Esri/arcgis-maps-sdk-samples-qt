@@ -1,9 +1,0 @@
-{
-    "source" :  "SetInitialMapArea.qml",
-    "otherSourceFiles" : [
-        "SetInitialMapArea.h",
-        "SetInitialMapArea.cpp"
-    ],
-    "name" : "Set initial map area"
-}
-

@@ -1,9 +1,0 @@
-{
-    "source" :  "SpatialOperations.qml",
-    "name" : "Spatial operations",
-    "otherSourceFiles" :  [
-        "SpatialOperations.h",
-        "SpatialOperations.cpp"
-	]
-}
-

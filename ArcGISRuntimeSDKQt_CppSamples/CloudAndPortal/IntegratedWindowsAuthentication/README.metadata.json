@@ -17,9 +17,9 @@
         "UserCredential"
     ],
     "snippets": [
+        "IntegratedWindowsAuthentication.qml",
         "IntegratedWindowsAuthentication.cpp",
-        "IntegratedWindowsAuthentication.h",
-        "IntegratedWindowsAuthentication.qml"
+        "IntegratedWindowsAuthentication.h"
     ],
     "title": "Integrated windows authentication"
 }

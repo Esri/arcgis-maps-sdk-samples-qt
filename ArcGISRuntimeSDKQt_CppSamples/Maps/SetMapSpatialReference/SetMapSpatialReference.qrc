@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/SetMapSpatialReference">
-        <file alias="sample.json">SetMapSpatialReference.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>SetMapSpatialReference.qml</file>
 		<file>SetMapSpatialReference.h</file>

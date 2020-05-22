@@ -15,9 +15,15 @@
         "SymbolStyleSearchParameters"
     ],
     "snippets": [
+        "SearchDictionarySymbolStyle.qml",
         "SearchDictionarySymbolStyle.h",
-        "SearchDictionarySymbolStyle.cpp",
-        "SearchDictionarySymbolStyle.qml"
+        "SearchDictionarySymbolStyle.cpp"
+    ],
+    "dataItems" : [
+        {
+            "itemId" : "c78b149a1d52414682c86a5feeb13d30",
+            "path" : "~/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
+        }
     ],
     "title": "Search dictionary symbol style"
 }

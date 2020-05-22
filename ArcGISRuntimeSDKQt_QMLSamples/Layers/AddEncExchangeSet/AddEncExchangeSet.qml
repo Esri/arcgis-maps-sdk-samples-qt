@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -61,32 +61,30 @@ Rectangle {
                     }
 
                     // loop through the datasets
-                    for (var i = 0; i < datasets.length; i++) {
+                    for (let i = 0; i < datasets.length; i++) {
 
                         // create an EncCell from each dataset
-                        var encCell = ArcGISRuntimeEnvironment.createObject("EncCell", {
-                                                                                dataset: datasets[i]
-                                                                            }, map);
+                        const encCell = ArcGISRuntimeEnvironment.createObject("EncCell", {
+                                                                                  dataset: datasets[i]
+                                                                              }, map);
 
                         // create an EncLayer from each cell
-                        var encLayer = ArcGISRuntimeEnvironment.createObject("EncLayer", {
-                                                                                 cell: encCell
-                                                                             }, map);
+                        const encLayer = ArcGISRuntimeEnvironment.createObject("EncLayer", {
+                                                                                   cell: encCell
+                                                                               }, map);
                         layers.push(encLayer);
 
                         // connect to loadStatusChanged for each layer
-                        encLayer.loadStatusChanged.connect(function() {
+                        encLayer.loadStatusChanged.connect(()=> {
                             if (encLayer.loadStatus === Enums.LoadStatusLoaded) {
                                 loadedEncLayerCount++;
                             }
 
                             // loop through the layers and zoom to the combined full extent
                             if (loadedEncLayerCount === datasets.length) {
-                                var fullExtents = [];
-                                map.operationalLayers.forEach(function(layer) {
-                                    fullExtents.push(layer.fullExtent);
-                                });
-                                var fullExtentOfLayers = GeometryEngine.combineExtentsOfGeometries(fullExtents);
+                                const fullExtents = [];
+                                map.operationalLayers.forEach(layer => fullExtents.push(layer.fullExtent));
+                                const fullExtentOfLayers = GeometryEngine.combineExtentsOfGeometries(fullExtents);
                                 mapView.setViewpointGeometry(fullExtentOfLayers)
                             }
                         });

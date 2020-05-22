@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/LocalServer/LocalServerMapImageLayer">
-        <file alias="sample.json">LocalServerMapImageLayer.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>LocalServerMapImageLayer.qml</file>
 		<file>LocalServerMapImageLayer.h</file>

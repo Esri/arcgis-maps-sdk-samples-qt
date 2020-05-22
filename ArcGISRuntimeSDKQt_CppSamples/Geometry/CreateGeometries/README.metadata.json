@@ -28,9 +28,9 @@
         "MultipointBuilder"
     ],
     "snippets": [
+        "CreateGeometries.qml",
         "CreateGeometries.cpp",
-        "CreateGeometries.h",
-        "CreateGeometries.qml"
+        "CreateGeometries.h"
     ],
     "title": "Create geometries"
 }

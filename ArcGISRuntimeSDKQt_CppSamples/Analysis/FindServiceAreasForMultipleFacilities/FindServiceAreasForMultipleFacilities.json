@@ -1,8 +1,0 @@
-{
-    "source" :  "FindServiceAreasForMultipleFacilities.qml",
-    "otherSourceFiles" :  [
-        "FindServiceAreasForMultipleFacilities.h",
-        "FindServiceAreasForMultipleFacilities.cpp"
-    ],
-    "name" : "Find service areas for multiple facilities"
-}

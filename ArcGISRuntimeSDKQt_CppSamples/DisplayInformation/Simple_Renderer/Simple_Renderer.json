@@ -1,9 +1,0 @@
-{
-    "source" :  "Simple_Renderer.qml",
-    "otherSourceFiles" : [
-        "Simple_Renderer.h",
-        "Simple_Renderer.cpp"
-    ],
-    "name" : "Simple renderer"
-}
-

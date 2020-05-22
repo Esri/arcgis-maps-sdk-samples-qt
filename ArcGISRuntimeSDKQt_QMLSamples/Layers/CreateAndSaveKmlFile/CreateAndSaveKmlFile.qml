@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.12
 import Qt.labs.platform 1.1 as Dialogs
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -186,7 +186,7 @@ Rectangle {
                                                                       geometry: geometry,
                                                                       altitudeMode: Enums.KmlAltitudeModeClampToGround
                                                                   });
-        let kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
+        const kmlPlacemark = ArcGISRuntimeEnvironment.createObject("KmlPlacemark");
         kmlPlacemark.geometriesListModel.append(kmlGeometry);
         kmlPlacemark.style = kmlStyle;
         kmlDocument.childNodesListModel.append(kmlPlacemark);

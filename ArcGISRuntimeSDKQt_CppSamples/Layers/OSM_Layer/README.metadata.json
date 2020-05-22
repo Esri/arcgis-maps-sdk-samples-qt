@@ -17,9 +17,9 @@
         "MapView"
     ],
     "snippets": [
+        "OSM_Layer.qml",
         "OSM_Layer.h",
-        "OSM_Layer.cpp",
-        "OSM_Layer.qml"
+        "OSM_Layer.cpp"
     ],
     "title": "OpenStreetMap layer"
 }

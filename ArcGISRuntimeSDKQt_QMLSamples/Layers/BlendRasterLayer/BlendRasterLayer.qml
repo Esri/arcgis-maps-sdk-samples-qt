@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -163,7 +163,7 @@ Rectangle {
                 model: slopeTypeModel
 
                 Component.onCompleted : {
-                    for (var i = 0; i < model.count; ++i) {
+                    for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
                         modelWidth = Math.max(modelWidth, metrics.width);
                     }
@@ -188,7 +188,7 @@ Rectangle {
                 model: colorRampModel
 
                 Component.onCompleted : {
-                    for (var i = 0; i < model.count; ++i) {
+                    for (let i = 0; i < model.count; ++i) {
                         metrics2.text = model.get(i).name;
                         modelWidth = Math.max(modelWidth, metrics2.width);
                     }
@@ -214,7 +214,7 @@ Rectangle {
     }
 
     function applyRendererSettings() {
-        var blendRenderer = ArcGISRuntimeEnvironment.createObject("BlendRenderer");
+        const blendRenderer = ArcGISRuntimeEnvironment.createObject("BlendRenderer");
         blendRenderer.elevationRaster = elevationRaster;
         blendRenderer.altitude = altSlider.value;
         blendRenderer.azimuth = azimuthSlider.value;
@@ -232,7 +232,7 @@ Rectangle {
     }
 
     function applyRenderer(blendRenderer) {
-        var val = colorRampModel.get(colorCombo.currentIndex).value;
+        const val = colorRampModel.get(colorCombo.currentIndex).value;
         if (val.length === 0)
             rasterLayer.renderer = blendRenderer;
         else
@@ -240,11 +240,11 @@ Rectangle {
     }
 
     function getColorRamp() {
-        var val = colorRampModel.get(colorCombo.currentIndex).value;
+        const val = colorRampModel.get(colorCombo.currentIndex).value;
         if (val.length === 0)
             return null;
 
-        var colorRamp = ArcGISRuntimeEnvironment.createObject(val);
+        const colorRamp = ArcGISRuntimeEnvironment.createObject(val);
         colorRamp.size = 800;
 
         return colorRamp;

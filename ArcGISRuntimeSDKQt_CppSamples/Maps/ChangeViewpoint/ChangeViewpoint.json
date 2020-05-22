@@ -1,9 +1,0 @@
-{
-    "source" :  "ChangeViewpoint.qml",
-    "otherSourceFiles" : [
-        "ChangeViewpoint.h",
-        "ChangeViewpoint.cpp"
-    ],
-    "name" : "Change viewpoint"
-}
-

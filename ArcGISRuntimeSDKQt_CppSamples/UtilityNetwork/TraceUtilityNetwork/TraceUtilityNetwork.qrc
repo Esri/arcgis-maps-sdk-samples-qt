@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/UtilityNetwork/TraceUtilityNetwork">
+        <file alias="sample.json">README.metadata.json</file>
+        <file>TraceUtilityNetwork.qml</file>
+        <file>TraceUtilityNetwork.h</file>
+        <file>TraceUtilityNetwork.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

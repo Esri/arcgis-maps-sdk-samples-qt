@@ -1,9 +1,0 @@
-{
-    "source" :  "IdentifyGraphics.qml",
-    "otherSourceFiles" : [
-        "IdentifyGraphics.h",
-        "IdentifyGraphics.cpp"
-    ],
-    "name" : "Identify graphics"
-}
-

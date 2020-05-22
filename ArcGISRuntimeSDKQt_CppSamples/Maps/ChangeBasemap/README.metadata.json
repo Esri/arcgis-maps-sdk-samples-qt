@@ -17,8 +17,8 @@
         "Basemap"
     ],
     "snippets": [
-        "ChangeBasemap.h",
         "ChangeBasemap.qml",
+        "ChangeBasemap.h",
         "ChangeBasemap.cpp"
     ],
     "title": "Change basemap"

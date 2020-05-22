@@ -27,8 +27,8 @@
         "OrderBy"
     ],
     "snippets": [
-        "StatisticResultListModel.h",
         "StatisticalQueryGroupSort.qml",
+        "StatisticResultListModel.h",
         "StatisticResultListModel.cpp",
         "OptionsPage.qml",
         "StatisticalQueryGroupSort.cpp",

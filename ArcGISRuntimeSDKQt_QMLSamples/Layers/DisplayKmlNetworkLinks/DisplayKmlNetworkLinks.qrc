@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/DisplayKmlNetworkLinks">
-        <file alias="sample.json">DisplayKmlNetworkLinks.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>DisplayKmlNetworkLinks.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

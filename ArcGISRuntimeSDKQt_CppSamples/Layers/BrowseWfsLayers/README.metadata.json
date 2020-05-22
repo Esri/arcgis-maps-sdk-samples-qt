@@ -31,9 +31,9 @@
         "WfsFeatureTable::AxisOrder"
     ],
     "snippets": [
+        "BrowseWfsLayers.qml",
         "BrowseWfsLayers.cpp",
-        "BrowseWfsLayers.h",
-        "BrowseWfsLayers.qml"
+        "BrowseWfsLayers.h"
     ],
     "title": "Browse WFS layers"
 }

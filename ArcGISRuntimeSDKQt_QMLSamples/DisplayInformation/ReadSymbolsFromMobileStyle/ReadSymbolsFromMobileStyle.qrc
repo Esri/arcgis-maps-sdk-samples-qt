@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/ReadSymbolsFromMobileStyle">
-        <file alias="sample.json">ReadSymbolsFromMobileStyle.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>ReadSymbolsFromMobileStyle.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

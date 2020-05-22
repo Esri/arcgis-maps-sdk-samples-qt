@@ -20,9 +20,15 @@
         "LocalServerStatus"
     ],
     "snippets": [
+        "LocalServerFeatureLayer.qml",
         "LocalServerFeatureLayer.h",
-        "LocalServerFeatureLayer.cpp",
-        "LocalServerFeatureLayer.qml"
+        "LocalServerFeatureLayer.cpp"
+    ],
+    "dataItems" : [        
+        {
+            "itemId" : "4e94fec734434d1288e6ebe36c3c461f",
+            "path" : "~/ArcGIS/Runtime/Data/mpk/PointsofInterest.mpk"
+        }
     ],
     "title": "Local Server feature layer"
 }

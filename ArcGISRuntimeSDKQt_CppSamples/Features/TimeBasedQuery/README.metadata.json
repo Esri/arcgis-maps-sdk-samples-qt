@@ -20,9 +20,9 @@
         "ServiceFeatureTable::populateFromService"
     ],
     "snippets": [
+        "TimeBasedQuery.qml",
         "TimeBasedQuery.cpp",
-        "TimeBasedQuery.h",
-        "TimeBasedQuery.qml"
+        "TimeBasedQuery.h"
     ],
     "title": "Time based query"
 }

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/VectorTiledLayerUrl">
-        <file alias="sample.json">VectorTiledLayerUrl.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>VectorTiledLayerUrl.qml</file>
 		<file>VectorTiledLayerUrl.h</file>

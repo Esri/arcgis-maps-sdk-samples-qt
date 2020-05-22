@@ -21,8 +21,8 @@
         "SpatialReference"
     ],
     "snippets": [
-        "ShowCallout.h",
         "ShowCallout.qml",
+        "ShowCallout.h",
         "ShowCallout.cpp"
     ],
     "title": "Show callout"

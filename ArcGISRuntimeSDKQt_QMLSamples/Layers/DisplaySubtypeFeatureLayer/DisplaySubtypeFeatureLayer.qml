@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Shapes 1.12
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -56,7 +56,7 @@ Rectangle {
 
                     // get the Street Light sublayer and define its labels
                     subtypeSublayer = subtypeFeatureLayer.sublayerWithSubtypeName("Street Light");
-                    var labelDefinition = ArcGISRuntimeEnvironment.createObject("LabelDefinition", { json : labelJson});
+                    const labelDefinition = ArcGISRuntimeEnvironment.createObject("LabelDefinition", { json : labelJson});
 
                     if (!labelDefinition || !subtypeSublayer)
                       return;

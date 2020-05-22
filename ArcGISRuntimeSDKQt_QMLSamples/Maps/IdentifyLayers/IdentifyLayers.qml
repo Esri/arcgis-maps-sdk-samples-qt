@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -71,11 +71,11 @@ Rectangle {
 
         // identify layers on mouse click
         onMouseClicked: {
-            var screenX = mouse.x;
-            var screenY = mouse.y;
-            var tolerance = 12;
-            var returnPopups = false;
-            var maxResults = 10;
+            const screenX = mouse.x;
+            const screenY = mouse.y;
+            const tolerance = 12;
+            const returnPopups = false;
+            const maxResults = 10;
             mapView.identifyLayersWithMaxResults(screenX, screenY, tolerance, returnPopups, maxResults);
         }
 
@@ -88,11 +88,11 @@ Rectangle {
             msgText = "";
 
             // loop through the results
-            var results = mapView.identifyLayersResults;
-            for (var i = 0; i < results.length; i++) {
-                var result = results[i];
-                var count = geoElementsCountFromResult(result);
-                var layerName = result.layerContent.name;
+            const results = mapView.identifyLayersResults;
+            for (let i = 0; i < results.length; i++) {
+                const result = results[i];
+                const count = geoElementsCountFromResult(result);
+                const layerName = result.layerContent.name;
                 msgText += "%1 : %2".arg(layerName).arg(count);
                 // add new line character if not the final element in array
                 if (i !== results.length)
@@ -113,15 +113,15 @@ Rectangle {
 
     function geoElementsCountFromResult(identifyLayerResult) {
         // create temp array
-        var tempResults = [identifyLayerResult];
+        const tempResults = [identifyLayerResult];
 
         // use Depth First Search approach to handle recursion
-        var count = 0;
-        var index = 0;
+        let count = 0;
+        let index = 0;
 
         while (index < tempResults.length) {
             //get the result object from the array
-            var identifyResult = tempResults[index];
+            const identifyResult = tempResults[index];
 
             // update count with geoElements from the result
             count += identifyResult.geoElements.length;

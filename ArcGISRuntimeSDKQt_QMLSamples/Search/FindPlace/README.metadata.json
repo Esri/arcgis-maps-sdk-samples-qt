@@ -41,9 +41,9 @@
         "Map"
     ],
     "snippets": [
+        "FindPlace.qml",
         "SearchBox.qml",
         "SuggestionView.qml",
-        "FindPlace.qml",
         "SearchButton.qml"
     ],
     "title": "Find a place"

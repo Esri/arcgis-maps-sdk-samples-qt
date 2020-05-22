@@ -21,8 +21,8 @@
         "FeatureLayer"
     ],
     "snippets": [
-        "ServiceFeatureTableNoCache.cpp",
         "ServiceFeatureTableNoCache.qml",
+        "ServiceFeatureTableNoCache.cpp",
         "ServiceFeatureTableNoCache.h"
     ],
     "title": "Service feature table (no cache)"

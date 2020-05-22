@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/OSM_Layer">
-        <file alias="sample.json">OSM_Layer.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>OSM_Layer.qml</file>
         <file>OSM_Layer.h</file>
         <file>OSM_Layer.cpp</file>

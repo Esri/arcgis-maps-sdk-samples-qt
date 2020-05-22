@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/MobileMap_SearchAndRoute">
-        <file alias="sample.json">MobileMap_SearchAndRoute.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>MobileMap_SearchAndRoute.qml</file>
         <file>pinOutlineSymbol.png</file>
         <file>routingSymbol.png</file>

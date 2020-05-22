@@ -18,8 +18,8 @@
         "Envelope"
     ],
     "snippets": [
-        "ClipGeometry.h",
         "ClipGeometry.qml",
+        "ClipGeometry.h",
         "ClipGeometry.cpp"
     ],
     "title": "Clip geometry"

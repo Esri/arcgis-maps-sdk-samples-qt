@@ -1,8 +1,0 @@
-{
-    "source" :  "ListTransformations.qml",
-    "otherSourceFiles" :  [
-        "ListTransformations.h",
-        "ListTransformations.cpp"
-    ],
-    "name" : "List transformations by suitability"
-}

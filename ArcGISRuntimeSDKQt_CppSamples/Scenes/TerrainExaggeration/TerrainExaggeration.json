@@ -1,8 +1,0 @@
-{
-    "source" :  "TerrainExaggeration.qml",
-    "otherSourceFiles" :  [
-        "TerrainExaggeration.h",
-        "TerrainExaggeration.cpp"
-    ],
-    "name" : "Terrain exaggeration"
-}

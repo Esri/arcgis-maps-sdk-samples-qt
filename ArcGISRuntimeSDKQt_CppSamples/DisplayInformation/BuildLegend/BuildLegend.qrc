@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/BuildLegend">
-        <file alias="sample.json">BuildLegend.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>BuildLegend.qml</file>
         <file>BuildLegend.cpp</file>

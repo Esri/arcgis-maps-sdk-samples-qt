@@ -17,10 +17,16 @@
         "StretchRenderer"
     ],
     "snippets": [
+        "RasterStretchRenderer.qml",
         "RasterStretchRenderer.h",
         "RasterStretchRenderer.cpp",
-        "RasterStretchRenderer.qml",
         "InputWithLabel.qml"
+    ],
+    "dataItems" : [
+        {
+            "itemId" : "c669445e6cb4490b8306f0c170a9cbb1",
+            "path" : "~/ArcGIS/Runtime/Data/raster/Shasta.tif"
+        }
     ],
     "title": "Stretch renderer"
 }

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/Picture_Marker_Symbol">
-        <file alias="sample.json">Picture_Marker_Symbol.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>Picture_Marker_Symbol.qml</file>
         <file>Picture_Marker_Symbol.h</file>

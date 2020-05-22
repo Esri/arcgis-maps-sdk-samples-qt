@@ -101,7 +101,7 @@ Rectangle {
                             width: modelWidth + leftPadding + rightPadding + indicator.width
                             model: fields
                             onModelChanged: {
-                                for (var i = 0; i < model.length; ++i) {
+                                for (let i = 0; i < model.length; ++i) {
                                     metricsFieldComboBox.text = model[i];
                                     modelWidth = Math.max(modelWidth, metricsFieldComboBox.width);
                                 }
@@ -125,7 +125,7 @@ Rectangle {
                             property int modelWidth: 0
                             width: modelWidth + leftPadding + rightPadding + indicator.width
                             Component.onCompleted : {
-                                for (var i = 0; i < model.length; ++i) {
+                                for (let i = 0; i < model.length; ++i) {
                                     metricsStatisticComboBox.text = model[i];
                                     modelWidth = Math.max(modelWidth, metricsStatisticComboBox.width);
                                 }

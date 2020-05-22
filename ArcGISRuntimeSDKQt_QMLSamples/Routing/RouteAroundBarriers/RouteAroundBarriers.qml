@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 //import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.1
 
@@ -172,14 +172,16 @@ Rectangle {
                 stopsList.push(stopPoint);
 
                 // create a marker symbol and graphics, and add the graphics to the graphics overlay
-                let textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {text: stopsList.length,
-                                                                           color: "white",
-                                                                           size: 16,
-                                                                           horizontalAlignment: Enums.HorizontalAlignmentCenter,
-                                                                           verticalAlignment: Enums.VerticalAlignmentBottom});
+                const textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
+                                                                             text: stopsList.length,
+                                                                             color: "white",
+                                                                             size: 16,
+                                                                             horizontalAlignment: Enums.HorizontalAlignmentCenter,
+                                                                             verticalAlignment: Enums.VerticalAlignmentBottom
+                                                                         });
                 textSymbol.offsetY = pinSymbol.height/2;
 
-                let stopSymbol = ArcGISRuntimeEnvironment.createObject("CompositeSymbol");
+                const stopSymbol = ArcGISRuntimeEnvironment.createObject("CompositeSymbol");
                 stopSymbol.symbols.append(pinSymbol);
                 stopSymbol.symbols.append(textSymbol);
                 const stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopSymbol});
@@ -319,23 +321,24 @@ Rectangle {
                 Layout.margins: 3
                 color: "lightgrey"
 
-                ListView {
-                    id: directionsView
-                    anchors {
-                        fill: parent
-                        margins: 5
-                    }
-                    header: Component {
-                        Text {
-                            height: 40
+                ScrollView {
+                    anchors.fill: parent
+                    ListView {
+                        id: directionsView
+                        anchors {
+                            fill: parent
+                            margins: 5
+                        }
+                        header: Text {
                             text: "Directions:"
                             font.pixelSize: 22
+                            bottomPadding: 8
                         }
-                    }
 
-                    // set the model to the DirectionManeuverListModel returned from the route
-                    model: directionListModel
-                    delegate: directionDelegate
+                        // set the model to the DirectionManeuverListModel returned from the route
+                        model: directionListModel
+                        delegate: directionDelegate
+                    }
                 }
             }
 

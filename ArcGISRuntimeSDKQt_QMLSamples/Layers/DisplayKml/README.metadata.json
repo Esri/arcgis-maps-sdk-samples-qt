@@ -21,5 +21,11 @@
     "snippets": [
         "DisplayKml.qml"
     ],
+    "dataItems" : [
+        {
+            "itemId" : "324e4742820e46cfbe5029ff2c32cb1f",
+            "path" : "~/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
+        }
+    ],
     "title": "Display KML"
 }

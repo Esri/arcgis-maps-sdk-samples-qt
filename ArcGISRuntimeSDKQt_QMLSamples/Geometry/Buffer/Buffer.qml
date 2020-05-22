@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -101,30 +101,30 @@ Rectangle {
     // function to buffer a point and add graphics
     function bufferPoint(point) {
         // Create a variable to be the buffer size in meters. There are 1609.34 meters in one mile.
-        var bufferInMeters = bufferSizeText.text * 1609.34;
+        const bufferInMeters = bufferSizeText.text * 1609.34;
 
         // Create a planar buffer graphic around the input location at the specified distance.
-        var buffer = GeometryEngine.buffer(point, bufferInMeters);
+        const buffer = GeometryEngine.buffer(point, bufferInMeters);
 
         // Add the result planar buffer as a graphic
-        var resultGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                      geometry: buffer
-                                                                  });
+        const resultGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                        geometry: buffer
+                                                                    });
         graphicsOverlayPlanar.graphics.append(resultGraphic);
 
         // Create a geodesic buffer graphic using the same location and distance.
-        var bufferGeodesic = GeometryEngine.bufferGeodetic(point, bufferInMeters, Enums.LinearUnitIdMeters, NaN, Enums.geodesicCurveTypeGeodesic);
+        const bufferGeodesic = GeometryEngine.bufferGeodetic(point, bufferInMeters, Enums.LinearUnitIdMeters, NaN, Enums.geodesicCurveTypeGeodesic);
 
         // Add the result planar buffer as a graphic
-        var resultGraphicGeodesic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                              geometry: bufferGeodesic
-                                                                          });
+        const resultGraphicGeodesic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                                geometry: bufferGeodesic
+                                                                            });
         graphicsOverlaygeodesic.graphics.append(resultGraphicGeodesic);
 
         // Add the clicked point as a graphic
-        var clickedPointGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                            geometry: point
-                                                                        });
+        const clickedPointGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                              geometry: point
+                                                                          });
         graphicsOverlayPoints.graphics.append(clickedPointGraphic);
     }
 
@@ -159,6 +159,7 @@ Rectangle {
             id: bufferSizeText
             validator: IntValidator { bottom: 1; top: 10000 }
             text: "1000"
+            selectByMouse: true
         }
 
         Row {
