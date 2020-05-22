@@ -24,5 +24,11 @@
     "snippets": [
         "AnimateImagesWithImageOverlay.qml"
     ],
+    "dataItems" : [
+        {
+            "itemId" : "9465e8c02b294c69bdb42de056a23ab1",
+            "path" : "~/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest.zip"
+        }
+    ],
     "title": "Animate images with image overlay"
 }
