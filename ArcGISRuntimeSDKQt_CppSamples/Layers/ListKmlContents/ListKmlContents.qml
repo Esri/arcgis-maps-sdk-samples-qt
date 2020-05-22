@@ -33,7 +33,8 @@ Item {
             id: listViewWindow
             visible: true
             width: 200
-            height: 200
+//            height: 200
+            height: childrenRect.height
             //            Layout.margins: 3
             color: "lightgrey"
 
@@ -47,6 +48,9 @@ Item {
                     Button {
                         text: "<"
                         enabled: !sampleModel.isTopLevel
+                        background: Rectangle {
+                            color: listViewWindow.color
+                        }
                         onClicked: {
                             sampleModel.displayPreviousLevel();
                         }
@@ -57,7 +61,7 @@ Item {
                     ListView {
                         id: myListView
 //                        anchors.horizontalCenter: parent.horizontalCenter
-                        height: 400
+                        height: contentHeight
                         width: 200
                         spacing: 0
                         model: sampleModel.levelNodeNames

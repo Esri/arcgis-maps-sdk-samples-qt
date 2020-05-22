@@ -121,21 +121,6 @@ void ListKmlContents::displayPreviousLevel()
 {
   KmlNode* parentNode = m_currentNode->parentNode();
   KmlNode* grandparentNode = parentNode->parentNode();
-//  if (grandparentNode == nullptr || grandparentNode->name() == "")
-//  {
-//    displayChildren(parentNode);
-//    m_isTopLevel = true;
-//    emit isTopLevelChanged();
-//    qDebug() << "nullptr, " << m_currentNode->name();
-//  }
-//  // if parent node is nullptr, then at top of tree
-//  else
-//  {
-//    qDebug() << "Grandparent node: " << grandparentNode->name();
-//    displayChildren(grandparentNode);
-//    m_currentNode = grandparentNode;
-//    qDebug() << "(displayPreviousLevel) current node: " << m_currentNode->name();
-//  }
 
   if (grandparentNode != nullptr)
   {
