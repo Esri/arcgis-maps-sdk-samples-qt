@@ -50,7 +50,7 @@ public:
   ~ListKmlContents();
 
   static void init();
-  Q_INVOKABLE void nodeSelected(const QString nodeName);
+  Q_INVOKABLE void nodeSelected(QString nodeName);
   Q_INVOKABLE void displayPreviousLevel();
 
 signals:

@@ -106,13 +106,27 @@ void ListKmlContents::displayChildren(KmlNode *parentNode)
   {
     m_levelNodeNames.clear();
 
+    bool lastLevel = true;
+
     // for current level, get names of child nodes
     for (KmlNode* node: *(container->childNodesListModel()))
     {
-      m_levelNodeNames << node->name();
+      QString str = node->name();
+
+      // if node has children, add ">" to indicate further levels
+      if (!node->children().isEmpty())
+      {
+        str.append(" >");
+        lastLevel = false;
+      }
+      m_levelNodeNames << str;
       m_kmlNodesList << node;
     }
 
+    if (lastLevel)
+    {
+      m_currentNode = container->childNodesListModel()->at(0);
+    }
     emit levelNodeNamesChanged();
   }
 }
@@ -142,10 +156,16 @@ void ListKmlContents::displayPreviousLevel()
   }
 }
 
-void ListKmlContents::nodeSelected(const QString nodeName)
+void ListKmlContents::nodeSelected(QString nodeName)
 {
+  // find node in the list
   for (KmlNode* node : m_kmlNodesList)
   {
+    if (nodeName.contains(" >"))
+    {
+      nodeName.remove(" >");
+    }
+
     if (nodeName == node->name())
     {
       // update current node
@@ -184,7 +204,6 @@ void ListKmlContents::buildTree(KmlNode* parentNode)
       const QString str = node->name().rightJustified(node->name().length() + myCounter*2, ' ');
       m_nodeNames << str;
       emit nodeNamesChanged();
-
 
       buildTree(node);
     }
