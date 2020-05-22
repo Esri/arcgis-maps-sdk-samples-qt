@@ -43,8 +43,7 @@ class ListKmlContents : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
   Q_PROPERTY(QStringList nodeNames READ nodeNames NOTIFY nodeNamesChanged)
   Q_PROPERTY(QStringList levelNodeNames READ levelNodeNames NOTIFY levelNodeNamesChanged)
-  Q_PROPERTY(QStringList parentNodeNames READ parentNodeNames NOTIFY parentNodeNamesChanged)
-  Q_PROPERTY(bool levelAdded READ levelAdded NOTIFY levelAddedChanged)
+  Q_PROPERTY(bool isTopLevel READ isTopLevel NOTIFY isTopLevelChanged)
 
 public:
   explicit ListKmlContents(QObject* parent = nullptr);
@@ -57,35 +56,29 @@ public:
 signals:
   void sceneViewChanged();
   void nodeNamesChanged();
-  void levelAddedChanged();
   void levelNodeNamesChanged();
-  void parentNodeNamesChanged();
+  void isTopLevelChanged();
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
   void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);
   QStringList nodeNames() const { return m_nodeNames; }
+  QStringList levelNodeNames() const { return m_levelNodeNames; }
 
   void displayChildren(Esri::ArcGISRuntime::KmlNode* node);
 
-  QStringList levelNodeNames() const { return m_levelNodeNames; }
-  QStringList parentNodeNames() const { return m_parentNodeNames; }
-
-  bool levelAdded() const { return m_levelAdded; }
+  bool isTopLevel() const { return m_isTopLevel; }
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::KmlDataset* m_kmlDataset = nullptr;
   QAbstractListModel* m_nodeListModel = nullptr;
-  QStringList m_nodeNames = {};
+  QStringList m_nodeNames = {}; // shows nested tree
   QStringList m_levelNodeNames = {};
-  QStringList m_parentNodeNames = {};
-  bool m_levelAdded = false;
+  bool m_isTopLevel = true;
   QList<Esri::ArcGISRuntime::KmlNode*> m_kmlNodesList = {};
-  QList<Esri::ArcGISRuntime::KmlNode*> m_previousLevel = {};
   Esri::ArcGISRuntime::KmlNode* m_currentNode = nullptr;
-  QList<int> m_indices = {};
 };
 
 #endif // LISTKMLCONTENTS_H

@@ -22,7 +22,6 @@ import Esri.Samples 1.0
 Item {
 
     property var nodeNamesList: []
-    property bool showCurrentLevel: true
 
     SceneView {
         id: view
@@ -47,84 +46,96 @@ Item {
 
                     Button {
                         text: "<"
-                        enabled: stackView.depth > 1
+                        enabled: !sampleModel.isTopLevel
                         onClicked: {
                             sampleModel.displayPreviousLevel();
-//                            showCurrentLevel = false;
-//                            console.log(stackView.depth);
-//                            stackView.pop();
-//                            stackView.push(mapSelectViewComponent);
                         }
-                    }
-                    Button {
-                        text: "Pop"
-                        enabled: stackView.depth > 1
-                        onClicked: stackView.pop()
-
                     }
                 }
 
                 RowLayout {
-                    StackView {
-                        id: stackView
-                        width: parent.width
-                        onDepthChanged: console.log("number of layers: ", depth);
-                    }
-                }
-            }
-        }
-    }
-    Component {
-        id: mapSelectViewComponent
+                    ListView {
+                        id: myListView
+//                        anchors.horizontalCenter: parent.horizontalCenter
+                        height: 400
+                        width: 200
+                        spacing: 0
+                        model: sampleModel.levelNodeNames
+//                        onModelChanged: {
+//                            if (modelData.length < 2) {
+//                                console.log("< 2 elements");
+//                            }
+//                        }
 
-        Item {
-            id: mapSelectView
-
-            Column {
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                }
-                width: parent.width
-                spacing: 20
-
-                // UI navigation bar
-                //            Rectangle {
-                //                width: parent.width
-                //                height: 100
-                //                color: "#283593"
-                //            }
-
-                ListView {
-                    id: myListView
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    height: 400
-                    width: 200
-                    spacing: 10
-//                    model: sampleModel.levelNodeNames
-                    model: sampleModel.levelNodeNames
-
-                    delegate: Component {
-                        Button {
-                            text: modelData
-                            width: listViewWindow.width
-                            onClicked: {
-                                showCurrentLevel = true;
-                                sampleModel.nodeSelected(text);
+                        delegate: Component {
+                            Button {
+                                text: modelData
+                                width: listViewWindow.width
+                                onClicked: {
+                                    sampleModel.nodeSelected(text);
+                                }
                             }
                         }
                     }
+//                    StackView {
+//                        id: stackView
+//                        width: parent.width
+//                        onDepthChanged: console.log("number of layers: ", depth);
+//                    }
                 }
             }
         }
     }
+
+//    Component {
+//        id: mapSelectViewComponent
+
+//        Item {
+//            id: mapSelectView
+
+//            Column {
+//                anchors {
+//                    top: parent.top
+//                    left: parent.left
+//                }
+//                width: parent.width
+//                spacing: 20
+
+//                // UI navigation bar
+//                //            Rectangle {
+//                //                width: parent.width
+//                //                height: 100
+//                //                color: "#283593"
+//                //            }
+
+//                ListView {
+//                    id: myListView
+//                    anchors.horizontalCenter: parent.horizontalCenter
+//                    height: 400
+//                    width: 200
+//                    spacing: 0
+//                    model: sampleModel.levelNodeNames
+
+//                    delegate: Component {
+//                        Button {
+//                            text: modelData
+//                            width: listViewWindow.width
+//                            onClicked: {
+//                                sampleModel.nodeSelected(text);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
     Connections {
         target: sampleModel
-        onLevelNodeNamesChanged: {
-            stackView.push(mapSelectViewComponent);
-        }
+//        onLevelNodeNamesChanged: {
+//            stackView.push(mapSelectViewComponent);
+//        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view

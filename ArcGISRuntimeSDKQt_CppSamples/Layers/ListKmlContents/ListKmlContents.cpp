@@ -95,7 +95,6 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
     // if at top node, then display children
     if (!m_kmlNodesList.isEmpty() && m_kmlNodesList[0]->parentNode() == nullptr)
     {
-      m_previousLevel = {m_kmlNodesList[0]};
       displayChildren(m_kmlNodesList[0]);
     }
   });
@@ -105,22 +104,14 @@ void ListKmlContents::displayChildren(KmlNode *parentNode)
 {
   if (KmlContainer* container = dynamic_cast<KmlContainer*>(parentNode))
   {
-    m_parentNodeNames = m_levelNodeNames;
-    emit parentNodeNamesChanged();
-
     m_levelNodeNames.clear();
-    m_indices.clear();
-    int counter = 0;
 
     // for current level, get names of child nodes
     for (KmlNode* node: *(container->childNodesListModel()))
     {
       m_levelNodeNames << node->name();
       m_kmlNodesList << node;
-      m_indices.push_back(++counter);
     }
-
-    qDebug() << m_indices.length() << " elements";
 
     emit levelNodeNamesChanged();
   }
@@ -130,6 +121,22 @@ void ListKmlContents::displayPreviousLevel()
 {
   KmlNode* parentNode = m_currentNode->parentNode();
   KmlNode* grandparentNode = parentNode->parentNode();
+//  if (grandparentNode == nullptr || grandparentNode->name() == "")
+//  {
+//    displayChildren(parentNode);
+//    m_isTopLevel = true;
+//    emit isTopLevelChanged();
+//    qDebug() << "nullptr, " << m_currentNode->name();
+//  }
+//  // if parent node is nullptr, then at top of tree
+//  else
+//  {
+//    qDebug() << "Grandparent node: " << grandparentNode->name();
+//    displayChildren(grandparentNode);
+//    m_currentNode = grandparentNode;
+//    qDebug() << "(displayPreviousLevel) current node: " << m_currentNode->name();
+//  }
+
   if (grandparentNode != nullptr)
   {
     displayChildren(grandparentNode);
@@ -139,7 +146,14 @@ void ListKmlContents::displayPreviousLevel()
   else
   {
     displayChildren(parentNode);
-    qDebug() << "nullptr, " << m_currentNode->name();
+    m_isTopLevel = true;
+    emit isTopLevelChanged();
+  }
+
+  if (m_currentNode->name() == "")
+  {
+    m_isTopLevel = true;
+    emit isTopLevelChanged();
   }
 }
 
@@ -151,7 +165,8 @@ void ListKmlContents::nodeSelected(const QString nodeName)
     {
       // update current node
       m_currentNode = node;
-      qDebug() << m_currentNode->name();
+      m_isTopLevel = false;
+      emit isTopLevelChanged();
 
       // set the scene view viewpoint to the extent of the selected node
       Envelope nodeExtent = node->extent();
@@ -173,21 +188,7 @@ void ListKmlContents::buildTree(KmlNode* parentNode)
   if (KmlContainer* container = dynamic_cast<KmlContainer*>(parentNode))
   {
     ++myCounter;
-    m_levelAdded = true;
-    emit levelAddedChanged();
     KmlNodeListModel* childNodes = container->childNodesListModel();
-
-//    if (m_levelNodeNames.length() > 0)
-//      m_levelNodeNames.clear();
-
-//    // for current level, get names of child nodes
-//    for (KmlNode* node: *childNodes)
-//    {
-//      m_levelNodeNames << node->name();
-//      qDebug() << node->name();
-//    }
-
-//    emit levelNodeNamesChanged();
 
     for (KmlNode* node : *childNodes)
     {
@@ -196,17 +197,13 @@ void ListKmlContents::buildTree(KmlNode* parentNode)
 
       // add spaces to show hierarchy
       const QString str = node->name().rightJustified(node->name().length() + myCounter*2, ' ');
-//      m_nodeNames << node->name().leftJustified(myCounter*2, ' ');
       m_nodeNames << str;
-//      qDebug() << str;
       emit nodeNamesChanged();
 
 
       buildTree(node);
     }
     --myCounter;
-    m_levelAdded = false;
-    emit levelAddedChanged();
   }
 
   if (KmlNetworkLink* networkLink = dynamic_cast<KmlNetworkLink*>(parentNode))
