@@ -120,7 +120,6 @@ void ListKmlContents::displayChildren(KmlNode *parentNode)
         lastLevel = false;
       }
       m_levelNodeNames << str;
-      m_kmlNodesList << node;
     }
 
     if (lastLevel)
@@ -199,6 +198,8 @@ void ListKmlContents::buildTree(KmlNode* parentNode)
     {
       // some nodes have default visibility set to false
       node->setVisible(true);
+
+      m_kmlNodesList << node;
 
       // add spaces to show hierarchy
       const QString str = node->name().rightJustified(node->name().length() + myCounter*2, ' ');

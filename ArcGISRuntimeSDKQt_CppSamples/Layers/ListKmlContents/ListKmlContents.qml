@@ -33,9 +33,7 @@ Item {
             id: listViewWindow
             visible: true
             width: 200
-//            height: 200
             height: childrenRect.height
-            //            Layout.margins: 3
             color: "lightgrey"
 
             ColumnLayout {
@@ -65,12 +63,6 @@ Item {
                         width: 200
                         spacing: 0
                         model: sampleModel.levelNodeNames
-//                        onModelChanged: {
-//                            if (modelData.length < 2) {
-//                                console.log("< 2 elements");
-//                            }
-//                        }
-
                         delegate: Component {
                             Button {
                                 text: modelData
