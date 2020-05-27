@@ -30,7 +30,11 @@ Rectangle {
     property var nodesOnLevel: []
     property var kmlNodesList: []
     property var currentNodesList
+    property var currentNode: null
     property string labelText: ""
+    property bool topLevel: true
+    property bool selectedLastLevel: false
+//    property bool lastLevel: false
 
     SceneView {
         id: sceneView
@@ -52,21 +56,68 @@ Rectangle {
                     width: parent.width
 
                     Button {
+                        id: backButton
                         text: "<"
-                        // enabled:
+                        enabled: !topLevel
                         background: Rectangle {
                             color: listViewWindow.color
+//                            width: backButton.text.width
                         }
                         onClicked: {
+                            // display previous level of nodes
+                            console.log("current node: ", currentNode.name);
+                            let parentNode = currentNode.parentNode;
+                            let grandparentNode = parentNode.parentNode;
 
+                            // remove last node's name from label
+                            let ind = labelText.lastIndexOf(">");
+                            if (ind === labelText.length - 1) {
+                                labelText = labelText.slice(0, -1);
+                                ind = labelText.lastIndexOf(">");
+                            }
+                            labelText = labelText.substring(0, ind);
+
+                            if (selectedLastLevel) {
+                                ind = labelText.lastIndexOf(">");
+                                if (ind === labelText.length - 1) {
+                                    labelText = labelText.slice(0, -1);
+                                    ind = labelText.lastIndexOf(">");
+                                }
+                                labelText = labelText.substring(0, ind);
+                            }
+
+                            if (grandparentNode !== undefined && grandparentNode !== null) {
+                                console.log("grandparent defined");
+
+                                kmlDataset.displayChildren(grandparentNode);
+                                currentNode = grandparentNode;
+                            }
+                            // if parent node is undefined, then at top of tree
+                            else {
+                                console.log("grandparent undefined");
+                                kmlDataset.displayChildren(parentNode);
+                                topLevel = true;
+                            }
+
+                            if (currentNode.name === "") {
+                                topLevel = true;
+                            }
+
+                            console.log("after, current node: ", currentNode.name);
                         }
                         highlighted: pressed
                     }
-
-                    Text {
-                        id: textLabel
-                        text: labelText
-                        wrapMode: Text.Wrap
+                    Rectangle {
+                        id: textRectangle
+                        width: listViewWindow.width - backButton.width - buttonRow.spacing
+                        height: backButton.height
+                        color: listViewWindow.color
+                        Text {
+                            id: textLabel
+                            text: labelText
+                            width: textRectangle.width
+                            wrapMode: Text.Wrap
+                        }
                     }
                 }
 
@@ -127,11 +178,10 @@ Rectangle {
 
                     function buildTree(parentNode) {
                         let childNodes = parentNode.childNodesListModel;
-                        if (childNodes !== undefined) {
+                        if (childNodes !== undefined && childNodes !== null) {
                             for (let i = 0; i < childNodes.count; i++) {
                                 let node = childNodes.get(i);
                                 node.visible = true;
-                                console.log(node.name);
                                 kmlNodesList.push(node);
 
                                 buildTree(node);
@@ -141,8 +191,10 @@ Rectangle {
 
                     function displayChildren(parentNode) {
                         // if node has children, then display children
-                        let childNodes = parentNode.childNodesListModel
-                        if (childNodes !== undefined) {
+                        if (parentNode.childNodesListModel !== null && parentNode.childNodesListModel !== undefined) {
+                            let childNodes = parentNode.childNodesListModel
+                            let lastLevel = true;
+
                             // add ">" to indicate there are children
                             labelText = labelText.concat(">");
 
@@ -150,8 +202,16 @@ Rectangle {
                             nodesOnLevel = [];
                             for (let i = 0; i < childNodes.count; i++) {
                                 nodesOnLevel.push(childNodes.get(i).name);
+
+                                // check if on last level of nodes
+                                if (childNodes.get(i).childNodesListModel !== undefined && childNodes.get(i).childNodesListModel !== null) {
+                                    lastLevel = false;
+                                }
                             }
                             myListView.model = nodesOnLevel;
+                            if (lastLevel) {
+                                currentNode = childNodes.get(0);
+                            }
                         }
                     }
 
@@ -163,9 +223,11 @@ Rectangle {
             // find node with matching name
             for (let i = 0; i < kmlNodesList.length; i++) {
                 if (nodeName === kmlNodesList[i].name) {
+                    topLevel = false;
                     let node = kmlNodesList[i];
-                    labelText = labelText.concat(nodeName);
-
+                    currentNode = node;
+                    labelText = labelText.concat(currentNode.name);
+                    console.log("current node: ", currentNode.name);
 
                     // set the viewpoint to the extent of the selected node
                     let nodeExtent = node.extent;
@@ -173,15 +235,16 @@ Rectangle {
                         sceneView.setViewpoint(ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: nodeExtent}))
                     }
 
+                    if (node.childNodesListModel === null || node.childNodesListModel === undefined) {
+                        selectedLastLevel = true;
+                    } else {
+                        selectedLastLevel = false;
+                    }
+
+                    console.log("selected last level: ", selectedLastLevel);
+
                     // show the children of the node
                     kmlDataset.displayChildren(node);
-
-                    /*
-      // update current node
-      m_currentNode = node;
-      m_isTopLevel = false;
-      emit isTopLevelChanged();
-*/
                     break;
                 }
             }

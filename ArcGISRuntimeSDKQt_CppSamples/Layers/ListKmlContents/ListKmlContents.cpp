@@ -135,6 +135,9 @@ void ListKmlContents::displayPreviousLevel()
   KmlNode* parentNode = m_currentNode->parentNode();
   KmlNode* grandparentNode = parentNode->parentNode();
 
+ qDebug() << "current node: " << m_currentNode->name();
+ qDebug() << parentNode->name();
+
   if (grandparentNode != nullptr)
   {
     displayChildren(grandparentNode);
