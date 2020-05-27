@@ -34,7 +34,7 @@ Rectangle {
     property string labelText: ""
     property bool topLevel: true
     property bool selectedLastLevel: false
-//    property bool lastLevel: false
+    //    property bool lastLevel: false
 
     function removeLabelLayer(label) {
         let ind = label.lastIndexOf(">");
@@ -93,7 +93,6 @@ Rectangle {
                 let node = kmlNodesList[i];
                 currentNode = node;
                 labelText = labelText.concat(currentNode.name);
-                console.log("current node: ", currentNode.name);
 
                 // set the viewpoint to the extent of the selected node
                 let nodeExtent = node.extent;
@@ -101,13 +100,7 @@ Rectangle {
                     sceneView.setViewpoint(ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: nodeExtent}))
                 }
 
-                if (node.childNodesListModel === null || node.childNodesListModel === undefined) {
-                    selectedLastLevel = true;
-                } else {
-                    selectedLastLevel = false;
-                }
-
-                console.log("selected last level: ", selectedLastLevel);
+                selectedLastLevel = (node.childNodesListModel === null || node.childNodesListModel === undefined);
 
                 // show the children of the node
                 displayChildren(node);
@@ -124,8 +117,7 @@ Rectangle {
             id: listViewWindow
             visible: true
             width: 200
-            height: 200
-//            height: childrenRect.height
+            height: childrenRect.height
             color: "lightgrey"
 
             ColumnLayout {
@@ -141,11 +133,9 @@ Rectangle {
                         enabled: !topLevel
                         background: Rectangle {
                             color: listViewWindow.color
-//                            width: backButton.text.width
                         }
                         onClicked: {
                             // display previous level of nodes
-                            console.log("current node: ", currentNode.name);
                             let parentNode = currentNode.parentNode;
                             let grandparentNode = parentNode.parentNode;
 
@@ -157,14 +147,11 @@ Rectangle {
                             }
 
                             if (grandparentNode !== undefined && grandparentNode !== null) {
-                                console.log("grandparent defined");
-
                                 displayChildren(grandparentNode);
                                 currentNode = grandparentNode;
                             }
                             // if parent node is undefined, then at top of tree
                             else {
-                                console.log("grandparent undefined");
                                 displayChildren(parentNode);
                                 topLevel = true;
                             }
@@ -172,11 +159,11 @@ Rectangle {
                             if (currentNode.name === "") {
                                 topLevel = true;
                             }
-
-                            console.log("after, current node: ", currentNode.name);
                         }
+
                         highlighted: pressed
                     }
+
                     Rectangle {
                         id: textRectangle
                         width: listViewWindow.width - backButton.width - buttonRow.spacing
@@ -194,7 +181,7 @@ Rectangle {
                 RowLayout {
                     ListView {
                         id: myListView
-//                        anchors.horizontalCenter: parent.horizontalCenter
+                        // anchors.horizontalCenter: parent.horizontalCenter
                         height: contentHeight
                         width: 200
                         spacing: 0

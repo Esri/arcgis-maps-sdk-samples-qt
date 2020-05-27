@@ -44,6 +44,7 @@ Item {
                     width: parent.width
 
                     Button {
+                        id: backButton
                         text: "<"
                         enabled: !sampleModel.isTopLevel
                         background: Rectangle {
@@ -51,6 +52,20 @@ Item {
                         }
                         onClicked: {
                             sampleModel.displayPreviousLevel();
+                        }
+                        highlighted: pressed
+                    }
+
+                    Rectangle {
+                        id: textRectangle
+                        width: listViewWindow.width - backButton.width - buttonRow.spacing
+                        height: backButton.height
+                        color: listViewWindow.color
+                        Text {
+                            id: textLabel
+                            text: sampleModel.labelText
+                            width: textRectangle.width
+                            wrapMode: Text.Wrap
                         }
                     }
                 }
@@ -70,14 +85,10 @@ Item {
                                 onClicked: {
                                     sampleModel.nodeSelected(text);
                                 }
+                                highlighted: pressed
                             }
                         }
                     }
-//                    StackView {
-//                        id: stackView
-//                        width: parent.width
-//                        onDepthChanged: console.log("number of layers: ", depth);
-//                    }
                 }
             }
         }

@@ -106,6 +106,9 @@ void ListKmlContents::displayChildren(KmlNode *parentNode)
   {
     m_levelNodeNames.clear();
 
+    // add ">" to indicate there are children
+    m_labelText.append(">");
+    emit labelTextChanged();
     bool lastLevel = true;
 
     // for current level, get names of child nodes
@@ -130,13 +133,29 @@ void ListKmlContents::displayChildren(KmlNode *parentNode)
   }
 }
 
+void ListKmlContents::updateLabel()
+{
+  // remove last node's name from label
+  int ind = m_labelText.lastIndexOf(">");
+  if (ind == m_labelText.length() - 1)
+  {
+    m_labelText = m_labelText.left(ind);
+    ind = m_labelText.lastIndexOf(">");
+  }
+  m_labelText = m_labelText.left(ind);
+  emit labelTextChanged();
+}
+
 void ListKmlContents::displayPreviousLevel()
 {
   KmlNode* parentNode = m_currentNode->parentNode();
   KmlNode* grandparentNode = parentNode->parentNode();
 
- qDebug() << "current node: " << m_currentNode->name();
- qDebug() << parentNode->name();
+  updateLabel();
+  if (m_selectedLastLevel)
+  {
+    updateLabel();
+  }
 
   if (grandparentNode != nullptr)
   {
@@ -174,6 +193,8 @@ void ListKmlContents::nodeSelected(QString nodeName)
       m_currentNode = node;
       m_isTopLevel = false;
       emit isTopLevelChanged();
+      m_labelText.append(nodeName);
+      emit labelTextChanged();
 
       // set the scene view viewpoint to the extent of the selected node
       Envelope nodeExtent = node->extent();
@@ -181,6 +202,8 @@ void ListKmlContents::nodeSelected(QString nodeName)
       {
         m_sceneView->setViewpoint(Viewpoint(nodeExtent));
       }
+
+      m_selectedLastLevel = node->children().isEmpty();
 
       // show the children of the node
       displayChildren(node);

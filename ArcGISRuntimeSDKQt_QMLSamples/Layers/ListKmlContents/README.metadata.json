@@ -1,19 +1,38 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Layers",
+    "description": "List the contents of a KML file.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "Keyhole",
+        "KML",
+        "KMZ",
+        "layers",
+        "OGC"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "KmlContainer",
+        "KmlDataset",
+        "KmlDocument",
+        "KmlFolder",
+        "KmlGroundOverlay",
+        "KmlLayer",
+        "KmlNetworkLink",
+        "KmlNode",
+        "KmlPlacemark",
+        "KmlScreenOverlay"
     ],
     "snippets": [
         "ListKmlContents.qml"
+    ],
+    "dataItems" : [
+    {
+        "itemId" : "da301cb122874d5497f8a8f6c81eb36e",
+        "path" : "~/ArcGIS/Runtime/Data/kml/esri_test_data.kmz"
+    }
     ],
     "title": "List KML contents"
 }

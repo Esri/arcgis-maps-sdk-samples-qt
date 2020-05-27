@@ -1,31 +1,50 @@
 # List KML contents
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+List the contents of a KML file.
 
 ![](screenshot.png)
 
+## Use case
+
+KML files can contain a hierarchy of features, including network links to other KML content. A user may wish to traverse through the contents of KML nodes to know what data is contained within each node and, recursively, their children.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+The contents of the KML file are shown in a list of buttons. Select a node to zoom to that node and see its child nodes, if it has any. Not all nodes can be zoomed to (e.g. screen overlays).
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Add the KML file to the scene as a layer.
+2. Explore the root nodes of the `KmlDataset` recursively to create a view model.
+  * Each node is enabled for display at this step. KML files may include nodes that are turned off by default.
+3. When a node is selected, use the node's `Extent` to determine a viewpoint and set the `SceneView` object's viewpoint do it.
 
 ## Relevant API
- - ClassName1
- - MethodName
+ 
+* KmlContainer
+* KmlDataset
+* KmlDocument
+* KmlFolder
+* KmlGroundOverlay
+* KmlLayer
+* KmlNetworkLink
+* KmlNode
+* KmlPlacemark
+* KmlScreenOverlay
 
 ## Offline data
+
 Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
 ---------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+|[ESRI test data](https://www.arcgis.com/home/item.html?id=da301cb122874d5497f8a8f6c81eb36e)| `<userhome>`/ArcGIS/Runtime/Data/kml/esri_test_data.kmz |
 
-## Additional information
-A standard level license is required to ...
+## About the data
+
+This is an example KML file meant to demonstrate how Runtime supports several common features.
 
 ## Tags
-Routing, Network analysis, Geocode
+
+Keyhole, KML, KMZ, layers, OGC
 
