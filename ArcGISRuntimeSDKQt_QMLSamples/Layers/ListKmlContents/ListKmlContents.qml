@@ -36,6 +36,16 @@ Rectangle {
     property bool selectedLastLevel: false
 //    property bool lastLevel: false
 
+    function removeLabelLayer(label) {
+        let ind = label.lastIndexOf(">");
+        if (ind === label.length - 1) {
+            label = label.slice(0, -1);
+            ind = label.lastIndexOf(">");
+        }
+        label = label.substring(0, ind);
+        return label;
+    }
+
     SceneView {
         id: sceneView
         anchors.fill: parent
@@ -70,20 +80,10 @@ Rectangle {
                             let grandparentNode = parentNode.parentNode;
 
                             // remove last node's name from label
-                            let ind = labelText.lastIndexOf(">");
-                            if (ind === labelText.length - 1) {
-                                labelText = labelText.slice(0, -1);
-                                ind = labelText.lastIndexOf(">");
-                            }
-                            labelText = labelText.substring(0, ind);
+                            labelText = removeLabelLayer(labelText);
 
                             if (selectedLastLevel) {
-                                ind = labelText.lastIndexOf(">");
-                                if (ind === labelText.length - 1) {
-                                    labelText = labelText.slice(0, -1);
-                                    ind = labelText.lastIndexOf(">");
-                                }
-                                labelText = labelText.substring(0, ind);
+                                labelText = removeLabelLayer(labelText);
                             }
 
                             if (grandparentNode !== undefined && grandparentNode !== null) {
