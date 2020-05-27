@@ -46,6 +46,76 @@ Rectangle {
         return label;
     }
 
+    function buildTree(parentNode) {
+        let childNodes = parentNode.childNodesListModel;
+        if (childNodes !== undefined && childNodes !== null) {
+            for (let i = 0; i < childNodes.count; i++) {
+                let node = childNodes.get(i);
+                node.visible = true;
+                kmlNodesList.push(node);
+
+                buildTree(node);
+            }
+        }
+    }
+
+    function displayChildren(parentNode) {
+        // if node has children, then display children
+        if (parentNode.childNodesListModel !== null && parentNode.childNodesListModel !== undefined) {
+            let childNodes = parentNode.childNodesListModel
+            let lastLevel = true;
+
+            // add ">" to indicate there are children
+            labelText = labelText.concat(">");
+
+            // clear previous node names
+            nodesOnLevel = [];
+            for (let i = 0; i < childNodes.count; i++) {
+                nodesOnLevel.push(childNodes.get(i).name);
+
+                // check if on last level of nodes
+                if (childNodes.get(i).childNodesListModel !== undefined && childNodes.get(i).childNodesListModel !== null) {
+                    lastLevel = false;
+                }
+            }
+            myListView.model = nodesOnLevel;
+            if (lastLevel) {
+                currentNode = childNodes.get(0);
+            }
+        }
+    }
+
+    function nodeSelected(nodeName) {
+        // find node with matching name
+        for (let i = 0; i < kmlNodesList.length; i++) {
+            if (nodeName === kmlNodesList[i].name) {
+                topLevel = false;
+                let node = kmlNodesList[i];
+                currentNode = node;
+                labelText = labelText.concat(currentNode.name);
+                console.log("current node: ", currentNode.name);
+
+                // set the viewpoint to the extent of the selected node
+                let nodeExtent = node.extent;
+                if (!nodeExtent.empty) {
+                    sceneView.setViewpoint(ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: nodeExtent}))
+                }
+
+                if (node.childNodesListModel === null || node.childNodesListModel === undefined) {
+                    selectedLastLevel = true;
+                } else {
+                    selectedLastLevel = false;
+                }
+
+                console.log("selected last level: ", selectedLastLevel);
+
+                // show the children of the node
+                displayChildren(node);
+                break;
+            }
+        }
+    }
+
     SceneView {
         id: sceneView
         anchors.fill: parent
@@ -89,13 +159,13 @@ Rectangle {
                             if (grandparentNode !== undefined && grandparentNode !== null) {
                                 console.log("grandparent defined");
 
-                                kmlDataset.displayChildren(grandparentNode);
+                                displayChildren(grandparentNode);
                                 currentNode = grandparentNode;
                             }
                             // if parent node is undefined, then at top of tree
                             else {
                                 console.log("grandparent undefined");
-                                kmlDataset.displayChildren(parentNode);
+                                displayChildren(parentNode);
                                 topLevel = true;
                             }
 
@@ -134,7 +204,7 @@ Rectangle {
                                 text: modelData
                                 width: listViewWindow.width
                                 onClicked: {
-                                    sceneView.nodeSelected(text);
+                                    nodeSelected(text);
                                 }
                                 highlighted: pressed
                             }
@@ -176,79 +246,9 @@ Rectangle {
                         }
                     }
 
-                    function buildTree(parentNode) {
-                        let childNodes = parentNode.childNodesListModel;
-                        if (childNodes !== undefined && childNodes !== null) {
-                            for (let i = 0; i < childNodes.count; i++) {
-                                let node = childNodes.get(i);
-                                node.visible = true;
-                                kmlNodesList.push(node);
-
-                                buildTree(node);
-                            }
-                        }
-                    }
-
-                    function displayChildren(parentNode) {
-                        // if node has children, then display children
-                        if (parentNode.childNodesListModel !== null && parentNode.childNodesListModel !== undefined) {
-                            let childNodes = parentNode.childNodesListModel
-                            let lastLevel = true;
-
-                            // add ">" to indicate there are children
-                            labelText = labelText.concat(">");
-
-                            // clear previous node names
-                            nodesOnLevel = [];
-                            for (let i = 0; i < childNodes.count; i++) {
-                                nodesOnLevel.push(childNodes.get(i).name);
-
-                                // check if on last level of nodes
-                                if (childNodes.get(i).childNodesListModel !== undefined && childNodes.get(i).childNodesListModel !== null) {
-                                    lastLevel = false;
-                                }
-                            }
-                            myListView.model = nodesOnLevel;
-                            if (lastLevel) {
-                                currentNode = childNodes.get(0);
-                            }
-                        }
-                    }
-
 
                 }
             }
-        }
-        function nodeSelected(nodeName) {
-            // find node with matching name
-            for (let i = 0; i < kmlNodesList.length; i++) {
-                if (nodeName === kmlNodesList[i].name) {
-                    topLevel = false;
-                    let node = kmlNodesList[i];
-                    currentNode = node;
-                    labelText = labelText.concat(currentNode.name);
-                    console.log("current node: ", currentNode.name);
-
-                    // set the viewpoint to the extent of the selected node
-                    let nodeExtent = node.extent;
-                    if (!nodeExtent.empty) {
-                        sceneView.setViewpoint(ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: nodeExtent}))
-                    }
-
-                    if (node.childNodesListModel === null || node.childNodesListModel === undefined) {
-                        selectedLastLevel = true;
-                    } else {
-                        selectedLastLevel = false;
-                    }
-
-                    console.log("selected last level: ", selectedLastLevel);
-
-                    // show the children of the node
-                    kmlDataset.displayChildren(node);
-                    break;
-                }
-            }
-
         }
     }
 }
