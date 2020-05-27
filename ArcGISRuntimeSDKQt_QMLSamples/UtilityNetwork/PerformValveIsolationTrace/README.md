@@ -26,7 +26,7 @@ Create and set the configuration's filter barriers by selecting a category. Chec
     - Assign this condition to `TraceFilter.barriers` from the default configuration from step 7. Update this configuration's `includeIsolatedFeatures` property. 
     - Create a `UtilityTraceParameters` with `Enums.UtilityTraceTypeIsolation` and default starting location from step 4. 
     - Set its `TraceConfiguration` with this configuration and then, run a `UtilityNetwork.trace()`.
-11. For every `FeatureLayer` in the map, select the features returned by `featuresForElements` from the elements matching their `NetworkSource.name` with the layer's `FeatureTable.name`.
+9.  For every `FeatureLayer` in the map, select the features returned by `featuresForElements` from the elements matching their `NetworkSource.name` with the layer's `FeatureTable.name`.
 
 ## Relevant API
 
