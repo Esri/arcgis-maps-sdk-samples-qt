@@ -70,7 +70,6 @@ Item {
                 RowLayout {
                     ListView {
                         id: myListView
-//                        anchors.horizontalCenter: parent.horizontalCenter
                         height: contentHeight
                         width: 200
                         spacing: 0

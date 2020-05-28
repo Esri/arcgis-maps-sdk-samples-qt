@@ -80,12 +80,12 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
     }
 
     // recursively build tree to display KML contents
-    for (int i = 0; i < m_kmlDataset->rootNodes().size(); ++i)
+    for (KmlNode* node : m_kmlDataset->rootNodes())
     {
-      m_levelNodeNames << m_kmlDataset->rootNodes()[i]->name();
-      m_kmlNodesList << m_kmlDataset->rootNodes()[i];
+      m_levelNodeNames << node->name();
+      m_kmlNodesList << node;
 
-      buildTree(m_kmlDataset->rootNodes()[i]);
+      buildTree(node);
     }
 
     // if at top node, then display children
@@ -98,6 +98,9 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
 
 QString ListKmlContents::getKmlNodeType(KmlNode *node)
 {
+  if (node == nullptr)
+    return "";
+
   QString type = "";
   switch (node->kmlNodeType()) {
   case KmlNodeType::KmlDocument:
@@ -124,12 +127,17 @@ QString ListKmlContents::getKmlNodeType(KmlNode *node)
   case KmlNodeType::KmlTour:
     type = "KmlTour";
     break;
+  default:
+    return "";
   }
   return " - " + type;
 }
 
 void ListKmlContents::displayChildren(KmlNode *parentNode)
 {
+  if (parentNode == nullptr)
+    return;
+
   if (KmlContainer* container = dynamic_cast<KmlContainer*>(parentNode))
   {
     m_levelNodeNames.clear();
@@ -160,6 +168,9 @@ void ListKmlContents::displayChildren(KmlNode *parentNode)
 // recursively build string to indicate node's ancestors
 void ListKmlContents::buildPathLabel(KmlNode* node)
 {
+  if (node == nullptr)
+    return;
+
   if (node->parentNode() != nullptr)
   {
     buildPathLabel(node->parentNode());
@@ -171,6 +182,8 @@ void ListKmlContents::buildPathLabel(KmlNode* node)
 void ListKmlContents::displayPreviousLevel()
 {
   KmlNode* parentNode = m_currentNode->parentNode();
+  if (parentNode == nullptr)
+    return;
   KmlNode* grandparentNode = parentNode->parentNode();
 
   if (grandparentNode != nullptr)
@@ -202,18 +215,19 @@ void ListKmlContents::displayPreviousLevel()
 }
 
 // display selected node on sceneview and show its children
-void ListKmlContents::nodeSelected(QString nodeName)
+void ListKmlContents::nodeSelected(const QString& nodeName)
 {
+  QString extractedNodeName = nodeName;
+  if (nodeName.contains(" - "))
+  {
+    int ind = nodeName.lastIndexOf(" - ");
+    extractedNodeName = nodeName.left(ind);
+  }
+
   // find node in the list
   for (KmlNode* node : m_kmlNodesList)
   {
-    if (nodeName.contains(" - "))
-    {
-      int ind = nodeName.indexOf(" - ");
-      nodeName = nodeName.left(ind);
-    }
-
-    if (nodeName == node->name())
+    if (extractedNodeName == node->name())
     {
       // update current node
       m_currentNode = node;

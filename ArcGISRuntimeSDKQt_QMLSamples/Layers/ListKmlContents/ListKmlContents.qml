@@ -67,10 +67,11 @@ Rectangle {
             // clear previous node names
             nodesOnLevel = [];
             for (let i = 0; i < childNodes.count; i++) {
-                nodesOnLevel.push(childNodes.get(i).name + getKmlNodeType(childNodes.get(i)));
+                let node = childNodes.get(i);
+                nodesOnLevel.push(node.name + getKmlNodeType(node));
 
                 // check if on last level of nodes
-                if (childNodes.get(i).childNodesListModel !== undefined && childNodes.get(i).childNodesListModel !== null) {
+                if (node.childNodesListModel !== undefined && node.childNodesListModel !== null) {
                     nodesOnLevel[i] = nodesOnLevel[i].concat(" >"); // indicate there are children
                     lastLevel = false;
                 }
@@ -269,8 +270,6 @@ Rectangle {
                             displayChildren(kmlNodesList[0]);
                         }
                     }
-
-
                 }
             }
         }
