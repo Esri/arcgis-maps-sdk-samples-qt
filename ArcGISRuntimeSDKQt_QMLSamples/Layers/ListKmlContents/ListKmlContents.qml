@@ -35,16 +35,7 @@ Rectangle {
     property bool topLevel: true
     property bool selectedLastLevel: false
 
-    function removeLabelLayer(label) {
-        let ind = label.lastIndexOf(">");
-        if (ind === label.length - 1) {
-            label = label.slice(0, -1);
-            ind = label.lastIndexOf(">");
-        }
-        label = label.substring(0, ind);
-        return label;
-    }
-
+    // recursively build list of nodes
     function buildTree(parentNode) {
         let childNodes = parentNode.childNodesListModel;
         if (childNodes !== undefined && childNodes !== null) {
@@ -58,22 +49,29 @@ Rectangle {
         }
     }
 
+    // recursively build string to indicate node's ancestors
+    function buildPathLabel(node) {
+        if (node.parentNode !== undefined && node.parentNode !== null) {
+            buildPathLabel(node.parentNode);
+            labelText = labelText.concat(">");
+        }
+        labelText = labelText.concat(node.name);
+    }
+
     function displayChildren(parentNode) {
         // if node has children, then display children
         if (parentNode.childNodesListModel !== null && parentNode.childNodesListModel !== undefined) {
             let childNodes = parentNode.childNodesListModel
             let lastLevel = true;
 
-            // add ">" to indicate there are children
-            labelText = labelText.concat(">");
-
             // clear previous node names
             nodesOnLevel = [];
             for (let i = 0; i < childNodes.count; i++) {
-                nodesOnLevel.push(childNodes.get(i).name);
+                nodesOnLevel.push(childNodes.get(i).name + getKmlNodeType(childNodes.get(i)));
 
                 // check if on last level of nodes
                 if (childNodes.get(i).childNodesListModel !== undefined && childNodes.get(i).childNodesListModel !== null) {
+                    nodesOnLevel[i] = nodesOnLevel[i].concat(" >"); // indicate there are children
                     lastLevel = false;
                 }
             }
@@ -84,14 +82,19 @@ Rectangle {
         }
     }
 
+    // display selected node on sceneview and show its children
     function nodeSelected(nodeName) {
+        let ind = nodeName.indexOf(" - ");
+        if (ind > -1) {
+            nodeName = nodeName.substring(0, ind);
+        }
+
         // find node with matching name
         for (let i = 0; i < kmlNodesList.length; i++) {
             if (nodeName === kmlNodesList[i].name) {
                 topLevel = false;
                 let node = kmlNodesList[i];
                 currentNode = node;
-                labelText = labelText.concat(currentNode.name);
 
                 // set the viewpoint to the extent of the selected node
                 let nodeExtent = node.extent;
@@ -101,11 +104,47 @@ Rectangle {
 
                 selectedLastLevel = (node.childNodesListModel === null || node.childNodesListModel === undefined);
 
+                // update path label
+                labelText = "";
+                buildPathLabel(node);
+
                 // show the children of the node
                 displayChildren(node);
                 break;
             }
         }
+    }
+
+    // returns string containing the KmlNodeType
+    function getKmlNodeType(node) {
+        let type = "";
+        switch(node.kmlNodeType) {
+        case Enums.KmlNodeTypeKmlDocument:
+            type = "KmlDocument";
+            break;
+        case Enums.KmlNodeTypeKmlFolder:
+            type = "KmlFolder";
+            break;
+        case Enums.KmlNodeTypeKmlGroundOverlay:
+            type = "KmlGroundOverlay";
+            break;
+        case Enums.KmlNodeTypeKmlNetworkLink:
+            type = "KmlNetworkLink";
+            break;
+        case Enums.KmlNodeTypeKmlPhotoOverlay:
+            type = "KmlPhotoOverlay";
+            break;
+        case Enums.KmlNodeTypeKmlPlacemark:
+            type = "KmlPlacemark";
+            break;
+        case Enums.KmlNodeTypeKmlScreenOverlay:
+            type = "KmlScreenOverlay";
+            break;
+        case Enums.KmlNodeTypeKmlTour:
+            type = "KmlTour";
+            break;
+        }
+        return " - " + type;
     }
 
     SceneView {
@@ -115,7 +154,7 @@ Rectangle {
         Rectangle {
             id: listViewWindow
             visible: true
-            width: 200
+            width: 300
             height: childrenRect.height
             color: "lightgrey"
 
@@ -138,19 +177,18 @@ Rectangle {
                             let parentNode = currentNode.parentNode;
                             let grandparentNode = parentNode.parentNode;
 
-                            // remove last node's name from label
-                            labelText = removeLabelLayer(labelText);
-
-                            if (selectedLastLevel) {
-                                labelText = removeLabelLayer(labelText);
-                            }
-
                             if (grandparentNode !== undefined && grandparentNode !== null) {
+                                labelText = "";
+                                buildPathLabel(grandparentNode);
+
                                 displayChildren(grandparentNode);
                                 currentNode = grandparentNode;
                             }
                             // if parent node is undefined, then at top of tree
                             else {
+                                labelText = "";
+                                buildPathLabel(parentNode);
+
                                 displayChildren(parentNode);
                                 topLevel = true;
                             }
