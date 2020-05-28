@@ -34,7 +34,6 @@ Rectangle {
     property string labelText: ""
     property bool topLevel: true
     property bool selectedLastLevel: false
-    //    property bool lastLevel: false
 
     function removeLabelLayer(label) {
         let ind = label.lastIndexOf(">");

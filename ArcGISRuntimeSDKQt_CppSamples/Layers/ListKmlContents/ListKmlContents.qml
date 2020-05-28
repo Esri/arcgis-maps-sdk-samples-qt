@@ -32,7 +32,7 @@ Item {
         Rectangle {
             id: listViewWindow
             visible: true
-            width: 200
+            width: 300
             height: childrenRect.height
             color: "lightgrey"
 

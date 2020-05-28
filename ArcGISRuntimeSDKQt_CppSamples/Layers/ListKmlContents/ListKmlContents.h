@@ -72,7 +72,8 @@ private:
   QString labelText() const { return m_labelText; }
 
   void displayChildren(Esri::ArcGISRuntime::KmlNode* node);
-  void updateLabel();
+  void buildPathLabel(Esri::ArcGISRuntime::KmlNode* node);
+  QString getKmlNodeType(Esri::ArcGISRuntime::KmlNode* node);
 
   bool isTopLevel() const { return m_isTopLevel; }
   bool selectedLastLevel() const { return m_selectedLastLevel; }

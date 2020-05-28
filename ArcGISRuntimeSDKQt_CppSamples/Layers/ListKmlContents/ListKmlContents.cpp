@@ -100,21 +100,49 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
   });
 }
 
+QString ListKmlContents::getKmlNodeType(KmlNode *node)
+{
+  QString type = "";
+  switch (node->kmlNodeType()) {
+  case KmlNodeType::KmlDocument:
+    type = "KmlDocument";
+    break;
+  case KmlNodeType::KmlFolder:
+    type = "KmlFolder";
+    break;
+  case KmlNodeType::KmlNetworkLink:
+    type = "KmlNetworkLink";
+    break;
+  case KmlNodeType::KmlPlacemark:
+    type = "KmlPlacemark";
+    break;
+  case KmlNodeType::KmlPhotoOverlay:
+    type = "KmlPhotoOverlay";
+    break;
+  case KmlNodeType::KmlGroundOverlay:
+    type = "KmlGroundOverlay";
+    break;
+  case KmlNodeType::KmlScreenOverlay:
+    type = "KmlScreenOverlay";
+    break;
+  case KmlNodeType::KmlTour:
+    type = "KmlTour";
+    break;
+  }
+  return " - " + type;
+}
+
 void ListKmlContents::displayChildren(KmlNode *parentNode)
 {
   if (KmlContainer* container = dynamic_cast<KmlContainer*>(parentNode))
   {
     m_levelNodeNames.clear();
-
-    // add ">" to indicate there are children
-    m_labelText.append(">");
-    emit labelTextChanged();
     bool lastLevel = true;
 
     // for current level, get names of child nodes
     for (KmlNode* node: *(container->childNodesListModel()))
     {
-      QString str = node->name();
+      QString str = node->name() + getKmlNodeType(node);
 
       // if node has children, add ">" to indicate further levels
       if (!node->children().isEmpty())
@@ -133,17 +161,14 @@ void ListKmlContents::displayChildren(KmlNode *parentNode)
   }
 }
 
-void ListKmlContents::updateLabel()
+void ListKmlContents::buildPathLabel(KmlNode* node)
 {
-  // remove last node's name from label
-  int ind = m_labelText.lastIndexOf(">");
-  if (ind == m_labelText.length() - 1)
+  if (node->parentNode() != nullptr)
   {
-    m_labelText = m_labelText.left(ind);
-    ind = m_labelText.lastIndexOf(">");
+    buildPathLabel(node->parentNode());
+    m_labelText.append(">");
   }
-  m_labelText = m_labelText.left(ind);
-  emit labelTextChanged();
+  m_labelText.append(node->name());
 }
 
 void ListKmlContents::displayPreviousLevel()
@@ -151,20 +176,22 @@ void ListKmlContents::displayPreviousLevel()
   KmlNode* parentNode = m_currentNode->parentNode();
   KmlNode* grandparentNode = parentNode->parentNode();
 
-  updateLabel();
-  if (m_selectedLastLevel)
-  {
-    updateLabel();
-  }
-
   if (grandparentNode != nullptr)
   {
+    m_labelText.clear();
+    buildPathLabel(grandparentNode);
+    emit labelTextChanged();
+
     displayChildren(grandparentNode);
     m_currentNode = grandparentNode;
   }
   // if parent node is nullptr, then at top of tree
   else
   {
+    m_labelText.clear();
+    buildPathLabel(parentNode);
+    emit labelTextChanged();
+
     displayChildren(parentNode);
     m_isTopLevel = true;
     emit isTopLevelChanged();
@@ -182,9 +209,10 @@ void ListKmlContents::nodeSelected(QString nodeName)
   // find node in the list
   for (KmlNode* node : m_kmlNodesList)
   {
-    if (nodeName.contains(" >"))
+    if (nodeName.contains(" - "))
     {
-      nodeName.remove(" >");
+      int ind = nodeName.indexOf(" - ");
+      nodeName = nodeName.left(ind);
     }
 
     if (nodeName == node->name())
@@ -193,8 +221,6 @@ void ListKmlContents::nodeSelected(QString nodeName)
       m_currentNode = node;
       m_isTopLevel = false;
       emit isTopLevelChanged();
-      m_labelText.append(nodeName);
-      emit labelTextChanged();
 
       // set the scene view viewpoint to the extent of the selected node
       Envelope nodeExtent = node->extent();
@@ -207,6 +233,10 @@ void ListKmlContents::nodeSelected(QString nodeName)
 
       // show the children of the node
       displayChildren(node);
+
+      m_labelText.clear();
+      buildPathLabel(node);
+      emit labelTextChanged();
 
       break;
     }
