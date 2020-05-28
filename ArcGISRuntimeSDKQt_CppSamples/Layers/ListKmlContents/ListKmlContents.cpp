@@ -51,8 +51,6 @@ QString defaultDataPath()
 
   return dataPath;
 }
-
-int myCounter = 0;
 } // namespace
 
 ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
@@ -89,8 +87,6 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
 
       buildTree(m_kmlDataset->rootNodes()[i]);
     }
-
-    emit nodeNamesChanged();
 
     // if at top node, then display children
     if (!m_kmlNodesList.isEmpty() && m_kmlNodesList[0]->parentNode() == nullptr)
@@ -161,6 +157,7 @@ void ListKmlContents::displayChildren(KmlNode *parentNode)
   }
 }
 
+// recursively build string to indicate node's ancestors
 void ListKmlContents::buildPathLabel(KmlNode* node)
 {
   if (node->parentNode() != nullptr)
@@ -204,6 +201,7 @@ void ListKmlContents::displayPreviousLevel()
   }
 }
 
+// display selected node on sceneview and show its children
 void ListKmlContents::nodeSelected(QString nodeName)
 {
   // find node in the list
@@ -243,11 +241,11 @@ void ListKmlContents::nodeSelected(QString nodeName)
   }
 }
 
+// recursively build list of all KML nodes
 void ListKmlContents::buildTree(KmlNode* parentNode)
 {
   if (KmlContainer* container = dynamic_cast<KmlContainer*>(parentNode))
   {
-    ++myCounter;
     KmlNodeListModel* childNodes = container->childNodesListModel();
 
     for (KmlNode* node : *childNodes)
@@ -256,20 +254,22 @@ void ListKmlContents::buildTree(KmlNode* parentNode)
       node->setVisible(true);
 
       m_kmlNodesList << node;
-
-      // add spaces to show hierarchy
-      const QString str = node->name().rightJustified(node->name().length() + myCounter*2, ' ');
-      m_nodeNames << str;
-      emit nodeNamesChanged();
-
       buildTree(node);
     }
-    --myCounter;
   }
 
   if (KmlNetworkLink* networkLink = dynamic_cast<KmlNetworkLink*>(parentNode))
   {
-    qDebug("NETWORK LINK");
+    QList<KmlNode*> childNodes = networkLink->childNodes();
+
+    for (KmlNode* node : childNodes)
+    {
+      // some nodes have default visibility set to false
+      node->setVisible(true);
+
+      m_kmlNodesList << node;
+      buildTree(node);
+    }
   }
 }
 
@@ -299,3 +299,22 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
   emit sceneViewChanged();
 }
 
+QStringList ListKmlContents::levelNodeNames() const
+{
+  return m_levelNodeNames;
+}
+
+QString ListKmlContents::labelText() const
+{
+  return m_labelText;
+}
+
+bool ListKmlContents::isTopLevel() const
+{
+  return m_isTopLevel;
+}
+
+bool ListKmlContents::selectedLastLevel() const
+{
+  return m_selectedLastLevel;
+}

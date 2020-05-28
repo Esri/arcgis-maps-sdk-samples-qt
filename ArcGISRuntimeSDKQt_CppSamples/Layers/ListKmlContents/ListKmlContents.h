@@ -41,7 +41,6 @@ class ListKmlContents : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
-  Q_PROPERTY(QStringList nodeNames READ nodeNames NOTIFY nodeNamesChanged)
   Q_PROPERTY(QStringList levelNodeNames READ levelNodeNames NOTIFY levelNodeNamesChanged)
   Q_PROPERTY(bool isTopLevel READ isTopLevel NOTIFY isTopLevelChanged)
   Q_PROPERTY(bool selectedLastLevel READ selectedLastLevel NOTIFY selectedLastLevelChanged)
@@ -57,7 +56,6 @@ public:
 
 signals:
   void sceneViewChanged();
-  void nodeNamesChanged();
   void levelNodeNamesChanged();
   void isTopLevelChanged();
   void labelTextChanged();
@@ -66,23 +64,20 @@ signals:
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
-  void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);
-  QStringList nodeNames() const { return m_nodeNames; }
-  QStringList levelNodeNames() const { return m_levelNodeNames; }
-  QString labelText() const { return m_labelText; }
+  QStringList levelNodeNames() const;
+  QString labelText() const;
+  bool isTopLevel() const;
+  bool selectedLastLevel() const;
 
+  void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);
   void displayChildren(Esri::ArcGISRuntime::KmlNode* node);
   void buildPathLabel(Esri::ArcGISRuntime::KmlNode* node);
   QString getKmlNodeType(Esri::ArcGISRuntime::KmlNode* node);
-
-  bool isTopLevel() const { return m_isTopLevel; }
-  bool selectedLastLevel() const { return m_selectedLastLevel; }
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::KmlDataset* m_kmlDataset = nullptr;
   QAbstractListModel* m_nodeListModel = nullptr;
-  QStringList m_nodeNames = {}; // shows nested tree
   QStringList m_levelNodeNames = {};
   bool m_isTopLevel = true;
   bool m_selectedLastLevel = false;

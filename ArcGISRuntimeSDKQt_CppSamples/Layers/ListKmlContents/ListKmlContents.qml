@@ -21,14 +21,11 @@ import Esri.Samples 1.0
 
 Item {
 
-    property var nodeNamesList: []
-
     SceneView {
         id: view
         anchors.fill: parent
 
         // Create window for displaying the KML contents
-
         Rectangle {
             id: listViewWindow
             visible: true
@@ -92,57 +89,6 @@ Item {
                 }
             }
         }
-    }
-
-//    Component {
-//        id: mapSelectViewComponent
-
-//        Item {
-//            id: mapSelectView
-
-//            Column {
-//                anchors {
-//                    top: parent.top
-//                    left: parent.left
-//                }
-//                width: parent.width
-//                spacing: 20
-
-//                // UI navigation bar
-//                //            Rectangle {
-//                //                width: parent.width
-//                //                height: 100
-//                //                color: "#283593"
-//                //            }
-
-//                ListView {
-//                    id: myListView
-//                    anchors.horizontalCenter: parent.horizontalCenter
-//                    height: 400
-//                    width: 200
-//                    spacing: 0
-//                    model: sampleModel.levelNodeNames
-
-//                    delegate: Component {
-//                        Button {
-//                            text: modelData
-//                            width: listViewWindow.width
-//                            onClicked: {
-//                                sampleModel.nodeSelected(text);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-
-    Connections {
-        target: sampleModel
-//        onLevelNodeNamesChanged: {
-//            stackView.push(mapSelectViewComponent);
-//        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
