@@ -1,5 +1,5 @@
 {
-    "category": "Analysis",
+    "category": "Routing",
     "description": "Find the service areas of several facilities from a feature service.",
     "ignore": false,
     "images": [
@@ -21,9 +21,7 @@
         "ServiceAreaTask"
     ],
     "snippets": [
-        "FindServiceAreasForMultipleFacilities.qml",
-        "FindServiceAreasForMultipleFacilities.cpp",
-        "FindServiceAreasForMultipleFacilities.h"
+        "FindServiceAreasForMultipleFacilities.qml"
     ],
     "title": "Find service areas for multiple facilities"
 }
