@@ -82,6 +82,9 @@ Rectangle {
         PictureMarkerSymbol {
             id: pinSymbol
             url: pinUrl
+            height: 50
+            width: 50
+            offsetY: height/2
         }
 
         GraphicsOverlay {

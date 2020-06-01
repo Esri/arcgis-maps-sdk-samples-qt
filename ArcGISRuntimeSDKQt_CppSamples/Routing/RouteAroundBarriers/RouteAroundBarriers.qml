@@ -166,8 +166,8 @@ Item {
                                 }
                             }
                         }
-                        RowLayout {
 
+                        RowLayout {
                             ListView {
                                 id: directionsView
                                 header: Text {
