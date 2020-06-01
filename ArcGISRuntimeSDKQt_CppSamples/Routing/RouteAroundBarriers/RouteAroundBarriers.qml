@@ -124,6 +124,22 @@ Item {
                             }
                         }
                     }
+
+                    Row {
+                        Layout.alignment: Qt.AlignHCenter
+                        Button {
+                            text: "Hide directions"
+                            onClicked: {
+                                if (text === "Hide directions") {
+                                    directionsView.delegate = blankDelegate;
+                                    text = "Show directions";
+                                } else {
+                                    directionsView.delegate = directionDelegate;
+                                    text = "Hide directions";
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -141,49 +157,33 @@ Item {
                 ScrollView {
                     anchors.fill: parent
 
-                    GridLayout {
-                        anchors.fill: parent
-                        columns: 1
-                        rows: 2
-                        rowSpacing: 10
-                        columnSpacing: 2
-
-                        // button to toggle ListView's visibility
-                        RowLayout {
-                            id: hideButtonRow
-                            Layout.alignment: Qt.AlignHCenter
-                            Button {
-                                text: "Hide directions"
-                                Layout.alignment: Qt.AlignHCenter
-                                background: Rectangle {
-                                    color: directionWindow.color
-                                    border.color: "black"
-                                    width: 110
-                                }
-                                onClicked: {
-                                    directionsView.visible = !directionsView.visible;
-                                    text = text === "Hide directions" ? "Show directions" : "Hide directions";
-                                }
-                            }
+                    ListView {
+                        id: directionsView
+                        anchors {
+                            fill: parent
+                            margins: 5
+                        }
+                        header: Text {
+                            text: "Directions:"
+                            font.pixelSize: 22
+                            bottomPadding: 8
                         }
 
-                        RowLayout {
-                            ListView {
-                                id: directionsView
-                                header: Text {
-                                    text: "Directions:"
-                                    font.pixelSize: 22
-                                    bottomPadding: 8
-                                }
-
-                                // set the model to the DirectionManeuverListModel returned from the route
-                                model: sampleModel.directions
-                                delegate: directionDelegate
-                            }
-                        }
+                        // set the model to the DirectionManeuverListModel returned from the route
+                        model: sampleModel.directions
+                        delegate: directionDelegate
                     }
                 }
             }
+        }
+    }
+
+    Component {
+        id: blankDelegate
+        Rectangle {
+            width: parent.width
+            height: 35
+            color: directionWindow.color
         }
     }
 
