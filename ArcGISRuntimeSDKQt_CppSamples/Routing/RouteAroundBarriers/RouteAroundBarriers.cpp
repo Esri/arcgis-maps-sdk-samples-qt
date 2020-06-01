@@ -63,6 +63,9 @@ RouteAroundBarriers::RouteAroundBarriers(QObject* parent /* = nullptr */):
   m_routeOverlay->setRenderer(routeRenderer);
 
   m_pinSymbol = new PictureMarkerSymbol(pinUrl, this);
+  m_pinSymbol->setHeight(50);
+  m_pinSymbol->setWidth(50);
+  m_pinSymbol->setOffsetY(m_pinSymbol->height() / 2);
 
   // create route task
   m_routeTask = new RouteTask(routeTaskUrl, this);
