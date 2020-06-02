@@ -31,58 +31,30 @@ using namespace Esri::ArcGISRuntime;
 
 FeatureCollectionLayerFromPortal::FeatureCollectionLayerFromPortal(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::oceans(this), this)),
-  m_itemId("32798dfad17942858d5eef82ee802f0b")
+  m_map(new Map(Basemap::oceans(this), this))
 {
   const QUrl url("https://www.arcgis.com/");
   m_portal = new Portal(url, this);
-
-//  connect(m_portalItem, &PortalItem::doneLoading, this, [this](const Error& error){
-//    qDebug("inside connection");
-
-//    if (!error.isEmpty())
-//    {
-//      qDebug() << error.message() << error.additionalMessage();
-//      return;
-//    }
-
-//    if (m_portalItem->loadStatus() != LoadStatus::Loaded)
-//      return;
-
-//    if (m_portalItem->type() == PortalItemType::FeatureCollection)
-//    {
-//      qDebug("is a feature collection");
-//      // create a feature collection
-//      FeatureCollection* featureCollection = new FeatureCollection(m_portalItem);
-//      FeatureCollectionLayer* featureCollectionLayer = new FeatureCollectionLayer(featureCollection, this);
-//      m_map->operationalLayers()->append(featureCollectionLayer);
-//    }
-//    else
-//    {
-//      qDebug() << "Portal item with ID '" << m_itemId + "' is not a feature collection.";
-//    }
-//  });
 }
 
-void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString itemId)
+void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString& itemId)
 {
-  QString trimmedItemId = itemId.trimmed();
+  const QString trimmedItemId = itemId.trimmed();
   if (itemId.isNull() || itemId.isEmpty())
   {
-    qDebug("Please enter a portal item ID");
+    m_messageText = "Please enter a portal item ID";
+    emit messageTextChanged();
     return;
   }
 
   if (m_portalItem != nullptr)
   {
-    qDebug("deleted portal item");
     delete m_portalItem;
   }
 
   m_portalItem = new PortalItem(m_portal, trimmedItemId, this);
 
-  connect(m_portalItem, &PortalItem::doneLoading, this, [this, trimmedItemId](const Error& error){
-    qDebug("inside connection");
+  connect(m_portalItem, &PortalItem::doneLoading, this, [this, &trimmedItemId](const Error& error){
 
     if (!error.isEmpty())
     {
@@ -95,7 +67,6 @@ void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString itemI
 
     if (m_portalItem->type() == PortalItemType::FeatureCollection)
     {
-      qDebug("is a feature collection");
       // create a feature collection
       FeatureCollection* featureCollection = new FeatureCollection(m_portalItem);
       FeatureCollectionLayer* featureCollectionLayer = new FeatureCollectionLayer(featureCollection, this);
@@ -103,10 +74,11 @@ void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString itemI
     }
     else
     {
-      qDebug() << "Portal item with ID '" << trimmedItemId + "' is not a feature collection.";
+      m_messageText = "Portal item with ID '" + trimmedItemId + "' is not a feature collection.";
+      emit messageTextChanged();
     }
   });
-m_portalItem->load();
+  m_portalItem->load();
 }
 
 FeatureCollectionLayerFromPortal::~FeatureCollectionLayerFromPortal() = default;

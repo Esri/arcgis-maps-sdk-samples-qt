@@ -36,26 +36,29 @@ class FeatureCollectionLayerFromPortal : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QString messageText READ messageText NOTIFY messageTextChanged)
 
 public:
   explicit FeatureCollectionLayerFromPortal(QObject* parent = nullptr);
   ~FeatureCollectionLayerFromPortal();
 
   static void init();
-  Q_INVOKABLE void openFeatureCollection(const QString itemId);
+  Q_INVOKABLE void openFeatureCollection(const QString& itemId);
 
 signals:
   void mapViewChanged();
+  void messageTextChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  QString messageText() const { return m_messageText; }
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;
   Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
-  QString m_itemId;
+  QString m_messageText = "";
 };
 
 #endif // FEATURECOLLECTIONLAYERFROMPORTAL_H

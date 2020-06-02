@@ -25,7 +25,8 @@ Item {
     MessageDialog {
           id: messageDialog
           title: "Feature collection"
-//          text:
+          text: model.messageText
+          onTextChanged: visible = true;
           visible: false
           onRejected: {
               visible = false;
@@ -63,9 +64,6 @@ Item {
                     TextField {
                         id: textfield
                         text: "32798dfad17942858d5eef82ee802f0b"
-//                        onEditingFinished: console.log("editing finished");
-                        onTextChanged: console.log("changed");
-                        onTextEdited: console.log("edited");
                     }
                 }
                 RowLayout {
