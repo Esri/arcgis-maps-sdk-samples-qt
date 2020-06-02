@@ -1,26 +1,22 @@
 {
     "category": "Search",
-    "description": "Use an online service to find the address for a tapped point.",
+    "description": "This sample demonstrates how to get the address for a point on the map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "address",
+        "callout",
         "geocode",
-        "locate",
-        "reverse geocode",
-        "search",
-        "GeocodeParameters",
-        "LocatorTask",
-        "ReverseGeocodeParameters"
+        "reverse geocode"
     ],
-    "redirect_from": [
-        ""
-    ],
+    "redirect_from": "",
     "relevant_apis": [
-        "GeocodeParameters",
+        "Callout",
+        "CalloutData",
+        "GraphicsOverlay",
         "LocatorTask",
+        "PictureMarkerSymbol",
         "ReverseGeocodeParameters"
     ],
     "snippets": [
