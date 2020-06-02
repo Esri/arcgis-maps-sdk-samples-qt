@@ -6,25 +6,24 @@
         "screenshot.png"
     ],
     "keywords": [
-        "OrbitGeoElementCameraController",
-        "Camera",
-        "SceneView",
-        "3D"
+        "3D",
+        "camera",
+        "object",
+        "orbit",
+        "rotate",
+        "scene",
+        "OrbitGeoElementCameraController"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "OrbitGeoElementCameraController"
     ],
     "snippets": [
         "OrbitCameraAroundObject.qml",
-        "OrbitCameraAroundObject.h",
-        "OrbitCameraAroundObject.cpp"
-    ],
-    "dataItems" : [
-        {
-            "itemId" : "681d6f7694644709a7c830ec57a2d72b",
-            "path" : "~/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
-        }
+        "OrbitCameraAroundObject.cpp",
+        "OrbitCameraAroundObject.h"
     ],
     "title": "Orbit the camera around an object"
 }
