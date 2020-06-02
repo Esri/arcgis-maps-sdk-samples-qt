@@ -1,29 +1,31 @@
 {
     "category": "Search",
-    "description": "This sample demonstrates how to geocode an address and show it on the map view",
+    "description": "Find the location for an address.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "search for address",
-        "find address",
+        "address",
         "geocode",
-        "find location"
-    ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-findaddress.htm",
-    "relevant_apis": [
-        "LocatorTask",
+        "locator",
+        "search",
         "GeocodeParameters",
         "GeocodeResult",
-        "GraphicsOverlay",
-        "MapView",
-        "Map"
+        "LocatorTask"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-findaddress.htm"
+    ],
+    "relevant_apis": [
+        "GeocodeParameters",
+        "GeocodeResult",
+        "LocatorTask"
     ],
     "snippets": [
         "FindAddress.qml",
-        "FindAddress.h",
-        "FindAddress.cpp"
+        "FindAddress.cpp",
+        "FindAddress.h"
     ],
     "title": "Find address"
 }
