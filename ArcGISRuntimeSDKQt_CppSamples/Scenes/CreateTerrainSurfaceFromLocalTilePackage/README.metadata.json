@@ -1,31 +1,31 @@
 {
     "category": "Scenes",
-    "description": "Set the terrain surface with elevation described by a local tile package.",
+    "description": "Set the terrain surface with elevation described by a local tile package",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "3D",
-        "LERC",
-        "elevation",
-        "surface",
-        "terrain",
         "tile cache",
-        "ArcGISTiledElevationSource",
-        "Surface"
+        "elevation surface"
     ],
-    "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-createterrainsurfacefromlocaltilepackage.htm"
-    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-createterrainsurfacefromlocaltilepackage.htm",
     "relevant_apis": [
-        "ArcGISTiledElevationSource",
+        "ArcGISTiledElevationSource", 
         "Surface"
     ],
     "snippets": [
         "CreateTerrainSurfaceFromLocalTilePackage.qml",
+        "CreateTerrainSurfaceFromLocalTilePackage.h",
         "CreateTerrainSurfaceFromLocalTilePackage.cpp",
-        "CreateTerrainSurfaceFromLocalTilePackage.h"
+        "main.qml"
+    ],
+    "dataItems" : [
+        {
+            "itemId" : "cce37043eb0440c7a5c109cf8aad5500",
+            "path" : "~/ArcGIS/Runtime/Data/tpk/MontereyElevation.tpk"
+        }
     ],
     "title": "Create terrain surface from a local tile package"
 }

@@ -1,30 +1,38 @@
 {
     "category": "Scenes",
-    "description": "Change a graphic's symbol based on the camera's proximity to it.",
+    "description": "This sample demonstrates how to create a graphic using a distance composite scene symbol",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "3D",
-        "data",
-        "graphic",
-        "DistanceCompositeSceneSymbol",
-        "Range",
-        "RangeCollection"
+        "distance"
     ],
-    "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-distancecompositesymbolurl.htm"
-    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-distancecompositesymbolurl.htm",
     "relevant_apis": [
+        "Scene",
+        "ArcGISTiledElevationSource",
+        "Camera",
         "DistanceCompositeSceneSymbol",
+        "DistanceCompositeSceneSymbol.Range",
+        "Graphic",
+        "GraphicsOverlay",
+        "ModelSceneSymbol",
         "Range",
-        "RangeCollection"
+        "RangeCollection",
+        "SceneView",
+        "SimpleMarkerSceneSymbol"
     ],
     "snippets": [
         "DistanceCompositeSymbol.qml",
         "DistanceCompositeSymbol.cpp",
         "DistanceCompositeSymbol.h"
+    ],
+    "dataItems" : [
+        {
+            "itemId" : "681d6f7694644709a7c830ec57a2d72b",
+            "path" : "~/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
+        }
     ],
     "title": "Distance composite symbol"
 }

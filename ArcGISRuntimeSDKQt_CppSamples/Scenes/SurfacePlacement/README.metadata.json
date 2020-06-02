@@ -15,16 +15,9 @@
         "relative",
         "scenes",
         "sea level",
-        "surface placement",
-        "Graphic",
-        "GraphicsOverlay",
-        "LayerSceneProperties::SurfacePlacement",
-        "SceneProperties",
-        "Surface"
+        "surface placement"
     ],
-    "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-surfaceplacement.htm"
-    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-surfaceplacement.htm",
     "relevant_apis": [
         "Graphic",
         "GraphicsOverlay",
@@ -33,10 +26,9 @@
         "Surface"
     ],
     "snippets": [
-        "",
-        "Surface_Placement.cpp",
+        "Surface_Placement.qml",
         "Surface_Placement.h",
-        "Surface_Placement.qml"
+        "Surface_Placement.cpp"
     ],
     "title": "Surface placement"
 }

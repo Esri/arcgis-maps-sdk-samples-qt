@@ -1,44 +1,27 @@
 {
     "category": "Scenes",
-    "description": "Keep the view points of two views (e.g. MapView and SceneView) synchronized with each other.",
+    "description": "This sample demonstrates how to keep the viewpoints of multiple map or scene views in sync, so that navigating one view immediately updates the other",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "3D",
-        "automatic refresh",
-        "event",
-        "event handler",
-        "events",
-        "extent",
-        "interaction",
-        "interactions",
-        "pan",
-        "sync",
-        "synchronize",
-        "zoom",
-        "GeoView",
-        "MapView",
-        "SceneView",
-        "SetViewpoint",
-        "currentViewpoint",
-        "viewpointChanged"
+        "sync maps",
+        "multiple views",
+        "synchronization"
     ],
-    "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-syncmapviewsceneview.htm"
-    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-syncmapviewsceneview.htm",
     "relevant_apis": [
         "GeoView",
-        "MapView",
-        "SceneView",
-        "SetViewpoint",
-        "currentViewpoint",
-        "viewpointChanged"
+        "GeoView::viewpointChanged",
+        "GeoView::isNavigating",
+        "GeoView::currentViewpoint",
+        "GeoView::setViewpoint"
     ],
     "snippets": [
         "SyncMapViewSceneView.qml",
         "SyncMapViewSceneView.cpp",
+        "main.qml",
         "SyncMapViewSceneView.h"
     ],
     "title": "Sync map and scene views"

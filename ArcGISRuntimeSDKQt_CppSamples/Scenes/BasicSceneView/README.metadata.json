@@ -1,32 +1,27 @@
 {
     "category": "Scenes",
-    "description": "Display a scene with a terrain surface and some imagery.",
+    "description": "This sample demonstrates how to display a scene with an elevation surface",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "3D",
-        "basemap",
-        "elevation",
-        "scene",
-        "surface",
-        "ArcGISTiledElevationSource",
+        "SceneView",
         "Scene",
-        "SceneView"
+        "Basemap",
+        "Surface"
     ],
-    "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-basicsceneviewurl.htm"
-    ],
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-basicsceneviewurl.htm",
     "relevant_apis": [
-        "ArcGISTiledElevationSource",
+        "SceneView",
         "Scene",
-        "SceneView"
+        "Basemap",
+        "Surface"
     ],
     "snippets": [
         "BasicSceneView.qml",
-        "BasicSceneView.cpp",
-        "BasicSceneView.h"
+        "BasicSceneView.h",
+        "BasicSceneView.cpp"
     ],
     "title": "Display a scene"
 }
