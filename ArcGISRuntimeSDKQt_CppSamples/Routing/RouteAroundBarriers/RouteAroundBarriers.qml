@@ -124,6 +124,22 @@ Item {
                             }
                         }
                     }
+
+                    Row {
+                        Layout.alignment: Qt.AlignHCenter
+                        Button {
+                            text: "Hide directions"
+                            onClicked: {
+                                if (text === "Hide directions") {
+                                    directionsView.delegate = blankDelegate;
+                                    text = "Show directions";
+                                } else {
+                                    directionsView.delegate = directionDelegate;
+                                    text = "Hide directions";
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -159,6 +175,15 @@ Item {
                     }
                 }
             }
+        }
+    }
+
+    Component {
+        id: blankDelegate
+        Rectangle {
+            width: parent.width
+            height: 35
+            color: directionWindow.color
         }
     }
 
