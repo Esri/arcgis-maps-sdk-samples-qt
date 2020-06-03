@@ -15,7 +15,7 @@
 #include <Windows.h>
 #endif
 
-#include "FindServiceAreasForMultipleFacilities.h"
+#include "ShowLocationHistory.h"
 
 #include <QDir>
 #include <QGuiApplication>
@@ -25,10 +25,10 @@ int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QGuiApplication app(argc, argv);
-  app.setApplicationName(QStringLiteral("FindServiceAreasForMultipleFacilities - C++"));
+  app.setApplicationName(QStringLiteral("ShowLocationHistory - C++"));
 
   // Initialize the sample
-  FindServiceAreasForMultipleFacilities::init();
+  ShowLocationHistory::init();
 
   // Initialize application view
   QQmlApplicationEngine engine;
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 #endif
 
   // Set the source
-  engine.load(QUrl("qrc:/Samples/Analysis/FindServiceAreasForMultipleFacilities/main.qml"));
+  engine.load(QUrl("qrc:/Samples/Maps/ShowLocationHistory/main.qml"));
 
   return app.exec();
 }

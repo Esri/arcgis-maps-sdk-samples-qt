@@ -1,4 +1,4 @@
-// [WriteFile Name=FindServiceAreasForMultipleFacilities, Category=Analysis]
+// [WriteFile Name=FindServiceAreasForMultipleFacilities, Category=Routing]
 // [Legal]
 // Copyright 2020 Esri.
 

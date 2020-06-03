@@ -25,5 +25,5 @@
     "snippets": [
         "ClosestFacility.qml"
     ],
-    "title": "Closest facility"
+    "title": "Find closest facility to an incident (interactive)"
 }

@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-//import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.9
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.1
@@ -35,7 +34,7 @@ Rectangle {
     property var createAndDisplayRoute
     property var routeParameters: null
     property var directionListModel: null
-    property bool addStops: false
+    property bool addStops: true
     property bool addBarriers: false
     property bool findBestSeq: false
     property bool preserveFirstStp: false
@@ -82,6 +81,9 @@ Rectangle {
         PictureMarkerSymbol {
             id: pinSymbol
             url: pinUrl
+            height: 50
+            width: 50
+            offsetY: height/2
         }
 
         GraphicsOverlay {
@@ -229,6 +231,7 @@ Rectangle {
                         Button {
                             id: stopButton
                             text: "Add stop"
+                            checked: true
                             highlighted: checked
                             onClicked: {
                                 checked = true;
@@ -307,6 +310,21 @@ Rectangle {
                             }
                         }
                     }
+                    Row {
+                        Layout.alignment: Qt.AlignHCenter
+                        Button {
+                            text: "Hide directions"
+                            onClicked: {
+                                if (text === "Hide directions") {
+                                    directionsView.delegate = blankDelegate;
+                                    text = "Show directions";
+                                } else {
+                                    directionsView.delegate = directionDelegate;
+                                    text = "Hide directions";
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -342,6 +360,15 @@ Rectangle {
                 }
             }
 
+        }
+    }
+
+    Component {
+        id: blankDelegate
+        Rectangle {
+            width: parent.width
+            height: 35
+            color: directionWindow.color
         }
     }
 

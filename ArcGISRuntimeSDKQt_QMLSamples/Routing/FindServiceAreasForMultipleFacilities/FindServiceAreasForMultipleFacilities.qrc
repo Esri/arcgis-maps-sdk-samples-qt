@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/Samples/Analysis/FindServiceAreasForMultipleFacilities">
+    <qresource prefix="/Samples/Routing/FindServiceAreasForMultipleFacilities">
         <file alias="sample.json">README.metadata.json</file>        
         <file>FindServiceAreasForMultipleFacilities.qml</file>
         <file>screenshot.png</file>
