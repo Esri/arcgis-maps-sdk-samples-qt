@@ -1,41 +1,28 @@
 {
     "category": "Edit data",
-    "description": "This sample demonstrates how to edit attributes of a feature in a feature service",
+    "description": "Update feature attributes in an online feature service.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "edit feature attributes",
-        "attributes",
-        "edit features",
-        "MapView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "SpatialReference",
-        "ServiceFeatureTable",
-        "FeatureLayer",
-        "Feature",
+        "attribute",
+        "coded value",
+        "coded value domain",
+        "domain",
+        "editing",
+        "value",
         "ArcGISFeature",
-        "FeatureEditResult",
-        "FeatureQueryResult",
-        "Point"
+        "FeatureLayer",
+        "ServiceFeatureTable"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-updateattributesfeatureservice.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-updateattributesfeatureservice.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "SpatialReference",
-        "ServiceFeatureTable",
-        "FeatureLayer",
-        "Feature",
         "ArcGISFeature",
-        "FeatureEditResult",
-        "FeatureQueryResult",
-        "Point"
+        "FeatureLayer",
+        "ServiceFeatureTable"
     ],
     "snippets": [
         "UpdateAttributesFeatureService.qml",
