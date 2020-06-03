@@ -1,19 +1,26 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to take a screenshot of the MapView",
+    "description": "Take a screenshot of the map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "screenshot",
-        "screen capture",
+        "capture",
         "export",
-        "GeoView::exportImage"
+        "image",
+        "print",
+        "screen capture",
+        "screenshot",
+        "share",
+        "shot",
+        "GeoView.exportImage"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-takescreenshot.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-takescreenshot.htm"
+    ],
     "relevant_apis": [
-        "GeoView::exportImage"
+        "GeoView.exportImage"
     ],
     "snippets": [
         "TakeScreenshot.qml"

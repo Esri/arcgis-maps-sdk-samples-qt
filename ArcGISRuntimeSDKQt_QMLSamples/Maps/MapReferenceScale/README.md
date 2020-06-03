@@ -30,6 +30,6 @@ Map annotations are typically only relevant at certain scales. For instance, ann
 
 The map reference scale should normally be set by the map's author and not exposed to the end user like it is in this sample.
 
-#### Tags
+## Tags
 
-Maps & Scenes
+map, reference scale, scene
