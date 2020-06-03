@@ -1,24 +1,30 @@
 {
     "category": "Scenes",
-    "description": "This sample demonstrates how to render graphics extruded in the Z direction",
+    "description": "Extrude graphics based on an attribute value.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "ArcGISScene",
-        "Graphic",
-        "GraphicsOverlay",
-        "Renderer",
-        "Renderer->SceneProperties"
+        "3D",
+        "extrude",
+        "extrusion",
+        "height",
+        "scene",
+        "visualization",
+        "ExtrusionMode",
+        "RendererSceneProperties",
+        "RendererSceneProperties.extrusionExpression",
+        "SimpleRenderer"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-extrudegraphics.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-extrudegraphics.htm"
+    ],
     "relevant_apis": [
-        "ArcGISScene",
-        "Graphic",
-        "GraphicsOverlay",
-        "Renderer",
-        "Renderer->SceneProperties"
+        "ExtrusionMode",
+        "RendererSceneProperties",
+        "RendererSceneProperties.extrusionExpression",
+        "SimpleRenderer"
     ],
     "snippets": [
         "ExtrudeGraphics.qml"
