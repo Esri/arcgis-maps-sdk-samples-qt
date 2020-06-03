@@ -68,7 +68,7 @@ void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString& item
     if (m_portalItem->type() == PortalItemType::FeatureCollection)
     {
       // create a feature collection
-      FeatureCollection* featureCollection = new FeatureCollection(m_portalItem);
+      FeatureCollection* featureCollection = new FeatureCollection(m_portalItem, this);
       FeatureCollectionLayer* featureCollectionLayer = new FeatureCollectionLayer(featureCollection, this);
       m_map->operationalLayers()->append(featureCollectionLayer);
     }
@@ -78,6 +78,7 @@ void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString& item
       emit messageTextChanged();
     }
   });
+
   m_portalItem->load();
 }
 
