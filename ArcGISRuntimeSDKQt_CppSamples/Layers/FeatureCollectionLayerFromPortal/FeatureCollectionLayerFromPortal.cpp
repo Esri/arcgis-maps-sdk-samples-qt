@@ -39,6 +39,13 @@ FeatureCollectionLayerFromPortal::FeatureCollectionLayerFromPortal(QObject* pare
 
 void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString& itemId)
 {
+  if (m_portalItem != nullptr && m_portalItem->loadStatus() == LoadStatus::Loading)
+  {
+    m_messageText = "Portal item loading in progress";
+    emit messageTextChanged();
+    return;
+  }
+
   const QString trimmedItemId = itemId.trimmed();
   if (itemId.isNull() || itemId.isEmpty())
   {
@@ -54,7 +61,7 @@ void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString& item
 
   m_portalItem = new PortalItem(m_portal, trimmedItemId, this);
 
-  connect(m_portalItem, &PortalItem::doneLoading, this, [this, &trimmedItemId](const Error& error){
+  connect(m_portalItem, &PortalItem::doneLoading, this, [this](const Error& error){
 
     if (!error.isEmpty())
     {
@@ -74,7 +81,7 @@ void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString& item
     }
     else
     {
-      m_messageText = "Portal item with ID '" + trimmedItemId + "' is not a feature collection.";
+      m_messageText = "Portal item with ID '" + m_portalItem->itemId() + "' is not a feature collection.";
       emit messageTextChanged();
     }
   });

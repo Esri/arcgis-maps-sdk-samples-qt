@@ -81,6 +81,11 @@ Rectangle {
                     Button {
                         text: "Open from portal item"
                         onClicked: {
+                            if (portalItem.loadStatus === Enums.LoadStatusLoading) {
+                                messageDialog.text = "Portal item loading in progress.";
+                                return;
+                            }
+
                             const trimmedItemId = textfield.text.trim();
 
                             // if itemId is empty then prompt user for itemId
