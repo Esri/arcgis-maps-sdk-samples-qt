@@ -27,20 +27,24 @@ Rectangle {
     height: 600
 
     readonly property url portalUrl: "https://www.arcgis.com/"
+    property var portalItem: null
 
     MessageDialog {
           id: messageDialog
           title: "Feature collection"
           onTextChanged: visible = true;
           visible: false
-          onRejected: {
-              visible = false;
-          }
+          onRejected: visible = false;
       }
 
     MapView {
         id: mapView
         anchors.fill: parent
+
+        Portal {
+            id: portal
+            url: portalUrl
+        }
 
         Rectangle {
             id: backgroundRect
@@ -64,12 +68,14 @@ Rectangle {
                         font.bold: true
                     }
                 }
+
                 RowLayout {
                     TextField {
                         id: textfield
-                        text: "32798dfad17942858d5eef82ee802f0b"
+                        text: "32798dfad17942858d5eef82ee802f0b" // default itemId for PortalItem
                     }
                 }
+
                 RowLayout {
                     Layout.alignment: Qt.AlignHCenter
                     Button {
@@ -77,14 +83,39 @@ Rectangle {
                         onClicked: {
                             const trimmedItemId = textfield.text.trim();
 
-                            if (!trimmedItemId || trimmedItemId === "") {
+                            // if itemId is empty then prompt user for itemId
+                            if (!trimmedItemId || trimmedItemId.length === 0) {
                                 messageDialog.text = "Please enter a portal item ID";
                                 return;
                             }
 
-                            portalItem.itemId = trimmedItemId;
+                            portalItem = portalComponent.createObject(rootRectangle, {itemId: trimmedItemId});
                             portalItem.load();
                         }
+                    }
+                }
+            }
+        }
+
+        Component {
+            id: portalComponent
+            PortalItem {
+                id: componentPortalItem
+                portal: portal
+                onLoadStatusChanged: {
+                    if (loadStatus === Enums.LoadStatusFailedToLoad) {
+                        console.warn(loadError.message, loadError.additionalMessage);
+                        return;
+                    }
+                    if (loadStatus !== Enums.LoadStatusLoaded)
+                        return;
+
+                    if (type === Enums.PortalItemTypeFeatureCollection) {
+                        const featureCollection = ArcGISRuntimeEnvironment.createObject("FeatureCollection", {item: portalItem});
+                        const featureCollectionLayer = ArcGISRuntimeEnvironment.createObject("FeatureCollectionLayer", {featureCollection: featureCollection});
+                        map.operationalLayers.append(featureCollectionLayer);
+                    } else {
+                        messageDialog.text = "Portal item with ID '" + itemId + "' is not a feature collection.";
                     }
                 }
             }
@@ -93,35 +124,6 @@ Rectangle {
         Map {
             id: map
             BasemapOceans {}
-        }
-
-        PortalItem {
-            id: portalItem
-            onLoadStatusChanged: {
-                if (loadStatus === Enums.LoadStatusFailedToLoad) {
-                    console.warn(loadError.message, loadError.additionalMessage);
-                    return;
-                }
-                if (loadStatus !== Enums.LoadStatusLoaded)
-                    return;
-
-                console.log("loaded");
-
-                if (type === Enums.PortalItemTypeFeatureCollection) {
-                    console.log("is feature collection");
-                    let featureCollection = ArcGISRuntimeEnvironment.createObject("FeatureCollection", {item: portalItem});
-                    let featureCollectionLayer = ArcGISRuntimeEnvironment.createObject("FeatureCollectionLayer", {featureCollection: featureCollection});
-                    map.operationalLayers.append(featureCollectionLayer);
-                } else {
-                    console.log("Portal item with ID '" + itemId + "' is not a feature collection.");
-                    messageDialog.text = "Portal item with ID '" + itemId + "' is not a feature collection.";
-                }
-
-            }
-            Portal {
-                url: portalUrl
-            }
-//            itemId: textfield.text
         }
     }
 }
