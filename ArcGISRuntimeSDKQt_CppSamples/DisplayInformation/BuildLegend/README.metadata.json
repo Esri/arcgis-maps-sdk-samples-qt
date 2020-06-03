@@ -1,31 +1,26 @@
 {
     "category": "Display information",
-    "description": "This sample demonstrates how to build a legend for all the operational layers in the map",
+    "description": "Build a legend for all the operational layers in the map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "legend",
-        "MapView",
-        "Map",
-        "Basemap",
-        "ArcGISMapImageLayer",
-        "ArcGISTiledLayer",
-        "FeatureLayer",
-        "ServiceFeatureTable",
+        "legend info",
+        "symbol swatch",
+        "toolkit",
+        "Layer::setAutoFetchLegendInfos",
+        "LayerContent",
         "LegendInfo",
         "LegendInfoListModel"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-buildlegend.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-buildlegend.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "ArcGISMapImageLayer",
-        "ArcGISTiledLayer",
-        "FeatureLayer",
-        "ServiceFeatureTable",
+        "Layer::setAutoFetchLegendInfos",
+        "LayerContent",
         "LegendInfo",
         "LegendInfoListModel"
     ],

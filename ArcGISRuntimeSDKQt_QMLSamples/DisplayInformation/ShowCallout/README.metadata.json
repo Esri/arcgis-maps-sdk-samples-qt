@@ -1,24 +1,30 @@
 {
     "category": "Display information",
-    "description": "This sample demonstrates how to show location coordinates on a Map using a Callout",
+    "description": "Show a callout with the latitude and longitude of user-tapped points.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "Map",
-        "MapView",
-        "Callout",
-        "Viewpoint",
-        "SpatialReference"
+        "balloon",
+        "bubble",
+        "callout",
+        "flyout",
+        "flyover",
+        "info window",
+        "popup",
+        "tap",
+        "CalloutDefinition",
+        "GeometryEngine.project",
+        "MapView.onMouseClicked"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-showcallout.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-showcallout.htm"
+    ],
     "relevant_apis": [
-        "Map",
-        "MapView",
-        "Callout",
-        "Viewpoint",
-        "SpatialReference"
+        "CalloutDefinition",
+        "GeometryEngine.project",
+        "MapView.onMouseClicked"
     ],
     "snippets": [
         "ShowCallout.qml"
