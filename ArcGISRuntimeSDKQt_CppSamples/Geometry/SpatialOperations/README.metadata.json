@@ -1,33 +1,45 @@
 {
     "category": "Geometry",
-    "description": "This sample demonstrates how to perform spatial operations on geometries using the GeometryEngine",
+    "description": "Find the union, intersection, or difference of two geometries.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "geometry engine",
-        "geometric union",
-        "geometric difference",
-        "geometric symmetric difference",
-        "geometric intersection"
-    ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-spatialoperations.htm",
-    "relevant_apis": [
-        "GeometryEngine",
-        "GeometryEngine::union",
-        "GeometryEngine::difference",
-        "GeometryEngine::symmetricDifference",
-        "GeometryEngine::intersection",
+        "analysis",
+        "combine",
+        "difference",
+        "geometry",
+        "intersection",
+        "merge",
+        "polygon",
+        "union",
         "Geometry",
+        "GeometryEngine",
+        "GeometryEngine::difference",
+        "GeometryEngine::intersection",
+        "GeometryEngine::symmetricDifference",
+        "GeometryEngine::union",
         "Graphic",
-        "GraphicsOverlay",
-        "PolygonBuilder"
+        "GraphicsOverlay"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-spatialoperations.htm"
+    ],
+    "relevant_apis": [
+        "Geometry",
+        "GeometryEngine",
+        "GeometryEngine::difference",
+        "GeometryEngine::intersection",
+        "GeometryEngine::symmetricDifference",
+        "GeometryEngine::union",
+        "Graphic",
+        "GraphicsOverlay"
     ],
     "snippets": [
         "SpatialOperations.qml",
-        "SpatialOperations.h",
-        "SpatialOperations.cpp"
+        "SpatialOperations.cpp",
+        "SpatialOperations.h"
     ],
     "title": "Spatial operations"
 }
