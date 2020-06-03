@@ -6,22 +6,26 @@
         "screenshot.png"
     ],
     "keywords": [
-        "FeatureLayer",
-        "WfsFeatureTable",
-        "WfsFeatureTable.populateFromService",
         "OGC",
         "WFS",
-        "feature",
-        "web",
-        "service",
         "XML",
-        "query"
+        "feature",
+        "query",
+        "service",
+        "web",
+        "FeatureLayer",
+        "WfsFeatureTable",
+        "WfsFeatureTable.axisOrder",
+        "WfsFeatureTable.populateFromServiceWithXml"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "FeatureLayer",
         "WfsFeatureTable",
-        "WfsFeatureTable.populateFromService"
+        "WfsFeatureTable.axisOrder",
+        "WfsFeatureTable.populateFromServiceWithXml"
     ],
     "snippets": [
         "LoadWfsXmlQuery.qml"

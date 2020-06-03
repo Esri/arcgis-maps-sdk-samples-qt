@@ -1,35 +1,32 @@
 {
     "category": "Layers",
-    "description": "This samples demonstrates how to create a new feature collection with several feature collection tables",
+    "description": "Create a Feature Collection Layer from a Feature Collection Table, and add it to a map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "feature collection",
-        "feature collection layer",
-        "feature collection table",
+        "collection",
+        "feature",
+        "layers",
+        "table",
+        "Feature",
         "FeatureCollection",
         "FeatureCollectionLayer",
         "FeatureCollectionTable",
         "Field",
-        "Feature",
-        "SimpleRenderer",
-        "SimpleMarkerSymbol",
-        "SimpleLineSymbol",
-        "SimpleFillSymbol"
+        "SimpleRenderer"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-feature-collection-layer.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-feature-collection-layer.htm"
+    ],
     "relevant_apis": [
+        "Feature",
         "FeatureCollection",
         "FeatureCollectionLayer",
         "FeatureCollectionTable",
         "Field",
-        "Feature",
-        "SimpleRenderer",
-        "SimpleMarkerSymbol",
-        "SimpleLineSymbol",
-        "SimpleFillSymbol"
+        "SimpleRenderer"
     ],
     "snippets": [
         "Feature_Collection_Layer.qml"

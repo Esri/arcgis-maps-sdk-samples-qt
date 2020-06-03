@@ -20,7 +20,7 @@ To apply a `ColormapRenderer` to a `RasterLayer`:
 3. Create an `list<color>` array and use it to create a `Colormap`: colors at the beginning of the list replace the darkest values in the raster and colors at the end of the list replaced the brightest values of the raster.
 4. Create a `ColormapRenderer` with the colormap and apply it to the raster layer with `rasterLayer.renderer = colormapRenderer`.
 
-## Features
+## Relevant API
 
 * ColormapRenderer
 * Raster

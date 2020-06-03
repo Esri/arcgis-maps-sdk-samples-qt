@@ -6,19 +6,22 @@
         "screenshot.png"
     ],
     "keywords": [
+        "annotation",
+        "cartography",
+        "labels",
+        "placement",
+        "reference scale",
+        "text",
+        "utility",
         "AnnotationLayer",
-        "FeatureLayer",
-        "feature",
-        "web",
-        "service",
-        "layers",
-        "labels"
+        "FeatureLayer"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "AnnotationLayer",
-        "FeatureLayer",
-        "ServiceFeatureTable"
+        "FeatureLayer"
     ],
     "snippets": [
         "DisplayAnnotation.qml"

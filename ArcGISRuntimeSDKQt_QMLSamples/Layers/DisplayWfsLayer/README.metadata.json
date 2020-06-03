@@ -6,24 +6,26 @@
         "screenshot.png"
     ],
     "keywords": [
-        "WfsFeatureTable",
-        "WfsFeatureTable.populateFromService",
-        "FeatureLayer",
         "OGC",
         "WFS",
-        "feature",
-        "web",
-        "service",
-        "layers",
         "browse",
         "catalog",
-        "interaction cache"
-    ],
-    "redirect_from": "",
-    "relevant_apis": [
+        "feature",
+        "interaction cache",
+        "layers",
+        "service",
+        "web",
+        "FeatureLayer",
         "WfsFeatureTable",
-        "WfsFeatureTable.populateFromService",
-        "FeatureLayer"
+        "WfsFeatureTable.populateFromService"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "FeatureLayer",
+        "WfsFeatureTable",
+        "WfsFeatureTable.populateFromService"
     ],
     "snippets": [
         "DisplayWfsLayer.qml"
