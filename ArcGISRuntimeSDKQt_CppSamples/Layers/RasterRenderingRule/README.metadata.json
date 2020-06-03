@@ -1,25 +1,30 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to create an ImageServiceRaster, fetch the RenderingRules from the service info, and use a RenderingRule to create an ImageServiceRaster and add it to a raster layer",
+    "description": "Display a raster on a map and apply different rendering rules to that raster.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "raster rendering rule"
-    ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-rasterrenderingrule.htm",
-    "relevant_apis": [
-        "Map",
+        "raster",
+        "rendering rules",
+        "visualization",
         "ImageServiceRaster",
-        "RenderingRuleInfo",
-        "RenderingRule",
-        "RasterLayer"
+        "RasterLayer",
+        "RenderingRule"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-rasterrenderingrule.htm"
+    ],
+    "relevant_apis": [
+        "ImageServiceRaster",
+        "RasterLayer",
+        "RenderingRule"
     ],
     "snippets": [
         "RasterRenderingRule.qml",
-        "RasterRenderingRule.h",
-        "RasterRenderingRule.cpp"
+        "RasterRenderingRule.cpp",
+        "RasterRenderingRule.h"
     ],
     "title": "Raster rendering rule"
 }

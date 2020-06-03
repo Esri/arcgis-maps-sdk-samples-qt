@@ -6,28 +6,35 @@
         "screenshot.png"
     ],
     "keywords": [
-        "ArcGISMap",
+        "add",
+        "delete",
+        "layer",
+        "map",
+        "remove",
         "ArcGISMapImageLayer",
         "LayerListModel",
         "LayerListModel::append",
         "LayerListModel::move",
-        "LayerListModel::removeAt"
+        "LayerListModel::removeAt",
+        "Map"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "ArcGISMap",
         "ArcGISMapImageLayer",
         "LayerListModel",
         "LayerListModel::append",
         "LayerListModel::move",
-        "LayerListModel::removeAt"
+        "LayerListModel::removeAt",
+        "Map"
     ],
     "snippets": [
         "ManageOperationalLayers.qml",
-        "ManageOperationalLayers.h",
-        "ManageOperationalLayers.cpp",
+        "DrawOrderLayerListModel.cpp",
         "DrawOrderLayerListModel.h",
-        "DrawOrderLayerListModel.cpp"
+        "ManageOperationalLayers.cpp",
+        "ManageOperationalLayers.h"
     ],
     "title": "Manage operational layers"
 }
