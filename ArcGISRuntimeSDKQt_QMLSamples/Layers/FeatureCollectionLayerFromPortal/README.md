@@ -1,31 +1,38 @@
 # Create feature collection layer (Portal item)
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Create a feature collection layer from a portal item.
 
 ![](screenshot.png)
 
+## Use case
+
+Feature collection layers are often used to hold features with mixed geometry or unstructured data. You can display feature collections stored in a Portal, which are often used for showing content from a CSV or map notes.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Enter the ID of a Portal item that holds a feature collection into the text field, and click on the button to see result.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Create a `Portal`.
+2. Create the `PortalItem`, referring to the portal and an item ID.
+3. Verify that the item represents a feature collection.
+4. Create a `FeatureCollection` from the item.
+5. Create a `FeatureCollectionLayer`, referring to the feature collection.
+6. Add the feature collection layer to the map's `OperationalLayers` collection.
 
 ## Relevant API
- - ClassName1
- - MethodName
+ 
+* FeatureCollection
+* FeatureCollectionLayer
+* Portal
+* PortalItem
 
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
+## About the data
 
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+The sample uses a sample layer depicting [world populations](https://www.arcgis.com/home/item.html?id=32798dfad17942858d5eef82ee802f0b).
 
 ## Tags
-Routing, Network analysis, Geocode
+
+collection, feature collection, feature collection layer, id, item, map notes, portal
 
