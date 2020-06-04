@@ -87,7 +87,9 @@ Rectangle {
 
                 // display the convex hull
                 onClicked: {
-                    const convHull = GeometryEngine.convexHull(multipointBuilder.geometry);
+                    // normalizing the geometry before performing geometric operations
+                    const normalizedPoints = GeometryEngine.normalizeCentralMeridian(multipointBuilder.geometry);
+                    const convHull = GeometryEngine.convexHull(normalizedPoints);
                     if (convHull.geometryType === Enums.GeometryTypePoint) {
                         convexHullGraphic.symbol = markerSymbol;
                     } else if (convHull.geometryType === Enums.GeometryTypePolyline) {
