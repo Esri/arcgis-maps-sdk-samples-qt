@@ -83,9 +83,7 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
     // recursively build tree to display KML contents
     for (KmlNode* node : m_kmlDataset->rootNodes())
     {
-      m_levelNodeNames << node->name();
       m_kmlNodesList << node;
-
       buildTree(node);
     }
 
@@ -131,7 +129,7 @@ QString ListKmlContents::getKmlNodeType(KmlNode *node)
   default:
     return "";
   }
-  return " - " + type;
+  return type;
 }
 
 void ListKmlContents::displayChildren(KmlNode* parentNode)
@@ -147,7 +145,7 @@ void ListKmlContents::displayChildren(KmlNode* parentNode)
     // for current level, get names of child nodes
     for (KmlNode* node: *(container->childNodesListModel()))
     {
-      QString str = node->name() + getKmlNodeType(node);
+      QString str = node->name() + " - " + getKmlNodeType(node);
 
       // if node has children, add ">" to indicate further levels
       if (!node->children().isEmpty())
@@ -204,16 +202,10 @@ void ListKmlContents::displayPreviousLevel()
     emit currentNodeChanged();
     emit labelTextChanged();
   }
-
-  if (m_currentNode->name() == "")
-  {
-    qDebug("displayPreviousLevel(): m_currentNode->name() BLANK");
-    emit currentNodeChanged();
-  }
 }
 
 // display selected node on sceneview and show its children
-void ListKmlContents::nodeSelected(const QString& nodeName)
+void ListKmlContents::processSelectedNode(const QString& nodeName)
 {
   QString extractedNodeName = nodeName;
   if (nodeName.contains(" - "))
@@ -296,7 +288,7 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
   emit sceneViewChanged();
 }
 
-QStringList ListKmlContents::levelNodeNames() const
+QStringList ListKmlContents::levelNodeNames()
 {
   return m_levelNodeNames;
 }

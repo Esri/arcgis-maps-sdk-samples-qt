@@ -82,7 +82,7 @@ Item {
                                 text: modelData
                                 width: listViewWindow.width
                                 onClicked: {
-                                    sampleModel.nodeSelected(text);
+                                    sampleModel.processSelectedNode(text);
                                 }
                                 highlighted: pressed
                             }

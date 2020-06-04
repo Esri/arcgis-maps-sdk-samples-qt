@@ -32,7 +32,6 @@ class SceneQuickView;
 #include <QObject>
 #include <QList>
 #include <QStringList>
-#include <QAbstractListModel>
 
 class ListKmlContents : public QObject
 {
@@ -48,7 +47,7 @@ public:
   ~ListKmlContents();
 
   static void init();
-  Q_INVOKABLE void nodeSelected(const QString& nodeName);
+  Q_INVOKABLE void processSelectedNode(const QString& nodeName);
   Q_INVOKABLE void displayPreviousLevel();
 
 signals:
@@ -60,7 +59,7 @@ signals:
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
-  QStringList levelNodeNames() const;
+  QStringList levelNodeNames();
   QString labelText();
   bool isTopLevel() const;
 
@@ -72,7 +71,6 @@ private:
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
   Esri::ArcGISRuntime::KmlDataset* m_kmlDataset = nullptr;
-  QAbstractListModel* m_nodeListModel = nullptr;
   QStringList m_levelNodeNames = {};
   QList<Esri::ArcGISRuntime::KmlNode*> m_kmlNodesList = {};
   Esri::ArcGISRuntime::KmlNode* m_currentNode = nullptr;
