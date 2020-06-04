@@ -31,10 +31,9 @@ using namespace Esri::ArcGISRuntime;
 
 FeatureCollectionLayerFromPortal::FeatureCollectionLayerFromPortal(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::oceans(this), this))
+  m_map(new Map(Basemap::oceans(this), this)),
+  m_portal(new Portal(QUrl("https://www.arcgis.com/"), this))
 {
-  const QUrl url("https://www.arcgis.com/");
-  m_portal = new Portal(url, this);
 }
 
 void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString& itemId)
@@ -57,6 +56,7 @@ void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString& item
   if (m_portalItem != nullptr)
   {
     delete m_portalItem;
+    m_portalItem = nullptr;
   }
 
   m_portalItem = new PortalItem(m_portal, trimmedItemId, this);
