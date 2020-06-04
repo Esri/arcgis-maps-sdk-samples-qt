@@ -33,7 +33,10 @@ Item {
             height: childrenRect.height
             color: "lightgrey"
 
-            ColumnLayout {
+            GridLayout {
+                columns: 1
+                rows: 2
+                rowSpacing: 0
 
                 RowLayout {
                     id: buttonRow

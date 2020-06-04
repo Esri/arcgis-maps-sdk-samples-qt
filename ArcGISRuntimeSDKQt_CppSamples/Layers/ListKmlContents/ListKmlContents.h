@@ -40,8 +40,7 @@ class ListKmlContents : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::SceneQuickView* sceneView READ sceneView WRITE setSceneView NOTIFY sceneViewChanged)
   Q_PROPERTY(QStringList levelNodeNames READ levelNodeNames NOTIFY levelNodeNamesChanged)
-  Q_PROPERTY(bool isTopLevel READ isTopLevel NOTIFY isTopLevelChanged)
-  Q_PROPERTY(bool selectedLastLevel READ selectedLastLevel NOTIFY selectedLastLevelChanged)
+  Q_PROPERTY(bool isTopLevel READ isTopLevel NOTIFY currentNodeChanged)
   Q_PROPERTY(QString labelText READ labelText NOTIFY labelTextChanged)
 
 public:
@@ -55,9 +54,8 @@ public:
 signals:
   void sceneViewChanged();
   void levelNodeNamesChanged();
-  void isTopLevelChanged();
   void labelTextChanged();
-  void selectedLastLevelChanged();
+  void currentNodeChanged();
 
 private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
@@ -65,7 +63,6 @@ private:
   QStringList levelNodeNames() const;
   QString labelText() const;
   bool isTopLevel() const;
-  bool selectedLastLevel() const;
 
   void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);
   void displayChildren(Esri::ArcGISRuntime::KmlNode* node);
@@ -77,8 +74,6 @@ private:
   Esri::ArcGISRuntime::KmlDataset* m_kmlDataset = nullptr;
   QAbstractListModel* m_nodeListModel = nullptr;
   QStringList m_levelNodeNames = {};
-  bool m_isTopLevel = true;
-  bool m_selectedLastLevel = false;
   QList<Esri::ArcGISRuntime::KmlNode*> m_kmlNodesList = {};
   Esri::ArcGISRuntime::KmlNode* m_currentNode = nullptr;
   QString m_labelText = "";

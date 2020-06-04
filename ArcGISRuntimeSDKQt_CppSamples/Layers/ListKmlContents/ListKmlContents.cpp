@@ -31,6 +31,7 @@
 #include "SceneQuickView.h"
 
 #include <QDir>
+#include <algorithm>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -133,7 +134,7 @@ QString ListKmlContents::getKmlNodeType(KmlNode *node)
   return " - " + type;
 }
 
-void ListKmlContents::displayChildren(KmlNode *parentNode)
+void ListKmlContents::displayChildren(KmlNode* parentNode)
 {
   if (parentNode == nullptr)
     return;
@@ -160,6 +161,7 @@ void ListKmlContents::displayChildren(KmlNode *parentNode)
     if (lastLevel)
     {
       m_currentNode = container->childNodesListModel()->at(0);
+      emit currentNodeChanged();
     }
     emit levelNodeNamesChanged();
   }
@@ -183,34 +185,40 @@ void ListKmlContents::displayPreviousLevel()
 {
   KmlNode* parentNode = m_currentNode->parentNode();
   if (parentNode == nullptr)
+  {
+    qDebug() << "parent node == nullptr";
     return;
+  }
   KmlNode* grandparentNode = parentNode->parentNode();
 
   if (grandparentNode != nullptr)
   {
+    qDebug("displayPreviousLevel(): grandparent != nullptr");
     m_labelText.clear();
     buildPathLabel(grandparentNode);
     emit labelTextChanged();
 
     displayChildren(grandparentNode);
     m_currentNode = grandparentNode;
+    emit currentNodeChanged();
   }
-  // if parent node is nullptr, then at top of tree
+  // if grandparent node is nullptr, then at top of tree
   else
   {
+    qDebug("displayPreviousLevel(): grandparent == nullptr");
     m_labelText.clear();
     buildPathLabel(parentNode);
     emit labelTextChanged();
 
     displayChildren(parentNode);
-    m_isTopLevel = true;
-    emit isTopLevelChanged();
+    m_currentNode = parentNode;
+    emit currentNodeChanged();
   }
 
   if (m_currentNode->name() == "")
   {
-    m_isTopLevel = true;
-    emit isTopLevelChanged();
+    qDebug("displayPreviousLevel(): m_currentNode->name() BLANK");
+    emit currentNodeChanged();
   }
 }
 
@@ -231,8 +239,7 @@ void ListKmlContents::nodeSelected(const QString& nodeName)
     {
       // update current node
       m_currentNode = node;
-      m_isTopLevel = false;
-      emit isTopLevelChanged();
+      emit currentNodeChanged();
 
       // set the scene view viewpoint to the extent of the selected node
       Envelope nodeExtent = node->extent();
@@ -240,8 +247,6 @@ void ListKmlContents::nodeSelected(const QString& nodeName)
       {
         m_sceneView->setViewpoint(Viewpoint(nodeExtent));
       }
-
-      m_selectedLastLevel = node->children().isEmpty();
 
       // show the children of the node
       displayChildren(node);
@@ -258,32 +263,24 @@ void ListKmlContents::nodeSelected(const QString& nodeName)
 // recursively build list of all KML nodes
 void ListKmlContents::buildTree(KmlNode* parentNode)
 {
+  auto addNode = [this](KmlNode* node)
+  {
+    // some nodes have default visibility set to false
+    node->setVisible(true);
+
+    m_kmlNodesList << node;
+    buildTree(node);
+  };
+
   if (KmlContainer* container = dynamic_cast<KmlContainer*>(parentNode))
   {
-    KmlNodeListModel* childNodes = container->childNodesListModel();
-
-    for (KmlNode* node : *childNodes)
-    {
-      // some nodes have default visibility set to false
-      node->setVisible(true);
-
-      m_kmlNodesList << node;
-      buildTree(node);
-    }
+    const KmlNodeListModel& childNodes = *container->childNodesListModel();
+    std::for_each(std::begin(childNodes), std::end(childNodes), addNode);
   }
-
-  if (KmlNetworkLink* networkLink = dynamic_cast<KmlNetworkLink*>(parentNode))
+  else if (KmlNetworkLink* networkLink = dynamic_cast<KmlNetworkLink*>(parentNode))
   {
-    QList<KmlNode*> childNodes = networkLink->childNodes();
-
-    for (KmlNode* node : childNodes)
-    {
-      // some nodes have default visibility set to false
-      node->setVisible(true);
-
-      m_kmlNodesList << node;
-      buildTree(node);
-    }
+    const QList<KmlNode*> childNodes = networkLink->childNodes();
+    std::for_each(std::begin(childNodes), std::end(childNodes), addNode);
   }
 }
 
@@ -325,10 +322,12 @@ QString ListKmlContents::labelText() const
 
 bool ListKmlContents::isTopLevel() const
 {
-  return m_isTopLevel;
-}
-
-bool ListKmlContents::selectedLastLevel() const
-{
-  return m_selectedLastLevel;
+  if (m_currentNode == nullptr)
+    return true;
+  else if (m_currentNode->parentNode() == nullptr)
+    return true;
+  else if (m_currentNode->name() == "")
+    return true;
+  else
+    return false;
 }
