@@ -19,7 +19,7 @@ Choose a unit system for the measurement. Click any location in the scene to sta
 3. Add the location distance measurement analysis to the analysis overlay.
 4. The `measurementChanged` signal will trigger if the distances change. You can get the new values for the `directDistance`, `horizontalDistance`, and `verticalDistance` from the `MeasurementChanged` object returned by the signal.
 
-## Relevant API  
+## Relevant API
 
 * AnalysisOverlay
 * LocationDistanceMeasurement
