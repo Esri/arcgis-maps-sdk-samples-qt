@@ -6,15 +6,20 @@
         "screenshot.png"
     ],
     "keywords": [
+        "Windows",
         "authentication",
         "security",
-        "windows"
+        "AuthenticationManager",
+        "Credential",
+        "Portal"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "AuthenticationManager",
-        "Portal",
-        "UserCredential"
+        "Credential",
+        "Portal"
     ],
     "snippets": [
         "IntegratedWindowsAuthentication.qml",
