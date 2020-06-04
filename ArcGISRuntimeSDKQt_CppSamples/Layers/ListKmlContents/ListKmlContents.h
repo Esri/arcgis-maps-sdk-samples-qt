@@ -61,7 +61,7 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
   QStringList levelNodeNames() const;
-  QString labelText() const;
+  QString labelText();
   bool isTopLevel() const;
 
   void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);

@@ -185,34 +185,24 @@ void ListKmlContents::displayPreviousLevel()
 {
   KmlNode* parentNode = m_currentNode->parentNode();
   if (parentNode == nullptr)
-  {
-    qDebug() << "parent node == nullptr";
     return;
-  }
+
   KmlNode* grandparentNode = parentNode->parentNode();
 
   if (grandparentNode != nullptr)
   {
-    qDebug("displayPreviousLevel(): grandparent != nullptr");
-    m_labelText.clear();
-    buildPathLabel(grandparentNode);
-    emit labelTextChanged();
-
     displayChildren(grandparentNode);
     m_currentNode = grandparentNode;
     emit currentNodeChanged();
+    emit labelTextChanged();
   }
   // if grandparent node is nullptr, then at top of tree
   else
   {
-    qDebug("displayPreviousLevel(): grandparent == nullptr");
-    m_labelText.clear();
-    buildPathLabel(parentNode);
-    emit labelTextChanged();
-
     displayChildren(parentNode);
     m_currentNode = parentNode;
     emit currentNodeChanged();
+    emit labelTextChanged();
   }
 
   if (m_currentNode->name() == "")
@@ -240,6 +230,7 @@ void ListKmlContents::nodeSelected(const QString& nodeName)
       // update current node
       m_currentNode = node;
       emit currentNodeChanged();
+      emit labelTextChanged();
 
       // set the scene view viewpoint to the extent of the selected node
       Envelope nodeExtent = node->extent();
@@ -250,11 +241,6 @@ void ListKmlContents::nodeSelected(const QString& nodeName)
 
       // show the children of the node
       displayChildren(node);
-
-      m_labelText.clear();
-      buildPathLabel(node);
-      emit labelTextChanged();
-
       break;
     }
   }
@@ -315,8 +301,10 @@ QStringList ListKmlContents::levelNodeNames() const
   return m_levelNodeNames;
 }
 
-QString ListKmlContents::labelText() const
+QString ListKmlContents::labelText()
 {
+  m_labelText.clear();
+  buildPathLabel(m_currentNode);
   return m_labelText;
 }
 
