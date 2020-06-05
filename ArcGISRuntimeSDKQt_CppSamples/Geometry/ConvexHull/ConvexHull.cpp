@@ -58,7 +58,9 @@ void ConvexHull::displayConvexHull()
   if (m_inputsGraphic->geometry().isEmpty())
     return;
 
-  Geometry convexHull = GeometryEngine::convexHull(m_inputsGraphic->geometry());
+  // normalizing the geometry before performing geometric operations
+  const Geometry normalizedPoints = GeometryEngine::normalizeCentralMeridian(m_inputsGraphic->geometry());
+  const Geometry convexHull = GeometryEngine::convexHull(normalizedPoints);
 
   // change the symbol based on the returned geometry type
   if (convexHull.geometryType() == GeometryType::Point)
