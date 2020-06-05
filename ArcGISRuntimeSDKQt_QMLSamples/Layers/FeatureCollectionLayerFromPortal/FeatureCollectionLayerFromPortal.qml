@@ -81,7 +81,7 @@ Rectangle {
                     Button {
                         text: "Open from portal item"
                         onClicked: {
-                            if (portalItem.loadStatus === Enums.LoadStatusLoading) {
+                            if (portalItem !== null && portalItem.loadStatus === Enums.LoadStatusLoading) {
                                 messageDialog.text = "Portal item loading in progress.";
                                 return;
                             }
