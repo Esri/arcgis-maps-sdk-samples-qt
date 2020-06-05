@@ -23,7 +23,8 @@ Portals allow you to share and publish data with others. For example, you may cr
 6. When the item has been succesfully added, it is loaded in order to retrieve online properties such as the `itemId`.'
 7. When the "Delete Item" button is clicked, the item is passed as a parameter for the portalUser's `deleteItem` method. 
 
-## Features
+## Relevant API
+
 * AuthenticationView
 * Portal
 * PortalItem

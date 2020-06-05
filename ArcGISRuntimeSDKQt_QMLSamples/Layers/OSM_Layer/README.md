@@ -17,7 +17,7 @@ When the sample opens, it will automatically display the map with the OpenStreet
 1. Create a `BasemapOpenStreetMap` object nested as a child of the `Map`.
 2. Show the map in a map view.
 
-## Features
+## Relevant API
 
 * BasemapOpenStreetMap
 * Map
