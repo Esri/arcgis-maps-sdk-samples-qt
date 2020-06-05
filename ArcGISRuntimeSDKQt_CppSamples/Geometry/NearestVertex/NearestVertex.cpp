@@ -122,12 +122,15 @@ void NearestVertex::setupGraphics()
   connect(m_mapView, &MapQuickView::mouseClicked, this, [=](QMouseEvent& e)
   {
     Point clickedLocation = m_mapView->screenToLocation(e.x(), e.y());
-    clickedLocationGraphic->setGeometry(clickedLocation);
+    // normalizing the geometry before performing geometric operations
+    Geometry normalizedPoint = GeometryEngine::normalizeCentralMeridian(clickedLocation);
 
-    ProximityResult nearestCoordinateResult = GeometryEngine::nearestCoordinate(polygonBuilder->toGeometry(), clickedLocation);
+    clickedLocationGraphic->setGeometry(normalizedPoint);
+
+    ProximityResult nearestCoordinateResult = GeometryEngine::nearestCoordinate(polygonBuilder->toGeometry(), normalizedPoint);
     nearestCoordinateGraphic->setGeometry(nearestCoordinateResult.coordinate());
 
-    ProximityResult nearestVertexResult = GeometryEngine::nearestVertex(polygonBuilder->toGeometry(), clickedLocation);
+    ProximityResult nearestVertexResult = GeometryEngine::nearestVertex(polygonBuilder->toGeometry(), normalizedPoint);
     nearestVertexGraphic->setGeometry(nearestVertexResult.coordinate());
 
     // get distance in kilometers
