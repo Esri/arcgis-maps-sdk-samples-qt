@@ -10,7 +10,7 @@ Feature collection layers are often used to hold features with mixed geometry or
 
 ## How to use the sample
 
-Enter the ID of a Portal item that holds a feature collection into the text field, and click on the button to see result.
+The feature collection is loaded from the Portal item when the sample starts.
 
 ## How it works
 

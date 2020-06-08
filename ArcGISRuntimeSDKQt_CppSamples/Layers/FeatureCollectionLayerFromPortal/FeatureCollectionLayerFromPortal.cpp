@@ -48,6 +48,7 @@ FeatureCollectionLayerFromPortal::FeatureCollectionLayerFromPortal(QObject* pare
       return;
     }
 
+    // if the portal item is a feature collection, add the feature collection to the map's operational layers
     if (m_portalItem->type() == PortalItemType::FeatureCollection)
     {
       FeatureCollection* featureCollection = new FeatureCollection(m_portalItem, this);

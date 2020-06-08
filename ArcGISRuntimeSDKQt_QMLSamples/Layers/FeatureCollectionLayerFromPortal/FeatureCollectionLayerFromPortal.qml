@@ -30,9 +30,6 @@ Rectangle {
 
         PortalItem {
             id: portalItem
-            Portal {
-
-            }
             itemId: "32798dfad17942858d5eef82ee802f0b"
             Component.onCompleted: load();
             onLoadStatusChanged: {
@@ -40,6 +37,7 @@ Rectangle {
                     return;
                 }
 
+                // if the portal item is a feature collection, add the feature collection to the map's operational layers
                 if (type === Enums.PortalItemTypeFeatureCollection) {
                     const featureCollection = ArcGISRuntimeEnvironment.createObject("FeatureCollection", {item: portalItem});
                     const featureCollectionLayer = ArcGISRuntimeEnvironment.createObject("FeatureCollectionLayer", {featureCollection: featureCollection});
