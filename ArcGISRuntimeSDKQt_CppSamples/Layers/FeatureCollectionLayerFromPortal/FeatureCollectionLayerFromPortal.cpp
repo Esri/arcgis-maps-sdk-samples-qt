@@ -28,61 +28,36 @@
 #include "PortalItem.h"
 
 using namespace Esri::ArcGISRuntime;
+namespace
+{
+const QString featureCollectionItemId("32798dfad17942858d5eef82ee802f0b");
+}
 
 FeatureCollectionLayerFromPortal::FeatureCollectionLayerFromPortal(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::oceans(this), this)),
-  m_portal(new Portal(QUrl("https://www.arcgis.com/"), this))
+  m_map(new Map(Basemap::oceans(this), this))
 {
-}
+  Portal* portal = new Portal(this);
+  m_portalItem = new PortalItem(portal, featureCollectionItemId, this);
 
-void FeatureCollectionLayerFromPortal::openFeatureCollection(const QString& itemId)
-{
-  if (m_portalItem != nullptr && m_portalItem->loadStatus() == LoadStatus::Loading)
+  connect(m_portalItem, &PortalItem::doneLoading, this, [this](const Error& loadError)
   {
-    m_messageText = "Portal item loading in progress";
-    emit messageTextChanged();
-    return;
-  }
-
-  const QString trimmedItemId = itemId.trimmed();
-  if (itemId.isNull() || itemId.isEmpty())
-  {
-    m_messageText = "Please enter a portal item ID";
-    emit messageTextChanged();
-    return;
-  }
-
-  if (m_portalItem != nullptr)
-  {
-    delete m_portalItem;
-    m_portalItem = nullptr;
-  }
-
-  m_portalItem = new PortalItem(m_portal, trimmedItemId, this);
-
-  connect(m_portalItem, &PortalItem::doneLoading, this, [this](const Error& error){
-
-    if (!error.isEmpty())
+    if (!loadError.isEmpty())
     {
-      qDebug() << error.message() << error.additionalMessage();
+      qWarning() << loadError.message() << loadError.additionalMessage();
       return;
     }
 
-    if (m_portalItem->loadStatus() != LoadStatus::Loaded)
-      return;
-
+    // if the portal item is a feature collection, add the feature collection to the map's operational layers
     if (m_portalItem->type() == PortalItemType::FeatureCollection)
     {
-      // create a feature collection
       FeatureCollection* featureCollection = new FeatureCollection(m_portalItem, this);
       FeatureCollectionLayer* featureCollectionLayer = new FeatureCollectionLayer(featureCollection, this);
       m_map->operationalLayers()->append(featureCollectionLayer);
     }
     else
     {
-      m_messageText = "Portal item with ID '" + m_portalItem->itemId() + "' is not a feature collection.";
-      emit messageTextChanged();
+      qWarning() << "Portal item with ID " << featureCollectionItemId << " is not a feature collection.";
     }
   });
 
