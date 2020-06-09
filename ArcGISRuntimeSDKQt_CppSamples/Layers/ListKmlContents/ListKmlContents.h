@@ -74,6 +74,7 @@ private:
   QStringList m_levelNodeNames = {};
   QList<Esri::ArcGISRuntime::KmlNode*> m_kmlNodesList = {};
   Esri::ArcGISRuntime::KmlNode* m_currentNode = nullptr;
+  bool m_lastLevel;
 };
 
 #endif // LISTKMLCONTENTS_H

@@ -132,39 +132,6 @@ QString ListKmlContents::getKmlNodeType(KmlNode *node)
   return type;
 }
 
-void ListKmlContents::displayChildren(KmlNode* parentNode)
-{
-  if (parentNode == nullptr)
-    return;
-
-  if (KmlContainer* container = dynamic_cast<KmlContainer*>(parentNode))
-  {
-    m_levelNodeNames.clear();
-    bool lastLevel = true;
-
-    // for current level, get names of child nodes
-    for (KmlNode* node: *(container->childNodesListModel()))
-    {
-      QString str = node->name() + " - " + getKmlNodeType(node);
-
-      // if node has children, add ">" to indicate further levels
-      if (!node->children().isEmpty())
-      {
-        str.append(" >");
-        lastLevel = false;
-      }
-      m_levelNodeNames << str;
-    }
-
-    if (lastLevel)
-    {
-      m_currentNode = container->childNodesListModel()->at(0);
-      emit currentNodeChanged();
-    }
-    emit levelNodeNamesChanged();
-  }
-}
-
 // recursively build string to indicate node's ancestors
 QStringList ListKmlContents::buildPathLabel(KmlNode* node) const
 {
@@ -202,6 +169,7 @@ void ListKmlContents::displayPreviousLevel()
 // display selected node on sceneview and show its children
 void ListKmlContents::processSelectedNode(const QString& nodeName)
 {
+  // extract the node's name from the string, formatted "name - nodeType"
   QString extractedNodeName = nodeName;
   if (nodeName.contains(" - "))
   {
@@ -226,10 +194,44 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
         m_sceneView->setViewpoint(Viewpoint(nodeExtent));
       }
 
+      m_lastLevel = false;
       // show the children of the node
       displayChildren(node);
+
+      if (m_lastLevel)
+      {
+        m_currentNode = dynamic_cast<KmlContainer*>(m_currentNode)->childNodesListModel()->at(0);
+        emit currentNodeChanged();
+      }
       break;
     }
+  }
+}
+
+void ListKmlContents::displayChildren(KmlNode* parentNode)
+{
+  if (parentNode == nullptr)
+    return;
+
+  if (KmlContainer* container = dynamic_cast<KmlContainer*>(parentNode))
+  {
+    m_levelNodeNames.clear();
+    m_lastLevel = true;
+
+    // for current level, get names of child nodes
+    for (KmlNode* node: *(container->childNodesListModel()))
+    {
+      QString str = node->name() + " - " + getKmlNodeType(node);
+
+      // if node has children, add ">" to indicate further levels
+      if (!node->children().isEmpty())
+      {
+        str.append(" >");
+        m_lastLevel = false;
+      }
+      m_levelNodeNames << str;
+    }
+    emit levelNodeNamesChanged();
   }
 }
 
