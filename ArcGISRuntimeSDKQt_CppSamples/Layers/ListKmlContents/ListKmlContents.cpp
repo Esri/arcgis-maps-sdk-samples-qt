@@ -157,7 +157,6 @@ void ListKmlContents::displayPreviousLevel()
     m_currentNode = grandparentNode;
     emit currentNodeChanged();
     emit labelTextChanged();
-
     emit levelNodeNamesChanged();
   }
   // if grandparent node is nullptr, then at top of tree
@@ -166,7 +165,6 @@ void ListKmlContents::displayPreviousLevel()
     m_currentNode = parentNode;
     emit currentNodeChanged();
     emit labelTextChanged();
-
     emit levelNodeNamesChanged();
   }
 }

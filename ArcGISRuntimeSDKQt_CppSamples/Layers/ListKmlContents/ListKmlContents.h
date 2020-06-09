@@ -64,7 +64,6 @@ private:
   bool isTopLevel() const;
 
   void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);
-  void displayChildren(Esri::ArcGISRuntime::KmlNode* node);
   QStringList buildPathLabel(Esri::ArcGISRuntime::KmlNode* node) const;
   QString getKmlNodeType(Esri::ArcGISRuntime::KmlNode* node);
 

@@ -26,66 +26,45 @@ Item {
         anchors.fill: parent
 
         // Create window for displaying the KML contents
-        Rectangle {
-            id: listViewWindow
-            visible: true
+        Control {
             width: 300
-            height: childrenRect.height
-            color: "lightgrey"
-
-            GridLayout {
-                columns: 1
-                rows: 2
-                rowSpacing: 0
-
-                RowLayout {
-                    id: buttonRow
-                    spacing: 10
-                    width: parent.width
-
-                    Button {
-                        id: backButton
-                        text: "<"
-                        enabled: !sampleModel.isTopLevel
-                        background: Rectangle {
-                            color: listViewWindow.color
-                        }
-                        onClicked: {
-                            sampleModel.displayPreviousLevel();
-                        }
-                        highlighted: pressed
-                    }
-
-                    Rectangle {
-                        id: textRectangle
-                        width: listViewWindow.width - backButton.width - buttonRow.spacing
-                        height: backButton.height
-                        color: listViewWindow.color
-                        Text {
-                            id: textLabel
-                            text: sampleModel.labelText
-                            width: textRectangle.width
-                            wrapMode: Text.Wrap
-                        }
+            background : Rectangle {
+                color: "lightgrey"
+            }
+            contentItem: GridLayout {
+                columns: 2
+                Button {
+                    id: backButton
+                    Layout.margins: 3
+                    text: "<"
+                    enabled: !sampleModel.isTopLevel
+                    flat: true
+                    highlighted: pressed
+                    onClicked: {
+                        sampleModel.displayPreviousLevel();
                     }
                 }
-
-                RowLayout {
-                    ListView {
-                        id: myListView
-                        height: contentHeight
-                        width: 200
-                        spacing: 0
-                        model: sampleModel.levelNodeNames
-                        delegate: Component {
-                            Button {
-                                text: modelData
-                                width: listViewWindow.width
-                                onClicked: {
-                                    sampleModel.processSelectedNode(text);
-                                }
-                                highlighted: pressed
-                            }
+                Text {
+                    Layout.fillWidth: true
+                    id: textLabel
+                    text: sampleModel.labelText
+                    wrapMode: Text.Wrap
+                }
+                ListView {
+                    id: myListView
+                    Layout.columnSpan: 2
+                    Layout.fillWidth: true
+                    model: sampleModel.levelNodeNames
+                    Layout.preferredHeight: contentHeight
+                    delegate: Button {
+                        text: modelData
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                        }
+                        highlighted: pressed
+                        onClicked: {
+                            sampleModel.processSelectedNode(text);
                         }
                     }
                 }
