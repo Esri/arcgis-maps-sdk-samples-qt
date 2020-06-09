@@ -29,11 +29,9 @@ Rectangle {
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/kml/"
     property var nodesOnLevel: []
     property var kmlNodesList: []
-    property var currentNodesList
     property var currentNode: null
     property string labelText: ""
     property bool topLevel: true
-    property bool selectedLastLevel: false
 
     // recursively build list of nodes
     function buildTree(parentNode) {
@@ -77,6 +75,7 @@ Rectangle {
                 }
             }
             myListView.model = nodesOnLevel;
+
             if (lastLevel) {
                 currentNode = childNodes.get(0);
             }
@@ -84,8 +83,9 @@ Rectangle {
     }
 
     // display selected node on sceneview and show its children
-    function nodeSelected(nodeName) {
-        let ind = nodeName.indexOf(" - ");
+    function processSelectedNode(nodeName) {
+        // extract the node name from string, formatted "name - nodeType"
+        let ind = nodeName.lastIndexOf(" - ");
         if (ind > -1) {
             nodeName = nodeName.substring(0, ind);
         }
@@ -102,8 +102,6 @@ Rectangle {
                 if (!nodeExtent.empty) {
                     sceneView.setViewpoint(ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: nodeExtent}))
                 }
-
-                selectedLastLevel = (node.childNodesListModel === null || node.childNodesListModel === undefined);
 
                 // update path label
                 labelText = "";
@@ -229,7 +227,7 @@ Rectangle {
                                 text: modelData
                                 width: listViewWindow.width
                                 onClicked: {
-                                    nodeSelected(text);
+                                    processSelectedNode(text);
                                 }
                                 highlighted: pressed
                             }
