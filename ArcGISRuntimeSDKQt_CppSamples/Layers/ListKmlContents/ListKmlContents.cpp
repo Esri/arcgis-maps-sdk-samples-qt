@@ -166,17 +166,12 @@ void ListKmlContents::displayChildren(KmlNode* parentNode)
 }
 
 // recursively build string to indicate node's ancestors
-void ListKmlContents::buildPathLabel(KmlNode* node)
+QStringList ListKmlContents::buildPathLabel(KmlNode* node) const
 {
-  if (node == nullptr)
-    return;
-
-  if (node->parentNode() != nullptr)
-  {
-    buildPathLabel(node->parentNode());
-    m_labelText.append(">");
-  }
-  m_labelText.append(node->name());
+  if (node != nullptr)
+    return buildPathLabel(node->parentNode()) << node->name();
+  else
+    return QStringList {};
 }
 
 void ListKmlContents::displayPreviousLevel()
@@ -293,11 +288,9 @@ QStringList ListKmlContents::levelNodeNames()
   return m_levelNodeNames;
 }
 
-QString ListKmlContents::labelText()
+QString ListKmlContents::labelText() const
 {
-  m_labelText.clear();
-  buildPathLabel(m_currentNode);
-  return m_labelText;
+  return buildPathLabel(m_currentNode).join(" > ");
 }
 
 bool ListKmlContents::isTopLevel() const

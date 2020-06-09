@@ -60,12 +60,12 @@ private:
   Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
   void setSceneView(Esri::ArcGISRuntime::SceneQuickView* sceneView);
   QStringList levelNodeNames();
-  QString labelText();
+  QString labelText() const;
   bool isTopLevel() const;
 
   void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);
   void displayChildren(Esri::ArcGISRuntime::KmlNode* node);
-  void buildPathLabel(Esri::ArcGISRuntime::KmlNode* node);
+  QStringList buildPathLabel(Esri::ArcGISRuntime::KmlNode* node) const;
   QString getKmlNodeType(Esri::ArcGISRuntime::KmlNode* node);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
@@ -74,7 +74,6 @@ private:
   QStringList m_levelNodeNames = {};
   QList<Esri::ArcGISRuntime::KmlNode*> m_kmlNodesList = {};
   Esri::ArcGISRuntime::KmlNode* m_currentNode = nullptr;
-  QString m_labelText = "";
 };
 
 #endif // LISTKMLCONTENTS_H
