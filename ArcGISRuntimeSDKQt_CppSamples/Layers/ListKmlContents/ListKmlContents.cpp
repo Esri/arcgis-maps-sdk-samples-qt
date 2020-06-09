@@ -90,7 +90,10 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
     // if at top node, then display children
     if (!m_kmlNodesList.isEmpty() && m_kmlNodesList[0]->parentNode() == nullptr)
     {
-      displayChildren(m_kmlNodesList[0]);
+      m_currentNode = m_kmlNodesList[0];
+      emit currentNodeChanged();
+
+      emit levelNodeNamesChanged();
     }
   });
 }
@@ -151,18 +154,20 @@ void ListKmlContents::displayPreviousLevel()
 
   if (grandparentNode != nullptr)
   {
-    displayChildren(grandparentNode);
     m_currentNode = grandparentNode;
     emit currentNodeChanged();
     emit labelTextChanged();
+
+    emit levelNodeNamesChanged();
   }
   // if grandparent node is nullptr, then at top of tree
   else
   {
-    displayChildren(parentNode);
     m_currentNode = parentNode;
     emit currentNodeChanged();
     emit labelTextChanged();
+
+    emit levelNodeNamesChanged();
   }
 }
 
@@ -194,10 +199,11 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
         m_sceneView->setViewpoint(Viewpoint(nodeExtent));
       }
 
+      // reset m_lastLevel before levelNodeNames() is called
       m_lastLevel = false;
-      // show the children of the node
-      displayChildren(node);
+      emit levelNodeNamesChanged();
 
+      // if displaying end-nodes, change m_currentNode to first end-node for correct behavior of back button
       if (m_lastLevel)
       {
         m_currentNode = dynamic_cast<KmlContainer*>(m_currentNode)->childNodesListModel()->at(0);
@@ -205,33 +211,6 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
       }
       break;
     }
-  }
-}
-
-void ListKmlContents::displayChildren(KmlNode* parentNode)
-{
-  if (parentNode == nullptr)
-    return;
-
-  if (KmlContainer* container = dynamic_cast<KmlContainer*>(parentNode))
-  {
-    m_levelNodeNames.clear();
-    m_lastLevel = true;
-
-    // for current level, get names of child nodes
-    for (KmlNode* node: *(container->childNodesListModel()))
-    {
-      QString str = node->name() + " - " + getKmlNodeType(node);
-
-      // if node has children, add ">" to indicate further levels
-      if (!node->children().isEmpty())
-      {
-        str.append(" >");
-        m_lastLevel = false;
-      }
-      m_levelNodeNames << str;
-    }
-    emit levelNodeNamesChanged();
   }
 }
 
@@ -287,6 +266,31 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
 
 QStringList ListKmlContents::levelNodeNames()
 {
+  if (m_currentNode == nullptr)
+    return {};
+
+  QStringList nodeNames = {};
+
+  // if node is not a container, m_levelNodeNames will be unchanged
+  if (KmlContainer* container = dynamic_cast<KmlContainer*>(m_currentNode))
+  {
+    m_lastLevel = true;
+
+    // for current level, get names of child nodes
+    for (KmlNode* node: *(container->childNodesListModel()))
+    {
+      QString str = node->name() + " - " + getKmlNodeType(node);
+
+      // if node has children, add ">" to indicate further levels
+      if (!node->children().isEmpty())
+      {
+        str.append(" >");
+        m_lastLevel = false;
+      }
+      nodeNames << str;
+    }
+    m_levelNodeNames = nodeNames;
+  }
   return m_levelNodeNames;
 }
 
