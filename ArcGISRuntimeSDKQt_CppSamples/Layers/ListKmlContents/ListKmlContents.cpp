@@ -92,7 +92,6 @@ ListKmlContents::ListKmlContents(QObject* parent /* = nullptr */):
     {
       m_currentNode = m_kmlNodesList[0];
       emit currentNodeChanged();
-
       emit levelNodeNamesChanged();
     }
   });
@@ -198,13 +197,12 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
       }
 
       // reset m_lastLevel before levelNodeNames() is called
-      m_lastLevel = false;
       emit levelNodeNamesChanged();
 
       // if displaying end-nodes, change m_currentNode to first end-node for correct behavior of back button
-      if (m_lastLevel)
+      if (noGrandchildren(m_currentNode))
       {
-        m_currentNode = dynamic_cast<KmlContainer*>(m_currentNode)->childNodesListModel()->at(0);
+        m_currentNode = static_cast<KmlContainer*>(m_currentNode)->childNodesListModel()->at(0);
         emit currentNodeChanged();
       }
       break;
@@ -272,8 +270,6 @@ QStringList ListKmlContents::levelNodeNames()
   // if node is not a container, m_levelNodeNames will be unchanged
   if (KmlContainer* container = dynamic_cast<KmlContainer*>(m_currentNode))
   {
-    m_lastLevel = true;
-
     // for current level, get names of child nodes
     for (KmlNode* node: *(container->childNodesListModel()))
     {
@@ -283,13 +279,34 @@ QStringList ListKmlContents::levelNodeNames()
       if (!node->children().isEmpty())
       {
         str.append(" >");
-        m_lastLevel = false;
       }
       nodeNames << str;
     }
     m_levelNodeNames = nodeNames;
   }
   return m_levelNodeNames;
+}
+
+bool ListKmlContents::noGrandchildren(KmlNode *currentNode) const
+{
+  bool hasNoGrandchildren = false;
+
+  if (KmlContainer* container = dynamic_cast<KmlContainer*>(currentNode))
+  {
+    hasNoGrandchildren = true;
+
+    // for current level, get names of child nodes
+    for (KmlNode* node: *(container->childNodesListModel()))
+    {
+      // if node has children, add ">" to indicate further levels
+      if (!node->children().isEmpty())
+      {
+        hasNoGrandchildren = false;
+      }
+    }
+  }
+
+  return hasNoGrandchildren;
 }
 
 QString ListKmlContents::labelText() const

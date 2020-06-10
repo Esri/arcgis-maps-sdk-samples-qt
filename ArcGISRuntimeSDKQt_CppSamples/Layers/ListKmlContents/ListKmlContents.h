@@ -66,6 +66,7 @@ private:
   void buildTree(Esri::ArcGISRuntime::KmlNode* parentNode);
   QStringList buildPathLabel(Esri::ArcGISRuntime::KmlNode* node) const;
   QString getKmlNodeType(Esri::ArcGISRuntime::KmlNode* node);
+  bool noGrandchildren(Esri::ArcGISRuntime::KmlNode* node) const;
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
@@ -73,7 +74,6 @@ private:
   QStringList m_levelNodeNames = {};
   QList<Esri::ArcGISRuntime::KmlNode*> m_kmlNodesList = {};
   Esri::ArcGISRuntime::KmlNode* m_currentNode = nullptr;
-  bool m_lastLevel;
 };
 
 #endif // LISTKMLCONTENTS_H
