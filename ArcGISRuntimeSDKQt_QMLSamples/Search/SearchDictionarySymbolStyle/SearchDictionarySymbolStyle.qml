@@ -60,11 +60,8 @@ Rectangle {
 
         Column {
             id: fieldColumn
-            anchors {
-                left: parent.left
-                right: parent.right
-                margins: 8
-            }
+            Layout.fillWidth: true
+            Layout.margins: 8
             visible: !hideSearch.checked
             enabled: visible
 
@@ -254,10 +251,7 @@ Rectangle {
         Rectangle {
             id: bottomRectangle
             Layout.fillHeight: true
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
+            Layout.fillWidth: true
 
             //Listview of results returned from Dictionary
             ListView {
