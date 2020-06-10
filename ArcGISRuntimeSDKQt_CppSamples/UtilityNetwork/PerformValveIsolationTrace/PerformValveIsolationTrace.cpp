@@ -232,7 +232,8 @@ void PerformValveIsolationTrace::connectSignals()
 
     if (utilityTraceResultList->isEmpty())
     {
-      qWarning() << "No results found.";
+      m_noResults = true;
+      emit noResultsChanged();
       return;
     }
 
