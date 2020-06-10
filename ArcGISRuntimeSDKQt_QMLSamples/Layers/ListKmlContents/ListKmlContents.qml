@@ -150,87 +150,73 @@ Rectangle {
         id: sceneView
         anchors.fill: parent
 
-        Rectangle {
-            id: listViewWindow
-            visible: true
+        // create window for displaying the KML contents
+        Control {
             width: 300
-            height: childrenRect.height
-            color: "lightgrey"
+            background : Rectangle {
+                color: "lightgrey"
+            }
+            contentItem: GridLayout {
+                columns: 2
 
-            ColumnLayout {
+                Button {
+                    id: backButton
+                    Layout.margins: 3
+                    text: "<"
+                    enabled: !topLevel
+                    flat: true
+                    highlighted: pressed
+                    onClicked: {
+                        // display previous level of nodes
+                        let parentNode = currentNode.parentNode;
+                        let grandparentNode = parentNode.parentNode;
 
-                RowLayout {
-                    id: buttonRow
-                    spacing: 10
-                    width: parent.width
+                        if (grandparentNode !== undefined && grandparentNode !== null) {
+                            labelText = "";
+                            buildPathLabel(grandparentNode);
 
-                    Button {
-                        id: backButton
-                        text: "<"
-                        enabled: !topLevel
-                        background: Rectangle {
-                            color: listViewWindow.color
+                            displayChildren(grandparentNode);
+                            currentNode = grandparentNode;
                         }
-                        onClicked: {
-                            // display previous level of nodes
-                            let parentNode = currentNode.parentNode;
-                            let grandparentNode = parentNode.parentNode;
+                        // if parent node is undefined, then at top of tree
+                        else {
+                            labelText = "";
+                            buildPathLabel(parentNode);
 
-                            if (grandparentNode !== undefined && grandparentNode !== null) {
-                                labelText = "";
-                                buildPathLabel(grandparentNode);
-
-                                displayChildren(grandparentNode);
-                                currentNode = grandparentNode;
-                            }
-                            // if parent node is undefined, then at top of tree
-                            else {
-                                labelText = "";
-                                buildPathLabel(parentNode);
-
-                                displayChildren(parentNode);
-                                topLevel = true;
-                            }
-
-                            if (currentNode.name === "") {
-                                topLevel = true;
-                            }
+                            displayChildren(parentNode);
+                            topLevel = true;
                         }
 
-                        highlighted: pressed
-                    }
-
-                    Rectangle {
-                        id: textRectangle
-                        width: listViewWindow.width - backButton.width - buttonRow.spacing
-                        height: backButton.height
-                        color: listViewWindow.color
-                        Text {
-                            id: textLabel
-                            text: labelText
-                            width: textRectangle.width
-                            wrapMode: Text.Wrap
+                        if (currentNode.name === "") {
+                            topLevel = true;
                         }
                     }
                 }
 
-                RowLayout {
-                    ListView {
-                        id: myListView
-                        // anchors.horizontalCenter: parent.horizontalCenter
-                        height: contentHeight
-                        width: 200
-                        spacing: 0
-                        model: nodesOnLevel
-                        delegate: Component {
-                            Button {
-                                text: modelData
-                                width: listViewWindow.width
-                                onClicked: {
-                                    processSelectedNode(text);
-                                }
-                                highlighted: pressed
+                Text {
+                    Layout.fillWidth: true
+                    id: textLabel
+                    text: labelText
+                    wrapMode: Text.Wrap
+                }
+
+                ListView {
+                    id: myListView
+                    Layout.columnSpan: 2
+                    Layout.fillWidth: true
+                    model: nodesOnLevel
+                    Layout.preferredHeight: contentHeight
+                    delegate: Component {
+                        Button {
+                            text: modelData
+                            anchors {
+                                left: parent.left
+                                right: parent.right
                             }
+                            onClicked: {
+                                processSelectedNode(text);
+                            }
+                            highlighted: pressed
                         }
                     }
                 }
