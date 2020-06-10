@@ -148,7 +148,9 @@ Rectangle {
         }
 
         Component.onDestruction: {
-            exportJob.jobStatusChanged.disconnect(updateJobStatus);
+            if (exportJob) {
+                exportJob.jobStatusChanged.disconnect(updateJobStatus);
+            }
         }
     }
     //! [ExportTiles ExportTileCacheTask]

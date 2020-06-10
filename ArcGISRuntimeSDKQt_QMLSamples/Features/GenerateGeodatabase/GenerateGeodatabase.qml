@@ -169,7 +169,9 @@ Rectangle {
         }
 
         Component.onDestruction: {
+            if (generateJob) {
             generateJob.jobStatusChanged.disconnect(updateGenerateJobStatus);
+            }
         }
     }
 
