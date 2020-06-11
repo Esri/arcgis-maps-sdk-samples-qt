@@ -104,13 +104,6 @@ Rectangle {
             }
         }
 
-        SimpleMarkerSymbol {
-            id: stopLabel
-            style: Enums.SimpleMarkerSymbolStyleCircle
-            color: "red"
-            size: 20
-        }
-
         RouteTask {
             id: routeTask
             url: dataPath + "san_diego/sandiego.geodatabase"
@@ -201,6 +194,10 @@ Rectangle {
                     console.warn("Outside of routable area");
                     return;
                 }
+                const stopLabel = ArcGISRuntimeEnvironment.createObject("TextSymbol", {color: "red",
+                                                                            horizontalAlignment: Enums.HorizontalAlignmentRight,
+                                                                            verticalAlignment: Enums.VerticalAlignmentTop,
+                                                                            size: 20, text: stopsOverlay.graphics.count + 1});
                 const stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopLabel});
                 stopsOverlay.graphics.append(stopGraphic);
                 routeTask.findRoute();
