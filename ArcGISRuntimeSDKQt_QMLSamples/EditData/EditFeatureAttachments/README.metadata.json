@@ -38,8 +38,8 @@
         "AttachmentListModel"
     ],
     "snippets": [
-        "main.qml",
-        "EditFeatureAttachments.qml"
+        "EditFeatureAttachments.qml",
+        "main.qml"
     ],
     "title": "Edit feature attachments"
 }
