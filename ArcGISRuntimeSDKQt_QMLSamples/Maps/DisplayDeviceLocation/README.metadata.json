@@ -13,7 +13,7 @@
         "mobile",
         "navigation",
         "LocationDisplay",
-        "LocationDisplay::setAutoPanMode",
+        "LocationDisplay.autoPanMode",
         "Map",
         "MapView"
     ],
@@ -22,7 +22,7 @@
     ],
     "relevant_apis": [
         "LocationDisplay",
-        "LocationDisplay::setAutoPanMode",
+        "LocationDisplay.autoPanMode",
         "Map",
         "MapView"
     ],

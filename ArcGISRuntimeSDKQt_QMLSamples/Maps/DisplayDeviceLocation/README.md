@@ -28,7 +28,7 @@ Tap the button in the lower right (which starts in Stop mode). A menu will appea
 
 * Map
 * LocationDisplay
-* LocationDisplay::setAutoPanMode
+* LocationDisplay.autoPanMode
 * MapView
 
 ## Additional information
