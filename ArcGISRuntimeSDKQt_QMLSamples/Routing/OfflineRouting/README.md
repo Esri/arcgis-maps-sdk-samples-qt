@@ -6,7 +6,7 @@ This sample demonstrates how to solve a route on-the-fly using offline data.
 
 ## How to use the sample
 
-Click near a road to add a stop to the route. A red graphic will show the position of the stop. After adding at least 2 stops, a route will display. Use the combo box in the top left corner to choose between the travel modes "Fastest" and "Shortest" (how the route is optimized). To move a stop, click on the graphic, and while continuing to press on the graphic, move the mouse to reposition. Release the mouse to set the new position. The route will update on-the-fly while moving stops. The green box marks the boundary of the route geodatabase.
+Click near a road to start adding a stop to the route, click again to place it on the map. A number graphic will show its order in the route. After adding at least 2 stops, a route will display. Choose "Fastest" or "Shortest" to control how the route is optimized. To move a stop, click on the graphic, and while continuing to press on the graphic, move the mouse to reposition. Release the mouse to set the new position. The route will update on-the-fly while moving stops. The green box marks the boundary of the route geodatabase.
 
 ## How it works
 

@@ -29,6 +29,7 @@ class Graphic;
 class GraphicsOverlay;
 class Map;
 class MapQuickView;
+class PictureMarkerSymbol;
 class RouteTask;
 }
 }
@@ -70,6 +71,7 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
 
+  Esri::ArcGISRuntime::PictureMarkerSymbol* m_pinSymbol = nullptr;
   Esri::ArcGISRuntime::Graphic* m_selectedGraphic = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_stopsOverlay = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_routeOverlay = nullptr;
