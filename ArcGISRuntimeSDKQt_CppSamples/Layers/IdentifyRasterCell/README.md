@@ -44,4 +44,3 @@ The data shown is an NDVI classification derived from MODIS imagery between 27 A
 ## Tags
 
 band, cell, cell value, continuous, discrete, identify, pixel, pixel value, raster
-

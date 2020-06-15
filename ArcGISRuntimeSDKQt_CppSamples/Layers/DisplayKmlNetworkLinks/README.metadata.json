@@ -12,19 +12,19 @@
         "Network Link",
         "Network Link Control",
         "OGC",
-        "`KmlDataset(Url)`",
-        "`KmlLayer(KmlDataset)`",
-        "`KmlNetworkLink`",
-        "`kmlNetworkLinkMessageReceived`"
+        "KmlDataset(Url)",
+        "KmlLayer(KmlDataset)",
+        "KmlNetworkLink",
+        "kmlNetworkLinkMessageReceived"
     ],
     "redirect_from": [
         "/qt/latest/cpp/sample-code/sample-qt-displaykmlnetworklinks.htm"
     ],
     "relevant_apis": [
-        "`KmlDataset(Url)`",
-        "`KmlLayer(KmlDataset)`",
-        "`KmlNetworkLink`",
-        "`kmlNetworkLinkMessageReceived`"
+        "KmlDataset(Url)",
+        "KmlLayer(KmlDataset)",
+        "KmlNetworkLink",
+        "kmlNetworkLinkMessageReceived"
     ],
     "snippets": [
         "DisplayKmlNetworkLinks.qml",

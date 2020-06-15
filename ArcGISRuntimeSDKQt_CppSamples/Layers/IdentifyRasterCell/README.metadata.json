@@ -21,7 +21,6 @@
         "pixel",
         "pixel value",
         "raster",
-        "",
         "GeoView::identifyLayer(...)",
         "IdentifyLayerResult",
         "RasterCell",
@@ -32,7 +31,6 @@
         ""
     ],
     "relevant_apis": [
-        "",
         "GeoView::identifyLayer(...)",
         "IdentifyLayerResult",
         "RasterCell",
