@@ -22,7 +22,7 @@
         "AnalysisOverlay",
         "GeoElementViewshed",
         "GeodeticDistanceResult",
-        "GeometryEngine.distanceGeodetic (used to animate the vehicle)",
+        "GeometryEngine.distanceGeodetic",
         "ModelSceneSymbol",
         "OrbitGeoElementCameraController"
     ],

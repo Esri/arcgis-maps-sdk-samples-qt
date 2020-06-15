@@ -32,7 +32,7 @@
         "GeoView",
         "MapView",
         "SceneView",
-        "SetViewpoint",
+        "setViewpoint",
         "currentViewpoint",
         "viewpointChanged"
     ],

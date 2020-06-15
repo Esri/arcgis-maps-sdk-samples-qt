@@ -18,7 +18,7 @@
         "surface placement",
         "Graphic",
         "GraphicsOverlay",
-        "LayerSceneProperties.SurfacePlacement",
+        "LayerSceneProperties.surfacePlacement",
         "SceneProperties",
         "Surface"
     ],
@@ -28,7 +28,7 @@
     "relevant_apis": [
         "Graphic",
         "GraphicsOverlay",
-        "LayerSceneProperties.SurfacePlacement",
+        "LayerSceneProperties.surfacePlacement",
         "SceneProperties",
         "Surface"
     ],

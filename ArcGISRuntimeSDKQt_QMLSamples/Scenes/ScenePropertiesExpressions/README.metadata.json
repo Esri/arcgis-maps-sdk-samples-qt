@@ -20,7 +20,7 @@
         "SceneProperties.headingExpression",
         "SceneProperties.pitchExpression",
         "SimpleRenderer",
-        "SimpleRenderer.RendererSceneProperties"
+        "SimpleRenderer.rendererSceneProperties"
     ],
     "redirect_from": [
         "/qt/latest/qml/sample-code/sample-qt-scenepropertiesexpressions.htm"
@@ -32,7 +32,7 @@
         "SceneProperties.headingExpression",
         "SceneProperties.pitchExpression",
         "SimpleRenderer",
-        "SimpleRenderer.RendererSceneProperties"
+        "SimpleRenderer.rendererSceneProperties"
     ],
     "snippets": [
         "ScenePropertiesExpressions.qml"

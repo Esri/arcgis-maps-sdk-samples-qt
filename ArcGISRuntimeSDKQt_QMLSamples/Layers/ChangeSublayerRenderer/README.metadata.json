@@ -16,7 +16,7 @@
         "ArcGISMapImageLayer",
         "ArcGISMapImageSubLayer",
         "ClassBreaksRenderer",
-        "ClassBreaksRenderer.ClassBreak"
+        "ClassBreaksRenderer.classBreak"
     ],
     "redirect_from": [
         "/qt/latest/qml/sample-code/sample-qt-changesublayerrenderer.htm"
@@ -25,7 +25,7 @@
         "ArcGISMapImageLayer",
         "ArcGISMapImageSubLayer",
         "ClassBreaksRenderer",
-        "ClassBreaksRenderer.ClassBreak"
+        "ClassBreaksRenderer.classBreak"
     ],
     "snippets": [
         "ChangeSublayerRenderer.qml"
