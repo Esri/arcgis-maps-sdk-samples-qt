@@ -22,7 +22,7 @@ Tap on the raster or press on the raster, hold, and move around the raster to id
    * Show the callout.
 
 ## Relevant API
- 
+
 * GeoView::identifyLayer(...)
 * IdentifyLayerResult
 * RasterCell

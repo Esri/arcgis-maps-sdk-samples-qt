@@ -21,8 +21,8 @@
         "GeoView",
         "MapView",
         "SceneView",
-        "SetViewpoint",
         "currentViewpoint",
+        "setViewpoint",
         "viewpointChanged"
     ],
     "redirect_from": [
@@ -32,8 +32,8 @@
         "GeoView",
         "MapView",
         "SceneView",
-        "setViewpoint",
         "currentViewpoint",
+        "setViewpoint",
         "viewpointChanged"
     ],
     "snippets": [

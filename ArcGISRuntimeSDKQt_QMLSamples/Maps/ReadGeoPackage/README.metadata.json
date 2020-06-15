@@ -20,9 +20,9 @@
         "raster",
         "table",
         "GeoPackage",
-        "GeoPackage.loadStatusChanged",
         "GeoPackage.geoPackageFeatureTables",
         "GeoPackage.geoPackageRasters",
+        "GeoPackage.loadStatusChanged",
         "GeoPackageFeatureTable",
         "GeoPackageRaster"
     ],
@@ -31,9 +31,9 @@
     ],
     "relevant_apis": [
         "GeoPackage",
-        "GeoPackage.loadStatusChanged",
         "GeoPackage.geoPackageFeatureTables",
         "GeoPackage.geoPackageRasters",
+        "GeoPackage.loadStatusChanged",
         "GeoPackageFeatureTable",
         "GeoPackageRaster"
     ],

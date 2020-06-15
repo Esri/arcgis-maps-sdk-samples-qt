@@ -22,7 +22,7 @@ The feature collection is loaded from the Portal item when the sample starts.
 6. Add the feature collection layer to the map's `OperationalLayers` collection.
 
 ## Relevant API
- 
+
 * FeatureCollection
 * FeatureCollectionLayer
 * Portal

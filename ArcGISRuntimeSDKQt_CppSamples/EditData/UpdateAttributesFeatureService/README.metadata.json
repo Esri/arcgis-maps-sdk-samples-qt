@@ -12,7 +12,7 @@
         "edit",
         "editing",
         "information",
-        "value"
+        "value",
         "ArcGISFeature",
         "FeatureLayer",
         "ServiceFeatureTable"

@@ -18,19 +18,19 @@
         "gpkg",
         "package",
         "standards",
-        "ArcGISMap",
         "FeatureLayer",
         "GeoPackage",
-        "GeoPackageFeatureTable"
+        "GeoPackageFeatureTable",
+        "Map"
     ],
     "redirect_from": [
         "/qt/latest/qml/sample-code/sample-qt-featurelayergeopackage.htm"
     ],
     "relevant_apis": [
-        "Map",
         "FeatureLayer",
         "GeoPackage",
-        "GeoPackageFeatureTable"
+        "GeoPackageFeatureTable",
+        "Map"
     ],
     "snippets": [
         "FeatureLayer_GeoPackage.qml"
