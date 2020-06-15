@@ -62,6 +62,7 @@ Rectangle {
 
     // Display a ComboBox with options for each operation
     ComboBox {
+        id: comboBox
         anchors {
             left: parent.left
             top: parent.top

@@ -16,7 +16,6 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-//import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.9
 import QtQuick.Layouts 1.11
 import QtQuick.Dialogs 1.1
@@ -35,7 +34,7 @@ Rectangle {
     property var createAndDisplayRoute
     property var routeParameters: null
     property var directionListModel: null
-    property bool addStops: false
+    property bool addStops: true
     property bool addBarriers: false
     property bool findBestSeq: false
     property bool preserveFirstStp: false
@@ -232,6 +231,7 @@ Rectangle {
                         Button {
                             id: stopButton
                             text: "Add stop"
+                            checked: true
                             highlighted: checked
                             onClicked: {
                                 checked = true;

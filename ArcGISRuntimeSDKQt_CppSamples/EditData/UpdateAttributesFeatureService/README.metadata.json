@@ -6,12 +6,13 @@
         "screenshot.png"
     ],
     "keywords": [
+        "amend",
         "attribute",
-        "coded value",
-        "coded value domain",
-        "domain",
+        "details",
+        "edit",
         "editing",
-        "value",
+        "information",
+        "value"
         "ArcGISFeature",
         "FeatureLayer",
         "ServiceFeatureTable"

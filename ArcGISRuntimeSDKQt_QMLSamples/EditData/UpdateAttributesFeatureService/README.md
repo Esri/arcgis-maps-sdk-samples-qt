@@ -36,4 +36,4 @@ This is done by first obtaining the inspection point feature after it is selecte
 
 ## Tags
 
-attribute, coded value, coded value domain, domain, editing, value
+amend, attribute, details, edit, editing, information, value

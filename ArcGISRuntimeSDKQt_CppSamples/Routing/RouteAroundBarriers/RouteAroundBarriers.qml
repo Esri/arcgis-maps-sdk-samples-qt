@@ -59,6 +59,7 @@ Item {
                         Button {
                             id: stopButton
                             text: "Add stop"
+                            checked: true
                             highlighted: checked
                             onClicked: {
                                 checked = true;
