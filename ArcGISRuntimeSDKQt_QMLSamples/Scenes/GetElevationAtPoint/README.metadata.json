@@ -6,7 +6,6 @@
         "screenshot.png"
     ],
     "keywords": [
-        "MapViews SceneViews and UI",
         "elevation",
         "surface",
         "ArcGISTiledElevationSource",

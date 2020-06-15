@@ -21,26 +21,26 @@
         "story",
         "tour",
         "KmlTour",
-        "KmlTour.tourStatus",
-        "KmlTour.tourStatusChanged",
+        "KmlTour::tourStatus",
+        "KmlTour::tourStatusChanged",
         "KmlTourController",
-        "KmlTourController.pause()",
-        "KmlTourController.play()",
-        "KmlTourController.reset()",
-        "KmlTourController.tour"
+        "KmlTourController::pause()",
+        "KmlTourController::play()",
+        "KmlTourController::reset()",
+        "KmlTourController::tour"
     ],
     "redirect_from": [
         ""
     ],
     "relevant_apis": [
         "KmlTour",
-        "KmlTour.tourStatus",
-        "KmlTour.tourStatusChanged",
+        "KmlTour::tourStatus",
+        "KmlTour::tourStatusChanged",
         "KmlTourController",
-        "KmlTourController.pause()",
-        "KmlTourController.play()",
-        "KmlTourController.reset()",
-        "KmlTourController.tour"
+        "KmlTourController::pause()",
+        "KmlTourController::play()",
+        "KmlTourController::reset()",
+        "KmlTourController::tour"
     ],
     "snippets": [
         "PlayAKmlTour.qml",

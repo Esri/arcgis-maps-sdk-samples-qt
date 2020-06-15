@@ -47,5 +47,5 @@
         "GenerateWindow.qml",
         "OverridesWindow.qml"
     ],
-    "title": "Generate Offline Map (Overrides)"
+    "title": "Generate offline map (overrides)"
 }

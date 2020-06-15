@@ -12,7 +12,6 @@
         "features",
         "rendering",
         "static",
-        "#",
         "Camera",
         "FeatureLayer",
         "FeatureLayer.renderingMode",
@@ -24,7 +23,6 @@
         "/qt/latest/qml/sample-code/sample-qt-featurelayerrenderingmodescene.htm"
     ],
     "relevant_apis": [
-        "#",
         "Camera",
         "FeatureLayer",
         "FeatureLayer.renderingMode",

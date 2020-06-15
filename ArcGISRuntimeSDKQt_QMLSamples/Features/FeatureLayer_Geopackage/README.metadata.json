@@ -27,13 +27,12 @@
         "/qt/latest/qml/sample-code/sample-qt-featurelayergeopackage.htm"
     ],
     "relevant_apis": [
-        "ArcGISMap",
+        "Map",
         "FeatureLayer",
         "GeoPackage",
         "GeoPackageFeatureTable"
     ],
     "snippets": [
-        "",
         "FeatureLayer_GeoPackage.qml"
     ],
     "title": "Feature layer (GeoPackage)"

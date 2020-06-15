@@ -33,10 +33,9 @@
         "Surface"
     ],
     "snippets": [
-        "",
+        "Surface_Placement.qml",
         "Surface_Placement.cpp",
-        "Surface_Placement.h",
-        "Surface_Placement.qml"
+        "Surface_Placement.h"
     ],
     "title": "Surface placement"
 }

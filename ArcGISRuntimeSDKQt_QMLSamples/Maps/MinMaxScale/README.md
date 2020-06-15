@@ -1,4 +1,4 @@
-# Min-Max Scale
+# Min-Max scale
 
 Restrict zooming between specific scale ranges.
 

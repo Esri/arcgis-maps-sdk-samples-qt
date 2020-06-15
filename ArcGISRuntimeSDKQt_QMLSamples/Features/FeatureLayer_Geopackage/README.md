@@ -22,7 +22,7 @@ Pan and zoom around the map. View the data loaded from the geopackage.
 
 ## Relevant API
 
-* ArcGISMap
+* Map
 * FeatureLayer
 * GeoPackage
 * GeoPackageFeatureTable
