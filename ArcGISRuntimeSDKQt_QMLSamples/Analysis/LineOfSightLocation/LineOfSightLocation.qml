@@ -61,13 +61,13 @@ Rectangle {
                     x: -73.06958032962375
                     y: -49.253112971555446
                     z: 2000
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
                 targetLocation: Point {
                     x: -73.079266999709162
                     y: -49.300457676730559
                     z: 1312
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
 
                 // Configure the LoS color and width
@@ -97,7 +97,7 @@ Rectangle {
                                                                 x: -73.0815,
                                                                 y: -49.3272,
                                                                 z: 4059,
-                                                                spatialReference: SpatialReference.createWgs84()
+                                                                spatialReference: Factory.SpatialReference.createWgs84()
                                                             });
 
         const camera = ArcGISRuntimeEnvironment.createObject("Camera", {

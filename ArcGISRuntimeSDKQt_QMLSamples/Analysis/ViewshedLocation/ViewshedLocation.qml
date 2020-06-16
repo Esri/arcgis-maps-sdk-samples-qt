@@ -49,7 +49,7 @@ Rectangle {
                                                                             x: 6.86088,
                                                                             y: 45.3604,
                                                                             z: 3582.55,
-                                                                            spatialReference: SpatialReference.createWgs84()
+                                                                            spatialReference: Factory.SpatialReference.createWgs84()
                                                                         });
 
                     const camera = ArcGISRuntimeEnvironment.createObject("Camera", {

@@ -64,7 +64,7 @@ Rectangle {
                             // Create a new point feature, provide geometry and attribute values
                             const pointFeature = pointsTable.createFeature();
                             pointFeature.attributes.replaceAttribute("Place", "Current location");
-                            const point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: SpatialReference.createWgs84()});
+                            const point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: Factory.SpatialReference.createWgs84()});
                             pointFeature.geometry = point1;
 
                             // Add to the table
@@ -99,9 +99,9 @@ Rectangle {
                             // Create a new polyline feature, provide geometry and attribute values
                             const lineFeature = linesTable.createFeature();
                             lineFeature.attributes.replaceAttribute("Boundary", "AManAPlanACanalPanama");
-                            const point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: SpatialReference.createWgs84()});
-                            const point2 = ArcGISRuntimeEnvironment.createObject("Point", {x: -80.035568, y: 9.432302, spatialReference: SpatialReference.createWgs84()});
-                            const lineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
+                            const point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: Factory.SpatialReference.createWgs84()});
+                            const point2 = ArcGISRuntimeEnvironment.createObject("Point", {x: -80.035568, y: 9.432302, spatialReference: Factory.SpatialReference.createWgs84()});
+                            const lineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: Factory.SpatialReference.createWgs84()});
                             lineBuilder.addPoint(point1);
                             lineBuilder.addPoint(point2);
                             lineFeature.geometry = lineBuilder.geometry;
@@ -145,10 +145,10 @@ Rectangle {
                             // Create a new point feature, provide geometry and attribute values
                             const polygonFeature = linesTable.createFeature();
                             polygonFeature.attributes.replaceAttribute("Area", "Restricted area");
-                            const point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: SpatialReference.createWgs84()});
-                            const point2 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.337936, y: 8.638903, spatialReference: SpatialReference.createWgs84()});
-                            const point3 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.11409, y: 8.895422, spatialReference: SpatialReference.createWgs84()});
-                            const polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: SpatialReference.createWgs84()});
+                            const point1 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.497238, y: 8.849289, spatialReference: Factory.SpatialReference.createWgs84()});
+                            const point2 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.337936, y: 8.638903, spatialReference: Factory.SpatialReference.createWgs84()});
+                            const point3 = ArcGISRuntimeEnvironment.createObject("Point", {x: -79.11409, y: 8.895422, spatialReference: Factory.SpatialReference.createWgs84()});
+                            const polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: Factory.SpatialReference.createWgs84()});
                             polygonBuilder.addPoint(point1);
                             polygonBuilder.addPoint(point2);
                             polygonBuilder.addPoint(point3);

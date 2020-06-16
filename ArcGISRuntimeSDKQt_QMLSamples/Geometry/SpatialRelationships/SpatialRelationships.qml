@@ -53,7 +53,7 @@ Rectangle {
                 }
 
                 Component.onCompleted: {
-                    const polyBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: SpatialReference.createWebMercator()});
+                    const polyBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: Factory.SpatialReference.createWebMercator()});
                     polyBuilder.addPointXY(-5991501.677830, 5599295.131468);
                     polyBuilder.addPointXY(-6928550.398185, 2087936.739807);
                     polyBuilder.addPointXY(-3149463.800709, 1840803.011362);
@@ -74,7 +74,7 @@ Rectangle {
                 }
 
                 Component.onCompleted: {
-                    const polyBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: SpatialReference.createWebMercator()});
+                    const polyBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: Factory.SpatialReference.createWebMercator()});
                     polyBuilder.addPointXY(-4354240.726880, -609939.795721);
                     polyBuilder.addPointXY(-3427489.245210, 2139422.933233);
                     polyBuilder.addPointXY(-2109442.693501, 4301843.057130);

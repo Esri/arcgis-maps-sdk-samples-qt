@@ -85,7 +85,7 @@ Rectangle {
         const corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
         const envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
         envBuilder.setCorners(corner1, corner2);
-        const mapExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
+        const mapExtent = GeometryEngine.project(envBuilder.geometry, Factory.SpatialReference.createWebMercator());
         offlineMapTask.createDefaultGenerateOfflineMapParameters(mapExtent);
     }
 

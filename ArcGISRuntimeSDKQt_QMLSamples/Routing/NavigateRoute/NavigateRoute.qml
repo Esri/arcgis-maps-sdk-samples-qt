@@ -127,7 +127,7 @@ Rectangle {
                 createDefaultParametersResult.returnStops = true;
                 createDefaultParametersResult.returnDirections = true;
                 createDefaultParametersResult.returnRoutes = true;
-                createDefaultParametersResult.outputSpatialReference = SpatialReference.createWgs84();
+                createDefaultParametersResult.outputSpatialReference = Factory.SpatialReference.createWgs84();
                 createDefaultParametersResult.setStops([stop1, stop2, stop3]);
 
                 //solve the route with these parameters

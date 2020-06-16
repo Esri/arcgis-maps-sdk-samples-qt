@@ -63,7 +63,7 @@ Rectangle {
                     xMin: -122.50017717584528
                     yMax: 37.81638388695054
                     yMin: 37.745000054347535
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
             }
         }
@@ -247,7 +247,7 @@ Rectangle {
                 const corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
                 const envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
                 envBuilder.setCorners(corner1, corner2);
-                generateExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
+                generateExtent = GeometryEngine.project(envBuilder.geometry, Factory.SpatialReference.createWebMercator());
             }
         }
     }

@@ -68,7 +68,7 @@ Rectangle {
                     const renderer = ArcGISRuntimeEnvironment.createObject("DictionaryRenderer",{
                                                                                dictionarySymbolStyle:
                                                                                //! [Create Dictionary Symbol Style QML]
-                                                                               DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
+                                                                               Factory.DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
                                                                                //! [Create Dictionary Symbol Style QML]
                                                                            });
                     layer.renderer = renderer;
