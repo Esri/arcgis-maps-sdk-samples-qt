@@ -53,7 +53,7 @@ Rectangle {
                     x: -4.49492
                     y: 48.3808
                     z: 48.2511
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
                 targetScale: 62.01
 

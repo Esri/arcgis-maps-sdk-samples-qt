@@ -31,7 +31,7 @@ Rectangle {
     readonly property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
     property var searchParamList: [[],[],[],[],[]]
-    property DictionarySymbolStyle dictionarySymbolStyle: DictionarySymbolStyle.createFromFile(dataPath);
+    property DictionarySymbolStyle dictionarySymbolStyle: Factory.DictionarySymbolStyle.createFromFile(dataPath);
 
     Connections {
         target: dictionarySymbolStyle

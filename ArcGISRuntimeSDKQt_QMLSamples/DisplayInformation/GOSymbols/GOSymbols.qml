@@ -61,7 +61,7 @@ Rectangle {
     Point {
         x: -2.712642647560347
         y: 56.062812566811544
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: Factory.SpatialReference.createWgs84()
 
         onComponentCompleted: {
             buoyLocArray.push(this);
@@ -72,7 +72,7 @@ Rectangle {
     Point {
         x: -2.6908416959572303
         y: 56.06444173689877
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: Factory.SpatialReference.createWgs84()
 
         onComponentCompleted: {
             buoyLocArray.push(this);
@@ -83,7 +83,7 @@ Rectangle {
     Point {
         x: -2.6697273884990937
         y: 56.064250073402874
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: Factory.SpatialReference.createWgs84()
 
         onComponentCompleted: {
             buoyLocArray.push(this);
@@ -94,7 +94,7 @@ Rectangle {
     Point {
         x: -2.6395150461199726
         y: 56.06127916736989
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: Factory.SpatialReference.createWgs84()
 
         onComponentCompleted: {
             buoyLocArray.push(this);
@@ -117,7 +117,7 @@ Rectangle {
     Point {
         x: -2.640631
         y: 56.078083
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: Factory.SpatialReference.createWgs84()
 
         onComponentCompleted: {
             textLocArray.push(this);
@@ -128,7 +128,7 @@ Rectangle {
     Point {
         x: -2.720324
         y: 56.073569
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: Factory.SpatialReference.createWgs84()
 
         onComponentCompleted: {
             textLocArray.push(this);
@@ -152,7 +152,7 @@ Rectangle {
     // polygon for nesting ground
     PolygonBuilder {
         id: nestingGroundPolygonBuilder
-        spatialReference: SpatialReference.createWgs84()
+        spatialReference: Factory.SpatialReference.createWgs84()
     }
 
     // symbol for nesting ground
