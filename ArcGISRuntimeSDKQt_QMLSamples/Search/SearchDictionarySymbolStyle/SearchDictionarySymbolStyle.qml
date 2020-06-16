@@ -31,7 +31,7 @@ Rectangle {
     readonly property var hintsModel: ["Fire", "Sustainment Points", "3", "Control Measure", "25212300_6"]
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
     property var searchParamList: [[],[],[],[],[]]
-    property DictionarySymbolStyle dictionarySymbolStyle: DictionarySymbolStyle.createFromFile(dataPath);
+    property DictionarySymbolStyle dictionarySymbolStyle: Factory.DictionarySymbolStyle.createFromFile(dataPath);
 
     Connections {
         target: dictionarySymbolStyle
@@ -60,11 +60,8 @@ Rectangle {
 
         Column {
             id: fieldColumn
-            anchors {
-                left: parent.left
-                right: parent.right
-                margins: 8
-            }
+            Layout.fillWidth: true
+            Layout.margins: 8
             visible: !hideSearch.checked
             enabled: visible
 
@@ -254,10 +251,7 @@ Rectangle {
         Rectangle {
             id: bottomRectangle
             Layout.fillHeight: true
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
+            Layout.fillWidth: true
 
             //Listview of results returned from Dictionary
             ListView {

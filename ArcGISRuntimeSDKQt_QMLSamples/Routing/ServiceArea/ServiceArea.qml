@@ -162,7 +162,7 @@ Rectangle {
 
             busy = false;
             facilityParams = createDefaultParametersResult;
-            facilityParams.outputSpatialReference = SpatialReference.createWebMercator();
+            facilityParams.outputSpatialReference = Factory.SpatialReference.createWebMercator();
             facilityParams.returnPolygonBarriers = true;
             facilityParams.polygonDetail = Enums.ServiceAreaPolygonDetailHigh;
         }
@@ -278,7 +278,7 @@ Rectangle {
 
     function createBarrierBuilder() {
         barrierBuilder = ArcGISRuntimeEnvironment.createObject(
-                    "PolylineBuilder", {spatialReference: SpatialReference.createWebMercator()})
+                    "PolylineBuilder", {spatialReference: Factory.SpatialReference.createWebMercator()})
     }
 
     function handleBarrierPoint(mapPoint) {

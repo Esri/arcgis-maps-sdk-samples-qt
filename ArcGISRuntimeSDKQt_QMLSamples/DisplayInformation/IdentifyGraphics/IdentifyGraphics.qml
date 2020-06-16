@@ -84,7 +84,7 @@ Rectangle {
 
     Component.onCompleted: {
         // create the polygon by assigning points
-        const polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: SpatialReference.createWebMercator()});
+        const polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: Factory.SpatialReference.createWebMercator()});
         polygonBuilder.addPointXY(-20e5, 20e5);
         polygonBuilder.addPointXY(20e5, 20e5);
         polygonBuilder.addPointXY(20e5, -20e5);

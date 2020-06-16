@@ -53,7 +53,7 @@ Rectangle {
                     yMin: 5129980.36635111
                     xMax: -9813185.0602376
                     yMax: 5130215.41254146
-                    spatialReference: SpatialReference.createWebMercator();
+                    spatialReference: Factory.SpatialReference.createWebMercator();
                 }
             }
 

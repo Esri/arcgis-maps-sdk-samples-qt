@@ -111,12 +111,14 @@ Rectangle {
         anchors.fill: parent
         onClicked: {
             const clickedPoint = mapView.screenToLocation(mouseX, mouseY);
-            clickedPointGraphic.geometry = clickedPoint;
+            // normalizing the geometry before performing geometric operations
+            const normalizedPoint = GeometryEngine.normalizeCentralMeridian(clickedPoint);
+            clickedPointGraphic.geometry = normalizedPoint;
 
-            const nearestVertexPoint = GeometryEngine.nearestVertex(polygonBuilder.geometry, clickedPoint);
+            const nearestVertexPoint = GeometryEngine.nearestVertex(polygonBuilder.geometry, normalizedPoint);
             nearestVertexGraphic.geometry = nearestVertexPoint.coordinate;
 
-            const nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, clickedPoint);
+            const nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, normalizedPoint);
             nearestCoordinateGraphic.geometry = nearestCoordinateResult.coordinate;
 
             distancesLabel.text = `Vertex distance: ${(nearestVertexPoint.distance/1000.0).toFixed()} km

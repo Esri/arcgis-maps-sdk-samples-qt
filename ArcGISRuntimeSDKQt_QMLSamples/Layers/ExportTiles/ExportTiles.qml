@@ -148,7 +148,9 @@ Rectangle {
         }
 
         Component.onDestruction: {
-            exportJob.jobStatusChanged.disconnect(updateJobStatus);
+            if (exportJob) {
+                exportJob.jobStatusChanged.disconnect(updateJobStatus);
+            }
         }
     }
     //! [ExportTiles ExportTileCacheTask]
@@ -213,7 +215,7 @@ Rectangle {
                 const corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
                 const envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
                 envBuilder.setCorners(corner1, corner2);
-                tileCacheExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
+                tileCacheExtent = GeometryEngine.project(envBuilder.geometry, Factory.SpatialReference.createWebMercator());
                 exportTask.generateDefaultParameters();
             }
         }

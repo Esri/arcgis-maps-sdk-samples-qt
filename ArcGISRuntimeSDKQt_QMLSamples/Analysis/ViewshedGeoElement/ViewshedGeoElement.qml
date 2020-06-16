@@ -86,7 +86,7 @@ Rectangle {
                     x: -4.508708007847015
                     y: 48.38823243446344
                     z: 0
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
 
                 ModelSceneSymbol {

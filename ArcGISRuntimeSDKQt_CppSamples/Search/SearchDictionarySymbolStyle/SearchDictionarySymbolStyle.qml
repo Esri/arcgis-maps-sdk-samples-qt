@@ -38,15 +38,11 @@ SearchDictionarySymbolStyleSample {
         }
 
         Column {
+            id: fieldColumn
             visible: !hideSearch.checked
             enabled: visible
-
-            id: fieldColumn
-            anchors {
-                left: parent.left
-                right: parent.right
-                margins: 8
-            }
+            Layout.fillWidth: true
+            Layout.margins: 8
 
             Repeater {
                 id: repeater
@@ -226,10 +222,7 @@ SearchDictionarySymbolStyleSample {
         Rectangle {
             id: bottomRectangle
             Layout.fillHeight: true
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
+            Layout.fillWidth: true
 
             //Listview of results returned from Dictionary
             ListView {

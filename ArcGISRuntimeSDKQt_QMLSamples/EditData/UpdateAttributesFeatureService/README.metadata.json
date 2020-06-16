@@ -6,21 +6,13 @@
         "screenshot.png"
     ],
     "keywords": [
-        "edit feature attributes",
-        "attributes",
-        "edit features",
-        "MapView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "SpatialReference",
-        "ServiceFeatureTable",
-        "FeatureLayer",
-        "Feature",
-        "ArcGISFeature",
-        "FeatureEditResult",
-        "FeatureQueryResult",
-        "Point"
+        "amend",
+        "attribute",
+        "details",
+        "edit",
+        "editing",
+        "information",
+        "value"
     ],
     "redirect_from": "/qt/latest/qml/sample-code/sample-qt-updateattributesfeatureservice.htm",
     "relevant_apis": [

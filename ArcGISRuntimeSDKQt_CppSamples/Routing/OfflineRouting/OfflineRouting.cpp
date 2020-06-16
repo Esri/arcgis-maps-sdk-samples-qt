@@ -31,7 +31,6 @@
 #include "RouteParameters.h"
 #include "RouteResult.h"
 #include "RouteTask.h"
-#include "SimpleMarkerSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
 #include "Stop.h"
@@ -189,7 +188,7 @@ void OfflineRouting::connectSignals()
         qWarning() << "Outside of routable area.";
         return;
       }
-      SimpleMarkerSymbol* stopLabel = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 20, this);
+      TextSymbol* stopLabel = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::red, 20, HorizontalAlignment::Right, VerticalAlignment::Top, this);
       Graphic* stopGraphic = new Graphic(m_mapView->screenToLocation(e.x(), e.y()), stopLabel, this);
       m_stopsOverlay->graphics()->append(stopGraphic);
       findRoute();

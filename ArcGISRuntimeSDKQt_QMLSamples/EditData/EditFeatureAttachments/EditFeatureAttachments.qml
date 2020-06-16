@@ -307,7 +307,7 @@ Rectangle {
         id: fileDialog
         folder: {
             const locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation)
-            return locs.length > 0 ? locs.last() : "";
+            return locs.length > 0 ? locs[locs.length - 1] : "";
         }
 
         function doAddAttachment(){

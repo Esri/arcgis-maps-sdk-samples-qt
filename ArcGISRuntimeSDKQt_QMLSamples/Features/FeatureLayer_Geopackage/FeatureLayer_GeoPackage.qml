@@ -45,7 +45,7 @@ Rectangle {
                 Point {
                     y: 39.7294
                     x: -104.8319
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
                 targetScale: 200000
             }

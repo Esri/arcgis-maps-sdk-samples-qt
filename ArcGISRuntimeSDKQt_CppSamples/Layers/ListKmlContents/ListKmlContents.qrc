@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Layers/ListKmlContents">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>ListKmlContents.qml</file>
+        <file>ListKmlContents.h</file>
+        <file>ListKmlContents.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

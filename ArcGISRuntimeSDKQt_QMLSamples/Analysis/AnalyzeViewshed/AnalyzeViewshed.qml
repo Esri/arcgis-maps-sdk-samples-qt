@@ -42,7 +42,7 @@ Rectangle {
                 Point {
                     x: 6.84905317262762
                     y: 45.3790902612337
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
                 targetScale: 100000
             }
@@ -112,7 +112,7 @@ Rectangle {
             // Create a new feature collection table based upon point geometries using the current map view spatial reference
             const inputFeatures = ArcGISRuntimeEnvironment.createObject("FeatureCollectionTable", {
                                                                             geometryType: Enums.GeometryTypePoint,
-                                                                            spatialReference: SpatialReference.createWebMercator()
+                                                                            spatialReference: Factory.SpatialReference.createWebMercator()
                                                                         });
 
             // Create a new feature from the feature collection table. It will not have a coordinate location (x,y) yet
@@ -130,7 +130,7 @@ Rectangle {
                                                                                      });
 
                     // Request the output features to use the same SpatialReference as the map view
-                    viewshedParameters.outputSpatialReference = SpatialReference.createWebMercator();
+                    viewshedParameters.outputSpatialReference = Factory.SpatialReference.createWebMercator();
 
                     // Add an input location to the geoprocessing parameters
                     const inputs = {};

@@ -14,11 +14,11 @@ Click on the button to reload the Map. The load status of the Map will be displa
 
 ## How it works
 
-The `loadStatus` is `Enums.LoadStatusLoaded` when any of the following criteria are met:
-
-* The map has a valid spatial reference.
-* The map has an an initial viewpoint.
-* One of the map's predefined layers has been created.
+1. Create a `Map` and add it to a `MapView`.
+2. Connect to the `Map`'s `onloadStatusChanged` signal to query the map's load status. The `loadStatus` is `Enums.LoadStatusLoaded` when any of the following criteria are met:
+  * The map has a valid spatial reference.
+  * The map has an an initial viewpoint.
+  * One of the map's predefined layers has been created.
 
 ## Relevant API
 
