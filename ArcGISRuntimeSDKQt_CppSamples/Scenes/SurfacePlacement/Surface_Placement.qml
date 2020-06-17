@@ -57,6 +57,17 @@ SurfacePlacementSample {
 
                 onCheckedChanged: changeDrapedVisibility();
             }
+
+            Slider {
+                id: zValueSlider
+                from: 0
+                value: 70
+                to: 140
+                onMoved: {
+                    changeZValue(value);
+                }
+
+            }
         }
     }
     //! [add a sceneView component]
