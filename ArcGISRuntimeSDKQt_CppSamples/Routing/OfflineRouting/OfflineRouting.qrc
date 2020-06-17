@@ -8,5 +8,6 @@
         <file>screenshot.png</file>
         <file>sample.gif</file>
         <file>README.md</file>
+        <file>orange_symbol.png</file>
     </qresource>
 </RCC>

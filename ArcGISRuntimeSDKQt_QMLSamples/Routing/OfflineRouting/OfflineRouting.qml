@@ -28,6 +28,7 @@ Rectangle {
     height: 600
 
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data/tpk/"
+    readonly property url pinUrl: "qrc:/Samples/Routing/OfflineRouting/orange_symbol.png"
     property var findRoute;
     property Graphic selectedGraphic: null;
 
@@ -83,6 +84,14 @@ Rectangle {
                     width: 2
                 }
             }
+        }
+
+        PictureMarkerSymbol {
+            id: pinSymbol
+            url: pinUrl
+            height: 50
+            width: 50
+            offsetY: height/2
         }
 
         GraphicsOverlay {
@@ -194,11 +203,16 @@ Rectangle {
                     console.warn("Outside of routable area");
                     return;
                 }
-                const stopLabel = ArcGISRuntimeEnvironment.createObject("TextSymbol", {color: "red",
-                                                                            horizontalAlignment: Enums.HorizontalAlignmentRight,
-                                                                            verticalAlignment: Enums.VerticalAlignmentTop,
+                const textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {color: "white",
+                                                                            horizontalAlignment: Enums.HorizontalAlignmentCenter,
+                                                                            verticalAlignment: Enums.VerticalAlignmentBottom,
                                                                             size: 20, text: stopsOverlay.graphics.count + 1});
-                const stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopLabel});
+                textSymbol.offsetY = pinSymbol.height/2;
+                const stopSymbol = ArcGISRuntimeEnvironment.createObject("CompositeSymbol");
+                stopSymbol.symbols.append(pinSymbol);
+                stopSymbol.symbols.append(textSymbol);
+
+                const stopGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: clickedPoint, symbol: stopSymbol});
                 stopsOverlay.graphics.append(stopGraphic);
                 routeTask.findRoute();
             }
