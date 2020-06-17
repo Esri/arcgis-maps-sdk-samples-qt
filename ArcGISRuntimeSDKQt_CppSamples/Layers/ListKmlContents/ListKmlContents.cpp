@@ -189,17 +189,28 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
       emit currentNodeChanged();
       emit labelTextChanged();
 
-      Viewpoint vp = getViewpointFromKmlViewpoint(node);
+      qDebug("");
+      qDebug() << "node: " << node->name();
+      m_viewpoint = Viewpoint();
+      m_viewpointCamera = Camera();
+      getViewpointFromKmlViewpoint(node);
       if (m_needsAltitudeFixed)
       {
-        vp = getAltitudeAdjustedViewpoint(node, vp);
+        qDebug("fix altitude");
+        getAltitudeAdjustedViewpoint(node);
       }
+      qDebug() << "after fixAltitude check:" << m_viewpoint.toJson();
 
-      // set the scene view viewpoint to the extent of the selected node
-      Envelope nodeExtent = node->extent();
-      if (nodeExtent.isValid() && !nodeExtent.isEmpty())
+//      if (!m_viewpoint.isEmpty())
+//      {
+//        m_sceneView->setViewpoint(m_viewpoint);
+////        m_sceneView->setViewpointCameraAndWait(m_viewpointCamera);
+//        qDebug("viewpoint set");
+//      }
+      if (!m_viewpointCamera.isEmpty())
       {
-        m_sceneView->setViewpoint(Viewpoint(nodeExtent));
+        qDebug("setting camera");
+        m_sceneView->setViewpointCameraAndWait(m_viewpointCamera);
       }
 
       // reset m_lastLevel before levelNodeNames() is called
@@ -216,26 +227,28 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
   }
 }
 
-Viewpoint ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
+void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
 {
   KmlViewpoint kmlViewpoint = node->viewpoint();
   Viewpoint viewpoint;
 
   if (!kmlViewpoint.isEmpty())
   {
+    qDebug("getViewpoint: kmlViewpoint not empty");
     // altitude adjustment is needed for all but Absolute altitude mode
     m_needsAltitudeFixed = (kmlViewpoint.altitudeMode() != KmlAltitudeMode::Absolute);
-    qDebug() << "Altitude mode:" << int(kmlViewpoint.altitudeMode());
+
     switch (kmlViewpoint.type())
     {
     case KmlViewpointType::LookAt:
-      return Viewpoint(kmlViewpoint.location(), Camera(kmlViewpoint.location(),
-                                                       kmlViewpoint.range(), kmlViewpoint.heading(),
-                                                       kmlViewpoint.pitch(), kmlViewpoint.roll()));
+      m_viewpoint = Viewpoint(kmlViewpoint.location(), Camera(kmlViewpoint.location(), kmlViewpoint.range(),
+                                                              kmlViewpoint.heading(), kmlViewpoint.pitch(), kmlViewpoint.roll()));
+      return;
     case KmlViewpointType::Camera:
-      return Viewpoint(kmlViewpoint.location(), Camera(kmlViewpoint.location(),
-                                                       kmlViewpoint.heading(), kmlViewpoint.pitch(),
-                                                       kmlViewpoint.roll()));
+//      m_viewpointCamera = Camera(kmlViewpoint.location(), kmlViewpoint.heading(), kmlViewpoint.pitch(), kmlViewpoint.roll());
+      m_viewpoint = Viewpoint(kmlViewpoint.location(), Camera(kmlViewpoint.location(),
+                                                              kmlViewpoint.heading(), kmlViewpoint.pitch(), kmlViewpoint.roll()));
+      return;
     default:
       qWarning("Unexpected KmlViewpointType");
     }
@@ -253,7 +266,9 @@ Viewpoint ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
     {
       qDebug("height and width = 0");
       // default values based on Google Earth
-      return Viewpoint(nodeExtent, Camera(nodeExtent.center(), 1000, 0, 45, 0));
+      m_viewpoint = Viewpoint(nodeExtent);
+      m_viewpointCamera = Camera(nodeExtent.center(), 1000, 0, 45, 0);
+      return;
     }
     else
     {
@@ -263,22 +278,25 @@ Viewpoint ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
                                          nodeExtent.xMax() + bufferDistance, nodeExtent.yMax() + bufferDistance,
                                          nodeExtent.zMin() - bufferDistance, nodeExtent.zMax() + bufferDistance,
                                          SpatialReference::wgs84());
-      return Viewpoint(bufferedExtent);
+      m_viewpoint = Viewpoint(bufferedExtent);
     }
   }
   else
   {
     // can't show viewpoint
     m_needsAltitudeFixed = false;
-    return Viewpoint();
+    m_viewpoint = Viewpoint();
   }
 }
 
-Viewpoint ListKmlContents::getAltitudeAdjustedViewpoint(KmlNode* node, Viewpoint baseViewpoint)
+void ListKmlContents::getAltitudeAdjustedViewpoint(KmlNode* node)
 {
   // assume altitude mode is clamp-to-ground if not specified
   KmlAltitudeMode altMode = KmlAltitudeMode::ClampToGround;
   KmlViewpoint kmlViewpoint = node->viewpoint();
+
+  qDebug() << "inside altitude function: " << m_viewpoint.toJson();
+
   if (!kmlViewpoint.isEmpty())
   {
     altMode = kmlViewpoint.altitudeMode();
@@ -286,49 +304,23 @@ Viewpoint ListKmlContents::getAltitudeAdjustedViewpoint(KmlNode* node, Viewpoint
 
   // if altitude mode is Absolute, viewpoint doesn't need adjustment
   if (altMode == KmlAltitudeMode::Absolute)
-    return baseViewpoint;
+  {
+    return;
+  }
 
-  double altitude;
-  Envelope lookAtExtent = static_cast<Envelope>(baseViewpoint.targetGeometry());
-  Point lookAtPoint = static_cast<Point>(baseViewpoint.targetGeometry());
+  Envelope lookAtExtent = static_cast<Envelope>(m_viewpoint.targetGeometry());
+  Point lookAtPoint = static_cast<Point>(m_viewpoint.targetGeometry());
 
   if (lookAtExtent.isValid())
   {
     qDebug("extent");
-//    connect(m_scene->baseSurface(), &Surface::locationToElevationCompleted, this, [this, &altitude, &altMode, &lookAtExtent, &kmlViewpoint](QUuid, double elevation)
-//    {
-//      altitude = elevation;
-//      qDebug() << "Inside connection: " << altitude;
-
-//      Envelope  target;
-//      if (altMode == KmlAltitudeMode::ClampToGround)
-//      {
-//        target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(),
-//                          lookAtExtent.xMax(), lookAtExtent.yMax(),
-//                          altitude, lookAtExtent.depth() + altitude,
-//                          lookAtExtent.spatialReference());
-//      }
-//      else
-//      {
-//        target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(),
-//                          lookAtExtent.xMax(), lookAtExtent.yMax(),
-//                          lookAtExtent.zMin() + altitude, lookAtExtent.zMax() + altitude,
-//                          lookAtExtent.spatialReference());
-//      }
-
-//      if (!kmlViewpoint.isEmpty())
-//      {
-//        return ;
-//      }
-//    });
     m_scene->baseSurface()->locationToElevation(lookAtExtent.center());
-    qDebug() << "after function call";
-//        altitude = await MySceneView.Scene.BaseSurface.GetElevationAsync(lookAtExtent.GetCenter());
   }
-  if (lookAtPoint.isValid())
+  else if (lookAtPoint.isValid())
+  {
     qDebug("point");
-
-  return Viewpoint();
+    m_scene->baseSurface()->locationToElevation(lookAtPoint);
+  }
 }
 
 // recursively build list of all KML nodes
@@ -377,6 +369,109 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
 
   m_sceneView = sceneView;
   m_sceneView->setArcGISScene(m_scene);
+
+  connect(m_scene->baseSurface(), &Surface::locationToElevationCompleted, this, [this](QUuid, double elevation)
+  {
+    // assume altitude mode is clamp-to-ground if not specified
+    KmlAltitudeMode altMode = KmlAltitudeMode::ClampToGround;
+    KmlViewpoint kmlViewpoint = m_currentNode->viewpoint();
+
+    if (!kmlViewpoint.isEmpty())
+    {
+      altMode = kmlViewpoint.altitudeMode();
+    }
+    // if altitude mode is Absolute, viewpoint doesn't need adjustment
+    if (altMode == KmlAltitudeMode::Absolute)
+      return;
+
+    Envelope lookAtExtent = static_cast<Envelope>(m_viewpoint.targetGeometry());
+    Point lookAtPoint = static_cast<Point>(m_viewpoint.targetGeometry());
+
+    if (lookAtExtent.isValid())
+    {
+      Envelope  target;
+      if (altMode == KmlAltitudeMode::ClampToGround)
+      {
+        qDebug("clamp to ground");
+        qDebug() << "Elevation: " << elevation;
+
+        // if depth of extent is 0, add 100m to the elevation to get zMax
+        if (lookAtExtent.depth() == 0)
+        {
+          target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(),
+                            lookAtExtent.xMax(), lookAtExtent.yMax(),
+                            elevation, elevation + 100,
+                            lookAtExtent.spatialReference());
+        }
+        else
+        {
+          target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(),
+                            lookAtExtent.xMax(), lookAtExtent.yMax(),
+                            elevation, lookAtExtent.depth() + elevation,
+                            lookAtExtent.spatialReference());
+        }
+      }
+      else
+      {
+        qDebug("not");
+        target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(),
+                          lookAtExtent.xMax(), lookAtExtent.yMax(),
+                          lookAtExtent.zMin() + elevation, lookAtExtent.zMax() + elevation,
+                          lookAtExtent.spatialReference());
+      }
+
+
+      // if node has viewpoint specified, return adjusted geometry with adjusted camera
+      if (!kmlViewpoint.isEmpty())
+      {
+//        m_viewpoint = Viewpoint(target, m_viewpoint.camera().elevate(elevation));
+        m_sceneView->setViewpointCameraAndWait(m_viewpoint.camera().elevate(elevation));
+        m_viewpoint = Viewpoint(target);
+        return ;
+      }
+      else
+      {
+        qDebug("viewpoint empty");
+        qDebug() << "target.zMin: " << target.zMin();
+
+        m_viewpoint = Viewpoint(target);
+        qDebug() << m_viewpoint.toJson();
+        m_sceneView->setViewpoint(m_viewpoint);
+        return;
+      }
+    }
+    else if (lookAtPoint.isValid())
+    {
+      Point target;
+      if (altMode == KmlAltitudeMode::ClampToGround)
+      {
+        target = Point(lookAtPoint.x(), lookAtPoint.y(), elevation, lookAtPoint.spatialReference());
+      }
+      else
+      {
+        target = Point(lookAtPoint.x(), lookAtPoint.y(), lookAtPoint.z() + elevation, lookAtPoint.spatialReference());
+      }
+
+      // set the viewpoint using the adjusted target
+      if (!kmlViewpoint.isEmpty())
+      {
+        qDebug("setting viewpoint for Point");
+        m_sceneView->setViewpointCameraAndWait(m_viewpoint.camera().elevate(elevation));
+        m_viewpoint = Viewpoint(target);
+//        m_viewpoint = Viewpoint(target, m_viewpoint.camera().elevate(elevation));
+        return;
+      }
+      else
+      {
+        qDebug("using defaults for Point");
+        // use Google Earth default values to set camera
+        m_sceneView->setViewpointCameraAndWait(Camera(target, 1000, 0, 45, 0));
+        m_viewpoint = Viewpoint(target);
+//        m_viewpoint = Viewpoint(target, Camera(target, 1000, 0, 45, 0));
+        return;
+      }
+    }
+  });
 
   emit sceneViewChanged();
 }
