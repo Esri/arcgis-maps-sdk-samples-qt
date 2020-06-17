@@ -17,7 +17,6 @@
 #ifndef LISTKMLCONTENTS_H
 #define LISTKMLCONTENTS_H
 
-#include "Camera.h"
 #include "Viewpoint.h"
 
 namespace Esri
@@ -81,7 +80,6 @@ private:
   Esri::ArcGISRuntime::KmlNode* m_currentNode = nullptr;
   bool m_needsAltitudeFixed;
   Esri::ArcGISRuntime::Viewpoint m_viewpoint;
-  Esri::ArcGISRuntime::Camera m_viewpointCamera;
 };
 
 #endif // LISTKMLCONTENTS_H

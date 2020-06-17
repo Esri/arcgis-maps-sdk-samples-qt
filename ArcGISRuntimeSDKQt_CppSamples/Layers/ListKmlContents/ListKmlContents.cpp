@@ -190,7 +190,6 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
       emit labelTextChanged();
 
       m_viewpoint = Viewpoint();
-      m_viewpointCamera = Camera();
       getViewpointFromKmlViewpoint(node);
       if (m_needsAltitudeFixed)
       {
@@ -228,7 +227,6 @@ void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
                                                               kmlViewpoint.heading(), kmlViewpoint.pitch(), kmlViewpoint.roll()));
       return;
     case KmlViewpointType::Camera:
-//      m_viewpointCamera = Camera(kmlViewpoint.location(), kmlViewpoint.heading(), kmlViewpoint.pitch(), kmlViewpoint.roll());
       m_viewpoint = Viewpoint(kmlViewpoint.location(), Camera(kmlViewpoint.location(),
                                                               kmlViewpoint.heading(), kmlViewpoint.pitch(), kmlViewpoint.roll()));
       return;
@@ -248,7 +246,6 @@ void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
     {
       // default values based on Google Earth
       m_viewpoint = Viewpoint(nodeExtent);
-      m_viewpointCamera = Camera(nodeExtent.center(), 1000, 0, 45, 0);
       return;
     }
     else
@@ -432,9 +429,8 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
       {
         // use Google Earth default values to set camera
         m_viewpoint = Viewpoint(target);
-        m_viewpointCamera = Camera(target, 1000, 0, 45, 0);
         m_sceneView->setViewpoint(m_viewpoint);
-        m_sceneView->setViewpointCameraAndWait(m_viewpointCamera);
+        m_sceneView->setViewpointCameraAndWait(Camera(target, 1000, 0, 45, 0));
         return;
       }
     }
