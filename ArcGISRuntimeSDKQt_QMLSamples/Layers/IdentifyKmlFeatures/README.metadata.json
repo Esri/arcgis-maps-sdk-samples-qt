@@ -6,15 +6,21 @@
         "screenshot.png"
     ],
     "keywords": [
-        "Keyhole",
         "KML",
         "KMZ",
+        "Keyhole",
         "NOAA",
         "NWS",
-        "OGC", 
-        "weather"
+        "OGC",
+        "weather",
+        "GeoView.identifyLayer(...)",
+        "IdentifyLayerResult",
+        "KmlLayer",
+        "KmlPlacemark.balloonContent()"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "GeoView.identifyLayer(...)",
         "IdentifyLayerResult",

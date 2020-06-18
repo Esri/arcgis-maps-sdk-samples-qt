@@ -19,6 +19,8 @@ Load the sample to see a raster function applied to a raster.
 3. Use the raster function to create a new `Raster`.
 4. Set the raster to a `RasterLayer` and display it in the `Map`.
 
+## Relevant API
+
 * Raster
 * RasterFunction
 * RasterLayer

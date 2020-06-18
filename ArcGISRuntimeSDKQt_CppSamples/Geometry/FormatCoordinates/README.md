@@ -2,11 +2,11 @@
 
 Format coordinates in a variety of common notations.
 
+![](screenshot.png)
+
 ## Use case
 
 The coordinate formatter can format a map location in WGS84 in a number of common coordinate notations. Parsing one of these formats to a location is also supported. Formats include decimal degrees; degrees, minutes, seconds; Universal Transverse Mercator (UTM), and United States National Grid (USNG).
-
-![](screenshot.png)
 
 ## How to use the sample
 

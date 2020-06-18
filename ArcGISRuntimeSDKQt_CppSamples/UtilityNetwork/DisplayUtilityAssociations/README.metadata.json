@@ -11,9 +11,15 @@
         "attachment",
         "connectivity",
         "containment",
-        "relationships"
+        "relationships",
+        "GraphicsOverlay",
+        "UtilityAssociation",
+        "UtilityAssociationType",
+        "UtilityNetwork"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "GraphicsOverlay",
         "UtilityAssociation",
@@ -24,8 +30,8 @@
         "DisplayUtilityAssociations.qml",
         "DisplayUtilityAssociations.cpp",
         "DisplayUtilityAssociations.h",
-        "SymbolImageProvider.h",
-        "SymbolImageProvider.cpp"
+        "SymbolImageProvider.cpp",
+        "SymbolImageProvider.h"
     ],
     "title": "Display utility associations"
 }

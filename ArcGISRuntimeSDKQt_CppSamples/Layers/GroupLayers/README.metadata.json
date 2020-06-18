@@ -6,12 +6,14 @@
         "screenshot.png"
     ],
     "keywords": [
-        "GroupLayer",
+        "LayerListModel",
         "Layers",
         "group layer",
-        "LayerListModel"
+        "GroupLayer"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "GroupLayer"
     ],

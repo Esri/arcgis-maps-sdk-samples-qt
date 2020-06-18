@@ -131,7 +131,8 @@ You can download the project from [GitHub](http://links.esri.com/qtSingleApplica
 The sample is designed to include the source files directly: update the `QT_SINGLEAPP_DIR`
 variable in `OAuthRedirectExample.pro` to point to the location you unpack it to.
 
-## Features
+## Relevant API
+
 - AuthenticationChallenge
 - AuthenticationManager
 - Portal

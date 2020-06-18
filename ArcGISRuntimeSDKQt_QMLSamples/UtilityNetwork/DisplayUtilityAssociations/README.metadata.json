@@ -11,9 +11,15 @@
         "attachment",
         "connectivity",
         "containment",
-        "relationships"
+        "relationships",
+        "GraphicsOverlay",
+        "UtilityAssociation",
+        "UtilityAssociationType",
+        "UtilityNetwork"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "GraphicsOverlay",
         "UtilityAssociation",

@@ -20,7 +20,7 @@ The contents of the KML file are shown in a list of buttons. Select a node to zo
 3. When a node is selected, use the node's `Extent` to determine a viewpoint and set the `SceneView` object's viewpoint to it.
 
 ## Relevant API
- 
+
 * KmlDataset
 * KmlDocument
 * KmlFolder

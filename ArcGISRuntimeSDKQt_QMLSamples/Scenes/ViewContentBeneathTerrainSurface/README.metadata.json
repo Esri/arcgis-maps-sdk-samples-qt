@@ -6,14 +6,16 @@
         "screenshot.png"
     ],
     "keywords": [
-        "Surface",
-        "Surface.navigationConstraint",
         "3D",
         "subsurface",
         "underground",
-        "utilities"
+        "utilities",
+        "Surface",
+        "Surface.navigationConstraint"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "Surface",
         "Surface.navigationConstraint"

@@ -1,4 +1,4 @@
-# Change Viewpoint
+# Change viewpoint
 
 Set the map view to a new viewpoint.
 

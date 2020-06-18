@@ -1,4 +1,4 @@
-# Change Basemap
+# Change basemap
 
 Change a map's basemap. A basemap is beneath all layers on an `Map` and is used to provide visual reference for the operational layers.
 

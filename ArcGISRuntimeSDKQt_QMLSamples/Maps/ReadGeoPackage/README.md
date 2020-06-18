@@ -24,7 +24,7 @@ When the sample loads, the feature tables and rasters from the GeoPackage will b
 ## Relevant API
 
 * GeoPackage
-* GeoPackage.LoadStatusChanged
+* GeoPackage.loadStatusChanged
 * GeoPackage.geoPackageFeatureTables
 * GeoPackage.geoPackageRasters
 * GeoPackageFeatureTable

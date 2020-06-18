@@ -13,9 +13,24 @@
         "subnetwork trace",
         "trace configuration",
         "trace filter",
-        "utility network"
+        "utility network",
+        "UtilityCategory",
+        "UtilityCategoryComparison",
+        "UtilityCategoryComparisonOperator",
+        "UtilityDomainNetwork",
+        "UtilityElement",
+        "UtilityElementTraceResult",
+        "UtilityNetwork",
+        "UtilityNetworkDefinition",
+        "UtilityTier",
+        "UtilityTraceFilter",
+        "UtilityTraceParameters",
+        "UtilityTraceResult",
+        "UtilityTraceType"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "UtilityCategory",
         "UtilityCategoryComparison",

@@ -6,13 +6,14 @@
         "screenshot.png"
     ],
     "keywords": [
-        "ArcGISSceneLayer",
         "3D",
-        "point",
-        "scene layer",
-        "layers"
+        "layers",
+        "point scene layer",
+        "ArcGISSceneLayer"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "ArcGISSceneLayer"
     ],

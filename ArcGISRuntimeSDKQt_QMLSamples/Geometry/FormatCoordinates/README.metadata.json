@@ -1,20 +1,27 @@
 {
     "category": "Geometry",
-    "description": "Coordinates can be written as text that is formatted in different ways",
+    "description": "Format coordinates in a variety of common notations.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "CoordinateFormatter",
-        "Point",
-        "Graphic"
+        "USNG",
+        "UTM",
+        "convert",
+        "coordinate",
+        "decimal degrees",
+        "degree minutes seconds",
+        "format",
+        "latitude",
+        "longitude",
+        "CoordinateFormatter"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-formatcoordinates.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-formatcoordinates.htm"
+    ],
     "relevant_apis": [
-        "CoordinateFormatter",
-        "Point",
-        "Graphic"
+        "CoordinateFormatter"
     ],
     "snippets": [
         "FormatCoordinates.qml"

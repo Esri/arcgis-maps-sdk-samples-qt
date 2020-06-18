@@ -26,7 +26,7 @@ The application loads a scene showing three points that use the individual surfa
 
 * Graphic
 * GraphicsOverlay
-* LayerSceneProperties.SurfacePlacement
+* LayerSceneProperties.surfacePlacement
 * SceneProperties
 * Surface
 

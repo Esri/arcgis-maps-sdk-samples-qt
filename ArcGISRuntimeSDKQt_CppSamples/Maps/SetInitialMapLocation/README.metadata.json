@@ -1,19 +1,36 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to create a map with a basemap, centered at a specific location and scale",
+    "description": "Display a basemap centered at an initial location and scale.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-      "Viewpoint",
-      "Area of Interest",
-      "Extent"
+        "LOD",
+        "basemap",
+        "center",
+        "envelope",
+        "extent",
+        "initial",
+        "lat",
+        "latitude",
+        "level of detail",
+        "location",
+        "long",
+        "longitude",
+        "scale",
+        "zoom level",
+        "BasemapType",
+        "Map",
+        "MapView"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-setinitialmaplocation.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-setinitialmaplocation.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map"
+        "BasemapType",
+        "Map",
+        "MapView"
     ],
     "snippets": [
         "SetInitialMapLocation.qml",

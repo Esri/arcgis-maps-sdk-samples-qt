@@ -22,7 +22,7 @@ Tap on the raster or press on the raster, hold, and move around the raster to id
    * Show the callout.
 
 ## Relevant API
- 
+
 * GeoView.identifyLayer(...)
 * IdentifyLayerResult
 * RasterCell
@@ -44,4 +44,3 @@ The data shown is an NDVI classification derived from MODIS imagery between 27 A
 ## Tags
 
 band, cell, cell value, continuous, discrete, identify, pixel, pixel value, raster
-

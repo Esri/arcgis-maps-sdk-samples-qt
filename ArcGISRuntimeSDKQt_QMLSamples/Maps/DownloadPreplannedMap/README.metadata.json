@@ -8,10 +8,17 @@
     "keywords": [
         "map area",
         "offline",
+        "pre-planned",
         "preplanned",
-        "pre-planned"
+        "DownloadPreplannedOfflineMapJob",
+        "DownloadPreplannedOfflineMapParameters",
+        "DownloadPreplannedOfflineMapResult",
+        "OfflineMapTask",
+        "PreplannedMapArea"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "DownloadPreplannedOfflineMapJob",
         "DownloadPreplannedOfflineMapParameters",
@@ -22,5 +29,5 @@
     "snippets": [
         "DownloadPreplannedMap.qml"
     ],
-    "title": "Download preplanned map"
+    "title": "Download a preplanned map area"
 }

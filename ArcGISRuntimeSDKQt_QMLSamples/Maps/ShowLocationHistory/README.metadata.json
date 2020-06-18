@@ -6,18 +6,26 @@
         "screenshot.png"
     ],
     "keywords": [
+        "GPS",
         "bread crumb",
         "breadcrumb",
-        "GPS",
         "history",
         "movement",
         "navigation",
         "real-time",
         "trace",
         "track",
-        "trail"
+        "trail",
+        "Location.position",
+        "LocationDisplay.autoPanMode",
+        "LocationDisplay.dataSource",
+        "LocationDisplay.locationChanged",
+        "MapView.locationDisplay",
+        "SimulatedLocationDataSource"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "Location.position",
         "LocationDisplay.autoPanMode",

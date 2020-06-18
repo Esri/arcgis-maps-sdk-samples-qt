@@ -1,46 +1,40 @@
 {
     "category": "Routing",
-    "description": "This sample demonstrates how to get a route between two locations",
+    "description": "Display directions for a route between two points.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "network analysis",
-        "navigation",
-        "travel",
         "directions",
-        "GraphicsOverlay",
-        "Graphic",
-        "Point",
-        "PictureMarkerSymbol",
-        "SimpleLineSymbol",
-        "SimpleRenderer",
-        "RouteTask",
+        "driving",
+        "navigation",
+        "network",
+        "network analysis",
+        "route",
+        "routing",
+        "shortest path",
+        "turn-by-turn",
+        "DirectionManeuver",
+        "Route",
         "RouteParameters",
-        "Stop",
         "RouteResult",
-        "DirectionManeuverListModel"
+        "RouteTask",
+        "Stop"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-findroute.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-findroute.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "GraphicsOverlay",
-        "Graphic",
-        "Point",
-        "PictureMarkerSymbol",
-        "SimpleLineSymbol",
-        "SimpleRenderer",
-        "RouteTask",
+        "DirectionManeuver",
+        "Route",
         "RouteParameters",
-        "Stop",
         "RouteResult",
-        "DirectionManeuverListModel"
+        "RouteTask",
+        "Stop"
     ],
     "snippets": [
         "FindRoute.qml"
     ],
-    "title": "Find route"
+    "title": "Find a route"
 }

@@ -11,9 +11,15 @@
         "impedance",
         "network analysis",
         "service area",
-        "travel time"
+        "travel time",
+        "ServiceAreaParameters",
+        "ServiceAreaPolygon",
+        "ServiceAreaResult",
+        "ServiceAreaTask"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "ServiceAreaParameters",
         "ServiceAreaPolygon",

@@ -1,38 +1,36 @@
 {
     "category": "Display information",
-    "description": "This sample demonstrates how to add graphics with symbols to a graphics overlay",
+    "description": "Use a symbol style to display a graphic on a graphics overlay.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "MapView",
-        "Map",
-        "BasemapOceans",
-        "ViewpointCenter",
+        "display",
+        "fill",
+        "graphics",
+        "line",
+        "marker",
+        "overlay",
+        "point",
+        "symbol",
+        "Geometry",
+        "Graphic",
+        "GraphicsOverlay",
         "SimpleFillSymbol",
         "SimpleLineSymbol",
-        "SimpleMarkerSymbol",
-        "TextSymbol",
-        "Point",
-        "PolylineBuilder",
-        "PolygonBuilder",
-        "GraphicsOverlay"
+        "SimpleMarkerSymbol"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-gosymbols.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-gosymbols.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "BasemapOceans",
-        "ViewpointCenter",
+        "Geometry",
+        "Graphic",
+        "GraphicsOverlay",
         "SimpleFillSymbol",
         "SimpleLineSymbol",
-        "SimpleMarkerSymbol",
-        "TextSymbol",
-        "Point",
-        "PolylineBuilder",
-        "PolygonBuilder",
-        "GraphicsOverlay"
+        "SimpleMarkerSymbol"
     ],
     "snippets": [
         "GOSymbols.qml"

@@ -8,9 +8,14 @@
     "keywords": [
         "authentication",
         "security",
-        "windows"
+        "windows",
+        "AuthenticationManager",
+        "Portal",
+        "UserCredential"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "AuthenticationManager",
         "Portal",

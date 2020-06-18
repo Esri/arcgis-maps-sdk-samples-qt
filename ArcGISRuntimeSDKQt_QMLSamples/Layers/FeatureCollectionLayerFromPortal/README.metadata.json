@@ -12,9 +12,15 @@
         "id",
         "item",
         "map notes",
-        "portal"
+        "portal",
+        "FeatureCollection",
+        "FeatureCollectionLayer",
+        "Portal",
+        "PortalItem"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "FeatureCollection",
         "FeatureCollectionLayer",

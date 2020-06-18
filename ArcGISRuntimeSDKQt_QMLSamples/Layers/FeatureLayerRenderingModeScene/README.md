@@ -23,7 +23,7 @@ Two `Scenes` are created, each containing several `FeatureLayers`. Prior to load
 3. When left to automatic rendering, points are drawn dynamically and polylines and polygons statically.
 
 ## Relevant API
-#
+
 * Camera 
 * FeatureLayer
 * FeatureLayer.renderingMode

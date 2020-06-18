@@ -68,4 +68,4 @@ Local Server can be downloaded for Windows and Linux platforms. Local Server is 
 
 ## Tags
 
-geoprocessing, local, offline, parameters, processing, service,
+geoprocessing, local, offline, parameters, processing, service

@@ -8,19 +8,30 @@
     "keywords": [
         "connected trace",
         "network analysis",
-        "utility network"
+        "utility network",
+        "GeometryEngine.fractionAlong",
+        "UtilityAssetType",
+        "UtilityElementTraceResult",
+        "UtilityNetwork",
+        "UtilityNetworkDefinition",
+        "UtilityNetworkSource",
+        "UtilityTerminal",
+        "UtilityTraceParameters",
+        "UtilityTraceResult"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "UtilityNetworks.UtilityNetwork",
-        "UtilityNetworks.UtilityTraceParameters",
-        "UtilityNetworks.UtilityTraceResult",
-        "UtilityNetworks.UtilityElementTraceResult",
-        "UtilityNetworks.UtilityNetworkDefinition",
-        "UtilityNetworks.UtilityNetworkSource",
-        "UtilityNetworks.UtilityAssetType",
-        "UtilityNetworks.UtilityTerminal",
-        "GeometryEngine.FractionAlong"
+        "GeometryEngine.fractionAlong",
+        "UtilityAssetType",
+        "UtilityElementTraceResult",
+        "UtilityNetwork",
+        "UtilityNetworkDefinition",
+        "UtilityNetworkSource",
+        "UtilityTerminal",
+        "UtilityTraceParameters",
+        "UtilityTraceResult"
     ],
     "snippets": [
         "TraceUtilityNetwork.qml"

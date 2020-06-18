@@ -24,7 +24,7 @@ Wait for the map image layer to load. Press the `Apply Renderer` button to apply
 * ArcGISMapImageLayer
 * ArcGISMapImageSubLayer
 * ClassBreaksRenderer
-* ClassBreaksRenderer.ClassBreak
+* ClassBreaksRenderer.classBreak
 
 ## About the data
 

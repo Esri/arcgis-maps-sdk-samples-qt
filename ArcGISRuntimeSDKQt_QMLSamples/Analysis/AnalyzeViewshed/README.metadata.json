@@ -1,50 +1,35 @@
 {
     "category": "Analysis",
-    "description": "This sample demonstrates how to use GeoprocessingTask to calculate a viewshed using a geoprocessing service",
+    "description": "Calculate a viewshed using a geoprocessing service, in this case showing which parts of a landscape are visible from points on mountainous terrain.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "geoprocessing",
+        "heat map",
+        "heatmap",
         "viewshed",
-        "visibility",
-        "GeoprocessingTask",
-        "GeoprocessingParameters",
-        "GeoprocessingJob",
-        "GeoprocessingFeatures",
-        "GeoprocessingResult",
         "FeatureCollectionTable",
-        "GraphicsOverlay",
-        "SimpleRenderer",
-        "Graphic",
-        "SimpleMarkerSymbol",
-        "SimpleFillSymbol",
-        "FeatureIterator",
-        "MapView",
-        "Map",
-        "Basemap"
+        "GeoprocessingFeatures",
+        "GeoprocessingJob",
+        "GeoprocessingParameters",
+        "GeoprocessingResult",
+        "GeoprocessingTask"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-analyzeviewshed.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-analyzeviewshed.htm"
+    ],
     "relevant_apis": [
-        "GeoprocessingTask",
-        "GeoprocessingParameters",
-        "GeoprocessingJob",
-        "GeoprocessingFeatures",
-        "GeoprocessingResult",
         "FeatureCollectionTable",
-        "GraphicsOverlay",
-        "SimpleRenderer",
-        "Graphic",
-        "SimpleMarkerSymbol",
-        "SimpleFillSymbol",
-        "FeatureIterator",
-        "MapView",
-        "Map",
-        "Basemap"
+        "GeoprocessingFeatures",
+        "GeoprocessingJob",
+        "GeoprocessingParameters",
+        "GeoprocessingResult",
+        "GeoprocessingTask"
     ],
     "snippets": [
         "AnalyzeViewshed.qml"
     ],
-    "title": "Viewshed (geoprocessing)"
+    "title": "Viewshed (Geoprocessing)"
 }

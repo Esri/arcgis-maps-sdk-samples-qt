@@ -1,30 +1,25 @@
 {
     "category": "Features",
-    "description": "This sample demonstrates how to query a feature layer using a feature table",
+    "description": "Find features in a feature table which match an SQL query.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "SpatialReference",
-        "ServiceFeatureTable",
+        "Search and Query",
         "FeatureLayer",
-        "Viewpoint"
+        "FeatureQueryResult",
+        "QueryParameters",
+        "ServiceFeatureTable"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-featurelayerquery.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-featurelayerquery.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "SpatialReference",
-        "ServiceFeatureTable",
         "FeatureLayer",
-        "Viewpoint"
+        "FeatureQueryResult",
+        "QueryParameters",
+        "ServiceFeatureTable"
     ],
     "snippets": [
         "FeatureLayer_Query.qml"

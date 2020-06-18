@@ -1,28 +1,29 @@
 {
     "category": "Geometry",
-    "description": "This sample demonstrates how to clip a geometry with an envelope using the GeometryEngine",
+    "description": "Clip a geometry with another geometry.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "geometry engine",
+        "analysis",
         "clip",
         "geometry",
-        "GeometryEngine",
-        "GeometryEngine.clip",
-        "GraphicsOverlay",
-        "Graphic",
+        "Envelope",
         "Geometry",
-        "Envelope"
+        "GeometryEngine.clip",
+        "Graphic",
+        "GraphicsOverlay"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-clipgeometry.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-clipgeometry.htm"
+    ],
     "relevant_apis": [
-        "GeometryEngine.clip",
-        "GraphicsOverlay",
-        "Graphic",
+        "Envelope",
         "Geometry",
-        "Envelope"
+        "GeometryEngine.clip",
+        "Graphic",
+        "GraphicsOverlay"
     ],
     "snippets": [
         "ClipGeometry.qml"

@@ -1,4 +1,4 @@
-# Open Map (URL)
+# Open map (URL)
 
 Display a web map.
 
