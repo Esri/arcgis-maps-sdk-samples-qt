@@ -236,6 +236,7 @@ void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
       return;
     default:
       qWarning("Unexpected KmlViewpointType");
+      return;
     }
   }
 

@@ -151,6 +151,7 @@ Rectangle {
                 return;
             default:
                 console.warn("Unexpected KmlViewpointType");
+                return;
             }
         }
 
