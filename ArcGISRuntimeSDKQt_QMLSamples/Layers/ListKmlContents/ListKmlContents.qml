@@ -105,8 +105,9 @@ Rectangle {
                 getViewpointFromKmlViewpoint(currentNode);
                 if (needsAltitudeFixed) {
                     getAltitudeAdjustedViewpoint(currentNode);
+                } else {
+                    sceneView.setViewpoint(currentViewpoint);
                 }
-//                sceneView.setViewpoint(currentViewpoint);
 
                 // update path label
                 labelText = "";
@@ -155,7 +156,7 @@ Rectangle {
 
         // if viewpoint is empty then use node's extent
         const nodeExtent = node.extent;
-        if (nodeExtent !== null && nodeExtent !== undefined) {
+        if (nodeExtent !== null && nodeExtent !== undefined && !nodeExtent.empty) {
             // when no altitude is specified, assume elevation needs to be adjusted
             needsAltitudeFixed = true;
 
@@ -187,6 +188,7 @@ Rectangle {
         } else {
             // can't show viewpoint
             needsAltitudeFixed = false;
+            currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointCenter");
         }
     }
 
@@ -430,20 +432,7 @@ Rectangle {
                             sceneView.setViewpointCameraAndWait(currentCamera);
                             return;
                         }
-
                     }
-
-                    /*
-      else
-      {
-        // use Google Earth default values to set camera
-        m_viewpoint = Viewpoint(target);
-        m_sceneView->setViewpoint(m_viewpoint);
-        m_sceneView->setViewpointCameraAndWait(Camera(target, 1000, 0, 45, 0));
-        return;
-      }
-*/
-
                 }
             }
 

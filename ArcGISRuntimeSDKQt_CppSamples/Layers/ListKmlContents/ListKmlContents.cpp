@@ -195,6 +195,11 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
       {
         getAltitudeAdjustedViewpoint(node);
       }
+      else
+      {
+        if (!m_viewpoint.isEmpty() && !m_viewpoint.targetGeometry().isEmpty())
+          m_sceneView->setViewpoint(m_viewpoint);
+      }
 
       // reset m_lastLevel before levelNodeNames() is called
       emit levelNodeNamesChanged();
@@ -243,7 +248,6 @@ void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
 
     if (nodeExtent.width() == 0 && nodeExtent.height() == 0)
     {
-      qDebug("width 0, using defaults");
       // default values based on Google Earth
       m_viewpoint = Viewpoint(nodeExtent);
       m_sceneView->setViewpointCameraAndWait(Camera(nodeExtent.center(), 1000, 0, 45, 0));
@@ -253,7 +257,6 @@ void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
     {
       // add padding to extent
       double bufferDistance = qMax(nodeExtent.width(), nodeExtent.height()) / 20;
-      qDebug() << "buffer distance: " << bufferDistance;
       Envelope bufferedExtent = Envelope(nodeExtent.xMin() - bufferDistance, nodeExtent.yMin() - bufferDistance,
                                          nodeExtent.xMax() + bufferDistance, nodeExtent.yMax() + bufferDistance,
                                          nodeExtent.zMin() - bufferDistance, nodeExtent.zMax() + bufferDistance,
@@ -283,6 +286,7 @@ void ListKmlContents::getAltitudeAdjustedViewpoint(KmlNode* node)
   // if altitude mode is Absolute, viewpoint doesn't need adjustment
   if (altMode == KmlAltitudeMode::Absolute)
   {
+    m_sceneView->setViewpoint(m_viewpoint);
     return;
   }
 
@@ -291,12 +295,10 @@ void ListKmlContents::getAltitudeAdjustedViewpoint(KmlNode* node)
 
   if (lookAtExtent.isValid())
   {
-    qDebug("extent");
     m_scene->baseSurface()->locationToElevation(lookAtExtent.center());
   }
   else if (lookAtPoint.isValid())
   {
-    qDebug("point");
     m_scene->baseSurface()->locationToElevation(lookAtPoint);
   }
 }
@@ -394,15 +396,12 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
                           lookAtExtent.spatialReference());
       }
 
-      qDebug() << target.toJson();
-
-
       // if node has viewpoint specified, return adjusted geometry with adjusted camera
       if (!kmlViewpoint.isEmpty())
       {
-//        m_viewpoint = Viewpoint(target, m_viewpoint.camera().elevate(elevation));
         m_sceneView->setViewpointCameraAndWait(m_viewpoint.camera().elevate(elevation));
         m_viewpoint = Viewpoint(target);
+        m_sceneView->setViewpoint(m_viewpoint);
         return ;
       }
       else
@@ -429,6 +428,7 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
       {
         m_sceneView->setViewpointCameraAndWait(m_viewpoint.camera().elevate(elevation));
         m_viewpoint = Viewpoint(target);
+        m_sceneView->setViewpoint(m_viewpoint);
         return;
       }
       else
