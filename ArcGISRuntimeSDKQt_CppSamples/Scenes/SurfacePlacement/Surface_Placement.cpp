@@ -163,8 +163,7 @@ void Surface_Placement::changeDrapedVisibility()
 
 void Surface_Placement::changeZValue(double value)
 {
-
-  for( auto overlay : *m_sceneView->graphicsOverlays())
+  for (auto overlay : *m_sceneView->graphicsOverlays())
   {
     for (auto graphic : *overlay->graphics())
     {
