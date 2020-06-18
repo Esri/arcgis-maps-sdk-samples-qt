@@ -212,8 +212,7 @@ void ListKmlContents::processSelectedNode(const QString& nodeName)
 
 void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
 {
-  KmlViewpoint kmlViewpoint = node->viewpoint();
-  Viewpoint viewpoint;
+  const KmlViewpoint kmlViewpoint = node->viewpoint();
 
   if (!kmlViewpoint.isEmpty())
   {
@@ -244,14 +243,17 @@ void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
 
     if (nodeExtent.width() == 0 && nodeExtent.height() == 0)
     {
+      qDebug("width 0, using defaults");
       // default values based on Google Earth
       m_viewpoint = Viewpoint(nodeExtent);
+      m_sceneView->setViewpointCameraAndWait(Camera(nodeExtent.center(), 1000, 0, 45, 0));
       return;
     }
     else
     {
       // add padding to extent
       double bufferDistance = qMax(nodeExtent.width(), nodeExtent.height()) / 20;
+      qDebug() << "buffer distance: " << bufferDistance;
       Envelope bufferedExtent = Envelope(nodeExtent.xMin() - bufferDistance, nodeExtent.yMin() - bufferDistance,
                                          nodeExtent.xMax() + bufferDistance, nodeExtent.yMax() + bufferDistance,
                                          nodeExtent.zMin() - bufferDistance, nodeExtent.zMax() + bufferDistance,
@@ -284,15 +286,17 @@ void ListKmlContents::getAltitudeAdjustedViewpoint(KmlNode* node)
     return;
   }
 
-  Envelope lookAtExtent = static_cast<Envelope>(m_viewpoint.targetGeometry());
-  Point lookAtPoint = static_cast<Point>(m_viewpoint.targetGeometry());
+  const Envelope lookAtExtent = static_cast<Envelope>(m_viewpoint.targetGeometry());
+  const Point lookAtPoint = static_cast<Point>(m_viewpoint.targetGeometry());
 
   if (lookAtExtent.isValid())
   {
+    qDebug("extent");
     m_scene->baseSurface()->locationToElevation(lookAtExtent.center());
   }
   else if (lookAtPoint.isValid())
   {
+    qDebug("point");
     m_scene->baseSurface()->locationToElevation(lookAtPoint);
   }
 }
@@ -389,6 +393,8 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
                           lookAtExtent.zMin() + elevation, lookAtExtent.zMax() + elevation,
                           lookAtExtent.spatialReference());
       }
+
+      qDebug() << target.toJson();
 
 
       // if node has viewpoint specified, return adjusted geometry with adjusted camera
