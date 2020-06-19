@@ -17,6 +17,8 @@
 #ifndef LISTKMLCONTENTS_H
 #define LISTKMLCONTENTS_H
 
+#include "Viewpoint.h"
+
 namespace Esri
 {
 namespace ArcGISRuntime
@@ -67,6 +69,8 @@ private:
   QStringList buildPathLabel(Esri::ArcGISRuntime::KmlNode* node) const;
   QString getKmlNodeType(Esri::ArcGISRuntime::KmlNode* node);
   bool noGrandchildren(Esri::ArcGISRuntime::KmlNode* node) const;
+  void getViewpointFromKmlViewpoint(Esri::ArcGISRuntime::KmlNode* node);
+  void getAltitudeAdjustedViewpoint(Esri::ArcGISRuntime::KmlNode* node);
 
   Esri::ArcGISRuntime::Scene* m_scene = nullptr;
   Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
@@ -74,6 +78,8 @@ private:
   QStringList m_levelNodeNames = {};
   QList<Esri::ArcGISRuntime::KmlNode*> m_kmlNodesList = {};
   Esri::ArcGISRuntime::KmlNode* m_currentNode = nullptr;
+  bool m_needsAltitudeFixed;
+  Esri::ArcGISRuntime::Viewpoint m_viewpoint;
 };
 
 #endif // LISTKMLCONTENTS_H

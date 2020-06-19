@@ -30,8 +30,11 @@ Rectangle {
     property var nodesOnLevel: []
     property var kmlNodesList: []
     property var currentNode: null
+    property var currentViewpoint: null
+    property var currentCamera: null
     property string labelText: ""
     property bool topLevel: true
+    property bool needsAltitudeFixed
 
     // recursively build list of nodes
     function buildTree(parentNode) {
@@ -98,9 +101,12 @@ Rectangle {
                 currentNode = node;
 
                 // set the viewpoint to the extent of the selected node
-                let nodeExtent = node.extent;
-                if (!nodeExtent.empty) {
-                    sceneView.setViewpoint(ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: nodeExtent}))
+
+                getViewpointFromKmlViewpoint(currentNode);
+                if (needsAltitudeFixed) {
+                    getAltitudeAdjustedViewpoint(currentNode);
+                } else {
+                    sceneView.setViewpoint(currentViewpoint);
                 }
 
                 // update path label
@@ -111,6 +117,101 @@ Rectangle {
                 displayChildren(node);
                 break;
             }
+        }
+    }
+
+    function getViewpointFromKmlViewpoint(node) {
+        const kmlViewpoint = node.viewpoint;
+
+        if (kmlViewpoint !== undefined && kmlViewpoint !== null) {
+            // altitude adjustment is needed for all but Absolute altitude mode
+            needsAltitudeFixed = (kmlViewpoint.altitudeMode !== Enums.KmlAltitudeModeAbsolute);
+
+            switch (kmlViewpoint.type) {
+            case Enums.KmlViewpointTypeLookAt:
+                currentCamera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                                                                          location: kmlViewpoint.location,
+                                                                          distance: kmlViewpoint.range,
+                                                                          heading: kmlViewpoint.heading,
+                                                                          pitch: kmlViewpoint.pitch,
+                                                                          roll: kmlViewpoint.roll
+                                                                      });
+                currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: kmlViewpoint.location,
+                                                                         camera: currentCamera});
+                return;
+            case Enums.KmlViewpointTypeCamera:
+                currentCamera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                                                                          location: kmlViewpoint.location,
+                                                                          heading: kmlViewpoint.heading,
+                                                                          pitch: kmlViewpoint.pitch,
+                                                                          roll: kmlViewpoint.roll
+                                                                      });
+                currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: kmlViewpoint.location,
+                                                                         camera: currentCamera});
+                return;
+            default:
+                console.warn("Unexpected KmlViewpointType");
+                return;
+            }
+        }
+
+        // if viewpoint is empty then use node's extent
+        const nodeExtent = node.extent;
+        if (nodeExtent !== null && nodeExtent !== undefined && !nodeExtent.empty) {
+            // when no altitude is specified, assume elevation needs to be adjusted
+            needsAltitudeFixed = true;
+
+            if (nodeExtent.width === 0 && nodeExtent.height === 0) {
+                currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: nodeExtent});
+                currentCamera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                                                                          location: nodeExtent.center,
+                                                                          distance: 1000,
+                                                                          heading: 0,
+                                                                          pitch: 45,
+                                                                          roll: 0
+                                                                      });
+                sceneView.setViewpointCameraAndWait(currentCamera);
+                return;
+            } else {
+                // add padding to extent
+                const bufferDistance = Math.max(nodeExtent.width, nodeExtent.height) / 20;
+                const bufferedExtent = ArcGISRuntimeEnvironment.createObject("Envelope", {
+                                                                                 xMin: nodeExtent.xMin - bufferDistance,
+                                                                                 yMin: nodeExtent.yMin - bufferDistance,
+                                                                                 xMax: nodeExtent.xMax + bufferDistance,
+                                                                                 yMax: nodeExtent.yMax + bufferDistance,
+                                                                                 zMin: nodeExtent.zMin - bufferDistance,
+                                                                                 zMax: nodeExtent.zMax + bufferDistance,
+                                                                                 spatialReference: SpatialReference.createWgs84()
+                                                                             });
+                currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: bufferedExtent});
+            }
+        } else {
+            // can't show viewpoint
+            needsAltitudeFixed = false;
+            currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointCenter");
+        }
+    }
+
+    function getAltitudeAdjustedViewpoint(node) {
+        // assume altitude mode is clamp-to-ground if not specified
+        let altMode = Enums.KmlAltitudeModeClampToGround;
+        let kmlViewpoint = node.viewpoint;
+
+        if (kmlViewpoint !== undefined && kmlViewpoint !== null) {
+            altMode = kmlViewpoint.altitudeMode;
+        }
+
+        // if altitude mode is Absolute, viewpoint doesn't need adjustment
+        if (altMode === Enums.KmlAltitudeModeAbsolute) {
+            return;
+        }
+
+        if (currentViewpoint.viewpointType === Enums.ViewpointTypeBoundingGeometry) {
+            scene.baseSurface.locationToElevation(currentViewpoint.extent.center);
+        }
+        else if (currentViewpoint.viewpointType === Enums.ViewpointTypeCenterAndScale) {
+            scene.baseSurface.locationToElevation(currentViewpoint.center);
         }
     }
 
@@ -230,6 +331,110 @@ Rectangle {
             Surface {
                 ArcGISTiledElevationSource {
                     url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                }
+
+                onLocationToElevationStatusChanged: {
+                    if (locationToElevationStatus !== Enums.TaskStatusCompleted)
+                        return;
+
+                    // assume altitude mode is clamp-to-ground if not specified
+                    let altMode = Enums.KmlAltitudeModeClampToGround;
+                    let kmlViewpoint = currentNode.viewpoint;
+
+                    if (kmlViewpoint !== undefined && kmlViewpoint !== null) {
+                        altMode = kmlViewpoint.altitudeMode;
+                    }
+
+                    // if altitude mode is Absolute, viewpoint doesn't need adjustment
+                    if (altMode === Enums.KmlAltitudeModeAbsolute)
+                        return;
+
+                    if (currentViewpoint.viewpointType === Enums.ViewpointTypeBoundingGeometry) {
+                        let lookAtExtent = currentViewpoint.extent;
+                        let target = null;
+                        if (altMode === Enums.KmlAltitudeModeClampToGround) {
+                            // if depth of extent = 0, add 100m to the elevation to get zMax
+                            if (lookAtExtent.depth === 0) {
+                                target = ArcGISRuntimeEnvironment.createObject("Envelope",{
+                                                                                       xMin: lookAtExtent.xMin,
+                                                                                       yMin: lookAtExtent.yMin,
+                                                                                       xMax: lookAtExtent.xMax,
+                                                                                       yMax: lookAtExtent.yMax,
+                                                                                       zMin: locationToElevationResult,
+                                                                                       zMax: locationToElevationResult + 100,
+                                                                                       spatialReference: lookAtExtent.spatialReference
+                                                                                   });
+                            } else {
+                                target = ArcGISRuntimeEnvironment.createObject("Envelope",{
+                                                                                       xMin: lookAtExtent.xMin,
+                                                                                       yMin: lookAtExtent.yMin,
+                                                                                       xMax: lookAtExtent.xMax,
+                                                                                       yMax: lookAtExtent.yMax,
+                                                                                       zMin: locationToElevationResult,
+                                                                                       zMax: lookAtExtent.depth + locationToElevationResult,
+                                                                                       spatialReference: lookAtExtent.spatialReference
+                                                                                   });
+                            }
+                        } else {
+                            target = ArcGISRuntimeEnvironment.createObject("Envelope",{
+                                                                                   xMin: lookAtExtent.xMin,
+                                                                                   yMin: lookAtExtent.yMin,
+                                                                                   xMax: lookAtExtent.xMax,
+                                                                                   yMax: lookAtExtent.yMax,
+                                                                                   zMin: lookAtExtent.zMin + locationToElevationResult,
+                                                                                   zMax: lookAtExtent.zMax + locationToElevationResult,
+                                                                                   spatialReference: lookAtExtent.spatialReference
+                                                                               });
+                        }
+
+                        // if node has viewpoint specified, return adjusted geometry with adjusted camera
+                        if (kmlViewpoint !== undefined && kmlViewpoint !== null) {
+                            sceneView.setViewpointCameraAndWait(currentViewpoint.camera.elevate(locationToElevationResult));
+                            currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: target});
+                            sceneView.setViewpoint(currentViewpoint);
+                            return;
+                        } else {
+                            currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: target});
+                            sceneView.setViewpoint(currentViewpoint);
+                            return;
+                        }
+                    } else if (currentViewpoint.viewpointType === Enums.ViewpointTypeCenterAndScale) {
+                        let targetPoint = null;
+                        let lookAtPoint = currentViewpoint.center;
+                        if (altMode === Enums.KmlAltitudeModeClampToGround) {
+                            targetPoint = ArcGISRuntimeEnvironment.createObject("Point", {
+                                                                                    x: lookAtPoint.x, y: lookAtPoint.y,
+                                                                                    z: locationToElevationResult,
+                                                                                    spatialReference: lookAtPoint.spatialReference
+                                                                                });
+                        } else {
+                            targetPoint = ArcGISRuntimeEnvironment.createObject("Point", {
+                                                                                    x: lookAtPoint.x, y: lookAtPoint.y,
+                                                                                    z: lookAtPoint.z + locationToElevationResult,
+                                                                                    spatialReference: lookAtPoint.spatialReference
+                                                                                });
+                        }
+
+                        // set the viewpoint using the adjusted target
+                        if (kmlViewpoint !== undefined && kmlViewpoint !== null) {
+                            sceneView.setViewpointCameraAndWait(currentViewpoint.camera.elevate(locationToElevationResult));
+                            currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: targetPoint});
+                            return;
+                        } else {
+                            // use Google Earth default values to set camera
+                            currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: targetPoint});
+                            sceneView.setViewpoint(currentViewpoint);
+                            currentCamera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                                                                                      location: targetPoint,
+                                                                                      distance: 1000,
+                                                                                      heading: 0,
+                                                                                      pitch: 45,
+                                                                                      roll: 0
+                                                                                  });
+                            sceneView.setViewpointCameraAndWait(currentCamera);
+                            return;
+                        }
+                    }
                 }
             }
 
