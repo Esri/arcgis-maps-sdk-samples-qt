@@ -198,12 +198,14 @@ Rectangle {
         let altMode = Enums.KmlAltitudeModeClampToGround;
         let kmlViewpoint = node.viewpoint;
 
-        if (kmlViewpoint !== undefined && kmlViewpoint !== null)
+        if (kmlViewpoint !== undefined && kmlViewpoint !== null) {
             altMode = kmlViewpoint.altitudeMode;
+        }
 
         // if altitude mode is Absolute, viewpoint doesn't need adjustment
-        if (altMode === Enums.KmlAltitudeModeAbsolute)
+        if (altMode === Enums.KmlAltitudeModeAbsolute) {
             return;
+        }
 
         if (currentViewpoint.viewpointType === Enums.ViewpointTypeBoundingGeometry) {
             scene.baseSurface.locationToElevation(currentViewpoint.extent.center);
@@ -349,7 +351,7 @@ Rectangle {
 
                     if (currentViewpoint.viewpointType === Enums.ViewpointTypeBoundingGeometry) {
                         let lookAtExtent = currentViewpoint.extent;
-                        let target;
+                        let target = null;
                         if (altMode === Enums.KmlAltitudeModeClampToGround) {
                             // if depth of extent = 0, add 100m to the elevation to get zMax
                             if (lookAtExtent.depth === 0) {
@@ -397,7 +399,7 @@ Rectangle {
                             return;
                         }
                     } else if (currentViewpoint.viewpointType === Enums.ViewpointTypeCenterAndScale) {
-                        let targetPoint;
+                        let targetPoint = null;
                         let lookAtPoint = currentViewpoint.center;
                         if (altMode === Enums.KmlAltitudeModeClampToGround) {
                             targetPoint = ArcGISRuntimeEnvironment.createObject("Point", {
@@ -417,7 +419,6 @@ Rectangle {
                         if (kmlViewpoint !== undefined && kmlViewpoint !== null) {
                             sceneView.setViewpointCameraAndWait(currentViewpoint.camera.elevate(locationToElevationResult));
                             currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointCenter", {center: targetPoint});
-//                            sceneView.setViewpoint(currentViewpoint);
                             return;
                         } else {
                             // use Google Earth default values to set camera

@@ -249,7 +249,7 @@ void ListKmlContents::getViewpointFromKmlViewpoint(KmlNode* node)
 
     if (nodeExtent.width() == 0 && nodeExtent.height() == 0)
     {
-      // default values based on Google Earth
+      // default values: distance = 1000m, pitch = 45 degrees
       m_viewpoint = Viewpoint(nodeExtent);
       m_sceneView->setViewpointCameraAndWait(Camera(nodeExtent.center(), 1000, 0, 45, 0));
       return;
@@ -291,8 +291,8 @@ void ListKmlContents::getAltitudeAdjustedViewpoint(KmlNode* node)
     return;
   }
 
-  const Envelope lookAtExtent = static_cast<Envelope>(m_viewpoint.targetGeometry());
-  const Point lookAtPoint = static_cast<Point>(m_viewpoint.targetGeometry());
+  const Envelope lookAtExtent = geometry_cast<Envelope>(m_viewpoint.targetGeometry());
+  const Point lookAtPoint = geometry_cast<Point>(m_viewpoint.targetGeometry());
 
   if (lookAtExtent.isValid())
   {
@@ -365,8 +365,8 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
     if (altMode == KmlAltitudeMode::Absolute)
       return;
 
-    Envelope lookAtExtent = static_cast<Envelope>(m_viewpoint.targetGeometry());
-    Point lookAtPoint = static_cast<Point>(m_viewpoint.targetGeometry());
+    const Envelope lookAtExtent = geometry_cast<Envelope>(m_viewpoint.targetGeometry());
+    const Point lookAtPoint = geometry_cast<Point>(m_viewpoint.targetGeometry());
 
     if (lookAtExtent.isValid())
     {
@@ -403,7 +403,7 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
         m_sceneView->setViewpointCameraAndWait(m_viewpoint.camera().elevate(elevation));
         m_viewpoint = Viewpoint(target);
         m_sceneView->setViewpoint(m_viewpoint);
-        return ;
+        return;
       }
       else
       {
@@ -434,7 +434,7 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
       }
       else
       {
-        // use Google Earth default values to set camera
+        // use default values to set camera: distance = 1000m, pitch = 45 degrees
         m_viewpoint = Viewpoint(target);
         m_sceneView->setViewpoint(m_viewpoint);
         m_sceneView->setViewpointCameraAndWait(Camera(target, 1000, 0, 45, 0));
