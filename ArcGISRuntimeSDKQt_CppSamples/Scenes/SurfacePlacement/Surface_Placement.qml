@@ -122,7 +122,7 @@ SurfacePlacementSample {
                         width: childrenRect.width
                         radius: 3
                         x: headingHandleNub.x - width
-                        y: headingHandleNub.y - height/2 + headingHandleNub.height/2
+                        y: headingHandleNub.y - height / 2 + headingHandleNub.height / 2
                         color: zValueSlider.background.children[0].color
 
                         Text {
