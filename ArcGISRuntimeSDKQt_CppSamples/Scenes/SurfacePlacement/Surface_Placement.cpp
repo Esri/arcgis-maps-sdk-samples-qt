@@ -112,7 +112,7 @@ void Surface_Placement::addGraphicsOverlays()
 
 void Surface_Placement::addGraphics()
 {
-  // create point for the scene related graphic with a z value of 0
+  // create point for the scene related graphic with a z value of 70
   const Point sceneRelatedPoint(-4.4610562, 48.3902727, 70, SpatialReference::wgs84());
 
   // create point for the surface related graphics with z value of 70
@@ -161,15 +161,16 @@ void Surface_Placement::changeDrapedVisibility()
   m_drapedBillboardedOverlay->setVisible(!m_drapedBillboardedOverlay->isVisible());
 }
 
-void Surface_Placement::changeZValue(double value)
+void Surface_Placement::changeZValue(double zValue)
 {
-  for (auto overlay : *m_sceneView->graphicsOverlays())
+  for (GraphicsOverlay* overlay : *m_sceneView->graphicsOverlays())
   {
-    for (auto graphic : *overlay->graphics())
+    for (Graphic* graphic : *overlay->graphics())
     {
+      // create new graphic with the same existing information but a new Z-value
       const Point graphicPoint{graphic->geometry()};
-      const Point p{graphicPoint.x(), graphicPoint.y(), value, graphicPoint.spatialReference()};
-      graphic->setGeometry(p);
+      const Point point{graphicPoint.x(), graphicPoint.y(), zValue, graphicPoint.spatialReference()};
+      graphic->setGeometry(point);
     }
   }
 }

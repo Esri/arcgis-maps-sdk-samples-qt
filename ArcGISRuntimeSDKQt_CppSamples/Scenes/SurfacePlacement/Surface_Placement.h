@@ -39,7 +39,7 @@ public:
   void componentComplete() override;
   static void init();
   Q_INVOKABLE void changeDrapedVisibility();
-  Q_INVOKABLE void changeZValue(double value);
+  Q_INVOKABLE void changeZValue(double zValue);
 
 private:
   void addGraphics();
