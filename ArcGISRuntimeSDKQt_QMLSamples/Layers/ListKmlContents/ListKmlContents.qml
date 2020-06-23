@@ -101,12 +101,13 @@ Rectangle {
                 currentNode = node;
 
                 // set the viewpoint to the extent of the selected node
-
                 getViewpointFromKmlViewpoint(currentNode);
                 if (needsAltitudeFixed) {
                     getAltitudeAdjustedViewpoint(currentNode);
                 } else {
-                    sceneView.setViewpoint(currentViewpoint);
+                    if (currentViewpoint !== null && currentViewpoint !== undefined) {
+                        sceneView.setViewpoint(currentViewpoint);
+                    }
                 }
 
                 // update path label
@@ -175,6 +176,7 @@ Rectangle {
             } else {
                 // add padding to extent
                 const bufferDistance = Math.max(nodeExtent.width, nodeExtent.height) / 20;
+                const spatialReferenceWgs84 = ArcGISRuntimeEnvironment.createObject("SpatialReference", {wkid: 4326});
                 const bufferedExtent = ArcGISRuntimeEnvironment.createObject("Envelope", {
                                                                                  xMin: nodeExtent.xMin - bufferDistance,
                                                                                  yMin: nodeExtent.yMin - bufferDistance,
@@ -182,7 +184,7 @@ Rectangle {
                                                                                  yMax: nodeExtent.yMax + bufferDistance,
                                                                                  zMin: nodeExtent.zMin - bufferDistance,
                                                                                  zMax: nodeExtent.zMax + bufferDistance,
-                                                                                 spatialReference: SpatialReference.createWgs84()
+                                                                                 spatialReference: spatialReferenceWgs84
                                                                              });
                 currentViewpoint = ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: bufferedExtent});
             }
