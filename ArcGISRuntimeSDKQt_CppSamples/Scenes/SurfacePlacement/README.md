@@ -27,7 +27,7 @@ The application loads a scene showing four points that use individual surface pl
 
 * Graphic
 * GraphicsOverlay
-* LayerScenePropertie::surfacePlacement
+* LayerSceneProperties::surfacePlacement
 * SceneProperties
 * Surface
 
