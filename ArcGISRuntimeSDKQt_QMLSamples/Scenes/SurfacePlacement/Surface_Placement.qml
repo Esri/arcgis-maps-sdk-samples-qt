@@ -38,13 +38,17 @@ Rectangle {
                 }
             }
 
+            ArcGISSceneLayer {
+                url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/Buildings_Brest/SceneServer"
+            }
+
             // set an initial viewpoint
             ViewpointCenter {
                 Point {
                     id: initialViewpoint
-                    x: -4.01
-                    y: 53.05
-                    z: 1115
+                    x: -4.45968
+                    y: 48.3889
+                    z: 37.9922
                     spatialReference: SpatialReference { wkid: 4326 }
                 }
                 targetScale: 62.013264927081764
@@ -52,8 +56,8 @@ Rectangle {
                 Camera {
                     id: camera
                     location: initialViewpoint
-                    heading: 299
-                    pitch: 88.0
+                    heading: 329.91
+                    pitch: 96.6632
                     roll: 0
                 }
             }
@@ -67,7 +71,7 @@ Rectangle {
 
             // Graphics will be draped on the surface of the scene and will appear flat
             Graphic {
-                geometry: point
+                geometry: surfaceRelatedPoint
 
                 SimpleMarkerSymbol {
                     color: "red"
@@ -77,12 +81,12 @@ Rectangle {
             }
 
             Graphic {
-                geometry: point
+                geometry: surfaceRelatedPoint
 
                 TextSymbol {
                     size: 20
                     text: "DRAPED FLAT"
-                    color: "white"
+                    color: "blue"
                     horizontalAlignment: Enums.HorizontalAlignmentLeft
                     verticalAlignment: Enums.VerticalAlignmentMiddle
                     offsetX: 20
@@ -97,7 +101,7 @@ Rectangle {
 
             // Graphics will be draped on the surface of the scene and will always face the camera.
             Graphic {
-                geometry: point
+                geometry: surfaceRelatedPoint
 
                 SimpleMarkerSymbol {
                     color: "red"
@@ -107,12 +111,12 @@ Rectangle {
             }
 
             Graphic {
-                geometry: point
+                geometry: surfaceRelatedPoint
 
                 TextSymbol {
                     size: 20
                     text: "DRAPED BILLBOARDED"
-                    color: "white"
+                    color: "blue"
                     horizontalAlignment: Enums.HorizontalAlignmentLeft
                     verticalAlignment: Enums.VerticalAlignmentMiddle
                     offsetX: 20
@@ -127,7 +131,7 @@ Rectangle {
 
             // Graphics will be placed at z value relative to the surface
             Graphic {
-                geometry: point
+                geometry: surfaceRelatedPoint
 
                 SimpleMarkerSymbol {
                     color: "red"
@@ -137,12 +141,12 @@ Rectangle {
             }
 
             Graphic {
-                geometry: point
+                geometry: surfaceRelatedPoint
 
                 TextSymbol {
                     size: 20
                     text: "RELATIVE"
-                    color: "white"
+                    color: "blue"
                     horizontalAlignment: Enums.HorizontalAlignmentLeft
                     verticalAlignment: Enums.VerticalAlignmentMiddle
                     offsetX: 20
@@ -157,7 +161,7 @@ Rectangle {
 
             // Graphics will be placed at absolute z value
             Graphic {
-                geometry: point
+                geometry: surfaceRelatedPoint
 
                 SimpleMarkerSymbol {
                     color: "red"
@@ -167,15 +171,44 @@ Rectangle {
             }
 
             Graphic {
-                geometry: point
+                geometry: surfaceRelatedPoint
 
                 TextSymbol {
                     size: 20
                     text: "ABSOLUTE"
-                    color: "white"
+                    color: "blue"
                     horizontalAlignment: Enums.HorizontalAlignmentLeft
                     verticalAlignment: Enums.VerticalAlignmentMiddle
                     offsetX: 20
+                }
+            }
+        }
+
+        GraphicsOverlay {
+            id: relToScene
+            sceneProperties.surfacePlacement: Enums.SurfacePlacementRelativeToScene
+
+            // Graphics will be placed at absolute z value
+            Graphic {
+                geometry: sceneRelatedPoint
+
+                SimpleMarkerSymbol {
+                    color: "red"
+                    style: Enums.SimpleMarkerSymbolStyleTriangle
+                    size: 20
+                }
+            }
+
+            Graphic {
+                geometry: sceneRelatedPoint
+
+                TextSymbol {
+                    size: 20
+                    text: "RELATIVE TO SCENE"
+                    color: "blue"
+                    horizontalAlignment: Enums.HorizontalAlignmentRight
+                    verticalAlignment: Enums.VerticalAlignmentMiddle
+                    offsetX: -20
                 }
             }
         }
@@ -214,12 +247,108 @@ Rectangle {
         }
     }
 
-    // create a point with a z value of 1000
+    Rectangle {
+        anchors {
+            top: parent.top
+            right: parent.right
+            margins: 5
+        }
+        width: childrenRect.width
+        height: childrenRect.height
+        color: "#000000"
+        opacity: .8
+        radius: 5
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse.accepted = true
+            onWheel: wheel.accepted = true
+        }
+
+        ColumnLayout {
+            Text {
+                id: zValueSliderLabel
+                text: qsTr("Z-Value")
+                color: "white"
+                Layout.margins: 2
+                Layout.alignment: Qt.AlignHCenter
+            }
+
+            Slider {
+                id: zValueSlider
+                from: 0
+                to: 140
+                value: 70
+                Layout.alignment: Qt.AlignHCenter
+                Layout.margins: 2
+                orientation: Qt.Vertical
+
+                onMoved: changeZValue(value.toFixed(0));
+
+                // Custom slider handle that displays the current value
+                handle: Item {
+                    x: parent.leftPadding + parent.availableWidth / 2 - headingHandleNub.width / 2
+                    y: parent.topPadding + parent.visualPosition * (parent.availableHeight - headingHandleNub.height)
+
+                    Rectangle {
+                        id: headingHandleNub
+                        color: headingHandleRect.color
+                        radius: width * 0.5
+                        width: 20
+                        height: width
+                    }
+                    Rectangle {
+                        id: headingHandleRect
+                        height: childrenRect.height
+                        width: childrenRect.width
+                        radius: 3
+                        x: headingHandleNub.x - width
+                        y: headingHandleNub.y - height / 2 + headingHandleNub.height / 2
+                        color: zValueSlider.background.children[0].color
+
+                        Text {
+                            id: headingValue
+                            font.pixelSize: 14
+                            padding: 3
+                            horizontalAlignment: Qt.AlignHCenter
+                            verticalAlignment: Qt.AlignVCenter
+                            text: (zValueSlider.value).toFixed(0)
+                            color: "white"
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // create a point with a z value of 70
     Point {
-        id: point
-        x: -4.04
-        y: 53.06
-        z: 1000
+        id: sceneRelatedPoint
+        x: -4.4610562
+        y: 48.3902727
+        z: 70
         spatialReference: SpatialReference { wkid: 4326 }
+    }
+    // create a point with a z value of 70
+    Point {
+        id: surfaceRelatedPoint
+        x: -4.4609257
+        y: 48.3903965
+        z: 70
+        spatialReference: SpatialReference { wkid: 4326 }
+    }
+
+    function changeZValue(zValue) {
+        sceneView.graphicsOverlays.forEach( function(overlay) {
+            overlay.graphics.forEach( function(graphic) {
+                // create new graphic with the same existing information but a new Z-value
+                const graphicPoint = ArcGISRuntimeEnvironment.createObject("Point", {
+                                                                               x:graphic.geometry.x,
+                                                                               y:graphic.geometry.y,
+                                                                               z:zValue,
+                                                                               spatialReference: graphic.geometry.spatialReference
+                                                                           });
+                graphic.geometry = graphicPoint;
+            });
+        });
     }
 }

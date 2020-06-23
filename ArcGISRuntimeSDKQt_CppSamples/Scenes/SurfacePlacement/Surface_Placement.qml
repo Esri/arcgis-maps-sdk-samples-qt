@@ -34,7 +34,7 @@ SurfacePlacementSample {
         anchors {
             top: parent.top
             left: parent.left
-            margins: 3
+            margins: 5
         }
         width: childrenRect.width
         height: childrenRect.height
@@ -42,10 +42,16 @@ SurfacePlacementSample {
         opacity: .8
         radius: 5
 
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse.accepted = true
+            onWheel: wheel.accepted = true
+        }
+
         ColumnLayout {
             Text {
-                Layout.alignment: Qt.AlignHCenter
                 Layout.margins: 2
+                Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Draped mode")
                 color: "white"
             }
@@ -56,6 +62,80 @@ SurfacePlacementSample {
                 Layout.margins: 2
 
                 onCheckedChanged: changeDrapedVisibility();
+            }
+        }
+    }
+
+    Rectangle {
+        anchors {
+            top: parent.top
+            right: parent.right
+            margins: 5
+        }
+        width: childrenRect.width
+        height: childrenRect.height
+        color: "#000000"
+        opacity: .8
+        radius: 5
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse.accepted = true
+            onWheel: wheel.accepted = true
+        }
+
+        ColumnLayout {
+            Text {
+                id: zValueSliderLabel
+                text: qsTr("Z-Value")
+                color: "white"
+                Layout.margins: 2
+                Layout.alignment: Qt.AlignHCenter
+            }
+
+            Slider {
+                id: zValueSlider
+                from: 0
+                to: 140
+                value: 70
+                Layout.alignment: Qt.AlignHCenter
+                Layout.margins: 2
+                orientation: Qt.Vertical
+
+                onMoved: changeZValue(value);
+
+                // Custom slider handle that displays the current value
+                handle: Item {
+                    x: parent.leftPadding + parent.availableWidth / 2 - headingHandleNub.width / 2
+                    y: parent.topPadding + parent.visualPosition * (parent.availableHeight - headingHandleNub.height)
+
+                    Rectangle {
+                        id: headingHandleNub
+                        color: headingHandleRect.color
+                        radius: width * 0.5
+                        width: 20
+                        height: width
+                    }
+                    Rectangle {
+                        id: headingHandleRect
+                        height: childrenRect.height
+                        width: childrenRect.width
+                        radius: 3
+                        x: headingHandleNub.x - width
+                        y: headingHandleNub.y - height / 2 + headingHandleNub.height / 2
+                        color: zValueSlider.background.children[0].color
+
+                        Text {
+                            id: headingValue
+                            font.pixelSize: 14
+                            padding: 3
+                            horizontalAlignment: Qt.AlignHCenter
+                            verticalAlignment: Qt.AlignVCenter
+                            text: (zValueSlider.value).toFixed(0)
+                            color: "white"
+                        }
+                    }
+                }
             }
         }
     }
