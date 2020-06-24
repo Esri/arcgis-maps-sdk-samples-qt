@@ -2,7 +2,7 @@
 
 Use a symbol style to display a graphic on a graphics overlay.
 
-[IMAGE]
+![](screenshot.png)
 
 ## Use case
 
