@@ -33,5 +33,5 @@
     "snippets": [
         "FeatureLayer_DictionaryRenderer.qml"
     ],
-    "title": "Dictionary renderer with feature layer"
+    "title": "Feature layer (dictionary renderer)"
 }
