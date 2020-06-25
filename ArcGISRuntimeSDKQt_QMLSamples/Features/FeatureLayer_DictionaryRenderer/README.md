@@ -1,4 +1,4 @@
-# Dictionary renderer with feature layer
+# Feature layer (dictionary renderer)
 
 Convert features into graphics to show them with mil2525d symbols.
 
