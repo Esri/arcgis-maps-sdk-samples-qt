@@ -1,16 +1,28 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Display information",
+    "description": "Show predefined popups from a web map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "feature",
+        "feature layer",
+        "popup",
+        "web map",
+        "IdentifyLayerResult",
+        "Map",
+        "PopupManager",
+        "PopupStackView"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "TODO"
+        "IdentifyLayerResult",
+        "Map",
+        "PopupManager",
+        "PopupStackView"
     ],
     "snippets": [
         "ShowPopup.qml"
