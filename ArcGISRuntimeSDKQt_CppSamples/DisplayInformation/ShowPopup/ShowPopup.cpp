@@ -20,6 +20,7 @@
 
 #include "ShowPopup.h"
 
+#include "FeatureLayer.h"
 #include "Map.h"
 #include "MapQuickView.h"
 #include "PopupManager.h"
@@ -59,10 +60,15 @@ void ShowPopup::setMapView(MapQuickView* mapView)
 
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this] (QMouseEvent& mouseEvent)
   {
-    Layer* temp = m_map->operationalLayers()->at(0);
+    if (m_map->loadStatus() != LoadStatus::Loaded)
+      return;
+
+    m_layer = m_map->operationalLayers()->at(0);
     constexpr double tolerance = 12;
     constexpr bool returnPopupsOnly = false;
-    m_taskWatcher = m_mapView->identifyLayer(temp, mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly);
+
+    m_taskWatcher = m_mapView->identifyLayer(m_layer, mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly);
+
     if (!m_taskWatcher.isValid())
       qWarning() << "Task not valid.";
 
@@ -92,6 +98,12 @@ void ShowPopup::setMapView(MapQuickView* mapView)
       {
         PopupManager* popupManager = new PopupManager{popup, this};
         m_popupManagers.append(popupManager);
+        if(m_layer->layerType() == LayerType::FeatureLayer)
+        {
+          FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_layer);
+          featureLayer->clearSelection();
+          featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
+        }
         emit popupManagersChanged();
       }
     }
@@ -110,3 +122,11 @@ QQmlListProperty<PopupManager> ShowPopup::popupManagers()
   return QQmlListProperty<PopupManager>(this, m_popupManagers);
 }
 
+void ShowPopup::clearSelection() const
+{
+  if (m_layer->layerType() == LayerType::FeatureLayer)
+  {
+    FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_layer);
+    featureLayer->clearSelection();
+  }
+}

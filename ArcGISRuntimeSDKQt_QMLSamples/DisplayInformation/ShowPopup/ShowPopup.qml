@@ -28,6 +28,7 @@ Rectangle {
     property real adjustedX: rootRectangle.width - popupStackView.width
     property real originX: rootRectangle.width
     property var popupManagers: []
+    property var featureLayer: null
 
     MapView {
         id: mapView
@@ -43,8 +44,8 @@ Rectangle {
             const screenY = mouse.y;
             const tolerance = 12;
             const returnPopupsOnly = false;
-            const layer = mapView.map.operationalLayers.get(0);
-            mapView.identifyLayer(layer, screenX, screenY, tolerance, returnPopupsOnly);
+            featureLayer = mapView.map.operationalLayers.get(0);
+            mapView.identifyLayer(featureLayer, screenX, screenY, tolerance, returnPopupsOnly);
             busy.visible = true;
         }
 
@@ -53,13 +54,18 @@ Rectangle {
                 return;
             busy.visible = false;
 
+            if ( featureLayer.layerType === Enums.LayerTypeFeatureLayer) {
+                featureLayer.clearSelection();
+                featureLayer.selectFeature(mapView.identifyLayerResult.geoElements[0]);
+            }
+
             const popups = mapView.identifyLayerResult.popups;
 
             popupManagers = [];
             for (let i = 0; i < popups.length; i++) {
                 // create a popup manager
                 const popupManager = ArcGISRuntimeEnvironment.createObject("PopupManager", {
-                                                                           popup: popups[i]
+                                                                               popup: popups[i]
                                                                            });
 
                 // add popup manager to list
@@ -77,6 +83,13 @@ Rectangle {
         }
 
         onPopupManagersChanged: popupStackView.slideHorizontal(originX, adjustedX);
+
+        onVisibleChanged: {
+            if (!visible) {
+                if ( featureLayer.layerType === Enums.LayerTypeFeatureLayer)
+                    featureLayer.clearSelection();
+            }
+        }
     }
 
     BusyIndicator {

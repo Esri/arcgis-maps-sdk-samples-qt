@@ -36,6 +36,11 @@ Item {
             bottom: parent.bottom
         }
         popupManagers: model.popupManagers
+
+        onVisibleChanged: {
+            if (!visible)
+                model.clearSelection();
+        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view
