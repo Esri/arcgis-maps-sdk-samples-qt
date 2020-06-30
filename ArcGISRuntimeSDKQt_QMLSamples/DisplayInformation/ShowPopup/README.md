@@ -14,7 +14,7 @@ Tap on the features to prompt a popup that displays information about the featur
 
 ## How it works
 
-1. Create and load an `Map` using a URL.
+1. Create and load a `Map` using a URL.
 2. Set the map to a `MapView` and connect to the `MapView.onMouseClicked` signal.
 3. Use `GeoView.identifyLayer(layer, x, y, tolerance, allowPopupsOnly)` to identify the top-most feature.
 4. Create a `PopupManager` for each of the result's `Popup`s and append them to a list.
