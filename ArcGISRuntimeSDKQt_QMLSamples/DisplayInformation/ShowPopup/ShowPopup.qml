@@ -46,13 +46,11 @@ Rectangle {
             const returnPopupsOnly = false;
             featureLayer = mapView.map.operationalLayers.get(0);
             mapView.identifyLayer(featureLayer, screenX, screenY, tolerance, returnPopupsOnly);
-            busy.visible = true;
         }
 
         onIdentifyLayerStatusChanged: {
             if (identifyLayerStatus !== Enums.TaskStatusCompleted)
                 return;
-            busy.visible = false;
 
             // if layer is a feature layer, select the identify result features
             if (featureLayer.layerType === Enums.LayerTypeFeatureLayer) {
@@ -100,6 +98,6 @@ Rectangle {
     BusyIndicator {
         id: busy
         anchors.centerIn: parent
-        visible: false
+        visible: mapView.identifyLayerStatus === Enums.TaskStatusInProgress
     }
 }
