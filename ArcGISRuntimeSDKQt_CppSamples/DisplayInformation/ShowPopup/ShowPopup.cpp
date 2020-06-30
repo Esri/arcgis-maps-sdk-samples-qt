@@ -70,7 +70,7 @@ void ShowPopup::setMapView(MapQuickView* mapView)
   emit mapViewChanged();
 }
 
-void ShowPopup::onIdentifyLayerCompleted(QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
+void ShowPopup::onIdentifyLayerCompleted(QUuid, IdentifyLayerResult* rawIdentifyResult)
 {
   emit taskRunningChanged();
   auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
