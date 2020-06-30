@@ -14,11 +14,12 @@ Tap on the features to prompt a popup that displays information about the featur
 
 ## How it works
 
-1. Create and load an `AGSMap` using a URL.
-2. Set the map to an `AGSMapView` and set the `touchDelegate`.
-3. Use the `AGSGeoView.identifyLayer(_:screenPoint:tolerance:returnPopupsOnly:completion:)` method to identify the top-most feature.
-4. Create an `AGSPopupsViewController` with the result's `popups`.
-5. Present the view controller.
+1. Create and load an `Map` using a URL.
+2. Set the map to a `MapView` and connect to the `MapView.onMouseClicked` signal.
+3. Use `GeoView.identifyLayer(layer, x, y, tolerance, allowPopupsOnly)` to identify the top-most feature.
+4. Create a `PopupManager` for each of the result's `Popup`s and append them to a list.
+5. Assign the list of popup managers to the `PopupStackView.popupManagers` property.
+6. Display the popup stack view.
 
 ## Relevant API
 
