@@ -85,16 +85,11 @@ void ShowPopup::onIdentifyLayerCompleted(QUuid, Esri::ArcGISRuntime::IdentifyLay
     return;
   }
 
-  // if layer is a feature layer, select the identify result features
-  if (m_layer->layerType() == LayerType::FeatureLayer)
+  m_featureLayer->clearSelection();
+  for (GeoElement* geoElement : identifyResult->geoElements())
   {
-    FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_layer);
-    featureLayer->clearSelection();
-    for (GeoElement* geoElement : identifyResult->geoElements())
-    {
-      Feature* feature = static_cast<Feature*>(geoElement);
-      featureLayer->selectFeature(feature);
-    }
+    Feature* feature = static_cast<Feature*>(geoElement);
+    m_featureLayer->selectFeature(feature);
   }
 
   if (!identifyResult->popups().isEmpty())
@@ -118,11 +113,16 @@ void ShowPopup::onMouseClicked(QMouseEvent& mouseEvent)
   if (m_map->loadStatus() != LoadStatus::Loaded)
     return;
 
-  m_layer = m_map->operationalLayers()->at(0);
+  Layer* layer = m_map->operationalLayers()->at(0);
+  if (layer->layerType() == LayerType::FeatureLayer)
+  {
+    m_featureLayer = static_cast<FeatureLayer*>(layer);
+  }
+
   constexpr double tolerance = 12;
   constexpr bool returnPopupsOnly = false;
 
-  m_taskWatcher = m_mapView->identifyLayer(m_layer, mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly);
+  m_taskWatcher = m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly);
 
   if (!m_taskWatcher.isValid())
     qWarning() << "Task not valid.";
@@ -142,9 +142,5 @@ QQmlListProperty<PopupManager> ShowPopup::popupManagers()
 
 void ShowPopup::clearSelection() const
 {
-  if (m_layer->layerType() == LayerType::FeatureLayer)
-  {
-    FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_layer);
-    featureLayer->clearSelection();
-  }
+  m_featureLayer->clearSelection();
 }

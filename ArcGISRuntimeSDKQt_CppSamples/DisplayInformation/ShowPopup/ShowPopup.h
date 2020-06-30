@@ -23,9 +23,9 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class FeatureLayer;
 class GeoElement;
 class IdentifyLayerResult;
-class Layer;
 class Map;
 class MapQuickView;
 class PopupManager;
@@ -71,7 +71,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::PopupManager* m_popupManager = nullptr;
   QList<Esri::ArcGISRuntime::PopupManager*> m_popupManagers;
-  Esri::ArcGISRuntime::Layer* m_layer = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
 
   Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
 };
