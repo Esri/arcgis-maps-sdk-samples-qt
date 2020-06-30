@@ -54,21 +54,26 @@ Rectangle {
                 return;
             busy.visible = false;
 
-            if ( featureLayer.layerType === Enums.LayerTypeFeatureLayer) {
+            // if layer is a feature layer, select the identify result features
+            if (featureLayer.layerType === Enums.LayerTypeFeatureLayer) {
                 featureLayer.clearSelection();
-                featureLayer.selectFeature(mapView.identifyLayerResult.geoElements[0]);
+                const geoElements = mapView.identifyLayerResult.geoElements;
+
+                for (let i = 0; i < geoElements.length; i++) {
+                    featureLayer.selectFeature(geoElements[i]);
+                }
             }
 
             const popups = mapView.identifyLayerResult.popups;
-
+            // clear the list of PopupManagers
             popupManagers = [];
+
             for (let i = 0; i < popups.length; i++) {
                 // create a popup manager
                 const popupManager = ArcGISRuntimeEnvironment.createObject("PopupManager", {
                                                                                popup: popups[i]
                                                                            });
-
-                // add popup manager to list
+                // push popup manager to list
                 popupManagers.push(popupManager);
                 popupStackView.popupManagers = popupManagers;
             }
@@ -86,7 +91,7 @@ Rectangle {
 
         onVisibleChanged: {
             if (!visible) {
-                if ( featureLayer.layerType === Enums.LayerTypeFeatureLayer)
+                if (featureLayer.layerType === Enums.LayerTypeFeatureLayer)
                     featureLayer.clearSelection();
             }
         }

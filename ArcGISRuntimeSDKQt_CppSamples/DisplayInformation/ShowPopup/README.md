@@ -32,6 +32,10 @@ Tap on the features to prompt a popup that displays information about the featur
 
 This sample uses a [feature layer](https://sampleserver6.arcgisonline.com/arcgis/rest/services/SF311/FeatureServer/0) that displays reported incidents in San Francisco.
 
+## Additional information
+
+In order to use the PopupManager with a QML UI, the PopupManager, PopupAttachmentManager, PopupAttachmentListModel, and PopupAttributeListModel classes must be registered as QML Types. For more information [visit our developer site](https://developers.arcgis.com/qt/latest/cpp/api-reference/esri-arcgisruntime-popupmanager.html#details).
+
 ## Tags
 
 feature, feature layer, popup, web map

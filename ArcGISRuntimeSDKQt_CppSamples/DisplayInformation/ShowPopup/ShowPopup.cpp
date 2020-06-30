@@ -40,8 +40,12 @@ void ShowPopup::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ShowPopup>("Esri.Samples", 1, 0, "ShowPopupSample");
-  // In order to use the PopupManager with a QML UI, the PopupManager class must be registered as a QML Type.
+
+  // Required to use the PopupManager with a QML UI.
   qmlRegisterUncreatableType<PopupManager>("Esri.Samples", 1, 0, "PopupManager", "PopupManager is uncreateable");
+  qmlRegisterUncreatableType<PopupAttachmentManager>("Esri.Samples", 1, 0, "PopupAttachmentManager", "PopupAttachmentManager is uncreateable");
+  qmlRegisterUncreatableType<PopupAttributeListModel>("Esri.Samples", 1, 0, "PopupAttributeListModel", "PopupAttributeListModel is uncreateable");
+  qmlRegisterUncreatableType<PopupAttachmentListModel>("Esri.Samples", 1, 0, "PopupAttachmentListModel", "PopupAttachmentListModel is uncreateable");
 }
 
 MapQuickView* ShowPopup::mapView() const
@@ -58,6 +62,7 @@ void ShowPopup::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  // once map is set, connect to MapQuickView mouse clicked signal
   connect(m_mapView, &MapQuickView::mouseClicked, this, [this] (QMouseEvent& mouseEvent)
   {
     if (m_map->loadStatus() != LoadStatus::Loaded)
@@ -78,7 +83,6 @@ void ShowPopup::setMapView(MapQuickView* mapView)
   connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
   {
     emit taskRunningChanged();
-
     auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
 
     // Invalid identify result
@@ -91,24 +95,32 @@ void ShowPopup::setMapView(MapQuickView* mapView)
       return;
     }
 
+    // if layer is a feature layer, select the identify result features
+    if (m_layer->layerType() == LayerType::FeatureLayer)
+    {
+      FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_layer);
+      featureLayer->clearSelection();
+      for (GeoElement* geoElement : identifyResult->geoElements())
+      {
+        Feature* feature = static_cast<Feature*>(geoElement);
+        featureLayer->selectFeature(feature);
+      }
+    }
+
     if (!identifyResult->popups().isEmpty())
     {
+      // clear the list of PopupManagers
       m_popupManagers.clear();
       for (Popup* popup : identifyResult->popups())
       {
+        // create a popup manager
         PopupManager* popupManager = new PopupManager{popup, this};
+        // append popup manager to list
         m_popupManagers.append(popupManager);
-        if(m_layer->layerType() == LayerType::FeatureLayer)
-        {
-          FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_layer);
-          featureLayer->clearSelection();
-          featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
-        }
         emit popupManagersChanged();
       }
     }
   });
-
   emit mapViewChanged();
 }
 
