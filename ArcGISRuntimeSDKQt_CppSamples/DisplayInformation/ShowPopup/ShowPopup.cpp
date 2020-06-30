@@ -63,65 +63,71 @@ void ShowPopup::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   // once map is set, connect to MapQuickView mouse clicked signal
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this] (QMouseEvent& mouseEvent)
-  {
-    if (m_map->loadStatus() != LoadStatus::Loaded)
-      return;
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &ShowPopup::onMouseClicked);
 
-    m_layer = m_map->operationalLayers()->at(0);
-    constexpr double tolerance = 12;
-    constexpr bool returnPopupsOnly = false;
-
-    m_taskWatcher = m_mapView->identifyLayer(m_layer, mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly);
-
-    if (!m_taskWatcher.isValid())
-      qWarning() << "Task not valid.";
-
-    emit taskRunningChanged();
-  });
-
-  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
-  {
-    emit taskRunningChanged();
-    auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
-
-    // Invalid identify result
-    if (!identifyResult)
-      return;
-
-    if (!identifyResult->error().isEmpty())
-    {
-      qDebug() << "Identify error occurred: " << identifyResult->error().message();
-      return;
-    }
-
-    // if layer is a feature layer, select the identify result features
-    if (m_layer->layerType() == LayerType::FeatureLayer)
-    {
-      FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_layer);
-      featureLayer->clearSelection();
-      for (GeoElement* geoElement : identifyResult->geoElements())
-      {
-        Feature* feature = static_cast<Feature*>(geoElement);
-        featureLayer->selectFeature(feature);
-      }
-    }
-
-    if (!identifyResult->popups().isEmpty())
-    {
-      // clear the list of PopupManagers
-      m_popupManagers.clear();
-      for (Popup* popup : identifyResult->popups())
-      {
-        // create a popup manager
-        PopupManager* popupManager = new PopupManager{popup, this};
-        // append popup manager to list
-        m_popupManagers.append(popupManager);
-        emit popupManagersChanged();
-      }
-    }
-  });
+  // connect to MapQuickView::identifyLayerCompleted signal
+  connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, &ShowPopup::onIdentifyLayerCompleted);
   emit mapViewChanged();
+}
+
+void ShowPopup::onIdentifyLayerCompleted(QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult)
+{
+  emit taskRunningChanged();
+  auto identifyResult = std::unique_ptr<IdentifyLayerResult>(rawIdentifyResult);
+
+  // Invalid identify result
+  if (!identifyResult)
+    return;
+
+  if (!identifyResult->error().isEmpty())
+  {
+    qDebug() << "Identify error occurred: " << identifyResult->error().message();
+    return;
+  }
+
+  // if layer is a feature layer, select the identify result features
+  if (m_layer->layerType() == LayerType::FeatureLayer)
+  {
+    FeatureLayer* featureLayer = static_cast<FeatureLayer*>(m_layer);
+    featureLayer->clearSelection();
+    for (GeoElement* geoElement : identifyResult->geoElements())
+    {
+      Feature* feature = static_cast<Feature*>(geoElement);
+      featureLayer->selectFeature(feature);
+    }
+  }
+
+  if (!identifyResult->popups().isEmpty())
+  {
+    // clear the list of PopupManagers
+    m_popupManagers.clear();
+    for (Popup* popup : identifyResult->popups())
+    {
+      // create a popup manager
+      PopupManager* popupManager = new PopupManager{popup, this};
+      // append popup manager to list
+      m_popupManagers.append(popupManager);
+      // notify QML that m_popupManagers has changed and to display the popup(s).
+      emit popupManagersChanged();
+    }
+  }
+}
+
+void ShowPopup::onMouseClicked(QMouseEvent& mouseEvent)
+{
+  if (m_map->loadStatus() != LoadStatus::Loaded)
+    return;
+
+  m_layer = m_map->operationalLayers()->at(0);
+  constexpr double tolerance = 12;
+  constexpr bool returnPopupsOnly = false;
+
+  m_taskWatcher = m_mapView->identifyLayer(m_layer, mouseEvent.x(), mouseEvent.y(), tolerance, returnPopupsOnly);
+
+  if (!m_taskWatcher.isValid())
+    qWarning() << "Task not valid.";
+
+  emit taskRunningChanged();
 }
 
 bool ShowPopup::taskRunning() const

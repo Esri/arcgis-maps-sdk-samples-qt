@@ -23,16 +23,18 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class GeoElement;
+class IdentifyLayerResult;
+class Layer;
 class Map;
 class MapQuickView;
 class PopupManager;
-class GeoElement;
-class Layer;
 }
 }
 
 #include <QObject>
 #include <QQmlListProperty>
+#include <QMouseEvent>
 
 class ShowPopup : public QObject
 {
@@ -54,6 +56,10 @@ signals:
   void mapViewChanged();
   void popupManagersChanged();
   void taskRunningChanged();
+
+private slots:
+  void onMouseClicked(QMouseEvent& mouseEvent);
+  void onIdentifyLayerCompleted(QUuid, Esri::ArcGISRuntime::IdentifyLayerResult* rawIdentifyResult);
 
 private:
   bool taskRunning() const;
