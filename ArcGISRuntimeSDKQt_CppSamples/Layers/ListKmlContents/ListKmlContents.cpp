@@ -383,9 +383,10 @@ void ListKmlContents::setSceneView(SceneQuickView* sceneView)
         }
         else
         {
+          // add buffer of 1m to zMax
           target = Envelope(lookAtExtent.xMin(), lookAtExtent.yMin(),
                             lookAtExtent.xMax(), lookAtExtent.yMax(),
-                            elevation, lookAtExtent.depth() + elevation,
+                            elevation, lookAtExtent.depth() + elevation + 1,
                             lookAtExtent.spatialReference());
         }
       }
