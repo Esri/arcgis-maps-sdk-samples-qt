@@ -86,7 +86,7 @@ Rectangle {
     Connections {
         target: alaskaNationalParks
 
-        onSelectFeaturesStatusChanged: {
+        function onSelectFeaturesStatusChanged() {
             if (alaskaNationalParks.selectFeaturesStatus === Enums.TaskStatusErrored) {
                 const errorString = "Error: %1".arg(alaskaNationalParks.error.message);
                 msgDialog.text = errorString;

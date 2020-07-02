@@ -154,7 +154,7 @@ Rectangle {
 
         Connections {
             target: bookmarks.model
-            onCountChanged: {
+            function onCountChanged() {
                 const model = bookmarks.model;
                 if (model) {
                     for (let i = 0; i < model.count; ++i) {

@@ -269,10 +269,10 @@ Rectangle {
     }
 
     // connect signals from LocatorTask
-    Connections  {
+    Connections {
         target: currentLocatorTask
 
-        onGeocodeStatusChanged: {
+        function onGeocodeStatusChanged() {
             if (currentLocatorTask.geocodeStatus === Enums.TaskStatusCompleted) {
                 busyIndicator.visible = false;
 
@@ -319,19 +319,19 @@ Rectangle {
         target: currentRouteTask
 
         // if RouteTask loads properly, create the default parameters
-        onLoadStatusChanged: {
+        function onLoadStatusChanged() {
             if (currentRouteTask.loadStatus === Enums.LoadStatusLoaded) {
                 currentRouteTask.createDefaultParameters();
             }
         }
 
         // obtain default parameters
-        onCreateDefaultParametersStatusChanged: {
+        function onCreateDefaultParametersStatusChanged() {
             if (currentRouteTask.createDefaultParametersStatus === Enums.TaskStatusCompleted)
                 currentRouteParams = currentRouteTask.createDefaultParametersResult;
         }
 
-        onSolveRouteStatusChanged: {
+        function onSolveRouteStatusChanged() {
             // if route solve is successful, add a route graphic
             if(currentRouteTask.solveRouteStatus === Enums.TaskStatusCompleted) {
                 const routeTaskResult = currentRouteTask.solveRouteResult;

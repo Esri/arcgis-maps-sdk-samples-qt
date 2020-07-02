@@ -36,7 +36,7 @@ Rectangle {
     Connections {
         target: dictionarySymbolStyle
 
-        onSearchSymbolsStatusChanged: {
+        function onSearchSymbolsStatusChanged() {
             if (dictionarySymbolStyle.searchSymbolsStatus !== Enums.TaskStatusCompleted)
                 return;
 

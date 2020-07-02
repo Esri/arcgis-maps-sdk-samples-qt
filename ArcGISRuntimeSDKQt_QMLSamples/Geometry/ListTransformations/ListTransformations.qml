@@ -32,7 +32,9 @@ Rectangle {
 
     Connections {
         target: TransformationCatalog
-        onErrorChanged: peDataSet = false;
+        function onErrorChanged() {
+            peDataSet = false;
+        }
     }
 
     MapView {
