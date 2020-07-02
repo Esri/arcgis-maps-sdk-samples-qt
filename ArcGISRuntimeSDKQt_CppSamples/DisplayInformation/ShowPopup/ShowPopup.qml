@@ -20,8 +20,8 @@ import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 Item {
-    property real adjustedX: appWindow.width - popupStackView.width
-    property real originX: appWindow.width
+    property real adjustedX: parent.width - popupStackView.width
+    property real originX: parent.width
 
     // add a mapView component
     MapView {
