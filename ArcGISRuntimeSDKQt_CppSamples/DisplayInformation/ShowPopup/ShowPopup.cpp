@@ -29,7 +29,8 @@ using namespace Esri::ArcGISRuntime;
 
 ShowPopup::ShowPopup(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(QUrl("https://runtime.maps.arcgis.com/home/webmap/viewer.html?webmap=e4c6eb667e6c43b896691f10cc2f1580"), this))
+  m_map(new Map(QUrl("https://runtime.maps.arcgis.com/home/webmap/viewer.html?webmap=e4c6eb667e6c43b896691f10cc2f1580"), this)),
+  m_popupManagers(new QList<PopupManager*>)
 {
 }
 
@@ -95,13 +96,13 @@ void ShowPopup::onIdentifyLayerCompleted(QUuid, IdentifyLayerResult* rawIdentify
   if (!identifyResult->popups().isEmpty())
   {
     // clear the list of PopupManagers
-    m_popupManagers.clear();
+    m_popupManagers->clear();
     for (Popup* popup : identifyResult->popups())
     {
       // create a popup manager
       PopupManager* popupManager = new PopupManager{popup, this};
       // append popup manager to list
-      m_popupManagers.append(popupManager);
+      m_popupManagers->append(popupManager);
       // notify QML that m_popupManagers has changed and to display the popup(s).
       emit popupManagersChanged();
     }
