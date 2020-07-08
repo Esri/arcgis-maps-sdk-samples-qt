@@ -70,7 +70,7 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::PopupManager* m_popupManager = nullptr;
-  QList<Esri::ArcGISRuntime::PopupManager*>* m_popupManagers = nullptr;
+  QList<Esri::ArcGISRuntime::PopupManager*> m_popupManagers;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
 
   Esri::ArcGISRuntime::TaskWatcher m_taskWatcher;
