@@ -137,7 +137,7 @@ bool ShowPopup::taskRunning() const
 
 QQmlListProperty<PopupManager> ShowPopup::popupManagers()
 {
-  return QQmlListProperty<PopupManager>(this, m_popupManagers);
+  return QQmlListProperty<PopupManager>(this, &m_popupManagers);
 }
 
 void ShowPopup::clearSelection() const
