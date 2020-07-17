@@ -20,8 +20,6 @@ import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 Item {
-    property real adjustedX: parent.width - popupStackView.width
-    property real originX: parent.width
 
     // add a mapView component
     MapView {
@@ -34,6 +32,7 @@ Item {
         anchors {
             top: parent.top
             bottom: parent.bottom
+            right: parent.right
         }
         popupManagers: model.popupManagers
 
@@ -48,7 +47,7 @@ Item {
         id: model
         mapView: view
 
-        onPopupManagersChanged: popupStackView.slideHorizontal(originX, adjustedX);
+        onPopupManagersChanged: popupStackView.show();
     }
 
     BusyIndicator {

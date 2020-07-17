@@ -25,8 +25,6 @@ Rectangle {
     width: 800
     height: 600
 
-    property real adjustedX: rootRectangle.width - popupStackView.width
-    property real originX: rootRectangle.width
     property var popupManagers: []
     property var featureLayer: null
 
@@ -83,9 +81,10 @@ Rectangle {
         anchors {
             top: parent.top
             bottom: parent.bottom
+            right: parent.right
         }
 
-        onPopupManagersChanged: popupStackView.slideHorizontal(originX, adjustedX);
+        onPopupManagersChanged: popupStackView.show();
 
         onVisibleChanged: {
             if (!visible) {
