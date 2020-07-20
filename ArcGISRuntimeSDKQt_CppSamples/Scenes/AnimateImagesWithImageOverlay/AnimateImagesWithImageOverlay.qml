@@ -21,7 +21,7 @@ import Esri.Samples 1.0
 
 Item {
     property var timerIntervals: [17,34,68]
-    property var imageFrameRefreshRate: ["60 fps","30 fps","15 fps"]
+    property var imageFrameRefreshRate: ["Fast","Medium","Slow"]
 
     SceneView {
         id: view

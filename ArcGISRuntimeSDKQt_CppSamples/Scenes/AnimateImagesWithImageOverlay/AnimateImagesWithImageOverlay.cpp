@@ -137,8 +137,7 @@ void AnimateImagesWithImageOverlay::setupImageOverlay()
   // append the image overlay to the scene view
   m_sceneView->imageOverlays()->append(m_imageOverlay);
 
-  // Create new Timer and set the timeout interval to 68
-  // 68 ms interval timer equates to approximately 15 frames per seconds or FPS
+  // Create new Timer and set the timeout interval to 68ms
   m_timer = new QTimer(this);
   m_timer->setInterval(68);
 
