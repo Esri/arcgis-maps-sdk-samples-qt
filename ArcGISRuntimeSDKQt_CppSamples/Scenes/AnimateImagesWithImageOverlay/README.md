@@ -15,9 +15,9 @@ The application loads a map of the Southwestern United States. Click the "Start"
 ## How it works
 
 1. Create an `ImageOverlay` and add it to the `SceneView`.
-2. Set up a timer with an initial interval time of 68ms, equivalent to ~15fps.
+2. Set up a timer with an initial interval time of 68ms, which will display approximately 15 `ImageFrame`s per second.
 3. Connect to the timeout signal from the timer.
-4. Create a new `ImageFrame` every timeout and set it on the image overlay.
+4. Create a new image frame every timeout and set it on the image overlay.
 
 ## Relevant API
 
