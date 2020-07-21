@@ -23,10 +23,6 @@ Once you launch the app, you will be challenged for an ArcGIS Online login to vi
 * MapView
 * ArcGISMapImageLayer
 
-## About the data
-
-The Traffic web map uses public layers as well as the world traffic (premium content) layer. The world traffic service presents historical and near real-time traffic information for different regions in the world. The data is updated every 5 minutes. This map service requires an ArcGIS Online organizational subscription.
-
 ## Tags
 
 authentication, cloud, portal, remember, security
