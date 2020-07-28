@@ -17,7 +17,7 @@ Click 'Start tracking' to start tracking your location, which will appear as poi
 1. If necessary, request location permission from the operating system.
 2. Create a graphics overlay to show each point and another graphics overlay for displaying the route line.
 3. Create a `SimulatedLocationDataSource` and initialize it with a polyline. Start the `SimulatedLocationDataSource` to begin receiving location updates.
- - NOTE: To track a user's real position, use `DefaultLocationDataSource` instead.
+   - NOTE: To track a user's real position, use `DefaultLocationDataSource` instead.
 4. Connect to the `LocationDisplay`'s `LocationChanged` signal to handle location updates.
 5. Every time the location updates, store that location, display a point on the map, and re-create the route line.
 
