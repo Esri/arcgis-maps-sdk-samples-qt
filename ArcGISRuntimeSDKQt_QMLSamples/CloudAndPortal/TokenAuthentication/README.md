@@ -14,7 +14,7 @@ Once you launch the app, you will be challenged for an ArcGIS Online login to vi
 
 ## How it works
 
-1. Create an `ArcGISMapImageLayer` passing in the URL to a map service that is secured with token-based authentication
+1. Create an `ArcGISMapImageLayer` passing in the URL to a map service that is secured with token-based authentication.
 2. Append the map image layer to the operational layers to display the map.
 
 ## Relevant API
