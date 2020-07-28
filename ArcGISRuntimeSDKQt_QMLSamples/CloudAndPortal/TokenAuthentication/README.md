@@ -10,7 +10,7 @@ Allows you to access a secure service with the convenience and security of ArcGI
 
 ## How to use the sample
 
-Once you launch the app, you will be challenged for an ArcGIS Online login to view the protected map service. Enter a user name and password for an ArcGIS Online named user account (such as your ArcGIS for Developers account). If you authenticate successfully, the protected map service will display in the map.
+Once you launch the app, you will be challenged for an ArcGIS Online login to view the protected map service. Enter a user name and password for this resources. In this case, the username is `user1` and the password is also `user1`.
 
 ## How it works
 
