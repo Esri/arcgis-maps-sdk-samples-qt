@@ -316,10 +316,10 @@ Rectangle {
                             text: "Hide directions"
                             onClicked: {
                                 if (text === "Hide directions") {
-                                    directionsView.delegate = blankDelegate;
+                                    directionsView.visible = false;
                                     text = "Show directions";
                                 } else {
-                                    directionsView.delegate = directionDelegate;
+                                    directionsView.visible = true;
                                     text = "Hide directions";
                                 }
                             }
@@ -360,15 +360,6 @@ Rectangle {
                 }
             }
 
-        }
-    }
-
-    Component {
-        id: blankDelegate
-        Rectangle {
-            width: parent.width
-            height: 35
-            color: directionWindow.color
         }
     }
 
