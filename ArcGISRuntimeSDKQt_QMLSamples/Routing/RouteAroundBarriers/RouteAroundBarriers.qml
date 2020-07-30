@@ -342,7 +342,7 @@ Rectangle {
                     anchors.fill: parent
                     ListView {
                         id: directionsView
-                        visible: hideShowDirectionsBtn.text === "Show directions" ? true : false
+                        visible: hideShowDirectionsBtn.text === "Hide directions" ? true : false
                         anchors {
                             fill: parent
                             margins: 5
