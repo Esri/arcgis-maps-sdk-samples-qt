@@ -313,13 +313,12 @@ Rectangle {
                     Row {
                         Layout.alignment: Qt.AlignHCenter
                         Button {
+                            id: hideShowDirectionsBtn
                             text: "Hide directions"
                             onClicked: {
                                 if (text === "Hide directions") {
-                                    directionsView.visible = false;
                                     text = "Show directions";
                                 } else {
-                                    directionsView.visible = true;
                                     text = "Hide directions";
                                 }
                             }
@@ -343,6 +342,7 @@ Rectangle {
                     anchors.fill: parent
                     ListView {
                         id: directionsView
+                        visible: hideShowDirectionsBtn.text === "Show directions" ? true : false
                         anchors {
                             fill: parent
                             margins: 5
