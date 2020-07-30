@@ -34,6 +34,7 @@ Rectangle {
     property var createAndDisplayRoute
     property var routeParameters: null
     property var directionListModel: null
+    property var myRoute: null
     property bool addStops: true
     property bool addBarriers: false
     property bool findBestSeq: false
@@ -155,12 +156,12 @@ Rectangle {
                     }
 
                     // get the first route and add to graphics overlay
-                    const route = solveRouteResult.routes[0];
-                    const routeGeometry = route.routeGeometry;
+                    myRoute = solveRouteResult.routes[0];
+                    const routeGeometry = myRoute.routeGeometry;
                     const routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeGeometry});
                     routeOverlay.graphics.append(routeGraphic);
 
-                    directionListModel = route.directionManeuvers;
+                    directionListModel = myRoute.directionManeuvers;
                 }
             }
         }
