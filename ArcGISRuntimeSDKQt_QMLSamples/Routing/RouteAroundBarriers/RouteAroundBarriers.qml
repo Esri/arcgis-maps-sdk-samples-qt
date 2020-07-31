@@ -34,6 +34,7 @@ Rectangle {
     property var createAndDisplayRoute
     property var routeParameters: null
     property var directionListModel: null
+    property var myRoute: null
     property bool addStops: true
     property bool addBarriers: false
     property bool findBestSeq: false
@@ -155,12 +156,12 @@ Rectangle {
                     }
 
                     // get the first route and add to graphics overlay
-                    const route = solveRouteResult.routes[0];
-                    const routeGeometry = route.routeGeometry;
+                    myRoute = solveRouteResult.routes[0];
+                    const routeGeometry = myRoute.routeGeometry;
                     const routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeGeometry});
                     routeOverlay.graphics.append(routeGraphic);
 
-                    directionListModel = route.directionManeuvers;
+                    directionListModel = myRoute.directionManeuvers;
                 }
             }
         }
@@ -313,13 +314,12 @@ Rectangle {
                     Row {
                         Layout.alignment: Qt.AlignHCenter
                         Button {
+                            id: hideShowDirectionsBtn
                             text: "Hide directions"
                             onClicked: {
                                 if (text === "Hide directions") {
-                                    directionsView.delegate = blankDelegate;
                                     text = "Show directions";
                                 } else {
-                                    directionsView.delegate = directionDelegate;
                                     text = "Hide directions";
                                 }
                             }
@@ -343,6 +343,8 @@ Rectangle {
                     anchors.fill: parent
                     ListView {
                         id: directionsView
+                        clip: true
+                        visible: hideShowDirectionsBtn.text === "Hide directions" ? true : false
                         anchors {
                             fill: parent
                             margins: 5
@@ -360,15 +362,6 @@ Rectangle {
                 }
             }
 
-        }
-    }
-
-    Component {
-        id: blankDelegate
-        Rectangle {
-            width: parent.width
-            height: 35
-            color: directionWindow.color
         }
     }
 
