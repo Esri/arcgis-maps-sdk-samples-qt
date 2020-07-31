@@ -1,6 +1,6 @@
 // [WriteFile Name=DisplayLayerViewDrawState, Category=Maps]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,164 +20,112 @@
 
 #include "DisplayLayerViewDrawState.h"
 
-#include "ArcGISMapImageLayer.h"
-#include "ArcGISTiledLayer.h"
 #include "FeatureLayer.h"
-#include "FeatureTable.h"
-#include "Point.h"
+#include "ServiceFeatureTable.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "ServiceFeatureTable.h"
-#include "SpatialReference.h"
+#include "PortalItem.h"
 #include "Viewpoint.h"
+#include "Point.h"
 
-#include <QUrl>
 
 using namespace Esri::ArcGISRuntime;
 
-DisplayLayerViewDrawState::DisplayLayerViewDrawState(QQuickItem* parent) :
-  QQuickItem(parent)
+DisplayLayerViewDrawState::DisplayLayerViewDrawState(QObject* parent /* = nullptr */):
+  QObject(parent),
+  m_map(new Map(Basemap::topographic(this), this))
 {
+
+  // create the feature table
+//  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://runtime.maps.arcgis.com/home/item.html?id=b8f4033069f141729ffb298b7418b653"), this);
+  // create the feature layer using the feature table
+//  m_featureLayer = new FeatureLayer(featureTable, this);
+
+  // add the feature layer to the map
+//  m_map->operationalLayers()->append(m_featureLayer);
 }
 
 DisplayLayerViewDrawState::~DisplayLayerViewDrawState() = default;
 
 void DisplayLayerViewDrawState::init()
 {
+  // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<DisplayLayerViewDrawState>("Esri.Samples", 1, 0, "DisplayLayerViewDrawStateSample");
 }
 
-const QList<QObject*>& DisplayLayerViewDrawState::statusModel() const
+MapQuickView* DisplayLayerViewDrawState::mapView() const
 {
-  return m_statuses;
+  return m_mapView;
 }
 
-void DisplayLayerViewDrawState::componentComplete()
+// Set the view (created in QML)
+void DisplayLayerViewDrawState::setMapView(MapQuickView* mapView)
 {
-  QQuickItem::componentComplete();
+  if (!mapView || mapView == m_mapView)
+    return;
 
-  // find QML MapView component
-  m_mapView = findChild<MapQuickView*>("mapView");
-
-  // create a new map instance without a basemap
-  m_map = new Map(this);
-
-  // add three layers to map and connect signal
-  addLayers();
-
-  // set map on the map view
+  m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  // set Initial Viewpoint
-  m_mapView->setViewpointCenter(Point(-11e6, 45e5, SpatialReference(102100)), 5e7);
-
-  // initialize QStringList of layer names and states
-  for (int i = 0; i < m_map->operationalLayers()->size(); ++i)
+  connect(m_mapView, &MapQuickView::layerViewStateChanged, this, [this](Layer*, LayerViewState viewState)
   {
-    DisplayItem* o = new DisplayItem(m_map->operationalLayers()->at(i)->name(),
-                                     "Unknown",
-                                     this);
-    m_statuses << o;
-  }
-
-  emit modelChanged();
-
-  connectSignals();
-}
-
-//add layers and connect layerViewStateChanged signal
-void DisplayLayerViewDrawState::addLayers()
-{
-  // create tiled layer using a url
-  m_tiledLayer = new ArcGISTiledLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer"), this);
-  // add to map
-  m_map->operationalLayers()->append(m_tiledLayer);
-
-  // create map image using url
-  m_imageLayer = new ArcGISMapImageLayer(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Census/MapServer"), this);
-  m_imageLayer->setMinScale(40000000);
-  m_imageLayer->setMaxScale(2000000);
-  // add to map
-  m_map->operationalLayers()->append(m_imageLayer);
-
-  // create feature table using url
-  m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Recreation/FeatureServer/0"), this);
-  // create feature layer using table
-  m_featureLayer = new FeatureLayer(m_featureTable, this);
-  // add feature layer to map
-  m_map->operationalLayers()->append(m_featureLayer);
-}
-
-void DisplayLayerViewDrawState::connectSignals()
-{
-  // connect layerViewStateChanged signal
-  connect(m_mapView, &MapQuickView::layerViewStateChanged, this, [this](Layer* layer, LayerViewState viewState)
-  {
-    int rIndex = 0;
-
-    // find index in QStringList of that layer
-    for (int i = 0; i < m_map->operationalLayers()->size(); ++i)
-    {
-      if (layer == m_map->operationalLayers()->at(i))
-        rIndex = i;
-    }
-
-    QObject* drawStatus = m_statuses[rIndex];
-    // replace layer name in QStringList
-   drawStatus->setProperty("name", layer->name());
+    m_viewStatuses.clear();
+//    m_viewStatus.clear();
 
     // use insert to replace values mapped to layer name
     if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Active)
-      drawStatus->setProperty("status", "Active");
-    else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::NotVisible)
-      drawStatus->setProperty("status", "Not visible");
-    else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::OutOfScale)
-      drawStatus->setProperty("status", "Out of scale");
-    else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Loading)
-      drawStatus->setProperty("status", "Loading");
-    else if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Error)
-      drawStatus->setProperty("status", "Error");
-    else
-      drawStatus->setProperty("status", "Unknown");
+      m_viewStatuses.append("Active ");
+    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::NotVisible)
+      m_viewStatuses.append("NotVisible ");
+    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::OutOfScale)
+      m_viewStatuses.append("OutOfScale ");
+    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Loading)
+      m_viewStatuses.append("Loading ");
+    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Error)
+      m_viewStatuses.append("Error ");
+    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Warning)
+      m_viewStatuses.append("Warning ");
 
-    emit modelChanged();
+    emit viewStatusChanged();
   });
+
+  emit mapViewChanged();
 }
 
-DisplayItem::DisplayItem(const QString& name, const QString& status, QObject* parent) :
-  QObject(parent),
-  m_name(name),
-  m_status(status)
+void DisplayLayerViewDrawState::loadLayer()
 {
+  Portal* portal = new Portal(QUrl("https://runtime.maps.arcgis.com"), this);
+  PortalItem* pI = new PortalItem(portal, "b8f4033069f141729ffb298b7418b653", this);
+  m_featureLayer = new FeatureLayer(pI, 0, this);
+
+  connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, [this] (LoadStatus loadStatus)
+  {
+    if (loadStatus == LoadStatus::Loading)
+      m_loading = true;
+    else
+      m_loading = false;
+    emit loadingChanged();
+
+  });
+
+  connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this](Error e)
+  {
+    if (!e.isEmpty())
+      return;
+    const Point point{-11000000, 4500000, SpatialReference::webMercator()};
+    Viewpoint vp{point, 40000000.0};
+    m_mapView->setViewpoint(vp);
+
+  });
+  m_featureLayer->setMinScale(400000000.0);
+  m_featureLayer->setMaxScale(400000000.0 / 10);
+
+  m_map->operationalLayers()->append(m_featureLayer);
 }
 
-DisplayItem::DisplayItem(QObject* parent) :
-  QObject(parent)
+void DisplayLayerViewDrawState::changeFeatureLayerVisibility(bool visible)
 {
+  if (m_featureLayer->loadStatus() == LoadStatus::Loaded)
+    m_featureLayer->setVisible(visible);
 }
-
-DisplayItem::~DisplayItem() = default;
-
-void DisplayItem::setName(const QString& name)
-{
-  m_name = name;
-  emit nameChanged();
-}
-
-QString DisplayItem::name() const
-{
-  return m_name;
-}
-
-void DisplayItem::setStatus(const QString& status)
-{
-  m_status = status;
-  emit statusChanged();
-}
-QString DisplayItem::status() const
-{
-  return m_status;
-}
-
-

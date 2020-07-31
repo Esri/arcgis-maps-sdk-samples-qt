@@ -1,26 +1,16 @@
 {
-    "category": "Maps",
-    "description": "Determine if a layer is currently being viewed.",
+    "category": "TODO",
+    "description": "TODO",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "layer",
-        "map",
-        "status",
-        "view",
-        "Map",
-        "MapQuickView::layerViewStateChanged",
-        "MapView"
+        "TODO"
     ],
-    "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-displaylayerviewdrawstate.htm"
-    ],
+    "redirect_from": "",
     "relevant_apis": [
-        "Map",
-        "MapQuickView::layerViewStateChanged",
-        "MapView"
+        "TODO"
     ],
     "snippets": [
         "DisplayLayerViewDrawState.qml",

@@ -1,34 +1,31 @@
 # Display layer view draw state
 
-Determine if a layer is currently being viewed.
+This sample demonstrates how to XXXXX.
+This sample demonstrates ...       
+This is **why** you would do it this way ...
 
 ![](screenshot.png)
 
-## Use case
-
-The view state includes information on the loading state of layers and whether layers are visible at a given scale. For example, you might change how a layer is displayed in a layer list to communicate whether it is being viewed in the map: Show a loading spinner next to its name when the view state is 'Loading', gray out the name when 'NotVisible' or 'OutOfScale', show the name normally when 'Active', or with an error icon when the state is 'Error'.
-
 ## How to use the sample
-
-Pan and zoom around in the map. Each layer's view status is displayed. Notice that some layers configured with a min and max scale change to `LayerViewStatus::OutOfScale` at certain scales.
+e.g. Use the input controls to define a ... Click the "Go" button to ...
 
 ## How it works
-
-1. Create an `Map` with some operational layers.
-2. Set the map on a `MapView`.
-3. Connect to the `MapQuickView::layerViewStateChanged` signal.
-4. Get the `Layer` and the `LayerViewState` returned from the slot.
+e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
 
 ## Relevant API
+ - ClassName1
+ - MethodName
 
-* Map
-* MapQuickView::layerViewStateChanged
-* MapView
+## Offline data
+Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
-## About the data
+Link | Local Location
+---------|-------|
+|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
 
-The map shows a tiled layer of world time zones, a map image layer of the census, and a feature layer of recreation services.
+## Additional information
+A standard level license is required to ...
 
 ## Tags
+Routing, Network analysis, Geocode
 
-layer, map, status, view
