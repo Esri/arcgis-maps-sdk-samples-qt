@@ -17,6 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
 Item {
 
@@ -25,6 +26,13 @@ Item {
         id: view
         anchors.fill: parent
     }
+
+    // Uncomment this section when running as standalone application
+
+    AuthenticationView {
+        authenticationManager: model.authManager
+    }
+
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     EditWithBranchVersioningSample {

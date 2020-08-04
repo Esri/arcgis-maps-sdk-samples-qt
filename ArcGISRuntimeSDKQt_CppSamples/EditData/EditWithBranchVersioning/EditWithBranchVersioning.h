@@ -21,6 +21,7 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class AuthenticationManager;
 class Map;
 class MapQuickView;
 }
@@ -32,6 +33,7 @@ class EditWithBranchVersioning : public QObject
 {
   Q_OBJECT
 
+  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
 
 public:
@@ -40,7 +42,10 @@ public:
 
   static void init();
 
+  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
+
 signals:
+  void authManagerChanged();
   void mapViewChanged();
 
 private:

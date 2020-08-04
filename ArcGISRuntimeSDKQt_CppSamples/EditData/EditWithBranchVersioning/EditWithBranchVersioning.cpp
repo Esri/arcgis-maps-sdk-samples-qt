@@ -20,6 +20,7 @@
 
 #include "EditWithBranchVersioning.h"
 
+#include "AuthenticationManager.h"
 #include "Map.h"
 #include "MapQuickView.h"
 
@@ -37,6 +38,7 @@ EditWithBranchVersioning::~EditWithBranchVersioning() = default;
 void EditWithBranchVersioning::init()
 {
   // Register the map view for QML
+  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<EditWithBranchVersioning>("Esri.Samples", 1, 0, "EditWithBranchVersioningSample");
 }
@@ -56,4 +58,9 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
   m_mapView->setMap(m_map);
 
   emit mapViewChanged();
+}
+
+AuthenticationManager *EditWithBranchVersioning::authManager() const
+{
+  return AuthenticationManager::instance();
 }
