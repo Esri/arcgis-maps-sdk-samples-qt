@@ -1,16 +1,32 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Maps",
+    "description": "Determine if a layer is currently being viewed.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "layer",
+        "load",
+        "map",
+        "status",
+        "view",
+        "visibility",
+        "Enums.LayerViewStatus",
+        "LayerViewState",
+        "Map",
+        "MapView",
+        "MapView.layerViewStateChanged"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "TODO"
+        "Enums.LayerViewStatus",
+        "LayerViewState",
+        "Map",
+        "MapView",
+        "MapView.layerViewStateChanged"
     ],
     "snippets": [
         "DisplayLayerViewDrawState.qml"
