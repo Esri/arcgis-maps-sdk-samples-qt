@@ -1,6 +1,6 @@
 // [WriteFile Name=DisplayLayerViewDrawState, Category=Maps]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,53 +16,104 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
+import QtQuick.Layouts 1.12
 import Esri.Samples 1.0
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
-DisplayLayerViewDrawStateSample {
-    id: displayLayerView
-    width: 800
-    height: 600
+Item {
 
     // add a mapView component
     MapView {
-        id: mapView
+        id: view
         anchors.fill: parent
-        objectName: "mapView"
+
+        Dialog {
+            id: warningDialog
+            anchors.centerIn: parent
+            standardButtons: Dialog.Ok
+            visible: model.warningMessage !== "" ? true : false
+            Text {
+                text: model.warningMessage;
+            }
+        }
 
         Rectangle {
+            id: controlRect
             anchors {
-                bottom: mapView.attributionTop
+                bottom: loadLayerButton.top
                 horizontalCenter: parent.horizontalCenter
                 margins: 5
             }
-            border.color: "black"
-            radius: 10
-            height: childrenRect.height
             width: childrenRect.width
-            opacity: 0.95
-            GridLayout {
-                id: gridLayout
-                flow: GridLayout.TopToBottom
-                rows: statusModel.length
-                Repeater {
-                    model: statusModel
-                    delegate: Text {
-                        text: model.modelData.name
-                        horizontalAlignment: Text.AlignLeft
-                        Layout.margins: 5
-                    }
+            height: childrenRect.height
+            color: "#1976D2"
+            radius: 3
+
+            MouseArea {
+                width: controlLayout.childrenRect.width
+                height: controlLayout.childrenRect.height
+                onClicked: mouse.accepted = true;
+                onWheel: wheel.accepted = true;
+            }
+
+            ColumnLayout{
+                id: controlLayout
+
+                Text {
+                    id: textHeader
+                    text: qsTr("Current view status:")
+                    color: "white"
                 }
-                Repeater {
-                    model: statusModel
-                    delegate: Text {
-                        text: model.modelData.status
-                        color: "steelblue"
-                        horizontalAlignment: Text.AlignRight
-                        Layout.margins: 5
+
+                Column {
+                    id: column
+                    Layout.alignment: Qt.AlignHCenter
+                    Repeater {
+                        id: layerViewStatusRepeater
+                        model: model.viewStatus
+                        Layout.alignment: Qt.AlignHCenter
+                        Item {
+                            width: childrenRect.width
+                            height: childrenRect.height
+                            Text {
+                                text: modelData
+                                color: "white"
+                            }
+                        }
                     }
                 }
             }
         }
+
+        Button {
+            id: loadLayerButton
+            anchors {
+                bottom: view.attributionTop
+                horizontalCenter: parent.horizontalCenter
+                margins: 5
+            }
+            text: qsTr("Load Layer")
+            enabled: !model.loading
+            clip: true
+            onClicked: {
+                if (text === qsTr("Load Layer")) {
+                    model.loadLayer();
+                    text = qsTr("Hide Layer");
+                } else if (text === qsTr("Hide Layer")) {
+                    text = qsTr("Show Layer");
+                    model.changeFeatureLayerVisibility(false);
+
+                } else if (text === qsTr("Show Layer")) {
+                    text = qsTr("Hide Layer");
+                    model.changeFeatureLayerVisibility(true);
+                }
+            }
+        }
+    }
+
+    // Declare the C++ instance which creates the scene etc. and supply the view
+    DisplayLayerViewDrawStateSample {
+        id: model
+        mapView: view
     }
 }

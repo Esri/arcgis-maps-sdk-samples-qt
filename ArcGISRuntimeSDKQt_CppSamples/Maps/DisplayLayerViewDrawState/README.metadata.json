@@ -7,9 +7,13 @@
     ],
     "keywords": [
         "layer",
+        "load",
         "map",
         "status",
         "view",
+        "visibility",
+        "LayerViewState",
+        "LayerViewStatus",
         "Map",
         "MapQuickView::layerViewStateChanged",
         "MapView"
@@ -18,6 +22,8 @@
         "/qt/latest/cpp/sample-code/sample-qt-displaylayerviewdrawstate.htm"
     ],
     "relevant_apis": [
+        "LayerViewState",
+        "LayerViewStatus",
         "Map",
         "MapQuickView::layerViewStateChanged",
         "MapView"

@@ -7,20 +7,26 @@
     ],
     "keywords": [
         "layer",
+        "load",
         "map",
         "status",
         "view",
+        "visibility",
+        "Enums.LayerViewStatus",
+        "LayerViewState",
         "Map",
         "MapView",
-        "MapView.onLayerViewStateChanged"
+        "MapView.layerViewStateChanged"
     ],
     "redirect_from": [
         "/qt/latest/qml/sample-code/sample-qt-displaylayerviewdrawstate.htm"
     ],
     "relevant_apis": [
+        "Enums.LayerViewStatus",
+        "LayerViewState",
         "Map",
         "MapView",
-        "MapView.onLayerViewStateChanged"
+        "MapView.layerViewStateChanged"
     ],
     "snippets": [
         "DisplayLayerViewDrawState.qml"

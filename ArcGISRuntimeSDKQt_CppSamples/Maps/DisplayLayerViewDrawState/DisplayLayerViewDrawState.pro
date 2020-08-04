@@ -1,5 +1,5 @@
 #-------------------------------------------------
-# Copyright 2015 Esri.
+# Copyright 2020 Esri.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,17 +24,20 @@ CONFIG += c++14
 # additional modules are pulled in via arcgisruntime.pri
 QT += opengl qml quick
 
-ARCGIS_RUNTIME_VERSION = 100.9
-include($$PWD/arcgisruntime.pri)
-
 TEMPLATE = app
 TARGET = DisplayLayerViewDrawState
 
+ARCGIS_RUNTIME_VERSION = 100.9
+include($$PWD/arcgisruntime.pri)
+
 #-------------------------------------------------------------------------------
 
-HEADERS += DisplayLayerViewDrawState.h
+HEADERS += \
+    DisplayLayerViewDrawState.h
 
-SOURCES += main.cpp DisplayLayerViewDrawState.cpp
+SOURCES += \
+    main.cpp \
+    DisplayLayerViewDrawState.cpp
 
 RESOURCES += DisplayLayerViewDrawState.qrc
 
@@ -59,5 +62,3 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
-
-
