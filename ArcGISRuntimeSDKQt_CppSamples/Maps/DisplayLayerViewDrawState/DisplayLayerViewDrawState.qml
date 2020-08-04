@@ -31,7 +31,7 @@ Item {
             id: warningDialog
             anchors.centerIn: parent
             standardButtons: Dialog.Ok
-            visible: model.warningMessage ? true : false
+            visible: model.warningMessage !== "" ? true : false
             Text {
                 text: model.warningMessage;
             }

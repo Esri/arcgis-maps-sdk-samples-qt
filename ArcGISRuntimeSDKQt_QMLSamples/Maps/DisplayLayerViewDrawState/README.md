@@ -42,7 +42,7 @@ The following are members of the `LayerViewStatus` enum:
 * `ERROR`: The layer in the view has an unrecoverable error. When the status is `ERROR`, the layer cannot be rendered in the view. For example, it may have failed to load, be an unsupported layer type, or contain invalid data.
 * `WARNING`: The layer in the view has a non-breaking problem with its display, such as incomplete information (eg. by requesting more features than the max feature count of a service) or a network request failure.
 
-If your device supports airplane mode, you can toggle this on and pan around the map to see layers display the WARNING status when they cannot online fetch data. Toggle airplane mode back off to see the warning disappear.
+If your device supports airplane mode, you can toggle this on and pan around the map to see layers display the Enums.LayerViewStatusWarning status when they cannot online fetch data. Toggle airplane mode back off to see the warning disappear.
 
 ## Tags
 

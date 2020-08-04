@@ -28,7 +28,7 @@ Rectangle {
 
     readonly property string portalItemId: "b8f4033069f141729ffb298b7418b653"
     property var statusStringList: []
-    property var warningMessage: null
+    property var warningMessage: ""
 
 
 
@@ -67,7 +67,7 @@ Rectangle {
             id: warningDialog
             anchors.centerIn: parent
             standardButtons: Dialog.Ok
-            visible: warningMessage ? true : false
+            visible: warningMessage !== "" ? true : false
             Text {
                 id: warningText
                 text: warningMessage;
