@@ -76,7 +76,7 @@ Rectangle {
 
         onLayerViewStateChanged: {
             // only update list if the layer is the feature layer.
-            if (layer != featureLayer)
+            if (layer.name != featureLayer.name)
                 return;
 
             // clear list for new view state(s).

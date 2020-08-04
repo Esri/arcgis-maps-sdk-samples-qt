@@ -99,8 +99,7 @@ Item {
                 if (text === qsTr("Load Layer")) {
                     model.loadLayer();
                     text = qsTr("Hide Layer");
-                }
-                else if (text === qsTr("Hide Layer")) {
+                } else if (text === qsTr("Hide Layer")) {
                     text = qsTr("Show Layer");
                     model.changeFeatureLayerVisibility(false);
 

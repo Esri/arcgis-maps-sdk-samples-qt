@@ -23,11 +23,9 @@ CONFIG += c++14
 ARCGIS_RUNTIME_VERSION = 100.9
 include($$PWD/arcgisruntime.pri)
 
-SOURCES += \
-    main.cpp
+SOURCES += main.cpp
 
-RESOURCES += \
-    DisplayLayerViewDrawState.qrc
+RESOURCES += DisplayLayerViewDrawState.qrc
 
 ios {
     QMAKE_INFO_PLIST = $$PWD/Info.plist

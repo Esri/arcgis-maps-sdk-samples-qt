@@ -104,7 +104,7 @@ void DisplayLayerViewDrawState::changeFeatureLayerVisibility(bool visible)
 void DisplayLayerViewDrawState::onLayerViewStateCompleted(Layer* layer, LayerViewState layerViewState)
 {
   // only update the QStringList if the layer is the feature layer.
-  if (layer != m_featureLayer)
+  if (layer->name() != m_featureLayer->name())
     return;
 
   // clear string list for new view state(s).
