@@ -1,4 +1,4 @@
-// Copyright 2015 Esri.
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,49 +11,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <QSettings>
 #include <QGuiApplication>
 #include <QQuickView>
-#include <QUrl>
-#include <QCoreApplication>
+#include <QCommandLineParser>
 #include <QDir>
 #include <QQmlEngine>
 
-#define STRINGIZE(x) #x
-#define QUOTE(x) STRINGIZE(x)
-
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    app.setApplicationName("DisplayLayerViewDrawState - QML");
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QGuiApplication app(argc, argv);
+  app.setApplicationName(QStringLiteral("DisplayLayerViewDrawState - QML"));
 
-    // initialize application view
-    QQuickView view;
-    view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // Intialize application view
+  QQuickView view;
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
 
-    // Add the import Path
-    view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
+  // Add the import Path
+  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
 
-    QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-    QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
-
-#if defined(LINUX_PLATFORM_REPLACEMENT)
-    // on some linux platforms the string 'linux' is replaced with 1
-    // fix the replacement paths which were created
-    QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
-    arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
-    arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+#ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
+  view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-    // Add the Runtime and Extras path
-    view.engine()->addImportPath(arcGISRuntimeImportPath);
-    // Add the Toolkit path
-    view.engine()->addImportPath(arcGISToolkitImportPath);
+#ifdef ARCGIS_TOOLKIT_IMPORT_PATH_2
+  view.engine()->addImportPath(ARCGIS_TOOLKIT_IMPORT_PATH_2);
+#endif
 
-    // Set the source
-    view.setSource(QUrl("qrc:/Samples/Maps/DisplayLayerViewDrawState/DisplayLayerViewDrawState.qml"));
+  // Set the source
+  view.setSource(QUrl("qrc:/Samples/Maps/DisplayLayerViewDrawState/DisplayLayerViewDrawState.qml"));
 
-    view.show();
+  view.show();
 
-    return app.exec();
+  return app.exec();
 }

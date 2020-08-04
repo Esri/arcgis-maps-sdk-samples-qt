@@ -18,6 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.12
 import Esri.Samples 1.0
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
 Item {
 
@@ -26,12 +27,19 @@ Item {
         id: view
         anchors.fill: parent
 
-        onMouseClicked: print(viewStatus.width)
+        Dialog {
+            id: warningDialog
+            anchors.centerIn: parent
+            standardButtons: Dialog.Ok
+            visible: model.warningMessage ? true : false
+            Text {
+                text: model.warningMessage;
+            }
+        }
 
         Rectangle {
             id: controlRect
             anchors {
-                //                bottom: view.attributionTop
                 bottom: loadLayerButton.top
                 horizontalCenter: parent.horizontalCenter
                 margins: 5
@@ -42,7 +50,6 @@ Item {
             radius: 3
 
             MouseArea {
-                id: mA
                 width: controlLayout.childrenRect.width
                 height: controlLayout.childrenRect.height
                 onClicked: mouse.accepted = true;
@@ -58,12 +65,13 @@ Item {
                     color: "white"
                 }
 
-
                 Column {
                     id: column
                     Layout.alignment: Qt.AlignHCenter
                     Repeater {
+                        id: layerViewStatusRepeater
                         model: model.viewStatus
+                        Layout.alignment: Qt.AlignHCenter
                         Item {
                             width: childrenRect.width
                             height: childrenRect.height
@@ -102,8 +110,6 @@ Item {
                 }
             }
         }
-
-
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view

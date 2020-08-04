@@ -24,6 +24,9 @@ namespace ArcGISRuntime
 class FeatureLayer;
 class Map;
 class MapQuickView;
+class PortalItem;
+class Layer;
+class LayerViewState;
 }
 }
 
@@ -35,7 +38,7 @@ class DisplayLayerViewDrawState : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QStringList viewStatus MEMBER m_viewStatuses NOTIFY viewStatusChanged)
-//  Q_PROPERTY(QString viewStatus MEMBER m_viewStatus NOTIFY viewStatusChanged)
+  Q_PROPERTY(QString warningMessage MEMBER m_warningMessage NOTIFY warningMessageChanged)
   Q_PROPERTY(bool loading MEMBER m_loading NOTIFY loadingChanged)
 
 public:
@@ -43,6 +46,7 @@ public:
   ~DisplayLayerViewDrawState();
 
   static void init();
+  void onLayerViewStateCompleted(Esri::ArcGISRuntime::Layer* layer, Esri::ArcGISRuntime::LayerViewState layerViewState);
 
   Q_INVOKABLE void loadLayer();
   Q_INVOKABLE void changeFeatureLayerVisibility(bool visible);
@@ -51,6 +55,7 @@ signals:
   void mapViewChanged();
   void viewStatusChanged();
   void loadingChanged();
+  void warningMessageChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -59,10 +64,11 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
 
   bool m_loading = false;
-  QString m_viewStatus;
   QStringList m_viewStatuses;
+  QString m_warningMessage;
 };
 
 #endif // DISPLAYLAYERVIEWDRAWSTATE_H

@@ -35,14 +35,6 @@ DisplayLayerViewDrawState::DisplayLayerViewDrawState(QObject* parent /* = nullpt
   QObject(parent),
   m_map(new Map(Basemap::topographic(this), this))
 {
-
-  // create the feature table
-//  ServiceFeatureTable* featureTable = new ServiceFeatureTable(QUrl("https://runtime.maps.arcgis.com/home/item.html?id=b8f4033069f141729ffb298b7418b653"), this);
-  // create the feature layer using the feature table
-//  m_featureLayer = new FeatureLayer(featureTable, this);
-
-  // add the feature layer to the map
-//  m_map->operationalLayers()->append(m_featureLayer);
 }
 
 DisplayLayerViewDrawState::~DisplayLayerViewDrawState() = default;
@@ -68,59 +60,38 @@ void DisplayLayerViewDrawState::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  connect(m_mapView, &MapQuickView::layerViewStateChanged, this, [this](Layer*, LayerViewState viewState)
-  {
-    m_viewStatuses.clear();
-//    m_viewStatus.clear();
-
-    // use insert to replace values mapped to layer name
-    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Active)
-      m_viewStatuses.append("Active ");
-    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::NotVisible)
-      m_viewStatuses.append("NotVisible ");
-    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::OutOfScale)
-      m_viewStatuses.append("OutOfScale ");
-    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Loading)
-      m_viewStatuses.append("Loading ");
-    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Error)
-      m_viewStatuses.append("Error ");
-    if (viewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Warning)
-      m_viewStatuses.append("Warning ");
-
-    emit viewStatusChanged();
-  });
+  connect(m_mapView, &MapQuickView::layerViewStateChanged, this, &DisplayLayerViewDrawState::onLayerViewStateCompleted);
 
   emit mapViewChanged();
 }
 
 void DisplayLayerViewDrawState::loadLayer()
 {
-  Portal* portal = new Portal(QUrl("https://runtime.maps.arcgis.com"), this);
-  PortalItem* pI = new PortalItem(portal, "b8f4033069f141729ffb298b7418b653", this);
-  m_featureLayer = new FeatureLayer(pI, 0, this);
+  // load a feature layer from a portal item
+  Portal* portal = new Portal(this);
+  m_portalItem = new PortalItem(portal, "b8f4033069f141729ffb298b7418b653", this);
+  m_featureLayer = new FeatureLayer(m_portalItem, 0, this);
 
   connect(m_featureLayer, &FeatureLayer::loadStatusChanged, this, [this] (LoadStatus loadStatus)
   {
-    if (loadStatus == LoadStatus::Loading)
-      m_loading = true;
-    else
-      m_loading = false;
+    m_loading = (loadStatus == LoadStatus::Loading) ? true : false;
     emit loadingChanged();
-
   });
 
+  // load feature layer and set the viewpoint
   connect(m_featureLayer, &FeatureLayer::doneLoading, this, [this](Error e)
   {
     if (!e.isEmpty())
       return;
-    const Point point{-11000000, 4500000, SpatialReference::webMercator()};
-    Viewpoint vp{point, 40000000.0};
-    m_mapView->setViewpoint(vp);
 
+    const Point point{-11000000, 4500000, SpatialReference::webMercator()};
+    const Viewpoint vp{point, 40000000.0};
+    m_mapView->setViewpoint(vp);
   });
+
+  // set min/max scale to demonstrate different view states.
   m_featureLayer->setMinScale(400000000.0);
   m_featureLayer->setMaxScale(400000000.0 / 10);
-
   m_map->operationalLayers()->append(m_featureLayer);
 }
 
@@ -128,4 +99,36 @@ void DisplayLayerViewDrawState::changeFeatureLayerVisibility(bool visible)
 {
   if (m_featureLayer->loadStatus() == LoadStatus::Loaded)
     m_featureLayer->setVisible(visible);
+}
+
+void DisplayLayerViewDrawState::onLayerViewStateCompleted(Layer* layer, LayerViewState layerViewState)
+{
+  // only update the QStringList if the layer is the feature layer.
+  if (layer != m_featureLayer)
+    return;
+
+  // clear string list for new view state(s).
+  m_viewStatuses.clear();
+
+  if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Active)
+    m_viewStatuses.append("Active");
+  if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::NotVisible)
+    m_viewStatuses.append("NotVisible");
+  if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::OutOfScale)
+    m_viewStatuses.append("OutOfScale");
+  if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Loading)
+    m_viewStatuses.append("Loading");
+  if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Error)
+    m_viewStatuses.append("Error");
+  if (layerViewState.statusFlags() & Esri::ArcGISRuntime::LayerViewStatus::Warning)
+  {
+    m_viewStatuses.append("Warning");
+    if (!layerViewState.error().isEmpty())
+    {
+      const QString warningMessage = QString("Warning message: %1").arg(layerViewState.error().message());
+      m_warningMessage = warningMessage;
+      emit warningMessageChanged();
+    }
+  }
+  emit viewStatusChanged();
 }
