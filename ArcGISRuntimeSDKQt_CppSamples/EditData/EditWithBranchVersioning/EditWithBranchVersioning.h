@@ -22,12 +22,15 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class AuthenticationManager;
+class ServiceVersionParameters;
 class Map;
 class MapQuickView;
+class ServiceGeodatabase;
 }
 }
 
 #include <QObject>
+#include <QUrl>
 
 class EditWithBranchVersioning : public QObject
 {
@@ -35,6 +38,7 @@ class EditWithBranchVersioning : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QString sgdbCurrentVersion MEMBER m_sgdbCurrentVersion NOTIFY sgdbCurrentVersionChanged)
 
 public:
   explicit EditWithBranchVersioning(QObject* parent = nullptr);
@@ -43,10 +47,18 @@ public:
   static void init();
 
   Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
+  Esri::ArcGISRuntime::ServiceVersionParameters* createParams();
+
+  Q_INVOKABLE void createVersion();
+  Q_INVOKABLE void switchVersion() const;
+
+  // to be removed
+  Q_INVOKABLE void fetchVersions() const;
 
 signals:
   void authManagerChanged();
   void mapViewChanged();
+  void sgdbCurrentVersionChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -54,6 +66,12 @@ private:
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
+  Esri::ArcGISRuntime::ServiceGeodatabase* m_serviceGeodatabase = nullptr;
+
+  const QUrl m_serviceUrl{"https://rt-server1081.esri.com/portal/home/item.html?id=adb5c3090edf43f3853e57d8b0810f9b"};
+
+  QString m_sgdbCurrentVersion;
+  QString m_createdVersion;
 };
 
 #endif // EDITWITHBRANCHVERSIONING_H
