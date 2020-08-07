@@ -68,6 +68,9 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  // connect to the mouse clicked signal on the MapQuickView
+
+
   connect(m_map, &Map::doneLoading, this, [this](Error e)
   {
     if (!e.isEmpty())
@@ -76,9 +79,81 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
     for( Layer* layer : *m_map->operationalLayers()) {
       qDebug() << layer->name();
 
-      auto fl = static_cast<FeatureLayer*>(layer);
-      auto sft = static_cast<ServiceFeatureTable*>(fl->featureTable());
-      m_serviceGeodatabase = sft->serviceGeodatabase();
+      m_featureLayer = static_cast<FeatureLayer*>(layer);
+//      m_featureTable = m_featureLayer->featureTable();
+//      auto sft = static_cast<ServiceFeatureTable*>(m_featureLayer->featureTable());
+//      m_serviceGeodatabase = sft->serviceGeodatabase();
+      m_featureTable = static_cast<ServiceFeatureTable*>(m_featureLayer->featureTable());
+      m_serviceGeodatabase = m_featureTable->serviceGeodatabase();
+
+
+
+      connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+      {
+        // first clear the selection
+        m_featureLayer->clearSelection();
+
+//        emit hideWindow();
+
+        // call identify on the map view
+        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+      });
+
+
+      connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
+      {
+        m_featureLayer->clearSelection();
+
+//        emit hideWindow();
+      });
+
+      // connect to the identifyLayerCompleted signal on the map view
+      connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
+      {
+        if(!identifyResult)
+          return;
+        if (!identifyResult->geoElements().empty())
+        {
+          // select the item in the result
+          m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
+//          emit  featureSelected();
+
+          qDebug() << m_mapView->calloutData()->title();
+//          // Update the parent so the featureLayer is not deleted when the identifyResult is deleted.
+//          m_featureLayer->setParent(this);
+
+//          // obtain the selected feature with attributes
+          QueryParameters queryParams;
+          QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
+          queryParams.setWhereClause(whereClause);
+
+//          auto featTable = m_serviceGeodatabase->connectedTables()[0];
+//          featTable->queryFeatures(queryParams);
+//          m_featureTable = m_serviceGeodatabase->connectedTables()[0];
+          m_featureTable->queryFeatures(queryParams);
+        }
+      });
+
+      connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+      {
+        if (featureQueryResult && featureQueryResult->iterator().hasNext())
+        {
+          // first delete if not nullptr
+          if (m_selectedFeature)
+            delete m_selectedFeature;
+
+          // set selected feature member
+          m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
+          m_selectedFeature->setParent(this);
+          m_featureType = m_selectedFeature->attributes()->attributeValue("NAME").toString();
+          m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\"><b>%1</b></font>").arg(m_featureType));
+          m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
+          qDebug() << m_mapView->calloutData()->title();
+          emit featureTypeChanged();
+          emit featureSelected();
+        }
+      });
+
 
       connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this] (Error e)
       {
@@ -89,12 +164,8 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
 
         // create parameters for branch
 //        auto params = createParams();
-
-
-//        qDebug() << m_serviceGeodatabase->credential()->username();
         m_sgdbCurrentVersion = m_serviceGeodatabase->versionName();
         emit sgdbCurrentVersionChanged();
-//        m_serviceGeodatabase->fetchVersions();
       });
 
       connect(m_serviceGeodatabase, &ServiceGeodatabase::fetchVersionsCompleted, this, [this] (QUuid, const QList<ServiceVersionInfo*> &serviceVersionInfos)
@@ -106,12 +177,6 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
           auto access = serviceInfo->access() == VersionAccess::Private ? "Private" : "Other";
           qDebug() << serviceInfo->name() << "\t owner?(api broken): " << owner << "\t access?: " << access;
         }
-
-        // create parameters for branch
-//        auto params = createParams();
-
-//        m_serviceGeodatabase->createVersion(params);
-
       });
 
       connect(m_serviceGeodatabase, &ServiceGeodatabase::createVersionCompleted, this, [this](QUuid, Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo)
@@ -122,9 +187,6 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
         m_createdVersion = serviceVersionInfo->name();
         qDebug() << serviceVersionInfo->isOwner() << " - Not working API level";
         m_serviceGeodatabase->switchVersion(serviceVersionInfo->name());
-//        m_serviceGeodatabase->fetchVersions();
-
-
       });
 
       connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [this](Error e)
@@ -192,4 +254,9 @@ void EditWithBranchVersioning::fetchVersions() const
     return;
 
   m_serviceGeodatabase->fetchVersions();
+}
+
+QString EditWithBranchVersioning::featureType() const
+{
+  return m_featureType;
 }

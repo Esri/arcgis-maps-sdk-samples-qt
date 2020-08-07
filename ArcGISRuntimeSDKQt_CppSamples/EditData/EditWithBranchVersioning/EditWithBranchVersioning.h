@@ -26,6 +26,9 @@ class ServiceVersionParameters;
 class Map;
 class MapQuickView;
 class ServiceGeodatabase;
+class FeatureLayer;
+class ServiceFeatureTable;
+class ArcGISFeature;
 }
 }
 
@@ -39,6 +42,8 @@ class EditWithBranchVersioning : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString sgdbCurrentVersion MEMBER m_sgdbCurrentVersion NOTIFY sgdbCurrentVersionChanged)
+
+  Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
 
 public:
   explicit EditWithBranchVersioning(QObject* parent = nullptr);
@@ -59,19 +64,26 @@ signals:
   void authManagerChanged();
   void mapViewChanged();
   void sgdbCurrentVersionChanged();
+  void featureSelected();
+  void featureTypeChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
+  QString featureType() const;
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::ServiceGeodatabase* m_serviceGeodatabase = nullptr;
+  Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
+  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
+  Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
 
   const QUrl m_serviceUrl{"https://rt-server1081.esri.com/portal/home/item.html?id=adb5c3090edf43f3853e57d8b0810f9b"};
 
   QString m_sgdbCurrentVersion;
   QString m_createdVersion;
+  QString m_featureType;
 };
 
 #endif // EDITWITHBRANCHVERSIONING_H
