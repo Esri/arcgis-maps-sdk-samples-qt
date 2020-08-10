@@ -1,0 +1,27 @@
+{
+    "category": "Edit Data",
+    "dataItems": [
+        {
+            "itemId": "74c0c9fa80f4498c9739cc42531e9948",
+            "path": "~/ArcGIS/Runtime/Data/geodatabase/loudoun_anno.geodatabase.zip"
+        }
+    ],
+    "description": "TODO",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "TODO"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "TODO"
+    ],
+    "snippets": [
+        "EditFeaturesWithFeatureLinkedAnnotation.qml",
+        "EditFeaturesWithFeatureLinkedAnnotation.cpp",
+        "EditFeaturesWithFeatureLinkedAnnotation.h"
+    ],
+    "title": "Edit features with feature-linked annotation"
+}
