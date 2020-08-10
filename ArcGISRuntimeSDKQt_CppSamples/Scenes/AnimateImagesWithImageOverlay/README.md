@@ -25,6 +25,12 @@ The application loads a map of the Southwestern United States. Click the "Start"
 * ImageOverlay
 * SceneView
 
+## Offline data
+
+Link | Local Location
+---------|-------|
+|[Pacific South West Images](https://www.arcgis.com/home/item.html?id=9465e8c02b294c69bdb42de056a23ab1)|`<userhome>/ArcGIS/Runtime/Data/3D/ImageOverlay/PacificSouthWest.zip`|
+
 ## About the data
 
 These radar images were captured by the US National Weather Service (NWS). They highlight the Pacific Southwest sector which is made up of part the western United States and Mexico. For more information visit the [National Weather Service](https://www.weather.gov/jetstream/gis) website.
