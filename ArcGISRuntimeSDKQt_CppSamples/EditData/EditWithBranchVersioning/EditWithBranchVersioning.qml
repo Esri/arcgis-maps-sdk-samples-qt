@@ -110,19 +110,42 @@ Item {
             }
         }
 
-        Button {
-            id: applyEditsBt
-            text: qsTr("Apply Edits")
+        RowLayout {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: view.attributionTop
                 margins: 3
             }
-            enabled: false
-            visible: enabled
+            Button {
+                id: applyEditsBt
+                text: qsTr("Apply Edits")
+//                anchors {
+//                    horizontalCenter: parent.horizontalCenter
+//                    bottom: view.attributionTop
+//                    margins: 3
+//                }
+                enabled: false
+                visible: enabled
 
-            onClicked: {
-                enabled = false;
+                onClicked: {
+                    enabled = false;
+                }
+            }
+
+            Button {
+                id: resetBtn
+                text: qsTr("Reset")
+//                anchors {
+//                    horizontalCenter: parent.horizontalCenter
+//                    bottom: view.attributionTop
+//                    margins: 3
+//                }
+                enabled: applyEditsBt.enabled
+                visible: enabled
+
+                onClicked: {
+                    applyEditsBt.enabled = false;
+                }
             }
         }
 
@@ -218,6 +241,14 @@ Item {
 
         onFeatureSelected: {
             callout.showCallout();
+        }
+
+        onHideWindow: {
+            // hide the callout
+            if (callout.visible)
+                callout.dismiss();
+            // hide the update window
+            updateWindow.visible = false;
         }
     }
 }

@@ -93,7 +93,7 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
         // first clear the selection
         m_featureLayer->clearSelection();
 
-//        emit hideWindow();
+        emit hideWindow();
 
         // call identify on the map view
         m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
@@ -104,7 +104,7 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
       {
         m_featureLayer->clearSelection();
 
-//        emit hideWindow();
+        emit hideWindow();
       });
 
       // connect to the identifyLayerCompleted signal on the map view
@@ -189,7 +189,7 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
         m_serviceGeodatabase->switchVersion(serviceVersionInfo->name());
       });
 
-      connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [this](Error e)
+      connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [](Error e)
       {
         qDebug() << e.message();
 
@@ -220,14 +220,16 @@ ServiceVersionParameters* EditWithBranchVersioning::createParams()
   const quint32 value = QRandomGenerator::global()->generate();
   const auto s_value = QString::number(value);
   const QString name{"SAMPLE_DESIGN_" + s_value};
+//  const QString name{"SAMPLE_DESIGN_1196606252"};
+//  const QString name{"crtSameVersionTwiceTest"};
   params->setName(name);
   params->setAccess(VersionAccess::Private);
   params->setDescription("description + " + name);
 
   auto access_s = params->access() == VersionAccess::Private ? "Private" : "Other";
-  qDebug() << params->name();
-  qDebug() << access_s;
-  qDebug() << params->description();
+//  qDebug() << params->name();
+//  qDebug() << access_s;
+//  qDebug() << params->description();
 
   return std::move(params);
 }

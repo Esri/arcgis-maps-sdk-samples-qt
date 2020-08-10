@@ -66,6 +66,7 @@ signals:
   void sgdbCurrentVersionChanged();
   void featureSelected();
   void featureTypeChanged();
+  void hideWindow();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
