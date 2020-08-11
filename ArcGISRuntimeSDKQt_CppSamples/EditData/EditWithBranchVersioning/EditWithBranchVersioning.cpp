@@ -188,7 +188,7 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
           return;
 
         m_createdVersion = serviceVersionInfo->name();
-        qDebug() << serviceVersionInfo->isOwner() << " - createVersionCompleted";
+        qDebug() << "createVersionCompleted, ServiceGeodatabase::isOwner() - " << serviceVersionInfo->isOwner();
         m_serviceGeodatabase->switchVersion(serviceVersionInfo->name());
       });
 
@@ -265,3 +265,4 @@ QString EditWithBranchVersioning::featureType() const
 {
   return m_featureType;
 }
+
