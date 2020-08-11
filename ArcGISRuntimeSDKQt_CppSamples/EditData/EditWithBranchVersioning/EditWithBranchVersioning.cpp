@@ -148,7 +148,7 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
           m_featureType = m_selectedFeature->attributes()->attributeValue("NAME").toString();
           m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\"><b>%1</b></font>").arg(m_featureType));
           m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
-          qDebug() << m_mapView->calloutData()->title();
+//          qDebug() << m_mapView->calloutData()->title();
           emit featureTypeChanged();
           emit featureSelected();
         }
@@ -175,7 +175,7 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
         {
           auto owner = serviceInfo->isOwner() ? "true" : "false";
           auto access = serviceInfo->access() == VersionAccess::Private ? "Private" : "Other";
-          qDebug() << serviceInfo->name() << "\t owner?(api broken): " << owner << "\t access?: " << access;
+          qDebug() << serviceInfo->name() << "\t owner?: " << serviceInfo->isOwner() << "\t access?: " << access;
         }
       });
 
@@ -184,8 +184,11 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
         if (m_serviceGeodatabase->hasLocalEdits())
           return;
 
+        if (!serviceVersionInfo)
+          return;
+
         m_createdVersion = serviceVersionInfo->name();
-        qDebug() << serviceVersionInfo->isOwner() << " - Not working API level";
+        qDebug() << serviceVersionInfo->isOwner() << " - createVersionCompleted";
         m_serviceGeodatabase->switchVersion(serviceVersionInfo->name());
       });
 
@@ -224,7 +227,7 @@ ServiceVersionParameters* EditWithBranchVersioning::createParams()
 //  const QString name{"crtSameVersionTwiceTest"};
   params->setName(name);
   params->setAccess(VersionAccess::Private);
-  params->setDescription("description + " + name);
+//  params->setDescription("description + " + name);
 
   auto access_s = params->access() == VersionAccess::Private ? "Private" : "Other";
 //  qDebug() << params->name();
