@@ -25,12 +25,16 @@ class Map;
 class MapQuickView;
 class Geodatabase;
 class FeatureLayer;
+class Feature;
 class AnnotationLayer;
+//class Point;
 }
 }
 
 #include <QObject>
 #include <QDir>
+
+#include "Point.h"
 
 class EditFeaturesWithFeatureLinkedAnnotation : public QObject
 {
@@ -58,8 +62,11 @@ private:
   Esri::ArcGISRuntime::FeatureLayer* m_parcelLinesFeatureLayer = nullptr;
   Esri::ArcGISRuntime::AnnotationLayer* m_addressPointsAnnotationLayer = nullptr;
   Esri::ArcGISRuntime::AnnotationLayer* m_parcelLinesAnnotationLayer = nullptr;
+  Esri::ArcGISRuntime::Feature* m_selectedFeature = nullptr;
+  Esri::ArcGISRuntime::Point m_screenClickPoint;
 
   void clearSelection();
+  void movePolylineVertex(Esri::ArcGISRuntime::Point mapPoint);
 
 };
 

@@ -27,6 +27,9 @@
 #include "FeatureLayer.h"
 #include "AnnotationLayer.h"
 #include "GeodatabaseFeatureTable.h"
+#include "GeometryEngine.h"
+#include "PolylineBuilder.h"
+#include "PartCollection.h"
 
 // Qt headers
 #include <QString>
@@ -76,7 +79,7 @@ EditFeaturesWithFeatureLinkedAnnotation::EditFeaturesWithFeatureLinkedAnnotation
     if (!e.isEmpty())
       return;
 
-//    qDebug() << "done loading";
+    //    qDebug() << "done loading";
 
     GeodatabaseFeatureTable* pointFeatureTable = m_geodatabase->geodatabaseFeatureTable("Loudoun_Address_Points_1");
     GeodatabaseFeatureTable* parcelLinesFeatureTable = m_geodatabase->geodatabaseFeatureTable("ParcelLines_1");
@@ -168,8 +171,23 @@ void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
   {
     clearSelection();
     // call identify on the map view
-//    m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
-    m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 10, false);
+    //    m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+
+    if (m_selectedFeature) {
+      //move
+
+      const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+
+      movePolylineVertex(clickedPoint);
+
+//      delete m_selectedFeature;
+//      m_selectedFeature = nullptr;
+    }
+    else
+    {
+      m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 10, false);
+    }
+    //
   });
 
   connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](QUuid, QList<IdentifyLayerResult*> identifyResults)
@@ -184,34 +202,36 @@ void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
       if (!identifyResult->geoElements().empty())
       {
         // select the item in the result
-//        qDebug() << identifyResult->layerContent()->name();
+        //        qDebug() << identifyResult->layerContent()->name();
 
-        auto testCast = static_cast<FeatureLayer*>(identifyResult->layerContent());
+        auto testCast = dynamic_cast<FeatureLayer*>(identifyResult->layerContent());
 
 
         if (testCast)
         {
           qDebug() << testCast->name() << "Clearing selection";
 
-          testCast->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
+          m_selectedFeature = dynamic_cast<Feature*>(identifyResult->geoElements().at(0));
+
+          testCast->selectFeature(m_selectedFeature);
         } else {
           qDebug() << "Failed cast";
         }
-//        m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
+        //        m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
         //          emit  featureSelected();
 
         //          // Update the parent so the featureLayer is not deleted when the identifyResult is deleted.
         //          m_featureLayer->setParent(this);
 
         //          // obtain the selected feature with attributes
-//        QueryParameters queryParams;
-//        QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
-//        queryParams.setWhereClause(whereClause);
+        //        QueryParameters queryParams;
+        //        QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
+        //        queryParams.setWhereClause(whereClause);
 
         //          auto featTable = m_serviceGeodatabase->connectedTables()[0];
         //          featTable->queryFeatures(queryParams);
         //          m_featureTable = m_serviceGeodatabase->connectedTables()[0];
-//        m_featureTable->queryFeatures(queryParams);
+        //        m_featureTable->queryFeatures(queryParams);
       }
     }
   });
@@ -225,5 +245,37 @@ void EditFeaturesWithFeatureLinkedAnnotation::clearSelection()
   {
     auto featureLayer = static_cast<FeatureLayer*>(layer);
     featureLayer->clearSelection();
+  }
+}
+
+void EditFeaturesWithFeatureLinkedAnnotation::movePolylineVertex(Point mapPoint)
+{
+  const Polyline geom = m_selectedFeature->geometry();
+  const Point workingPoint = GeometryEngine::project(mapPoint, geom.spatialReference());
+  if (geom.geometryType() == GeometryType::Polyline)
+  {
+    const ProximityResult nearestVertex = GeometryEngine::nearestVertex(geom, workingPoint);
+
+    PolylineBuilder* polylineBuilder = new PolylineBuilder(geom, this);
+
+    Part* part = polylineBuilder->parts()->part(nearestVertex.partIndex());
+
+
+    part->removePoint(nearestVertex.pointIndex());
+    part->addPoint(workingPoint);
+    m_selectedFeature->setGeometry(polylineBuilder->toGeometry());
+    m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
+
+    clearSelection();
+    delete m_selectedFeature;
+    m_selectedFeature = nullptr;
+  }
+  else
+  {
+    m_selectedFeature->setGeometry(mapPoint);
+    m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
+    clearSelection();
+    delete m_selectedFeature;
+    m_selectedFeature = nullptr;
   }
 }
