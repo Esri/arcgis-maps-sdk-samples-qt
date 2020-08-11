@@ -260,6 +260,17 @@ void EditFeaturesWithFeatureLinkedAnnotation::movePolylineVertex(Point mapPoint)
 
     Part* part = polylineBuilder->parts()->part(nearestVertex.partIndex());
 
+    qDebug() << "segment count: " << part->segmentCount();
+
+    if ( part->segmentCount() > 1)
+    {
+      qDebug() << "Only Straight lines";
+      clearSelection();
+      delete m_selectedFeature;
+      m_selectedFeature = nullptr;
+      return;
+    }
+
 
     part->removePoint(nearestVertex.pointIndex());
     part->addPoint(workingPoint);
