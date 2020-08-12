@@ -55,6 +55,8 @@ include($$AR_TOOLKIT_SOURCE_PATH/Plugin/QmlApi/ArQmlApi.pri)
 android {
     QT += androidextras
 
+    ANDROID_ABIS = arm64-v8a
+
     DISTFILES += \
         android/AndroidManifest.xml \
         android/build.gradle \

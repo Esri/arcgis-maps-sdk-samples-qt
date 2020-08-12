@@ -79,6 +79,8 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 
+    ANDROID_ABIS = arm64-v8a
+
     DISTFILES += \
         android/AndroidManifest.xml \
         android/build.gradle \
