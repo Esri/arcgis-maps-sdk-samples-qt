@@ -16,6 +16,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
+import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
 
 Item {
@@ -26,9 +28,93 @@ Item {
         anchors.fill: parent
     }
 
+    // Update Window
+    Rectangle {
+        id: updateWindow
+        width: childrenRect.width
+        height: childrenRect.height
+        anchors.centerIn: parent
+        radius: 10
+        visible: false
+
+        GaussianBlur {
+            anchors.fill: updateWindow
+            source: view
+            radius: 40
+            samples: 20
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
+        }
+
+        GridLayout {
+            columns: 2
+            anchors.margins: 5
+
+            Text {
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                Layout.alignment: Qt.AlignHCenter
+                text: "Update Attributes"
+                font.pixelSize: 16
+            }
+
+            Text {
+                text: qsTr("AD_ADDRESS:")
+                Layout.margins: 5
+            }
+
+            TextField {
+                id: attAddressTextField
+                selectByMouse: true
+            }
+
+            Text {
+                text: qsTr("ST_STR_NAM:")
+                Layout.margins: 5
+            }
+
+            TextField {
+                id: attStreetTextField
+                selectByMouse: true
+            }
+
+            Button {
+                Layout.margins: 5
+                Layout.alignment: Qt.AlignLeft
+//                Layout.minimumWidth: parent.width /2
+                text: "Update"
+                // once the update button is clicked, hide the windows, and fetch the currently selected features
+                onClicked: {
+                    updateWindow.visible = false;
+                    model.updateSelectedFeature(attAddressTextField.text, attStreetTextField.text);
+                }
+            }
+
+            Button {
+                Layout.alignment: Qt.AlignRight
+                Layout.margins: 5
+//                Layout.minimumWidth: parent.width /2
+                text: "Cancel"
+                // once the cancel button is clicked, hide the window
+                onClicked: updateWindow.visible = false;
+            }
+        }
+    }
+
     // Declare the C++ instance which creates the scene etc. and supply the view
     EditFeaturesWithFeatureLinkedAnnotationSample {
         id: model
         mapView: view
+
+        onAddressAndStreetTextChanged: {
+            updateWindow.visible = true;
+
+            attAddressTextField.text = model.addressAndStreetText[0];
+            attStreetTextField.text = model.addressAndStreetText[1];
+        }
     }
 }

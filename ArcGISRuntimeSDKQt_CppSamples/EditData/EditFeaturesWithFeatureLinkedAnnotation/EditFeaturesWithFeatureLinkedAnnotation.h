@@ -41,6 +41,7 @@ class EditFeaturesWithFeatureLinkedAnnotation : public QObject
   Q_OBJECT
 
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QStringList addressAndStreetText MEMBER m_addressAndStreetText NOTIFY addressAndStreetTextChanged)
 
 public:
   explicit EditFeaturesWithFeatureLinkedAnnotation(QObject* parent = nullptr);
@@ -48,8 +49,13 @@ public:
 
   static void init();
 
+  Q_INVOKABLE void updateSelectedFeature(const QString& address, const QString& streetName);
+
 signals:
   void mapViewChanged();
+  void addressTextChanged();
+  void streetNameTextChanged();
+  void addressAndStreetTextChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -67,6 +73,7 @@ private:
 
   void clearSelection();
   void movePolylineVertex(Esri::ArcGISRuntime::Point mapPoint);
+  QStringList m_addressAndStreetText;
 
 };
 
