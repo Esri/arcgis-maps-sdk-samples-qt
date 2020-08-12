@@ -53,8 +53,6 @@ public:
 
 signals:
   void mapViewChanged();
-  void addressTextChanged();
-  void streetNameTextChanged();
   void addressAndStreetTextChanged();
 
 private:

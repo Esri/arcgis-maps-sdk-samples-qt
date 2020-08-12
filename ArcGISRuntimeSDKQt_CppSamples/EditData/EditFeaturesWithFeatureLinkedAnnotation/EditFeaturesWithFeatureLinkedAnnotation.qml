@@ -26,6 +26,11 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
+
+        onMouseClicked: {
+            if (updateWindow.visible)
+                updateWindow.visible = false;
+        }
     }
 
     // Update Window
@@ -82,25 +87,33 @@ Item {
                 selectByMouse: true
             }
 
-            Button {
-                Layout.margins: 5
-                Layout.alignment: Qt.AlignLeft
-//                Layout.minimumWidth: parent.width /2
-                text: "Update"
-                // once the update button is clicked, hide the windows, and fetch the currently selected features
-                onClicked: {
-                    updateWindow.visible = false;
-                    model.updateSelectedFeature(attAddressTextField.text, attStreetTextField.text);
-                }
-            }
-
-            Button {
+            Row {
+//                Layout.fillWidth: true
                 Layout.alignment: Qt.AlignRight
-                Layout.margins: 5
-//                Layout.minimumWidth: parent.width /2
-                text: "Cancel"
-                // once the cancel button is clicked, hide the window
-                onClicked: updateWindow.visible = false;
+                height: childrenRect.height
+                Layout.columnSpan: 2
+                spacing: 5
+
+                Button {
+                    Layout.margins: 5
+                    Layout.alignment: Qt.AlignRight
+                    //                Layout.minimumWidth: parent.width /2
+                    text: "Update"
+                    // once the update button is clicked, hide the windows, and fetch the currently selected features
+                    onClicked: {
+                        updateWindow.visible = false;
+                        model.updateSelectedFeature(attAddressTextField.text, attStreetTextField.text);
+                    }
+                }
+
+                Button {
+                    Layout.alignment: Qt.AlignRight
+                    Layout.margins: 5
+                    //                Layout.minimumWidth: parent.width /2
+                    text: "Cancel"
+                    // once the cancel button is clicked, hide the window
+                    onClicked: updateWindow.visible = false;
+                }
             }
         }
     }

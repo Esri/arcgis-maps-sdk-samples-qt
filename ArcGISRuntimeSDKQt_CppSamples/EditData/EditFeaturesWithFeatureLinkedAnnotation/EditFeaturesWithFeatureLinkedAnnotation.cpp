@@ -72,7 +72,7 @@ EditFeaturesWithFeatureLinkedAnnotation::EditFeaturesWithFeatureLinkedAnnotation
   m_map(new Map(BasemapType::LightGrayCanvasVector, 39.0204, -77.4159, 18, this))
 {
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/geodatabase/loudoun_anno.geodatabase";
-  qDebug() << dataPath;
+
   m_geodatabase = new Geodatabase(dataPath, this);
   connect(m_geodatabase, &Geodatabase::doneLoading, this, [this](Error e)
   {
@@ -146,26 +146,23 @@ void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
 
     for (auto identifyResult : identifyResults)
     {
-
       if (!identifyResult->geoElements().empty())
       {
+        FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(identifyResult->layerContent());
 
-        auto testCast = dynamic_cast<FeatureLayer*>(identifyResult->layerContent());
-
-
-        if (testCast)
+        if (featureLayer)
         {
-          qDebug() << testCast->name() << "Clearing selection";
-
           m_selectedFeature = dynamic_cast<Feature*>(identifyResult->geoElements().at(0));
+
+          // Prevent the feature from being deleted along with the identifyResult.
+          m_selectedFeature->setParent(this);
+
           const GeometryType selectedFeatureGeomType = m_selectedFeature->geometry().geometryType();
 
           if (selectedFeatureGeomType == GeometryType::Polyline)
           {
             const Geometry geom = m_selectedFeature->geometry();
             const PolylineBuilder* polylineBuilder = new PolylineBuilder(geom, this);
-
-
 
             if (polylineBuilder->toPolyline().parts().part(0).segmentCount() > 1)
             {
@@ -182,11 +179,8 @@ void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
 
             const QString addressText = m_selectedFeature->attributes()->attributeValue("AD_ADDRESS").toString();
             m_addressAndStreetText.append(addressText);
-            emit addressTextChanged();
-
             const QString streetNameText = m_selectedFeature->attributes()->attributeValue("ST_STR_NAM").toString();
             m_addressAndStreetText.append(streetNameText);
-            emit streetNameTextChanged();
 
             emit addressAndStreetTextChanged();
           }
@@ -195,12 +189,19 @@ void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
             qDebug() << "Unexpected geometry type selected";
           }
 
-          testCast->selectFeature(m_selectedFeature);
-        } else {
+          featureLayer->selectFeature(m_selectedFeature);
+        }
+        else
+        {
           qDebug() << "Failed cast";
         }
       }
     }
+  });
+
+  connect(m_map, &Map::doneLoading, this, [this] (Error e)
+  {
+    qDebug() << m_map->initialViewpoint().toJson();
   });
 
   emit mapViewChanged();
@@ -210,7 +211,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::clearSelection()
 {
   for (auto layer : *m_map->operationalLayers())
   {
-    auto featureLayer = static_cast<FeatureLayer*>(layer);
+    FeatureLayer* featureLayer = static_cast<FeatureLayer*>(layer);
     featureLayer->clearSelection();
   }
 }
