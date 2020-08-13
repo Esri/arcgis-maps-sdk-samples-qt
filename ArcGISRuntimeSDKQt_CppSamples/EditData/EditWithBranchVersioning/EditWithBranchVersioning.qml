@@ -299,8 +299,10 @@ Item {
                     text: qsTr("Update")
                     // once the update button is clicked, hide the windows, and fetch the currently selected features
                     onClicked: {
-                        updateWindow.visible = false;
+                        print("Update Attriubte " + typeDmgCombo.currentValue);
                         model.updateAttribute(typeDmgCombo.currentValue);
+                        updateWindow.visible = false;
+                        callout.dismiss();
                     }
                 }
 
@@ -309,7 +311,11 @@ Item {
                     Layout.margins: 5
                     text: qsTr("Cancel")
                     // once the cancel button is clicked, hide the window
-                    onClicked: updateWindow.visible = false;
+                    onClicked: {
+
+                        updateWindow.visible = false;
+                        callout.dismiss();
+                    }
                 }
             }
         }
