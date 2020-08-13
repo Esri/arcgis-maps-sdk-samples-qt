@@ -36,9 +36,9 @@ Item {
     // Update Window
     Rectangle {
         id: updateWindow
+        anchors.centerIn: parent
         width: childrenRect.width
         height: childrenRect.height
-        anchors.centerIn: parent
         radius: 10
         visible: false
 
@@ -63,7 +63,7 @@ Item {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.alignment: Qt.AlignHCenter
-                text: "Update Attributes"
+                text: qsTr("Update Attributes")
                 font.pixelSize: 16
             }
 
@@ -88,17 +88,15 @@ Item {
             }
 
             Row {
-//                Layout.fillWidth: true
                 Layout.alignment: Qt.AlignRight
-                height: childrenRect.height
                 Layout.columnSpan: 2
+                height: childrenRect.height
                 spacing: 5
 
                 Button {
                     Layout.margins: 5
                     Layout.alignment: Qt.AlignRight
-                    //                Layout.minimumWidth: parent.width /2
-                    text: "Update"
+                    text: qsTr("Update")
                     // once the update button is clicked, hide the windows, and fetch the currently selected features
                     onClicked: {
                         updateWindow.visible = false;
@@ -109,8 +107,7 @@ Item {
                 Button {
                     Layout.alignment: Qt.AlignRight
                     Layout.margins: 5
-                    //                Layout.minimumWidth: parent.width /2
-                    text: "Cancel"
+                    text: qsTr("Cancel")
                     // once the cancel button is clicked, hide the window
                     onClicked: updateWindow.visible = false;
                 }

@@ -28,15 +28,15 @@ Rectangle {
     height: 600
 
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
+    readonly property string pointsFeatureLayerName: "Loudoun_Address_Points_1"
+    readonly property string pointsAnnoLayerName: "Loudoun_Address_PointsAnno_1"
+    readonly property string linesFeatureLayerName: "ParcelLines_1"
+    readonly property string linesAnnoLayerName: "ParcelLinesAnno_1"
     property var selectedFeature: null
     property var pointsFeatureLayer: null
     property var linesFeatureLayer: null
-    readonly property string pointsFeatureLayerName: "Loudoun_Address_Points_1"
-    readonly property string linesFeatureLayerName: "ParcelLines_1"
-    readonly property string pointsAnnoLayerName: "Loudoun_Address_PointsAnno_1"
-    readonly property string linesAnnoLayerName: "ParcelLinesAnno_1"
-    property string addressText: ""
     property string streetNameText: ""
+    property string addressText: ""
 
     MapView {
         id: mapView
@@ -46,18 +46,17 @@ Rectangle {
             id: map
             BasemapLightGrayCanvasVector {}
 
-            // Set the initialViewpoint property to a ViewpointCenter object
             initialViewpoint: viewpoint
         }
 
         onMouseClicked: {
-            let clickPoint = mapView.screenToLocation(mouse.x, mouse.y);
+            const clickPoint = mapView.screenToLocation(mouse.x, mouse.y);
 
             if (updateWindow.visible)
                 updateWindow.visible = false;
 
             if (selectedFeature) {
-                moveVertex(clickPoint);
+                moveFeature(clickPoint);
             } else {
                 mapView.identifyLayers(mouse.x,  mouse.y, 10, false);
             }
@@ -72,8 +71,8 @@ Rectangle {
             for (let j = 0; j < results.length; j++) {
 
                 const layerContent = identifyLayersResults[j].layerContent;
-                print(layerContent.name);
 
+                // only select features if the layer content is a Feature Layer
                 if ( layerContent.name === pointsFeatureLayerName || layerContent.name === linesFeatureLayerName) {
 
                     selectedFeature = results[j].geoElements[0];
@@ -81,6 +80,7 @@ Rectangle {
 
                     if (geometry.geometryType === Enums.GeometryTypePoint) {
 
+                        // update QML text fields with the attributes for the selected point feature
                         addressText = selectedFeature.attributes.attributeValue("AD_ADDRESS");
                         streetNameText = selectedFeature.attributes.attributeValue("ST_STR_NAM");
                         pointsFeatureLayer.selectFeature(selectedFeature);
@@ -92,12 +92,13 @@ Rectangle {
                                                                                           spatialReference: Factory.SpatialReference.createWgs84()
                                                                                       });
 
+                        // if the selected feature is a polyline with any part containing more than one segment
+                        // (i.e. a curve) do not select it
                         if (polylineBuilder.parts.part(0).segmentCount > 1) {
                             print("only straight lines");
                             clearSelection();
                             return;
                         }
-
                         linesFeatureLayer.selectFeature(selectedFeature);
                     }
                 }
@@ -119,8 +120,6 @@ Rectangle {
     }
 
     Geodatabase {
-        property var gdbLayers: []
-
         id: geodatabase
         path: dataPath + "/geodatabase/loudoun_anno.geodatabase"
 
@@ -128,6 +127,7 @@ Rectangle {
             if (Enums.LoadStatusLoaded !== geodatabase.loadStatus)
                 return;
 
+            // create feature layers from tables in the geodatabase
             const pointFeatureTable = geodatabase.geodatabaseFeatureTablesByTableName[pointsFeatureLayerName];
             pointsFeatureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {
                                                                            featureTable: pointFeatureTable
@@ -140,6 +140,7 @@ Rectangle {
                                                                       });
             map.operationalLayers.append(linesFeatureLayer);
 
+            // create annotation layers from tables in the geodatabase
             const pointAnnoFeatureTable = geodatabase.geodatabaseAnnotationTablesByTableName[pointsAnnoLayerName];
             const pointAnnoFeatureLayer = ArcGISRuntimeEnvironment.createObject("AnnotationLayer", {
                                                                                     featureTable: pointAnnoFeatureTable
@@ -161,9 +162,9 @@ Rectangle {
     // Update Window
     Rectangle {
         id: updateWindow
+        anchors.centerIn: parent
         width: childrenRect.width
         height: childrenRect.height
-        anchors.centerIn: parent
         radius: 10
         visible: false
 
@@ -188,7 +189,7 @@ Rectangle {
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.alignment: Qt.AlignHCenter
-                text: "Update Attributes"
+                text: qsTr("Update Attributes")
                 font.pixelSize: 16
             }
 
@@ -216,20 +217,21 @@ Rectangle {
 
             Row {
                 Layout.alignment: Qt.AlignRight
-                height: childrenRect.height
                 Layout.columnSpan: 2
+                height: childrenRect.height
                 spacing: 5
 
                 Button {
                     Layout.margins: 5
                     Layout.alignment: Qt.AlignRight
-                    text: "Update"
+                    text: qsTr("Update")
                     onClicked: {
                         updateWindow.visible = false;
 
                         if (!selectedFeature)
                             return;
 
+                        // update the two attirbutes with the inputed text.
                         selectedFeature.attributes.replaceAttribute("AD_ADDRESS", attAddressTextField.text);
                         selectedFeature.attributes.replaceAttribute("ST_STR_NAM", attStreetTextField.text);
                         selectedFeature.featureTable.updateFeature(selectedFeature);
@@ -239,8 +241,8 @@ Rectangle {
                 Button {
                     Layout.alignment: Qt.AlignRight
                     Layout.margins: 5
-                    text: "Cancel"
-                    // once the cancel button is clicked, hide the window
+                    text: qsTr("Cancel")
+                    // once the cancel button is clicked, hide the window and reset text fields
                     onClicked: {
                         updateWindow.visible = false;
                         streetNameText = "";
@@ -251,7 +253,6 @@ Rectangle {
         }
     }
 
-
     function clearSelection() {
         pointsFeatureLayer.clearSelection();
         linesFeatureLayer.clearSelection();
@@ -259,11 +260,13 @@ Rectangle {
         selectedFeature = null;
     }
 
-    function moveVertex(mapPoint) {
+    function moveFeature(mapPoint) {
         const geometry = selectedFeature.geometry;
         const workingPoint = GeometryEngine.project(mapPoint, geometry.spatialReference);
 
         if (geometry.geometryType === Enums.GeometryTypePolyline) {
+
+            // get nearest vertex to the map point on the selected polyline
             const nearestVertex = GeometryEngine.nearestVertex(geometry, workingPoint);
 
 
@@ -272,32 +275,27 @@ Rectangle {
                                                                               spatialReference: Factory.SpatialReference.createWgs84()
                                                                           });
 
+            // get part of polyline nearest to map point
             const part = polylineBuilder.parts.part(nearestVertex.partIndex);
 
+            // remove nearest point to map point
             part.removePoint(nearestVertex.pointIndex);
+
+            // add the map point as a new point
             part.addPoint(workingPoint);
+
+            // update the selected feature with the new geometry
             selectedFeature.geometry = polylineBuilder.geometry;
             selectedFeature.featureTable.updateFeature(selectedFeature);
             clearSelection();
-
-
-
         } else if ( geometry.geometryType === Enums.GeometryTypePoint ) {
+
+            // if the selected feature is a point, change the geometry with the map point
             selectedFeature.geometry = mapPoint;
+
+            // update the selected feature with the new geometry
             selectedFeature.featureTable.updateFeature(selectedFeature);
             clearSelection();
         }
-    }
-
-    function updateSelectedFeature(addText, streetText) {
-
-
-
-        //        if (!m_selectedFeature)
-        //          return;
-
-        //        m_selectedFeature->attributes()->replaceAttribute("AD_ADDRESS", address);
-        //        m_selectedFeature->attributes()->replaceAttribute("ST_STR_NAM", streetName);
-        //        m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
     }
 }

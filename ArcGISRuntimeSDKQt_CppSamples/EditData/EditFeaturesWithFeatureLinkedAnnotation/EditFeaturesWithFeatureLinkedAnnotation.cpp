@@ -140,7 +140,8 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent mouseEv
 {
   clearSelection();
 
-  if (m_selectedFeature) {
+  if (m_selectedFeature)
+  {
     // move feature to clicked locaiton if already selected
     const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
     moveFeature(clickedPoint);
@@ -154,7 +155,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent mouseEv
 
 void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, QList<IdentifyLayerResult *> identifyResults)
 {
-  if(identifyResults.isEmpty())
+  if (identifyResults.isEmpty())
     return;
 
   for (IdentifyLayerResult* identifyResult : identifyResults)
@@ -211,7 +212,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, Q
 
 void EditFeaturesWithFeatureLinkedAnnotation::clearSelection()
 {
-  for (auto layer : *m_map->operationalLayers())
+  for (Layer* layer : *m_map->operationalLayers())
   {
     FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
     if (featureLayer)
@@ -246,7 +247,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::moveFeature(Point mapPoint)
     delete m_selectedFeature;
     m_selectedFeature = nullptr;
   }
-  else
+  else if (geom.geometryType() == GeometryType::Point)
   {
     // if the selected feature is a point, change the geometry with the map point
     m_selectedFeature->setGeometry(mapPoint);
