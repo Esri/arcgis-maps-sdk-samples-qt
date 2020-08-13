@@ -21,18 +21,20 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
+class AnnotationLayer;
+class Error;
+class Feature;
+class FeatureLayer;
+class Geodatabase;
+class IdentifyLayerResult;
 class Map;
 class MapQuickView;
-class Geodatabase;
-class FeatureLayer;
-class Feature;
-class AnnotationLayer;
-//class Point;
 }
 }
 
 #include <QObject>
 #include <QDir>
+#include <QMouseEvent>
 
 #include "Point.h"
 
@@ -49,6 +51,11 @@ public:
 
   static void init();
 
+  void onIdentifyLayersCompleted(QUuid, QList<Esri::ArcGISRuntime::IdentifyLayerResult*> identifyResults);
+  void onMouseClicked(QMouseEvent mouseEvent);
+  void onGeodatabaseDoneLoading(Esri::ArcGISRuntime::Error error);
+  void clearSelection();
+  void moveFeature(Esri::ArcGISRuntime::Point mapPoint);
   Q_INVOKABLE void updateSelectedFeature(const QString& address, const QString& streetName);
 
 signals:
@@ -68,9 +75,6 @@ private:
   Esri::ArcGISRuntime::AnnotationLayer* m_parcelLinesAnnotationLayer = nullptr;
   Esri::ArcGISRuntime::Feature* m_selectedFeature = nullptr;
   Esri::ArcGISRuntime::Point m_screenClickPoint;
-
-  void clearSelection();
-  void movePolylineVertex(Esri::ArcGISRuntime::Point mapPoint);
   QStringList m_addressAndStreetText;
 
 };

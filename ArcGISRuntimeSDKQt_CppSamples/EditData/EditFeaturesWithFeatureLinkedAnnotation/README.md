@@ -1,31 +1,50 @@
 # Edit features with feature-linked annotation
 
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Edit feature attributes which are linked to annotation through an expression.
 
 ![](screenshot.png)
 
+## Use case
+
+Annotation is useful for displaying text that you don't want to move or resize when the map is panned or zoomed (unlike labels which will move and resize). Feature-linked annotation will update when a feature attribute referenced by the annotation expression is also updated. Additionally, the position of the annotation will transform to match any transformation to the linked feature's geometry.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+
+Pan and zoom the map to see that the text on the map is annotation, not labels. Tap one of the address points to update the house number (AD_ADDRESS) and street name (ST_STR_NAM). Tap one of the dashed parcel polylines and tap another location to change its geometry. NOTE: Selection is only enabled for points and straight (single segment) polylines.
+
+The feature-linked annotation will update accordingly.
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+
+1. Load the geodatabase. NOTE: Read/write geodatabases should normally come from a `GeodatabaseSyncTask`, but this has been omitted here. That functionality is covered in the sample *Generate geodatabase*.
+2. Create `FeatureLayer`s from geodatabase feature tables found in the geodatabase with `Geodatabase::geodatabaseFeatureTable`.
+3. Create `AnnotationLayer`s from geodatabase feature tables found in the geodatabase with `Geodatabase::geodatabaseAnnotationTable`.
+4. Add the feature layers and annotation layers to the map's operational layers.
+5. Connect to `MapQuickView::mouseClicked` to capture clicks on the map to either select address points or parcel polyline features.  NOTE: Selection is only enabled for points and straight (single segment) polylines.
+    * For the address points, a dialog will opened to allow editing of the address number (AD_ADDRESS) and street name (ST_STR_NAM) attributes. A second tap will change the location of the point.
+    * For the parcel lines, a second tap will change one of the polyline's vertices.
+
+Both expressions were defined by the data author in ArcGIS Pro using [the Arcade expression language](https://developers.arcgis.com/arcade/).
 
 ## Relevant API
- - ClassName1
- - MethodName
+
+* AnnotationLayer
+* Feature
+* FeatureLayer
+* Geodatabase
 
 ## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
 
 Link | Local Location
 ---------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
+|[Loudoun geodatabase](https://arcgisruntime.maps.arcgis.com/home/item.html?id=74c0c9fa80f4498c9739cc42531e9948)|`<userhome>/ArcGIS/Runtime/Data/geodatabase/loudoun_anno.geodatabase`|
 
-## Additional information
-A standard level license is required to ...
+## About the data
+
+This sample uses data derived from the [Loudoun GeoHub](https://geohub-loudoungis.opendata.arcgis.com/).
+
+The annotation linked to the point data in this sample is defined by arcade expression `$feature.AD_ADDRESS + " " + $feature.ST_STR_NAM`. The annotation linked to the parcel polyline data is defined by `Round(Length(Geometry($feature), 'feet'), 2)`.
 
 ## Tags
-Routing, Network analysis, Geocode
 
+annotation, attributes, features, feature-linked annotation, fields

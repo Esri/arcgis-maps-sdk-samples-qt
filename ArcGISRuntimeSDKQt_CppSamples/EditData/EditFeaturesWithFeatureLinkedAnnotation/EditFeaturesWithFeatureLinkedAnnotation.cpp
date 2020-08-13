@@ -74,29 +74,7 @@ EditFeaturesWithFeatureLinkedAnnotation::EditFeaturesWithFeatureLinkedAnnotation
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/geodatabase/loudoun_anno.geodatabase";
 
   m_geodatabase = new Geodatabase(dataPath, this);
-  connect(m_geodatabase, &Geodatabase::doneLoading, this, [this](Error e)
-  {
-    if (!e.isEmpty())
-      return;
-
-    GeodatabaseFeatureTable* pointFeatureTable = m_geodatabase->geodatabaseFeatureTable("Loudoun_Address_Points_1");
-    GeodatabaseFeatureTable* parcelLinesFeatureTable = m_geodatabase->geodatabaseFeatureTable("ParcelLines_1");
-
-    GeodatabaseFeatureTable* addressPointsAnnotationTable = m_geodatabase->geodatabaseAnnotationTable("Loudoun_Address_PointsAnno_1");
-    GeodatabaseFeatureTable* parcelLinesAnnotationTable = m_geodatabase->geodatabaseAnnotationTable("ParcelLinesAnno_1");
-
-    m_pointFeatureLayer = new FeatureLayer(pointFeatureTable, this);
-    m_parcelLinesFeatureLayer = new FeatureLayer(parcelLinesFeatureTable, this);
-
-    m_addressPointsAnnotationLayer = new AnnotationLayer(addressPointsAnnotationTable, this);
-    m_parcelLinesAnnotationLayer = new AnnotationLayer(parcelLinesAnnotationTable, this);
-
-    m_map->operationalLayers()->append(m_pointFeatureLayer);
-    m_map->operationalLayers()->append(m_parcelLinesFeatureLayer);
-
-    m_map->operationalLayers()->append(m_addressPointsAnnotationLayer);
-    m_map->operationalLayers()->append(m_parcelLinesAnnotationLayer);
-  });
+  connect(m_geodatabase, &Geodatabase::doneLoading, this, &EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading);
 
   m_geodatabase->load();
 }
@@ -124,112 +102,143 @@ void EditFeaturesWithFeatureLinkedAnnotation::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
-  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent mouseEvent)
-  {
-    clearSelection();
-
-    if (m_selectedFeature) {
-      const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
-
-      movePolylineVertex(clickedPoint);
-    }
-    else
-    {
-      m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 10, false);
-    }
-  });
-
-  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, [this](QUuid, QList<IdentifyLayerResult*> identifyResults)
-  {
-    if(identifyResults.isEmpty())
-      return;
-
-    for (auto identifyResult : identifyResults)
-    {
-      if (!identifyResult->geoElements().empty())
-      {
-        FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(identifyResult->layerContent());
-
-        if (featureLayer)
-        {
-          m_selectedFeature = dynamic_cast<Feature*>(identifyResult->geoElements().at(0));
-
-          // Prevent the feature from being deleted along with the identifyResult.
-          m_selectedFeature->setParent(this);
-
-          const GeometryType selectedFeatureGeomType = m_selectedFeature->geometry().geometryType();
-
-          if (selectedFeatureGeomType == GeometryType::Polyline)
-          {
-            const Geometry geom = m_selectedFeature->geometry();
-            const PolylineBuilder* polylineBuilder = new PolylineBuilder(geom, this);
-
-            if (polylineBuilder->toPolyline().parts().part(0).segmentCount() > 1)
-            {
-              qDebug() << "Only Straight lines";
-              clearSelection();
-              delete m_selectedFeature;
-              m_selectedFeature = nullptr;
-              return;
-            }
-          }
-          else if (selectedFeatureGeomType == GeometryType::Point)
-          {
-            m_addressAndStreetText.clear();
-
-            const QString addressText = m_selectedFeature->attributes()->attributeValue("AD_ADDRESS").toString();
-            m_addressAndStreetText.append(addressText);
-            const QString streetNameText = m_selectedFeature->attributes()->attributeValue("ST_STR_NAM").toString();
-            m_addressAndStreetText.append(streetNameText);
-
-            emit addressAndStreetTextChanged();
-          }
-          else
-          {
-            qDebug() << "Unexpected geometry type selected";
-          }
-
-          featureLayer->selectFeature(m_selectedFeature);
-        }
-        else
-        {
-          qDebug() << "Failed cast";
-        }
-      }
-    }
-  });
-
-  connect(m_map, &Map::doneLoading, this, [this] (Error e)
-  {
-    qDebug() << m_map->initialViewpoint().toJson();
-  });
+  connect(m_mapView, &MapQuickView::mouseClicked, this, &EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked);
+  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted);
 
   emit mapViewChanged();
+}
+
+void EditFeaturesWithFeatureLinkedAnnotation::onGeodatabaseDoneLoading(Error error)
+{
+  if (!error.isEmpty())
+    return;
+
+  GeodatabaseFeatureTable* pointFeatureTable = m_geodatabase->geodatabaseFeatureTable("Loudoun_Address_Points_1");
+  GeodatabaseFeatureTable* parcelLinesFeatureTable = m_geodatabase->geodatabaseFeatureTable("ParcelLines_1");
+
+  GeodatabaseFeatureTable* addressPointsAnnotationTable = m_geodatabase->geodatabaseAnnotationTable("Loudoun_Address_PointsAnno_1");
+  GeodatabaseFeatureTable* parcelLinesAnnotationTable = m_geodatabase->geodatabaseAnnotationTable("ParcelLinesAnno_1");
+
+  // create feature layers from tables in the geodatabase
+  m_pointFeatureLayer = new FeatureLayer(pointFeatureTable, this);
+  m_parcelLinesFeatureLayer = new FeatureLayer(parcelLinesFeatureTable, this);
+
+  // create annotation layers from tables in the geodatabase
+  m_addressPointsAnnotationLayer = new AnnotationLayer(addressPointsAnnotationTable, this);
+  m_parcelLinesAnnotationLayer = new AnnotationLayer(parcelLinesAnnotationTable, this);
+
+  // add feature layers to map
+  m_map->operationalLayers()->append(m_pointFeatureLayer);
+  m_map->operationalLayers()->append(m_parcelLinesFeatureLayer);
+
+  // add annotation layers to map
+  m_map->operationalLayers()->append(m_addressPointsAnnotationLayer);
+  m_map->operationalLayers()->append(m_parcelLinesAnnotationLayer);
+}
+
+void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent mouseEvent)
+{
+  clearSelection();
+
+  if (m_selectedFeature) {
+    // move feature to clicked locaiton if already selected
+    const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    moveFeature(clickedPoint);
+  }
+  else
+  {
+    // identify and select feature
+    m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), 10, false);
+  }
+}
+
+void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, QList<IdentifyLayerResult *> identifyResults)
+{
+  if(identifyResults.isEmpty())
+    return;
+
+  for (IdentifyLayerResult* identifyResult : identifyResults)
+  {
+    if (!identifyResult->geoElements().empty())
+    {
+      // only perform selections on Feature Layers
+      FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(identifyResult->layerContent());
+
+      // if cast was succesful select features.
+      if (featureLayer)
+      {
+        m_selectedFeature = static_cast<Feature*>(identifyResult->geoElements().at(0));
+
+        // Prevent the feature from being deleted along with the identifyResult.
+        m_selectedFeature->setParent(this);
+
+        const GeometryType selectedFeatureGeomType = m_selectedFeature->geometry().geometryType();
+
+        if (selectedFeatureGeomType == GeometryType::Polyline)
+        {
+          const Geometry geom = m_selectedFeature->geometry();
+          const PolylineBuilder* polylineBuilder = new PolylineBuilder(geom, this);
+
+          // if the selected feature is a polyline with any part containing more than one segment
+          // (i.e. a curve) do not select it
+          if (polylineBuilder->toPolyline().parts().part(0).segmentCount() > 1)
+          {
+            qDebug() << "Only Straight lines";
+            clearSelection();
+            delete m_selectedFeature;
+            m_selectedFeature = nullptr;
+            return;
+          }
+        }
+        else if (selectedFeatureGeomType == GeometryType::Point)
+        {
+          // clear string list with attribute values.
+          m_addressAndStreetText.clear();
+
+          // update QML text fields with the attributes for the selected point feature
+          const QString addressText = m_selectedFeature->attributes()->attributeValue("AD_ADDRESS").toString();
+          m_addressAndStreetText.append(addressText);
+          const QString streetNameText = m_selectedFeature->attributes()->attributeValue("ST_STR_NAM").toString();
+          m_addressAndStreetText.append(streetNameText);
+
+          emit addressAndStreetTextChanged();
+        }
+        featureLayer->selectFeature(m_selectedFeature);
+      }
+    }
+  }
 }
 
 void EditFeaturesWithFeatureLinkedAnnotation::clearSelection()
 {
   for (auto layer : *m_map->operationalLayers())
   {
-    FeatureLayer* featureLayer = static_cast<FeatureLayer*>(layer);
-    featureLayer->clearSelection();
+    FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
+    if (featureLayer)
+      featureLayer->clearSelection();
   }
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::movePolylineVertex(Point mapPoint)
+void EditFeaturesWithFeatureLinkedAnnotation::moveFeature(Point mapPoint)
 {
   const Polyline geom = m_selectedFeature->geometry();
-  const Point workingPoint = GeometryEngine::project(mapPoint, geom.spatialReference());
+  const Point projectedMapPoint = GeometryEngine::project(mapPoint, geom.spatialReference());
   if (geom.geometryType() == GeometryType::Polyline)
   {
-    const ProximityResult nearestVertex = GeometryEngine::nearestVertex(geom, workingPoint);
-
+    // get nearest vertex to the map point on the selected polyline
+    const ProximityResult nearestVertex = GeometryEngine::nearestVertex(geom, projectedMapPoint);
     PolylineBuilder* polylineBuilder = new PolylineBuilder(geom, this);
 
+    // get part of polyline nearest to map point
     Part* part = polylineBuilder->parts()->part(nearestVertex.partIndex());
 
+    // remove nearest point to map point
     part->removePoint(nearestVertex.pointIndex());
-    part->addPoint(workingPoint);
+
+    // add the map point as a new point
+    part->addPoint(projectedMapPoint);
+
+    // update the selected feature with the new geometry
     m_selectedFeature->setGeometry(polylineBuilder->toGeometry());
     m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
 
@@ -239,7 +248,10 @@ void EditFeaturesWithFeatureLinkedAnnotation::movePolylineVertex(Point mapPoint)
   }
   else
   {
+    // if the selected feature is a point, change the geometry with the map point
     m_selectedFeature->setGeometry(mapPoint);
+
+    // update the selected feature with the new geometry
     m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
     clearSelection();
     delete m_selectedFeature;
@@ -252,6 +264,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::updateSelectedFeature(const QStrin
   if (!m_selectedFeature)
     return;
 
+  // update the two attirbutes with the inputed text.
   m_selectedFeature->attributes()->replaceAttribute("AD_ADDRESS", address);
   m_selectedFeature->attributes()->replaceAttribute("ST_STR_NAM", streetName);
   m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);

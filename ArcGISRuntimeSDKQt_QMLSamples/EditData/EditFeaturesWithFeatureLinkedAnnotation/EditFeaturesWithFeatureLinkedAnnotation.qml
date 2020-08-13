@@ -72,30 +72,34 @@ Rectangle {
             for (let j = 0; j < results.length; j++) {
 
                 const layerContent = identifyLayersResults[j].layerContent;
+                print(layerContent.name);
 
-                selectedFeature = results[j].geoElements[0];
-                const geometry = selectedFeature.geometry;
+                if ( layerContent.name === pointsFeatureLayerName || layerContent.name === linesFeatureLayerName) {
 
-                if (geometry.geometryType === Enums.GeometryTypePoint) {
+                    selectedFeature = results[j].geoElements[0];
+                    const geometry = selectedFeature.geometry;
 
-                    addressText = selectedFeature.attributes.attributeValue("AD_ADDRESS");
-                    streetNameText = selectedFeature.attributes.attributeValue("ST_STR_NAM");
-                    pointsFeatureLayer.selectFeature(selectedFeature);
-                    updateWindow.visible = true;
-                } else if (geometry.geometryType === Enums.GeometryTypePolyline ) {
+                    if (geometry.geometryType === Enums.GeometryTypePoint) {
 
-                    const polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {
-                                                                                      geometry: geometry,
-                                                                                      spatialReference: Factory.SpatialReference.createWgs84()
-                                                                                  });
+                        addressText = selectedFeature.attributes.attributeValue("AD_ADDRESS");
+                        streetNameText = selectedFeature.attributes.attributeValue("ST_STR_NAM");
+                        pointsFeatureLayer.selectFeature(selectedFeature);
+                        updateWindow.visible = true;
+                    } else if (geometry.geometryType === Enums.GeometryTypePolyline ) {
 
-                    if (polylineBuilder.parts.part(0).segmentCount > 1) {
-                        print("only straight lines");
-                        clearSelection();
-                        return;
+                        const polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {
+                                                                                          geometry: geometry,
+                                                                                          spatialReference: Factory.SpatialReference.createWgs84()
+                                                                                      });
+
+                        if (polylineBuilder.parts.part(0).segmentCount > 1) {
+                            print("only straight lines");
+                            clearSelection();
+                            return;
+                        }
+
+                        linesFeatureLayer.selectFeature(selectedFeature);
                     }
-
-                    linesFeatureLayer.selectFeature(selectedFeature);
                 }
             }
         }
@@ -138,14 +142,14 @@ Rectangle {
 
             const pointAnnoFeatureTable = geodatabase.geodatabaseAnnotationTablesByTableName[pointsAnnoLayerName];
             const pointAnnoFeatureLayer = ArcGISRuntimeEnvironment.createObject("AnnotationLayer", {
-                                                                           featureTable: pointAnnoFeatureTable
-                                                                       });
+                                                                                    featureTable: pointAnnoFeatureTable
+                                                                                });
             map.operationalLayers.append(pointAnnoFeatureLayer);
 
             const linesAnnoFeatureTable = geodatabase.geodatabaseAnnotationTablesByTableName[linesAnnoLayerName];
             const linesAnnoFeatureLayer = ArcGISRuntimeEnvironment.createObject("AnnotationLayer", {
-                                                                          featureTable: linesAnnoFeatureTable
-                                                                      });
+                                                                                    featureTable: linesAnnoFeatureTable
+                                                                                });
             map.operationalLayers.append(linesAnnoFeatureLayer);
         }
     }
@@ -237,7 +241,11 @@ Rectangle {
                     Layout.margins: 5
                     text: "Cancel"
                     // once the cancel button is clicked, hide the window
-                    onClicked: updateWindow.visible = false;
+                    onClicked: {
+                        updateWindow.visible = false;
+                        streetNameText = "";
+                        addressText = "";
+                    }
                 }
             }
         }
@@ -285,11 +293,11 @@ Rectangle {
 
 
 
-//        if (!m_selectedFeature)
-//          return;
+        //        if (!m_selectedFeature)
+        //          return;
 
-//        m_selectedFeature->attributes()->replaceAttribute("AD_ADDRESS", address);
-//        m_selectedFeature->attributes()->replaceAttribute("ST_STR_NAM", streetName);
-//        m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
+        //        m_selectedFeature->attributes()->replaceAttribute("AD_ADDRESS", address);
+        //        m_selectedFeature->attributes()->replaceAttribute("ST_STR_NAM", streetName);
+        //        m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
     }
 }

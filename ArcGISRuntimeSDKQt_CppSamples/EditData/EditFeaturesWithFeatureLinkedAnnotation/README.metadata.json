@@ -6,17 +6,30 @@
             "path": "~/ArcGIS/Runtime/Data/geodatabase/loudoun_anno.geodatabase.zip"
         }
     ],
-    "description": "TODO",
+    "description": "Edit feature attributes which are linked to annotation through an expression.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "annotation",
+        "attributes",
+        "feature-linked annotation",
+        "features",
+        "fields",
+        "AnnotationLayer",
+        "Feature",
+        "FeatureLayer",
+        "Geodatabase"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "TODO"
+        "AnnotationLayer",
+        "Feature",
+        "FeatureLayer",
+        "Geodatabase"
     ],
     "snippets": [
         "EditFeaturesWithFeatureLinkedAnnotation.qml",
