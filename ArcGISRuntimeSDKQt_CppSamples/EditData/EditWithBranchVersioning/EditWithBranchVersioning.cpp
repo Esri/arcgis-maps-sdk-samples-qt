@@ -84,6 +84,8 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
     qDebug() << "mapLoaded";
 
     m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer"), m_cred, this);
+    m_busy = true;
+    emit busyChanged();
 
 
     connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this] (Error e)
@@ -106,7 +108,19 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
         qDebug() << "SFT done loading";
 
         m_mapView->setViewpoint(m_featureLayer->fullExtent());
+
+        m_busy = false;
+        emit busyChanged();
       });
+
+      connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this] (QUuid, bool success)
+      {
+        qDebug() << success;
+
+        m_serviceGeodatabase->applyEdits();
+
+      });
+
       m_featureLayer = new FeatureLayer(m_featureTable, this);
 
       m_map->operationalLayers()->append(m_featureLayer);
@@ -166,6 +180,8 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
       if (!serviceVersionInfo)
         return;
 
+      emit createVersionSuccess();
+
       m_createdVersion = serviceVersionInfo->name();
       qDebug() << m_createdVersion;
       qDebug() << "createVersionCompleted, ServiceGeodatabase::isOwner() - " << serviceVersionInfo->isOwner();
@@ -175,6 +191,7 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
     connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [this](Error e)
     {
       m_errorMessage = e.message() + " - " + e.additionalMessage();
+      qDebug() << m_errorMessage;
       emit errorMessageChanged();
 
     });
@@ -207,6 +224,8 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
     {
       // first clear the selection
       m_featureLayer->clearSelection();
+      m_busy = true;
+      emit busyChanged();
 
       emit hideWindow();
 
@@ -254,6 +273,8 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
         //          m_featureTable = m_serviceGeodatabase->connectedTables()[0];
         m_featureTable->queryFeatures(queryParams, QueryFeatureFields::LoadAll);
       }
+      m_busy = false;
+      emit busyChanged();
     });
 
 
@@ -335,9 +356,10 @@ void EditWithBranchVersioning::updateAttribute(const QString& attributeValue)
     return;
 
   // update the two attirbutes with the inputed text.
+    qDebug() << m_selectedFeature->attributes()->attributeValue("TYPDAMAGE");
   m_selectedFeature->attributes()->replaceAttribute("TYPDAMAGE", attributeValue);
     m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
-  m_serviceGeodatabase->applyEdits();
+//  m_serviceGeodatabase->applyEdits();
   m_featureLayer->clearSelection();
   delete m_selectedFeature;
   m_selectedFeature = nullptr;

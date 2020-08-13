@@ -45,6 +45,7 @@ class EditWithBranchVersioning : public QObject
   Q_PROPERTY(QString sgdbCurrentVersion MEMBER m_sgdbCurrentVersion NOTIFY sgdbCurrentVersionChanged)
   Q_PROPERTY(QString currentTypeDamage MEMBER m_currentTypeDamage NOTIFY currentTypeDamageChanged)
   Q_PROPERTY(QString errorMessage MEMBER m_errorMessage NOTIFY errorMessageChanged)
+  Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
 
   Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
 
@@ -74,6 +75,8 @@ signals:
   void hideWindow();
   void currentTypeDamageChanged();
   void errorMessageChanged();
+  void busyChanged();
+  void createVersionSuccess();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -94,6 +97,7 @@ private:
   QString m_featureType;
   QString m_currentTypeDamage;
   QString m_errorMessage;
+  bool m_busy = false;
 
   // remove only done for simplification
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;

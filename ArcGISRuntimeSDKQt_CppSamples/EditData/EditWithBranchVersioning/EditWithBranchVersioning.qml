@@ -61,11 +61,12 @@ Item {
                 top: parent.top
                 margins: 3
             }
+            enabled: !busyIndicator.visible
 
             onClicked: {
                 if (text === qsTr("Create Version")) {
                     createVersionWindow.visible = true;
-                    text = qsTr("Switch to Default version")
+//                    text = qsTr("Switch to Default version")
                 } else if (text === qsTr("Switch to Default version")) {
                     text = qsTr("Switch to created version")
                     model.switchVersion();
@@ -80,6 +81,7 @@ Item {
         Button {
             id: fetchVersions
             text: qsTr("Fetch Versions")
+            visible: false
             anchors {
                 left: parent.left
                 top: createVersionBtn.bottom
@@ -118,36 +120,6 @@ Item {
                 }
             }
         }
-
-        RowLayout {
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                bottom: view.attributionTop
-                margins: 3
-            }
-            Button {
-                id: applyEditsBt
-                text: qsTr("Apply Edits")
-                enabled: false
-                visible: enabled
-
-                onClicked: {
-                    enabled = false;
-                }
-            }
-
-            Button {
-                id: resetBtn
-                text: qsTr("Reset")
-                enabled: applyEditsBt.enabled
-                visible: enabled
-
-                onClicked: {
-                    applyEditsBt.enabled = false;
-                }
-            }
-        }
-
     }
 
     Rectangle {
@@ -215,6 +187,7 @@ Item {
                     onClicked: {
                         model.createVersion(versionNameTextField.text, accessComboBox.currentValue, descriptionTextField.text);
                         resetCreateVersionWindow();
+//                        createVersionBtn.text = qsTr("Switch to Default version");
                     }
                 }
 
@@ -344,21 +317,30 @@ Item {
             // hide the update window
             updateWindow.visible = false;
         }
+
+        onCreateVersionSuccess: {
+            createVersionBtn.text = qsTr("Switch to Default version");
+        }
+
+        onErrorMessageChanged: {
+            errorDialog.visible = true;
+        }
     }
 
     Dialog {
         id: errorDialog
         anchors.centerIn: parent
-        visible: errorText.text !== ""
         standardButtons: Dialog.Ok
 
         Text {
             id: errorText
             text: model.errorMessage;
         }
+    }
 
-        onClosed: {
-            createVersionBtn.text = qsTr("Create Version");
-        }
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        visible: model.busy
     }
 }
