@@ -29,6 +29,7 @@ class ServiceGeodatabase;
 class FeatureLayer;
 class ServiceFeatureTable;
 class ArcGISFeature;
+class Credential;
 }
 }
 
@@ -42,6 +43,8 @@ class EditWithBranchVersioning : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString sgdbCurrentVersion MEMBER m_sgdbCurrentVersion NOTIFY sgdbCurrentVersionChanged)
+  Q_PROPERTY(QString currentTypeDamage MEMBER m_currentTypeDamage NOTIFY currentTypeDamageChanged)
+  Q_PROPERTY(QString errorMessage MEMBER m_errorMessage NOTIFY errorMessageChanged)
 
   Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
 
@@ -55,7 +58,9 @@ public:
   Esri::ArcGISRuntime::ServiceVersionParameters* createParams();
 
   Q_INVOKABLE void createVersion();
+  Q_INVOKABLE void createVersion(const QString& versionName, const QString& versionAccess, const QString& description);
   Q_INVOKABLE void switchVersion() const;
+  Q_INVOKABLE void updateAttribute(const QString& attributeValue);
 
   // to be removed
   Q_INVOKABLE void fetchVersions() const;
@@ -67,6 +72,8 @@ signals:
   void featureSelected();
   void featureTypeChanged();
   void hideWindow();
+  void currentTypeDamageChanged();
+  void errorMessageChanged();
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -85,6 +92,11 @@ private:
   QString m_sgdbCurrentVersion;
   QString m_createdVersion;
   QString m_featureType;
+  QString m_currentTypeDamage;
+  QString m_errorMessage;
+
+  // remove only done for simplification
+  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
 };
 
 #endif // EDITWITHBRANCHVERSIONING_H

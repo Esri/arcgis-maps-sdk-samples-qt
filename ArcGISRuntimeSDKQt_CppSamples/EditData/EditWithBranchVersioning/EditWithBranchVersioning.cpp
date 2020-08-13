@@ -31,6 +31,7 @@
 #include "ServiceVersionInfo.h"
 #include "ServiceVersionParameters.h"
 #include "Credential.h"
+#include "AttributeListModel.h"
 
 #include <QUuid>
 #include <QRandomGenerator>
@@ -39,9 +40,11 @@ using namespace Esri::ArcGISRuntime;
 
 EditWithBranchVersioning::EditWithBranchVersioning(QObject* parent /* = nullptr */):
   QObject(parent),
-//  m_map(new Map(m_serviceUrl, this))
-  m_map(new Map(QUrl("https://rt-server1081.esri.com/portal/home/item.html?id=adb5c3090edf43f3853e57d8b0810f9b"), this))
+  m_map(new Map(Basemap::streetsVector(this), this))
+//  m_map(new Map(QUrl("https://rt-server1081.esri.com/portal/home/item.html?id=adb5c3090edf43f3853e57d8b0810f9b"), this))
+//    m_map(new Map(QUrl("https://nice.esri.com/portal/home/item.html?id=4ce3f10b26394bb3b60c4b13ed0d9649"), this))
 {
+  m_cred = new Credential{"apptest", "app.test1234", this};
 }
 
 EditWithBranchVersioning::~EditWithBranchVersioning() = default;
@@ -76,63 +79,40 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
     if (!e.isEmpty())
       return;
 
-    for( Layer* layer : *m_map->operationalLayers()) {
-      qDebug() << layer->name();
+    qDebug() << "mapLoaded";
 
-      m_featureLayer = static_cast<FeatureLayer*>(layer);
-//      m_featureTable = m_featureLayer->featureTable();
-//      auto sft = static_cast<ServiceFeatureTable*>(m_featureLayer->featureTable());
-//      m_serviceGeodatabase = sft->serviceGeodatabase();
-      m_featureTable = static_cast<ServiceFeatureTable*>(m_featureLayer->featureTable());
-      m_serviceGeodatabase = m_featureTable->serviceGeodatabase();
+    m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer"), m_cred, this);
 
 
+    connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this] (Error e)
+    {
+      if (!e.isEmpty())
+        return;
 
-      connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+      qDebug() << "Supports branch versioning: " << m_serviceGeodatabase->isSupportsBranchVersioning();
+      qDebug() << m_serviceGeodatabase->defaultVersionName();
+
+
+      //              m_featureTable = new ServiceFeatureTable(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer/0"), m_cred, this);
+      m_featureTable = m_serviceGeodatabase->table(0);
+
+      connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](Error error)
       {
-        // first clear the selection
-        m_featureLayer->clearSelection();
-
-        emit hideWindow();
-
-        // call identify on the map view
-        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
-      });
-
-
-      connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
-      {
-        m_featureLayer->clearSelection();
-
-        emit hideWindow();
-      });
-
-      // connect to the identifyLayerCompleted signal on the map view
-      connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
-      {
-        if(!identifyResult)
+        if (!error.isEmpty())
           return;
-        if (!identifyResult->geoElements().empty())
-        {
-          // select the item in the result
-          m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
-//          emit  featureSelected();
 
-          qDebug() << m_mapView->calloutData()->title();
-//          // Update the parent so the featureLayer is not deleted when the identifyResult is deleted.
-//          m_featureLayer->setParent(this);
+        qDebug() << "SFT done loading";
 
-//          // obtain the selected feature with attributes
-          QueryParameters queryParams;
-          QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
-          queryParams.setWhereClause(whereClause);
-
-//          auto featTable = m_serviceGeodatabase->connectedTables()[0];
-//          featTable->queryFeatures(queryParams);
-//          m_featureTable = m_serviceGeodatabase->connectedTables()[0];
-          m_featureTable->queryFeatures(queryParams);
-        }
+        m_mapView->setViewpoint(m_featureLayer->fullExtent());
       });
+      m_featureLayer = new FeatureLayer(m_featureTable, this);
+
+      m_map->operationalLayers()->append(m_featureLayer);
+
+      // create parameters for branch
+      //        auto params = createParams();
+      m_sgdbCurrentVersion = m_serviceGeodatabase->versionName();
+      emit sgdbCurrentVersionChanged();
 
       connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
       {
@@ -145,66 +125,166 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
           // set selected feature member
           m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
           m_selectedFeature->setParent(this);
-          m_featureType = m_selectedFeature->attributes()->attributeValue("NAME").toString();
+          m_featureType = m_selectedFeature->attributes()->attributeValue("PLACENAME").toString();
+          //        for (auto att : m_selectedFeature->attributes()->attributeNames()) {
+          //          qDebug() << att;
+          //        }
           m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\"><b>%1</b></font>").arg(m_featureType));
           m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
-//          qDebug() << m_mapView->calloutData()->title();
+          qDebug() << m_mapView->calloutData()->title();
+
+          m_currentTypeDamage = m_selectedFeature->attributes()->attributeValue("TYPDAMAGE").toString();
           emit featureTypeChanged();
+          emit currentTypeDamageChanged();
           emit featureSelected();
         }
       });
+    });
 
-
-      connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this] (Error e)
+    connect(m_serviceGeodatabase, &ServiceGeodatabase::fetchVersionsCompleted, this, [this] (QUuid, const QList<ServiceVersionInfo*> &serviceVersionInfos)
+    {
+      qDebug() << serviceVersionInfos.count();
+      for(auto serviceInfo : serviceVersionInfos)
       {
-        if (!e.isEmpty())
-          return;
+        auto owner = serviceInfo->isOwner() ? "true" : "false";
+        auto access = serviceInfo->access() == VersionAccess::Private ? "Private" : "Other";
+        qDebug() << serviceInfo->name() << "\t owner?: " << serviceInfo->isOwner() << "\t access?: " << access;
+      }
+    });
 
-        qDebug() << "Supports branch versioning: " << m_serviceGeodatabase->isSupportsBranchVersioning();
+    connect(m_serviceGeodatabase, &ServiceGeodatabase::createVersionCompleted, this, [this] (QUuid, Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo)
+    {
+      if (m_serviceGeodatabase->hasLocalEdits())
+        return;
 
-        // create parameters for branch
-//        auto params = createParams();
-        m_sgdbCurrentVersion = m_serviceGeodatabase->versionName();
-        emit sgdbCurrentVersionChanged();
-      });
+      if (!serviceVersionInfo)
+        return;
 
-      connect(m_serviceGeodatabase, &ServiceGeodatabase::fetchVersionsCompleted, this, [this] (QUuid, const QList<ServiceVersionInfo*> &serviceVersionInfos)
+      m_createdVersion = serviceVersionInfo->name();
+      qDebug() << m_createdVersion;
+      qDebug() << "createVersionCompleted, ServiceGeodatabase::isOwner() - " << serviceVersionInfo->isOwner();
+      m_serviceGeodatabase->switchVersion(serviceVersionInfo->name());
+    });
+
+    connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [this](Error e)
+    {
+      m_errorMessage = e.message() + " - " + e.additionalMessage();
+      emit errorMessageChanged();
+
+    });
+
+    connect(m_serviceGeodatabase, &ServiceGeodatabase::switchVersionCompleted, this, [this] (QUuid)
+    {
+      m_sgdbCurrentVersion = m_serviceGeodatabase->versionName();
+      emit sgdbCurrentVersionChanged();
+    });
+
+    m_serviceGeodatabase->load();
+
+    //    m_featureTable = new ServiceFeatureTable(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer/0"), this);
+    //    m_featureTable = new ServiceFeatureTable(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer/0"), this);
+    //    m_featureTable = new ServiceFeatureTable(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer/0"), m_cred, this);
+    //    connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](Error error)
+    //    {
+    //      if (!error.isEmpty())
+    //        return;
+
+    //      qDebug() << "SFT done loading";
+
+    //      m_mapView->setViewpoint(m_featureLayer->fullExtent());
+
+    ////      Credential* cred = new Credential{"apptest", "app.test1234", this};
+    ////      m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer"), cred, this);
+
+    ////      m_featureTable = m_serviceGeodatabase->connectedTables().at(0);
+
+
+    //      //        m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer"), m_featureTable->credential(), this);
+
+    //    });
+
+    //    m_featureLayer = new FeatureLayer(m_featureTable, this);
+
+    //    m_map->operationalLayers()->append(m_featureLayer);
+
+
+    connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent& mouseEvent)
+    {
+      // first clear the selection
+      m_featureLayer->clearSelection();
+
+      emit hideWindow();
+
+      // call identify on the map view
+      m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+    });
+
+
+    connect(m_mapView, &MapQuickView::viewpointChanged, this, [this]()
+    {
+      if (!m_featureLayer)
+        return;
+
+      m_featureLayer->clearSelection();
+
+      emit hideWindow();
+    });
+
+    // connect to the identifyLayerCompleted signal on the map view
+    connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
+    {
+      if(!identifyResult)
+        return;
+      if (!identifyResult->geoElements().empty())
       {
-        qDebug() << serviceVersionInfos.count();
-        for(auto serviceInfo : serviceVersionInfos)
-        {
-          auto owner = serviceInfo->isOwner() ? "true" : "false";
-          auto access = serviceInfo->access() == VersionAccess::Private ? "Private" : "Other";
-          qDebug() << serviceInfo->name() << "\t owner?: " << serviceInfo->isOwner() << "\t access?: " << access;
-        }
-      });
+        // select the item in the result
+        m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
+        //          emit  featureSelected();
 
-      connect(m_serviceGeodatabase, &ServiceGeodatabase::createVersionCompleted, this, [this](QUuid, Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo)
-      {
-        if (m_serviceGeodatabase->hasLocalEdits())
-          return;
+        qDebug() << m_mapView->calloutData()->title();
+        //          // Update the parent so the featureLayer is not deleted when the identifyResult is deleted.
+        //          m_featureLayer->setParent(this);
 
-        if (!serviceVersionInfo)
-          return;
+        //          // obtain the selected feature with attributes
+        QueryParameters queryParams;
+        QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
+        queryParams.setWhereClause(whereClause);
 
-        m_createdVersion = serviceVersionInfo->name();
-        qDebug() << "createVersionCompleted, ServiceGeodatabase::isOwner() - " << serviceVersionInfo->isOwner();
-        m_serviceGeodatabase->switchVersion(serviceVersionInfo->name());
-      });
+        //          auto featTable = m_serviceGeodatabase->connectedTables()[0];
+        //          featTable->queryFeatures(queryParams);
+        //          m_featureTable = m_serviceGeodatabase->connectedTables()[0];
+        m_featureTable->queryFeatures(queryParams, QueryFeatureFields::LoadAll);
+      }
+    });
 
-      connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [](Error e)
-      {
-        qDebug() << e.message();
+    //    connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
+    //    {
+    //      if (featureQueryResult && featureQueryResult->iterator().hasNext())
+    //      {
+    //        // first delete if not nullptr
+    //        if (m_selectedFeature)
+    //          delete m_selectedFeature;
 
-      });
+    //        // set selected feature member
+    //        m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
+    //        m_selectedFeature->setParent(this);
+    //        m_featureType = m_selectedFeature->attributes()->attributeValue("PLACENAME").toString();
+    ////        for (auto att : m_selectedFeature->attributes()->attributeNames()) {
+    ////          qDebug() << att;
+    ////        }
+    //        m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\"><b>%1</b></font>").arg(m_featureType));
+    //        m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
+    //        qDebug() << m_mapView->calloutData()->title();
 
-      connect(m_serviceGeodatabase, &ServiceGeodatabase::switchVersionCompleted, this, [this] (QUuid)
-      {
-        m_sgdbCurrentVersion = m_serviceGeodatabase->versionName();
-        emit sgdbCurrentVersionChanged();
-      });
+    //        m_currentTypeDamage = m_selectedFeature->attributes()->attributeValue("TYPDAMAGE").toString();
+    //        emit featureTypeChanged();
+    //        emit currentTypeDamageChanged();
+    //        emit featureSelected();
+    //      }
+    //    });
 
-    }
+
+
 
   });
 
@@ -223,16 +303,16 @@ ServiceVersionParameters* EditWithBranchVersioning::createParams()
   const quint32 value = QRandomGenerator::global()->generate();
   const auto s_value = QString::number(value);
   const QString name{"SAMPLE_DESIGN_" + s_value};
-//  const QString name{"SAMPLE_DESIGN_1196606252"};
-//  const QString name{"crtSameVersionTwiceTest"};
+  //  const QString name{"SAMPLE_DESIGN_1196606252"};
+  //  const QString name{"crtSameVersionTwiceTest"};
   params->setName(name);
   params->setAccess(VersionAccess::Private);
-//  params->setDescription("description + " + name);
+  //  params->setDescription("description + " + name);
 
   auto access_s = params->access() == VersionAccess::Private ? "Private" : "Other";
-//  qDebug() << params->name();
-//  qDebug() << access_s;
-//  qDebug() << params->description();
+  //  qDebug() << params->name();
+  //  qDebug() << access_s;
+  //  qDebug() << params->description();
 
   return std::move(params);
 }
@@ -240,13 +320,17 @@ ServiceVersionParameters* EditWithBranchVersioning::createParams()
 void EditWithBranchVersioning::createVersion()
 {
   // create parameters for branch
-        auto params = createParams();
+  auto params = createParams();
 
-        m_serviceGeodatabase->createVersion(params);
+  m_serviceGeodatabase->createVersion(params);
 }
 
 void EditWithBranchVersioning::switchVersion() const
 {
+//  m_serviceGeodatabase->switchVersion("Esri_Anonymous.testPrivate1");
+//  return;
+
+
   if (m_sgdbCurrentVersion == m_createdVersion)
     m_serviceGeodatabase->switchVersion(m_serviceGeodatabase->defaultVersionName());
   else
@@ -266,3 +350,46 @@ QString EditWithBranchVersioning::featureType() const
   return m_featureType;
 }
 
+void EditWithBranchVersioning::updateAttribute(const QString& attributeValue)
+{
+  if (!m_selectedFeature)
+    return;
+
+  // update the two attirbutes with the inputed text.
+  m_selectedFeature->attributes()->replaceAttribute("TYPDAMAGE", attributeValue);
+  //  m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
+  m_serviceGeodatabase->applyEdits();
+  m_featureLayer->clearSelection();
+  delete m_selectedFeature;
+  m_selectedFeature = nullptr;
+}
+
+void EditWithBranchVersioning::createVersion(const QString& versionName, const QString& versionAccess, const QString& description)
+{
+  // create parameters for branch
+  //  auto params = createParams();
+
+  ServiceVersionParameters* params = new ServiceVersionParameters(this);
+  const quint32 value = QRandomGenerator::global()->generate();
+  const auto s_value = QString::number(value);
+  //  const QString name{"SAMPLE_DESIGN_" + s_value};
+  //  const QString name{"SAMPLE_DESIGN_1196606252"};
+  //  const QString name{versionName};
+  params->setName(versionName);
+  params->setDescription(description);
+
+  if (versionAccess == "Private")
+    params->setAccess(VersionAccess::Private);
+  else if (versionAccess == "Protected")
+    params->setAccess(VersionAccess::Protected);
+  else
+    params->setAccess(VersionAccess::Public);
+
+  //  auto access_s = params->access() == VersionAccess::Private ? "Private" : "Other";
+  //  qDebug() << params->name();
+  //  qDebug() << access_s;
+  //  qDebug() << params->description();
+
+
+  m_serviceGeodatabase->createVersion(params);
+}

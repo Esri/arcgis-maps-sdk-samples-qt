@@ -24,7 +24,8 @@ import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 Item {
 
-    readonly property var featAttributes: ["Blocked Street or Sidewalk", "Damaged Property", "Graffiti Complaint - Public Property", "Graffiti Complaint – Private Property", "Sewer Issues", "Sidewalk and Curb Issues", "Tree Maintenance or Damage"]
+    readonly property var featAttributes: ["Affected", "Destroyed", "Inaccessible", "Minor", "Major"]
+    readonly property var versionAccessModel: ["Public", "Protected", "Private"]
 
     // add a mapView component
     MapView {
@@ -39,13 +40,21 @@ Item {
             calloutData: model.mapView.calloutData
             leaderPosition: leaderPositionEnum.Automatic
             onAccessoryButtonClicked: {
-                updateWindow.visible = true;
+                for (let i=0; i < featAttributes.length; i++) {
+                    if (model.currentTypeDamage === featAttributes[i]) {
+                        typeDmgCombo.currentIndex = i;
+                        updateWindow.visible = true;
+                        return;
+                    }
+                }
+
+
                 // window to edit attributes
             }
         }
 
         Button {
-            id: creatVersion
+            id: createVersionBtn
             text: qsTr("Create Version")
             anchors {
                 left: parent.left
@@ -55,7 +64,7 @@ Item {
 
             onClicked: {
                 if (text === qsTr("Create Version")) {
-                    model.createVersion();
+                    createVersionWindow.visible = true;
                     text = qsTr("Switch to Default version")
                 } else if (text === qsTr("Switch to Default version")) {
                     text = qsTr("Switch to created version")
@@ -73,7 +82,7 @@ Item {
             text: qsTr("Fetch Versions")
             anchors {
                 left: parent.left
-                top: creatVersion.bottom
+                top: createVersionBtn.bottom
                 margins: 3
             }
 
@@ -119,11 +128,6 @@ Item {
             Button {
                 id: applyEditsBt
                 text: qsTr("Apply Edits")
-//                anchors {
-//                    horizontalCenter: parent.horizontalCenter
-//                    bottom: view.attributionTop
-//                    margins: 3
-//                }
                 enabled: false
                 visible: enabled
 
@@ -135,11 +139,6 @@ Item {
             Button {
                 id: resetBtn
                 text: qsTr("Reset")
-//                anchors {
-//                    horizontalCenter: parent.horizontalCenter
-//                    bottom: view.attributionTop
-//                    margins: 3
-//                }
                 enabled: applyEditsBt.enabled
                 visible: enabled
 
@@ -151,12 +150,101 @@ Item {
 
     }
 
+    Rectangle {
+        id: createVersionWindow
+        anchors.centerIn: parent
+        width: childrenRect.width
+        height: childrenRect.height
+        radius: 10
+        visible: false
+
+        GaussianBlur {
+            anchors.fill: createVersionWindow
+            source: view
+            radius: 40
+            samples: 20
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: mouse.accepted = true;
+            onWheel: wheel.accepted = true;
+        }
+        GridLayout {
+            columns: 2
+            anchors.margins: 5
+
+            TextField {
+                id: versionNameTextField
+                placeholderText: qsTr("Name must be unique")
+                Layout.columnSpan: 2
+                Layout.alignment: Qt.AlignHCenter
+                Layout.margins: 5
+                validator: RegExpValidator { regExp: /\w{0,50}/ }
+            }
+
+            ComboBox {
+                id: accessComboBox
+                model: versionAccessModel
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignHCenter
+                Layout.margins: 5
+            }
+
+            TextField {
+                id: descriptionTextField
+                placeholderText: qsTr("Enter description")
+                Layout.columnSpan: 2
+                Layout.alignment: Qt.AlignHCenter
+                Layout.margins: 5
+            }
+
+            Row {
+                Layout.alignment: Qt.AlignRight
+                Layout.columnSpan: 2
+                Layout.margins: 5
+                height: childrenRect.height
+                spacing: 5
+
+                Button {
+                    Layout.margins: 5
+                    Layout.alignment: Qt.AlignRight
+                    text: qsTr("Create")
+                    // once the update button is clicked, hide the windows, and fetch the currently selected features
+                    onClicked: {
+                        model.createVersion(versionNameTextField.text, accessComboBox.currentValue, descriptionTextField.text);
+                        resetCreateVersionWindow();
+                    }
+                }
+
+                Button {
+                    Layout.alignment: Qt.AlignRight
+                    Layout.margins: 5
+                    text: qsTr("Cancel")
+                    // once the cancel button is clicked, hide the window
+                    onClicked: {
+                        resetCreateVersionWindow();
+                    }
+                }
+            }
+
+        }
+    }
+
+    function resetCreateVersionWindow() {
+        createVersionWindow.visible = false;
+        versionNameTextField.text = "";
+        descriptionTextField.text = "";
+        accessComboBox.currentIndex = 0;
+    }
+
     // Update Window
     Rectangle {
         id: updateWindow
+        anchors.centerIn: parent
         width: childrenRect.width
         height: childrenRect.height
-        anchors.centerIn: parent
         radius: 10
         visible: false
 
@@ -180,49 +268,49 @@ Item {
             Text {
                 Layout.columnSpan: 2
                 Layout.margins: 5
-                text: "Update Attribute"
+                Layout.alignment: Qt.AlignHCenter
+                text: qsTr("Update Attributes")
                 font.pixelSize: 16
             }
 
+            Text {
+                text: "TYPDAMAGE:"
+                Layout.margins: 5
+            }
+
             ComboBox {
+                id: typeDmgCombo
                 property int modelWidth: 0
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
-                Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true
-                id: damageComboBox
                 model: featAttributes
-                Component.onCompleted : {
-                    for (let i = 0; i < model.length; ++i) {
-//                        metrics.text = model[i];
-//                        modelWidth = Math.max(modelWidth, metrics.width);
+            }
+
+            Row {
+                Layout.alignment: Qt.AlignRight
+                Layout.columnSpan: 2
+                height: childrenRect.height
+                spacing: 5
+
+                Button {
+                    Layout.margins: 5
+                    Layout.alignment: Qt.AlignRight
+                    text: qsTr("Update")
+                    // once the update button is clicked, hide the windows, and fetch the currently selected features
+                    onClicked: {
+                        updateWindow.visible = false;
+                        model.updateAttribute(typeDmgCombo.currentValue);
                     }
                 }
-                TextMetrics {
-                    id: metrics
-                    font: damageComboBox.font
-                }
-            }
 
-            Button {
-                Layout.margins: 5
-                text: "Update"
-                // once the update button is clicked, hide the windows, and fetch the currently selected features
-                onClicked: {
-//                    if (callout.visible)
-//                        callout.dismiss();
-                    updateWindow.visible = false;
-                    applyEditsBt.enabled = true;
-//                    updateFeaturesSample.updateSelectedFeature(damageComboBox.currentText)
+                Button {
+                    Layout.alignment: Qt.AlignRight
+                    Layout.margins: 5
+                    text: qsTr("Cancel")
+                    // once the cancel button is clicked, hide the window
+                    onClicked: updateWindow.visible = false;
                 }
-            }
-
-            Button {
-                Layout.alignment: Qt.AlignRight
-                Layout.margins: 5
-                text: "Cancel"
-                // once the cancel button is clicked, hide the window
-                onClicked: updateWindow.visible = false;
             }
         }
     }
@@ -249,6 +337,22 @@ Item {
                 callout.dismiss();
             // hide the update window
             updateWindow.visible = false;
+        }
+    }
+
+    Dialog {
+        id: errorDialog
+        anchors.centerIn: parent
+        visible: errorText.text !== ""
+        standardButtons: Dialog.Ok
+
+        Text {
+            id: errorText
+            text: model.errorMessage;
+        }
+
+        onClosed: {
+            createVersionBtn.text = qsTr("Create Version");
         }
     }
 }
