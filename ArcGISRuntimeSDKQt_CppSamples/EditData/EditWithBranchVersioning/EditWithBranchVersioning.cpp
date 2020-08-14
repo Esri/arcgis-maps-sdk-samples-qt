@@ -46,7 +46,7 @@ EditWithBranchVersioning::EditWithBranchVersioning(QObject* parent /* = nullptr 
 //  m_map(new Map(QUrl("https://rt-server1081.esri.com/portal/home/item.html?id=adb5c3090edf43f3853e57d8b0810f9b"), this))
 //    m_map(new Map(QUrl("https://nice.esri.com/portal/home/item.html?id=4ce3f10b26394bb3b60c4b13ed0d9649"), this))
 {
-  m_cred = new Credential{"apptest", "app.test1234", this};
+  m_cred = new Credential{"editor01", "editor01.password", this};
 }
 
 EditWithBranchVersioning::~EditWithBranchVersioning() = default;
@@ -83,7 +83,9 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
 
     qDebug() << "mapLoaded";
 
-    m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer"), m_cred, this);
+//    https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer
+//    m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer"), m_cred, this);
+    m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"), m_cred, this);
     m_busy = true;
     emit busyChanged();
 
@@ -266,6 +268,7 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
         //          // obtain the selected feature with attributes
         QueryParameters queryParams;
         QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
+        qDebug() << whereClause;
         queryParams.setWhereClause(whereClause);
 
         //          auto featTable = m_serviceGeodatabase->connectedTables()[0];
