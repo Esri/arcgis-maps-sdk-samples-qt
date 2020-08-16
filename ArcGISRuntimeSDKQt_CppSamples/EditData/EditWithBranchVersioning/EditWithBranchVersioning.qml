@@ -341,6 +341,7 @@ Item {
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        visible: model.busy
+        visible: false
+//        visible: model.busy
     }
 }

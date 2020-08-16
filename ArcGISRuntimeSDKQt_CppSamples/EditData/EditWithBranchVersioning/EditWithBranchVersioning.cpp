@@ -83,8 +83,8 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
 
     qDebug() << "mapLoaded";
 
-//    https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer
-//    m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer"), m_cred, this);
+    //    https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer
+    //    m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer"), m_cred, this);
     m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"), m_cred, this);
     m_busy = true;
     emit busyChanged();
@@ -231,8 +231,16 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
 
       emit hideWindow();
 
-      // call identify on the map view
-      m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+      if (m_selectedFeature)
+      {
+        const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+        moveFeature(clickedPoint);
+      }
+      else
+      {
+        // call identify on the map view
+        m_mapView->identifyLayer(m_featureLayer, mouseEvent.x(), mouseEvent.y(), 5, false, 1);
+      }
     });
 
 
@@ -326,8 +334,8 @@ void EditWithBranchVersioning::createVersion()
 
 void EditWithBranchVersioning::switchVersion() const
 {
-//  m_serviceGeodatabase->switchVersion("Esri_Anonymous.testPrivate1");
-//  return;
+  //  m_serviceGeodatabase->switchVersion("Esri_Anonymous.testPrivate1");
+  //  return;
 
   if (m_serviceGeodatabase->hasLocalEdits())
   {
@@ -359,13 +367,13 @@ void EditWithBranchVersioning::updateAttribute(const QString& attributeValue)
     return;
 
   // update the two attirbutes with the inputed text.
-    qDebug() << m_selectedFeature->attributes()->attributeValue("TYPDAMAGE");
+  qDebug() << m_selectedFeature->attributes()->attributeValue("TYPDAMAGE");
   m_selectedFeature->attributes()->replaceAttribute("TYPDAMAGE", attributeValue);
-    m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
-//  m_serviceGeodatabase->applyEdits();
-  m_featureLayer->clearSelection();
-  delete m_selectedFeature;
-  m_selectedFeature = nullptr;
+  m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
+  //  m_serviceGeodatabase->applyEdits();
+//  m_featureLayer->clearSelection();
+//  delete m_selectedFeature;
+//  m_selectedFeature = nullptr;
 }
 
 void EditWithBranchVersioning::createVersion(const QString& versionName, const QString& versionAccess, const QString& description)
@@ -374,8 +382,8 @@ void EditWithBranchVersioning::createVersion(const QString& versionName, const Q
   //  auto params = createParams();
 
   ServiceVersionParameters* params = new ServiceVersionParameters(this);
-//  const quint32 value = QRandomGenerator::global()->generate();
-//  const auto s_value = QString::number(value);
+  //  const quint32 value = QRandomGenerator::global()->generate();
+  //  const auto s_value = QString::number(value);
   params->setName(versionName);
   params->setDescription(description);
 
@@ -387,4 +395,27 @@ void EditWithBranchVersioning::createVersion(const QString& versionName, const Q
     params->setAccess(VersionAccess::Public);
 
   m_serviceGeodatabase->createVersion(params);
+}
+
+void EditWithBranchVersioning::moveFeature(const Point& mapPoint)
+{
+  const Polyline geom = m_selectedFeature->geometry();
+  // if the selected feature is a point, change the geometry with the map point
+  m_selectedFeature->setGeometry(mapPoint);
+
+  // update the selected feature with the new geometry
+  m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
+  clearSelection();
+  delete m_selectedFeature;
+  m_selectedFeature = nullptr;
+}
+
+void EditWithBranchVersioning::clearSelection()
+{
+  for (Layer* layer : *m_map->operationalLayers())
+  {
+    FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
+    if (featureLayer)
+      featureLayer->clearSelection();
+  }
 }

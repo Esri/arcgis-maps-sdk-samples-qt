@@ -30,6 +30,7 @@ class FeatureLayer;
 class ServiceFeatureTable;
 class ArcGISFeature;
 class Credential;
+class Point;
 }
 }
 
@@ -57,6 +58,8 @@ public:
 
   Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
   Esri::ArcGISRuntime::ServiceVersionParameters* createParams();
+  void moveFeature(const Esri::ArcGISRuntime::Point& mapPoint);
+  void clearSelection();
 
   Q_INVOKABLE void createVersion();
   Q_INVOKABLE void createVersion(const QString& versionName, const QString& versionAccess, const QString& description);
