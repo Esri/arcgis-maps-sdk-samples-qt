@@ -31,7 +31,6 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
-//        objectName: "view"
 
         Callout {
             id: callout
@@ -63,13 +62,18 @@ Item {
             onClicked: {
                 if (text === qsTr("Create Version")) {
                     createVersionWindow.visible = true;
-//                    text = qsTr("Switch to Default version")
+                    callout.dismiss();
+                    updateWindow.visible = false;
                 } else if (text === qsTr("Switch to Default version")) {
                     text = qsTr("Switch to created version")
                     model.switchVersion();
+                    callout.dismiss();
+                    updateWindow.visible = false;
                 } else if (text === qsTr("Switch to created version")) {
                     text = qsTr("Switch to Default version")
                     model.switchVersion();
+                    callout.dismiss();
+                    updateWindow.visible = false;
                 }
             }
         }
@@ -165,11 +169,9 @@ Item {
                     Layout.margins: 5
                     Layout.alignment: Qt.AlignRight
                     text: qsTr("Create")
-                    // once the update button is clicked, hide the windows, and fetch the currently selected features
                     onClicked: {
                         model.createVersion(versionNameTextField.text, accessComboBox.currentValue, descriptionTextField.text);
                         resetCreateVersionWindow();
-//                        createVersionBtn.text = qsTr("Switch to Default version");
                     }
                 }
 
@@ -177,13 +179,11 @@ Item {
                     Layout.alignment: Qt.AlignRight
                     Layout.margins: 5
                     text: qsTr("Cancel")
-                    // once the cancel button is clicked, hide the window
                     onClicked: {
                         resetCreateVersionWindow();
                     }
                 }
             }
-
         }
     }
 
@@ -252,6 +252,7 @@ Item {
                     Layout.margins: 5
                     Layout.alignment: Qt.AlignRight
                     text: qsTr("Update")
+                    enabled: model.allowEditing
                     // once the update button is clicked, hide the windows, and fetch the currently selected features
                     onClicked: {
                         print("Update Attriubte " + typeDmgCombo.currentValue);
@@ -323,7 +324,6 @@ Item {
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        visible: false
-//        visible: model.busy
+        visible: model.busy
     }
 }

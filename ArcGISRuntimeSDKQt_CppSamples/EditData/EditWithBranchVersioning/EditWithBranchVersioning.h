@@ -48,13 +48,11 @@ class EditWithBranchVersioning : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString sgdbCurrentVersion MEMBER m_sgdbCurrentVersion NOTIFY sgdbCurrentVersionChanged)
-  Q_PROPERTY(QString sgdbVersionAccess MEMBER m_sgdbVersionAccess NOTIFY sgdbVersionAccessChanged)
-  Q_PROPERTY(QString sgdbVersionDescription MEMBER m_sgdbVersionDescription NOTIFY sgdbVersionDescriptionChanged)
   Q_PROPERTY(QString currentTypeDamage MEMBER m_currentTypeDamage NOTIFY currentTypeDamageChanged)
   Q_PROPERTY(QString errorMessage MEMBER m_errorMessage NOTIFY errorMessageChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
+  Q_PROPERTY(bool allowEditing MEMBER m_allowEditing NOTIFY allowEditingChanged)
 
-  Q_PROPERTY(QString featureType READ featureType NOTIFY featureTypeChanged)
 
 public:
   explicit EditWithBranchVersioning(QObject* parent = nullptr);
@@ -66,40 +64,34 @@ public:
   Esri::ArcGISRuntime::ServiceVersionParameters* createParams();
   void moveFeature(const Esri::ArcGISRuntime::Point& mapPoint);
   void clearSelection();
-//  void onMapDoneLoading(Esri::ArcGISRuntime::Error error);
   Q_INVOKABLE void createVersion(const QString& versionName, const QString& versionAccess, const QString& description);
-  Q_INVOKABLE void switchVersion() const;
+  Q_INVOKABLE void switchVersion();
   Q_INVOKABLE void updateAttribute(const QString& attributeValue);
 
 signals:
   void authManagerChanged();
-  void mapViewChanged();
-  void sgdbCurrentVersionChanged();
-  void featureSelected();
-  void featureTypeChanged();
-  void sgdbVersionAccessChanged();
-  void sgdbVersionDescriptionChanged();
-  void hideWindow();
-  void currentTypeDamageChanged();
-  void errorMessageChanged();
+  void allowEditingChanged();
   void busyChanged();
   void createVersionSuccess();
-
+  void currentTypeDamageChanged();
+  void errorMessageChanged();
+  void featureSelected();
+  void hideWindow();
+  void mapViewChanged();
+  void sgdbCurrentVersionChanged();
 
 private slots:
 
   void onMapDoneLoading(Esri::ArcGISRuntime::Error error);
   void onSgdbDoneLoadingCompleted(Esri::ArcGISRuntime::Error error);
-  void onFetchVersionsCompleted(QUuid, const QList<Esri::ArcGISRuntime::ServiceVersionInfo*> &serviceVersionInfos);
   void onCreateVersionCompleted(QUuid, Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo);
-
-
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
-  QString featureType() const;
   void connectSgdbSignals();
+  bool sgdbVerionIsDefault() const;
+  void clearSelectedFeature();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -108,21 +100,18 @@ private:
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
 
-  const QUrl m_serviceUrl{"https://rt-server1081.esri.com/portal/home/item.html?id=adb5c3090edf43f3853e57d8b0810f9b"};
 
   QString m_sgdbCurrentVersion;
   QString m_sgdbVersionAccess;
   QString m_sgdbVersionDescription;
   QString m_createdVersion;
-  QString m_featureType;
   QString m_currentTypeDamage;
   QString m_errorMessage;
   bool m_busy = false;
+  bool m_allowEditing = false;
 
   // remove only done for simplification
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
-  Esri::ArcGISRuntime::Credential* m_cred2 = nullptr;
-
 
 };
 
