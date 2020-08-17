@@ -28,12 +28,16 @@ class MapQuickView;
 class ServiceGeodatabase;
 class FeatureLayer;
 class ServiceFeatureTable;
+class ServiceVersionInfo;
 class ArcGISFeature;
 class Credential;
 class Point;
 }
 }
 
+#include "Error.h"
+
+#include <QUuid>
 #include <QObject>
 #include <QUrl>
 
@@ -62,15 +66,10 @@ public:
   Esri::ArcGISRuntime::ServiceVersionParameters* createParams();
   void moveFeature(const Esri::ArcGISRuntime::Point& mapPoint);
   void clearSelection();
-
-  Q_INVOKABLE void createVersion();
+//  void onMapDoneLoading(Esri::ArcGISRuntime::Error error);
   Q_INVOKABLE void createVersion(const QString& versionName, const QString& versionAccess, const QString& description);
   Q_INVOKABLE void switchVersion() const;
   Q_INVOKABLE void updateAttribute(const QString& attributeValue);
-
-  // to be removed
-  Q_INVOKABLE void fetchVersions() const;
-  Q_INVOKABLE void switchVersion2() const;
 
 signals:
   void authManagerChanged();
@@ -87,11 +86,20 @@ signals:
   void createVersionSuccess();
 
 
+private slots:
+
+  void onMapDoneLoading(Esri::ArcGISRuntime::Error error);
+  void onSgdbDoneLoadingCompleted(Esri::ArcGISRuntime::Error error);
+  void onFetchVersionsCompleted(QUuid, const QList<Esri::ArcGISRuntime::ServiceVersionInfo*> &serviceVersionInfos);
+  void onCreateVersionCompleted(QUuid, Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo);
+
+
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   QString featureType() const;
+  void connectSgdbSignals();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -114,6 +122,8 @@ private:
   // remove only done for simplification
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
   Esri::ArcGISRuntime::Credential* m_cred2 = nullptr;
+
+
 };
 
 #endif // EDITWITHBRANCHVERSIONING_H

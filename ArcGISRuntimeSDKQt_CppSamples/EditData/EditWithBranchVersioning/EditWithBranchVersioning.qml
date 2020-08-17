@@ -47,9 +47,6 @@ Item {
                         return;
                     }
                 }
-
-
-                // window to edit attributes
             }
         }
 
@@ -77,33 +74,6 @@ Item {
             }
         }
 
-        // to be removed
-        Button {
-            id: fetchVersions
-            text: qsTr("Fetch Versions")
-//            visible: false
-            anchors {
-                left: parent.left
-                top: createVersionBtn.bottom
-                margins: 3
-            }
-
-            onClicked: model.fetchVersions();
-        }
-
-        Button {
-            id: switchVersions
-            text: qsTr("Switch Versions")
-//            visible: false
-            anchors {
-                left: parent.left
-                top: fetchVersions.bottom
-                margins: 3
-            }
-
-            onClicked: model.switchVersion2();
-        }
-
         Rectangle {
             id: currentVersionRect
             anchors{
@@ -121,7 +91,6 @@ Item {
                 Text {
                     text: qsTr("Current version:")
                     Layout.alignment: Qt.AlignHCenter
-                    //                visible: currentVersionText.text !== "" ? true : false
                     color: "white"
                 }
 
@@ -129,34 +98,6 @@ Item {
                     id: currentVersionText
                     Layout.alignment: Qt.AlignHCenter
                     text: model.sgdbCurrentVersion
-                    color: "white"
-                }
-
-                Text {
-                    text: qsTr("Version access:")
-                    Layout.alignment: Qt.AlignHCenter
-                    //                visible: currentVersionText.text !== "" ? true : false
-                    color: "white"
-                }
-
-                Text {
-                    id: versionAccessText
-                    Layout.alignment: Qt.AlignHCenter
-                    text: model.sgdbVersionAccess
-                    color: "white"
-                }
-
-                Text {
-                    text: qsTr("description:")
-                    Layout.alignment: Qt.AlignHCenter
-                    //                visible: currentVersionText.text !== "" ? true : false
-                    color: "white"
-                }
-
-                Text {
-                    id: descriptionText
-                    Layout.alignment: Qt.AlignHCenter
-                    text: model.sgdbVersionDescription
                     color: "white"
                 }
             }
