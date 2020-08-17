@@ -81,7 +81,7 @@ Item {
         Button {
             id: fetchVersions
             text: qsTr("Fetch Versions")
-            visible: false
+//            visible: false
             anchors {
                 left: parent.left
                 top: createVersionBtn.bottom
@@ -89,6 +89,19 @@ Item {
             }
 
             onClicked: model.fetchVersions();
+        }
+
+        Button {
+            id: switchVersions
+            text: qsTr("Switch Versions")
+//            visible: false
+            anchors {
+                left: parent.left
+                top: fetchVersions.bottom
+                margins: 3
+            }
+
+            onClicked: model.switchVersion2();
         }
 
         Rectangle {
@@ -116,6 +129,34 @@ Item {
                     id: currentVersionText
                     Layout.alignment: Qt.AlignHCenter
                     text: model.sgdbCurrentVersion
+                    color: "white"
+                }
+
+                Text {
+                    text: qsTr("Version access:")
+                    Layout.alignment: Qt.AlignHCenter
+                    //                visible: currentVersionText.text !== "" ? true : false
+                    color: "white"
+                }
+
+                Text {
+                    id: versionAccessText
+                    Layout.alignment: Qt.AlignHCenter
+                    text: model.sgdbVersionAccess
+                    color: "white"
+                }
+
+                Text {
+                    text: qsTr("description:")
+                    Layout.alignment: Qt.AlignHCenter
+                    //                visible: currentVersionText.text !== "" ? true : false
+                    color: "white"
+                }
+
+                Text {
+                    id: descriptionText
+                    Layout.alignment: Qt.AlignHCenter
+                    text: model.sgdbVersionDescription
                     color: "white"
                 }
             }

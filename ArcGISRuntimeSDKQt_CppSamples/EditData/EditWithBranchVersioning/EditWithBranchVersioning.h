@@ -44,6 +44,8 @@ class EditWithBranchVersioning : public QObject
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QString sgdbCurrentVersion MEMBER m_sgdbCurrentVersion NOTIFY sgdbCurrentVersionChanged)
+  Q_PROPERTY(QString sgdbVersionAccess MEMBER m_sgdbVersionAccess NOTIFY sgdbVersionAccessChanged)
+  Q_PROPERTY(QString sgdbVersionDescription MEMBER m_sgdbVersionDescription NOTIFY sgdbVersionDescriptionChanged)
   Q_PROPERTY(QString currentTypeDamage MEMBER m_currentTypeDamage NOTIFY currentTypeDamageChanged)
   Q_PROPERTY(QString errorMessage MEMBER m_errorMessage NOTIFY errorMessageChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
@@ -68,6 +70,7 @@ public:
 
   // to be removed
   Q_INVOKABLE void fetchVersions() const;
+  Q_INVOKABLE void switchVersion2() const;
 
 signals:
   void authManagerChanged();
@@ -75,11 +78,15 @@ signals:
   void sgdbCurrentVersionChanged();
   void featureSelected();
   void featureTypeChanged();
+  void sgdbVersionAccessChanged();
+  void sgdbVersionDescriptionChanged();
   void hideWindow();
   void currentTypeDamageChanged();
   void errorMessageChanged();
   void busyChanged();
   void createVersionSuccess();
+
+
 
 private:
   Esri::ArcGISRuntime::MapQuickView* mapView() const;
@@ -96,6 +103,8 @@ private:
   const QUrl m_serviceUrl{"https://rt-server1081.esri.com/portal/home/item.html?id=adb5c3090edf43f3853e57d8b0810f9b"};
 
   QString m_sgdbCurrentVersion;
+  QString m_sgdbVersionAccess;
+  QString m_sgdbVersionDescription;
   QString m_createdVersion;
   QString m_featureType;
   QString m_currentTypeDamage;
@@ -104,6 +113,7 @@ private:
 
   // remove only done for simplification
   Esri::ArcGISRuntime::Credential* m_cred = nullptr;
+  Esri::ArcGISRuntime::Credential* m_cred2 = nullptr;
 };
 
 #endif // EDITWITHBRANCHVERSIONING_H

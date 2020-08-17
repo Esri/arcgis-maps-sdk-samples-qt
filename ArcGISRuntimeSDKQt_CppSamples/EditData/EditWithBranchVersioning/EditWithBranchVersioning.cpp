@@ -46,7 +46,8 @@ EditWithBranchVersioning::EditWithBranchVersioning(QObject* parent /* = nullptr 
 //  m_map(new Map(QUrl("https://rt-server1081.esri.com/portal/home/item.html?id=adb5c3090edf43f3853e57d8b0810f9b"), this))
 //    m_map(new Map(QUrl("https://nice.esri.com/portal/home/item.html?id=4ce3f10b26394bb3b60c4b13ed0d9649"), this))
 {
-  m_cred = new Credential{"editor01", "editor01.password", this};
+  m_cred2 = new Credential{"editor01", "editor01.password", this};
+  m_cred = new Credential{"editor02", "editor02.password", this};
 }
 
 EditWithBranchVersioning::~EditWithBranchVersioning() = default;
@@ -76,12 +77,11 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
   // connect to the mouse clicked signal on the MapQuickView
 
 
-  connect(m_map, &Map::doneLoading, this, [this](Error e)
+  connect(m_map, &Map::doneLoading, this, [this](Error error)
   {
-    if (!e.isEmpty())
+    if (!error.isEmpty())
       return;
 
-    qDebug() << "mapLoaded";
 
     //    https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer
     //    m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://nice.esri.com/server/rest/services/DamageBuilldings_Sync/FeatureServer"), m_cred, this);
@@ -90,9 +90,9 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
     emit busyChanged();
 
 
-    connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this] (Error e)
+    connect(m_serviceGeodatabase, &ServiceGeodatabase::doneLoading, this, [this] (Error error)
     {
-      if (!e.isEmpty())
+      if (!error.isEmpty())
         return;
 
       qDebug() << "Supports branch versioning: " << m_serviceGeodatabase->isSupportsBranchVersioning();
@@ -127,8 +127,6 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
 
       m_map->operationalLayers()->append(m_featureLayer);
 
-      // create parameters for branch
-      //        auto params = createParams();
       m_sgdbCurrentVersion = m_serviceGeodatabase->versionName();
       emit sgdbCurrentVersionChanged();
 
@@ -190,10 +188,9 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
       m_serviceGeodatabase->switchVersion(serviceVersionInfo->name());
     });
 
-    connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [this](Error e)
+    connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [this](Error error)
     {
-      m_errorMessage = e.message() + " - " + e.additionalMessage();
-      qDebug() << m_errorMessage;
+      m_errorMessage = error.message() + " - " + error.additionalMessage();
       emit errorMessageChanged();
 
     });
@@ -289,10 +286,6 @@ void EditWithBranchVersioning::setMapView(MapQuickView* mapView)
     });
 
 
-
-
-
-
   });
 
   emit mapViewChanged();
@@ -322,14 +315,6 @@ ServiceVersionParameters* EditWithBranchVersioning::createParams()
   //  qDebug() << params->description();
 
   return std::move(params);
-}
-
-void EditWithBranchVersioning::createVersion()
-{
-  // create parameters for branch
-  auto params = createParams();
-
-  m_serviceGeodatabase->createVersion(params);
 }
 
 void EditWithBranchVersioning::switchVersion() const
@@ -379,11 +364,8 @@ void EditWithBranchVersioning::updateAttribute(const QString& attributeValue)
 void EditWithBranchVersioning::createVersion(const QString& versionName, const QString& versionAccess, const QString& description)
 {
   // create parameters for branch
-  //  auto params = createParams();
 
   ServiceVersionParameters* params = new ServiceVersionParameters(this);
-  //  const quint32 value = QRandomGenerator::global()->generate();
-  //  const auto s_value = QString::number(value);
   params->setName(versionName);
   params->setDescription(description);
 
@@ -412,10 +394,20 @@ void EditWithBranchVersioning::moveFeature(const Point& mapPoint)
 
 void EditWithBranchVersioning::clearSelection()
 {
-  for (Layer* layer : *m_map->operationalLayers())
-  {
-    FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer);
-    if (featureLayer)
-      featureLayer->clearSelection();
-  }
+  if (m_featureLayer)
+    m_featureLayer->clearSelection();
+}
+
+void EditWithBranchVersioning::switchVersion2() const
+{
+  if (!m_serviceGeodatabase)
+    return;
+  if (m_serviceGeodatabase->hasLocalEdits())
+    return;
+
+  qDebug() << m_serviceGeodatabase->versionName();
+  if ( m_serviceGeodatabase->versionName() == "sde.DEFAULT")
+    m_serviceGeodatabase->switchVersion("editor01.doItForMike007");
+  else
+    m_serviceGeodatabase->switchVersion("sde.DEFAULT");
 }
