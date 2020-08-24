@@ -51,12 +51,14 @@ public:
 
   static void init();
 
-  void onIdentifyLayersCompleted(QUuid, QList<Esri::ArcGISRuntime::IdentifyLayerResult*> identifyResults);
-  void onMouseClicked(QMouseEvent mouseEvent);
-  void onGeodatabaseDoneLoading(Esri::ArcGISRuntime::Error error);
   void clearSelection();
   void moveFeature(Esri::ArcGISRuntime::Point mapPoint);
   Q_INVOKABLE void updateSelectedFeature(const QString& address, const QString& streetName);
+
+private slots:
+  void onIdentifyLayersCompleted(QUuid, QList<Esri::ArcGISRuntime::IdentifyLayerResult*> identifyResults);
+  void onMouseClicked(QMouseEvent mouseEvent);
+  void onGeodatabaseDoneLoading(Esri::ArcGISRuntime::Error error);
 
 signals:
   void mapViewChanged();
