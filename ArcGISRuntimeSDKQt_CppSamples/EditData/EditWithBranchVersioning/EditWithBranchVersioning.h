@@ -104,7 +104,7 @@ private:
   QString m_sgdbCurrentVersion;
   QString m_sgdbVersionAccess;
   QString m_sgdbVersionDescription;
-  QString m_createdVersion;
+  QString m_createdVersionName;
   QString m_currentTypeDamage;
   QString m_errorMessage;
   bool m_busy = false;

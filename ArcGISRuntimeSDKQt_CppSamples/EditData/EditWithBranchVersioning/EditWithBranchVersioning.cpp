@@ -132,6 +132,9 @@ void EditWithBranchVersioning::onMapDoneLoading(Error error)
     }
     if (!identifyResult->geoElements().empty())
     {
+
+      m_selectedFeature = static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0));
+      qDebug() << m_selectedFeature->attributes()->size();
       // select the item in the result
       m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
       QueryParameters queryParams;
@@ -210,8 +213,10 @@ void EditWithBranchVersioning::onSgdbDoneLoadingCompleted(Error error)
 
   connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this] (QUuid, bool success)
   {
+    m_busy = false;
+    emit busyChanged();
     // once update featuers has completed we can apply the edits back to our version
-    m_serviceGeodatabase->applyEdits();
+//    m_serviceGeodatabase->applyEdits();
   });
 
   // create a feature layer from the service feature table
@@ -264,10 +269,10 @@ void EditWithBranchVersioning::onCreateVersionCompleted(QUuid, Esri::ArcGISRunti
   emit createVersionSuccess();
 
   // store create version name for easy switching between default and created version
-  m_createdVersion = serviceVersionInfo->name();
+  m_createdVersionName = serviceVersionInfo->name();
 
   // switch to the version you just created
-  m_serviceGeodatabase->switchVersion(m_createdVersion);
+  m_serviceGeodatabase->switchVersion(m_createdVersionName);
 }
 
 void EditWithBranchVersioning::switchVersion()
@@ -275,17 +280,25 @@ void EditWithBranchVersioning::switchVersion()
   m_busy = true;
   emit busyChanged();
 
-  if (m_serviceGeodatabase->hasLocalEdits())
-  {
-    // apply local edits before switching versions
-    m_serviceGeodatabase->applyEdits();
-  }
+//  if (m_serviceGeodatabase->hasLocalEdits())
+//  {
+//    // apply local edits before switching versions
+//    m_serviceGeodatabase->applyEdits();
+//  }
 
   // if the current version is our created version switch to the default
-  if (m_sgdbCurrentVersion == m_createdVersion)
+  if (m_sgdbCurrentVersion == m_createdVersionName)
+  {
+    if (m_serviceGeodatabase->hasLocalEdits())
+    {
+      // apply local edits before switching versions
+      m_serviceGeodatabase->applyEdits();
+    }
+
     m_serviceGeodatabase->switchVersion(m_serviceGeodatabase->defaultVersionName());
+  }
   else
-    m_serviceGeodatabase->switchVersion(m_createdVersion);
+    m_serviceGeodatabase->switchVersion(m_createdVersionName);
 }
 
 void EditWithBranchVersioning::updateAttribute(const QString& attributeValue)

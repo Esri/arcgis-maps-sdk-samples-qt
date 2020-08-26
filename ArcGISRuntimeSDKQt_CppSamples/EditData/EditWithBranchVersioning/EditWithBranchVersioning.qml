@@ -42,9 +42,11 @@ Item {
                 for (let i=0; i < featAttributes.length; i++) {
                     if (model.currentTypeDamage === featAttributes[i]) {
                         typeDmgCombo.currentIndex = i;
-                        updateWindow.visible = true;
+//                        updateWindow.visible = true;
                         return;
                     }
+                    updateWindow.visible = true;
+                    return;
                 }
             }
         }
@@ -320,6 +322,19 @@ Item {
             text: model.errorMessage;
         }
     }
+
+//    Dialog {
+//        id: applyEditsDialog
+//        anchors.centerIn: parent
+//        standardButtons: Dialog.Ok
+
+//        Text {
+//            id: applyEditsText
+//            text: qsTr("Would")
+//        }
+
+
+//    }
 
     BusyIndicator {
         id: busyIndicator
