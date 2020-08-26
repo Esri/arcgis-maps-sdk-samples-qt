@@ -153,14 +153,11 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent mouseEv
   }
 }
 
-void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, QList<IdentifyLayerResult *> identifyResults)
+void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& identifyResults)
 {
-  if (identifyResults.isEmpty())
-    return;
-
   for (IdentifyLayerResult* identifyResult : identifyResults)
   {
-    if (!identifyResult->geoElements().empty())
+    if (!identifyResult->geoElements().isEmpty())
     {
       // only perform selections on Feature Layers
       FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(identifyResult->layerContent());
@@ -169,9 +166,6 @@ void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, Q
       if (featureLayer)
       {
         m_selectedFeature = static_cast<Feature*>(identifyResult->geoElements().at(0));
-
-        // Prevent the feature from being deleted along with the identifyResult.
-        m_selectedFeature->setParent(this);
 
         const GeometryType selectedFeatureGeomType = m_selectedFeature->geometry().geometryType();
 

@@ -22,7 +22,6 @@ namespace Esri
 namespace ArcGISRuntime
 {
 class AnnotationLayer;
-class Error;
 class Feature;
 class FeatureLayer;
 class Geodatabase;
@@ -37,6 +36,7 @@ class MapQuickView;
 #include <QMouseEvent>
 
 #include "Point.h"
+#include "Error.h"
 
 class EditFeaturesWithFeatureLinkedAnnotation : public QObject
 {
@@ -56,7 +56,7 @@ public:
   Q_INVOKABLE void updateSelectedFeature(const QString& address, const QString& streetName);
 
 private slots:
-  void onIdentifyLayersCompleted(QUuid, QList<Esri::ArcGISRuntime::IdentifyLayerResult*> identifyResults);
+  void onIdentifyLayersCompleted(QUuid,const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& identifyResults);
   void onMouseClicked(QMouseEvent mouseEvent);
   void onGeodatabaseDoneLoading(Esri::ArcGISRuntime::Error error);
 
