@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     clip: true
@@ -56,10 +56,10 @@ Rectangle {
                         resultsText = "";
 
                         // Iterate through the results
-                        var iter = queryStatisticsResult.iterator;
+                        const iter = queryStatisticsResult.iterator;
                         while (iter.hasNext) {
-                            var record = iter.next();
-                            for (var key in record.statistics) {
+                            const record = iter.next();
+                            for (let key in record.statistics) {
                                 if (record.statistics.hasOwnProperty(key)) {
                                     resultsText += key + ": " + record.statistics[key] + "\n";
                                 }

@@ -1,53 +1,42 @@
 {
     "category": "Display information",
-    "description": "This sample demonstrates applying a dictionary renderer to a graphics overlay in a 3D scene to display military symbology",
+    "dataItems": [
+        {
+            "itemId": "c78b149a1d52414682c86a5feeb13d30",
+            "path": "~/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
+        },
+        {
+            "itemId": "1e4ea99af4b440c092e7959cf3957bfa",
+            "path": "~/ArcGIS/Runtime/Data/xml/arcade_style/Mil2525DMessages.xml"
+        }
+    ],
+    "description": "This sample demonstrates applying a dictionary renderer to a graphics overlay in a 3D scene to display military symbology.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "dictionary renderer",
-        "military symbology",
-        "ArcGISTiledElevationSource",
-        "Basemap",
-        "Camera",
+        "defense",
+        "military",
+        "situational awareness",
+        "tactical",
+        "visualization",
         "DictionaryRenderer",
-        "Envelope",
-        "Geometry",
-        "GeometryEngine",
-        "Graphic",
-        "GraphicsOverlay",
-        "Point",
-        "Scene",
-        "SceneQuickView",
-        "SceneView",
-        "SpatialReference",
-        "Surface",
-        "DictionarySymbolStyle"
+        "DictionarySymbolStyle",
+        "GraphicsOverlay"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-godictionaryrenderer-3d.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-godictionaryrenderer-3d.htm"
+    ],
     "relevant_apis": [
-        "ArcGISTiledElevationSource",
-        "Basemap",
-        "Camera",
         "DictionaryRenderer",
-        "Envelope",
-        "Geometry",
-        "GeometryEngine",
-        "Graphic",
-        "GraphicsOverlay",
-        "Point",
-        "Scene",
-        "SceneQuickView",
-        "SceneView",
-        "SpatialReference",
-        "Surface",
-        "DictionarySymbolStyle"
+        "DictionarySymbolStyle",
+        "GraphicsOverlay"
     ],
     "snippets": [
+        "GODictionaryRenderer_3D.qml",
         "GODictionaryRenderer_3D.cpp",
-        "GODictionaryRenderer_3D.h",
-        "GODictionaryRenderer_3D.qml"
+        "GODictionaryRenderer_3D.h"
     ],
     "title": "Graphics overlay (dictionary renderer) 3D"
 }

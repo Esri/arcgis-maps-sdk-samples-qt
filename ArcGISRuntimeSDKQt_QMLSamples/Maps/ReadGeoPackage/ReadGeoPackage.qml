@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -64,16 +64,16 @@ Rectangle {
                 return;
 
             // For each raster, create a raster layer and add the layer to the map
-            for (var k = 0; k < gpkg.geoPackageRasters.length; k++){
-                var raster = gpkg.geoPackageRasters[k];
-                var rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: raster}, gpkg);
+            for (let k = 0; k < gpkg.geoPackageRasters.length; k++){
+                const raster = gpkg.geoPackageRasters[k];
+                const rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: raster}, gpkg);
                 rasterLayer.opacity = 0.55;
                 map.operationalLayers.append(rasterLayer);
             }
 
             // For each feature table, create a feature layer and add the layer to the map
-            for (var i = 0; i < gpkg.geoPackageFeatureTables.length; i++){
-                var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: gpkg.geoPackageFeatureTables[i]}, gpkg);
+            for (let i = 0; i < gpkg.geoPackageFeatureTables.length; i++){
+                const featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: gpkg.geoPackageFeatureTables[i]}, gpkg);
                 map.operationalLayers.append(featureLayer);
             }
         }

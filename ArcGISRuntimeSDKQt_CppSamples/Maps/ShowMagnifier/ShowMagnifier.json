@@ -1,9 +1,0 @@
-{
-    "source" :  "ShowMagnifier.qml",
-    "otherSourceFiles" : [
-        "ShowMagnifier.h",
-        "ShowMagnifier.cpp"
-    ],
-    "name" : "Show magnifier"
-}
-

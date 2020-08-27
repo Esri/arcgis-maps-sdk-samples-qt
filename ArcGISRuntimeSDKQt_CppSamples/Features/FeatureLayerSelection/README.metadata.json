@@ -1,40 +1,32 @@
 {
     "category": "Features",
-    "description": "This sample demonstrates how to select features in a feature layer",
+    "description": "Select features in a feature layer.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "feature selection",
-        "MapQuickView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "SpatialReference",
-        "ServiceFeatureTable",
-        "FeatureLayer",
+        "features",
+        "layers",
+        "select",
+        "selection",
+        "tolerance",
         "Feature",
-        "Envelope",
-        "GeoElement"
+        "FeatureLayer",
+        "ServiceFeatureTable"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-featurelayerselection.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-featurelayerselection.htm"
+    ],
     "relevant_apis": [
-        "MapQuickView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "SpatialReference",
-        "ServiceFeatureTable",
-        "FeatureLayer",
         "Feature",
-        "Envelope",
-        "GeoElement"
+        "FeatureLayer",
+        "ServiceFeatureTable"
     ],
     "snippets": [
+        "FeatureLayerSelection.qml",
         "FeatureLayerSelection.cpp",
-        "FeatureLayerSelection.h",
-        "FeatureLayerSelection.qml"
+        "FeatureLayerSelection.h"
     ],
     "title": "Feature layer selection"
 }

@@ -85,7 +85,7 @@ private:
   QList<Esri::ArcGISRuntime::Stop> m_stopsList;
   QList<Esri::ArcGISRuntime::PolygonBarrier> m_barriersList;
   QAbstractListModel* m_directions = nullptr;
-  bool m_addStops = false;
+  bool m_addStops = true;
   bool m_addBarriers = false;
   bool m_findBestSequence = false;
   bool m_preserveFirstStop = false;

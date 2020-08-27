@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/ControlAnnotationSublayerVisibility">
-        <file alias="sample.json">ControlAnnotationSublayerVisibility.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>ControlAnnotationSublayerVisibility.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

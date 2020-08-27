@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/IdentifyLayers">
-        <file alias="sample.json">IdentifyLayers.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>IdentifyLayers.qml</file>
         <file>IdentifyLayers.h</file>
         <file>IdentifyLayers.cpp</file>

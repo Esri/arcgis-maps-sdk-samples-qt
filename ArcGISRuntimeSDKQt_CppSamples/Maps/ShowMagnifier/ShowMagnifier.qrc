@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/ShowMagnifier">
-        <file alias="sample.json">ShowMagnifier.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>ShowMagnifier.qml</file>
 		<file>ShowMagnifier.cpp</file>

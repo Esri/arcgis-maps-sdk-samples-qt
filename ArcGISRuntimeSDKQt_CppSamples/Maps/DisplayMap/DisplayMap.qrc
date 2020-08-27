@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/DisplayMap">
-        <file alias="sample.json">DisplayMap.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>DisplayMap.qml</file>
 		<file>DisplayMap.h</file>

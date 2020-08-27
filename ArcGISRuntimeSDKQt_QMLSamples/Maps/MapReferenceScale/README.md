@@ -32,4 +32,4 @@ The map reference scale should normally be set by the map's author and not expos
 
 ## Tags
 
-Maps & Scenes
+map, reference scale, scene

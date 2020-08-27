@@ -1,11 +1,27 @@
 {
     "category": "Local Server",
-    "description": "Demonstrates how to start and stop the Local Server and start and stop a local map, feature, and geoprocessing service running on the Local Server",
+    "dataItems": [
+        {
+            "itemId": "4e94fec734434d1288e6ebe36c3c461f",
+            "path": "~/ArcGIS/Runtime/Data/mpk/PointsofInterest.mpk"
+        },
+        {
+            "itemId": "a0ef1f20344f43ad8837f0e0d8406d03",
+            "path": "~/ArcGIS/Runtime/Data/gpk/MessageInABottle.gpk"
+        }
+    ],
+    "description": "Demonstrates how to start and stop the Local Server and start and stop a local map, feature, and geoprocessing service running on the Local Server.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "feature",
+        "geoprocessing",
+        "local services",
+        "map",
+        "server",
+        "service",
         "LocalFeatureService",
         "LocalGeoprocessingService",
         "LocalMapService",
@@ -13,7 +29,9 @@
         "LocalServerStatus",
         "LocalService"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-localserverservices.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-localserverservices.htm"
+    ],
     "relevant_apis": [
         "LocalFeatureService",
         "LocalGeoprocessingService",
@@ -24,7 +42,6 @@
     ],
     "snippets": [
         "LocalServerServices.qml",
-        "main.qml",
         "LocalServerServices.cpp",
         "LocalServerServices.h"
     ],

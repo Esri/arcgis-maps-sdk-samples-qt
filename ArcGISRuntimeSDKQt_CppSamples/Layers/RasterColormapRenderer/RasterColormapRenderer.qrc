@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/RasterColormapRenderer">
-        <file alias="sample.json">RasterColormapRenderer.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>RasterColormapRenderer.qml</file>
         <file>RasterColormapRenderer.h</file>
         <file>RasterColormapRenderer.cpp</file>

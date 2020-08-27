@@ -1,39 +1,51 @@
 {
     "category": "Analysis",
-    "description": "This sample demonstrates how to query a feature table to get statistics for one or more specified fields",
+    "description": "Query a feature table for statistics, grouping and sorting by different fields.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "correlation",
+        "data",
+        "fields",
+        "filter",
+        "group",
+        "sort",
         "statistics",
-        "sort results",
+        "table",
+        "Field",
+        "OrderBy",
+        "QueryParameters",
         "ServiceFeatureTable",
-        "StatisticQueryParameters",
-        "StatisticQueryResult",
-        "StatisticIterator",
-        "StatisticRecord",
         "StatisticDefinition",
-        "OrderBy"
+        "StatisticRecord",
+        "StatisticType",
+        "StatisticsQueryParameters",
+        "StatisticsQueryResult"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-statisticalquerygroupsort.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-statisticalquerygroupsort.htm"
+    ],
     "relevant_apis": [
+        "Field",
+        "OrderBy",
+        "QueryParameters",
         "ServiceFeatureTable",
-        "StatisticQueryParameters",
-        "StatisticQueryResult",
-        "StatisticIterator",
-        "StatisticRecord",
         "StatisticDefinition",
-        "OrderBy"
+        "StatisticRecord",
+        "StatisticType",
+        "StatisticsQueryParameters",
+        "StatisticsQueryResult"
     ],
     "snippets": [
-        "StatisticResultListModel.h",
         "StatisticalQueryGroupSort.qml",
-        "StatisticResultListModel.cpp",
         "OptionsPage.qml",
+        "ResultsPage.qml",
+        "StatisticResultListModel.cpp",
+        "StatisticResultListModel.h",
         "StatisticalQueryGroupSort.cpp",
-        "StatisticalQueryGroupSort.h",
-        "ResultsPage.qml"
+        "StatisticalQueryGroupSort.h"
     ],
-    "title": "Statistical query (group and sort)"
+    "title": "Statistical query (group & sort)"
 }

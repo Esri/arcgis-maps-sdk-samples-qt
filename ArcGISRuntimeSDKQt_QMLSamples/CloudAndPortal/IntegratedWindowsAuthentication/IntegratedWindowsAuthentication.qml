@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import Esri.ArcGISRuntime 100.8
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.8
+import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
 Rectangle {
     id: rootRectangle
@@ -85,6 +85,7 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.margins: 2
                 placeholderText: qsTr("Enter portal url secured by IWA")
+                selectByMouse: true
                 background: Rectangle {
                     implicitWidth: parent.width
                     implicitHeight: parent.height
@@ -166,7 +167,7 @@ Rectangle {
             }
         }
 
-        iwaSecurePortal.loadStatusChanged.connect(function() {
+        iwaSecurePortal.loadStatusChanged.connect(()=> {
             if (iwaSecurePortal.loadStatus === Enums.LoadStatusFailedToLoad) {
                 webMapMsg.text = iwaSecurePortal.loadError.message;
                 webmapsList.model = null;
@@ -182,7 +183,7 @@ Rectangle {
 
         });
 
-        iwaSecurePortal.findItemsStatusChanged.connect(function() {
+        iwaSecurePortal.findItemsStatusChanged.connect(()=> {
             if ( iwaSecurePortal.findItemsStatus === Enums.TaskStatusCompleted ) {
                 indicator.running = false;
                 webmapsList.textRole = "title";

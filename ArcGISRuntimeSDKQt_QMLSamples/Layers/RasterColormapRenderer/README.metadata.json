@@ -1,25 +1,31 @@
 {
     "category": "Layers",
-    "description": "Demonstrates how to use a colormap renderer on raster layer",
+    "dataItems": [
+        {
+            "itemId": "cc68728b5904403ba637e1f1cd2995ae",
+            "path": "~/ArcGIS/Runtime/Data/raster/ShastaBW.tif"
+        }
+    ],
+    "description": "Apply a colormap renderer to a raster.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "colormap renderer",
-        "Map",
-        "Basemap",
+        "colormap",
+        "data",
+        "raster",
+        "renderer",
+        "visualization",
         "ColormapRenderer",
-        "MapView",
         "Raster",
         "RasterLayer"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-rastercolormaprenderer.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-rastercolormaprenderer.htm"
+    ],
     "relevant_apis": [
-        "Map",
-        "Basemap",
         "ColormapRenderer",
-        "MapView",
         "Raster",
         "RasterLayer"
     ],

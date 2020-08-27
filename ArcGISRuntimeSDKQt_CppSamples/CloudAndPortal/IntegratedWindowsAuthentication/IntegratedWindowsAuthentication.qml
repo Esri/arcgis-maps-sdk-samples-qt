@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.8
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
 Item {
 
@@ -45,6 +45,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.margins: 2
                 placeholderText: qsTr("Enter portal url secured by IWA")
+                selectByMouse: true
                 background: Rectangle {
                     implicitWidth: parent.width
                     implicitHeight: parent.height

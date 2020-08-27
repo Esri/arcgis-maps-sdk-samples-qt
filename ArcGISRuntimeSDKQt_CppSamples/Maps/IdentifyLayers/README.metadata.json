@@ -1,34 +1,33 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to identify features on a map across the different layers in the map",
+    "description": "Identify features in all layers in a map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-      "Find",
-      "Search",
-      "Attribute",
-        "MapView",
+        "identify",
+        "recursion",
+        "recursive",
+        "sublayers",
         "IdentifyLayerResult",
-        "ArcGISMapImageLayer",
-        "ArcGISMapImageSublayer",
-        "ServiceFeatureTable",
-        "FeatureLayer"
+        "IdentifyLayerResult::layerContent::name",
+        "IdentifyLayerResult::sublayerResults",
+        "MapView::identifyLayers"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-identifylayers.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-identifylayers.htm"
+    ],
     "relevant_apis": [
-        "MapView",
         "IdentifyLayerResult",
-        "ArcGISMapImageLayer",
-        "ArcGISMapImageSublayer",
-        "ServiceFeatureTable",
-        "FeatureLayer"
+        "IdentifyLayerResult::layerContent::name",
+        "IdentifyLayerResult::sublayerResults",
+        "MapView::identifyLayers"
     ],
     "snippets": [
+        "IdentifyLayers.qml",
         "IdentifyLayers.cpp",
-        "IdentifyLayers.h",
-        "IdentifyLayers.qml"
+        "IdentifyLayers.h"
     ],
     "title": "Identify layers"
 }

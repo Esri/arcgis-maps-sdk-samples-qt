@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/CloudAndPortal/ShowOrgBasemaps">
-        <file alias="sample.json">ShowOrgBasemaps.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>ShowOrgBasemaps.qml</file>
         <file>ic_menu_back_dark.png</file>
         <file>ic_menu_account_dark.png</file>

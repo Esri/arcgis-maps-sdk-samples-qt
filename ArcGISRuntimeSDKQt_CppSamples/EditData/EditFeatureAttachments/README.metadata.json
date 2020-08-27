@@ -1,47 +1,44 @@
 {
     "category": "Edit data",
-    "description": "The sample demonstrates how to add, delete, and fetch attachments for a specific feature in a feature service",
+    "description": "Add, delete, and download attachments for features from a service.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "edit feature attachments",
-        "attachments",
-        "edit features",
-        "MapView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "SpatialReference",
-        "ServiceFeatureTable",
+        "Edit and Manage Data",
+        "JPEG",
+        "PDF",
+        "PNG",
+        "TXT",
+        "image",
+        "picture",
+        "ApplyEdits",
+        "AttachmentListModel",
+        "DeleteAttachment",
         "FeatureLayer",
-        "Feature",
-        "ArcGISFeature",
-        "FeatureEditResult",
-        "FeatureQueryResult",
-        "AttachmentListModel"
+        "FetchAttachments",
+        "FetchData",
+        "ServiceFeatureTable",
+        "UpdateFeature"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-editfeatureattachments.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-editfeatureattachments.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "SpatialReference",
-        "ServiceFeatureTable",
+        "ApplyEdits",
+        "AttachmentListModel",
+        "DeleteAttachment",
         "FeatureLayer",
-        "Feature",
-        "ArcGISFeature",
-        "FeatureEditResult",
-        "FeatureQueryResult",
-        "AttachmentListModel"
+        "FetchAttachments",
+        "FetchData",
+        "ServiceFeatureTable",
+        "UpdateFeature"
     ],
     "snippets": [
+        "EditFeatureAttachments.qml",
         "EditFeatureAttachments.cpp",
-        "main.qml",
-        "EditFeatureAttachments.h",
-        "EditFeatureAttachments.qml"
+        "EditFeatureAttachments.h"
     ],
     "title": "Edit feature attachments"
 }

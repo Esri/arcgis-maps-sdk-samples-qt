@@ -1,9 +1,0 @@
-{
-    "source" :  "EditFeatureAttachments.qml",
-    "otherSourceFiles" : [
-        "EditFeatureAttachments.h",
-        "EditFeatureAttachments.cpp"
-    ],
-    "name" : "Edit feature attachments"
-}
-

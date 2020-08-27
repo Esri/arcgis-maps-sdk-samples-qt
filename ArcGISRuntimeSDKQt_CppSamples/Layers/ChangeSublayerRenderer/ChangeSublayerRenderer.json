@@ -1,8 +1,0 @@
-{
-    "source" :  "ChangeSublayerRenderer.qml",
-    "otherSourceFiles" :  [
-        "ChangeSublayerRenderer.h",
-        "ChangeSublayerRenderer.cpp"
-    ],
-    "name" : "Change sublayer renderer"
-}

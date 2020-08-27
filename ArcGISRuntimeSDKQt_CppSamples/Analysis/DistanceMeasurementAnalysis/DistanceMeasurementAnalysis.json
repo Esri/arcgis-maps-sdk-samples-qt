@@ -1,8 +1,0 @@
-{
-    "source" :  "DistanceMeasurementAnalysis.qml",
-    "otherSourceFiles" :  [
-        "DistanceMeasurementAnalysis.h",
-        "DistanceMeasurementAnalysis.cpp"
-    ],
-    "name" : "Distance measurement analysis"
-}

@@ -1,27 +1,33 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to author a Map in ArcGIS Runtime and save it to ArcGIS Online as a web map",
+    "description": "Create and save a map as an ArcGIS `PortalItem` (i.e. web map).",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "ArcGIS Online",
+        "ArcGIS Pro",
+        "portal",
+        "publish",
+        "share",
         "web map",
-        "create map",
         "Map",
-        "Portal",
-        "Map::saveAs()"
+        "Map.saveAs",
+        "Portal"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-createandsavemap.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-createandsavemap.htm"
+    ],
     "relevant_apis": [
         "Map",
-        "Portal",
-        "Map::saveAs()"
+        "Map.saveAs",
+        "Portal"
     ],
     "snippets": [
-        "SaveOptionsWindow.qml",
         "CreateAndSaveMap.qml",
-        "LayerWindow.qml"
+        "LayerWindow.qml",
+        "SaveOptionsWindow.qml"
     ],
     "title": "Create and save map"
 }

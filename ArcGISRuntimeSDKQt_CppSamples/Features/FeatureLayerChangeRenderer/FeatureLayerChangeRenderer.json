@@ -1,9 +1,0 @@
-{
-    "source" :  "FeatureLayerChangeRenderer.qml",
-    "otherSourceFiles" : [
-        "FeatureLayerChangeRenderer.h",
-        "FeatureLayerChangeRenderer.cpp"
-    ],
-    "name" : "Feature layer change renderer"
-}
-

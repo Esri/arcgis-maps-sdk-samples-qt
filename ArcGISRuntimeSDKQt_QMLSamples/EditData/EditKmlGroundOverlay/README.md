@@ -32,7 +32,7 @@ Use the slider to adjust the opacity of the ground overlay.
 
 ## About the data
 
-The [image](https://libapps.s3.amazonaws.com/accounts/55937/images/1944.jpg) is an aerial view of the campus of the University of Oregon. This imagery was taken in 1944 by the U.S. Army Corps of Engineers. It is publicly available on the University of Oregon libraries [website](https://researchguides.uoregon.edu/online-aerial-photography). It is also available on [ArcGIS Online](https://arcgisruntime.maps.arcgis.com/home/item.html?id=1f3677c24b2c446e96eaf1099292e83e).
+The image used in this sample is an [aerial view of the campus of the University of Oregon](https://libapps.s3.amazonaws.com/accounts/55937/images/1944.jpg). This imagery was taken in 1944 by the U.S. Army Corps of Engineers. It is publicly available as [Online Aerial Imagery](https://researchguides.uoregon.edu/online-aerial-photography) hosted by Oregon University Library. It is also available as a Portal item on ArcGIS Online as [University of Oregon Campus Aerial Imagery - 1944](https://arcgisruntime.maps.arcgis.com/home/item.html?id=1f3677c24b2c446e96eaf1099292e83e).
 
 ## Tags
 

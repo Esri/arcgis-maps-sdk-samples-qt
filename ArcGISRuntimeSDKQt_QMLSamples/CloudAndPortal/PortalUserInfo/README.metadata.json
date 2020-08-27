@@ -1,28 +1,36 @@
 {
     "category": "Cloud and portal",
-    "description": "This sample demonstrates how to retrieve a user's details via a Portal",
+    "description": "This sample demonstrates how to retrieve a user's details via a Portal.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "portal user",
-        "user details",
-        "Portal",
-        "Credential",
-        "PortalUser",
-        "PortalInfo",
+        "account",
+        "avatar",
+        "bio",
+        "cloud and portal",
+        "email",
+        "login",
+        "picture",
+        "profile",
+        "user",
+        "username",
+        "AuthenticationManager",
         "AuthenticationView",
-        "AuthenticationManager"
+        "Credential",
+        "PortalInfo",
+        "PortalUser"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-portaluserinfo.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-portaluserinfo.htm"
+    ],
     "relevant_apis": [
-        "Portal",
-        "Credential",
-        "PortalUser",
-        "PortalInfo",
+        "AuthenticationManager",
         "AuthenticationView",
-        "AuthenticationManager"
+        "Credential",
+        "PortalInfo",
+        "PortalUser"
     ],
     "snippets": [
         "PortalUserInfo.qml"

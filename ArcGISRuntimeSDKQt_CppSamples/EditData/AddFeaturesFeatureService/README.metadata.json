@@ -1,41 +1,32 @@
 {
     "category": "Edit data",
-    "description": "This sample demonstrates how to add features to a feature service",
+    "description": "Add features to a feature layer.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "create feature",
-        "feature table",
-        "edit feature",
-        "feature service",
-        "MapView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "SpatialReference",
-        "ServiceFeatureTable",
-        "FeatureLayer",
+        "edit",
+        "feature",
+        "online service",
         "Feature",
-        "FeatureEditResult"
+        "FeatureEditResult",
+        "FeatureLayer",
+        "ServiceFeatureTable"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-addfeaturesfeatureservice.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-addfeaturesfeatureservice.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "SpatialReference",
-        "ServiceFeatureTable",
-        "FeatureLayer",
         "Feature",
-        "FeatureEditResult"
+        "FeatureEditResult",
+        "FeatureLayer",
+        "ServiceFeatureTable"
     ],
     "snippets": [
         "AddFeaturesFeatureService.qml",
-        "AddFeaturesFeatureService.h",
-        "AddFeaturesFeatureService.cpp"
+        "AddFeaturesFeatureService.cpp",
+        "AddFeaturesFeatureService.h"
     ],
     "title": "Add features (feature service)"
 }

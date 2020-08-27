@@ -1,25 +1,33 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to dynamically change the style of a sublayer in a WMS layer",
+    "description": "Change the style of a Web Map Service (WMS) layer.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "WMS style",
-        "change style"
+        "WMS",
+        "imagery",
+        "styles",
+        "visualization",
+        "WmsLayer",
+        "WmsSublayer",
+        "WmsSublayer::currentStyle",
+        "WmsSublayerInfo"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-stylewmslayer.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-stylewmslayer.htm"
+    ],
     "relevant_apis": [
         "WmsLayer",
         "WmsSublayer",
-        "WmsLayerInfo",
-        "WmsSublayer::currentStyle"
+        "WmsSublayer::currentStyle",
+        "WmsSublayerInfo"
     ],
     "snippets": [
         "StyleWmsLayer.qml",
         "StyleWmsLayer.cpp",
         "StyleWmsLayer.h"
     ],
-    "title": "Style WMS layer"
+    "title": "Style WMS layers"
 }

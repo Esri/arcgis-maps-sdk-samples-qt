@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/DisplayDeviceLocation">
-        <file alias="sample.json">DisplayDeviceLocation.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>DisplayDeviceLocation.qml</file>
         <file>screenshot.png</file>
         <file>Close.png</file>

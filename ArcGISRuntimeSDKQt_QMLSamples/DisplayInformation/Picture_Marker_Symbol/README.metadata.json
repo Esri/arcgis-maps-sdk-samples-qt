@@ -1,32 +1,29 @@
 {
     "category": "Display information",
-    "description": "This sample demonstrates how to create PictureMarkerSymbols from the different types of image resources",
+    "dataItems": [
+        {
+            "itemId": "1c95ea3b6e4843cdbd6ae354efb97f0c",
+            "path": "~/ArcGIS/Runtime/Data/symbol/orange_symbol.png"
+        }
+    ],
+    "description": "Use pictures for markers.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "Envelope",
-        "GraphicsOverlay",
-        "Point",
-        "PictureMarkerSymbol",
-        "SpatialReference"
+        "graphics",
+        "marker",
+        "picture",
+        "symbol",
+        "visualization",
+        "PictureMarkerSymbol"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-picturemarkersymbol.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-picturemarkersymbol.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "Viewpoint",
-        "Envelope",
-        "GraphicsOverlay",
-        "Point",
-        "PictureMarkerSymbol",
-        "SpatialReference"
+        "PictureMarkerSymbol"
     ],
     "snippets": [
         "Picture_Marker_Symbol.qml"

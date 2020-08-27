@@ -1,8 +1,0 @@
-{
-    "source" :  "MapReferenceScale.qml",
-    "otherSourceFiles" :  [
-        "MapReferenceScale.h",
-        "MapReferenceScale.cpp"
-    ],
-    "name" : "Map reference scale"
-}

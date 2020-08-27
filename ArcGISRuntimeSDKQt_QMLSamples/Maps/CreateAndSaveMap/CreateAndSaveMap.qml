@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.8
+import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
 Rectangle {
     id: rootRectangle
@@ -60,7 +60,7 @@ Rectangle {
         LayerWindow {
             onCreateMapSelected: {
                 stackView.push(mapView)
-                var map = createMap(basemap, layerList);
+                const map = createMap(basemap, layerList);
                 mapView.map = map;
             }
         }
@@ -75,10 +75,10 @@ Rectangle {
             }
 
             onSaveMapClicked: {
-                var thumbnail = null;
-                var folder = null;
-                var forceSave = true;
-                var tagsList = tags.split(",");
+                const thumbnail = null;
+                const folder = null;
+                const forceSave = true;
+                const tagsList = tags.split(",");
                 mapView.map.saveAs(portal, title, tagsList, forceSave, folder, description, thumbnail);
             }
         }
@@ -110,8 +110,8 @@ Rectangle {
                     // We need a local ref to the stackView and layerWindow
                     // object as our object references will have been deleted
                     // once "clear" cleans up this object.
-                    var sv = stackView;
-                    var lWindow = layerWindow;
+                    const sv = stackView;
+                    const lWindow = layerWindow;
                     sv.clear();
                     sv.push(lWindow);
                 }
@@ -143,7 +143,7 @@ Rectangle {
 
     function createMap(basemap, layerList) {
         // Create the Basemap
-        var selectedBasemap;
+        let selectedBasemap;
         if (basemap === "Streets")
             selectedBasemap = ArcGISRuntimeEnvironment.createObject("BasemapStreets");
         else if (basemap === "Imagery")
@@ -154,11 +154,11 @@ Rectangle {
             selectedBasemap = ArcGISRuntimeEnvironment.createObject("BasemapOceans");
 
         // Create the Map with the basemap
-        var map = ArcGISRuntimeEnvironment.createObject("Map", { basemap: selectedBasemap }, mapView);
+        const map = ArcGISRuntimeEnvironment.createObject("Map", { basemap: selectedBasemap }, mapView);
 
-        map.saveStatusChanged.connect(function() {
+        map.saveStatusChanged.connect(()=> {
             if (map.saveStatus === Enums.TaskStatusCompleted) {
-                var url =  "https://www.arcgis.com/home/item.html?id=%1".arg(map.item.itemId);
+                const url =  "https://www.arcgis.com/home/item.html?id=%1".arg(map.item.itemId);
                 stackView.push(completionRect,
                                { text: 'Map saved successfully.<br>View in <a href="%1">ArcGIS Online</a>'.arg(url) });
             } else if (map.saveStatus === Enums.TaskStatusErrored) {
@@ -171,11 +171,11 @@ Rectangle {
         });
 
         // Add Operational Layers
-        for (var i = 0; i < layerList.length; i++) {
+        for (let i = 0; i < layerList.length; i++) {
             if (layerList[i] === "WorldElevations") {
-                var elevationLyr = ArcGISRuntimeEnvironment.createObject("ArcGISMapImageLayer", {
-                                                                             url : "https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"
-                                                                         });
+                const elevationLyr = ArcGISRuntimeEnvironment.createObject("ArcGISMapImageLayer", {
+                                                                               url : "https://sampleserver5.arcgisonline.com/arcgis/rest/services/Elevation/WorldElevations/MapServer"
+                                                                           });
                 elevationLyr.opacity = 0.5;
                 map.operationalLayers.append(elevationLyr);
             } else if (layerList[i] === "Census") {

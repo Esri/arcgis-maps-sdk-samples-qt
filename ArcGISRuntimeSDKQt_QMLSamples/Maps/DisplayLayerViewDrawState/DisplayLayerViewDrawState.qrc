@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/DisplayLayerViewDrawState">
-        <file alias="sample.json">DisplayLayerViewDrawState.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>DisplayLayerViewDrawState.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

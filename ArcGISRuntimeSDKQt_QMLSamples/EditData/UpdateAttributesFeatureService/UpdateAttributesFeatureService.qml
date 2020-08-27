@@ -18,8 +18,8 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.8
-import Esri.ArcGISRuntime.Toolkit.Controls 100.8
+import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 Rectangle {
     width: 800
@@ -188,7 +188,7 @@ Rectangle {
                 model: featAttributes
 
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         metrics.text = model[i];
                         modelWidth = Math.max(modelWidth, metrics.width);
                     }

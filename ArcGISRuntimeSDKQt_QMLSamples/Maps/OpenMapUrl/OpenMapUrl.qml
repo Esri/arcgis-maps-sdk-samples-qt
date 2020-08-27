@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     width: 800
@@ -71,10 +71,10 @@ Rectangle {
 
                     //! [Construct map from a webmap url]
                     // construct the webmap Url using the itemId
-                    var organizationPortalUrl = "https://arcgis.com/sharing/rest/content/items/";
-                    var webmapUrl = organizationPortalUrl + itemId;
+                    const organizationPortalUrl = "https://arcgis.com/sharing/rest/content/items/";
+                    const webmapUrl = organizationPortalUrl + itemId;
                     // Create a new map and assign it the initUrl
-                    var newMap = ArcGISRuntimeEnvironment.createObject("Map", {initUrl: webmapUrl});
+                    const newMap = ArcGISRuntimeEnvironment.createObject("Map", {initUrl: webmapUrl});
                     //! [Construct map from a webmap url]
 
                     // Set the map to the MapView

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -128,7 +128,7 @@ Rectangle {
                 textRole: "name"
 
                 onModelChanged: {
-                    for (var i = 0; i < missionsModel.count; ++i) {
+                    for (let i = 0; i < missionsModel.count; ++i) {
                         textMetrics.text = missionsModel.get(i).name;
                         modelWidth = Math.max(modelWidth, textMetrics.width);
                     }
@@ -351,11 +351,11 @@ Rectangle {
         if (!missionsFolder.exists)
             return;
 
-        var fileName = missionName.replace(/\s/g, '') + ".csv";
-        var fileContents = missionsFolder.readTextFile(fileName);
-        var lines = fileContents.split("\n");
-        for (var i = 0; i < lines.length; i++) {
-            var dataParts = lines[i].split(",");
+        const fileName = missionName.replace(/\s/g, '') + ".csv";
+        const fileContents = missionsFolder.readTextFile(fileName);
+        const lines = fileContents.split("\n");
+        for (let i = 0; i < lines.length; i++) {
+            const dataParts = lines[i].split(",");
             if (dataParts.length !== 6)
                 continue;
 
@@ -374,15 +374,14 @@ Rectangle {
 
         // create polyline builder and fill with points
         // for the mission polyline
-        var rtBldr = ArcGISRuntimeEnvironment.createObject(
-                    "PolylineBuilder", {spatialReference: SpatialReference.createWgs84()});
-        for (var j = 0; j < currentMissionModel.count; j++) {
-            var missionData = currentMissionModel.get(j);
+        const rtBldr = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: Factory.SpatialReference.createWgs84()});
+        for (let j = 0; j < currentMissionModel.count; j++) {
+            const missionData = currentMissionModel.get(j);
             rtBldr.addPointXY(missionData.lon, missionData.lat);
         }
 
-        var firstData = currentMissionModel.get(0);
-        var firstPos = createPoint(firstData);
+        const firstData = currentMissionModel.get(0);
+        const firstPos = createPoint(firstData);
 
         // update model graphic's attributes
         graphic3d.attributes.replaceAttribute(headingAtt, firstData.heading);
@@ -413,8 +412,8 @@ Rectangle {
 
     function animate() {
         if (progressSlider.value < missionSize ) {
-            var missionData = currentMissionModel.get(progressSlider.value);
-            var newPos = createPoint(missionData);
+            const missionData = currentMissionModel.get(progressSlider.value);
+            const newPos = createPoint(missionData);
 
             graphic3d.geometry = newPos;
             graphic3d.attributes.replaceAttribute(headingAtt, missionData.heading);
@@ -449,7 +448,7 @@ Rectangle {
                         x: missionData.lon,
                         y: missionData.lat,
                         z: missionData.elevation,
-                        spatialReference: SpatialReference.createWgs84()
+                        spatialReference: Factory.SpatialReference.createWgs84()
                     });
     }
 }

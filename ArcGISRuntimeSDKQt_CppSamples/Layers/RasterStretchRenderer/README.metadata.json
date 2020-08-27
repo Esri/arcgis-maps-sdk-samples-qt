@@ -1,26 +1,56 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to use stretch renderer on a raster layer",
+    "dataItems": [
+        {
+            "itemId": "c669445e6cb4490b8306f0c170a9cbb1",
+            "path": "~/ArcGIS/Runtime/Data/raster/Shasta.tif"
+        }
+    ],
+    "description": "Use a stretch renderer to enhance the visual contrast of raster data for analysis.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "stretch renderer"
-    ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-rasterstretchrenderer.htm",
-    "relevant_apis": [
-        "Map",
-        "MapView",
+        "analysis",
+        "deviation",
+        "histogram",
+        "imagery",
+        "interpretation",
+        "min-max",
+        "percent clip",
+        "pixel",
+        "raster",
+        "stretch",
+        "symbology",
+        "visualization",
+        "ColorRamp",
+        "MinMaxStretchParameters",
+        "PercentClipStretchParameters",
         "Raster",
         "RasterLayer",
+        "StandardDeviationStretchParameters",
+        "StretchParameters",
+        "StretchRenderer"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-rasterstretchrenderer.htm"
+    ],
+    "relevant_apis": [
+        "ColorRamp",
+        "MinMaxStretchParameters",
+        "PercentClipStretchParameters",
+        "Raster",
+        "RasterLayer",
+        "StandardDeviationStretchParameters",
+        "StretchParameters",
         "StretchRenderer"
     ],
     "snippets": [
-        "RasterStretchRenderer.h",
-        "RasterStretchRenderer.cpp",
         "RasterStretchRenderer.qml",
-        "InputWithLabel.qml"
+        "InputWithLabel.qml",
+        "RasterStretchRenderer.cpp",
+        "RasterStretchRenderer.h"
     ],
     "title": "Stretch renderer"
 }

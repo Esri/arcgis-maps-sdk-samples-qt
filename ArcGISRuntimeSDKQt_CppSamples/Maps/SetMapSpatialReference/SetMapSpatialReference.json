@@ -1,9 +1,0 @@
-{
-    "source" :  "SetMapSpatialReference.qml",
-    "otherSourceFiles" : [
-        "SetMapSpatialReference.h",
-        "SetMapSpatialReference.cpp"
-    ],
-    "name" : "Set map spatial reference"
-}
-

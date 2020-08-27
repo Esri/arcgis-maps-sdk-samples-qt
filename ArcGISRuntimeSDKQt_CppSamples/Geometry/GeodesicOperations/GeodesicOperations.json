@@ -1,8 +1,0 @@
-{
-    "source" :  "GeodesicOperations.qml",
-    "otherSourceFiles" :  [
-        "GeodesicOperations.h",
-        "GeodesicOperations.cpp"
-    ],
-    "name" : "Geodesic operations"
-}

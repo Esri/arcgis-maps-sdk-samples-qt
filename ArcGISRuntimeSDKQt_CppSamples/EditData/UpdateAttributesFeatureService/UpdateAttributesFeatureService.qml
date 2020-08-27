@@ -19,7 +19,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.8
+import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 UpdateAttributesFeatureServiceSample {
     id: updateFeaturesSample
@@ -104,7 +104,7 @@ UpdateAttributesFeatureServiceSample {
                 id: damageComboBox
                 model: featAttributes
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         metrics.text = model[i];
                         modelWidth = Math.max(modelWidth, metrics.width);
                     }

@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     width: 800
@@ -50,9 +50,9 @@ Rectangle {
         //! [identify graphics api snippet]
         // Signal handler for mouse click event on the map view
         onMouseClicked: {
-            var tolerance = 22;
-            var returnPopupsOnly = false;
-            var maximumResults = 1000;
+            const tolerance = 22;
+            const returnPopupsOnly = false;
+            const maximumResults = 1000;
             mapView.identifyGraphicsOverlayWithMaxResults(graphicsOverlay, mouse.x, mouse.y, tolerance, returnPopupsOnly, maximumResults);
         }
 
@@ -84,13 +84,13 @@ Rectangle {
 
     Component.onCompleted: {
         // create the polygon by assigning points
-        var polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: SpatialReference.createWebMercator()});
+        const polygonBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: Factory.SpatialReference.createWebMercator()});
         polygonBuilder.addPointXY(-20e5, 20e5);
         polygonBuilder.addPointXY(20e5, 20e5);
         polygonBuilder.addPointXY(20e5, -20e5);
         polygonBuilder.addPointXY(-20e5, -20e5);
         // assign the geometry of the graphic to be the polygon
-        var polygonGraphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+        const polygonGraphic = ArcGISRuntimeEnvironment.createObject("Graphic");
         polygonGraphic.geometry = polygonBuilder.geometry;
         // add the graphic to the polygon graphics overlay
         graphicsOverlay.graphics.append(polygonGraphic);

@@ -1,38 +1,44 @@
 {
     "category": "Analysis",
-    "description": "This sample demonstrates how to calculate a Viewshed from a GeoElement",
+    "dataItems": [
+        {
+            "itemId": "07d62a792ab6496d9b772a24efea45d0",
+            "path": "~/ArcGIS/Runtime/Data/3D/bradley_low_3ds/bradle.3ds"
+        }
+    ],
+    "description": "This sample demonstrates how to calculate a Viewshed from a GeoElement.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "3D",
+        "analysis",
+        "buildings",
+        "model",
+        "scene",
         "viewshed",
-        "GeoElementViewshed",
+        "visibility analysis",
         "AnalysisOverlay",
-        "ArcGISSceneLayer",
-        "GraphicsOverlay",
-        "LayerSceneProperties",
-        "GeometryEngine",
-        "ModelSceneSymbol",
+        "GeoElementViewshed",
         "GeodeticDistanceResult",
-        "SimpleRenderer",
-        "OrbitGeoElementCameraController."
+        "GeometryEngine.distanceGeodetic (used to animate the vehicle)",
+        "ModelSceneSymbol",
+        "OrbitGeoElementCameraController"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-viewshedgeoelement.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-viewshedgeoelement.htm"
+    ],
     "relevant_apis": [
-        "GeoElementViewshed",
         "AnalysisOverlay",
-        "ArcGISSceneLayer",
-        "GraphicsOverlay",
-        "LayerSceneProperties",
-        "GeometryEngine",
-        "ModelSceneSymbol",
+        "GeoElementViewshed",
         "GeodeticDistanceResult",
-        "SimpleRenderer",
-        "OrbitGeoElementCameraController."
+        "GeometryEngine.distanceGeodetic (used to animate the vehicle)",
+        "ModelSceneSymbol",
+        "OrbitGeoElementCameraController"
     ],
     "snippets": [
         "ViewshedGeoElement.qml"
     ],
-    "title": "Viewshed (geoelement)"
+    "title": "Viewshed (GeoElement)"
 }

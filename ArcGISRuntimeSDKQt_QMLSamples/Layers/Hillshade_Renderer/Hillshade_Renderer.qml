@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -82,15 +82,15 @@ Rectangle {
 
     function applyHillshadeRenderer(altitude, azimuth, slope) {
         // create the new renderer
-        var hillshadeRenderer = ArcGISRuntimeEnvironment.createObject("HillshadeRenderer", {
-                                                                          altitude: altitude,
-                                                                          azimuth: azimuth,
-                                                                          zFactor: 0.000016,
-                                                                          slopeType: slope,
-                                                                          pixelSizeFactor: 1,
-                                                                          pixelSizePower: 1,
-                                                                          outputBitDepth: 8
-                                                                      });
+        const hillshadeRenderer = ArcGISRuntimeEnvironment.createObject("HillshadeRenderer", {
+                                                                            altitude: altitude,
+                                                                            azimuth: azimuth,
+                                                                            zFactor: 0.000016,
+                                                                            slopeType: slope,
+                                                                            pixelSizeFactor: 1,
+                                                                            pixelSizePower: 1,
+                                                                            outputBitDepth: 8
+                                                                        });
 
         // set the renderer on the layer
         rasterLayer.renderer = hillshadeRenderer;

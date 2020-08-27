@@ -1,21 +1,35 @@
 {
     "category": "Features",
-    "description": "This sample demonstrates how to open a GeoPackage, obtain a feature table from the package, and display the table as a FeatureLayer",
+    "dataItems": [
+        {
+            "itemId": "68ec42517cdd439e81b036210483e8e7",
+            "path": "~/ArcGIS/Runtime/Data/gpkg/AuroraCO.gpkg"
+        }
+    ],
+    "description": "Display features from a local GeoPackage.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "OGC",
+        "feature table",
+        "geopackage",
+        "gpkg",
+        "package",
+        "standards",
+        "FeatureLayer",
         "GeoPackage",
         "GeoPackageFeatureTable",
-        "FeatureLayer",
         "Map"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-featurelayergeopackage.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-featurelayergeopackage.htm"
+    ],
     "relevant_apis": [
+        "FeatureLayer",
         "GeoPackage",
         "GeoPackageFeatureTable",
-        "FeatureLayer",
         "Map"
     ],
     "snippets": [

@@ -89,7 +89,7 @@ RasterStretchRendererSample {
                 property int modelWidth: 0
                 width: modelWidth + leftPadding + rightPadding + indicator.width
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         metrics.text = model[i];
                         modelWidth = Math.max(modelWidth, metrics.width);
                     }

@@ -1,9 +1,0 @@
-{
-    "source" :  "Unique_Value_Renderer.qml",
-    "otherSourceFiles" : [
-        "Unique_Value_Renderer.h",
-        "Unique_Value_Renderer.cpp"
-    ],
-    "name" : "Unique value renderer"
-}
-

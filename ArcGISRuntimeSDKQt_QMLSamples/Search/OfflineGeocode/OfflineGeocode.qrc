@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Search/OfflineGeocode">
-        <file alias="sample.json">OfflineGeocode.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>OfflineGeocode.qml</file>
         <file>screenshot.png</file>
         <file>red_pin.png</file>

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.Samples 1.0
 
 Rectangle {
@@ -153,7 +153,7 @@ Rectangle {
                                         anchors.fill: parent
                                         onClicked: {
                                             menu.close();
-                                            var modelIndex = drawOrderModel.mappedIndex(index);
+                                            const  modelIndex = drawOrderModel.mappedIndex(index);
                                             layerListModel.move(modelIndex, modelIndex - 1);
                                         }
                                     }
@@ -168,7 +168,7 @@ Rectangle {
                                         anchors.fill: parent
                                         onClicked: {
                                             menu.close();
-                                            var modelIndex = drawOrderModel.mappedIndex(index);
+                                            const  modelIndex = drawOrderModel.mappedIndex(index);
                                             layerListModel.move(modelIndex, modelIndex + 1);
                                         }
                                     }
@@ -181,7 +181,7 @@ Rectangle {
                                         anchors.fill: parent
                                         onClicked: {
                                             menu.close();
-                                            var modelIndex = drawOrderModel.mappedIndex(index);
+                                            const  modelIndex = drawOrderModel.mappedIndex(index);
                                             deletedLayerListModel.push(layerListModel.get(modelIndex));
                                             deletedLayersList.model = deletedLayerListModel
                                             layerListModel.remove(modelIndex);

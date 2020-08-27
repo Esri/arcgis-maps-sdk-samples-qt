@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/Samples/UtilityNetwork/DisplayUtilityAssociations">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>DisplayUtilityAssociations.qml</file>
+        <file>DisplayUtilityAssociations.h</file>
+        <file>DisplayUtilityAssociations.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+        <file>SymbolImageProvider.cpp</file>
+        <file>SymbolImageProvider.h</file>
+    </qresource>
+</RCC>

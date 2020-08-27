@@ -6,22 +6,24 @@
         "screenshot.png"
     ],
     "keywords": [
-        "Surface",
-        "Surface.navigationConstraint",
         "3D",
         "subsurface",
         "underground",
-        "utilities"
+        "utilities",
+        "NavigationConstraint",
+        "Surface"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "Surface",
-        "Surface::navigationConstraint"
+        "NavigationConstraint",
+        "Surface"
     ],
     "snippets": [
-        "ViewContentBeneathTerrainSurface.h",
+        "ViewContentBeneathTerrainSurface.qml",
         "ViewContentBeneathTerrainSurface.cpp",
-        "ViewContentBeneathTerrainSurface.qml"
+        "ViewContentBeneathTerrainSurface.h"
     ],
     "title": "View content beneath terrain surface"
 }

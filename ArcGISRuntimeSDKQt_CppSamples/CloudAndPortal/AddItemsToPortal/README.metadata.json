@@ -1,29 +1,32 @@
 {
     "category": "Cloud and portal",
-    "description": "This sample demonstrates how to add and delete items (in this case a local .csv file) in a user's portal",
+    "description": "This sample demonstrates how to add and delete items in a user's portal.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "portal item",
-        "new item",
-        "AuthenticationView",
+        "add item",
+        "cloud",
+        "portal",
         "Portal",
         "PortalItem",
-        "PortalUser"
+        "PortalUser::addPortalItemWithUrl",
+        "PortalUser::deleteItem"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-additemstoportal.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-additemstoportal.htm"
+    ],
     "relevant_apis": [
-        "AuthenticationView",
         "Portal",
         "PortalItem",
-        "PortalUser"
+        "PortalUser::addPortalItemWithUrl",
+        "PortalUser::deleteItem"
     ],
     "snippets": [
+        "AddItemsToPortal.qml",
         "AddItemsToPortal.cpp",
-        "AddItemsToPortal.h",
-        "AddItemsToPortal.qml"
+        "AddItemsToPortal.h"
     ],
     "title": "Add items to portal"
 }

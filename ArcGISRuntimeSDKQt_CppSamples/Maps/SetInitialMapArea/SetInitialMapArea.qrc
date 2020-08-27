@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/SetInitialMapArea">
-        <file alias="sample.json">SetInitialMapArea.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>SetInitialMapArea.qml</file>
 		<file>SetInitialMapArea.h</file>

@@ -1,24 +1,33 @@
 {
     "category": "Maps",
+    "dataItems": [
+        {
+            "itemId": "174150279af74a2ba6f8b87a567f480b",
+            "path": "~/ArcGIS/Runtime/Data/mmpk/LothianRiversAnno.mmpk"
+        }
+    ],
     "description": "Access the expiration information of an expired mobile map package.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "Expiration",
+        "expiration",
         "mmpk",
+        "Expiration",
         "MobileMapPackage"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "Expiration",
         "MobileMapPackage"
     ],
     "snippets": [
+        "HonorMobileMapPackageExpiration.qml",
         "HonorMobileMapPackageExpiration.cpp",
-        "HonorMobileMapPackageExpiration.h",
-        "HonorMobileMapPackageExpiration.qml"
+        "HonorMobileMapPackageExpiration.h"
     ],
     "title": "Honor mobile map package expiration date"
 }

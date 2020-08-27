@@ -1,9 +1,0 @@
-{
-    "source" :  "MapRotation.qml",
-    "otherSourceFiles" : [
-        "MapRotation.h",
-        "MapRotation.cpp"
-    ],
-    "name" : "Map rotation"
-}
-

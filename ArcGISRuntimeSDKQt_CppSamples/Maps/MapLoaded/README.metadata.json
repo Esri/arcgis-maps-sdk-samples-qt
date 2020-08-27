@@ -1,21 +1,24 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to determine the map's load status",
+    "description": "Determine the map's load status which can be: `NotLoaded`, `FailedToLoad`, `Loading`, `Loaded`, `Unknown`.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "State",
-        "MapView",
+        "LoadStatus",
+        "Loadable pattern",
+        "LoadStatusChanged",
         "Map",
-        "Basemap"
+        "MapView"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-maploaded.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-maploaded.htm"
+    ],
     "relevant_apis": [
-        "MapView",
+        "LoadStatusChanged",
         "Map",
-        "Basemap"
+        "MapView"
     ],
     "snippets": [
         "MapLoaded.qml",

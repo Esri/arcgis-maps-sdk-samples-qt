@@ -1,22 +1,30 @@
 {
     "category": "Geometry",
-    "description": "This sample demonstrates how to cut a geometry with a polyline using the GeometryEngine",
+    "description": "Cut a geometry along a polyline.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "split geometry"
+        "cut",
+        "geometry",
+        "split",
+        "GeometryEngine::cut",
+        "Polygon",
+        "Polyline"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-cutgeometry.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-cutgeometry.htm"
+    ],
     "relevant_apis": [
-        "GeometryEngine",
-        "GeometryEngine::cut"
+        "GeometryEngine::cut",
+        "Polygon",
+        "Polyline"
     ],
     "snippets": [
+        "CutGeometry.qml",
         "CutGeometry.cpp",
-        "CutGeometry.h",
-        "CutGeometry.qml"
+        "CutGeometry.h"
     ],
     "title": "Cut geometry"
 }

@@ -15,8 +15,8 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
-import Esri.ArcGISRuntime.Toolkit.Controls 100.8
+import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 Rectangle {
     id: rootRectangle
@@ -71,26 +71,26 @@ Rectangle {
         // handle mouseClicked signal
         onMouseClicked: {
             // get the mouse click as a point
-            var originalPoint = mouse.mapPoint;
+            const originalPoint = mouse.mapPoint;
 
             // show the clicked location on the map with a graphic
             inputGraphic.geometry = originalPoint;
 
             // create the output SpatialReference by specifying a well known ID (WKID)
-            var spatialReference = ArcGISRuntimeEnvironment.createObject("SpatialReference", {
-                                                                             wkid: 4326
-                                                                         });
+            const spatialReference = ArcGISRuntimeEnvironment.createObject("SpatialReference", {
+                                                                               wkid: 4326
+                                                                           });
 
             // project the web mercator point to WGS84
-            var projectedPoint = GeometryEngine.project(originalPoint, spatialReference);
+            const projectedPoint = GeometryEngine.project(originalPoint, spatialReference);
 
             // update callout data
             calloutData.title = "Coordinates"
             calloutData.location = originalPoint;
-            var ox = originalPoint.x.toFixed(5)
-            var oy = originalPoint.y.toFixed(5);
-            var px = projectedPoint.x.toFixed(5);
-            var py = projectedPoint.y.toFixed(5);
+            const ox = originalPoint.x.toFixed(5)
+            const oy = originalPoint.y.toFixed(5);
+            const px = projectedPoint.x.toFixed(5);
+            const py = projectedPoint.y.toFixed(5);
             calloutData.detail = "Original: %1, %2\nProjected: %3, %4".arg(ox).arg(oy).arg(px).arg(py);
 
             // show the callout

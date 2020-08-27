@@ -1,8 +1,0 @@
-{
-    "source" :  "DisplaySubtypeFeatureLayer.qml",
-    "otherSourceFiles" :  [
-        "DisplaySubtypeFeatureLayer.h",
-        "DisplaySubtypeFeatureLayer.cpp"
-    ],
-    "name" : "Display subtype feature layer"
-}

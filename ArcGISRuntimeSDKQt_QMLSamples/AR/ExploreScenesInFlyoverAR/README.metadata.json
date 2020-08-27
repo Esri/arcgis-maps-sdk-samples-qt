@@ -12,9 +12,13 @@
         "fly over",
         "flyover",
         "mixed reality",
-        "translation factor"
+        "translation factor",
+        "ArcGISARView",
+        "SceneView"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "ArcGISARView",
         "SceneView"

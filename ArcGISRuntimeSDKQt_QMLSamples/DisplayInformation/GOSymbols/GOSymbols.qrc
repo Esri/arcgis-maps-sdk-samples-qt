@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/GOSymbols">
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
-        <file alias="sample.json">GOSymbols.json</file>
         <file>GOSymbols.qml</file>
         <file>README.md</file>
     </qresource>

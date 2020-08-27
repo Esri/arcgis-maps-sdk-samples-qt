@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Features/ListRelatedFeatures">
-        <file alias="sample.json">ListRelatedFeatures.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>ListRelatedFeatures.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

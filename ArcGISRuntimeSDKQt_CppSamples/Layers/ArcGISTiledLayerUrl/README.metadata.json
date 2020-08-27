@@ -1,27 +1,34 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to display a tiled map service",
+    "description": "Load an ArcGIS tiled layer from a URL.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "MapView",
-        "Map",
+        "basemap",
+        "layers",
+        "raster tiles",
+        "tiled layer",
+        "visualization",
+        "ArcGISTiledLayer",
         "Basemap",
-        "ArcGISTiledLayer"
+        "Map",
+        "MapView"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-arcgistiledlayerurl.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-arcgistiledlayerurl.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
+        "ArcGISTiledLayer",
         "Basemap",
-        "ArcGISTiledLayer"
+        "Map",
+        "MapView"
     ],
     "snippets": [
         "ArcGISTiledLayerUrl.qml",
-        "ArcGISTiledLayerUrl.h",
-        "ArcGISTiledLayerUrl.cpp"
+        "ArcGISTiledLayerUrl.cpp",
+        "ArcGISTiledLayerUrl.h"
     ],
     "title": "ArcGIS tiled layer (URL)"
 }

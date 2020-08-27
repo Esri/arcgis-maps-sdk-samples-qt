@@ -1,25 +1,35 @@
 {
     "category": "Features",
-    "description": "This sample demonstrates how to consume an Esri mobile geodatabase by using a FeatureLayer and a GeodatabaseFeatureTable",
+    "dataItems": [
+        {
+            "itemId": "d9f8ce6f6ac84b90a665a861d71a5d0a",
+            "path": "~/ArcGIS/Runtime/Data/vtpk/LosAngeles.vtpk"
+        },
+        {
+            "itemId": "2b0f9e17105847809dfeb04e3cad69e0",
+            "path": "~/ArcGIS/Runtime/Data/geodatabase/LA_Trails.geodatabase"
+        }
+    ],
+    "description": "Display features from a local geodatabase.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "mobile geodatabase",
-        "MapView",
-        "Map",
-        "Basemap",
-        "GeodatabaseFeatureTable",
-        "FeatureLayer"
+        "geodatabase",
+        "mobile",
+        "offline",
+        "FeatureLayer",
+        "Geodatabase",
+        "GeodatabaseFeatureTable"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-featurelayergeodatabase.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-featurelayergeodatabase.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "GeodatabaseFeatureTable",
-        "FeatureLayer"
+        "FeatureLayer",
+        "Geodatabase",
+        "GeodatabaseFeatureTable"
     ],
     "snippets": [
         "FeatureLayerGeodatabase.qml",

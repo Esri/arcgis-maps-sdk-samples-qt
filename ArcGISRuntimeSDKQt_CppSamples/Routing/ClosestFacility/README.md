@@ -1,4 +1,4 @@
-# Closest facility
+# Find closest facility to an incident (interactive)
 
 Find a route to the closest facility from a location.
 

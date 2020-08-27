@@ -1,8 +1,0 @@
-{
-    "source" :  "AddItemsToPortal.qml",
-    "otherSourceFiles" : [
-        "AddItemsToPortal.h",
-        "AddItemsToPortal.cpp"
-    ],
-    "name" : "Add items to portal"
-}

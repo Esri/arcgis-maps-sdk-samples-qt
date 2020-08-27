@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/MapRotation">
-        <file alias="sample.json">MapRotation.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>MapRotation.qml</file>
 		<file>MapRotation.h</file>

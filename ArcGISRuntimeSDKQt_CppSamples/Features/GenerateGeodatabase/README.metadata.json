@@ -1,37 +1,34 @@
 {
     "category": "Features",
-    "description": "This sample demonstrates how to take a feature service offline by generating a geodatabase",
+    "dataItems": [
+        {
+            "itemId": "3f1bbf0ec70b409a975f5c91f363fe7d",
+            "path": "~/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk"
+        }
+    ],
+    "description": "Generate a local geodatabase from an online feature service.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "mobile geodatabase",
-        "Map",
-        "MapView",
-        "ArcGISTiledLayer",
-        "TileCache",
-        "FeatureLayer",
-        "ServiceFeatureTable",
-        "GeodatabaseFeatureTable",
-        "GeodatabaseSyncTask",
+        "disconnected",
+        "local geodatabase",
+        "offline",
+        "sync",
+        "GenerateGeodatabaseJob",
         "GenerateGeodatabaseParameters",
-        "GenerateLayerOption",
-        "GenerateGeodatabaseJob"
+        "Geodatabase",
+        "GeodatabaseSyncTask"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-generategeodatabase.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-generategeodatabase.htm"
+    ],
     "relevant_apis": [
-        "Map",
-        "MapView",
-        "ArcGISTiledLayer",
-        "TileCache",
-        "FeatureLayer",
-        "ServiceFeatureTable",
-        "GeodatabaseFeatureTable",
-        "GeodatabaseSyncTask",
+        "GenerateGeodatabaseJob",
         "GenerateGeodatabaseParameters",
-        "GenerateLayerOption",
-        "GenerateGeodatabaseJob"
+        "Geodatabase",
+        "GeodatabaseSyncTask"
     ],
     "snippets": [
         "GenerateGeodatabase.qml",

@@ -1,34 +1,32 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to get the view status of a Layer in a Map",
+    "description": "Determine if a layer is currently being viewed.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "status",
+        "layer",
         "load",
-        "MapView",
+        "map",
+        "status",
+        "view",
+        "visibility",
+        "Enums.LayerViewStatus",
+        "LayerViewState",
         "Map",
-        "ArcGISTiledLayer",
-        "ArcGISMapImageLayer",
-        "FeatureLayer",
-        "ServiceFeatureTable",
-        "ViewpointCenter",
-        "Point",
-        "SpatialReference"
+        "MapView",
+        "MapView.layerViewStateChanged"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-displaylayerviewdrawstate.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-displaylayerviewdrawstate.htm"
+    ],
     "relevant_apis": [
-        "MapView",
+        "Enums.LayerViewStatus",
+        "LayerViewState",
         "Map",
-        "ArcGISTiledLayer",
-        "ArcGISMapImageLayer",
-        "FeatureLayer",
-        "ServiceFeatureTable",
-        "ViewpointCenter",
-        "Point",
-        "SpatialReference"
+        "MapView",
+        "MapView.layerViewStateChanged"
     ],
     "snippets": [
         "DisplayLayerViewDrawState.qml"

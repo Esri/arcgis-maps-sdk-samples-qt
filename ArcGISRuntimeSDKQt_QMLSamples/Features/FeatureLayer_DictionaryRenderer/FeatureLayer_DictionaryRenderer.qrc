@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Features/FeatureLayer_DictionaryRenderer">
-        <file alias="sample.json">FeatureLayer_DictionaryRenderer.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>FeatureLayer_DictionaryRenderer.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

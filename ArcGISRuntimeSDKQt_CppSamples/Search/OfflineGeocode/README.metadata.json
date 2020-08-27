@@ -1,33 +1,57 @@
 {
     "category": "Search",
-    "description": "This sample demonstrates how to geocode and reverse geocode addresses and locations without network connectivity",
+    "dataItems": [
+        {
+            "itemId": "7277419732964266b909bf2bae1ddb54",
+            "path": "~/ArcGIS/Runtime/Data/tpk/streetmap_SD.tpk"
+        },
+        {
+            "itemId": "c88c170e18f74740a0e4c660a5ff51c4",
+            "path": "~/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc"
+        },
+        {
+            "itemId": "c88c170e18f74740a0e4c660a5ff51c4",
+            "path": "~/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.loc.xml"
+        },
+        {
+            "itemId": "c88c170e18f74740a0e4c660a5ff51c4",
+            "path": "~/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.locb"
+        },
+        {
+            "itemId": "c88c170e18f74740a0e4c660a5ff51c4",
+            "path": "~/ArcGIS/Runtime/Data/Locators/SanDiegoStreetAddress/SanDiego_StreetAddress.lox"
+        }
+    ],
+    "description": "Geocode addresses to locations and reverse geocode locations to addresses offline.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "reverse geocode",
-        "offline geocode"
-    ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-offlinegeocode.htm",
-    "relevant_apis": [
-        "Map",
-        "MapView",
-        "ArcGISTiledLayer",
-        "TileCache",
-        "Callout",
-        "LocatorTask",
-        "GeocodeResult",
+        "geocode",
+        "geocoder",
+        "locator",
+        "offline",
+        "package",
+        "query",
+        "search",
         "GeocodeParameters",
-        "ReverseGeocodeParameters",
-        "SuggestListModel",
-        "GraphicOverlay",
-        "PictureMarkerSymbol",
-        "Viewpoint"
+        "GeocodeResult",
+        "LocatorTask",
+        "ReverseGeocodeParameters"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-offlinegeocode.htm"
+    ],
+    "relevant_apis": [
+        "GeocodeParameters",
+        "GeocodeResult",
+        "LocatorTask",
+        "ReverseGeocodeParameters"
     ],
     "snippets": [
-        "OfflineGeocode.cpp",
         "OfflineGeocode.qml",
+        "OfflineGeocode.cpp",
         "OfflineGeocode.h"
     ],
     "title": "Offline geocode"

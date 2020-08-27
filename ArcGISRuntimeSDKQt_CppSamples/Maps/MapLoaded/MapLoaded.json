@@ -1,9 +1,0 @@
-{
-    "source" :  "MapLoaded.qml",
-    "otherSourceFiles" : [
-        "MapLoaded.h",
-        "MapLoaded.cpp"
-    ],
-    "name" : "Map loaded"
-}
-

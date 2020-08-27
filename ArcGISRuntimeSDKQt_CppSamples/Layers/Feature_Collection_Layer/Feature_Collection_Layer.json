@@ -1,9 +1,0 @@
-{
-    "source" :  "Feature_Collection_Layer.qml",
-    "otherSourceFiles" : [
-        "Feature_Collection_Layer.h",
-        "Feature_Collection_Layer.cpp"
-    ],
-    "name" : "Feature collection layer"
-}
-

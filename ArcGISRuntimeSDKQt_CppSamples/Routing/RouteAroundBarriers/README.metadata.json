@@ -14,9 +14,18 @@
         "routing",
         "sequence",
         "stop order",
-        "stops"
+        "stops",
+        "DirectionManeuverListModel",
+        "PolygonBarrier",
+        "Route",
+        "RouteParameters",
+        "RouteResult",
+        "RouteTask",
+        "Stop"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "DirectionManeuverListModel",
         "PolygonBarrier",
@@ -27,9 +36,9 @@
         "Stop"
     ],
     "snippets": [
+        "RouteAroundBarriers.qml",
         "RouteAroundBarriers.cpp",
-        "RouteAroundBarriers.h",
-        "RouteAroundBarriers.qml"
+        "RouteAroundBarriers.h"
     ],
     "title": "Route around barriers"
 }

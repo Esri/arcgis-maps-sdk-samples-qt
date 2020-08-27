@@ -28,7 +28,7 @@ QT += texttospeech
 TEMPLATE = app
 TARGET = NavigateRoute
 
-ARCGIS_RUNTIME_VERSION = 100.8
+ARCGIS_RUNTIME_VERSION = 100.9
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------

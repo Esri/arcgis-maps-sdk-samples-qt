@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/ChangeSublayerRenderer">
-        <file alias="sample.json">ChangeSublayerRenderer.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>ChangeSublayerRenderer.qml</file>
         <file>ChangeSublayerRenderer.h</file>
         <file>ChangeSublayerRenderer.cpp</file>

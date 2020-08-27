@@ -1,20 +1,25 @@
 {
     "category": "Scenes",
-    "description": "This sample demonstrates how to open a scene from a Portal item",
+    "description": "Open a web scene from a portal item.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "3D",
-        "web scene",
         "portal",
-        "portal item"
-    ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-openscene.htm",
-    "relevant_apis": [
+        "scene",
+        "web scene",
+        "PortalItem",
         "Scene",
-        "PortalItem"
+        "SceneView"
+    ],
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-openscene.htm"
+    ],
+    "relevant_apis": [
+        "PortalItem",
+        "Scene",
+        "SceneView"
     ],
     "snippets": [
         "OpenScene.qml"

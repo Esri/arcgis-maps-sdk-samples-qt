@@ -1,6 +1,6 @@
 // [WriteFile Name=DisplayLayerViewDrawState, Category=Maps]
 // [Legal]
-// Copyright 2016 Esri.
+// Copyright 2020 Esri.
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,75 +19,56 @@
 
 namespace Esri
 {
-  namespace ArcGISRuntime
-  {
-    class Map;
-    class MapQuickView;
-    class FeatureLayer;
-    class ServiceFeatureTable;
-    class ArcGISTiledLayer;
-    class ArcGISMapImageLayer;
-    class LayerListModel;
-  }
+namespace ArcGISRuntime
+{
+class FeatureLayer;
+class Map;
+class MapQuickView;
+class PortalItem;
+class Layer;
+class LayerViewState;
+}
 }
 
-#include <QMetaObject>
-#include <QQuickItem>
+#include <QObject>
 
-class DisplayLayerViewDrawState : public QQuickItem
+class DisplayLayerViewDrawState : public QObject
 {
   Q_OBJECT
-  Q_PROPERTY(const QList<QObject*>& statusModel READ statusModel NOTIFY modelChanged)
+
+  Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
+  Q_PROPERTY(QStringList viewStatus MEMBER m_viewStatuses NOTIFY viewStatusChanged)
+  Q_PROPERTY(QString warningMessage MEMBER m_warningMessage NOTIFY warningMessageChanged)
+  Q_PROPERTY(bool loading MEMBER m_loading NOTIFY loadingChanged)
 
 public:
-  explicit DisplayLayerViewDrawState(QQuickItem* parent = nullptr);
-  ~DisplayLayerViewDrawState() override;
+  explicit DisplayLayerViewDrawState(QObject* parent = nullptr);
+  ~DisplayLayerViewDrawState();
 
-  void componentComplete() override;
   static void init();
+  void onLayerViewStateCompleted(Esri::ArcGISRuntime::Layer* layer, Esri::ArcGISRuntime::LayerViewState layerViewState);
+
+  Q_INVOKABLE void loadLayer();
+  Q_INVOKABLE void changeFeatureLayerVisibility(bool visible);
 
 signals:
-  void modelChanged();
+  void mapViewChanged();
+  void viewStatusChanged();
+  void loadingChanged();
+  void warningMessageChanged();
 
 private:
-  const QList<QObject*>& statusModel() const;
-  void addLayers();
-  void connectSignals();
+  Esri::ArcGISRuntime::MapQuickView* mapView() const;
+  void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
 
-private:
-  QList<QObject*> m_statuses;
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
-  Esri::ArcGISRuntime::ArcGISMapImageLayer* m_imageLayer = nullptr;
-  Esri::ArcGISRuntime::ArcGISTiledLayer* m_tiledLayer = nullptr;
-  Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::FeatureLayer* m_featureLayer = nullptr;
-};
+  Esri::ArcGISRuntime::PortalItem* m_portalItem = nullptr;
 
-class DisplayItem : public QObject
-{
-  Q_OBJECT
-  Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
-  Q_PROPERTY(QString status READ status WRITE setStatus NOTIFY statusChanged)
-
-public:
-  DisplayItem(QObject* parent = nullptr);
-  DisplayItem(const QString& name, const QString& status, QObject* parent = nullptr);
-  ~DisplayItem() override;
-
-  void setName(const QString& name);
-  QString name() const;
-
-  void setStatus(const QString& status);
-  QString status() const;
-
-signals:
-  void nameChanged();
-  void statusChanged();
-
-private:
-  QString m_name;
-  QString m_status;
+  bool m_loading = false;
+  QStringList m_viewStatuses;
+  QString m_warningMessage;
 };
 
 #endif // DISPLAYLAYERVIEWDRAWSTATE_H

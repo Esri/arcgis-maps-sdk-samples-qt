@@ -1,9 +1,0 @@
-{
-    "source" :  "Simple_Marker_Symbol.qml",
-    "otherSourceFiles" : [
-        "Simple_Marker_Symbol.h",
-        "Simple_Marker_Symbol.cpp"
-    ],
-    "name" : "Simple marker symbol"
-}
-

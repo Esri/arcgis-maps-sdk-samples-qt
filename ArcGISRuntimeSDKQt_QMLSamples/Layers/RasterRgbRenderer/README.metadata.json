@@ -1,31 +1,44 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to use an rgb renderer with a raster layer",
+    "dataItems": [
+        {
+            "itemId": "c669445e6cb4490b8306f0c170a9cbb1",
+            "path": "~/ArcGIS/Runtime/Data/raster/Shasta.tif"
+        }
+    ],
+    "description": "Apply an RGB renderer to a raster layer to enhance feature visibility.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "RGB renderer",
-        "Map",
-        "MapView",
-        "MinMaxStretchParameters",
-        "PercentClipStretchParameters",
+        "analysis",
+        "color",
+        "composite",
+        "imagery",
+        "multiband",
+        "multispectral",
+        "pan-sharpen",
+        "photograph",
+        "raster",
+        "spectrum",
+        "stretch",
+        "visualization",
+        "Basemap",
+        "RGBRenderer",
         "Raster",
         "RasterLayer",
-        "RGBRenderer",
-        "StandardDeviationStretchParameters"
+        "StretchParameters"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-rasterrgbrenderer.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-rasterrgbrenderer.htm"
+    ],
     "relevant_apis": [
-        "Map",
-        "MapView",
-        "MinMaxStretchParameters",
-        "PercentClipStretchParameters",
+        "Basemap",
+        "RGBRenderer",
         "Raster",
         "RasterLayer",
-        "RGBRenderer",
-        "StandardDeviationStretchParameters"
+        "StretchParameters"
     ],
     "snippets": [
         "RasterRgbRenderer.qml"

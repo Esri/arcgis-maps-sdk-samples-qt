@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/RasterLayerGeoPackage">
-        <file alias="sample.json">RasterLayerGeoPackage.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>RasterLayerGeoPackage.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

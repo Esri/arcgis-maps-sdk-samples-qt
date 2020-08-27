@@ -21,17 +21,18 @@
 #include "OfflineRouting.h"
 
 #include "ArcGISTiledLayer.h"
+#include "CompositeSymbol.h"
 #include "Envelope.h"
 #include "GeometryEngine.h"
 #include "Graphic.h"
 #include "GraphicsOverlay.h"
 #include "Map.h"
 #include "MapQuickView.h"
+#include "PictureMarkerSymbol.h"
 #include "Polyline.h"
 #include "RouteParameters.h"
 #include "RouteResult.h"
 #include "RouteTask.h"
-#include "SimpleMarkerSymbol.h"
 #include "SimpleLineSymbol.h"
 #include "SimpleRenderer.h"
 #include "Stop.h"
@@ -61,11 +62,12 @@ QString defaultDataPath()
 
   return dataPath;
 }
-
+const QUrl pinUrl("qrc:/Samples/Routing/OfflineRouting/orange_symbol.png");
 } // namespace
 
 OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
   QObject(parent),
+  m_pinSymbol(new PictureMarkerSymbol(pinUrl, this)),
   m_stopsOverlay(new GraphicsOverlay(this)),
   m_routeOverlay(new GraphicsOverlay(this))
 {
@@ -86,6 +88,10 @@ OfflineRouting::OfflineRouting(QObject* parent /* = nullptr */):
   SimpleLineSymbol* lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle::Solid, Qt::blue, 2, this);
   SimpleRenderer* routeRenderer = new SimpleRenderer(lineSymbol, this);
   m_routeOverlay->setRenderer(routeRenderer);
+
+  m_pinSymbol->setHeight(50);
+  m_pinSymbol->setWidth(50);
+  m_pinSymbol->setOffsetY(m_pinSymbol->height() / 2);
 
   const QString geodatabaseLocation = folderLocation + QString("/sandiego.geodatabase");
   m_routeTask = new RouteTask(geodatabaseLocation, "Streets_ND", this);
@@ -189,7 +195,9 @@ void OfflineRouting::connectSignals()
         qWarning() << "Outside of routable area.";
         return;
       }
-      SimpleMarkerSymbol* stopLabel = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Circle, Qt::red, 20, this);
+      TextSymbol* textSymbol = new TextSymbol(QString::number(m_stopsOverlay->graphics()->size() + 1), Qt::white, 20, HorizontalAlignment::Center, VerticalAlignment::Bottom, this);
+      textSymbol->setOffsetY(m_pinSymbol->height() / 2);
+      CompositeSymbol* stopLabel = new CompositeSymbol(QList<Symbol*>{m_pinSymbol, textSymbol}, this);
       Graphic* stopGraphic = new Graphic(m_mapView->screenToLocation(e.x(), e.y()), stopLabel, this);
       m_stopsOverlay->graphics()->append(stopGraphic);
       findRoute();

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Features/FeatureLayerChangeRenderer">
-        <file alias="sample.json">FeatureLayerChangeRenderer.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>FeatureLayerChangeRenderer.qml</file>
 		<file>FeatureLayerChangeRenderer.h</file>

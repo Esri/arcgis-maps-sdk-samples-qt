@@ -1,18 +1,19 @@
 {
     "category": "Analysis",
-    "description": "This sample demonstrates measuring 3D distances between two points in a scene",
+    "description": "This sample demonstrates measuring 3D distances between two points in a scene.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "analysis",
         "3D",
-        "measurement",
+        "Analysis",
         "AnalysisOverlay",
         "LocationDistanceMeasurement"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-distancemeasurementanalysis.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-distancemeasurementanalysis.htm"
+    ],
     "relevant_apis": [
         "AnalysisOverlay",
         "LocationDistanceMeasurement"

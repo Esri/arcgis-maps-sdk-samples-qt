@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.4
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -110,13 +110,15 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            var clickedPoint = mapView.screenToLocation(mouseX, mouseY);
-            clickedPointGraphic.geometry = clickedPoint;
+            const clickedPoint = mapView.screenToLocation(mouseX, mouseY);
+            // normalizing the geometry before performing geometric operations
+            const normalizedPoint = GeometryEngine.normalizeCentralMeridian(clickedPoint);
+            clickedPointGraphic.geometry = normalizedPoint;
 
-            var nearestVertexPoint = GeometryEngine.nearestVertex(polygonBuilder.geometry, clickedPoint);
+            const nearestVertexPoint = GeometryEngine.nearestVertex(polygonBuilder.geometry, normalizedPoint);
             nearestVertexGraphic.geometry = nearestVertexPoint.coordinate;
 
-            var nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, clickedPoint);
+            const nearestCoordinateResult = GeometryEngine.nearestCoordinate(polygonBuilder.geometry, normalizedPoint);
             nearestCoordinateGraphic.geometry = nearestCoordinateResult.coordinate;
 
             distancesLabel.text = `Vertex distance: ${(nearestVertexPoint.distance/1000.0).toFixed()} km

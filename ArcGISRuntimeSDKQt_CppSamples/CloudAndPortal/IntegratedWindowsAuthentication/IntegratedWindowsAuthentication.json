@@ -1,8 +1,0 @@
-{
-    "source" :  "IntegratedWindowsAuthentication.qml",
-    "otherSourceFiles" :  [
-        "IntegratedWindowsAuthentication.h",
-        "IntegratedWindowsAuthentication.cpp"
-    ],
-    "name" : "Integrated windows authentication"
-}

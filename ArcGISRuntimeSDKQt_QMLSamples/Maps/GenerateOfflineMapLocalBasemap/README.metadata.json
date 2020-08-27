@@ -1,25 +1,38 @@
 {
     "category": "Maps",
-    "description": "Use the `OfflineMapTask` to take a web map offline, but instead of downloading an online basemap, use one which is already on the device.",
+    "dataItems": [
+        {
+            "itemId": "628e8e3521cf45e9a28a12fe10c02c4d",
+            "path": "~/ArcGIS/Runtime/Data/tpk/naperville_imagery.tpk"
+        }
+    ],
+    "description": "Use the OfflineMapTask to take a web map offline, but instead of downloading an online basemap, use one which is already on the device.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "OfflineMapTask",
-        "GenerateOfflineMapParameters",
+        "basemap",
+        "download",
+        "local",
+        "offline",
+        "save",
+        "web map",
         "GenerateOfflineMapJob",
+        "GenerateOfflineMapParameters",
         "GenerateOfflineMapResult",
-        "Offline"
+        "OfflineMapTask"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "OfflineMapTask",
-        "GenerateOfflineMapParameters",
         "GenerateOfflineMapJob",
-        "GenerateOfflineMapResult"
+        "GenerateOfflineMapParameters",
+        "GenerateOfflineMapResult",
+        "OfflineMapTask"
     ],
-    "snippets": [        
+    "snippets": [
         "GenerateOfflineMapLocalBasemap.qml",
         "DownloadButton.qml",
         "GenerateWindow.qml"

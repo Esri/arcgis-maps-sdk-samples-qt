@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Analysis/ViewshedGeoElement">
-        <file alias="sample.json">ViewshedGeoElement.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>ViewshedGeoElement.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

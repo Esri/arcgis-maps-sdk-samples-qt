@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: mainRect
@@ -154,8 +154,8 @@ Rectangle {
                         routeParameters.clearStops();
 
                         // set the stops to the parameters
-                        var stop1 = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stop1Geometry, name: "Origin"});
-                        var stop2 = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stop2Geometry, name: "Destination"});
+                        const stop1 = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stop1Geometry, name: "Origin"});
+                        const stop2 = ArcGISRuntimeEnvironment.createObject("Stop", {geometry: stop2Geometry, name: "Destination"});
                         routeParameters.setStops([stop1, stop2]);
 
                         // solve the route with the parameters
@@ -233,8 +233,8 @@ Rectangle {
         onSolveRouteStatusChanged: {
             if (solveRouteStatus === Enums.TaskStatusCompleted) {
                 // Add the route graphic once the solve completes
-                var generatedRoute = solveRouteResult.routes[0];
-                var routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: generatedRoute.routeGeometry});
+                const generatedRoute = solveRouteResult.routes[0];
+                const routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: generatedRoute.routeGeometry});
                 routeGraphicsOverlay.graphics.append(routeGraphic);
 
                 // set the direction maneuver list model
@@ -286,31 +286,31 @@ Rectangle {
         stop1Geometry = ArcGISRuntimeEnvironment.createObject("Point", {
                                                                   x: -13041171,
                                                                   y: 3860988,
-                                                                  spatialReference: SpatialReference.createWebMercator()
+                                                                  spatialReference: Factory.SpatialReference.createWebMercator()
                                                               });
         stop2Geometry = ArcGISRuntimeEnvironment.createObject("Point", {
                                                                   x: -13041693,
                                                                   y: 3856006,
-                                                                  spatialReference: SpatialReference.createWebMercator()
+                                                                  spatialReference: Factory.SpatialReference.createWebMercator()
                                                               });
 
         // create the stop graphics' symbols
-        var stop1Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
-                                                                    url: "qrc:/Samples/Routing/FindRoute/pinA.png",
-                                                                    width: 32,
-                                                                    height: 32,
-                                                                    offsetY: 16
-                                                                });
-        var stop2Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
-                                                                    url: "qrc:/Samples/Routing/FindRoute/pinB.png",
-                                                                    width: 32,
-                                                                    height: 32,
-                                                                    offsetY: 16
-                                                                });
+        const stop1Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
+                                                                      url: "qrc:/Samples/Routing/FindRoute/pinA.png",
+                                                                      width: 32,
+                                                                      height: 32,
+                                                                      offsetY: 16
+                                                                  });
+        const stop2Symbol = ArcGISRuntimeEnvironment.createObject("PictureMarkerSymbol", {
+                                                                      url: "qrc:/Samples/Routing/FindRoute/pinB.png",
+                                                                      width: 32,
+                                                                      height: 32,
+                                                                      offsetY: 16
+                                                                  });
 
         // create the stop graphics
-        var stop1Graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: stop1Geometry, symbol: stop1Symbol});
-        var stop2Graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: stop2Geometry, symbol: stop2Symbol});
+        const stop1Graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: stop1Geometry, symbol: stop1Symbol});
+        const stop2Graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: stop2Geometry, symbol: stop2Symbol});
 
         // add to the overlay
         stopsGraphicsOverlay.graphics.append(stop1Graphic);

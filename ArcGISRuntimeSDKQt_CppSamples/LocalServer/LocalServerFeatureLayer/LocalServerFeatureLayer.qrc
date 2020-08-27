@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/LocalServer/LocalServerFeatureLayer">
-        <file alias="sample.json">LocalServerFeatureLayer.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>LocalServerFeatureLayer.qml</file>
 		<file>LocalServerFeatureLayer.h</file>

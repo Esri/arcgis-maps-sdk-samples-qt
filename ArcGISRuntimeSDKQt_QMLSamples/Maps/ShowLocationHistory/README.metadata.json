@@ -1,0 +1,41 @@
+{
+    "category": "Maps",
+    "description": "Display your location history on the map.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "GPS",
+        "bread crumb",
+        "breadcrumb",
+        "history",
+        "movement",
+        "navigation",
+        "real-time",
+        "trace",
+        "track",
+        "trail",
+        "Location.position",
+        "LocationDisplay.autoPanMode",
+        "LocationDisplay.dataSource",
+        "LocationDisplay.locationChanged",
+        "MapView.locationDisplay",
+        "SimulatedLocationDataSource"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "Location.position",
+        "LocationDisplay.autoPanMode",
+        "LocationDisplay.dataSource",
+        "LocationDisplay.locationChanged",
+        "MapView.locationDisplay",
+        "SimulatedLocationDataSource"
+    ],
+    "snippets": [
+        "ShowLocationHistory.qml"
+    ],
+    "title": "Show location history"
+}

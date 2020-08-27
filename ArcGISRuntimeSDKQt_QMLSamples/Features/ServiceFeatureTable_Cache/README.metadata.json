@@ -1,26 +1,27 @@
 {
     "category": "Features",
-    "description": "This sample demonstrates how to use a feature table with the FeatureRequestModeOnInteractionCache feature request mode",
+    "description": "Display a feature layer from a service using the **on interaction cache** feature request mode.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "ServiceFeatureTable",
+        "cache",
+        "feature request mode",
+        "performance",
+        "Enums.FeatureRequestModeOnInteractionCache",
         "FeatureLayer",
-        "Enums"
+        "ServiceFeatureTable",
+        "ServiceFeatureTable.featureRequestMode"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-servicefeaturetable-cache.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-servicefeaturetable-cache.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "ServiceFeatureTable",
+        "Enums.FeatureRequestModeOnInteractionCache",
         "FeatureLayer",
-        "Enums"
+        "ServiceFeatureTable",
+        "ServiceFeatureTable.featureRequestMode"
     ],
     "snippets": [
         "ServiceFeatureTable_Cache.qml"

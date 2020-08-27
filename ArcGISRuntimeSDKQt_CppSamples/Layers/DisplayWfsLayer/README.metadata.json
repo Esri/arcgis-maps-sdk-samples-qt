@@ -6,29 +6,33 @@
         "screenshot.png"
     ],
     "keywords": [
-        "WfsFeatureTable",
-        "WfsFeatureTable::populateFromService",
-        "FeatureLayer",
         "OGC",
         "WFS",
-        "feature",
-        "web",
-        "service",
-        "layers",
         "browse",
         "catalog",
-        "interaction cache"
-    ],
-    "redirect_from": "",
-    "relevant_apis": [
+        "feature",
+        "interaction cache",
+        "layers",
+        "service",
+        "web",
+        "FeatureLayer",
+        "MapView::navigatingChanged",
         "WfsFeatureTable",
-        "WfsFeatureTable::populateFromService",
-        "FeatureLayer"
+        "WfsFeatureTable::populateFromService"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "FeatureLayer",
+        "MapView::navigatingChanged",
+        "WfsFeatureTable",
+        "WfsFeatureTable::populateFromService"
     ],
     "snippets": [
+        "DisplayWfsLayer.qml",
         "DisplayWfsLayer.cpp",
-        "DisplayWfsLayer.h",
-        "DisplayWfsLayer.qml"
+        "DisplayWfsLayer.h"
     ],
     "title": "Display a WFS layer"
 }

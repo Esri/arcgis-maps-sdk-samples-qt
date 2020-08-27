@@ -1,24 +1,43 @@
 {
     "category": "Scenes",
-    "description": "This sample demonstrates how to create symbols with different 3D shapes",
+    "description": "Show various kinds of 3D symbols in a scene.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "create 3D shapes"
+        "3D",
+        "cone",
+        "cube",
+        "cylinder",
+        "diamond",
+        "geometry",
+        "graphic",
+        "graphics overlay",
+        "pyramid",
+        "scene",
+        "shape",
+        "sphere",
+        "symbol",
+        "tetrahedron",
+        "tube",
+        "visualization",
+        "SceneSymbol::anchorPosition",
+        "SimpleMarkerSceneSymbol",
+        "SimpleMarkerSceneSymbol::style"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-scenesymbols.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-scenesymbols.htm"
+    ],
     "relevant_apis": [
-        "SceneView",
-        "Graphic",
-        "GraphicsOverlay",
-        "SimpleMarkerSceneSymbol"
+        "SceneSymbol::anchorPosition",
+        "SimpleMarkerSceneSymbol",
+        "SimpleMarkerSceneSymbol::style"
     ],
     "snippets": [
         "Symbols.qml",
-        "Symbols.h",
-        "Symbols.cpp"
+        "Symbols.cpp",
+        "Symbols.h"
     ],
     "title": "Scene symbols"
 }

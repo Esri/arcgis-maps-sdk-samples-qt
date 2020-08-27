@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.6
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.8
-import Esri.ArcGISRuntime.Toolkit.Controls 100.8 // needed to use Callout in QML
+import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime.Toolkit.Controls 100.9 // needed to use Callout in QML
 
 Rectangle {
     id: rootRectangle
@@ -93,8 +93,8 @@ Rectangle {
             onGeocodeStatusChanged: {
                 if (geocodeStatus === Enums.TaskStatusCompleted) {
                     if (geocodeResults.length > 0) {
-                        var address = geocodeResults[0].label;
-                        let splitIndex = address.indexOf(",");
+                        const address = geocodeResults[0].label;
+                        const splitIndex = address.indexOf(",");
                         mapView.setViewpointCenter(geocodeResults[0].displayLocation);
                         mapView.calloutData.location = clickedPoint;
                         mapView.calloutData.title = address.substring(0, splitIndex < 0 ? undefined: splitIndex).trim();

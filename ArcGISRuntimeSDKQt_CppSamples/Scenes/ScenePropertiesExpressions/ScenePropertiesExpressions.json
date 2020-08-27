@@ -1,8 +1,0 @@
-{
-    "source" :  "ScenePropertiesExpressions.qml",
-    "otherSourceFiles" :  [
-        "ScenePropertiesExpressions.h",
-        "ScenePropertiesExpressions.cpp"
-    ],
-    "name" : "Scene properties expressions"
-}

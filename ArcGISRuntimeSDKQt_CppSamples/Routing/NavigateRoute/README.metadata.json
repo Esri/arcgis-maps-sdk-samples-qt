@@ -11,9 +11,21 @@
         "navigation",
         "route",
         "turn-by-turn",
-        "voice"
+        "voice",
+        "DestinationStatus",
+        "DirectionManeuver",
+        "Location",
+        "Route",
+        "RouteParameters",
+        "RouteTask",
+        "RouteTracker",
+        "SimulatedLocationDataSource",
+        "Stop",
+        "VoiceGuidance"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "DestinationStatus",
         "DirectionManeuver",
@@ -27,9 +39,9 @@
         "VoiceGuidance"
     ],
     "snippets": [
+        "NavigateRoute.qml",
         "NavigateRoute.cpp",
-        "NavigateRoute.h",
-        "NavigateRoute.qml"
+        "NavigateRoute.h"
     ],
     "title": "Navigate route"
 }

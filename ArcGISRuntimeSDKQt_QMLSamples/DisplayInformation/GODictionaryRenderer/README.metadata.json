@@ -1,40 +1,37 @@
 {
     "category": "Display information",
-    "description": "This sample demonstrates applying a dictionary renderer to graphics to display military symbology",
+    "dataItems": [
+        {
+            "itemId": "c78b149a1d52414682c86a5feeb13d30",
+            "path": "~/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
+        },
+        {
+            "itemId": "1e4ea99af4b440c092e7959cf3957bfa",
+            "path": "~/ArcGIS/Runtime/Data/xml/arcade_style/Mil2525DMessages.xml"
+        }
+    ],
+    "description": "Create graphics using a local mil2525d style file and an XML file with key/value pairs for each graphic.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "dictionary renderer",
-        "military symbology",
-        "MapView",
-        "Map",
-        "BasemapTopographic",
-        "GraphicsOverlay",
+        "defense",
+        "military",
+        "situational awareness",
+        "tactical",
+        "visualization",
         "DictionaryRenderer",
         "DictionarySymbolStyle",
-        "SpatialReference",
-        "PointBuilder",
-        "PolygonBuilder",
-        "PolylineBuilder",
-        "Graphic",
-        "GeometryEngine"
+        "GraphicsOverlay"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-godictionaryrenderer.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-godictionaryrenderer.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "BasemapTopographic",
-        "GraphicsOverlay",
         "DictionaryRenderer",
         "DictionarySymbolStyle",
-        "SpatialReference",
-        "PointBuilder",
-        "PolygonBuilder",
-        "PolylineBuilder",
-        "Graphic",
-        "GeometryEngine"
+        "GraphicsOverlay"
     ],
     "snippets": [
         "GODictionaryRenderer.qml"

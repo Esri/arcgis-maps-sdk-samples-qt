@@ -1,21 +1,30 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to open a shapefile stored on the device and display it as a feature layer with default symbology",
+    "dataItems": [
+        {
+            "itemId": "d98b3e5293834c5f852f13c569930caa",
+            "path": "~/ArcGIS/Runtime/Data/shp/Public_Art.shp"
+        }
+    ],
+    "description": "Open a shapefile stored on the device and display it as a feature layer with default symbology.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "Layers",
         "shapefile",
-        "shape file",
-        "feature layer",
-        "ShapefileFeatureTable",
-        "FeatureLayer"
+        "shp",
+        "vector",
+        "FeatureLayer",
+        "ShapefileFeatureTable"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-featurelayershapefile.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-featurelayershapefile.htm"
+    ],
     "relevant_apis": [
-        "ShapefileFeatureTable",
-        "FeatureLayer"
+        "FeatureLayer",
+        "ShapefileFeatureTable"
     ],
     "snippets": [
         "FeatureLayerShapefile.qml"

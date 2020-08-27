@@ -1,24 +1,27 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to display a map image layer",
+    "description": "Display a layer from an ArcGIS map image layer service.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "map image layer"
+        "display",
+        "image",
+        "layer",
+        "map",
+        "ArcGISMapImageLayer"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-arcgismapimagelayerurl.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-arcgismapimagelayerurl.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
         "ArcGISMapImageLayer"
     ],
     "snippets": [
         "ArcGISMapImageLayerUrl.qml",
-        "ArcGISMapImageLayerUrl.h",
-        "ArcGISMapImageLayerUrl.cpp"
+        "ArcGISMapImageLayerUrl.cpp",
+        "ArcGISMapImageLayerUrl.h"
     ],
     "title": "ArcGIS map image layer (URL)"
 }

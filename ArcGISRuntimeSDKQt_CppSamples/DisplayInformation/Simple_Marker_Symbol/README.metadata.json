@@ -1,37 +1,30 @@
 {
     "category": "Display information",
-    "description": "This sample demonstrates how to add a point graphic, symbolized by a red circle specified via a SimpleMarkerSymbol, to a GraphicsOverlay",
+    "description": "Show a simple marker symbol on a map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "MapView",
-        "Map",
-        "Basemap",
+        "symbol",
         "Graphic",
         "GraphicsOverlay",
-        "SimpleMarkerSymbol",
-        "Viewpoint",
         "Point",
-        "SpatialReference"
+        "SimpleMarkerSymbol"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-simplemarkersymbol.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-simplemarkersymbol.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
         "Graphic",
         "GraphicsOverlay",
-        "SimpleMarkerSymbol",
-        "Viewpoint",
         "Point",
-        "SpatialReference"
+        "SimpleMarkerSymbol"
     ],
     "snippets": [
+        "Simple_Marker_Symbol.qml",
         "Simple_Marker_Symbol.cpp",
-        "Simple_Marker_Symbol.h",
-        "Simple_Marker_Symbol.qml"
+        "Simple_Marker_Symbol.h"
     ],
     "title": "Simple marker symbol"
 }

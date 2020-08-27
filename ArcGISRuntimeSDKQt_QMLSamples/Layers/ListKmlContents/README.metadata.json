@@ -1,0 +1,46 @@
+{
+    "category": "Layers",
+    "dataItems": [
+        {
+            "itemId": "da301cb122874d5497f8a8f6c81eb36e",
+            "path": "~/ArcGIS/Runtime/Data/kml/esri_test_data.kmz"
+        }
+    ],
+    "description": "List the contents of a KML file.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "KML",
+        "KMZ",
+        "Keyhole",
+        "OGC",
+        "layers",
+        "KmlDataset",
+        "KmlDocument",
+        "KmlFolder",
+        "KmlGroundOverlay",
+        "KmlLayer",
+        "KmlNode",
+        "KmlPlacemark",
+        "KmlScreenOverlay"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "KmlDataset",
+        "KmlDocument",
+        "KmlFolder",
+        "KmlGroundOverlay",
+        "KmlLayer",
+        "KmlNode",
+        "KmlPlacemark",
+        "KmlScreenOverlay"
+    ],
+    "snippets": [
+        "ListKmlContents.qml"
+    ],
+    "title": "List KML contents"
+}

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/GenerateOfflineMap_Overrides">
-        <file alias="sample.json">GenerateOfflineMap_Overrides.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>README.md</file>
         <file>download.png</file>

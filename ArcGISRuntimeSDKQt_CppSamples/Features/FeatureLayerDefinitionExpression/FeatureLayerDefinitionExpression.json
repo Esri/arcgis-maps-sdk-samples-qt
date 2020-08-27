@@ -1,9 +1,0 @@
-{
-    "source" :  "FeatureLayerDefinitionExpression.qml",
-    "otherSourceFiles" : [
-        "FeatureLayerDefinitionExpression.h",
-        "FeatureLayerDefinitionExpression.cpp"
-    ],
-    "name" : "Feature layer definition expression"
-}
-

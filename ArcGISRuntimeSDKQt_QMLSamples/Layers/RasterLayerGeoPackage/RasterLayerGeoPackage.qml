@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -66,9 +66,9 @@ Rectangle {
                 return;
 
             // Get the first raster
-            var gpkgRaster = gpkg.geoPackageRasters[0];
+            const gpkgRaster = gpkg.geoPackageRasters[0];
             // Create a RasterLayer with the raster
-            var rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: gpkgRaster});
+            const rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: gpkgRaster});
             // Append the layer to the map
             map.operationalLayers.append(rasterLayer);
         }

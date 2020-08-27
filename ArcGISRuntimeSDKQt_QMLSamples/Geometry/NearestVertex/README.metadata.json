@@ -1,16 +1,23 @@
 {
     "category": "Geometry",
-    "description": "Get the vertex of a geometry closest to a point.",
+    "description": "Find the closest vertex and coordinate of a geometry to a point.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "analysis",
+        "coordinate",
         "geometry",
-        "polygon",
-        "proximity"
+        "nearest",
+        "proximity",
+        "vertex",
+        "GeometryEngine",
+        "ProximityResult"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "GeometryEngine",
         "MapView",

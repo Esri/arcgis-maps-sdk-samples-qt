@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Geometry/CreateGeometries">
-        <file alias="sample.json">CreateGeometries.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>CreateGeometries.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

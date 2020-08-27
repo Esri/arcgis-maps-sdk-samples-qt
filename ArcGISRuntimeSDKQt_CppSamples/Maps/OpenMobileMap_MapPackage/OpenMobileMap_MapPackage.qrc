@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/OpenMobileMap_MapPackage">
-        <file alias="sample.json">OpenMobileMap_MapPackage.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>OpenMobileMap_MapPackage.qml</file>
 		<file>OpenMobileMap_MapPackage.h</file>

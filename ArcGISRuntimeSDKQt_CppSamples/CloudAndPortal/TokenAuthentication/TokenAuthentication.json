@@ -1,9 +1,0 @@
-{
-    "source" :  "TokenAuthentication.qml",
-    "otherSourceFiles" : [
-        "TokenAuthentication.h",
-        "TokenAuthentication.cpp"
-    ],
-    "name" : "Token authentication"
-}
-

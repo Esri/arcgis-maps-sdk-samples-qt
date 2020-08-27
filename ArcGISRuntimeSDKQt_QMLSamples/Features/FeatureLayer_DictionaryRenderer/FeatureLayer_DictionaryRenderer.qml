@@ -16,13 +16,13 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
     width: 800
     height: 600
-    
+
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Create MapView that contains a Map with the Topographic Basemap
@@ -55,23 +55,22 @@ Rectangle {
 
         onLoadStatusChanged: {
             if (Enums.LoadStatusLoaded === geodatabase_militaryOverlay.loadStatus) {
-                var tables = geodatabase_militaryOverlay.geodatabaseFeatureTables;
+                const tables = geodatabase_militaryOverlay.geodatabaseFeatureTables;
 
                 // Create a layer for each table
-                for (var i = tables.length - 1; i >= 0; i--) {
+                for (let i = tables.length - 1; i >= 0; i--) {
                     //! [Apply Dictionary Renderer Feature Layer QML]
                     // Create a layer and set the feature table
-                    var layer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
+                    const layer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
                     layer.featureTable = tables[i];
 
                     // Create a dictionary renderer and apply to the layer
-                    var renderer = ArcGISRuntimeEnvironment.createObject(
-                                "DictionaryRenderer",
-                                { dictionarySymbolStyle:
-                                    //! [Create Dictionary Symbol Style QML]
-                                    DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
-                                    //! [Create Dictionary Symbol Style QML]
-                                });
+                    const renderer = ArcGISRuntimeEnvironment.createObject("DictionaryRenderer",{
+                                                                               dictionarySymbolStyle:
+                                                                               //! [Create Dictionary Symbol Style QML]
+                                                                               Factory.DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
+                                                                               //! [Create Dictionary Symbol Style QML]
+                                                                           });
                     layer.renderer = renderer;
                     //! [Apply Dictionary Renderer Feature Layer QML]
 
@@ -86,7 +85,7 @@ Rectangle {
                      * expects the field name "identity" but the database table contains the field "affiliation" instead.
                      */
                     /**
-                    var fieldOverrides = {
+                    let fieldOverrides = {
                         identity: "affiliation"
                     };
                     renderer.symbologyFieldOverrides = fieldOverrides;
@@ -95,10 +94,10 @@ Rectangle {
                     gdbLayers.push(layer);
 
                     // Connect the layer's loadStatusChanged signal
-                    layer.loadStatusChanged.connect(function () {
+                    layer.loadStatusChanged.connect(()=> {
 
                         // See if all the layers have loaded.
-                        for (var j = 0; j < gdbLayers.length; j++) {
+                        for (let j = 0; j < gdbLayers.length; j++) {
                             if (Enums.LoadStatusLoaded !== gdbLayers[j].loadStatus) {
                                 return;
                             }
@@ -108,7 +107,7 @@ Rectangle {
                          * If we get here, all the layers loaded. Union the extents and set
                          * the viewpoint.
                          */
-                        var bbox = gdbLayers[0].fullExtent;
+                        let bbox = gdbLayers[0].fullExtent;
                         for (let j = 1; j < gdbLayers.length; j++) {
                             bbox = GeometryEngine.unionOf(bbox, gdbLayers[j].fullExtent);
                         }

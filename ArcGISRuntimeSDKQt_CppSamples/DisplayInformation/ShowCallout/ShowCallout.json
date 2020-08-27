@@ -1,9 +1,0 @@
-{
-    "source" :  "ShowCallout.qml",
-    "otherSourceFiles" : [
-        "ShowCallout.h",
-        "ShowCallout.cpp"
-    ],
-    "name" : "Show callout"
-}
-

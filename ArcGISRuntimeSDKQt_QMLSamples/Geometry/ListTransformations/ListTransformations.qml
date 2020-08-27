@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -32,7 +32,9 @@ Rectangle {
 
     Connections {
         target: TransformationCatalog
-        onErrorChanged: peDataSet = false;
+        function onErrorChanged() {
+            peDataSet = false;
+        }
     }
 
     MapView {
@@ -160,12 +162,12 @@ Rectangle {
                     anchors.fill: parent
                     onClicked: {
                         transformationList.currentIndex = index;
-                        var transform = transformationList.model[index];
+                        const transform = transformationList.model[index];
                         if (transform.missingProjectionEngineFiles) {
-                            var missingFiles = "Missing grid files: ";
-                            var steps = transform.steps;
-                            for (var i = 0; i < steps.length; i++) {
-                                for (var j = 0; j < steps[i].projectionEngineFilenames.length; j++) {
+                            let missingFiles = "Missing grid files: ";
+                            const steps = transform.steps;
+                            for (let i = 0; i < steps.length; i++) {
+                                for (let j = 0; j < steps[i].projectionEngineFilenames.length; j++) {
                                     missingFiles += steps[i].projectionEngineFilenames[j];
                                 }
                             }

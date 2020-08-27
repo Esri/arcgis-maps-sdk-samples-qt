@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/WMTS_Layer">
-        <file alias="sample.json">WMTS_Layer.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>WMTS_Layer.qml</file>
         <file>WMTS_Layer.h</file>
         <file>WMTS_Layer.cpp</file>

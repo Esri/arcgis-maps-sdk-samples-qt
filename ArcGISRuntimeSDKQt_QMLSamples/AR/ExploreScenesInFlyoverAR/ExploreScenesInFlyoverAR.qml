@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.12
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISArToolkit 1.0
 
@@ -63,10 +63,10 @@ Rectangle {
 
                     // Start with the camera at the center of the mesh layer.
                     const viewPoint = ArcGISRuntimeEnvironment.createObject("Point", {
-                                                                                      y: integratedMeshLayer.fullExtent.center.y,
-                                                                                      x: integratedMeshLayer.fullExtent.center.x,
-                                                                                      z: 250.0
-                                                                                  });
+                                                                                y: integratedMeshLayer.fullExtent.center.y,
+                                                                                x: integratedMeshLayer.fullExtent.center.x,
+                                                                                z: 250.0
+                                                                            });
 
                     const originCamera = ArcGISRuntimeEnvironment.createObject("Camera", {
                                                                                    location: viewPoint,

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/ShowCallout">
-        <file alias="sample.json">ShowCallout.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>ShowCallout.qml</file>
         <file>ShowCallout.h</file>

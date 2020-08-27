@@ -1,9 +1,0 @@
-{
-    "source" :  "Surface_Placement.qml",
-    "otherSourceFiles" : [
-        "Surface_Placement.h",
-        "Surface_Placement.cpp"
-    ],
-    "name" : "Surface placement"
-}
-

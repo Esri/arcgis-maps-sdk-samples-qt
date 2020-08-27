@@ -1,32 +1,33 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to use the DrawStatus value of the MapView to notify the user that the MapView is drawing",
+    "description": "Get the draw status of your map view or scene view to know when all layers in the map or scene have finished drawing.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-      "Status",
-      "MapView",
+        "draw",
+        "loading",
+        "map",
+        "render",
         "Map",
-        "FeatureLayer",
-        "ServiceFeatureTable",
-        "Viewpoint",
-        "Envelope"
-    ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-displaydrawingstatus.htm",
-    "relevant_apis": [
+        "MapQuickView::drawStatusChanged",
         "MapView",
+        "drawStatus"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-displaydrawingstatus.htm"
+    ],
+    "relevant_apis": [
         "Map",
-        "FeatureLayer",
-        "ServiceFeatureTable",
-        "Viewpoint",
-        "Envelope"
+        "MapQuickView::drawStatusChanged",
+        "MapView",
+        "drawStatus"
     ],
     "snippets": [
-        "DisplayDrawingStatus.h",
         "DisplayDrawingStatus.qml",
-        "DisplayDrawingStatus.cpp"
+        "DisplayDrawingStatus.cpp",
+        "DisplayDrawingStatus.h"
     ],
-    "title": "Display drawing status"
+    "title": "Display draw status"
 }

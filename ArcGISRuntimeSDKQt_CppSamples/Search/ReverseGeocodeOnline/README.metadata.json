@@ -1,17 +1,26 @@
 {
     "category": "Search",
-    "description": "This sample demonstrates how to get the address for a point on the map.",
+    "description": "Use an online service to find the address for a tapped point.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "callout",
+        "address",
         "geocode",
-        "reverse geocode"
+        "locate",
+        "reverse geocode",
+        "search",
+        "GeocodeParameters",
+        "LocatorTask",
+        "ReverseGeocodeParameters"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
+        "GeocodeParameters",
         "Callout",
         "CalloutData",
         "GraphicsOverlay",
@@ -20,9 +29,9 @@
         "ReverseGeocodeParameters"
     ],
     "snippets": [
+        "ReverseGeocodeOnline.qml",
         "ReverseGeocodeOnline.cpp",
-        "ReverseGeocodeOnline.h",
-        "ReverseGeocodeOnline.qml"
+        "ReverseGeocodeOnline.h"
     ],
     "title": "Reverse geocode"
 }

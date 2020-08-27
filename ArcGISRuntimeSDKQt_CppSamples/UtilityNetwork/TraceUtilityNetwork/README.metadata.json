@@ -1,0 +1,42 @@
+{
+    "category": "UtilityNetwork",
+    "description": "Find all features connected to a set of starting points in a utility network.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "connected trace",
+        "network analysis",
+        "utility network",
+        "GeometryEngine::fractionAlong",
+        "UtilityAssetType",
+        "UtilityElementTraceResult",
+        "UtilityNetwork",
+        "UtilityNetworkDefinition",
+        "UtilityNetworkSource",
+        "UtilityTerminal",
+        "UtilityTraceParameters",
+        "UtilityTraceResult"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "GeometryEngine::fractionAlong",
+        "UtilityAssetType",
+        "UtilityElementTraceResult",
+        "UtilityNetwork",
+        "UtilityNetworkDefinition",
+        "UtilityNetworkSource",
+        "UtilityTerminal",
+        "UtilityTraceParameters",
+        "UtilityTraceResult"
+    ],
+    "snippets": [
+        "TraceUtilityNetwork.qml",
+        "TraceUtilityNetwork.cpp",
+        "TraceUtilityNetwork.h"
+    ],
+    "title": "Trace utility network"
+}

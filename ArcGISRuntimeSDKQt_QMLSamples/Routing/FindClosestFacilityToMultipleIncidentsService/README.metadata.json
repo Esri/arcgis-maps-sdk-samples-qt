@@ -9,9 +9,19 @@
         "incident",
         "network analysis",
         "route",
-        "search"
+        "search",
+        "ClosestFacilityParameters",
+        "ClosestFacilityResult",
+        "ClosestFacilityRoute",
+        "ClosestFacilityTask",
+        "Facility",
+        "Graphic",
+        "GraphicsOverlay",
+        "Incident"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "ClosestFacilityParameters",
         "ClosestFacilityResult",

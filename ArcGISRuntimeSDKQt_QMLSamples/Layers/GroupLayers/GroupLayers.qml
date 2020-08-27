@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.5
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -73,17 +73,17 @@ Rectangle {
 
         Component.onCompleted: {
             // create initial viewpoint extent
-            var env = ArcGISRuntimeEnvironment.createObject("Envelope", {
-                                                                json: {
-                                                                    "spatialReference": {
-                                                                        "wkid":4326
-                                                                    },
-                                                                    "xmax":-122.67960721754773,
-                                                                    "xmin":-122.68647066116789,
-                                                                    "ymax":45.53584958588318,
-                                                                    "ymin":45.531539857343745
-                                                                }
-                                                            });
+            const env = ArcGISRuntimeEnvironment.createObject("Envelope", {
+                                                                  json: {
+                                                                      "spatialReference": {
+                                                                          "wkid":4326
+                                                                      },
+                                                                      "xmax":-122.67960721754773,
+                                                                      "xmin":-122.68647066116789,
+                                                                      "ymax":45.53584958588318,
+                                                                      "ymin":45.531539857343745
+                                                                  }
+                                                              });
 
             // set viewpoint
             sceneView.setViewpoint(ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {

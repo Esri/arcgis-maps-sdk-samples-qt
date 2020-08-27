@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     clip: true
@@ -61,13 +61,13 @@ Rectangle {
                     x: -73.06958032962375
                     y: -49.253112971555446
                     z: 2000
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
                 targetLocation: Point {
                     x: -73.079266999709162
                     y: -49.300457676730559
                     z: 1312
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
 
                 // Configure the LoS color and width
@@ -93,19 +93,19 @@ Rectangle {
 
     function setInitialViewpoint() {
         // Set a viewpoint
-        var point = ArcGISRuntimeEnvironment.createObject("Point", {
-                                                              x: -73.0815,
-                                                              y: -49.3272,
-                                                              z: 4059,
-                                                              spatialReference: SpatialReference.createWgs84()
-                                                          });
+        const point = ArcGISRuntimeEnvironment.createObject("Point", {
+                                                                x: -73.0815,
+                                                                y: -49.3272,
+                                                                z: 4059,
+                                                                spatialReference: Factory.SpatialReference.createWgs84()
+                                                            });
 
-        var camera = ArcGISRuntimeEnvironment.createObject("Camera", {
-                                                               location: point,
-                                                               heading: 11,
-                                                               pitch: 62,
-                                                               roll: 0
-                                                           });
+        const camera = ArcGISRuntimeEnvironment.createObject("Camera", {
+                                                                 location: point,
+                                                                 heading: 11,
+                                                                 pitch: 62,
+                                                                 roll: 0
+                                                             });
 
         sceneView.setViewpointCamera(camera);
     }

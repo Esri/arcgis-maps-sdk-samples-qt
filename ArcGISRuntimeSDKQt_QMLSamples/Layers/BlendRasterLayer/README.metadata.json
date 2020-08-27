@@ -1,31 +1,46 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to use blend renderer on a raster layer",
+    "dataItems": [
+        {
+            "itemId": "c669445e6cb4490b8306f0c170a9cbb1",
+            "path": "~/ArcGIS/Runtime/Data/raster/Shasta.tif"
+        },
+        {
+            "itemId": "b051f5c3e01048f3bf11c59b41507896",
+            "path": "~/ArcGIS/Runtime/Data/raster/Shasta_Elevation.tif"
+        }
+    ],
+    "description": "Blend a hillshade with a raster by specifying the elevation data. The resulting raster looks similar to the original raster, but with some terrain shading, giving it a textured look.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "blend renderers",
+        "color ramp",
+        "elevation",
         "hillshade",
-        "Map",
-        "MapQuickView",
+        "image",
+        "raster",
+        "raster layer",
+        "visualization",
+        "BlendRenderer",
+        "ColorRamp",
         "Raster",
-        "RasterLayer",
-        "BlendRenderer"
+        "RasterLayer"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-blendrasterlayer.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-blendrasterlayer.htm"
+    ],
     "relevant_apis": [
-        "Map",
-        "MapQuickView",
+        "BlendRenderer",
+        "ColorRamp",
         "Raster",
-        "RasterLayer",
-        "BlendRenderer"
+        "RasterLayer"
     ],
     "snippets": [
+        "BlendRasterLayer.qml",
         "ColorRampModel.qml",
-        "SlopeTypeModel.qml",
-        "BlendRasterLayer.qml"
+        "SlopeTypeModel.qml"
     ],
     "title": "Blend raster layer"
 }

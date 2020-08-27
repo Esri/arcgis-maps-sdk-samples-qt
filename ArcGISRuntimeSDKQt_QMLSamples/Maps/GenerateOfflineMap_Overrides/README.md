@@ -1,4 +1,4 @@
-# Generate Offline Map (Overrides)
+# Generate offline map (overrides)
 
 Take a web map offline with additional options for each layer.
 

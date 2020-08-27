@@ -83,6 +83,7 @@ LocalServerGeoprocessingSample {
                             margins: 5
                         }
                         text: "200"
+                        selectByMouse: true
                         validator: DoubleValidator {bottom: 100; top: 500}
                     }
                 }

@@ -14,7 +14,7 @@ Once you launch the app, you will be challenged for an ArcGIS Online login to vi
 
 ## How it works
 
-1. Create a `ArcGISMapImageLayer` passing in the URL to a map service that is secured with token-based authentication
+1. Create a `ArcGISMapImageLayer` passing in the URL to a map service that is secured with token-based authentication.
 2. Append the map image layer to the operational layers to display the map.
 
 ## Relevant API
@@ -22,10 +22,6 @@ Once you launch the app, you will be challenged for an ArcGIS Online login to vi
 * Map
 * MapView
 * ArcGISMapImageLayer
-
-## About the data
-
-The Traffic web map uses public layers as well as the world traffic (premium content) layer. The world traffic service presents historical and near real-time traffic information for different regions in the world. The data is updated every 5 minutes. This map service requires an ArcGIS Online organizational subscription.
 
 ## Tags
 

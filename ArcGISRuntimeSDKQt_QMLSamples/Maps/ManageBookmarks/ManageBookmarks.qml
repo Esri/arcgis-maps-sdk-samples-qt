@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -48,7 +48,7 @@ Rectangle {
             // helper function for creating bookmarks
             function createBookmark(bookmarkName,bookmarkViewpoint) {
                 // create a bookmark object and assign the name and viewpoint
-                var bookmark = ArcGISRuntimeEnvironment.createObject("Bookmark");
+                const bookmark = ArcGISRuntimeEnvironment.createObject("Bookmark");
                 bookmark.name = bookmarkName;
                 bookmark.viewpoint = bookmarkViewpoint;
                 // append the bookmark to the map's BookmarkListModel
@@ -154,10 +154,10 @@ Rectangle {
 
         Connections {
             target: bookmarks.model
-            onCountChanged: {
-                var model = bookmarks.model;
+            function onCountChanged() {
+                const model = bookmarks.model;
                 if (model) {
-                    for (var i = 0; i < model.count; ++i) {
+                    for (let i = 0; i < model.count; ++i) {
                         metrics.text = model.get(i).name;
                         bookmarks.modelWidth = Math.max(bookmarks.modelWidth,
                                                         metrics.width);
@@ -168,7 +168,7 @@ Rectangle {
 
         onCurrentIndexChanged: {
             if (currentIndex >= 0) {
-                var bookmark = map.bookmarks.get(currentIndex);
+                const bookmark = map.bookmarks.get(currentIndex);
                 if (bookmark) {
                     mapView.setViewpoint(
                                 map.bookmarks.get(currentIndex).viewpoint);
@@ -215,6 +215,7 @@ Rectangle {
             TextField {
                 id: textField
                 placeholderText: qsTr("ex: Grand Canyon")
+                selectByMouse: true
                 Layout.columnSpan: 2
                 Layout.margins: 5
                 Layout.fillWidth: true
@@ -234,7 +235,7 @@ Rectangle {
                 onClicked: {
                     // Create the new bookmark by getting the current viewpoint and using the
                     // user's input bookmark name
-                    var viewpoint = mapView.currentViewpointExtent;
+                    const viewpoint = mapView.currentViewpointExtent;
                     map.createBookmark(textField.text,viewpoint);
                     bookmarks.currentIndex = map.bookmarks.count -1;
                     textField.text = "";

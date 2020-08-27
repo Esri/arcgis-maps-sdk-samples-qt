@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.8
-import Esri.ArcGISRuntime.Toolkit.Controls 100.8
+import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 Rectangle {
     clip: true
@@ -269,16 +269,16 @@ Rectangle {
     }
 
     // connect signals from LocatorTask
-    Connections  {
+    Connections {
         target: currentLocatorTask
 
-        onGeocodeStatusChanged: {
+        function onGeocodeStatusChanged() {
             if (currentLocatorTask.geocodeStatus === Enums.TaskStatusCompleted) {
                 busyIndicator.visible = false;
 
                 if (currentLocatorTask.geocodeResults.length > 0) {
                     // create a pin graphic to display location
-                    var pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: currentLocatorTask.geocodeResults[0].displayLocation, symbol: bluePinSymbol});
+                    const pinGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: currentLocatorTask.geocodeResults[0].displayLocation, symbol: bluePinSymbol});
                     stopsGraphicsOverlay.graphics.append(pinGraphic);
                     pinGraphic.attributes.insertAttribute("AddressLabel", currentLocatorTask.geocodeResults[0].label);
 
@@ -287,22 +287,22 @@ Rectangle {
 
                     // add geocoded point as a stop if routing is available for current map
                     if (currentRouteTask !== null) {
-                        var stop = ArcGISRuntimeEnvironment.createObject("Stop", {name: "stop", geometry: pinGraphic.geometry});
+                        const stop = ArcGISRuntimeEnvironment.createObject("Stop", {name: "stop", geometry: pinGraphic.geometry});
                         routeStops.push(stop);
 
                         if (routeStops.length > 1)
                             routeButton.visible = true;
 
                         // create a Text symbol to display stop number
-                        var textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
-                                                                                   color: "white",
-                                                                                   text: routeStops.length,
-                                                                                   size: 18,
-                                                                                   offsetY: 19
-                                                                               });
+                        const textSymbol = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
+                                                                                     color: "white",
+                                                                                     text: routeStops.length,
+                                                                                     size: 18,
+                                                                                     offsetY: 19
+                                                                                 });
 
                         // create graphic using the text symbol
-                        var labelGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: pinGraphic.geometry, symbol: textSymbol});
+                        const labelGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: pinGraphic.geometry, symbol: textSymbol});
                         labelGraphic.zIndex = pinGraphic.zIndex + 1;
                         stopsGraphicsOverlay.graphics.append(labelGraphic);
                     }
@@ -319,24 +319,24 @@ Rectangle {
         target: currentRouteTask
 
         // if RouteTask loads properly, create the default parameters
-        onLoadStatusChanged: {
+        function onLoadStatusChanged() {
             if (currentRouteTask.loadStatus === Enums.LoadStatusLoaded) {
                 currentRouteTask.createDefaultParameters();
             }
         }
 
         // obtain default parameters
-        onCreateDefaultParametersStatusChanged: {
+        function onCreateDefaultParametersStatusChanged() {
             if (currentRouteTask.createDefaultParametersStatus === Enums.TaskStatusCompleted)
                 currentRouteParams = currentRouteTask.createDefaultParametersResult;
         }
 
-        onSolveRouteStatusChanged: {
+        function onSolveRouteStatusChanged() {
             // if route solve is successful, add a route graphic
             if(currentRouteTask.solveRouteStatus === Enums.TaskStatusCompleted) {
-                var routeTaskResult = currentRouteTask.solveRouteResult;
+                const routeTaskResult = currentRouteTask.solveRouteResult;
                 if (routeTaskResult !== null && routeTaskResult.routes.length > 0) {
-                    var routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeTaskResult.routes[0].routeGeometry});
+                    const routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: routeTaskResult.routes[0].routeGeometry});
                     routeGraphicsOverlay.graphics.append(routeGraphic);
                 }
                 else {
@@ -447,8 +447,8 @@ Rectangle {
                                     mapsInBundle.clear();
 
                                     // create the list of maps within a package
-                                    for(var i = 0; i < mobileMapList[index].maps.length; i++) {
-                                        var mapTitle = mobileMapList[index].maps[i].item.title;
+                                    for (let i = 0; i < mobileMapList[index].maps.length; i++) {
+                                        let mapTitle = mobileMapList[index].maps[i].item.title;
 
                                         mapTitle += " " + (i + 1);
 
@@ -618,14 +618,14 @@ Rectangle {
         // recursively create and load MobileMapPackages
         function loadMmpks() {
             if (mapPackageLoadIndex < mobilePathsList.length) {
-                var index = mapPackageLoadIndex;
-                var mobileMap = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", { path: mobilePathsList[index] });
+                const index = mapPackageLoadIndex;
+                const mobileMap = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", { path: mobilePathsList[index] });
                 mobileMap.load();
 
-                mobileMap.loadStatusChanged.connect(function() {
+                mobileMap.loadStatusChanged.connect(()=> {
                     // after mmpk is loaded, add it to the list of mobile map packages
                     if (mobileMap.loadStatus === Enums.LoadStatusLoaded) {
-                        var title = mobileMap.item.title;
+                        const title = mobileMap.item.title;
                         mobileMapList.push(mobileMap);
                         mobileMapPackages.append({"name": title});
                     }
@@ -638,7 +638,7 @@ Rectangle {
 
         Component.onCompleted: {
             // search through every file in the folder
-            for(var i = 0; i < mmpkFolder.fileNames().length; i++) {
+            for (let i = 0; i < mmpkFolder.fileNames().length; i++) {
 
                 // if it is an mmpk file, store its path
                 if (mmpkFolder.fileInfo(mmpkFolder.fileNames()[i]).suffix === "mmpk") {

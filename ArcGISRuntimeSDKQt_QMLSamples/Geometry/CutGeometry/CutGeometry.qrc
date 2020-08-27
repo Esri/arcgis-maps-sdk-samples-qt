@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Geometry/CutGeometry">
-        <file alias="sample.json">CutGeometry.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>CutGeometry.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

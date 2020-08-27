@@ -44,6 +44,7 @@ OAuthRedirectExample {
                     id: clientIdField
                     width: 128 * scaleFactor
                     placeholderText: clientId
+                    selectByMouse: true
                     onAccepted: setClientId(text);
                 }
 

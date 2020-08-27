@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Scenes/ViewContentBeneathTerrainSurface">
-        <file alias="sample.json">ViewContentBeneathTerrainSurface.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>ViewContentBeneathTerrainSurface.qml</file>
         <file>ViewContentBeneathTerrainSurface.h</file>
         <file>ViewContentBeneathTerrainSurface.cpp</file>

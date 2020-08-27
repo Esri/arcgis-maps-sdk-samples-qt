@@ -1,8 +1,0 @@
-{
-    "source" :  "Symbols.qml",
-    "otherSourceFiles" : [
-        "Symbols.h",
-        "Symbols.cpp"
-    ],
-    "name" : "Scene symbols"
-}

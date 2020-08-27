@@ -1,39 +1,55 @@
 {
-  "category": "Local Server",
-  "description": "Demonstrates how to create contour lines from local raster data using a local geoprocessing package (.gpk) and the contour geoprocessing tool",
-  "ignore": false,
-  "images": [
-    "screenshot.png"
-  ],
-  "keywords": [
-    "Offline",
-    "Analysis",
-    "GeoprocessingDouble",
-    "GeoprocessingJob",
-    "GeoprocessingParameter",
-    "GeoprocessingParameters",
-    "GeoprocessingTask",
-    "LocalGeoprocessingService",
-    "LocalGeoprocessingService.ServiceType",
-    "LocalServer",
-    "LocalServerStatus"
-  ],
-  "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-localservergeoprocessing.htm",
-  "relevant_apis": [
-    "GeoprocessingDouble",
-    "GeoprocessingJob",
-    "GeoprocessingParameter",
-    "GeoprocessingParameters",
-    "GeoprocessingTask",
-    "LocalGeoprocessingService",
-    "LocalGeoprocessingService.ServiceType",
-    "LocalServer",
-    "LocalServerStatus"
-  ],
-  "snippets": [
-    "LocalServerGeoprocessing.qml",
-    "LocalServerGeoprocessing.h",
-    "LocalServerGeoprocessing.cpp"
-  ],
-  "title": "Local Server geoprocessing"
+    "category": "Local Server",
+    "dataItems": [
+        {
+            "itemId": "da9e565a52ca41c1937cff1a01017068",
+            "path": "~/ArcGIS/Runtime/Data/gpk/Contour.gpk"
+        },
+        {
+            "itemId": "f7c7b4a30fb9415896ba0d1921fe014b",
+            "path": "~/ArcGIS/Runtime/Data/tpk/RasterHillshade.tpk"
+        }
+    ],
+    "description": "Create contour lines from local raster data using a local geoprocessing package `.gpk` and the contour geoprocessing tool.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "geoprocessing",
+        "local",
+        "offline",
+        "parameters",
+        "processing",
+        "service",
+        "GeoprocessingDouble",
+        "GeoprocessingJob",
+        "GeoprocessingParameter",
+        "GeoprocessingParameters",
+        "GeoprocessingTask",
+        "LocalGeoprocessingService",
+        "LocalGeoprocessingService::serviceType",
+        "LocalServer",
+        "LocalServerStatus"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-localservergeoprocessing.htm"
+    ],
+    "relevant_apis": [
+        "GeoprocessingDouble",
+        "GeoprocessingJob",
+        "GeoprocessingParameter",
+        "GeoprocessingParameters",
+        "GeoprocessingTask",
+        "LocalGeoprocessingService",
+        "LocalGeoprocessingService::serviceType",
+        "LocalServer",
+        "LocalServerStatus"
+    ],
+    "snippets": [
+        "LocalServerGeoprocessing.qml",
+        "LocalServerGeoprocessing.cpp",
+        "LocalServerGeoprocessing.h"
+    ],
+    "title": "Local server geoprocessing"
 }

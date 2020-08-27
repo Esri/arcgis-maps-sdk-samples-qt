@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/EditData/DeleteFeaturesFeatureService">
-        <file alias="sample.json">DeleteFeaturesFeatureService.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>DeleteFeaturesFeatureService.qml</file>
         <file>DeleteFeaturesFeatureService.h</file>

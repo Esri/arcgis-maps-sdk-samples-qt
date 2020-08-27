@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/Maps/ShowLocationHistory">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>ShowLocationHistory.qml</file>
+        <file>ShowLocationHistory.h</file>
+        <file>ShowLocationHistory.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>

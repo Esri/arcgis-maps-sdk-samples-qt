@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -105,17 +105,17 @@ Rectangle {
     //! [RasterFunctionFile qml raster from function]
     function applyRasterFunction() {
         // create raster function
-        var rasterFunction = createRasterFunction();
+        const rasterFunction = createRasterFunction();
 
         // check for valid raster function
         if (!rasterFunction)
             return;
 
         // create the raster from the raster function
-        var raster = ArcGISRuntimeEnvironment.createObject("Raster", { rasterFunction: rasterFunction });
+        const raster = ArcGISRuntimeEnvironment.createObject("Raster", { rasterFunction: rasterFunction });
 
         // create raster layer from raster
-        var newRasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster });
+        const newRasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", { raster: raster });
         newRasterLayer.opacity = 0.5;
 
         // add raster to map
@@ -129,7 +129,7 @@ Rectangle {
           return;
 
         // create the raster function
-        var rasterFunction = ArcGISRuntimeEnvironment.createObject("RasterFunction", {path: dataPath + "/color.json"});
+        const rasterFunction = ArcGISRuntimeEnvironment.createObject("RasterFunction", {path: dataPath + "/color.json"});
 
         // check for valid raster function
         if (!rasterFunction)

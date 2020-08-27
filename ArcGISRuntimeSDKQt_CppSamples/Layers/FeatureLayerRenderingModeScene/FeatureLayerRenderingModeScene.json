@@ -1,8 +1,0 @@
-{
-    "source" :  "FeatureLayerRenderingModeScene.qml",
-    "otherSourceFiles" :  [
-        "FeatureLayerRenderingModeScene.h",
-        "FeatureLayerRenderingModeScene.cpp"
-    ],
-    "name" : "Feature layer rendering mode (scene)"
-}

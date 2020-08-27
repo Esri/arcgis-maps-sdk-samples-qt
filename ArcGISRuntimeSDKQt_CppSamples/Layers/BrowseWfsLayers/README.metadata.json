@@ -6,34 +6,36 @@
         "screenshot.png"
     ],
     "keywords": [
-        "WfsService",
-        "WfsServiceInfo",
-        "WfsLayerInfo",
-        "WfsFeatureTable",
-        "FeatureLayer",
-        "WfsFeatureTable::AxisOrder",
         "OGC",
         "WFS",
-        "feature",
-        "web",
-        "service",
-        "layers",
         "browse",
-        "catalog"
-    ],
-    "redirect_from": "",
-    "relevant_apis": [        
-        "WfsService",
-        "WfsServiceInfo",
-        "WfsLayerInfo",
-        "WfsFeatureTable",
+        "catalog",
+        "feature",
+        "layers",
+        "service",
+        "web",
         "FeatureLayer",
-        "WfsFeatureTable::AxisOrder"
+        "WfsFeatureTable",
+        "WfsFeatureTable::axisOrder",
+        "WfsLayerInfo",
+        "WfsService",
+        "WfsServiceInfo"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "FeatureLayer",
+        "WfsFeatureTable",
+        "WfsFeatureTable::axisOrder",
+        "WfsLayerInfo",
+        "WfsService",
+        "WfsServiceInfo"
     ],
     "snippets": [
+        "BrowseWfsLayers.qml",
         "BrowseWfsLayers.cpp",
-        "BrowseWfsLayers.h",
-        "BrowseWfsLayers.qml"
+        "BrowseWfsLayers.h"
     ],
     "title": "Browse WFS layers"
 }

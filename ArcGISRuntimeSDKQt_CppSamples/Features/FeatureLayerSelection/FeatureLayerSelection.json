@@ -1,9 +1,0 @@
-{
-    "source" :  "FeatureLayerSelection.qml",
-    "otherSourceFiles" : [
-        "FeatureLayerSelection.h",
-        "FeatureLayerSelection.cpp"
-    ],
-    "name" : "Feature layer selection"
-}
-

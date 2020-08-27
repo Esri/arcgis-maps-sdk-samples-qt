@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -51,9 +51,9 @@ Rectangle {
                         if (loadStatus === Enums.LoadStatusLoaded) {
                             mapView.setViewpointGeometry(imageServiceRaster.serviceInfo.fullExtent);
 
-                            var renderingRuleInfos = imageServiceRaster.serviceInfo.renderingRuleInfos;
-                            var names = [];
-                            for (var i = 0; i < renderingRuleInfos.length; i++) {
+                            const renderingRuleInfos = imageServiceRaster.serviceInfo.renderingRuleInfos;
+                            const names = [];
+                            for (let i = 0; i < renderingRuleInfos.length; i++) {
                                 names.push(renderingRuleInfos[i].name);
                             }
                             renderingRuleNames = names;
@@ -92,7 +92,7 @@ Rectangle {
                     Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                     model: renderingRuleNames
                     onModelChanged: {
-                        for (var i = 0; i < model.length; ++i) {
+                        for (let i = 0; i < model.length; ++i) {
                             metrics.text = model[i];
                             modelWidth = Math.max(modelWidth, metrics.width);
                         }
@@ -118,15 +118,15 @@ Rectangle {
     function applyRenderingRule(index) {
         //! [ImageServiceRaster Create a rendering rule]
         // get the rendering rule info at the selected index
-        var renderingRuleInfo = imageServiceRaster.serviceInfo.renderingRuleInfos[index];
+        const renderingRuleInfo = imageServiceRaster.serviceInfo.renderingRuleInfos[index];
         // create a rendering rule object using the rendering rule info
-        var renderingRule = ArcGISRuntimeEnvironment.createObject("RenderingRule", {renderingRuleInfo: renderingRuleInfo});
+        const renderingRule = ArcGISRuntimeEnvironment.createObject("RenderingRule", {renderingRuleInfo: renderingRuleInfo});
         // create a new image service raster
-        var newImageServiceRaster = ArcGISRuntimeEnvironment.createObject("ImageServiceRaster", {url: imageServiceUrl});
+        const newImageServiceRaster = ArcGISRuntimeEnvironment.createObject("ImageServiceRaster", {url: imageServiceUrl});
         // apply the rendering rule
         newImageServiceRaster.renderingRule = renderingRule;
         // create a raster layer using the image service raster
-        var rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newImageServiceRaster});
+        const rasterLayer = ArcGISRuntimeEnvironment.createObject("RasterLayer", {raster: newImageServiceRaster});
         //! [ImageServiceRaster Create a rendering rule]
         // add the raster layer to the map
         map.operationalLayers.append(rasterLayer);

@@ -29,7 +29,7 @@ Adjust the heading and pitch sliders to rotate the cone.
 * SceneProperties.headingExpression
 * SceneProperties.pitchExpression
 * SimpleRenderer
-* SimpleRenderer.RendererSceneProperties
+* SimpleRenderer.rendererSceneProperties
 
 ## Tags
 

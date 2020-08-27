@@ -1,30 +1,36 @@
 {
     "category": "Display information",
-    "description": "This sample demonstrates how to add graphics and set renderer on graphic overlays",
+    "description": "A renderer allows you to change the style of all graphics in a graphics overlay by referencing a single symbol style.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "MapView",
-        "Map",
-        "BasemapTopographic",
-        "GraphicsOverlay",
+        "display",
+        "graphics",
+        "marker",
+        "overlay",
+        "renderer",
+        "symbol",
+        "Geometry",
         "Graphic",
-        "Point",
-        "PolylineBuilder",
-        "PolygonBuilder"
+        "GraphicsOverlay",
+        "SimpleFillSymbol",
+        "SimpleLineSymbol",
+        "SimpleMarkerSymbol",
+        "SimpleRenderer"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-gorenderers.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-gorenderers.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "BasemapTopographic",
-        "GraphicsOverlay",
+        "Geometry",
         "Graphic",
-        "Point",
-        "PolylineBuilder",
-        "PolygonBuilder"
+        "GraphicsOverlay",
+        "SimpleFillSymbol",
+        "SimpleLineSymbol",
+        "SimpleMarkerSymbol",
+        "SimpleRenderer"
     ],
     "snippets": [
         "GORenderers.qml"

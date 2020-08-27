@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/RasterRgbRenderer">
-        <file alias="sample.json">RasterRgbRenderer.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>RasterRgbRenderer.qml</file>
         <file>RasterRgbRenderer.h</file>
         <file>RasterRgbRenderer.cpp</file>

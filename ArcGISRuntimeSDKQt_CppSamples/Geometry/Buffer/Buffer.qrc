@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Geometry/Buffer">
-        <file alias="sample.json">Buffer.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>Buffer.qml</file>
         <file>Buffer.h</file>
         <file>Buffer.cpp</file>

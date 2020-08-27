@@ -1,25 +1,43 @@
 {
     "category": "Scenes",
-    "description": "This sample demonstrates how to update the orientation of a graphic using scene property rotation expressions",
+    "description": "Update the orientation of a graphic using expressions based on its attributes.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "3D",
-        "rotation expressions"
-    ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-scenepropertiesexpressions.htm",
-    "relevant_apis": [
-        "SimpleRenderer",
+        "expression",
+        "graphics",
+        "heading",
+        "pitch",
+        "rotation",
+        "scene",
+        "symbology",
+        "Graphic::attributes",
         "GraphicsOverlay",
-        "RendererSceneProperties"
+        "SceneProperties",
+        "SceneProperties::headingExpression",
+        "SceneProperties::pitchExpression",
+        "SimpleRenderer",
+        "SimpleRenderer::sceneProperties"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-scenepropertiesexpressions.htm"
+    ],
+    "relevant_apis": [
+        "Graphic::attributes",
+        "GraphicsOverlay",
+        "SceneProperties",
+        "SceneProperties::headingExpression",
+        "SceneProperties::pitchExpression",
+        "SimpleRenderer",
+        "SimpleRenderer::sceneProperties"
     ],
     "snippets": [
+        "ScenePropertiesExpressions.qml",
         "ScenePropertiesExpressions.cpp",
-        "ScenePropertiesExpressions.h",
-        "main.qml",
-        "ScenePropertiesExpressions.qml"
+        "ScenePropertiesExpressions.h"
     ],
     "title": "Scene properties expressions"
 }

@@ -1,8 +1,0 @@
-{
-    "source" :  "TraceUtilityNetwork.qml",
-    "otherSourceFiles" :  [
-        "TraceUtilityNetwork.h",
-        "TraceUtilityNetwork.cpp"
-    ],
-    "name" : "Trace utility network"
-}

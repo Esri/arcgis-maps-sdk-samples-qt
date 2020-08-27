@@ -1,31 +1,32 @@
 {
     "category": "Features",
-    "description": "This sample demonstrates how to query a layer for features that are in a related table",
+    "description": "List features related to a selected feature.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "related features",
-        "ArcGISFeatureTable",
-        "ArcGISFeature",
-        "RelatedFeatureQueryResult",
+        "features",
+        "identify",
+        "query",
+        "related",
+        "relationship",
+        "search",
+        "Feature",
         "FeatureQueryResult",
-        "FeatureIterator",
-        "Map",
-        "MapView",
-        "FeatureLayer"
+        "FeatureTable",
+        "FeatureTable.queryRelatedFeatures",
+        "RelatedFeatureQueryResult"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-listrelatedfeatures.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-listrelatedfeatures.htm"
+    ],
     "relevant_apis": [
-        "ArcGISFeatureTable",
-        "ArcGISFeature",
-        "RelatedFeatureQueryResult",
+        "Feature",
         "FeatureQueryResult",
-        "FeatureIterator",
-        "Map",
-        "MapView",
-        "FeatureLayer"
+        "FeatureTable",
+        "FeatureTable.queryRelatedFeatures",
+        "RelatedFeatureQueryResult"
     ],
     "snippets": [
         "ListRelatedFeatures.qml"

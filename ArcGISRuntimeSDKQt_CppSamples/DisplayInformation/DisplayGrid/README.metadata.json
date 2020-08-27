@@ -1,45 +1,52 @@
 {
     "category": "Display information",
-    "description": "This sample demonstrates how to display grids such as MGRS, Lat/Lon, USNG, and UTM on a map",
+    "description": "Display coordinate system grids including Latitude/Longitude, MGRS, UTM and USNG on a map view. Also, toggle label visibility and change the color of grid lines and grid labels.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "Map",
+        "MGRS",
+        "USNG",
+        "UTM",
+        "coordinates",
+        "degrees",
+        "graticule",
+        "grid",
+        "latitude",
+        "longitude",
+        "minutes",
+        "seconds",
+        "ArcGISGrid",
+        "LatitudeLongitudeGrid",
+        "LatitudeLongitudeGridLabelFormat::DecimalDegrees",
+        "LatitudeLongitudeGridLabelFormat::DegreesMinutesSeconds",
+        "MGRSGrid",
         "MapView",
-        "Grid",
-        "LatitudeLongitudeGrid",
-        "MGRSGrid",
-        "UTMGrid",
-        "USNGGrid",
-        "MGRSGrid",
-        "LatitudeLongitudeGrid",
-        "USNGGrid",
-        "UTMGrid",
+        "SimpleLineSymbol",
         "TextSymbol",
-        "SimpleLineSymbol"
+        "USNGGrid",
+        "UTMGrid"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-displaygrid.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-displaygrid.htm"
+    ],
     "relevant_apis": [
-        "Map",
+        "ArcGISGrid",
+        "LatitudeLongitudeGrid",
+        "LatitudeLongitudeGridLabelFormat::DecimalDegrees",
+        "LatitudeLongitudeGridLabelFormat::DegreesMinutesSeconds",
+        "MGRSGrid",
         "MapView",
-        "Grid",
-        "LatitudeLongitudeGrid",
-        "MGRSGrid",
-        "UTMGrid",
-        "USNGGrid",
-        "MGRSGrid",
-        "LatitudeLongitudeGrid",
-        "USNGGrid",
-        "UTMGrid",
+        "SimpleLineSymbol",
         "TextSymbol",
-        "SimpleLineSymbol"
+        "USNGGrid",
+        "UTMGrid"
     ],
     "snippets": [
         "DisplayGrid.qml",
-        "DisplayGrid.h",
-        "DisplayGrid.cpp"
+        "DisplayGrid.cpp",
+        "DisplayGrid.h"
     ],
     "title": "Display a grid"
 }

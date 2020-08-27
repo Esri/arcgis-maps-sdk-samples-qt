@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Routing/FindRoute">
-        <file alias="sample.json">FindRoute.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>FindRoute.qml</file>
         <file>screenshot.png</file>
         <file>pinA.png</file>

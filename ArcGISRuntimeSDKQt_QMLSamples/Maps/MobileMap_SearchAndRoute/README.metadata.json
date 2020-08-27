@@ -1,48 +1,51 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to geocode and route using data in a map package",
+    "dataItems": [
+        {
+            "itemId": "e1f3a7254cb845b09450f54937c16061",
+            "path": "~/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk"
+        },
+        {
+            "itemId": "133ae60b710b4d29bec40fbbebb136ab",
+            "path": "~/ArcGIS/Runtime/Data/mmpk/SanFrancisco.mmpk"
+        }
+    ],
+    "description": "Display maps and use locators to enable search and routing offline using a Mobile Map Package.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "navigate",
+        "disconnected",
+        "field mobility",
+        "geocode",
+        "network",
+        "network analysis",
         "offline",
+        "routing",
+        "search",
+        "transportation",
+        "GeocodeResult",
         "MobileMapPackage",
-        "RouteTask",
+        "ReverseGeocodeParameters",
+        "Route",
         "RouteParameters",
         "RouteResult",
-        "Stop",
-        "LocatorTask",
-        "GeocodeResult",
-        "ReverseGeocodeParameters",
-        "Graphic",
-        "GraphicsOverlay",
-        "PictureMarkerSymbol",
-        "SimpleLineSymbol",
-        "TextSymbol",
-        "SimpleRenderer",
-        "Callout"
+        "RouteTask",
+        "TransportationNetworkDataset"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-mobilemap-searchandroute.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-mobilemap-searchandroute.htm"
+    ],
     "relevant_apis": [
-        "Map",
-        "MapView",
+        "GeocodeResult",
         "MobileMapPackage",
-        "RouteTask",
+        "ReverseGeocodeParameters",
+        "Route",
         "RouteParameters",
         "RouteResult",
-        "Stop",
-        "LocatorTask",
-        "GeocodeResult",
-        "ReverseGeocodeParameters",
-        "Graphic",
-        "GraphicsOverlay",
-        "PictureMarkerSymbol",
-        "SimpleLineSymbol",
-        "TextSymbol",
-        "SimpleRenderer",
-        "Callout"
+        "RouteTask",
+        "TransportationNetworkDataset"
     ],
     "snippets": [
         "MobileMap_SearchAndRoute.qml"

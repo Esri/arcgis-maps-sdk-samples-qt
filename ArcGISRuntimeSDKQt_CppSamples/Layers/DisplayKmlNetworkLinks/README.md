@@ -22,10 +22,10 @@ The message button will show the last message received from the KML network reso
 
 ## Relevant API
 
-* `KmlDataset(Url)`
-* `KmlLayer(KmlDataset)`
-* `KmlNetworkLink`
-* `kmlNetworkLinkMessageReceived`
+* KmlDataset(Url)
+* KmlLayer(KmlDataset)
+* KmlNetworkLink
+* kmlNetworkLinkMessageReceived
 
 ## Offline data
 

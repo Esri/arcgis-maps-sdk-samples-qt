@@ -1,8 +1,0 @@
-{
-    "source" :  "ChangeAtmosphereEffect.qml",
-    "otherSourceFiles" :  [
-        "ChangeAtmosphereEffect.h",
-        "ChangeAtmosphereEffect.cpp"
-    ],
-    "name" : "Change atmosphere effect"
-}

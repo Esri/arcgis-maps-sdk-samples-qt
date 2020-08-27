@@ -1,28 +1,42 @@
 {
     "category": "Local Server",
-    "description": "Demonstrates how to start the Local Server and local feature service, create a feature layer from the local feature service, and add it to a map",
+    "dataItems": [
+        {
+            "itemId": "4e94fec734434d1288e6ebe36c3c461f",
+            "path": "~/ArcGIS/Runtime/Data/mpk/PointsofInterest.mpk"
+        }
+    ],
+    "description": "Start a local feature service and display its features in a map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-      "Offline",
-      "FeatureLayer",
+        "feature service",
+        "local",
+        "offline",
+        "server",
+        "service",
+        "FeatureLayer",
         "LocalFeatureService",
+        "LocalFeatureService::statusChanged",
         "LocalServer",
         "LocalServerStatus"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-localserverfeaturelayer.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-localserverfeaturelayer.htm"
+    ],
     "relevant_apis": [
         "FeatureLayer",
         "LocalFeatureService",
+        "LocalFeatureService::statusChanged",
         "LocalServer",
         "LocalServerStatus"
     ],
     "snippets": [
-        "LocalServerFeatureLayer.h",
+        "LocalServerFeatureLayer.qml",
         "LocalServerFeatureLayer.cpp",
-        "LocalServerFeatureLayer.qml"
+        "LocalServerFeatureLayer.h"
     ],
     "title": "Local Server feature layer"
 }

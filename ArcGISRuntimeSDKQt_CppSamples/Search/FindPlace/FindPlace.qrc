@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Search/FindPlace">
-        <file alias="sample.json">FindPlace.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>FindPlace.qml</file>
         <file>FindPlace.h</file>
         <file>FindPlace.cpp</file>

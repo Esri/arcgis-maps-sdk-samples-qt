@@ -18,9 +18,9 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.8
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
 Rectangle {
     id: rootRectangle
@@ -81,11 +81,11 @@ Rectangle {
     }
 
     function createDefaultParametersFromRectangle() {
-        var corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
-        var corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
-        var envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
+        const corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
+        const corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+        const envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
         envBuilder.setCorners(corner1, corner2);
-        var mapExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
+        const mapExtent = GeometryEngine.project(envBuilder.geometry, Factory.SpatialReference.createWebMercator());
         offlineMapTask.createDefaultGenerateOfflineMapParameters(mapExtent);
     }
 
@@ -126,29 +126,29 @@ Rectangle {
         if (!overridesReady())
             return;
 
-        var layers = map.basemap.baseLayers;
+        const layers = map.basemap.baseLayers;
         if (layers && layers.count < 1)
             return;
 
         // Obtain a key for the given basemap-layer.
-        var keyForTiledLayer = ArcGISRuntimeEnvironment.createObject("OfflineMapParametersKey", {initLayer: layers.get(0)});
+        const keyForTiledLayer = ArcGISRuntimeEnvironment.createObject("OfflineMapParametersKey", {initLayer: layers.get(0)});
 
         if (keyForTiledLayer.empty || keyForTiledLayer.type !== Enums.OfflineMapParametersTypeExportTileCache)
             return;
 
         // Obtain the dictionary of parameters for taking the basemap offline.
-        var dictionary = overrides.exportTileCacheParameters;
+        const dictionary = overrides.exportTileCacheParameters;
         if (!dictionary.contains(keyForTiledLayer))
             return;
 
         // Create a new sublist of LODs in the range requested by the user.
-        var newLODs = [];
-        for (var i = min; i < max; ++i )
+        const newLODs = [];
+        for (let i = min; i < max; ++i )
             newLODs.push(i);
 
         // Apply the sublist as the LOD level in tilecache parameters for the given
         // service.
-        var exportTileCacheParam = dictionary.value(keyForTiledLayer);
+        const exportTileCacheParam = dictionary.value(keyForTiledLayer);
         exportTileCacheParam.levelIds = newLODs;
     }
 
@@ -156,26 +156,26 @@ Rectangle {
         if (!overridesReady())
             return;
 
-        var layers = map.basemap.baseLayers;
+        const layers = map.basemap.baseLayers;
         if (layers && layers.count < 1)
             return;
 
         // Obtain a key for the given basemap-layer.
-        var keyForTiledLayer = ArcGISRuntimeEnvironment.createObject("OfflineMapParametersKey", {initLayer: layers.get(0)});
+        const keyForTiledLayer = ArcGISRuntimeEnvironment.createObject("OfflineMapParametersKey", {initLayer: layers.get(0)});
 
         if (keyForTiledLayer.empty || keyForTiledLayer.type !== Enums.OfflineMapParametersTypeExportTileCache)
             return;
 
         // Obtain the dictionary of parameters for taking the basemap offline.
-        var dictionary = overrides.exportTileCacheParameters;
+        const dictionary = overrides.exportTileCacheParameters;
         if (!dictionary.contains(keyForTiledLayer))
             return;
 
         // Create a new geometry around the origional area of interest.
-        var bufferGeom = GeometryEngine.buffer(parameters.areaOfInterest, bufferMeters);
+        const bufferGeom = GeometryEngine.buffer(parameters.areaOfInterest, bufferMeters);
 
         // Apply the geometry to the ExportTileCacheParameters.
-        var exportTileCacheParam = dictionary.value(keyForTiledLayer);
+        const exportTileCacheParam = dictionary.value(keyForTiledLayer);
 
         // Set the parameters back into the dictionary.
         exportTileCacheParam.areaOfInterest = bufferGeom;
@@ -189,10 +189,10 @@ Rectangle {
     function getFeatureLayerByName(layerName)
     {
         // Find the feature layer with the given name
-        var opLayers = map.operationalLayers;
-        for (var i = 0; i < opLayers.count; ++i)
+        const opLayers = map.operationalLayers;
+        for (let i = 0; i < opLayers.count; ++i)
         {
-            var candidateLayer = opLayers.get(i);
+            const candidateLayer = opLayers.get(i);
 
             if (candidateLayer.layerType === Enums.LayerTypeFeatureLayer && candidateLayer.name.includes(layerName)) {
                 return candidateLayer;
@@ -206,34 +206,34 @@ Rectangle {
         if (!overridesReady())
             return;
 
-        var  targetLayer = getFeatureLayerByName(layerName);
+        const targetLayer = getFeatureLayerByName(layerName);
         if (!targetLayer)
             return;
 
         // Obtain a key for the given basemap-layer.
-        var keyForTargetLayer = ArcGISRuntimeEnvironment.createObject("OfflineMapParametersKey", {initLayer: targetLayer});
+        const keyForTargetLayer = ArcGISRuntimeEnvironment.createObject("OfflineMapParametersKey", {initLayer: targetLayer});
 
         if (keyForTargetLayer.empty || keyForTargetLayer.type !== Enums.OfflineMapParametersTypeGenerateGeodatabase)
             return;
 
         // Get the dictionary of GenerateGeoDatabaseParameters.
-        var dictionary = overrides.generateGeodatabaseParameters;
+        const dictionary = overrides.generateGeodatabaseParameters;
 
         if (!dictionary.contains(keyForTargetLayer))
             return;
 
         // Grab the GenerateGeoDatabaseParameters associated with the given key.
-        var generateGdbParam = dictionary.value(keyForTargetLayer);
+        const generateGdbParam = dictionary.value(keyForTargetLayer);
 
-        var table = targetLayer.featureTable;
+        const table = targetLayer.featureTable;
 
         // Get the service layer id for the given layer.
-        var targetLayerId = table.layerInfo.serviceLayerIdAsInt;
+        const targetLayerId = table.layerInfo.serviceLayerIdAsInt;
 
         // Remove the layer option from the list.
-        var layerOptions = generateGdbParam.layerOptions;
-        var newLayerOptions = [];
-        for (var i = 0; i < layerOptions.length; i++) {
+        const layerOptions = generateGdbParam.layerOptions;
+        const newLayerOptions = [];
+        for (let i = 0; i < layerOptions.length; i++) {
             if (layerOptions[i].layerIdAsInt !== targetLayerId) {
                 newLayerOptions.push(layerOptions[i]);
             }
@@ -252,34 +252,34 @@ Rectangle {
         if (!overridesReady())
             return;
 
-        var targetLayer = getFeatureLayerByName("Hydrant");
+        const targetLayer = getFeatureLayerByName("Hydrant");
         if (!targetLayer)
             return;
 
         // Obtain a key for the given basemap-layer.
-        var keyForTargetLayer = ArcGISRuntimeEnvironment.createObject("OfflineMapParametersKey", {initLayer: targetLayer});
+        const keyForTargetLayer = ArcGISRuntimeEnvironment.createObject("OfflineMapParametersKey", {initLayer: targetLayer});
 
         if (keyForTargetLayer.empty || keyForTargetLayer.type !== Enums.OfflineMapParametersTypeGenerateGeodatabase)
             return;
 
         // Get the dictionary of GenerateGeoDatabaseParameters.
-        var dictionary = overrides.generateGeodatabaseParameters;
+        const dictionary = overrides.generateGeodatabaseParameters;
 
         if (!dictionary.contains(keyForTargetLayer))
             return;
 
         // Grab the GenerateGeoDatabaseParameters associated with the given key.
-        var generateGdbParam = dictionary.value(keyForTargetLayer);
+        const generateGdbParam = dictionary.value(keyForTargetLayer);
 
-        var table = targetLayer.featureTable;
+        const table = targetLayer.featureTable;
 
         // Get the service layer id for the given layer.
-        var targetLayerId = table.layerInfo.serviceLayerIdAsInt;
+        const targetLayerId = table.layerInfo.serviceLayerIdAsInt;
 
         // Update the where-clause on the layer.
-        var layerOptions = generateGdbParam.layerOptions;
-        for (var i = 0; i < layerOptions.length; i++) {
-            var layerOption = layerOptions[i];
+        const layerOptions = generateGdbParam.layerOptions;
+        for (let i = 0; i < layerOptions.length; i++) {
+            const layerOption = layerOptions[i];
             if (layerOption.layerIdAsInt === targetLayerId) {
                 layerOption.whereClause = whereClause;
                 layerOption.queryOption = Enums.GenerateLayerQueryOptionUseFilter;
@@ -293,34 +293,34 @@ Rectangle {
         if (!overridesReady())
             return;
 
-        var targetLayer = getFeatureLayerByName("Main");
+        const targetLayer = getFeatureLayerByName("Main");
         if (!targetLayer)
             return;
 
         // Obtain a key for the given basemap-layer.
-        var keyForTargetLayer = ArcGISRuntimeEnvironment.createObject("OfflineMapParametersKey", {initLayer: targetLayer});
+        const keyForTargetLayer = ArcGISRuntimeEnvironment.createObject("OfflineMapParametersKey", {initLayer: targetLayer});
 
         if (keyForTargetLayer.empty || keyForTargetLayer.type !== Enums.OfflineMapParametersTypeGenerateGeodatabase)
             return;
 
         // Get the dictionary of GenerateGeoDatabaseParameters.
-        var dictionary = overrides.generateGeodatabaseParameters;
+        const dictionary = overrides.generateGeodatabaseParameters;
 
         if (!dictionary.contains(keyForTargetLayer))
             return;
 
         // Grab the GenerateGeoDatabaseParameters associated with the given key.
-        var generateGdbParam = dictionary.value(keyForTargetLayer);
+        const generateGdbParam = dictionary.value(keyForTargetLayer);
 
-        var table = targetLayer.featureTable;
+        const table = targetLayer.featureTable;
 
         // Get the service layer id for the given layer.
-        var targetLayerId = table.layerInfo.serviceLayerIdAsInt;
+        const targetLayerId = table.layerInfo.serviceLayerIdAsInt;
 
         // Set the use geometry flag on the layer.
-        var layerOptions = generateGdbParam.layerOptions;
-        for (var i = 0; i < layerOptions.length; i++) {
-            var layerOption = layerOptions[i];
+        const layerOptions = generateGdbParam.layerOptions;
+        for (let i = 0; i < layerOptions.length; i++) {
+            const layerOption = layerOptions[i];
             if (layerOption.layerIdAsInt === targetLayerId) {
                 layerOption.useGeometry = clip;
                 break;
@@ -368,10 +368,10 @@ Rectangle {
         case Enums.JobStatusSucceeded:
             // show any layer errors
             if (generateJob.result.hasErrors) {
-                var layerErrors = generateJob.result.layerErrors;
-                var errorText = "";
-                for (var i = 0; i < layerErrors.length; i++) {
-                    var errorPair = layerErrors[i];
+                const layerErrors = generateJob.result.layerErrors;
+                let errorText = "";
+                for (let i = 0; i < layerErrors.length; i++) {
+                    const errorPair = layerErrors[i];
                     errorText += errorPair.layer.name + ": " + errorPair.error.message + "\n";
                 }
                 msgDialog.detailedText = errorText;

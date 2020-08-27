@@ -1,24 +1,35 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to change the viewpoint of a map",
+    "description": "Set the map view to a new viewpoint.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "area of interest",
+        "animate",
         "extent",
-        "viewpoint",
-        "map",
-        "envelope",
-        "ViewpointExtent",
-        "EnvelopeBuilder"
-    ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-changeviewpoint.htm",
-    "relevant_apis": [
+        "pan",
+        "rotate",
+        "scale",
+        "view",
+        "zoom",
+        "Enums.AnimationCurve",
+        "Geometry",
         "Map",
-        "ViewpointExtent",
-        "EnvelopeBuilder"
+        "MapView",
+        "Point",
+        "Viewpoint"
+    ],
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-changeviewpoint.htm"
+    ],
+    "relevant_apis": [
+        "Enums.AnimationCurve",
+        "Geometry",
+        "Map",
+        "MapView",
+        "Point",
+        "Viewpoint"
     ],
     "snippets": [
         "ChangeViewpoint.qml"

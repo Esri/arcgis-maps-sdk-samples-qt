@@ -1,26 +1,29 @@
 {
     "category": "Scenes",
-    "description": "This sample demonstrates how to display a scene service with a scene layer",
+    "description": "Add a scene layer to a scene.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "SceneView",
-        "Scene",
-        "Basemap",
-        "Surface",
+        "3D",
+        "layer",
+        "scene",
         "ArcGISSceneLayer",
-        "Camera"
+        "ArcGISTiledElevationSource",
+        "Scene",
+        "SceneView",
+        "Surface"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-displayscenelayer.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-displayscenelayer.htm"
+    ],
     "relevant_apis": [
-        "SceneView",
-        "Scene",
-        "Basemap",
-        "Surface",
         "ArcGISSceneLayer",
-        "Camera"
+        "ArcGISTiledElevationSource",
+        "Scene",
+        "SceneView",
+        "Surface"
     ],
     "snippets": [
         "DisplaySceneLayer.qml"

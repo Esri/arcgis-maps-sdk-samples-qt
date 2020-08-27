@@ -13,17 +13,21 @@
         "pin",
         "place",
         "table-top",
-        "tabletop"
+        "tabletop",
+        "ArcGISArView",
+        "Surface"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "ArcGISArView",
         "Surface"
     ],
     "snippets": [
+        "DisplayScenesInTabletopAR.qml",
         "DisplayScenesInTabletopAR.cpp",
         "DisplayScenesInTabletopAR.h",
-        "DisplayScenesInTabletopAR.qml",
         "PermissionsHelper.cpp",
         "PermissionsHelper.h"
     ],

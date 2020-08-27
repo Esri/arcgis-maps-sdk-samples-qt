@@ -1,0 +1,34 @@
+{
+    "category": "Layers",
+    "description": "Create a feature collection layer from a portal item.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "collection",
+        "feature collection",
+        "feature collection layer",
+        "id",
+        "item",
+        "map notes",
+        "portal",
+        "FeatureCollection",
+        "FeatureCollectionLayer",
+        "Portal",
+        "PortalItem"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "FeatureCollection",
+        "FeatureCollectionLayer",
+        "Portal",
+        "PortalItem"
+    ],
+    "snippets": [
+        "FeatureCollectionLayerFromPortal.qml"
+    ],
+    "title": "Create feature collection layer (Portal item)"
+}

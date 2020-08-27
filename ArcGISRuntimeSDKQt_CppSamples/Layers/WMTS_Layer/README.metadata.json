@@ -1,27 +1,34 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to load a Web Map Tile Service (WMTS) and display it as a layer in a Map",
+    "description": "Display a layer from a Web Map Tile Service.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "web map tile service"
+        "OGC",
+        "layer",
+        "raster",
+        "tiled",
+        "web map tile service",
+        "WmtsLayer",
+        "WmtsLayerInfo",
+        "WmtsService",
+        "WmtsServiceInfo"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-wmts-layer.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-wmts-layer.htm"
+    ],
     "relevant_apis": [
         "WmtsLayer",
         "WmtsLayerInfo",
         "WmtsService",
-        "WmtsServiceInfo",
-        "Basemap",
-        "Map",
-        "MapView"
+        "WmtsServiceInfo"
     ],
     "snippets": [
         "WMTS_Layer.qml",
-        "WMTS_Layer.h",
-        "WMTS_Layer.cpp"
+        "WMTS_Layer.cpp",
+        "WMTS_Layer.h"
     ],
     "title": "WMTS layer"
 }

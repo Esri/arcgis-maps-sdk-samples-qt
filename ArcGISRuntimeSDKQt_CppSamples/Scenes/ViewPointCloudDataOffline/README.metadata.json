@@ -1,23 +1,31 @@
 {
     "category": "Scenes",
-    "description": "Display local 3D point cloud data",
+    "dataItems": [
+        {
+            "itemId": "34da965ca51d4c68aa9b3a38edb29e00",
+            "path": "~/ArcGIS/Runtime/Data/slpk/sandiego-north-balboa-pointcloud.slpk"
+        }
+    ],
+    "description": "Display local 3D point cloud data.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "3D",
+        "lidar",
         "point cloud",
-        "lidar"
+        "PointCloudLayer"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-viewpointclouddataoffline.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-viewpointclouddataoffline.htm"
+    ],
     "relevant_apis": [
         "PointCloudLayer"
     ],
     "snippets": [
-        "ViewPointCloudDataOffline.cpp",
-        "main.qml",
         "ViewPointCloudDataOffline.qml",
+        "ViewPointCloudDataOffline.cpp",
         "ViewPointCloudDataOffline.h"
     ],
     "title": "View point cloud data offline"

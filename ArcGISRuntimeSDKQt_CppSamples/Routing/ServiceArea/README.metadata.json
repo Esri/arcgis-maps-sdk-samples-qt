@@ -1,14 +1,16 @@
 {
     "category": "Routing",
-    "description": "Demonstrates how to find services areas around a point using the ServiceAreaTask",
+    "description": "Find the service area within a network from a given point.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-      "Network Analysis",
-      "Service Area",
-      "Closest Facility",
+        "barriers",
+        "facilities",
+        "impedance",
+        "logistics",
+        "routing",
         "PolylineBarrier",
         "ServiceAreaFacility",
         "ServiceAreaParameters",
@@ -16,23 +18,21 @@
         "ServiceAreaResult",
         "ServiceAreaTask"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-servicearea.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-servicearea.htm"
+    ],
     "relevant_apis": [
-        "Map",
-        "GraphicsOverlay",
-        "MapView",
         "PolylineBarrier",
         "ServiceAreaFacility",
         "ServiceAreaParameters",
         "ServiceAreaPolygon",
         "ServiceAreaResult",
-        "ServiceAreaTask",
-        "PolylineBuilder"
+        "ServiceAreaTask"
     ],
     "snippets": [
-        "ServiceArea.h",
+        "ServiceArea.qml",
         "ServiceArea.cpp",
-        "ServiceArea.qml"
+        "ServiceArea.h"
     ],
     "title": "Service area"
 }

@@ -1,8 +1,0 @@
-{
-    "source" :  "FindClosestFacilityToMultipleIncidentsService.qml",
-    "otherSourceFiles" :  [
-        "FindClosestFacilityToMultipleIncidentsService.h",
-        "FindClosestFacilityToMultipleIncidentsService.cpp"
-    ],
-    "name" : "Find closest facility to multiple incidents (service)"
-}

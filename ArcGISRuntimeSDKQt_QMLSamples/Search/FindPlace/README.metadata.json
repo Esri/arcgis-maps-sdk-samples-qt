@@ -1,50 +1,41 @@
 {
     "category": "Search",
-    "description": "This sample demonstrates how to use geocode functionality to search for points of interest around a location or within an extent",
+    "description": "Find places of interest near a location or within a specific area.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "POI",
+        "businesses",
+        "geocode",
+        "locations",
+        "locator",
+        "places of interest",
         "point of interest",
-        "find location",
-        "LocatorTask",
+        "search",
+        "suggestions",
         "GeocodeParameters",
         "GeocodeResult",
-        "SuggestListModel",
+        "LocatorTask",
         "SuggestParameters",
-        "Callout",
-        "GeometryEngine",
-        "GraphicsOverlay",
-        "Graphic",
-        "SimpleRenderer",
-        "PictureMarkerSymbol",
-        "LocationDisplay",
-        "IdentifyGraphicsOverlayResult"
+        "SuggestResult"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-findplace.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-findplace.htm"
+    ],
     "relevant_apis": [
-        "LocatorTask",
         "GeocodeParameters",
         "GeocodeResult",
-        "SuggestListModel",
+        "LocatorTask",
         "SuggestParameters",
-        "Callout",
-        "GeometryEngine",
-        "GraphicsOverlay",
-        "Graphic",
-        "SimpleRenderer",
-        "PictureMarkerSymbol",
-        "LocationDisplay",
-        "IdentifyGraphicsOverlayResult",
-        "MapView",
-        "Map"
+        "SuggestResult"
     ],
     "snippets": [
-        "SearchBox.qml",
-        "SuggestionView.qml",
         "FindPlace.qml",
-        "SearchButton.qml"
+        "SearchBox.qml",
+        "SearchButton.qml",
+        "SuggestionView.qml"
     ],
     "title": "Find a place"
 }

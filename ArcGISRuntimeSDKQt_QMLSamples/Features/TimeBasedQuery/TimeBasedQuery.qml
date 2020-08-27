@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -37,8 +37,8 @@ Rectangle {
                     featureRequestMode: Enums.FeatureRequestModeManualCache // set the cache mode to manual
                     onLoadStatusChanged: {
                         if (loadStatus === Enums.LoadStatusLoaded) {
-                            var clearCache = true;
-                            var outFields = ["*"];
+                            const clearCache = true;
+                            const outFields = ["*"];
 
                             // populate the table with records matching the query
                             hurricaneTable.populateFromService(queryParams, clearCache, outFields);

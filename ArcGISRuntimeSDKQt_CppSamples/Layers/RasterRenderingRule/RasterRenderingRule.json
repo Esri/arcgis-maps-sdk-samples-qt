@@ -1,9 +1,0 @@
-{
-    "source" :  "RasterRenderingRule.qml",
-    "name" : "Raster rendering rule",
-    "otherSourceFiles" :  [
-        "RasterRenderingRule.h",
-        "RasterRenderingRule.cpp"
-	]
-}
-

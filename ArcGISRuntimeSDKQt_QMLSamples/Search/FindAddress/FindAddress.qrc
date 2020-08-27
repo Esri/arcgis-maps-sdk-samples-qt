@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Search/FindAddress">
-        <file alias="sample.json">FindAddress.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>FindAddress.qml</file>
         <file>screenshot.png</file>
         <file>ic_menu_closeclear_light_d.png</file>

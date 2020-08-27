@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/DisplayGrid">
-        <file alias="sample.json">DisplayGrid.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>DisplayGrid.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

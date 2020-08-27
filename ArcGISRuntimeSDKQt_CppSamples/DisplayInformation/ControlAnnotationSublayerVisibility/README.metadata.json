@@ -1,27 +1,38 @@
 {
     "category": "Display information",
+    "dataItems": [
+        {
+            "itemId": "b87307dcfb26411eb2e92e1627cb615b",
+            "path": "~/ArcGIS/Runtime/Data/mmpk/GasDeviceAnno.mmpk"
+        }
+    ],
     "description": "Use annotation sublayers to gain finer control of annotation layer subtypes.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "annotation", 
-        "scale", 
-        "text", 
-        "utilities", 
-        "visualization"
+        "annotation",
+        "scale",
+        "text",
+        "utilities",
+        "visualization",
+        "AnnotationLayer",
+        "AnnotationSublayer",
+        "LayerContent"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "AnnotationLayer",
         "AnnotationSublayer",
         "LayerContent"
     ],
     "snippets": [
+        "ControlAnnotationSublayerVisibility.qml",
         "ControlAnnotationSublayerVisibility.cpp",
-        "ControlAnnotationSublayerVisibility.h",
-        "ControlAnnotationSublayerVisibility.qml"
+        "ControlAnnotationSublayerVisibility.h"
     ],
     "title": "Control annotation sublayer visibility"
 }

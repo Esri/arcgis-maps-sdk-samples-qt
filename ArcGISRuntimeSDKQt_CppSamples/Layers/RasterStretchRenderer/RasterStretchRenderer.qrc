@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/RasterStretchRenderer">
-        <file alias="sample.json">RasterStretchRenderer.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>RasterStretchRenderer.qml</file>
         <file>RasterStretchRenderer.h</file>
         <file>RasterStretchRenderer.cpp</file>

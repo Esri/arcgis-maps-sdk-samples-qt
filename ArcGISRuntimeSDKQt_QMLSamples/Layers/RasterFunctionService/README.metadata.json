@@ -1,23 +1,34 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to create an ImageServiceRaster and apply a RasterFunction to it",
+    "dataItems": [
+        {
+            "itemId": "cd8876a18ab44680a5a18aef7c2760b0",
+            "path": "~/ArcGIS/Runtime/Data/raster/hillshade_simplified.json"
+        }
+    ],
+    "description": "Load a raster from a service, then apply a function to it.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "Map",
-        "MapQuickView",
+        "function",
+        "layer",
+        "raster",
+        "raster function",
+        "service",
         "ImageServiceRaster",
+        "Raster",
         "RasterFunction",
         "RasterFunctionArguments",
         "RasterLayer"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-rasterfunctionservice.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-rasterfunctionservice.htm"
+    ],
     "relevant_apis": [
-        "Map",
-        "MapQuickView",
         "ImageServiceRaster",
+        "Raster",
         "RasterFunction",
         "RasterFunctionArguments",
         "RasterLayer"

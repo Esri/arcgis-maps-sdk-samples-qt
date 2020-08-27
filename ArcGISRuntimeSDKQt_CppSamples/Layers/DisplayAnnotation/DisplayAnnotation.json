@@ -1,8 +1,0 @@
-{
-    "source" :  "DisplayAnnotation.qml",
-    "otherSourceFiles" :  [
-        "DisplayAnnotation.h",
-        "DisplayAnnotation.cpp"
-    ],
-    "name" : "Display annotation"
-}

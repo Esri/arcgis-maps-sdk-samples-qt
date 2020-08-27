@@ -1,32 +1,29 @@
 {
     "category": "Cloud and portal",
-    "description": "This sample demonstrates how to load a Portal and then use the organization's predefined basemaps query to get all basemaps",
+    "description": "Connect to Portal to give users access to their organization's basemaps.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "predefined basemap",
+        "basemap",
+        "integration",
+        "organization",
+        "portal",
         "Portal",
-        "Credential",
-        "AuthenticationManager",
-        "BasemapListModel",
-        "Map",
-        "MapView"
+        "Portal::fetchBasemaps"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-showorgbasemaps.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-showorgbasemaps.htm"
+    ],
     "relevant_apis": [
         "Portal",
-        "Credential",
-        "AuthenticationManager",
-        "BasemapListModel",
-        "Map",
-        "MapView"
+        "Portal::fetchBasemaps"
     ],
     "snippets": [
-        "ShowOrgBasemaps.h",
         "ShowOrgBasemaps.qml",
-        "ShowOrgBasemaps.cpp"
+        "ShowOrgBasemaps.cpp",
+        "ShowOrgBasemaps.h"
     ],
     "title": "Show organization basemaps"
 }

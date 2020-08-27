@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -45,7 +45,7 @@ Rectangle {
                 Point {
                     y: 39.7294
                     x: -104.8319
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
                 targetScale: 200000
             }
@@ -66,9 +66,9 @@ Rectangle {
                 return;
 
             // Get the first feature table
-            var gpkgFeatureTable = gpkg.geoPackageFeatureTables[0];
+            const gpkgFeatureTable = gpkg.geoPackageFeatureTables[0];
             // Create a FeatureLayer with the table
-            var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: gpkgFeatureTable});
+            const featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer", {featureTable: gpkgFeatureTable});
             // Append the layer to the map
             map.operationalLayers.append(featureLayer);
         }

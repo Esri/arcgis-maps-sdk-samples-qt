@@ -1,23 +1,48 @@
 {
     "category": "Search",
-    "description": "This sample demonstrates how to search a DictionarySymbolStyle and return the results in a ListView",
+    "dataItems": [
+        {
+            "itemId": "c78b149a1d52414682c86a5feeb13d30",
+            "path": "~/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
+        }
+    ],
+    "description": "Find symbols within the mil2525d specification that match a keyword.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "CIM",
+        "MIL-STD-2525B",
+        "MIL-STD-2525C",
+        "MIL-STD-2525D",
+        "defense",
+        "look up",
+        "mil2525b",
+        "mil2525c",
+        "mil2525d",
+        "military",
         "military symbology",
-        "symbol dictionary"
+        "search",
+        "symbology",
+        "DictionarySymbolStyle",
+        "Symbol",
+        "SymbolStyleSearchParameters",
+        "SymbolStyleSearchResultListModel"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-searchdictionarysymbolstyle.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-searchdictionarysymbolstyle.htm"
+    ],
     "relevant_apis": [
         "DictionarySymbolStyle",
-        "SymbolStyleSearchParameters"
+        "Symbol",
+        "SymbolStyleSearchParameters",
+        "SymbolStyleSearchResultListModel"
     ],
     "snippets": [
-        "SearchDictionarySymbolStyle.h",
+        "SearchDictionarySymbolStyle.qml",
         "SearchDictionarySymbolStyle.cpp",
-        "SearchDictionarySymbolStyle.qml"
+        "SearchDictionarySymbolStyle.h"
     ],
     "title": "Search dictionary symbol style"
 }

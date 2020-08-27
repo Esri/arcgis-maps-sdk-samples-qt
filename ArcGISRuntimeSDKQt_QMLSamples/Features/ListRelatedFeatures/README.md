@@ -1,6 +1,6 @@
 # List related features
 
-List features related to the selected feature.
+List features related to a selected feature.
 
 ![](screenshot.png)
 
@@ -22,7 +22,7 @@ Click on a feature to select it. The related features will be displayed in a lis
 * Feature
 * FeatureTable
 * FeatureQueryResult
-* FeatureTable.QueryRelatedFeatures
+* FeatureTable.queryRelatedFeatures
 * RelatedFeatureQueryResult
 
 ## Tags

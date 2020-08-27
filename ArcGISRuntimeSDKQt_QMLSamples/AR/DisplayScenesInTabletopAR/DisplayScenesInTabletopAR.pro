@@ -20,7 +20,7 @@ QT += opengl qml quick
 
 CONFIG += c++14
 
-ARCGIS_RUNTIME_VERSION = 100.8
+ARCGIS_RUNTIME_VERSION = 100.9
 include($$PWD/arcgisruntime.pri)
 
 HEADERS += \
@@ -54,6 +54,8 @@ include($$AR_TOOLKIT_SOURCE_PATH/Plugin/QmlApi/ArQmlApi.pri)
 
 android {
     QT += androidextras
+
+    ANDROID_ABIS = arm64-v8a
 
     DISTFILES += \
         android/AndroidManifest.xml \

@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.XmlListModel 2.0
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -50,7 +50,7 @@ Rectangle {
 
             DictionaryRenderer {
                 id: dictionaryRenderer
-                dictionarySymbolStyle: DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
+                dictionarySymbolStyle: Factory.DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/mil2525d.stylx")
             }
         }
         //! [Apply Dictionary Renderer Graphics Overlay QML]
@@ -88,29 +88,29 @@ Rectangle {
 
         onStatusChanged: {
             if (status === XmlListModel.Ready) {
-                for (var i = 0; i < count; i++) {
-                    var element = get(i);
-                    var wkid = element._wkid;
+                for (let i = 0; i < count; i++) {
+                    const element = get(i);
+                    let wkid = element._wkid;
                     if (!wkid) {
                         // If _wkid was absent, use WGS 1984 (4326) by default.
                         wkid = 4326;
                     }
-                    var pointStrings = element._control_points.split(";");
-                    var sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
-                    var geom;
+                    const pointStrings = element._control_points.split(";");
+                    const sr = ArcGISRuntimeEnvironment.createObject("SpatialReference", { wkid: wkid });
+                    let geom;
                     if (pointStrings.length === 1) {
                         // It's a point
-                        var pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder");
+                        const pointBuilder = ArcGISRuntimeEnvironment.createObject("PointBuilder");
                         pointBuilder.spatialReference = sr;
-                        var coords = pointStrings[0].split(",");
+                        const coords = pointStrings[0].split(",");
                         pointBuilder.setXY(coords[0], coords[1]);
                         geom = pointBuilder.geometry;
                     } else {
-                        var builder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder");
+                        const builder = ArcGISRuntimeEnvironment.createObject("MultipointBuilder");
                         builder.spatialReference = sr;
 
-                        for (var ptIndex = 0; ptIndex < pointStrings.length; ptIndex++) {
-                            var coords = pointStrings[ptIndex].split(",");
+                        for (let ptIndex = 0; ptIndex < pointStrings.length; ptIndex++) {
+                            const coords = pointStrings[ptIndex].split(",");
                             builder.points.addPointXY(coords[0], coords[1]);
                         }
                         geom = builder.geometry;
@@ -121,7 +121,7 @@ Rectangle {
                         element._control_points = undefined;
                         element._wkid = undefined;
 
-                        var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: geom });
+                        const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", { geometry: geom });
                         graphic.attributes.attributesJson = element;
                         graphicsOverlay.graphics.append(graphic);
                     }

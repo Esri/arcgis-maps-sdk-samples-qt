@@ -1,20 +1,24 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to display a map view with a basemap",
+    "description": "Display a map with an imagery basemap.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "MapView",
+        "basemap",
+        "map",
+        "Basemap",
         "Map",
-        "Basemap"
+        "MapView"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-displaymap.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-displaymap.htm"
+    ],
     "relevant_apis": [
-        "MapView",
+        "Basemap",
         "Map",
-        "Basemap"
+        "MapView"
     ],
     "snippets": [
         "DisplayMap.qml"

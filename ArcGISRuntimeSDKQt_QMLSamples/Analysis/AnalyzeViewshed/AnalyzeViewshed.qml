@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -42,7 +42,7 @@ Rectangle {
                 Point {
                     x: 6.84905317262762
                     y: 45.3790902612337
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
                 targetScale: 100000
             }
@@ -88,7 +88,7 @@ Rectangle {
             resultsOverlay.graphics.clear();
 
             // Create a marker graphic where the user clicked on the map and add it to the existing graphics overlay
-            var inputGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: mouse.mapPoint});
+            const inputGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: mouse.mapPoint});
             inputOverlay.graphics.append(inputGraphic);
 
             // Execute the geoprocessing task
@@ -110,30 +110,30 @@ Rectangle {
         // function to caclulate the viewshed
         function calculateViewshed(location) {
             // Create a new feature collection table based upon point geometries using the current map view spatial reference
-            var inputFeatures = ArcGISRuntimeEnvironment.createObject("FeatureCollectionTable", {
-                                                                          geometryType: Enums.GeometryTypePoint,
-                                                                          spatialReference: SpatialReference.createWebMercator()
-                                                                      });
+            const inputFeatures = ArcGISRuntimeEnvironment.createObject("FeatureCollectionTable", {
+                                                                            geometryType: Enums.GeometryTypePoint,
+                                                                            spatialReference: Factory.SpatialReference.createWebMercator()
+                                                                        });
 
             // Create a new feature from the feature collection table. It will not have a coordinate location (x,y) yet
-            var inputFeature = inputFeatures.createFeature();
+            const inputFeature = inputFeatures.createFeature();
 
             // Assign a physical location to the new point feature based upon where the user clicked on the map view
             inputFeature.geometry = location;
 
             // connect to addFeature status changed signal
-            inputFeatures.addFeatureStatusChanged.connect(function() {
+            inputFeatures.addFeatureStatusChanged.connect(()=> {
                 if (inputFeatures.addFeatureStatus === Enums.TaskStatusCompleted) {
                     // Create the parameters that are passed to the used geoprocessing task
-                    var viewshedParameters = ArcGISRuntimeEnvironment.createObject("GeoprocessingParameters", {
+                    const viewshedParameters = ArcGISRuntimeEnvironment.createObject("GeoprocessingParameters", {
                                                                                          executionType: Enums.GeoprocessingExecutionTypeSynchronousExecute
                                                                                      });
 
                     // Request the output features to use the same SpatialReference as the map view
-                    viewshedParameters.outputSpatialReference = SpatialReference.createWebMercator();
+                    viewshedParameters.outputSpatialReference = Factory.SpatialReference.createWebMercator();
 
                     // Add an input location to the geoprocessing parameters
-                    var inputs = {};
+                    const inputs = {};
                     inputs["Input_Observation_Point"] = ArcGISRuntimeEnvironment.createObject("GeoprocessingFeatures", { features: inputFeatures });
                     viewshedParameters.inputs = inputs;
 
@@ -175,15 +175,15 @@ Rectangle {
         // function to handle the results from the GeoprocessingJob
         function processResults(result) {
             // Get the results from the outputs as GeoprocessingFeatures
-            var viewshedResultFeatures = result.outputs["Viewshed_Result"];
+            const viewshedResultFeatures = result.outputs["Viewshed_Result"];
 
             // Add all the features from the result feature set as a graphics to the map
-            var viewshedAreas = viewshedResultFeatures.features.iterator;
+            const viewshedAreas = viewshedResultFeatures.features.iterator;
             while (viewshedAreas.hasNext) {
-                var feat = viewshedAreas.next();
-                var graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
-                                                                        geometry: feat.geometry
-                                                                    });
+                const feat = viewshedAreas.next();
+                const graphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                          geometry: feat.geometry
+                                                                      });
                 resultsOverlay.graphics.append(graphic);
             }
         }

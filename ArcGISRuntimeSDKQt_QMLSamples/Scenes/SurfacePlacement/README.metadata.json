@@ -15,13 +15,20 @@
         "relative",
         "scenes",
         "sea level",
-        "surface placement"
+        "surface placement",
+        "Graphic",
+        "GraphicsOverlay",
+        "LayerSceneProperties.surfacePlacement",
+        "SceneProperties",
+        "Surface"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-surfaceplacement.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-surfaceplacement.htm"
+    ],
     "relevant_apis": [
         "Graphic",
         "GraphicsOverlay",
-        "LayerSceneProperties::SurfacePlacement",
+        "LayerSceneProperties.surfacePlacement",
         "SceneProperties",
         "Surface"
     ],

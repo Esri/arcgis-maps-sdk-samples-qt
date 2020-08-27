@@ -131,7 +131,7 @@ Rectangle {
                             onModelChanged: {
                                 if (!fields)
                                     return;
-                                for (var i = 0; i < model.length; ++i) {
+                                for (let i = 0; i < model.length; ++i) {
                                     metricsFieldComboBox.text = model[i];
                                     modelWidth = Math.max(modelWidth, metricsFieldComboBox.width);
                                 }
@@ -155,7 +155,7 @@ Rectangle {
                             width: modelWidth + leftPadding + rightPadding + indicator.width
                             model: statisticTypes
                             Component.onCompleted : {
-                                for (var i = 0; i < model.length; ++i) {
+                                for (let i = 0; i < model.length; ++i) {
                                     metricsStatisticComboBox.text = model[i];
                                     modelWidth = Math.max(modelWidth, metricsStatisticComboBox.width);
                                 }
@@ -171,7 +171,7 @@ Rectangle {
                             width: 30
                             height: width
                             onClicked: {
-                                for (var i = 0; i < statisticsModel.count; i++) {
+                                for (let i = 0; i < statisticsModel.count; i++) {
                                     if (statisticsModel.get(i).field === fieldComboBox.currentText) {
                                         if (statisticsModel.get(i).statistic === statisticComboBox.currentText)
                                             return;
@@ -289,12 +289,12 @@ Rectangle {
                                             groupingFields.push(text);
                                         } else {
                                             // remove the item from the selected list
-                                            var i = groupingFields.indexOf(text);
+                                            const i = groupingFields.indexOf(text);
                                             if (i !== -1)
                                                 groupingFields.splice(i, 1);
 
                                             // remove the item from the orderBy list
-                                            for (var j = 0; j < orderByModel.count; j++) {
+                                            for (let j = 0; j < orderByModel.count; j++) {
                                                 if (orderByModel.get(j).field === text)
                                                     orderByModel.remove(j, 1);
                                             }
@@ -324,7 +324,7 @@ Rectangle {
                                 return;
 
                             // return if the field is already added
-                            for (var i =  0; i < orderByModel.count; i++) {
+                            for (let i =  0; i < orderByModel.count; i++) {
                                 if (orderByModel.get(i).field === fields[fieldView.currentIndex])
                                     return;
                             };
@@ -404,7 +404,7 @@ Rectangle {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: "Change Sort Order"
                         onClicked: {
-                            var i = groupingView.currentIndex;
+                            const i = groupingView.currentIndex;
                             if (orderByModel.get(i).order === "Ascending")
                                 orderByModel.get(i).order = "Descending";
                             else

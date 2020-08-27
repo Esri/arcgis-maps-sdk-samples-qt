@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -95,8 +95,7 @@ Rectangle {
                 return;
 
             if (modeComboBox.currentText === "Facility") {
-                var facilityGraphic = ArcGISRuntimeEnvironment.createObject(
-                            "Graphic", {geometry: mouse.mapPoint});
+                const facilityGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: mouse.mapPoint});
                 facilitiesOverlay.graphics.append(facilityGraphic);
             }
             else {
@@ -163,7 +162,7 @@ Rectangle {
 
             busy = false;
             facilityParams = createDefaultParametersResult;
-            facilityParams.outputSpatialReference = SpatialReference.createWebMercator();
+            facilityParams.outputSpatialReference = Factory.SpatialReference.createWebMercator();
             facilityParams.returnPolygonBarriers = true;
             facilityParams.polygonDetail = Enums.ServiceAreaPolygonDetailHigh;
         }
@@ -180,13 +179,12 @@ Rectangle {
                 return;
             }
 
-            var numFacilities = facilitiesOverlay.graphics.rowCount();
-            for (var i = 0; i < numFacilities; i++) {
-                var results = solveServiceAreaResult.resultPolygons(i);
-                for (var j = 0; j < results.length; j++) {
-                    var resultGeometry = results[j].geometry;
-                    var resultGraphic = ArcGISRuntimeEnvironment.createObject(
-                                "Graphic", {geometry: resultGeometry});
+            const numFacilities = facilitiesOverlay.graphics.rowCount();
+            for (let i = 0; i < numFacilities; i++) {
+                const results = solveServiceAreaResult.resultPolygons(i);
+                for (let j = 0; j < results.length; j++) {
+                    const resultGeometry = results[j].geometry;
+                    const resultGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: resultGeometry});
                     areasOverlay.graphics.append(resultGraphic);
                 }
             }
@@ -228,7 +226,7 @@ Rectangle {
             }
 
             Component.onCompleted : {
-                for (var i = 0; i < model.length; ++i) {
+                for (let i = 0; i < model.length; ++i) {
                     metrics.text = model[i];
                     modelWidth = Math.max(modelWidth, metrics.width);
                 }
@@ -280,13 +278,13 @@ Rectangle {
 
     function createBarrierBuilder() {
         barrierBuilder = ArcGISRuntimeEnvironment.createObject(
-                    "PolylineBuilder", {spatialReference: SpatialReference.createWebMercator()})
+                    "PolylineBuilder", {spatialReference: Factory.SpatialReference.createWebMercator()})
     }
 
     function handleBarrierPoint(mapPoint) {
         barrierBuilder.addPoint(mapPoint);
         // update the geometry for the current barrier - or create 1 if it does not exist
-        var barriersCount = barriersOverlay.graphics.rowCount();
+        const barriersCount = barriersOverlay.graphics.rowCount();
         if (barriersCount > 0)
             barriersOverlay.graphics.get(barriersCount-1).geometry = barrierBuilder.geometry
         else
@@ -294,8 +292,7 @@ Rectangle {
     }
 
     function addBarrierGraphic() {
-        var barrierGraphic = ArcGISRuntimeEnvironment.createObject(
-                    "Graphic", {geometry: barrierBuilder.geometry});
+        const barrierGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {geometry: barrierBuilder.geometry});
         barriersOverlay.graphics.append(barrierGraphic);
     }
 
@@ -310,21 +307,17 @@ Rectangle {
 
         busy = true;
 
-        var facilities = [];
-        facilitiesOverlay.graphics.forEach(function(graphic) {
-            var facility = ArcGISRuntimeEnvironment.createObject(
-                        "ServiceAreaFacility", {geometry: graphic.geometry});
-            facilities.push(facility);
-        });
+        const facilities = [];
+        facilitiesOverlay.graphics.forEach(graphic => facilities.push(ArcGISRuntimeEnvironment.createObject("ServiceAreaFacility", {
+                                                                                                                geometry: graphic.geometry
+                                                                                                            })));
 
         facilityParams.setFacilities(facilities);
 
-        var barriers = [];
-        barriersOverlay.graphics.forEach(function(graphic) {
-            var barrier = ArcGISRuntimeEnvironment.createObject(
-                        "PolylineBarrier", {geometry: graphic.geometry});
-            barriers.push(barrier);
-        });
+        const barriers = [];
+        barriersOverlay.graphics.forEach(graphic => barriers.push(ArcGISRuntimeEnvironment.createObject("PolylineBarrier", {
+                                                                                                            geometry: graphic.geometry
+                                                                                                        })));
 
         if (barriers.length > 0)
             facilityParams.setPolylineBarriers(barriers);

@@ -1,23 +1,35 @@
 {
     "category": "Layers",
+    "dataItems": [
+        {
+            "itemId": "9d2987a825c646468b3ce7512fb76e2d",
+            "path": "~/ArcGIS/Runtime/Data/ENC/ExchangeSetwithoutUpdates.zip"
+        },
+        {
+            "itemId": "af74ccbb69c846ef97085e4bebd3e76a",
+            "path": "~/ArcGIS/Runtime/Data/ENC/hydrography.zip"
+        }
+    ],
     "description": "Display nautical charts per the ENC specification.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "Data",
+        "ENC",
+        "hydrographic",
+        "layers",
+        "maritime",
+        "nautical chart",
         "EncCell",
         "EncDataset",
         "EncExchangeSet",
-        "EncLayer",
-        "Data",
-        "ENC",
-        "maritime",
-        "nautical chart",
-        "layers",
-        "hydrographic"
+        "EncLayer"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "EncCell",
         "EncDataset",

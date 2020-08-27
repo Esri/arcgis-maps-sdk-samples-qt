@@ -1,8 +1,0 @@
-{
-    "source" :  "ViewContentBeneathTerrainSurface.qml",
-    "otherSourceFiles" :  [
-        "ViewContentBeneathTerrainSurface.h",
-        "ViewContentBeneathTerrainSurface.cpp"
-    ],
-    "name" : "View content beneath terrain surface"
-}

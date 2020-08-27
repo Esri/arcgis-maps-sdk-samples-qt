@@ -1,36 +1,38 @@
 {
     "category": "Analysis",
-    "description": "This sample demonstrates how to calculate a Viewshed from a SceneView's current Camera Viewpoint",
+    "description": "Analyze the viewshed for a camera. A viewshed shows the visible and obstructed areas from an observer's vantage point.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "LocationViewshed",
-        "AnalysisOverlay",
-        "Analysis",
-        "Viewshed",
+        "3D",
         "Scene",
-        "SceneView",
-        "Surface",
+        "viewshed",
+        "visibility analysis",
+        "AnalysisOverlay",
+        "ArcGISScene",
+        "ArcGISSceneLayer",
         "ArcGISTiledElevationSource",
-        "Camera"
+        "Camera",
+        "LocationViewshed",
+        "SceneView"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-viewshedcamera.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-viewshedcamera.htm"
+    ],
     "relevant_apis": [
-        "LocationViewshed",
         "AnalysisOverlay",
-        "Analysis",
-        "Viewshed",
-        "Scene",
-        "SceneView",
-        "Surface",
+        "ArcGISScene",
+        "ArcGISSceneLayer",
         "ArcGISTiledElevationSource",
-        "Camera"
+        "Camera",
+        "LocationViewshed",
+        "SceneView"
     ],
     "snippets": [
-        "ViewshedCamera.cpp",
         "ViewshedCamera.qml",
+        "ViewshedCamera.cpp",
         "ViewshedCamera.h"
     ],
     "title": "Viewshed (camera)"

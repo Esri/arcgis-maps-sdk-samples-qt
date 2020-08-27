@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.8
+import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
 Rectangle {
     id: rootRectangle
@@ -222,7 +222,7 @@ Rectangle {
                     onClicked: {
                         addItemButton.border.width = 4;
                         //! [PortalUser addItemWithUrl]
-                        var localCSVFile = "qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv";
+                        const localCSVFile = "qrc:/Samples/CloudAndPortal/AddItemsToPortal/add_item_sample.csv";
                         myUser.addPortalItemWithUrl(itemToAdd, localCSVFile, "add_item_sample.csv");
                         //! [PortalUser addItemWithUrl]
                     }

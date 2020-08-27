@@ -1,17 +1,26 @@
 {
     "category": "Scenes",
-    "description": "Use a terrain surface with elevation described by a raster file",
+    "dataItems": [
+        {
+            "itemId": "98092369c4ae4d549bbbd45dba993ebc",
+            "path": "~/ArcGIS/Runtime/Data/raster/MontereyElevation.dt2"
+        }
+    ],
+    "description": "Set the terrain surface with elevation described by a raster file.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "raster",
-        "elevation surface",
+        "3D",
+        "Elevation",
+        "Raster",
         "RasterElevationSource",
         "Surface"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-createterrainsurfacefromlocalraster.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-createterrainsurfacefromlocalraster.htm"
+    ],
     "relevant_apis": [
         "RasterElevationSource",
         "Surface"

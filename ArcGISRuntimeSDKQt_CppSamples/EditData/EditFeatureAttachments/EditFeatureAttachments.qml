@@ -19,7 +19,7 @@ import QtQuick.Controls 2.2
 import Qt.labs.platform 1.0
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.8
+import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample
@@ -212,7 +212,7 @@ EditFeatureAttachmentsSample {
     FileDialog {
         id: fileDialog
         folder: {
-            var locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation)
+            const locs = StandardPaths.standardLocations(StandardPaths.PicturesLocation)
             return locs.length > 0 ? locs.last() : "";
         }
         onAccepted: {

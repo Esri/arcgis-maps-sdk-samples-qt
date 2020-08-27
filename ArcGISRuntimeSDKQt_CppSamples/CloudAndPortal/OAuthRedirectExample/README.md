@@ -95,7 +95,7 @@ You may need to adjust the Qt Postlink step created by QtCreator to point to the
 E.g. Go to Build Phases/Qt PostLink and edit the script to look something like:
 
 `
-install_name_tool -change libEsriCommonQt.dylib "~/ArcGIS_SDKs/Qt100.8/sdk/macOS/x64/lib/libEsriCommonQt.dylib" Release/OAuthRedirectExample.app/Contents/MacOS/OAuthRedirectExample
+install_name_tool -change libEsriCommonQt.dylib "~/ArcGIS_SDKs/Qt100.9/sdk/macOS/x64/lib/libEsriCommonQt.dylib" Release/OAuthRedirectExample.app/Contents/MacOS/OAuthRedirectExample
 `
 
 Next go to Info/URL Types and add a new URL type with Identifier and URL Schemes set to the custom URL scheme you set up for your App.
@@ -131,7 +131,8 @@ You can download the project from [GitHub](http://links.esri.com/qtSingleApplica
 The sample is designed to include the source files directly: update the `QT_SINGLEAPP_DIR`
 variable in `OAuthRedirectExample.pro` to point to the location you unpack it to.
 
-## Features
+## Relevant API
+
 - AuthenticationChallenge
 - AuthenticationManager
 - Portal

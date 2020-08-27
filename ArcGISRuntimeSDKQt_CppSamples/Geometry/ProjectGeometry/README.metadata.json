@@ -1,27 +1,36 @@
 {
     "category": "Geometry",
-    "description": "This sample demonstrates how to project a point from one spatial reference to another",
+    "description": "Project a point from one spatial reference to another.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "project geometry",
-        "spatial seference",
-        "projection",
+        "WGS 84",
+        "Web Mercator",
         "coordinate system",
-        "geometry engine"
+        "coordinates",
+        "latitude",
+        "longitude",
+        "projected",
+        "projection",
+        "spatial reference",
+        "GeometryEngine",
+        "Point",
+        "SpatialReference"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-projectgeometry.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-projectgeometry.htm"
+    ],
     "relevant_apis": [
         "GeometryEngine",
         "Point",
         "SpatialReference"
     ],
     "snippets": [
+        "ProjectGeometry.qml",
         "ProjectGeometry.cpp",
-        "ProjectGeometry.h",
-        "ProjectGeometry.qml"
+        "ProjectGeometry.h"
     ],
     "title": "Project"
 }

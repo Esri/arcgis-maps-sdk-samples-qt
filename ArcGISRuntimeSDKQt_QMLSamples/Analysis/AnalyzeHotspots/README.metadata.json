@@ -1,29 +1,34 @@
 {
     "category": "Analysis",
-    "description": "This sample demonstrates how to execute a geoprocessing task to calculate a hotspot analysis based on the frequency of 911 calls",
+    "description": "This sample demonstrates how to execute a geoprocessing task to calculate a hotspot analysis based on the frequency of 911 calls. It calculates the frequency of these calls within a given study area during a specified constrained time period set between 1/1/1998 and 5/31/1998.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "analysis",
+        "density",
         "geoprocessing",
-        "hotspot analysis",
-        "GeoprocessingTask",
+        "hot spots",
+        "hotspots",
+        "ArcGISMapImageLayer",
         "GeoprocessingJob",
         "GeoprocessingParameters",
-        "GeoprocessingString",
         "GeoprocessingResult",
-        "ArcGISMapImageLayer",
+        "GeoprocessingString",
+        "GeoprocessingTask",
         "Map"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-analyzehotspots.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-analyzehotspots.htm"
+    ],
     "relevant_apis": [
-        "GeoprocessingTask",
+        "ArcGISMapImageLayer",
         "GeoprocessingJob",
         "GeoprocessingParameters",
-        "GeoprocessingString",
         "GeoprocessingResult",
-        "ArcGISMapImageLayer",
+        "GeoprocessingString",
+        "GeoprocessingTask",
         "Map"
     ],
     "snippets": [

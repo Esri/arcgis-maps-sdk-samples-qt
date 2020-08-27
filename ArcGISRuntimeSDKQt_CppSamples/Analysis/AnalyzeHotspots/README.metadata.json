@@ -1,34 +1,33 @@
 {
     "category": "Analysis",
-    "description": "This sample demonstrates how to execute a geoprocessing task to calculate a hotspot analysis based on the frequency of 911 calls",
+    "description": "Use a geoprocessing service and a set of features to identify statistically significant hot spots and cold spots.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "analysis",
+        "density",
         "geoprocessing",
-        "hotspot analysis",
-        "GeoprocessingTask",
+        "hot spots",
+        "hotspots",
         "GeoprocessingJob",
         "GeoprocessingParameters",
-        "GeoprocessingString",
         "GeoprocessingResult",
-        "ArcGISMapImageLayer",
-        "Map"
+        "GeoprocessingTask"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-analyzehotspots.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-analyzehotspots.htm"
+    ],
     "relevant_apis": [
-        "GeoprocessingTask",
         "GeoprocessingJob",
         "GeoprocessingParameters",
-        "GeoprocessingString",
         "GeoprocessingResult",
-        "ArcGISMapImageLayer",
-        "Map"
+        "GeoprocessingTask"
     ],
     "snippets": [
-        "AnalyzeHotspots.cpp",
         "AnalyzeHotspots.qml",
+        "AnalyzeHotspots.cpp",
         "AnalyzeHotspots.h"
     ],
     "title": "Analyze hotspots"

@@ -58,15 +58,15 @@ Item {
     }
 
     function validateFileExtension(filePath) {
-        var extension = filePath.split('.').pop();
-        var idx = supportedExtensions.indexOf(extension);
+        const extension = filePath.split('.').pop();
+        const idx = supportedExtensions.indexOf(extension);
 
         return idx !== -1;
     }
 
     onSupportedExtensionsChanged: {
-        var nameFiltersString = "Raster files (";
-        for (var i = 0; i < supportedFormats.length; i++)
+        let nameFiltersString = "Raster files (";
+        for (let i = 0; i < supportedFormats.length; i++)
             nameFiltersString += "*." + supportedFormats[i] + " ";
 
         nameFiltersString += ")";

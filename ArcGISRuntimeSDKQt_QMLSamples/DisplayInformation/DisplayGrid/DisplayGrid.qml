@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -71,13 +71,13 @@ Rectangle {
     function changeGridColor(color) {
         if (mapView.grid) {
             // find the number of resolution levels in the grid
-            var gridLevels = mapView.grid.levelCount;
+            const gridLevels = mapView.grid.levelCount;
 
             //! [DisplayGrid Set_Grid_Lines]
-            for (var level = 0; level < gridLevels; ++level) {
-                var lineSym = ArcGISRuntimeEnvironment.createObject("SimpleLineSymbol", {style: Enums.SimpleLineSymbolStyleSolid,
-                                                                        color: color,
-                                                                        width: 1 + level} );
+            for (let level = 0; level < gridLevels; ++level) {
+                const lineSym = ArcGISRuntimeEnvironment.createObject("SimpleLineSymbol", {style: Enums.SimpleLineSymbolStyleSolid,
+                                                                          color: color,
+                                                                          width: 1 + level} );
                 mapView.grid.setLineSymbol(level, lineSym);
             }
             //! [DisplayGrid Set_Grid_Lines]
@@ -89,18 +89,18 @@ Rectangle {
         if (mapView.grid) {
             //! [DisplayGrid Grid_Levels]
             // find the number of resolution levels in the grid
-            var gridLevels = mapView.grid.levelCount;
+            const gridLevels = mapView.grid.levelCount;
             //! [DisplayGrid Grid_Levels]
 
             //! [DisplayGrid Set_Grid_Labels]
-            for (var level = 0; level < gridLevels; ++level) {
-                var textSym = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
-                                                                        text: "text",
-                                                                        size: 14,
-                                                                        color: color,
-                                                                        horizontalAlignment: Enums.HorizontalAlignmentLeft,
-                                                                        verticalAlignment: Enums.VerticalAlignmentBottom
-                                                                    });
+            for (let level = 0; level < gridLevels; ++level) {
+                const textSym = ArcGISRuntimeEnvironment.createObject("TextSymbol", {
+                                                                          text: "text",
+                                                                          size: 14,
+                                                                          color: color,
+                                                                          horizontalAlignment: Enums.HorizontalAlignmentLeft,
+                                                                          verticalAlignment: Enums.VerticalAlignmentBottom
+                                                                      });
                 textSym.haloColor = "white";
                 textSym.haloWidth = 2 + level;
 
@@ -292,7 +292,7 @@ Rectangle {
                 }
 
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         metricsGridTypeComboBox.text = model[i];
                         modelWidth = Math.max(modelWidth, metricsGridTypeComboBox.width);
                     }
@@ -367,7 +367,7 @@ Rectangle {
                 }
 
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         colorComboMetrics.text = model[i];
                         modelWidth = Math.max(modelWidth, colorComboMetrics.width);
                     }
@@ -396,7 +396,7 @@ Rectangle {
                     changeLabelColor(currentGridLabelColor);
                 }
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         colorCombo2Metrics.text = model[i];
                         modelWidth = Math.max(modelWidth, colorCombo2Metrics.width);
                     }
@@ -427,7 +427,7 @@ Rectangle {
                 }
 
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         positionComboMetrics.text = model[i];
                         modelWidth = Math.max(modelWidth, positionComboMetrics.width);
                     }
@@ -459,7 +459,7 @@ Rectangle {
                     changeLabelFormat(currentLabelFormat);
                 }
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         formatComboMetrics.text = model[i];
                         modelWidth = Math.max(modelWidth, formatComboMetrics.width);
                     }

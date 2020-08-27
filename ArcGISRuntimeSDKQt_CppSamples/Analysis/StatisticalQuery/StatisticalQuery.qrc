@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Analysis/StatisticalQuery">
-        <file alias="sample.json">StatisticalQuery.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>StatisticalQuery.qml</file>
         <file>StatisticalQuery.h</file>
         <file>StatisticalQuery.cpp</file>

@@ -1,0 +1,33 @@
+{
+    "category": "UtilityNetwork",
+    "description": "Create graphics for utility associations in a utility network.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "associating",
+        "association",
+        "attachment",
+        "connectivity",
+        "containment",
+        "relationships",
+        "GraphicsOverlay",
+        "UtilityAssociation",
+        "UtilityAssociationType",
+        "UtilityNetwork"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "GraphicsOverlay",
+        "UtilityAssociation",
+        "UtilityAssociationType",
+        "UtilityNetwork"
+    ],
+    "snippets": [
+        "DisplayUtilityAssociations.qml"
+    ],
+    "title": "Display utility associations"
+}

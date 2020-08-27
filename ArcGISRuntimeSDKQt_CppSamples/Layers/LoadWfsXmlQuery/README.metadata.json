@@ -6,27 +6,31 @@
         "screenshot.png"
     ],
     "keywords": [
-        "FeatureLayer",
-        "WfsFeatureTable",
-        "WfsFeatureTable::populateFromService",
         "OGC",
         "WFS",
-        "feature",
-        "web",
-        "service",
         "XML",
-        "query"
+        "feature",
+        "query",
+        "service",
+        "web",
+        "FeatureLayer",
+        "WfsFeatureTable",
+        "WfsFeatureTable::axisOrder",
+        "WfsFeatureTable::populateFromService"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "FeatureLayer",
         "WfsFeatureTable",
+        "WfsFeatureTable::axisOrder",
         "WfsFeatureTable::populateFromService"
     ],
     "snippets": [
+        "LoadWfsXmlQuery.qml",
         "LoadWfsXmlQuery.cpp",
-        "LoadWfsXmlQuery.h",
-        "LoadWfsXmlQuery.qml"
+        "LoadWfsXmlQuery.h"
     ],
     "title": "Load WFS with XML query"
 }

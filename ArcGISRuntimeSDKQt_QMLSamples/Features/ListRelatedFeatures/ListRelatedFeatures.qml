@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -46,7 +46,7 @@ Rectangle {
                     return;
 
                 // get the Alaska National Parks feature layer
-                map.operationalLayers.forEach(function(fl) {
+                map.operationalLayers.forEach(fl => {
                     if (fl.name.indexOf("- Alaska National Parks") !== -1) {
                         alaskaNationalParks = fl;
                     }
@@ -62,16 +62,16 @@ Rectangle {
             relatedFeaturesModel.clear();
 
             // create objects required to do a selection with a query
-            var clickPoint = mouse.mapPoint;
-            var mapTolerance = 10 * mapView.unitsPerDIP;
-            var envelope = ArcGISRuntimeEnvironment.createObject("Envelope", {
-                                                                     xMin: clickPoint.x - mapTolerance,
-                                                                     yMin: clickPoint.y - mapTolerance,
-                                                                     xMax: clickPoint.x + mapTolerance,
-                                                                     yMax: clickPoint.y + mapTolerance,
-                                                                     spatialReference: map.spatialReference
-                                                                 });
-            var queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+            const clickPoint = mouse.mapPoint;
+            const mapTolerance = 10 * mapView.unitsPerDIP;
+            const envelope = ArcGISRuntimeEnvironment.createObject("Envelope", {
+                                                                       xMin: clickPoint.x - mapTolerance,
+                                                                       yMin: clickPoint.y - mapTolerance,
+                                                                       xMax: clickPoint.x + mapTolerance,
+                                                                       yMax: clickPoint.y + mapTolerance,
+                                                                       spatialReference: map.spatialReference
+                                                                   });
+            const queryParams = ArcGISRuntimeEnvironment.createObject("QueryParameters");
             queryParams.geometry = envelope;
             queryParams.spatialRelationship = Enums.SpatialRelationshipIntersects;
 
@@ -86,40 +86,40 @@ Rectangle {
     Connections {
         target: alaskaNationalParks
 
-        onSelectFeaturesStatusChanged: {
+        function onSelectFeaturesStatusChanged() {
             if (alaskaNationalParks.selectFeaturesStatus === Enums.TaskStatusErrored) {
-                var errorString = "Error: %1".arg(alaskaNationalParks.error.message);
+                const errorString = "Error: %1".arg(alaskaNationalParks.error.message);
                 msgDialog.text = errorString;
                 msgDialog.open();
                 console.log(errorString);
             } else if (alaskaNationalParks.selectFeaturesStatus === Enums.TaskStatusCompleted) {
-                var featureQueryResult = alaskaNationalParks.selectFeaturesResult;
+                const featureQueryResult = alaskaNationalParks.selectFeaturesResult;
 
                 // iterate over features returned
                 while (featureQueryResult.iterator.hasNext) {
-                    var arcGISFeature = featureQueryResult.iterator.next();
-                    var selectedTable = arcGISFeature.featureTable;
+                    const arcGISFeature = featureQueryResult.iterator.next();
+                    const selectedTable = arcGISFeature.featureTable;
 
                     // connect signal
-                    selectedTable.queryRelatedFeaturesStatusChanged.connect(function() {
+                    selectedTable.queryRelatedFeaturesStatusChanged.connect(()=> {
                         if (selectedTable.queryRelatedFeaturesStatus !== Enums.TaskStatusCompleted)
                             return;
 
-                        var relatedFeatureQueryResultList = selectedTable.queryRelatedFeaturesResults;
+                        const relatedFeatureQueryResultList = selectedTable.queryRelatedFeaturesResults;
 
                         // iterate over returned RelatedFeatureQueryResults
-                        for (var i = 0; i < relatedFeatureQueryResultList.length; i++) {
+                        for (let i = 0; i < relatedFeatureQueryResultList.length; i++) {
 
                             // iterate over Features returned
-                            var iter = relatedFeatureQueryResultList[i].iterator;
+                            const iter = relatedFeatureQueryResultList[i].iterator;
                             while (iter.hasNext) {
-                                var feat = iter.next();
-                                var displayFieldName = feat.featureTable.layerInfo.displayFieldName;
-                                var serviceLayerName = feat.featureTable.layerInfo.serviceLayerName;
-                                var displayFieldValue = feat.attributes.attributeValue(displayFieldName);
+                                const feat = iter.next();
+                                const displayFieldName = feat.featureTable.layerInfo.displayFieldName;
+                                const serviceLayerName = feat.featureTable.layerInfo.serviceLayerName;
+                                const displayFieldValue = feat.attributes.attributeValue(displayFieldName);
 
                                 // add the related feature info to a list model
-                                var listElement = {
+                                const listElement = {
                                     "displayFieldName" : displayFieldName,
                                     "displayFieldValue" : displayFieldValue,
                                     "serviceLayerName" : serviceLayerName

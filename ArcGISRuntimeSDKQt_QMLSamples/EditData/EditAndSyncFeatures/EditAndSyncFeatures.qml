@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -63,7 +63,7 @@ Rectangle {
                     xMin: -122.50017717584528
                     yMax: 37.81638388695054
                     yMin: 37.745000054347535
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
             }
         }
@@ -75,8 +75,8 @@ Rectangle {
             } else if (isOffline && selectedFeature) {
 
                 // connect to feature table signal
-                var featureTable = map.operationalLayers.get(0).featureTable;
-                featureTable.updateFeatureStatusChanged.connect(function() {
+                const featureTable = map.operationalLayers.get(0).featureTable;
+                featureTable.updateFeatureStatusChanged.connect(()=> {
                     if (featureTable.updateFeatureStatus === Enums.TaskStatusCompleted) {
                         // clear selections
                         featureTable.featureLayer.clearSelection();
@@ -94,7 +94,7 @@ Rectangle {
 
         onIdentifyLayerStatusChanged: {
             if (identifyLayerStatus === Enums.TaskStatusCompleted) {
-                var featureLayer = map.operationalLayers.get(0);
+                const featureLayer = map.operationalLayers.get(0);
 
                 // clear any previous selections
                 featureLayer.clearSelection();
@@ -102,7 +102,7 @@ Rectangle {
 
                 // select the feature
                 if (identifyLayerResult.geoElements.length > 0) {
-                    var geoElement = identifyLayerResult.geoElements[0];
+                    const geoElement = identifyLayerResult.geoElements[0];
                     featureLayer.selectFeature(geoElement);
                     selectedFeature = geoElement;
                     instructionText = "Tap on map to move feature";
@@ -225,12 +225,12 @@ Rectangle {
             map.operationalLayers.clear();
 
             // load the geodatabase to access the feature tables
-            offlineGdb.loadStatusChanged.connect(function() {
+            offlineGdb.loadStatusChanged.connect(()=> {
                 if (offlineGdb.loadStatus === Enums.LoadStatusLoaded) {
                     // create a feature layer from each feature table, and add to the map
-                    for (var i = 0; i < offlineGdb.geodatabaseFeatureTables.length; i++) {
-                        var featureTable = offlineGdb.geodatabaseFeatureTables[i];
-                        var featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
+                    for (let i = 0; i < offlineGdb.geodatabaseFeatureTables.length; i++) {
+                        const featureTable = offlineGdb.geodatabaseFeatureTables[i];
+                        const featureLayer = ArcGISRuntimeEnvironment.createObject("FeatureLayer");
                         featureLayer.featureTable = featureTable;
                         map.operationalLayers.append(featureLayer);
                     }
@@ -344,11 +344,11 @@ Rectangle {
             }
 
             function getRectangleEnvelope() {
-                var corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
-                var corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
-                var envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
+                const corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
+                const corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+                const envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
                 envBuilder.setCorners(corner1, corner2);
-                generateExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
+                generateExtent = GeometryEngine.project(envBuilder.geometry, Factory.SpatialReference.createWebMercator());
             }
         }
     }

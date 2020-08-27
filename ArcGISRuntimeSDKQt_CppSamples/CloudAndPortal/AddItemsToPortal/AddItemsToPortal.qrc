@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/CloudAndPortal/AddItemsToPortal">
-        <file alias="sample.json">AddItemsToPortal.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>AddItemsToPortal.qml</file>
         <file>README.md</file>

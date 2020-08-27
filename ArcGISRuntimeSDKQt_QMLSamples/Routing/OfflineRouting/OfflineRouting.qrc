@@ -1,9 +1,10 @@
 <RCC>
     <qresource prefix="/Samples/Routing/OfflineRouting">
-        <file alias="sample.json">OfflineRouting.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>OfflineRouting.qml</file>
         <file>README.md</file>
         <file>screenshot.png</file>
         <file>sample.gif</file>
+        <file>orange_symbol.png</file>
     </qresource>
 </RCC>

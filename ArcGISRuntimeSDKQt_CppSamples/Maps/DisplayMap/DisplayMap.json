@@ -1,9 +1,0 @@
-{
-    "source" :  "DisplayMap.qml",
-    "otherSourceFiles" : [
-        "DisplayMap.h",
-        "DisplayMap.cpp"
-    ],
-    "name" : "Display a map"
-}
-

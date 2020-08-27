@@ -1,6 +1,6 @@
 {
     "category": "Geometry",
-    "description": "Create a convex hull for a given set of points. The convex hull is a polygon with shortest perimeter that encloses a set of points.",
+    "description": "Create a convex hull for a given set of points. The convex hull is a polygon with shortest perimeter that encloses a set of points. As a visual analogy, consider a set of points as nails in a board. The convex hull of the points would be like a rubber band stretched around the outermost nails.",
     "ignore": false,
     "images": [
         "screenshot.png"
@@ -8,17 +8,21 @@
     "keywords": [
         "convex hull",
         "geometry",
-        "spatial analysis"
+        "spatial analysis",
+        "Geometry",
+        "GeometryEngine"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "Geometry",
         "GeometryEngine"
     ],
     "snippets": [
+        "ConvexHull.qml",
         "ConvexHull.cpp",
-        "ConvexHull.h",
-        "ConvexHull.qml"
+        "ConvexHull.h"
     ],
     "title": "Convex hull"
 }

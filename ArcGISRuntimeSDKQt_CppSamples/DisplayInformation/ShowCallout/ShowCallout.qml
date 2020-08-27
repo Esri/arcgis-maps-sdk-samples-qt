@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.8
+import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 ShowCalloutSample {
     id: showCalloutSample

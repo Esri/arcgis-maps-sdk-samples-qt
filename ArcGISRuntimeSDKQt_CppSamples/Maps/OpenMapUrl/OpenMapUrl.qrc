@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Maps/OpenMapUrl">
-        <file alias="sample.json">OpenMapUrl.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>OpenMapUrl.qml</file>
         <file>OpenMapUrl.h</file>

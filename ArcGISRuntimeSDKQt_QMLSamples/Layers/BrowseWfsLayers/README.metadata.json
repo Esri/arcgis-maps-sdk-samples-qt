@@ -6,29 +6,31 @@
         "screenshot.png"
     ],
     "keywords": [
-        "WfsService",
-        "WfsServiceInfo",
-        "WfsLayerInfo",
-        "WfsFeatureTable",
-        "FeatureLayer",
-        "WfsFeatureTable.AxisOrder",
         "OGC",
         "WFS",
-        "feature",
-        "web",
-        "service",
-        "layers",
         "browse",
-        "catalog"
-    ],
-    "redirect_from": "",
-    "relevant_apis": [        
-        "WfsService",
-        "WfsServiceInfo",
-        "WfsLayerInfo",
-        "WfsFeatureTable",
+        "catalog",
+        "feature",
+        "layers",
+        "service",
+        "web",
         "FeatureLayer",
-        "WfsFeatureTable.AxisOrder"
+        "WfsFeatureTable",
+        "WfsFeatureTable.AxisOrder",
+        "WfsLayerInfo",
+        "WfsService",
+        "WfsServiceInfo"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "FeatureLayer",
+        "WfsFeatureTable",
+        "WfsFeatureTable.AxisOrder",
+        "WfsLayerInfo",
+        "WfsService",
+        "WfsServiceInfo"
     ],
     "snippets": [
         "BrowseWfsLayers.qml"

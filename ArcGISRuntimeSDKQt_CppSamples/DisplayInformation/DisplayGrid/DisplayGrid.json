@@ -1,9 +1,0 @@
-{
-    "source" :  "DisplayGrid.qml",
-    "otherSourceFiles" : [
-        "DisplayGrid.h",
-        "DisplayGrid.cpp"
-    ],
-    "name" : "Display a grid"
-}
-

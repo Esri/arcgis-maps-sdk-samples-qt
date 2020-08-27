@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Analysis/LineOfSightLocation">
-        <file alias="sample.json">LineOfSightLocation.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>LineOfSightLocation.qml</file>
         <file>LineOfSightLocation.h</file>
         <file>LineOfSightLocation.cpp</file>

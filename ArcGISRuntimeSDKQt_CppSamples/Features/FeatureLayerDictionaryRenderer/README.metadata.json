@@ -1,37 +1,37 @@
 {
     "category": "Features",
-    "description": "This sample demonstrates how to display a FeatureLayer with military symbology, using ArcGIS Runtime's DictionaryRenderer",
+    "dataItems": [
+        {
+            "itemId": "c78b149a1d52414682c86a5feeb13d30",
+            "path": "~/ArcGIS/Runtime/Data/styles/arcade_style/mil2525d.stylx"
+        },
+        {
+            "itemId": "e0d41b4b409a49a5a7ba11939d8535dc",
+            "path": "~/ArcGIS/Runtime/Data/geodatabase/militaryoverlay.geodatabase"
+        }
+    ],
+    "description": "Convert features into graphics to show them with mil2525d symbols.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "dictionary renderer",
-        "military symbology",
-        "MapView",
-        "Map",
-        "BasemapTopographic",
-        "DictionarySymbolStyle",
+        "military",
+        "symbol",
         "DictionaryRenderer",
-        "Geodatabase",
-        "FeatureLayer",
-        "GeometryEngine"
+        "DictionarySymbolStyle"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-featurelayerdictionaryrenderer.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-featurelayerdictionaryrenderer.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "BasemapTopographic",
-        "DictionarySymbolStyle",
         "DictionaryRenderer",
-        "Geodatabase",
-        "FeatureLayer",
-        "GeometryEngine"
+        "DictionarySymbolStyle"
     ],
     "snippets": [
+        "FeatureLayerDictionaryRenderer.qml",
         "FeatureLayerDictionaryRenderer.cpp",
-        "FeatureLayerDictionaryRenderer.h",
-        "FeatureLayerDictionaryRenderer.qml"
+        "FeatureLayerDictionaryRenderer.h"
     ],
     "title": "Feature layer (dictionary renderer)"
 }

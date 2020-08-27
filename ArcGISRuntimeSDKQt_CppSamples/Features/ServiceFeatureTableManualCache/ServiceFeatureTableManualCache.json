@@ -1,9 +1,0 @@
-{
-    "source" :  "ServiceFeatureTableManualCache.qml",
-    "otherSourceFiles" : [
-        "ServiceFeatureTableManualCache.h",
-        "ServiceFeatureTableManualCache.cpp"
-    ],
-    "name" : "Service feature table (manual cache)"
-}
-

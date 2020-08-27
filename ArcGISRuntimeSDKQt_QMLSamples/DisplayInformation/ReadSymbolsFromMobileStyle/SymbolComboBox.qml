@@ -17,7 +17,7 @@
 import QtQuick 2.11
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 ComboBox {
     id: rootComboBox
@@ -39,7 +39,7 @@ ComboBox {
                                                           styleLocation: dataPath
                                                       });
 
-        var params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: [filterKeyword]});
+        const params = ArcGISRuntimeEnvironment.createObject("SymbolStyleSearchParameters", {categories: [filterKeyword]});
         style.searchSymbols(params);
     }
     delegate: Item {

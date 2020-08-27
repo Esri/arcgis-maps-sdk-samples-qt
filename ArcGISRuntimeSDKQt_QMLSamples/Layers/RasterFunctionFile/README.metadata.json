@@ -1,22 +1,40 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to apply a RasterFunction to a local Raster file and display the output with a RasterLayer",
+    "dataItems": [
+        {
+            "itemId": "b051f5c3e01048f3bf11c59b41507896",
+            "path": "~/ArcGIS/Runtime/Data/raster/Shasta_Elevation.tif"
+        },
+        {
+            "itemId": "5356dbf91788474493467519e268cf87",
+            "path": "~/ArcGIS/Runtime/Data/raster/color.json"
+        }
+    ],
+    "description": "Apply a raster function to a local raster file and display the output with a raster layer.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "RasterFunction",
-        "RasterLayer",
+        "analysis",
+        "function",
+        "image",
+        "layer",
+        "processing",
+        "raster",
+        "raster function",
+        "transformation",
         "Raster",
-        "Map"
+        "RasterFunction",
+        "RasterLayer"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-rasterfunctionfile.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-rasterfunctionfile.htm"
+    ],
     "relevant_apis": [
-        "RasterFunction",
-        "RasterLayer",
         "Raster",
-        "Map"
+        "RasterFunction",
+        "RasterLayer"
     ],
     "snippets": [
         "RasterFunctionFile.qml"

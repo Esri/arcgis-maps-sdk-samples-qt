@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Analysis/AnalyzeHotspots">
-        <file alias="sample.json">AnalyzeHotspots.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>AnalyzeHotspots.qml</file>
         <file>AnalyzeHotspots.h</file>

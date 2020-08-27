@@ -1,9 +1,0 @@
-{
-    "source" :  "DisplayDeviceLocation.qml",
-    "otherSourceFiles" : [
-        "DisplayDeviceLocation.h",
-        "DisplayDeviceLocation.cpp"
-    ],
-    "name" : "Display device location"
-}
-

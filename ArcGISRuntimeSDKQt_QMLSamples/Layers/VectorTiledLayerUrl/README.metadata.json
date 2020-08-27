@@ -1,24 +1,25 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to use a vector tiled layer from an ArcGIS Online service as a basemap",
+    "description": "Load an ArcGIS Vector Tiled Layer from a URL.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "tiles",
+        "vector",
+        "vector basemap",
         "vector tiled layer",
-        "vector tile layer",
-        "MapView",
-        "Map",
-        "Basemap",
-        "ArcGISVectorTiledLayer"
+        "vector tiles",
+        "ArcGISVectorTiledLayer",
+        "Basemap"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-vectortilelayerurl.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-vectortilelayerurl.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "Basemap",
-        "ArcGISVectorTiledLayer"
+        "ArcGISVectorTiledLayer",
+        "Basemap"
     ],
     "snippets": [
         "VectorTiledLayerUrl.qml"

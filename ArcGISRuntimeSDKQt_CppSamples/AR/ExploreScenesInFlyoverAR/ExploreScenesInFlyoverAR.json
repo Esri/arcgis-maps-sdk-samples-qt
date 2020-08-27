@@ -1,8 +1,0 @@
-{
-    "source" :  "ExploreScenesInFlyoverAR.qml",
-    "otherSourceFiles" :  [
-        "ExploreScenesInFlyoverAR.h",
-        "ExploreScenesInFlyoverAR.cpp"
-    ],
-    "name" : "Explore scenes in flyover AR"
-}

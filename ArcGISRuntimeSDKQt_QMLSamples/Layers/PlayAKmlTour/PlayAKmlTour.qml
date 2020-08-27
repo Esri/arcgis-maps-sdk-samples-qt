@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -51,10 +51,10 @@ Rectangle {
                    if (loadStatus !== Enums.LoadStatusLoaded)
                        return;
 
-                   var kmlTour = findFirstKMLTour(kmlDataset.rootNodes)
+                   const kmlTour = findFirstKMLTour(kmlDataset.rootNodes)
 
                    if (kmlTour !== null) {
-                       kmlTour.tourStatusChanged.connect(function() {
+                       kmlTour.tourStatusChanged.connect(()=> {
                            switch(kmlTour.tourStatus) {
                            case Enums.KmlTourStatusCompleted:
                            case Enums.KmlTourStatusInitialized:
@@ -137,8 +137,8 @@ Rectangle {
     }
 
     function findFirstKMLTour(nodes) {
-        for (var i = 0; i < nodes.length; i++) {
-            let node = nodes[i];
+        for (let i = 0; i < nodes.length; i++) {
+            const node = nodes[i];
             if (node.kmlNodeType === Enums.KmlNodeTypeKmlTour)
                 return node;
             else if ((node.kmlNodeType === Enums.KmlNodeTypeKmlFolder) || (node.kmlNodeType === Enums.KmlNodeTypeKmlDocument))
@@ -148,7 +148,7 @@ Rectangle {
     }
 
     function findFirstKMLTourFromListModel(nodes) {
-        for (var i = 0; i < nodes.count; ++i) {
+        for (let i = 0; i < nodes.count; ++i) {
             const node = nodes.get(i);
             if (node.kmlNodeType === Enums.KmlNodeTypeKmlTour)
                 return node;

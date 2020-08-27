@@ -1,9 +1,0 @@
-{
-    "source" :  "FindAddress.qml",
-    "otherSourceFiles" : [
-        "FindAddress.h",
-        "FindAddress.cpp"
-    ],
-    "name" : "Find address"
-}
-

@@ -1,10 +1,11 @@
 <RCC>
     <qresource prefix="/Samples/Maps/DisplayLayerViewDrawState">
-        <file alias="sample.json">DisplayLayerViewDrawState.json</file>
-        <file>screenshot.png</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>DisplayLayerViewDrawState.qml</file>
         <file>DisplayLayerViewDrawState.h</file>
         <file>DisplayLayerViewDrawState.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
         <file>README.md</file>
     </qresource>
 </RCC>

@@ -1,17 +1,26 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to open and display a map from a Mobile Map Package",
+    "dataItems": [
+        {
+            "itemId": "e1f3a7254cb845b09450f54937c16061",
+            "path": "~/ArcGIS/Runtime/Data/mmpk/Yellowstone.mmpk"
+        }
+    ],
+    "description": "Display a map from a mobile map package.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "mmpk",
+        "mobile map package",
         "offline",
-        "disconnected",
         "MapView",
         "MobileMapPackage"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-openmobilemap-mappackage.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-openmobilemap-mappackage.htm"
+    ],
     "relevant_apis": [
         "MapView",
         "MobileMapPackage"

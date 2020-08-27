@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     width: 800
@@ -49,7 +49,7 @@ Rectangle {
                                 return;
                             }
 
-                            var count = populateFromServiceResult.iterator.features.length;
+                            const count = populateFromServiceResult.iterator.features.length;
                             console.log("Retrieved %1 features".arg(count));
                         }
                     }

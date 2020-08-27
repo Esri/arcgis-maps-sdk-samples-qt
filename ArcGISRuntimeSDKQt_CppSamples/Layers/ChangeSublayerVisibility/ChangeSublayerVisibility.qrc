@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/ChangeSublayerVisibility">
-        <file alias="sample.json">ChangeSublayerVisibility.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>ChangeSublayerVisibility.qml</file>
 		<file>ChangeSublayerVisibility.cpp</file>

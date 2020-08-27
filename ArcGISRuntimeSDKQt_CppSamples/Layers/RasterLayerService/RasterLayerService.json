@@ -1,9 +1,0 @@
-{
-    "source" :  "RasterLayerService.qml",
-    "name" : "Raster layer (service)",
-    "otherSourceFiles" :  [
-        "RasterLayerService.h",
-        "RasterLayerService.cpp"
-	]
-}
-

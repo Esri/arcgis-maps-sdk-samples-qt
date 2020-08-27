@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = ExploreScenesInFlyoverAR
 
-ARCGIS_RUNTIME_VERSION = 100.8
+ARCGIS_RUNTIME_VERSION = 100.9
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
@@ -79,26 +79,16 @@ include($$AR_TOOLKIT_SOURCE_PATH/Plugin/CppApi/ArCppApi.pri)
 #-------------------------------------------------------------------------------
 
 android {
-    ANDROID_LIBS = $$dirname(QMAKE_QMAKE)/../lib
-    LIST_SSL_LIBS = libcrypto_1_1.so libssl_1_1.so
+    ANDROID_ABIS = arm64-v8a
 
-    for(lib, LIST_SSL_LIBS) {
-        exists($$ANDROID_LIBS/$${lib}) {
-            ANDROID_EXTRA_LIBS += $$ANDROID_LIBS/$${lib}
-        }
-        else {
-            error($$ANDROID_LIBS is missing the $${lib} library which is required to build this Android application.)
-        }
-    }
-
-DISTFILES += \
-    android/AndroidManifest.xml \
-    android/build.gradle \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew \
-    android/gradlew.bat \
-    android/res/values/libs.xml
+    DISTFILES += \
+        android/AndroidManifest.xml \
+        android/build.gradle \
+        android/gradle/wrapper/gradle-wrapper.jar \
+        android/gradle/wrapper/gradle-wrapper.properties \
+        android/gradlew \
+        android/gradlew.bat \
+        android/res/values/libs.xml
 }
 
 contains(ANDROID_TARGET_ARCH,arm64-v8a) {

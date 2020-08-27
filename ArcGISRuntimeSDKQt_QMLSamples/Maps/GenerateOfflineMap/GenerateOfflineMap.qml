@@ -17,9 +17,9 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.8
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
 
 Rectangle {
     id: rootRectangle
@@ -76,11 +76,11 @@ Rectangle {
         }
 
         function getRectangleEnvelope() {
-            var corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
-            var corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
-            var envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
+            const corner1 = mapView.screenToLocation(extentRectangle.x, extentRectangle.y);
+            const corner2 = mapView.screenToLocation((extentRectangle.x + extentRectangle.width), (extentRectangle.y + extentRectangle.height));
+            const envBuilder = ArcGISRuntimeEnvironment.createObject("EnvelopeBuilder");
             envBuilder.setCorners(corner1, corner2);
-            var mapExtent = GeometryEngine.project(envBuilder.geometry, SpatialReference.createWebMercator());
+            const mapExtent = GeometryEngine.project(envBuilder.geometry, Factory.SpatialReference.createWebMercator());
             offlineMapTask.createDefaultGenerateOfflineMapParameters(mapExtent);
         }
     }
@@ -143,10 +143,10 @@ Rectangle {
             case Enums.JobStatusSucceeded:
                 // show any layer errors
                 if (generateJob.result.hasErrors) {
-                    var layerErrors = generateJob.result.layerErrors;
-                    var errorText = "";
-                    for (var i = 0; i < layerErrors.length; i++) {
-                        var errorPair = layerErrors[i];
+                    const layerErrors = generateJob.result.layerErrors;
+                    let errorText = "";
+                    for (let i = 0; i < layerErrors.length; i++) {
+                        const errorPair = layerErrors[i];
                         errorText += errorPair.layer.name + ": " + errorPair.error.message + "\n";
                     }
                     msgDialog.detailedText = errorText;

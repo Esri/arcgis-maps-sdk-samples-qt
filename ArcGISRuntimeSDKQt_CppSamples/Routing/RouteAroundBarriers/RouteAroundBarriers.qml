@@ -30,7 +30,6 @@ Item {
     MapView {
         id: view
         anchors.fill: parent
-
         ColumnLayout {
             spacing: 0
             Layout.alignment: Qt.AlignTop
@@ -60,6 +59,7 @@ Item {
                         Button {
                             id: stopButton
                             text: "Add stop"
+                            checked: true
                             highlighted: checked
                             onClicked: {
                                 checked = true;
@@ -125,6 +125,22 @@ Item {
                             }
                         }
                     }
+
+                    Row {
+                        Layout.alignment: Qt.AlignHCenter
+                        Button {
+                            text: "Hide directions"
+                            onClicked: {
+                                if (text === "Hide directions") {
+                                    directionsView.delegate = blankDelegate;
+                                    text = "Show directions";
+                                } else {
+                                    directionsView.delegate = directionDelegate;
+                                    text = "Hide directions";
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -139,25 +155,36 @@ Item {
                 Layout.margins: 3
                 color: "lightgrey"
 
-                ListView {
-                    id: directionsView
-                    anchors {
-                        fill: parent
-                        margins: 5
-                    }
-                    header: Component {
-                        Text {
-                            height: 40
+                ScrollView {
+                    anchors.fill: parent
+
+                    ListView {
+                        id: directionsView
+                        anchors {
+                            fill: parent
+                            margins: 5
+                        }
+                        header: Text {
                             text: "Directions:"
                             font.pixelSize: 22
+                            bottomPadding: 8
                         }
-                    }
 
-                    // set the model to the DirectionManeuverListModel returned from the route
-                    model: sampleModel.directions
-                    delegate: directionDelegate
+                        // set the model to the DirectionManeuverListModel returned from the route
+                        model: sampleModel.directions
+                        delegate: directionDelegate
+                    }
                 }
             }
+        }
+    }
+
+    Component {
+        id: blankDelegate
+        Rectangle {
+            width: parent.width
+            height: 35
+            color: directionWindow.color
         }
     }
 

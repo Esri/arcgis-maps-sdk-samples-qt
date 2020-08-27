@@ -1,25 +1,32 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how you can tap and hold on a map to get the magnifier",
+    "description": "Tap and hold on a map to show a magnifier.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-      "Magnify",
-      "Display",
-      "Zoom"
-    ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-showmagnifier.htm",
-    "relevant_apis": [
-        "MapView",
+        "magnify",
+        "map",
+        "zoom",
         "Map",
-        "Basemap"
+        "MapView",
+        "MapView::setMagnifierEnabled()",
+        "MapView::setMagnifierMapPanningEnabled()"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-showmagnifier.htm"
+    ],
+    "relevant_apis": [
+        "Map",
+        "MapView",
+        "MapView::setMagnifierEnabled()",
+        "MapView::setMagnifierMapPanningEnabled()"
     ],
     "snippets": [
+        "ShowMagnifier.qml",
         "ShowMagnifier.cpp",
-        "ShowMagnifier.h",
-        "ShowMagnifier.qml"
+        "ShowMagnifier.h"
     ],
     "title": "Show magnifier"
 }

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Scenes/ViewPointCloudDataOffline">
-        <file alias="sample.json">ViewPointCloudDataOffline.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>ViewPointCloudDataOffline.qml</file>
         <file>ViewPointCloudDataOffline.h</file>
         <file>ViewPointCloudDataOffline.cpp</file>

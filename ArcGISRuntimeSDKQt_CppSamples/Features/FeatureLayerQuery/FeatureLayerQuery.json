@@ -1,9 +1,0 @@
-{
-    "source" :  "FeatureLayerQuery.qml",
-    "otherSourceFiles" : [
-        "FeatureLayerQuery.h",
-        "FeatureLayerQuery.cpp"
-    ],
-    "name" : "Feature layer query"
-}
-

@@ -1,21 +1,34 @@
 {
     "category": "Geometry",
-    "description": "This sample demonstrates how to densify (add additional vertices) or generalize (reduce vertices) a polyline geometry",
+    "description": "A multipart geometry can be densified by adding interpolated points at regular intervals. Generalizing a multipart geometry simplifies it while preserving its general shape. Densifying a multipart geometry adds more vertices at regular intervals.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "densify geometry",
-        "generalize geometry"
-    ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-densifyandgeneralize.htm",
-    "relevant_apis": [
-        "GeometryEngine::densify",
-        "GeometryEngine::generalize",
-        "PointCollection",
+        "Edit and Manage Data",
+        "densify",
+        "generalize",
+        "simplify",
+        "GeometryEngine",
         "Multipoint",
-        "Polyline"
+        "Point",
+        "PointCollection",
+        "Polyline",
+        "SimpleLineSymbol",
+        "SpatialReference"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-densifyandgeneralize.htm"
+    ],
+    "relevant_apis": [
+        "GeometryEngine",
+        "Multipoint",
+        "Point",
+        "PointCollection",
+        "Polyline",
+        "SimpleLineSymbol",
+        "SpatialReference"
     ],
     "snippets": [
         "DensifyAndGeneralize.qml",

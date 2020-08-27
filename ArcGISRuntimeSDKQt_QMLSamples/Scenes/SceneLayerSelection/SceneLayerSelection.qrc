@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Scenes/SceneLayerSelection">
-        <file alias="sample.json">SceneLayerSelection.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>SceneLayerSelection.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

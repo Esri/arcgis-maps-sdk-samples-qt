@@ -6,27 +6,38 @@
         "screenshot.png"
     ],
     "keywords": [
-        "Keyhole",
         "KML",
         "KMZ",
-        "OGC"
+        "Keyhole",
+        "OGC",
+        "KmlDocument",
+        "KmlGeometry",
+        "KmlIcon",
+        "KmlIconStyle",
+        "KmlLineStyle",
+        "KmlNode::saveAs",
+        "KmlPlacemark",
+        "KmlPolygonStyle",
+        "KmlStyle"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "KmlDocument",
         "KmlGeometry",
-        "KmlNode::saveAs",
-        "KmlPlacemark",
-        "KmlStyle",
+        "KmlIcon",
         "KmlIconStyle",
         "KmlLineStyle",
+        "KmlNode::saveAs",
+        "KmlPlacemark",
         "KmlPolygonStyle",
-        "KmlIcon"
+        "KmlStyle"
     ],
     "snippets": [
+        "CreateAndSaveKmlFile.qml",
         "CreateAndSaveKmlFile.cpp",
-        "CreateAndSaveKmlFile.h",
-        "CreateAndSaveKmlFile.qml"
+        "CreateAndSaveKmlFile.h"
     ],
     "title": "Create and save KML file"
 }

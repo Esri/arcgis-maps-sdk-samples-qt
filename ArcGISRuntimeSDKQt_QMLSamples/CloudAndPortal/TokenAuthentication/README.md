@@ -10,11 +10,11 @@ Allows you to access a secure service with the convenience and security of ArcGI
 
 ## How to use the sample
 
-Once you launch the app, you will be challenged for an ArcGIS Online login to view the protected map service. Enter a user name and password for an ArcGIS Online named user account (such as your ArcGIS for Developers account). If you authenticate successfully, the protected map service will display in the map.
+Once you launch the app, you will be challenged for an ArcGIS Online login to view the protected map service. Enter a user name and password for this resources. In this case, the username is `user1` and the password is also `user1`.
 
 ## How it works
 
-1. Create an `ArcGISMapImageLayer` passing in the URL to a map service that is secured with token-based authentication
+1. Create an `ArcGISMapImageLayer` passing in the URL to a map service that is secured with token-based authentication.
 2. Append the map image layer to the operational layers to display the map.
 
 ## Relevant API
@@ -22,10 +22,6 @@ Once you launch the app, you will be challenged for an ArcGIS Online login to vi
 * Map
 * MapView
 * ArcGISMapImageLayer
-
-## About the data
-
-The Traffic web map uses public layers as well as the world traffic (premium content) layer. The world traffic service presents historical and near real-time traffic information for different regions in the world. The data is updated every 5 minutes. This map service requires an ArcGIS Online organizational subscription.
 
 ## Tags
 

@@ -1,27 +1,24 @@
 {
     "category": "Display information",
-    "description": "This sample demonstrates how to identify graphics in a graphics overlay",
+    "description": "Display an alert message when a graphic is clicked.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "identify graphics",
-        "MapView",
-        "Map",
-        "GraphicsOverlay",
+        "graphics",
+        "identify",
         "Graphic",
-        "SimpleFillSymbol",
-        "PolygonBuilder"
+        "GraphicsOverlay",
+        "MapView"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-identifygraphics.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-identifygraphics.htm"
+    ],
     "relevant_apis": [
-        "MapView",
-        "Map",
-        "GraphicsOverlay",
         "Graphic",
-        "SimpleFillSymbol",
-        "PolygonBuilder"
+        "GraphicsOverlay",
+        "MapView"
     ],
     "snippets": [
         "IdentifyGraphics.qml"

@@ -61,6 +61,7 @@ BufferSample {
             id: bufferSizeText
             validator: IntValidator { bottom: 1; top: 10000 }
             text: "1000"
+            selectByMouse: true
             onTextChanged: bufferSize = Number(text);
         }
 

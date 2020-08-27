@@ -1,31 +1,38 @@
 {
     "category": "Layers",
-    "description": "Demonstrates how to create and use a raster layer made from a local raster file",
+    "dataItems": [
+        {
+            "itemId": "c669445e6cb4490b8306f0c170a9cbb1",
+            "path": "~/ArcGIS/Runtime/Data/raster/Shasta.tif"
+        }
+    ],
+    "description": "Create and use a raster layer made from a local raster file.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "data",
+        "image",
+        "import",
+        "layer",
+        "raster",
+        "visualization",
         "Raster",
-        "RasterLayer",
-        "Basemap",
-        "Map",
-        "MapQuickView"
+        "RasterLayer"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-rasterlayerfile.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-rasterlayerfile.htm"
+    ],
     "relevant_apis": [
         "Raster",
-        "RasterLayer",
-        "Basemap",
-        "Map",
-        "MapQuickView"
+        "RasterLayer"
     ],
     "snippets": [
-        "RasterLayerFile.cpp",
-        "RasterLoader.qml",
-        "main.qml",
         "RasterLayerFile.qml",
-        "RasterLayerFile.h"
+        "RasterLayerFile.cpp",
+        "RasterLayerFile.h",
+        "RasterLoader.qml"
     ],
     "title": "Raster layer (file)"
 }

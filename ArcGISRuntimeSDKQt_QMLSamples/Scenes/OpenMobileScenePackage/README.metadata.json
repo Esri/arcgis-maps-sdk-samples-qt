@@ -1,26 +1,27 @@
 {
     "category": "Scenes",
-    "description": "Opens and displays a scene from a Mobile Scene Package (specifically, basemaps and features) used to display an offline 3D scene",
+    "dataItems": [
+        {
+            "itemId": "7dd2f97bb007466ea939160d0de96a9d",
+            "path": "~/ArcGIS/Runtime/Data/mspk/philadelphia.mspk"
+        }
+    ],
+    "description": "Opens and displays a scene from a Mobile Scene Package (.mspk).",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "offline",
-        "3D",
-        "mobile scene package",
-        "mspk",
-        "Scene",
+        "scene",
         "MobileScenePackage",
-        "MobileScenePackageUtility",
-        "Scene",
         "SceneView"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-openmobilescenepackage.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-openmobilescenepackage.htm"
+    ],
     "relevant_apis": [
         "MobileScenePackage",
-        "MobileScenePackageUtility",
-        "Scene",
         "SceneView"
     ],
     "snippets": [

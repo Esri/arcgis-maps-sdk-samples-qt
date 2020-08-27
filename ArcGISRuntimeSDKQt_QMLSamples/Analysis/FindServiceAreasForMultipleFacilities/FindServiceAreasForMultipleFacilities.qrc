@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/Samples/Analysis/FindServiceAreasForMultipleFacilities">
-        <file alias="sample.json">FindServiceAreasForMultipleFacilities.json</file>        
-        <file>FindServiceAreasForMultipleFacilities.qml</file>
-        <file>screenshot.png</file>
-        <file>README.md</file>
-    </qresource>
-</RCC>

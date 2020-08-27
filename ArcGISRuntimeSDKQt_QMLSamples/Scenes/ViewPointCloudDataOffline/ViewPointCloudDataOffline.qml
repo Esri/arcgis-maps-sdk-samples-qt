@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -51,7 +51,7 @@ Rectangle {
                     if (loadStatus !== Enums.LoadStatusLoaded)
                         return;
 
-                    var vp = ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: fullExtent});
+                    const vp = ArcGISRuntimeEnvironment.createObject("ViewpointExtent", {extent: fullExtent});
                     sceneView.setViewpoint(vp);
                 }
             }

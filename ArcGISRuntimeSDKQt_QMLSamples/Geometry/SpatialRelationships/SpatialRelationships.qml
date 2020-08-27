@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -53,7 +53,7 @@ Rectangle {
                 }
 
                 Component.onCompleted: {
-                    var polyBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: SpatialReference.createWebMercator()});
+                    const polyBuilder = ArcGISRuntimeEnvironment.createObject("PolygonBuilder", {spatialReference: Factory.SpatialReference.createWebMercator()});
                     polyBuilder.addPointXY(-5991501.677830, 5599295.131468);
                     polyBuilder.addPointXY(-6928550.398185, 2087936.739807);
                     polyBuilder.addPointXY(-3149463.800709, 1840803.011362);
@@ -74,7 +74,7 @@ Rectangle {
                 }
 
                 Component.onCompleted: {
-                    var polyBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: SpatialReference.createWebMercator()});
+                    const polyBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {spatialReference: Factory.SpatialReference.createWebMercator()});
                     polyBuilder.addPointXY(-4354240.726880, -609939.795721);
                     polyBuilder.addPointXY(-3427489.245210, 2139422.933233);
                     polyBuilder.addPointXY(-2109442.693501, 4301843.057130);
@@ -115,20 +115,20 @@ Rectangle {
             if (identifyGraphicsOverlayStatus !== Enums.TaskStatusCompleted)
                 return;
 
-            var identifiedGraphics = identifyGraphicsOverlayResult.graphics;
+            const identifiedGraphics = identifyGraphicsOverlayResult.graphics;
             if (identifiedGraphics.length < 1)
                 return;
 
             // get the first identified graphic
-            var graphic = identifiedGraphics[0];
+            const graphic = identifiedGraphics[0];
 
             // select the graphic
             graphicsOverlay.clearSelection();
             graphic.selected = true;
 
             // get the geometry
-            var selectedGeometry = graphic.geometry;
-            var selectedGeometryType = selectedGeometry.geometryType;
+            const selectedGeometry = graphic.geometry;
+            const selectedGeometryType = selectedGeometry.geometryType;
 
             // reset the output text
             pointText.text = "";
@@ -138,15 +138,15 @@ Rectangle {
             // populate the view with the spatial relationships the selected graphic has to the other graphics
             // ignore testing relationships between the geometry and itself
             if (selectedGeometryType !== Enums.GeometryTypePoint) {
-                var pointRelationships = getSpatialRelationships(selectedGeometry, pointGraphic.geometry).toString();
+                const pointRelationships = getSpatialRelationships(selectedGeometry, pointGraphic.geometry).toString();
                 pointText.text = "Point: %1".arg(pointRelationships);
             }
             if (selectedGeometryType !== Enums.GeometryTypePolyline) {
-                var polylineRelationships = getSpatialRelationships(selectedGeometry, polylineGraphic.geometry).toString();
+                const polylineRelationships = getSpatialRelationships(selectedGeometry, polylineGraphic.geometry).toString();
                 lineText.text = "Polyline: %1".arg(polylineRelationships);
             }
             if (selectedGeometryType !== Enums.GeometryTypePolygon) {
-                var polygonRelationships = getSpatialRelationships(selectedGeometry, polygonGraphic.geometry).toString();
+                const polygonRelationships = getSpatialRelationships(selectedGeometry, polygonGraphic.geometry).toString();
                 polygonText.text = "Polygon: %1".arg(polygonRelationships);
             }
         }
@@ -154,7 +154,7 @@ Rectangle {
 
     // function to return list of relaionships
     function getSpatialRelationships(geom1, geom2) {
-        var relationships = [];
+        const relationships = [];
         if (GeometryEngine.crosses(geom1, geom2))
             relationships.push("CROSSES");
         if (GeometryEngine.contains(geom1, geom2))

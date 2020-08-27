@@ -1,4 +1,4 @@
-# Feature Layer Extrusion
+# Feature layer extrusion
 
 Extrude features based on their attributes.
 

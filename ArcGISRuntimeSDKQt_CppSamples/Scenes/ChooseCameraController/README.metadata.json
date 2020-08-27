@@ -1,28 +1,40 @@
 {
     "category": "Scenes",
-    "description": "Control the behavior of the camera in a scene",
+    "dataItems": [
+        {
+            "itemId": "681d6f7694644709a7c830ec57a2d72b",
+            "path": "~/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
+        }
+    ],
+    "description": "Control the behavior of the camera in a scene.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "3D",
         "camera controller",
-        "camera",
-        "3D"
-    ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-choosecameracontroller.htm",
-    "relevant_apis": [
-        "ArcGISScene",
         "Camera",
         "GlobeCameraController",
         "OrbitGeoElementCameraController",
         "OrbitLocationCameraController",
+        "Scene",
+        "SceneView"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-choosecameracontroller.htm"
+    ],
+    "relevant_apis": [
+        "Camera",
+        "GlobeCameraController",
+        "OrbitGeoElementCameraController",
+        "OrbitLocationCameraController",
+        "Scene",
         "SceneView"
     ],
     "snippets": [
-        "ChooseCameraController.cpp",
-        "main.qml",
         "ChooseCameraController.qml",
+        "ChooseCameraController.cpp",
         "ChooseCameraController.h"
     ],
     "title": "Choose camera controller"

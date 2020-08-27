@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     width: 800
@@ -59,7 +59,7 @@ Rectangle {
         }
 
         Component.onCompleted : {
-            for (var i = 0; i < model.count; ++i) {
+            for (let i = 0; i < model.count; ++i) {
                 metrics.text = model.get(i).text;
                 modelWidth = Math.max(modelWidth, metrics.width);
             }

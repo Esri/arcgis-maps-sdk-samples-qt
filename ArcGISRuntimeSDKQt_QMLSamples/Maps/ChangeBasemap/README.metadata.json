@@ -1,20 +1,24 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to change a map's basemap",
+    "description": "Change a map's basemap. A basemap is beneath all layers on an `Map` and is used to provide visual reference for the operational layers.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "MapView",
+        "basemap",
+        "map",
+        "Basemap",
         "Map",
-        "Basemap"
+        "MapView"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-changebasemap.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-changebasemap.htm"
+    ],
     "relevant_apis": [
-        "MapView",
+        "Basemap",
         "Map",
-        "Basemap"
+        "MapView"
     ],
     "snippets": [
         "ChangeBasemap.qml"

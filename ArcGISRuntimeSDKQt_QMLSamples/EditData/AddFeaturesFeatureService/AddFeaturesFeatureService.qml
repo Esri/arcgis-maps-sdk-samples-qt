@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     width: 800
@@ -74,10 +74,10 @@ Rectangle {
         //! [AddFeaturesFeatureService new feature at mouse click]
         onMouseClicked: {  // mouseClicked came from the MapView
             // create attributes json for the new feature
-            var featureAttributes = {"typdamage" : "Minor", "primcause" : "Earthquake"};
+            const featureAttributes = {"typdamage" : "Minor", "primcause" : "Earthquake"};
 
             // create a new feature using the mouse's map point
-            var feature = featureTable.createFeatureWithAttributes(featureAttributes, mouse.mapPoint);
+            const feature = featureTable.createFeatureWithAttributes(featureAttributes, mouse.mapPoint);
 
             // add the new feature to the feature table
             featureTable.addFeature(feature);

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/EditData/UpdateAttributesFeatureService">
-        <file alias="sample.json">UpdateAttributesFeatureService.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>UpdateAttributesFeatureService.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

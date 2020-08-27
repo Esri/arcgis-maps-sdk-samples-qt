@@ -19,6 +19,7 @@ import QtQuick.Controls 2.2
 
 TextField {
     width: parent.width
+    selectByMouse: true
 
     property url imageUrl
     signal imageClicked

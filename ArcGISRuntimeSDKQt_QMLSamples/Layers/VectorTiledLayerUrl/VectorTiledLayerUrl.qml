@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     width: 800
@@ -60,7 +60,7 @@ Rectangle {
         }
 
         Component.onCompleted : {
-            for (var i = 0; i < model.length; ++i) {
+            for (let i = 0; i < model.length; ++i) {
                 metrics.text = model[i];
                 modelWidth = Math.max(modelWidth, metrics.width);
             }
@@ -73,7 +73,7 @@ Rectangle {
 
         function changeBasemap() {
             // Determine the selected basemap, create that type, and set the Map's basemap
-            var layer;
+            let layer;
             switch (comboBoxBasemap.currentText) {
             case "Mid-Century":
             default:
@@ -92,7 +92,7 @@ Rectangle {
                 layer = ArcGISRuntimeEnvironment.createObject("ArcGISVectorTiledLayer", {url:"https://www.arcgis.com/home/item.html?id=86f556a2d1fd468181855a35e344567f"});
                 break;
             }
-            var newBasemap = ArcGISRuntimeEnvironment.createObject("Basemap");
+            const newBasemap = ArcGISRuntimeEnvironment.createObject("Basemap");
             newBasemap.baseLayers.append(layer);
             map.basemap = newBasemap;
         }

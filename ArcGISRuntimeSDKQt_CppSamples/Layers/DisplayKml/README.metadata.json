@@ -1,6 +1,12 @@
 {
     "category": "Layers",
-    "description": "Load and display KML files from various sources, including URLs, local files, and Portal items",
+    "dataItems": [
+        {
+            "itemId": "324e4742820e46cfbe5029ff2c32cb1f",
+            "path": "~/ArcGIS/Runtime/Data/kml/US_State_Capitals.kml"
+        }
+    ],
+    "description": "Display KML from a URL, portal item, or local KML file.",
     "ignore": false,
     "images": [
         "screenshot.png"
@@ -9,17 +15,21 @@
         "KML",
         "KMZ",
         "OGC",
-        "Keyhole"
+        "keyhole",
+        "KmlDataset",
+        "KmlLayer"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-displaykml.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-displaykml.htm"
+    ],
     "relevant_apis": [
-        "KmlLayer",
-        "KmlDataset"
+        "KmlDataset",
+        "KmlLayer"
     ],
     "snippets": [
-        "DisplayKml.h",
         "DisplayKml.qml",
-        "DisplayKml.cpp"
+        "DisplayKml.cpp",
+        "DisplayKml.h"
     ],
     "title": "Display KML"
 }

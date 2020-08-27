@@ -1,9 +1,0 @@
-{
-    "source" :  "ManageBookmarks.qml",
-    "otherSourceFiles" : [
-        "ManageBookmarks.h",
-        "ManageBookmarks.cpp"
-    ],
-    "name" : "Manage bookmarks"
-}
-

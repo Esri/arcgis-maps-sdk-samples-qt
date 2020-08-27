@@ -6,19 +6,23 @@
         "screenshot.png"
     ],
     "keywords": [
+        "map",
+        "reference scale",
+        "scene",
         "FeatureLayer",
-        "Map",
-        "Maps & Scenes"
+        "Map"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "FeatureLayer",
-        "Map"        
+        "Map"
     ],
     "snippets": [
         "MapReferenceScale.qml",
-        "MapReferenceScale.h",
-        "MapReferenceScale.cpp"
+        "MapReferenceScale.cpp",
+        "MapReferenceScale.h"
     ],
     "title": "Map reference scale"
 }

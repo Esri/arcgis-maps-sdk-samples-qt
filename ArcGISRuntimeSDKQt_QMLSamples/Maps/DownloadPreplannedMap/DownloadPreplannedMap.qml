@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -88,8 +88,8 @@ Rectangle {
                 busy.visible = false;
 
                 for (let i = 0; i < offlineMapTask.preplannedMapAreaList.count; i++) {
-                    let mapArea = offlineMapTask.preplannedMapAreaList.get(i);
-                    mapArea.loadStatusChanged.connect(function () {
+                    const mapArea = offlineMapTask.preplannedMapAreaList.get(i);
+                    mapArea.loadStatusChanged.connect(()=> {
                         if (offlineMapTask.preplannedMapAreaList.get(i).loadStatus !== Enums.LoadStatusLoaded)
                             return;
 
@@ -112,14 +112,14 @@ Rectangle {
                  * DownloadScheduledUpdates - schedulded, read-only updates will be
                  * downloaded and applied to the local geodatabase. */
                 createDefaultDownloadPreplannedOfflineMapParametersResult.updateMode = Enums.PreplannedUpdateModeNoUpdates;
-                let result = createDefaultDownloadPreplannedOfflineMapParametersResult;
+                const result = createDefaultDownloadPreplannedOfflineMapParametersResult;
 
                 path = outputMapPackage +"/" + result.preplannedMapArea.portalItem.title;
                 fileFolder.url = path;
 
                 if (fileFolder.exists) {
                     mmpk = ArcGISRuntimeEnvironment.createObject("MobileMapPackage", { path: path });
-                    mmpk.loadStatusChanged.connect(function () {
+                    mmpk.loadStatusChanged.connect(()=> {
                         if (loadStatus !== Enums.LoadStatusLoaded )
                             return;
 
@@ -133,7 +133,7 @@ Rectangle {
                 } else {
                     job = offlineMapTask.downloadPreplannedOfflineMapWithParameters(createDefaultDownloadPreplannedOfflineMapParametersResult, path);
 
-                    job.jobStatusChanged.connect(function () {
+                    job.jobStatusChanged.connect(()=> {
                         if (job.jobStatus === Enums.JobStatusFailed) {
                             console.log(job.error.message + " - " + job.error.additionalMessage)
                             busy = false;
@@ -147,7 +147,7 @@ Rectangle {
                         busy.visible = false;
                     });
 
-                    job.progressChanged.connect(function () {
+                    job.progressChanged.connect(()=> {
                         progressBar_loading.value = job.progress * .01;
                     });
 

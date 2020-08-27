@@ -1,23 +1,30 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to set the minimum and maximum scale of a map",
+    "description": "Restrict zooming between specific scale ranges.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "extent",
-        "maps",
-        "2D",
+        "area of interest",
+        "level of detail",
+        "maximum",
+        "minimum",
         "scale",
-        "setminScale",
-        "setmaxScale",
-        "zoom"
+        "viewpoint",
+        "Basemap",
+        "Map",
+        "MapView",
+        "ViewPoint"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-minmaxscale.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-minmaxscale.htm"
+    ],
     "relevant_apis": [
-        "Map.minScale",
-        "Map.maxScale"
+        "Basemap",
+        "Map",
+        "MapView",
+        "ViewPoint"
     ],
     "snippets": [
         "MinMaxScale.qml"

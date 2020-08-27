@@ -6,24 +6,29 @@
         "screenshot.png"
     ],
     "keywords": [
+        "annotation",
+        "cartography",
+        "labels",
+        "placement",
+        "reference scale",
+        "text",
+        "utility",
         "AnnotationLayer",
         "FeatureLayer",
-        "feature",
-        "web",
-        "service",
-        "layers",
-        "labels"
+        "ServiceFeatureTable"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "AnnotationLayer",
         "FeatureLayer",
         "ServiceFeatureTable"
     ],
     "snippets": [
+        "DisplayAnnotation.qml",
         "DisplayAnnotation.cpp",
-        "DisplayAnnotation.h",
-        "DisplayAnnotation.qml"
+        "DisplayAnnotation.h"
     ],
     "title": "Display annotation"
 }

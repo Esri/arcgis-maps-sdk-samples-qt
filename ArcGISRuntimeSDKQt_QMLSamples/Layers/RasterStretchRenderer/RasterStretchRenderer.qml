@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -113,7 +113,7 @@ Rectangle {
                 width: modelWidth + leftPadding + rightPadding + indicator.width
                 model: stretchTypes
                 Component.onCompleted : {
-                    for (var i = 0; i < model.length; ++i) {
+                    for (let i = 0; i < model.length; ++i) {
                         metrics.text = model[i];
                         modelWidth = Math.max(modelWidth, metrics.width);
                     }
@@ -184,7 +184,7 @@ Rectangle {
 
     //! [RasterStretchRenderer qml set renderers]
     function applyRendererSettings(){
-        var rgbRenderer = ArcGISRuntimeEnvironment.createObject("StretchRenderer");
+        const rgbRenderer = ArcGISRuntimeEnvironment.createObject("StretchRenderer");
 
         if (stretchTypeCombo.currentText === minMax){
             minMaxParams.minValues = [minMaxMin.value];

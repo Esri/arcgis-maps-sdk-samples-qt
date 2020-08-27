@@ -1,9 +1,0 @@
-{
-    "source" :  "OpenMapUrl.qml",
-    "otherSourceFiles" : [
-        "OpenMapUrl.h",
-        "OpenMapUrl.cpp"
-    ],
-    "name" : "Open Map (URL)"
-}
-

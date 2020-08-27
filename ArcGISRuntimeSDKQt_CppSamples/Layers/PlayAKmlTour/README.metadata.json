@@ -1,35 +1,51 @@
 {
     "category": "Layers",
+    "dataItems": [
+        {
+            "itemId": "f10b1d37fdd645c9bc9b189fb546307c",
+            "path": "~/ArcGIS/Runtime/Data/kml/Esri_tour.kmz"
+        }
+    ],
     "description": "Play tours in KML files.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "KML",
         "animation",
         "interactive",
-        "kml",
         "narration",
-        "play",
         "pause",
+        "play",
         "story",
-        "tour"
-    ],
-    "redirect_from": "",
-    "relevant_apis": [        
-        "KmlTourController",
-        "KmlTourController::tour",
-        "KmlTourController::play()",
-        "KmlTourController::pause()",
-        "KmlTourController::reset()",
+        "tour",
         "KmlTour",
         "KmlTour::tourStatus",
-        "KmlTour::tourStatusChanged"
+        "KmlTour::tourStatusChanged",
+        "KmlTourController",
+        "KmlTourController::pause()",
+        "KmlTourController::play()",
+        "KmlTourController::reset()",
+        "KmlTourController::tour"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "KmlTour",
+        "KmlTour::tourStatus",
+        "KmlTour::tourStatusChanged",
+        "KmlTourController",
+        "KmlTourController::pause()",
+        "KmlTourController::play()",
+        "KmlTourController::reset()",
+        "KmlTourController::tour"
     ],
     "snippets": [
+        "PlayAKmlTour.qml",
         "PlayAKmlTour.cpp",
-        "PlayAKmlTour.h",
-        "PlayAKmlTour.qml"
+        "PlayAKmlTour.h"
     ],
-    "title": "Play A KML tour"
+    "title": "Play a KML tour"
 }

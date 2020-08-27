@@ -1,9 +1,0 @@
-{
-    "source" :  "ExportTiles.qml",
-    "otherSourceFiles" : [
-        "ExportTiles.h",
-        "ExportTiles.cpp"
-    ],
-    "name" : "Export tiles"
-}
-

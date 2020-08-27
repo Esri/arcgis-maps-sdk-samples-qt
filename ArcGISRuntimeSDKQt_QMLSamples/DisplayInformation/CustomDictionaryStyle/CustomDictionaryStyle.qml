@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import Esri.ArcGISExtras 1.1
 
 Rectangle {
@@ -53,7 +53,7 @@ Rectangle {
                 // Set a Dictionary Renderer on the Feature Layer
                 DictionaryRenderer {
                     id: dictionaryRenderer
-                    dictionarySymbolStyle: DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/Restaurant.stylx")
+                    dictionarySymbolStyle: Factory.DictionarySymbolStyle.createFromFile(dataPath + "/styles/arcade_style/Restaurant.stylx")
                 }
             }
         }

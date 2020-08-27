@@ -17,8 +17,8 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.8
-import Esri.ArcGISRuntime.Toolkit.Controls 100.8
+import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 Rectangle {
     id: root
@@ -106,7 +106,7 @@ Rectangle {
             if (geocodeStatus === Enums.TaskStatusCompleted) {
                 if (geocodeResults.length > 0) {
                     graphicsOverlay.graphics.clear();
-                    var graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
+                    const graphic = ArcGISRuntimeEnvironment.createObject("Graphic");
                     graphic.geometry = geocodeResults[0].displayLocation;
                     graphic.attributes.attributesJson = geocodeResults[0].attributes;
                     graphicsOverlay.graphics.append(graphic);
@@ -149,6 +149,7 @@ Rectangle {
                     id: textField
                     font.pixelSize: 14
                     placeholderText: "Type in an address"
+                    selectByMouse: true
 
                     Keys.onEnterPressed: geocodeAddress();
                     Keys.onReturnPressed: geocodeAddress();

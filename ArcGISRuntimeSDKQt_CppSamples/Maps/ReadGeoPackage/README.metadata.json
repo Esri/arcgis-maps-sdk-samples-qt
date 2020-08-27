@@ -1,25 +1,46 @@
 {
     "category": "Maps",
-    "description": "This sample demonstrates how to read rasters and feature tables from GeoPackages to show them as layers in a map",
+    "dataItems": [
+        {
+            "itemId": "68ec42517cdd439e81b036210483e8e7",
+            "path": "~/ArcGIS/Runtime/Data/gpkg/AuroraCO.gpkg"
+        }
+    ],
+    "description": "Add rasters and feature tables from a GeoPackage to a map.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-      "Offline",
-      "OGC",
-      "GeoPackage",
-        "Map",
-        "Esri::ArcGISRuntime::GeoPackage"
+        "OGC",
+        "container",
+        "layer",
+        "map",
+        "package",
+        "raster",
+        "table",
+        "GeoPackage",
+        "GeoPackage::doneLoading",
+        "GeoPackage::geoPackageFeatureTables",
+        "GeoPackage::geoPackageRasters",
+        "GeoPackageFeatureTable",
+        "GeoPackageRaster"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-readgeopackage.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-readgeopackage.htm"
+    ],
     "relevant_apis": [
-        "Esri::ArcGISRuntime::GeoPackage"
+        "GeoPackage",
+        "GeoPackage::doneLoading",
+        "GeoPackage::geoPackageFeatureTables",
+        "GeoPackage::geoPackageRasters",
+        "GeoPackageFeatureTable",
+        "GeoPackageRaster"
     ],
     "snippets": [
-        "ReadGeoPackage.h",
+        "ReadGeoPackage.qml",
         "ReadGeoPackage.cpp",
-        "ReadGeoPackage.qml"
+        "ReadGeoPackage.h"
     ],
-    "title": "Read GeoPackage"
+    "title": "Read a GeoPackage"
 }

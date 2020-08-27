@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Layers/FeatureLayerRenderingModeScene">
-        <file alias="sample.json">FeatureLayerRenderingModeScene.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>FeatureLayerRenderingModeScene.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

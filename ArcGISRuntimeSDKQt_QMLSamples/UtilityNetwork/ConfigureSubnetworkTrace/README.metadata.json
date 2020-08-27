@@ -1,0 +1,72 @@
+{
+    "category": "UtilityNetwork",
+    "description": "Get a server-defined trace configuration for a given tier and modify its traversability scope, add new condition barriers and control what is included in the subnetwork trace result.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "category comparison",
+        "condition barriers",
+        "network analysis",
+        "network attribute comparison",
+        "subnetwork trace",
+        "trace configuration",
+        "traversability",
+        "utility network",
+        "validate consistency",
+        "CodedValueDomain",
+        "UtilityAssetType",
+        "UtilityAttributeComparisonOperator",
+        "UtilityCategory",
+        "UtilityCategoryComparison",
+        "UtilityCategoryComparisonOperator",
+        "UtilityDomainNetwork",
+        "UtilityElement",
+        "UtilityElementTraceResult",
+        "UtilityNetwork",
+        "UtilityNetworkAttribute",
+        "UtilityNetworkAttributeComparison",
+        "UtilityNetworkDefinition",
+        "UtilityTerminal",
+        "UtilityTier",
+        "UtilityTraceAndCondition",
+        "UtilityTraceConfiguration",
+        "UtilityTraceOrCondition",
+        "UtilityTraceParameters",
+        "UtilityTraceResult",
+        "UtilityTraceType",
+        "UtilityTraversability"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "CodedValueDomain",
+        "UtilityAssetType",
+        "UtilityAttributeComparisonOperator",
+        "UtilityCategory",
+        "UtilityCategoryComparison",
+        "UtilityCategoryComparisonOperator",
+        "UtilityDomainNetwork",
+        "UtilityElement",
+        "UtilityElementTraceResult",
+        "UtilityNetwork",
+        "UtilityNetworkAttribute",
+        "UtilityNetworkAttributeComparison",
+        "UtilityNetworkDefinition",
+        "UtilityTerminal",
+        "UtilityTier",
+        "UtilityTraceAndCondition",
+        "UtilityTraceConfiguration",
+        "UtilityTraceOrCondition",
+        "UtilityTraceParameters",
+        "UtilityTraceResult",
+        "UtilityTraceType",
+        "UtilityTraversability"
+    ],
+    "snippets": [
+        "ConfigureSubnetworkTrace.qml"
+    ],
+    "title": "Configure subnetwork trace"
+}

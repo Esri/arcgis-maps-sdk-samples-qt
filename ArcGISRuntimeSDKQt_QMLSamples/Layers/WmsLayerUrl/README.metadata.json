@@ -1,20 +1,24 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to display a WMS Layer from an online URL",
+    "description": "Display a WMS layer using a WMS service URL.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "WmsLayer",
+        "OGC",
+        "web map service",
         "Map",
-        "MapView"
+        "MapView",
+        "WmsLayer"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-wmslayerurl.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-wmslayerurl.htm"
+    ],
     "relevant_apis": [
-        "WmsLayer",
         "Map",
-        "MapView"
+        "MapView",
+        "WmsLayer"
     ],
     "snippets": [
         "WmsLayerUrl.qml"

@@ -1,35 +1,51 @@
 {
     "category": "Maps",
-    "description": "You can use the OfflineMapTask to take a webmap offline, and overrides allow you to adjust the settings used for taking each layer in the map offline",
+    "description": "Take a web map offline with additional options for each layer.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "LOD",
+        "adjust",
+        "download",
+        "extent",
+        "filter",
         "offline",
-        "OfflineMapTask",
+        "override",
+        "parameters",
+        "reduce",
+        "scale range",
+        "setting",
+        "ExportTileCacheParameters",
         "GenerateGeodatabaseParameters",
-        "GenerateOfflineMapParameters",
-        "GenerateOfflineMapParameterOverrides",
+        "GenerateLayerOption",
         "GenerateOfflineMapJob",
+        "GenerateOfflineMapParameterOverrides",
+        "GenerateOfflineMapParameters",
         "GenerateOfflineMapResult",
-        "ExportTileCacheParameters"
+        "OfflineMapParametersKey",
+        "OfflineMapTask"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-generateofflinemapoverrides.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-generateofflinemapoverrides.htm"
+    ],
     "relevant_apis": [
-        "OfflineMapTask",
+        "ExportTileCacheParameters",
         "GenerateGeodatabaseParameters",
-        "GenerateOfflineMapParameters",
-        "GenerateOfflineMapParameterOverrides",
+        "GenerateLayerOption",
         "GenerateOfflineMapJob",
+        "GenerateOfflineMapParameterOverrides",
+        "GenerateOfflineMapParameters",
         "GenerateOfflineMapResult",
-        "ExportTileCacheParameters"
+        "OfflineMapParametersKey",
+        "OfflineMapTask"
     ],
     "snippets": [
-        "OverridesWindow.qml",
+        "GenerateOfflineMap_Overrides.qml",
         "DownloadButton.qml",
         "GenerateWindow.qml",
-        "GenerateOfflineMap_Overrides.qml"
+        "OverridesWindow.qml"
     ],
     "title": "Generate offline map (overrides)"
 }

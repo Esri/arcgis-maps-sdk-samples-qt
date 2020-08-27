@@ -1,24 +1,35 @@
 {
     "category": "Layers",
-    "description": "This sample demonstrates how to change the renderer on a map image layer sublayer",
+    "description": "Apply a renderer to a sublayer.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "sublayer renderer",
-        "dynamic layer"
-    ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-changesublayerrenderer.htm",
-    "relevant_apis": [
-        "ArcGISMapImageSublayer",
+        "class breaks",
+        "dynamic layer",
+        "dynamic rendering",
+        "renderer",
+        "sublayer",
+        "symbology",
+        "visualization",
+        "ArcGISMapImageLayer",
+        "ArcGISMapImageSubLayer",
         "ClassBreaksRenderer",
-        "ClassBreak",
-        "ArcGISMapImageSublayer::renderer"
+        "ClassBreaksRenderer::classBreak"
+    ],
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-changesublayerrenderer.htm"
+    ],
+    "relevant_apis": [
+        "ArcGISMapImageLayer",
+        "ArcGISMapImageSubLayer",
+        "ClassBreaksRenderer",
+        "ClassBreaksRenderer::classBreak"
     ],
     "snippets": [
-        "ChangeSublayerRenderer.cpp",
         "ChangeSublayerRenderer.qml",
+        "ChangeSublayerRenderer.cpp",
         "ChangeSublayerRenderer.h"
     ],
     "title": "Change sublayer renderer"

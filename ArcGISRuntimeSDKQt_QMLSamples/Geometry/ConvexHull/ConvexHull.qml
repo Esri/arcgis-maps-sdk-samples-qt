@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import QtQuick.Layouts 1.11
 import QtQuick.Controls 2.6
 
@@ -69,7 +69,7 @@ Rectangle {
         }
 
         onMouseClicked: {
-            var clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
+            const clickedPoint = mapView.screenToLocation(mouse.x, mouse.y);
             multipointBuilder.points.addPoint(clickedPoint);
             inputsGraphic.geometry = multipointBuilder.geometry;
         }
@@ -87,7 +87,9 @@ Rectangle {
 
                 // display the convex hull
                 onClicked: {
-                    var convHull = GeometryEngine.convexHull(multipointBuilder.geometry);
+                    // normalizing the geometry before performing geometric operations
+                    const normalizedPoints = GeometryEngine.normalizeCentralMeridian(multipointBuilder.geometry);
+                    const convHull = GeometryEngine.convexHull(normalizedPoints);
                     if (convHull.geometryType === Enums.GeometryTypePoint) {
                         convexHullGraphic.symbol = markerSymbol;
                     } else if (convHull.geometryType === Enums.GeometryTypePolyline) {

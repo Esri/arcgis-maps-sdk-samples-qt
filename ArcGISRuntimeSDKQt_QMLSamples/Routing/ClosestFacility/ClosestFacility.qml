@@ -1,4 +1,4 @@
-// [WriteFile Name=ClosestFacilitySample, Category=Routing]
+// [WriteFile Name=FindClosestFacilityToAnIncidentInteractive, Category=Routing]
 // [Legal]
 // Copyright 2017 Esri.
 
@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 Rectangle {
     id: rootRectangle
@@ -142,8 +142,10 @@ Rectangle {
 
             resultsOverlay.graphics.clear();
 
-            var incidentGraphic = ArcGISRuntimeEnvironment.createObject(
-                "Graphic", {geometry: mouse.mapPoint, symbol: incidentSymbol});
+            const incidentGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                              geometry: mouse.mapPoint,
+                                                                              symbol: incidentSymbol
+                                                                          });
             resultsOverlay.graphics.append(incidentGraphic);
 
             solveRoute(mouse.mapPoint);
@@ -193,14 +195,16 @@ Rectangle {
             if (solveClosestFacilityResult === null || solveClosestFacilityResult.error)
                 message = "Incident not within San Diego Area!";
 
-            var rankedList = solveClosestFacilityResult.rankedFacilityIndexes(0);
-            var closestFacilityIdx = rankedList[0];
+            const rankedList = solveClosestFacilityResult.rankedFacilityIndexes(0);
+            const closestFacilityIdx = rankedList[0];
 
-            var incidentIndex = 0; // 0 since there is just 1 incident at a time
-            var route = solveClosestFacilityResult.route(closestFacilityIdx, incidentIndex);
+            const incidentIndex = 0; // 0 since there is just 1 incident at a time
+            const route = solveClosestFacilityResult.route(closestFacilityIdx, incidentIndex);
 
-            var routeGraphic = ArcGISRuntimeEnvironment.createObject(
-                "Graphic", { geometry: route.routeGeometry, symbol: routeSymbol});
+            const routeGraphic = ArcGISRuntimeEnvironment.createObject("Graphic", {
+                                                                           geometry: route.routeGeometry,
+                                                                           symbol: routeSymbol
+                                                                       });
             resultsOverlay.graphics.append(routeGraphic);
         }
 
@@ -227,10 +231,9 @@ Rectangle {
     }
 
     function createFacilities() {
-        facilitiesOverlay.graphics.forEach(function(graphic) {
-            var facility = ArcGISRuntimeEnvironment.createObject("Facility", {geometry: graphic.geometry});
-            facilities.push(facility);
-        });
+        facilitiesOverlay.graphics.forEach(graphic => facilities.push(ArcGISRuntimeEnvironment.createObject("Facility", {
+                                                                                                                geometry: graphic.geometry
+                                                                                                            })));
     }
 
 
@@ -241,7 +244,7 @@ Rectangle {
     }
 
     function solveRoute(incidentPoint) {
-        var incident = ArcGISRuntimeEnvironment.createObject("Incident", {geometry: incidentPoint});
+        const incident = ArcGISRuntimeEnvironment.createObject("Incident", {geometry: incidentPoint});
         facilityParams.setIncidents( [ incident ] );
 
         busy = true;

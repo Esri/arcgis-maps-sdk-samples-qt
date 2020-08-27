@@ -1,8 +1,0 @@
-{
-    "source" :  "StatisticalQuery.qml",
-    "otherSourceFiles" :  [
-        "StatisticalQuery.h",
-        "StatisticalQuery.cpp"
-    ],
-    "name" : "Statistical query"
-}

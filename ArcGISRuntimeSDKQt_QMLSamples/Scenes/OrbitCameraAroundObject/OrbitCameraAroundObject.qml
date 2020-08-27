@@ -15,7 +15,7 @@
 // [Legal]
 
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.12
@@ -74,7 +74,7 @@ Rectangle {
                     x: 6.637
                     y: 45.399
                     z: 100.0
-                    spatialReference: SpatialReference.createWgs84()
+                    spatialReference: Factory.SpatialReference.createWgs84()
                 }
 
                 Component.onCompleted: {

@@ -6,19 +6,21 @@
         "screenshot.png"
     ],
     "keywords": [
-        "GroupLayer",
+        "LayerListModel",
         "Layers",
         "group layer",
-        "LayerListModel"
+        "GroupLayer"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "GroupLayer"
     ],
     "snippets": [
+        "GroupLayers.qml",
         "GroupLayers.cpp",
-        "GroupLayers.h",
-        "GroupLayers.qml"
+        "GroupLayers.h"
     ],
     "title": "Group layers"
 }

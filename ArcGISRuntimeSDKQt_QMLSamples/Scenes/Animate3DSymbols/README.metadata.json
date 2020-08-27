@@ -1,47 +1,67 @@
 {
     "category": "Scenes",
-    "description": "Demonstrates how to animate a graphic's position and rotation and follow it using an OrbitGeoElementCameraController",
+    "dataItems": [
+        {
+            "itemId": "681d6f7694644709a7c830ec57a2d72b",
+            "path": "~/ArcGIS/Runtime/Data/3D/Bristol/Collada/Bristol.dae"
+        },
+        {
+            "itemId": "290f0c571c394461a8b58b6775d0bd63",
+            "path": "~/ArcGIS/Runtime/Data/3D/Missions/GrandCanyon.csv"
+        },
+        {
+            "itemId": "e87c154fb9c2487f999143df5b08e9b1",
+            "path": "~/ArcGIS/Runtime/Data/3D/Missions/Hawaii.csv"
+        },
+        {
+            "itemId": "5a9b60cee9ba41e79640a06bcdf8084d",
+            "path": "~/ArcGIS/Runtime/Data/3D/Missions/Pyrenees.csv"
+        },
+        {
+            "itemId": "12509ffdc684437f8f2656b0129d2c13",
+            "path": "~/ArcGIS/Runtime/Data/3D/Missions/Snowdon.csv"
+        }
+    ],
+    "description": "Demonstrates how to animate a graphic's position and rotation and follow it using a `OrbitGeoElementCameraController`.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "animation",
-        "camera controller",
-        "model scene symbol",
+        "camera",
+        "heading",
+        "pitch",
+        "roll",
+        "rotation",
+        "visualize",
         "Camera",
         "GlobeCameraController",
         "Graphic",
         "GraphicsOverlay",
-        "SurfacePlacement",
-        "MapView",
         "ModelSceneSymbol",
         "OrbitGeoElementCameraController",
-        "Point",
-        "Polyline",
         "Renderer",
-        "SceneProperties",
-        "SceneView",
-        "Viewpoint"
-    ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-animate3dsymbols.htm",
-    "relevant_apis": [
-        "Map",
         "Scene",
+        "SceneProperties",
+        "SceneView",
+        "SurfacePlacement"
+    ],
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-animate3dsymbols.htm"
+    ],
+    "relevant_apis": [
         "Camera",
         "GlobeCameraController",
         "Graphic",
         "GraphicsOverlay",
-        "SurfacePlacement",
-        "MapView",
         "ModelSceneSymbol",
         "OrbitGeoElementCameraController",
-        "Point",
-        "Polyline",
         "Renderer",
+        "Scene",
         "SceneProperties",
         "SceneView",
-        "Viewpoint"
+        "SurfacePlacement"
     ],
     "snippets": [
         "Animate3DSymbols.qml",

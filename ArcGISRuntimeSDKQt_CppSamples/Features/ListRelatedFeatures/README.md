@@ -1,6 +1,6 @@
 # List related features
 
-List features related to the selected feature.
+List features related to a selected feature.
 
 ![](screenshot.png)
 

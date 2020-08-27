@@ -1,37 +1,44 @@
 {
     "category": "Display information",
-    "description": "Open a mobile style (.stylx) and read its contents.",
+    "dataItems": [
+        {
+            "itemId": "1bd036f221f54a99abc9e46ff3511cbf",
+            "path": "~/ArcGIS/Runtime/Data/styles/emoji-mobile.stylx"
+        }
+    ],
+    "description": "Open a mobile style (.stylx) and read its contents. Combine several symbols from the style into a single multilayer point symbol, then use it to display graphics in the map view.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
+        "advanced symbology",
+        "mobile style",
+        "multilayer",
+        "stylx",
         "MultilayerPointSymbol",
-        "Symbol::createSwatch",
+        "Symbol.createSwatch",
         "SymbolLayer",
         "SymbolStyle",
-        "SymbolStyle::searchSymbols",
-        "SymbolStyle::fetchSymbol",
-        "SymbolStyleSearchResultListModel",
-        "SymbolStyleSearchResult",
+        "SymbolStyle.fetchSymbolWithKeyList",
+        "SymbolStyle.searchSymbols",
         "SymbolStyleSearchParameters",
-        "advanced",
-        "symbology",
-        "multilayer",
-        "mobile style",
-        "stylx"
+        "SymbolStyleSearchResult",
+        "SymbolStyleSearchResultListModel"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "MultilayerPointSymbol",
-        "Symbol::createSwatch",
+        "Symbol.createSwatch",
         "SymbolLayer",
         "SymbolStyle",
+        "SymbolStyle.fetchSymbolWithKeyList",
         "SymbolStyle.searchSymbols",
-        "SymbolStyle.fetchSymbol",
-        "SymbolStyleSearchResultListModel",
+        "SymbolStyleSearchParameters",
         "SymbolStyleSearchResult",
-        "SymbolStyleSearchParameters"
+        "SymbolStyleSearchResultListModel"
     ],
     "snippets": [
         "ReadSymbolsFromMobileStyle.qml",

@@ -38,15 +38,11 @@ SearchDictionarySymbolStyleSample {
         }
 
         Column {
+            id: fieldColumn
             visible: !hideSearch.checked
             enabled: visible
-
-            id: fieldColumn
-            anchors {
-                left: parent.left
-                right: parent.right
-                margins: 8
-            }
+            Layout.fillWidth: true
+            Layout.margins: 8
 
             Repeater {
                 id: repeater
@@ -80,6 +76,7 @@ SearchDictionarySymbolStyleSample {
                             id: categoryEntry
                             Layout.fillWidth: true
                             placeholderText: repeaterModel[index] +" (e.g. "+ hintsModel[index] +")"
+                            selectByMouse: true
                             validator: RegExpValidator{ regExp: /^\s*[\da-zA-Z_][\da-zA-Z\s_]*$/ }
                             onAccepted: addCategoryButton.mouseArea.clicked();
                         }
@@ -102,7 +99,7 @@ SearchDictionarySymbolStyleSample {
                                     if (categoryEntry.text.length === 0)
                                         return;
 
-                                    var tmp = searchParamList;
+                                    const tmp = searchParamList;
                                     tmp[index].push(categoryEntry.text);
 
                                     searchParamList = tmp;
@@ -133,7 +130,7 @@ SearchDictionarySymbolStyleSample {
                                 anchors.fill: parent
                                 onClicked: {
                                     categoryEntry.text = "";
-                                    var tmp = searchParamList;
+                                    const tmp = searchParamList;
                                     tmp[index] = [];
 
                                     searchParamList = tmp;
@@ -225,10 +222,7 @@ SearchDictionarySymbolStyleSample {
         Rectangle {
             id: bottomRectangle
             Layout.fillHeight: true
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
+            Layout.fillWidth: true
 
             //Listview of results returned from Dictionary
             ListView {

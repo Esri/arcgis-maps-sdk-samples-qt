@@ -1,32 +1,41 @@
 {
     "category": "Display information",
-    "description": "This sample demonstrates how to override the default renderer of a shapefile when displaying with a FeatureLayer",
+    "dataItems": [
+        {
+            "itemId": "d98b3e5293834c5f852f13c569930caa",
+            "path": "~/ArcGIS/Runtime/Data/shp/Subdivisions.shp"
+        }
+    ],
+    "description": "Display a shapefile with custom symbology.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "shapefile",
+        "package",
         "shape file",
-        "ShapefileFeatureTable",
+        "shapefile",
+        "symbology",
+        "visualization",
         "FeatureLayer",
-        "SimpleRenderer",
+        "ShapefileFeatureTable",
         "SimpleFillSymbol",
         "SimpleLineSymbol",
-        "Map"
+        "SimpleRenderer"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-symbolizeshapefile.htm",
+    "redirect_from": [
+        "/qt/latest/cpp/sample-code/sample-qt-symbolizeshapefile.htm"
+    ],
     "relevant_apis": [
-        "ShapefileFeatureTable",
         "FeatureLayer",
-        "SimpleRenderer",
+        "ShapefileFeatureTable",
         "SimpleFillSymbol",
         "SimpleLineSymbol",
-        "Map"
+        "SimpleRenderer"
     ],
     "snippets": [
-        "SymbolizeShapefile.cpp",
         "SymbolizeShapefile.qml",
+        "SymbolizeShapefile.cpp",
         "SymbolizeShapefile.h"
     ],
     "title": "Symbolize a shapefile"

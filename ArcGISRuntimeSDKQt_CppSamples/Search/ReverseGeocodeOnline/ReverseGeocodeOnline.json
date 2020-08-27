@@ -1,8 +1,0 @@
-{
-    "source" :  "ReverseGeocodeOnline.qml",
-    "otherSourceFiles" :  [
-        "ReverseGeocodeOnline.h",
-        "ReverseGeocodeOnline.cpp"
-    ],
-    "name" : "Reverse geocode"
-}

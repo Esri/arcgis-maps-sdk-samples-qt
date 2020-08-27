@@ -1,36 +1,43 @@
 {
     "category": "Routing",
+    "dataItems": [
+        {
+            "itemId": "567e14f3420d40c5a206e5c0284cf8fc",
+            "path": "~/ArcGIS/Runtime/Data/tpk/san_diego/san_diego.zip"
+        }
+    ],
     "description": "This sample demonstrates how to solve a route on-the-fly using offline data.",
     "ignore": false,
     "images": [
-        "sample.gif"
+        "screenshot.png"
     ],
     "keywords": [
-        "offline",
+        "connectivity",
         "disconnected",
-        "network analysis",
-        "routing",
         "fastest",
-        "shortest",
-        "routing",
         "locator",
         "navigation",
-        "connectivity",
-        "turn-by-turn"
-    ],
-    "redirect_from": "",
-    "relevant_apis": [
-        "ArcGISTiledLayer",
-        "Graphic",
-        "GraphicsOverlay",
-        "MapView",
-        "RouteTask",
+        "network analysis",
+        "offline",
+        "routing",
+        "routing",
+        "shortest",
+        "turn-by-turn",
         "RouteParameters",
         "RouteResult",
-        "SimpleLineSymbol",
+        "RouteTask",
         "Stop",
-        "TextSymbol",
-        "TileCache"
+        "TravelMode"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "RouteParameters",
+        "RouteResult",
+        "RouteTask",
+        "Stop",
+        "TravelMode"
     ],
     "snippets": [
         "OfflineRouting.qml"

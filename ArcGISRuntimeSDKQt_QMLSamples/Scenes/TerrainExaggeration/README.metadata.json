@@ -1,19 +1,29 @@
 {
     "category": "Scenes",
-    "description": "This sample demonstrates how to exaggerate a scene's terrain surface",
+    "description": "Vertically exaggerate terrain in a scene.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
         "3D",
+        "DEM",
+        "DTM",
         "elevation",
-        "exaggeration",
+        "scene",
+        "surface",
+        "terrain",
+        "Scene",
+        "Scene.baseSurface",
         "Surface",
         "Surface.elevationExaggeration"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-terrainexaggeration.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-terrainexaggeration.htm"
+    ],
     "relevant_apis": [
+        "Scene",
+        "Scene.baseSurface",
         "Surface",
         "Surface.elevationExaggeration"
     ],

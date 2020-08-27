@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Features/TimeBasedQuery">
-        <file alias="sample.json">TimeBasedQuery.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>TimeBasedQuery.qml</file>
         <file>TimeBasedQuery.h</file>
         <file>TimeBasedQuery.cpp</file>

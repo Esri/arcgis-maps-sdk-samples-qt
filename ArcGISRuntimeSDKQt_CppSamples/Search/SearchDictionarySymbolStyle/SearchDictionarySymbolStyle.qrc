@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Search/SearchDictionarySymbolStyle">
-        <file alias="sample.json">SearchDictionarySymbolStyle.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>SearchDictionarySymbolStyle.qml</file>
         <file>SearchDictionarySymbolStyle.cpp</file>
         <file>SearchDictionarySymbolStyle.h</file>

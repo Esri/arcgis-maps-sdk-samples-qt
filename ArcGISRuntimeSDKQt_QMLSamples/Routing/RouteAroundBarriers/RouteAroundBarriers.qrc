@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Routing/RouteAroundBarriers">
-        <file alias="sample.json">RouteAroundBarriers.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>RouteAroundBarriers.qml</file>
         <file>screenshot.png</file>
         <file>orange_symbol.png</file>

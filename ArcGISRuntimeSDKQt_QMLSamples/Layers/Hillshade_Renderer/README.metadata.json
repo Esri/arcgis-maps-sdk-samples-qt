@@ -1,33 +1,40 @@
 {
     "category": "Layers",
-    "description": "This sample shows how to apply a HillshadeRenderer to a RasterLayer",
+    "dataItems": [
+        {
+            "itemId": "ae9739163a76437ea02482e1a807b806",
+            "path": "~/ArcGIS/Runtime/Data/raster/srtm.tiff"
+        }
+    ],
+    "description": "Apply a hillshade renderer to a raster.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "hillshade",
-        "shaded relief",
-        "lighting angle",
-        "HillshadeRenderer",
-        "RasterLayer",
-        "Raster",
+        "altitude",
+        "angle",
+        "azimuth",
+        "raster",
+        "slope",
+        "visualization",
         "Basemap",
-        "Map",
-        "MapView"
+        "HillshadeRenderer",
+        "Raster",
+        "RasterLayer"
     ],
-    "redirect_from": "/qt/latest/qml/sample-code/sample-qt-hillshade-renderer.htm",
+    "redirect_from": [
+        "/qt/latest/qml/sample-code/sample-qt-hillshade-renderer.htm"
+    ],
     "relevant_apis": [
-        "HillshadeRenderer",
-        "RasterLayer",
-        "Raster",
         "Basemap",
-        "Map",
-        "MapView"
+        "HillshadeRenderer",
+        "Raster",
+        "RasterLayer"
     ],
     "snippets": [
-        "HillshadeSettings.qml",
         "Hillshade_Renderer.qml",
+        "HillshadeSettings.qml",
         "HillshadeSlopeTypeModel.qml"
     ],
     "title": "Hillshade renderer"

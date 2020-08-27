@@ -1,5 +1,11 @@
 {
     "category": "Layers",
+    "dataItems": [
+        {
+            "itemId": "3f1bbf0ec70b409a975f5c91f363fe7d",
+            "path": "~/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk"
+        }
+    ],
     "description": "Load an offline copy of a tiled map service as a basemap.",
     "ignore": false,
     "images": [
@@ -9,9 +15,15 @@
         "cache",
         "layers",
         "offline",
-        "tile"
+        "tile",
+        "ArcGISTiledLayer",
+        "Basemap",
+        "Map",
+        "TileCache"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
         "ArcGISTiledLayer",
         "Basemap",

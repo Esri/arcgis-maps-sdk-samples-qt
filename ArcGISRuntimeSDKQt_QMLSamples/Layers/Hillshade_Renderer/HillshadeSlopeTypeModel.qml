@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.5
-import Esri.ArcGISRuntime 100.8
+import Esri.ArcGISRuntime 100.9
 
 ListModel {
     ListElement {

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/CloudAndPortal/PortalUserInfo">
-        <file alias="sample.json">PortalUserInfo.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>screenshot.png</file>
         <file>PortalUserInfo.qml</file>
         <file>PortalUserInfo.h</file>

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/Analysis/ViewshedCamera">
-        <file alias="sample.json">ViewshedCamera.json</file>        
+        <file alias="sample.json">README.metadata.json</file>        
         <file>ViewshedCamera.qml</file>
         <file>ViewshedCamera.h</file>
         <file>ViewshedCamera.cpp</file>

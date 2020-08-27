@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/Samples/DisplayInformation/Simple_Marker_Symbol">
-        <file alias="sample.json">Simple_Marker_Symbol.json</file>
+        <file alias="sample.json">README.metadata.json</file>
         <file>Simple_Marker_Symbol.qml</file>
         <file>screenshot.png</file>
         <file>README.md</file>

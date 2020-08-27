@@ -1,9 +1,0 @@
-{
-    "source" :  "AnalyzeHotspots.qml",
-    "otherSourceFiles" : [
-        "AnalyzeHotspots.h",
-        "AnalyzeHotspots.cpp"
-    ],
-    "name" : "Analyze hotspots"
-}
-
