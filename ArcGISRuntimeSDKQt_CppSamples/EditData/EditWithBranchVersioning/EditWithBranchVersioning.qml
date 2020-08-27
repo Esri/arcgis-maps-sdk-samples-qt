@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
@@ -34,7 +34,7 @@ Item {
 
         Callout {
             id: callout
-            borderWidth: 1;
+            borderWidth: 1
             borderColor: "lightgrey"
             calloutData: model.mapView.calloutData
             leaderPosition: leaderPositionEnum.Automatic
@@ -42,12 +42,10 @@ Item {
                 for (let i=0; i < featAttributes.length; i++) {
                     if (model.currentTypeDamage === featAttributes[i]) {
                         typeDmgCombo.currentIndex = i;
-//                        updateWindow.visible = true;
-                        return;
+                        break;
                     }
-                    updateWindow.visible = true;
-                    return;
                 }
+                updateWindow.visible = true;
             }
         }
 
@@ -66,14 +64,16 @@ Item {
                     createVersionWindow.visible = true;
                     callout.dismiss();
                     updateWindow.visible = false;
-                } else if (text === qsTr("Switch to Default version")) {
+                } else if (text === qsTr("Switch to default version")) {
                     text = qsTr("Switch to created version")
-                    model.switchVersion();
+                    //                    model.switchVersion();
+                    model.applyEdits();
                     callout.dismiss();
                     updateWindow.visible = false;
                 } else if (text === qsTr("Switch to created version")) {
-                    text = qsTr("Switch to Default version")
-                    model.switchVersion();
+                    text = qsTr("Switch to default version")
+                    //                    model.switchVersion();
+                    model.applyEdits();
                     callout.dismiss();
                     updateWindow.visible = false;
                 }
@@ -270,7 +270,7 @@ Item {
                     text: qsTr("Cancel")
                     // once the cancel button is clicked, hide the window
                     onClicked: {
-
+                        model.clearSelectedFeature();
                         updateWindow.visible = false;
                         callout.dismiss();
                     }
@@ -304,11 +304,19 @@ Item {
         }
 
         onCreateVersionSuccess: {
-            createVersionBtn.text = qsTr("Switch to Default version");
+            createVersionBtn.text = qsTr("Switch to default version");
         }
 
         onErrorMessageChanged: {
             errorDialog.visible = true;
+        }
+
+        onApplyingEdits: {
+            applyEditsDialog.visible = true;
+        }
+
+        onApplyingEditsCompleted: {
+            applyEditsDialog.visible = false;
         }
     }
 
@@ -323,18 +331,16 @@ Item {
         }
     }
 
-//    Dialog {
-//        id: applyEditsDialog
-//        anchors.centerIn: parent
-//        standardButtons: Dialog.Ok
+    Dialog {
+        id: applyEditsDialog
+        x: Math.round(parent.width - width) / 2
+        y: Math.round(parent.height - height) - view.attributionRect.height;
 
-//        Text {
-//            id: applyEditsText
-//            text: qsTr("Would")
-//        }
-
-
-//    }
+        Text {
+            id: applyEditsText
+            text: qsTr("Applying Edits")
+        }
+    }
 
     BusyIndicator {
         id: busyIndicator

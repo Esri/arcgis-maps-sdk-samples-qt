@@ -62,3 +62,4 @@ android {
     INCLUDEPATH += $$PWD
     DEPENDPATH += $$PWD
 }
+android: include(/Users/jare8800/Android/Library/Android/sdk/android_openssl/openssl.pri)

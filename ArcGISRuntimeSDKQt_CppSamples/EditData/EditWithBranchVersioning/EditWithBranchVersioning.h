@@ -47,7 +47,7 @@ class EditWithBranchVersioning : public QObject
 
   Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
-  Q_PROPERTY(QString sgdbCurrentVersion MEMBER m_sgdbCurrentVersion NOTIFY sgdbCurrentVersionChanged)
+  Q_PROPERTY(QString sgdbCurrentVersion MEMBER m_sgdbCurrentVersionName NOTIFY sgdbCurrentVersionChanged)
   Q_PROPERTY(QString currentTypeDamage MEMBER m_currentTypeDamage NOTIFY currentTypeDamageChanged)
   Q_PROPERTY(QString errorMessage MEMBER m_errorMessage NOTIFY errorMessageChanged)
   Q_PROPERTY(bool busy MEMBER m_busy NOTIFY busyChanged)
@@ -65,8 +65,10 @@ public:
   void moveFeature(const Esri::ArcGISRuntime::Point& mapPoint);
   void clearSelection();
   Q_INVOKABLE void createVersion(const QString& versionName, const QString& versionAccess, const QString& description);
-  Q_INVOKABLE void switchVersion();
+  Q_INVOKABLE void switchVersion() const;
+  Q_INVOKABLE void applyEdits();
   Q_INVOKABLE void updateAttribute(const QString& attributeValue);
+  Q_INVOKABLE void clearSelectedFeature();
 
 signals:
   void authManagerChanged();
@@ -79,6 +81,8 @@ signals:
   void hideWindow();
   void mapViewChanged();
   void sgdbCurrentVersionChanged();
+  void applyingEdits();
+  void applyingEditsCompleted();
 
 private slots:
 
@@ -91,7 +95,7 @@ private:
   void setMapView(Esri::ArcGISRuntime::MapQuickView* mapView);
   void connectSgdbSignals();
   bool sgdbVerionIsDefault() const;
-  void clearSelectedFeature();
+//  void clearSelectedFeature();
 
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
@@ -101,7 +105,7 @@ private:
   Esri::ArcGISRuntime::ArcGISFeature* m_selectedFeature = nullptr;
 
 
-  QString m_sgdbCurrentVersion;
+  QString m_sgdbCurrentVersionName;
   QString m_sgdbVersionAccess;
   QString m_sgdbVersionDescription;
   QString m_createdVersionName;

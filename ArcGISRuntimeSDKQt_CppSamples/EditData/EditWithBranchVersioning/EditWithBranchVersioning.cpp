@@ -42,7 +42,7 @@ EditWithBranchVersioning::EditWithBranchVersioning(QObject* parent /* = nullptr 
   m_map(new Map(Basemap::streetsVector(this), this))
 {
   m_cred = new Credential{"editor01", "editor01.password", this};
-//  m_cred = new Credential{"editor02", "editor02.password", this};
+  //  m_cred = new Credential{"editor02", "editor02.password", this};
 }
 
 EditWithBranchVersioning::~EditWithBranchVersioning() = default;
@@ -103,6 +103,13 @@ void EditWithBranchVersioning::onMapDoneLoading(Error error)
     // if feature is already selected, then move to new location
     if (m_selectedFeature)
     {
+      if (m_serviceGeodatabase->versionName() == m_serviceGeodatabase->defaultVersionName())
+      {
+        clearSelectedFeature();
+        m_busy = false;
+        emit busyChanged();
+        return;
+      }
       const Point clickedPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
       moveFeature(clickedPoint);
     }
@@ -134,13 +141,18 @@ void EditWithBranchVersioning::onMapDoneLoading(Error error)
     {
 
       m_selectedFeature = static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0));
-      qDebug() << m_selectedFeature->attributes()->size();
       // select the item in the result
-      m_featureLayer->selectFeature(static_cast<Feature*>(identifyResult->geoElements().at(0)));
-      QueryParameters queryParams;
-      QString whereClause = "objectid=" + identifyResult->geoElements().at(0)->attributes()->attributeValue("objectid").toString();
-      queryParams.setWhereClause(whereClause);
-      m_featureTable->queryFeatures(queryParams, QueryFeatureFields::LoadAll);
+      m_featureLayer->selectFeature(m_selectedFeature);
+
+
+      // Obtain placename attribute for the callout title
+      const QString featureName = m_selectedFeature->attributes()->attributeValue("PLACENAME").toString();
+      m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\">%1</font>").arg(featureName));
+      m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
+
+      m_currentTypeDamage = m_selectedFeature->attributes()->attributeValue("TYPDAMAGE").toString();
+      emit currentTypeDamageChanged();
+      emit featureSelected();
     }
     m_busy = false;
     emit busyChanged();
@@ -150,7 +162,7 @@ void EditWithBranchVersioning::onMapDoneLoading(Error error)
 void EditWithBranchVersioning::connectSgdbSignals()
 {
   m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"), m_cred,this);
-//  m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"), this);
+  //  m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"), this);
   m_busy = true;
   emit busyChanged();
 
@@ -160,14 +172,16 @@ void EditWithBranchVersioning::connectSgdbSignals()
 
   connect(m_serviceGeodatabase, &ServiceGeodatabase::applyEditsCompleted, this, [this]()
   {
-    m_busy = false;
-    emit busyChanged();
+    emit applyingEditsCompleted();
+    switchVersion();
   });
 
   connect(m_serviceGeodatabase, &ServiceGeodatabase::errorOccurred, this, [this](Error error)
   {
     m_errorMessage = error.message() + " - " + error.additionalMessage();
     emit errorMessageChanged();
+    m_busy = false;
+    emit busyChanged();
 
   });
 
@@ -176,9 +190,9 @@ void EditWithBranchVersioning::connectSgdbSignals()
     m_busy = false;
     emit busyChanged();
     // set the current version name for the UI
-    m_sgdbCurrentVersion = m_serviceGeodatabase->versionName();
+    m_sgdbCurrentVersionName = m_serviceGeodatabase->versionName();
     // if the current version is the default, prevent editing
-    m_allowEditing = m_sgdbCurrentVersion == "sde.DEFAULT" ? false : true;
+    m_allowEditing = m_sgdbCurrentVersionName == "sde.DEFAULT" ? false : true;
     clearSelectedFeature();
     emit allowEditingChanged();
     emit sgdbCurrentVersionChanged();
@@ -215,8 +229,6 @@ void EditWithBranchVersioning::onSgdbDoneLoadingCompleted(Error error)
   {
     m_busy = false;
     emit busyChanged();
-    // once update featuers has completed we can apply the edits back to our version
-//    m_serviceGeodatabase->applyEdits();
   });
 
   // create a feature layer from the service feature table
@@ -226,32 +238,8 @@ void EditWithBranchVersioning::onSgdbDoneLoadingCompleted(Error error)
   m_map->operationalLayers()->append(m_featureLayer);
 
   // update current version for UI
-  m_sgdbCurrentVersion = m_serviceGeodatabase->versionName();
+  m_sgdbCurrentVersionName = m_serviceGeodatabase->versionName();
   emit sgdbCurrentVersionChanged();
-
-  connect(m_featureTable, &FeatureTable::queryFeaturesCompleted, this, [this](QUuid, FeatureQueryResult* featureQueryResult)
-  {
-    if (featureQueryResult && featureQueryResult->iterator().hasNext())
-    {
-      // first delete if not nullptr
-      if (m_selectedFeature)
-      {
-        clearSelectedFeature();
-      }
-
-      // set selected feature member
-      m_selectedFeature = static_cast<ArcGISFeature*>(featureQueryResult->iterator().next(this));
-      m_selectedFeature->setParent(this);
-      // Obtain placename attribute for the callout title
-      const QString featureName = m_selectedFeature->attributes()->attributeValue("PLACENAME").toString();
-      m_mapView->calloutData()->setTitle(QString("<br><font size=\"+2\"><b>%1</b></font>").arg(featureName));
-      m_mapView->calloutData()->setLocation(m_selectedFeature->geometry().extent().center());
-
-      m_currentTypeDamage = m_selectedFeature->attributes()->attributeValue("TYPDAMAGE").toString();
-      emit currentTypeDamageChanged();
-      emit featureSelected();
-    }
-  });
 }
 
 void EditWithBranchVersioning::onCreateVersionCompleted(QUuid, Esri::ArcGISRuntime::ServiceVersionInfo* serviceVersionInfo)
@@ -275,30 +263,27 @@ void EditWithBranchVersioning::onCreateVersionCompleted(QUuid, Esri::ArcGISRunti
   m_serviceGeodatabase->switchVersion(m_createdVersionName);
 }
 
-void EditWithBranchVersioning::switchVersion()
+void EditWithBranchVersioning::applyEdits()
 {
   m_busy = true;
   emit busyChanged();
 
-//  if (m_serviceGeodatabase->hasLocalEdits())
-//  {
-//    // apply local edits before switching versions
-//    m_serviceGeodatabase->applyEdits();
-//  }
-
-  // if the current version is our created version switch to the default
-  if (m_sgdbCurrentVersion == m_createdVersionName)
+  if (m_serviceGeodatabase->hasLocalEdits())
   {
-    if (m_serviceGeodatabase->hasLocalEdits())
-    {
-      // apply local edits before switching versions
-      m_serviceGeodatabase->applyEdits();
-    }
-
-    m_serviceGeodatabase->switchVersion(m_serviceGeodatabase->defaultVersionName());
+    emit applyingEdits();
+    m_serviceGeodatabase->applyEdits();
   }
   else
+    switchVersion();
+}
+
+void EditWithBranchVersioning::switchVersion() const
+{
+  // if the current version is our created version switch to the default
+  if (m_serviceGeodatabase->versionName() == m_serviceGeodatabase->defaultVersionName())
     m_serviceGeodatabase->switchVersion(m_createdVersionName);
+  else
+    m_serviceGeodatabase->switchVersion(m_serviceGeodatabase->defaultVersionName());
 }
 
 void EditWithBranchVersioning::updateAttribute(const QString& attributeValue)
