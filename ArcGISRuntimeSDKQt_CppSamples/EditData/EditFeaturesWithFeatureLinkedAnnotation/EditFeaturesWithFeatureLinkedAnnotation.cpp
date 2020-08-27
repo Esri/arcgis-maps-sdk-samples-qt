@@ -179,7 +179,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, c
       // only perform selections on Feature Layers
       FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(identifyResult->layerContent());
 
-      // if cast was succesful select features.
+      // if cast was successful select features.
       if (featureLayer)
       {
         m_selectedFeature = static_cast<Feature*>(identifyResult->geoElements().at(0));
