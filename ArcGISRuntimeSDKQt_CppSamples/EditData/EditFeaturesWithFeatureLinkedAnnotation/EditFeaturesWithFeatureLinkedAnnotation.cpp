@@ -280,7 +280,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::updateSelectedFeature(const QStrin
   if (!m_selectedFeature)
     return;
 
-  // update the two attirbutes with the inputed text.
+  // update the two attributes with the inputted text.
   m_selectedFeature->attributes()->replaceAttribute(s_ad_address, address);
   m_selectedFeature->attributes()->replaceAttribute(s_st_str_nam, streetName);
   m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);

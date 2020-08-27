@@ -75,7 +75,7 @@ Rectangle {
                 const layerContent = identifyLayersResults[i].layerContent;
 
                 // only select features if the layer content is a Feature Layer
-                if ( layerContent.name === pointsFeatureLayerName || layerContent.name === linesFeatureLayerName) {
+                if (layerContent.name === pointsFeatureLayerName || layerContent.name === linesFeatureLayerName) {
 
                     selectedFeature = results[i].geoElements[0];
                     const geometry = selectedFeature.geometry;
@@ -108,14 +108,14 @@ Rectangle {
         }
     }
 
-    // Create the intial Viewpoint
+    // Create the initial Viewpoint
     ViewpointCenter {
         id: viewpoint
         // Specify the center Point
         center: Point {
             x: -77.41589
             y: 39.0204
-            spatialReference: Factory.SpatialReference.createWgs84()
+            spatialReference: SpatialReference { wkid: 4326 }
         }
         // Specify the scale
         targetScale: 2257
@@ -233,7 +233,7 @@ Rectangle {
                         if (!selectedFeature)
                             return;
 
-                        // update the two attirbutes with the inputed text.
+                        // update the two attributes with the inputted text.
                         selectedFeature.attributes.replaceAttribute(ad_address, attAddressTextField.text);
                         selectedFeature.attributes.replaceAttribute(st_str_nam, attStreetTextField.text);
                         selectedFeature.featureTable.updateFeature(selectedFeature);
