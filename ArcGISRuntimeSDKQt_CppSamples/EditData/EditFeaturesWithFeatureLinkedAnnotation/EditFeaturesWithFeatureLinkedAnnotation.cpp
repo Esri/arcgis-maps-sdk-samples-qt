@@ -73,10 +73,10 @@ const QString EditFeaturesWithFeatureLinkedAnnotation::s_st_str_nam = QStringLit
 namespace
 {
   // Convenience RAII struct that deletes all pointers in given container.
-  struct IdentifyLayerResultLock
+  struct IdentifyLayerResultsScopedCleanup
   {
-    IdentifyLayerResultLock(const QList<IdentifyLayerResult*>& list) : results(list) { }
-    ~IdentifyLayerResultLock() { qDeleteAll(results); }
+    IdentifyLayerResultsScopedCleanup(const QList<IdentifyLayerResult*>& list) : results(list) { }
+    ~IdentifyLayerResultsScopedCleanup() { qDeleteAll(results); }
     const QList<IdentifyLayerResult*>& results;
   };
 }
@@ -170,7 +170,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent mouseEv
 void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& identifyResults)
 {
   // A convenience wrapper that deletes the contents of identifyResults when we leave scope.
-  IdentifyLayerResultLock identifyResultsLock(identifyResults);
+  IdentifyLayerResultsScopedCleanup identifyResultsScopedCleanup(identifyResults);
 
   for (IdentifyLayerResult* identifyResult : identifyResults)
   {
