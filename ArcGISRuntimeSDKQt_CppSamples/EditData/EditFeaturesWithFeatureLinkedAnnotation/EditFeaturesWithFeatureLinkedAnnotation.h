@@ -79,6 +79,9 @@ private:
   Esri::ArcGISRuntime::Point m_screenClickPoint;
   QStringList m_addressAndStreetText;
 
+  static const QString s_ad_address;
+  static const QString s_st_str_nam;
+
 };
 
 #endif // EDITFEATURESWITHFEATURELINKEDANNOTATION_H

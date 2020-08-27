@@ -67,6 +67,9 @@ QString defaultDataPath()
 
 using namespace Esri::ArcGISRuntime;
 
+const QString EditFeaturesWithFeatureLinkedAnnotation::s_ad_address = QStringLiteral("AD_ADDRESS");
+const QString EditFeaturesWithFeatureLinkedAnnotation::s_st_str_nam = QStringLiteral("ST_STR_NAM");
+
 EditFeaturesWithFeatureLinkedAnnotation::EditFeaturesWithFeatureLinkedAnnotation(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapType::LightGrayCanvasVector, 39.0204, -77.4159, 18, this))
@@ -178,7 +181,6 @@ void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, c
           // (i.e. a curve) do not select it
           if (polylineBuilder->toPolyline().parts().part(0).segmentCount() > 1)
           {
-            qDebug() << "Only Straight lines";
             clearSelection();
             delete m_selectedFeature;
             m_selectedFeature = nullptr;
@@ -191,9 +193,9 @@ void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, c
           m_addressAndStreetText.clear();
 
           // update QML text fields with the attributes for the selected point feature
-          const QString addressText = m_selectedFeature->attributes()->attributeValue("AD_ADDRESS").toString();
+          const QString addressText = m_selectedFeature->attributes()->attributeValue(s_ad_address).toString();
           m_addressAndStreetText.append(addressText);
-          const QString streetNameText = m_selectedFeature->attributes()->attributeValue("ST_STR_NAM").toString();
+          const QString streetNameText = m_selectedFeature->attributes()->attributeValue(s_st_str_nam).toString();
           m_addressAndStreetText.append(streetNameText);
 
           emit addressAndStreetTextChanged();
@@ -216,7 +218,8 @@ void EditFeaturesWithFeatureLinkedAnnotation::clearSelection()
 
 void EditFeaturesWithFeatureLinkedAnnotation::moveFeature(Point mapPoint)
 {
-  const Polyline geom = m_selectedFeature->geometry();
+  const Geometry geom = m_selectedFeature->geometry();
+
   const Point projectedMapPoint = GeometryEngine::project(mapPoint, geom.spatialReference());
   if (geom.geometryType() == GeometryType::Polyline)
   {
@@ -260,7 +263,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::updateSelectedFeature(const QStrin
     return;
 
   // update the two attirbutes with the inputed text.
-  m_selectedFeature->attributes()->replaceAttribute("AD_ADDRESS", address);
-  m_selectedFeature->attributes()->replaceAttribute("ST_STR_NAM", streetName);
+  m_selectedFeature->attributes()->replaceAttribute(s_ad_address, address);
+  m_selectedFeature->attributes()->replaceAttribute(s_st_str_nam, streetName);
   m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
 }

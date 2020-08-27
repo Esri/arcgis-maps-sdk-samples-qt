@@ -32,6 +32,8 @@ Rectangle {
     readonly property string pointsAnnoLayerName: "Loudoun_Address_PointsAnno_1"
     readonly property string linesFeatureLayerName: "ParcelLines_1"
     readonly property string linesAnnoLayerName: "ParcelLinesAnno_1"
+    readonly property string ad_address: "AD_ADDRESS"
+    readonly property string st_str_nam: "ST_STR_NAM"
     property var selectedFeature: null
     property var pointsFeatureLayer: null
     property var linesFeatureLayer: null
@@ -81,8 +83,8 @@ Rectangle {
                     if (geometry.geometryType === Enums.GeometryTypePoint) {
 
                         // update QML text fields with the attributes for the selected point feature
-                        addressText = selectedFeature.attributes.attributeValue("AD_ADDRESS");
-                        streetNameText = selectedFeature.attributes.attributeValue("ST_STR_NAM");
+                        addressText = selectedFeature.attributes.attributeValue(ad_address);
+                        streetNameText = selectedFeature.attributes.attributeValue(st_str_nam);
                         pointsFeatureLayer.selectFeature(selectedFeature);
                         updateWindow.visible = true;
                     } else if (geometry.geometryType === Enums.GeometryTypePolyline ) {
@@ -95,7 +97,6 @@ Rectangle {
                         // if the selected feature is a polyline with any part containing more than one segment
                         // (i.e. a curve) do not select it
                         if (polylineBuilder.parts.part(0).segmentCount > 1) {
-                            print("only straight lines");
                             clearSelection();
                             return;
                         }
@@ -232,8 +233,8 @@ Rectangle {
                             return;
 
                         // update the two attirbutes with the inputed text.
-                        selectedFeature.attributes.replaceAttribute("AD_ADDRESS", attAddressTextField.text);
-                        selectedFeature.attributes.replaceAttribute("ST_STR_NAM", attStreetTextField.text);
+                        selectedFeature.attributes.replaceAttribute(ad_address, attAddressTextField.text);
+                        selectedFeature.attributes.replaceAttribute(st_str_nam, attStreetTextField.text);
                         selectedFeature.featureTable.updateFeature(selectedFeature);
                     }
                 }
