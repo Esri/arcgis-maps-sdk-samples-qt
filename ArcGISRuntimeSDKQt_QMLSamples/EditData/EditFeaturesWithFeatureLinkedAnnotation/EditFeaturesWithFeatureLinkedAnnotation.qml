@@ -60,7 +60,7 @@ Rectangle {
             if (selectedFeature) {
                 moveFeature(clickPoint);
             } else {
-                mapView.identifyLayers(mouse.x,  mouse.y, 10, false);
+                mapView.identifyLayers(mouse.x, mouse.y, 10, false);
             }
         }
 
@@ -70,14 +70,14 @@ Rectangle {
 
             const results = mapView.identifyLayersResults;
 
-            for (let j = 0; j < results.length; j++) {
+            for (let i = 0; i < results.length; i++) {
 
-                const layerContent = identifyLayersResults[j].layerContent;
+                const layerContent = identifyLayersResults[i].layerContent;
 
                 // only select features if the layer content is a Feature Layer
                 if ( layerContent.name === pointsFeatureLayerName || layerContent.name === linesFeatureLayerName) {
 
-                    selectedFeature = results[j].geoElements[0];
+                    selectedFeature = results[i].geoElements[0];
                     const geometry = selectedFeature.geometry;
 
                     if (geometry.geometryType === Enums.GeometryTypePoint) {
@@ -101,6 +101,7 @@ Rectangle {
                             return;
                         }
                         linesFeatureLayer.selectFeature(selectedFeature);
+                        return;
                     }
                 }
             }
@@ -270,7 +271,6 @@ Rectangle {
             // get nearest vertex to the map point on the selected polyline
             const nearestVertex = GeometryEngine.nearestVertex(geometry, workingPoint);
 
-
             const polylineBuilder = ArcGISRuntimeEnvironment.createObject("PolylineBuilder", {
                                                                               geometry: geometry,
                                                                               spatialReference: Factory.SpatialReference.createWgs84()
@@ -285,18 +285,14 @@ Rectangle {
             // add the map point as a new point
             part.addPoint(workingPoint);
 
-            // update the selected feature with the new geometry
             selectedFeature.geometry = polylineBuilder.geometry;
-            selectedFeature.featureTable.updateFeature(selectedFeature);
-            clearSelection();
-        } else if ( geometry.geometryType === Enums.GeometryTypePoint ) {
+        } else if (geometry.geometryType === Enums.GeometryTypePoint) {
 
             // if the selected feature is a point, change the geometry with the map point
             selectedFeature.geometry = mapPoint;
-
-            // update the selected feature with the new geometry
-            selectedFeature.featureTable.updateFeature(selectedFeature);
-            clearSelection();
         }
+        // update the selected feature with the new geometry
+        selectedFeature.featureTable.updateFeature(selectedFeature);
+        clearSelection();
     }
 }

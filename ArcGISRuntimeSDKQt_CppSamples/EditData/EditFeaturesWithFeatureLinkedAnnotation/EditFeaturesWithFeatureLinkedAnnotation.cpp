@@ -70,6 +70,17 @@ using namespace Esri::ArcGISRuntime;
 const QString EditFeaturesWithFeatureLinkedAnnotation::s_ad_address = QStringLiteral("AD_ADDRESS");
 const QString EditFeaturesWithFeatureLinkedAnnotation::s_st_str_nam = QStringLiteral("ST_STR_NAM");
 
+namespace
+{
+  // Convenience RAII struct that deletes all pointers in given container.
+  struct IdentifyLayerResultLock
+  {
+    IdentifyLayerResultLock(const QList<IdentifyLayerResult*>& list) : results(list) { }
+    ~IdentifyLayerResultLock() { qDeleteAll(results); }
+    const QList<IdentifyLayerResult*>& results;
+  };
+}
+
 EditFeaturesWithFeatureLinkedAnnotation::EditFeaturesWithFeatureLinkedAnnotation(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(BasemapType::LightGrayCanvasVector, 39.0204, -77.4159, 18, this))
@@ -158,6 +169,9 @@ void EditFeaturesWithFeatureLinkedAnnotation::onMouseClicked(QMouseEvent mouseEv
 
 void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& identifyResults)
 {
+  // A convenience wrapper that deletes the contents of identifyResults when we leave scope.
+  IdentifyLayerResultLock identifyResultsLock(identifyResults);
+
   for (IdentifyLayerResult* identifyResult : identifyResults)
   {
     if (!identifyResult->geoElements().isEmpty())
@@ -170,16 +184,19 @@ void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, c
       {
         m_selectedFeature = static_cast<Feature*>(identifyResult->geoElements().at(0));
 
+        // Prevent the feature from being deleted when identifyResultsLock goes out of scope and cleans up identifyResults
+        m_selectedFeature->setParent(this);
+
         const GeometryType selectedFeatureGeomType = m_selectedFeature->geometry().geometryType();
 
         if (selectedFeatureGeomType == GeometryType::Polyline)
         {
           const Geometry geom = m_selectedFeature->geometry();
-          const PolylineBuilder* polylineBuilder = new PolylineBuilder(geom, this);
+          const PolylineBuilder polylineBuilder(geom);
 
           // if the selected feature is a polyline with any part containing more than one segment
           // (i.e. a curve) do not select it
-          if (polylineBuilder->toPolyline().parts().part(0).segmentCount() > 1)
+          if (polylineBuilder.toPolyline().parts().part(0).segmentCount() > 1)
           {
             clearSelection();
             delete m_selectedFeature;
@@ -201,6 +218,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::onIdentifyLayersCompleted(QUuid, c
           emit addressAndStreetTextChanged();
         }
         featureLayer->selectFeature(m_selectedFeature);
+        return;
       }
     }
   }
@@ -220,15 +238,15 @@ void EditFeaturesWithFeatureLinkedAnnotation::moveFeature(Point mapPoint)
 {
   const Geometry geom = m_selectedFeature->geometry();
 
-  const Point projectedMapPoint = GeometryEngine::project(mapPoint, geom.spatialReference());
+  const Point projectedMapPoint = geometry_cast<Point>(GeometryEngine::project(mapPoint, geom.spatialReference()));
   if (geom.geometryType() == GeometryType::Polyline)
   {
     // get nearest vertex to the map point on the selected polyline
     const ProximityResult nearestVertex = GeometryEngine::nearestVertex(geom, projectedMapPoint);
-    PolylineBuilder* polylineBuilder = new PolylineBuilder(geom, this);
+    const PolylineBuilder polylineBuilder(geom);
 
     // get part of polyline nearest to map point
-    Part* part = polylineBuilder->parts()->part(nearestVertex.partIndex());
+    Part* part = polylineBuilder.parts()->part(nearestVertex.partIndex());
 
     // remove nearest point to map point
     part->removePoint(nearestVertex.pointIndex());
@@ -237,7 +255,7 @@ void EditFeaturesWithFeatureLinkedAnnotation::moveFeature(Point mapPoint)
     part->addPoint(projectedMapPoint);
 
     // update the selected feature with the new geometry
-    m_selectedFeature->setGeometry(polylineBuilder->toGeometry());
+    m_selectedFeature->setGeometry(polylineBuilder.toGeometry());
     m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
 
     clearSelection();
