@@ -22,7 +22,7 @@ import Esri.ArcGISExtras 1.1
 Rectangle {
     width: 800
     height: 600
-    
+
     readonly property url dataPath: System.userHomePath + "/ArcGIS/Runtime/Data"
 
     // Create MapView that contains a Map with the Topographic Basemap
