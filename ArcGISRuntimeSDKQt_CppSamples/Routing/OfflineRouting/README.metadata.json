@@ -9,7 +9,8 @@
     "description": "This sample demonstrates how to solve a route on-the-fly using offline data.",
     "ignore": false,
     "images": [
-        "screenshot.png"
+        "screenshot.png",
+        "sample.gif"
     ],
     "keywords": [
         "connectivity",

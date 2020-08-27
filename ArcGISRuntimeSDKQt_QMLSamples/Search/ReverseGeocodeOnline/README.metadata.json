@@ -6,6 +6,7 @@
         "screenshot.png"
     ],
     "keywords": [
+        "callout",
         "address",
         "geocode",
         "locate",
@@ -20,7 +21,11 @@
     ],
     "relevant_apis": [
         "GeocodeParameters",
+        "Callout",
+        "CalloutData",
+        "GraphicsOverlay",
         "LocatorTask",
+        "PictureMarkerSymbol",
         "ReverseGeocodeParameters"
     ],
     "snippets": [
