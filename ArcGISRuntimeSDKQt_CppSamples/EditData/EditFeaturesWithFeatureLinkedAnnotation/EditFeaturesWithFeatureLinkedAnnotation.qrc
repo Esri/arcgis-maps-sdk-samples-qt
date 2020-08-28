@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/EditData/EditFeaturesWithFeatureLinkedAnnotation">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>EditFeaturesWithFeatureLinkedAnnotation.qml</file>
+        <file>EditFeaturesWithFeatureLinkedAnnotation.h</file>
+        <file>EditFeaturesWithFeatureLinkedAnnotation.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
