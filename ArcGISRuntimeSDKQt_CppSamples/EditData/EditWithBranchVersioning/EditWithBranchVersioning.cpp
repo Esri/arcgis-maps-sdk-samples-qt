@@ -37,6 +37,17 @@
 
 using namespace Esri::ArcGISRuntime;
 
+namespace
+{
+  // Convenience RAII struct that deletes all pointers in given container.
+  struct FeatureTableEditResultsScopedCleanup
+  {
+    FeatureTableEditResultsScopedCleanup(const QList<FeatureTableEditResult*>& list) : results(list) { }
+    ~FeatureTableEditResultsScopedCleanup() { qDeleteAll(results); }
+    const QList<FeatureTableEditResult*>& results;
+  };
+}
+
 EditWithBranchVersioning::EditWithBranchVersioning(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::streetsVector(this), this))
@@ -170,8 +181,25 @@ void EditWithBranchVersioning::connectSgdbSignals()
 
   connect(m_serviceGeodatabase, &ServiceGeodatabase::createVersionCompleted, this, &EditWithBranchVersioning::onCreateVersionCompleted);
 
-  connect(m_serviceGeodatabase, &ServiceGeodatabase::applyEditsCompleted, this, [this]()
+  connect(m_serviceGeodatabase, &ServiceGeodatabase::applyEditsCompleted, this, [this](QUuid,const QList<FeatureTableEditResult*>& featureTableEditResults)
   {
+    // A convenience wrapper that deletes the contents of featureEditResults when we leave scope.
+    FeatureTableEditResultsScopedCleanup featureTableEditResultsCleanup(featureTableEditResults);
+
+    for (auto featureTableEditResult : featureTableEditResults)
+    {
+      for (auto featureEditResult : featureTableEditResult->editResults())
+      {
+        if (!featureEditResult->error().isEmpty())
+        {
+          m_errorMessage = featureEditResult->error().message() + " - " + featureEditResult->error().additionalMessage();
+          emit errorMessageChanged();
+          m_busy = false;
+          emit busyChanged();
+        }
+      }
+    }
+
     emit applyingEditsCompleted();
     switchVersion();
   });
@@ -225,7 +253,7 @@ void EditWithBranchVersioning::onSgdbDoneLoadingCompleted(Error error)
     emit busyChanged();
   });
 
-  connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this] (QUuid, bool success)
+  connect(m_featureTable, &ServiceFeatureTable::updateFeatureCompleted, this, [this] (QUuid, bool)
   {
     m_busy = false;
     emit busyChanged();
