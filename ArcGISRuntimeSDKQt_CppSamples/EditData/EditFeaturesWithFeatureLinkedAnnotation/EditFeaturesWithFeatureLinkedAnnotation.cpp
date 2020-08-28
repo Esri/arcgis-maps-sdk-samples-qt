@@ -64,11 +64,7 @@ QString defaultDataPath()
 }
 } // namespace
 
-
 using namespace Esri::ArcGISRuntime;
-
-const QString EditFeaturesWithFeatureLinkedAnnotation::s_ad_address = QStringLiteral("AD_ADDRESS");
-const QString EditFeaturesWithFeatureLinkedAnnotation::s_st_str_nam = QStringLiteral("ST_STR_NAM");
 
 namespace
 {
@@ -83,7 +79,9 @@ namespace
 
 EditFeaturesWithFeatureLinkedAnnotation::EditFeaturesWithFeatureLinkedAnnotation(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(BasemapType::LightGrayCanvasVector, 39.0204, -77.4159, 18, this))
+  m_map(new Map(BasemapType::LightGrayCanvasVector, 39.0204, -77.4159, 18, this)),
+  s_ad_address(QStringLiteral("AD_ADDRESS")),
+  s_st_str_nam(QStringLiteral("ST_STR_NAM"))
 {
   const QString dataPath = defaultDataPath() + "/ArcGIS/Runtime/Data/geodatabase/loudoun_anno.geodatabase";
 
@@ -256,23 +254,18 @@ void EditFeaturesWithFeatureLinkedAnnotation::moveFeature(Point mapPoint)
 
     // update the selected feature with the new geometry
     m_selectedFeature->setGeometry(polylineBuilder.toGeometry());
-    m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
-
-    clearSelection();
-    delete m_selectedFeature;
-    m_selectedFeature = nullptr;
   }
   else if (geom.geometryType() == GeometryType::Point)
   {
     // if the selected feature is a point, change the geometry with the map point
     m_selectedFeature->setGeometry(mapPoint);
-
-    // update the selected feature with the new geometry
-    m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
-    clearSelection();
-    delete m_selectedFeature;
-    m_selectedFeature = nullptr;
   }
+
+  // update the selected feature with the new geometry
+  m_selectedFeature->featureTable()->updateFeature(m_selectedFeature);
+  clearSelection();
+  delete m_selectedFeature;
+  m_selectedFeature = nullptr;
 }
 
 void EditFeaturesWithFeatureLinkedAnnotation::updateSelectedFeature(const QString& address, const QString& streetName)
