@@ -170,8 +170,11 @@ Rectangle {
                                 break;
                                 case Enums.TaskStatusErrored:
                                 table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
-                                if (table.error) reject(table.error)
-                                else reject({message: table.tableName + ": query task errored++++"})
+                                if (table.error) {
+                                    reject(table.error);
+                                } else {
+                                    reject({message: table.tableName + ": query task errored++++"});
+                                }
                                 break;
                             }
                         }
