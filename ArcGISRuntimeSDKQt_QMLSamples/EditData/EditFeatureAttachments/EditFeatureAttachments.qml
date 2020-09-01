@@ -20,7 +20,7 @@ import Qt.labs.platform 1.0
 import QtGraphicalEffects 1.0
 import Esri.ArcGISExtras 1.1
 import Esri.ArcGISRuntime 100.10
-import Esri.ArcGISRuntime.Toolkit.Controls 100.9
+import Esri.ArcGISRuntime.Toolkit.Controls 100.10
 
 Rectangle {
 
