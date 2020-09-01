@@ -19,7 +19,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.10
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
 
 Rectangle {
     id: rootRectangle

@@ -27,7 +27,7 @@ QT += opengl qml quick
 TEMPLATE = app
 TARGET = BlendRasterLayer
 
-ARCGIS_RUNTIME_VERSION = 100.9
+ARCGIS_RUNTIME_VERSION = 100.10
 include($$PWD/arcgisruntime.pri)
 
 #-------------------------------------------------------------------------------
