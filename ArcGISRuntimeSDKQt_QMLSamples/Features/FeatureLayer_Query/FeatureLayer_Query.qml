@@ -105,9 +105,11 @@ Rectangle {
                 text: "Find and Select"
                 enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
                 onClicked: {
-                    queryFeatures(findText.text, featureTable) // query the table
+                    const queryString = `LOWER(STATE_NAME) LIKE LOWER('${findText.text}%')`;
+                    queryFeatures(queryString, featureTable) // query the table
                     .then(result=>selectResults(result, featureLayer)) // then select the features
-                    .then(features=>mapView.setViewpointGeometryAndPadding(features[0].geometry, 30)); // then zoom to the select feature
+                    .then(features=>mapView.setViewpointGeometryAndPadding(features[0].geometry, 30)) // then zoom to the select feature
+                    .catch(error=>textLabel.text = error.message);
                 }
             }
         }
@@ -121,7 +123,10 @@ Rectangle {
             property alias text : textLabel.text
             Text {
                 id: textLabel
-                text: "No state named " + findText.text.toUpperCase() + " exists."
+                onTextChanged: {
+                    if (text.length > 0)
+                        errorMsgDialog.open();
+                }
             }
         }
     }
@@ -133,9 +138,10 @@ Rectangle {
                         layer.clearSelection();
 
                         // get the features
-                        const features = []
-                        while (result.iterator.hasNext) {
-                            features.push(result.iterator.next());
+                        const features = Array.from(result.iterator.features);
+                        if (features.length === 0) {
+                            const msg = "No state named " + findText.text.toUpperCase() + " exists."
+                            reject({message: msg});
                         }
 
                         // select the features
@@ -154,47 +160,34 @@ Rectangle {
                     (resolve, reject)=>{
                         let taskId;
                         let parameters = ArcGISRuntimeEnvironment.createObject("QueryParameters");
-                        parameters.whereClause = "STATE_NAME LIKE '" + formatStateNameForQuery(findText.text) + "%'";
+                        parameters.whereClause = searchString;
 
-                        const featureStatusChanged = ()=>{
-                            switch (table.queryFeaturesStatus){
+                        const featureStatusChanged = ()=> {
+                            switch (table.queryFeaturesStatus) {
                                 case Enums.TaskStatusCompleted:
-                                table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
-                                const result = table.queryFeaturesResults[taskId]
-                                if (result) {
-                                    resolve(result)
-                                }
-                                else {
-                                    reject({message: "The query finished but there was no result for this taskId", taskId: taskId});
-                                }
-                                break;
+                                    table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
+                                    const result = table.queryFeaturesResults[taskId];
+                                    if (result) {
+                                        resolve(result);
+                                    } else {
+                                        reject({message: "The query finished but there was no result for this taskId", taskId: taskId});
+                                    }
+                                    break;
                                 case Enums.TaskStatusErrored:
-                                table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
-                                if (table.error) {
-                                    reject(table.error);
-                                } else {
-                                    reject({message: table.tableName + ": query task errored++++"});
-                                }
-                                break;
+                                    table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
+                                    if (table.error) {
+                                        reject(table.error);
+                                    } else {
+                                        reject({message: table.tableName + ": query task errored++++"});
+                                    }
+                                    break;
+                                default:
+                                    break;
                             }
                         }
 
                         table.queryFeaturesStatusChanged.connect(featureStatusChanged);
                         taskId = table.queryFeatures(parameters);
-                    })
-    }
-
-    function formatStateNameForQuery(stateName) {
-        // format state names as expected by the service, for instance "Rhode Island"
-        if (stateName === "")
-            return "";
-
-        const formattedWords = [];
-
-        const lowerStateName = stateName.toLowerCase();
-        const words = lowerStateName.split(" ");
-        words.forEach(word => formattedWords.push(word.charAt(0).toUpperCase() + word.slice(1)));
-
-        return formattedWords.join(" ");
+                    });
     }
 }
