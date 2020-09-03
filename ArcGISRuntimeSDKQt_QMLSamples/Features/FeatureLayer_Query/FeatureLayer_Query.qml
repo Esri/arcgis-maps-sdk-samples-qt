@@ -59,33 +59,6 @@ Rectangle {
                 ServiceFeatureTable {
                     id: featureTable
                     url: "https://services.arcgis.com/jIL9msH9OI208GCb/arcgis/rest/services/USA_Daytime_Population_2016/FeatureServer/0"
-
-                    onQueryFeaturesStatusChanged: {
-                        if (queryFeaturesStatus === Enums.TaskStatusCompleted) {
-                            if (!queryFeaturesResult.iterator.hasNext) {
-                                errorMsgDialog.visible = true;
-                                return;
-                            }
-
-                            // clear any previous selection
-                            featureLayer.clearSelection();
-
-                            const features = []
-                            // get the features
-                            while (queryFeaturesResult.iterator.hasNext) {
-                                features.push(queryFeaturesResult.iterator.next());
-                            }
-
-                            // select the features
-                            // The ideal way to select features is to call featureLayer.selectFeaturesWithQuery(), which will
-                            // automatically select the features based on your query.  This is just a way to show you operations
-                            // that you can do with query results. Refer to API doc for more details.
-                            featureLayer.selectFeatures(features);
-
-                            // zoom to the first feature
-                            mapView.setViewpointGeometryAndPadding(features[0].geometry, 30);
-                        }
-                    }
                 }
             }
         }
@@ -101,10 +74,6 @@ Rectangle {
                 }
             }
             targetScale: 9e7
-        }
-
-        QueryParameters {
-            id: params
         }
 
         Row {
@@ -127,15 +96,20 @@ Rectangle {
                 selectByMouse: true
                 validator: RegExpValidator{ regExp: /^[a-zA-Z ]*$/ }
                 Keys.onReturnPressed: {
-                    query();
+                    btn.clicked();
                 }
             }
 
             Button {
+                id: btn
                 text: "Find and Select"
                 enabled: featureTable.loadStatus === Enums.LoadStatusLoaded
                 onClicked: {
-                    query();
+                    const queryString = `LOWER(STATE_NAME) LIKE LOWER('${findText.text}%')`;
+                    queryFeatures(queryString, featureTable) // query the table
+                    .then(result=>selectResults(result, featureLayer)) // then select the features
+                    .then(features=>mapView.setViewpointGeometryAndPadding(features[0].geometry, 30)) // then zoom to the select feature
+                    .catch(error=>textLabel.text = error.message);
                 }
             }
         }
@@ -149,31 +123,71 @@ Rectangle {
             property alias text : textLabel.text
             Text {
                 id: textLabel
-                text: "No state named " + findText.text.toUpperCase() + " exists."
+                onTextChanged: {
+                    if (text.length > 0)
+                        errorMsgDialog.open();
+                }
             }
         }
     }
 
-    // function to form and execute the query
-    function query() {
-        // set the where clause
-        params.whereClause = "STATE_NAME LIKE '" + formatStateNameForQuery(findText.text) + "%'";
+    function selectResults(result, layer) {
+        return new Promise(
+                    (resolve, reject)=>{
+                        // clear any previous selection
+                        layer.clearSelection();
 
-        // start the query
-        featureTable.queryFeatures(params);
+                        // get the features
+                        const features = Array.from(result.iterator.features);
+                        if (features.length === 0) {
+                            const msg = "No state named " + findText.text.toUpperCase() + " exists."
+                            reject({message: msg});
+                        }
+
+                        // select the features
+                        // The ideal way to select features is to call featureLayer.selectFeaturesWithQuery(), which will
+                        // automatically select the features based on your query.  This is just a way to show you operations
+                        // that you can do with query results. Refer to API doc for more details.
+                        layer.selectFeatures(features);
+
+                        resolve(features)
+                    });
     }
 
-    function formatStateNameForQuery(stateName) {
-        // format state names as expected by the service, for instance "Rhode Island"
-        if (stateName === "")
-            return "";
 
-        const formattedWords = [];
+    function queryFeatures(searchString, table){
+        return new Promise(
+                    (resolve, reject)=>{
+                        let taskId;
+                        let parameters = ArcGISRuntimeEnvironment.createObject("QueryParameters");
+                        parameters.whereClause = searchString;
 
-        const lowerStateName = stateName.toLowerCase();
-        const words = lowerStateName.split(" ");
-        words.forEach(word => formattedWords.push(word.charAt(0).toUpperCase() + word.slice(1)));
+                        const featureStatusChanged = ()=> {
+                            switch (table.queryFeaturesStatus) {
+                                case Enums.TaskStatusCompleted:
+                                    table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
+                                    const result = table.queryFeaturesResults[taskId];
+                                    if (result) {
+                                        resolve(result);
+                                    } else {
+                                        reject({message: "The query finished but there was no result for this taskId", taskId: taskId});
+                                    }
+                                    break;
+                                case Enums.TaskStatusErrored:
+                                    table.queryFeaturesStatusChanged.disconnect(featureStatusChanged);
+                                    if (table.error) {
+                                        reject(table.error);
+                                    } else {
+                                        reject({message: table.tableName + ": query task errored++++"});
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
 
-        return formattedWords.join(" ");
+                        table.queryFeaturesStatusChanged.connect(featureStatusChanged);
+                        taskId = table.queryFeatures(parameters);
+                    });
     }
 }
