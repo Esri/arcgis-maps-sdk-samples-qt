@@ -22,9 +22,6 @@ import Esri.Samples 1.0
 import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
 import Esri.ArcGISRuntime.Toolkit.Controls 100.10
 
-//import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
-//import Esri.ArcGISRuntime.Toolkit.Controls 100.9
-
 Item {
 
     readonly property var featAttributes: ["Affected", "Destroyed", "Inaccessible", "Minor", "Major"]
@@ -69,15 +66,12 @@ Item {
                     updateWindow.visible = false;
                 } else if (text === qsTr("Switch to default version")) {
                     text = qsTr("Switch to created version")
-                    //                    model.switchVersion();
-//                    model.applyEdits();
-                    // applying edits shouldn't be needed for default
+                    model.applyEdits();
                     callout.dismiss();
                     updateWindow.visible = false;
                 } else if (text === qsTr("Switch to created version")) {
                     text = qsTr("Switch to default version")
-                    //                    model.switchVersion();
-                    model.applyEdits();
+                    model.switchVersion();
                     callout.dismiss();
                     updateWindow.visible = false;
                 }
@@ -134,6 +128,7 @@ Item {
             onClicked: mouse.accepted = true;
             onWheel: wheel.accepted = true;
         }
+
         GridLayout {
             columns: 2
             anchors.margins: 5
@@ -193,13 +188,6 @@ Item {
         }
     }
 
-    function resetCreateVersionWindow() {
-        createVersionWindow.visible = false;
-        versionNameTextField.text = "";
-        descriptionTextField.text = "";
-        accessComboBox.currentIndex = 0;
-    }
-
     // Update Window
     Rectangle {
         id: updateWindow
@@ -245,6 +233,7 @@ Item {
                 Layout.minimumWidth: modelWidth + leftPadding + rightPadding + indicator.width
                 Layout.margins: 5
                 Layout.fillWidth: true
+                enabled: !model.sgdbVersionIsDefault
                 model: featAttributes
             }
 
@@ -258,7 +247,8 @@ Item {
                     Layout.margins: 5
                     Layout.alignment: Qt.AlignRight
                     text: qsTr("Update")
-                    enabled: model.allowEditing
+//                    enabled: model.allowEditing
+                    enabled: !model.sgdbVersionIsDefault
                     // once the update button is clicked, hide the windows, and fetch the currently selected features
                     onClicked: {
                         print("Update Attriubte " + typeDmgCombo.currentValue);
@@ -283,12 +273,17 @@ Item {
         }
     }
 
+    function resetCreateVersionWindow() {
+        createVersionWindow.visible = false;
+        versionNameTextField.text = "";
+        descriptionTextField.text = "";
+        accessComboBox.currentIndex = 0;
+    }
     // Uncomment this section when running as standalone application
 
     AuthenticationView {
         authenticationManager: model.authManager
     }
-
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     EditWithBranchVersioningSample {

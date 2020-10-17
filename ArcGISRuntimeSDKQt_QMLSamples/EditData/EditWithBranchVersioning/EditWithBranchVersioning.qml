@@ -116,10 +116,6 @@ Rectangle {
     ServiceGeodatabase {
         id: sgdb
         url: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"
-        credential: Credential {
-            username: "editor01"
-            password: "editor01.password"
-        }
 
         onLoadStatusChanged: {
             if (loadStatus !== Enums.LoadStatusLoaded)
@@ -133,7 +129,7 @@ Rectangle {
              });
 
             serviceFeatureTable.loadStatusChanged.connect(()=> {
-                if ( serviceFeatureTable.loadStatus !== Enums.LoadStatusLoaded)
+                if (serviceFeatureTable.loadStatus !== Enums.LoadStatusLoaded)
                     return;
 
                 mapView.setViewpointGeometry(featureLayer.fullExtent);

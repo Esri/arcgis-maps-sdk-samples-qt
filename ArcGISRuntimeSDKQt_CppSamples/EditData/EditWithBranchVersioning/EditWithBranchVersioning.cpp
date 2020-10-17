@@ -23,7 +23,6 @@
 #include "ArcGISFeatureServiceInfo.h"
 #include "AttributeListModel.h"
 #include "AuthenticationManager.h"
-#include "Credential.h"
 #include "FeatureEditResult.h"
 #include "FeatureLayer.h"
 #include "FeatureTableEditResult.h"
@@ -52,8 +51,6 @@ EditWithBranchVersioning::EditWithBranchVersioning(QObject* parent /* = nullptr 
   QObject(parent),
   m_map(new Map(Basemap::streetsVector(this), this))
 {
-  m_cred = new Credential{"editor01", "editor01.password", this};
-  //  m_cred = new Credential{"editor02", "editor02.password", this};
 }
 
 EditWithBranchVersioning::~EditWithBranchVersioning() = default;
@@ -94,7 +91,7 @@ AuthenticationManager *EditWithBranchVersioning::authManager() const
   return AuthenticationManager::instance();
 }
 
-void EditWithBranchVersioning::onMapDoneLoading(Error error)
+void EditWithBranchVersioning::onMapDoneLoading(const Error& error)
 {
   if (!error.isEmpty())
     return;
@@ -137,24 +134,23 @@ void EditWithBranchVersioning::onMapDoneLoading(Error error)
       return;
 
     m_featureLayer->clearSelection();
+    clearSelectedFeature();
     emit hideWindow();
   });
 
   // connect to the identifyLayerCompleted signal on the map view
   connect(m_mapView, &MapQuickView::identifyLayerCompleted, this, [this](QUuid, IdentifyLayerResult* identifyResult)
   {
-    if(!identifyResult)
+    if (!identifyResult)
     {
       clearSelectedFeature();
       return;
     }
     if (!identifyResult->geoElements().empty())
     {
-
       m_selectedFeature = static_cast<ArcGISFeature*>(identifyResult->geoElements().at(0));
       // select the item in the result
       m_featureLayer->selectFeature(m_selectedFeature);
-
 
       // Obtain placename attribute for the callout title
       const QString featureName = m_selectedFeature->attributes()->attributeValue("PLACENAME").toString();
@@ -172,8 +168,7 @@ void EditWithBranchVersioning::onMapDoneLoading(Error error)
 
 void EditWithBranchVersioning::connectSgdbSignals()
 {
-  m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"), m_cred,this);
-  //  m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"), this);
+  m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"), this);
   m_busy = true;
   emit busyChanged();
 
@@ -200,17 +195,6 @@ void EditWithBranchVersioning::connectSgdbSignals()
         }
       }
     }
-
-    if (m_serviceGeodatabase->hasLocalEdits())
-    {
-      qDebug() << "local edits still exists after applying edits completed";
-      return;
-    }
-    else
-    {
-      qDebug() << "no edits as expected";
-    }
-
     emit applyingEditsCompleted();
     switchVersion();
   });
@@ -221,7 +205,6 @@ void EditWithBranchVersioning::connectSgdbSignals()
     emit errorMessageChanged();
     m_busy = false;
     emit busyChanged();
-
   });
 
   connect(m_serviceGeodatabase, &ServiceGeodatabase::switchVersionCompleted, this, [this] (QUuid)
@@ -231,26 +214,21 @@ void EditWithBranchVersioning::connectSgdbSignals()
     // set the current version name for the UI
     m_sgdbCurrentVersionName = m_serviceGeodatabase->versionName();
     // if the current version is the default, prevent editing
-    m_allowEditing = m_sgdbCurrentVersionName == "sde.DEFAULT" ? false : true;
+    m_sgdbVersionIsDefault = m_sgdbCurrentVersionName == m_serviceGeodatabase->defaultVersionName() ? true : false;
     clearSelectedFeature();
-    emit allowEditingChanged();
+    emit sgdbVersionIsDefaultChanged();
     emit sgdbCurrentVersionChanged();
   });
-
   m_serviceGeodatabase->load();
 }
 
-void EditWithBranchVersioning::onSgdbDoneLoadingCompleted(Error error)
+void EditWithBranchVersioning::onSgdbDoneLoadingCompleted(const Error& error)
 {
   if (!error.isEmpty())
     return;
 
   // created service feature table from the table contained in the service geodatabase
   m_featureTable = m_serviceGeodatabase->table(0);
-
-  // set allow editing to false as the initial version loaded is the default
-  m_allowEditing = false;
-  emit allowEditingChanged();
 
   connect(m_featureTable, &ServiceFeatureTable::doneLoading, this, [this](Error error)
   {
@@ -397,4 +375,3 @@ void EditWithBranchVersioning::clearSelectedFeature()
   m_selectedFeature = nullptr;
   clearSelection();
 }
-
