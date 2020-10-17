@@ -279,11 +279,11 @@ Item {
         descriptionTextField.text = "";
         accessComboBox.currentIndex = 0;
     }
-    // Uncomment this section when running as standalone application
 
-    AuthenticationView {
+    // Uncomment this section when running as standalone application
+    /*AuthenticationView {
         authenticationManager: model.authManager
-    }
+    }*/
 
     // Declare the C++ instance which creates the scene etc. and supply the view
     EditWithBranchVersioningSample {

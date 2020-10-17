@@ -479,9 +479,9 @@ Rectangle {
     }
 
     //     Uncomment this section when running as standalone application
-    AuthenticationView {
+    /*AuthenticationView {
         authenticationManager: AuthenticationManager
-    }
+    }*/
 
     Dialog {
         id: errorDialog
