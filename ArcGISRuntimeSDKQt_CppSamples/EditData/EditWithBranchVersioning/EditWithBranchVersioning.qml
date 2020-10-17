@@ -19,8 +19,11 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
-import Esri.ArcGISRuntime.Toolkit.Controls 100.9
+import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
+import Esri.ArcGISRuntime.Toolkit.Controls 100.10
+
+//import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
+//import Esri.ArcGISRuntime.Toolkit.Controls 100.9
 
 Item {
 
@@ -67,7 +70,8 @@ Item {
                 } else if (text === qsTr("Switch to default version")) {
                     text = qsTr("Switch to created version")
                     //                    model.switchVersion();
-                    model.applyEdits();
+//                    model.applyEdits();
+                    // applying edits shouldn't be needed for default
                     callout.dismiss();
                     updateWindow.visible = false;
                 } else if (text === qsTr("Switch to created version")) {

@@ -13,10 +13,10 @@
         "FeatureLayer",
         "ServiceFeatureTable",
         "ServiceGeodatabase",
-        "ServiceGeodatabase::applyEdits()",
-        "ServiceGeodatabase::createVersion",
-        "ServiceGeodatabase::createVersionCompleted",
-        "ServiceGeodatabase::switchVersion",
+        "ServiceGeodatabase.applyEdits()",
+        "ServiceGeodatabase.createVersion",
+        "ServiceGeodatabase.createVersionResult",
+        "ServiceGeodatabase.switchVersion",
         "ServiceVersionInfo",
         "ServiceVersionParameters",
         "VersionAccess"
@@ -28,18 +28,16 @@
         "FeatureLayer",
         "ServiceFeatureTable",
         "ServiceGeodatabase",
-        "ServiceGeodatabase::applyEdits()",
-        "ServiceGeodatabase::createVersion",
-        "ServiceGeodatabase::createVersionCompleted",
-        "ServiceGeodatabase::switchVersion",
+        "ServiceGeodatabase.applyEdits()",
+        "ServiceGeodatabase.createVersion",
+        "ServiceGeodatabase.createVersionResult",
+        "ServiceGeodatabase.switchVersion",
         "ServiceVersionInfo",
         "ServiceVersionParameters",
         "VersionAccess"
     ],
     "snippets": [
-        "EditWithBranchVersioning.qml",
-        "EditWithBranchVersioning.cpp",
-        "EditWithBranchVersioning.h"
+        "EditWithBranchVersioning.qml"
     ],
     "title": "Edit with branch versioning"
 }

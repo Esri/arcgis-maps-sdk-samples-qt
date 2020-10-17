@@ -196,8 +196,19 @@ void EditWithBranchVersioning::connectSgdbSignals()
           emit errorMessageChanged();
           m_busy = false;
           emit busyChanged();
+          return;
         }
       }
+    }
+
+    if (m_serviceGeodatabase->hasLocalEdits())
+    {
+      qDebug() << "local edits still exists after applying edits completed";
+      return;
+    }
+    else
+    {
+      qDebug() << "no edits as expected";
     }
 
     emit applyingEditsCompleted();
@@ -386,3 +397,4 @@ void EditWithBranchVersioning::clearSelectedFeature()
   m_selectedFeature = nullptr;
   clearSelection();
 }
+

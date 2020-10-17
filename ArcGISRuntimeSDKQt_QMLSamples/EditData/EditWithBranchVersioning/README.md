@@ -23,22 +23,21 @@ Click the button in the top left corner to switch back and forth between the ver
 3. Create a `FeatureLayer` from the service feature table.
 4. Create `ServiceVersionParameters` with a unique name, `VersionAccess`, and description.
     * Note - See the additional information section for more restrictions on the version name.
-5. Create a new version calling `ServiceGeodatabase::createVersion` passing in the service version parameters.
-6. Connect to `ServiceGeodatabase::createVersionCompleted` signal to obtain the `ServiceVersionInfo` of the version created.
-7. Switch to the version you have just created using `ServiceGeodatabase::switchVersion`, passing in the version name obtained from the service version info from *step 6*.
-8. Select a `Feature` from the map to edit its "TYPDAMAGE" attribute and location.
-9. Apply these edits to your version by calling `ServiceGeodatabase::applyEdits()`.
-10. Switch back and forth between your version and the default version to see how the two versions differ.
+5. Create a new version calling `ServiceGeodatabase.createVersion` passing in the service version parameters.
+6. Switch to the version you have just created using `ServiceGeodatabase.switchVersion`, passing in the version name obtained from `ServiceGeodatabase.createVersionResult`.
+7. Select a `Feature` from the map to edit its "TYPDAMAGE" attribute and location.
+8. Apply these edits to your version by calling `ServiceGeodatabase.applyEdits()`.
+9. Switch back and forth between your version and the default version to see how the two versions differ.
 
 ## Relevant API
 
 * FeatureLayer
 * ServiceFeatureTable
 * ServiceGeodatabase
-* ServiceGeodatabase::applyEdits()
-* ServiceGeodatabase::createVersion
-* ServiceGeodatabase::createVersionCompleted
-* ServiceGeodatabase::switchVersion
+* ServiceGeodatabase.applyEdits()
+* ServiceGeodatabase.createVersion
+* ServiceGeodatabase.createVersionResult
+* ServiceGeodatabase.switchVersion
 * ServiceVersionInfo
 * ServiceVersionParameters
 * VersionAccess
