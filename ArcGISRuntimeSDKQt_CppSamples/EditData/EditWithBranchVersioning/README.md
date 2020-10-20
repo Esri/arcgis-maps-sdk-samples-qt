@@ -27,7 +27,7 @@ Click the button in the top left corner to switch back and forth between the ver
 6. Connect to `ServiceGeodatabase::createVersionCompleted` signal to obtain the `ServiceVersionInfo` of the version created.
 7. Switch to the version you have just created using `ServiceGeodatabase::switchVersion`, passing in the version name obtained from the service version info from *step 6*.
 8. Select a `Feature` from the map to edit its "TYPDAMAGE" attribute and location.
-9. Apply these edits to your version by calling `ServiceGeodatabase::applyEdits()`.
+9. Apply these edits to your version by calling `ServiceGeodatabase::applyEdits`.
 10. Switch back and forth between your version and the default version to see how the two versions differ.
 
 ## Relevant API
@@ -35,7 +35,7 @@ Click the button in the top left corner to switch back and forth between the ver
 * FeatureLayer
 * ServiceFeatureTable
 * ServiceGeodatabase
-* ServiceGeodatabase::applyEdits()
+* ServiceGeodatabase::applyEdits
 * ServiceGeodatabase::createVersion
 * ServiceGeodatabase::createVersionCompleted
 * ServiceGeodatabase::switchVersion
@@ -51,7 +51,7 @@ The feature layer used in this sample is [Damage to commercial buildings](https:
 
 Credentials:
 * Username: editor01
-* Passowrd: editor01.password
+* Password: editor01.password
 
 The name of the version must meet the following criteria:
 1. Must not exceed 62 characters

@@ -181,9 +181,9 @@ void EditWithBranchVersioning::connectSgdbSignals()
     // A convenience wrapper that deletes the contents of featureEditResults when we leave scope.
     FeatureTableEditResultsScopedCleanup featureTableEditResultsCleanup(featureTableEditResults);
 
-    for (auto featureTableEditResult : featureTableEditResults)
+    for (FeatureTableEditResult* featureTableEditResult : featureTableEditResults)
     {
-      for (auto featureEditResult : featureTableEditResult->editResults())
+      for (FeatureEditResult* featureEditResult : featureTableEditResult->editResults())
       {
         if (!featureEditResult->error().isEmpty())
         {

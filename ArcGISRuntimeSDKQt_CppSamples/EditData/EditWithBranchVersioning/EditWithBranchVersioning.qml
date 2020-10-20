@@ -247,7 +247,6 @@ Item {
                     Layout.margins: 5
                     Layout.alignment: Qt.AlignRight
                     text: qsTr("Update")
-//                    enabled: model.allowEditing
                     enabled: !model.sgdbVersionIsDefault
                     // once the update button is clicked, hide the windows, and fetch the currently selected features
                     onClicked: {
