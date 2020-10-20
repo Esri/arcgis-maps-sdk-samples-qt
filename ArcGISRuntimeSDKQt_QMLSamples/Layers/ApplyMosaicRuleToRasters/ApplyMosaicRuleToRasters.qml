@@ -62,7 +62,7 @@ Rectangle {
             }
             color: "lightgrey"
             opacity: 0.8
-            visible: rasterLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
+            visible: rasterLayer.loadStatus === Enums.LoadStatusLoaded
 
             Column {
                 Text {
