@@ -1,16 +1,28 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Layers",
+    "description": "Apply mosaic rule to a mosaic dataset of rasters.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "image service",
+        "mosaic method",
+        "mosaic rule",
+        "raster",
+        "ImageServiceRaster",
+        "MosaicMethod",
+        "MosaicOperation",
+        "MosaicRule"
     ],
-    "redirect_from": "",
+    "redirect_from": [
+        ""
+    ],
     "relevant_apis": [
-        "TODO"
+        "ImageServiceRaster",
+        "MosaicMethod",
+        "MosaicOperation",
+        "MosaicRule"
     ],
     "snippets": [
         "ApplyMosaicRuleToRasters.qml"
