@@ -85,41 +85,40 @@ void ApplyMosaicRuleToRasters::setMapView(MapQuickView* mapView)
 
 void ApplyMosaicRuleToRasters::applyRasterRule(const QString& ruleString)
 {
-  // Reset to clear previous mosaic rule parameters
-  ApplyMosaicRuleToRasters::resetMosaicRule();
+  MosaicRule myMosaicRule;
 
   if (ruleString == "None")
   {
-    m_mosaicRule->setMosaicMethod(MosaicMethod::None);
+    myMosaicRule.setMosaicMethod(MosaicMethod::None);
   }
   else if (ruleString == "NorthWest")
   {
-    m_mosaicRule->setMosaicMethod(MosaicMethod::Northwest);
-    m_mosaicRule->setMosaicOperation(MosaicOperation::First);
+    myMosaicRule.setMosaicMethod(MosaicMethod::Northwest);
+    myMosaicRule.setMosaicOperation(MosaicOperation::First);
   }
   else if (ruleString == "Center")
   {
-    m_mosaicRule->setMosaicMethod(MosaicMethod::Center);
-    m_mosaicRule->setMosaicOperation(MosaicOperation::Blend);
+    myMosaicRule.setMosaicMethod(MosaicMethod::Center);
+    myMosaicRule.setMosaicOperation(MosaicOperation::Blend);
   }
   else if (ruleString == "ByAttribute")
   {
-    m_mosaicRule->setMosaicMethod(MosaicMethod::Attribute);
-    m_mosaicRule->setSortField("OBJECTID");
+    myMosaicRule.setMosaicMethod(MosaicMethod::Attribute);
+    myMosaicRule.setSortField("OBJECTID");
 
   }
   else if (ruleString  == "LockRaster")
   {
-    m_mosaicRule->setMosaicMethod(MosaicMethod::LockRaster);
-    m_mosaicRule->setLockRasterIds(QList<qint64>{1,7,12});
+    myMosaicRule.setMosaicMethod(MosaicMethod::LockRaster);
+    myMosaicRule.setLockRasterIds(QList<qint64>{1,7,12});
   }
-  m_imageServiceRaster->setMosaicRule(m_mosaicRule);
+
+  m_imageServiceRaster->setMosaicRule(&myMosaicRule);
 }
 
 // Helper function to reset the mosaic rule
 void ApplyMosaicRuleToRasters::resetMosaicRule()
 {
   delete m_mosaicRule;
-  m_mosaicRule = nullptr;
   m_mosaicRule = new MosaicRule(this);
 }
