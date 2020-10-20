@@ -20,11 +20,11 @@
 
 #include "ApplyMosaicRuleToRasters.h"
 
+#include "ImageServiceRaster.h"
 #include "Map.h"
 #include "MapQuickView.h"
-#include "ImageServiceRaster.h"
-#include "RasterLayer.h"
 #include "MosaicRule.h"
+#include "RasterLayer.h"
 
 using namespace Esri::ArcGISRuntime;
 
@@ -58,13 +58,17 @@ void ApplyMosaicRuleToRasters::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  // Create image service raster from image server
   m_imageServiceRaster = new ImageServiceRaster(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/amberg_germany/ImageServer"), this);
 
+  // Set Mosaic Rule if none exists on the image service raster
   if (!m_imageServiceRaster->mosaicRule())
-    m_imageServiceRaster->setMosaicRule(new MosaicRule(m_imageServiceRaster));
+    m_imageServiceRaster->setMosaicRule(m_mosaicRule);
 
+  // Create a raster layer form the image service raster
   m_rasterLayer = new RasterLayer(m_imageServiceRaster, this);
 
+  // Once loaded change the viewpoint the the center of the raster layers full extent
   connect(m_rasterLayer, &RasterLayer::doneLoading, this, [this](Error e)
   {
     if (e.isEmpty())
@@ -73,16 +77,15 @@ void ApplyMosaicRuleToRasters::setMapView(MapQuickView* mapView)
       emit rasterLoadedChanged();
       m_mapView->setViewpointCenter(m_rasterLayer->fullExtent().center(), 25000.0);
     }
-
   });
 
   m_map->operationalLayers()->append(m_rasterLayer);
-
   emit mapViewChanged();
 }
 
 void ApplyMosaicRuleToRasters::applyRasterRule(const QString& ruleString)
 {
+  // Reset to clear previous mosaic rule parameters
   ApplyMosaicRuleToRasters::resetMosaicRule();
 
   if (ruleString == "None")
@@ -113,6 +116,7 @@ void ApplyMosaicRuleToRasters::applyRasterRule(const QString& ruleString)
   m_imageServiceRaster->setMosaicRule(m_mosaicRule);
 }
 
+// Helper function to reset the mosaic rule
 void ApplyMosaicRuleToRasters::resetMosaicRule()
 {
   delete m_mosaicRule;

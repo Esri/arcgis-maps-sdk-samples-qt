@@ -19,8 +19,8 @@ When the rasters are loaded, choose from a list of preset mosaic rules to apply 
 ## How it works
 
 1. Create an `ImageServiceRaster` using the service's URL.
-2. Create an `MosaicRule` object and set it to the `mosaicRule` property of the image service raster, if it does not specify a mosaic rule.
-3. Create an `RasterLayer` from the image service raster and add it to the map.
+2. Create an `RasterLayer` from the image service raster and add it to the map.
+3. Create an `MosaicRule` object and set it to the `mosaicRule` property of the image service raster.
 4. Use `MosaicRule::setMosaicMethod`, `MosaicRule::setMosaicOperation` and other functions of the mosaic rule object accordingly to specify the rule on the raster dataset.
 
 ## Relevant API

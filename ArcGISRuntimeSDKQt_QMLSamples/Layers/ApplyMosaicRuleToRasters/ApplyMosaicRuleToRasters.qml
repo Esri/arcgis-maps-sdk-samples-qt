@@ -41,8 +41,11 @@ Rectangle {
                     url: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/amberg_germany/ImageServer"
                 }
                 onLoadStatusChanged: {
+                    // Once loaded set the viewpoint to the center of the raster layer
                     if (loadStatus === Enums.LoadStatusLoaded) {
                         mapView.setViewpointCenterAndScale(rasterLayer.fullExtent.center, 25000);
+
+                        // Create a mosaic rule and set the mosaic rule property of the image service raster
                         mosaicRule = ArcGISRuntimeEnvironment.createObject("MosaicRule");
                         imageServiceRaster.mosaicRule = mosaicRule;
                     }
@@ -62,13 +65,9 @@ Rectangle {
             visible: rasterLayer.loadStatus === Enums.LoadStatusLoaded ? true : false
 
             Column {
-                width: childrenRect.width
-                height: childrenRect.height
-
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: qsTr("Select Mosaic Rule")
-//                    color: "black"
                 }
                 ComboBox {
                     id: rasterRulesComboBox
@@ -79,10 +78,10 @@ Rectangle {
                 }
             }
         }
-
     }
 
     function applyRasterRule(ruleString) {
+        // Reset to clear previous mosaic rule parameters
         resetMosaicRule();
 
         if (ruleString === "None") {
@@ -107,8 +106,8 @@ Rectangle {
         imageServiceRaster.mosaicRule = mosaicRule;
     }
 
+    // Helper function to reset the mosaic rule
     function resetMosaicRule() {
-        print("cleared");
         mosaicRule = null;
         mosaicRule = ArcGISRuntimeEnvironment.createObject("MosaicRule");
     }

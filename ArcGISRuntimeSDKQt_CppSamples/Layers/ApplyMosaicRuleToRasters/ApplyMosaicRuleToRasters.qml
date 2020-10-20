@@ -39,13 +39,9 @@ Item {
             visible: model.rasterLoaded
 
             Column {
-                width: childrenRect.width
-                height: childrenRect.height
-
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: qsTr("Select Mosaic Rule")
-//                    color: "black"
                 }
                 ComboBox {
                     id: rasterRulesComboBox
@@ -57,18 +53,6 @@ Item {
                 }
             }
         }
-
-//        ComboBox {
-//            id: rasterRulesComboBox
-//            anchors {
-//                bottom: view.attributionTop
-//                horizontalCenter: view.horizontalCenter
-//            }
-//            model: rasterRules
-//            visible: model.rasterLoaded
-
-//            onActivated: model.applyRasterRule(rasterRules[currentIndex]);
-//        }
     }
 
     // Declare the C++ instance which creates the scene etc. and supply the view

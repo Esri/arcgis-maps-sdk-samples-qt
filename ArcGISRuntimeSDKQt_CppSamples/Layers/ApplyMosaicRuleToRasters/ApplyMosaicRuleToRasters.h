@@ -60,7 +60,6 @@ private:
   Esri::ArcGISRuntime::ImageServiceRaster* m_imageServiceRaster = nullptr;
   Esri::ArcGISRuntime::RasterLayer* m_rasterLayer = nullptr;
   Esri::ArcGISRuntime::MosaicRule* m_mosaicRule = nullptr;
-
   bool m_rasterLoaded = false;
 
 };
