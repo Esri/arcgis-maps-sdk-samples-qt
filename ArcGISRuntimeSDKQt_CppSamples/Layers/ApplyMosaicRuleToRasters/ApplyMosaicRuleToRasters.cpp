@@ -120,6 +120,5 @@ void ApplyMosaicRuleToRasters::applyRasterRule(const QString& ruleString)
 void ApplyMosaicRuleToRasters::resetMosaicRule()
 {
   delete m_mosaicRule;
-  m_mosaicRule = nullptr;
   m_mosaicRule = new MosaicRule(this);
 }

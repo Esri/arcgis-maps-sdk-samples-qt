@@ -108,7 +108,6 @@ Rectangle {
 
     // Helper function to reset the mosaic rule
     function resetMosaicRule() {
-        mosaicRule = null;
         mosaicRule = ArcGISRuntimeEnvironment.createObject("MosaicRule");
     }
 }
