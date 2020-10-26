@@ -39,15 +39,13 @@ Rectangle {
                 ImageServiceRaster {
                     id: imageServiceRaster
                     url: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/amberg_germany/ImageServer"
+                    mosaicRule: MosaicRule {
+                    }
                 }
                 onLoadStatusChanged: {
                     // Once loaded set the viewpoint to the center of the raster layer
                     if (loadStatus === Enums.LoadStatusLoaded) {
                         mapView.setViewpointCenterAndScale(rasterLayer.fullExtent.center, 25000);
-
-                        // Create a mosaic rule and set the mosaic rule property of the image service raster
-                        mosaicRule = ArcGISRuntimeEnvironment.createObject("MosaicRule");
-                        imageServiceRaster.mosaicRule = mosaicRule;
                     }
                 }
             }
