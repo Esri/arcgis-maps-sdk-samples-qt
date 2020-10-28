@@ -27,7 +27,7 @@ Rectangle {
     width: 800
     height: 600
 
-    
+
     property var portalItem
 
     function search() {
@@ -309,7 +309,7 @@ Rectangle {
     // Uncomment this section when running as standalone application
     /*
     AuthenticationView {
-        authenticationManager: AuthenticationManager
+        anchors.fill: parent
     }
     */
 

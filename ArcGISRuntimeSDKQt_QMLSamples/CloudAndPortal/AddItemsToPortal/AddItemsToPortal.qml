@@ -26,8 +26,6 @@ Rectangle {
     width: 800
     height: 600
 
-    
-
     PortalItem {
         id: itemToAdd
         portal: portal
@@ -355,7 +353,7 @@ Rectangle {
 
     /* Uncomment this section when running as standalone application
     AuthenticationView {
-        authenticationManager: AuthenticationManager
+        anchors.fill: parent
     }
     */
 

@@ -24,7 +24,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     readonly property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]
     readonly property var detailValue: ["fullName", "username", "email", "userDescription", "access"]
     readonly property var infoLabels: ["Description", "Can Find External Content", "Can Share Items Externally"]
@@ -189,7 +189,7 @@ Rectangle {
     /* Uncomment this section when running as standalone application
     AuthenticationView {
         id: authView
-        authenticationManager: AuthenticationManager
+        anchors.fill: parent
     }
     */
     //! [PortalUserInfo create portal]

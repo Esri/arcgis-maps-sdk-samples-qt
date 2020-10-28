@@ -26,7 +26,7 @@ Rectangle {
     clip: true
     width: 800
     height: 600
-    
+
     readonly property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_%1.mmpk".arg(new Date().getTime().toString())
     readonly property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
 
@@ -211,7 +211,6 @@ Rectangle {
     /* Uncomment this section when running as standalone application
     AuthenticationView {
         anchors.fill: parent
-        authenticationManager: AuthenticationManager
     }
     */
 }

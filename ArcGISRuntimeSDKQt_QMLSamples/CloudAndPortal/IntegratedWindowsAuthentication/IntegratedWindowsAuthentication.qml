@@ -202,7 +202,7 @@ Rectangle {
     // Uncomment this section when running as standalone application
     /*
     AuthenticationView {
-        authenticationManager: AuthenticationManager
+        anchors.fill: parent
     }*/
 
     Dialog {

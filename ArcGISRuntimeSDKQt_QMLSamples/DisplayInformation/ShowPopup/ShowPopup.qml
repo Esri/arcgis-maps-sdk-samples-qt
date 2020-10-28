@@ -83,8 +83,9 @@ Rectangle {
             bottom: parent.bottom
             right: parent.right
         }
+        visible: false
 
-        onPopupManagersChanged: popupStackView.show();
+        onPopupManagersChanged: popupStackView.visible = true
 
         onVisibleChanged: {
             if (!visible) {
