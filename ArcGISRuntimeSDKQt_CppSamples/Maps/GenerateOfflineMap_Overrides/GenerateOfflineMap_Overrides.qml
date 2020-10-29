@@ -24,7 +24,7 @@ GenerateOfflineMap_OverridesSample {
     id: offlineMapOverridesSample
     clip: true
     width: 800
-    height: 600    
+    height: 600
 
     onUpdateStatus: generateWindow.statusText = status;
     onUpdateProgress: generateWindow.progressText = progress;
@@ -128,7 +128,6 @@ GenerateOfflineMap_OverridesSample {
     /* Uncomment this section when running as standalone application
     AuthenticationView {
         anchors.fill: parent
-        authenticationManager: offlineMapOverridesSample.authenticationManager // set the authenticationManager property (this needs to be registered)
     }
     */
 }

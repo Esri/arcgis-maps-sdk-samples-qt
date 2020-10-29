@@ -154,7 +154,7 @@ PortalUserInfoSample {
     /* Uncomment this section when running as standalone application
     AuthenticationView {
         id: authView
-        authenticationManager: authManager
+        anchors.fill: parent
     }
     */
 }

@@ -81,7 +81,7 @@ GenerateOfflineMapLocalBasemapSample {
     GenerateWindow {
         id: generateWindow
         anchors.fill: parent
-    }        
+    }
 
     Dialog {
         id: msgDialog
@@ -152,7 +152,6 @@ GenerateOfflineMapLocalBasemapSample {
     /* Uncomment this section when running as standalone application
     AuthenticationView {
         anchors.fill: parent
-        authenticationManager: offlineMapSample.authenticationManager // set the authenticationManager property (this needs to be registered)
     }
     */
 }

@@ -106,7 +106,7 @@ Item {
     // Uncomment this section when running as standalone application
     /*
     AuthenticationView {
-        authenticationManager: integratedWindowsAuthenticationSampleModel.authManager
+        anchors.fill: parent
     }*/
 
     Dialog {

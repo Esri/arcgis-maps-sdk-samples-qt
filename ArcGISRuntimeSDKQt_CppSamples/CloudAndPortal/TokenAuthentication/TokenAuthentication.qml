@@ -24,7 +24,7 @@ TokenAuthenticationSample {
     clip: true
     width: 800
     height: 600
-    
+
     // add a mapView component
     MapView {
         id: mapView
@@ -58,7 +58,6 @@ TokenAuthenticationSample {
     // Declare an AuthenticationView
     AuthenticationView {
         anchors.fill: parent
-        authenticationManager: authSample.authenticationManager // set the authenticationManager property (this needs to be registered)
     }
     */
 }

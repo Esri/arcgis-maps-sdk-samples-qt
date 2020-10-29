@@ -23,7 +23,7 @@ SearchForWebmapSample {
     width: 800
     height: 600
     clip: true
-    
+
     property string selItem
 
     // Create MapQuickView here, and create its Map etc. in C++ code
@@ -193,7 +193,7 @@ SearchForWebmapSample {
     // Uncomment this section when running as standalone application
     /*
     AuthenticationView {
-        authenticationManager: authManager
+        anchors.fill: parent
     }
     */
 

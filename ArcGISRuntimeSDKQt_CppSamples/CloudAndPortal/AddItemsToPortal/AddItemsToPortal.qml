@@ -24,7 +24,7 @@ AddItemsToPortalSample {
     clip: true
     width: 800
     height: 600
-    
+
     onPortalItemTitleChanged: portalItemModel.setProperty(0, "value", portalItemTitle);
     onPortalItemIdChanged: portalItemModel.setProperty(1, "value", portalItemId);
     onPortalItemTypeNameChanged: portalItemModel.setProperty(2, "value", portalItemTypeName);
@@ -258,7 +258,7 @@ AddItemsToPortalSample {
 
     /* Uncomment this section when running as standalone application
     AuthenticationView {
-        authenticationManager: authManager
+        anchors.fill: parent
     }
     */
 

@@ -23,7 +23,7 @@ ShowOrgBasemapsSample {
     width: 800
     height: 600
     clip: true
-    
+
     onPortalLoadedChanged: { gridFadeIn.running = true; }
 
     BusyIndicator {
@@ -223,7 +223,7 @@ ShowOrgBasemapsSample {
     /*
     // Uncomment this section when running as standalone application
     AuthenticationView {
-        authenticationManager: authManager
+        anchors.fill: parent
     }*/
 
 }
