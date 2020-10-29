@@ -35,6 +35,7 @@ Item {
             right: parent.right
         }
         popupManagers: model.popupManagers
+        visible: false
 
         onVisibleChanged: {
             if (!visible)
@@ -47,7 +48,7 @@ Item {
         id: model
         mapView: view
 
-        onPopupManagersChanged: popupStackView.show();
+        onPopupManagersChanged: popupStackView.visible = true
     }
 
     BusyIndicator {
