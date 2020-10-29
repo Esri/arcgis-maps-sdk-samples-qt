@@ -21,6 +21,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -42,6 +44,8 @@ int main(int argc, char *argv[])
 #ifdef ARCGIS_TOOLKIT_IMPORT_PATH_2
   engine.addImportPath(ARCGIS_TOOLKIT_IMPORT_PATH_2);
 #endif
+
+  Esri::ArcGISRuntime::Toolkit::registerComponents();
 
   // Set the source
   engine.load(QUrl("qrc:/Samples/Layers/IdentifyKmlFeatures/main.qml"));

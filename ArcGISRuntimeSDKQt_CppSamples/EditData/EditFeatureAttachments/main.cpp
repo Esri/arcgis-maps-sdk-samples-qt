@@ -19,6 +19,8 @@
 #include <QQmlEngine>
 #include <QQmlApplicationEngine>
 
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -58,6 +60,8 @@ int main(int argc, char *argv[])
   engine.addImportPath(arcGISRuntimeImportPath);
   // Add the Toolkit path
   engine.addImportPath(arcGISToolkitImportPath);
+
+  Esri::ArcGISRuntime::Toolkit::registerComponents();
 
   // Set the source
   engine.load("qrc:/Samples/EditData/EditFeatureAttachments/main.qml");

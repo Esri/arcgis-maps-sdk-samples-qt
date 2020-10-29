@@ -21,6 +21,8 @@
 #include <Windows.h>
 #endif
 
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 #include "TokenAuthentication.h"
 
 #define STRINGIZE(x) #x
@@ -57,6 +59,8 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
   // Add the Toolkit path
   view.engine()->addImportPath(arcGISToolkitImportPath);
+
+  Esri::ArcGISRuntime::Toolkit::registerComponents();
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/CloudAndPortal/TokenAuthentication/TokenAuthentication.qml"));

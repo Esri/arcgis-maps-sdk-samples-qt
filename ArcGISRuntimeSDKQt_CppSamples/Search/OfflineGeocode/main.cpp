@@ -17,6 +17,8 @@
 #include <QDir>
 #include <QQmlEngine>
 
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -57,6 +59,8 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(arcGISRuntimeImportPath);
   // Add the Toolkit path
   view.engine()->addImportPath(arcGISToolkitImportPath);
+
+  Esri::ArcGISRuntime::Toolkit::registerComponents();
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Search/OfflineGeocode/OfflineGeocode.qml"));

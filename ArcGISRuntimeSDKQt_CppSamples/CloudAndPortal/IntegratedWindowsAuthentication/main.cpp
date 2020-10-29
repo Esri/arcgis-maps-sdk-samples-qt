@@ -28,6 +28,8 @@
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -60,6 +62,8 @@ int main(int argc, char *argv[])
   engine.addImportPath(arcGISRuntimeImportPath);
   // Add the Toolkit path
   engine.addImportPath(arcGISToolkitImportPath);
+
+  Esri::ArcGISRuntime::Toolkit::registerComponents();
 
   // Set the source
   engine.load(QUrl("qrc:/Samples/CloudAndPortal/IntegratedWindowsAuthentication/main.qml"));
