@@ -41,10 +41,6 @@ int main(int argc, char *argv[])
   engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-#ifdef ARCGIS_TOOLKIT_IMPORT_PATH_2
-  engine.addImportPath(ARCGIS_TOOLKIT_IMPORT_PATH_2);
-#endif
-
   Esri::ArcGISRuntime::Toolkit::registerComponents();
 
   // Set the source
