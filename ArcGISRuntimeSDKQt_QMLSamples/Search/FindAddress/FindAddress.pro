@@ -22,6 +22,15 @@ QT += opengl qml quick
 ARCGIS_RUNTIME_VERSION = 100.10
 include($$PWD/arcgisruntime.pri)
 
+# path of the toolkit relative to the sample
+TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt
+
+exists($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri) {
+    include($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri)
+} else {
+    error(TOOLKIT_PRI_PATH is missing which is required to build this application.)
+}
+
 CONFIG += c++14
 
 SOURCES += main.cpp
