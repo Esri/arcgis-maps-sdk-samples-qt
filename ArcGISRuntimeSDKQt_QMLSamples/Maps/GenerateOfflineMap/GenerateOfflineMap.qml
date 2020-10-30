@@ -19,14 +19,14 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.ArcGISRuntime 100.10
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-    
+
     readonly property url outputMapPackage: System.temporaryFolder.url + "/OfflineMap_%1.mmpk".arg(new Date().getTime().toString())
     readonly property string webMapId: "acc027394bc84c2fb04d1ed317aac674"
 
@@ -211,7 +211,6 @@ Rectangle {
     /* Uncomment this section when running as standalone application
     AuthenticationView {
         anchors.fill: parent
-        authenticationManager: AuthenticationManager
     }
     */
 }

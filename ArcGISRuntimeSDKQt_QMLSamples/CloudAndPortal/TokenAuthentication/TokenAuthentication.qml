@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.10
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 Rectangle {
     id: rootRectangle
@@ -25,7 +25,7 @@ Rectangle {
     width: 800
     height: 600
 
-    
+
 
     MapView {
         id: mapView
@@ -46,7 +46,7 @@ Rectangle {
                     }
                 }
             }
-        }       
+        }
 
         Column {
             anchors {
@@ -84,7 +84,6 @@ Rectangle {
     // Declare an AuthenticationView
     AuthenticationView {
         anchors.fill: parent
-        authenticationManager: AuthenticationManager // set the authenticationManager property
     }
     */
 }

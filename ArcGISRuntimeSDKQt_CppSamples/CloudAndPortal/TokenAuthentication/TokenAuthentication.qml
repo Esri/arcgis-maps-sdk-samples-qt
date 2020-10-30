@@ -17,14 +17,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 TokenAuthenticationSample {
     id: authSample
     clip: true
     width: 800
     height: 600
-    
+
     // add a mapView component
     MapView {
         id: mapView
@@ -58,7 +58,6 @@ TokenAuthenticationSample {
     // Declare an AuthenticationView
     AuthenticationView {
         anchors.fill: parent
-        authenticationManager: authSample.authenticationManager // set the authenticationManager property (this needs to be registered)
     }
     */
 }

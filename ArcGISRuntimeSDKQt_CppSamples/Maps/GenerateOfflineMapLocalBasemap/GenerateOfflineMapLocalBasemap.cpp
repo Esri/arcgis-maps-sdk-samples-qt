@@ -22,7 +22,6 @@
 
 #include "Map.h"
 #include "MapQuickView.h"
-#include "AuthenticationManager.h"
 #include "Portal.h"
 #include "PortalItem.h"
 #include "OfflineMapTask.h"
@@ -71,7 +70,6 @@ void GenerateOfflineMapLocalBasemap::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<GenerateOfflineMapLocalBasemap>("Esri.Samples", 1, 0, "GenerateOfflineMapLocalBasemapSample");
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
 }
 
 void GenerateOfflineMapLocalBasemap::componentComplete()
@@ -81,7 +79,7 @@ void GenerateOfflineMapLocalBasemap::componentComplete()
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
 
-  // Create a Portal Item for use by the Map and OfflineMapTask  
+  // Create a Portal Item for use by the Map and OfflineMapTask
   m_portalItem = new PortalItem(webMapId(), this);
 
   // Create a map from the Portal Item
@@ -207,9 +205,4 @@ void GenerateOfflineMapLocalBasemap::generateMapByExtent(double xCorner1, double
 
   // generate parameters
   m_offlineMapTask->createDefaultGenerateOfflineMapParameters(mapExtent);
-}
-
-AuthenticationManager* GenerateOfflineMapLocalBasemap::authenticationManager() const
-{
-  return AuthenticationManager::instance();
 }

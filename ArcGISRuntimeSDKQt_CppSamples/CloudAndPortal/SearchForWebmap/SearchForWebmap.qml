@@ -16,14 +16,14 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 SearchForWebmapSample {
     id: root
     width: 800
     height: 600
     clip: true
-    
+
     property string selItem
 
     // Create MapQuickView here, and create its Map etc. in C++ code
@@ -193,7 +193,7 @@ SearchForWebmapSample {
     // Uncomment this section when running as standalone application
     /*
     AuthenticationView {
-        authenticationManager: authManager
+        anchors.fill: parent
     }
     */
 

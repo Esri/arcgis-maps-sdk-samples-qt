@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 CreateAndSaveMapSample {
     id: rootRectangle
@@ -127,7 +127,6 @@ CreateAndSaveMapSample {
     // Declare AuthenticationView to handle any authentication challenges
     AuthenticationView {
         anchors.fill: parent
-        authenticationManager: rootRectangle.authenticationManager
     }
     */
 }

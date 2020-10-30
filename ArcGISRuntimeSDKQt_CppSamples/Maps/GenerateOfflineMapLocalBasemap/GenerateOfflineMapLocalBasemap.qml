@@ -18,7 +18,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 GenerateOfflineMapLocalBasemapSample {
     id: offlineMapSample
@@ -81,7 +81,7 @@ GenerateOfflineMapLocalBasemapSample {
     GenerateWindow {
         id: generateWindow
         anchors.fill: parent
-    }        
+    }
 
     Dialog {
         id: msgDialog
@@ -152,7 +152,6 @@ GenerateOfflineMapLocalBasemapSample {
     /* Uncomment this section when running as standalone application
     AuthenticationView {
         anchors.fill: parent
-        authenticationManager: offlineMapSample.authenticationManager // set the authenticationManager property (this needs to be registered)
     }
     */
 }
