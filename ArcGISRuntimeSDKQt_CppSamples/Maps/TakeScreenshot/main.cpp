@@ -56,7 +56,6 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   // Add the Runtime path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
-  // Add the Toolkit path
 
 
   // Add Image Provider to the QQmlEngine instance

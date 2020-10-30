@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
   engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   // Add the Extras path
   engine.addImportPath(QUOTE(ARCGIS_RUNTIME_IMPORT_PATH));
-  // Add the Toolkit path
   engine.addImportPath(QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH));
 
   // Set the source

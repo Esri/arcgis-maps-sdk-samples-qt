@@ -57,7 +57,6 @@ int main(int argc, char *argv[])
 
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
-  // Add the Toolkit path
 
 
   Esri::ArcGISRuntime::Toolkit::registerComponents();
