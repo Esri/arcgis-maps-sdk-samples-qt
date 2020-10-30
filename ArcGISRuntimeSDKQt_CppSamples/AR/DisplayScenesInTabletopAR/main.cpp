@@ -52,14 +52,20 @@ int main(int argc, char *argv[])
   DisplayScenesInTabletopAR::init();
 
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
+<<<<<<< Updated upstream
   
+=======
+>>>>>>> Stashed changes
 
 #if defined(LINUX_PLATFORM_REPLACEMENT)
   // on some linux platforms the string 'linux' is replaced with 1
   // fix the replacement paths which were created
   QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
   arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 #endif
 
   Esri::ArcGISRuntime::Toolkit::ArcGISArView::qmlRegisterTypes();
@@ -70,7 +76,10 @@ int main(int argc, char *argv[])
   engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   // Add the Runtime and Extras path
   engine.addImportPath(arcGISRuntimeImportPath);
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
   // Set the source
   engine.load(QUrl("qrc:/Samples/AR/DisplayScenesInTabletopAR/main.qml"));
