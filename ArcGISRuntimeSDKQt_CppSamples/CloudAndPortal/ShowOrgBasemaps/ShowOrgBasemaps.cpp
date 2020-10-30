@@ -70,8 +70,6 @@ void ShowOrgBasemaps::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-
-  emit authManagerChanged();
 }
 
 bool ShowOrgBasemaps::portalLoaded() const
