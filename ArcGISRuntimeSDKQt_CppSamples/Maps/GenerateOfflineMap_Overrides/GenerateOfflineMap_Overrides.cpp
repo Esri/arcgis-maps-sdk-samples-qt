@@ -20,7 +20,6 @@
 
 #include "GenerateOfflineMap_Overrides.h"
 
-#include "AuthenticationManager.h"
 #include "Envelope.h"
 #include "FeatureLayer.h"
 #include "GeometryEngine.h"
@@ -50,7 +49,6 @@ void GenerateOfflineMap_Overrides::init()
   // Register the map view for QML
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<GenerateOfflineMap_Overrides>("Esri.Samples", 1, 0, "GenerateOfflineMap_OverridesSample");
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
 }
 
 void GenerateOfflineMap_Overrides::componentComplete()
@@ -384,11 +382,6 @@ void GenerateOfflineMap_Overrides::takeMapOffline()
 bool GenerateOfflineMap_Overrides::taskBusy() const
 {
   return m_taskBusy;
-}
-
-AuthenticationManager* GenerateOfflineMap_Overrides::authenticationManager() const
-{
-  return AuthenticationManager::instance();
 }
 
 bool GenerateOfflineMap_Overrides::overridesReady() const

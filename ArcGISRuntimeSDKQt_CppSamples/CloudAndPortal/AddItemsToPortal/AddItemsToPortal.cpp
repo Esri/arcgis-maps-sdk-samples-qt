@@ -28,7 +28,7 @@ AddItemsToPortal::AddItemsToPortal(QQuickItem* parent /* = nullptr */):
   m_portal(new Portal(new Credential(OAuthClientInfo("iLkGIj0nX8A4EJda", OAuthMode::User), this), this)),
   m_item(new PortalItem(m_portal, this))
 {
-  // AuthenticationManager::instance()->setCredentialCacheEnabled(false);
+  AuthenticationManager::instance()->setCredentialCacheEnabled(false);
   m_item->setTitle("Add Items Sample");
   m_item->setType(PortalItemType::CSV);
 }
@@ -38,14 +38,12 @@ AddItemsToPortal::~AddItemsToPortal() = default;
 void AddItemsToPortal::init()
 {
   // Register the types for QML
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
   qmlRegisterType<AddItemsToPortal>("Esri.Samples", 1, 0, "AddItemsToPortalSample");
 }
 
 void AddItemsToPortal::componentComplete()
 {
   QQuickItem::componentComplete();
-  emit authManagerChanged();
 
   if (m_portal)
   {
@@ -200,9 +198,4 @@ void AddItemsToPortal::setStatusText(const QString &statusText)
 {
   m_statusText = statusText;
   emit statusTextChanged();
-}
-
-AuthenticationManager* AddItemsToPortal::authManager() const
-{
-  return AuthenticationManager::instance();
 }

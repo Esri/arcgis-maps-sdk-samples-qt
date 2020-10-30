@@ -18,7 +18,6 @@
 #define GENERATEOFFLINEMAP_OVERRIDES_H
 
 // C++ API headers
-#include "AuthenticationManager.h"
 #include "GenerateOfflineMapParameters.h"
 
 namespace Esri
@@ -41,7 +40,6 @@ class GenerateOfflineMap_Overrides: public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authenticationManager READ authenticationManager CONSTANT)
   Q_PROPERTY(bool mapLoaded READ mapLoaded NOTIFY mapLoadedChanged)
   Q_PROPERTY(bool overridesReady READ overridesReady NOTIFY overridesReadyChanged)
   Q_PROPERTY(bool taskBusy READ taskBusy NOTIFY taskBusyChanged)
@@ -75,7 +73,6 @@ signals:
 private:
   static QString webMapId();
   bool taskBusy() const;
-  Esri::ArcGISRuntime::AuthenticationManager* authenticationManager() const;
   bool mapLoaded() const;
   bool overridesReady() const;
   void removeFeatureLayer(const QString& layerName);
