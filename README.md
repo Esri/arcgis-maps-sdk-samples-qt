@@ -33,7 +33,9 @@ $ cd /arcgis-runtime-samples-qt
 $ git clone https://github.com/Esri/arcgis-runtime-toolkit-qt.git
 ```
 
-* Note - if you want to contribute to the toolkit repository as well, you will need to follow the steps from above at [Fork the repo](#fork-the-repo) but for the toolkit instead.
+Cloning the toolkit in this location will allow for the samples to automatically pick it up. If you wish to place the toolkit in another location you will need to update the samples project file accordingly to locate the necessary .pri file.
+
+* Note - if you want to contribute to the toolkit repository as well, you will need to follow the fork step, [Fork the repo](#fork-the-repo), from above but for the toolkit instead.
 
 ## Configure remote upstream for your fork
 To sync changes you make in a fork with this repository, you must configure a remote that points to the upstream repository in Git.
