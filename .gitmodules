@@ -1,0 +1,3 @@
+[submodule "arcgis-runtime-toolkit-qt"]
+	path = arcgis-runtime-toolkit-qt
+	url = https://github.com/Esri/arcgis-runtime-toolkit-qt
