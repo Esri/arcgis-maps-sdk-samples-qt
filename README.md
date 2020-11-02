@@ -2,7 +2,7 @@
 ArcGIS Runtime SDK 100.10 for Qt sample applications.  The repo contains [Qt](http://qt.io) projects for each sample that can be run from within the Qt Creator IDE.
 
 # Prerequisites
-* Qt SDK 5.15 or higher (Open source or commercial)
+* Qt SDK 5.15.1 or higher (Open source or commercial)
 * Qt Creator
 * [ArcGIS Runtime Toolkit - Qt](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components. 
 * For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/latest/qml/guide/arcgis-runtime-sdk-for-qt-system-requirements.htm) page.
@@ -34,8 +34,6 @@ $ git clone https://github.com/Esri/arcgis-runtime-toolkit-qt.git
 ```
 
 Cloning the toolkit in this location will allow for the samples to automatically pick it up. If you wish to place the toolkit in another location, you will need to update the samples project file accordingly to locate the necessary .pri file.
-
-* Note - if you want to contribute to the toolkit repository as well, you will need to follow the fork step, [Fork the repo](#fork-the-repo), from above but for the toolkit instead.
 
 ## Configure remote upstream for your fork
 To sync changes you make in a fork with this repository, you must configure a remote that points to the upstream repository in Git.
