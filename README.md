@@ -28,8 +28,8 @@ Change directory into your locally cloned samples repo and use `git clone` to ge
 
 ```
 # Change directory to the clone of the samples repository
-$ cd /arcgis-runtime-samples-qt
 # Clone the toolkit repository into the current directory in terminal
+$ cd /arcgis-runtime-samples-qt
 $ git clone https://github.com/Esri/arcgis-runtime-toolkit-qt.git
 ```
 
