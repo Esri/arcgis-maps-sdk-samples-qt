@@ -4,6 +4,7 @@ ArcGIS Runtime SDK 100.10 for Qt sample applications.  The repo contains [Qt](ht
 # Prerequisites
 * Qt SDK 5.15 or higher (Open source or commercial)
 * Qt Creator
+* [ArcGIS Runtime Toolkit - Qt](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components. For more information on the toolkit please visit, [Building a better toolkit.](https://community.esri.com/community/developers/native-app-developers/arcgis-runtime-sdk-for-qt/blog/2020/08/28/building-a-better-toolkit)
 * For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/latest/qml/guide/arcgis-runtime-sdk-for-qt-system-requirements.htm) page.
 
 ## Fork the repo
@@ -20,6 +21,19 @@ Open your terminal, navigate to your working directory, use ```git clone``` to g
 # Clone your fork of the repository into the current directory in terminal
 $ git clone https://github.com/YOUR-USERNAME/arcgis-runtime-samples-qt.git
 ```
+
+#### Clone the toolkit repo
+
+Change directory into your locally cloned samples repo and use `git clone` to get a copy of the ArcGIS Runtime Toolkit - Qt.
+
+```
+# Change directory to the clone of the samples repository
+$ cd /arcgis-runtime-samples-qt
+# Clone the toolkit repository into the current directory in terminal
+$ git clone https://github.com/Esri/arcgis-runtime-toolkit-qt.git
+```
+
+* Note - if you want to contribute to the toolkit repository as well, you will need to follow the steps from above at [Fork the repo](#fork-the-repo) but for the toolkit instead.
 
 ## Configure remote upstream for your fork
 To sync changes you make in a fork with this repository, you must configure a remote that points to the upstream repository in Git.
