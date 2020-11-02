@@ -24,7 +24,7 @@ $ git clone https://github.com/YOUR-USERNAME/arcgis-runtime-samples-qt.git
 
 #### Clone the toolkit repo
 
-Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the ArcGIS Runtime Toolkit - Qt.
+Change directory into your locally cloned samples repo and then use `git clone` to get a copy of the [ArcGIS Runtime Toolkit - Qt](https://github.com/Esri/arcgis-runtime-toolkit-qt.git).
 
 ```
 # Change directory to the clone of the samples repository
