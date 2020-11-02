@@ -4,7 +4,7 @@ ArcGIS Runtime SDK 100.10 for Qt sample applications.  The repo contains [Qt](ht
 # Prerequisites
 * Qt SDK 5.15 or higher (Open source or commercial)
 * Qt Creator
-* [ArcGIS Runtime Toolkit - Qt](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components. For more information on the toolkit please visit, [Building a better toolkit.](https://community.esri.com/community/developers/native-app-developers/arcgis-runtime-sdk-for-qt/blog/2020/08/28/building-a-better-toolkit)
+* [ArcGIS Runtime Toolkit - Qt](https://github.com/Esri/arcgis-runtime-toolkit-qt) is required as some samples utilize toolkit components. 
 * For more information, please visit the [System Requirements](https://developers.arcgis.com/qt/latest/qml/guide/arcgis-runtime-sdk-for-qt-system-requirements.htm) page.
 
 ## Fork the repo
