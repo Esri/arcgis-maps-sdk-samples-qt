@@ -39,15 +39,15 @@ AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
   m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
   // create the integrated mesh layer
-  const QUrl meshLyrUrl("https://tiles.arcgis.com/tiles/FQD0rKU8X5sAQfh8/arcgis/rest/services/VRICON_Yosemite_Sample_Integrated_Mesh_scene_layer/SceneServer");
+  const QUrl meshLyrUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer");
   IntegratedMeshLayer* integratedMeshLyr = new IntegratedMeshLayer(meshLyrUrl, this);
 
   // add the layer to the scene
   m_scene->operationalLayers()->append(integratedMeshLyr);
 
   // set the intial viewpoint of the scene
-  const Point initialPt(-119.622075, 37.720650, 2104.901239, SpatialReference(4326));
-  const Camera initialCamera(initialPt, initialPt.z(), 315.50368761552056, 78.09465920130114, 0);
+  const Point initialPt(2.8259, 41.9906, 200.0, SpatialReference::wgs84());
+  const Camera initialCamera(initialPt, initialPt.z(), 190.0, 65.0, 0.0);
   const Viewpoint initialViewpoint(initialPt, initialPt.z(), initialCamera);
   m_scene->setInitialViewpoint(initialViewpoint);
 
