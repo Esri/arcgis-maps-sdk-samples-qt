@@ -29,15 +29,8 @@ using namespace Esri::ArcGISRuntime;
 
 AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_scene(new Scene(Basemap::imagery(this), this))
+  m_scene(new Scene(this))
 {
-  // create an elevation source from a REST service
-  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
-
-  // add the elevation source to the scene to display elevation
-  m_scene->baseSurface()->elevationSources()->append(elevationSource);
-
   // create the integrated mesh layer
   const QUrl meshLyrUrl("https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer");
   IntegratedMeshLayer* integratedMeshLyr = new IntegratedMeshLayer(meshLyrUrl, this);
@@ -47,10 +40,9 @@ AddIntegratedMeshLayer::AddIntegratedMeshLayer(QObject* parent /* = nullptr */):
 
   // set the intial viewpoint of the scene
   const Point initialPt(2.8259, 41.9906, 200.0, SpatialReference::wgs84());
-  const Camera initialCamera(initialPt, initialPt.z(), 190.0, 65.0, 0.0);
+  const Camera initialCamera(initialPt, 200.0, 190.0, 65.0, 0.0);
   const Viewpoint initialViewpoint(initialPt, initialPt.z(), initialCamera);
   m_scene->setInitialViewpoint(initialViewpoint);
-
 }
 
 AddIntegratedMeshLayer::~AddIntegratedMeshLayer() = default;
