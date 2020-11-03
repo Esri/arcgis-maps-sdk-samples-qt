@@ -85,7 +85,7 @@ Item {
                     Repeater {
                         model: sampleModel.getGroupLayerListModel(layerVisibilityListView.currentIndex)
                         delegate: RadioDelegate {
-                            checked: index == 0
+                            checked: index === 0
                             text: name
                             leftPadding: indicator.width
                             width: layerVisibilityRect.width - leftPadding

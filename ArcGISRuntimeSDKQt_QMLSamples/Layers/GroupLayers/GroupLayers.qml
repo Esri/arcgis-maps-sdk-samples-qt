@@ -43,7 +43,7 @@ Rectangle {
             GroupLayer {
                 id: gl
                 name: "Buildings group"
-                visibilityMode: "GroupVisibilityModeExclusive"
+                visibilityMode: Enums.GroupVisibilityModeExclusive
 
                 ArcGISSceneLayer {
                     url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer"
@@ -147,7 +147,7 @@ Rectangle {
                         property var groupLyr: scene.operationalLayers.get(layerVisibilityListView.currentIndex)
                         model: groupLyr ? groupLyr.layers : null
                         delegate: RadioDelegate {
-                            checked: index == 0
+                            checked: index === 0
                             text: name
                             leftPadding: indicator.width
                             width: layerVisibilityRect.width - leftPadding
