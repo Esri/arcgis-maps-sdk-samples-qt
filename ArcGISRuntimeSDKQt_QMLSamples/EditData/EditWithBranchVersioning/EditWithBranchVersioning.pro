@@ -27,7 +27,7 @@ include($$PWD/arcgisruntime.pri)
 TOOLKIT_PRI_PATH = $$PWD/../../../arcgis-runtime-toolkit-qt
 
 exists($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri) {
-    include($$TOOLKIT_PRI_PATH/uitools/toolkitcpp.pri)
+    include($$TOOLKIT_PRI_PATH/uitools/toolkitqml.pri)
 } else {
     error(TOOLKIT_PRI_PATH is missing which is required to build this application.)
 }
