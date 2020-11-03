@@ -19,8 +19,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
-import Esri.ArcGISRuntime.Toolkit.Controls 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 Item {
 
@@ -129,14 +128,12 @@ Item {
             onWheel: wheel.accepted = true;
         }
 
-        GridLayout {
-            columns: 2
+        ColumnLayout {
             anchors.margins: 5
 
             TextField {
                 id: versionNameTextField
                 placeholderText: qsTr("Name must be unique")
-                Layout.columnSpan: 2
                 Layout.alignment: Qt.AlignHCenter
                 Layout.margins: 5
                 validator: RegExpValidator { regExp: /\w{0,50}/ }
@@ -145,7 +142,6 @@ Item {
             ComboBox {
                 id: accessComboBox
                 model: versionAccessModel
-                Layout.columnSpan: 2
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignHCenter
                 Layout.margins: 5
@@ -154,14 +150,12 @@ Item {
             TextField {
                 id: descriptionTextField
                 placeholderText: qsTr("Enter description")
-                Layout.columnSpan: 2
                 Layout.alignment: Qt.AlignHCenter
                 Layout.margins: 5
             }
 
             Row {
                 Layout.alignment: Qt.AlignRight
-                Layout.columnSpan: 2
                 Layout.margins: 5
                 height: childrenRect.height
                 spacing: 5

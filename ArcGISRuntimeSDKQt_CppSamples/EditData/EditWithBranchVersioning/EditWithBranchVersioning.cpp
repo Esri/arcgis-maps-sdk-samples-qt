@@ -49,7 +49,8 @@ namespace
 
 EditWithBranchVersioning::EditWithBranchVersioning(QObject* parent /* = nullptr */):
   QObject(parent),
-  m_map(new Map(Basemap::streetsVector(this), this))
+  m_map(new Map(Basemap::streetsVector(this), this)),
+  m_cred(new Credential("editor01", "editor01.password", this))
 {
 }
 
@@ -168,7 +169,7 @@ void EditWithBranchVersioning::onMapDoneLoading(const Error& error)
 
 void EditWithBranchVersioning::connectSgdbSignals()
 {
-  m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"), this);
+  m_serviceGeodatabase = new ServiceGeodatabase(QUrl("https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"), m_cred, this);
   m_busy = true;
   emit busyChanged();
 

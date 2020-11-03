@@ -100,6 +100,7 @@ private:
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::ServiceFeatureTable* m_featureTable = nullptr;
   Esri::ArcGISRuntime::ServiceGeodatabase* m_serviceGeodatabase = nullptr;
+  Esri::ArcGISRuntime::Credential* m_cred = nullptr;
 
   bool m_busy = false;
   bool m_sgdbVersionIsDefault = true;
