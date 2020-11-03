@@ -38,7 +38,7 @@ Rectangle {
             Surface {
                 id: elevationSurface
                 ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
 
                 // When location has changed, set the elevation text to display new elevation, and move the elevationMarker to the queried-for position on the surface.
