@@ -78,7 +78,7 @@ Item {
                     CheckBox {
                         id: parentBox
                         text: name
-                        checked: true
+                        checked: layerVisible
                         onCheckedChanged: layerVisible = checked
                     }
 
@@ -100,7 +100,7 @@ Item {
                 id: layerDelegate
                 CheckBox {
                     text: name
-                    checked: true
+                    checked: layerVisible
                     onCheckedChanged: {
                         layerVisible = checked;
                     }

@@ -43,6 +43,7 @@ Rectangle {
             GroupLayer {
                 id: gl
                 name: "Buildings group"
+                visibilityMode: "GroupVisibilityModeExclusive"
 
                 ArcGISSceneLayer {
                     url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer"
@@ -138,7 +139,7 @@ Rectangle {
                     CheckBox {
                         id: parentBox
                         text: name
-                        checked: true
+                        checked: layerVisible
                         onCheckedChanged: layerVisible = checked
                     }
 
@@ -161,7 +162,7 @@ Rectangle {
                 id: layerDelegate
                 CheckBox {
                     text: name
-                    checked: true
+                    checked: layerVisible
                     onCheckedChanged: layerVisible = checked
                 }
             }

@@ -48,6 +48,7 @@ GroupLayers::GroupLayers(QObject* parent /* = nullptr */):
   ArcGISSceneLayer* layer2 = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevB_BuildingShells/SceneServer"), this);
   GroupLayer* groupLayer = new GroupLayer(QList<Layer*>{layer1, layer2}, this);
   groupLayer->setName("Buildings group");
+  groupLayer->setVisibilityMode(GroupVisibilityMode::Exclusive);
 
   // Create additional layers
   ArcGISSceneLayer* layer3 = new ArcGISSceneLayer(QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_Trees/SceneServer"), this);
