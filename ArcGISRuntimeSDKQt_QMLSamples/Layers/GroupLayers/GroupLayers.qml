@@ -145,8 +145,8 @@ Rectangle {
                     Repeater {
                         property var groupLyr: scene.operationalLayers.get(layerVisibilityListView.currentIndex)
                         model: groupLyr ? groupLyr.layers : null
-                        delegate: CheckBox {
-                            checked: true
+                        delegate: RadioDelegate {
+                            checked: index == 0
                             text: name
                             leftPadding: indicator.width
                             width: layerVisibilityRect.width - leftPadding
