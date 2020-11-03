@@ -20,8 +20,7 @@ import Esri.ArcGISRuntime 100.10
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
-import Esri.ArcGISRuntime.Toolkit.Controls 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 Rectangle {
     id: rootRectangle
@@ -116,6 +115,11 @@ Rectangle {
     ServiceGeodatabase {
         id: sgdb
         url: "https://sampleserver7.arcgisonline.com/arcgis/rest/services/DamageAssessment/FeatureServer"
+
+        credential: Credential {
+            username: "editor01"
+            password: "editor01.password"
+        }
 
         onLoadStatusChanged: {
             if (loadStatus !== Enums.LoadStatusLoaded)
@@ -479,9 +483,9 @@ Rectangle {
     }
 
     //     Uncomment this section when running as standalone application
-    /*AuthenticationView {
-        authenticationManager: AuthenticationManager
-    }*/
+    AuthenticationView {
+        anchors.fill: parent
+    }
 
     Dialog {
         id: errorDialog
