@@ -101,9 +101,7 @@ Item {
                 CheckBox {
                     text: name
                     checked: layerVisible
-                    onCheckedChanged: {
-                        layerVisible = checked;
-                    }
+                    onCheckedChanged: layerVisible = checked;
                 }
             }
         }
