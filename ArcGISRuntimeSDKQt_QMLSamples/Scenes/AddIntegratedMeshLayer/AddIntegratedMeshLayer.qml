@@ -51,6 +51,7 @@ Rectangle {
                     heading: 190.0
                     pitch: 65.0
                     roll: 0.0
+                    distance: 200.0
                 }
             }
         }
