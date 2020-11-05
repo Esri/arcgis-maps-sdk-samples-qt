@@ -60,10 +60,10 @@ void LocalServerFeatureLayer::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data";
-
+  QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpkx/";
+  QString fileName = "PointsofInterest.mpkx";
   // create a feature service
-  m_localFeatureService = new LocalFeatureService(dataPath + "/mpk/PointsofInterest.mpk", this);
+  m_localFeatureService = new LocalFeatureService(dataPath + fileName, this);
 
   if (LocalServer::instance()->isInstallValid())
   {
@@ -82,6 +82,9 @@ void LocalServerFeatureLayer::connectSignals()
   {
     if (LocalServer::status() == LocalServerStatus::Started)
     {
+        if (m_localFeatureService->status() != LocalServerStatus::Started) {
+            m_localFeatureService->start();
+        }
       qDebug() << "Local server started";
     }
   });
@@ -91,6 +94,7 @@ void LocalServerFeatureLayer::connectSignals()
   {
     if (m_localFeatureService->status() == LocalServerStatus::Started)
     {
+      qDebug() << "Successfully started local server: " << m_localFeatureService->url().toString();
       // create the feature layer
       ServiceFeatureTable* svt = new ServiceFeatureTable(QUrl(m_localFeatureService->url().toString() + "/0"), this);
       FeatureLayer* featureLayer = new FeatureLayer(svt, this);
@@ -102,6 +106,11 @@ void LocalServerFeatureLayer::connectSignals()
         }
       });
       m_map->operationalLayers()->append(featureLayer);
+    }
+    else if (m_localFeatureService->status() == LocalServerStatus::Failed)
+    {
+        qDebug() << "Failed to start";
+        qDebug() << m_localFeatureService->url().toString();
     }
   });
 }
