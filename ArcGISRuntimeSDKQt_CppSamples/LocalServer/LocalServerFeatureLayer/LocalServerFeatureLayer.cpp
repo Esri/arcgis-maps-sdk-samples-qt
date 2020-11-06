@@ -66,7 +66,7 @@ void LocalServerFeatureLayer::componentComplete()
 
   // Check to see if map package exists
   if (!QFileInfo::exists(dataPath) || !QFileInfo(dataPath).isFile())
-    qDebug() << "File: at \"" << dataPath << "\" not found";
+    qDebug() << "File:" << dataPath << "not found";
 
   // create a feature service
   m_localFeatureService = new LocalFeatureService(dataPath, this);
@@ -117,7 +117,7 @@ void LocalServerFeatureLayer::connectSignals()
     }
     else if (m_localFeatureService->status() == LocalServerStatus::Started)
     {
-      qDebug() << "Successfully hosting local feature service at: " << m_localFeatureService->url().toString();
+      qDebug() << "Successfully hosting local feature service at:" << m_localFeatureService->url().toString();
 
       // create the feature layer
       ServiceFeatureTable* svt = new ServiceFeatureTable(QUrl(m_localFeatureService->url().toString() + "/0"), this);
