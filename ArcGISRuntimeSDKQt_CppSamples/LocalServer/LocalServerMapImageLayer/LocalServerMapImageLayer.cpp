@@ -29,6 +29,7 @@
 #include "Viewpoint.h"
 
 #include <QDir>
+#include <QFile>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -58,11 +59,25 @@ void LocalServerMapImageLayer::componentComplete()
 
   // Set map to map view
   m_mapView->setMap(m_map);
-
-  QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data";
-
+qDebug() << "62";
+  // Check for ArcGIS Pro map package files
+  QString fileName = "RelationshipID.mpkx";
+  QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpkx/" + fileName;
+qDebug() << "66";
+  // Check to see if map package exists
+  if (!QFileInfo::exists(dataPath) || !QFileInfo(dataPath).isFile())
+  {
+    qDebug() << "ArcGIS Pro .mpkx file not found at" << dataPath << "\nChecking for .mpk file";
+    fileName = "RelationshipID.mpk";
+    dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpk/" + fileName;
+    if (!QFileInfo::exists(dataPath) || !QFileInfo(dataPath).isFile())
+      qDebug() << "File:" << dataPath << "not found";
+    else
+      qDebug() << "Using .mpk file from" << dataPath;
+  }
+qDebug() << "78";
   // create a map service
-  m_localMapService = new LocalMapService(dataPath + "/mpk/RelationshipID.mpk", this);
+  m_localMapService = new LocalMapService(dataPath, this);
 
   if (LocalServer::instance()->isInstallValid())
   {
@@ -82,6 +97,7 @@ void LocalServerMapImageLayer::connectSignals()
     if (LocalServer::status() == LocalServerStatus::Started)
     {
       // start the service
+        qDebug() << "100";
       m_localMapService->start();
     }
   });
@@ -89,10 +105,22 @@ void LocalServerMapImageLayer::connectSignals()
   // local map service status
   connect(m_localMapService, &LocalMapService::statusChanged, this, [this]()
   {
-    if (m_localMapService->status() == LocalServerStatus::Started)
+    if (m_localMapService->status() == LocalServerStatus::Starting)
+    {
+        qDebug() << "local Map service starting";
+    }
+    else if (m_localMapService->status() == LocalServerStatus::Failed)
+    {
+        qDebug() << "local Map service failed";
+    }
+    else if (m_localMapService->status() == LocalServerStatus::Stopping) {
+        qDebug() << "local Map service stopping";
+    }
+
+    else if (m_localMapService->status() == LocalServerStatus::Started)
     {
       ArcGISMapImageLayer* mapImageLayer = new ArcGISMapImageLayer(QUrl(m_localMapService->url()), this);
-
+        qDebug() << m_localMapService->url().toString();
       connect(mapImageLayer, &ArcGISMapImageLayer::loadStatusChanged, this, [this, mapImageLayer](LoadStatus status)
       {
         if (status == LoadStatus::Loaded)
