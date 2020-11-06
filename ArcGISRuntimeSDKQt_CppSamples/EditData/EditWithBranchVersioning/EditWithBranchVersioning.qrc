@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Samples/EditData/EditWithBranchVersioning">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>EditWithBranchVersioning.qml</file>
+        <file>EditWithBranchVersioning.h</file>
+        <file>EditWithBranchVersioning.cpp</file>
+        <file>main.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
