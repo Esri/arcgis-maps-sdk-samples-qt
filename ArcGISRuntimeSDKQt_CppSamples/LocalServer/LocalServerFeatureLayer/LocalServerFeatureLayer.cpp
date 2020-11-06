@@ -30,6 +30,7 @@
 #include "Viewpoint.h"
 
 #include <QDir>
+#include <QFileInfo>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -60,10 +61,15 @@ void LocalServerFeatureLayer::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
-  QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpkx/";
   QString fileName = "PointsofInterest.mpkx";
+  QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpkx/" + fileName;
+
+  // Check to see if map package exists
+  if (!QFileInfo::exists(dataPath) || !QFileInfo(dataPath).isFile())
+      qDebug() << "File: at \"" << dataPath << "\" not found";
+
   // create a feature service
-  m_localFeatureService = new LocalFeatureService(dataPath + fileName, this);
+  m_localFeatureService = new LocalFeatureService(dataPath, this);
 
   if (LocalServer::instance()->isInstallValid())
   {
