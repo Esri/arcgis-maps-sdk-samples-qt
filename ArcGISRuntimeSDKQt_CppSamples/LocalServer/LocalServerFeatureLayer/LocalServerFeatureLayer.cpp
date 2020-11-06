@@ -61,12 +61,21 @@ void LocalServerFeatureLayer::componentComplete()
   // Set map to map view
   m_mapView->setMap(m_map);
 
+  // Check for ArcGIS Pro map package files
   QString fileName = "PointsofInterest.mpkx";
   QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpkx/" + fileName;
 
   // Check to see if map package exists
   if (!QFileInfo::exists(dataPath) || !QFileInfo(dataPath).isFile())
-    qDebug() << "File:" << dataPath << "not found";
+  {
+    qDebug() << "ArcGIS Pro .mpkx file not found at" << dataPath << "\nChecking for .mpk file";
+    fileName = "PointsofInterest.mpk";
+    dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpk/" + fileName;
+    if (!QFileInfo::exists(dataPath) || !QFileInfo(dataPath).isFile())
+      qDebug() << "File:" << dataPath << "not found";
+    else
+      qDebug() << "Using .mpk file from" << dataPath;
+  }
 
   // create a feature service
   m_localFeatureService = new LocalFeatureService(dataPath, this);
