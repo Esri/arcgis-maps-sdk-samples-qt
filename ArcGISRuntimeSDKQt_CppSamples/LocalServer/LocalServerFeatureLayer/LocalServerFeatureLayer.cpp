@@ -66,7 +66,7 @@ void LocalServerFeatureLayer::componentComplete()
 
   // Check to see if map package exists
   if (!QFileInfo::exists(dataPath) || !QFileInfo(dataPath).isFile())
-      qDebug() << "File: at \"" << dataPath << "\" not found";
+    qDebug() << "File: at \"" << dataPath << "\" not found";
 
   // create a feature service
   m_localFeatureService = new LocalFeatureService(dataPath, this);
@@ -75,32 +75,50 @@ void LocalServerFeatureLayer::componentComplete()
   {
     connectSignals();
     if (LocalServer::status() == LocalServerStatus::Started)
-      m_localFeatureService->start();
-    else
+    {
+      qDebug() << "Local server was already running";
+
+      // The local server can already be running if it was started in a different application.
+      // We start up the local feature service here because there will be no status change signal to otherwise trigger it.
+
+      if (m_localFeatureService->status() != LocalServerStatus::Started || m_localFeatureService->status() != LocalServerStatus::Starting)
+      {
+        m_localFeatureService->start();
+      }
+    }
+    else if (LocalServer::status() != LocalServerStatus::Started || LocalServerStatus() != LocalServerStatus::Starting)
+    {
       LocalServer::start();
+    }
   }
+  else
+    qDebug() << "Local server install invalid";
 }
 
 void LocalServerFeatureLayer::connectSignals()
 {
-  // local server status
+  // Local server status
   connect(LocalServer::instance(), &LocalServer::statusChanged, this, [this]()
   {
+    // If the local server was not previously running, our local feature service will start here if the local server has successfully started.
     if (LocalServer::status() == LocalServerStatus::Started)
     {
-        if (m_localFeatureService->status() != LocalServerStatus::Started) {
-            m_localFeatureService->start();
-        }
-      qDebug() << "Local server started";
+      if (m_localFeatureService->status() != LocalServerStatus::Started || m_localFeatureService->status() != LocalServerStatus::Starting)
+        m_localFeatureService->start();
     }
   });
 
   // local feature service status
   connect(m_localFeatureService, &LocalFeatureService::statusChanged, this, [this]()
   {
-    if (m_localFeatureService->status() == LocalServerStatus::Started)
+    if (m_localFeatureService->status() == LocalServerStatus::Starting)
     {
-      qDebug() << "Successfully started local server: " << m_localFeatureService->url().toString();
+      qDebug() << "Local feature service starting up";
+    }
+    else if (m_localFeatureService->status() == LocalServerStatus::Started)
+    {
+      qDebug() << "Successfully hosting local feature service at: " << m_localFeatureService->url().toString();
+
       // create the feature layer
       ServiceFeatureTable* svt = new ServiceFeatureTable(QUrl(m_localFeatureService->url().toString() + "/0"), this);
       FeatureLayer* featureLayer = new FeatureLayer(svt, this);
@@ -115,8 +133,7 @@ void LocalServerFeatureLayer::connectSignals()
     }
     else if (m_localFeatureService->status() == LocalServerStatus::Failed)
     {
-        qDebug() << "Failed to start";
-        qDebug() << m_localFeatureService->url().toString();
+      qDebug() << "Local feature service failed to start";
     }
   });
 }
