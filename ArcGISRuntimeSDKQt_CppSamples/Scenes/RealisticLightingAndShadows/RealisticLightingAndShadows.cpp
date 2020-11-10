@@ -83,6 +83,7 @@ void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
 
     // set a calendar with a date and time
     QDateTime sunTime(QDate(2018, 8, 10), QTime(12, 0), QTimeZone(-25200));
+    m_sunTime = &sunTime;
 
     // set the sun time to the calendar
     m_sceneView->setSunTime(sunTime);
@@ -93,3 +94,12 @@ void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
     emit sceneViewChanged();
 }
 
+void RealisticLightingAndShadows::setSunTime(double sunHour)
+{
+    if (m_sceneView)
+    {
+        int a = sunHour;
+        qDebug() << a;
+        m_sunTime->setTime(QTime(a, 0));
+    }
+}

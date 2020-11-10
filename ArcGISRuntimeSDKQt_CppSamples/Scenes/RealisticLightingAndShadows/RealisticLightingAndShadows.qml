@@ -29,5 +29,44 @@ Item {
     RealisticLightingAndShadowsSample {
         id: model
         sceneView: view
+
+    }
+    Rectangle {
+        anchors {
+            top: parent.top
+            right: parent.right
+            margins: 5
+        }
+        width: 400
+        height: 20
+        color: "#ffffff"
+        Row {
+            id: sliderCombo
+            spacing: 5
+
+            Slider {
+                id: slider
+                opacity: 0.7
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                }
+                // Slider controls degrees of rotation
+                from: 1
+                to: 24
+                onValueChanged: {
+                    RealisticLightingAndShadowsSample.setSunTime(slider.value);
+                }
+            }
+
+            Text {
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    margins: 5
+                }
+                horizontalAlignment: TextInput.AlignHCenter
+                font.pixelSize: 20
+                text: slider.value
+            }
+        }
     }
 }

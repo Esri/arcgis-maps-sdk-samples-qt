@@ -40,6 +40,10 @@ public:
 
     static void init();
 
+    Q_INVOKABLE void setSunTime(double sunHour);
+
+    QDateTime* m_sunTime = nullptr;
+
 signals:
     void sceneViewChanged();
 
@@ -49,6 +53,8 @@ private:
 
     Esri::ArcGISRuntime::Scene* m_scene = nullptr;
     Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
+
+
 };
 
 #endif // REALISTICLIGHTINGANDSHADOWS_H
