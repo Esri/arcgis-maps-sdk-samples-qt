@@ -1,0 +1,21 @@
+{
+    "category": "TODO",
+    "description": "TODO",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "TODO"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "TODO"
+    ],
+    "snippets": [
+        "RealisticLightingAndShadows.qml",
+        "RealisticLightingAndShadows.cpp",
+        "RealisticLightingAndShadows.h"
+    ],
+    "title": "Realistic lighting and shadows"
+}
