@@ -30,7 +30,7 @@
 #include "Viewpoint.h"
 
 #include <QDir>
-#include <QFileInfo>
+#include <QFile>
 
 using namespace Esri::ArcGISRuntime;
 
@@ -66,12 +66,12 @@ void LocalServerFeatureLayer::componentComplete()
   QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpkx/" + fileName;
 
   // Check to see if map package exists
-  if (!QFileInfo::exists(dataPath) || !QFileInfo(dataPath).isFile())
+  if (!QFile::exists(dataPath))
   {
     qDebug() << "ArcGIS Pro .mpkx file not found at" << dataPath << "\nChecking for .mpk file";
     fileName = "PointsofInterest.mpk";
     dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpk/" + fileName;
-    if (!QFileInfo::exists(dataPath) || !QFileInfo(dataPath).isFile())
+    if (!QFile::exists(dataPath))
       qDebug() << "File:" << dataPath << "not found";
     else
       qDebug() << "Using .mpk file from" << dataPath;
