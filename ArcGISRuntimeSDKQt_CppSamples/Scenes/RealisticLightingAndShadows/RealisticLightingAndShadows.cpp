@@ -31,11 +31,13 @@
 #include <QTime>
 #include <QTimeZone>
 
+#include <cmath>
+
 using namespace Esri::ArcGISRuntime;
 
 RealisticLightingAndShadows::RealisticLightingAndShadows(QObject* parent /* = nullptr */):
     QObject(parent),
-    m_scene(new Scene(Basemap::imagery(this), this))
+    m_scene(new Scene(Basemap::topographic(this), this))
 {
     // create a new elevation source from Terrain3D REST service
     ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
@@ -46,7 +48,7 @@ RealisticLightingAndShadows::RealisticLightingAndShadows(QObject* parent /* = nu
 
     // add 3D building shells with a scene layer
     ArcGISSceneLayer* scenelayer = new ArcGISSceneLayer(
-                QUrl("http://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer/layers/0"), this);
+                QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer/layers/0"), this);
 
     m_scene->operationalLayers()->append(scenelayer);
 }
@@ -81,12 +83,8 @@ void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
     // set atmosphere effect to realistic
     m_sceneView->setAtmosphereEffect(AtmosphereEffect::Realistic);
 
-    // set a calendar with a date and time
-    QDateTime sunTime(QDate(2018, 8, 10), QTime(12, 0), QTimeZone(-25200));
-    m_sunTime = &sunTime;
-
     // set the sun time to the calendar
-    m_sceneView->setSunTime(sunTime);
+    setSunTime(8.5);
 
     // add sun lighting
     m_sceneView->setSunLighting(LightingMode::LightAndShadows);
@@ -94,12 +92,42 @@ void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
     emit sceneViewChanged();
 }
 
-void RealisticLightingAndShadows::setSunTime(double sunHour)
+void RealisticLightingAndShadows::setSunTime(const double sunTimeValue)
 {
     if (m_sceneView)
     {
-        int a = sunHour;
-        qDebug() << a;
-        m_sunTime->setTime(QTime(a, 0));
+
+        double remainder = std::fmod(sunTimeValue, 1);
+        int minute = remainder*60;
+        int hour = sunTimeValue-remainder;
+
+        QTime selectedTime = QTime(hour, minute);
+
+        // set a calendar with a date and time
+        const QDateTime sunTime(QDate(2018, 8, 10), selectedTime, QTimeZone(-25200));
+
+        // set the sun time to the calendar
+        m_sceneView->setSunTime(sunTime);
+        emit sunTimeChanged(selectedTime.toString("h:mm ap"));
+
+    }
+}
+
+void RealisticLightingAndShadows::setLightingMode(const int lightingModeValue)
+{
+    if (m_sceneView)
+    {
+        if (lightingModeValue == 0)
+        {
+            m_sceneView->setSunLighting(LightingMode::NoLight);
+        }
+        else if (lightingModeValue == 1)
+        {
+            m_sceneView->setSunLighting(LightingMode::Light);
+        }
+        else
+        {
+            m_sceneView->setSunLighting(LightingMode::LightAndShadows);
+        }
     }
 }

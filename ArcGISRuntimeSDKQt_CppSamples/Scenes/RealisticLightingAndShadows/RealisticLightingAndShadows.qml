@@ -29,6 +29,7 @@ Item {
     RealisticLightingAndShadowsSample {
         id: model
         sceneView: view
+        onSunTimeChanged: timeValue.text = "August 10, 2018, " + sunTimeText
 
     }
     Rectangle {
@@ -37,35 +38,53 @@ Item {
             right: parent.right
             margins: 5
         }
-        width: 400
-        height: 20
+        width: childrenRect.width
+        height: childrenRect.height
         color: "#ffffff"
-        Row {
+        opacity: 0.7
+        Column {
             id: sliderCombo
             spacing: 5
+            padding: 15
+            Text {
+                id: timeValue
+                anchors {
+                    margins: 5
+                }
+                topPadding: 5
+                font.pixelSize: 12
+                // text: slider.value
+            }
 
+            ComboBox {
+                id: sunLighting
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                }
+                width: 200
+                model: [
+                    "No Light",
+                    "Light",
+                    "Light and Shadows"
+                ]
+                currentIndex: 2
+                onCurrentIndexChanged: {
+                    model.setLightingMode(currentIndex);
+                }
+            }
             Slider {
                 id: slider
                 opacity: 0.7
                 anchors {
-                    verticalCenter: parent.verticalCenter
-                }
-                // Slider controls degrees of rotation
-                from: 1
-                to: 24
-                onValueChanged: {
-                    RealisticLightingAndShadowsSample.setSunTime(slider.value);
-                }
-            }
-
-            Text {
-                anchors {
-                    verticalCenter: parent.verticalCenter
+                    horizontalCenter: parent.horizontalCenter
                     margins: 5
                 }
-                horizontalAlignment: TextInput.AlignHCenter
-                font.pixelSize: 20
-                text: slider.value
+                // Slider controls degrees of rotation
+                from: 0; to: 23.99
+                value: 8.5
+                onValueChanged: {
+                    model.setSunTime(slider.value);
+                }
             }
         }
     }

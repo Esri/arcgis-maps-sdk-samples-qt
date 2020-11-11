@@ -40,12 +40,14 @@ public:
 
     static void init();
 
-    Q_INVOKABLE void setSunTime(double sunHour);
+    Q_INVOKABLE void setSunTime(const double sunTimeValue);
+    Q_INVOKABLE void setLightingMode(const int lightingModeValue);
 
-    QDateTime* m_sunTime = nullptr;
+
 
 signals:
     void sceneViewChanged();
+    void sunTimeChanged(const QString& sunTimeText);
 
 private:
     Esri::ArcGISRuntime::SceneQuickView* sceneView() const;
@@ -53,7 +55,6 @@ private:
 
     Esri::ArcGISRuntime::Scene* m_scene = nullptr;
     Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-
 
 };
 
