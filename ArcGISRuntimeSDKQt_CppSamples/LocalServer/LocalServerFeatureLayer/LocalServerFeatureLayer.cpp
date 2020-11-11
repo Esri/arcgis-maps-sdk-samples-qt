@@ -62,8 +62,8 @@ void LocalServerFeatureLayer::componentComplete()
   m_mapView->setMap(m_map);
 
   // Check for ArcGIS Pro map package files
-  QString fileName = "PointsofInterest.mpkx";
-  QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpkx/" + fileName;
+  const QString fileName = "PointsofInterest.mpkx";
+  const QString dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpkx/" + fileName;
 
   // Check to see if map package exists
   if (!QFile::exists(dataPath))
@@ -84,10 +84,7 @@ void LocalServerFeatureLayer::componentComplete()
       // The local server can already be running if it was started in a different application.
       // We start up the local feature service here because there will be no status change signal to otherwise trigger it.
 
-      if (m_localFeatureService->status() != LocalServerStatus::Started || m_localFeatureService->status() != LocalServerStatus::Starting)
-      {
-        m_localFeatureService->start();
-      }
+      startFeatureService();
     }
     else if (LocalServer::status() != LocalServerStatus::Starting)
     {
@@ -106,8 +103,7 @@ void LocalServerFeatureLayer::connectSignals()
     // If the local server was not previously running, our local feature service will start here if the local server has successfully started.
     if (LocalServer::status() == LocalServerStatus::Started)
     {
-      if (m_localFeatureService->status() != LocalServerStatus::Started || m_localFeatureService->status() != LocalServerStatus::Starting)
-        m_localFeatureService->start();
+      startFeatureService();
     }
   });
 
@@ -139,4 +135,10 @@ void LocalServerFeatureLayer::connectSignals()
       qDebug() << "Local feature service failed to start";
     }
   });
+}
+
+void LocalServerFeatureLayer::startFeatureService() const
+{
+  if (m_localFeatureService->status() != LocalServerStatus::Started || m_localFeatureService->status() != LocalServerStatus::Starting)
+    m_localFeatureService->start();
 }
