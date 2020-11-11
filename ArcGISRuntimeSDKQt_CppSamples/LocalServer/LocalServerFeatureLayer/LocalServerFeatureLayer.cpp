@@ -68,13 +68,7 @@ void LocalServerFeatureLayer::componentComplete()
   // Check to see if map package exists
   if (!QFile::exists(dataPath))
   {
-    qDebug() << "ArcGIS Pro .mpkx file not found at" << dataPath << "\nChecking for .mpk file";
-    fileName = "PointsofInterest.mpk";
-    dataPath = QDir::homePath() + "/ArcGIS/Runtime/Data/mpk/" + fileName;
-    if (!QFile::exists(dataPath))
-      qDebug() << "File:" << dataPath << "not found";
-    else
-      qDebug() << "Using .mpk file from" << dataPath;
+    qDebug() << "ArcGIS Pro .mpkx file not found at" << dataPath;
   }
 
   // create a feature service
