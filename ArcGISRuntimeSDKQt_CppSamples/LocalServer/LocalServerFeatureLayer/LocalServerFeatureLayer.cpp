@@ -95,7 +95,7 @@ void LocalServerFeatureLayer::componentComplete()
         m_localFeatureService->start();
       }
     }
-    else if (LocalServer::status() != LocalServerStatus::Started || LocalServerStatus() != LocalServerStatus::Starting)
+    else if (LocalServer::status() != LocalServerStatus::Starting)
     {
       LocalServer::start();
     }
