@@ -36,98 +36,100 @@
 using namespace Esri::ArcGISRuntime;
 
 RealisticLightingAndShadows::RealisticLightingAndShadows(QObject* parent /* = nullptr */):
-    QObject(parent),
-    m_scene(new Scene(Basemap::topographic(this), this))
+  QObject(parent),
+  m_scene(new Scene(Basemap::topographic(this), this))
 {
-    // create a new elevation source from Terrain3D REST service
-    ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
-                QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
+  // create a new elevation source from Terrain3D REST service
+  ArcGISTiledElevationSource* elevationSource = new ArcGISTiledElevationSource(
+        QUrl("https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), this);
 
-    // add the elevation source to the scene to display elevation
-    m_scene->baseSurface()->elevationSources()->append(elevationSource);
+  // add the elevation source to the scene to display elevation
+  m_scene->baseSurface()->elevationSources()->append(elevationSource);
 
-    // add 3D building shells with a scene layer
-    ArcGISSceneLayer* scenelayer = new ArcGISSceneLayer(
-                QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer/layers/0"), this);
+  // add 3D building shells with a scene layer
+  ArcGISSceneLayer* scenelayer = new ArcGISSceneLayer(
+        QUrl("https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer/layers/0"), this);
 
-    m_scene->operationalLayers()->append(scenelayer);
+  m_scene->operationalLayers()->append(scenelayer);
 }
 
 RealisticLightingAndShadows::~RealisticLightingAndShadows() = default;
 
 void RealisticLightingAndShadows::init()
 {
-    // Register classes for QML
-    qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
-    qmlRegisterType<RealisticLightingAndShadows>("Esri.Samples", 1, 0, "RealisticLightingAndShadowsSample");
+  // Register classes for QML
+  qmlRegisterType<SceneQuickView>("Esri.Samples", 1, 0, "SceneView");
+  qmlRegisterType<RealisticLightingAndShadows>("Esri.Samples", 1, 0, "RealisticLightingAndShadowsSample");
 }
 
 SceneQuickView* RealisticLightingAndShadows::sceneView() const
 {
-    return m_sceneView;
+  return m_sceneView;
 }
 
 // Set the view (created in QML)
 void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
 {
-    if (!sceneView || sceneView == m_sceneView)
-        return;
+  if (!sceneView || sceneView == m_sceneView)
+    return;
 
-    m_sceneView = sceneView;
-    m_sceneView->setArcGISScene(m_scene);
+  m_sceneView = sceneView;
+  m_sceneView->setArcGISScene(m_scene);
 
-    // add camera and set scene viewpoint
-    Camera camera(45.54605153789073, -122.69033380511073, 941.0002111233771, 162.58544227544266, 60.0,0.0);
-    m_sceneView->setViewpointCamera(camera, 0);
+  // add camera and set scene viewpoint
+  Camera camera(45.54605153789073, -122.69033380511073, 941.0002111233771, 162.58544227544266, 60.0,0.0);
+  m_sceneView->setViewpointCamera(camera, 0);
 
-    // set atmosphere effect to realistic
-    m_sceneView->setAtmosphereEffect(AtmosphereEffect::Realistic);
+  // set atmosphere effect to realistic
+  m_sceneView->setAtmosphereEffect(AtmosphereEffect::Realistic);
 
-    // set the sun time to the calendar
-    setSunTime(8.5);
+  // set the sun time to the calendar
+  setSunTime(8.5);
 
-    // add sun lighting
-    m_sceneView->setSunLighting(LightingMode::LightAndShadows);
+  // add sun lighting
+  m_sceneView->setSunLighting(LightingMode::LightAndShadows);
 
-    emit sceneViewChanged();
+  emit sceneViewChanged();
 }
 
 void RealisticLightingAndShadows::setSunTime(const double sunTimeValue)
 {
-    if (m_sceneView)
-    {
+  if (m_sceneView)
+  {
+    // convert a double from 0.0 to 23.99 into hours and minutes
+    double remainder = std::fmod(sunTimeValue, 1);
+    int minute = remainder * 60;
+    int hour = sunTimeValue - remainder;
 
-        double remainder = std::fmod(sunTimeValue, 1);
-        int minute = remainder*60;
-        int hour = sunTimeValue-remainder;
+    QTime selectedTime = QTime(hour, minute);
 
-        QTime selectedTime = QTime(hour, minute);
+    // set a calendar with a date, time, and timezone
+    const QDateTime sunTime(QDate(2018, 8, 10), selectedTime, QTimeZone(-25200));
 
-        // set a calendar with a date and time
-        const QDateTime sunTime(QDate(2018, 8, 10), selectedTime, QTimeZone(-25200));
+    // set the sun time to the calendar
+    m_sceneView->setSunTime(sunTime);
 
-        // set the sun time to the calendar
-        m_sceneView->setSunTime(sunTime);
-        emit sunTimeChanged(selectedTime.toString("h:mm ap"));
+    // trigger the time in the settings column to update
+    emit sunTimeChanged(selectedTime.toString("h:mm ap"));
 
-    }
+  }
 }
 
 void RealisticLightingAndShadows::setLightingMode(const int lightingModeValue)
 {
-    if (m_sceneView)
+  if (m_sceneView)
+  {
+    if (lightingModeValue == 0)
     {
-        if (lightingModeValue == 0)
-        {
-            m_sceneView->setSunLighting(LightingMode::NoLight);
-        }
-        else if (lightingModeValue == 1)
-        {
-            m_sceneView->setSunLighting(LightingMode::Light);
-        }
-        else
-        {
-            m_sceneView->setSunLighting(LightingMode::LightAndShadows);
-        }
+      m_sceneView->setSunLighting(LightingMode::NoLight);
     }
+    else if (lightingModeValue == 1)
+    {
+      m_sceneView->setSunLighting(LightingMode::Light);
+    }
+    else
+    {
+      m_sceneView->setSunLighting(LightingMode::LightAndShadows);
+    }
+  }
 }

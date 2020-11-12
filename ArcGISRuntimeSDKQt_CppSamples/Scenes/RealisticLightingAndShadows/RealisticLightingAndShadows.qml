@@ -43,24 +43,17 @@ Item {
         color: "#ffffff"
         opacity: 0.7
         Column {
-            id: sliderCombo
+            id: settingsColumn
             spacing: 5
             padding: 15
             Text {
                 id: timeValue
-                anchors {
-                    margins: 5
-                }
-                topPadding: 5
-                font.pixelSize: 12
-                // text: slider.value
+                font.pixelSize: 16
+                // text is set from C++ instance
             }
 
             ComboBox {
-                id: sunLighting
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
+                id: sunLightingSelection
                 width: 200
                 model: [
                     "No Light",
@@ -73,17 +66,12 @@ Item {
                 }
             }
             Slider {
-                id: slider
+                id: sunTimeSlider
                 opacity: 0.7
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    margins: 5
-                }
-                // Slider controls degrees of rotation
                 from: 0; to: 23.99
                 value: 8.5
                 onValueChanged: {
-                    model.setSunTime(slider.value);
+                    model.setSunTime(sunTimeSlider.value);
                 }
             }
         }
