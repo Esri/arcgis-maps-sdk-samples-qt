@@ -75,7 +75,7 @@ Rectangle {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "white"
+        color: "#eeeeee"
         opacity: 0.7
         Column {
             id: settingsColumn
@@ -110,33 +110,57 @@ Rectangle {
                     sceneView.sunTime = doubleToDateTime(sunTimeSlider.value)
                 }
                 background: Rectangle {
-                    width: sunTimeSlider.width
-                    anchors.horizontalCenter: sunTimeSlider.horizontalCenter
-                    anchors.right: parent.right
+                    id: bar
                     color: "black"
-                    Row {
-                        anchors.top: sunTimeSlider.top
-                        //anchors.horizontalCenter: parent.horizontalCenter
-                        width: sunTimeSlider.width
-                        spacing: sunTimeSlider.width / 5
-
-                        Repeater {
-                            model: 50
-                            Rectangle {
-                                color: "black"
-                                width: 10
-                                height: 10
-                            }
-                            Text {
-                                anchors {
-                                    top: model.horizontalCenter
-                                    verticalCenter: model.verticalCenter
-                                }
-                                text: "\n0"
-
-                            }
-                        }
-                    }
+                    height: sunTimeSlider.height*.1
+                    anchors.centerIn: sunTimeSlider
+                    width: parent.width *.85
+                }
+                Text {
+                    text: "|"
+                    x: bar.x
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                Text {
+                    text: "|"
+                    x: bar.x + bar.width * .24
+                    anchors.verticalCenter: parent.verticalCenter                }
+                Text {
+                    text: "|"
+                    x: bar.x + bar.width * .49
+                    anchors.verticalCenter: parent.verticalCenter                }
+                Text {
+                    text: "|"
+                    x: bar.x + bar.width * .74
+                    anchors.verticalCenter: parent.verticalCenter                }
+                Text {
+                    text: "|"
+                    x: bar.x + bar.width * .99
+                    anchors.verticalCenter: parent.verticalCenter                }
+                Text {
+                    text: "0"
+                    x: parent.x
+                    anchors.bottom: sunTimeSlider.bottom
+                }
+                Text {
+                    text: "6"
+                    x: parent.x + parent.width * .22
+                    anchors.bottom: sunTimeSlider.bottom
+                }
+                Text {
+                    text: "12"
+                    x: parent.x + parent.width * .42
+                    anchors.bottom: sunTimeSlider.bottom
+                }
+                Text {
+                    text: "18"
+                    x: parent.x + parent.width * .62
+                    anchors.bottom: sunTimeSlider.bottom
+                }
+                Text {
+                    text: "24"
+                    x: parent.x + parent.width*.82
+                    anchors.bottom: sunTimeSlider.bottom
                 }
             }
         }
