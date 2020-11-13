@@ -43,8 +43,6 @@ public:
     Q_INVOKABLE void setSunTimeFromValue(const double sunTimeValue);
     Q_INVOKABLE void setLightingMode(const int lightingModeValue);
 
-
-
 signals:
     void sceneViewChanged();
     void sunTimeChanged(const QString& sunTimeText);
