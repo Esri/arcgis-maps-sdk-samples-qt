@@ -19,6 +19,8 @@
 #include <QQmlEngine>
 #include <QQmlApplicationEngine>
 
+#include <Esri/ArcGISRuntime/Toolkit/register.h>
+
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
@@ -42,6 +44,8 @@ int main(int argc, char *argv[])
     QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
     arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
 #endif
+
+    Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
     // Add the Runtime and Extras path
     engine.addImportPath(arcGISRuntimeImportPath);

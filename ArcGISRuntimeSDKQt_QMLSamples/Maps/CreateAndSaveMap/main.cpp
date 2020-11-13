@@ -18,6 +18,8 @@
 #include <QDir>
 #include <QQmlEngine>
 
+#include <Esri/ArcGISRuntime/Toolkit/register.h>
+
 #define STRINGIZE(x) #x
 #define QUOTE(x) STRINGIZE(x)
 
@@ -47,6 +49,8 @@ int main(int argc, char *argv[])
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/CreateAndSaveMap/CreateAndSaveMap.qml"));
+
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
   view.show();
 
