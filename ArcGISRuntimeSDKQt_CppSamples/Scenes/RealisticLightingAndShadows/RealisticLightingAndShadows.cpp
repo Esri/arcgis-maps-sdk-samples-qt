@@ -96,6 +96,7 @@ void RealisticLightingAndShadows::setSunTimeFromValue(double sunTimeValue)
 {
   if (!m_sceneView)
     return;
+
   // convert a double from 0.0 to 23.99 into hours and minutes
   double remainder = std::fmod(sunTimeValue, 1);
   int minute = remainder * 60;
@@ -119,6 +120,7 @@ void RealisticLightingAndShadows::setLightingMode(int lightingModeValue)
 {
   if (!m_sceneView)
     return;
+
   if (lightingModeValue == 0)
   {
     m_sceneView->setSunLighting(LightingMode::NoLight);
