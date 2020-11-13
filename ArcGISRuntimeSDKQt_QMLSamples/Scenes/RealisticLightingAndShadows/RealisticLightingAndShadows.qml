@@ -46,7 +46,6 @@ Rectangle {
             roll: 0
         }
 
-
         // create a scene, which is a default property of scene view
         Scene {
             // add a basemap

@@ -53,7 +53,6 @@ private:
 
     Esri::ArcGISRuntime::Scene* m_scene = nullptr;
     Esri::ArcGISRuntime::SceneQuickView* m_sceneView = nullptr;
-
 };
 
 #endif // REALISTICLIGHTINGANDSHADOWS_H

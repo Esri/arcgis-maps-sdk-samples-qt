@@ -113,8 +113,6 @@ void RealisticLightingAndShadows::setSunTimeFromValue(double sunTimeValue)
 
   // trigger the time in the settings column to update
   emit sunTimeChanged(selectedTime.toString("h:mm ap"));
-
-
 }
 
 void RealisticLightingAndShadows::setLightingMode(int lightingModeValue)
@@ -133,5 +131,4 @@ void RealisticLightingAndShadows::setLightingMode(int lightingModeValue)
   {
     m_sceneView->setSunLighting(LightingMode::LightAndShadows);
   }
-
 }

@@ -1,5 +1,5 @@
 # Realistic lighting and shadows
-Show realistic lighting and shadows for the time of day.
+Show realistic lighting and shadows for the specific date and time of day.
 
 ![](screenshot.png)
 
@@ -11,7 +11,7 @@ Select one of the three available lighting options to display that lighting effe
 
 ## How it works
 1. Create an `ArcGISSceneLayer` and display it in a `SceneView`.
-2. Create a `QDateTime` to define the date and time of day.
+2. Create a `Date` to define the date and time of day.
 3. Set the sun time of the scene view to the specified date and time with `sceneView.sunTime`.
 4. Set the `lightingMode` of the scene view to `NoLight`, `Light`, or `LightAndShadows` with `sceneView.sunLighting`.
 
