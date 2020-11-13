@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/Samples/Analysis/RealisticLightingAndShadows">
+        <file alias="sample.json">README.metadata.json</file>        
+        <file>RealisticLightingAndShadows.qml</file>
+        <file>screenshot.png</file>
+        <file>README.md</file>
+    </qresource>
+</RCC>
