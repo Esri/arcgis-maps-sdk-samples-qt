@@ -1,5 +1,5 @@
 # Realistic lighting and shadows
-Show realistic lighting and shadows for the time of day.
+Show realistic lighting and shadows for the specific date and time of day.
 
 ![](screenshot.png)
 

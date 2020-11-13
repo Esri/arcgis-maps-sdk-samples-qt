@@ -77,7 +77,7 @@ void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setArcGISScene(m_scene);
 
   // add camera and set scene viewpoint
-  Camera camera(45.54605153789073, -122.69033380511073, 941.0002111233771, 162.58544227544266, 60.0,0.0);
+  const Camera camera(45.54605153789073, -122.69033380511073, 941.0002111233771, 162.58544227544266, 60.0,0.0);
   m_sceneView->setViewpointCamera(camera, 0);
 
   // set atmosphere effect to realistic
@@ -92,44 +92,46 @@ void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
   emit sceneViewChanged();
 }
 
-void RealisticLightingAndShadows::setSunTimeFromValue(const double sunTimeValue)
+void RealisticLightingAndShadows::setSunTimeFromValue(double sunTimeValue)
 {
-  if (m_sceneView)
-  {
-    // convert a double from 0.0 to 23.99 into hours and minutes
-    double remainder = std::fmod(sunTimeValue, 1);
-    int minute = remainder * 60;
-    int hour = sunTimeValue - remainder;
+  if (!m_sceneView)
+    return;
+  // convert a double from 0.0 to 23.99 into hours and minutes
+  double remainder = std::fmod(sunTimeValue, 1);
+  int minute = remainder * 60;
+  int hour = sunTimeValue - remainder;
 
-    QTime selectedTime = QTime(hour, minute);
+  const QTime selectedTime = QTime(hour, minute);
 
-    // set a calendar with a date, time, and timezone
-    const QDateTime sunTime(QDate(2018, 8, 10), selectedTime, QTimeZone(-25200));
+  // set a calendar with a date, time, and timezone
+  const QDateTime sunTime(QDate(2018, 8, 10), selectedTime, QTimeZone(-25200));
+  // To represent the PST time zone during daylight savings time (-7 hours), we use the number of seconds of offset.
+  // 3600 seconds/hour * -7 hours = -25,200 seconds.
 
-    // set the sun time to the calendar
-    m_sceneView->setSunTime(sunTime);
+  // set the sun time to the calendar
+  m_sceneView->setSunTime(sunTime);
 
-    // trigger the time in the settings column to update
-    emit sunTimeChanged(selectedTime.toString("h:mm ap"));
+  // trigger the time in the settings column to update
+  emit sunTimeChanged(selectedTime.toString("h:mm ap"));
 
-  }
+
 }
 
-void RealisticLightingAndShadows::setLightingMode(const int lightingModeValue)
+void RealisticLightingAndShadows::setLightingMode(int lightingModeValue)
 {
-  if (m_sceneView)
+  if (!m_sceneView)
+    return;
+  if (lightingModeValue == 0)
   {
-    if (lightingModeValue == 0)
-    {
-      m_sceneView->setSunLighting(LightingMode::NoLight);
-    }
-    else if (lightingModeValue == 1)
-    {
-      m_sceneView->setSunLighting(LightingMode::Light);
-    }
-    else
-    {
-      m_sceneView->setSunLighting(LightingMode::LightAndShadows);
-    }
+    m_sceneView->setSunLighting(LightingMode::NoLight);
   }
+  else if (lightingModeValue == 1)
+  {
+    m_sceneView->setSunLighting(LightingMode::Light);
+  }
+  else
+  {
+    m_sceneView->setSunLighting(LightingMode::LightAndShadows);
+  }
+
 }

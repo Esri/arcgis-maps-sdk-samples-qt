@@ -60,7 +60,7 @@ Rectangle {
                 }
             }
 
-            //! [add a scene service with ArcGISSceneLayer]
+            // add a scene service with ArcGISSceneLayer
             ArcGISSceneLayer {
                 url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer/layers/0"
             }
@@ -85,7 +85,7 @@ Rectangle {
                 id: timeValue
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 16
-                text: "August 10, 2018 " + sceneView.sunTime.toLocaleTimeString("hh:mm ap")
+                text: "August 10, 2018, " + sceneView.sunTime.toLocaleTimeString("hh:mm ap")
             }
 
             ComboBox {
@@ -136,16 +136,15 @@ Rectangle {
     ]
 
     function doubleToDateTime(d) {
-        const remainder = d % 1
-        let minute = remainder * 60
-        let hour = d - remainder
+        const remainder = d % 1;
+        let minute = remainder * 60;
+        let hour = d - remainder;
         if (hour < 10) {
-            hour = "0" + hour
+            hour = "0" + hour;
         }
         if (minute < 10) {
-            minute = "0" + minute
+            minute = "0" + minute;
         }
-        const dateTime = new Date("2018-08-10T"+hour+":"+minute)
-        return dateTime
+        return new Date(`2018-08-10 ${hour}:${minute}`);
     }
 }
