@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
   engine.addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-  Esri::ArcGISRuntime::Toolkit::registerComponents();
+  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
   engine.load(QUrl("qrc:/Samples/DisplayInformation/ShowPopup/main.qml"));

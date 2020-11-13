@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
-  Esri::ArcGISRuntime::Toolkit::registerComponents();
+  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/GenerateOfflineMap/GenerateOfflineMap.qml"));
