@@ -40,7 +40,7 @@ public:
 
     static void init();
 
-    Q_INVOKABLE void setSunTime(const double sunTimeValue);
+    Q_INVOKABLE void setSunTimeFromValue(const double sunTimeValue);
     Q_INVOKABLE void setLightingMode(const int lightingModeValue);
 
 

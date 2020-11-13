@@ -1,31 +1,27 @@
 # Realistic lighting and shadows
-
-This sample demonstrates how to XXXXX.
-This sample demonstrates ...       
-This is **why** you would do it this way ...
+Show realistic lighting and shadows for the time of day.
 
 ![](screenshot.png)
 
+## Use case
+You can use realistic lighting to evaluate the shadow impact of buildings and utility infrastructure on the surrounding community. This could be useful for civil engineers and urban planners, or for events management assessing the impact of building shadows during an outdoor event.
+
 ## How to use the sample
-e.g. Use the input controls to define a ... Click the "Go" button to ...
+Select one of the three available lighting options to display that lighting effect. Adjust the slider to show the lighting effect for a particular time of day. The 3D buildings will display shadows when "Sun light with shadows" is selected. 
 
 ## How it works
-e.g. In the `GeoView.Tapped` event, features in the `Map` are selected using an `Envelope` defined by the user's tap location ...
+1. Create an `ArcGISSceneLayer` and display it in a `SceneView`.
+2. Create a `QDateTime` to define the date and time of day.
+3. Set the sun time of the scene view to the specified date and time with `m_sceneView->setSunTime(QDateTime)`.
+4. Set the `lightingMode` of the scene view to `NoLight`, `Light`, or `LightAndShadows` with `m_sceneView->setSunLighting(LightingMode)`.
 
 ## Relevant API
- - ClassName1
- - MethodName
-
-## Offline data
-Read more about how to set up the sample's offline data [here](http://links.esri.com/ArcGISRuntimeQtSamples).
-
-Link | Local Location
----------|-------|
-|[San Francisco Streets TPK](https://www.arcgis.com/home/item.html?id=3f1bbf0ec70b409a975f5c91f363fe7d)| `<userhome>`/ArcGIS/Runtime/Data/tpk/SanFrancisco.tpk |
-
-## Additional information
-A standard level license is required to ...
+* Scene
+* ArcGISSceneLayer
+* SceneView
+* LightingMode
+* setSunLighting()
+* setSunTime()
 
 ## Tags
-Routing, Network analysis, Geocode
-
+3D, lighting, realism, realistic, rendering, shadows, sun, time

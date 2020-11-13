@@ -1,16 +1,28 @@
 {
-    "category": "TODO",
-    "description": "TODO",
+    "category": "Scene",
+    "description": "Show realistic lighting and shadows for the time of day.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "TODO"
+        "3D",
+        "lighting",
+        "realism",
+        "realistic",
+        "rendering",
+        "shadows",
+        "sun",
+        "time"
     ],
     "redirect_from": "",
     "relevant_apis": [
-        "TODO"
+        "Scene",
+        "ArcGISSceneLayer",
+        "SceneView",
+        "LightingMode",
+        "setSunLighting",
+        "setSunTime"
     ],
     "snippets": [
         "RealisticLightingAndShadows.qml",

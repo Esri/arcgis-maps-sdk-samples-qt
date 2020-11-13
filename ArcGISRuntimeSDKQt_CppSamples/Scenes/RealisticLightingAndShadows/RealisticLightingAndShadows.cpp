@@ -84,7 +84,7 @@ void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
   m_sceneView->setAtmosphereEffect(AtmosphereEffect::Realistic);
 
   // set the sun time to the calendar
-  setSunTime(8.5);
+  setSunTimeFromValue(8.5);
 
   // add sun lighting
   m_sceneView->setSunLighting(LightingMode::LightAndShadows);
@@ -92,7 +92,7 @@ void RealisticLightingAndShadows::setSceneView(SceneQuickView* sceneView)
   emit sceneViewChanged();
 }
 
-void RealisticLightingAndShadows::setSunTime(const double sunTimeValue)
+void RealisticLightingAndShadows::setSunTimeFromValue(const double sunTimeValue)
 {
   if (m_sceneView)
   {

@@ -75,7 +75,7 @@ Rectangle {
         }
         width: childrenRect.width
         height: childrenRect.height
-        color: "#eeeeee"
+        color: "#ffffff"
         opacity: 0.7
         Column {
             id: settingsColumn
@@ -91,7 +91,7 @@ Rectangle {
             ComboBox {
                 id: sunLightingSelection
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: sceneView.width *.25
+                width: 200
                 model: [
                     "No Light",
                     "Light",
@@ -102,65 +102,11 @@ Rectangle {
             Slider {
                 id: sunTimeSlider
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: sceneView.width *.33
                 opacity: 0.7
                 from: 0; to: 23.99
                 value: 8.5
                 onValueChanged: {
                     sceneView.sunTime = doubleToDateTime(sunTimeSlider.value)
-                }
-                background: Rectangle {
-                    id: bar
-                    color: "black"
-                    height: sunTimeSlider.height*.1
-                    anchors.centerIn: sunTimeSlider
-                    width: parent.width *.85
-                }
-                Text {
-                    text: "|"
-                    x: bar.x
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-                Text {
-                    text: "|"
-                    x: bar.x + bar.width * .24
-                    anchors.verticalCenter: parent.verticalCenter                }
-                Text {
-                    text: "|"
-                    x: bar.x + bar.width * .49
-                    anchors.verticalCenter: parent.verticalCenter                }
-                Text {
-                    text: "|"
-                    x: bar.x + bar.width * .74
-                    anchors.verticalCenter: parent.verticalCenter                }
-                Text {
-                    text: "|"
-                    x: bar.x + bar.width * .99
-                    anchors.verticalCenter: parent.verticalCenter                }
-                Text {
-                    text: "0"
-                    x: parent.x
-                    anchors.bottom: sunTimeSlider.bottom
-                }
-                Text {
-                    text: "6"
-                    x: parent.x + parent.width * .22
-                    anchors.bottom: sunTimeSlider.bottom
-                }
-                Text {
-                    text: "12"
-                    x: parent.x + parent.width * .42
-                    anchors.bottom: sunTimeSlider.bottom
-                }
-                Text {
-                    text: "18"
-                    x: parent.x + parent.width * .62
-                    anchors.bottom: sunTimeSlider.bottom
-                }
-                Text {
-                    text: "24"
-                    x: parent.x + parent.width*.82
-                    anchors.bottom: sunTimeSlider.bottom
                 }
             }
         }
@@ -201,6 +147,5 @@ Rectangle {
         }
         const dateTime = new Date("2018-08-10T"+hour+":"+minute)
         return dateTime
-        //return "2018-08-10T"+hour+":00"
     }
 }

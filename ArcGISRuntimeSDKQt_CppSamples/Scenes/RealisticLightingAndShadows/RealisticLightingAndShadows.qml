@@ -48,12 +48,14 @@ Item {
             padding: 15
             Text {
                 id: timeValue
+                anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 16
                 // text is set from C++ instance
             }
 
             ComboBox {
                 id: sunLightingSelection
+                anchors.horizontalCenter: parent.horizontalCenter
                 width: 200
                 model: [
                     "No Light",
@@ -67,11 +69,12 @@ Item {
             }
             Slider {
                 id: sunTimeSlider
+                anchors.horizontalCenter: parent.horizontalCenter
                 opacity: 0.7
                 from: 0; to: 23.99
                 value: 8.5
                 onValueChanged: {
-                    model.setSunTime(sunTimeSlider.value);
+                    model.setSunTimeFromValue(sunTimeSlider.value);
                 }
             }
         }
