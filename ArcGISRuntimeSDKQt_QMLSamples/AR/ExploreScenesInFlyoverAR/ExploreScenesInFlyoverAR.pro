@@ -50,9 +50,6 @@ exists($$ARCGIS_TOOLKIT_PATH/augmentedreality/QmlApi/ArQmlApi.pri) {
 
 #-------------------------------------------------------------------------------
 
-# Default rules for deployment.
-include(deployment.pri)
-
 android {
     ANDROID_ABIS = arm64-v8a
 }
