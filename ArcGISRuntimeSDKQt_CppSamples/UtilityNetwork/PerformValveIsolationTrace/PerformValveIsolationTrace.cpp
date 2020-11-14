@@ -44,6 +44,7 @@
 #include "UtilityNetworkDefinition.h"
 #include "UtilityNetworkSource.h"
 #include "UtilityNetworkTypes.h"
+#include "UtilityTerminalConfiguration.h"
 #include "UtilityTier.h"
 #include "UtilityTraceConfiguration.h"
 #include "UtilityTraceFilter.h"
@@ -54,7 +55,8 @@
 using namespace Esri::ArcGISRuntime;
 
 namespace  {
-const QString featureServiceUrl = "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleGas/FeatureServer";
+//const QString featureServiceUrl = "https://sampleserver7.arcgisonline.com/arcgis/rest/services/UtilityNetwork/NapervilleGas/FeatureServer";
+const QString featureServiceUrl = "https://nice.esri.com/server/rest/services/NapervilleGas/FeatureServer";
 const QString domainNetworkName = "Pipeline";
 const QString tierName = "Pipe Distribution System";
 const QString networkSourceName = "Gas Device";
@@ -66,19 +68,22 @@ const QString globalId = "{98A06E95-70BE-43E7-91B7-E34C9D3CB9FF}";
 PerformValveIsolationTrace::PerformValveIsolationTrace(QObject* parent /* = nullptr */):
   QObject(parent),
   m_map(new Map(Basemap::streetsNightVector(this), this)),
-  m_startingLocationOverlay(new GraphicsOverlay(this))
+  m_startingLocationOverlay(new GraphicsOverlay(this)),
+  m_filterBarriersOverlay(new GraphicsOverlay(this))
 {
-  ServiceFeatureTable* distributionLineFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/3", this);
+
+  Credential* cred = new Credential{"apptest", "app.test1234", this};
+  ServiceFeatureTable* distributionLineFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/3", cred, this);
   FeatureLayer* distributionLineLayer = new FeatureLayer(distributionLineFeatureTable, this);
 
-  ServiceFeatureTable* deviceFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/0", this);
+  ServiceFeatureTable* deviceFeatureTable = new ServiceFeatureTable(featureServiceUrl + "/0", cred, this);
   FeatureLayer* deviceLayer = new FeatureLayer(deviceFeatureTable, this);
 
   // add the feature layers to the map
   m_map->operationalLayers()->append(distributionLineLayer);
   m_map->operationalLayers()->append(deviceLayer);
 
-  m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, this);
+  m_utilityNetwork = new UtilityNetwork(featureServiceUrl, m_map, cred, this);
   connectSignals();
   m_utilityNetwork->load();
 }
@@ -106,10 +111,32 @@ void PerformValveIsolationTrace::setMapView(MapQuickView* mapView)
   m_mapView = mapView;
   m_mapView->setMap(m_map);
 
+  connect(m_mapView, &MapQuickView::mouseClicked, this, [this](QMouseEvent mouseEvent)
+  {
+    qDebug() << "MouseClicked";
+
+    if (m_map->loadStatus() != LoadStatus::Loaded)
+      return;
+
+    constexpr double tolerance = 10.0;
+    constexpr bool returnPopups = false;
+    m_clickPoint = m_mapView->screenToLocation(mouseEvent.x(), mouseEvent.y());
+    m_mapView->identifyLayers(mouseEvent.x(), mouseEvent.y(), tolerance, returnPopups);
+
+  });
+
+  // handle the identify results
+  connect(m_mapView, &MapQuickView::identifyLayersCompleted, this, &PerformValveIsolationTrace::onIdentifyLayersCompleted);
+
   // apply renderers
   SimpleMarkerSymbol* startingPointSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::Cross, Qt::green, 25, this);
   m_startingLocationOverlay->setRenderer(new SimpleRenderer(startingPointSymbol, this));
+
+  SimpleMarkerSymbol* filterBarrierSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbolStyle::X, Qt::red, 25, this);
+  m_filterBarriersOverlay->setRenderer(new SimpleRenderer(filterBarrierSymbol, this));
+
   m_mapView->graphicsOverlays()->append(m_startingLocationOverlay);
+  m_mapView->graphicsOverlays()->append(m_filterBarriersOverlay);
 
   emit mapViewChanged();
 }
@@ -142,11 +169,9 @@ void PerformValveIsolationTrace::performTrace()
 
   for (Layer* layer : *m_map->operationalLayers())
   {
-     // clear previous selection from the feature layers
-    if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
-    {
-      featureLayer->clearSelection();
-    }
+    // clear previous selection from the feature layers
+   if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
+     featureLayer->clearSelection();
   }
 
   const QList<UtilityCategory*> categories = m_utilityNetwork->definition()->categories();
@@ -157,17 +182,86 @@ void PerformValveIsolationTrace::performTrace()
     UtilityCategory* selectedCategory = categories[m_selectedIndex];
     UtilityCategoryComparison* categoryComparison = new UtilityCategoryComparison(selectedCategory, UtilityCategoryComparisonOperator::Exists, this);
 
+    // needs removing
     // set the category comparison to the barriers of the configuration's trace filter
-    m_traceConfiguration->filter()->setBarriers(categoryComparison);
+//    m_traceConfiguration->filter()->setBarriers(categoryComparison);
 
     // set whether to include isolated features
     m_traceConfiguration->setIncludeIsolatedFeatures(m_isolateFeatures);
 
     // build parameters for the isolation trace
-    UtilityTraceParameters* traceParameters = new UtilityTraceParameters(UtilityTraceType::Isolation, QList<UtilityElement*> {m_startingLocation}, this);
-    traceParameters->setTraceConfiguration(m_traceConfiguration);
+    delete m_traceParams;
 
-    m_utilityNetwork->trace(traceParameters);
+    m_traceParams = new UtilityTraceParameters(UtilityTraceType::Isolation, QList<UtilityElement*> {m_startingLocation}, this);
+
+//    UtilityTraceParameters* traceParameters = new UtilityTraceParameters(UtilityTraceType::Isolation, QList<UtilityElement*> {m_startingLocation}, this);
+//    traceParameters->setTraceConfiguration(m_traceConfiguration);
+    m_traceParams->setTraceConfiguration(m_traceConfiguration);
+
+    connect(m_traceParams, &UtilityTraceParameters::errorOccurred, this, [](Error e)
+    {
+      qDebug() << e.message();
+    });
+    // set the user selected filter barries otherwise
+    // set the category comparison to the barriers of the configuration's trace filter
+
+    // reset trace configuration filter barriers
+    m_traceConfiguration->filter()->setBarriers(nullptr);
+
+    if (!m_filterBarriers.empty())
+    {
+
+//      m_traceConfiguration->setFilter(nullptr);
+//      auto filterbarriers = traceParameters->filterBarriers();
+
+      auto filterbarriers = m_traceParams->filterBarriers();
+
+      qDebug() << "before traceParameters->filterBarriers(): " << filterbarriers.size();
+
+      for (auto barrier : m_filterBarriers)
+      {
+        filterbarriers.append(barrier);
+      }
+
+      qDebug() << "after traceParameters->filterBarriers(): " << filterbarriers.size();
+
+
+//      m_traceParams->setFilterBarriers(filterbarriers);
+//      m_traceParams->setBarriers(filterbarriers);
+
+      m_traceParams->setFilterBarriers(m_filterBarriers);
+
+//      qDebug() << "m_filterBarriers.size()" <<  m_filterBarriers.size();
+//      traceParameters->setFilterBarriers(m_filterBarriers);
+//      qDebug() << traceParameters->filterBarriers().size();
+
+
+      qDebug() << "m_traceParams->filterBarriers().size(): " << m_traceParams->filterBarriers().size();
+//      traceParameters->traceConfiguration()->setIncludeIsolatedFeatures(true);
+
+      m_traceParams->traceConfiguration()->setIncludeIsolatedFeatures(true);
+    }
+    else
+    {
+//      m_traceConfiguration->filter()->setBarriers(categoryComparison);
+//      traceParameters->traceConfiguration()->filter()->setBarriers(categoryComparison);
+      m_traceParams->traceConfiguration()->filter()->setBarriers(categoryComparison);
+    }
+//    m_utilityNetwork->trace(traceParameters);
+    m_utilityNetwork->trace(m_traceParams);
+  }
+}
+
+void PerformValveIsolationTrace::performReset() {
+  qDebug() << "reset";
+  m_filterBarriersOverlay->graphics()->clear();
+  m_filterBarriers.clear();
+
+  for (Layer* layer : *m_map->operationalLayers())
+  {
+    // clear previous selection from the feature layers
+   if (FeatureLayer* featureLayer = dynamic_cast<FeatureLayer*>(layer))
+     featureLayer->clearSelection();
   }
 }
 
@@ -294,4 +388,48 @@ bool PerformValveIsolationTrace::noResults() const
 bool PerformValveIsolationTrace::tasksRunning() const
 {
   return m_tasksRunning;
+}
+
+void PerformValveIsolationTrace::onIdentifyLayersCompleted(QUuid, const QList<IdentifyLayerResult*>& results)
+{
+  if (results.isEmpty())
+    return;
+
+  const IdentifyLayerResult* result = results[0];
+  ArcGISFeature* feature = static_cast<ArcGISFeature*>(result->geoElements()[0]);
+  // why would feature be null? should remove otherwise
+  if (!feature)
+    return;
+  UtilityElement* element = m_utilityNetwork->createElementWithArcGISFeature(feature);
+
+
+  const UtilityNetworkSourceType elementSourceType = element->networkSource()->sourceType();
+
+  if (elementSourceType == UtilityNetworkSourceType::Junction)
+  {
+    qDebug() << "Junction";
+    QList<Esri::ArcGISRuntime::UtilityTerminal* > terminals = element->assetType()->terminalConfiguration()->terminals();
+    // normally check for multiple terminals but sample doesn't seem to have that occurance.
+    if ( terminals.size() > 1)
+    {
+      qDebug() << "Choose Terminal";
+      return;
+    }
+  }
+  else if (elementSourceType == UtilityNetworkSourceType::Edge)
+  {
+    qDebug() << "Edge";
+
+    if (feature->geometry().geometryType() == GeometryType::Polyline)
+    {
+      const Polyline line = GeometryEngine::removeZ(feature->geometry());
+      // Set how far the element is along the edge.
+      const double fraction = GeometryEngine::fractionAlong(line, m_clickPoint, -1);
+      qDebug() << fraction;
+      element->setFractionAlongEdge(fraction);
+    }
+  }
+  m_filterBarriersOverlay->graphics()->append(new Graphic(m_clickPoint, this));
+
+  m_filterBarriers.append(element);
 }

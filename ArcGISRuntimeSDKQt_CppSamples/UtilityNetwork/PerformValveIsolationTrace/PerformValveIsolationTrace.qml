@@ -38,7 +38,7 @@ Item {
             id: backgroundRect
             color: "#FBFBFB"
             height: childrenRect.height
-            width: row.width * 1.5
+            width: row.width * 1.25
 
             RowLayout {
                 id: titleRow
@@ -76,6 +76,13 @@ Item {
                     text: "Trace"
                     onClicked: {
                         sampleModel.performTrace();
+                    }
+                    enabled: !sampleModel.tasksRunning
+                }
+                Button {
+                    text: "Reset"
+                    onClicked: {
+                        sampleModel.performReset();
                     }
                     enabled: !sampleModel.tasksRunning
                 }

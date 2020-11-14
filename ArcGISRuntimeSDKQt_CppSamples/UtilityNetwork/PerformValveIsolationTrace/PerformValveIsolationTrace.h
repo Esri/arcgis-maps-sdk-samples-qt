@@ -29,6 +29,7 @@ class UtilityCategory;
 class UtilityElement;
 class UtilityNetwork;
 class UtilityTraceConfiguration;
+class UtilityTraceParameters;
 }
 }
 
@@ -51,6 +52,10 @@ public:
 
   static void init();
   Q_INVOKABLE void performTrace();
+  Q_INVOKABLE void performReset();
+
+private slots:
+  void onIdentifyLayersCompleted(QUuid, const QList<Esri::ArcGISRuntime::IdentifyLayerResult*>& results);
 
 signals:
   void mapViewChanged();
@@ -71,9 +76,13 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::GraphicsOverlay* m_startingLocationOverlay = nullptr;
+  Esri::ArcGISRuntime::GraphicsOverlay* m_filterBarriersOverlay = nullptr;
   Esri::ArcGISRuntime::UtilityElement* m_startingLocation = nullptr;
   Esri::ArcGISRuntime::UtilityNetwork* m_utilityNetwork = nullptr;
   Esri::ArcGISRuntime::UtilityTraceConfiguration* m_traceConfiguration = nullptr;
+  Esri::ArcGISRuntime::UtilityTraceParameters* m_traceParams = nullptr;
+  Esri::ArcGISRuntime::Point m_clickPoint;
+  QList<Esri::ArcGISRuntime::UtilityElement*> m_filterBarriers;
   QStringList m_categoriesList;
   int m_selectedIndex = -1;
   bool m_isolateFeatures = false;
