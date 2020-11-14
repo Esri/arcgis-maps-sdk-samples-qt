@@ -49,6 +49,7 @@
 #include "UtilityTraceConfiguration.h"
 #include "UtilityTraceFilter.h"
 #include "UtilityTraceParameters.h"
+#include "GeometryEngine.h"
 
 #include <QUuid>
 

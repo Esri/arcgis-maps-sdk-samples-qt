@@ -30,10 +30,12 @@ class UtilityElement;
 class UtilityNetwork;
 class UtilityTraceConfiguration;
 class UtilityTraceParameters;
+class IdentifyLayerResult;
 }
 }
 
 #include <QObject>
+#include <Point.h>
 
 class PerformValveIsolationTrace : public QObject
 {
