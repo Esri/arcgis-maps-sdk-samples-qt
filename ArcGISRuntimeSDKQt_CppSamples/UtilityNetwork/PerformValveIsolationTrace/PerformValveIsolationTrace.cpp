@@ -211,36 +211,9 @@ void PerformValveIsolationTrace::performTrace()
 
     if (!m_filterBarriers.empty())
     {
-
-//      m_traceConfiguration->setFilter(nullptr);
-//      auto filterbarriers = traceParameters->filterBarriers();
-
-      auto filterbarriers = m_traceParams->filterBarriers();
-
-      qDebug() << "before traceParameters->filterBarriers(): " << filterbarriers.size();
-
-      for (auto barrier : m_filterBarriers)
-      {
-        filterbarriers.append(barrier);
-      }
-
-      qDebug() << "after traceParameters->filterBarriers(): " << filterbarriers.size();
-
-
-//      m_traceParams->setFilterBarriers(filterbarriers);
-//      m_traceParams->setBarriers(filterbarriers);
-
       m_traceParams->setFilterBarriers(m_filterBarriers);
-
-//      qDebug() << "m_filterBarriers.size()" <<  m_filterBarriers.size();
 //      traceParameters->setFilterBarriers(m_filterBarriers);
-//      qDebug() << traceParameters->filterBarriers().size();
-
-
-      qDebug() << "m_traceParams->filterBarriers().size(): " << m_traceParams->filterBarriers().size();
-//      traceParameters->traceConfiguration()->setIncludeIsolatedFeatures(true);
-
-      m_traceParams->traceConfiguration()->setIncludeIsolatedFeatures(true);
+//      m_traceParams->traceConfiguration()->setIncludeIsolatedFeatures(true);
     }
     else
     {
@@ -253,8 +226,8 @@ void PerformValveIsolationTrace::performTrace()
   }
 }
 
-void PerformValveIsolationTrace::performReset() {
-  qDebug() << "reset";
+void PerformValveIsolationTrace::performReset()
+{
   m_filterBarriersOverlay->graphics()->clear();
   m_filterBarriers.clear();
 
