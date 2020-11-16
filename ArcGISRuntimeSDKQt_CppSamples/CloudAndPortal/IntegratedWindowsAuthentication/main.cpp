@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
   // Add the Runtime and Extras path
   engine.addImportPath(arcGISRuntimeImportPath);
 
-  Esri::ArcGISRuntime::Toolkit::registerComponents();
+  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
   engine.load(QUrl("qrc:/Samples/CloudAndPortal/IntegratedWindowsAuthentication/main.qml"));

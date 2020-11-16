@@ -18,6 +18,8 @@
 #include <QDir>
 #include <QQmlEngine>
 
+#include <Esri/ArcGISRuntime/Toolkit/register.h>
+
 int main(int argc, char *argv[])
 {
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -34,6 +36,8 @@ int main(int argc, char *argv[])
 #ifdef ARCGIS_RUNTIME_IMPORT_PATH_2
   view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
+
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/DisplayLayerViewDrawState/DisplayLayerViewDrawState.qml"));

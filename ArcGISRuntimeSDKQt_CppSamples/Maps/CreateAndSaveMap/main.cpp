@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
-  Esri::ArcGISRuntime::Toolkit::registerComponents();
+  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/CreateAndSaveMap/CreateAndSaveMap.qml"));
