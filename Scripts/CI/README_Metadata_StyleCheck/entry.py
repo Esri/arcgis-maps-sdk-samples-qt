@@ -91,6 +91,7 @@ def main():
 
         # Only run checks on folders that is within a category.
         if path_parts[-3] not in categories:
+            print(path_parts)
             print('folder name is not a category')
             # Folder name is not a category, omit.
             continue
