@@ -1,4 +1,5 @@
-from os import truncate
+from os import listdir
+from os.path import isfile, join
 
 
 def check_sentence_case(string: str) -> bool:
@@ -29,3 +30,6 @@ def is_subsequence(subsequence, full_sequence) -> bool:
             return False
 
     return True
+
+def get_filenames_in_folder(folderpath):
+    return [file for file in listdir(folderpath) if isfile(join(folderpath, file))]
