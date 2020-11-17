@@ -16,8 +16,7 @@ file_categories = {
 }
 
 # Note: category naming style is inconsistent
-
-json_categories = {
+metadata_categories = {
     'Analysis',
     'AR',
     'Cloud and portal',
@@ -49,4 +48,16 @@ exception_proper_nouns = {
     'Open Street Map',
     'OpenStreetMap',
     'Play a KML Tour'
+}
+
+readme_json_keys = {
+    'category',
+    'description',
+    'ignore',
+    'images',
+    'keywords',
+    'redirect_from',
+    'relevant_apis',
+    'snippets',
+    'title'
 }

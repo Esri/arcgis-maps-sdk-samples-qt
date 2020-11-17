@@ -277,9 +277,13 @@ def all_samples(path: str):
     # Throw once if there are exceptions.
     if exception_count > 0:
         raise Exception('Error(s) occurred during checking all samples.')
+def check_title():
+    pass
 
+def check_metadata_file(file):
 
-def main():
+    metadata = json.loads(file)
+
     # Initialize parser.
     msg = 'Check metadata style. Run it against the /arcgis-ios-sdk-samples ' \
           'folder or a single sample folder. ' \
