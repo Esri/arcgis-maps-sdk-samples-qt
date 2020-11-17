@@ -1,5 +1,5 @@
 # Using Debian slim which uses minimum packages necessary; Alpine is not preferred 
-FROM debian:9.5-slim
+FROM alpine:3.12
 
 # MAINTAINER is depreciated
 LABEL maintainer="Tanner Yould <tyould@esri.com>"

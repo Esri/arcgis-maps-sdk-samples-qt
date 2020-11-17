@@ -75,19 +75,24 @@ def main():
     samples_set = set()
 
     for f in files:
+        print('for f in files')
         if not os.path.exists(f):
+            print('file was deleted')
             # The changed file is deleted, no need to style check.
             continue
 
         path_parts = os.path.normpath(f).split(os.path.sep)
 
         if len(path_parts) < 3:
+            print('file is not in sampels folder')
             # A file not in samples folder, omit.
             # E.g. might be in the root folder or other unrelated folders.
             continue
 
         # Only run checks on folders that is within a category.
         if path_parts[-3] not in categories:
+            print(path_parts)
+            print('folder name is not a category')
             # Folder name is not a category, omit.
             continue
 
@@ -98,28 +103,34 @@ def main():
 
         # Changed file is not a README or metadata file, omit.
         if l_name != 'readme.md' and l_name != 'readme.metadata.json':
+            print('file is not readme or metadata')
             continue
 
         # Print debug information for current sample.
         if dir_path not in samples_set:
+            print('dir path not in samples set')
             print(f'*** Checking {dir_path} ***')
 
         # Check if the capitalization of doc filenames are correct.
         if l_name == 'readme.md' and filename != 'README.md':
+            print('checking capitalization')
             print(f'Error: {dir_path} filename has wrong capitalization')
             return_code += 1
 
         if l_name == 'readme.metadata.json' and filename != 'README.metadata.json':
+            print('checking capitalization')
             print(f'Error: {dir_path} filename has wrong capitalization')
             return_code += 1
 
         # Run the markdownlint linter on README file.
         if filename == 'README.md':
+            print('filename is README.md')
             # Run the linter on markdown file.
             return_code += run_mdl(f)
 
         # Run the other Python checks on the whole sample folder.
         if dir_path not in samples_set:
+            print('adding file to samples set')
             samples_set.add(dir_path)
             return_code += run_style_check(dir_path)
 
