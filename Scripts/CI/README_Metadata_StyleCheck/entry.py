@@ -84,17 +84,17 @@ def main():
         path_parts = os.path.normpath(f).split(os.path.sep)
 
         if len(path_parts) < 3:
-            print('file is not in sampels folder')
+            print('file is not in samples folder')
             # A file not in samples folder, omit.
             # E.g. might be in the root folder or other unrelated folders.
             continue
 
         # Only run checks on folders that is within a category.
-        if path_parts[-3] not in categories:
+'''        if path_parts[-3] not in categories:
             print(path_parts)
             print('folder name is not a category')
             # Folder name is not a category, omit.
-            continue
+            continue '''
 
         # Get filename and folder name of the changed sample.
         filename = os.path.basename(f)
