@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
   app.setApplicationName("MobileMap_SearchAndRoute - C++");
 
- // Initialize the sample    
+ // Initialize the sample
   MobileMap_SearchAndRoute::init();
 
  // Initialize application view
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 
  // Add the import Path
  view.engine()->addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
-  
+
  QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
 
  #if defined(LINUX_PLATFORM_REPLACEMENT)
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
-  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/MobileMap_SearchAndRoute/MobileMap_SearchAndRoute.qml"));

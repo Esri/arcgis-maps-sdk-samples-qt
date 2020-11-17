@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   QGuiApplication app(argc, argv);
   app.setApplicationName("GenerateOfflineMap - C++");
 
-  // Initialize the sample  
+  // Initialize the sample
   GenerateOfflineMap::init();
 
   // Initialize application view
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
   // Add the Runtime and Extras path
   view.engine()->addImportPath(arcGISRuntimeImportPath);
 
-  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
+  Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
 
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Maps/GenerateOfflineMap/GenerateOfflineMap.qml"));
