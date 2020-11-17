@@ -1,0 +1,28 @@
+# Using Debian slim which uses minimum packages necessary; Alpine is not preferred 
+FROM debian:9.5-slim
+
+# MAINTAINER is depreciated
+LABEL maintainer="Tanner Yould <tyould@esri.com>"
+
+# Setting PYTHONUNBUFFERED=TRUE or PYTHONUNBUFFERED=1 (they are equivalent) allows for log messages 
+# to be immediately dumped to the stream instead of being buffered. This is useful for receiving timely 
+# log messages and avoiding situations where the application crashes without emitting a relevant message 
+# due to the message being "stuck" in a buffer.
+ENV PYTHONUNBUFFERED=1
+
+# Add scripts for the check
+ADD entry.py /entry.py
+ADD style.rb /style.rb
+ADD README_style_checker.py /README_style_checker.py
+
+# Install dependencies
+RUN echo "**** Install Ruby and mdl ****" && \
+    apk add --update --no-cache ruby-full && \
+    gem install mdl --no-document && \
+    echo "**** Install Python ****" && \
+    apk add --no-cache python3 && \
+    if [ ! -e /usr/bin/python ]; then ln -sf python3 /usr/bin/python ; fi
+
+# An ENTRYPOINT allows you to configure a container that will run as an executable.
+# ex. ENTRYPOINT ["executable", "param1", "param2"]
+ENTRYPOINT ["python3", "/entry.py"]
