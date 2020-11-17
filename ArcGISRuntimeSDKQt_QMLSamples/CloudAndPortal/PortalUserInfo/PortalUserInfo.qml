@@ -17,14 +17,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.ArcGISRuntime 100.10
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 Rectangle {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-    
+
     readonly property var detailNames: ["Full name", "Username", "Email", "Bio", "Who can see your profile?"]
     readonly property var detailValue: ["fullName", "username", "email", "userDescription", "access"]
     readonly property var infoLabels: ["Description", "Can Find External Content", "Can Share Items Externally"]
@@ -189,7 +189,7 @@ Rectangle {
     /* Uncomment this section when running as standalone application
     AuthenticationView {
         id: authView
-        authenticationManager: AuthenticationManager
+        anchors.fill: parent
     }
     */
     //! [PortalUserInfo create portal]

@@ -10,7 +10,7 @@ The view status includes information on the loading state of layers and whether 
 
 ## How to use the sample
 
-Tap *Load layer* to create a new layer and add it to the map. As you pan and zoom around the map, note how the `Enums.LayerViewStatus` flags change; for example, `Enums.LayerViewStatusOutOfScale` becomes true when the map is scaled outside of the layer's min and max scale range. Tap *Hide layer* to hide the layer and observe the view state change to `Enums.LayerViewStatusNotVisible`.
+Tap the *Load layer* button to create a new layer and add it to the map. As you pan and zoom around the map, note how the `Enums.LayerViewStatus` flags change; for example, `Enums.LayerViewStatusOutOfScale` becomes true when the map is scaled outside of the layer's min and max scale range. Tap the *Hide layer* button to hide the layer and observe the view state change to `Enums.LayerViewStatusNotVisible`.
 
 ## How it works
 

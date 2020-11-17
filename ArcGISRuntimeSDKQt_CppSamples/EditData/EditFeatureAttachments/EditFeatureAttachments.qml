@@ -19,7 +19,7 @@ import QtQuick.Controls 2.2
 import Qt.labs.platform 1.0
 import QtGraphicalEffects 1.0
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 EditFeatureAttachmentsSample {
     id: editAttachmentsSample

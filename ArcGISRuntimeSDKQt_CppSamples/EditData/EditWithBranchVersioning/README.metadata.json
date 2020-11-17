@@ -1,0 +1,45 @@
+{
+    "category": "EditData",
+    "description": "Create, query and edit a specific server version using service geodatabase.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "branch versioning",
+        "edit",
+        "version control",
+        "version management server",
+        "FeatureLayer",
+        "ServiceFeatureTable",
+        "ServiceGeodatabase",
+        "ServiceGeodatabase::applyEdits()",
+        "ServiceGeodatabase::createVersion",
+        "ServiceGeodatabase::createVersionCompleted",
+        "ServiceGeodatabase::switchVersion",
+        "ServiceVersionInfo",
+        "ServiceVersionParameters",
+        "VersionAccess"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "FeatureLayer",
+        "ServiceFeatureTable",
+        "ServiceGeodatabase",
+        "ServiceGeodatabase::applyEdits()",
+        "ServiceGeodatabase::createVersion",
+        "ServiceGeodatabase::createVersionCompleted",
+        "ServiceGeodatabase::switchVersion",
+        "ServiceVersionInfo",
+        "ServiceVersionParameters",
+        "VersionAccess"
+    ],
+    "snippets": [
+        "EditWithBranchVersioning.qml",
+        "EditWithBranchVersioning.cpp",
+        "EditWithBranchVersioning.h"
+    ],
+    "title": "Edit with branch versioning"
+}

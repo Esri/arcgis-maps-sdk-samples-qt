@@ -23,7 +23,6 @@
 #include "Map.h"
 #include "MapQuickView.h"
 #include "ArcGISMapImageLayer.h"
-#include "AuthenticationManager.h"
 #include "Viewpoint.h"
 #include "Envelope.h"
 #include "Basemap.h"
@@ -42,8 +41,6 @@ void TokenAuthentication::init()
 {
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<TokenAuthentication>("Esri.Samples", 1, 0, "TokenAuthenticationSample");
-  // Register the AuthenticationManager for QML
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
 }
 
 void TokenAuthentication::componentComplete()
@@ -59,15 +56,10 @@ void TokenAuthentication::componentComplete()
 
   // Create a map using the topographic basemap
   m_map = new Map(Basemap::topographic(this), this);
-  m_map->setInitialViewpoint(Viewpoint(Envelope(-19221397.32591107, -208306.59714691807, -3024411.4154897667, 11939432.83566906, SpatialReference(3857))));  
+  m_map->setInitialViewpoint(Viewpoint(Envelope(-19221397.32591107, -208306.59714691807, -3024411.4154897667, 11939432.83566906, SpatialReference(3857))));
 
   // Set map to map view
   m_mapView->setMap(m_map);
-}
-
-AuthenticationManager* TokenAuthentication::authenticationManager() const
-{
-  return AuthenticationManager::instance();
 }
 
 void TokenAuthentication::loadSecuredLayer()

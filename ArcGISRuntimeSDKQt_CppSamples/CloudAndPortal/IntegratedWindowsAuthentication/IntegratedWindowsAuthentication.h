@@ -21,7 +21,6 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
-class AuthenticationManager;
 class Map;
 class MapQuickView;
 class Portal;
@@ -41,7 +40,6 @@ class IntegratedWindowsAuthentication : public QObject
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(Esri::ArcGISRuntime::MapQuickView* mapView READ mapView WRITE setMapView NOTIFY mapViewChanged)
   Q_PROPERTY(QAbstractListModel* webmapListModel READ webmapListModel NOTIFY webmapListModelChanged)
   Q_PROPERTY(QString mapLoadError MEMBER m_mapLoadError NOTIFY mapLoadErrorChanged)
@@ -53,7 +51,6 @@ public:
 
   static void init();
 
-  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
   Q_INVOKABLE void searchPublicPortal();
   Q_INVOKABLE void searchIwaSecurePortal(const QString& url);
   Q_INVOKABLE void loadSelectedWebmap(int index);
@@ -62,7 +59,6 @@ public:
 
 signals:
   void mapViewChanged();
-  void authManagerChanged();
   void webmapListModelChanged();
   void mapLoadErrorChanged();
   void isLoadingChanged();

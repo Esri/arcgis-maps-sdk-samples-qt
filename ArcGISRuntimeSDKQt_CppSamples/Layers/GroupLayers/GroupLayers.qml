@@ -78,14 +78,14 @@ Item {
                     CheckBox {
                         id: parentBox
                         text: name
-                        checked: true
+                        checked: layerVisible
                         onCheckedChanged: layerVisible = checked
                     }
 
                     Repeater {
                         model: sampleModel.getGroupLayerListModel(layerVisibilityListView.currentIndex)
-                        delegate: CheckBox {
-                            checked: true
+                        delegate: RadioDelegate {
+                            checked: index === 0
                             text: name
                             leftPadding: indicator.width
                             width: layerVisibilityRect.width - leftPadding
@@ -100,10 +100,8 @@ Item {
                 id: layerDelegate
                 CheckBox {
                     text: name
-                    checked: true
-                    onCheckedChanged: {
-                        layerVisible = checked;
-                    }
+                    checked: layerVisible
+                    onCheckedChanged: layerVisible = checked;
                 }
             }
         }

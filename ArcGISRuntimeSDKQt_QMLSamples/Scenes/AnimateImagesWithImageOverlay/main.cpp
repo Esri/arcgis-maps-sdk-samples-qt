@@ -44,10 +44,6 @@ int main(int argc, char *argv[])
   view.engine()->addImportPath(ARCGIS_RUNTIME_IMPORT_PATH_2);
 #endif
 
-#ifdef ARCGIS_TOOLKIT_IMPORT_PATH_2
-  view.engine()->addImportPath(ARCGIS_TOOLKIT_IMPORT_PATH_2);
-#endif
-
   // Set the source
   view.setSource(QUrl("qrc:/Samples/Scenes/AnimateImagesWithImageOverlay/AnimateImagesWithImageOverlay.qml"));
 

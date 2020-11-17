@@ -21,7 +21,6 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class AuthenticationManager;
     class BasemapListModel;
     class Map;
     class MapQuickView;
@@ -36,7 +35,6 @@ class ShowOrgBasemaps : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(bool portalLoaded READ portalLoaded NOTIFY portalLoadedChanged)
   Q_PROPERTY(QString orgName READ orgName NOTIFY orgNameChanged)
   Q_PROPERTY(QAbstractListModel* basemaps READ basemaps NOTIFY basemapsChanged)
@@ -49,7 +47,6 @@ public:
   void componentComplete() override;
   static void init();
 
-  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
   bool portalLoaded() const;
   QString orgName() const;
   QAbstractListModel* basemaps() const;
@@ -60,7 +57,6 @@ public:
   Q_INVOKABLE void errorAccepted();
 
 signals:
-  void authManagerChanged();
   void portalLoadedChanged();
   void orgNameChanged();
   void basemapsChanged();

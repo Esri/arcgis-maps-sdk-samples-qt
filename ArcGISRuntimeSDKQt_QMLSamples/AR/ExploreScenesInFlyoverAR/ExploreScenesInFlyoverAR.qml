@@ -44,14 +44,14 @@ Rectangle {
             Surface {
                 opacity: 0.0
                 ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+                    url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
                 }
             }
 
             // create the integrated mesh layer
             IntegratedMeshLayer {
                 id: integratedMeshLayer
-                url: "https://www.arcgis.com/home/item.html?id=dbc72b3ebb024c848d89a42fe6387a1b"
+                url: "https://www.arcgis.com/home/item.html?id=5c55d0d1f21e489193cdeff11460a28c"
 
                 onLoadStatusChanged: {
                     if (loadStatus !== Enums.LoadStatusLoaded)

@@ -17,14 +17,14 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 AddItemsToPortalSample {
     id: rootRectangle
     clip: true
     width: 800
     height: 600
-    
+
     onPortalItemTitleChanged: portalItemModel.setProperty(0, "value", portalItemTitle);
     onPortalItemIdChanged: portalItemModel.setProperty(1, "value", portalItemId);
     onPortalItemTypeNameChanged: portalItemModel.setProperty(2, "value", portalItemTypeName);
@@ -258,7 +258,7 @@ AddItemsToPortalSample {
 
     /* Uncomment this section when running as standalone application
     AuthenticationView {
-        authenticationManager: authManager
+        anchors.fill: parent
     }
     */
 
