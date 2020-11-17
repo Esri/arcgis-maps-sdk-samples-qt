@@ -76,6 +76,7 @@ def main():
 
     for f in files:
         print('for f in files')
+        print(f)
         if not os.path.exists(f):
             print('file was deleted')
             # The changed file is deleted, no need to style check.
