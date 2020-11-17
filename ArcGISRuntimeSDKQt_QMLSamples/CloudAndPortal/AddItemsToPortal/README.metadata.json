@@ -1,6 +1,6 @@
 {
     "category": "Cloud and portal",
-    "description": "This sample demonstrates how to add and delete items (in this case a local .csv file) in a user's portal.",
+    "cription": "This sample demonstrates how to add and delete items (in this case a local .csv file) in a user's portal.",
     "ignore": false,
     "images": [
         "screenshot.png"
