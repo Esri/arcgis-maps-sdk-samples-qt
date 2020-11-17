@@ -13,44 +13,7 @@ import os
 import re
 import typing
 import argparse
-
-# region Global sets
-# A set of words that get omitted during letter-case checks.
-exception_proper_nouns = {
-    'WmsLayer',
-    'ArcGIS Online',
-    'OAuth',
-    'Web Mercator',
-    'ArcGIS Pro',
-    'GeoPackage',
-    'loadStatus',
-    'Integrated Windows Authentication',
-    'GeoElement',
-    'Network Link',
-    'Network Link Control',
-    'Open Street Map',
-    'OpenStreetMap',
-    'Play a KML Tour'
-}
-
-# A set of category folder names in current sample viewer.
-categories = {
-    'Maps',
-    'Scenes',
-    'Layers',
-    'Features',
-    'Display information',
-    'Search',
-    'Geometry',
-    'Routing',
-    'Edit data',
-    'Cloud and portal',
-    'Analysis',
-    'Local server',
-    'Utility network'
-}
-# endregion
-
+from common_dicts import categories, exception_proper_nouns
 
 # region Static functions
 def get_folder_name_from_path(path: str, index: int = -1) -> str:
@@ -322,7 +285,7 @@ class ReadmeStyleChecker:
             if not api_set.isdisjoint(tag_set):
                 raise Exception(f'Error tags - API should not be in tags')
         except Exception as err:
-            raise Exception(f'Error checking extra tags due to previous error')
+            raise Exception(f'Error checking extra tags due to previous error. Error: {err}')
 
 
 # region Main wrapper functions
