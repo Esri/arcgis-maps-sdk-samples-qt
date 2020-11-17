@@ -75,19 +75,23 @@ def main():
     samples_set = set()
 
     for f in files:
+        print(0)
         if not os.path.exists(f):
+            print(1)
             # The changed file is deleted, no need to style check.
             continue
 
         path_parts = os.path.normpath(f).split(os.path.sep)
 
         if len(path_parts) < 3:
+            print(2)
             # A file not in samples folder, omit.
             # E.g. might be in the root folder or other unrelated folders.
             continue
 
         # Only run checks on folders that is within a category.
         if path_parts[-3] not in categories:
+            print(3)
             # Folder name is not a category, omit.
             continue
 
@@ -98,28 +102,34 @@ def main():
 
         # Changed file is not a README or metadata file, omit.
         if l_name != 'readme.md' and l_name != 'readme.metadata.json':
+            print(4)
             continue
 
         # Print debug information for current sample.
         if dir_path not in samples_set:
+            print(5)
             print(f'*** Checking {dir_path} ***')
 
         # Check if the capitalization of doc filenames are correct.
         if l_name == 'readme.md' and filename != 'README.md':
+            print(6)
             print(f'Error: {dir_path} filename has wrong capitalization')
             return_code += 1
 
         if l_name == 'readme.metadata.json' and filename != 'README.metadata.json':
+            print(7)
             print(f'Error: {dir_path} filename has wrong capitalization')
             return_code += 1
 
         # Run the markdownlint linter on README file.
         if filename == 'README.md':
+            print(8)
             # Run the linter on markdown file.
             return_code += run_mdl(f)
 
         # Run the other Python checks on the whole sample folder.
         if dir_path not in samples_set:
+            print(9)
             samples_set.add(dir_path)
             return_code += run_style_check(dir_path)
 
