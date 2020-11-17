@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
 #endif
 
-    Esri::ArcGISRuntime::Toolkit::registerComponents(*(view.engine()));
+    Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
     // Add the Runtime and Extras path
     engine.addImportPath(arcGISRuntimeImportPath);
