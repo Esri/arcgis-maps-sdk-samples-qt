@@ -11,6 +11,7 @@ from common_dicts import metadata_categories, readme_json_keys
 
 # Global variables
 directory_list = [] # A list of all folders in the file path and .json file
+file_name = "" # The name of the file (should be README.metadata.json)
 file_path = "" # The path to the folder containing the metadata file. Does not include .json file
 sample_name = "" # The name of the sample, as defined in the parent directory name
 sample_type = "" # The type of sample, ie ArcGISRuntimeSDKQt_CppSamples
@@ -24,6 +25,7 @@ def check_metadata_file(path):
     global sample_type
     global category_name
     global file_path
+    global file_name
     global other_files_in_folder
     global metadata
 
@@ -32,63 +34,65 @@ def check_metadata_file(path):
     with open(path) as f:
         metadata = json.load(f)
     directory_list = path.split("/")
+    file_name = directory_list[-1]
     filepath = "/".join(directory_list[:-1])
-    samplename = directory_list[-2]
-    categoryname = directory_list[-3]
-    sampletype = directory_list[-4]
+    sample_name = directory_list[-2]
+    category_name = directory_list[-3]
+    sample_type = directory_list[-4]
     other_files_in_folder = get_filenames_in_folder(filepath)
 
     meta_errors = []
+
+    if file_name != "README.metadata.json":
+        meta_errors.append(f"{file_name} does not have correct capitalization")
 
     for key in metadata.keys():
         if key not in readme_json_keys:
             meta_errors.append(f"Section: '{key}' not found in expected metadata keys")
         else:
-            meta_errors += check_sections(key)
+            meta_errors.append(check_sections(key))
 
     for expected_key in readme_json_keys:
         if expected_key not in metadata.keys():
             meta_errors.append(f"{expected_key} not found in file metadata keys")
 
     print(f"Found {len(meta_errors)} errors")
-    for me in meta_errors:
-        print(me)
+    for i in range(len(meta_errors)):
+        print(f"{i+1}. {meta_errors[i]}")
     return meta_errors
 
 def check_sections(key: str):
     # We do this in case the .json key is not one of the accepted sections
-    section_errors = []
     if key == "category":
-        section_errors += (check_category(metadata["category"]))
+        return (check_category(metadata["category"]))
     elif key == "description":
-        section_errors += (check_description(metadata["description"]))
+        return (check_description(metadata["description"]))
     elif key == "ignore":
         return []
     elif key == "images":
-        section_errors += (check_images(metadata["images"]))
+        return (check_images(metadata["images"]))
     elif key == "keywords":
-        section_errors += (check_keywords(metadata['keywords']))
+        return (check_keywords(metadata['keywords']))
     elif key == "redirect_from":
-        section_errors += (check_redirect_from(metadata["redirect_from"]))
+        return (check_redirect_from(metadata["redirect_from"]))
     elif key == "relevant_apis":
-        section_errors += (check_relevant_apis(metadata['relevant_apis']))
+        return (check_relevant_apis(metadata['relevant_apis']))
     elif key == "snippets":
-        section_errors += (check_snippets(metadata["snippets"]))
+        return (check_snippets(metadata["snippets"]))
     elif key == "title":
-        section_errors += (check_title(metadata["title"]))
+        return (check_title(metadata["title"]))
     else:
-        section_errors.append(f"{key} found in readme_json_keys file but not in section checks")
-    
-    return section_errors
+        # If this triggers, there is something wrong with this file. Ideally this should not trigger.
+        return f"{key} found in readme_json_keys file but not in section checks. Please check this code (metadata_style_checker.py) to ensure all json keys are checked."
 
 def check_category(cat: str):
     if not cat:
         return ["No category"]
     errors = []
     if cat not in metadata_categories:
-        errors.append("Category does not match any currently listed metadata categories")
+        errors.append(f"Category does not match any currently listed metadata categories: ('{cat}')")
     if "".join(cat.split(" ")).lower() != category_name.lower():
-        errors.append("Category does not match parent category folder")
+        errors.append(f"Category does not match parent category folder: ('{cat}' != '{category_name}')")
     return errors
 
 def check_description(description: str):
@@ -168,5 +172,3 @@ def check_title(title: str):
     if not title[-1].isalnum():
         errors.append("Title does not end in alphanumeric character")
     return errors
-
-(check_metadata_file("/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/CloudAndPortal/AddItemsToPortal/README.metadata.json"))
