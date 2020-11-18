@@ -24,21 +24,7 @@ def main():
         print('FATAL ERROR: Invalid arguments, abort.')
         exit(1)
 
-<<<<<<< HEAD
-    return_code = 0
-    # A set of dirname strings to avoid duplicate checks on the same sample.
-    samples_set = set()
-
-    for f in files:
-        print('for f in files')
-        print(f)
-        if not os.path.exists(f):
-            print('file was deleted')
-            # The changed file is deleted, no need to style check.
-            continue
-=======
     errors = []
->>>>>>> v.next
 
     # A set of dirname strings to avoid duplicate checks on the same sample.
 
