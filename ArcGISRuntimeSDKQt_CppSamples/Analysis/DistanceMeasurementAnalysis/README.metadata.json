@@ -1,21 +1,14 @@
 {
-    "category": "Analysis",
+    "category": "aaaaaaaaaaa",
     "description": "Measure distances between two points in 3D.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
     "keywords": [
-        "3D",
-        "analysis",
-        "distance",
-        "measure",
-        "AnalysisOverlay",
-        "LocationDistanceMeasurement",
-        "MeasurementChanged"
     ],
     "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-distancemeasurementanalysis.htm"
+        "/qt/latest/cppasDsample-code/sample-qt-distancemeasurementanalysis.htm"
     ],
     "relevant_apis": [
         "AnalysisOverlay",
@@ -24,7 +17,7 @@
     ],
     "snippets": [
         "DistanceMeasurementAnalysis.qml",
-        "DistanceMeasurementAnalysis.cpp",
+        "DistanceMeasurementAnalysis.cAAApp",
         "DistanceMeasurementAnalysis.h"
     ],
     "title": "Distance measurement analysis"
