@@ -10,30 +10,32 @@ from utilities import check_sentence_case, get_filenames_in_folder
 from common_dicts import metadata_categories, readme_json_keys
 
 # Global variables
-dirlist = [] # A list of all folders in the file path and .json file
-filepath = "" # The path to the folder containing the metadata file. Does not include .json file
-samplename = "" # The name of the sample, as defined in the parent directory name
-sampletype = "" # The type of sample, ie ArcGISRuntimeSDKQt_CppSamples
-categoryname = "" # The category of the sample ie CloudAndPortal or AR
-files_in_folder = [] # All files in the folder, including the .json file
+directory_list = [] # A list of all folders in the file path and .json file
+file_path = "" # The path to the folder containing the metadata file. Does not include .json file
+sample_name = "" # The name of the sample, as defined in the parent directory name
+sample_type = "" # The type of sample, ie ArcGISRuntimeSDKQt_CppSamples
+category_name = "" # The category of the sample ie CloudAndPortal or AR
+other_files_in_folder = [] # All files in the folder, including the .json file
 metadata = {} # .json file data will be converted into a dictionary here
 
 def check_metadata_file(path):
-    global dirlist
-    global samplename
-    global sampletype
-    global categoryname
-    global filepath
+    global directory_list
+    global sample_name
+    global sample_type
+    global category_name
+    global file_path
     global other_files_in_folder
     global metadata
+
+    print(f"Checking {path}")
     
     with open(path) as f:
         metadata = json.load(f)
-    dirlist = path.split("/")
-    filepath = "/".join(dirlist[:-1])
-    samplename = dirlist[-2]
-    categoryname = dirlist[-3]
-    sampletype = dirlist[-4]
+    directory_list = path.split("/")
+    filepath = "/".join(directory_list[:-1])
+    samplename = directory_list[-2]
+    categoryname = directory_list[-3]
+    sampletype = directory_list[-4]
     other_files_in_folder = get_filenames_in_folder(filepath)
 
     meta_errors = []
@@ -48,6 +50,7 @@ def check_metadata_file(path):
         if expected_key not in metadata.keys():
             meta_errors.append(f"{expected_key} not found in file metadata keys")
 
+    print(f"Found {len(meta_errors)} errors")
     for me in meta_errors:
         print(me)
     return meta_errors
@@ -84,7 +87,7 @@ def check_category(cat: str):
     errors = []
     if cat not in metadata_categories:
         errors.append("Category does not match any currently listed metadata categories")
-    if "".join(cat.split(" ")).lower() != categoryname.lower():
+    if "".join(cat.split(" ")).lower() != category_name.lower():
         errors.append("Category does not match parent category folder")
     return errors
 
@@ -122,7 +125,7 @@ def check_redirect_from(redirects: list):
         return ["No redirects listed"]
     errors = []
     has_expected_redirect = False
-    expected_redirect = "/qt/latest/cpp/sample-code/sample-qt-"+samplename+".htm"
+    expected_redirect = "/qt/latest/cpp/sample-code/sample-qt-"+sample_name+".htm"
     for redirect in redirects:
         if redirect.lower() == expected_redirect.lower():
             has_expected_redirect = True
@@ -144,14 +147,14 @@ def check_snippets(snippets: list):
         if snippet not in other_files_in_folder:
             errors.append(f"{snippet} not found in sample folder")
     expected_snippets = [
-        samplename + ".h",
-        samplename + ".qml"
+        sample_name + ".h",
+        sample_name + ".qml"
     ]
-    if sampletype == "ArcGISRuntimeSDKQt_CppSamples":
-        expected_snippets.append(samplename + ".cpp")
-    for e_snip in expected_snippets:
-        if e_snip not in snippets:
-            errors.append(f"Expected {e_snip} in snippets")
+    if sample_type == "ArcGISRuntimeSDKQt_CppSamples":
+        expected_snippets.append(sample_name + ".cpp")
+    for expected_snippet in expected_snippets:
+        if expected_snippet not in snippets:
+            errors.append(f"Expected {expected_snippet} in snippets")
     return errors
 
 def check_title(title: str):
@@ -160,10 +163,10 @@ def check_title(title: str):
     errors = []
     if not check_sentence_case:
         errors.append("Title does not follow sentence case")
-    if "".join(title.split(" ")).lower() != samplename.lower():
+    if "".join(title.split(" ")).lower() != sample_name.lower():
         errors.append("Title does not match sample name")
     if not title[-1].isalnum():
         errors.append("Title does not end in alphanumeric character")
     return errors
 
-print(check_metadata_file("/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/CloudAndPortal/AddItemsToPortal/README.metadata.json"))
+(check_metadata_file("/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/CloudAndPortal/AddItemsToPortal/README.metadata.json"))
