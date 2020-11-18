@@ -15,7 +15,7 @@
 // [Legal]
 
 import QtQuick 2.6
-import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime 100.10
 
 Rectangle {
     id: rootRectangle
@@ -29,36 +29,29 @@ Rectangle {
 
         Scene {
             id: scene
-            BasemapImagery {}
-
-            Surface {
-                ArcGISTiledElevationSource {
-                    url: "http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
-                }
-            }
 
             // Add the integrated mesh layer to the scene
             IntegratedMeshLayer {
-                url: "https://tiles.arcgis.com/tiles/FQD0rKU8X5sAQfh8/arcgis/rest/services/VRICON_Yosemite_Sample_Integrated_Mesh_scene_layer/SceneServer"
+                url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Girona_Spain/SceneServer"
             }
 
             // Set the initial viewpoint to Yosemite Valley
             ViewpointCenter {
                 center: Point {
                     id: initPt
-                    x: -119.622075
-                    y: 37.720650
-                    z: 2104.901239
+                    x: 2.8259
+                    y: 41.9906
+                    z: 200.0
                     spatialReference: SpatialReference { wkid: 4326 }
                 }
                 targetScale: 2104
 
                 Camera {
                     location: initPt
-                    heading: 315.50368761552056
-                    pitch: 78.09465920130114
-                    roll: 0
-                    distance: 2104
+                    heading: 190.0
+                    pitch: 65.0
+                    roll: 0.0
+                    distance: 200.0
                 }
             }
         }

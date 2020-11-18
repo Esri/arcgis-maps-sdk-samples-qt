@@ -16,7 +16,7 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.5
-import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime 100.10
 
 Rectangle {
     id: rootRectangle
@@ -43,6 +43,7 @@ Rectangle {
             GroupLayer {
                 id: gl
                 name: "Buildings group"
+                visibilityMode: Enums.GroupVisibilityModeExclusive
 
                 ArcGISSceneLayer {
                     url: "https://tiles.arcgis.com/tiles/P3ePLMYs2RVChkJx/arcgis/rest/services/DevA_BuildingShells/SceneServer"
@@ -138,15 +139,15 @@ Rectangle {
                     CheckBox {
                         id: parentBox
                         text: name
-                        checked: true
+                        checked: layerVisible
                         onCheckedChanged: layerVisible = checked
                     }
 
                     Repeater {
                         property var groupLyr: scene.operationalLayers.get(layerVisibilityListView.currentIndex)
                         model: groupLyr ? groupLyr.layers : null
-                        delegate: CheckBox {
-                            checked: true
+                        delegate: RadioDelegate {
+                            checked: index === 0
                             text: name
                             leftPadding: indicator.width
                             width: layerVisibilityRect.width - leftPadding
@@ -161,7 +162,7 @@ Rectangle {
                 id: layerDelegate
                 CheckBox {
                     text: name
-                    checked: true
+                    checked: layerVisible
                     onCheckedChanged: layerVisible = checked
                 }
             }

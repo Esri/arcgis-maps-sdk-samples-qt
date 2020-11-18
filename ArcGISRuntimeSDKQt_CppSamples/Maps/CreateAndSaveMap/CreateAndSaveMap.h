@@ -21,7 +21,6 @@ namespace Esri
 {
 namespace ArcGISRuntime
 {
-class AuthenticationManager;
 class Map;
 class MapQuickView;
 class Portal;
@@ -33,8 +32,6 @@ class Portal;
 class CreateAndSaveMap : public QQuickItem
 {
   Q_OBJECT
-
-  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authenticationManager READ authenticationManager CONSTANT)
 
 public:
   explicit CreateAndSaveMap(QQuickItem* parent = nullptr);
@@ -54,7 +51,6 @@ private:
   Esri::ArcGISRuntime::Map* m_map = nullptr;
   Esri::ArcGISRuntime::MapQuickView* m_mapView = nullptr;
   Esri::ArcGISRuntime::Portal* m_portal = nullptr;
-  Esri::ArcGISRuntime::AuthenticationManager* authenticationManager() const;
 };
 
 #endif // CREATEANDSAVEMAP_H

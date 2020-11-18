@@ -19,7 +19,6 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class AuthenticationManager;
     class Map;
     class MapQuickView;
     class Portal;
@@ -36,7 +35,6 @@ class SearchForWebmap : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(bool portalLoaded READ portalLoaded NOTIFY portalLoadedChanged)
   Q_PROPERTY(QAbstractListModel* webmaps READ webmaps NOTIFY webmapsChanged)
   Q_PROPERTY(bool hasMoreResults READ hasMoreResults NOTIFY hasMoreResultsChanged)
@@ -49,7 +47,6 @@ public:
   void componentComplete() override;
   static void init();
 
-  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
   bool portalLoaded() const;
   QAbstractListModel* webmaps() const;
   bool hasMoreResults() const;
@@ -61,7 +58,6 @@ public:
   Q_INVOKABLE void errorAccepted();
 
 signals:
-  void authManagerChanged();
   void portalLoadedChanged();
   void webmapsChanged();
   void hasMoreResultsChanged();

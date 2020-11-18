@@ -13,44 +13,12 @@ import os
 import re
 import typing
 import argparse
+from .common_dicts import categories, exception_proper_nouns
+from .utilities import check_sentence_case
 
-# region Global sets
-# A set of words that get omitted during letter-case checks.
-exception_proper_nouns = {
-    'WmsLayer',
-    'ArcGIS Online',
-    'OAuth',
-    'Web Mercator',
-    'ArcGIS Pro',
-    'GeoPackage',
-    'loadStatus',
-    'Integrated Windows Authentication',
-    'GeoElement',
-    'Network Link',
-    'Network Link Control',
-    'Open Street Map',
-    'OpenStreetMap',
-    'Play a KML Tour'
-}
-
-# A set of category folder names in current sample viewer.
-categories = {
-    'Maps',
-    'Scenes',
-    'Layers',
-    'Features',
-    'Display information',
-    'Search',
-    'Geometry',
-    'Routing',
-    'Edit data',
-    'Cloud and portal',
-    'Analysis',
-    'Local server',
-    'Utility network'
-}
-# endregion
-
+filename = None
+samplename = None
+filepath = None
 
 # region Static functions
 def get_folder_name_from_path(path: str, index: int = -1) -> str:
@@ -136,34 +104,13 @@ def check_tags(tags_string: str) -> typing.Set[str]:
     return s
 
 
-def check_sentence_case(string: str) -> None:
-    """
-    Check if a sentence follows 'sentence case'. A few examples below.
-    Hello world! -> YES
-    I'm a good guy. -> YES
-    a man and a gun. -> NO
-    A WMS layer -> YES, as it's allowed to include proper nouns
-    :param string: Input sentence, typically the title string.
-    :return: None. Throws if is not sentence case.
-    """
-    # Check empty string.
-    if not string:
-        raise Exception('Empty title string.')
-    # The whole sentence get excepted.
-    if string in exception_proper_nouns:
-        return
-    # Split sentence into words.
-    words = string.split()
-    # First word should either be Title-cased or a proper noun (UPPERCASE).
-    if words[0][0].upper() != words[0][0] and words[0].upper() != words[0] \
-            and words[0] not in exception_proper_nouns:
-        raise Exception('Wrong letter case for the first word in title.')
-    # If a word is neither lowercase nor UPPERCASE then it is not great.
-    for word in words[1:]:
-        word = word.strip('()')
-        if word.lower() != word and word.upper() != word \
-                and word not in exception_proper_nouns:
-            raise Exception(f'Wrong letter case for word: "{word}" in title.')
+def check_title(title):
+    if type(title) != str:
+        return False
+    if not check_sentence_case(title):
+        return False
+    if title.split(" ").join("").lower() != samplename:
+        return False
 
 
 def check_is_subsequence(list_a: typing.List[str],
@@ -322,7 +269,7 @@ class ReadmeStyleChecker:
             if not api_set.isdisjoint(tag_set):
                 raise Exception(f'Error tags - API should not be in tags')
         except Exception as err:
-            raise Exception(f'Error checking extra tags due to previous error')
+            raise Exception(f'Error checking extra tags due to previous error. Error: {err}')
 
 
 # region Main wrapper functions

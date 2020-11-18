@@ -42,14 +42,12 @@ int main(int argc, char *argv[])
   QQmlApplicationEngine engine;
 
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-  QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
 
 #if defined(LINUX_PLATFORM_REPLACEMENT)
   // On some linux platforms the string 'linux' is replaced with 1.
   // Fix the replacement paths which were created.
   QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
   arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
-  arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
 #endif
 
   // Add the import Path

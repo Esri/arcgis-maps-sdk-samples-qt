@@ -38,14 +38,12 @@ PortalUserInfo::PortalUserInfo(QQuickItem* parent /* = nullptr */):
 {
   connect(m_portal, &Portal::loadStatusChanged, this, &PortalUserInfo::onPortalLoadStatusChanged);
   connect(m_portal, &Portal::doneLoading, this, &PortalUserInfo::loadErrorMessageChanged);
-  emit authManagerChanged();
   AuthenticationManager::instance()->setCredentialCacheEnabled(false);
 }
 
 PortalUserInfo::~PortalUserInfo() = default;
 void PortalUserInfo::init()
 {
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
   qmlRegisterType<PortalUserInfo>("Esri.Samples", 1, 0, "PortalUserInfoSample");
 }
 
@@ -53,11 +51,6 @@ void PortalUserInfo::componentComplete()
 {
   QQuickItem::componentComplete();
   load();
-}
-
-AuthenticationManager *PortalUserInfo::authManager() const
-{
-  return AuthenticationManager::instance();
 }
 
 void PortalUserInfo::load()

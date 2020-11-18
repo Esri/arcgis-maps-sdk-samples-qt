@@ -6,309 +6,169 @@ import json
 import typing
 import argparse
 
+from utilities import check_sentence_case, get_filenames_in_folder
+from common_dicts import metadata_categories, readme_json_keys
 
-# region Global sets
-# A set of category folder names in current sample viewer.
-categories = {
-    'Maps',
-    'Scenes',
-    'Layers',
-    'Features',
-    'Display information',
-    'Search',
-    'Geometry',
-    'Routing',
-    'Edit data',
-    'Cloud and portal',
-    'Analysis',
-    'Local server',
-    'Utility network'
-}
-# endregion
+# Global variables
+directory_list = [] # A list of all folders in the file path and .json file
+file_name = "" # The name of the file (should be README.metadata.json)
+file_path = "" # The path to the folder containing the metadata file. Does not include .json file
+sample_name = "" # The name of the sample, as defined in the parent directory name
+sample_type = "" # The type of sample, ie ArcGISRuntimeSDKQt_CppSamples
+category_name = "" # The category of the sample ie CloudAndPortal or AR
+other_files_in_folder = [] # All files in the folder, including the .json file
+metadata = {} # .json file data will be converted into a dictionary here
 
+def check_metadata_file(path):
+    global directory_list
+    global sample_name
+    global sample_type
+    global category_name
+    global file_path
+    global file_name
+    global other_files_in_folder
+    global metadata
 
-# region Static functions
-def sub_special_char(string: str) -> str:
-    """
-    Check and substitute if a string contains special characters.
-    :param string: The input string.
-    :return: A new string without special characters.
-    """
-    # regex = re.compile('[@_!#$%^&*()<>?/\\|}{~:]')
-    regex = re.compile(r'[@_!#$%^&*<>?|/\\}{~:]')
-    return re.sub(regex, '', string)
+    print(f"Checking {path}")
+    
+    with open(path) as f:
+        metadata = json.load(f)
+    directory_list = path.split("/")
+    file_name = directory_list[-1]
+    filepath = "/".join(directory_list[:-1])
+    sample_name = directory_list[-2]
+    category_name = directory_list[-3]
+    sample_type = directory_list[-4]
+    other_files_in_folder = get_filenames_in_folder(filepath)
 
+    meta_errors = []
 
-def parse_head(head_string: str) -> (str, str):
-    """
-    Parse the `Title` section of README file and get the title and description.
-    :param head_string: A string containing title, description and images.
-    :return: Stripped title and description strings.
-    """
-    parts = list(filter(bool, head_string.splitlines()))
-    if len(parts) < 3:
-        raise Exception('README description parse failure!')
-    title = parts[0].lstrip('# ').rstrip()
-    description = parts[1].strip()
-    return title, description
+    if file_name != "README.metadata.json":
+        meta_errors.append(f"{file_name} does not have correct capitalization")
 
-
-def parse_apis(apis_string: str) -> typing.List[str]:
-    """
-    Parse the `Relevant API` section and get a list of APIs.
-    :param apis_string: A string containing all APIs.
-    :return: A sorted list of stripped API names.
-    """
-    apis = list(filter(bool, apis_string.splitlines()))
-    if not apis:
-        raise Exception('README Relevant API parse failure!')
-    return sorted([api.lstrip('*- ').rstrip() for api in apis])
-
-
-def parse_tags(tags_string: str) -> typing.List[str]:
-    """
-    Parse the `Tags` section and get a list of tags.
-    :param tags_string: A string containing all tags, with comma as delimiter.
-    :return: A sorted list of stripped tags.
-    """
-    tags = tags_string.split(',')
-    if not tags:
-        raise Exception('README Tags parse failure!')
-    return sorted([tag.strip() for tag in tags])
-
-
-def get_folder_name_from_path(path: str, index: int = -1) -> str:
-    """
-    Get the folder name from a full path.
-    :param path: A string of a full/absolute path to a folder.
-    :param index: The index of path parts. Default to -1 to get the most
-    trailing folder in the path; set to certain index to get other parts.
-    :return: The folder name.
-    """
-    return os.path.normpath(path).split(os.path.sep)[index]
-# endregion
-
-
-class MetadataCreator:
-
-    def __init__(self, folder_path: str):
-        """
-        The standard format of metadata.json for iOS platform. Read more at:
-        /common-samples/wiki/README.metadata.json
-        """
-        self.category = ''          # Populate from path.
-        self.description = ''       # Populate from README.
-        self.ignore = False         # Default to False.
-        self.images = []            # Populate from paths.
-        self.keywords = []          # Populate from README.
-        self.redirect_from = []     # Default to empty list.
-        self.relevant_apis = []     # Populate from README.
-        self.snippets = []          # Populate from paths.
-        self.title = ''             # Populate from README.
-
-        self.folder_path = folder_path
-        self.folder_name = get_folder_name_from_path(folder_path)
-        self.readme_path = os.path.join(folder_path, 'README.md')
-        self.json_path = os.path.join(folder_path, 'README.metadata.json')
-
-    def get_source_code_paths(self) -> typing.List[str]:
-        """
-        Traverse the directory and get all filenames for source code.
-        :return: A list of swift source code filenames.
-        """
-        results = []
-        for file in os.listdir(self.folder_path):
-            if os.path.splitext(file)[1] in ['.swift']:
-                results.append(file)
-        if not results:
-            raise Exception('Unable to get swift source code paths.')
-        return sorted(results)
-
-    def get_images_paths(self):
-        """
-        Traverse the directory and get all filenames for images.
-        :return: A list of image filenames.
-        """
-        results = []
-        for file in os.listdir(self.folder_path):
-            if os.path.splitext(file)[1].lower() in ['.png']:
-                results.append(file)
-        if not results:
-            raise Exception('Unable to get images paths.')
-        return sorted(results)
-
-    def populate_from_readme(self) -> None:
-        """
-        Read and parse the sections from README, and fill in the 'title',
-        'description', 'relevant_apis' and 'keywords' fields in the dictionary
-        for output json.
-        """
-        try:
-            readme_file = open(self.readme_path, 'r')
-            # read the readme content into a string
-            readme_contents = readme_file.read()
-        except Exception as err:
-            print(f"Error reading README - {self.readme_path} - {err}.")
-            raise err
+    for key in metadata.keys():
+        if key not in readme_json_keys:
+            meta_errors.append(f"Section: '{key}' not found in expected metadata keys")
         else:
-            readme_file.close()
+            meta_errors.append(check_sections(key))
 
-        # Use regex to split the README by exactly 2 pound marks, so that they
-        # are separated into paragraphs.
-        pattern = re.compile(r'^#{2}(?!#)\s(.*)', re.MULTILINE)
-        readme_parts = re.split(pattern, readme_contents)
-        try:
-            api_section_index = readme_parts.index('Relevant API') + 1
-            tags_section_index = readme_parts.index('Tags') + 1
-            self.title, self.description = parse_head(readme_parts[0])
-            self.relevant_apis = parse_apis(readme_parts[api_section_index])
-            keywords = parse_tags(readme_parts[tags_section_index])
-            # De-duplicate API names in README's Tags section.
-            self.keywords = [w for w in keywords if w not in self.relevant_apis]
+    for expected_key in readme_json_keys:
+        if expected_key not in metadata.keys():
+            meta_errors.append(f"{expected_key} not found in file metadata keys")
 
-            # "It combines the Tags and the Relevant APIs in the README."
-            # See /runtime/common-samples/wiki/README.metadata.json#keywords
-            self.keywords += self.relevant_apis
-            # self.keywords.sort(key=str.casefold)
-        except Exception as err:
-            print(f'Error parsing README - {self.readme_path} - {err}.')
-            raise err
+    print(f"Found {len(meta_errors)} errors")
+    for i in range(len(meta_errors)):
+        print(f"{i+1}. {meta_errors[i]}")
+    return meta_errors
 
-    def populate_from_paths(self) -> None:
-        """
-        Populate category name, source code and image filenames from a sample's
-        folder.
-        """
-        self.category = get_folder_name_from_path(self.folder_path, -2)
-        try:
-            self.images = self.get_images_paths()
-            self.snippets = self.get_source_code_paths()
-        except Exception as err:
-            print(f"Error parsing paths - {self.folder_name} - {err}.")
-            raise err
-
-    def flush_to_json_string(self) -> str:
-        """
-        Write the metadata to a json string.
-        """
-        data = dict()
-
-        data["category"] = self.category
-        data["description"] = self.description
-        data["ignore"] = self.ignore
-        data["images"] = self.images
-        data["keywords"] = self.keywords
-        data["redirect_from"] = self.redirect_from
-        data["relevant_apis"] = self.relevant_apis
-        data["snippets"] = self.snippets
-        data["title"] = self.title
-
-        return json.dumps(data, indent=4, sort_keys=True)
-
-
-def compare_one_metadata(folder_path: str):
-    """
-    A handy helper function to create 1 sample's metadata by running the script
-    without passing in arguments, and write to a separate json for comparison.
-    The path may look like
-    '~/arcgis-runtime-samples-ios/arcgis-ios-sdk-samples/Maps/Display a map'
-    """
-    single_updater = MetadataCreator(folder_path)
-    try:
-        single_updater.populate_from_readme()
-        single_updater.populate_from_paths()
-    except Exception as err:
-        print(f'Error populate failed for - {single_updater.folder_name}.')
-        raise err
-
-    json_path = os.path.join(folder_path, 'README.metadata.json')
-
-    try:
-        json_file = open(json_path, 'r')
-        json_data = json.load(json_file)
-    except Exception as err:
-        print(f'Error reading JSON - {folder_path} - {err}')
-        raise err
+def check_sections(key: str):
+    # We do this in case the .json key is not one of the accepted sections
+    if key == "category":
+        return (check_category(metadata["category"]))
+    elif key == "description":
+        return (check_description(metadata["description"]))
+    elif key == "ignore":
+        return []
+    elif key == "images":
+        return (check_images(metadata["images"]))
+    elif key == "keywords":
+        return (check_keywords(metadata['keywords']))
+    elif key == "redirect_from":
+        return (check_redirect_from(metadata["redirect_from"]))
+    elif key == "relevant_apis":
+        return (check_relevant_apis(metadata['relevant_apis']))
+    elif key == "snippets":
+        return (check_snippets(metadata["snippets"]))
+    elif key == "title":
+        return (check_title(metadata["title"]))
     else:
-        json_file.close()
-    # The special rule not to compare the redirect_from.
-    single_updater.redirect_from = json_data['redirect_from']
+        # If this triggers, there is something wrong with this file. Ideally this should not trigger.
+        return f"{key} found in readme_json_keys file but not in section checks. Please check this code (metadata_style_checker.py) to ensure all json keys are checked."
 
-    # The special rule to be lenient on shortened description.
-    # If the original json has a shortened/special char purged description,
-    # then no need to raise an error.
-    if json_data['description'] in sub_special_char(single_updater.description):
-        single_updater.description = json_data['description']
-    # The special rule to ignore the order of src filenames.
-    # If the original json has all the filenames, then it is good.
-    if sorted(json_data['snippets']) == single_updater.snippets:
-        single_updater.snippets = json_data['snippets']
+def check_category(cat: str):
+    if not cat:
+        return ["No category"]
+    errors = []
+    if cat not in metadata_categories:
+        errors.append(f"Category does not match any currently listed metadata categories: ('{cat}')")
+    if "".join(cat.split(" ")).lower() != category_name.lower():
+        errors.append(f"Category does not match parent category folder: ('{cat}' != '{category_name}')")
+    return errors
 
-    new = single_updater.flush_to_json_string()
-    original = json.dumps(json_data, indent=4, sort_keys=True)
-    if new != original:
-        raise Exception(f'Error inconsistent metadata - {folder_path}')
+def check_description(description: str):
+    if not description:
+        return ["No description written"]
+    errors = []
+    if description[-1] not in ".?!":
+        errors.append("Description does not end in proper punctuation")
+    return errors
 
+def check_images(images: list):
+    if not images:
+        return ["No images listed"]
+    errors = []
+    images_in_folder = other_files_in_folder
+    has_screenshotpng = False
+    for image in images:
+        if not image in images_in_folder:
+            errors.append(f"{image} not found in folder")
+        if image == "screenshot.png":
+            has_screenshotpng = True
+    if not has_screenshotpng:
+        errors.append("'screenshot.png' not found")
+    return errors
 
-def all_samples(path: str):
-    """
-    Run the check on all samples.
-    :param path: The path to 'arcgis-ios-sdk-samples' folder.
-    :return: None. Throws if exception occurs.
-    """
-    exception_count = 0
-    for root, dirs, files in os.walk(path):
-        # Get parent folder name.
-        parent_folder_name = get_folder_name_from_path(root)
-        # If parent folder name is a valid category name.
-        if parent_folder_name in categories:
-            for dir_name in dirs:
-                sample_path = os.path.join(root, dir_name)
-                # Omit empty folders - they are omitted by Git.
-                if len([f for f in os.listdir(sample_path)
-                        if not f.startswith('.DS_Store')]) == 0:
-                    continue
-                try:
-                    compare_one_metadata(sample_path)
-                except Exception as err:
-                    exception_count += 1
-                    print(f'{exception_count}. {err}')
+def check_keywords(keywords: list):
+    if not keywords:
+        return ["No keywords found"]
+    errors = []
+    return errors
 
-    # Throw once if there are exceptions.
-    if exception_count > 0:
-        raise Exception('Error(s) occurred during checking all samples.')
+def check_redirect_from(redirects: list):
+    if not redirects:
+        return ["No redirects listed"]
+    errors = []
+    has_expected_redirect = False
+    expected_redirect = "/qt/latest/cpp/sample-code/sample-qt-"+sample_name+".htm"
+    for redirect in redirects:
+        if redirect.lower() == expected_redirect.lower():
+            has_expected_redirect = True
+    if not has_expected_redirect:
+        errors.append(f"Expected redirect ({expected_redirect}) not found")
+    return errors
 
+def check_relevant_apis(apis: list):
+    if not apis:
+        return ["No APIs listed"]
+    errors = []
+    return errors
 
-def main():
-    # Initialize parser.
-    msg = 'Check metadata style. Run it against the /arcgis-ios-sdk-samples ' \
-          'folder or a single sample folder. ' \
-          'On success: Script will exit with zero. ' \
-          'On failure: Title inconsistency will print to console and the ' \
-          'script will exit with non-zero code.'
-    parser = argparse.ArgumentParser(description=msg)
-    parser.add_argument('-a', '--all', help='path to arcgis-ios-sdk-samples '
-                                            'folder')
-    parser.add_argument('-s', '--single', help='path to a single sample')
-    args = parser.parse_args()
+def check_snippets(snippets: list):
+    if not snippets:
+        return ["No snippets listed"]
+    errors = []
+    for snippet in snippets:
+        if snippet not in other_files_in_folder:
+            errors.append(f"{snippet} not found in sample folder")
+    expected_snippets = [
+        sample_name + ".h",
+        sample_name + ".qml"
+    ]
+    if sample_type == "ArcGISRuntimeSDKQt_CppSamples":
+        expected_snippets.append(sample_name + ".cpp")
+    for expected_snippet in expected_snippets:
+        if expected_snippet not in snippets:
+            errors.append(f"Expected {expected_snippet} in snippets")
+    return errors
 
-    if args.all:
-        try:
-            all_samples(args.all)
-        except Exception as err:
-            raise err
-    elif args.single:
-        try:
-            compare_one_metadata(args.single)
-        except Exception as err:
-            raise err
-    else:
-        raise Exception('Invalid arguments, abort.')
-
-
-if __name__ == '__main__':
-    try:
-        main()
-    except Exception as error:
-        print(f'{error}')
-        exit(1)
+def check_title(title: str):
+    if not title:
+        return ["No title"]
+    errors = []
+    if not check_sentence_case:
+        errors.append("Title does not follow sentence case")
+    if "".join(title.split(" ")).lower() != sample_name.lower():
+        errors.append("Title does not match sample name")
+    if not title[-1].isalnum():
+        errors.append("Title does not end in alphanumeric character")
+    return errors

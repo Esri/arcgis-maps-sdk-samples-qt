@@ -16,8 +16,8 @@
 
 import QtQuick 2.6
 import QtQuick.Controls 2.2
-import Esri.ArcGISRuntime 100.9
-import Esri.ArcGISRuntime.Toolkit.Controls 100.9
+import Esri.ArcGISRuntime 100.10
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 Rectangle {
     id: rootRectangle
@@ -83,8 +83,9 @@ Rectangle {
             bottom: parent.bottom
             right: parent.right
         }
+        visible: false
 
-        onPopupManagersChanged: popupStackView.show();
+        onPopupManagersChanged: popupStackView.visible = true
 
         onVisibleChanged: {
             if (!visible) {

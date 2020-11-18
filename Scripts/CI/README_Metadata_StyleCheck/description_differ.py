@@ -6,25 +6,10 @@ import json
 import plistlib
 import argparse
 from typing import List
+from .common_dicts import categories
 
 
 # region Global sets
-# A set of category folder names in current sample viewer.
-categories = {
-    'Maps',
-    'Scenes',
-    'Layers',
-    'Features',
-    'Display information',
-    'Search',
-    'Geometry',
-    'Routing',
-    'Edit data',
-    'Cloud and portal',
-    'Analysis',
-    'Local server',
-    'Utility network'
-}
 
 excluded_samples = {
     'Map loaded',

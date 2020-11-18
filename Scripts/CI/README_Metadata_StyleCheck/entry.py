@@ -2,74 +2,29 @@ import os
 import json
 import argparse
 import subprocess as sp
-
-# Category folder names in current sample viewer
-# Checks only run when a file path is within one of these category folders
-categories = {
-    'Maps',
-    'Scenes',
-    'Layers',
-    'Features',
-    'Display information',
-    'Search',
-    'Geometry',
-    'Routing',
-    'Edit data',
-    'Cloud and portal',
-    'Analysis',
-    'Local server',
-    'Utility network'
-}
-
-def run_mdl(readme_path: str): # Run markdown linter
-    print("**** mdl ****")
-    return sp.call(f'mdl --style /style.rb "{readme_path}', shell=True)
-
-def run_style_check(dirname: str):
-    print("**** README_style_checker ****")
-    code1 = sp.call(f'python3 /README_style_checker.py -s "{dirname}"', shell=True)
-
-    print("**** title_differ ****")
-    code2 = sp.call(f'python3 /title_differ.py -s "{dirname}"', shell=True)
-
-    print("**** description_differ ****")
-    code3 = sp.call(f'python3 /description_differ.py -s "{dirname}"', shell=True)
-
-    print("**** metadata_style_checker ****")
-    code4 = sp.call(f'python3 /metadata_style_checker.py -s "{dirname}"', shell=True)
-
-    return code1 + code2 + code3 + code4
-
-def read_json(filenames_json_data):
-    return [filename for filename in filenames_json_data]
- 
-def load_json_file(path: str):
-    try:
-        with open(path, 'r') as json_file:
-            json_data = json.load(json_file)
-    except Exception as err:
-        print(f'Error reading JSON - {path} - {err}')
-        raise err
-        
-    return json_data
+from .README_style_checker import main as rmsc
+from .metadata_style_checker import check_metadata_file
+from .common_dicts import file_categories
 
 def main():
     msg = 'Entry point of the docker to run mdl and style check scripts.'
     parser = argparse.ArgumentParser(description=msg)
     parser.add_argument('-s', '--string', help='A JSON array of file paths.')
     args = parser.parse_args()
-    files = None
+    file_set = set()
 
     print("** Starting checks **")
     if args.string:
-        files = read_json(json.loads(args.string))
-        if not files:
-            print('Invalid input file paths string, abort.')
-            exit(1)
+        for file in json.loads(args.string):
+            file_set.add(file)
+        if not file_set:
+            print('FATAL ERROR: Invalid input file paths string, abort.')
+            exit(1)    
     else:
-        print('Invalid arguments, abort.')
+        print('FATAL ERROR: Invalid arguments, abort.')
         exit(1)
 
+<<<<<<< HEAD
     return_code = 0
     # A set of dirname strings to avoid duplicate checks on the same sample.
     samples_set = set()
@@ -81,59 +36,67 @@ def main():
             print('file was deleted')
             # The changed file is deleted, no need to style check.
             continue
+=======
+    errors = []
+>>>>>>> v.next
 
-        path_parts = os.path.normpath(f).split(os.path.sep)
+    # A set of dirname strings to avoid duplicate checks on the same sample.
 
-        if len(path_parts) < 3:
-            print('file is not in samples folder')
-            # A file not in samples folder, omit.
-            # E.g. might be in the root folder or other unrelated folders.
-            continue
+    for file in file_set:
+        print(f"**** Checking {file} ****")
+        directory_list = file.split("/")
+        filename = directory_list[-1]
         
-        # Get filename and folder name of the changed sample.
-        filename = os.path.basename(f)
-        dir_path = os.path.dirname(f)
-        l_name = filename.lower()
+        # Check skip file conditions
+        if skip_file(directory_list):
+            continue        
 
-        # Changed file is not a README or metadata file, omit.
-        if l_name != 'readme.md' and l_name != 'readme.metadata.json':
-            print('file is not readme or metadata')
-            continue
+        # Check if metadata file
+        if filename.lower() == 'readme.metadata.json':
+            errors += check_metadata_file
 
-        # Print debug information for current sample.
-        if dir_path not in samples_set:
-            print('dir path not in samples set')
-            print(f'*** Checking {dir_path} ***')
+        # Run the markdownlint linter on README file. Thanks to Ting Chen (tchen@esri.com) for this one.
+        if filename.lower() == 'readme.md':
+            print('filename is README.md type')
 
-        # Check if the capitalization of doc filenames are correct.
-        if l_name == 'readme.md' and filename != 'README.md':
-            print('checking capitalization')
-            print(f'Error: {dir_path} filename has wrong capitalization')
-            return_code += 1
-
-        if l_name == 'readme.metadata.json' and filename != 'README.metadata.json':
-            print('checking capitalization')
-            print(f'Error: {dir_path} filename has wrong capitalization')
-            return_code += 1
-
-        # Run the markdownlint linter on README file.
-        if filename == 'README.md':
-            print('filename is README.md')
             # Run the linter on markdown file.
-            return_code += run_mdl(f)
+            r = run_mdl(file)
+            if r > 0:
+                errors.append(f"markdown linter results: "+ r)
 
-        # Run the other Python checks on the whole sample folder.
-        if dir_path not in samples_set:
-            print('adding file to samples set')
-            samples_set.add(dir_path)
-            return_code += run_style_check(dir_path)
+            # Run the style checker
 
-    if return_code != 0:
-        # Non-zero code occurred during the process.
-        exit(return_code)
+
+    if len(errors) == 0:
+        print("No errors found")
+        return 0
     else:
-        exit(0)
+        print(f"Found {len(errors)}:")
+        for i in range(len(errors)):
+            print(f"{i+1}. {errors[i]}")
+        return len(errors)
+            
+def run_mdl(readme_path: str): # Run markdown linter
+    print("**** mdl ****")
+    return sp.call(f'mdl --style /style.rb "{readme_path}', shell=True)
 
+def skip_file(directory_list: list)-> bool:
+    filename = directory_list[-1]
+    # sample name = directory_list[-2]
+    category_name = directory_list[-3]
+
+    if not os.path.exists(directory_list.join("/")):
+        print('File was deleted')
+        # The changed file is deleted, no need to style check.
+        return True
+    
+    if category_name not in file_categories:
+        print('File is not in a category folder')
+        return True
+    
+    if filename.lower() != 'readme.md' and filename.lower() != 'readme.metadata.json':
+        print('File is not readme or metadata')
+        return True
 
 if __name__ == '__main__':
     main()

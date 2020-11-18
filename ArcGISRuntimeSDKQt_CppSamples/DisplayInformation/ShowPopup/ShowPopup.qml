@@ -17,7 +17,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import Esri.Samples 1.0
-import Esri.ArcGISRuntime.Toolkit.Controls 100.9
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 Item {
 
@@ -35,6 +35,7 @@ Item {
             right: parent.right
         }
         popupManagers: model.popupManagers
+        visible: false
 
         onVisibleChanged: {
             if (!visible)
@@ -47,7 +48,7 @@ Item {
         id: model
         mapView: view
 
-        onPopupManagersChanged: popupStackView.show();
+        onPopupManagersChanged: popupStackView.visible = true
     }
 
     BusyIndicator {

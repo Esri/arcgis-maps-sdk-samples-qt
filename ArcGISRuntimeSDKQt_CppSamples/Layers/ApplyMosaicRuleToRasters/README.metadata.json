@@ -1,0 +1,33 @@
+{
+    "category": "Layers",
+    "description": "Apply mosaic rule to a mosaic dataset of rasters.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "image service",
+        "mosaic method",
+        "mosaic rule",
+        "raster",
+        "ImageServiceRaster",
+        "MosaicRule",
+        "MosaicRule::setMosaicMethod",
+        "MosaicRule::setMosaicOperation"
+    ],
+    "redirect_from": [
+        ""
+    ],
+    "relevant_apis": [
+        "ImageServiceRaster",
+        "MosaicRule",
+        "MosaicRule::setMosaicMethod",
+        "MosaicRule::setMosaicOperation"
+    ],
+    "snippets": [
+        "ApplyMosaicRuleToRasters.qml",
+        "ApplyMosaicRuleToRasters.cpp",
+        "ApplyMosaicRuleToRasters.h"
+    ],
+    "title": "Apply mosaic rule to rasters"
+}

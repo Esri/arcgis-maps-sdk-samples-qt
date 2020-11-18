@@ -6,11 +6,14 @@ name: README and metadata formatting check
 on:
   pull_request:
     branches: [ master, v.next ]
+    paths: ['**.json', '**.md']
   push:
-    branches: [ master, v.next ]
+    branches:
+    - 'tan11389/**'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+
   # This workflow contains a single job called "changes"
   changes:
     name: Check README and metadata format for changed files

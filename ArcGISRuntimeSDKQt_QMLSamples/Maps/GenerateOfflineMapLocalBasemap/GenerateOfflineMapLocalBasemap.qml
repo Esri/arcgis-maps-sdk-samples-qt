@@ -17,9 +17,9 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime 100.9
+import Esri.ArcGISRuntime 100.10
 import Esri.ArcGISExtras 1.1
-import Esri.ArcGISRuntime.Toolkit.Dialogs 100.9
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 Rectangle {
     id: rootRectangle
@@ -263,7 +263,6 @@ Rectangle {
     /* Uncomment this section when running as standalone application
     AuthenticationView {
         anchors.fill: parent
-        authenticationManager: AuthenticationManager
     }
     */
 }

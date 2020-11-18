@@ -6,27 +6,7 @@ import json
 import plistlib
 import argparse
 from typing import List
-
-
-# region Global sets
-# A set of category folder names in current sample viewer.
-categories = {
-    'Maps',
-    'Scenes',
-    'Layers',
-    'Features',
-    'Display information',
-    'Search',
-    'Geometry',
-    'Routing',
-    'Edit data',
-    'Cloud and portal',
-    'Analysis',
-    'Local server',
-    'Utility network'
-}
-# endregion
-
+from .common_dicts import categories
 
 # region Static functions
 def get_plist_cat_mapping(plist_category: str) -> str:
