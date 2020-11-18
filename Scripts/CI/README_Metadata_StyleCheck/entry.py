@@ -2,9 +2,8 @@ import os
 import json
 import argparse
 import subprocess as sp
-from .README_style_checker import main as rmsc
-from .metadata_style_checker import check_metadata_file
-from .common_dicts import file_categories
+from metadata_style_checker import check_metadata_file
+from common_dicts import file_categories
 
 def main():
     msg = 'Entry point of the docker to run mdl and style check scripts.'
