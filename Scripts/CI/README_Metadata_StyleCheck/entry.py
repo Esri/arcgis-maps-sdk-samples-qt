@@ -16,7 +16,7 @@ def main():
 
     print("** Starting checks **")
     if args.string:
-        for file in ([args.string]):
+        for file in (args.string):
             file_set.add(file)
         if not file_set:
             print('FATAL ERROR: Invalid input file paths string, abort.')
@@ -88,7 +88,7 @@ def skip_file(directory_list: list)-> bool:
 
 #!/usr/bin/env python3
 
-
+# PLEASE DELETE BELOW THIS LINE WHEN WE FIGURE OUT THE IMPORT STUFF
 
 # Global variables
 directory_list = [] # A list of all folders in the file path and .json file

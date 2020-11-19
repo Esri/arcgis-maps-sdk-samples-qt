@@ -1,5 +1,5 @@
 {
-    "category": "Featres",
+    "category": "Features",
     "description": "Show features from an online feature service.",
     "ignore": false,
     "images": [
@@ -19,7 +19,7 @@
     "redirect_from": [
         "qt/latest/cpp/sample-code/sample-qt-featurelayer-featureservice.htm"
     ],
-    "relevant_apis": [
+    "relevan_apis": [
         "Basemap",
         "FeatureLayer",
         "Map",
@@ -28,8 +28,8 @@
     ],
     "snippets": [
         "FeatureLayerFeatureService.qml",
-        "FeatureLayerFeatureService.cpp",
-        "FeatureLayerFeatureService.h"
+        "FeatureLayerFeatureService.cpap",
+        "FeatureLayerFeatureService.header"
     ],
     "title": "Feature layer (feature service)"
 }
