@@ -47,6 +47,7 @@ jobs:
 
       - name: Run style checks
         uses: ./Scripts/CI/README_Metadata_StyleCheck
+        working-directory: ./Scripts/CI/README_Metadata_StyleCheck
         with:
           FILE_PATHS: ${{ steps.file_changes.outputs.files }}
       
