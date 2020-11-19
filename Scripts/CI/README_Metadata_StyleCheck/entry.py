@@ -85,8 +85,6 @@ def skip_file(directory_list: list)-> bool:
         print('File is not readme or metadata')
         return True
 
-if __name__ == '__main__':
-    main()
 
 #!/usr/bin/env python3
 
@@ -349,3 +347,6 @@ def is_subsequence(subsequence, full_sequence) -> bool:
 
 def get_filenames_in_folder(folderpath):
     return [file for file in listdir(folderpath) if isfile(join(folderpath, file))]
+
+if __name__ == '__main__':
+    main()
