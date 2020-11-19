@@ -4,8 +4,6 @@ import subprocess as sp
 from os import listdir
 from os.path import isfile, join
 import json
-# from stylechecks.metadata_style_checker import check_metadata_file
-# from utilities.common_dicts import file_categories
 
 def main():
     msg = 'Entry point of the docker to run mdl and style check scripts.'
@@ -13,14 +11,22 @@ def main():
     parser.add_argument('-s', '--string', help='A JSON array of file paths.')
     args = parser.parse_args()
     cleanstring = ""
-    for letter in args.string:
-        if letter not in '["]':
-            cleanstring+=letter
-    file_set = cleanstring.split(",")
+    try:
+        for letter in args.string:
+            if letter not in '["]':
+                cleanstring+=letter
+        file_set = cleanstring.split(",")
+    except Exception as e:
+        print(f"Unable to split args {args.string}. Exception {e}")
+        exit(1)
+    
     print("Files to check: ")
     print(file_set)
-    # A set of dirname strings to avoid duplicate checks on the same sample.
+
     total_errors = 0
+    if not file_set:
+        print("No files in file set")
+        exit(0)
     for file in file_set:
         errors = []
         print(f"**** Checking {file} ****")
@@ -33,20 +39,14 @@ def main():
 
         # Check if metadata file
         if filename.lower() == 'readme.metadata.json':
-            errors += check_metadata_file(file)
-
-        # Run the markdownlint linter on README file. Thanks to Ting Chen (tchen@esri.com) for this one.
-        if filename.lower() == 'readme.md':
-            print('filename is README.md type')
-
-            # Run the linter on markdown file.
-            r = run_mdl(file)
-            if r > 0:
-                errors.append(f"markdown linter results: "+ r)
+            try:
+                errors += check_metadata_file(file)
+            except Exception as e:
+                errors.append(f"Error checking {filename}. Exception: {e}")
 
         if len(errors) == 0:
             print("No errors found")
-            return 0
+            exit(0)
         else:
             print(f"Found {len(errors)} errors:")
             for i in range(len(errors)):
@@ -54,51 +54,18 @@ def main():
         total_errors+=len(errors)
     
     print(f"Total errors: {total_errors}")
+    # When we exit an pass a non-zero value, GitHub registers the test as failed.
     exit(total_errors)
-            
-def run_mdl(readme_path: str): # Run markdown linter
-    print("**** mdl ****")
-    return sp.call(f'mdl --style /style.rb "{readme_path}', shell=True)
-
-def skip_file(directory_list: list)-> bool:
-    filename = directory_list[-1]
-    # sample name = directory_list[-2]
-    category_name = directory_list[-3]
-
-    if not os.path.exists("/".join(directory_list)):
-        print('File was deleted')
-        # The changed file is deleted, no need to style check.
-        return True
-    
-    if category_name not in file_categories:
-        print('File is not in a category folder')
-        return True
-    
-    if filename.lower() != 'readme.md' and filename.lower() != 'readme.metadata.json':
-        print('File is not readme or metadata')
-        return True
-
-
-#!/usr/bin/env python3
 
 # PLEASE DELETE BELOW THIS LINE WHEN WE FIGURE OUT THE IMPORT STUFF
-
-# Global variables
-directory_list = [] # A list of all folders in the file path and .json file
-file_name = "" # The name of the file (should be README.metadata.json)
-file_path = "" # The path to the folder containing the metadata file. Does not include .json file
-sample_name = "" # The name of the sample, as defined in the parent directory name
-sample_type = "" # The type of sample, ie ArcGISRuntimeSDKQt_CppSamples
-category_name = "" # The category of the sample ie CloudAndPortal or AR
-other_files_in_folder = [] # All files in the folder, including the .json file
-metadata = {} # .json file data will be converted into a dictionary here
+# from stylechecks.metadata_style_checker import check_metadata_file
+# from utilities.common_dicts import file_categories
 
 def check_metadata_file(path):
     global directory_list
     global sample_name
     global sample_type
     global category_name
-    global file_path
     global file_name
     global other_files_in_folder
     global metadata
@@ -122,13 +89,34 @@ def check_metadata_file(path):
         if key not in readme_json_keys:
             meta_errors.append(f"Section: '{key}' not found in expected metadata keys")
         else:
-            meta_errors += (check_sections(key))
+            try:
+                meta_errors += (check_sections(key))
+            except Exception as e:
+                meta_errors.append(f"Errors testing: {key}. Exception: {e}")
 
     for expected_key in readme_json_keys:
         if expected_key not in metadata.keys():
             meta_errors.append(f"{expected_key} not found in file metadata keys")
 
     return meta_errors
+
+def skip_file(directory_list: list)-> bool:
+    filename = directory_list[-1]
+    # sample name = directory_list[-2]
+    category_name = directory_list[-3]
+
+    if not os.path.exists("/".join(directory_list)):
+        print('File was deleted')
+        # The changed file is deleted, no need to style check.
+        return True
+    
+    if category_name not in file_categories:
+        print('File is not in a category folder')
+        return True
+    
+    if filename.lower() != 'readme.md' and filename.lower() != 'readme.metadata.json':
+        print('File is not readme or metadata')
+        return True
 
 def check_sections(key: str):
     # We do this in case the .json key is not one of the accepted sections
@@ -242,6 +230,8 @@ def check_title(title: str):
         errors.append("Title does not end in alphanumeric character")
     return errors
 
+# ***** Large variable sets (from utilities.common_dicts) *****
+
 file_categories = {
     'Analysis',
     'AR',
@@ -259,7 +249,6 @@ file_categories = {
     'UtilityNetwork'
 }
 
-# Note: category naming style is inconsistent
 metadata_categories = {
     'Analysis',
     'AR',
@@ -277,23 +266,6 @@ metadata_categories = {
     'UtilityNetwork'
 }
 
-exception_proper_nouns = {
-    'WmsLayer',
-    'ArcGIS Online',
-    'OAuth',
-    'Web Mercator',
-    'ArcGIS Pro',
-    'GeoPackage',
-    'loadStatus',
-    'Integrated Windows Authentication',
-    'GeoElement',
-    'Network Link',
-    'Network Link Control',
-    'Open Street Map',
-    'OpenStreetMap',
-    'Play a KML Tour'
-}
-
 readme_json_keys = {
     'category',
     'description',
@@ -306,8 +278,7 @@ readme_json_keys = {
     'title'
 }
 
-
-
+# ***** Helper functions from utilities.utility_functions 
 
 def check_sentence_case(string: str) -> bool:
     words = string.split(" ")
@@ -322,19 +293,6 @@ def check_sentence_case(string: str) -> bool:
 
             if not words[i][j].islower():
                 return False
-
-    return True
-
-def is_subsequence(subsequence, full_sequence) -> bool:
-    if (len(subsequence) == 0) or (len(subsequence) > len(full_sequence)):
-        return False
-
-    idx = 0
-    for item in subsequence:
-        try:
-            idx = full_sequence[idx:].index(item)
-        except ValueError:
-            return False
 
     return True
 
