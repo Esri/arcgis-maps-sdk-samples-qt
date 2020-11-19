@@ -1,6 +1,5 @@
 import os
 import argparse
-import subprocess as sp
 from os import listdir
 from os.path import isfile, join
 import json
@@ -279,7 +278,7 @@ readme_json_keys = {
     'title'
 }
 
-# ***** Helper functions from utilities.utility_functions 
+# ***** Helper functions from utilities.helper_functions
 
 def check_sentence_case(string: str) -> bool:
     words = string.split(" ")

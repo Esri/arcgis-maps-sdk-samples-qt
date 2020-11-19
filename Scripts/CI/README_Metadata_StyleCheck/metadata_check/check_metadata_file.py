@@ -1,36 +1,20 @@
-#!/usr/bin/env python3
-
 import os
-import re
 import json
-import typing
-import argparse
-
-from utilities.utility_functions import check_sentence_case, get_filenames_in_folder
-from utilities.common_dicts import metadata_categories, readme_json_keys
-
-# Global variables
-directory_list = [] # A list of all folders in the file path and .json file
-file_name = "" # The name of the file (should be README.metadata.json)
-file_path = "" # The path to the folder containing the metadata file. Does not include .json file
-sample_name = "" # The name of the sample, as defined in the parent directory name
-sample_type = "" # The type of sample, ie ArcGISRuntimeSDKQt_CppSamples
-category_name = "" # The category of the sample ie CloudAndPortal or AR
-other_files_in_folder = [] # All files in the folder, including the .json file
-metadata = {} # .json file data will be converted into a dictionary here
+from ..utilities.helper_functions import get_filenames_in_folder, check_sentence_case
+from ..utilities.common_dicts import readme_json_keys, file_categories, metadata_categories
 
 def check_metadata_file(path):
     global directory_list
     global sample_name
     global sample_type
     global category_name
-    global file_path
     global file_name
     global other_files_in_folder
     global metadata
     
     with open(path) as f:
         metadata = json.load(f)
+
     directory_list = path.split("/")
     file_name = directory_list[-1]
     filepath = "/".join(directory_list[:-1])
@@ -48,13 +32,30 @@ def check_metadata_file(path):
         if key not in readme_json_keys:
             meta_errors.append(f"Section: '{key}' not found in expected metadata keys")
         else:
-            meta_errors += (check_sections(key))
+            try:
+                meta_errors += (check_sections(key))
+            except Exception as e:
+                meta_errors.append(f"Errors testing: {key}. Exception: {e}")
 
     for expected_key in readme_json_keys:
         if expected_key not in metadata.keys():
             meta_errors.append(f"{expected_key} not found in file metadata keys")
 
     return meta_errors
+
+def skip_file(directory_list: list)-> bool:
+    if not os.path.exists("/".join(directory_list)):
+        print('File was deleted')
+        # The changed file is deleted, no need to style check.
+        return True
+    
+    if category_name not in file_categories:
+        print('File is not in a category folder')
+        return True
+    
+    if file_name.lower() != 'readme.metadata.json':
+        print('File is not readme or metadata')
+        return True
 
 def check_sections(key: str):
     # We do this in case the .json key is not one of the accepted sections
