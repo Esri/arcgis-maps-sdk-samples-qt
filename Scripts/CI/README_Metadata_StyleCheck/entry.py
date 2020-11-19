@@ -54,7 +54,8 @@ def main():
                 print(f"{i+1}. {errors[i]}")
         total_errors+=len(errors)
     
-    return len(total_errors)
+    print(f"Total errors: {total_errors}")
+    exit(total_errors)
             
 def run_mdl(readme_path: str): # Run markdown linter
     print("**** mdl ****")
