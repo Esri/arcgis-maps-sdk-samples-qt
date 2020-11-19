@@ -1,0 +1,33 @@
+{
+    "category": "Scenes",
+    "description": "Show realistic lighting and shadows for the specific date and time of day.",
+    "ignore": false,
+    "images": [
+        "screenshot.png"
+    ],
+    "keywords": [
+        "3D",
+        "lighting",
+        "realism",
+        "realistic",
+        "rendering",
+        "shadows",
+        "sun",
+        "time"
+    ],
+    "redirect_from": "",
+    "relevant_apis": [
+        "Scene",
+        "ArcGISSceneLayer",
+        "SceneView",
+        "LightingMode",
+        "setSunLighting",
+        "setSunTime"
+    ],
+    "snippets": [
+        "RealisticLightingAndShadows.qml",
+        "RealisticLightingAndShadows.cpp",
+        "RealisticLightingAndShadows.h"
+    ],
+    "title": "Realistic lighting and shadows"
+}

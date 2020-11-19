@@ -34,6 +34,8 @@ Some transformations aren't available until transformation data is provided.
 
 This sample can be used with or without provisioning projection engine data to your device. If you do not provision data, a limited number of transformations will be available.
 
+This sample uses a `GeographicTransformation`, which extends the `DatumTransformation` class. As of 100.9, ArcGIS Runtime also includes a `HorizontalVerticalTransformation`, which also extends `DatumTransformation`. The `HorizontalVerticalTransformation` class is used to transform coordinates of z-aware geometries between spatial references that have different geographic and/or vertical coordinate systems.
+
 To download projection engine data to your device:
 1. Log in to the ArcGIS for Developers site using your Developer account.
 2. In the Dashboard page, click 'Download APIs and SDKs'.

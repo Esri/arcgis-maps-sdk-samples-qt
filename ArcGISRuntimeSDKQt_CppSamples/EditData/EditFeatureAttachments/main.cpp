@@ -19,6 +19,8 @@
 #include <QQmlEngine>
 #include <QQmlApplicationEngine>
 
+#include "Esri/ArcGISRuntime/Toolkit/register.h"
+
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -44,20 +46,18 @@ int main(int argc, char *argv[])
   engine.addImportPath(QDir(QCoreApplication::applicationDirPath()).filePath("qml"));
   
   QString arcGISRuntimeImportPath = QUOTE(ARCGIS_RUNTIME_IMPORT_PATH);
-  QString arcGISToolkitImportPath = QUOTE(ARCGIS_TOOLKIT_IMPORT_PATH);
 
  #if defined(LINUX_PLATFORM_REPLACEMENT)
   // on some linux platforms the string 'linux' is replaced with 1
   // fix the replacement paths which were created
   QString replaceString = QUOTE(LINUX_PLATFORM_REPLACEMENT);
   arcGISRuntimeImportPath = arcGISRuntimeImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
-  arcGISToolkitImportPath = arcGISToolkitImportPath.replace(replaceString, "linux", Qt::CaseSensitive);
  #endif
 
   // Add the Runtime and Extras path
   engine.addImportPath(arcGISRuntimeImportPath);
-  // Add the Toolkit path
-  engine.addImportPath(arcGISToolkitImportPath);
+
+  Esri::ArcGISRuntime::Toolkit::registerComponents(engine);
 
   // Set the source
   engine.load("qrc:/Samples/EditData/EditFeatureAttachments/main.qml");

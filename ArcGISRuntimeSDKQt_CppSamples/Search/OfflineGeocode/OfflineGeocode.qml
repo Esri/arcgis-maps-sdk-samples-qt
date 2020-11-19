@@ -18,7 +18,7 @@ import QtQuick 2.6
 import Esri.Samples 1.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import Esri.ArcGISRuntime.Toolkit.Controls 100.9
+import Esri.ArcGISRuntime.Toolkit 100.10
 
 OfflineGeocodeSample {
     id: offlineGeocodeSample

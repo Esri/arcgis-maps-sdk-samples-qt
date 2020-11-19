@@ -1,14 +1,12 @@
 # Build a legend
 
-Build a legend for all the operational layers in the MAAAAAP.
+Build a legend for all the operational layers in the map.
 
 ![](screenshot.png)
 
-## USE CASE
+## Use case
 
 Legends are used to describe what each symbol on a map represents. A common format is to show an image of the symbol alongside of a text description of what that symbol represents. This sample demonstrates how a simple legend can be built up in code using the `LayerContent` interface.
-
-## TEST
 
 ## How to use the sample
 

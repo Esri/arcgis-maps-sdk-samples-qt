@@ -39,7 +39,6 @@ ShowOrgBasemaps::~ShowOrgBasemaps() = default;
 
 void ShowOrgBasemaps::init()
 {
-  qmlRegisterUncreatableType<AuthenticationManager>("Esri.Samples", 1, 0, "AuthenticationManager", "AuthenticationManager is uncreateable");
   qmlRegisterUncreatableType<QAbstractListModel>("Esri.Samples", 1, 0, "AbstractListModel", "AbstractListModel is uncreateable");
   qmlRegisterType<MapQuickView>("Esri.Samples", 1, 0, "MapView");
   qmlRegisterType<ShowOrgBasemaps>("Esri.Samples", 1, 0, "ShowOrgBasemapsSample");
@@ -71,8 +70,6 @@ void ShowOrgBasemaps::componentComplete()
 
   // find QML MapView component
   m_mapView = findChild<MapQuickView*>("mapView");
-
-  emit authManagerChanged();
 }
 
 bool ShowOrgBasemaps::portalLoaded() const
@@ -154,9 +151,4 @@ void ShowOrgBasemaps::errorAccepted()
 {
   m_mapLoadError.clear();
   emit mapLoadErrorChanged();
-}
-
-AuthenticationManager *ShowOrgBasemaps::authManager() const
-{
-  return AuthenticationManager::instance();
 }

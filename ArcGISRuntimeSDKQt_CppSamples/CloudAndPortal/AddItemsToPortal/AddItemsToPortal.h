@@ -19,7 +19,6 @@ namespace Esri
 {
   namespace ArcGISRuntime
   {
-    class AuthenticationManager;
     class Portal;
     class PortalItem;
     class PortalUser;
@@ -32,7 +31,6 @@ class AddItemsToPortal : public QQuickItem
 {
   Q_OBJECT
 
-  Q_PROPERTY(Esri::ArcGISRuntime::AuthenticationManager* authManager READ authManager NOTIFY authManagerChanged)
   Q_PROPERTY(bool portalLoaded READ portalLoaded NOTIFY portalLoadedChanged)
   Q_PROPERTY(bool portalItemLoaded READ portalItemLoaded NOTIFY portalItemLoadedChanged)
   Q_PROPERTY(QString portalItemId READ portalItemId NOTIFY portalItemIdChanged)
@@ -54,7 +52,6 @@ public:
   Q_INVOKABLE void deleteItem();
 
 signals:
-  void authManagerChanged();
   void portalLoadedChanged();
   void portalItemLoadedChanged();
   void portalItemTitleChanged();
@@ -65,7 +62,6 @@ signals:
   void busyChanged();
 
 private:
-  Esri::ArcGISRuntime::AuthenticationManager* authManager() const;
   bool portalLoaded() const;
   bool portalItemLoaded() const;
   QString portalItemId() const;
