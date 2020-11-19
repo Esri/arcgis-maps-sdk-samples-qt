@@ -12,18 +12,7 @@ def main():
     parser = argparse.ArgumentParser(description=msg)
     parser.add_argument('-s', '--string', help='A JSON array of file paths.')
     args = parser.parse_args()
-    file_set = set()
-
-    print("** Starting checks **")
-    if args.string:
-        for file in (args.string):
-            file_set.add(file)
-        if not file_set:
-            print('FATAL ERROR: Invalid input file paths string, abort.')
-            exit(1)    
-    else:
-        print('FATAL ERROR: Invalid arguments, abort.')
-        exit(1)
+    file_set = args.string.split(",")
 
     errors = []
 
