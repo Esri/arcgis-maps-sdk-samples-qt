@@ -5,7 +5,7 @@
     "images": [
         "screenshot.png"
     ],
-    "kywords": [
+    "keywords": [
         "3D",
         "line of sight",
         "visibility",
@@ -26,5 +26,6 @@
         "LineOfSightLocation.qml",
         "LineOfSightLocation.cpp",
         "LineOfSightLocation.h"
-    ]
+    ],
+    "title": "Line of sight (location)"
 }
