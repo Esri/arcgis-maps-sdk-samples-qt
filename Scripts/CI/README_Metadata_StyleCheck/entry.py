@@ -17,9 +17,8 @@ def main():
         if letter not in '["]':
             cleanstring+=letter
     file_set = cleanstring.split(",")
-
-    
-
+    print("Files to check: ")
+    print(file_set)
     # A set of dirname strings to avoid duplicate checks on the same sample.
     total_errors = 0
     for file in file_set:

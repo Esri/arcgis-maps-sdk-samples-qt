@@ -1,16 +1,16 @@
 {
-    "category": "Cloud and portal",
-    "description": "Find webmap portal items by using a search term.",
+    "cateasdgory": "Cloud and portal",
+    "descrasdf asiption": "Find webmap portal items by using a search term.",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
-    "keywords": [
-        "keyword",
+    "keywoasdfasdrds": [
+        "keyf adsford",
         "query",
         "search",
         "webmap",
-        "Portal",
+        "Portaf adsl",
         "PortalItem",
         "PortalQueryParameters",
         "PortalQueryResultSet"
@@ -19,7 +19,7 @@
         "/qt/latest/cpp/sample-code/sample-qt-searchforwebmap.htm"
     ],
     "relevant_apis": [
-        "Portal",
+        "Portal", 
         "PortalItem",
         "PortalQueryParameters",
         "PortalQueryResultSet"
