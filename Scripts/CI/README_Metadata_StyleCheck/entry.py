@@ -6,7 +6,7 @@ from os.path import isfile, join
 import json
 
 def main():
-    msg = 'Entry point of the docker to run mdl and style check scripts.'
+    msg = 'Entry point of the docker to run json style check scripts.'
     parser = argparse.ArgumentParser(description=msg)
     parser.add_argument('-s', '--string', help='A JSON array of file paths.')
     args = parser.parse_args()
@@ -17,7 +17,7 @@ def main():
                 cleanstring+=letter
         file_set = cleanstring.split(",")
     except Exception as e:
-        print(f"Unable to split args {args.string}. Exception {e}")
+        print(f"Unable to split args {args.string}.\nException: {e}")
         exit(1)
     
     print("Files to check: ")
@@ -28,30 +28,34 @@ def main():
         print("No files in file set")
         exit(0)
     for file in file_set:
-        errors = []
-        print(f"**** Checking {file} ****")
-        directory_list = file.split("/")
-        filename = directory_list[-1]
-        
-        # Check skip file conditions
-        if skip_file(directory_list):
-            continue        
+        try:
+            errors = []
+            print(f"\n**** Checking {file} ****")
+            directory_list = file.split("/")
+            filename = directory_list[-1]
+            
+            # Check skip file conditions
+            if skip_file(directory_list):
+                continue        
 
-        # Check if metadata file
-        if filename.lower() == 'readme.metadata.json':
-            try:
-                errors += check_metadata_file(file)
-            except Exception as e:
-                errors.append(f"Error checking {filename}. Exception: {e}")
+            # Check if metadata file
+            if filename.lower() == 'readme.metadata.json':
+                try:
+                    errors += check_metadata_file(file)
+                except Exception as e:
+                    errors.append(f"Error checking {filename}. Exception: {e}")
 
-        if len(errors) == 0:
-            print("No errors found")
-            exit(0)
-        else:
-            print(f"Found {len(errors)} errors:")
-            for i in range(len(errors)):
-                print(f"{i+1}. {errors[i]}")
-        total_errors+=len(errors)
+            if len(errors) == 0:
+                print("No errors found")
+                exit(0)
+            else:
+                print(f"Found {len(errors)} errors:")
+                for i in range(len(errors)):
+                    print(f"{i+1}. {errors[i]}")
+            total_errors += len(errors)
+        except Exception as e:
+            print(f"Critical failure on file: {file}\nException: {e}")
+            total_errors += 1
     
     print(f"Total errors: {total_errors}")
     # When we exit an pass a non-zero value, GitHub registers the test as failed.
@@ -72,6 +76,7 @@ def check_metadata_file(path):
     
     with open(path) as f:
         metadata = json.load(f)
+
     directory_list = path.split("/")
     file_name = directory_list[-1]
     filepath = "/".join(directory_list[:-1])
@@ -101,10 +106,6 @@ def check_metadata_file(path):
     return meta_errors
 
 def skip_file(directory_list: list)-> bool:
-    filename = directory_list[-1]
-    # sample name = directory_list[-2]
-    category_name = directory_list[-3]
-
     if not os.path.exists("/".join(directory_list)):
         print('File was deleted')
         # The changed file is deleted, no need to style check.
@@ -114,7 +115,7 @@ def skip_file(directory_list: list)-> bool:
         print('File is not in a category folder')
         return True
     
-    if filename.lower() != 'readme.md' and filename.lower() != 'readme.metadata.json':
+    if file_name.lower() != 'readme.metadata.json':
         print('File is not readme or metadata')
         return True
 
