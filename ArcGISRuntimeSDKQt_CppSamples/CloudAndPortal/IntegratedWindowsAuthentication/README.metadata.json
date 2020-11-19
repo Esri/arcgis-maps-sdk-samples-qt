@@ -1,11 +1,11 @@
 {
-    "category": "Cloud and portal",
+    "category": "Cloud ANNNND portal",
     "description": "Uses Windows credentials to access services hosted on a portal secured with Integrated Windows Authentication (IWA).",
     "ignore": false,
     "images": [
         "screenshot.png"
     ],
-    "keywords": [
+    "keywoooords": [
         "Windows",
         "authentication",
         "security",
