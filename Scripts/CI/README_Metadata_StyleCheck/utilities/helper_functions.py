@@ -1,7 +1,6 @@
 from os import listdir
 from os.path import isfile, join
 
-
 def check_sentence_case(string: str) -> bool:
     words = string.split(" ")
     for i in range(len(words)):
@@ -15,19 +14,6 @@ def check_sentence_case(string: str) -> bool:
 
             if not words[i][j].islower():
                 return False
-
-    return True
-
-def is_subsequence(subsequence, full_sequence) -> bool:
-    if (len(subsequence) == 0) or (len(subsequence) > len(full_sequence)):
-        return False
-
-    idx = 0
-    for item in subsequence:
-        try:
-            idx = full_sequence[idx:].index(item)
-        except ValueError:
-            return False
 
     return True
 

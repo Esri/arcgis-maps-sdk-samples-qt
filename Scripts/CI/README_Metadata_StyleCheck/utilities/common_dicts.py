@@ -15,7 +15,6 @@ file_categories = {
     'UtilityNetwork'
 }
 
-# Note: category naming style is inconsistent
 metadata_categories = {
     'Analysis',
     'AR',
@@ -31,23 +30,6 @@ metadata_categories = {
     'Scenes',
     'Search',
     'UtilityNetwork'
-}
-
-exception_proper_nouns = {
-    'WmsLayer',
-    'ArcGIS Online',
-    'OAuth',
-    'Web Mercator',
-    'ArcGIS Pro',
-    'GeoPackage',
-    'loadStatus',
-    'Integrated Windows Authentication',
-    'GeoElement',
-    'Network Link',
-    'Network Link Control',
-    'Open Street Map',
-    'OpenStreetMap',
-    'Play a KML Tour'
 }
 
 readme_json_keys = {
