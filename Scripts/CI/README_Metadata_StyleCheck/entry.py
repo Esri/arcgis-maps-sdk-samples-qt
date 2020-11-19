@@ -2,8 +2,8 @@ import os
 import json
 import argparse
 import subprocess as sp
-from .stylechecks.metadata_style_checker import check_metadata_file
-from .utilities.common_dicts import file_categories
+from stylechecks.metadata_style_checker import check_metadata_file
+from utilities.common_dicts import file_categories
 
 def main():
     msg = 'Entry point of the docker to run mdl and style check scripts.'
@@ -14,7 +14,7 @@ def main():
 
     print("** Starting checks **")
     if args.string:
-        for file in json.loads(args.string):
+        for file in ([args.string]):
             file_set.add(file)
         if not file_set:
             print('FATAL ERROR: Invalid input file paths string, abort.')
@@ -38,7 +38,7 @@ def main():
 
         # Check if metadata file
         if filename.lower() == 'readme.metadata.json':
-            errors += check_metadata_file
+            errors += check_metadata_file(file)
 
         # Run the markdownlint linter on README file. Thanks to Ting Chen (tchen@esri.com) for this one.
         if filename.lower() == 'readme.md':
@@ -56,7 +56,7 @@ def main():
         print("No errors found")
         return 0
     else:
-        print(f"Found {len(errors)}:")
+        print(f"Found {len(errors)} errors:")
         for i in range(len(errors)):
             print(f"{i+1}. {errors[i]}")
         return len(errors)
@@ -70,7 +70,7 @@ def skip_file(directory_list: list)-> bool:
     # sample name = directory_list[-2]
     category_name = directory_list[-3]
 
-    if not os.path.exists(directory_list.join("/")):
+    if not os.path.exists("/".join(directory_list)):
         print('File was deleted')
         # The changed file is deleted, no need to style check.
         return True

@@ -6,8 +6,8 @@ import json
 import typing
 import argparse
 
-from ..utilities.utility_functions import check_sentence_case, get_filenames_in_folder
-from ..utilities.common_dicts import metadata_categories, readme_json_keys
+from utilities.utility_functions import check_sentence_case, get_filenames_in_folder
+from utilities.common_dicts import metadata_categories, readme_json_keys
 
 # Global variables
 directory_list = [] # A list of all folders in the file path and .json file
@@ -28,8 +28,6 @@ def check_metadata_file(path):
     global file_name
     global other_files_in_folder
     global metadata
-
-    print(f"Checking {path}")
     
     with open(path) as f:
         metadata = json.load(f)
@@ -50,15 +48,12 @@ def check_metadata_file(path):
         if key not in readme_json_keys:
             meta_errors.append(f"Section: '{key}' not found in expected metadata keys")
         else:
-            meta_errors.append(check_sections(key))
+            meta_errors += (check_sections(key))
 
     for expected_key in readme_json_keys:
         if expected_key not in metadata.keys():
             meta_errors.append(f"{expected_key} not found in file metadata keys")
 
-    print(f"Found {len(meta_errors)} errors")
-    for i in range(len(meta_errors)):
-        print(f"{i+1}. {meta_errors[i]}")
     return meta_errors
 
 def check_sections(key: str):
