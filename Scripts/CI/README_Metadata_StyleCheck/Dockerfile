@@ -13,7 +13,6 @@ ENV PYTHONUNBUFFERED=1
 # Add scripts for the check
 ADD entry.py /entry.py
 ADD style.rb /style.rb
-ADD README_style_checker.py /README_style_checker.py
 
 # Install dependencies
 RUN echo "**** Install Ruby and mdl ****" && \
