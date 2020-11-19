@@ -1,8 +1,8 @@
 {
-    "catgory": "A",
-    "desription": "Use augmented reality (AR) to quickly explore a scene more naturally than you could with a touch or mouse interface.",
-    "ignre": false,
-    "imaes": [
+    "category": "AR",
+    "description": "Use augmented reality (AR) to quickly explore a scene more naturally than you could with a touch or mouse interface.",
+    "ignore": false,
+    "images": [
         "screenshot.png"
     ],
     "keywords": [
@@ -19,14 +19,14 @@
     "redirect_from": [
         ""
     ],
-    "relevantapis": [
+    "relevant_apis": [
         "ArcGISARView",
         "SceneView"
     ],
     "snippets": [
-        "ExploreScenesInFlyoverAR.ql",
+        "ExploreScenesInFlyoverAR.qml",
         "ExploreScenesInFlyoverAR.cpp",
         "ExploreScenesInFlyoverAR.h"
     ],
-    "title": "Eplore scenes in flyover AR"
+    "title": "Explore scenes in flyover AR"
 }

@@ -1,6 +1,6 @@
 {
-    "category": "Cloud AYUND portal",
-    "description": "This sample demonstrates how to add and delete items in a user's portal",
+    "category": "Cloud and portal",
+    "description": "This sample demonstrates how to add and delete items in a user's portal.",
     "ignore": false,
     "images": [
         "screenshot.png"
@@ -15,9 +15,9 @@
         "PortalUser::deleteItem"
     ],
     "redirect_from": [
-        "/qt/latest/cpp/sample-code/sample-qt-addiemstoportal.htm"
+        "/qt/latest/cpp/sample-code/sample-qt-additemstoportal.htm"
     ],
-    "relevnt_apis": [
+    "relevant_apis": [
         "Portal",
         "PortalItem",
         "PortalUser::addPortalItemWithUrl",
@@ -25,8 +25,8 @@
     ],
     "snippets": [
         "AddItemsToPortal.qml",
-        "AddItemsToortal.cpp",
+        "AddItemsToPortal.cpp",
         "AddItemsToPortal.h"
     ],
-    "title": "Add items 2 portal"
+    "title": "Add items to portal"
 }

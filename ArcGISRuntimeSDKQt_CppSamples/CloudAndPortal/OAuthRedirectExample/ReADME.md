@@ -112,7 +112,7 @@ You need to update `<data android:scheme="exampleapp"/>` to use your own scheme 
 
 The JNI call results in a call to `QDesktopServices::openUrl` which will be handled by the App.
 
-# iOS
+### iOS
 On iOS, the `Info.plist` file defines the custom URL scheme.
 You need to update the following code with your custome URL scheme in place of `exampleapp`:
 

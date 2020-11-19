@@ -19,7 +19,7 @@
     "redirect_from": [
         "qt/latest/cpp/sample-code/sample-qt-featurelayer-featureservice.htm"
     ],
-    "aaaaa": [
+    "relevant_apis": [
         "Basemap",
         "FeatureLayer",
         "Map",
@@ -28,8 +28,8 @@
     ],
     "snippets": [
         "FeatureLayerFeatureService.qml",
-        "FeatureLayerFeatureService.cpap",
-        "FeatureLayerFeatureService.header"
+        "FeatureLayerFeatureService.cpp",
+        "FeatureLayerFeatureService.h"
     ],
-    "tite": "Feature layer (feature service)"
+    "title": "Feature layer (feature service)"
 }
