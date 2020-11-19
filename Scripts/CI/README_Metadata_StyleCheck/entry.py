@@ -2,7 +2,6 @@ import os
 import json
 import argparse
 import subprocess as sp
-print(os.getcwd())
 from metadata_style_checker import check_metadata_file
 from common_dicts import file_categories
 
