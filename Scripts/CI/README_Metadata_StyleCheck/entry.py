@@ -12,13 +12,18 @@ def main():
     parser = argparse.ArgumentParser(description=msg)
     parser.add_argument('-s', '--string', help='A JSON array of file paths.')
     args = parser.parse_args()
-    file_set = args.string.split(",")
+    cleanstring = ""
+    for letter in args.string:
+        if letter not in '["]':
+            cleanstring+=letter
+    file_set = cleanstring.split(",")
 
-    errors = []
+    
 
     # A set of dirname strings to avoid duplicate checks on the same sample.
-
+    total_errors = 0
     for file in file_set:
+        errors = []
         print(f"**** Checking {file} ****")
         directory_list = file.split("/")
         filename = directory_list[-1]
@@ -40,17 +45,16 @@ def main():
             if r > 0:
                 errors.append(f"markdown linter results: "+ r)
 
-            # Run the style checker
-
-
-    if len(errors) == 0:
-        print("No errors found")
-        return 0
-    else:
-        print(f"Found {len(errors)} errors:")
-        for i in range(len(errors)):
-            print(f"{i+1}. {errors[i]}")
-        return len(errors)
+        if len(errors) == 0:
+            print("No errors found")
+            return 0
+        else:
+            print(f"Found {len(errors)} errors:")
+            for i in range(len(errors)):
+                print(f"{i+1}. {errors[i]}")
+        total_errors+=len(errors)
+    
+    return len(total_errors)
             
 def run_mdl(readme_path: str): # Run markdown linter
     print("**** mdl ****")
