@@ -6,8 +6,8 @@ import json
 import typing
 import argparse
 
-from utilities import check_sentence_case, get_filenames_in_folder
-from common_dicts import metadata_categories, readme_json_keys
+from ..utilities.utility_functions import check_sentence_case, get_filenames_in_folder
+from ..utilities.common_dicts import metadata_categories, readme_json_keys
 
 # Global variables
 directory_list = [] # A list of all folders in the file path and .json file

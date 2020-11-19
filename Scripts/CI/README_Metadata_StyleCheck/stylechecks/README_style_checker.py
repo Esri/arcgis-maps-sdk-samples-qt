@@ -13,8 +13,8 @@ import os
 import re
 import typing
 import argparse
-from .common_dicts import categories, exception_proper_nouns
-from .utilities import check_sentence_case
+from ..utilities.common_dicts import categories, exception_proper_nouns
+from ..utilities.utility_functions import check_sentence_case
 
 filename = None
 samplename = None
@@ -31,7 +31,7 @@ def get_folder_name_from_path(path: str, index: int = -1) -> str:
     """
     return os.path.normpath(path).split(os.path.sep)[index]
 
-
+'''
 def parse_head(head_string: str) -> (str, str):
     """
     Parse the head of README and get title and description.
@@ -45,7 +45,7 @@ def parse_head(head_string: str) -> (str, str):
     title = parts[0].lstrip('# ').rstrip()
     description = parts[1].strip()
     return title, description
-
+'''
 
 def check_apis(apis_string: str) -> typing.Set[str]:
     """
