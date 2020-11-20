@@ -12,6 +12,8 @@ category_name = ""
 file_name = ""
 other_files_in_folder = []
 metadata = None
+api_list = []
+tag_list = []
 
 def main():
     # Tell the program that we're using global variables
@@ -34,8 +36,11 @@ def main():
         file_set = cleanstring.split(",")
     except Exception as e:
         print(f"Unable to split args {args.string}.\nException: {e}")
-        exit(1)
+        # exit(1)
+        file_set = test_file_list
     
+
+
     print("Files to check: ")
     print(file_set)
 
@@ -46,7 +51,7 @@ def main():
     for file in file_set:
         try:
             errors = []
-            print(f"\n**** Checking {file} ****")
+            print(f"\n----\n** Checking {file} **")
 
             # Set variables for file
             directory_list = file.split("/")
@@ -68,8 +73,15 @@ def main():
                 except Exception as e:
                     errors.append(f"Error checking {file_name}. Exception: {e}")
 
+            # Check if README.md
+            if file_name.lower == 'readme.md':
+                try:
+                    errors += check_readme(file)
+                except Exception as e:
+                    errors.append(f"Error checking {file_name}. Exception: {e}")
+            
             if len(errors) == 0:
-                print("No errors found")
+                print("No errors found!")
             else:
                 print(f"Found {len(errors)} errors:")
                 for i in range(len(errors)):
@@ -85,10 +97,6 @@ def main():
     # When we exit an pass a non-zero value, GitHub registers the test as failed.
     exit(total_errors)
 
-# PLEASE DELETE BELOW THIS LINE WHEN WE FIGURE OUT THE IMPORT STUFF
-# from stylechecks.metadata_style_checker import check_metadata_file
-# from utilities.common_dicts import file_categories
-
 def skip_file(directory_list: list)-> bool:
     category_name = directory_list[-3]
     if not os.path.exists("/".join(directory_list)):
@@ -99,9 +107,18 @@ def skip_file(directory_list: list)-> bool:
         print('File is not in a category folder')
         return True
     
-    if file_name.lower() != 'readme.metadata.json':
+    if file_name.lower() not in  ['readme.metadata.json', 'readme.md']:
         print('File is not readme or metadata')
         return True
+
+
+'''
+********************************
+|                              |
+| readme.metadata.json section |
+|                              |
+********************************
+'''
 
 def check_metadata_file(path):
 
@@ -240,9 +257,141 @@ def check_title(title: str):
         errors.append("Title does not end in alphanumeric character")
     return errors
 
+
+'''
+*********************
+|                   |
+| README.md section |
+|                   |
+*********************
+'''
+def check_readme(path):
+    global api_list
+    global tag_list
+
+    api_list = []
+    tag_list = []
+
+    text = ""
+    with open(path, 'r') as f:
+        data = f.readlines()
+        # Remove blank lines
+        for line in data:
+            if line != "\n":
+                text += line
+
+    # Split out sections by header 2
+    text = text.split("\n## ")
+    
+
+    # Parse header
+    try:
+        header = text.pop(0)
+        # This splits the header by the first instance of \n
+        # We do this in case description is multiple lines
+        header = [header[:header.find("\n")]] + [header[header.find("\n")+1:]]
+        title = header[0][2:]
+        description, screenshot = header[1].split("\n![]") # This doesn't work if screenshot is formatted improperly.
+    except Exception as e:
+        r = f"Title, description, or screenshot.png formatted incorrectly. README check cannot proceed.\nFatal error: {e}"
+        print(r)
+        return [r]
+    all_section_titles = []
+    all_errors = []
+
+    # If all goes well, this the only items remaining in the text are the h2's
+
+    for section in text:
+        section_body = section.split("\n")
+        section_title = section_body.pop(0)
+        if section_title not in all_section_titles:
+            all_section_titles.append(section_title)
+            all_errors += (check_readme_sections(section_title, section_body))
+        else:
+            all_errors.append("Error, duplicate section title: " + section_title)
+
+    if not is_subsequence(all_section_titles, possible_readme_headers):
+        all_errors.append("Section headers are not in the correct order.")
+        print(f"Section are not in the correct order. The correct order is:\n{possible_readme_headers}")
+    
+    missing_headers = []
+    for essential_header in essential_readme_headers:
+        if essential_header not in all_section_titles:
+            missing_headers.append(essential_header)
+    if missing_headers:
+        all_errors.append(f"Missing essential headers: {missing_headers}. (This may be due to improper capitalization).")
+
+    if len(all_errors) > 0:
+        print(f"{len(all_errors)} total errors")
+        for i in range(len(all_errors)):
+            print(f"{i + 1}. {all_errors[i]}")
+    else:
+        print("No errors found!")
+    return all_errors
+
+def check_readme_sections(s_title, s_body):
+
+    if s_title.lower() == "relevant api":
+        return check_relevant_api(s_body)
+
+    elif s_title.lower() == "tags":
+        return check_tags(s_body)
+
+    elif s_title.lower() == "offline data":
+        return check_if_section_contents(s_title, s_body)
+
+    elif s_title in possible_readme_headers:
+        return check_if_section_contents(s_title, s_body)
+    else:
+        return [f"{s_title} not found in potential README headers."]
+
+def check_relevant_api(body):
+    global api_list
+
+    if not body:
+        return ["No text found in 'Relevant API'"]
+    errors = []
+    for i in range(len(body)):
+        if body[i][:2] != "* ":
+            errors.append(f"Expected unordered list item as '* ' on line {i}")
+        else:
+            api = body[i][3:]
+            if api in api_list:
+                errors.append(f"{api} is duplicate on line {i}")
+            else:
+                api_list.append(api)
+                if api in tag_list:
+                    errors.append(f"{api} should not be in tags")
+    return errors
+
+def check_tags(body):
+    global tag_list
+
+    if not body:
+        return ["No tags found in 'Tag' section"]
+    errors = []
+    tags = body[0].split(", ")
+    for tag in tags:
+        if tag in tag_list:
+            errors.append(f"Tag '{tag}' has duplicates.")
+        else:
+            tag_list.append(tag)
+            if tag in api_list:
+                errors.append(f"Tag '{tag}' should not be an API.")
+    if tag_list != sorted(tag_list):
+        errors.append("Expected tag list to be sorted alphabetically")
+    
+    return errors
+
+def check_if_section_contents(title, body):
+    if not body:
+        return [f"No text found in {title} section body."]
+    return []
+
+
 # ***** Large variable sets (from utilities.common_dicts) *****
 
-file_categories = {
+file_categories = [
     'Analysis',
     'AR',
     'CloudAndPortal',
@@ -257,9 +406,9 @@ file_categories = {
     'Scenes',
     'Search',
     'UtilityNetwork'
-}
+]
 
-metadata_categories = {
+metadata_categories = [
     'Analysis',
     'AR',
     'Cloud and portal',
@@ -274,9 +423,9 @@ metadata_categories = {
     'Scenes',
     'Search',
     'UtilityNetwork'
-}
+]
 
-required_metadata_keys = {
+required_metadata_keys = [
     'category',
     'description',
     'ignore',
@@ -286,32 +435,85 @@ required_metadata_keys = {
     'relevant_apis',
     'snippets',
     'title'
-}
+]
+
+essential_readme_headers = [
+    'Use case',
+    'How to use the sample',
+    'How it works',
+    'Relevant API',
+    'Tags'
+]
+
+possible_readme_headers = [
+    'Use case',
+    'How to use the sample',
+    'How it works',
+    'Relevant API',
+    'Offline data',
+    'About the data',
+    'Additional information',
+    'Tags'
+]
 
 # ***** Helper functions from utilities.helper_functions
 
 def check_sentence_case(string: str) -> bool:
-    words = string.split(" ")
-    for i in range(len(words)):
-        for j in range(len(words[i])):
+    ignore_list = {
+        "ArcGIS"
+    }
+    alnum_string = filter_string_for_alpha_numeric(string)
+    words = alnum_string.split(" ")
+    i = 0
+    while i < len(words):
+        if words[i] in ignore_list or words[i][0] == "`":
+            continue
+        j = 0
+        starting_letter = 0
+        while j < len(words[i]):
             if not words[i][j].isalpha():
-                continue
-
-            if i == 0 and j == 0:
+                starting_letter += 1
+            elif i == 0 and j == starting_letter:
                 if not words[i][j].isupper():
                     return False
-
-            if not words[i][j].islower():
+            elif not words[i][j].islower():
                 return False
-
+            j += 1
+        i += 1
     return True
 
 def get_filenames_in_folder(folderpath):
     return [file for file in listdir(folderpath) if isfile(join(folderpath, file))]
 
+def is_subsequence(arr1, arr2) -> bool:
+    if len(arr1) > len(arr2) or not arr1:
+        return False
+    i, j = 0, 0
+    while i < len(arr1):
+        if arr1[i].lower() == arr2[j].lower():
+            i += 1
+        j += 1
+    if i == len(arr1):
+        return True
+    return False
+
+def filter_string_for_alpha_numeric(string):
+    clean_string = ""
+    for letter in string:
+        if letter.isalnum() or letter in " `":
+             clean_string += letter
+    return clean_string
+
+test_file_list = [
+    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/AddIntegratedMeshLayer/README.md",
+    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/Symbols/README.md",
+    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/RealisticLightingAndShadows/README.md",
+    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Search/OfflineGeocode/README.md",
+    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/LocalServer/LocalServerMapImageLayer/README.md",
+    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Geometry/FormatCoordinates/README.metadata.json",
+    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Geometry/FormatCoordinates/README.metadata.json",
+    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Routing/OfflineRouting/README.metadata.json"
+]
+
 if __name__ == '__main__':
-    pass
     main()
-
-
-# "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Geometry/FormatCoordinates/README.metadata.json,/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Routing/OfflineRouting/README.metadata.json,"
