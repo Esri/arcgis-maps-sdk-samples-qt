@@ -535,7 +535,7 @@ test_file_list = [
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Geometry/FormatCoordinates/README.metadata.json",
 ]
 
-check_files(test_file_list)
+# check_files(test_file_list)
 
 if __name__ == '__main__':
     main()
