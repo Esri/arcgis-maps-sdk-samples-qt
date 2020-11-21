@@ -4,19 +4,6 @@ from os import listdir
 from os.path import isfile, join
 import json
 
-# ***** Global variables *****
-directory_list = []
-sample_name = ""
-sample_type = ""
-category_name = ""
-file_name = ""
-other_files_in_folder = []
-metadata = None
-api_list = []
-tag_list = []
-json_keyword_list = []
-json_api_list = []
-
 def main():
     # Tell the program that we're using global variables
     msg = 'Entry point of the docker to run json style check scripts.'
@@ -35,14 +22,6 @@ def main():
     check_files(file_list)
     
 def check_files(file_list):
-    # Tell the program that we're using global variables
-    global directory_list
-    global sample_name
-    global sample_type
-    global category_name
-    global file_name
-    global other_files_in_folder
-
     print("Files to check: ")
     for file in file_list:
         print(file)
@@ -57,11 +36,6 @@ def check_files(file_list):
             # Set variables for file
             directory_list = file.split("/")
             file_name = directory_list[-1]
-            filepath = "/".join(directory_list[:-1])
-            sample_name = directory_list[-2]
-            category_name = directory_list[-3]
-            sample_type = directory_list[-4]
-            other_files_in_folder = get_filenames_in_folder(filepath)
             
             # Check skip file conditions
             if skip_file(directory_list):
@@ -70,14 +44,16 @@ def check_files(file_list):
             # If metadata file
             if file_name.lower() == 'readme.metadata.json':
                 try:
-                    errors += check_metadata_file(file)
+                    json_file = MetadataFile(file)
+                    errors += json_file.check_metadata_file_for_errors()
                 except Exception as e:
                     errors.append(f"Error checking {file_name}. Exception: {e}")
 
             # If README.md
-            elif file_name.lower == 'readme.md':
+            elif file_name.lower() == 'readme.md':
                 try:
-                    errors += check_readme(file)
+                    readme_file = READMEFile(file)
+                    errors += readme_file.check_readme_for_errors()
                 except Exception as e:
                     errors.append(f"Error checking {file_name}. Exception: {e}")
             
@@ -104,316 +80,316 @@ def skip_file(directory_list: list)-> bool:
         print('File was deleted')
         # The changed file is deleted, no need to style check.
         return True
-    if category_name not in file_categories:
+    if category_name not in folder_names:
         print('File is not in a category folder')
         return True
     
-    if file_name.lower() not in  ['readme.metadata.json', 'readme.md']:
+    if directory_list[-1].lower() not in  ['readme.metadata.json', 'readme.md']:
         print('File is not readme or metadata')
         return True
 
+class MetadataFile:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.directory_list = file_path.split("/")
+        self.file_name = self.directory_list[-1]
+        self.folder_path = "/".join(self.directory_list[:-1])
+        self.sample_name = self.directory_list[-2]
+        self.category_name = self.directory_list[-3]
+        self.sample_type = self.directory_list[-4]
+        self.other_files_in_folder = get_filenames_in_folder(self.folder_path)
+        self.api_list = []
+        self.keyword_list = []
+        self.metadata = read_json_file(file_path)
+        self.metadata_errors = []
 
-'''
-********************************
-|                              |
-| readme.metadata.json section |
-|                              |
-********************************
-'''
+    def check_metadata_file_for_errors(self):
+        if self.file_name != "README.metadata.json":
+            self.metadata_errors.append(f"{self.file_name} does not have correct capitalization")
 
-def check_metadata_file(path):
+        for key in self.metadata.keys():
+            try:
+                self.metadata_errors += (self.check_sections(key))
+            except Exception as e:
+                self.metadata_errors.append(f"Errors testing: {key}. Exception: {e}")
 
-    global metadata
-    global json_api_list
-    global json_keyword_list
-    with open(path) as f:
-        metadata = json.load(f)
+        for expected_key in required_metadata_keys:
+            if expected_key not in self.metadata.keys():
+                self.metadata_errors.append(f"{expected_key} not found in file metadata keys")
 
-    meta_errors = []
-    json_api_list = []
-    json_keyword_list = []
+        return self.metadata_errors
 
-    if file_name != "README.metadata.json":
-        meta_errors.append(f"{file_name} does not have correct capitalization")
-
-    for key in metadata.keys():
-        try:
-            meta_errors += (check_sections(key))
-        except Exception as e:
-            meta_errors.append(f"Errors testing: {key}. Exception: {e}")
-
-    for expected_key in required_metadata_keys:
-        if expected_key not in metadata.keys():
-            meta_errors.append(f"{expected_key} not found in file metadata keys")
-
-    return meta_errors
-
-def check_sections(key: str):
-    # We do this in case the .json key is not one of the accepted sections
-    if key == "category":
-        return (check_category(metadata["category"]))
-    elif key == "description":
-        return (check_description(metadata["description"]))
-    elif key == "ignore":
-        return [] # (check_ignore(metadata["ignore"]))
-    elif key == "images":
-        return (check_images(metadata["images"]))
-    elif key == "keywords":
-        return (check_keywords(metadata['keywords']))
-    elif key == "redirect_from":
-        return (check_redirect_from(metadata["redirect_from"]))
-    elif key == "relevant_apis":
-        return (check_relevant_apis(metadata['relevant_apis']))
-    elif key == "snippets":
-        return (check_snippets(metadata["snippets"]))
-    elif key == "title":
-        return (check_title(metadata["title"]))
-    elif key == "dataItems":
-        return [] # (check_dataItems(metadata["dataItems"]))
-    else:
-        # If this triggers, there is something wrong with this file. Ideally this should not trigger.
-        return [f"Category: '{key}' is not a recognized readme metadata key."]
-
-def check_category(cat: str):
-    if not cat:
-        return ["No category"]
-    errors = []
-    if cat not in metadata_categories:
-        errors.append(f"Category does not match any currently listed metadata categories: ('{cat}')")
-    if "".join(cat.split(" ")).lower() != category_name.lower():
-        errors.append(f"Category does not match parent category folder: ('{cat}' != '{category_name}')")
-    return errors
-
-def check_description(description: str):
-    if not description:
-        return ["No description written"]
-    errors = []
-    if description[-1] not in ".?!":
-        errors.append("Description does not end in proper punctuation")
-    return errors
-
-def check_images(images: list):
-    if not images:
-        return ["No images listed"]
-    errors = []
-    images_in_folder = other_files_in_folder
-    has_screenshotpng = False
-    for image in images:
-        if not image in images_in_folder:
-            errors.append(f"{image} not found in folder")
-        if image == "screenshot.png":
-            has_screenshotpng = True
-    if not has_screenshotpng:
-        errors.append("'screenshot.png' not found")
-    return errors
-
-def check_keywords(keywords: list):
-    if not keywords:
-        return ["No keywords found"]
-    errors = []
-    for keyword in keywords:
-        if keyword in json_keyword_list:
-            errors.append(f"Duplicate keyword: {keyword}")
+    def check_sections(self, key: str):
+        # We do this in case the .json key is not one of the accepted sections
+        if key == "category":
+            return self.check_category(self.metadata["category"])
+        elif key == "description":
+            return self.check_description(self.metadata["description"])
+        elif key == "ignore":
+            return [] # (check_ignore(self.metadata["ignore"]))
+        elif key == "images":
+            return self.check_images(self.metadata["images"])
+        elif key == "keywords":
+            return self.check_keywords(self.metadata['keywords'])
+        elif key == "redirect_from":
+            return self.check_redirect_from(self.metadata["redirect_from"])
+        elif key == "relevant_apis":
+            return self.check_relevant_apis(self.metadata['relevant_apis'])
+        elif key == "snippets":
+            return self.check_snippets(self.metadata["snippets"])
+        elif key == "title":
+            return self.check_title(self.metadata["title"])
+        elif key == "dataItems":
+            return [] # (check_dataItems(self.metadata["dataItems"]))
         else:
-            json_keyword_list.append(keyword)
-    return errors
+            return [f"Category: '{key}' is not a recognized readme metadata key."]
 
-def check_redirect_from(redirects: list):
-    if redirects == ['']:
-        return ["No redirects listed"]
-    errors = []
-    has_expected_redirect = False
-    expected_redirect = "/qt/latest/cpp/sample-code/sample-qt-"+sample_name+".htm"
-    for redirect in redirects:
-        if redirect.lower() == expected_redirect.lower():
-            has_expected_redirect = True
-    if not has_expected_redirect:
-        errors.append(f"Expected redirect ({expected_redirect}) not found among {redirects}")
-    return errors
+    def check_category(self, category: str):
+        if not category:
+            return ["No category"]
+        errors = []
+        if category not in metadata_categories:
+            errors.append(f"Category does not match any currently listed metadata categories: ('{category}')")
+        if "".join(category.split(" ")).lower() != self.category_name.lower():
+            errors.append(f"Category does not match parent category folder: ('{category}' != '{self.category_name}')")
+        return errors
 
-def check_relevant_apis(apis: list):
-    if not apis:
-        return ["No APIs listed"]
-    errors = []
-    for api in apis:
-        if api in json_api_list:
-            errors.append(f"Duplicate API: {api}")
-        else:
-            json_api_list.append(api)
-    return errors
+    def check_description(self, description: str):
+        if not description:
+            return ["No description written"]
+        errors = []
+        if description[-1] not in ".?!":
+            errors.append("Description does not end in proper punctuation")
+        return errors
 
-def check_snippets(snippets: list):
-    if not snippets:
-        return ["No snippets listed"]
-    errors = []
-    for snippet in snippets:
-        if snippet not in other_files_in_folder:
-            errors.append(f"{snippet} not found in sample folder")
-    expected_snippets = [
-        sample_name + ".qml",
-    ]
+    def check_images(self, images: list):
+        if not images:
+            return ["No images listed"]
+        errors = []
+        images_in_folder = self.other_files_in_folder
+        has_screenshotpng = False
+        for image in images:
+            if not image in images_in_folder:
+                errors.append(f"{image} not found in folder")
+            if image == "screenshot.png":
+                has_screenshotpng = True
+        if not has_screenshotpng:
+            errors.append("'screenshot.png' not found")
+        return errors
 
-    if sample_type == "ArcGISRuntimeSDKQt_CppSamples":
-        expected_snippets += [sample_name + ".cpp", sample_name + ".h"]
-
-    if not snippets[0] == expected_snippets[0]:
-        errors.append(f"The .qml snippet must be listed first in the list.")
-        
-    for expected_snippet in expected_snippets:
-        if expected_snippet not in snippets:
-            errors.append(f"Expected {expected_snippet} in snippets")
-    return errors
-
-def check_title(title: str):
-    if not title:
-        return ["No title"]
-    errors = []
-    if not check_sentence_case:
-        errors.append("Title does not follow sentence case")
-    if "".join(title.split(" ")).lower() != sample_name.lower():
-        errors.append("Title does not match sample name")
-    if not title[-1].isalnum():
-        errors.append("Title does not end in alphanumeric character")
-    return errors
-
-
-'''
-*********************
-|                   |
-| README.md section |
-|                   |
-*********************
-'''
-def check_readme(path):
-    global api_list
-    global tag_list
-
-    api_list = []
-    tag_list = []
-
-    text = ""
-    with open(path, 'r') as f:
-        data = f.readlines()
-        # Remove blank lines
-        for line in data:
-            if line != "\n":
-                text += line
-
-    # Split out sections by header 2
-    text = text.split("\n## ")
-    
-
-    # Parse header
-    try:
-        header = text.pop(0)
-        # This splits the header by the first instance of \n
-        # We do this in case description is multiple lines
-        header = [header[:header.find("\n")]] + [header[header.find("\n")+1:]]
-        title = header[0][2:]
-        description, screenshot = header[1].split("\n![]") # This doesn't work if screenshot is formatted improperly.
-    except Exception as e:
-        r = f"Title, description, or screenshot.png formatted incorrectly. README check cannot proceed.\nFatal error: {e}"
-        print(r)
-        return [r]
-    all_section_titles = []
-    all_errors = []
-
-    # If all goes well, this the only items remaining in the text are the h2's
-
-    for section in text:
-        section_body = section.split("\n")
-        section_title = section_body.pop(0)
-        if section_title not in all_section_titles:
-            all_section_titles.append(section_title)
-            all_errors += (check_readme_sections(section_title, section_body))
-        else:
-            all_errors.append("Error, duplicate section title: " + section_title)
-
-    if not is_subsequence(all_section_titles, possible_readme_headers):
-        all_errors.append("Section headers are not in the correct order.")
-        print(f"Section are not in the correct order. The correct order is:\n{possible_readme_headers}")
-    
-    missing_headers = []
-    for essential_header in essential_readme_headers:
-        if essential_header not in all_section_titles:
-            missing_headers.append(essential_header)
-    if missing_headers:
-        all_errors.append(f"Missing essential headers: {missing_headers}. (This may be due to improper capitalization).")
-
-    if len(all_errors) > 0:
-        print(f"{len(all_errors)} total errors")
-        for i in range(len(all_errors)):
-            print(f"{i + 1}. {all_errors[i]}")
-    else:
-        print("No errors found!")
-    return all_errors
-
-def check_readme_sections(s_title, s_body):
-
-    if s_title.lower() == "relevant api":
-        return check_relevant_api(s_body)
-
-    elif s_title.lower() == "tags":
-        return check_tags(s_body)
-
-    elif s_title.lower() == "offline data":
-        return check_if_section_contents(s_title, s_body)
-
-    elif s_title in possible_readme_headers:
-        return check_if_section_contents(s_title, s_body)
-    else:
-        return [f"{s_title} not found in potential README headers."]
-
-def check_relevant_api(body):
-    global api_list
-
-    if not body:
-        return ["No text found in 'Relevant API'"]
-    errors = []
-    for i in range(len(body)):
-        if body[i][:2] != "* ":
-            errors.append(f"Expected unordered list item as '* ' on line {i}")
-        else:
-            api = body[i][3:]
-            if api in api_list:
-                errors.append(f"{api} is duplicate on line {i}")
+    def check_keywords(self, keywords: list):
+        if not keywords:
+            return ["No keywords found"]
+        errors = []
+        for keyword in keywords:
+            if keyword in self.keyword_list:
+                errors.append(f"Duplicate keyword: {keyword}")
             else:
-                api_list.append(api)
-                if api in tag_list:
-                    errors.append(f"{api} should not be in tags")
-    if api_list != sorted(api_list):
-        errors.append("Expected API list to be sorted alphabetically")
+                self.keyword_list.append(keyword)
+        return errors
+
+    def check_redirect_from(self, redirects: list):
+        if redirects == ['']:
+            return ["No redirects listed"]
+        errors = []
+        has_expected_redirect = False
+        expected_redirect = "/qt/latest/cpp/sample-code/sample-qt-"+self.sample_name+".htm"
+        for redirect in redirects:
+            if redirect.lower() == expected_redirect.lower():
+                has_expected_redirect = True
+        if not has_expected_redirect:
+            errors.append(f"Expected redirect ({expected_redirect}) not found among {redirects}")
+        return errors
+
+    def check_relevant_apis(self, apis: list):
+        if not apis:
+            return ["No APIs listed"]
+        errors = []
+        for api in apis:
+            if api in self.api_list:
+                errors.append(f"Duplicate API: {api}")
+            else:
+                self.api_list.append(api)
+        return errors
+
+    def check_snippets(self, snippets: list):
+        if not snippets:
+            return ["No snippets listed"]
+        errors = []
+        for snippet in snippets:
+            if snippet not in self.other_files_in_folder:
+                errors.append(f"{snippet} not found in sample folder")
+        expected_snippets = [
+            self.sample_name + ".qml",
+        ]
+
+        if self.sample_type == "ArcGISRuntimeSDKQt_CppSamples":
+            expected_snippets += [self.sample_name + ".cpp", self.sample_name + ".h"]
+
+        if not snippets[0] == expected_snippets[0]:
+            errors.append(f"The .qml snippet must be listed first in the list.")
+            
+        for expected_snippet in expected_snippets:
+            if expected_snippet not in snippets:
+                errors.append(f"Expected {expected_snippet} in snippets")
+        return errors
+
+    def check_title(self, title: str):
+        if not title:
+            return ["No title"]
+        errors = []
+        if not check_sentence_case:
+            errors.append("Title does not follow sentence case")
+        if "".join(title.split(" ")).lower() != self.sample_name.lower():
+            errors.append("Title does not match sample name")
+        if not title[-1].isalnum():
+            errors.append("Title does not end in alphanumeric character")
+        return errors
+
+class READMEFile:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.directory_list = file_path.split("/")
+        self.file_name = self.directory_list[-1]
+        self.folder_path = "/".join(self.directory_list[:-1])
+        self.sample_name = self.directory_list[-2]
+        self.category_name = self.directory_list[-3]
+        self.sample_type = self.directory_list[-4]
+        self.other_files_in_folder = get_filenames_in_folder(self.folder_path)
+        self.api_list = []
+        self.tag_list = []
+        self.readme_text = read_readme_file(file_path)
+        self.title = ""
+        self.description = ""
+        self.screenshot_text = ""
+        self.sections = {}
+        self.section_header_list = []
+        self.readme_errors = []
+        self.header_errors = []
+        self.section_errors = []
+
+        self.parse_readme()
     
-    return errors
+    def parse_readme(self):
+        # Split out sections by header 2
+        text = self.readme_text.split("\n## ")
 
-def check_tags(body):
-    global tag_list
+        # Parse header
+        try:
+            header = text.pop(0)
+            # This splits the header by the first instance of \n
+            # We do this in case description is multiple lines
+            header = [header[:header.find("\n")]] + [header[header.find("\n")+1:]]
+            self.title = header[0][2:]
+            self.description, self.screenshot = header[1].split("\n![]") # This doesn't work if screenshot is formatted improperly.
+        except Exception as e:
+            return f"Title, description, or screenshot.png formatted incorrectly. README check cannot proceed.\nFatal error: {e}"
 
-    if not body:
-        return ["No tags found in 'Tag' section"]
-    errors = []
-    tags = body[0].split(", ")
-    for tag in tags:
-        if tag in tag_list:
-            errors.append(f"Tag '{tag}' has duplicates.")
-        else:
-            tag_list.append(tag)
-            if tag in api_list:
-                errors.append(f"Tag '{tag}' should not be an API.")
-    if tag_list != sorted(tag_list):
-        errors.append("Expected tag list to be sorted alphabetically")
-    
-    return errors
+        # If all goes well, this the only items remaining in the text are the h2's
+        for section in text:
+            section_body = section.split("\n")
+            section_title = section_body.pop(0)
+            self.section_header_list.append(section_title)
+            if section_title in self.sections:
+                self.sections[section_title] += section_body
+            else:
+                self.sections[section_title] = section_body
 
-def check_if_section_contents(title, body):
-    if not body:
-        return [f"No text found in {title} section body."]
-    return []
+    def check_readme_for_errors(self):
+        self.readme_errors = []
+        self.readme_errors += (self.check_readme_section_headers())
+        self.readme_errors += (self.check_readme_sections())
+        return self.readme_errors
+
+    def check_readme_section_headers(self):
+        # Check if missing essential headers
+        missing_headers = []
+        self.header_errors = []
+        
+        for essential_header in essential_readme_headers:
+            if essential_header not in self.section_header_list:
+                missing_headers.append(essential_header)
+        
+        if missing_headers:
+            self.header_errors.append(f"Missing essential headers: {missing_headers}. (This may be due to improper capitalization).")
+        
+        # Check if README headers are in order
+        if not is_subsequence(self.section_header_list, possible_readme_headers):
+            self.header_errors.append("Section headers are not in the correct order.")
+
+        # Check if duplicate headers
+        temp_header_list = []
+        for header in self.section_header_list:
+            if header in temp_header_list:
+                self.header_errors.append(f"Header '{header}' is a aduplicate.")
+            else:
+                temp_header_list.append(header)
+        return self.header_errors
+
+    def check_readme_sections(self):
+        self.section_errors = []
+        for header in self.sections.keys():
+            if header.lower() == "relevant api":
+                self.section_errors += (self.check_relevant_api(header))
+
+            elif header.lower() == "tags":
+                self.section_errors += (self.check_tags(header))
+
+            elif header.lower() == "offline data":
+                self.section_errors += (self.check_if_section_contents(header))
+
+            elif header in possible_readme_headers:
+                self.section_errors += (self.check_if_section_contents(header))
+            else:
+                self.section_errors += ([f"{header} not found in possible README headers."])
+        return self.section_errors
+
+    def check_relevant_api(self, h):
+        if not self.sections[h]:
+            return ["No text found in 'Relevant API'"]
+        errors = []
+        for i in range(len(self.sections[h])):
+            if self.sections[h][i][:2] != "* ":
+                errors.append(f"Expected unordered list item as '* ' on line {i}")
+            else:
+                api = self.sections[h][i][2:]
+                if api in self.api_list:
+                    errors.append(f"{api} is duplicate on line {i}")
+                else:
+                    self.api_list.append(api)
+                    if api in self.tag_list:
+                        errors.append(f"{api} should not be in tags")
+        if self.api_list != sorted(self.api_list):
+            errors.append("Expected API list to be sorted alphabetically")
+        return errors
+
+    def check_tags(self, h):
+        if not self.sections[h]:
+            return ["No tags found in 'Tag' section"]
+        errors = []
+        tags = self.sections[h][0].split(", ")
+        for tag in tags:
+            if tag in self.tag_list:
+                errors.append(f"Tag '{tag}' has duplicates.")
+            else:
+                self.tag_list.append(tag)
+                if tag in self.api_list:
+                    errors.append(f"Tag '{tag}' should not be an API.")
+        if self.tag_list != sorted(self.tag_list):
+            errors.append("Expected tag list to be sorted alphabetically")
+        return errors
+
+    def check_if_section_contents(self, h):
+        if not self.sections[h]:
+            return [f"No text found in {h} section body."]
+        errors = []
+        return errors
+
 
 
 # ***** Large variable sets (from utilities.common_dicts) *****
 
-file_categories = [
+folder_names = [
     'Analysis',
     'AR',
     'CloudAndPortal',
@@ -459,6 +435,19 @@ required_metadata_keys = [
     'title'
 ]
 
+possible_metadata_keys = [
+    'category',
+    'dataItems',
+    'description',
+    'ignore',
+    'images',
+    'keywords',
+    'redirect_from',
+    'relevant_apis',
+    'snippets',
+    'title'
+]
+
 essential_readme_headers = [
     'Use case',
     'How to use the sample',
@@ -479,6 +468,23 @@ possible_readme_headers = [
 ]
 
 # ***** Helper functions from utilities.helper_functions
+
+def read_json_file(file_path):
+    data = None
+    with open(file_path) as file:
+        data = json.load(file)
+    return data
+
+
+def read_readme_file(file_path):
+    readme_text = ""
+    with open(file_path, 'r') as f:
+        data = f.readlines()
+        # Remove blank lines
+        for line in data:
+            if line != "\n":
+                readme_text += line
+    return readme_text
 
 def check_sentence_case(string: str) -> bool:
     ignore_list = {
@@ -511,7 +517,7 @@ def is_subsequence(arr1, arr2) -> bool:
     if len(arr1) > len(arr2) or not arr1:
         return False
     i, j = 0, 0
-    while i < len(arr1):
+    while i < len(arr1) and j < len(arr2):
         if arr1[i].lower() == arr2[j].lower():
             i += 1
         j += 1
@@ -528,6 +534,7 @@ def filter_string_for_alpha_numeric(string):
 
 test_file_list = [
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/AddIntegratedMeshLayer/README.md",
+    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/SceneLayerSelection/README.md",
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/Symbols/README.md",
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Scenes/RealisticLightingAndShadows/README.md",
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Search/OfflineGeocode/README.md",
@@ -535,7 +542,7 @@ test_file_list = [
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Geometry/FormatCoordinates/README.metadata.json",
 ]
 
-# check_files(test_file_list)
+check_files(test_file_list)
 
 if __name__ == '__main__':
     main()
