@@ -14,16 +14,11 @@ other_files_in_folder = []
 metadata = None
 api_list = []
 tag_list = []
+json_keyword_list = []
+json_api_list = []
 
 def main():
     # Tell the program that we're using global variables
-    global directory_list
-    global sample_name
-    global sample_type
-    global category_name
-    global file_name
-    global other_files_in_folder
-
     msg = 'Entry point of the docker to run json style check scripts.'
     parser = argparse.ArgumentParser(description=msg)
     parser.add_argument('-s', '--string', help='A JSON array of file paths.')
@@ -33,26 +28,32 @@ def main():
         for letter in args.string:
             if letter not in '[" \']':
                 cleanstring+=letter
-        file_set = cleanstring.split(",")
+        file_list = cleanstring.split(",")
     except Exception as e:
         print(f"Unable to split args {args.string}.\nException: {e}")
-        # exit(1)
-        file_set = test_file_list
+        exit(1)
+    check_files(file_list)
     
-
+def check_files(file_list):
+    # Tell the program that we're using global variables
+    global directory_list
+    global sample_name
+    global sample_type
+    global category_name
+    global file_name
+    global other_files_in_folder
 
     print("Files to check: ")
-    print(file_set)
-
+    for file in file_list:
+        print(file)
+    print("\n")
     total_errors = 0
-    if not file_set:
+    if not file_list:
         print("No files in file set")
         exit(0)
-    for file in file_set:
+    for file in file_list:
         try:
             errors = []
-            print(f"\n----\n** Checking {file} **")
-
             # Set variables for file
             directory_list = file.split("/")
             file_name = directory_list[-1]
@@ -66,34 +67,34 @@ def main():
             if skip_file(directory_list):
                 continue        
 
-            # Check if metadata file
+            # If metadata file
             if file_name.lower() == 'readme.metadata.json':
                 try:
                     errors += check_metadata_file(file)
                 except Exception as e:
                     errors.append(f"Error checking {file_name}. Exception: {e}")
 
-            # Check if README.md
-            if file_name.lower == 'readme.md':
+            # If README.md
+            elif file_name.lower == 'readme.md':
                 try:
                     errors += check_readme(file)
                 except Exception as e:
                     errors.append(f"Error checking {file_name}. Exception: {e}")
             
-            if len(errors) == 0:
-                print("No errors found!")
-            else:
-                print(f"Found {len(errors)} errors:")
+            if len(errors) > 0:
+                print(f"Found {len(errors)} errors in file:\n{file}")
                 for i in range(len(errors)):
                     print(f"{i+1}. {errors[i]}")
+                print("\n")
             total_errors += len(errors)
         except Exception as e:
             print(f"Critical failure on file: {file}. Exception: {e}")
             total_errors += 1
     
     if total_errors == 0:
-        print("\nAll tests passed!")
-    print(f"\nTotal errors: {total_errors}")
+        print("All tests passed!")
+    else:
+        print(f"Total errors: {total_errors}")
     # When we exit an pass a non-zero value, GitHub registers the test as failed.
     exit(total_errors)
 
@@ -123,10 +124,14 @@ def skip_file(directory_list: list)-> bool:
 def check_metadata_file(path):
 
     global metadata
+    global json_api_list
+    global json_keyword_list
     with open(path) as f:
         metadata = json.load(f)
 
     meta_errors = []
+    json_api_list = []
+    json_keyword_list = []
 
     if file_name != "README.metadata.json":
         meta_errors.append(f"{file_name} does not have correct capitalization")
@@ -206,6 +211,11 @@ def check_keywords(keywords: list):
     if not keywords:
         return ["No keywords found"]
     errors = []
+    for keyword in keywords:
+        if keyword in json_keyword_list:
+            errors.append(f"Duplicate keyword: {keyword}")
+        else:
+            json_keyword_list.append(keyword)
     return errors
 
 def check_redirect_from(redirects: list):
@@ -225,6 +235,11 @@ def check_relevant_apis(apis: list):
     if not apis:
         return ["No APIs listed"]
     errors = []
+    for api in apis:
+        if api in json_api_list:
+            errors.append(f"Duplicate API: {api}")
+        else:
+            json_api_list.append(api)
     return errors
 
 def check_snippets(snippets: list):
@@ -235,9 +250,13 @@ def check_snippets(snippets: list):
         if snippet not in other_files_in_folder:
             errors.append(f"{snippet} not found in sample folder")
     expected_snippets = [
-        sample_name + ".h",
-        sample_name + ".qml"
+        sample_name + ".qml",
+        sample_name + ".h"
     ]
+
+    if not snippets[0] == expected_snippets[0]:
+        errors.append(f"The .qml snippet must be listed first in the list.")
+
     if sample_type == "ArcGISRuntimeSDKQt_CppSamples":
         expected_snippets.append(sample_name + ".cpp")
     for expected_snippet in expected_snippets:
@@ -362,6 +381,9 @@ def check_relevant_api(body):
                 api_list.append(api)
                 if api in tag_list:
                     errors.append(f"{api} should not be in tags")
+    if api_list != sorted(api_list):
+        errors.append("Expected API list to be sorted alphabetically")
+    
     return errors
 
 def check_tags(body):
@@ -511,9 +533,9 @@ test_file_list = [
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Search/OfflineGeocode/README.md",
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/LocalServer/LocalServerMapImageLayer/README.md",
     "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Geometry/FormatCoordinates/README.metadata.json",
-    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Geometry/FormatCoordinates/README.metadata.json",
-    "/Users/tan11389/Projects/ty-samples/ArcGISRuntimeSDKQt_CppSamples/Routing/OfflineRouting/README.metadata.json"
 ]
+
+check_files(test_file_list)
 
 if __name__ == '__main__':
     main()
