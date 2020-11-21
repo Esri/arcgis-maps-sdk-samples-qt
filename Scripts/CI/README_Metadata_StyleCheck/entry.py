@@ -251,14 +251,14 @@ def check_snippets(snippets: list):
             errors.append(f"{snippet} not found in sample folder")
     expected_snippets = [
         sample_name + ".qml",
-        sample_name + ".h"
     ]
+
+    if sample_type == "ArcGISRuntimeSDKQt_CppSamples":
+        expected_snippets += [sample_name + ".cpp", sample_name + ".h"]
 
     if not snippets[0] == expected_snippets[0]:
         errors.append(f"The .qml snippet must be listed first in the list.")
-
-    if sample_type == "ArcGISRuntimeSDKQt_CppSamples":
-        expected_snippets.append(sample_name + ".cpp")
+        
     for expected_snippet in expected_snippets:
         if expected_snippet not in snippets:
             errors.append(f"Expected {expected_snippet} in snippets")
