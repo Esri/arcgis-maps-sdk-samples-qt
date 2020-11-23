@@ -1,11 +1,20 @@
 {
-    "category": "Cloud aaaaa portal",
+    "category": "Cloud and portal",
     "description": "This sample demonstrates an approach to using OAuth2 for authenticating with an ArcGIS portal",
     "ignore": true,
     "images": [],
     "keywords": [
+        "authentication",
+        "login",
+        "security",
+        "password",
+        "authorization",
+        "credential",
+        "AuthenticationChallenge",
+        "AuthenticationManager",
+        "Portal"
     ],
-    "redirect_from": "/qt/latest/cpp/sample-codade/sample-qt-oauthredirectexample.htm",
+    "redirect_from": "/qt/latest/cpp/sample-code/sample-qt-oauthredirectexample.htm",
     "relevant_apis": [
         "AuthenticationChallenge",
         "AuthenticationManager",
@@ -15,7 +24,7 @@
         "OAuthRedirectExample.qml",
         "OAuthRedirectExample.h",
         "MyApplication.h",
-        "OAuthRedirectHandler.capp",
+        "OAuthRedirectHandler.cpp",
         "OAuthRedirectHandler.h",
         "MyApplication.cpp",
         "OAuthRedirectExample.cpp"
